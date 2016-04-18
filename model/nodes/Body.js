@@ -9,5 +9,6 @@ function Body() {
 Container.extend(Body);
 
 Body.static.name = "body";
+Body.static.allowedContext = "article";
 
 module.exports = Body;

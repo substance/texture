@@ -11,6 +11,7 @@ module.exports = {
   */
 
   import: function(el, node, converter) {
+    node.id = this.tagName;
     var childNodes = el.getChildNodes();
     childNodes.forEach(function(childEl) {
       var tagName = childEl.tagName;

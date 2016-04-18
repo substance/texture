@@ -6,6 +6,7 @@ var ArticleNode = require('./nodes/ArticleNode');
 var Front = require('./nodes/Front');
 var Body = require('./nodes/Body');
 var Paragraph = require('substance/packages/paragraph/Paragraph');
+var Heading = require('substance/packages/heading/Heading');
 var UnsupportedBlockNode = require('./nodes/UnsupportedBlockNode');
 var UnsupportedInlineNode = require('./nodes/UnsupportedInlineNode');
 
@@ -30,6 +31,7 @@ ScientistSchema.nodes = [
   Front,
   Body,
   Paragraph,
+  Heading,
   UnsupportedBlockNode,
   UnsupportedInlineNode
 ];

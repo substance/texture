@@ -3,6 +3,8 @@
 var extend = require('lodash/extend');
 var isString = require('lodash/isString');
 var isArray = require('lodash/isArray');
+var last = require('lodash/last');
+var DOMImporter = require('substance/model/DOMImporter');
 var XMLImporter = require('substance/model/XMLImporter');
 var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
 var ScientistArticle = require('../model/ScientistArticle');
@@ -11,6 +13,7 @@ var ScientistSchema = require('../model/ScientistSchema');
 var ArticleConverter = require('./nodes/ArticleConverter');
 var FrontConverter = require('./nodes/FrontConverter');
 var BodyConverter = require('./nodes/BodyConverter');
+var SectionConverter = require('./nodes/SectionConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
 var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
 var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConverter');
@@ -18,6 +21,8 @@ var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConve
 function JATSImporter(config) {
   config = _getConfig();
   JATSImporter.super.call(this, config);
+
+  this.state = new JATSImporter.State();
 }
 
 JATSImporter.Prototype = function() {
@@ -69,9 +74,77 @@ function _getConfig(config) {
   return config;
 }
 
+JATSImporter.State = function() {
+  JATSImporter.State.super.call(this);
+};
+
+JATSImporter.State.Prototype = function() {
+
+  var _super = JATSImporter.State.super.prototype;
+
+  this.reset = function() {
+    _super.reset.call(this);
+
+    // stack for containers (body or sections)
+    this.sectionLevel = 1;
+    this.containers = [];
+    // stack for list types
+    this.lists = [];
+    this.listItemLevel = 1;
+  };
+
+  // Support for nested elements which we decided to
+  // model in a flattened way
+
+  this.getCurrentSectionLevel = function() {
+    return this.sectionLevel;
+  };
+
+  this.increaseSectionLevel = function() {
+    return this.sectionLevel++;
+  };
+
+  this.decreaseSectionLevel = function() {
+    return this.sectionLevel--;
+  };
+
+  this.getCurrentContainer = function() {
+    return last(this.containers);
+  };
+
+  this.pushContainer = function(node) {
+    return this.containers.push(node);
+  };
+
+  this.popContainer = function() {
+    this.containers.pop();
+  };
+
+  this.getCurrentListItemLevel = function() {
+    return this.listItemLevel;
+  };
+
+  this.increaseListItemLevel = function() {
+    return this.listItemLevel++;
+  };
+
+  this.decreaseListItemLevel = function() {
+    return this.listItemLevel--;
+  };
+
+  this.getCurrentList = function() {
+    return last(this.lists);
+  };
+
+};
+
+DOMImporter.State.extend(JATSImporter.State);
+
+
 JATSImporter.converters = [
   ArticleConverter,
   FrontConverter,
+  SectionConverter,
   BodyConverter,
   ParagraphConverter,
   UnsupportedBlockNodeConverter,

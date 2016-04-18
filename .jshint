@@ -1,0 +1,18 @@
+{
+  "esnext": true,
+  "node": true,
+  "devel": true,
+  "latedef": true,
+  "undef": true,
+  "unused": true,
+  "sub": true,
+  "predef": [
+    "localStorage",
+    "React",
+    "WebSocket",
+    "window",
+    "document",
+    "i18n",
+    "QUnit"
+  ]
+}

@@ -21,8 +21,7 @@ JATSImporter.Prototype = function() {
 
   this.importDocument = function(xmlString) {
     this.reset();
-    debugger;
-    var xmlDoc = DefaultDOMElement.parseXML(xmlString);
+    var xmlDoc = DefaultDOMElement.parseXML(xmlString, 'fullDoc');
     var articleEl = xmlDoc.find('article');
     this.convertDocument(articleEl);
     var doc = this.generateDocument();

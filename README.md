@@ -1,4 +1,4 @@
-# Substance Scienctist
+# Substance Scientist
 
 # Install
 
@@ -11,7 +11,7 @@ $ git clone https://github.com/substance/scientist.git
 Navigate to the source directory.
 
 ```bash
-$ cd scientise
+$ cd scientist
 ```
 
 Install via npm

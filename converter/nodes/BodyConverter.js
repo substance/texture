@@ -7,6 +7,8 @@ module.exports = {
   type: 'body',
   tagName: 'body',
 
+  allowedContext: 'article',
+
   import: function(el, node, converter) {
     node.nodes = map(el.getChildNodes(), function(childEl) {
       var child = converter.convertElement(childEl);

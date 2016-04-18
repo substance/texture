@@ -1,6 +1,8 @@
 'use strict';
 
 var extend = require('lodash/extend');
+var isString = require('lodash/isString');
+var isArray = require('lodash/isArray');
 var XMLImporter = require('substance/model/XMLImporter');
 var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
 var ScientistArticle = require('../model/ScientistArticle');
@@ -34,6 +36,20 @@ JATSImporter.Prototype = function() {
 
   this._createDocument = function() {
     return new ScientistArticle();
+  };
+
+  this._converterCanBeApplied = function(converter, el) {
+    var currentContext = this.state.getCurrentElementContext();
+    var allowedContext = converter.allowedContext;
+    var matches = converter.matchElement(el);
+    if (matches && currentContext && allowedContext) {
+      if (isString(allowedContext)) {
+        return (allowedContext === currentContext);
+      } else if (isArray(allowedContext)) {
+        return (allowedContext.indexOf(currentContext) > -1);
+      }
+    }
+    return matches;
   };
 
 };

@@ -1,0 +1,20 @@
+var express = require('express');
+var path = require('path');
+var glob = require('glob');
+var browserify = require('browserify');
+var PORT = process.env.PORT || 5001;
+var serverUtils = require('substance/util/server');
+
+var app = express();
+
+// static served data
+app.use('/i18n', express.static(path.join(__dirname, 'i18n')));
+app.use('/data', express.static(path.join(__dirname, 'data')));
+
+serverUtils.serveStyles(app, '/app.css', path.join(__dirname, 'app', 'app.scss'));
+serverUtils.serveJS(app, '/app.js', path.join(__dirname, 'app', 'app.js'));
+serverUtils.serveHTML(app, '/', path.join(__dirname, 'app', 'index.html'), {});
+
+app.listen(PORT);
+console.log('Server is listening on %s', PORT);
+console.log('To view the docs go to http://localhost:%s', PORT);

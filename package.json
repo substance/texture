@@ -1,0 +1,29 @@
+{
+  "name": "substance-scientist",
+  "description": "A scientific editor and reader for JATS files.",
+  "dependencies": {
+    "lodash": "^4.2.1",
+    "substance": "substance/substance#master"
+  },
+  "devDependencies": {
+    "browserify": "substance/node-browserify#d3caeb6dcdaa97a258d099c7231a57f0f60ec876",
+    "express": "^4.13.4",
+    "glob": "^7.0.3",
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "yargs": "^4.6.0"
+  },
+  "scripts": {
+    "bundle": "gulp"
+  },
+  "version": "0.1.0"
+}

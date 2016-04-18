@@ -1,0 +1,1 @@
+A converter supporting JATS (archiving) as of version 1.1 http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html

@@ -3,6 +3,7 @@
 var DocumentSchema = require('substance/model/DocumentSchema');
 
 var ArticleNode = require('./nodes/ArticleNode');
+var Front = require('./nodes/Front');
 var Body = require('./nodes/Body');
 var Paragraph = require('substance/packages/paragraph/Paragraph');
 var UnsupportedBlockNode = require('./nodes/UnsupportedBlockNode');
@@ -26,6 +27,7 @@ DocumentSchema.extend(ScientistSchema);
 
 ScientistSchema.nodes = [
   ArticleNode,
+  Front,
   Body,
   Paragraph,
   UnsupportedBlockNode,

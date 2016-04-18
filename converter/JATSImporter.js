@@ -9,6 +9,7 @@ var ScientistArticle = require('../model/ScientistArticle');
 var ScientistSchema = require('../model/ScientistSchema');
 
 var ArticleConverter = require('./nodes/ArticleConverter');
+var FrontConverter = require('./nodes/FrontConverter');
 var BodyConverter = require('./nodes/BodyConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
 var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
@@ -70,6 +71,7 @@ function _getConfig(config) {
 
 JATSImporter.converters = [
   ArticleConverter,
+  FrontConverter,
   BodyConverter,
   ParagraphConverter,
   UnsupportedBlockNodeConverter,

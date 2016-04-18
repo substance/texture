@@ -1,9 +1,14 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
+var JATSImporter = require('../converter/JATSImporter');
+var jQuery = require('substance/util/jquery');
+var DocumentSession = require('substance/model/DocumentSession');
+var ScientistReader = require('./ScientistReader');
+var ScientistWriter = require('./ScientistWriter');
 
 /*
-  Loads and displays a Scientist article
+  Loads and displays a ScientistArticle
 
   Renders ScientistReader on mobile and ScientistWriter on the desktop
 */
@@ -15,36 +20,57 @@ DocumentPage.Prototype = function() {
 
   this.getInitialState = function() {
     return {
-      documentSession: null, // CollabSession will be stored here, if null indicates we are in loading state
-      error: null // used to display error messages e.g. loading of document failed
+      documentSession: null,
+      error: null
     };
   };
 
   this.didMount = function() {
     // load the document after mounting
-    this._loadDocument(this.getDocumentId());
+    this._loadDocument(this.props.documentId);
   };
 
   this.willReceiveProps = function(newProps) {
     if (newProps.documentId !== this.props.documentId) {
       this.dispose();
       this.state = this.getInitialState();
-      this._loadDocument(this.getDocumentId());
+      this._loadDocument(this.props.documentId);
     }
   };
 
-  this._loadDocument = function(cb) {
-    // TODO: load doc here
+  this._loadDocument = function() {
+    jQuery.ajax(this.props.documentId, {
+      dataType: 'text'
+    })
+    .done(function(data){
+      var importer = new JATSImporter();
+      var doc = importer.importDocument(data);
+      var documentSession = new DocumentSession(doc);
+
+      this.setState({
+        documentSession: documentSession
+      });
+    }.bind(this))
+    .fail(function(xhr, status, err) {
+      console.error(err);
+      this.setState({
+        error: new Error('Loading failed')
+      });
+    }.bind(this));
   };
 
   // Rendering
   // ------------------------------------
 
-  this.renderPage = function($$) {
+  this.render = function($$) {
     var el = $$('div').addClass('sc-document-page');
 
     if (!this.state.documentSession) {
       return el;
+    }
+
+    if (this.state.error) {
+      el.append('ERROR: ', this.state.error.message);
     }
 
     // Display reader for mobile and writer on desktop

@@ -8,6 +8,7 @@
   "devDependencies": {
     "browserify": "substance/node-browserify#d3caeb6dcdaa97a258d099c7231a57f0f60ec876",
     "express": "^4.13.4",
+    "font-awesome": "4.5.0",
     "glob": "^7.0.3",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.0",

@@ -32,14 +32,18 @@ ResponsiveApplication.Prototype = function() {
       var _window = DefaultDOMElement.getBrowserWindow();
       _window.on('resize', this._onResize, this);
     }
+    this.router = this.getRouter();
+    this.router.on('route:changed', this._onRouteChanged, this);
     var route = this.router.readRoute();
     // Replaces the current entry without creating new history entry
     // or triggering hashchange
     this.navigate(route, {replace: true});
   };
 
+
   this.dispose = function() {
     this.router.off(this);
+    this.router.dispose();
   };
 
   /*
@@ -61,8 +65,27 @@ ResponsiveApplication.Prototype = function() {
     this.navigate(route, {replace: true});
   };
 
-  this.didMount = function() {
-    this.router.on('route:changed', this._onRouteChanged, this);
+  this._isMobile = function() {
+    if (inBrowser) {
+      return window.innerWidth < 700;  
+    }
+  };
+
+  this._onResize = function() {
+    if (this._isMobile()) {
+      // switch to mobile
+      if (!this.state.mobile) {
+        this.extendState({
+          mobile: true
+        });
+      }
+    } else {
+      if (this.state.mobile) {
+        this.extendState({
+          mobile: false
+        });
+      }
+    }
   };
 
   this._getPage = function() {
@@ -87,8 +110,22 @@ ResponsiveApplication.Prototype = function() {
 
   this.renderPage = function($$) {
     var PageClass = this._getPageClass();
-
     return $$(PageClass, this._getPageProps());
+  };
+
+  this.render = function($$) {
+    var el = $$('div').addClass('sc-responsive-application');
+
+    if (this.state.route === undefined) {
+      // Not yet initialized by router
+      return el;
+    }
+
+    el.append(
+      this.renderPage($$)
+    );
+    
+    return el;
   };
 
 };

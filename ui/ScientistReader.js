@@ -18,5 +18,5 @@ ScientistReader.Prototype = function() {
   };
 };
 
-Component.extend(ScientistWriter);
-module.exports = ScientistWriter;
+Component.extend(ScientistReader);
+module.exports = ScientistReader;

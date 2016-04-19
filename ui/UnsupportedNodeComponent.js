@@ -14,7 +14,7 @@ UnsupportedNodeComponent.Prototype = function() {
       .addClass('sc-unsupported-node')
       .attr("data-id", this.props.node.id)
       .append($$(TextProperty, {
-        path: [ this.props.node.id, "content"]
+        path: [ this.props.node.id, "xml"]
       }));
   };
 };

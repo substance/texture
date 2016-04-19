@@ -3,19 +3,12 @@
 var Router = require('substance/ui/Router');
 
 function ScientistRouter(app) {
-  Router.call(this);
+  Router.apply(this, arguments);
   this.app = app;
 }
 
 ScientistRouter.Prototype = function() {
 
-  // URL helpers
-  this.openNote = function(documentId) {
-    return '#' + Router.objectToRouteString({
-      section: 'note',
-      documentId: documentId
-    });
-  };
 };
 
 Router.extend(ScientistRouter);

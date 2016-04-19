@@ -47,6 +47,8 @@ DocumentPage.Prototype = function() {
       var doc = importer.importDocument(data);
       var documentSession = new DocumentSession(doc);
 
+      console.log('documentSession', documentSession);
+      
       this.setState({
         documentSession: documentSession
       });

@@ -76,7 +76,9 @@ ScientistWriter.static.config = {
       'image': require('substance/packages/image/ImageComponent'),
       'link': require('substance/packages/link/LinkComponent'),
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
-      'blockquote': require('substance/packages/blockquote/BlockquoteComponent')
+      'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
+      'unsupported-inline': require('./UnsupportedNodeComponent'),
+      'unsupported-block': require('./UnsupportedNodeComponent')
     },
     // Controller commands
     commands: [

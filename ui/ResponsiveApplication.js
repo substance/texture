@@ -40,7 +40,6 @@ ResponsiveApplication.Prototype = function() {
     this.navigate(route, {replace: true});
   };
 
-
   this.dispose = function() {
     this.router.off(this);
     this.router.dispose();
@@ -110,7 +109,8 @@ ResponsiveApplication.Prototype = function() {
 
   this.renderPage = function($$) {
     var PageClass = this._getPageClass();
-    return $$(PageClass, this._getPageProps());
+    var pageName = this._getPage();
+    return $$(PageClass, this._getPageProps()).ref(pageName);
   };
 
   this.render = function($$) {

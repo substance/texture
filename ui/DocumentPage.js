@@ -27,14 +27,16 @@ DocumentPage.Prototype = function() {
 
   this.didMount = function() {
     // load the document after mounting
+    console.log('DocumentPage.didMount');
     this._loadDocument(this.props.documentId);
   };
 
   this.willReceiveProps = function(newProps) {
+    console.log('newProps/oldProps', newProps, this.props);
     if (newProps.documentId !== this.props.documentId) {
       this.dispose();
       this.state = this.getInitialState();
-      this._loadDocument(this.props.documentId);
+      this._loadDocument(newProps.documentId);
     }
   };
 
@@ -76,17 +78,17 @@ DocumentPage.Prototype = function() {
     }
 
     // Display reader for mobile and writer on desktop
-    if (this.state.mobile) {
+    if (this.props.mobile) {
       el.append(
         $$(ScientistReader, {
           documentSession: this.state.documentSession
-        })
+        }).ref('scientistReader')
       );
     } else {
       el.append(
         $$(ScientistWriter, {
           documentSession: this.state.documentSession
-        })
+        }).ref('scientistWriter')
       );
     }
     return el;

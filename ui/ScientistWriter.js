@@ -24,7 +24,7 @@ ScientistWriter.Prototype = function() {
   // Custom Render method for your editor
   this.render = function($$) {
     var config = this.getConfig();
-    return $$('div').addClass('sc-note-writer').append(
+    return $$('div').addClass('sc-scientist-writer').append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
         // Top area (toolbar)
         $$('div').addClass('se-toolbar-wrapper').append(
@@ -44,7 +44,7 @@ ScientistWriter.Prototype = function() {
         ),
         // Bottom area (content)
         $$(ScrollPane, {
-          scrollbarType: 'native',
+          scrollbarType: 'substance',
           scrollbarPosition: 'right'
         }).append(
           $$(Layout, {
@@ -77,7 +77,7 @@ ScientistWriter.static.config = {
       'link': require('substance/packages/link/LinkComponent'),
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
-      'unsupported-inline': require('./UnsupportedInlineNodeComponent'),
+      'unsupported-inline': require('./ExpandableComponent'), // require('./UnsupportedInlineNodeComponent'),
       'unsupported-block': require('./UnsupportedBlockNodeComponent')
     },
     // Controller commands

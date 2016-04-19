@@ -49,13 +49,31 @@ JATSImporter.Prototype = function() {
     var allowedContext = converter.allowedContext;
     var matches = converter.matchElement(el);
     if (matches && currentContext && allowedContext) {
+      var parentTagName = currentContext.tagName;
       if (isString(allowedContext)) {
-        return (allowedContext === currentContext);
+        return (allowedContext === parentTagName);
       } else if (isArray(allowedContext)) {
-        return (allowedContext.indexOf(currentContext) > -1);
+        return (allowedContext.indexOf(parentTagName) > -1);
       }
     }
     return matches;
+  };
+
+  this._convertContainerElement = function(el, container, startPos) {
+    var state = this.state;
+    state.pushContainer(container);
+    var childNodes = el.getChildNodes();
+    startPos = startPos || 0;
+    for (var i = startPos; i < childNodes.length; i++) {
+      state.lastContainer = null;
+      var child = this.convertElement(childNodes[i]);
+      container.nodes.push(child.id);
+      if (state.lastContainer) {
+        container.nodes = container.nodes.concat(state.lastContainer.nodes);
+      }
+      state.lastContainer = null;
+    }
+    state.popContainer(container);
   };
 
 };
@@ -117,7 +135,7 @@ JATSImporter.State.Prototype = function() {
   };
 
   this.popContainer = function() {
-    this.containers.pop();
+    this.lastContainer = this.containers.pop();
   };
 
   this.getCurrentListItemLevel = function() {

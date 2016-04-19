@@ -11,7 +11,8 @@ Annotation.extend(UnsupportedInlineNode);
 UnsupportedInlineNode.static.name = "unsupported-inline";
 
 UnsupportedInlineNode.static.defineSchema({
-  xml: 'string'
+  xml: 'string',
+  tagName: 'string'
 });
 
 module.exports = UnsupportedInlineNode;

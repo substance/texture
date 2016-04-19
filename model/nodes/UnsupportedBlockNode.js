@@ -11,7 +11,8 @@ BlockNode.extend(UnsupportedBlockNode);
 UnsupportedBlockNode.static.name = "unsupported-block";
 
 UnsupportedBlockNode.static.defineSchema({
-  xml: 'string'
+  xml: 'string',
+  tagName: 'string'
 });
 
 

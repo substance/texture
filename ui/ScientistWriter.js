@@ -35,8 +35,8 @@ ScientistWriter.Prototype = function() {
                 $$(UndoTool).append($$(Icon, {icon: 'fa-undo'})),
                 $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
                 $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
-                $$(LinkTool).append($$(Icon, {icon: 'fa-bold'})),
                 $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
+                $$(LinkTool).append($$(Icon, {icon: 'fa-link'})),
                 $$(CodeTool).append($$(Icon, {icon: 'fa-code'}))
               )
             )
@@ -77,8 +77,8 @@ ScientistWriter.static.config = {
       'link': require('substance/packages/link/LinkComponent'),
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
-      'unsupported-inline': require('./UnsupportedNodeComponent'),
-      'unsupported-block': require('./UnsupportedNodeComponent')
+      'unsupported-inline': require('./UnsupportedInlineNodeComponent'),
+      'unsupported-block': require('./UnsupportedBlockNodeComponent')
     },
     // Controller commands
     commands: [

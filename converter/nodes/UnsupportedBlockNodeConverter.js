@@ -10,6 +10,7 @@ module.exports = {
 
   import: function(el, node, converter) {
     node.xml = el.outerHTML;
+    node.tagName = el.tagName;
   },
 
   export: function(node, el, converter) {

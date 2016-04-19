@@ -7,4 +7,15 @@
   button {
     display: inline;
   }
+
+  position: relative;
+
+  .se-actions {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    padding: 5px;
+    border: 1px solid $border-color;
+    background: #fff;
+  }
 }

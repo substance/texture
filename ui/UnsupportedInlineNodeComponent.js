@@ -21,6 +21,14 @@ UnsupportedInlineNodeComponent.Prototype = function() {
     });
   };
 
+  this._highlight = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      highlighted: !this.state.highlighted
+    });
+  };
+
   this._closeModal = function() {
     this.setState({
       editXML: false
@@ -35,8 +43,19 @@ UnsupportedInlineNodeComponent.Prototype = function() {
       .append(
         $$('button').addClass('se-toggle').append(
           '<'+this.props.node.tagName+'>'
-        ).on('click', this._openModal)
+        ).on('mousedown', this._highlight)
       );
+
+    // Highlighted states must be set outside
+    // TODO: this must come in as prop (this.props.highlighted)
+    // We need new API's for highlights
+    if (this.state.highlighted) {
+      el.append(
+        $$('div').addClass('se-actions').append(
+          $$('button').append('Edit').on('mousedown', this._openModal)
+        )
+      );
+    }
 
     if (this.state.editXML) {
       el.append(

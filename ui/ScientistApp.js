@@ -4,7 +4,6 @@ var extend = require('lodash/extend');
 var DocumentPage = require('./DocumentPage');
 var DashboardPage = require('./DashboardPage');
 var ResponsiveApplication = require('./ResponsiveApplication');
-
 var ScientistRouter = require('./ScientistRouter');
 
 var I18n = require('substance/ui/i18n');

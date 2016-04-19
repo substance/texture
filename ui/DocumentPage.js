@@ -32,7 +32,6 @@ DocumentPage.Prototype = function() {
   };
 
   this.willReceiveProps = function(newProps) {
-    console.log('newProps/oldProps', newProps, this.props);
     if (newProps.documentId !== this.props.documentId) {
       this.dispose();
       this.state = this.getInitialState();

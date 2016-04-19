@@ -14,7 +14,9 @@
   &.sm-expanded {
     display: block;
     margin: 20px 0;
-    background: #eee;
+    background: $fill-light-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
     padding: 20px;
   }
 

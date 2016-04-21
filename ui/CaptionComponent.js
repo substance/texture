@@ -32,6 +32,7 @@ CaptionComponent.Prototype = function() {
         })
       );
     }.bind(this));
+    el.append(contentEl);
 
     return el;
   };

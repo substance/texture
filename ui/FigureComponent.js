@@ -2,7 +2,6 @@
 
 var Component = require('substance/ui/Component');
 var TextProperty = require('substance/ui/TextPropertyComponent');
-var Caption = require('./CaptionComponent');
 
 function FigureComponent() {
   Component.apply(this, arguments);
@@ -11,28 +10,29 @@ function FigureComponent() {
 FigureComponent.Prototype = function() {
 
   this.render = function($$) {
-    var doc = this.props.node.getDocument();
+    var surface = this.context.surface;
 
     var el = $$('div')
       .addClass('sc-figure')
       .attr('data-id', this.props.node.id)
-      .attr('contenteditable', false)
       .append($$(TextProperty, {
         path: [ this.props.node.id, 'label']
       }));
 
-    // Display Captions
-    this.props.node.captionNodes.forEach(function(captionNodeId) {
-      var node = doc.get(captionNodeId);
+    // Display figure content
+    this.props.node.contentNodes.forEach(function(nodeId) {
       el.append(
-        $$(Caption, {
-          doc: doc,
-          node: node
-        })
+        surface._renderNode($$, nodeId)
+      );
+    }.bind(this)); 
+
+    // Display Captions
+    this.props.node.captionNodes.forEach(function(nodeId) {
+      el.append(
+        surface._renderNode($$, nodeId)
       );
     }.bind(this));
-
-    // TODO: add figure content
+   
     return el;
   };
 };

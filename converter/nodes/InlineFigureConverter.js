@@ -14,6 +14,8 @@ module.exports = {
   ],
 
   /*
+    Spec: http://jats.nlm.nih.gov/archiving/tag-library/1.1/element/fig.html
+
     Attributes
       fig-type Type of Figure
       id Document Internal Identifier
@@ -87,6 +89,8 @@ module.exports = {
           node.contentNodes.push(converter.convertElement(childEl));
       }
     });
+
+    console.log('converted figure', node);
   },
 
   export: function(node, el, converter) {

@@ -11,6 +11,7 @@ var Strong = require('substance/packages/strong/Strong');
 var Link = require('substance/packages/link/Link');
 var Heading = require('substance/packages/heading/Heading');
 var Caption = require('./nodes/Caption');
+var Graphic = require('./nodes/Graphic');
 var InlineFigure = require('./nodes/InlineFigure');
 var UnsupportedBlockNode = require('./nodes/UnsupportedBlockNode');
 var UnsupportedInlineNode = require('./nodes/UnsupportedInlineNode');
@@ -38,6 +39,7 @@ ScientistSchema.nodes = [
   Strong,
   Link,
   InlineFigure,
+  Graphic,
   Caption,
   UnsupportedBlockNode,
   UnsupportedInlineNode

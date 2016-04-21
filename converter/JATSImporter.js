@@ -17,6 +17,7 @@ var BodyConverter = require('./nodes/BodyConverter');
 var SectionConverter = require('./nodes/SectionConverter');
 var InlineFigureConverter = require('./nodes/InlineFigureConverter');
 var CaptionConverter = require('./nodes/CaptionConverter');
+var GraphicConverter = require('./nodes/GraphicConverter');
 var EmphasisConverter = require('./nodes/EmphasisConverter');
 var LinkConverter = require('./nodes/LinkConverter');
 var StrongConverter = require('./nodes/StrongConverter');
@@ -159,7 +160,6 @@ JATSImporter.State.Prototype = function() {
   this.getCurrentList = function() {
     return last(this.lists);
   };
-
 };
 
 DOMImporter.State.extend(JATSImporter.State);
@@ -170,6 +170,7 @@ JATSImporter.converters = [
   SectionConverter,
   InlineFigureConverter,
   CaptionConverter,
+  GraphicConverter,
   EmphasisConverter,
   StrongConverter,
   LinkConverter,

@@ -13,7 +13,6 @@ var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var StrongTool = require('substance/packages/strong/StrongTool');
 var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
 var LinkTool = require('substance/packages/link/LinkTool');
-var CodeTool = require('substance/packages/code/CodeTool');
 
 function ScientistWriter() {
   Controller.apply(this, arguments);
@@ -36,8 +35,7 @@ ScientistWriter.Prototype = function() {
                 $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
                 $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
                 $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
-                $$(LinkTool).append($$(Icon, {icon: 'fa-link'})),
-                $$(CodeTool).append($$(Icon, {icon: 'fa-code'}))
+                $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
               )
             )
           )
@@ -78,8 +76,9 @@ ScientistWriter.static.config = {
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
       'inline-figure': require('./FigureComponent'),
+      'caption': require('./CaptionComponent'),
+      'graphic': require('./GraphicComponent'),
       // 'unsupported-inline': require('./ExpandableComponent'),
-
       'unsupported-inline': require('./UnsupportedInlineNodeComponent'),
       'unsupported-block': require('./UnsupportedBlockNodeComponent')
     },
@@ -96,9 +95,7 @@ ScientistWriter.static.config = {
       require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/strong/StrongCommand'),
       require('substance/packages/emphasis/EmphasisCommand'),
-      require('substance/packages/code/CodeCommand'),
-      require('substance/packages/link/LinkCommand'),
-      require('substance/packages/image/ImageCommand')
+      require('substance/packages/link/LinkCommand')
     ],
     textTypes: [
       {name: 'paragraph', data: {type: 'paragraph'}},

@@ -10,7 +10,7 @@ function InlineFigure() {
 
 InlineNode.extend(InlineFigure);
 
-InlineFigure.static.name = "inline-figure";
+InlineFigure.static.name = 'inline-figure';
 InlineFigure.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
   objectIdNodes: { type: ['id'], default: [] },

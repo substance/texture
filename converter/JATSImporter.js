@@ -13,8 +13,12 @@ var ScientistSchema = require('../model/ScientistSchema');
 var ArticleConverter = require('./nodes/ArticleConverter');
 var FrontConverter = require('./nodes/FrontConverter');
 var BodyConverter = require('./nodes/BodyConverter');
+
 var SectionConverter = require('./nodes/SectionConverter');
 var InlineFigureConverter = require('./nodes/InlineFigureConverter');
+var CaptionConverter = require('./nodes/CaptionConverter');
+var EmphasisConverter = require('./nodes/EmphasisConverter');
+var StrongConverter = require('./nodes/StrongConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
 var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
 var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConverter');
@@ -170,6 +174,9 @@ JATSImporter.converters = [
   FrontConverter,
   SectionConverter,
   InlineFigureConverter,
+  CaptionConverter,
+  EmphasisConverter,
+  StrongConverter,
   BodyConverter,
   ParagraphConverter,
   UnsupportedBlockNodeConverter,

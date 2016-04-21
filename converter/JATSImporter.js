@@ -49,12 +49,6 @@ JATSImporter.Prototype = function() {
     return new ScientistArticle();
   };
 
-  this._extractXMLAttributes = function(el) {
-    var attrs = {};
-    console.warn('TODO: extract attributes from DOM element');
-    return attrs;
-  };
-
   this._converterCanBeApplied = function(converter, el) {
     var currentContext = this.state.getCurrentElementContext();
     var allowedContext = converter.allowedContext;

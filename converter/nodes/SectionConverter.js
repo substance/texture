@@ -62,7 +62,6 @@ module.exports = {
     }
     // other content
     converter._convertContainerElement(el, { nodes: [] }, i);
-
     state.decreaseSectionLevel();
   },
 

@@ -14,6 +14,7 @@ var ArticleConverter = require('./nodes/ArticleConverter');
 var FrontConverter = require('./nodes/FrontConverter');
 var BodyConverter = require('./nodes/BodyConverter');
 var SectionConverter = require('./nodes/SectionConverter');
+var FigureConverter = require('./nodes/FigureConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
 var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
 var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConverter');
@@ -42,6 +43,12 @@ JATSImporter.Prototype = function() {
 
   this._createDocument = function() {
     return new ScientistArticle();
+  };
+
+  this._extractXMLAttributes = function(el) {
+    var attrs = {};
+    console.warn('TODO: extract attributes from DOM element');
+    return attrs;
   };
 
   this._converterCanBeApplied = function(converter, el) {
@@ -158,11 +165,11 @@ JATSImporter.State.Prototype = function() {
 
 DOMImporter.State.extend(JATSImporter.State);
 
-
 JATSImporter.converters = [
   ArticleConverter,
   FrontConverter,
   SectionConverter,
+  FigureConverter,
   BodyConverter,
   ParagraphConverter,
   UnsupportedBlockNodeConverter,

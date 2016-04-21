@@ -39,7 +39,7 @@ module.exports = {
           node.title = converter.annotatedText(childEl, [node.id, 'title']);
           break;
         case 'p':
-          node.contentNodes.push(converter.convertElement(childEl));
+          node.contentNodes.push(converter.convertElement(childEl).id);
           break;
         default:
           console.warn('Unhandled content in <caption>. Appending to node.contentNodes.');

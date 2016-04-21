@@ -1,7 +1,6 @@
 'use strict';
 
 // TODO: we should be able to inherit from JATSNode to share properties.
-
 var TextBlock = require('substance/model/TextBlock');
 
 function Caption() {

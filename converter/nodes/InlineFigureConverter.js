@@ -45,19 +45,20 @@ module.exports = {
 
       switch (tagName) {
         case 'object-id':
-          node.objectIdNodes.push(converter.convertElement(childEl));
+          node.objectIdNodes.push(converter.convertElement(childEl).id);
           break;
         case 'label':
           node.label = converter.annotatedText(childEl, [node.id, 'label']);
           break;
         case 'caption':
-          node.captionNodes.push(converter.convertElement(childEl));
+          node.captionNodes.push(converter.convertElement(childEl).id);
+          debugger;
           break;
         case 'abstract':
-          node.abstractNodes.push(converter.convertElement(childEl));
+          node.abstractNodes.push(converter.convertElement(childEl).id);
           break;
         case 'kwd-group':
-          node.kwdGroupNodes.push(converter.convertElement(childEl));
+          node.kwdGroupNodes.push(converter.convertElement(childEl).id);
           break;
         case 'disp-formula':
         case 'disp-formula-group':
@@ -76,11 +77,11 @@ module.exports = {
         case 'graphic':
         case 'media':
         case 'preformat':
-          node.contentNodes.push(converter.convertElement(childEl));
+          node.contentNodes.push(converter.convertElement(childEl).id);
           break;
         case 'attrib':
         case 'permissions':
-          node.attribNodes.push(converter.convertElement(childEl));
+          node.attribNodes.push(converter.convertElement(childEl).id);
           break;
         default:
           console.warn('Unhandled content in <fig>. Appending to node.contentNodes.');

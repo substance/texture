@@ -2,6 +2,7 @@
 
 var Component = require('substance/ui/Component');
 var TextProperty = require('substance/ui/TextPropertyComponent');
+var Caption = require('./CaptionComponent');
 
 function FigureComponent() {
   Component.apply(this, arguments);
@@ -10,6 +11,8 @@ function FigureComponent() {
 FigureComponent.Prototype = function() {
 
   this.render = function($$) {
+    var doc = this.props.node.getDocument();
+
     var el = $$('div')
       .addClass('sc-figure')
       .attr('data-id', this.props.node.id)
@@ -18,13 +21,18 @@ FigureComponent.Prototype = function() {
         path: [ this.props.node.id, 'label']
       }));
 
-    // Display figure content
-    el.append(
-      $$('div').addClass('se-figure-content').append(
-        'FIGURE_CONTENT'
-      )
-    );
+    // Display Captions
+    this.props.node.captionNodes.forEach(function(captionNodeId) {
+      var node = doc.get(captionNodeId);
+      el.append(
+        $$(Caption, {
+          doc: doc,
+          node: node
+        })
+      );
+    }.bind(this));
 
+    // TODO: add figure content
     return el;
   };
 };

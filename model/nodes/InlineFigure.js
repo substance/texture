@@ -5,7 +5,7 @@
 var InlineNode = require('substance/model/InlineNode');
 
 function InlineFigure() {
-  Figure.super.apply(this, arguments);
+  InlineFigure.super.apply(this, arguments);
 }
 
 InlineNode.extend(InlineFigure);

@@ -52,7 +52,6 @@ module.exports = {
           break;
         case 'caption':
           node.captionNodes.push(converter.convertElement(childEl).id);
-          debugger;
           break;
         case 'abstract':
           node.abstractNodes.push(converter.convertElement(childEl).id);

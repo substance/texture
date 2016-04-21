@@ -67,7 +67,7 @@ This matrix shows which JATS elements are currently supported
 | `<back>`                           | no            |
 | `<bio>`                            | no            |
 | `<body>`                           | no            |
-| `<bold>`                           | no            |
+| `<bold>`                           | yes           |
 | `<boxed-text>`                     | no            |
 | `<break>`                          | no            |
 | `<caption>`                        | no            |
@@ -125,7 +125,7 @@ This matrix shows which JATS elements are currently supported
 | `<equation-count>`                 | no            |
 | `<era>`                            | no            |
 | `<etal>`                           | no            |
-| `<ext-link>`                       | no            |
+| `<ext-link>`                       | yes           |
 | `<fax>`                            | no            |
 | `<fig>`                            | no            |
 | `<fig-count>`                      | no            |
@@ -162,7 +162,7 @@ This matrix shows which JATS elements are currently supported
 | `<issue-part>`                     | no            |
 | `<issue-sponsor>`                  | no            |
 | `<issue-title>`                    | no            |
-| `<italic>`                         | no            |
+| `<italic>`                         | yes           |
 | `<journal-id>`                     | no            |
 | `<journal-meta>`                   | no            |
 | `<journal-subtitle>`               | no            |

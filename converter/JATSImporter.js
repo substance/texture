@@ -14,7 +14,7 @@ var ArticleConverter = require('./nodes/ArticleConverter');
 var FrontConverter = require('./nodes/FrontConverter');
 var BodyConverter = require('./nodes/BodyConverter');
 var SectionConverter = require('./nodes/SectionConverter');
-var FigureConverter = require('./nodes/FigureConverter');
+var InlineFigureConverter = require('./nodes/InlineFigureConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
 var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
 var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConverter');
@@ -169,7 +169,7 @@ JATSImporter.converters = [
   ArticleConverter,
   FrontConverter,
   SectionConverter,
-  FigureConverter,
+  InlineFigureConverter,
   BodyConverter,
   ParagraphConverter,
   UnsupportedBlockNodeConverter,

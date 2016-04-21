@@ -4,11 +4,13 @@ var forEach = require('lodash/forEach');
 
 module.exports = {
 
-  type: 'figure',
+  type: 'inline-figure',
   tagName: 'fig',
   allowedContext: [
-    'abstract', 'ack', 'app', 'back', 'bio', 'body', 'boxed-text',
-    'notes', 'sec', 'trans-abstract'
+    'abstract', 'ack', 'app', 'app-group', 'bio', 'body', 'boxed-text',
+    'disp-quote', 'fig-group', 'floats-group', 'glossary', 'license-p', 
+    'named-content', 'notes', 'p', 'ref-list', 'sec', 'styled-content',
+    'trans-abstract'
   ],
 
   /*
@@ -34,31 +36,28 @@ module.exports = {
   */
 
   import: function(el, node, converter) {
-    // var state = converter.state;
-    var childNodes = el.getChildNodes();
+    var childEls = el.getChildNodes();
 
-    debugger;
-    node.attributes = converter._extractXMLAttributes(el);
+    node.xmlAttributes = el.getAttributes();
 
-    forEach(childNodes, function(childNode) {
-      var tagName = childNode.tagName;
-
+    forEach(childEls, function(childEl) {
+      var tagName = childEl.tagName;
 
       switch (tagName) {
         case 'object-id':
-          node.objectIdNodes.push(this.convertElement(childNode));
+          node.objectIdNodes.push(converter.convertElement(childEl));
           break;
         case 'label':
-          node.label = converter.annotatedText(childNodes, [node.id, 'label']);
+          node.label = converter.annotatedText(childEl, [node.id, 'label']);
           break;
         case 'caption':
-          node.captionNodes.push(this.convertElement(childNode));
+          node.captionNodes.push(converter.convertElement(childEl));
           break;
         case 'abstract':
-          node.abstractNodes.push(this.convertElement(childNode));
+          node.abstractNodes.push(converter.convertElement(childEl));
           break;
         case 'kwd-group':
-          node.kwdGroupNodes.push(this.convertElement(childNode));
+          node.kwdGroupNodes.push(converter.convertElement(childEl));
           break;
         case 'disp-formula':
         case 'disp-formula-group':
@@ -77,15 +76,15 @@ module.exports = {
         case 'graphic':
         case 'media':
         case 'preformat':
-          node.contentNodes.push(this.convertElement(childNode));
+          node.contentNodes.push(converter.convertElement(childEl));
           break;
         case 'attrib':
         case 'permissions':
-          node.attribNodes.push(this.convertElement(childNode));
+          node.attribNodes.push(converter.convertElement(childEl));
           break;
         default:
           console.warn('Unhandled content in <fig>. Appending to node.contentNodes.');
-          node.contentNodes.push(this.convertElement(childNode));
+          node.contentNodes.push(converter.convertElement(childEl));
       }
     });
   },

@@ -13,7 +13,14 @@ var ScientistSchema = require('../model/ScientistSchema');
 var ArticleConverter = require('./nodes/ArticleConverter');
 var FrontConverter = require('./nodes/FrontConverter');
 var BodyConverter = require('./nodes/BodyConverter');
+
 var SectionConverter = require('./nodes/SectionConverter');
+var InlineFigureConverter = require('./nodes/InlineFigureConverter');
+var CaptionConverter = require('./nodes/CaptionConverter');
+var GraphicConverter = require('./nodes/GraphicConverter');
+var EmphasisConverter = require('./nodes/EmphasisConverter');
+var LinkConverter = require('./nodes/LinkConverter');
+var StrongConverter = require('./nodes/StrongConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
 var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
 var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConverter');
@@ -153,16 +160,20 @@ JATSImporter.State.Prototype = function() {
   this.getCurrentList = function() {
     return last(this.lists);
   };
-
 };
 
 DOMImporter.State.extend(JATSImporter.State);
-
 
 JATSImporter.converters = [
   ArticleConverter,
   FrontConverter,
   SectionConverter,
+  InlineFigureConverter,
+  CaptionConverter,
+  GraphicConverter,
+  EmphasisConverter,
+  StrongConverter,
+  LinkConverter,
   BodyConverter,
   ParagraphConverter,
   UnsupportedBlockNodeConverter,

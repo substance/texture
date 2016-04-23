@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var TextProperty = require('substance/ui/TextPropertyComponent');
 
 function UnsupportedBlockNodeComponent() {
   Component.apply(this, arguments);
@@ -14,10 +13,9 @@ UnsupportedBlockNodeComponent.Prototype = function() {
       .addClass('sc-unsupported-block-node')
       .attr('data-id', this.props.node.id)
       .attr('contenteditable', false)
-      // .append('<?XML>')
-      .append($$(TextProperty, {
-        path: [ this.props.node.id, "xml"]
-      }));
+      .append(
+        '<'+this.props.node.tagName+'>'
+      );
   };
 };
 

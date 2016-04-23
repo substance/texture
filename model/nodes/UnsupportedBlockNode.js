@@ -15,6 +15,4 @@ UnsupportedBlockNode.static.defineSchema({
   tagName: 'string'
 });
 
-
-
 module.exports = UnsupportedBlockNode;

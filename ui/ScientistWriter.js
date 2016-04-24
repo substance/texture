@@ -76,6 +76,7 @@ ScientistWriter.static.config = {
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
       'inline-figure': require('./FigureComponent'),
+      'reference': require('./ReferenceComponent'),
       'caption': require('./CaptionComponent'),
       'graphic': require('./GraphicComponent'),
       // 'unsupported-inline': require('./ExpandableComponent'),

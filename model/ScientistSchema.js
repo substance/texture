@@ -10,6 +10,7 @@ var Emphasis = require('substance/packages/emphasis/Emphasis');
 var Strong = require('substance/packages/strong/Strong');
 var Link = require('substance/packages/link/Link');
 var Heading = require('substance/packages/heading/Heading');
+var Reference = require('./nodes/Reference');
 var Caption = require('./nodes/Caption');
 var Graphic = require('./nodes/Graphic');
 var InlineFigure = require('./nodes/InlineFigure');
@@ -38,6 +39,7 @@ ScientistSchema.nodes = [
   Emphasis,
   Strong,
   Link,
+  Reference,
   InlineFigure,
   Graphic,
   Caption,

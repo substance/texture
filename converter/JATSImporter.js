@@ -18,6 +18,8 @@ var SectionConverter = require('./nodes/SectionConverter');
 var InlineFigureConverter = require('./nodes/InlineFigureConverter');
 var CaptionConverter = require('./nodes/CaptionConverter');
 var GraphicConverter = require('./nodes/GraphicConverter');
+var ReferenceConverter = require('./nodes/ReferenceConverter');
+
 var EmphasisConverter = require('./nodes/EmphasisConverter');
 var LinkConverter = require('./nodes/LinkConverter');
 var StrongConverter = require('./nodes/StrongConverter');
@@ -171,6 +173,7 @@ JATSImporter.converters = [
   InlineFigureConverter,
   CaptionConverter,
   GraphicConverter,
+  ReferenceConverter,
   EmphasisConverter,
   StrongConverter,
   LinkConverter,

@@ -21,6 +21,8 @@ var GraphicConverter = require('./nodes/GraphicConverter');
 var ReferenceConverter = require('./nodes/ReferenceConverter');
 
 var EmphasisConverter = require('./nodes/EmphasisConverter');
+var SuperscriptConverter = require('./nodes/SuperscriptConverter');
+var SubscriptConverter = require('./nodes/SubscriptConverter');
 var LinkConverter = require('./nodes/LinkConverter');
 var StrongConverter = require('./nodes/StrongConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
@@ -175,6 +177,8 @@ JATSImporter.converters = [
   GraphicConverter,
   ReferenceConverter,
   EmphasisConverter,
+  SuperscriptConverter,
+  SubscriptConverter,
   StrongConverter,
   LinkConverter,
   BodyConverter,

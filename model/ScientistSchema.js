@@ -8,6 +8,8 @@ var Body = require('./nodes/Body');
 var Paragraph = require('substance/packages/paragraph/Paragraph');
 var Emphasis = require('substance/packages/emphasis/Emphasis');
 var Strong = require('substance/packages/strong/Strong');
+var Superscript = require('substance/packages/superscript/Superscript');
+var Subscript = require('substance/packages/subscript/Subscript');
 var Link = require('substance/packages/link/Link');
 var Heading = require('substance/packages/heading/Heading');
 var Reference = require('./nodes/Reference');
@@ -38,6 +40,8 @@ ScientistSchema.nodes = [
   Heading,
   Emphasis,
   Strong,
+  Superscript,
+  Subscript,
   Link,
   Reference,
   InlineFigure,

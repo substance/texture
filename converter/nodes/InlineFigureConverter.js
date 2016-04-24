@@ -90,7 +90,7 @@ module.exports = {
       }
     });
 
-    console.log('converted figure', node);
+    // console.log('converted figure', node);
   },
 
   export: function(node, el, converter) {

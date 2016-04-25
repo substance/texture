@@ -87,7 +87,8 @@ ScientistWriter.static.config = {
       'graphic': require('./GraphicComponent'),
       // 'unsupported-inline': require('./ExpandableComponent'),
       'unsupported-inline': require('./UnsupportedInlineNodeComponent'),
-      'unsupported-block': require('./UnsupportedBlockNodeComponent')
+      'unsupported-block': require('./UnsupportedInlineNodeComponent'),
+      // 'unsupported-block': require('./UnsupportedBlockNodeComponent')
     },
     // Controller commands
     commands: [

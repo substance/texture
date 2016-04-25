@@ -1,8 +1,7 @@
 'use strict';
 
 var XMLExporter = require('substance/model/XMLExporter');
-var converters = require('./JATSImporter').converters;
-// var each = require('lodash/collection/each');
+var converters = require('./nodes');
 
 function JATSExporter() {
   JATSExporter.super.call(this, {

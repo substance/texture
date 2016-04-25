@@ -84,6 +84,7 @@ ScientistWriter.static.config = {
       'inline-table-wrap': require('./FigureComponent'),
       'reference': require('./ReferenceComponent'),
       'caption': require('./CaptionComponent'),
+      'table': require('./TableComponent'),
       'graphic': require('./GraphicComponent'),
       // 'unsupported-inline': require('./ExpandableComponent'),
       'unsupported-inline': require('./UnsupportedInlineNodeComponent'),

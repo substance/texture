@@ -42,7 +42,11 @@ UnsupportedInlineNodeComponent.Prototype = function() {
       .attr('contenteditable', false)
       .append(
         $$('button').addClass('se-toggle').append(
-          '<'+this.props.node.tagName+'>'
+          $$('pre').append(
+            $$('code').append(
+              this.props.node.xml
+            )
+          )
         ).on('mousedown', this._highlight)
       );
 

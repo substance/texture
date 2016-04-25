@@ -10,30 +10,9 @@ var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
 var ScientistArticle = require('../model/ScientistArticle');
 var ScientistSchema = require('../model/ScientistSchema');
 
-var ArticleConverter = require('./nodes/ArticleConverter');
-var FrontConverter = require('./nodes/FrontConverter');
-var BodyConverter = require('./nodes/BodyConverter');
-
-var SectionConverter = require('./nodes/SectionConverter');
-var InlineFigureConverter = require('./nodes/InlineFigureConverter');
-var InlineTableWrapConverter = require('./nodes/InlineTableWrapConverter');
-var CaptionConverter = require('./nodes/CaptionConverter');
-var GraphicConverter = require('./nodes/GraphicConverter');
-var ReferenceConverter = require('./nodes/ReferenceConverter');
-
-var EmphasisConverter = require('./nodes/EmphasisConverter');
-var SuperscriptConverter = require('./nodes/SuperscriptConverter');
-var SubscriptConverter = require('./nodes/SubscriptConverter');
-var LinkConverter = require('./nodes/LinkConverter');
-var StrongConverter = require('./nodes/StrongConverter');
-var ParagraphConverter = require('./nodes/ParagraphConverter');
-var UnsupportedBlockNodeConverter = require('./nodes/UnsupportedBlockNodeConverter');
-var UnsupportedInlineNodeConverter = require('./nodes/UnsupportedInlineNodeConverter');
-
 function JATSImporter(config) {
   config = _getConfig();
   JATSImporter.super.call(this, config);
-
   this.state = new JATSImporter.State();
 }
 
@@ -169,24 +148,7 @@ JATSImporter.State.Prototype = function() {
 
 DOMImporter.State.extend(JATSImporter.State);
 
-JATSImporter.converters = [
-  ArticleConverter,
-  FrontConverter,
-  SectionConverter,
-  InlineFigureConverter,
-  InlineTableWrapConverter,
-  CaptionConverter,
-  GraphicConverter,
-  ReferenceConverter,
-  EmphasisConverter,
-  SuperscriptConverter,
-  SubscriptConverter,
-  StrongConverter,
-  LinkConverter,
-  BodyConverter,
-  ParagraphConverter,
-  UnsupportedBlockNodeConverter,
-  UnsupportedInlineNodeConverter
-];
+JATSImporter.converters = require('./nodes');
+
 
 module.exports = JATSImporter;

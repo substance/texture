@@ -2,6 +2,8 @@
   padding: $default-padding;
   textarea {
     width: 100%;
-    min-height: 200px;
+    min-height: 400px;
+    font-family: $font-family-code;
+    font-size: 12px;
   }
 }

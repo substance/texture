@@ -18,4 +18,9 @@
     border: 1px solid $border-color;
     background: #fff;
   }
+
+  pre {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
 }

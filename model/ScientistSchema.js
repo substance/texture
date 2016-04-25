@@ -17,6 +17,7 @@ var Caption = require('./nodes/Caption');
 var Graphic = require('./nodes/Graphic');
 var InlineFigure = require('./nodes/InlineFigure');
 var InlineTableWrap = require('./nodes/InlineTableWrap');
+var Table = require('./nodes/Table');
 var UnsupportedBlockNode = require('./nodes/UnsupportedBlockNode');
 var UnsupportedInlineNode = require('./nodes/UnsupportedInlineNode');
 
@@ -47,6 +48,7 @@ ScientistSchema.nodes = [
   Reference,
   InlineFigure,
   InlineTableWrap,
+  Table,
   Graphic,
   Caption,
   UnsupportedBlockNode,

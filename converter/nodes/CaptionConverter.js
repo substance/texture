@@ -46,8 +46,7 @@ module.exports = {
           node.contentNodes.push(converter.convertElement(childEl));
       }
     });
-
-    console.log('converted caption', node);
+    // console.log('converted caption', node);
   },
 
   export: function(node, el, converter) {

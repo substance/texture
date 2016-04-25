@@ -2,6 +2,7 @@
 
 var Component = require('substance/ui/Component');
 var JATSImporter = require('../converter/JATSImporter');
+var JATSExporter = require('../converter/JATSExporter');
 var jQuery = require('substance/util/jquery');
 var DocumentSession = require('substance/model/DocumentSession');
 var ScientistReader = require('./ScientistReader');
@@ -46,10 +47,16 @@ DocumentPage.Prototype = function() {
     .done(function(data){
       var importer = new JATSImporter();
       var doc = importer.importDocument(data);
+
       var documentSession = new DocumentSession(doc);
 
       console.log('documentSession', documentSession);
       
+      // Dry-run for exporter
+      var exporter = new JATSExporter();
+      var xml = exporter.exportDocument(doc);
+      console.log('exporter', xml);
+
       this.setState({
         documentSession: documentSession
       });

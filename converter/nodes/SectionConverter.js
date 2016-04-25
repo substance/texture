@@ -6,8 +6,8 @@ module.exports = {
   tagName: 'sec',
 
   allowedContext: [
-    'abstract', 'ack', 'app', 'back', 'bio', 'body', 'boxedText',
-    'notes', 'sec', 'transAbstract'
+    'abstract', 'ack', 'app', 'back', 'bio', 'body', 'boxed-text',
+    'notes', 'sec', 'trans-abstract'
   ],
 
   /*
@@ -66,16 +66,22 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
-    converter.pushContainer(node);
-    // consume all elements of the current container until
-    // a heading is reached with level <= node.level
-    converter.continue(function(childNode, childEl) {
-      if (childNode.type === 'heading' && childNode.level <= node.level) {
-        return false;
-      }
-      el.append(childEl);
-    });
-    converter.popContainer();
+    return converter.$$('heading')
+      .attr({
+        level: node.level
+      })
+      .append(node.content);
+
+    // converter.pushContainer(node);
+    // // consume all elements of the current container until
+    // // a heading is reached with level <= node.level
+    // converter.continue(function(childNode, childEl) {
+    //   if (childNode.type === 'heading' && childNode.level <= node.level) {
+    //     return false;
+    //   }
+    //   el.append(childEl);
+    // });
+    // converter.popContainer();
   }
 
 };

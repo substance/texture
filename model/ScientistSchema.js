@@ -16,6 +16,7 @@ var Reference = require('./nodes/Reference');
 var Caption = require('./nodes/Caption');
 var Graphic = require('./nodes/Graphic');
 var InlineFigure = require('./nodes/InlineFigure');
+var InlineFootnote = require('./nodes/InlineFootnote');
 var InlineTableWrap = require('./nodes/InlineTableWrap');
 var Table = require('./nodes/Table');
 var UnsupportedBlockNode = require('./nodes/UnsupportedBlockNode');

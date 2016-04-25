@@ -12,6 +12,9 @@ var RedoTool = require('substance/ui/RedoTool');
 var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var StrongTool = require('substance/packages/strong/StrongTool');
 var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
+var SuperscriptTool = require('substance/packages/superscript/SuperscriptTool');
+var SubscriptTool = require('substance/packages/subscript/SubscriptTool');
+
 var LinkTool = require('substance/packages/link/LinkTool');
 
 function ScientistWriter() {
@@ -35,6 +38,8 @@ ScientistWriter.Prototype = function() {
                 $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
                 $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
                 $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
+                $$(SuperscriptTool).append($$(Icon, {icon: 'fa-superscript'})),
+                $$(SubscriptTool).append($$(Icon, {icon: 'fa-subscript'})),
                 $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
               )
             )
@@ -76,6 +81,7 @@ ScientistWriter.static.config = {
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
       'inline-figure': require('./FigureComponent'),
+      'reference': require('./ReferenceComponent'),
       'caption': require('./CaptionComponent'),
       'graphic': require('./GraphicComponent'),
       // 'unsupported-inline': require('./ExpandableComponent'),
@@ -95,6 +101,8 @@ ScientistWriter.static.config = {
       require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/strong/StrongCommand'),
       require('substance/packages/emphasis/EmphasisCommand'),
+      require('substance/packages/superscript/SuperscriptCommand'),
+      require('substance/packages/subscript/SubscriptCommand'),
       require('substance/packages/link/LinkCommand')
     ],
     textTypes: [

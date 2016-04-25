@@ -18,7 +18,11 @@ var SectionConverter = require('./nodes/SectionConverter');
 var InlineFigureConverter = require('./nodes/InlineFigureConverter');
 var CaptionConverter = require('./nodes/CaptionConverter');
 var GraphicConverter = require('./nodes/GraphicConverter');
+var ReferenceConverter = require('./nodes/ReferenceConverter');
+
 var EmphasisConverter = require('./nodes/EmphasisConverter');
+var SuperscriptConverter = require('./nodes/SuperscriptConverter');
+var SubscriptConverter = require('./nodes/SubscriptConverter');
 var LinkConverter = require('./nodes/LinkConverter');
 var StrongConverter = require('./nodes/StrongConverter');
 var ParagraphConverter = require('./nodes/ParagraphConverter');
@@ -171,7 +175,10 @@ JATSImporter.converters = [
   InlineFigureConverter,
   CaptionConverter,
   GraphicConverter,
+  ReferenceConverter,
   EmphasisConverter,
+  SuperscriptConverter,
+  SubscriptConverter,
   StrongConverter,
   LinkConverter,
   BodyConverter,

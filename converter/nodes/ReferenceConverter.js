@@ -38,7 +38,7 @@ module.exports = {
     node.target = el.attr('rid');
     node.label = el.textContent;
     node.referenceType = el.attr('ref-type');
-    console.log('imported xref', node);
+    // console.log('imported xref', node);
   },
 
   export: function(node, el) {

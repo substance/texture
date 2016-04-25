@@ -76,11 +76,12 @@ ScientistWriter.static.config = {
     components: {
       'paragraph': require('substance/packages/paragraph/ParagraphComponent'),
       'heading': require('substance/packages/heading/HeadingComponent'),
-      'image': require('substance/packages/image/ImageComponent'),
+      // 'image': require('substance/packages/image/ImageComponent'),
       'link': require('substance/packages/link/LinkComponent'),
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
       'inline-figure': require('./FigureComponent'),
+      'inline-table-wrap': require('./FigureComponent'),
       'reference': require('./ReferenceComponent'),
       'caption': require('./CaptionComponent'),
       'graphic': require('./GraphicComponent'),

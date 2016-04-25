@@ -16,6 +16,7 @@ var BodyConverter = require('./nodes/BodyConverter');
 
 var SectionConverter = require('./nodes/SectionConverter');
 var InlineFigureConverter = require('./nodes/InlineFigureConverter');
+var InlineTableWrapConverter = require('./nodes/InlineTableWrapConverter');
 var CaptionConverter = require('./nodes/CaptionConverter');
 var GraphicConverter = require('./nodes/GraphicConverter');
 var ReferenceConverter = require('./nodes/ReferenceConverter');
@@ -173,6 +174,7 @@ JATSImporter.converters = [
   FrontConverter,
   SectionConverter,
   InlineFigureConverter,
+  InlineTableWrapConverter,
   CaptionConverter,
   GraphicConverter,
   ReferenceConverter,

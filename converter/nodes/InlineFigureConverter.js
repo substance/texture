@@ -73,6 +73,7 @@ module.exports = {
         case 'def-list':
         case 'list':
         case 'alternatives':
+        case 'table': // this is not JATS-spec-conform
         case 'array':
         case 'code':
         case 'graphic':
@@ -86,7 +87,7 @@ module.exports = {
           break;
         default:
           console.warn('Unhandled content in <fig>. Appending to node.contentNodes.');
-          node.contentNodes.push(converter.convertElement(childEl));
+          node.contentNodes.push(converter.convertElement(childEl).id);
       }
     });
 

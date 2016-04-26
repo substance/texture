@@ -38,6 +38,8 @@ module.exports = {
   import: function(el, node, converter) {
     var state = converter.state;
 
+    node.xmlAttributes = el.getAttributes();
+
     var currentLevel = state.getCurrentSectionLevel();
     node.level = currentLevel;
     state.increaseSectionLevel();
@@ -62,8 +64,21 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
-    /* jshint unused:false */
-    // not implemented yet
+    debugger;
+    var doc = node.getDocument();
+    el.attr(node.xmlAttributes);
+
+    var nodesIt = converter.sectionContainerIterator;
+    if (!nodesIt) {
+      throw new Error('Section support is not done on parent element ' + el.parentNode.tagName);
+    }
+    while (nodesIt.hasNext()) {
+      var nextNode = doc.get(nodesIt.next());
+      if (nextNode.type === 'heading' && node.level >= nextNode.level) {
+        break;
+      }
+      el.append(converter.convertNode(nextNode));
+    }
   }
 
 };

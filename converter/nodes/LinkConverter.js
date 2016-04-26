@@ -53,20 +53,23 @@ module.exports = {
       monospace | overline | overline-start | overline-end | roman | sans-serif
       | sc | strike | underline | underline-start | underline-end | ruby |
       alternatives | inline-graphic | private-char | chem-struct | inline-formula |
-      tex-math | mml:math | abbrev | milestone-end | milestone-start | named-content | 
+      tex-math | mml:math | abbrev | milestone-end | milestone-start | named-content |
       styled-content | fn | target | xref | sub | sup | x)*
   */
 
   import: function(el, node) {
+    // ATTENTION: this is not implemented correctly yet
     node.xmlAttributes = el.getAttributes();
     node.url = el.attr('xlink:href');
     node.title = el.attr('xlink:title');
   },
 
-  export: function(link, el) {
+  export: function(node, el) {
+    // ATTENTION: this is not implemented correctly yet
+    el.attr(node.xmlAttributes);
     el.attr({
-      'xlink:href': link.url,
-      'xlink:title': link.title
+      'xlink:href': node.url,
+      'xlink:title': node.title
     });
   }
 };

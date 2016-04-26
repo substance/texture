@@ -32,6 +32,20 @@ JATSImporter.Prototype = function() {
     this.convertElement(articleElement);
   };
 
+  this.convertElements = function(elements, startIdx, endIdx) {
+    if (arguments.length < 2) {
+      startIdx = 0;
+    }
+    if(arguments.length < 3) {
+      endIdx = elements.length;
+    }
+    var nodes = [];
+    for (var i = startIdx; i < endIdx; i++) {
+      nodes.push(this.convertElement(elements[i]));
+    }
+    return nodes;
+  };
+
   this._createDocument = function() {
     return new ScientistArticle();
   };

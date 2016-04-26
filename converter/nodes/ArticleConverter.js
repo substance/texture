@@ -72,14 +72,10 @@ module.exports = {
       el.append(converter.convertNode(node.floatsGroup));
     }
     if (node.subArticles) {
-      node.subArticles.forEach(function(subArticle) {
-        el.append(converter.convertNode(subArticle));
-      });
+      el.append(converter.convertNodes(node.subArticles));
     }
     if (node.responses) {
-      node.responses.forEach(function(response) {
-        el.append(converter.convertNode(response));
-      });
+      el.append(converter.convertNodes(node.responses));
     }
   }
 

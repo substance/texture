@@ -1,7 +1,5 @@
 'use strict';
 
-var forEach = require('lodash/forEach');
-
 module.exports = {
 
   type: 'caption',
@@ -25,11 +23,9 @@ module.exports = {
   */
 
   import: function(el, node, converter) {
-
     node.xmlAttributes = el.getAttributes();
-
     var children = el.getChildren();
-    forEach(children, function(childEl) {
+    children.forEach(function(childEl) {
       var tagName = childEl.tagName;
       switch (tagName) {
         case 'title':
@@ -46,15 +42,12 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
-    // jshint unused:false
     var $$ = converter.$$;
     el.attr(node.xmlAttributes);
     el.append(
       $$('title').append(converter.annotatedText([node.id, 'title']))
     );
-    node.contentNodes.forEach(function(nodeId) {
-      el.append(converter.convertNode(nodeId));
-    });
+    el.append(converter.convertNodes(node.contentNodes));
   }
 
 };

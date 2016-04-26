@@ -1,5 +1,7 @@
 'use strict';
 
+var ArrayIterator = require('substance/util/ArrayIterator');
+
 module.exports = {
 
   type: 'body',
@@ -32,7 +34,10 @@ module.exports = {
 
   export: function(node, el, converter) {
     el.attr(node.xmlAttributes);
-    el.append(converter.convertContainer(node));
+    // EXPERIMENTAL
+    // TODO: iron out section handling
+    converter.sectionContainerIterator = new ArrayIterator(node.nodes);
+    el.append(converter.convertNodes(converter.sectionContainerIterator));
   }
 
 };

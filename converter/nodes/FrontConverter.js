@@ -42,9 +42,7 @@ module.exports = {
       el.append(converter.convertNode(node.journalMeta));
     }
     el.append(converter.convertNode(node.articleMeta));
-    node.contentNodes.forEach(function(nodeId) {
-      el.append(converter.convertNode(nodeId));
-    });
+    el.append(converter.convertNodes(node.contentNodes));
   }
 
 };

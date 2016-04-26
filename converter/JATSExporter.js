@@ -1,7 +1,11 @@
 'use strict';
 
 var XMLExporter = require('substance/model/XMLExporter');
+var UnsupportedNodeConverter = require('./nodes/UnsupportedNodeConverter');
+
 var converters = require('./nodes');
+converters = converters.slice(0);
+converters.push(UnsupportedNodeConverter);
 
 function JATSExporter() {
   JATSExporter.super.call(this, {
@@ -21,9 +25,15 @@ JATSExporter.Prototype = function() {
   this.convertNodes = function(nodes) {
     var els = [];
     var converter = this;
-    nodes.forEach(function(node) {
-      els.push(converter.convertNode(node));
-    });
+    if (nodes._isArrayIterator) {
+      while(nodes.hasNext()) {
+        els.push(converter.convertNode(nodes.next()));
+      }
+    } else {
+      nodes.forEach(function(node) {
+        els.push(converter.convertNode(node));
+      });
+    }
     return els;
   };
 };

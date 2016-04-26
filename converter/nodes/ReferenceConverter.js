@@ -36,17 +36,17 @@ module.exports = {
   import: function(el, node) {
     node.xmlAttributes = el.getAttributes();
     node.target = el.attr('rid');
-    node.label = el.textContent;
     node.referenceType = el.attr('ref-type');
+    node.label = el.textContent;
   },
 
   export: function(node, el) {
-    // TODO: export xmlAttributes
     el.attr(node.xmlAttributes);
     el.attr({
-      'ref-type': node.referenceType,
-      'rid': node.target
+      'rid': node.target,
+      'ref-type': node.referenceType
     });
+    el.text(node.label);
   }
 };
 

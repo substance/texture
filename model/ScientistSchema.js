@@ -5,13 +5,14 @@ var DocumentSchema = require('substance/model/DocumentSchema');
 var ArticleNode = require('./nodes/ArticleNode');
 var Front = require('./nodes/Front');
 var Body = require('./nodes/Body');
-var Paragraph = require('substance/packages/paragraph/Paragraph');
+var ParagraphNode = require('./nodes/ParagraphNode');
 var Emphasis = require('substance/packages/emphasis/Emphasis');
 var Strong = require('substance/packages/strong/Strong');
 var Code = require('substance/packages/code/Code');
 var Superscript = require('substance/packages/superscript/Superscript');
 var Subscript = require('substance/packages/subscript/Subscript');
 var Link = require('substance/packages/link/Link');
+// var Section = require('nodes/SectionNode');
 var Heading = require('substance/packages/heading/Heading');
 var Reference = require('./nodes/Reference');
 var Caption = require('./nodes/Caption');
@@ -38,8 +39,9 @@ ScientistSchema.nodes = [
   ArticleNode,
   Front,
   Body,
-  Paragraph,
   Heading,
+  // SectionNode,
+  ParagraphNode,
   Emphasis,
   Strong,
   Code,

@@ -64,7 +64,6 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
-    debugger;
     var doc = node.getDocument();
     el.attr(node.xmlAttributes);
 

@@ -43,6 +43,10 @@ module.exports = {
     /* jshint unused:false */
     // TODO this needs more treatment
     node.href = el.attr('xlink:href');
+    var children = el.getChildren();
+    children.forEach(function(childEl) {
+      node.children.push(converter.convertElement(childEl).id);
+    });
   },
 
   export: function(node, el, converter) {
@@ -52,6 +56,7 @@ module.exports = {
     el.attr({
       'xlink:href': node.href
     });
+    el.append(converter.convertNodes(node.children));
   }
 
 };

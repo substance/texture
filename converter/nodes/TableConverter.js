@@ -10,13 +10,11 @@ module.exports = {
   ],
 
   import: function(el, node, converter) {
-    // jshint unused:false
     node.xmlAttributes = el.getAttributes();
     node.htmlContent = el.innerHTML;
   },
 
   export: function(node, el, converter) {
-    // jshint unused:false
     el.attr(node.xmlAttributes);
     el.html(node.htmlContent);
   }

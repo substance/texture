@@ -12,7 +12,8 @@ Graphic.static.name = 'graphic';
 
 Graphic.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
-  href: { type: 'string', default: '' }
+  href: { type: 'string', default: '' },
+  children: { type: ['id'], default: [] }
 });
 
 module.exports = Graphic;

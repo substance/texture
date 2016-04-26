@@ -50,10 +50,6 @@ DocumentPage.Prototype = function() {
 
       console.log('documentSession', documentSession);
 
-      // Dry-run for exporter
-      // var exporter = new JATSExporter();
-      // var xml = exporter.exportDocument(doc);
-      // console.log('exporter', xml);
 
       this.setState({
         documentSession: documentSession
@@ -91,7 +87,15 @@ DocumentPage.Prototype = function() {
     } else {
       el.append(
         $$(ScientistWriter, {
-          documentSession: this.state.documentSession
+          documentSession: this.state.documentSession,
+          onSave: function(doc, changes, cb) {
+            var exporter = new JATSExporter();
+            var xml = exporter.exportDocument(doc);
+            if (this.props.onSave) {
+              this.props.onSave(xml);
+            }
+            cb(null);
+          }.bind(this)
         }).ref('scientistWriter')
       );
     }

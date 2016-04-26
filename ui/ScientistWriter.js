@@ -8,6 +8,7 @@ var Icon = require('substance/ui/FontAwesomeIcon');
 var Toolbar = require('substance/ui/Toolbar');
 var Layout = require('substance/ui/Layout');
 var UndoTool = require('substance/ui/UndoTool');
+var SaveTool = require('substance/ui/SaveTool');
 var RedoTool = require('substance/ui/RedoTool');
 var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var StrongTool = require('substance/packages/strong/StrongTool');
@@ -36,6 +37,7 @@ ScientistWriter.Prototype = function() {
                 $$(SwitchTextTypeTool, {'title': this.i18n.t('switch_text')}),
                 $$(UndoTool).append($$(Icon, {icon: 'fa-undo'})),
                 $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
+                $$(SaveTool).append($$(Icon, {icon: 'fa-save'})),
                 $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
                 $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
                 $$(SuperscriptTool).append($$(Icon, {icon: 'fa-superscript'})),

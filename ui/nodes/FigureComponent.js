@@ -2,6 +2,7 @@
 
 var Component = require('substance/ui/Component');
 var TextProperty = require('substance/ui/TextPropertyComponent');
+var renderNode = require('substance/util/renderNode');
 
 function FigureComponent() {
   Component.apply(this, arguments);
@@ -10,7 +11,8 @@ function FigureComponent() {
 FigureComponent.Prototype = function() {
 
   this.render = function($$) {
-    var surface = this.context.surface;
+    var node = this.props.node;
+    var doc = node.getDocument();
 
     var el = $$('div')
       .addClass('sc-figure')
@@ -20,19 +22,21 @@ FigureComponent.Prototype = function() {
       }));
 
     // Display figure content
-    this.props.node.contentNodes.forEach(function(nodeId) {
+    node.contentNodes.forEach(function(nodeId) {
+      var childNode = doc.get(nodeId);
       el.append(
-        surface._renderNode($$, nodeId)
-      );
-    }.bind(this)); 
-
-    // Display Captions
-    this.props.node.captionNodes.forEach(function(nodeId) {
-      el.append(
-        surface._renderNode($$, nodeId)
+        renderNode($$, this, childNode)
       );
     }.bind(this));
-   
+
+    // Display Captions
+    node.captionNodes.forEach(function(nodeId) {
+      var childNode = doc.get(nodeId);
+      el.append(
+        renderNode($$, this, childNode)
+      );
+    }.bind(this));
+
     return el;
   };
 };

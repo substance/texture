@@ -75,24 +75,7 @@ ScientistWriter.static.config = {
   // Controller specific configuration (required!)
   controller: {
     // Component registry
-    components: {
-      'paragraph': require('substance/packages/paragraph/ParagraphComponent'),
-      'heading': require('substance/packages/heading/HeadingComponent'),
-      'link': require('substance/packages/link/LinkComponent'),
-      'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
-      'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
-      'figure': require('./FigureComponent'),
-      'table-wrap': require('./FigureComponent'),
-      'reference': require('./ReferenceComponent'),
-      'caption': require('./CaptionComponent'),
-      'table': require('./TableComponent'),
-      'graphic': require('./GraphicComponent'),
-      'unsupported': require('./UnsupportedNodeComponent'),
-      'emphasis': require('substance/ui/AnnotationComponent'),
-      'strong': require('substance/ui/AnnotationComponent'),
-      'subscript': require('substance/ui/AnnotationComponent'),
-      'superscript': require('substance/ui/AnnotationComponent'),
-    },
+    components: require('./nodes'),
     // Controller commands
     commands: [
       require('substance/ui/UndoCommand'),

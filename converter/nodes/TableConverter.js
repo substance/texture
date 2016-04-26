@@ -9,12 +9,12 @@ module.exports = {
     'table-wrap'
   ],
 
-  import: function(el, node, converter) {
+  import: function(el, node) {
     node.xmlAttributes = el.getAttributes();
     node.htmlContent = el.innerHTML;
   },
 
-  export: function(node, el, converter) {
+  export: function(node, el) {
     el.attr(node.xmlAttributes);
     el.html(node.htmlContent);
   }

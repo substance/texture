@@ -10,6 +10,7 @@ var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
 var ScientistArticle = require('../model/ScientistArticle');
 var ScientistSchema = require('../model/ScientistSchema');
 var UnsupportedNodeConverter = require('./nodes/UnsupportedNodeConverter');
+var inBrowser = require('substance/util/inBrowser');
 
 function JATSImporter(config) {
   config = _getConfig();
@@ -22,7 +23,18 @@ JATSImporter.Prototype = function() {
   this.importDocument = function(xmlString) {
     this.reset();
     var xmlDoc = DefaultDOMElement.parseXML(xmlString, 'fullDoc');
-    var articleEl = xmlDoc.find('article');
+    // HACK: server side impl gives an array
+    var articleEl;
+    if (inBrowser) {
+      articleEl = xmlDoc.find('article');
+    } else {
+      // HACK: this should be more convenient
+      for (var idx = 0; idx < xmlDoc.length; idx++) {
+        if (xmlDoc[idx].tagName === 'article') {
+          articleEl = xmlDoc[idx];
+        }
+      }
+    }
     this.convertDocument(articleEl);
     var doc = this.generateDocument();
     return doc;

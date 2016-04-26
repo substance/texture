@@ -1,6 +1,5 @@
 window.SUBSTANCE_DEBUG_RENDERING = true;
 
-
 var DocumentPage = require('../../ui/DocumentPage');
 var Component = require('substance/ui/Component');
 

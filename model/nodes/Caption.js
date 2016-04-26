@@ -10,9 +10,14 @@ function Caption() {
 TextBlock.extend(Caption);
 
 Caption.static.name = 'caption';
+
+/*
+  Content
+    ( title?, (p)* )
+*/
 Caption.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
-  title: { type: 'text', optional: true },
+  title: { type: 'text' },
   contentNodes: { type: ['id'], default: [] },
 });
 

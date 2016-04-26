@@ -37,51 +37,33 @@ module.exports = {
 
   import: function(el, node, converter) {
     var state = converter.state;
-    // set level and increase for subsections
+
     var currentLevel = state.getCurrentSectionLevel();
     node.level = currentLevel;
     state.increaseSectionLevel();
-    // process children
-    // as in the spec, the first three children are optional built-ins
-    // which only occur at this position
-    // TODO: to be strict these converters should be disabled afterwards
-    var childNodes = el.getChildNodes();
-    var i = 0;
-    if (childNodes[i].tagName === 'sec-meta') {
-      var secMeta = converter.convertElement(childNodes[i]);
+
+    var children = el.getChildren();
+    var child, i = 0;
+    if ((child = children[i]) && child.tagName === 'sec-meta') {
+      var secMeta = converter.convertElement(child);
       node.meta = secMeta.id;
       i++;
     }
-    if (childNodes[i].tagName === 'label') {
-      node.label = converter.annotatedText(childNodes[i], [node.id, 'label']);
+    if ((child = children[i]) && child.tagName === 'label') {
+      node.label = converter.annotatedText(child, [node.id, 'label']);
       i++;
     }
-    if (childNodes[i].tagName === 'title') {
-      node.content = converter.annotatedText(childNodes[i], [node.id, 'content']);
+    if ((child = children[i]) && child.tagName === 'title') {
+      node.content = converter.annotatedText(child, [node.id, 'content']);
       i++;
     }
-    // other content
-    converter._convertContainerElement(el, { nodes: [] }, i);
+    node.contentNodes = converter._convertContainerElement(el, i);
     state.decreaseSectionLevel();
   },
 
   export: function(node, el, converter) {
-    return converter.$$('heading')
-      .attr({
-        level: node.level
-      })
-      .append(node.content);
-
-    // converter.pushContainer(node);
-    // // consume all elements of the current container until
-    // // a heading is reached with level <= node.level
-    // converter.continue(function(childNode, childEl) {
-    //   if (childNode.type === 'heading' && childNode.level <= node.level) {
-    //     return false;
-    //   }
-    //   el.append(childEl);
-    // });
-    // converter.popContainer();
+    /* jshint unused:false */
+    // not implemented yet
   }
 
 };

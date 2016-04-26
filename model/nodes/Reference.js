@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO: we should be able to inherit from JATSNode to share properties.
-
 var InlineNode = require('substance/model/InlineNode');
 
 function Reference() {
@@ -11,6 +9,7 @@ function Reference() {
 InlineNode.extend(Reference);
 
 Reference.static.name = 'reference';
+
 Reference.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
   label: { type: 'text', optional: true },

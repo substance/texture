@@ -1,14 +1,12 @@
 'use strict';
 
-var forEach = require('lodash/forEach');
-
 module.exports = {
 
   type: 'inline-figure',
   tagName: 'fig',
   allowedContext: [
     'abstract', 'ack', 'app', 'app-group', 'bio', 'body', 'boxed-text',
-    'disp-quote', 'fig-group', 'floats-group', 'glossary', 'license-p', 
+    'disp-quote', 'fig-group', 'floats-group', 'glossary', 'license-p',
     'named-content', 'notes', 'p', 'ref-list', 'sec', 'styled-content',
     'trans-abstract'
   ],
@@ -38,16 +36,13 @@ module.exports = {
   */
 
   import: function(el, node, converter) {
-    var childEls = el.getChildNodes();
-
     node.xmlAttributes = el.getAttributes();
-
-    forEach(childEls, function(childEl) {
+    var children = el.getChildren();
+    children.forEach(function(childEl) {
       var tagName = childEl.tagName;
-
       switch (tagName) {
         case 'object-id':
-          node.objectIdNodes.push(converter.convertElement(childEl).id);
+          node.objectIds.push(childEl.textContent);
           break;
         case 'label':
           node.label = converter.annotatedText(childEl, [node.id, 'label']);
@@ -85,17 +80,30 @@ module.exports = {
         case 'permissions':
           node.attribNodes.push(converter.convertElement(childEl).id);
           break;
+        case 'alt-text':
+        case 'long-desc':
+        case 'email':
+        case 'ext-link':
+        case 'uri':
         default:
-          console.warn('Unhandled content in <fig>. Appending to node.contentNodes.');
+          console.warn('Unhandled element <%s> in <fig>.', tagName);
           node.contentNodes.push(converter.convertElement(childEl).id);
       }
     });
-
-    // console.log('converted figure', node);
   },
 
   export: function(node, el, converter) {
-    // jshint unused:false
+    var $$ = converter.$$;
+    node.objectIds.forEach(function(objectId) {
+      el.append($$('object-id').text(objectId));
+    });
+    if (node.label) {
+      el.append(converter.annotatedText([node.id, 'label']))
+    }
+    el.append(converter.convertNodes(node.captionNodes));
+    el.append(converter.convertNodes(node.abstractNodes));
+    el.append(converter.convertNodes(node.kwdGroupNodes));
+    el.append(converter.convertNodes(node.contentNodes));
   }
 
 };

@@ -17,6 +17,15 @@ JATSExporter.Prototype = function() {
     var articleEl = this.convertNode(doc.get('article'));
     return articleEl.outerHTML;
   };
+
+  this.convertNodes = function(nodes) {
+    var els = [];
+    var converter = this;
+    nodes.forEach(function(node) {
+      els.push(converter.convertNode(node));
+    });
+    return els;
+  };
 };
 
 XMLExporter.extend(JATSExporter);

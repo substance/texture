@@ -1,20 +1,16 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+var DocumentNode = require('substance/model/DocumentNode');
 
 function Front() {
   Front.super.apply(this, arguments);
 }
 
-Container.extend(Front);
+DocumentNode.extend(Front);
 
 Front.static.name = "front";
-Front.static.allowedContext = "article";
 
 /*
-  Attributes
-    id Document Internal Identifier
-    xml:base Base
   Content
     (
       journal-meta?, article-meta,
@@ -23,8 +19,10 @@ Front.static.allowedContext = "article";
 */
 
 Front.static.defineSchema({
-  journalMeta: { type: 'id', optional:true },
-  articleMeta: { type: 'id' }
+  xmlAttributes: { type: 'object',  default: {} },
+  journalMeta: { type: 'id', optional: true },
+  articleMeta: { type: 'id' },
+  contentNodes: { type: ['id'], default: [] }
 });
 
 

@@ -1,13 +1,11 @@
 'use strict';
 
-var Front = require('../../model/nodes/Front');
-
 module.exports = {
 
   type: 'front',
   tagName: 'front',
 
-  allowedContext: Front.static.allowedContext,
+  allowedContext: "article",
 
   /*
     Attributes
@@ -22,24 +20,31 @@ module.exports = {
 
   import: function(el, node, converter) {
     node.id = this.tagName;
-    var childNodes = el.getChildNodes();
+    var children = el.getChildren();
     var i = 0;
-    if (childNodes[i].tagName === 'journal-meta') {
-      var journalMeta = converter.convertElement(childNodes[i]);
-      node.journalMeta = journalMeta.id;
+    var child;
+    if ((child = children[i]) && child.tagName === 'journal-meta') {
+      node.journalMeta = converter.convertElement(child).id;
       i++;
     }
-    if (childNodes[i].tagName !== 'article-meta') {
-      throw new Error('<article-meta> is mandatory');
+    if ((child = children[i]) && child.tagName === 'article-meta') {
+      node.articleMeta = converter.convertElement(child).id;
+      i++;
     } else {
-      var articleMeta = converter.convertElement(childNodes[i]);
-      node.articleMeta = articleMeta.id;
+      throw new Error('Invalid JATS: <article-meta> is mandatory in <front>');
     }
-    converter._convertContainerElement(el, node, i);
+    node.contentNodes = converter._convertContainerElement(el, i);
   },
 
   export: function(node, el, converter) {
-    el.append(converter.convertContainer(node));
+    el.attr(node.xmlAttributes);
+    if (node.journalMeta) {
+      el.append(converter.convertNode(node.journalMeta));
+    }
+    el.append(converter.convertNode(node.articleMeta));
+    node.contentNodes.forEach(function(nodeId) {
+      el.append(converter.convertNode(nodeId));
+    });
   }
 
 };

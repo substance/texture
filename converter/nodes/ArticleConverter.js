@@ -24,8 +24,8 @@ module.exports = {
 
   import: function(el, node, converter) {
     node.id = this.tagName;
-    var childNodes = el.getChildNodes();
-    childNodes.forEach(function(childEl) {
+    var children = el.getChildren();
+    children.forEach(function(childEl) {
       var tagName = childEl.tagName;
       var child = converter.convertElement(childEl);
       switch(tagName) {
@@ -60,6 +60,7 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
+    el.attr(node.xmlAttributes);
     el.append(converter.convertNode(node.front));
     if (node.body) {
       el.append(converter.convertNode(node.body));

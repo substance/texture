@@ -50,21 +50,23 @@ JATSImporter.Prototype = function() {
     return matches;
   };
 
-  this._convertContainerElement = function(el, container, startPos) {
+  this._convertContainerElement = function(el, startPos) {
     var state = this.state;
-    state.pushContainer(container);
-    var childNodes = el.getChildNodes();
+    var nodes = [];
+    state.pushContainer(nodes);
+    var children = el.getChildren();
     startPos = startPos || 0;
-    for (var i = startPos; i < childNodes.length; i++) {
+    for (var i = startPos; i < children.length; i++) {
       state.lastContainer = null;
-      var child = this.convertElement(childNodes[i]);
-      container.nodes.push(child.id);
+      var child = this.convertElement(children[i]);
+      nodes.push(child.id);
       if (state.lastContainer) {
-        container.nodes = container.nodes.concat(state.lastContainer.nodes);
+        Array.prototype.push.apply(nodes, state.lastContainer);
       }
       state.lastContainer = null;
     }
-    state.popContainer(container);
+    state.popContainer();
+    return nodes;
   };
 
 };

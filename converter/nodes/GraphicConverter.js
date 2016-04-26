@@ -40,12 +40,13 @@ module.exports = {
   */
 
   import: function(el, node, converter) {
-    // jshint unused:false
+    // TODO this needs more treatment
     node.href = el.attr('xlink:href');
   },
 
   export: function(node, el, converter) {
-    // jshint unused:false
+    // TODO this needs more treatment
+    el.attr(node.xmlAttributes);
     el.attr({
       'xlink:href': node.href
     });

@@ -38,11 +38,11 @@ module.exports = {
     node.target = el.attr('rid');
     node.label = el.textContent;
     node.referenceType = el.attr('ref-type');
-    // console.log('imported xref', node);
   },
 
   export: function(node, el) {
     // TODO: export xmlAttributes
+    el.attr(node.xmlAttributes);
     el.attr({
       'ref-type': node.referenceType,
       'rid': node.target

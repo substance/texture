@@ -21,19 +21,16 @@ module.exports = {
     xml:lang Language
 
     Content
-    (
-      (title?, (p)*)
-    )
+      ( title?, (p)* )
   */
 
   import: function(el, node, converter) {
-    var childEls = el.getChildNodes();
 
     node.xmlAttributes = el.getAttributes();
 
-    forEach(childEls, function(childEl) {
+    var children = el.getChildren();
+    forEach(children, function(childEl) {
       var tagName = childEl.tagName;
-
       switch (tagName) {
         case 'title':
           node.title = converter.annotatedText(childEl, [node.id, 'title']);
@@ -46,11 +43,18 @@ module.exports = {
           node.contentNodes.push(converter.convertElement(childEl));
       }
     });
-    // console.log('converted caption', node);
   },
 
   export: function(node, el, converter) {
     // jshint unused:false
+    var $$ = converter.$$;
+    el.attr(node.xmlAttributes);
+    el.append(
+      $$('title').append(converter.annotatedText([node.id, 'title']))
+    );
+    node.contentNodes.forEach(function(nodeId) {
+      el.append(converter.convertNode(nodeId));
+    });
   }
 
 };

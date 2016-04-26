@@ -15,12 +15,10 @@ var Heading = require('substance/packages/heading/Heading');
 var Reference = require('./nodes/Reference');
 var Caption = require('./nodes/Caption');
 var Graphic = require('./nodes/Graphic');
-var InlineFigure = require('./nodes/InlineFigure');
-var InlineFootnote = require('./nodes/InlineFootnote');
-var InlineTableWrap = require('./nodes/InlineTableWrap');
+var Figure = require('./nodes/Figure');
+var TableWrap = require('./nodes/TableWrap');
 var Table = require('./nodes/Table');
-var UnsupportedBlockNode = require('./nodes/UnsupportedBlockNode');
-var UnsupportedInlineNode = require('./nodes/UnsupportedInlineNode');
+var UnsupportedNode = require('./nodes/UnsupportedNode');
 
 function ScientistSchema() {
   ScientistSchema.super.call(this);
@@ -47,13 +45,11 @@ ScientistSchema.nodes = [
   Subscript,
   Link,
   Reference,
-  InlineFigure,
-  InlineTableWrap,
-  Table,
+  Figure,
+  TableWrap, Table,
   Graphic,
   Caption,
-  UnsupportedBlockNode,
-  UnsupportedInlineNode
+  UnsupportedNode
 ];
 
 module.exports = ScientistSchema;

@@ -76,20 +76,20 @@ ScientistWriter.static.config = {
     components: {
       'paragraph': require('substance/packages/paragraph/ParagraphComponent'),
       'heading': require('substance/packages/heading/HeadingComponent'),
-      // 'image': require('substance/packages/image/ImageComponent'),
       'link': require('substance/packages/link/LinkComponent'),
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent'),
-      'inline-figure': require('./FigureComponent'),
-      'inline-table-wrap': require('./FigureComponent'),
+      'figure': require('./FigureComponent'),
+      'table-wrap': require('./FigureComponent'),
       'reference': require('./ReferenceComponent'),
       'caption': require('./CaptionComponent'),
       'table': require('./TableComponent'),
       'graphic': require('./GraphicComponent'),
-      // 'unsupported-inline': require('./ExpandableComponent'),
-      'unsupported-inline': require('./UnsupportedInlineNodeComponent'),
-      'unsupported-block': require('./UnsupportedInlineNodeComponent'),
-      // 'unsupported-block': require('./UnsupportedBlockNodeComponent')
+      'unsupported': require('./UnsupportedNodeComponent'),
+      'emphasis': require('substance/ui/AnnotationComponent'),
+      'strong': require('substance/ui/AnnotationComponent'),
+      'subscript': require('substance/ui/AnnotationComponent'),
+      'superscript': require('substance/ui/AnnotationComponent'),
     },
     // Controller commands
     commands: [

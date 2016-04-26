@@ -1,7 +1,5 @@
 'use strict';
 
-var Body = require('../../model/nodes/Body');
-
 module.exports = {
 
   type: 'body',

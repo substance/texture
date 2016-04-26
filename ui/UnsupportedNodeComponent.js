@@ -4,7 +4,7 @@ var Component = require('substance/ui/Component');
 var Modal = require('substance/ui/Modal');
 var EditXML = require('./EditXML');
 
-function UnsupportedInlineNodeComponent() {
+function UnsupportedNodeComponent() {
   Component.apply(this, arguments);
 
   this.handleActions({
@@ -12,7 +12,7 @@ function UnsupportedInlineNodeComponent() {
   });
 }
 
-UnsupportedInlineNodeComponent.Prototype = function() {
+UnsupportedNodeComponent.Prototype = function() {
   this._openModal = function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -74,6 +74,6 @@ UnsupportedInlineNodeComponent.Prototype = function() {
   };
 };
 
-Component.extend(UnsupportedInlineNodeComponent);
+Component.extend(UnsupportedNodeComponent);
 
-module.exports = UnsupportedInlineNodeComponent;
+module.exports = UnsupportedNodeComponent;

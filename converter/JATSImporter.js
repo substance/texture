@@ -9,6 +9,7 @@ var XMLImporter = require('substance/model/XMLImporter');
 var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
 var ScientistArticle = require('../model/ScientistArticle');
 var ScientistSchema = require('../model/ScientistSchema');
+var UnsupportedNodeConverter = require('./nodes/UnsupportedNodeConverter');
 
 function JATSImporter(config) {
   config = _getConfig();
@@ -69,6 +70,9 @@ JATSImporter.Prototype = function() {
     return nodes;
   };
 
+  this._getUnsupportedNodeConverter = function() {
+    return UnsupportedNodeConverter;
+  };
 };
 
 XMLImporter.extend(JATSImporter);

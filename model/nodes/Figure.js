@@ -2,15 +2,15 @@
 
 // TODO: we should be able to inherit from JATSNode to share properties.
 
-var InlineNode = require('substance/model/InlineNode');
+var DocumentNode = require('substance/model/DocumentNode');
 
-function InlineFigure() {
-  InlineFigure.super.apply(this, arguments);
+function Figure() {
+  Figure.super.apply(this, arguments);
 }
 
-InlineNode.extend(InlineFigure);
+DocumentNode.extend(Figure);
 
-InlineFigure.static.name = 'inline-figure';
+Figure.static.name = 'figure';
 
 /*
   Content
@@ -24,7 +24,7 @@ InlineFigure.static.name = 'inline-figure';
       (attrib | permissions)*
     )
 */
-InlineFigure.static.defineSchema({
+Figure.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
   objectIds: { type: ['string'], default: [] },
   label: { type: 'text', optional: true },
@@ -35,4 +35,4 @@ InlineFigure.static.defineSchema({
   attribNodes: { type: ['id'], default: [] },
 });
 
-module.exports = InlineFigure;
+module.exports = Figure;

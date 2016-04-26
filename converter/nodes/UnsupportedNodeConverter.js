@@ -2,18 +2,18 @@
 
 module.exports = {
 
-  type: 'unsupported-block',
+  type: 'unsupported',
 
   matchElement: function() {
     return true;
   },
 
-  import: function(el, node, converter) {
+  import: function(el, node) {
     node.xml = el.outerHTML;
     node.tagName = el.tagName;
   },
 
-  export: function(node, el, converter) {
+  export: function(node, el) {
     el.innerHTML = node.xml;
     return el.children[0];
   }

@@ -53,8 +53,8 @@ DocumentPage.Prototype = function() {
       console.log('documentSession', documentSession);
 
       // Dry-run for exporter
-      var exporter = new JATSExporter();
-      var xml = exporter.exportDocument(doc);
+      // var exporter = new JATSExporter();
+      // var xml = exporter.exportDocument(doc);
       // console.log('exporter', xml);
 
       this.setState({

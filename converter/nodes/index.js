@@ -2,8 +2,8 @@ var ArticleConverter = require('./ArticleConverter');
 var FrontConverter = require('./FrontConverter');
 var BodyConverter = require('./BodyConverter');
 var SectionConverter = require('./SectionConverter');
-var InlineFigureConverter = require('./InlineFigureConverter');
-var InlineTableWrapConverter = require('./InlineTableWrapConverter');
+var FigureConverter = require('./FigureConverter');
+var TableWrapConverter = require('./TableWrapConverter');
 var TableConverter = require('./TableConverter');
 var CaptionConverter = require('./CaptionConverter');
 var GraphicConverter = require('./GraphicConverter');
@@ -14,15 +14,14 @@ var SubscriptConverter = require('./SubscriptConverter');
 var LinkConverter = require('./LinkConverter');
 var StrongConverter = require('./StrongConverter');
 var ParagraphConverter = require('./ParagraphConverter');
-var UnsupportedBlockNodeConverter = require('./UnsupportedBlockNodeConverter');
-var UnsupportedInlineNodeConverter = require('./UnsupportedInlineNodeConverter');
+var UnsupportedNodeConverter = require('./UnsupportedNodeConverter');
 
 module.exports = [
   ArticleConverter,
   FrontConverter,
   SectionConverter,
-  InlineFigureConverter,
-  InlineTableWrapConverter,
+  FigureConverter,
+  TableWrapConverter,
   TableConverter,
   CaptionConverter,
   GraphicConverter,
@@ -33,7 +32,5 @@ module.exports = [
   StrongConverter,
   LinkConverter,
   BodyConverter,
-  ParagraphConverter,
-  UnsupportedBlockNodeConverter,
-  UnsupportedInlineNodeConverter
+  ParagraphConverter
 ];

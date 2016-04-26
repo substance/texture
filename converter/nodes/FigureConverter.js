@@ -2,7 +2,7 @@
 
 module.exports = {
 
-  type: 'inline-figure',
+  type: 'figure',
   tagName: 'fig',
   allowedContext: [
     'abstract', 'ack', 'app', 'app-group', 'bio', 'body', 'boxed-text',
@@ -85,6 +85,9 @@ module.exports = {
         case 'email':
         case 'ext-link':
         case 'uri':
+          console.warn('<fig>.<%s> is not yet implemented.', tagName);
+          node.contentNodes.push(converter.convertElement(childEl).id);
+          break;
         default:
           console.warn('Unhandled element <%s> in <fig>.', tagName);
           node.contentNodes.push(converter.convertElement(childEl).id);
@@ -98,7 +101,7 @@ module.exports = {
       el.append($$('object-id').text(objectId));
     });
     if (node.label) {
-      el.append(converter.annotatedText([node.id, 'label']))
+      el.append(converter.annotatedText([node.id, 'label']));
     }
     el.append(converter.convertNodes(node.captionNodes));
     el.append(converter.convertNodes(node.abstractNodes));

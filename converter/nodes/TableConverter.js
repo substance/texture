@@ -13,7 +13,6 @@ module.exports = {
     // jshint unused:false
     node.xmlAttributes = el.getAttributes();
     node.htmlContent = el.innerHTML;
-    console.log('table imported', node);
   },
 
   export: function(node, el, converter) {

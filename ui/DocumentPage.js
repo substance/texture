@@ -28,26 +28,24 @@ DocumentPage.Prototype = function() {
 
   this.didMount = function() {
     // load the document after mounting
-    console.log('DocumentPage.didMount');
-    this._loadDocument(this.props.documentId);
+    this._loadDocument(this.props.documentUrl);
   };
 
   this.willReceiveProps = function(newProps) {
-    if (newProps.documentId !== this.props.documentId) {
+    if (newProps.documentUrl !== this.props.documentUrl) {
       this.dispose();
       this.state = this.getInitialState();
-      this._loadDocument(newProps.documentId);
+      this._loadDocument(newProps.documentUrl);
     }
   };
 
   this._loadDocument = function() {
-    jQuery.ajax(this.props.documentId, {
+    jQuery.ajax(this.props.documentUrl, {
       dataType: 'text'
     })
     .done(function(data){
       var importer = new JATSImporter();
       var doc = importer.importDocument(data);
-
       var documentSession = new DocumentSession(doc);
 
       console.log('documentSession', documentSession);

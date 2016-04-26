@@ -23,7 +23,7 @@ ExpandableComponent.Prototype = function() {
 
   this.render = function($$) {
     var el = $$('span')
-      .addClass('sc-expandable-component')
+      .addClass('sc-expandable')
       .attr('data-id', this.props.node.id)
       .attr('contenteditable', false);
 

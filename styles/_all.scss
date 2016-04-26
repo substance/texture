@@ -1,0 +1,15 @@
+$fa-font-path:  "../fonts" !default;
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/substance/styles/base/index';
+
+// Substance modules
+@import '../node_modules/substance/styles/components/_all';
+@import '../node_modules/substance/packages/_all';
+
+// Scientist styles
+@import './_scientist-writer';
+@import './_edit-xml';
+@import './_expandable';
+
+// Nodes
+@import './nodes/_all';

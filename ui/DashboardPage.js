@@ -16,7 +16,7 @@ DashboardPage.Prototype = function() {
     el.append($$('p').append('Choose an example-document'));
     el.append(
       $$('p').append(
-        $$('a').attr({href: '#page=document,documentId=data/elife-00007.xml'}).append('ELIFE_00007')
+        $$('a').attr({href: '#page=document,documentUrl=data/elife-00007.xml'}).append('ELIFE_00007')
       )
     );
     return el;

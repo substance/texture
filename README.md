@@ -28,6 +28,11 @@ $ npm run start
 
 And navigate to [http://localhost:5001](http://localhost:5001)
 
+# Bundle examples
+
+```bash
+$ npm run bundle
+```
 
 # JATS Support Status
 

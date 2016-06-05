@@ -1,0 +1,21 @@
+$fa-font-path:  "../fonts" !default;
+@import '../../node_modules/font-awesome/scss/font-awesome';
+@import '../../node_modules/substance/styles/base/index';
+
+// Substance core-styles
+@import '../../node_modules/substance/styles/components/_all';
+@import '../../node_modules/substance/packages/_all';
+
+// Packages
+@import '../../packages/unsupported/_unsupported-block-node';
+@import '../../packages/unsupported/_unsupported-inline-node';
+@import '../../packages/graphic/_graphic';
+@import '../../packages/figure/_figure';
+@import '../../packages/footnote/_footnote';
+@import '../../packages/reference/_reference';
+
+.sc-scientist-writer {
+  .se-toolbar-wrapper {
+    border-bottom: 1px solid $border-color;
+  }
+}

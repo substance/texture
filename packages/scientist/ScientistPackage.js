@@ -9,6 +9,8 @@ var SwitchTextTypeCommand = require('substance/packages/text/SwitchTextTypeComma
 var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var UndoTool = require('substance/ui/UndoTool');
 var RedoTool = require('substance/ui/RedoTool');
+var JATSImporter = require('./JATSImporter');
+var JATSExporter = require('./JATSExporter');
 
 module.exports = {
   name: 'prose-editor',
@@ -44,5 +46,7 @@ module.exports = {
     config.import(require('../table-wrap/TableWrapPackage'));
     config.import(require('../unsupported/UnsupportedNodePackage'));
 
+    config.addImporter('jats', JATSImporter);
+    config.addExporter('jats', JATSExporter);
   }
 };

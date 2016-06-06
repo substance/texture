@@ -88,9 +88,10 @@ JATSImporter.Prototype = function() {
     return nodes;
   };
 
-  this._getUnsuppoUnsupportedNodeJATSConverterrtedNodeConverter = function() {
-    return ;
+  this._getUnsupportedNodeConverter = function() {
+    return UnsupportedNodeJATSConverter;
   };
+
 };
 
 XMLImporter.extend(JATSImporter);

@@ -20,3 +20,4 @@ ScientistReader.Prototype = function() {
 
 Component.extend(ScientistReader);
 module.exports = ScientistReader;
+

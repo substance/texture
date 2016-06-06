@@ -19,6 +19,12 @@ function Scientist() {
 
 Scientist.Prototype = function() {
 
+  this.getChildContext = function() {
+    return {
+      xmlStore: this.xmlStore
+    };
+  };
+
   this.getInitialState = function() {
     return {
       documentSession: null,

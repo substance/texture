@@ -57,9 +57,6 @@ UnsupportedNodeTool.Prototype = function() {
 Component.extend(UnsupportedNodeTool);
 
 UnsupportedNodeTool.static.getProps = function(commandStates) {
-
-  console.log(commandStates.unsupported);
-  
   if (commandStates.unsupported.mode === 'edit') {
     return clone(commandStates.unsupported);
   } else {

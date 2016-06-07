@@ -19,8 +19,11 @@ ScientistWriter.Prototype = function() {
 
   this._initialize = function() {
     _super._initialize.apply(this, arguments);
+
+    this.exporter = this.props.configurator.createExporter('jats');
     this.saveHandler = new ScientistSaveHandler({
-      xmlStore: this.context.xmlStore
+      xmlStore: this.context.xmlStore,
+      exporter: this.exporter
     });
     this.documentSession.setSaveHandler(this.saveHandler);
   };

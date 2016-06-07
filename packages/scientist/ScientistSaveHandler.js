@@ -8,9 +8,9 @@ var ScientistSaveHandler = function(context) {
 
 ScientistSaveHandler.Prototype = function() {
   this.saveDocument = function(doc, changes, cb) {
-    console.log('saving logic goes here');
-
-    cb(null);
+    var exporter = this.context.exporter;
+    var xml = exporter.exportDocument(doc);
+    this.context.xmlStore.writeXML('elife-00007', xml, cb);
   };
 };
 

@@ -15,9 +15,9 @@ SectionComponent.Prototype = function() {
     var el = $$('div').addClass('sc-section');
 
     // TODO: would be good to know the tag name or the path
-    el.append(
-      $$('div').addClass('se-tag').append('section')
-    );
+    // el.append(
+    //   $$('div').addClass('se-tag').append('section')
+    // );
 
     if (node.title) {
       el.append(

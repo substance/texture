@@ -1,6 +1,6 @@
 'use strict';
 
-var IteratorHelper = require('../../util/IteratorHelper');
+var XMLIterator = require('../../util/XMLIterator');
 
 module.exports = {
 
@@ -39,7 +39,7 @@ module.exports = {
   import: function(el, node, converter) {
 
     var children = el.getChildren();
-    var iterator = new IteratorHelper(children);
+    var iterator = new XMLIterator(children);
 
     iterator.optional('sec-meta', function(child) {
       node.meta = converter.convertElement(child).id;

@@ -10,7 +10,6 @@ var ScientistWriterTools = require('./ScientistWriterTools');
 var ScientistWriterOverlay = require('./ScientistWriterOverlay');
 var ScientistSaveHandler = require('./ScientistSaveHandler');
 
-
 function ScientistWriter() {
   ScientistWriter.super.apply(this, arguments);
 }
@@ -44,7 +43,6 @@ ScientistWriter.Prototype = function() {
             $$(ContainerEditor, {
               documentSession: this.documentSession,
               containerId: 'body',
-              name: 'body',
               commands: configurator.getSurfaceCommandNames(),
               textTypes: configurator.getTextTypes()
             }).ref('body')

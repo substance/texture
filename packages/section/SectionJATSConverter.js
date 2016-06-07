@@ -1,8 +1,10 @@
 'use strict';
 
+var IteratorHelper = require('../../util/IteratorHelper');
+
 module.exports = {
 
-  type: 'heading',
+  type: 'section',
   tagName: 'sec',
 
   allowedContext: [
@@ -11,7 +13,6 @@ module.exports = {
   ],
 
   /*
-
     Attributes
       disp-level Display Level of a Heading
       id Document Internal Identifier
@@ -36,48 +37,62 @@ module.exports = {
   */
 
   import: function(el, node, converter) {
-    var state = converter.state;
-
-    node.xmlAttributes = el.getAttributes();
-
-    var currentLevel = state.getCurrentSectionLevel();
-    node.level = currentLevel;
-    state.increaseSectionLevel();
 
     var children = el.getChildren();
-    var child, i = 0;
-    if ((child = children[i]) && child.tagName === 'sec-meta') {
-      var secMeta = converter.convertElement(child);
-      node.meta = secMeta.id;
-      i++;
-    }
-    if ((child = children[i]) && child.tagName === 'label') {
+    var iterator = new IteratorHelper(children);
+
+    iterator.optional('sec-meta', function(child) {
+      node.meta = converter.convertElement(child).id;
+    });
+    iterator.optional('label', function(child) {
       node.label = converter.annotatedText(child, [node.id, 'label']);
-      i++;
+    });
+    iterator.optional('title', function(child) {
+      node.title = converter.annotatedText(child, [node.id, 'title']);
+    });
+
+    iterator.manyOf([
+      "address","alternatives","array","boxed-text",
+      "chem-struct-wrap","code","fig","fig-group",
+      "graphic","media","preformat","supplementary-material",
+      "table-wrap","table-wrap-group","disp-formula",
+      "disp-formula-group","def-list","list","tex-math",
+      "mml:math","p","related-article","related-object",
+      "ack","disp-quote","speech","statement","verse-group","x"
+    ], function(child) {
+      node.content.push(converter.convertElement(child).id);
+    });
+
+    iterator.manyOf(['sec'], function(child) {
+      node.content.push(converter.convertElement(child).id);
+    });
+
+    iterator.manyOf(["notes","fn-group","glossary","ref-list"], function(child) {
+      node.backMatter.push(converter.convertElement(child).id);
+    });
+
+    if (iterator.hasNext()) {
+      throw new Error('Illegal JATS: ' + el.outerHTML);
     }
-    if ((child = children[i]) && child.tagName === 'title') {
-      node.content = converter.annotatedText(child, [node.id, 'content']);
-      i++;
-    }
-    node.contentNodes = converter._convertContainerElement(el, i);
-    state.decreaseSectionLevel();
   },
 
   export: function(node, el, converter) {
-    var doc = node.getDocument();
     el.attr(node.xmlAttributes);
-
-    var nodesIt = converter.sectionContainerIterator;
-    if (!nodesIt) {
-      throw new Error('Section support is not done on parent element ' + el.parentNode.tagName);
+    if (node.meta) {
+      el.append(converter.convertNode(node.meta));
     }
-    while (nodesIt.hasNext()) {
-      var nextNode = doc.get(nodesIt.next());
-      if (nextNode.type === 'heading' && node.level >= nextNode.level) {
-        break;
-      }
-      el.append(converter.convertNode(nextNode));
+    if(node.label) {
+      el.append(converter.annotatedText([node.id, 'label']));
     }
+    if(node.title) {
+      el.append(converter.annotatedText([node.id, 'title']));
+    }
+    node.content.forEach(function(nodeId) {
+      el.append(converter.convertNode(nodeId));
+    });
+    node.backMatter.forEach(function(nodeId) {
+      el.append(converter.convertNode(nodeId));
+    });
   }
 
 };

@@ -18,12 +18,16 @@
 }
 
 .sc-isolated-node > .se-container:hover, {
-  background: rgba(163, 205, 253, 0.2);
-  outline: none;
-  border-left: 2px solid #ccc;
+  background: rgba(163, 205, 253, 0.1);
+  border-left: 2px solid rgba(#A3CDFD, 0.2);
 }
 
-.sc-isolated-node.sm-co-focused > .se-container {
+.sc-isolated-node.sm-selected > .se-container, {
+  background: rgba(163, 205, 253, 0.3);
+  border-left: 2px solid rgba(#A3CDFD, 0.6);
+}
+
+.sc-isolated-node.sm-focused > .se-container {
   background: #fff;
   outline: none;
   border-left: 2px solid #A3CDFD;

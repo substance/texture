@@ -36,7 +36,7 @@ module.exports = {
     config.import(require('../article/ArticlePackage'));
     config.import(require('../body/BodyPackage'));
     config.import(require('../caption/CaptionPackage'));
-    // config.import(require('../emphasis/EmphasisPackage'));
+    config.import(require('../emphasis/EmphasisPackage'));
     config.import(require('../figure/FigurePackage'));
     config.import(require('../footnote/FootnotePackage'));
     config.import(require('../front/FrontPackage'));

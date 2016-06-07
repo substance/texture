@@ -10,6 +10,7 @@ var UnsupportedNodeJATSConverter = require('../unsupported/UnsupportedNodeJATSCo
 var inBrowser = require('substance/util/inBrowser');
 
 function JATSImporter(config) {
+  config.enableInlineWrapper = true;
   JATSImporter.super.call(this, config);
   this.state = new JATSImporter.State();
 }

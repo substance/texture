@@ -1,13 +1,17 @@
-.sc-isolated-node.sm-co-focused {
-  > .se-container {
+
+.sc-isolated-node.sm-section {
+
+  position: relative;
+
+  &.sm-co-focused > .se-container {
     outline: none;
     outline-color: initial;
   }
-}
-.sc-isolated-node.sm-selected {
-  > .se-container ::selection {
+
+  &.sm-selected > .se-container ::selection {
     background: transparent;
   }
+
 }
 
 .sc-section > .se-title {
@@ -23,4 +27,51 @@
 .sc-section .sc-section .sc-section > .se-title {
   font-size: $h3-font-size;
   margin-bottom: $h3-font-size;
+}
+
+.sc-section > .se-section {
+  font-size: $h1-font-size;
+  margin-bottom: $h1-font-size;
+}
+
+.sc-section .sc-section > .se-title {
+  font-size: $h2-font-size;
+  margin-bottom: $h2-font-size;
+}
+
+.sc-section .sc-section .sc-section > .se-title {
+  font-size: $h3-font-size;
+  margin-bottom: $h3-font-size;
+}
+
+.sc-section .se-bracket {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-left: 2px solid #ccc;
+  visibility: hidden;
+
+  left: -50px;
+}
+
+.sc-section .sc-section .se-bracket {
+  left: -30px;
+}
+
+.sc-section .sc-section .sc-section .se-bracket {
+  left: -10px;
+}
+
+.sc-isolated-node.sm-section {
+  &.sm-not-selected:hover, &.sm-co-focused {
+    > .se-container > .sc-section > .se-bracket {
+      visibility: visible;
+    }
+  }
+
+  &.sm-selected, &.sm-focused {
+    > .se-container > .sc-section > .se-bracket {
+      border-color: blue;
+      visibility: visible;
+    }
+  }
 }

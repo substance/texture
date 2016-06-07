@@ -1,17 +1,32 @@
-
+/* Isolated nodes hacks */
 .sc-isolated-node.sm-section {
-
   position: relative;
-
-  &.sm-co-focused > .se-container {
-    outline: none;
-    outline-color: initial;
-  }
 
   &.sm-selected > .se-container ::selection {
     background: transparent;
   }
+}
 
+.sc-isolated-node > .se-container {
+  padding: 20px;
+  border-left: 2px solid transparent;
+}
+
+.sc-isolated-node > .se-container {
+  padding: 20px;
+  border-left: 2px solid transparent;
+}
+
+.sc-isolated-node > .se-container:hover, {
+  background: rgba(163, 205, 253, 0.2);
+  outline: none;
+  border-left: 2px solid #ccc;
+}
+
+.sc-isolated-node.sm-co-focused > .se-container {
+  background: #fff;
+  outline: none;
+  border-left: 2px solid #A3CDFD;
 }
 
 .sc-section > .se-title {
@@ -42,36 +57,4 @@
 .sc-section .sc-section .sc-section > .se-title {
   font-size: $h3-font-size;
   margin-bottom: $h3-font-size;
-}
-
-.sc-section .se-bracket {
-  position: absolute;
-  top: 0; bottom: 0;
-  border-left: 2px solid #ccc;
-  visibility: hidden;
-
-  left: -50px;
-}
-
-.sc-section .sc-section .se-bracket {
-  left: -30px;
-}
-
-.sc-section .sc-section .sc-section .se-bracket {
-  left: -10px;
-}
-
-.sc-isolated-node.sm-section {
-  &.sm-not-selected:hover, &.sm-co-focused {
-    > .se-container > .sc-section > .se-bracket {
-      visibility: visible;
-    }
-  }
-
-  &.sm-selected, &.sm-focused {
-    > .se-container > .sc-section > .se-bracket {
-      border-color: blue;
-      visibility: visible;
-    }
-  }
 }

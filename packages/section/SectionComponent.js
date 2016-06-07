@@ -14,7 +14,10 @@ SectionComponent.Prototype = function() {
     var node = this.props.node;
     var el = $$('div').addClass('sc-section');
 
-    el.append($$('div').addClass('se-bracket'));
+    // TODO: would be good to know the tag name or the path
+    el.append(
+      $$('div').addClass('se-tag').append('section')
+    );
 
     if (node.title) {
       el.append(
@@ -24,7 +27,7 @@ SectionComponent.Prototype = function() {
     }
 
     el.append(
-      $$(ContainerEditor, { node: node.contentAdapter }).ref('contentEditor')
+      $$(ContainerEditor, { node: node }).ref('contentEditor')
         .addClass('se-content')
     );
 
@@ -36,5 +39,6 @@ SectionComponent.Prototype = function() {
 Component.extend(SectionComponent);
 
 SectionComponent.static.fullWidth = true;
+SectionComponent.static.noStyle = true;
 
 module.exports = SectionComponent;

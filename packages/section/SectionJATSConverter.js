@@ -60,11 +60,11 @@ module.exports = {
       "mml:math","p","related-article","related-object",
       "ack","disp-quote","speech","statement","verse-group","x"
     ], function(child) {
-      node.content.push(converter.convertElement(child).id);
+      node.nodes.push(converter.convertElement(child).id);
     });
 
     iterator.manyOf(['sec'], function(child) {
-      node.content.push(converter.convertElement(child).id);
+      node.nodes.push(converter.convertElement(child).id);
     });
 
     iterator.manyOf(["notes","fn-group","glossary","ref-list"], function(child) {
@@ -87,7 +87,7 @@ module.exports = {
     if(node.title) {
       el.append(converter.annotatedText([node.id, 'title']));
     }
-    node.content.forEach(function(nodeId) {
+    node.nodes.forEach(function(nodeId) {
       el.append(converter.convertNode(nodeId));
     });
     node.backMatter.forEach(function(nodeId) {

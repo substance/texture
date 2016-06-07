@@ -1,11 +1,12 @@
-window.SUBSTANCE_DEBUG_RENDERING = true;
-
+var substanceGlobals = require('substance/util/substanceGlobals');
 var Scientist = require('../../packages/scientist/Scientist');
 var ScientistConfigurator = require('../../packages/scientist/ScientistConfigurator');
 var JATSEditorConfig = require('./JATSEditorConfig');
 
 var configurator = new ScientistConfigurator();
 configurator.import(JATSEditorConfig);
+
+substanceGlobals.DEBUG_RENDERING = true;
 
 window.onload = function() {
   window.app = Scientist.static.mount({

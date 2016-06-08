@@ -2,17 +2,13 @@
 
 var AnnotationCommand = require('substance/ui/AnnotationCommand');
 
-function UnsupportedNodeCommand() {
-  UnsupportedNodeCommand.super.apply(this, arguments);
+/* TODO: It may make sense to define an InlineNodeCommand that covers creating, editing */
+
+function ReferenceCommand() {
+  ReferenceCommand.super.apply(this, arguments);
 }
 
-UnsupportedNodeCommand.Prototype = function() {
-
-  this.getAnnotationData = function() {
-    return {
-      url: ""
-    };
-  };
+ReferenceCommand.Prototype = function() {
 
   this.canCreate = function() {
     return false;
@@ -33,8 +29,8 @@ UnsupportedNodeCommand.Prototype = function() {
 
 };
 
-AnnotationCommand.extend(UnsupportedNodeCommand);
+AnnotationCommand.extend(ReferenceCommand);
 
-UnsupportedNodeCommand.static.name = 'unsupported';
+ReferenceCommand.static.name = 'reference';
 
-module.exports = UnsupportedNodeCommand;
+module.exports = ReferenceCommand;

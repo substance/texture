@@ -35,6 +35,8 @@ module.exports = {
     // Now import base packages
     config.import(require('../article/ArticlePackage'));
     config.import(require('../body/BodyPackage'));
+    config.import(require('../back/BackPackage'));
+
     config.import(require('../caption/CaptionPackage'));
     // config.import(require('../emphasis/EmphasisPackage'));
     config.import(require('../figure/FigurePackage'));
@@ -44,7 +46,11 @@ module.exports = {
     config.import(require('../link/LinkPackage'));
     config.import(require('../monospace/MonospacePackage'));
     config.import(require('../paragraph/ParagraphPackage'));
-    config.import(require('../reference/ReferencePackage'));
+
+    config.import(require('../ref-list/RefListPackage'));
+    config.import(require('../ref/RefPackage'));
+    config.import(require('../cross-reference/CrossReferencePackage'));
+
     config.import(require('../section/SectionPackage'));
     config.import(require('../strong/StrongPackage'));
     config.import(require('../subscript/SubscriptPackage'));

@@ -30,17 +30,32 @@ XMLIterator.Prototype = function() {
     if (!optional) throw new Error("Expecting element '"+ tagName +"'.");
   };
 
-  this.manyOf = function(tagNames, cb) {
+  this._manyOf = function(tagNames, cb) {
+    var count = 0;
     tagNames = makeMap(tagNames);
     while(this.it.hasNext()) {
       var el = this.it.next();
       if (tagNames[el.tagName]) {
+        count++;
         cb(el);
       } else {
         this.it.back();
         break;
       }
     }
+    return count;
+  };
+
+  this.manyOf = function(tagNames, cb) {
+    return this._manyOf(tagNames, cb);
+  };
+
+  this.oneOrMoreOf = function(tagNames, cb) {
+    var count = this._manyOf(tagNames, cb);
+    if (count === 0) {
+      throw new Error('Expecting at least one element of ' + String(tagNames));
+    }
+    return count;
   };
 
   this.hasNext = function() {

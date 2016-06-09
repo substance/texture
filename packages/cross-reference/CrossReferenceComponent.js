@@ -1,12 +1,12 @@
 var InlineNodeComponent = require('substance/ui/InlineNodeComponent');
 
-function ReferenceComponent() {
-  ReferenceComponent.super.apply(this, arguments);
+function CrossReferenceComponent() {
+  CrossReferenceComponent.super.apply(this, arguments);
 }
 
-ReferenceComponent.Prototype = function() {
+CrossReferenceComponent.Prototype = function() {
 
-  var _super = ReferenceComponent.super.prototype;
+  var _super = CrossReferenceComponent.super.prototype;
 
   this.render = function($$) {
     var el = _super.render.call(this, $$);
@@ -18,6 +18,6 @@ ReferenceComponent.Prototype = function() {
 
 };
 
-InlineNodeComponent.extend(ReferenceComponent);
+InlineNodeComponent.extend(CrossReferenceComponent);
 
-module.exports = ReferenceComponent;
+module.exports = CrossReferenceComponent;

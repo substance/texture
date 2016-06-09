@@ -2,19 +2,19 @@
 
 var InlineNode = require('substance/model/InlineNode');
 
-function Reference() {
-  Reference.super.apply(this, arguments);
+function CrossReference() {
+  CrossReference.super.apply(this, arguments);
 }
 
-InlineNode.extend(Reference);
+InlineNode.extend(CrossReference);
 
-Reference.static.name = 'reference';
+CrossReference.static.name = 'cross-reference';
 
-Reference.static.defineSchema({
+CrossReference.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
   label: { type: 'text', optional: true },
   referenceType: { type: 'string'},
   target: {type: 'id'}
 });
 
-module.exports = Reference;
+module.exports = CrossReference;

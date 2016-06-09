@@ -3,7 +3,7 @@
 var Component = require('substance/ui/Component');
 var clone = require('lodash/clone');
 var map = require('lodash/map');
-var ReferenceTargets = require('./ReferenceTargets');
+var CrossReferenceTargets = require('./CrossReferenceTargets');
 
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
@@ -29,11 +29,11 @@ function getTargetsForReference(node) {
 /*
   Edit a reference in a prompt.
 */
-function EditReferenceTool() {
-  EditReferenceTool.super.apply(this, arguments);
+function CrossReferenceTool() {
+  CrossReferenceTool.super.apply(this, arguments);
 }
 
-EditReferenceTool.Prototype = function() {
+CrossReferenceTool.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
@@ -41,25 +41,24 @@ EditReferenceTool.Prototype = function() {
     var availableTargets = getTargetsForReference(node);
 
     el.append(
-      $$(ReferenceTargets, {
+      $$(CrossReferenceTargets, {
         availableTargets: availableTargets
       })
     );
     return el;
   };
-
 };
 
-Component.extend(EditReferenceTool);
+Component.extend(CrossReferenceTool);
 
-EditReferenceTool.static.getProps = function(commandStates) {
-  if (commandStates.reference.mode === 'edit') {
-    return clone(commandStates.reference);
+CrossReferenceTool.static.getProps = function(commandStates) {
+  if (commandStates['cross-reference'].mode === 'edit') {
+    return clone(commandStates['cross-reference']);
   } else {
     return undefined;
   }
 };
 
-EditReferenceTool.static.name = 'edit-reference';
+CrossReferenceTool.static.name = 'cross-reference';
 
-module.exports = EditReferenceTool;
+module.exports = CrossReferenceTool;

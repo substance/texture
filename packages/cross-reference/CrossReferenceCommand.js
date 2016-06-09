@@ -2,13 +2,16 @@
 
 var AnnotationCommand = require('substance/ui/AnnotationCommand');
 
-/* TODO: It may make sense to define an InlineNodeCommand that covers creating, editing */
+/*
+  TODO: Define an InlineNodeCommand that defines a language for
+  inline node tools
+*/
 
-function ReferenceCommand() {
-  ReferenceCommand.super.apply(this, arguments);
+function CrossReferenceCommand() {
+  CrossReferenceCommand.super.apply(this, arguments);
 }
 
-ReferenceCommand.Prototype = function() {
+CrossReferenceCommand.Prototype = function() {
 
   this.canCreate = function() {
     return false;
@@ -29,8 +32,8 @@ ReferenceCommand.Prototype = function() {
 
 };
 
-AnnotationCommand.extend(ReferenceCommand);
+AnnotationCommand.extend(CrossReferenceCommand);
 
-ReferenceCommand.static.name = 'reference';
+CrossReferenceCommand.static.name = 'cross-reference';
 
-module.exports = ReferenceCommand;
+module.exports = CrossReferenceCommand;

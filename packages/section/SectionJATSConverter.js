@@ -77,15 +77,29 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
+    var $$ = converter.$$;
+
     el.attr(node.xmlAttributes);
     if (node.meta) {
-      el.append(converter.convertNode(node.meta));
+      el.append(
+        $$('sec-meta').append(
+          converter.convertNode(node.meta)
+        )
+      );
     }
     if(node.label) {
-      el.append(converter.annotatedText([node.id, 'label']));
+      el.append(
+        $$('label').append(
+          converter.annotatedText([node.id, 'label'])
+        )
+      );
     }
     if(node.title) {
-      el.append(converter.annotatedText([node.id, 'title']));
+      el.append(
+        $$('title').append(
+          converter.annotatedText([node.id, 'title'])
+        )
+      );
     }
     node.nodes.forEach(function(nodeId) {
       el.append(converter.convertNode(nodeId));

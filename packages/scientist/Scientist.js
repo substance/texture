@@ -59,6 +59,8 @@ Scientist.Prototype = function() {
 
       var importer = configurator.createImporter('jats');
       var doc = importer.importDocument(xml);
+      // HACK: For debug purposes
+      window.doc = doc;
       var documentSession = new DocumentSession(doc);
 
       this.setState({

@@ -6,11 +6,11 @@ var Component = require('substance/ui/Component');
   Takes a list of available reference targets (e.g. figure nodes)
   and a list of ids (selected targets)
 */
-function ReferenceTargets() {
-  ReferenceTargets.super.apply(this, arguments);
+function CrossReferenceTargets() {
+  CrossReferenceTargets.super.apply(this, arguments);
 }
 
-ReferenceTargets.Prototype = function() {
+CrossReferenceTargets.Prototype = function() {
 
   this.render = function($$) {
     var el = $$('div').addClass('sc-reference-targets');
@@ -28,6 +28,6 @@ ReferenceTargets.Prototype = function() {
   };
 };
 
-Component.extend(ReferenceTargets);
+Component.extend(CrossReferenceTargets);
 
-module.exports = ReferenceTargets;
+module.exports = CrossReferenceTargets;

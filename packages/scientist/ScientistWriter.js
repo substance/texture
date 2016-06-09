@@ -43,9 +43,17 @@ ScientistWriter.Prototype = function() {
           $$(Layout, {
             width: 'large'
           }).append(
+            // Body editor
             $$(ContainerEditor, {
               documentSession: this.documentSession,
               containerId: 'body',
+              commands: configurator.getSurfaceCommandNames(),
+              textTypes: configurator.getTextTypes()
+            }).ref('body'),
+            // Back matter editor
+            $$(ContainerEditor, {
+              documentSession: this.documentSession,
+              containerId: 'back',
               commands: configurator.getSurfaceCommandNames(),
               textTypes: configurator.getTextTypes()
             }).ref('body')

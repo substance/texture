@@ -36,7 +36,7 @@ module.exports = {
     });
 
     iterator.optional('title', function(child) {
-      node.label = converter.annotatedText(child, [node.id, 'label']);
+      node.title = converter.annotatedText(child, [node.id, 'title']);
     });
 
     iterator.manyOf([

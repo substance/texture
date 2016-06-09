@@ -13,7 +13,7 @@ CrossReferenceComponent.Prototype = function() {
   this.render = function($$) {
     var el = $$('span');
     el.attr('data-id', this.props.node.id)
-      .addClass('sc-reference sm-'+this.props.node.referenceType)
+      .addClass('sc-cross-reference sm-'+this.props.node.referenceType)
       .append(this.props.node.label || '');
     return el;
   };

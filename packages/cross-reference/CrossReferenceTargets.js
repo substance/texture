@@ -13,7 +13,7 @@ function CrossReferenceTargets() {
 CrossReferenceTargets.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-reference-targets');
+    var el = $$('div').addClass('sc-cross-reference-targets');
     var node = this.props.node;
     var componentRegistry = this.context.componentRegistry;
     var availableTargets = this.props.availableTargets;
@@ -21,7 +21,7 @@ CrossReferenceTargets.Prototype = function() {
     availableTargets.forEach(function(targetNode) {
       var TargetComponent = componentRegistry.get(targetNode.type+'-target');
       el.append(
-        $$(TargetComponent, {node: node})
+        $$(TargetComponent, {node: targetNode})
       );
     });
     return el;

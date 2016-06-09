@@ -7,7 +7,7 @@ var CrossReferenceTargets = require('./CrossReferenceTargets');
 
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
-  'bibr': ['reference', 'element-citation', 'mixed-citation']
+  'bibr': ['ref' /*, 'element-citation', 'mixed-citation'*/]
 };
 
 /*

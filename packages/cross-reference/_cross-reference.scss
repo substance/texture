@@ -1,4 +1,4 @@
-.sc-reference {
+.sc-cross-reference {
   background: rgba(0,0,0,0.075);
   border-bottom: 1px solid rgba(0,0,0,0.3);
   cursor: pointer;
@@ -17,7 +17,8 @@
   }
 }
 
-
-.sc-reference-target {
-
+.sc-cross-reference-targets {
+  width: $small-layout-width;
+  max-height: 400px;
+  overflow: auto;
 }

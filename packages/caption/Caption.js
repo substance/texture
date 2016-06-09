@@ -1,13 +1,12 @@
 'use strict';
 
-// TODO: we should be able to inherit from JATSNode to share properties.
-var TextBlock = require('substance/model/TextBlock');
+var Container = require('substance/model/Container');
 
 function Caption() {
   Caption.super.apply(this, arguments);
 }
 
-TextBlock.extend(Caption);
+Container.extend(Caption);
 
 Caption.static.name = 'caption';
 
@@ -17,8 +16,7 @@ Caption.static.name = 'caption';
 */
 Caption.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
-  title: { type: 'text' },
-  contentNodes: { type: ['id'], default: [] },
+  title: { type: 'text' }
 });
 
 module.exports = Caption;

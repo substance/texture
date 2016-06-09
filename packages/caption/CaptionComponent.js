@@ -1,8 +1,8 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var TextProperty = require('substance/ui/TextPropertyComponent');
-var Paragraph = require('substance/packages/paragraph/ParagraphComponent');
+var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+var ContainerEditor = require('substance/ui/ContainerEditor');
 
 function CaptionComponent() {
   Component.apply(this, arguments);
@@ -11,27 +11,23 @@ function CaptionComponent() {
 CaptionComponent.Prototype = function() {
 
   this.render = function($$) {
-    var doc = this.props.node.getDocument();
+    var node = this.props.node;
+
     var el = $$('div')
       .addClass('sc-caption')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', node.id);
 
-    el.append($$(TextProperty, {
-      path: [ this.props.node.id, 'title']
+    el.append($$(TextPropertyEditor, {
+      disabled: this.props.disabled,
+      path: [ node.id, 'title']
     }));
 
-    // Render caption content (0..n paragraphs)
-
     var contentEl = $$('div').addClass('se-content');
-    this.props.node.contentNodes.forEach(function(paragraphId) {
-      var node = doc.get(paragraphId);
-      contentEl.append(
-        $$(Paragraph, {
-          doc: doc,
-          node: node
-        })
-      );
-    }.bind(this));
+    var contentEditor = $$(ContainerEditor, {
+      disabled: this.props.disabled,
+      node: node
+    }).ref('contentEditor');
+    contentEl.append(contentEditor);
     el.append(contentEl);
 
     return el;

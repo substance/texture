@@ -1,5 +1,7 @@
 'use strict';
 
+var XMLIterator = require('../../util/XMLIterator');
+
 module.exports = {
 
   type: 'caption',
@@ -24,21 +26,21 @@ module.exports = {
 
   import: function(el, node, converter) {
     node.xmlAttributes = el.getAttributes();
+
     var children = el.getChildren();
-    children.forEach(function(childEl) {
-      var tagName = childEl.tagName;
-      switch (tagName) {
-        case 'title':
-          node.title = converter.annotatedText(childEl, [node.id, 'title']);
-          break;
-        case 'p':
-          node.contentNodes.push(converter.convertElement(childEl).id);
-          break;
-        default:
-          console.warn('Unhandled content in <caption>. Appending to node.contentNodes.');
-          node.contentNodes.push(converter.convertElement(childEl));
-      }
+    var iterator = new XMLIterator(children);
+
+    iterator.optional(function(childEl) {
+      node.title = converter.annotatedText(childEl, [node.id, 'title']);
     });
+
+    iterator.manyOf(['p'], function(childEl) {
+      node.nodes.push(converter.convertElement(childEl).id);
+    });
+
+    if (iterator.hasNext()) {
+      throw new Error('Invalid JATS:' + el.outerHTML);
+    }
   },
 
   export: function(node, el, converter) {
@@ -47,7 +49,7 @@ module.exports = {
     el.append(
       $$('title').append(converter.annotatedText([node.id, 'title']))
     );
-    el.append(converter.convertNodes(node.contentNodes));
+    el.append(converter.convertNodes(node.nodes));
   }
 
 };

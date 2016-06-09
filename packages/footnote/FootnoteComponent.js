@@ -20,13 +20,13 @@ FootnoteComponent.Prototype = function() {
         path: [ this.props.node.id, 'label']
       }));
 
-    // Display figure content (paragraph nodes)
     this.props.node.contentNodes.forEach(function(nodeId) {
       var node = doc.get(nodeId);
       el.append(
         surface._renderNode($$, node)
       );
     }.bind(this));
+
     return el;
   };
 };

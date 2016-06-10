@@ -7,7 +7,6 @@ function UnsupportedNodeCommand() {
 }
 
 UnsupportedNodeCommand.Prototype = function() {
-
   this.canCreate = function() {
     return false;
   };
@@ -23,13 +22,10 @@ UnsupportedNodeCommand.Prototype = function() {
   this.canDelete = function(annos, sel) { // eslint-disable-line
     return false;
   };
-
 };
 
 AnnotationCommand.extend(UnsupportedNodeCommand);
-
 UnsupportedNodeCommand.static.name = 'unsupported-inline';
-
 module.exports = UnsupportedNodeCommand;
 
 

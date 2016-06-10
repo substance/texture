@@ -3,6 +3,7 @@
 var Component = require('substance/ui/Component');
 var clone = require('lodash/clone');
 var Modal = require('substance/ui/Modal');
+var EditXML = require('./EditXML');
 
 /*
   Prompt shown when an unsupported node is selected.
@@ -11,7 +12,8 @@ function UnsupportedInlineNodeTool() {
   UnsupportedInlineNodeTool.super.apply(this, arguments);
 
   this.handleActions({
-    'closeModal': this._closeModal
+    'closeModal': this._closeModal,
+    'xmlSaved': this._closeModal
   });
 }
 
@@ -31,13 +33,14 @@ UnsupportedInlineNodeTool.Prototype = function() {
 
   this.render = function($$) {
     var el = $$('div').addClass('sc-unsupported-node-tool');
+    var node = this.props.node;
 
     el.append(
       $$('div').addClass('se-actions').append(
         $$('button')
           .attr({title: this.i18n.t('edit')})
           .addClass('se-action')
-          .on('click', this.onEdit)
+          .on('click', this._onEdit)
           .append('Edit JATS')
       )
     );
@@ -46,7 +49,11 @@ UnsupportedInlineNodeTool.Prototype = function() {
       el.append(
         $$(Modal, {
           width: 'medium'
-        }).append('HELLO MODAL')
+        }).append(
+          $$(EditXML, {
+            path: [node.id, 'xml']
+          })
+        )
       );
     }
     return el;

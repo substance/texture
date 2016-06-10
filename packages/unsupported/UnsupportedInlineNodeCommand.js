@@ -8,12 +8,6 @@ function UnsupportedNodeCommand() {
 
 UnsupportedNodeCommand.Prototype = function() {
 
-  this.getAnnotationData = function() {
-    return {
-      url: ""
-    };
-  };
-
   this.canCreate = function() {
     return false;
   };
@@ -22,9 +16,8 @@ UnsupportedNodeCommand.Prototype = function() {
     return false;
   };
 
-  // When there's some overlap with only a single annotation we do an expand
   this.canEdit = function(annos, sel) { // eslint-disable-line
-    return annos.length === 1;
+    return annos.length === 1 && annos[0].getSelection().equals(sel);
   };
 
   this.canDelete = function(annos, sel) { // eslint-disable-line
@@ -35,6 +28,9 @@ UnsupportedNodeCommand.Prototype = function() {
 
 AnnotationCommand.extend(UnsupportedNodeCommand);
 
-UnsupportedNodeCommand.static.name = 'unsupported';
+UnsupportedNodeCommand.static.name = 'unsupported-inline';
 
 module.exports = UnsupportedNodeCommand;
+
+
+

@@ -18,7 +18,7 @@
 }
 
 .sc-cross-reference-targets {
-  width: $small-layout-width;
-  max-height: 400px;
+  max-width: $medium-layout-width;
+  max-height: 300px;
   overflow: auto;
 }

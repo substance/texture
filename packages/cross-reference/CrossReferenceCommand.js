@@ -21,7 +21,6 @@ CrossReferenceCommand.Prototype = function() {
     return false;
   };
 
-  // When there's some overlap with only a single annotation we do an expand
   this.canEdit = function(annos, sel) { // eslint-disable-line
     return annos.length === 1 && annos[0].getSelection().equals(sel);
   };
@@ -29,7 +28,6 @@ CrossReferenceCommand.Prototype = function() {
   this.canDelete = function(annos, sel) { // eslint-disable-line
     return false;
   };
-
 };
 
 AnnotationCommand.extend(CrossReferenceCommand);

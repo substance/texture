@@ -40,7 +40,8 @@ module.exports = {
     config.import(require('../caption/CaptionPackage'));
     // config.import(require('../emphasis/EmphasisPackage'));
     config.import(require('../figure/FigurePackage'));
-    config.import(require('../footnote/FootnotePackage'));
+
+    // config.import(require('../footnote/FootnotePackage')); // not year ready
     config.import(require('../front/FrontPackage'));
     config.import(require('../graphic/GraphicPackage'));
     config.import(require('../link/LinkPackage'));
@@ -61,5 +62,9 @@ module.exports = {
 
     config.addImporter('jats', JATSImporter);
     config.addExporter('jats', JATSExporter);
+
+    // Icon resolving
+    config.addIcon('edit', { 'fontawesome': 'fa-pencil' });
+    config.addIcon('delete', { 'fontawesome': 'fa-times' });
   }
 };

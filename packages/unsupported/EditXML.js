@@ -2,6 +2,9 @@
 
 var Component = require('substance/ui/Component');
 
+/*
+  Takes a path to an XML string and makes it editable
+*/
 function EditXML() {
   Component.apply(this, arguments);
 }
@@ -16,7 +19,6 @@ EditXML.Prototype = function() {
     documentSession.transaction(function(tx) {
       tx.set(path, newXML);
     });
-
     this.send('xmlSaved', newXML);
   };
 
@@ -25,8 +27,6 @@ EditXML.Prototype = function() {
     var documentSession = this.context.documentSession;
     var doc = documentSession.getDocument();
     var xml = doc.get(this.props.path);
-
-    console.log('xmlval', xml);
 
     el.append(
       $$('textarea')

@@ -19,6 +19,13 @@
 
 .sc-cross-reference-targets {
   max-width: $medium-layout-width;
-  max-height: 300px;
+  max-height: 600px;
   overflow: auto;
+}
+
+.sc-cross-reference-tool {
+  > .se-actions > button {
+    padding: 5px;
+    font-size: $small-font-size;
+  }
 }

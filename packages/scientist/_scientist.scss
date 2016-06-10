@@ -14,9 +14,17 @@ $fa-font-path:  "../fonts" !default;
 @import '../../packages/cross-reference/_cross-reference';
 @import '../../packages/ref-list/_ref-list';
 @import '../../packages/ref/_ref';
+@import '../../packages/prompt/_prompt';
 
 .sc-scientist-writer {
   .se-toolbar-wrapper {
     border-bottom: 1px solid $border-color;
+  }
+}
+
+
+.sc-overlay .se-actions {
+  > button {
+    color: $link-color;
   }
 }

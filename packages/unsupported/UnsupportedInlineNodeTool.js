@@ -3,7 +3,9 @@
 var Component = require('substance/ui/Component');
 var clone = require('lodash/clone');
 var Modal = require('substance/ui/Modal');
+var Prompt = require('substance/ui/Prompt');
 var EditXML = require('./EditXML');
+
 
 /*
   Prompt shown when an unsupported node is selected.
@@ -36,12 +38,12 @@ UnsupportedInlineNodeTool.Prototype = function() {
     var node = this.props.node;
 
     el.append(
-      $$('div').addClass('se-actions').append(
-        $$('button')
-          .attr({title: this.i18n.t('edit')})
-          .addClass('se-action')
-          .on('click', this._onEdit)
-          .append('Edit JATS')
+      $$(Prompt).append(
+        $$(Prompt.Label, {label: 'Unsupported Element'}),
+        $$(Prompt.Separator),
+        $$(Prompt.Action, {name: 'edit', title: 'Edit XML'})
+          .on('click', this._onEdit),
+        $$(Prompt.Action, {name: 'delete', title: 'Delete Element'})
       )
     );
 

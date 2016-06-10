@@ -3,7 +3,9 @@
 var Component = require('substance/ui/Component');
 var clone = require('lodash/clone');
 var map = require('lodash/map');
+var Modal = require('substance/ui/Modal');
 var CrossReferenceTargets = require('./CrossReferenceTargets');
+var Prompt = require('substance/ui/Prompt');
 
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
@@ -32,20 +34,53 @@ function getTargetsForReference(node) {
 */
 function CrossReferenceTool() {
   CrossReferenceTool.super.apply(this, arguments);
+
+  this.handleActions({
+    'closeModal': this._doneEditing,
+    'doneEditing': this._doneEditing
+  });
 }
 
 CrossReferenceTool.Prototype = function() {
 
+  this._onEdit = function() {
+    this.setState({
+      edit: true
+    });
+  };
+
+  this._doneEditing = function() {
+    this.setState({
+      edit: false
+    });
+  };
+
   this.render = function($$) {
     var node = this.props.node;
-    var el = $$('div').addClass('sc-edit-reference');
-    var availableTargets = getTargetsForReference(node);
+    var el = $$('div').addClass('sc-cross-reference-tool');
 
     el.append(
-      $$(CrossReferenceTargets, {
-        availableTargets: availableTargets
-      })
+      $$(Prompt).append(
+        $$(Prompt.Label, {label: 'Cross Reference'}),
+        $$(Prompt.Separator),
+        $$(Prompt.Action, {name: 'edit', title: 'Edit Reference'})
+          .on('click', this._onEdit),
+        $$(Prompt.Action, {name: 'delete', title: 'Delete Reference'})
+      )
     );
+
+    if (this.state.edit) {
+      var availableTargets = getTargetsForReference(node);
+      el.append(
+        $$(Modal, {
+          width: 'medium'
+        }).append(
+          $$(CrossReferenceTargets, {
+            availableTargets: availableTargets
+          })
+        )
+      );
+    }
     return el;
   };
 };

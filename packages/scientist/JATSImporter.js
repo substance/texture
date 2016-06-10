@@ -58,7 +58,7 @@ JATSImporter.Prototype = function() {
   this._converterCanBeApplied = function(converter, el) {
     var currentContext = this.state.getCurrentElementContext();
     var allowedContext = converter.allowedContext;
-    var matches = converter.matchElement(el);
+    var matches = converter.matchElement(el, this);
     if (matches && currentContext && allowedContext) {
       var parentTagName = currentContext.tagName;
       if (isString(allowedContext)) {

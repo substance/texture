@@ -58,6 +58,12 @@ module.exports = {
     config.import(require('../superscript/SuperscriptPackage'));
     config.import(require('../table/TablePackage'));
     config.import(require('../table-wrap/TableWrapPackage'));
+
+    // support inline wrappers, for all hybrid types that can be
+    // block-level but also inline.
+    config.import(require('../inline-wrapper/InlineWrapperPackage'));
+
+    // catch all converters
     config.import(require('../unsupported/UnsupportedNodePackage'));
 
     config.addImporter('jats', JATSImporter);

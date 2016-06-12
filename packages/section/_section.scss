@@ -9,24 +9,24 @@
 }
 
 .sc-isolated-node > .se-container {
-  padding: 20px;
-  border: 2px solid transparent;
+  padding: 10px 20px;
+  outline: 2px solid transparent;
 }
 
 .sc-isolated-node > .se-container:hover, {
   // background: rgba(163, 205, 253, 0.1);
-  border: 2px solid rgba(#A3CDFD, 0.4);
+  outline: 2px solid rgba(#A3CDFD, 0.4);
 }
 
 .sc-isolated-node.sm-selected > .se-container, {
   background: rgba(163, 205, 253, 0.3);
-  border: 2px solid rgba(#A3CDFD, 1);
+  outline: 2px solid rgba(#A3CDFD, 1);
 }
 
 .sc-isolated-node.sm-focused > .se-container {
   background: #fff;
   outline: none;
-  border: 2px solid #A3CDFD;
+  outline: 2px solid #A3CDFD;
 }
 
 .sc-section > .se-title {

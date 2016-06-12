@@ -4,7 +4,7 @@
   "dependencies": {
     "jquery": "^2.2.4",
     "lodash": "^4.2.1",
-    "substance": "substance/substance#devel"
+    "substance": "substance/substance#ca40b3d0aa8140e9374a42ef495f3c0fb8780e03"
   },
   "devDependencies": {
     "browserify": "substance/node-browserify#d3caeb6dcdaa97a258d099c7231a57f0f60ec876",

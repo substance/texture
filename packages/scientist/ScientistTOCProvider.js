@@ -16,14 +16,12 @@ function ScientistTOCProvider(documentSession) {
   EventEmitter.apply(this, arguments);
 
   this.documentSession = documentSession;
-
   this.entries = this.computeEntries();
   if (this.entries.length > 0) {
     this.activeEntry = this.entries[0].id;
   } else {
     this.activeEntry = null;
   }
-
   this.documentSession.on('update', this.handleDocumentChange, this);
 }
 
@@ -40,7 +38,6 @@ ScientistTOCProvider.Prototype = function() {
   // Inspects a document change and recomputes the
   // entries if necessary
   this.handleDocumentChange = function(change) { // eslint-disable-line
-    console.warn('TODO: Compute needsUpdate');
     var needsUpdate = false;
     if (needsUpdate) {
       this.entries = this.computeEntries();
@@ -76,7 +73,6 @@ ScientistTOCProvider.Prototype = function() {
     var body = doc.get('body');
     var level = 1;
     var entries = this._computeEntriesForContainer(body, level);
-    console.log('entries', entries);
     return entries;
   };
 

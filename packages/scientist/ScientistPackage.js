@@ -1,17 +1,5 @@
 'use strict';
 
-// Base commands
-var UndoCommand = require('substance/ui/UndoCommand');
-var RedoCommand = require('substance/ui/RedoCommand');
-var SaveCommand = require('substance/ui/SaveCommand');
-
-// Base Tools
-var SwitchTextTypeCommand = require('substance/packages/text/SwitchTextTypeCommand');
-var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
-var UndoTool = require('substance/ui/UndoTool');
-var RedoTool = require('substance/ui/RedoTool');
-var SaveTool = require('substance/ui/SaveTool');
-
 var JATSImporter = require('./JATSImporter');
 var JATSExporter = require('./JATSExporter');
 
@@ -19,20 +7,10 @@ module.exports = {
   name: 'scientist',
   configure: function(config) {
 
-    // Setup base functionality
-    config.addCommand(UndoCommand);
-    config.addCommand(RedoCommand);
-    config.addCommand(SwitchTextTypeCommand);
-    config.addCommand(SaveCommand);
 
-    config.addTool(SwitchTextTypeTool);
-    config.addTool(UndoTool);
-    config.addTool(RedoTool);
-
-    // Activate save tool
-    config.addTool(SaveTool);
 
     // Now import base packages
+    config.import(require('substance/packages/base/BasePackage'));
     config.import(require('../article/ArticlePackage'));
     config.import(require('../body/BodyPackage'));
     config.import(require('../back/BackPackage'));

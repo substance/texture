@@ -6,6 +6,7 @@ var map = require('lodash/map');
 var Modal = require('substance/ui/Modal');
 var CrossReferenceTargets = require('./CrossReferenceTargets');
 var Prompt = require('substance/ui/Prompt');
+var deleteSelection = require('substance/model/transform/deleteSelection');
 
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
@@ -55,17 +56,25 @@ CrossReferenceTool.Prototype = function() {
     });
   };
 
+  this._onDelete = function() {
+    var ds = this.context.documentSession;
+    ds.transaction(function(tx, args) {
+      deleteSelection(tx, args);
+    });
+  };
+
   this.render = function($$) {
     var node = this.props.node;
     var el = $$('div').addClass('sc-cross-reference-tool');
 
     el.append(
       $$(Prompt).append(
-        $$(Prompt.Label, {label: 'Cross Reference'}),
+        $$(Prompt.Label, {label: this.getLabel('cross-reference')}),
         $$(Prompt.Separator),
-        $$(Prompt.Action, {name: 'edit', title: 'Edit Reference'})
+        $$(Prompt.Action, {name: 'edit', title: this.getLabel('edit-reference')})
           .on('click', this._onEdit),
-        $$(Prompt.Action, {name: 'delete', title: 'Delete Reference'})
+        $$(Prompt.Action, {name: 'delete', title: this.getLabel('delete-reference')})
+          .on('click', this._onDelete)
       )
     );
 

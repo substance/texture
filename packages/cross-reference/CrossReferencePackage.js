@@ -14,5 +14,14 @@ module.exports = {
     config.addConverter('jats', CrossReferenceJATSConverter);
     config.addCommand(CrossReferenceCommand);
     config.addTool(CrossReferenceTool, { overlay: true });
+    config.addLabel('cross-reference', {
+      en: 'Cross Reference'
+    });
+    config.addLabel('edit-reference', {
+      en: 'Edit Reference'
+    });
+    config.addLabel('delete-reference', {
+      en: 'Delete Reference'
+    });
   }
 };

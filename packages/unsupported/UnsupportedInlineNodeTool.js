@@ -5,7 +5,7 @@ var clone = require('lodash/clone');
 var Modal = require('substance/ui/Modal');
 var Prompt = require('substance/ui/Prompt');
 var EditXML = require('./EditXML');
-
+var deleteSelection = require('substance/model/transform/deleteSelection');
 
 /*
   Prompt shown when an unsupported node is selected.
@@ -33,6 +33,13 @@ UnsupportedInlineNodeTool.Prototype = function() {
     });
   };
 
+  this._onDelete = function() {
+    var ds = this.context.documentSession;
+    ds.transaction(function(tx, args) {
+      deleteSelection(tx, args);
+    });
+  };
+
   this.render = function($$) {
     var el = $$('div').addClass('sc-unsupported-node-tool');
     var node = this.props.node;
@@ -44,6 +51,7 @@ UnsupportedInlineNodeTool.Prototype = function() {
         $$(Prompt.Action, {name: 'edit', title: 'Edit XML'})
           .on('click', this._onEdit),
         $$(Prompt.Action, {name: 'delete', title: 'Delete Element'})
+          .on('click', this._onDelete)
       )
     );
 

@@ -45,6 +45,17 @@ ScientistWriter.Prototype = function() {
     this.refs.contentPanel.scrollTo(nodeId);
   };
 
+  this.render = function($$) {
+    var el = $$('div').addClass('sc-scientist-writer');
+    el.append(
+      $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
+        this._renderContextSection($$),
+        this._renderMainSection($$)
+      )
+    );
+    return el;
+  };
+
   this._renderContentPanel = function($$) {
     var configurator = this.props.configurator;
 
@@ -99,16 +110,6 @@ ScientistWriter.Prototype = function() {
     return mainSection;
   };
 
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-scientist-writer');
-    el.append(
-      $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
-        this._renderContextSection($$),
-        this._renderMainSection($$)
-      )
-    );
-    return el;
-  };
 };
 
 ProseEditor.extend(ScientistWriter);

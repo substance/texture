@@ -2,7 +2,7 @@
 
 module.exports = {
 
-  type: "reference",
+  type: "cross-reference",
   tagName: "xref",
 
   allowedContext: [

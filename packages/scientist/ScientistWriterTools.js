@@ -11,11 +11,11 @@ function ScientistWriterTools() {
 ScientistWriterTools.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$("div").addClass('sc-example-toolbar');
+    var el = $$("div").addClass('sc-scientist-writer-tools');
     var commandStates = this.props.commandStates;
     var toolRegistry = this.context.toolRegistry;
     var tools = [];
-    
+
     toolRegistry.forEach(function(tool, name) {
       if (!tool.options.overlay) {
         // TODO: Remove clone hack once #577 is fixed

@@ -10,6 +10,7 @@ var UnsupportedNodeJATSConverter = require('../unsupported/UnsupportedNodeJATSCo
 var inBrowser = require('substance/util/inBrowser');
 
 function JATSImporter(config) {
+  config.enableInlineWrapper = true;
   JATSImporter.super.call(this, config);
   this.state = new JATSImporter.State();
 }
@@ -57,7 +58,7 @@ JATSImporter.Prototype = function() {
   this._converterCanBeApplied = function(converter, el) {
     var currentContext = this.state.getCurrentElementContext();
     var allowedContext = converter.allowedContext;
-    var matches = converter.matchElement(el);
+    var matches = converter.matchElement(el, this);
     if (matches && currentContext && allowedContext) {
       var parentTagName = currentContext.tagName;
       if (isString(allowedContext)) {
@@ -96,19 +97,6 @@ JATSImporter.Prototype = function() {
 
 XMLImporter.extend(JATSImporter);
 
-// function _getConfig(config) {
-//   // var converters = [];
-//   // if (config && config.converters) {
-//   //   converters = [];
-//   // }
-
-//   // converters = converters.concat(JATSImporter.converters);
-//   config = extend({}, config);
-//   config.converters = converters;
-//   config.schema = new ScientistSchema();
-//   return config;
-// }
-
 JATSImporter.State = function() {
   JATSImporter.State.super.call(this);
 };
@@ -126,21 +114,6 @@ JATSImporter.State.Prototype = function() {
     // stack for list types
     this.lists = [];
     this.listItemLevel = 1;
-  };
-
-  // Support for nested elements which we decided to
-  // model in a flattened way
-
-  this.getCurrentSectionLevel = function() {
-    return this.sectionLevel;
-  };
-
-  this.increaseSectionLevel = function() {
-    return this.sectionLevel++;
-  };
-
-  this.decreaseSectionLevel = function() {
-    return this.sectionLevel--;
   };
 
   this.getCurrentContainer = function() {
@@ -170,9 +143,9 @@ JATSImporter.State.Prototype = function() {
   this.getCurrentList = function() {
     return last(this.lists);
   };
+
 };
 
 DOMImporter.State.extend(JATSImporter.State);
-
 
 module.exports = JATSImporter;

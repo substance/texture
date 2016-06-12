@@ -7,15 +7,28 @@ $fa-font-path:  "../fonts" !default;
 @import '../../node_modules/substance/packages/_all';
 
 // Packages
-@import '../../packages/unsupported/_unsupported-block-node';
-@import '../../packages/unsupported/_unsupported-inline-node';
+@import '../../packages/unsupported/_unsupported';
 @import '../../packages/graphic/_graphic';
 @import '../../packages/figure/_figure';
 @import '../../packages/footnote/_footnote';
-@import '../../packages/reference/_reference';
+@import '../../packages/cross-reference/_cross-reference';
+@import '../../packages/ref-list/_ref-list';
+@import '../../packages/ref/_ref';
+
+/* Scientist Writer component */
 
 .sc-scientist-writer {
-  .se-toolbar-wrapper {
+
+  .se-context-section {
+    background: #fafafa;
+    border-right: 1px solid $border-color;
+
+    .se-toc-entries {
+      padding-right: 20px;
+    }
+  }
+
+  .sc-scientist-writer-tools {
     border-bottom: 1px solid $border-color;
   }
 }

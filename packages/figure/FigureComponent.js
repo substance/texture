@@ -1,8 +1,8 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var TextProperty = require('substance/ui/TextPropertyComponent');
-var renderNode = require('substance/util/renderNode');
+var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+var renderNodeComponent = require('../../util/renderNodeComponent');
 
 function FigureComponent() {
   Component.apply(this, arguments);
@@ -16,16 +16,23 @@ FigureComponent.Prototype = function() {
 
     var el = $$('div')
       .addClass('sc-figure')
-      .attr('data-id', this.props.node.id)
-      .append($$(TextProperty, {
-        path: [ this.props.node.id, 'label']
-      }));
+      .attr('data-id', this.props.node.id);
+
+
+    var labelEditor = $$(TextPropertyEditor, {
+      disabled: this.props.disabled,
+      path: [ this.props.node.id, 'label']
+    }).ref('labelEditor');
+
+    el.append(labelEditor);
 
     // Display figure content
     node.contentNodes.forEach(function(nodeId) {
       var childNode = doc.get(nodeId);
       el.append(
-        renderNode($$, this, childNode)
+        renderNodeComponent(this, $$, childNode, {
+          disabled: this.props.disabled
+        })
       );
     }.bind(this));
 
@@ -33,7 +40,9 @@ FigureComponent.Prototype = function() {
     node.captionNodes.forEach(function(nodeId) {
       var childNode = doc.get(nodeId);
       el.append(
-        renderNode($$, this, childNode)
+        renderNodeComponent(this, $$, childNode, {
+          disabled: this.props.disabled
+        })
       );
     }.bind(this));
 

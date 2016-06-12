@@ -1,12 +1,12 @@
 'use strict';
 
-var DocumentNode = require('substance/model/DocumentNode');
+var Container = require('substance/model/Container');
 
 function Section() {
   Section.super.apply(this, arguments);
 }
 
-DocumentNode.extend(Section);
+Container.extend(Section);
 
 Section.static.name = "section";
 
@@ -24,10 +24,12 @@ Section.static.name = "section";
 */
 
 Section.static.defineSchema({
-  meta: { type: 'id' },
-  label: { type: 'text' },
-  title: { type: 'text' },
-  contentNodes: { type: ['id'], default: [] },
+  xmlAttributes: { type: 'object', default: {} },
+  meta: { type: 'id', optional: true },
+  label: { type: 'string', optional:true },
+  title: { type: 'text', optional: true },
+  nodes: { type: ['id'], default: [] },
+  backMatter: { type: ['id'], default: [] }
 });
 
 module.exports = Section;

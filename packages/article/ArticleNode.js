@@ -8,7 +8,7 @@ function ArticleNode() {
 
 DocumentNode.extend(ArticleNode);
 
-ArticleNode.static.name = "article";
+ArticleNode.static.name = 'article';
 
 /*
   Content Model

@@ -15,14 +15,20 @@ $fa-font-path:  "../fonts" !default;
 @import '../../packages/ref-list/_ref-list';
 @import '../../packages/ref/_ref';
 
-.sc-scientist-writer {
-  .se-toolbar-wrapper {
-    border-bottom: 1px solid $border-color;
-  }
-}
+/* Scientist Writer component */
 
-.sc-overlay .se-actions {
-  > button {
-    color: $link-color;
+.sc-scientist-writer {
+
+  .se-context-section {
+    background: #fafafa;
+    border-right: 1px solid $border-color;
+
+    .se-toc-entries {
+      padding-right: 20px;
+    }
+  }
+
+  .sc-scientist-writer-tools {
+    border-bottom: 1px solid $border-color;
   }
 }

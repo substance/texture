@@ -9,9 +9,15 @@ var Layout = require('substance/ui/Layout');
 var ScientistWriterTools = require('./ScientistWriterTools');
 var ScientistWriterOverlay = require('./ScientistWriterOverlay');
 var ScientistSaveHandler = require('./ScientistSaveHandler');
+var ScientistTOCProvider = require('./ScientistTOCProvider');
+var TOCPanel = require('substance/ui/TOCPanel');
 
 function ScientistWriter() {
   ScientistWriter.super.apply(this, arguments);
+
+  this.handleActions({
+    'tocEntrySelected': this.tocEntrySelected
+  });
 }
 
 ScientistWriter.Prototype = function() {
@@ -26,41 +32,82 @@ ScientistWriter.Prototype = function() {
       exporter: this.exporter
     });
     this.documentSession.setSaveHandler(this.saveHandler);
+    this.toc = new ScientistTOCProvider(this.documentSession);
+  };
+
+  this.getChildContext = function() {
+    var childContext = _super.getChildContext.apply(this, arguments);
+    childContext.toc = this.toc;
+    return childContext;
+  };
+
+  this.tocEntrySelected = function(nodeId) {
+    this.refs.contentPanel.scrollTo(nodeId);
+  };
+
+  this._renderContentPanel = function($$) {
+    var configurator = this.props.configurator;
+
+    var contentPanel = $$(ScrollPane, {
+      scrollbarType: 'substance',
+      scrollbarPosition: 'right',
+      overlay: ScientistWriterOverlay,
+    }).ref('contentPanel');
+
+    var layout = $$(Layout, {
+      width: 'large'
+    });
+
+    // Body editor
+    layout.append(
+      $$(ContainerEditor, {
+        documentSession: this.documentSession,
+        containerId: 'body',
+        commands: configurator.getSurfaceCommandNames(),
+        textTypes: configurator.getTextTypes()
+      }).ref('body')
+    );
+
+    // Back matter editor
+    layout.append(
+      $$(ContainerEditor, {
+        documentSession: this.documentSession,
+        containerId: 'back',
+        commands: configurator.getSurfaceCommandNames(),
+        textTypes: configurator.getTextTypes()
+      }).ref('body')
+    );
+    contentPanel.append(layout);
+    return contentPanel;
+  };
+
+  this._renderContextSection = function($$) {
+    return $$('div').addClass('se-context-section').append(
+      $$(TOCPanel)
+    );
+  };
+
+  this._renderMainSection = function($$) {
+    var mainSection = $$('div').addClass('se-main-sectin');
+    var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
+      $$(Toolbar, {
+        content: ScientistWriterTools
+      }),
+      this._renderContentPanel($$)
+    );
+    mainSection.append(splitPane);
+    return mainSection;
   };
 
   this.render = function($$) {
-    var configurator = this.props.configurator;
-    return $$('div').addClass('sc-editor').append(
-      $$(SplitPane, {splitType: 'horizontal'}).append(
-        $$(Toolbar, {
-          content: ScientistWriterTools
-        }),
-        $$(ScrollPane, {
-          scrollbarType: 'substance',
-          scrollbarPosition: 'right',
-          overlay: ScientistWriterOverlay,
-        }).append(
-          $$(Layout, {
-            width: 'large'
-          }).append(
-            // Body editor
-            $$(ContainerEditor, {
-              documentSession: this.documentSession,
-              containerId: 'body',
-              commands: configurator.getSurfaceCommandNames(),
-              textTypes: configurator.getTextTypes()
-            }).ref('body'),
-            // Back matter editor
-            $$(ContainerEditor, {
-              documentSession: this.documentSession,
-              containerId: 'back',
-              commands: configurator.getSurfaceCommandNames(),
-              textTypes: configurator.getTextTypes()
-            }).ref('body')
-          )
-        ).ref('contentPanel')
+    var el = $$('div').addClass('sc-scientist-writer');
+    el.append(
+      $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
+        this._renderContextSection($$),
+        this._renderMainSection($$)
       )
     );
+    return el;
   };
 };
 

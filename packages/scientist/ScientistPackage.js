@@ -6,11 +6,10 @@ var JATSExporter = require('./JATSExporter');
 module.exports = {
   name: 'scientist',
   configure: function(config) {
-
-
-
     // Now import base packages
     config.import(require('substance/packages/base/BasePackage'));
+    config.import(require('substance/packages/persistence/PersistencePackage'));
+
     config.import(require('../article/ArticlePackage'));
     config.import(require('../body/BodyPackage'));
     config.import(require('../back/BackPackage'));
@@ -46,9 +45,5 @@ module.exports = {
 
     config.addImporter('jats', JATSImporter);
     config.addExporter('jats', JATSExporter);
-
-    // Icon resolving
-    config.addIcon('edit', { 'fontawesome': 'fa-pencil' });
-    config.addIcon('delete', { 'fontawesome': 'fa-times' });
   }
 };

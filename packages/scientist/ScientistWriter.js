@@ -57,6 +57,7 @@ ScientistWriter.Prototype = function() {
   };
 
   this._renderContentPanel = function($$) {
+    var doc = this.documentSession.getDocument();
     var configurator = this.props.configurator;
 
     var contentPanel = $$(ScrollPane, {
@@ -71,24 +72,27 @@ ScientistWriter.Prototype = function() {
     });
 
     // Body editor
+    var body = doc.get('body');
     layout.append(
       $$(ContainerEditor, {
-        documentSession: this.documentSession,
-        containerId: 'body',
+        node: body,
         commands: configurator.getSurfaceCommandNames(),
         textTypes: configurator.getTextTypes()
       }).ref('body')
     );
 
     // Back matter editor
-    layout.append(
-      $$(ContainerEditor, {
-        documentSession: this.documentSession,
-        containerId: 'back',
-        commands: configurator.getSurfaceCommandNames(),
-        textTypes: configurator.getTextTypes()
-      }).ref('body')
-    );
+    var back = doc.get('back');
+    if (back) {
+      layout.append(
+        $$(ContainerEditor, {
+          node: back,
+          commands: configurator.getSurfaceCommandNames(),
+          textTypes: configurator.getTextTypes()
+        }).ref('back')
+      );
+    }
+
     contentPanel.append(layout);
     return contentPanel;
   };

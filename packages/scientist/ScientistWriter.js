@@ -10,7 +10,7 @@ var ScientistWriterTools = require('./ScientistWriterTools');
 var ScientistWriterOverlay = require('./ScientistWriterOverlay');
 var ScientistSaveHandler = require('./ScientistSaveHandler');
 var ScientistTOCProvider = require('./ScientistTOCProvider');
-var TOCPanel = require('substance/ui/TOCPanel');
+var TOC = require('substance/ui/TOC');
 
 function ScientistWriter() {
   ScientistWriter.super.apply(this, arguments);
@@ -32,12 +32,12 @@ ScientistWriter.Prototype = function() {
       exporter: this.exporter
     });
     this.documentSession.setSaveHandler(this.saveHandler);
-    this.toc = new ScientistTOCProvider(this.documentSession);
+    this.tocProvider = new ScientistTOCProvider(this.documentSession);
   };
 
   this.getChildContext = function() {
     var childContext = _super.getChildContext.apply(this, arguments);
-    childContext.toc = this.toc;
+    childContext.tocProvider = this.tocProvider;
     return childContext;
   };
 
@@ -60,6 +60,7 @@ ScientistWriter.Prototype = function() {
     var configurator = this.props.configurator;
 
     var contentPanel = $$(ScrollPane, {
+      tocProvider: this.tocProvider,
       scrollbarType: 'substance',
       scrollbarPosition: 'right',
       overlay: ScientistWriterOverlay,
@@ -94,7 +95,7 @@ ScientistWriter.Prototype = function() {
 
   this._renderContextSection = function($$) {
     return $$('div').addClass('se-context-section').append(
-      $$(TOCPanel)
+      $$(TOC)
     );
   };
 

@@ -1,6 +1,7 @@
 "use strict";
 
 var EventEmitter = require('substance/util/EventEmitter');
+var TOCProvider = require('substance/ui/TOCProvider');
 
 /*
   Manages a table of content for scientist.
@@ -80,41 +81,7 @@ ScientistTOCProvider.Prototype = function() {
     return this.entries;
   };
 
-  this.markActiveEntry = function(scrollPane) {
-    var panelContent = scrollPane.getContentElement();
-    var contentHeight = scrollPane.getContentHeight();
-    var scrollPaneHeight = scrollPane.getHeight();
-    var scrollPos = scrollPane.getScrollPosition();
-
-    var scrollBottom = scrollPos + scrollPaneHeight;
-    var regularScanline = scrollPos;
-    var smartScanline = 2 * scrollBottom - contentHeight;
-    var scanline = Math.max(regularScanline, smartScanline);
-
-    var tocNodes = this.computeEntries();
-    if (tocNodes.length === 0) return;
-
-    // Use first toc node as default
-    var activeEntry = tocNodes[0].id;
-    for (var i = tocNodes.length - 1; i >= 0; i--) {
-      var tocNode = tocNodes[i];
-      var nodeEl = panelContent.find('[data-id="'+tocNode.id+'"]');
-      if (!nodeEl) {
-        console.warn('Not found in Content panel', tocNode.id);
-        return;
-      }
-      var panelOffset = scrollPane.getPanelOffsetForElement(nodeEl);
-      if (scanline >= panelOffset) {
-        activeEntry = tocNode.id;
-        break;
-      }
-    }
-
-    if (this.activeEntry !== activeEntry) {
-      this.activeEntry = activeEntry;
-      this.emit('toc:updated');
-    }
-  };
+  this.markActiveEntry = TOCProvider.prototype.markActiveEntry;
 };
 
 EventEmitter.extend(ScientistTOCProvider);

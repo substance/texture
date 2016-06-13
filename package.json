@@ -2,7 +2,6 @@
   "name": "substance-scientist",
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
-    "jquery": "^2.2.4",
     "lodash": "^4.2.1",
     "substance": "substance/substance#devel"
   },

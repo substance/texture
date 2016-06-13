@@ -1,7 +1,7 @@
 'use strict';
 
 var oo = require('substance/util/oo');
-var jQuery = require('jquery');
+var request = require('substance/util/request');
 
 function ExampleXMLStore() {
 
@@ -13,16 +13,7 @@ ExampleXMLStore.Prototype = function() {
     if (cached) {
       return cb(null, cached);
     }
-
-    jQuery.ajax('/data/'+documentId+'.xml', {
-      dataType: 'text'
-    })
-    .done(function(data) {
-      cb(null, data);
-    }.bind(this))
-    .fail(function(xhr, status, err) {
-      cb(err);
-    }.bind(this));
+    request('GET', '/data/'+documentId+'.xml', null, cb);
   };
 
   // TODO make functional

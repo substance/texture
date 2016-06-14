@@ -59,7 +59,7 @@ CrossReferenceTool.Prototype = function() {
   this._onDelete = function() {
     var ds = this.context.documentSession;
     ds.transaction(function(tx, args) {
-      deleteSelection(tx, args);
+      return deleteSelection(tx, args);
     });
   };
 

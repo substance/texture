@@ -13,8 +13,6 @@ module.exports = {
     // HACK monkey patching the context
     node.id = converter.nextId('inline-wrapper');
     var state = converter.state;
-    state.popElementContext();
-    state.pushElementContext(state.getCurrentElementContext().tagName);
     node.wrappedNode = converter.convertElement(el).id;
   },
 

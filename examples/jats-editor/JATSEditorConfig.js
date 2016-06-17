@@ -1,4 +1,6 @@
-var ScientistPackage = require('../../packages/scientist/ScientistPackage');
+'use strict';
+
+var ScientistPackage = require('../../packages/JATSWriter');
 var ExampleXMLStore = require('../ExampleXMLStore');
 
 module.exports = {
@@ -8,6 +10,6 @@ module.exports = {
     config.import(ScientistPackage);
 
     // Define XML Store
-    config.setXMLStore(ExampleXMLStore); 
+    config.setXMLStore(ExampleXMLStore);
   }
 };

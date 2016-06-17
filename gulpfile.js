@@ -1,5 +1,6 @@
 'use strict';
- 
+/* eslint-disable no-console, no-invalid-this */
+
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var browserify = require('browserify');

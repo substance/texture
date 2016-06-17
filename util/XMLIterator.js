@@ -32,9 +32,7 @@ XMLIterator.Prototype = function() {
   };
 
   this._manyOf = function(tagNames, cb) {
-    if (isString(tagNames)) {
-      tagNames = [tagNames];
-    }
+    if (isString(tagNames)) tagNames = [tagNames];
     var count = 0;
     tagNames = makeMap(tagNames);
     while(this.it.hasNext()) {

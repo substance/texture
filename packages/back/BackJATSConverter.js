@@ -15,12 +15,11 @@ module.exports = {
     (label?, title*, (ack | app-group | bio | fn-group | glossary | ref-list | notes | sec)*)
   */
   import: function(el, node, converter) {
-    var children = el.getChildren();
-    var iterator = new XMLIterator(children);
-
-
     node.id = 'back'; // There can only be one back item
     node.xmlAttributes = el.getAttributes();
+
+    var children = el.getChildren();
+    var iterator = new XMLIterator(children);
 
     iterator.optional('label', function(child) {
       node.label = converter.annotatedText(child, [node.id, 'label']);

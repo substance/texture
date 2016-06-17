@@ -1,5 +1,6 @@
 'use strict';
 
+var isString = require('lodash/isString');
 var oo = require('substance/util/oo');
 var ArrayIterator = require('substance/util/ArrayIterator');
 var makeMap = require('substance/util/makeMap');
@@ -31,6 +32,7 @@ XMLIterator.Prototype = function() {
   };
 
   this._manyOf = function(tagNames, cb) {
+    if (isString(tagNames)) tagNames = [tagNames];
     var count = 0;
     tagNames = makeMap(tagNames);
     while(this.it.hasNext()) {

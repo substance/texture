@@ -1,5 +1,7 @@
 'use strict';
 
+var XMLIterator = require('../../util/XMLIterator');
+
 module.exports = {
 
   type: 'article',
@@ -19,44 +21,38 @@ module.exports = {
       xmlns:xsi XML Schema Namespace Declaration
 
     Content Model
-      (front, body?, back?, floats-group?, (sub-article* | response*))
+      front, body?, back?, floats-group?, (sub-article* | response*)
   */
 
   import: function(el, node, converter) {
-    node.id = this.tagName;
+    node.id = 'article'; // there is only be one article element
+    node.xmlAttributes = el.getAttributes();
+
     var children = el.getChildren();
-    children.forEach(function(childEl) {
-      var tagName = childEl.tagName;
-      var child = converter.convertElement(childEl);
-      switch(tagName) {
-        case 'front':
-          node.front = child.id;
-          break;
-        case 'body':
-          node.body = child.id;
-          break;
-        case 'back':
-          node.back = child.id;
-          break;
-        case 'floats-group':
-          node.floatsGroup = child.id;
-          break;
-        case 'sub-article':
-          if (!node.subArticles) {
-            node.subArticles = [];
-          }
-          node.subArticles.push(child.id);
-          break;
-        case 'response':
-          if (!node.responses) {
-            node.responses = [];
-          }
-          node.responses.push(child.id);
-          break;
-        default:
-          throw new Error('Illegal <article> content element: ' + tagName);
-      }
+    var iterator = new XMLIterator(children);
+    iterator.required('front', function(child) {
+      node.front = converter.convertElement(child).id;
     });
+    iterator.optional('body', function(child) {
+      node.body = converter.convertElement(child).id;
+    });
+    iterator.optional('back', function(child) {
+      node.back = converter.convertElement(child).id;
+    });
+    iterator.optional('floats-group', function(child) {
+      node.floatsGroup = converter.convertElement(child).id;
+    });
+    iterator.manyOf('sub-article', function(child) {
+      if (!node.subArticles) node.subArticles = [];
+      node.subArticles.push(converter.convertElement(child).id);
+    });
+    iterator.manyOf('response', function(child) {
+      if (!node.responses) node.responses = [];
+      node.responses.push(converter.convertElement(child).id);
+    });
+    if (iterator.hasNext()) {
+      throw new Error('Illegal JATS: ' + el.outerHTML);
+    }
   },
 
   export: function(node, el, converter) {

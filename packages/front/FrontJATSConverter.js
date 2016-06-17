@@ -33,7 +33,7 @@ module.exports = {
     } else {
       throw new Error('Invalid JATS: <article-meta> is mandatory in <front>');
     }
-    node.contentNodes = converter._convertContainerElement(el, i);
+    node.nodes = converter._convertContainerElement(el, i);
   },
 
   export: function(node, el, converter) {
@@ -42,7 +42,7 @@ module.exports = {
       el.append(converter.convertNode(node.journalMeta));
     }
     el.append(converter.convertNode(node.articleMeta));
-    el.append(converter.convertNodes(node.contentNodes));
+    el.append(converter.convertNodes(node.nodes));
   }
 
 };

@@ -1,12 +1,12 @@
 'use strict';
 
-var DocumentNode = require('substance/model/DocumentNode');
+var Container = require('substance/model/Container');
 
 function Front() {
   Front.super.apply(this, arguments);
 }
 
-DocumentNode.extend(Front);
+Container.extend(Front);
 
 Front.static.name = "front";
 
@@ -19,11 +19,11 @@ Front.static.name = "front";
 */
 
 Front.static.defineSchema({
-  xmlAttributes: { type: 'object',  default: {} },
+  xmlAttributes: { type: 'object', default: {} },
   journalMeta: { type: 'id', optional: true },
   articleMeta: { type: 'id' },
-  contentNodes: { type: ['id'], default: [] }
+  // container
+  nodes: { type: ['id'], default: [] }
 });
-
 
 module.exports = Front;

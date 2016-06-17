@@ -70,26 +70,43 @@ ScientistWriter.Prototype = function() {
       width: 'large'
     });
 
-    // Body editor
-    var body = doc.get('body');
-    layout.append(
+    var front = doc.get('front');
+    var frontSection = $$('div').addClass('se-front-section').append(
+      $$('h1').append('Front'),
       $$(ContainerEditor, {
-        node: body,
+        node: front,
         commands: configurator.getSurfaceCommandNames(),
         textTypes: configurator.getTextTypes()
-      }).ref('body')
+      }).ref('front')
     );
+    layout.append(frontSection);
+
+    // Body editor
+    var body = doc.get('body');
+    if (body) {
+      var bodySection = $$('div').addClass('se-body-section').append(
+        $$('h1').append('Body'),
+        $$(ContainerEditor, {
+          node: body,
+          commands: configurator.getSurfaceCommandNames(),
+          textTypes: configurator.getTextTypes()
+        }).ref('body')
+      );
+      layout.append(bodySection);
+    }
 
     // Back matter editor
     var back = doc.get('back');
     if (back) {
-      layout.append(
+      var backSection = $$('div').addClass('se-back-section').append(
+        $$('h1').append('Back'),
         $$(ContainerEditor, {
           node: back,
           commands: configurator.getSurfaceCommandNames(),
           textTypes: configurator.getTextTypes()
         }).ref('back')
       );
+      layout.append(backSection);
     }
 
     contentPanel.append(layout);

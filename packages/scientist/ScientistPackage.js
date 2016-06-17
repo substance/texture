@@ -1,5 +1,7 @@
 'use strict';
 
+var Overlay = require('substance/ui/Overlay');
+
 var JATSImporter = require('./JATSImporter');
 var JATSExporter = require('./JATSExporter');
 
@@ -9,6 +11,8 @@ module.exports = {
     // Now import base packages
     config.import(require('substance/packages/base/BasePackage'));
     config.import(require('substance/packages/persistence/PersistencePackage'));
+
+    config.addComponent('overlay', Overlay);
 
     config.import(require('../article/ArticlePackage'));
     config.import(require('../body/BodyPackage'));

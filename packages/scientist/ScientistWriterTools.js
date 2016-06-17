@@ -1,8 +1,7 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var Toolbar = require('substance/ui/Toolbar');
-var clone = require('lodash/clone');
+var ToolGroup = require('substance/ui/ToolGroup');
 
 function ScientistWriterTools() {
   Component.apply(this, arguments);
@@ -11,24 +10,21 @@ function ScientistWriterTools() {
 ScientistWriterTools.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$("div").addClass('sc-scientist-writer-tools');
+    var el = $$("div").addClass('sc-scientist-writer-toolbar');
     var commandStates = this.props.commandStates;
     var toolRegistry = this.context.toolRegistry;
-    var tools = [];
 
+    var tools = [];
     toolRegistry.forEach(function(tool, name) {
       if (!tool.options.overlay) {
-        // TODO: Remove clone hack once #577 is fixed
         tools.push(
-          $$(tool.Class, clone(commandStates[name]))
+          $$(tool.Class, commandStates[name])
         );
       }
     });
 
     el.append(
-      $$(Toolbar.Group).append(
-        tools
-      )
+      $$(ToolGroup).append(tools)
     );
     return el;
   };

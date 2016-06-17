@@ -4,7 +4,6 @@ var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
-var Toolbar = require('substance/ui/Toolbar');
 var Layout = require('substance/ui/Layout');
 var ScientistWriterTools = require('./ScientistWriterTools');
 var ScientistWriterOverlay = require('./ScientistWriterOverlay');
@@ -104,11 +103,13 @@ ScientistWriter.Prototype = function() {
   };
 
   this._renderMainSection = function($$) {
+    var commandStates = this.commandManager.getCommandStates();
     var mainSection = $$('div').addClass('se-main-sectin');
     var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
-      $$(Toolbar, {
-        content: ScientistWriterTools
-      }),
+      // TODO: ProseEditor needs 'toolbar' ref
+      $$(ScientistWriterTools, {
+        commandStates: commandStates
+      }).ref('toolbar'),
       this._renderContentPanel($$)
     );
     mainSection.append(splitPane);

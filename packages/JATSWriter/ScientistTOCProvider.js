@@ -54,7 +54,7 @@ ScientistTOCProvider.Prototype = function() {
       if (node.type === 'section') {
         entries.push({
           id: node.id,
-          name: doc.get(node.title).getText(),
+          name: node.getTitle(),
           level: level,
           node: node
         });

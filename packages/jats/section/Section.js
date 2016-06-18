@@ -6,6 +6,16 @@ function Section() {
   Section.super.apply(this, arguments);
 }
 
+Section.Prototype = function() {
+
+  this.getTitle = function() {
+    var titleNode = this.getDocument().get(this.title);
+    if (titleNode) {
+      return titleNode.getText();
+    }
+  };
+}
+
 Container.extend(Section);
 
 Section.static.name = "section";

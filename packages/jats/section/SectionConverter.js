@@ -44,10 +44,10 @@ module.exports = {
       node.meta = converter.convertElement(child).id;
     });
     iterator.optional('label', function(child) {
-      node.label = converter.annotatedText(child, [node.id, 'label']);
+      node.label = converter.convertElement(child).id;
     });
     iterator.optional('title', function(child) {
-      node.title = converter.annotatedText(child, [node.id, 'title']);
+      node.title = converter.convertElement(child).id;
     });
 
     iterator.manyOf(JATS.PARA_LEVEL, function(child) {

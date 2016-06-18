@@ -52,10 +52,9 @@ ScientistTOCProvider.Prototype = function() {
     container.nodes.forEach(function(nodeId) {
       var node = doc.get(nodeId);
       if (node.type === 'section') {
-
         entries.push({
           id: node.id,
-          name: node.title,
+          name: doc.get(node.title).getText(),
           level: level,
           node: node
         });

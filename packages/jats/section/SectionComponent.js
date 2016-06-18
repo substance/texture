@@ -12,25 +12,19 @@ SectionComponent.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
+    var doc = node.getDocument();
     var el = $$('div').addClass('sc-section');
 
-    // TODO: would be good to know the tag name or the path
-    // el.append(
-    //   $$('div').addClass('se-tag').append('section')
-    // );
-
     if (node.title) {
+      var title = doc.get(node.title);
       el.append(
-        $$(TextPropertyEditor, { path: [node.id, 'title'] }).ref('titleEditor')
-          .addClass('se-title')
+        $$(TextPropertyEditor, { path: title.getTextPath() }).addClass('se-title').ref('titleEditor')
       );
     }
-
     el.append(
       $$(ContainerEditor, { node: node }).ref('contentEditor')
         .addClass('se-content')
     );
-
     return el;
   };
 

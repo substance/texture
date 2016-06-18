@@ -1,8 +1,14 @@
 // ATTENTION: this file has been generated automatically using `util/build-jats-package`.
+@import "./bold/_bold";
 @import "./cross-reference/_cross-reference";
+@import "./ext-link/_ext-link";
 @import "./figure/_figure";
 @import "./footnote/_footnote";
 @import "./graphic/_graphic";
+@import "./italic/_italic";
+@import "./monospace/_monospace";
 @import "./ref-list/_ref-list";
 @import "./ref/_ref";
 @import "./section/_section";
+@import "./subscript/_subscript";
+@import "./superscript/_superscript";

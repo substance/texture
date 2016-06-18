@@ -1,12 +1,14 @@
 'use strict';
 
-var LinkPackage = require('substance/packages/link/LinkPackage');
+var ExtLink = require('./ExtLink');
 var ExtLinkConverter = require('./ExtLinkConverter');
+var ExtLinkComponent = require('./ExtLinkComponent');
 
 module.exports = {
-  name: 'link',
+  name: 'ext-link',
   configure: function(config) {
-    config.import(LinkPackage);
-    config.addConverter('jats', LinkJATSConverter);
+    config.addNode(ExtLink);
+    config.addConverter('jats', ExtLinkConverter);
+    config.addComponent(ExtLink.static.name, ExtLinkComponent);
   }
 };

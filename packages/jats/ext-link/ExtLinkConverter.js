@@ -4,7 +4,7 @@ var JATS = require('../JATS');
 
 module.exports = {
 
-  type: "link",
+  type: "ext-link",
   tagName: "ext-link",
 
   /*
@@ -32,21 +32,4 @@ module.exports = {
       tex-math | mml:math | abbrev | milestone-end | milestone-start | named-content |
       styled-content | fn | target | xref | sub | sup | x)*
   */
-
-  import: function(el, node) {
-    // ATTENTION: this is not implemented correctly yet
-    node.xmlAttributes = el.getAttributes();
-    node.url = el.attr('xlink:href');
-    node.title = el.attr('xlink:title');
-  },
-
-  export: function(node, el) {
-    // ATTENTION: this is not implemented correctly yet
-    el.attr(node.xmlAttributes);
-    el.attr({
-      'xlink:href': node.url,
-      'xlink:title': node.title
-    });
-  }
 };
-

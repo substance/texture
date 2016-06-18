@@ -6,6 +6,14 @@ function Graphic() {
   Graphic.super.apply(this, arguments);
 }
 
+Graphic.Prototype = function() {
+
+  this.getHref = function() {
+    return this.attributes['xlink:href'];
+  };
+
+};
+
 DocumentNode.extend(Graphic);
 
 Graphic.static.name = 'graphic';

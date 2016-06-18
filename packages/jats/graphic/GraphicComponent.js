@@ -15,7 +15,7 @@ GraphicComponent.Prototype = function() {
       .attr('data-id', node.id);
     el.append(
       $$('img').attr({
-        src: node.attributes.href
+        src: node.getHref()
       })
     );
     return el;

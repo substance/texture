@@ -9,8 +9,6 @@ module.exports = {
 
   type: 'ref-list',
   tagName: 'ref-list',
-  canContain: ['label', 'title'].concat(REFLIST_CONTENT),
-
 
   /*
     (

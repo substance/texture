@@ -7,9 +7,6 @@ module.exports = {
 
   type: 'section',
   tagName: 'sec',
-  canContain: ['sec-meta', 'label', 'title']
-    .concat(JATS.PARA_LEVEL)
-    .concat(["sec","notes","fn-group","glossary","ref-list"]),
 
   /*
     Attributes

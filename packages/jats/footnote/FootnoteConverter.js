@@ -18,7 +18,6 @@ module.exports = {
     Content
       (label?, (p)+)
   */
-  canContain: ['label', 'p'],
 
   import: function(el, node, converter) {
     var iterator = new XMLIterator(el.getChildren());

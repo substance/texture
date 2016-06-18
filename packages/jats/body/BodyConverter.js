@@ -19,7 +19,6 @@ module.exports = {
       (sec)*,
       sig-block?
   */
-  canContain: JATS.PARA_LEVEL.concat('sec', 'sig-block'),
 
   import: function(el, node, converter) {
     node.id = 'body'; // there is only be one body element

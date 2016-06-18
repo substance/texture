@@ -57,19 +57,7 @@ JATSImporter.Prototype = function() {
 
   this._converterCanBeApplied = function(converter, el) {
     var currentContext = this.state.getCurrentContext();
-    var matches = converter.matchElement(el, this);
-    var parentConverter;
-    if (currentContext) {
-      parentConverter = currentContext.converter;
-    }
-    var allowedTags;
-    if (parentConverter) {
-      allowedTags = parentConverter.canContain;
-    }
-    if (matches && currentContext && allowedTags) {
-      return (allowedTags.indexOf(el.tagName) > -1);
-    }
-    return matches;
+    return converter.matchElement(el, this);
   };
 
   this._getUnsupportedNodeConverter = function() {

@@ -19,7 +19,6 @@ module.exports = {
     Content
       ( title?, (p)* )
   */
-  canContain: ['title', 'p'],
 
   import: function(el, node, converter) {
     node.xmlAttributes = el.getAttributes();

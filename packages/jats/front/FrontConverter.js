@@ -19,7 +19,6 @@ module.exports = {
         (def-list | list | ack | bio | fn-group | glossary | notes)*
       )
   */
-  canContain: ['journal-meta', 'article-meta'].concat(FRONT_CONTENT),
 
   import: function(el, node, converter) {
     node.id = 'front'; // there is only one <front> element

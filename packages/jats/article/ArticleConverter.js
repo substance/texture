@@ -24,8 +24,6 @@ module.exports = {
       front, body?, back?, floats-group?, (sub-article* | response*)
   */
 
-  canContain: ['front', 'body', 'back', 'floats-group', 'sub-article', 'response'],
-
   import: function(el, node, converter) {
     node.id = 'article'; // there is only be one article element
 

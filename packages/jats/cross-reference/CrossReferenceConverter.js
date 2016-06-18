@@ -11,7 +11,6 @@ module.exports = {
     Content:
       (%all_phrase | break)*
   */
-  canContain: JATS.ALL_PHRASE.concat(JATS.BREAK),
 
   /* <xref ref-type="bibr" rid="bib50">Steppuhn and Baldwin, 2007</xref> */
 

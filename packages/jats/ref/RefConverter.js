@@ -1,13 +1,11 @@
 'use strict';
 
 var JATS = require('../JATS');
-var REF_MODEL = ['label', 'note', 'x'].concat(JATS.CITATION);
 
 module.exports = {
 
   type: 'ref',
   tagName: 'ref',
-  canContain: REF_MODEL,
 
   /*
     (label?, (citation-alternatives | element-citation | mixed-citation | nlm-citation | note | x)+)

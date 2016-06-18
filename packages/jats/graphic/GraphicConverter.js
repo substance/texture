@@ -39,7 +39,6 @@ module.exports = {
     )*
 
   */
-  canContain: GRAPHIC_ELEMENTS,
 
   import: function(el, node, converter) {
     var iterator = new XMLIterator(el.getChildren());

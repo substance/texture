@@ -7,8 +7,6 @@ module.exports = {
   type: "link",
   tagName: "ext-link",
 
-  canContain: JATS.ALL_PHRASE,
-
   /*
     Attributes
     assigning-authority Authority Responsible for an Identifier

@@ -13,7 +13,6 @@ module.exports = {
       label?, title*,
       (ack | app-group | bio | fn-group | glossary | ref-list | notes | sec)*
   */
-  canContain: ["label", "title"].concat(BACK_CONTENT),
 
   import: function(el, node, converter) {
     node.id = 'back'; // There can only be one back item

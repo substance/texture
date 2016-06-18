@@ -40,10 +40,6 @@ module.exports = {
       (attrib | permissions)*
     )
   */
-  canContain: ['object-id', 'label', 'caption', 'abstract', 'kwd-group']
-    .concat(ACCESS_OR_LINK)
-    .concat(FIGURE_CONTENT)
-    .concat(JATS.DISPLAY_BACK_MATTER),
 
   import: function(el, node, converter) {
 

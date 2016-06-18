@@ -1,10 +1,8 @@
 'use strict';
 
-var JATS = require('../JATS');
-
 module.exports = {
 
-  type: "cross-reference",
+  type: "xref",
   tagName: "xref",
 
   /*

@@ -11,7 +11,7 @@ module.exports = {
     config.import(require('./body'));
     config.import(require('./bold'));
     config.import(require('./caption'));
-    config.import(require('./cross-reference'));
+    config.import(require('./xref'));
     config.import(require('./ext-link'));
     config.import(require('./figure'));
     config.import(require('./footnote'));

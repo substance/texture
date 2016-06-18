@@ -4,7 +4,7 @@ var Component = require('substance/ui/Component');
 var clone = require('lodash/clone');
 var map = require('lodash/map');
 var Modal = require('substance/ui/Modal');
-var CrossReferenceTargets = require('./CrossReferenceTargets');
+var XRefTargets = require('./XRefTargets');
 var Prompt = require('substance/ui/Prompt');
 var deleteSelection = require('substance/model/transform/deleteSelection');
 
@@ -33,8 +33,8 @@ function getTargetsForReference(node) {
 /*
   Edit a reference in a prompt.
 */
-function CrossReferenceTool() {
-  CrossReferenceTool.super.apply(this, arguments);
+function XRefTool() {
+  XRefTool.super.apply(this, arguments);
 
   this.handleActions({
     'closeModal': this._doneEditing,
@@ -42,7 +42,7 @@ function CrossReferenceTool() {
   });
 }
 
-CrossReferenceTool.Prototype = function() {
+XRefTool.Prototype = function() {
 
   this._onEdit = function() {
     this.setState({
@@ -65,15 +65,15 @@ CrossReferenceTool.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
-    var el = $$('div').addClass('sc-cross-reference-tool');
+    var el = $$('div').addClass('sc-xref-tool');
 
     el.append(
       $$(Prompt).append(
-        $$(Prompt.Label, {label: this.getLabel('cross-reference')}),
+        $$(Prompt.Label, {label: this.getLabel('xref')}),
         $$(Prompt.Separator),
-        $$(Prompt.Action, {name: 'edit', title: this.getLabel('edit-reference')})
+        $$(Prompt.Action, {name: 'edit', title: this.getLabel('edit-xref')})
           .on('click', this._onEdit),
-        $$(Prompt.Action, {name: 'delete', title: this.getLabel('delete-reference')})
+        $$(Prompt.Action, {name: 'delete', title: this.getLabel('delete-xref')})
           .on('click', this._onDelete)
       )
     );
@@ -84,7 +84,7 @@ CrossReferenceTool.Prototype = function() {
         $$(Modal, {
           width: 'medium'
         }).append(
-          $$(CrossReferenceTargets, {
+          $$(XRefTargets, {
             availableTargets: availableTargets
           })
         )
@@ -94,16 +94,16 @@ CrossReferenceTool.Prototype = function() {
   };
 };
 
-Component.extend(CrossReferenceTool);
+Component.extend(XRefTool);
 
-CrossReferenceTool.static.getProps = function(commandStates) {
-  if (commandStates['cross-reference'].mode === 'edit') {
-    return clone(commandStates['cross-reference']);
+XRefTool.static.getProps = function(commandStates) {
+  if (commandStates['xref'].mode === 'edit') {
+    return clone(commandStates['xref']);
   } else {
     return undefined;
   }
 };
 
-CrossReferenceTool.static.name = 'cross-reference';
+XRefTool.static.name = 'xref';
 
-module.exports = CrossReferenceTool;
+module.exports = XRefTool;

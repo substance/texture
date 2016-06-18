@@ -1,7 +1,6 @@
-.sc-cross-reference {
+.sc-xref {
   background: rgba(0,0,0,0.075);
   border-bottom: 1px solid rgba(0,0,0,0.3);
-  cursor: pointer;
   white-space: nowrap;
 
   &.sm-bibr {
@@ -17,13 +16,13 @@
   }
 }
 
-.sc-cross-reference-targets {
+.sc-xref-targets {
   max-width: $medium-layout-width;
   max-height: 600px;
   overflow: auto;
 }
 
-.sc-cross-reference-tool {
+.sc-xref-tool {
   > .se-actions > button {
     padding: 5px;
     font-size: $small-font-size;

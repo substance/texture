@@ -4,6 +4,10 @@ var Component = require('substance/ui/Component');
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 var renderNodeComponent = require('../../../util/renderNodeComponent');
 
+var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+var ContainerEditor = require('substance/ui/ContainerEditor');
+
+
 function FigureComponent() {
   Component.apply(this, arguments);
 }
@@ -39,11 +43,11 @@ FigureComponent.Prototype = function() {
 
     // Display Captions
     node.captions.forEach(function(nodeId) {
-      var childNode = doc.get(nodeId);
+      var captionNode = doc.get(nodeId);
+
       el.append(
-        renderNodeComponent(this, $$, childNode, {
-          disabled: this.props.disabled
-        })
+        $$(ContainerEditor, { node: captionNode }).ref(captionNode.id)
+          .addClass('se-content')
       );
     }.bind(this));
 

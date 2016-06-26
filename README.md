@@ -1,6 +1,8 @@
 # Substance Scientist
 
-# Install
+This is a work-in progress. The project name Scientist is temporary and may be changed with the first beta release.
+
+## Install
 
 Clone the repository.
 
@@ -34,7 +36,26 @@ And navigate to [http://localhost:5001](http://localhost:5001)
 $ npm run bundle
 ```
 
-# JATS Support Status
+## Roadmap
+
+### Beta
+
+*ETA: Fall 2016*
+
+- First class JATS editing
+- Author mode (classic word-style editing)
+- Publisher mode (visual JATS editing)
+- Add references via CrossRef search or pasting BibTex
+- Visually select xref targets.
+
+
+### Beta 2
+
+- Math support (inline and block formulas)
+- Structure mode (restructure sections with a dedicated interface)
+
+
+<!-- # JATS Support Status
 
 This matrix shows which JATS elements are currently supported
 
@@ -311,3 +332,4 @@ This matrix shows which JATS elements are currently supported
 | `<x>`                              | no            |
 | `<xref>`                           | no            |
 | `<year>`                           | no            |
+ -->

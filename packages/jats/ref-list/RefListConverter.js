@@ -40,10 +40,10 @@ module.exports = {
 
   export: function(node, el, converter) {
     if(node.label) {
-      el.append(converter.annotatedText(node.label));
+      el.append(converter.convertNode(node.label));
     }
     if(node.title) {
-      el.append(converter.annotatedText(node.title));
+      el.append(converter.convertNode(node.title));
     }
     node.nodes.forEach(function(nodeId) {
       el.append(converter.convertNode(nodeId));

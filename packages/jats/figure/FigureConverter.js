@@ -102,9 +102,9 @@ module.exports = {
         $$('label').append(converter.annotatedText([node.id, 'label']))
       );
     }
-    el.append(converter.convertNodes(node.captionNodes));
-    el.append(converter.convertNodes(node.abstractNodes));
-    el.append(converter.convertNodes(node.kwdGroupNodes));
+    el.append(converter.convertNodes(node.captions));
+    el.append(converter.convertNodes(node.abstracts));
+    el.append(converter.convertNodes(node.kwdGroups));
     if (node.altText) {
       el.append(
         $$('alt-text').append(node.altText)
@@ -131,6 +131,7 @@ module.exports = {
       );
     }
     el.append(converter.convertNodes(node.contentNodes));
-    el.append(converter.convertNodes(node.backMatter));
+    el.append(converter.convertNodes(node.attribs));
+    el.append(converter.convertNodes(node.permissions));
   }
 };

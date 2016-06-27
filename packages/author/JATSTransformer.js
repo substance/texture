@@ -83,10 +83,15 @@ JATSTransformer.Prototype = function() {
 
     var body = converted.get('bodyFlat');
     var nodeIds = _createSections(converted, body.getNodes());
-    converted.create({
-      id: 'body',
-      nodes: nodeIds
-    });
+    if (converted.get('body')) {
+      converted.set(['body', 'nodes'], nodeIds);
+    } else {
+      converted.create({
+        id: 'body',
+        type: 'body',
+        nodes: nodeIds
+      });
+    }
     return converted;
   };
 
@@ -102,22 +107,29 @@ JATSTransformer.Prototype = function() {
       nodes: [],
       backMatter: []
     }];
+
+    function _createSection(item) {
+      var title = doc.create({
+        type: 'title',
+        content: item.node.getText(),
+      });
+      annotationHelpers.transferAnnotations(doc, item.node.getTextPath(), 0, title.getTextPath(), 0);
+      return doc.create({
+        type: 'section',
+        title: title.id,
+        nodes: item.nodes,
+        backMatter: item.backMatter
+      });
+    }
+    var item, sec;
+
     for (var i=0; i < nodes.length; i++) {
       var node = nodes[i];
       if (node.type === 'heading') {
         while (stack.length >= node.level+1) {
-          var item = stack.pop();
-          var title = doc.create({
-            type: 'title',
-            content: item.node.getText(),
-          });
-          annotationHelpers.transferAnnotations(doc, item.node.getTextPath(), 0, title.getTextPath(), 0);
-          doc.create({
-            type: 'section',
-            title: title.id,
-            nodes: item.nodes,
-            backMatter: item.backMatter
-          });
+          item = stack.pop();
+          sec = _createSection(item);
+          last(stack).nodes.push(sec.id);
         }
         stack.push({
           node: node,
@@ -130,9 +142,10 @@ JATSTransformer.Prototype = function() {
         last(stack).nodes.push(node.id);
       }
     }
-    if (stack.length !== 1) {
-      // if this occurs we have a bug above
-      throw new Error("Illegal state.");
+    while (stack.length > 1) {
+      item = stack.pop();
+      sec = _createSection(item);
+      last(stack).nodes.push(sec.id);
     }
     return stack[0].nodes;
   }

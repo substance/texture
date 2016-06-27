@@ -4,7 +4,7 @@ var TOCProvider = require('substance/ui/TOCProvider');
 
 function AuthorTOCProvider(documentSession) {
   TOCProvider.call(this, documentSession.getDocument(), {
-    containerId: 'body'
+    containerId: 'bodyFlat'
   });
 }
 

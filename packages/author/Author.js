@@ -64,7 +64,6 @@ Author.Prototype = function() {
     var body = doc.get('bodyFlat');
     if (body) {
       var bodySection = $$('div').addClass('se-body-section').append(
-        $$('h1').append('Body'),
         $$(ContainerEditor, {
           node: body,
           commands: configurator.getSurfaceCommandNames(),

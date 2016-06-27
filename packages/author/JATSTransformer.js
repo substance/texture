@@ -68,6 +68,8 @@ JATSTransformer.Prototype = function() {
         result.push(id);
         _flattenSections(doc, node.getNodes(), result, level+1);
         result = result.concat(node.backMatter);
+      } else {
+        result.push(node.id);
       }
     });
     return result;
@@ -103,27 +105,25 @@ JATSTransformer.Prototype = function() {
     for (var i=0; i < nodes.length; i++) {
       var node = nodes[i];
       if (node.type === 'heading') {
-        if (node.level <= stack.length - 1) {
-          for (var j = stack.length - 2; j >= node.level; j--) {
-            var item = stack[j];
-            var title = doc.create({
-              type: 'title',
-              content: item.node.getText(),
-            });
-            annotationHelpers.transferAnnotations(doc, item.node.getTextPath(), 0, title.getTextPath(), 0);
-            doc.create({
-              type: 'section',
-              title: title.id,
-              nodes: item.nodes,
-              backMatter: item.backMatter
-            });
-          }
-        } else {
-          stack.push({
-            nodes: [],
-            backMatter: [],
+        while (stack.length >= node.level+1) {
+          var item = stack.pop();
+          var title = doc.create({
+            type: 'title',
+            content: item.node.getText(),
+          });
+          annotationHelpers.transferAnnotations(doc, item.node.getTextPath(), 0, title.getTextPath(), 0);
+          doc.create({
+            type: 'section',
+            title: title.id,
+            nodes: item.nodes,
+            backMatter: item.backMatter
           });
         }
+        stack.push({
+          node: node,
+          nodes: [],
+          backMatter: [],
+        });
       } else if (_isSectionBackMatter[node.type]) {
         last(stack).backMatter.push(node.id);
       } else {

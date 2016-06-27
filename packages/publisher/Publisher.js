@@ -2,22 +2,21 @@
 
 var Component = require('substance/ui/Component');
 var DocumentSession = require('substance/model/DocumentSession');
-var ScientistReader = require('./ScientistReader');
-var ScientistWriter = require('./ScientistWriter');
+var PublisherWriter = require('./PublisherWriter');
 
 /*
-  Scientist Component
+  Publisher Component
 
   Based on given props displays an editor or viewer
 */
-function Scientist() {
+function Publisher() {
   Component.apply(this, arguments);
 
   var configurator = this.props.configurator;
   this.xmlStore = configurator.getXMLStore();
 }
 
-Scientist.Prototype = function() {
+Publisher.Prototype = function() {
 
   this.getChildContext = function() {
     return {
@@ -74,7 +73,7 @@ Scientist.Prototype = function() {
 
   this.render = function($$) {
     var configurator = this.props.configurator;
-    var el = $$('div').addClass('sc-scientist');
+    var el = $$('div').addClass('sc-publisher');
 
     if (this.state.error) {
       el.append('ERROR: ', this.state.error.message);
@@ -86,24 +85,16 @@ Scientist.Prototype = function() {
     }
 
     // Display reader for mobile and writer on desktop
-    if (this.props.mobile) {
-      el.append(
-        $$(ScientistReader, {
-          documentSession: this.state.documentSession,
-          configurator: configurator
-        }).ref('scientistReader')
-      );
-    } else {
-      el.append(
-        $$(ScientistWriter, {
-          documentSession: this.state.documentSession,
-          configurator: configurator
-        }).ref('scientistWriter')
-      );
-    }
+    el.append(
+      $$(PublisherWriter, {
+        documentSession: this.state.documentSession,
+        configurator: configurator
+      }).ref('PublisherWriter')
+    );
     return el;
   };
 };
 
-Component.extend(Scientist);
-module.exports = Scientist;
+Component.extend(Publisher);
+
+module.exports = Publisher;

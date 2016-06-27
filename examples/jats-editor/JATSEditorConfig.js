@@ -1,13 +1,13 @@
 'use strict';
 
-var ScientistPackage = require('../../packages/publisher/package');
+var PublisherPackage = require('../../packages/publisher/package');
 var ExampleXMLStore = require('../ExampleXMLStore');
 
 module.exports = {
-  name: 'my-prose-editor',
+  name: 'jats-editor',
   configure: function(config) {
     // Base package with regular JATS support
-    config.import(ScientistPackage);
+    config.import(PublisherPackage);
 
     // Define XML Store
     config.setXMLStore(ExampleXMLStore);

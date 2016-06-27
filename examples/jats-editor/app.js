@@ -4,12 +4,11 @@ var extend = require('lodash/extend');
 var substanceGlobals = require('substance/util/substanceGlobals');
 var Component = require('substance/ui/Component');
 var Router = require('substance/ui/Router');
-var Scientist = require('../../packages/publisher/Scientist');
-var ScientistConfigurator = require('../../packages/publisher/ScientistConfigurator');
+var Publisher = require('../../packages/publisher/Publisher');
+var PublisherConfigurator = require('../../packages/publisher/PublisherConfigurator');
 var JATSEditorConfig = require('./JATSEditorConfig');
 
-var configurator = new ScientistConfigurator();
-configurator.import(JATSEditorConfig);
+var configurator = new PublisherConfigurator(JATSEditorConfig);
 
 substanceGlobals.DEBUG_RENDERING = true;
 
@@ -44,7 +43,7 @@ App.Prototype = function() {
   this.render = function($$) {
     var documentId = this.state.documentId;
     var el = $$('div').append(
-      $$(Scientist, {
+      $$(Publisher, {
         mode: 'write',
         documentId: documentId,
         configurator: configurator

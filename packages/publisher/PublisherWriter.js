@@ -5,10 +5,10 @@ var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var Layout = require('substance/ui/Layout');
-var ScientistWriterTools = require('./ScientistWriterTools');
-var ScientistWriterOverlay = require('./ScientistWriterOverlay');
-var ScientistSaveHandler = require('./ScientistSaveHandler');
-var ScientistTOCProvider = require('./ScientistTOCProvider');
+var PublisherToolbar = require('./PublisherToolbar');
+var PublisherOverlay = require('./PublisherOverlay');
+var SaveHandler = require('../persistence/SaveHandler');
+var PublisherTOCProvider = require('./PublisherTOCProvider');
 var TOC = require('substance/ui/TOC');
 
 function ScientistWriter() {
@@ -20,18 +20,19 @@ function ScientistWriter() {
 }
 
 ScientistWriter.Prototype = function() {
+
   var _super = ScientistWriter.super.prototype;
 
   this._initialize = function() {
     _super._initialize.apply(this, arguments);
 
     this.exporter = this.props.configurator.createExporter('jats');
-    this.saveHandler = new ScientistSaveHandler({
+    this.saveHandler = new SaveHandler({
       xmlStore: this.context.xmlStore,
       exporter: this.exporter
     });
     this.documentSession.setSaveHandler(this.saveHandler);
-    this.tocProvider = new ScientistTOCProvider(this.documentSession);
+    this.tocProvider = new PublisherTOCProvider(this.documentSession);
   };
 
   this.getChildContext = function() {
@@ -45,7 +46,7 @@ ScientistWriter.Prototype = function() {
   };
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-scientist-writer');
+    var el = $$('div').addClass('sc-publisher-writer');
     el.append(
       $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
         this._renderContextSection($$),
@@ -63,7 +64,7 @@ ScientistWriter.Prototype = function() {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
       scrollbarPosition: 'right',
-      overlay: ScientistWriterOverlay,
+      overlay: PublisherOverlay,
     }).ref('contentPanel');
 
     var layout = $$(Layout, {
@@ -124,7 +125,7 @@ ScientistWriter.Prototype = function() {
     var mainSection = $$('div').addClass('se-main-sectin');
     var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
       // TODO: ProseEditor needs 'toolbar' ref
-      $$(ScientistWriterTools, {
+      $$(PublisherToolbar, {
         commandStates: commandStates
       }).ref('toolbar'),
       this._renderContentPanel($$)

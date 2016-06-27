@@ -8,6 +8,7 @@ var Layout = require('substance/ui/Layout');
 var Overlay = require('substance/ui/DefaultOverlay');
 var AuthorTOCProvider = require('./AuthorTOCProvider');
 var TOC = require('substance/ui/TOC');
+var JATSTransformer = require('./JATSTransformer');
 
 function Author() {
   Author.super.apply(this, arguments);
@@ -59,19 +60,8 @@ Author.Prototype = function() {
       width: 'large'
     });
 
-    var front = doc.get('front');
-    var frontSection = $$('div').addClass('se-front-section').append(
-      $$('h1').append('Front'),
-      $$(ContainerEditor, {
-        node: front,
-        commands: configurator.getSurfaceCommandNames(),
-        textTypes: configurator.getTextTypes()
-      }).ref('front')
-    );
-    layout.append(frontSection);
-
     // Body editor
-    var body = doc.get('body');
+    var body = doc.get('bodyFlat');
     if (body) {
       var bodySection = $$('div').addClass('se-body-section').append(
         $$('h1').append('Body'),
@@ -84,20 +74,6 @@ Author.Prototype = function() {
       layout.append(bodySection);
     }
 
-    // Back matter editor
-    var back = doc.get('back');
-    if (back) {
-      var backSection = $$('div').addClass('se-back-section').append(
-        $$('h1').append('Back'),
-        $$(ContainerEditor, {
-          node: back,
-          commands: configurator.getSurfaceCommandNames(),
-          textTypes: configurator.getTextTypes()
-        }).ref('back')
-      );
-      layout.append(backSection);
-    }
-
     contentPanel.append(layout);
     return contentPanel;
   };
@@ -107,7 +83,14 @@ Author.Prototype = function() {
   };
 
   this._getExporter = function() {
-    return this.props.configurator.createExporter('author');
+    var jatsExporter = this.props.configurator.createExporter('jats');
+    var trafo = new JATSTransformer();
+    return {
+      exportDocument: function(doc) {
+        doc = trafo.toJATS(doc);
+        return jatsExporter.exportDocument(doc);
+      }
+    };
   };
 
   this._getTOCProvider = function() {

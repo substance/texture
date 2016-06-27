@@ -4,7 +4,7 @@ var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
 
 var BasicApp = require('../../packages/common/BasicApp');
-var Publisher = require('../../packages/publisher/Publisher');
+var JATSEditor = require('./JATSEditor');
 var JATSEditorConfig = require('./JATSEditorConfig');
 
 function App() {
@@ -26,7 +26,7 @@ App.Prototype = function() {
   this.render = function($$) {
     var documentId = this.state.documentId;
     var el = $$('div').append(
-      $$(Publisher, {
+      $$(JATSEditor, {
         mode: 'write',
         documentId: documentId,
         configurator: this.configurator

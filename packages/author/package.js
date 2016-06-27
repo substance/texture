@@ -14,7 +14,8 @@ module.exports = {
     // TODO: this should be used as default, too
     config.setToolbarClass(Toolbar);
 
-    config.import(require('../jats/package'))
+    config.import(require('../jats/package'));
+    config.import(require('./heading/package'));
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.

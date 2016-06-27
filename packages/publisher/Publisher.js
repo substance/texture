@@ -1,100 +1,122 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var DocumentSession = require('substance/model/DocumentSession');
-var PublisherWriter = require('./PublisherWriter');
+var AbstractWriter = require('../common/AbstractWriter');
+var ContainerEditor = require('substance/ui/ContainerEditor');
+var SplitPane = require('substance/ui/SplitPane');
+var ScrollPane = require('substance/ui/ScrollPane');
+var Layout = require('substance/ui/Layout');
+var Overlay = require('substance/ui/DefaultOverlay');
+var PublisherTOCProvider = require('./PublisherTOCProvider');
+var TOC = require('substance/ui/TOC');
 
-/*
-  Publisher Component
-
-  Based on given props displays an editor or viewer
-*/
-function Publisher() {
-  Component.apply(this, arguments);
-
-  var configurator = this.props.configurator;
-  this.xmlStore = configurator.getXMLStore();
+function PublisherWriter() {
+  PublisherWriter.super.apply(this, arguments);
 }
 
-Publisher.Prototype = function() {
-
-  this.getChildContext = function() {
-    return {
-      xmlStore: this.xmlStore
-    };
-  };
-
-  this.getInitialState = function() {
-    return {
-      documentSession: null,
-      error: null
-    };
-  };
-
-  this.didMount = function() {
-    // load the document after mounting
-    this._loadDocument(this.props.documentId);
-  };
-
-  this.willReceiveProps = function(newProps) {
-    if (newProps.documentId !== this.props.documentId) {
-      this.dispose();
-      this.state = this.getInitialState();
-      this._loadDocument(newProps.documentId);
-    }
-  };
-
-  this._loadDocument = function() {
-    var configurator = this.props.configurator;
-
-    this.xmlStore.readXML(this.props.documentId, function(err, xml) {
-      if (err) {
-        console.error(err);
-        this.setState({
-          error: new Error('Loading failed')
-        });
-        return;
-      }
-
-      var importer = configurator.createImporter('jats');
-      var doc = importer.importDocument(xml);
-      // HACK: For debug purposes
-      window.doc = doc;
-      var documentSession = new DocumentSession(doc);
-
-      this.setState({
-        documentSession: documentSession
-      });
-    }.bind(this));
-  };
-
-  // Rendering
-  // ------------------------------------
+PublisherWriter.Prototype = function() {
 
   this.render = function($$) {
-    var configurator = this.props.configurator;
     var el = $$('div').addClass('sc-publisher');
-
-    if (this.state.error) {
-      el.append('ERROR: ', this.state.error.message);
-      return el;
-    }
-
-    if (!this.state.documentSession) {
-      return el;
-    }
-
-    // Display reader for mobile and writer on desktop
     el.append(
-      $$(PublisherWriter, {
-        documentSession: this.state.documentSession,
-        configurator: configurator
-      }).ref('PublisherWriter')
+      $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
+        this._renderContextSection($$),
+        this._renderMainSection($$)
+      )
     );
     return el;
   };
+
+  this._renderContextSection = function($$) {
+    return $$('div').addClass('se-context-section').append(
+      $$(TOC)
+    );
+  };
+
+  this._renderMainSection = function($$) {
+    var mainSection = $$('div').addClass('se-main-sectin');
+    var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
+      this._renderToolbar($$),
+      this._renderContentPanel($$)
+    );
+    mainSection.append(splitPane);
+    return mainSection;
+  };
+
+  this._renderContentPanel = function($$) {
+    var doc = this.documentSession.getDocument();
+    var configurator = this.props.configurator;
+
+    var contentPanel = $$(ScrollPane, {
+      tocProvider: this.tocProvider,
+      scrollbarType: 'substance',
+      scrollbarPosition: 'right',
+      overlay: Overlay,
+    }).ref('contentPanel');
+
+    var layout = $$(Layout, {
+      width: 'large'
+    });
+
+    var front = doc.get('front');
+    var frontSection = $$('div').addClass('se-front-section').append(
+      $$('h1').append('Front'),
+      $$(ContainerEditor, {
+        disabled: this.props.disabled,
+        node: front,
+        commands: configurator.getSurfaceCommandNames(),
+        textTypes: configurator.getTextTypes()
+      }).ref('front')
+    );
+    layout.append(frontSection);
+
+    // Body editor
+    var body = doc.get('body');
+    if (body) {
+      var bodySection = $$('div').addClass('se-body-section').append(
+        $$('h1').append('Body'),
+        $$(ContainerEditor, {
+          disabled: this.props.disabled,
+          node: body,
+          commands: configurator.getSurfaceCommandNames(),
+          textTypes: configurator.getTextTypes()
+        }).ref('body')
+      );
+      layout.append(bodySection);
+    }
+
+    // Back matter editor
+    var back = doc.get('back');
+    if (back) {
+      var backSection = $$('div').addClass('se-back-section').append(
+        $$('h1').append('Back'),
+        $$(ContainerEditor, {
+          disabled: this.props.disabled,
+          node: back,
+          commands: configurator.getSurfaceCommandNames(),
+          textTypes: configurator.getTextTypes()
+        }).ref('back')
+      );
+      layout.append(backSection);
+    }
+
+    contentPanel.append(layout);
+    return contentPanel;
+  };
+
+  this._scrollTo = function(nodeId) {
+    this.refs.contentPanel.scrollTo(nodeId);
+  };
+
+  this._getExporter = function() {
+    return this.props.configurator.createExporter('jats');
+  };
+
+  this._getTOCProvider = function() {
+    return new PublisherTOCProvider(this.documentSession);
+  };
+
 };
 
-Component.extend(Publisher);
+AbstractWriter.extend(PublisherWriter);
 
-module.exports = Publisher;
+module.exports = PublisherWriter;

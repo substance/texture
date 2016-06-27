@@ -1,7 +1,7 @@
 'use strict';
 
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var SaveHandler = require('../persistence/SaveHandler');
+var SaveHandler = require('./SaveHandler');
 
 // TODO: we need to think if it is really a good idea to
 // derive from ProseEditor here

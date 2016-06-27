@@ -66,7 +66,7 @@ JATSTransformer.Prototype = function() {
           annotationHelpers.transferAnnotations(doc, [titleId, 'content'], 0, [id, 'content'], 0);
         }
         result.push(id);
-        _flattenSections(doc, node.getNodes(), result, level+1);
+        result = _flattenSections(doc, node.getNodes(), result, level+1);
         result = result.concat(node.backMatter);
       } else {
         result.push(node.id);

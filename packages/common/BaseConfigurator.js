@@ -2,11 +2,11 @@
 
 var Configurator = require('substance/util/Configurator');
 
-function PublisherConfigurator() {
-  PublisherConfigurator.super.apply(this, arguments);
+function BaseConfigurator() {
+  BaseConfigurator.super.apply(this, arguments);
 }
 
-PublisherConfigurator.Prototype = function() {
+BaseConfigurator.Prototype = function() {
 
   this.setXMLStore = function(XMLStoreClass) {
     this.config.XMLStoreClass = XMLStoreClass;
@@ -18,6 +18,6 @@ PublisherConfigurator.Prototype = function() {
   };
 };
 
-Configurator.extend(PublisherConfigurator);
+Configurator.extend(BaseConfigurator);
 
-module.exports = PublisherConfigurator;
+module.exports = BaseConfigurator;

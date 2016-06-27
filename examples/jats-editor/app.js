@@ -1,43 +1,26 @@
 'use strict';
 
-var extend = require('lodash/extend');
 var substanceGlobals = require('substance/util/substanceGlobals');
-var Component = require('substance/ui/Component');
-var Router = require('substance/ui/Router');
-var Publisher = require('../../packages/publisher/Publisher');
-var PublisherConfigurator = require('../../packages/publisher/PublisherConfigurator');
-var JATSEditorConfig = require('./JATSEditorConfig');
-
-var configurator = new PublisherConfigurator(JATSEditorConfig);
-
 substanceGlobals.DEBUG_RENDERING = true;
+
+var BasicApp = require('../../packages/common/BasicApp');
+var Publisher = require('../../packages/publisher/Publisher');
+var JATSEditorConfig = require('./JATSEditorConfig');
 
 function App() {
   App.super.apply(this, arguments);
-
-  this.router = new Router();
 }
 
 App.Prototype = function() {
 
-  this.didMount = function() {
-    this.router.on('route:changed', this.onRouteChange, this);
-    this.router.start();
+  this.getDefaultState = function() {
+    return {
+      documentId: 'elife-00007',
+    };
   };
 
-  this.dispose = function() {
-    this.router.off(this);
-    this.router.dispose();
-  };
-
-  var DEFAULT_STATE = {
-    documentId: 'elife-00007',
-  };
-
-  this.getInitialState = function() {
-    this.router = new Router();
-    var state = extend({}, DEFAULT_STATE, this.router.readRoute());
-    return state;
+  this.getConfiguration = function() {
+    return JATSEditorConfig;
   };
 
   this.render = function($$) {
@@ -46,19 +29,14 @@ App.Prototype = function() {
       $$(Publisher, {
         mode: 'write',
         documentId: documentId,
-        configurator: configurator
+        configurator: this.configurator
       })
     );
     return el;
   };
-
-  this.onRouteChange = function(newState) {
-    this.setState(extend({}, DEFAULT_STATE, newState));
-  };
-
 };
 
-Component.extend(App);
+BasicApp.extend(App);
 
 window.onload = function() {
   window.app = App.static.mount(document.body);

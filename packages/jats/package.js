@@ -6,7 +6,7 @@ var JATSExporter = require('./JATSExporter');
 module.exports = {
   name: 'jats',
   configure: function(config) {
-    config.import(require('./article'));
+    config.import(require('./article/package'));
     config.import(require('./back'));
     config.import(require('./body'));
     config.import(require('./bold'));

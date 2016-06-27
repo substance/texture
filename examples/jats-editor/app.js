@@ -4,8 +4,8 @@ var extend = require('lodash/extend');
 var substanceGlobals = require('substance/util/substanceGlobals');
 var Component = require('substance/ui/Component');
 var Router = require('substance/ui/Router');
-var Scientist = require('../../packages/JATSWriter/Scientist');
-var ScientistConfigurator = require('../../packages/JATSWriter/ScientistConfigurator');
+var Scientist = require('../../packages/publisher/Scientist');
+var ScientistConfigurator = require('../../packages/publisher/ScientistConfigurator');
 var JATSEditorConfig = require('./JATSEditorConfig');
 
 var configurator = new ScientistConfigurator();

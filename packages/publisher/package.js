@@ -11,7 +11,7 @@ module.exports = {
 
     config.addComponent('overlay', Overlay);
 
-    config.import(require('../jats'))
+    config.import(require('../jats/package'))
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.

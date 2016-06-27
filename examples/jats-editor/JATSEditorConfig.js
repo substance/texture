@@ -1,6 +1,6 @@
 'use strict';
 
-var ScientistPackage = require('../../packages/JATSWriter');
+var ScientistPackage = require('../../packages/publisher/package');
 var ExampleXMLStore = require('../ExampleXMLStore');
 
 module.exports = {

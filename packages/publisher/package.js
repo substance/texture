@@ -2,7 +2,6 @@
 
 var Overlay = require('substance/ui/Overlay');
 var Toolbar = require('substance/ui/Toolbar');
-var path = require('path');
 
 module.exports = {
   name: 'publisher',
@@ -14,7 +13,7 @@ module.exports = {
     config.addComponent('overlay', Overlay);
     // TODO: this should be used as default, too
     config.setToolbarClass(Toolbar);
-    config.addStyle(path.join(__dirname, '_publisher'));
+    config.addStyle(__dirname, '_publisher');
 
     config.import(require('../jats/package'))
 

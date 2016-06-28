@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(Subscript);
     config.addConverter('jats', SubscriptConverter);
+    config.addStyle(__dirname, '_subscript.scss');
   }
 };

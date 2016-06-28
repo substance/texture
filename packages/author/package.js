@@ -2,7 +2,6 @@
 
 var Overlay = require('substance/ui/Overlay');
 var Toolbar = require('substance/ui/Toolbar');
-var path = require('path');
 
 module.exports = {
   name: 'author',
@@ -17,7 +16,7 @@ module.exports = {
 
     config.import(require('../jats/package'));
     config.import(require('./heading/package'));
-    config.addStyle(path.join(__dirname, '_author'));
+    config.addStyle(__dirname, '_author');
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.

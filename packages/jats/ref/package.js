@@ -12,5 +12,6 @@ module.exports = {
     config.addComponent(Ref.static.name, RefComponent);
     config.addComponent(Ref.static.name+'-target', RefTarget);
     config.addConverter('jats', RefConverter);
+    config.addStyle(__dirname, '_ref.scss');
   }
 };

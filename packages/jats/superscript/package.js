@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(Superscript);
     config.addConverter('jats', SuperscriptConverter);
+    config.addStyle(__dirname, '_superscript.scss');
   }
 };

@@ -1,18 +1,17 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var ContainerEditor = require('substance/ui/ContainerEditor');
+var refToHTML = require('./refToHTML');
+
 
 function RefComponent() {
   RefComponent.super.apply(this, arguments);
 }
 
 RefComponent.Prototype = function() {
-
   this.render = function($$) {
     var el = $$('div').addClass('sc-ref');
-    el.innerHTML = this.props.node.xmlContent;
+    el.html(refToHTML(this.props.node.xmlContent));
     return el;
   };
 };

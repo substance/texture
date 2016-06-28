@@ -12,9 +12,14 @@ function RefTarget() {
 RefTarget.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-ref-target');
-    var node = this.props.node;
+    var el = $$('div')
+      .addClass('sc-ref-target')
+      .attr({'data-id': this.props.node.id});
 
+    if (this.props.selected) {
+      el.addClass('sm-selected');
+    }
+    var node = this.props.node;
     el.innerHTML = node.xmlContent;
     return el;
   };

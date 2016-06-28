@@ -10,16 +10,16 @@ module.exports = {
       (%all_phrase | break)*
   */
 
-  /* <xref ref-type="bibr" rid="bib50">Steppuhn and Baldwin, 2007</xref> */
+  /* <xref ref-type="bibr" rid="bib50 bib51">Steppuhn and Baldwin, 2007</xref> */
 
   import: function(el, node, converter) {
-    node.target = el.attr('rid');
+    node.targets = el.attr('rid').split(' ');
     node.label = converter.annotatedText(el, [node.id, 'label']);
   },
 
   export: function(node, el, converter) {
     el.attr({
-      'rid': node.target,
+      'rid': node.targets.join(' '),
       'ref-type': node.referenceType
     });
   }

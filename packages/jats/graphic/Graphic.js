@@ -1,6 +1,6 @@
 'use strict';
 
-var DocumentNode = require('substance/model/DocumentNode');
+var Container = require('substance/model/Container');
 
 function Graphic() {
   Graphic.super.apply(this, arguments);
@@ -14,13 +14,12 @@ Graphic.Prototype = function() {
 
 };
 
-DocumentNode.extend(Graphic);
+Container.extend(Graphic);
 
 Graphic.static.name = 'graphic';
 
 Graphic.static.defineSchema({
   attributes: { type: 'object', default: {} },
-  nodes: { type: ['id'], default: [] }
 });
 
 module.exports = Graphic;

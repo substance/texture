@@ -98,39 +98,28 @@ module.exports = {
       el.append($$('object-id').text(objectId));
     });
     if (node.label) {
-      el.append(
-        $$('label').append(converter.annotatedText([node.id, 'label']))
-      );
+      el.append(converter.convertNode(node.label));
     }
-    el.append(converter.convertNodes(node.captionNodes));
-    el.append(converter.convertNodes(node.abstractNodes));
-    el.append(converter.convertNodes(node.kwdGroupNodes));
-    if (node.altText) {
-      el.append(
-        $$('alt-text').append(node.altText)
-      );
+    el.append(converter.convertNodes(node.captions));
+    el.append(converter.convertNodes(node.abstracts));
+    el.append(converter.convertNodes(node.kwdGroups));
+    if (node.altTexts) {
+      el.append(converter.convertNodes(node.altTexts));
     }
-    if (node.longDesc) {
-      el.append(
-        $$('long-desc').append(node.longDesc)
-      );
+    if (node.longDescs) {
+      el.append(converter.convertNodes(node.longDescs));
     }
-    if (node.extLink) {
-      el.append(
-        $$('ext-link').append(converter.annotatedText([node.id, 'extLink']))
-      );
+    if (node.extLinks) {
+      el.append(converter.convertNodes(node.extLinks));
     }
-    if (node.uri) {
-      el.append(
-        $$('uri').append(converter.annotatedText([node.id, 'uri']))
-      );
+    if (node.uris) {
+      el.append(converter.convertNodes(node.uris));
     }
-    if (node.email) {
-      el.append(
-        $$('email').append(converter.annotatedText([node.id, 'email']))
-      );
+    if (node.emails) {
+      el.append(converter.convertNodes(node.emails));
     }
     el.append(converter.convertNodes(node.contentNodes));
-    el.append(converter.convertNodes(node.backMatter));
+    el.append(converter.convertNodes(node.attribs));
+    el.append(converter.convertNodes(node.permissions));
   }
 };

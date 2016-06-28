@@ -76,18 +76,10 @@ module.exports = {
       );
     }
     if(node.label) {
-      el.append(
-        $$('label').append(
-          converter.annotatedText([node.id, 'label'])
-        )
-      );
+      el.append(converter.convertNode(node.label));
     }
     if(node.title) {
-      el.append(
-        $$('title').append(
-          converter.annotatedText([node.id, 'title'])
-        )
-      );
+      el.append(converter.convertNode(node.title));
     }
     node.nodes.forEach(function(nodeId) {
       el.append(converter.convertNode(nodeId));

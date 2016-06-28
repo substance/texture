@@ -9,6 +9,7 @@ function XRefComponent() {
 XRefComponent.Prototype = function() {
 
   var _super = XRefComponent.super.prototype;
+
   this.render = function($$) {
     var el = _super.render.apply(this, arguments);
     el.addClass('sm-'+this.props.node.referenceType);

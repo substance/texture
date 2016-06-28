@@ -4,16 +4,16 @@ var EventEmitter = require('substance/util/EventEmitter');
 var TOCProvider = require('substance/ui/TOCProvider');
 
 /*
-  Manages a table of content for scientist.
+  Manages a table of content for Publisher.
 
   Used by {@link ui/TOCPanel} and {@link ui/ScrollPane}).
 
-  @class ScientistTOCProvider
+  @class PublisherTOCProvider
   @component
 
   @prop {model/DocumentSession}
 */
-function ScientistTOCProvider(documentSession) {
+function PublisherTOCProvider(documentSession) {
   EventEmitter.apply(this, arguments);
 
   this.documentSession = documentSession;
@@ -26,7 +26,7 @@ function ScientistTOCProvider(documentSession) {
   this.documentSession.on('update', this.handleDocumentChange, this);
 }
 
-ScientistTOCProvider.Prototype = function() {
+PublisherTOCProvider.Prototype = function() {
 
   this.dispose = function() {
     this.documentSession.disconnect(this);
@@ -83,6 +83,6 @@ ScientistTOCProvider.Prototype = function() {
   this.markActiveEntry = TOCProvider.prototype.markActiveEntry;
 };
 
-EventEmitter.extend(ScientistTOCProvider);
+EventEmitter.extend(PublisherTOCProvider);
 
-module.exports = ScientistTOCProvider;
+module.exports = PublisherTOCProvider;

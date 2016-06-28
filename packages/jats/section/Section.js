@@ -36,8 +36,8 @@ Section.static.name = "section";
 Section.static.defineSchema({
   xmlAttributes: { type: 'object', default: {} },
   meta: { type: 'id', optional: true },
-  label: { type: 'string', optional:true },
-  title: { type: 'text', optional: true },
+  label: { type: 'id', optional:true },
+  title: { type: 'id', optional: true },
   nodes: { type: ['id'], default: [] },
   backMatter: { type: ['id'], default: [] }
 });

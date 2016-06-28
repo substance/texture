@@ -9,6 +9,10 @@ serverUtils.serveStyles(app, '/jats-editor/app.css', path.join(__dirname, 'examp
 serverUtils.serveJS(app, '/jats-editor/app.js', path.join(__dirname, 'examples/jats-editor', 'app.js'));
 serverUtils.serveHTML(app, '/jats-editor', path.join(__dirname, 'examples/jats-editor', 'index.html'), {});
 
+serverUtils.serveStyles(app, '/science-writer/app.css', path.join(__dirname, 'examples/science-writer', 'app.scss'));
+serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'));
+serverUtils.serveHTML(app, '/science-writer', path.join(__dirname, 'examples/science-writer', 'index.html'), {});
+
 // static served data
 app.use('/data', express.static(path.join(__dirname, 'examples/data')));
 app.use(express.static(path.join(__dirname, 'examples')));

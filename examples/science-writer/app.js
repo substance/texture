@@ -4,8 +4,8 @@ var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
 
 var BasicApp = require('../../packages/common/BasicApp');
-var JATSEditor = require('./JATSEditor');
-var JATSEditorConfig = require('./JATSEditorConfig');
+var ScienceWriter = require('./ScienceWriter');
+var ScienceWriterConfig = require('./ScienceWriterConfig');
 
 function App() {
   App.super.apply(this, arguments);
@@ -20,13 +20,13 @@ App.Prototype = function() {
   };
 
   this.getConfiguration = function() {
-    return JATSEditorConfig;
+    return ScienceWriterConfig;
   };
 
   this.render = function($$) {
     var documentId = this.state.documentId;
     var el = $$('div').append(
-      $$(JATSEditor, {
+      $$(ScienceWriter, {
         mode: 'write',
         documentId: documentId,
         configurator: this.configurator

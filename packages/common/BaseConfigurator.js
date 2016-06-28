@@ -2,11 +2,11 @@
 
 var Configurator = require('substance/util/Configurator');
 
-function ScientistConfigurator() {
-  ScientistConfigurator.super.apply(this, arguments);
+function BaseConfigurator() {
+  BaseConfigurator.super.apply(this, arguments);
 }
 
-ScientistConfigurator.Prototype = function() {
+BaseConfigurator.Prototype = function() {
 
   this.setXMLStore = function(XMLStoreClass) {
     this.config.XMLStoreClass = XMLStoreClass;
@@ -16,8 +16,8 @@ ScientistConfigurator.Prototype = function() {
     var XMLStoreClass = this.config.XMLStoreClass;
     return new XMLStoreClass();
   };
-}
+};
 
-Configurator.extend(ScientistConfigurator);
+Configurator.extend(BaseConfigurator);
 
-module.exports = ScientistConfigurator;
+module.exports = BaseConfigurator;

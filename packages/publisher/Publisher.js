@@ -1,51 +1,22 @@
 'use strict';
 
-var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
+var AbstractWriter = require('../common/AbstractWriter');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var Layout = require('substance/ui/Layout');
-var ScientistWriterTools = require('./ScientistWriterTools');
-var ScientistWriterOverlay = require('./ScientistWriterOverlay');
-var ScientistSaveHandler = require('./ScientistSaveHandler');
-var ScientistTOCProvider = require('./ScientistTOCProvider');
+var Overlay = require('substance/ui/DefaultOverlay');
+var PublisherTOCProvider = require('./PublisherTOCProvider');
 var TOC = require('substance/ui/TOC');
 
-function ScientistWriter() {
-  ScientistWriter.super.apply(this, arguments);
-
-  this.handleActions({
-    'tocEntrySelected': this.tocEntrySelected
-  });
+function PublisherWriter() {
+  PublisherWriter.super.apply(this, arguments);
 }
 
-ScientistWriter.Prototype = function() {
-  var _super = ScientistWriter.super.prototype;
-
-  this._initialize = function() {
-    _super._initialize.apply(this, arguments);
-
-    this.exporter = this.props.configurator.createExporter('jats');
-    this.saveHandler = new ScientistSaveHandler({
-      xmlStore: this.context.xmlStore,
-      exporter: this.exporter
-    });
-    this.documentSession.setSaveHandler(this.saveHandler);
-    this.tocProvider = new ScientistTOCProvider(this.documentSession);
-  };
-
-  this.getChildContext = function() {
-    var childContext = _super.getChildContext.apply(this, arguments);
-    childContext.tocProvider = this.tocProvider;
-    return childContext;
-  };
-
-  this.tocEntrySelected = function(nodeId) {
-    this.refs.contentPanel.scrollTo(nodeId);
-  };
+PublisherWriter.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-scientist-writer');
+    var el = $$('div').addClass('sc-publisher');
     el.append(
       $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
         this._renderContextSection($$),
@@ -53,6 +24,22 @@ ScientistWriter.Prototype = function() {
       )
     );
     return el;
+  };
+
+  this._renderContextSection = function($$) {
+    return $$('div').addClass('se-context-section').append(
+      $$(TOC)
+    );
+  };
+
+  this._renderMainSection = function($$) {
+    var mainSection = $$('div').addClass('se-main-sectin');
+    var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
+      this._renderToolbar($$),
+      this._renderContentPanel($$)
+    );
+    mainSection.append(splitPane);
+    return mainSection;
   };
 
   this._renderContentPanel = function($$) {
@@ -63,7 +50,7 @@ ScientistWriter.Prototype = function() {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
       scrollbarPosition: 'right',
-      overlay: ScientistWriterOverlay,
+      overlay: Overlay,
     }).ref('contentPanel');
 
     var layout = $$(Layout, {
@@ -74,6 +61,7 @@ ScientistWriter.Prototype = function() {
     var frontSection = $$('div').addClass('se-front-section').append(
       $$('h1').append('Front'),
       $$(ContainerEditor, {
+        disabled: this.props.disabled,
         node: front,
         commands: configurator.getSurfaceCommandNames(),
         textTypes: configurator.getTextTypes()
@@ -87,6 +75,7 @@ ScientistWriter.Prototype = function() {
       var bodySection = $$('div').addClass('se-body-section').append(
         $$('h1').append('Body'),
         $$(ContainerEditor, {
+          disabled: this.props.disabled,
           node: body,
           commands: configurator.getSurfaceCommandNames(),
           textTypes: configurator.getTextTypes()
@@ -101,6 +90,7 @@ ScientistWriter.Prototype = function() {
       var backSection = $$('div').addClass('se-back-section').append(
         $$('h1').append('Back'),
         $$(ContainerEditor, {
+          disabled: this.props.disabled,
           node: back,
           commands: configurator.getSurfaceCommandNames(),
           textTypes: configurator.getTextTypes()
@@ -113,28 +103,20 @@ ScientistWriter.Prototype = function() {
     return contentPanel;
   };
 
-  this._renderContextSection = function($$) {
-    return $$('div').addClass('se-context-section').append(
-      $$(TOC)
-    );
+  this._scrollTo = function(nodeId) {
+    this.refs.contentPanel.scrollTo(nodeId);
   };
 
-  this._renderMainSection = function($$) {
-    var commandStates = this.commandManager.getCommandStates();
-    var mainSection = $$('div').addClass('se-main-sectin');
-    var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
-      // TODO: ProseEditor needs 'toolbar' ref
-      $$(ScientistWriterTools, {
-        commandStates: commandStates
-      }).ref('toolbar'),
-      this._renderContentPanel($$)
-    );
-    mainSection.append(splitPane);
-    return mainSection;
+  this._getExporter = function() {
+    return this.props.configurator.createExporter('jats');
+  };
+
+  this._getTOCProvider = function() {
+    return new PublisherTOCProvider(this.documentSession);
   };
 
 };
 
-ProseEditor.extend(ScientistWriter);
+AbstractWriter.extend(PublisherWriter);
 
-module.exports = ScientistWriter;
+module.exports = PublisherWriter;

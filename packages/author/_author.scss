@@ -10,9 +10,7 @@ $fa-font-path:  "../fonts" !default;
 @import '../../packages/unsupported/_unsupported';
 @import '../../packages/jats/_all';
 
-/* Scientist Writer component */
-
-.sc-scientist-writer {
+.sc-author {
 
   .se-context-section {
     background: #fafafa;
@@ -23,7 +21,11 @@ $fa-font-path:  "../fonts" !default;
     }
   }
 
-  .sc-scientist-writer-tools {
+  .se-body-section > .sc-container-editor * + * {
+    margin-top: 20px;
+  }
+
+  .sc-toolbar {
     border-bottom: 1px solid $border-color;
   }
 }

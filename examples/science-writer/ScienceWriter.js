@@ -2,22 +2,22 @@
 
 var Component = require('substance/ui/Component');
 var DocumentSession = require('substance/model/DocumentSession');
-var ScientistReader = require('./ScientistReader');
-var ScientistWriter = require('./ScientistWriter');
+var Author = require('../../packages/author/Author');
+var JATSTransformer = require('../../packages/author/JATSTransformer');
 
 /*
-  Scientist Component
+  ScienceWriter Component
 
   Based on given props displays an editor or viewer
 */
-function Scientist() {
+function ScienceWriter() {
   Component.apply(this, arguments);
 
   var configurator = this.props.configurator;
   this.xmlStore = configurator.getXMLStore();
 }
 
-Scientist.Prototype = function() {
+ScienceWriter.Prototype = function() {
 
   this.getChildContext = function() {
     return {
@@ -58,7 +58,11 @@ Scientist.Prototype = function() {
       }
 
       var importer = configurator.createImporter('jats');
+
       var doc = importer.importDocument(xml);
+      var trafo = new JATSTransformer();
+      doc = trafo.fromJATS(doc);
+
       // HACK: For debug purposes
       window.doc = doc;
       var documentSession = new DocumentSession(doc);
@@ -74,7 +78,7 @@ Scientist.Prototype = function() {
 
   this.render = function($$) {
     var configurator = this.props.configurator;
-    var el = $$('div').addClass('sc-scientist');
+    var el = $$('div').addClass('sc-science-writer');
 
     if (this.state.error) {
       el.append('ERROR: ', this.state.error.message);
@@ -86,24 +90,16 @@ Scientist.Prototype = function() {
     }
 
     // Display reader for mobile and writer on desktop
-    if (this.props.mobile) {
-      el.append(
-        $$(ScientistReader, {
-          documentSession: this.state.documentSession,
-          configurator: configurator
-        }).ref('scientistReader')
-      );
-    } else {
-      el.append(
-        $$(ScientistWriter, {
-          documentSession: this.state.documentSession,
-          configurator: configurator
-        }).ref('scientistWriter')
-      );
-    }
+    el.append(
+      $$(Author, {
+        documentSession: this.state.documentSession,
+        configurator: configurator
+      }).ref('publisher')
+    );
     return el;
   };
 };
 
-Component.extend(Scientist);
-module.exports = Scientist;
+Component.extend(ScienceWriter);
+
+module.exports = ScienceWriter;

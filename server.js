@@ -27,6 +27,8 @@ app.use('/data', express.static(path.join(__dirname, 'examples/data')));
 app.use(express.static(path.join(__dirname, 'examples')));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
 
+serverUtils.serveTestSuite(app, "test/**/*.test.js");
+
 app.listen(PORT);
 console.log('Server is listening on %s', PORT);
 console.log('To view the docs go to http://localhost:%s', PORT);

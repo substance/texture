@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(Monospace);
     config.addConverter('jats', MonospaceConverter);
+    config.addStyle(__dirname, '_monospace.scss');
   }
 };

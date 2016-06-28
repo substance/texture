@@ -10,5 +10,6 @@ module.exports = {
     config.addNode(Graphic);
     config.addComponent(Graphic.static.name, GraphicComponent);
     config.addConverter('jats', GraphicConverter);
+    config.addStyle(__dirname, '_graphic.scss');
   }
 };

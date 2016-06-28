@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(Bold);
     config.addConverter('jats', BoldConverter);
+    config.addStyle(__dirname, '_bold.scss');
   }
 };

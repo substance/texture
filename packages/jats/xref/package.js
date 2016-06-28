@@ -14,6 +14,7 @@ module.exports = {
     config.addConverter('jats', XRefConverter);
     config.addCommand(XRefCommand);
     config.addTool(XRefTool, { overlay: true });
+    config.addStyle(__dirname, '_xref.scss');
     config.addLabel('xref', {
       en: 'Cross Reference'
     });

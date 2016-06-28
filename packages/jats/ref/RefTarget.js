@@ -1,6 +1,7 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
+var refToHTML = require('./refToHTML');
 
 /*
   Renders a keyboard-selectable ref target item
@@ -20,7 +21,7 @@ RefTarget.Prototype = function() {
       el.addClass('sm-selected');
     }
     var node = this.props.node;
-    el.innerHTML = node.xmlContent;
+    el.html(refToHTML(node.xmlContent));
     return el;
   };
 };

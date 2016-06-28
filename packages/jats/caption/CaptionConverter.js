@@ -27,7 +27,7 @@ module.exports = {
     var iterator = new XMLIterator(children);
     // title is just annotated text
     iterator.optional('title', function(childEl) {
-      node.title = converter.annotatedText(childEl, [node.id, 'title']);
+      node.title = converter.convertElement(childEl).id;
     });
     iterator.manyOf('p', function(childEl) {
       node.nodes.push(converter.convertElement(childEl).id);

@@ -18,12 +18,10 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
-    el.attr(node.xmlAttributes);
     el.attr({
       'rid': node.target,
       'ref-type': node.referenceType
     });
-    el.append(converter.annotatedText([node.id, 'label']));
   }
 };
 

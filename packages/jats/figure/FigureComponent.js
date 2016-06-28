@@ -1,12 +1,7 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 var renderNodeComponent = require('../../../util/renderNodeComponent');
-
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var ContainerEditor = require('substance/ui/ContainerEditor');
-
 
 function FigureComponent() {
   Component.apply(this, arguments);
@@ -24,11 +19,11 @@ FigureComponent.Prototype = function() {
 
     if (node.label) {
       var label = doc.get(node.label);
-      var labelEditor = $$(TextPropertyEditor, {
-        disabled: this.props.disabled,
-        path: label.getTextPath()
-      }).ref('labelEditor');
-      el.append(labelEditor);
+      el.append(
+        renderNodeComponent(this, $$, label, {
+          disabled: this.props.disabled
+        })
+      );
     }
 
     // Display figure content
@@ -46,14 +41,14 @@ FigureComponent.Prototype = function() {
       var captionNode = doc.get(nodeId);
 
       el.append(
-        $$(ContainerEditor, { node: captionNode }).ref(captionNode.id)
-          .addClass('se-content')
+        renderNodeComponent(this, $$, captionNode, {
+          disabled: this.props.disabled
+        })
       );
     }.bind(this));
 
     // TODO: we should provide a UI to the rest of the node's content
     // in an overlay
-
     return el;
   };
 };

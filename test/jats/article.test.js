@@ -67,24 +67,36 @@ test.withFixture(subarticles, 'Im-/Exporting article with sub-articles', functio
   // export
   var exporter = t.fixture.createExporter();
   var el = exporter.convertNode(node);
-  t.equal(el.findAll('sub-article').length, 2, 'two a <sub-article>s should have been exported');
+  t.equal(el.findAll('sub-article').length, 2, 'two <sub-article>s should have been exported');
   t.end();
 });
 
-var subarticles =
+var response =
   '<article>'+
   '<front></front>'+
-  '<sub-article></sub-article>'+
-  '<sub-article></sub-article>'+
+  '<response></response>'+
+  '<response></response>'+
   '</article>';
-test.withFixture(subarticles, 'Im-/Exporting article with sub-articles', function(t) {
+test.withFixture(response, 'Im-/Exporting article with responses', function(t) {
   // import
   var importer = t.fixture.createImporter('article');
   var node = importer.convertElement(t.fixture.xmlElement);
-  t.equal(node.subArticles.length, 2, 'imported article node should have 2 sub-articles');
+  t.equal(node.responses.length, 2, 'imported article node should have 2 responses');
   // export
   var exporter = t.fixture.createExporter();
   var el = exporter.convertNode(node);
-  t.equal(el.findAll('sub-article').length, 2, 'two a <sub-article>s should have been exported');
+  t.equal(el.findAll('response').length, 2, 'two <response>s should have been exported');
+  t.end();
+});
+
+var noFront =
+  '<article>'+
+  '</article>';
+test.withFixture(noFront, 'Invalid <article>: no front matter', function(t) {
+  // import
+  var importer = t.fixture.createImporter('article');
+  t.throws(function() {
+    importer.convertElement(t.fixture.xmlElement);
+  });
   t.end();
 });

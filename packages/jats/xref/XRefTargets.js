@@ -15,9 +15,18 @@ function XRefTargets() {
 XRefTargets.Prototype = function() {
 
   this.getInitialState = function() {
+    console.log('XRefTargets.getInitialState');
     return {
       targets: getXRefTargets(this.props.node)
     };
+  };
+
+  this.willReceiveProps = function() {
+    console.log('XRefTargets.willReceiveProps');
+  };
+
+  this.dispose = function() {
+    console.log('XRefTargets.dispose');
   };
 
   this.render = function($$) {
@@ -64,7 +73,6 @@ XRefTargets.Prototype = function() {
     surface.transaction(function(tx) {
       tx.set([node.id, 'targets'], newTargets);
     });
-
   };
 };
 

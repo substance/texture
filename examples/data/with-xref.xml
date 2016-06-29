@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
+<article article-type="sample" dtd-version="1.1d3" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <article-meta></article-meta>
+  </front>
+  <body><p id="p1">Lorem ipsum <xref ref-type="bibr" rid="bib40">Price et al., 1980</xref> dolor sit amet.</p></body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="bib1">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Allison</surname>
+                      <given-names>JD</given-names>
+                  </name>
+                  <name>
+                      <surname>Hare</surname>
+                      <given-names>JD</given-names>
+                  </name>
+              </person-group>
+              <year>2009</year>
+              <article-title>Learned and na&#xEF;ve natural enemy responses and the interpretation of volatile organic compounds as cues or signals</article-title>
+              <source>New Phytol</source>
+              <volume>184</volume>
+              <fpage>768</fpage>
+              <lpage>782</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1111/j.1469-8137.2009.03046.x">10.1111/j.1469-8137.2009.03046.x</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib2">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Allmann</surname>
+                      <given-names>S</given-names>
+                  </name>
+                  <name>
+                      <surname>Baldwin</surname>
+                      <given-names>IT</given-names>
+                  </name>
+              </person-group>
+              <year>2010</year>
+              <article-title>Insects betray themselves in nature to predators by rapid isomerization of green leaf volatiles</article-title>
+              <source>Science</source>
+              <volume>329</volume>
+              <fpage>1075</fpage>
+              <lpage>1078</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1126/science.1191634">10.1126/science.1191634</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib3">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Allmann</surname>
+                      <given-names>S</given-names>
+                  </name>
+                  <name>
+                      <surname>Halitschke</surname>
+                      <given-names>R</given-names>
+                  </name>
+                  <name>
+                      <surname>Schuurink</surname>
+                      <given-names>RC</given-names>
+                  </name>
+                  <name>
+                      <surname>Baldwin</surname>
+                      <given-names>IT</given-names>
+                  </name>
+              </person-group>
+              <year>2010</year>
+              <article-title>Oxylipin channelling in <italic>Nicotiana attenuata</italic>: Lipoxygenase 2 supplies substrates for green leaf volatile production</article-title>
+              <source>Plant Cell Environ</source>
+              <volume>33</volume>
+              <fpage>2028</fpage>
+              <lpage>2040</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1126/science.1191634">10.1111/j.1365-3040.2010.02203.x</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib4">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Baldwin</surname>
+                      <given-names>IT</given-names>
+                  </name>
+              </person-group>
+              <year>1998</year>
+              <article-title>Jasmonate-induced responses are costly but benefit plants under attack in native populations</article-title>
+              <source>Proc Natl Acad Sci U S A</source>
+              <volume>95</volume>
+              <fpage>8113</fpage>
+              <lpage>8118</lpage>
+          </element-citation>
+      </ref>
+      <ref id="bib5">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Benrey</surname>
+                      <given-names>B</given-names>
+                  </name>
+                  <name>
+                      <surname>Denno</surname>
+                      <given-names>RF</given-names>
+                  </name>
+              </person-group>
+              <year>1997</year>
+              <article-title>The slow-growth-high mortality hypothesis: A test using the cabbage butterfly</article-title>
+              <source>Ecology</source>
+              <volume>78</volume>
+              <fpage>987</fpage>
+              <lpage>999</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.2307/2265852">10.2307/2265852</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib6">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Bubner</surname>
+                      <given-names>B</given-names>
+                  </name>
+                  <name>
+                      <surname>Gase</surname>
+                      <given-names>K</given-names>
+                  </name>
+                  <name>
+                      <surname>Berger</surname>
+                      <given-names>B</given-names>
+                  </name>
+                  <name>
+                      <surname>Link</surname>
+                      <given-names>D</given-names>
+                  </name>
+                  <name>
+                      <surname>Baldwin</surname>
+                      <given-names>IT</given-names>
+                  </name>
+              </person-group>
+              <year>2006</year>
+              <article-title>Occurrence of tetraploidy in <italic>Nicotiana attenuata</italic> plants after <italic>Agrobacterium</italic>-mediated transformation is genotype specific but independent of polysomaty of explant tissue</article-title>
+              <source>Plant Cell Rep</source>
+              <volume>25</volume>
+              <fpage>668</fpage>
+              <lpage>675</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1007/s00299-005-0111-4">10.1007/s00299-005-0111-4</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib7">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>De Moraes</surname>
+                      <given-names>CM</given-names>
+                  </name>
+                  <name>
+                      <surname>Mescher</surname>
+                      <given-names>MC</given-names>
+                  </name>
+                  <name>
+                      <surname>Tumlinson</surname>
+                      <given-names>JH</given-names>
+                  </name>
+              </person-group>
+              <year>2001</year>
+              <article-title>Caterpillar-induced nocturnal plant volatiles repel conspecific females</article-title>
+              <source>Nature</source>
+              <volume>410</volume>
+              <fpage>577</fpage>
+              <lpage>580</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1038/35069058">10.1038/35069058</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib8">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Degenhardt</surname>
+                      <given-names>J</given-names>
+                  </name>
+                  <name>
+                      <surname>Hiltpold</surname>
+                      <given-names>I</given-names>
+                  </name>
+                  <name>
+                      <surname>K&#xF6;llner</surname>
+                      <given-names>TG</given-names>
+                  </name>
+                  <name>
+                      <surname>Frey</surname>
+                      <given-names>M</given-names>
+                  </name>
+                  <name>
+                      <surname>Gierl</surname>
+                      <given-names>A</given-names>
+                  </name>
+                  <name>
+                      <surname>Gershenzon</surname>
+                      <given-names>J</given-names>
+                  </name>
+                  <etal/>
+              </person-group>
+              <year>2009</year>
+              <article-title>Restoring a maize root signal that attracts insect-killing nematodes to control a major pest</article-title>
+              <source>Proc Natl Acad Sci U S A</source>
+              <volume>106</volume>
+              <fpage>13213</fpage>
+              <lpage>13218</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1073/pnas.0906365106">10.1073/pnas.0906365106</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib9">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Dicke</surname>
+                      <given-names>M</given-names>
+                  </name>
+                  <name>
+                      <surname>Baldwin</surname>
+                      <given-names>IT</given-names>
+                  </name>
+              </person-group>
+              <year>2010</year>
+              <article-title>The evolutionary context for herbivore-induced plant volatiles: Beyond the &#x2018;cry for help&#x2019;</article-title>
+              <source>Trends Plant Sci</source>
+              <volume>15</volume>
+              <fpage>167</fpage>
+              <lpage>175</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1016/j.tplants.2009.12.002">10.1016/j.tplants.2009.12.002</ext-link>
+          </element-citation>
+      </ref>
+      <ref id="bib40">
+          <element-citation publication-type="journal">
+              <person-group person-group-type="author">
+                  <name>
+                      <surname>Price</surname>
+                      <given-names>PW</given-names>
+                  </name>
+                  <name>
+                      <surname>Bouton</surname>
+                      <given-names>CE</given-names>
+                  </name>
+                  <name>
+                      <surname>Gross</surname>
+                      <given-names>P</given-names>
+                  </name>
+                  <name>
+                      <surname>McPheron</surname>
+                      <given-names>BA</given-names>
+                  </name>
+                  <name>
+                      <surname>Thompson</surname>
+                      <given-names>JN</given-names>
+                  </name>
+                  <name>
+                      <surname>Weis</surname>
+                      <given-names>AE</given-names>
+                  </name>
+              </person-group>
+              <year>1980</year>
+              <article-title>Interactions among three trophic levels: Influence of plants on interactions between insect herbivores and natural enemies</article-title>
+              <source>Ann Rev Ecol Syst</source>
+              <volume>11</volume>
+              <fpage>41</fpage>
+              <lpage>65</lpage>
+              <ext-link ext-link-type="uri" href="http://dx.doi.org/10.1146/annurev.es.11.110180.000353">10.1146/annurev.es.11.110180.000353</ext-link>
+          </element-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

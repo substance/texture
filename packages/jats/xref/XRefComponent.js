@@ -10,7 +10,7 @@ XRefComponent.Prototype = function() {
 
   var _super = XRefComponent.super.prototype;
 
-  this.render = function($$) {
+  this.render = function($$) { // eslint-disable-line
     var el = _super.render.apply(this, arguments);
     el.addClass('sm-'+this.props.node.referenceType);
     return el;

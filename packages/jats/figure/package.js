@@ -13,5 +13,6 @@ module.exports = {
     config.addComponent(Figure.static.name+'-target', FigureTarget);
     config.addConverter('jats', FigureConverter);
     config.addStyle(__dirname, '_figure.scss');
+    config.addStyle(__dirname, '_figure-target.scss');
   }
 };

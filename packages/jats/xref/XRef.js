@@ -13,6 +13,7 @@ XRef.static.name = 'xref';
 
 XRef.static.defineSchema({
   attributes: { type: 'object', default: {} },
+  targets: {type: ['id'], default: []},
   label: { type: 'text', optional: true }
 });
 
@@ -24,18 +25,10 @@ Object.defineProperties(XRef.prototype, {
     set: function(refType) {
       this.attributes['ref-type'] = refType;
     }
-  },
-  target: {
-    get: function() {
-      return this.attributes['rid'];
-    },
-    set: function(rid) {
-      this.attributes['rid'] = rid;
-    }
   }
 });
 
-// in presence of overlapping annotations will try to render this as one element
+// In presence of overlapping annotations will try to render this as one element
 XRef.static.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
 
 module.exports = XRef;

@@ -3,19 +3,20 @@
 var PropertyAnnotation = require('substance/model/PropertyAnnotation');
 var Fragmenter = require('substance/model/Fragmenter');
 
-function Link() {
-  Link.super.apply(this, arguments);
+function ExtLink() {
+  ExtLink.super.apply(this, arguments);
 }
 
-PropertyAnnotation.extend(Link);
+PropertyAnnotation.extend(ExtLink);
 
-Link.static.name = "ext-link";
+ExtLink.static.name = "ext-link";
 
-Link.static.defineSchema({
+ExtLink.static.defineSchema({
   attributes: { type: 'object', default: {} },
 });
 
-// in presence of overlapping annotations will try to render this as one element
-Link.static.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
 
-module.exports = Link;
+// in presence of overlapping annotations will try to render this as one element
+ExtLink.static.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
+
+module.exports = ExtLink;

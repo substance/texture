@@ -36,7 +36,7 @@ XRefTargets.Prototype = function() {
 
   this._toggleTarget = function(targetNode) {
     var node = this.props.node;
-    var documentSession = this.context.documentSession;
+    var surface = this.context.surfaceManager.getFocusedSurface();
 
     // Update model
     var newTargets = node.targets;
@@ -45,12 +45,6 @@ XRefTargets.Prototype = function() {
     } else {
       newTargets.push(targetNode.id);
     }
-
-    // TODO: this is causing the modal to close. Can we prevent that?
-    documentSession.transaction(function(tx, args) {
-      tx.set([node.id, 'targets'], newTargets);
-      return args;
-    });
 
     // Compute visual feedback
     var targets = this.state.targets;
@@ -65,6 +59,12 @@ XRefTargets.Prototype = function() {
     this.setState({
       targets: targets
     });
+
+    // ATTENTION: still we need to use surface.transaction()
+    surface.transaction(function(tx) {
+      tx.set([node.id, 'targets'], newTargets);
+    });
+
   };
 };
 

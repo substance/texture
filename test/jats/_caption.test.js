@@ -1,19 +1,19 @@
 'use strict';
 
-var test = require('../test').module('jats/Caption');
+var test = require('./test').module('jats/caption');
 
 // attributes should be preserved
 var withAttributes =
   '<caption id="fixture1"' +
   '   content-type="test" specific-use="testing" style="test-style"' +
   '   xml:base="testbase" xml:lang="testlang"></caption>';
-test.attributesConversion(withAttributes);
+test.attributesConversion(withAttributes, 'caption');
 
 // without title
 var withoutTitle = '<caption><p>test</p></caption>';
 test.withFixture(withoutTitle, 'Im-/Exporting caption without title', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   var node = importer.convertElement(t.fixture.xmlElement);
   t.isNil(node.title, 'title should be nil after import');
   // export
@@ -28,16 +28,14 @@ test.withFixture(withoutTitle, 'Im-/Exporting caption without title', function(t
 var titleNoContent = '<caption><title>Test</title></caption>';
 test.withFixture(titleNoContent, 'Im-/Exporting caption with title but no content', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   var node = importer.convertElement(t.fixture.xmlElement);
-  t.notNil(node.title, 'title should be nil after import');
-  t.equal(node.getTitle().getText(), 'Test', 'title should have been extracted correctly');
+  t.notNil(node.title, 'title should be imported');
   // export
   var exporter = t.fixture.createExporter();
   var el = exporter.convertNode(node);
   var titleEl = el.find('title');
-  t.notNil(titleEl, 'there should be a <title> after export');
-  t.equal(titleEl.text(), 'Test', 'the title content should be exported correctly');
+  t.notNil(titleEl, 'title should have been exported');
   t.end();
 });
 
@@ -45,7 +43,7 @@ test.withFixture(titleNoContent, 'Im-/Exporting caption with title but no conten
 var empty = '<caption></caption>';
 test.withFixture(empty, 'Im-/Exporting empty caption', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   var node = importer.convertElement(t.fixture.xmlElement);
   t.isNil(node.title, 'title should be nil after import');
   t.equal(node.getLength(), 0, 'there should be no content nodes');
@@ -61,15 +59,13 @@ test.withFixture(empty, 'Im-/Exporting empty caption', function(t) {
 var singleParagraph = '<caption><p>test</p></caption>';
 test.withFixture(singleParagraph, 'Im-/Exporting caption with one paragraph', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   var node = importer.convertElement(t.fixture.xmlElement);
-  t.equal(node.getLength(), 1, 'there should be one content node');
-  t.equal(node.getChildAt(0).type, 'paragraph', '.. which should be paragraph');
+  t.equal(node.getLength(), 1, 'there should be one content node after import');
   // export
   var exporter = t.fixture.createExporter();
   var el = exporter.convertNode(node);
-  t.equal(el.getChildCount(), 1, 'the exported element should have one child element');
-  t.ok(el.getChildAt(0).is('p'), '... which should be a <p> element');
+  t.equal(el.findAll('p').length, 1, 'there should be one content element after export.');
   t.end();
 });
 
@@ -77,13 +73,13 @@ test.withFixture(singleParagraph, 'Im-/Exporting caption with one paragraph', fu
 var multipleParagraphs = '<caption><p>test</p><p>test2</p><p>test3</p></caption>';
 test.withFixture(multipleParagraphs, 'Im-/Exporting caption with multiple paragraph', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   var node = importer.convertElement(t.fixture.xmlElement);
-  t.equal(node.getLength(), 3, 'there should be three content nodes');
+  t.equal(node.getLength(), 3, 'three content nodes should have been imported');
   // export
   var exporter = t.fixture.createExporter();
   var el = exporter.convertNode(node);
-  t.equal(el.getChildCount(), 3, 'the exported element should have three child elements');
+  t.equal(el.findAll('p').length, 3, 'three content nodes should have been exported');
   t.end();
 });
 
@@ -91,27 +87,29 @@ test.withFixture(multipleParagraphs, 'Im-/Exporting caption with multiple paragr
 var titleAfterContent = '<caption><p>test</p><title>Test</title></caption>';
 test.withFixture(titleAfterContent, 'Illegal <caption>: title after content', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   t.throws(function() {
     importer.convertElement(t.fixture.xmlElement);
-  })
+  });
   t.end();
 });
+
 var multipleTitles = '<caption><title>Test</title><title>Test</title></caption>';
 test.withFixture(multipleTitles, 'Illegal <caption>: multiple titles', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   t.throws(function() {
     importer.convertElement(t.fixture.xmlElement);
-  })
+  });
   t.end();
 });
+
 var unsupportedContentType = '<caption><fig></fig></caption>';
-test.withFixture(titleAfterContent, 'Illegal <caption>: unsupported content', function(t) {
+test.withFixture(unsupportedContentType, 'Illegal <caption>: unsupported content', function(t) {
   // import
-  var importer = t.fixture.createImporter();
+  var importer = t.fixture.createImporter('caption');
   t.throws(function() {
     importer.convertElement(t.fixture.xmlElement);
-  })
+  });
   t.end();
 });

@@ -1,16 +1,17 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var getXRefTargets = require('./getXRefTargets');
+var clone = require('lodash/clone');
 var find = require('lodash/find');
 var without = require('lodash/without');
+var Component = require('substance/ui/Component');
+var getXRefTargets = require('./getXRefTargets');
 
 /*
   Editing of XRefTargets
 */
 function XRefTargets() {
   XRefTargets.super.apply(this, arguments);
-  console.log('Created XRefTargets', this.__id__);
+  // console.log('Created XRefTargets', this.__id__);
 }
 
 XRefTargets.Prototype = function() {
@@ -21,13 +22,13 @@ XRefTargets.Prototype = function() {
     };
   };
 
-  this.willReceiveProps = function() {
-    console.log('XRefTargets.willReceiveProps', this.__id__);
-  };
+  // this.willReceiveProps = function() {
+  //   console.log('XRefTargets.willReceiveProps', this.__id__);
+  // };
 
-  this.dispose = function() {
-    console.log('XRefTargets.dispose', this.__id__);
-  };
+  // this.dispose = function() {
+  //   console.log('XRefTargets.dispose', this.__id__);
+  // };
 
   this.render = function($$) {
     var el = $$('div').addClass('sc-xref-targets');
@@ -35,8 +36,11 @@ XRefTargets.Prototype = function() {
 
     this.state.targets.forEach(function(target) {
       var TargetComponent = componentRegistry.get(target.node.type+'-target');
+      var props = clone(target);
+      // disable editing in TargetComponent
+      props.disabled = true;
       el.append(
-        $$(TargetComponent, target)
+        $$(TargetComponent, props)
           .on('click', this._toggleTarget.bind(this, target.node))
       );
     }.bind(this));
@@ -46,6 +50,7 @@ XRefTargets.Prototype = function() {
   this._toggleTarget = function(targetNode) {
     var node = this.props.node;
     var surface = this.context.surfaceManager.getFocusedSurface();
+    // console.log('XRefTargets: toggling target of ', node.id);
 
     // Update model
     var newTargets = node.targets;
@@ -69,6 +74,7 @@ XRefTargets.Prototype = function() {
       targets: targets
     });
 
+    // console.log('XRefTargets: setting targets of ', node.id, 'to', newTargets);
     // ATTENTION: still we need to use surface.transaction()
     surface.transaction(function(tx) {
       tx.set([node.id, 'targets'], newTargets);

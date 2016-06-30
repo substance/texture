@@ -44,7 +44,7 @@ XRefTool.Prototype = function() {
         }).append(
           $$(XRefTargets, {
             node: node
-          })
+          }).ref('targets')
         )
       );
     }

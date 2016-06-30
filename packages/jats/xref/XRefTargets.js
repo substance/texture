@@ -1,9 +1,10 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var getXRefTargets = require('./getXRefTargets');
+var clone = require('lodash/clone');
 var find = require('lodash/find');
 var without = require('lodash/without');
+var Component = require('substance/ui/Component');
+var getXRefTargets = require('./getXRefTargets');
 
 /*
   Editing of XRefTargets
@@ -35,8 +36,11 @@ XRefTargets.Prototype = function() {
 
     this.state.targets.forEach(function(target) {
       var TargetComponent = componentRegistry.get(target.node.type+'-target');
+      var props = clone(target);
+      // disable editing in TargetComponent
+      props.disabled = true;
       el.append(
-        $$(TargetComponent, target)
+        $$(TargetComponent, props)
           .on('click', this._toggleTarget.bind(this, target.node))
       );
     }.bind(this));

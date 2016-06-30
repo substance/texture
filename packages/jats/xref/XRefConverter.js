@@ -17,7 +17,7 @@ module.exports = {
     node.label = converter.annotatedText(el, [node.id, 'label']);
   },
 
-  export: function(node, el, converter) {
+  export: function(node, el, converter) { // eslint-disable-line
     el.attr({
       'rid': node.targets.join(' '),
       'ref-type': node.referenceType

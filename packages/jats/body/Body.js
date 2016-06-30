@@ -18,9 +18,9 @@ Body.static.name = "body";
 */
 
 Body.static.defineSchema({
-  attributes: { type: 'object',  default: {} },
-  nodes: { type: ['id'],  default: [] },
-  sigBlock: { type: ['sig-block'],  optional: true }
+  attributes: { type: 'object', default: {} },
+  nodes: { type: ['id'], default: [] },
+  sigBlock: { type: ['sig-block'], optional: true }
 });
 
 

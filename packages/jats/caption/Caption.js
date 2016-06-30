@@ -34,7 +34,7 @@ Caption.static.name = 'caption';
     ( title?, (p)* )
 */
 Caption.static.defineSchema({
-  attributes: { type: 'object',  default: {} },
+  attributes: { type: 'object', default: {} },
   title: { type: 'title', optional: true },
   nodes: { type: ['p'], default: [] }
 });

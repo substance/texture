@@ -6,7 +6,7 @@ var InlineWrapperJATSConverter = require('./InlineWrapperJATSConverter');
 module.exports = {
   name: 'inline-wrapper',
 
-  configure: function(config, options) {
+  configure: function(config) {
     config.import(SubstanceInlineWrapperPackage);
     config.addConverter('jats', InlineWrapperJATSConverter);
   }

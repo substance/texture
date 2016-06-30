@@ -37,7 +37,7 @@ AbstractWriter.Prototype = function() {
     return _super._renderToolbar.apply(this, arguments);
   };
 
-  this._renderContentPanel = function($$) {
+  this._renderContentPanel = function($$) { // eslint-disable-line
     throw new Error("This method is abstract.");
   };
 

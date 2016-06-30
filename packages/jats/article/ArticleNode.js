@@ -28,11 +28,11 @@ ArticleNode.static.name = 'article';
 */
 
 ArticleNode.static.defineSchema({
-  attributes: { type: 'object',  default: {} },
+  attributes: { type: 'object', default: {} },
   front: { type: 'id' },
   body: { type: 'id', optional: true },
   back: { type: 'id', optional: true },
-  floatsGroup: { type: 'id', optional: true },
+  floatsGroup: { type: 'id', optional: true },
   subArticles: { type: ['id'], optional: true },
   responses: { type: ['id'], optional: true },
 });

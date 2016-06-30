@@ -22,7 +22,7 @@ function XRefTool() {
 XRefTool.Prototype = function() {
 
   this.render = function($$) {
-    if ($$.capturing) console.log("Rendering XRefTool, state=",  this.state);
+    // if ($$.capturing) console.log("Rendering XRefTool, state=", this.state);
     var node = this.props.node;
     var el = $$('div').addClass('sc-xref-tool');
 

@@ -2,11 +2,11 @@
 
 var oo = require('substance/util/oo');
 
-var ScientistSaveHandler = function(context) {
+function SaveHandler(context) {
   this.context = context;
-};
+}
 
-ScientistSaveHandler.Prototype = function() {
+SaveHandler.Prototype = function() {
   this.saveDocument = function(doc, changes, cb) {
     var exporter = this.context.exporter;
     var xml = exporter.exportDocument(doc);
@@ -15,6 +15,6 @@ ScientistSaveHandler.Prototype = function() {
   };
 };
 
-oo.initClass(ScientistSaveHandler);
+oo.initClass(SaveHandler);
 
-module.exports = ScientistSaveHandler;
+module.exports = SaveHandler;

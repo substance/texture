@@ -56,7 +56,6 @@ JATSImporter.Prototype = function() {
   };
 
   this._converterCanBeApplied = function(converter, el) {
-    var currentContext = this.state.getCurrentContext();
     return converter.matchElement(el, this);
   };
 

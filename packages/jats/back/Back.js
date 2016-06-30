@@ -25,7 +25,7 @@ Back.static.name = 'back';
 */
 
 Back.static.defineSchema({
-  attributes: { type: 'object',  default: {} },
+  attributes: { type: 'object', default: {} },
   label: { type: 'label', optional:true },
   titles: { type: ['title'], default: [] },
   nodes: { type: ['id'], default: [] },

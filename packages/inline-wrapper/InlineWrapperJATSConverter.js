@@ -10,9 +10,7 @@ module.exports = {
   },
 
   import: function(el, node, converter) {
-    // HACK monkey patching the context
     node.id = converter.nextId('inline-wrapper');
-    var state = converter.state;
     node.wrappedNode = converter.convertElement(el).id;
   },
 

@@ -29,6 +29,7 @@ test = test.withExtension('attributesConversion', function(fixtureXML, type) {
     });
     var exporter = t.fixture.createExporter();
     var newEl = exporter.convertNode(caption);
+    t.ok(newEl.is(el.tagName), 'Exported element should be ' + el.tagName);
     var exportedAttr = newEl.getAttributes();
     forEach(attr, function(val, key) {
       t.equal(exportedAttr[key], val, "Attribute '"+key+"' should have been exported.");

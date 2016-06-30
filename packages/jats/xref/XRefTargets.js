@@ -10,23 +10,23 @@ var without = require('lodash/without');
 */
 function XRefTargets() {
   XRefTargets.super.apply(this, arguments);
+  console.log('Created XRefTargets', this.__id__);
 }
 
 XRefTargets.Prototype = function() {
 
   this.getInitialState = function() {
-    console.log('XRefTargets.getInitialState');
     return {
       targets: getXRefTargets(this.props.node)
     };
   };
 
   this.willReceiveProps = function() {
-    console.log('XRefTargets.willReceiveProps');
+    console.log('XRefTargets.willReceiveProps', this.__id__);
   };
 
   this.dispose = function() {
-    console.log('XRefTargets.dispose');
+    console.log('XRefTargets.dispose', this.__id__);
   };
 
   this.render = function($$) {

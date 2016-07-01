@@ -3,7 +3,7 @@
 var test = require('./test').module('jats/subscript');
 
 var withAttributes =
-  '<subscript id="mysubscript"'+
-    'specific-use="test" arrange="test-arrange" xml:base="test-base">'+
-  '</subscript>';
+  '<sub id="mysubscript"'+
+  '   specific-use="test" arrange="test-arrange" xml:base="test-base">'+
+  '</sub>';
 test.attributesConversion(withAttributes, 'subscript');

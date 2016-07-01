@@ -8,6 +8,8 @@ var uglify = require('gulp-uglify');
 var through2 = require('through2');
 var rename = require('gulp-rename');
 var eslint = require('gulp-eslint');
+var tape = require('gulp-tape');
+var tapSpec = require('tap-spec');
 
 var examples = ['writer'];
 
@@ -59,6 +61,15 @@ gulp.task('lint', function() {
   ]).pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
+});
+
+gulp.task('test:server', ['lint'], function() {
+  return gulp.src([
+      './test/**/*.test.js'
+    ])
+    .pipe(tape({
+      reporter: tapSpec()
+    }));
 });
 
 gulp.task('default', ['assets', 'sass', 'browserify']);

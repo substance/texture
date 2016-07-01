@@ -72,4 +72,6 @@ gulp.task('test:server', ['lint'], function() {
     }));
 });
 
+gulp.task('test', ['test:server']);
+
 gulp.task('default', ['assets', 'sass', 'browserify']);

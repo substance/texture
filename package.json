@@ -29,7 +29,8 @@
     "yargs": "^4.6.0"
   },
   "scripts": {
-    "bundle": "gulp"
+    "bundle": "gulp",
+    "test": "gulp test"
   },
   "version": "0.1.0"
 }

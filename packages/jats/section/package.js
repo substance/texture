@@ -3,7 +3,6 @@
 var Section = require('./Section');
 var SectionComponent = require('./SectionComponent');
 var SectionConverter = require('./SectionConverter');
-var SectionTransformer = require('./SectionTransformer');
 
 module.exports = {
   name: 'section',
@@ -11,7 +10,6 @@ module.exports = {
     config.addNode(Section);
     config.addComponent('section', SectionComponent);
     config.addConverter('jats', SectionConverter);
-    config.addConverter('jats-to-internal', SectionTransformer);
     config.addStyle(__dirname, '_section.scss');
   }
 };

@@ -20,7 +20,7 @@ MiniJournal.Prototype = function() {
 
   var _super = MiniJournal.super.prototype;
 
-  this.getDefaultPage = function() {
+  this.getDefaultPage = function() {
     return 'dashboard';
   };
 

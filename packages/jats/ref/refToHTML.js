@@ -1,3 +1,5 @@
+'use strict';
+
 var DOMElement = require('substance/ui/DefaultDOMElement');
 
 var namesToHTML = function (ref) {

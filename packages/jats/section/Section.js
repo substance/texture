@@ -14,7 +14,7 @@ Section.Prototype = function() {
       return titleNode.getText();
     }
   };
-}
+};
 
 Container.extend(Section);
 

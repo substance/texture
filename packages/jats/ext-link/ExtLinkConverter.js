@@ -1,7 +1,5 @@
 'use strict';
 
-var JATS = require('../JATS');
-
 module.exports = {
 
   type: "ext-link",

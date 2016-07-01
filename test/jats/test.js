@@ -22,13 +22,14 @@ test = test.withExtension('attributesConversion', function(fixtureXML, type) {
   return this.withFixture(fixtureXML, 'Attributes should be converted.', function (t) { // eslint-disable-line
     var el = t.fixture.xmlElement;
     var importer = t.fixture.createImporter(type);
-    var caption = importer.convertElement(el);
+    var node = importer.convertElement(el);
     var attr = el.getAttributes();
     forEach(attr, function(val, key) {
-      t.equal(caption.attributes[key], val, "Attribute '"+key+"' should have been imported.");
+      t.equal(node.attributes[key], val, "Attribute '"+key+"' should have been imported.");
     });
     var exporter = t.fixture.createExporter();
-    var newEl = exporter.convertNode(caption);
+    var newEl = exporter.convertNode(node);
+    t.ok(newEl.is(el.tagName), 'Exported element should be ' + el.tagName);
     var exportedAttr = newEl.getAttributes();
     forEach(attr, function(val, key) {
       t.equal(exportedAttr[key], val, "Attribute '"+key+"' should have been exported.");

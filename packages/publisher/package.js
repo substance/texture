@@ -15,7 +15,7 @@ module.exports = {
     config.setToolbarClass(Toolbar);
     config.addStyle(__dirname, '_publisher');
 
-    config.import(require('../jats/package'))
+    config.import(require('../jats/package'));
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.

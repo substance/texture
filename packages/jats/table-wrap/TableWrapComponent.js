@@ -1,3 +1,5 @@
+'use strict';
+
 var FigureComponent = require('../figure/FigureComponent');
 
 function TableWrapComponent() {

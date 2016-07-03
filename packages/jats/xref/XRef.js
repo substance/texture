@@ -1,13 +1,13 @@
 'use strict';
 
-var PropertyAnnotation = require('substance/model/PropertyAnnotation');
+var InlineNode = require('substance/model/InlineNode');
 var Fragmenter = require('substance/model/Fragmenter');
 
 function XRef() {
   XRef.super.apply(this, arguments);
 }
 
-PropertyAnnotation.extend(XRef);
+InlineNode.extend(XRef);
 
 XRef.static.name = 'xref';
 

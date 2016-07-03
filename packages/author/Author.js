@@ -60,18 +60,17 @@ Author.Prototype = function() {
       width: 'large'
     });
 
-    // Body editor
-    var body = doc.get('bodyFlat');
-    if (body) {
-      var bodySection = $$('div').addClass('se-body-section').append(
-        $$(ContainerEditor, {
-          node: body,
-          commands: configurator.getSurfaceCommandNames(),
-          textTypes: configurator.getTextTypes()
-        }).ref('body')
-      );
-      layout.append(bodySection);
-    }
+    var ArticleComponent = this.componentRegistry.get('article');
+
+    var article = doc.get('article');
+    layout.append(
+      $$(ArticleComponent, {
+        node: article,
+        bodyId: 'bodyFlat',
+        disabled: this.props.disabled,
+        configurator: this.props.configurator
+      })
+    );
 
     contentPanel.append(layout);
     return contentPanel;

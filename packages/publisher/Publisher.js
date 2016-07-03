@@ -1,7 +1,6 @@
 'use strict';
 
 var AbstractWriter = require('../common/AbstractWriter');
-var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var Layout = require('substance/ui/Layout');
@@ -33,7 +32,7 @@ PublisherWriter.Prototype = function() {
   };
 
   this._renderMainSection = function($$) {
-    var mainSection = $$('div').addClass('se-main-sectin');
+    var mainSection = $$('div').addClass('se-main-section');
     var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
       this._renderToolbar($$),
       this._renderContentPanel($$)
@@ -44,7 +43,6 @@ PublisherWriter.Prototype = function() {
 
   this._renderContentPanel = function($$) {
     var doc = this.documentSession.getDocument();
-    var configurator = this.props.configurator;
 
     var contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
@@ -57,47 +55,17 @@ PublisherWriter.Prototype = function() {
       width: 'large'
     });
 
-    var front = doc.get('front');
-    var frontSection = $$('div').addClass('se-front-section').append(
-      $$('h1').append('Front'),
-      $$(ContainerEditor, {
+    var ArticleComponent = this.componentRegistry.get('article');
+
+    var article = doc.get('article');
+    layout.append(
+      $$(ArticleComponent, {
+        node: article,
+        bodyId: 'body',
         disabled: this.props.disabled,
-        node: front,
-        commands: configurator.getSurfaceCommandNames(),
-        textTypes: configurator.getTextTypes()
-      }).ref('front')
+        configurator: this.props.configurator
+      })
     );
-    layout.append(frontSection);
-
-    // Body editor
-    var body = doc.get('body');
-    if (body) {
-      var bodySection = $$('div').addClass('se-body-section').append(
-        $$('h1').append('Body'),
-        $$(ContainerEditor, {
-          disabled: this.props.disabled,
-          node: body,
-          commands: configurator.getSurfaceCommandNames(),
-          textTypes: configurator.getTextTypes()
-        }).ref('body')
-      );
-      layout.append(bodySection);
-    }
-
-    // Back matter editor
-    var back = doc.get('back');
-    if (back) {
-      var backSection = $$('div').addClass('se-back-section').append(
-        $$('h1').append('Back'),
-        $$(ContainerEditor, {
-          disabled: this.props.disabled,
-          node: back,
-          commands: configurator.getSurfaceCommandNames(),
-          textTypes: configurator.getTextTypes()
-        }).ref('back')
-      );
-      layout.append(backSection);
-    }
 
     contentPanel.append(layout);
     return contentPanel;

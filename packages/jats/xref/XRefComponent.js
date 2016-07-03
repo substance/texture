@@ -1,6 +1,7 @@
 'use strict';
 
-var AnnotationComponent = require('substance/ui/AnnotationComponent');
+var Component = require('substance/ui/Component');
+var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 
 function XRefComponent() {
   XRefComponent.super.apply(this, arguments);
@@ -8,15 +9,23 @@ function XRefComponent() {
 
 XRefComponent.Prototype = function() {
 
-  var _super = XRefComponent.super.prototype;
-
   this.render = function($$) { // eslint-disable-line
-    var el = _super.render.apply(this, arguments);
-    el.addClass('sm-'+this.props.node.referenceType);
+    var node = this.props.node;
+    var el = $$('span').addClass('sc-xref');
+
+    var labelEditor = $$(TextPropertyEditor, {
+      disabled: this.props.disabled,
+      tagName: 'span',
+      path: [node.id, 'label'],
+      withoutBreak: true
+    });
+    el.append(labelEditor);
+
+    el.addClass('sm-'+node.referenceType);
     return el;
   };
 };
 
-AnnotationComponent.extend(XRefComponent);
+Component.extend(XRefComponent);
 
 module.exports = XRefComponent;

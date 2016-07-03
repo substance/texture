@@ -23,14 +23,14 @@ CaptionComponent.Prototype = function() {
       el.append($$(TextPropertyEditor, {
         disabled: this.props.disabled,
         path: title.getTextPath()
-      }));
+      })).ref('title');
     }
 
     var contentEl = $$('div').addClass('se-content');
     var contentEditor = $$(ContainerEditor, {
       disabled: this.props.disabled,
       node: node
-    }).ref('contentEditor');
+    }).ref('content');
     contentEl.append(contentEditor);
     el.append(contentEl);
 

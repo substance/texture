@@ -22,7 +22,7 @@ FigureComponent.Prototype = function() {
       el.append(
         renderNodeComponent(this, $$, label, {
           disabled: this.props.disabled
-        })
+        }).ref('label')
       );
     }
 
@@ -39,11 +39,10 @@ FigureComponent.Prototype = function() {
     // Display Captions
     node.captions.forEach(function(nodeId) {
       var captionNode = doc.get(nodeId);
-
       el.append(
         renderNodeComponent(this, $$, captionNode, {
           disabled: this.props.disabled
-        })
+        }).ref('caption')
       );
     }.bind(this));
 

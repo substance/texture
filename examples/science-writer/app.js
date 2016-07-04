@@ -15,7 +15,8 @@ App.Prototype = function() {
 
   this.getDefaultState = function() {
     return {
-      documentId: 'elife-00007',
+      // documentId: 'elife-00007',
+      documentId: 'kitchen-sink-author',
     };
   };
 

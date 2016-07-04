@@ -44,7 +44,7 @@ JATSTransformer.Prototype = function() {
     var nodeIds = _flattenSections(converted, nodes, [], 1);
     converted.create({
       id: 'bodyFlat',
-      type: 'container',
+      type: 'body',
       nodes: nodeIds
     });
     return converted;

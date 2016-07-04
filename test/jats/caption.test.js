@@ -55,7 +55,7 @@ test.withFixture(empty, 'Im-/Exporting empty caption', function(t) {
 });
 
 
-// sinple p
+// single p
 var singleParagraph = '<caption><p>test</p></caption>';
 test.withFixture(singleParagraph, 'Im-/Exporting caption with one paragraph', function(t) {
   // import

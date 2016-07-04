@@ -22,6 +22,9 @@ module.exports = {
       'rid': node.targets.join(' '),
       'ref-type': node.referenceType
     });
+    el.append(
+      converter.annotatedText([node.id, 'label'])
+    );
   }
 };
 

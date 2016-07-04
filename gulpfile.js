@@ -65,7 +65,7 @@ gulp.task('lint', function() {
 
 gulp.task('test:server', ['lint'], function() {
   return gulp.src([
-      './test/**/*.test.js'
+      'test/jats/*.test.js'
     ])
     .pipe(tape({
       reporter: tapSpec()

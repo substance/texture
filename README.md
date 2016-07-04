@@ -30,6 +30,11 @@ $ npm run start
 
 And navigate to [http://localhost:5001](http://localhost:5001)
 
+
+## Contribute
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 # Bundle examples
 
 ```bash

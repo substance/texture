@@ -35,11 +35,11 @@ And navigate to [http://localhost:5001](http://localhost:5001)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-# Bundle examples
-
+<!--# Bundle examples
 ```bash
 $ npm run bundle
 ```
+-->
 
 ## Roadmap
 

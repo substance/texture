@@ -66,7 +66,7 @@ module.exports = {
           node.altTexts.push(childNode.id);
           break;
         case "long-desc":
-          node.longDesc.push(childNode.id);
+          node.longDescs.push(childNode.id);
           break;
         case "ext-link":
           node.extLinks.push(childNode.id);
@@ -85,7 +85,17 @@ module.exports = {
       node.contentNodes.push(converter.convertElement(child).id);
     });
     iterator.manyOf(JATS.DISLAY_BACK_MATTER, function(child) {
-      node.backMatter.push(converter.convertElement(child).id);
+      var childNode = converter.convertElement(child);
+      switch(child.tagName) {
+        case "attrib":
+          node.attribs.push(childNode.id);
+          break;
+        case "permissions":
+          node.permissions.push(childNode.id);
+          break;
+        default:
+          //nothing
+      }
     });
     if (iterator.hasNext()) {
       throw new Error('Illegal JATS: ' + el.outerHTML);

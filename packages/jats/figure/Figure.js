@@ -11,6 +11,15 @@ DocumentNode.extend(Figure);
 Figure.static.name = 'figure';
 
 /*
+  Attribute
+    fig-type Type of Figure
+    id Document Internal Identifier
+    orientation Orientation
+    position Position
+    specific-use Specific Use
+    xml:base Base
+    xml:lang Language
+
   Content
     (
       (object-id)*,

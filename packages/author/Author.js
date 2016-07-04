@@ -1,7 +1,6 @@
 'use strict';
 
 var AbstractWriter = require('../common/AbstractWriter');
-var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var Layout = require('substance/ui/Layout');
@@ -47,7 +46,6 @@ Author.Prototype = function() {
 
   this._renderContentPanel = function($$) {
     var doc = this.documentSession.getDocument();
-    var configurator = this.props.configurator;
 
     var contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,

@@ -34,7 +34,7 @@ Section.static.name = "section";
 */
 
 Section.static.defineSchema({
-  xmlAttributes: { type: 'object', default: {} },
+  attributes: { type: 'object', default: {} },
   meta: { type: 'id', optional: true },
   label: { type: 'id', optional:true },
   title: { type: 'id', optional: true },
@@ -43,3 +43,4 @@ Section.static.defineSchema({
 });
 
 module.exports = Section;
+

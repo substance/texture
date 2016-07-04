@@ -1,4 +1,4 @@
-# Substance Scientist
+# Substance Scientist [![Build Status](https://travis-ci.org/substance/scientist.svg?branch=devel)](https://travis-ci.org/substance/scientist)
 
 This is a work-in progress. The project name Scientist is temporary and may be changed with the first beta release.
 
@@ -30,6 +30,13 @@ $ npm run start
 
 And navigate to [http://localhost:5001](http://localhost:5001)
 
+To run the tests in the browser navigate to `http://localhost:5001/test`
+
+To run the test suite headless:
+
+```
+$ npm test
+```
 
 ## Contribute
 

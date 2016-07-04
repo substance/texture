@@ -37,7 +37,14 @@
     </article-meta>
   </front>
   <body>
-    <p id="p1">This is a basic <bold>JATS-compatible</bold> article, using a reduced set of tags. It supports citing references (<xref ref-type="bibr" rid="bib1 bib2">[1,2]</xref>) and figures.</p>
+    <sec id="s1">
+      <title>First Section</title>
+      <p id="p1">This is a basic <bold>JATS-compatible</bold> article, using a reduced set of tags. It supports citing references (<xref ref-type="bibr" rid="bib1 bib2">[1,2]</xref>) and figures.</p>
+    </sec>
+    <sec id="s2">
+      <title>Second Section</title>
+      <p id="p2">This is the second paragraph</p>
+    </sec>
   </body>
   <back>
     <!-- only the first ref-list element is considered in Author mode -->

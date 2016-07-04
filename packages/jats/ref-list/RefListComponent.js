@@ -1,9 +1,8 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 var ContainerEditor = require('substance/ui/ContainerEditor');
+var renderNodeComponent = require('../../../util/renderNodeComponent');
 
 function RefListComponent() {
   Component.apply(this, arguments);
@@ -13,24 +12,22 @@ RefListComponent.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
-    // var doc = node.getDocument();
-
+    var doc = node.getDocument();
     var el = $$('div').addClass('sc-ref-list');
 
-    // NOTE: We don't expose RefList.label to the editor
-
+    // NOTE: We don't yet expose RefList.label to the editor
     if (node.title) {
+      var titleNode = doc.get(node.title);
       el.append(
-        $$(TextPropertyEditor, { path: [node.id, 'title'] }).ref('titleEditor')
-          .addClass('se-title')
+        renderNodeComponent(this, $$, titleNode, {
+          disabled: this.props.disabled
+        })
       );
     }
-
     el.append(
       $$(ContainerEditor, { node: node }).ref('contentEditor')
         .addClass('se-content')
     );
-
     return el;
   };
 };

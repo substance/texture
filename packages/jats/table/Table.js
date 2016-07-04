@@ -12,7 +12,7 @@ BlockNode.extend(Table);
 
 Table.static.name = 'table';
 Table.static.defineSchema({
-  xmlAttributes: { type: 'object', default: {} },
+  attributes: { type: 'object', default: {} },
   htmlContent: {type: 'string'}
 });
 

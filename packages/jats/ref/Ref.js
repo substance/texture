@@ -21,7 +21,6 @@ Ref.static.name = 'ref';
 */
 Ref.static.defineSchema({
   attributes: { type: 'object', default: {} },
-  label: { type: 'label', optional: true },
   xmlContent: {type: 'string', default: ''}
 });
 

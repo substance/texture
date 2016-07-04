@@ -17,16 +17,16 @@ FrontComponent.Prototype = function() {
       .addClass('sc-front')
       .attr('data-id', this.props.node.id);
 
-    el.append($$('h1').append('Front'));
-
-    el.append(
-      $$(ContainerEditor, {
-        disabled: this.props.disabled,
-        node: node,
-        commands: configurator.getSurfaceCommandNames(),
-        textTypes: configurator.getTextTypes()
-      }).ref('front')
-    );
+    if (node.nodes.length > 0) {
+      el.append(
+        $$(ContainerEditor, {
+          disabled: this.props.disabled,
+          node: node,
+          commands: configurator.getSurfaceCommandNames(),
+          textTypes: configurator.getTextTypes()
+        }).ref('front')
+      );
+    }
 
     return el;
   };

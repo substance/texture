@@ -16,7 +16,6 @@ BodyComponent.Prototype = function() {
       .addClass('sc-body')
       .attr('data-id', this.props.node.id);
 
-    el.append($$('h1').append('Body'));
     el.append(
       $$(ContainerEditor, {
         disabled: this.props.disabled,
@@ -25,7 +24,6 @@ BodyComponent.Prototype = function() {
         textTypes: configurator.getTextTypes()
       }).ref('body')
     );
-
     return el;
   };
 };

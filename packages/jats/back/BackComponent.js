@@ -16,7 +16,6 @@ BackComponent.Prototype = function() {
       .addClass('sc-back')
       .attr('data-id', this.props.node.id);
 
-    el.append($$('h1').append('Back'));
     el.append(
       $$(ContainerEditor, {
         disabled: this.props.disabled,

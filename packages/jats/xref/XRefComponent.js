@@ -18,7 +18,7 @@ XRefComponent.Prototype = function() {
       tagName: 'span',
       path: [node.id, 'label'],
       withoutBreak: true
-    });
+    }).ref('labelEditor');
     el.append(labelEditor);
 
     el.addClass('sm-'+node.referenceType);

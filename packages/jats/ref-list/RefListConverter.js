@@ -45,12 +45,7 @@ module.exports = {
     if(node.title) {
       el.append(converter.convertNode(node.title));
     }
-    node.nodes.forEach(function(nodeId) {
-      el.append(converter.convertNode(nodeId));
-    });
-    node.refLists.forEach(function(nodeId) {
-      el.append(converter.convertNode(nodeId));
-    });
+    el.append(converter.convertNodes(node.nodes));
   }
 
 };

@@ -30,11 +30,10 @@ RefList.static.name = 'ref-list';
     )
   */
 RefList.static.defineSchema({
-  xmlAttributes: { type: 'object', default: {} },
+  attributes: { type: 'object', default: {} },
   label: { type: 'label', optional: true },
   title: { type: 'title', optional: true },
   nodes: { type: ['id'], default: [] },
-  refLists: { type: ['ref-list'], default: [] }
 });
 
 module.exports = RefList;

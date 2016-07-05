@@ -1,5 +1,6 @@
 'use strict';
 
+var isString = require('lodash/isString');
 var XMLExporter = require('substance/model/XMLExporter');
 
 function JATSExporter(config) {
@@ -19,6 +20,9 @@ JATSExporter.Prototype = function() {
 
   this.convertNode = function(node) {
     var el = _super.convertNode.apply(this, arguments);
+    if (isString(node)) {
+      node = this.state.doc.get(node);
+    }
     el.attr(node.attributes);
     return el;
   };

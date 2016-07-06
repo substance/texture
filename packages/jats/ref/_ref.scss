@@ -1,0 +1,19 @@
+.sc-ref-target {
+  font-size: $small-font-size;
+  border-bottom: 1px solid $border-color;
+  padding: $default-padding;
+
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #fff;
+  }
+
+  &.sm-selected {
+    border-left: 4px solid #0b9dd9;
+    background: #fff;
+  }
+}

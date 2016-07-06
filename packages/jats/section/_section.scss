@@ -1,0 +1,60 @@
+/* Isolated nodes hacks */
+// .sc-isolated-node.sm-section {
+.sc-isolated-node {
+  position: relative;
+
+  &.sm-selected > .se-container ::selection {
+    background: transparent;
+  }
+}
+
+.sc-isolated-node > .se-container {
+  padding: 10px 20px;
+  outline: 2px solid transparent;
+}
+
+.sc-isolated-node > .se-container:hover, {
+  // background: rgba(163, 205, 253, 0.1);
+  outline: 2px solid rgba(#A3CDFD, 0.4);
+}
+
+.sc-isolated-node.sm-selected > .se-container, {
+  background: rgba(163, 205, 253, 0.3);
+  outline: 2px solid rgba(#A3CDFD, 1);
+}
+
+.sc-isolated-node.sm-focused > .se-container {
+  background: #fff;
+  outline: none;
+  outline: 2px solid #A3CDFD;
+}
+
+.sc-section > .se-title {
+  font-size: $h1-font-size;
+  margin-bottom: $h1-font-size;
+}
+
+.sc-section .sc-section > .se-title {
+  font-size: $h2-font-size;
+  margin-bottom: $h2-font-size;
+}
+
+.sc-section .sc-section .sc-section > .se-title {
+  font-size: $h3-font-size;
+  margin-bottom: $h3-font-size;
+}
+
+.sc-section > .se-section {
+  font-size: $h1-font-size;
+  margin-bottom: $h1-font-size;
+}
+
+.sc-section .sc-section > .se-title {
+  font-size: $h2-font-size;
+  margin-bottom: $h2-font-size;
+}
+
+.sc-section .sc-section .sc-section > .se-title {
+  font-size: $h3-font-size;
+  margin-bottom: $h3-font-size;
+}

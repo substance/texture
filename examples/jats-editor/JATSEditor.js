@@ -87,6 +87,7 @@ JATSEditor.Prototype = function() {
     // Display reader for mobile and writer on desktop
     el.append(
       $$(Publisher, {
+        documentId: this.props.documentId,
         documentSession: this.state.documentSession,
         configurator: configurator
       }).ref('publisher')

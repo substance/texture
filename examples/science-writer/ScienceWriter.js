@@ -92,6 +92,7 @@ ScienceWriter.Prototype = function() {
     // Display reader for mobile and writer on desktop
     el.append(
       $$(Author, {
+        documentId: this.props.documentId,
         documentSession: this.state.documentSession,
         configurator: configurator
       }).ref('publisher')

@@ -59,6 +59,7 @@ AbstractWriter.Prototype = function() {
 
   this._getSaveHandler = function() {
     return new SaveHandler({
+      documentId: this.props.documentId,
       xmlStore: this.context.xmlStore,
       exporter: this.exporter
     });

@@ -1,4 +1,4 @@
-# Substance Scientist [![Build Status](https://travis-ci.org/substance/scientist.svg?branch=devel)](https://travis-ci.org/substance/scientist)
+# Substance Scientist [![Build Status](https://travis-ci.org/substance/scientist.svg?branch=develop)](https://travis-ci.org/substance/scientist)
 
 This is a work-in progress. The project name Scientist is temporary and may be changed with the first beta release.
 

@@ -30,7 +30,11 @@ gulp.task('sass', function(done) {
     return bundleStyles({
       rootDir: __dirname,
       configuratorPath: require.resolve('./packages/common/BaseConfigurator'),
-      configPath: require.resolve('./examples/'+exampleFolder+'/package')
+      configPath: require.resolve('./examples/'+exampleFolder+'/package'),
+      sass: {
+        sourceMap: false,
+        outputStyle: 'compressed'
+      }
     }).then(function(css) {
       var distPath = path.join(__dirname, 'dist', exampleFolder);
       gulpFile('app.css', css, { src: true })

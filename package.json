@@ -12,6 +12,7 @@
     "glob": "7.0.3",
     "gulp": "3.9.1",
     "gulp-eslint": "2.0.0",
+    "gulp-file": "^0.3.0",
     "gulp-if": "2.0.1",
     "gulp-rename": "1.2.2",
     "gulp-sass": "2.3.1",

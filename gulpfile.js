@@ -2,34 +2,45 @@
 /* eslint-disable no-console, no-invalid-this */
 
 var gulp = require('gulp');
-var sass = require('gulp-sass');
 var browserify = require('browserify');
 var uglify = require('gulp-uglify');
 var through2 = require('through2');
-var rename = require('gulp-rename');
 var eslint = require('gulp-eslint');
 var tape = require('gulp-tape');
 var tapSpec = require('tap-spec');
-
-var examples = ['writer'];
+var bundleStyles = require('substance/util/bundleStyles');
+var examples = require('./examples/config').examples;
+var fs = require('fs');
+var path = require('path');
+var gulpFile = require('gulp-file');
 
 gulp.task('assets', function () {
   examples.forEach(function(exampleFolder) {
     gulp.src('./examples/'+exampleFolder+'/index.html')
           .pipe(gulp.dest('dist/'+exampleFolder));
   });
-});
-
-gulp.task('sass', function() {
-  examples.forEach(function(exampleFolder) {
-    gulp.src('./examples/'+exampleFolder+'/app.scss')
-      .pipe(sass().on('error', sass.logError))
-      .pipe(rename('app.css'))
-      .pipe(gulp.dest('./dist/'+exampleFolder));
-  });
-
+  gulp.src('examples/data/*')
+    .pipe(gulp.dest('./dist/data'));
   gulp.src('node_modules/font-awesome/fonts/*')
     .pipe(gulp.dest('./dist/fonts'));
+});
+
+gulp.task('sass', function(done) {
+  Promise.all(examples.map(function(exampleFolder) {
+    return bundleStyles({
+      rootDir: __dirname,
+      configuratorPath: require.resolve('./packages/common/BaseConfigurator'),
+      configPath: require.resolve('./examples/'+exampleFolder+'/package')
+    }).then(function(css) {
+      var distPath = path.join(__dirname, 'dist', exampleFolder);
+      gulpFile('app.css', css, { src: true })
+        .pipe(gulp.dest(distPath));
+    }).catch(function(err) {
+      console.error(err);
+    });
+  })).then(function() {
+    done();
+  });
 });
 
 gulp.task('browserify', function() {
@@ -65,11 +76,11 @@ gulp.task('lint', function() {
 
 gulp.task('test:server', ['lint'], function() {
   return gulp.src([
-      'test/jats/*.test.js'
-    ])
-    .pipe(tape({
-      reporter: tapSpec()
-    }));
+    'test/jats/*.test.js'
+  ])
+  .pipe(tape({
+    reporter: tapSpec()
+  }));
 });
 
 gulp.task('test', ['test:server']);

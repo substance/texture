@@ -13,7 +13,7 @@ ExampleXMLStore.Prototype = function() {
     if (cached) {
       return cb(null, cached);
     }
-    request('GET', '/data/'+documentId+'.xml', null, cb);
+    request('GET', '../data/'+documentId+'.xml', null, cb);
   };
 
   // TODO make functional

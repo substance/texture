@@ -52,7 +52,7 @@ $ npm run bundle
 
 ### Alpha 2
 
-*ETA: 25 July 2016
+*ETA: 25 July 2016*
 
 - Update to Substance Beta 5
 - Author:

@@ -16,6 +16,13 @@ Navigate to the source directory.
 $ cd scientist
 ```
 
+At the moment, the default branch provides the develop version.
+To get the latest stable version switch to the `master` branch:
+
+```bash
+$ git checkout master
+```
+
 Install via npm
 
 ```bash

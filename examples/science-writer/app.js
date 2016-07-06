@@ -5,7 +5,7 @@ substanceGlobals.DEBUG_RENDERING = true;
 
 var BasicApp = require('../../packages/common/BasicApp');
 var ScienceWriter = require('./ScienceWriter');
-var ScienceWriterConfig = require('./ScienceWriterConfig');
+var ScienceWriterPackage = require('./package');
 
 function App() {
   App.super.apply(this, arguments);
@@ -21,7 +21,7 @@ App.Prototype = function() {
   };
 
   this.getConfiguration = function() {
-    return ScienceWriterConfig;
+    return ScienceWriterPackage;
   };
 
   this.render = function($$) {

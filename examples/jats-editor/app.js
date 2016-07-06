@@ -5,7 +5,7 @@ substanceGlobals.DEBUG_RENDERING = true;
 
 var BasicApp = require('../../packages/common/BasicApp');
 var JATSEditor = require('./JATSEditor');
-var JATSEditorConfig = require('./JATSEditorConfig');
+var JATSEditorPackage = require('./package');
 
 function App() {
   App.super.apply(this, arguments);
@@ -20,7 +20,7 @@ App.Prototype = function() {
   };
 
   this.getConfiguration = function() {
-    return JATSEditorConfig;
+    return JATSEditorPackage;
   };
 
   this.render = function($$) {

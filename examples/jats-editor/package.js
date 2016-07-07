@@ -2,7 +2,6 @@
 
 var ScientistPackage = require('../../packages/scientist/package');
 var ExampleXMLStore = require('../ExampleXMLStore');
-var path = require('path');
 
 module.exports = {
   name: 'jats-editor',
@@ -12,6 +11,6 @@ module.exports = {
 
     // Define XML Store
     config.setXMLStore(ExampleXMLStore);
-    config.addStyle(path.join(__dirname, 'app.scss'));
+    config.addStyle(__dirname, 'app.scss');
   }
 };

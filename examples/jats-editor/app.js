@@ -3,7 +3,6 @@
 var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
 
-var Component = require('substance/ui/Component');
 var Scientist = require('../../packages/scientist/Scientist');
 var ScientistConfigurator = require('../../packages/scientist/ScientistConfigurator');
 var JATSEditorPackage = require('./package');
@@ -16,3 +15,4 @@ window.onload = function() {
     configurator: configurator
   }, document.body);
 };
+

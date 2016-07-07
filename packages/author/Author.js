@@ -79,16 +79,8 @@ Author.Prototype = function() {
   };
 
   this._getExporter = function() {
-    var jatsExporter = this.props.configurator.createExporter('jats');
-    var trafo = new JATSTransformer();
-    return {
-      exportDocument: function(doc) {
-        doc = trafo.toJATS(doc);
-        return jatsExporter.exportDocument(doc);
-      }
-    };
+    this.props.configurator.createExporter('jats');
   };
-
 
   this._getTOCProvider = function() {
     return new AuthorTOCProvider(this.documentSession);

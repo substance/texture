@@ -3,6 +3,9 @@
 var Overlay = require('substance/ui/Overlay');
 var Toolbar = require('substance/ui/Toolbar');
 
+var AuthorImporter = require('./AuthorImporter');
+var AuthorExporter = require('./AuthorExporter');
+
 module.exports = {
   name: 'author',
   configure: function(config) {
@@ -23,5 +26,9 @@ module.exports = {
     config.import(require('../inline-wrapper/InlineWrapperPackage'));
     // catch all converters
     config.import(require('../unsupported/UnsupportedNodePackage'));
+
+    // Override Importer/Exporter
+    config.addImporter('jats', AuthorImporter);
+    config.addExporter('jats', AuthorExporter);
   }
 };

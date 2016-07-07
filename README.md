@@ -49,11 +49,11 @@ $ npm test
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-<!--# Bundle examples
+# Bundle examples
+
 ```bash
 $ npm run bundle
 ```
--->
 
 ## Roadmap
 
@@ -77,4 +77,24 @@ $ npm run bundle
 - Creating content (contextual)
 - Add references via CrossRef search or pasting BibTex
 - Support more elements
-- Extended JATS, Stencila Package
+- Extended JATS, [Stencila](https://stenci.la/) Package
+
+# Credits
+
+Scientist is developed by the [Substance Consortium](http://substance.io/consortium/) formed by the [Public Knowledge Project](https://pkp.sfu.ca/2016/04/27/substance-consortium/) (PKP), the [Collaborative Knowledge Foundation](http://coko.foundation/blog.html#substance_consortium) (CoKo) and [Érudit](https://apropos.erudit.org/fr/creation-dun-consortium-autour-de-substance/).
+
+Thanks goes to the following people, who made Scientist possible:
+
+- Alex Garnett (leadership, concept)
+- Juan Pablo Alperin (concept)
+- Alex Smecher (concept, dev)
+- Kristen Ratan (leadership)
+- Adam Hyde (leadership)
+- Jure Triglav (concept, dev)
+- Tanja Niemann (leadership)
+- Davin Baragiotta (concept, dev)
+- David Cormier (dev)
+- Sophy Ouch (design)
+- Michael Aufreiter (dev)
+- Oliver Buchtala (dev)
+- ...

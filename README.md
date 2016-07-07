@@ -86,7 +86,7 @@ Scientist is developed by the [Substance Consortium](http://substance.io/consort
 Thanks goes to the following people, who made Scientist possible:
 
 - Alex Garnett (leadership, concept)
-- Juan Pablo Alperin (concept)
+- Juan Pablo Alperin (leadership, concept)
 - Alex Smecher (concept, dev)
 - Kristen Ratan (leadership)
 - Adam Hyde (leadership)

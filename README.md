@@ -45,6 +45,75 @@ To run the test suite headless:
 $ npm test
 ```
 
+## Usage
+
+Here's how you can integrate Scientist into your web app.
+
+```js
+// app.js
+var Scientist = require('substance-scientist');
+var myScientistPackage = require('./myScientistPackage');
+var configurator = new Scientist.Configurator(myScientistPackage);
+
+window.onload = function() {
+  window.app = Scientist.static.mount({
+    mode: 'publisher', // or 'author' or 'reader'
+    documentId: 'doc-1',
+    configurator: configurator
+  }, document.body);
+};
+```
+
+Scientist is fully configurable. So you need to supply a custom configuration via a package defintion.
+
+```js
+// myScientistPackage.js
+var MyXMLStore = require('../MyXMLStore');
+var scientistPackage = require('substance-scientist/packages/scientist/package');
+var path = require('path');
+
+module.exports = {
+  name: 'my-scientist',
+  configure: function(config) {
+    // Use the default Scientist package
+    config.import(scientistPackage);
+
+    // Define XML Store
+    config.setXMLStore(MyXMLStore);
+    // Add your custom app styles
+    config.addStyle(__dirname, 'my-scientist.scss');
+  }
+};
+```
+
+In order to connect Scientist to a backend you need to define an XML Store:
+
+```js
+// MyXMLStore.js
+var oo = require('substance/util/oo');
+var request = require('substance/util/request');
+
+function MyXMLStore() {}
+
+MyXMLStore.Prototype = function() {
+  this.readXML = function(documentId, cb) {
+    request('GET', 'https://myserver.com/documents/'+documentId+'.xml', null, cb);
+  };
+
+  // TODO make functional
+  this.writeXML = function(documentId, xml, cb) {
+    var data = {content: xml};
+    var url = 'https://myserver.com/documents/'+documentId+'.xml'
+    request('PUT', url, data, cb);
+  };
+};
+
+oo.initClass(MyXMLStore);
+
+module.exports = MyXMLStore;
+```
+
+
 ## Bundle examples
 
 ```bash

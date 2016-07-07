@@ -45,15 +45,15 @@ To run the test suite headless:
 $ npm test
 ```
 
-## Contribute
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-# Bundle examples
+## Bundle examples
 
 ```bash
 $ npm run bundle
 ```
+
+## Contribute
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Roadmap
 

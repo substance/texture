@@ -3,9 +3,11 @@
 var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
 
-var BasicApp = require('../../packages/common/BasicApp');
-var JATSEditor = require('./JATSEditor');
+var Component = require('substance/ui/Component');
+var Scientist = require('../../packages/scientist/Scientist');
+var ScientistConfigurator = require('../../packages/scientist/ScientistConfigurator');
 var JATSEditorPackage = require('./package');
+var configurator = new ScientistConfigurator(JATSEditorPackage);
 
 function App() {
   App.super.apply(this, arguments);
@@ -13,30 +15,26 @@ function App() {
 
 App.Prototype = function() {
 
-  this.getDefaultState = function() {
+  this.getInitialState = function() {
     return {
       documentId: 'elife-00007',
     };
   };
 
-  this.getConfiguration = function() {
-    return JATSEditorPackage;
-  };
-
   this.render = function($$) {
     var documentId = this.state.documentId;
     var el = $$('div').append(
-      $$(JATSEditor, {
-        mode: 'write',
+      $$(Scientist, {
+        mode: 'publisher',
         documentId: documentId,
-        configurator: this.configurator
+        configurator: configurator
       })
     );
     return el;
   };
 };
 
-BasicApp.extend(App);
+Component.extend(App);
 
 window.onload = function() {
   window.app = App.static.mount(document.body);

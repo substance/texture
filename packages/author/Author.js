@@ -89,6 +89,7 @@ Author.Prototype = function() {
     };
   };
 
+
   this._getTOCProvider = function() {
     return new AuthorTOCProvider(this.documentSession);
   };

@@ -10,6 +10,10 @@ var uniq = require('lodash/uniq');
 */
 function ScientistConfigurator() {
   ScientistConfigurator.super.apply(this, arguments);
+
+  // Extend config
+  this.config.configurators = {};
+  this.config.XMLStoreClass = null;
 }
 
 ScientistConfigurator.Prototype = function() {
@@ -19,16 +23,10 @@ ScientistConfigurator.Prototype = function() {
     receive their own configurator)
   */
   this.addConfigurator = function(name, configurator) {
-    if (!this.config.configurators) {
-      this.config.configurators = {};
-    }
     this.config.configurators[name] = configurator;
   };
 
   this.getConfigurator = function(name) {
-    if (!this.config.configurators) {
-      return undefined;
-    }
     return this.config.configurators[name];
   };
 

@@ -7,7 +7,6 @@ var Layout = require('substance/ui/Layout');
 var Overlay = require('substance/ui/DefaultOverlay');
 var AuthorTOCProvider = require('./AuthorTOCProvider');
 var TOC = require('substance/ui/TOC');
-var JATSTransformer = require('./JATSTransformer');
 
 function Author() {
   Author.super.apply(this, arguments);

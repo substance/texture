@@ -7,7 +7,6 @@ var Layout = require('substance/ui/Layout');
 var Overlay = require('substance/ui/DefaultOverlay');
 var AuthorTOCProvider = require('./AuthorTOCProvider');
 var TOC = require('substance/ui/TOC');
-var JATSTransformer = require('./JATSTransformer');
 
 function Author() {
   Author.super.apply(this, arguments);
@@ -79,14 +78,7 @@ Author.Prototype = function() {
   };
 
   this._getExporter = function() {
-    var jatsExporter = this.props.configurator.createExporter('jats');
-    var trafo = new JATSTransformer();
-    return {
-      exportDocument: function(doc) {
-        doc = trafo.toJATS(doc);
-        return jatsExporter.exportDocument(doc);
-      }
-    };
+    this.props.configurator.createExporter('jats');
   };
 
   this._getTOCProvider = function() {

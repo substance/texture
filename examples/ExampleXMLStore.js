@@ -3,9 +3,7 @@
 var oo = require('substance/util/oo');
 var request = require('substance/util/request');
 
-function ExampleXMLStore() {
-
-}
+function ExampleXMLStore() {}
 
 ExampleXMLStore.Prototype = function() {
   this.readXML = function(documentId, cb) {

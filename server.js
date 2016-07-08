@@ -11,7 +11,7 @@ var app = express();
 // Writer example integration
 serverUtils.serveStyles(app, '/jats-editor/app.css', {
   rootDir: __dirname,
-  configuratorPath: require.resolve('./packages/common/BaseConfigurator'),
+  configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/jats-editor/package')
 });
 serverUtils.serveJS(app, '/jats-editor/app.js', path.join(__dirname, 'examples/jats-editor', 'app.js'));
@@ -19,7 +19,7 @@ serverUtils.serveHTML(app, '/jats-editor', path.join(__dirname, 'examples/jats-e
 
 serverUtils.serveStyles(app, '/science-writer/app.css', {
   rootDir: __dirname,
-  configuratorPath: require.resolve('./packages/common/BaseConfigurator'),
+  configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/science-writer/package'),
 });
 serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'));

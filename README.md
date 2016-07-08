@@ -100,7 +100,6 @@ MyXMLStore.Prototype = function() {
     request('GET', 'https://myserver.com/documents/'+documentId+'.xml', null, cb);
   };
 
-  // TODO make functional
   this.writeXML = function(documentId, xml, cb) {
     var data = {content: xml};
     var url = 'https://myserver.com/documents/'+documentId+'.xml'

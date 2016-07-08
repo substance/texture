@@ -1,6 +1,6 @@
 'use strict';
 
-var Configurator = require('../../packages/jats/JATSConfigurator');
+var Configurator = require('substance/util/Configurator');
 var JATSPackage = require('../../packages/jats/package');
 var InlineWrapperPackage = require('../../packages/inline-wrapper/InlineWrapperPackage');
 var UnsupportedNodePackage = require('../../packages/unsupported/UnsupportedNodePackage');

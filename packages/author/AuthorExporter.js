@@ -13,7 +13,7 @@ AuthorExporter.Prototype = function() {
   this.exportDocument = function(doc) {
     var trafo = new JATSTransformer();
     doc = trafo.toJATS(doc);
-    return _super.exportDocument.exportDocument.call(this, doc);
+    return _super.exportDocument.call(this, doc);
   };
 };
 

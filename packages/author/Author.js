@@ -78,7 +78,7 @@ Author.Prototype = function() {
   };
 
   this._getExporter = function() {
-    this.props.configurator.createExporter('jats');
+    return this.props.configurator.createExporter('jats');
   };
 
   this._getTOCProvider = function() {

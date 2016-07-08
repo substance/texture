@@ -6,7 +6,8 @@ substanceGlobals.DEBUG_RENDERING = true;
 var Scientist = require('../../packages/scientist/Scientist');
 var ScientistConfigurator = require('../../packages/scientist/ScientistConfigurator');
 var JATSEditorPackage = require('./package');
-var configurator = new ScientistConfigurator(JATSEditorPackage);
+
+var configurator = new ScientistConfigurator().import(JATSEditorPackage);
 
 window.onload = function() {
   window.app = Scientist.static.mount({
@@ -15,4 +16,3 @@ window.onload = function() {
     configurator: configurator
   }, document.body);
 };
-

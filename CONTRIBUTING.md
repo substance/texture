@@ -71,8 +71,8 @@ It's important you test your converter throughly. The following examples can be 
 
 - [Paragraph Test](test/jats/paragraph.test.js) (Text Node)
 - [ExtLink Test](test/jats/ext-link.test.js) (Annotation Node)
-- [XRef Test](test/jats/xref-link.test.js) (Inline Node)
-- [Body Test](test/jats/body-link.test.js) (Container Node)
+- [XRef Test](test/jats/xref.test.js) (Inline Node)
+- [Body Test](test/jats/body.test.js) (Container Node)
 - [Figure Test](test/jats/figure.test.js) (Document Node)
 
 

@@ -1,6 +1,6 @@
 # Implement a new JATS element
 
-Each JATS element is realized as a [package](https://github.com/substance/scientist/tree/devel/packages/jats/caption), containing a node definition, a converter and a component for rendering / editing.
+Each JATS element is realized as a [package](packages/jats/caption), containing a node definition, a converter and a component for rendering / editing.
 
 ## Choose the right node type
 
@@ -46,22 +46,22 @@ Example elements: `<fig>`, `<ref-list>`
 
 Use the following examples as a reference implementation.
 
-- [Paragraph](https://github.com/substance/scientist/blob/devel/packages/jats/paragraph/Paragraph.js) (Text Node)
-- [ExtLink](https://github.com/substance/scientist/blob/devel/packages/jats/ext-link/ExtLink.js) (Annotation Node)
-- [XRef](https://github.com/substance/scientist/blob/devel/packages/jats/xref/XRef.js) (Inline Node)
-- [Body](https://github.com/substance/scientist/blob/devel/packages/jats/body/Body.js) (Container Node)
-- [Figure](https://github.com/substance/scientist/blob/devel/packages/jats/figure/Figure.js) (Document Node)
+- [Paragraph](packages/jats/paragraph/Paragraph.js) (Text Node)
+- [ExtLink](packages/jats/ext-link/ExtLink.js) (Annotation Node)
+- [XRef](packages/jats/xref/XRef.js) (Inline Node)
+- [Body](packages/jats/body/Body.js) (Container Node)
+- [Figure](packages/jats/figure/Figure.js) (Document Node)
 
 
 ## Define a converter
 
 A converter is need to map from JATS XML to Substance document nodes.
 
-- [Paragraph Converter](https://github.com/substance/scientist/blob/devel/packages/jats/paragraph/ParagraphConverter.js) (Text Node)
-- [ExtLink Converter](https://github.com/substance/scientist/blob/devel/packages/jats/ext-link/ExtLinkConverter.js) (Annotation Node)
-- [XRef Converter](https://github.com/substance/scientist/blob/devel/packages/jats/xref/XRefConverter.js) (Inline Node)
-- [Body Converter](https://github.com/substance/scientist/blob/devel/packages/jats/body/BodyConverter.js) (Container Node)
-- [Figure Converter](https://github.com/substance/scientist/blob/devel/packages/jats/figure/FigureConverter.js) (Document Node)
+- [Paragraph Converter](packages/jats/paragraph/ParagraphConverter.js) (Text Node)
+- [ExtLink Converter](packages/jats/ext-link/ExtLinkConverter.js) (Annotation Node)
+- [XRef Converter](packages/jats/xref/XRefConverter.js) (Inline Node)
+- [Body Converter](packages/jats/body/BodyConverter.js) (Container Node)
+- [Figure Converter](packages/jats/figure/FigureConverter.js) (Document Node)
 
 
 ## Write a converter test
@@ -69,19 +69,19 @@ A converter is need to map from JATS XML to Substance document nodes.
 It's important you test your converter throughly. The following examples can be used as a reference.
 
 
-- [Paragraph Test](https://github.com/substance/scientist/blob/devel/test/jats/paragraph.test.js) (Text Node)
-- [ExtLink Test](https://github.com/substance/scientist/blob/devel/test/jats/ext-link.test.js) (Annotation Node)
-- [XRef Test](https://github.com/substance/scientist/blob/devel/test/jats/xref-link.test.js) (Inline Node)
-- [Body Test](https://github.com/substance/scientist/blob/devel/test/jats/body-link.test.js) (Container Node)
-- [Figure Test](https://github.com/substance/scientist/blob/devel/test/jats/figure.test.js) (Document Node)
+- [Paragraph Test](test/jats/paragraph.test.js) (Text Node)
+- [ExtLink Test](test/jats/ext-link.test.js) (Annotation Node)
+- [XRef Test](test/jats/xref-link.test.js) (Inline Node)
+- [Body Test](test/jats/body-link.test.js) (Container Node)
+- [Figure Test](test/jats/figure.test.js) (Document Node)
 
 
 ## Defining a component
 
 In order to make the content editable, you have to define components for each JATS element.
 
-- [Paragraph Component](https://github.com/substance/scientist/blob/devel/packages/jats/paragraph/Paragraph.js) (Text Node)
-- [ExtLink Component](https://github.com/substance/scientist/blob/devel/packages/jats/ext-link/ExtLink.js) (Annotation Node)
-- [XRef Component](https://github.com/substance/scientist/blob/devel/packages/jats/xref/XRef.js) (Inline Node)
-- [Body Component](https://github.com/substance/scientist/blob/devel/packages/jats/body/Body.js) (Container Node)
-- [Figure Component](https://github.com/substance/scientist/blob/devel/packages/jats/figure/Figure.js) (Document Node)
+- [Paragraph Component](packages/jats/paragraph/Paragraph.js) (Text Node)
+- [ExtLink Component](packages/jats/ext-link/ExtLink.js) (Annotation Node)
+- [XRef Component](packages/jats/xref/XRef.js) (Inline Node)
+- [Body Component](packages/jats/body/Body.js) (Container Node)
+- [Figure Component](packages/jats/figure/Figure.js) (Document Node)

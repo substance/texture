@@ -55,7 +55,7 @@ Use the following examples as a reference implementation.
 
 ## Define a converter
 
-A converter is need to map from JATS XML to Substance document nodes.
+A converter is needed to map from JATS XML to Substance document nodes.
 
 - [Paragraph Converter](packages/jats/paragraph/ParagraphConverter.js) (Text Node)
 - [ExtLink Converter](packages/jats/ext-link/ExtLinkConverter.js) (Annotation Node)
@@ -66,8 +66,7 @@ A converter is need to map from JATS XML to Substance document nodes.
 
 ## Write a converter test
 
-It's important you test your converter throughly. The following examples can be used as a reference.
-
+It's important you test your converter throughly, otherwise content could be lost. The following examples can be used as a reference.
 
 - [Paragraph Test](test/jats/paragraph.test.js) (Text Node)
 - [ExtLink Test](test/jats/ext-link.test.js) (Annotation Node)

@@ -101,7 +101,7 @@ module.exports = {
       .concat(JATS.ABSTRACT)
       .concat(['trans-abstract'])
       .concat(JATS.KWD_GROUP)
-      .concat(['funding-group', 'conference'])
+      .concat(['funding-group', 'conference']);
     iterator.manyOf(elements, function(child) {
       node.nodes.push(converter.convertElement(child).id);
     });

@@ -37,6 +37,7 @@ var JATS = {
   SIMPLE_DISPLAY: ['alternatives','array','code','graphic','media','preformat'],
   SIMPLE_LINK: ['fn','target','xref'],
   SUBSUP: ['sub','sup'],
+  TITLE_GROUP: ['article-title', 'subtitle', 'trans-title-group', 'alt-title', 'fn-group'],
   X: ['x'],
 };
 

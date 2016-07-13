@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var ContainerEditor = require('substance/ui/ContainerEditor');
 var renderNodeComponent = require('../../../util/renderNodeComponent');
 
 function FrontComponent() {
@@ -13,7 +12,6 @@ FrontComponent.Prototype = function() {
   this.render = function($$) {
     var node = this.props.node;
     var doc = node.getDocument();
-    var configurator = this.props.configurator;
 
     var el = $$('div')
       .addClass('sc-front')

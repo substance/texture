@@ -15,5 +15,4 @@ ContribGroup.static.defineSchema({
   nodes: { type: ['id'], default: [] }
 });
 
-
 module.exports = ContribGroup;

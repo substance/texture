@@ -1,0 +1,8 @@
+.sc-contrib-group {
+  overflow: auto;
+
+  > * {
+    float: left;
+    margin-right: $default-padding;
+  }
+}

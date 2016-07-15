@@ -7,6 +7,11 @@ module.exports = {
   name: 'jats',
   configure: function(config) {
     config.import(require('./article/package'));
+    config.import(require('./article-meta/package'));
+    config.import(require('./title-group/package'));
+    config.import(require('./article-title/package'));
+    config.import(require('./contrib-group/package'));
+    config.import(require('./contrib/package'));
     config.import(require('./back/package'));
     config.import(require('./body/package'));
     config.import(require('./bold/package'));

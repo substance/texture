@@ -1,0 +1,13 @@
+.sc-contrib-group {
+  padding-bottom: $default-padding;
+  overflow: auto;
+
+  > * {
+    float: left;
+    margin-right: $default-padding;
+  }
+
+  .se-add-author {
+    color: $link-color;
+  }
+}

@@ -1,0 +1,34 @@
+.sc-edit-xml {
+  padding: $default-padding;
+
+  textarea {
+    font-family: $font-family-code;
+    font-size: $font-size-code;
+    border: 1px solid #ddd;
+    padding: 20px;
+    resize: none;
+  }
+
+  .se-tag {
+    opacity: 0.5;
+  }
+
+  .se-actions {
+    padding-top: 20px;
+
+    .sc-button {
+      margin-right: 20px;
+    }
+  }
+}
+
+.sc-xml-attribute-editor textarea {
+  width: 100%;
+  height: 100px;
+}
+
+.sc-xml-editor textarea {
+  width: 100%;
+  height: 300px;
+}
+

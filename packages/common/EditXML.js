@@ -53,7 +53,7 @@ EditXML.Prototype = function() {
   };
 
   this._delete = function() {
-    console.log('Not yet implemented');
+    console.warn('Not yet implemented');
     // TODO: this is actually not very trivial as we don't
     // know the node's context. E.g. when deleting
     // a contrib node we need to remove the id from

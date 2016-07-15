@@ -19,7 +19,6 @@ function ContribComponent() {
 ContribComponent.Prototype = function() {
 
   this.render = function($$) {
-    console.log('rendering contrib');
     var node = this.props.node;
     var el = $$('div').addClass('sc-contrib')
       .append(
@@ -48,7 +47,6 @@ ContribComponent.Prototype = function() {
   };
 
   this._toggleEditor = function() {
-    console.log('toggle editor');
     this.setState({
       editXML: true
     });

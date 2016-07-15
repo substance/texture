@@ -19,7 +19,9 @@ module.exports = {
 
     config.import(require('../jats/package'));
     config.import(require('./heading/package'));
+    config.import(require('../common/package'));
     config.addStyle(__dirname, '_author');
+
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.

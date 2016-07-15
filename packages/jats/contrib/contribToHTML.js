@@ -1,6 +1,7 @@
 'use strict';
 
 var DOMElement = require('substance/ui/DefaultDOMElement');
+var toDOM = require('../../../util/toDOM');
 
 // TODO: this is dup of refToHTML -> generalize
 var namesToHTML = function (el) {
@@ -29,18 +30,12 @@ var contribToHTML = function (contrib) {
   // <given-names>Meredith C</given-names>
   // </name>
   // <xref ref-type="aff" rid="aff1"/>
-  // <xref ref-type="other" rid="par-1"/>
-  // <xref ref-type="fn" rid="conf2"/>
-  // <xref ref-type="fn" rid="con1"/>
-  // <xref ref-type="other" rid="dataro1"/>
   // </contrib>
+  var contribEl = toDOM(contrib);
 
-  contrib = DOMElement.parseXML('<contrib>'+contrib+'</contrib>');
   var el = DOMElement.createElement('div');
-  var names = namesToHTML(contrib);
-  for (var i = 0; i < names.length; i++) {
-    el.appendChild(names[i]);
-  }
+  el.append(namesToHTML(contribEl));
+
   return el.outerHTML;
 };
 

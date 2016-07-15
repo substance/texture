@@ -10,5 +10,6 @@ module.exports = {
     config.addNode(Contrib);
     config.addComponent(Contrib.static.name, ContribComponent);
     config.addConverter('jats', ContribConverter);
+    config.addStyle(__dirname, '_contrib.scss');
   }
 };

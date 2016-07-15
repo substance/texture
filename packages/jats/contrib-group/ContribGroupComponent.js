@@ -28,6 +28,8 @@ ContribGroupComponent.Prototype = function() {
         );
       }
     }.bind(this));
+
+    el.append($$('button').addClass('se-add-author').append('Add Author'));
     return el;
   };
 };

@@ -1,20 +1,14 @@
-'use strict';
+import SplitPane from 'substance/ui/SplitPane'
+import ScrollPane from 'substance/ui/ScrollPane'
+import Layout from 'substance/ui/Layout'
+import Overlay from 'substance/ui/DefaultOverlay'
+import AbstractWriter from '../common/AbstractWriter'
+import AuthorTOCProvider from './AuthorTOCProvider'
+import TOC from 'substance/ui/TOC'
 
-var AbstractWriter = require('../common/AbstractWriter');
-var SplitPane = require('substance/ui/SplitPane');
-var ScrollPane = require('substance/ui/ScrollPane');
-var Layout = require('substance/ui/Layout');
-var Overlay = require('substance/ui/DefaultOverlay');
-var AuthorTOCProvider = require('./AuthorTOCProvider');
-var TOC = require('substance/ui/TOC');
+class Author extends AbstractWriter {
 
-function Author() {
-  Author.super.apply(this, arguments);
-}
-
-Author.Prototype = function() {
-
-  this.render = function($$) {
+  render($$) {
     return (
       <div class="sc-author">
         <SplitPane splitType="vertical" sizeA="300px">
@@ -22,18 +16,18 @@ Author.Prototype = function() {
           { this._renderMainSection($$) }
         </SplitPane>
       </div>
-    );
-  };
+    )
+  }
 
-  this._renderContextSection = function($$) {
+  _renderContextSection($$) {
     return (
       <div class="se-context-section">
         <TOC />
       </div>
-    );
-  };
+    )
+  }
 
-  this._renderMainSection = function($$) {
+  _renderMainSection($$) {
     return (
       <div class="se-main-section">
         <SplitPane splitType="horizontal">
@@ -41,13 +35,13 @@ Author.Prototype = function() {
           { this._renderContentPanel($$) }
         </SplitPane>
       </div>
-    );
-  };
+    )
+  }
 
-  this._renderContentPanel = function($$) {
-    var doc = this.documentSession.getDocument();
-    var article = doc.get('article');
-    var ArticleComponent = this.componentRegistry.get('article');
+  _renderContentPanel($$) {
+    const doc = this.documentSession.getDocument()
+    const article = doc.get('article')
+    const ArticleComponent = this.componentRegistry.get('article');
     return (
       <ScrollPane
           tocProvider={this.tocProvider}
@@ -59,23 +53,21 @@ Author.Prototype = function() {
             configurator={this.props.configurator} />
         </Layout>
       </ScrollPane>
-    );
-  };
+    )
+  }
 
-  this._scrollTo = function(nodeId) {
-    this.refs.contentPanel.scrollTo(nodeId);
-  };
+  _scrollTo(nodeId) {
+    this.refs.contentPanel.scrollTo(nodeId)
+  }
 
-  this._getExporter = function() {
-    return this.props.configurator.createExporter('jats');
-  };
+  _getExporter() {
+    return this.props.configurator.createExporter('jats')
+  }
 
-  this._getTOCProvider = function() {
-    return new AuthorTOCProvider(this.documentSession);
-  };
+  _getTOCProvider() {
+    return new AuthorTOCProvider(this.documentSession)
+  }
 
-};
+}
 
-AbstractWriter.extend(Author);
-
-module.exports = Author;
+export default Author;

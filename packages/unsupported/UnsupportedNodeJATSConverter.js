@@ -1,21 +1,19 @@
-'use strict';
-
-module.exports = {
+export default {
 
   type: 'unsupported',
 
   matchElement: function() {
-    return true;
+    return true
   },
 
   import: function(el, node) {
-    node.xml = el.outerHTML;
-    node.tagName = el.tagName;
+    node.xml = el.outerHTML
+    node.tagName = el.tagName
   },
 
   export: function(node, el) {
-    el.innerHTML = node.xml;
-    return el.children[0];
+    el.innerHTML = node.xml
+    return el.children[0]
   }
 
-};
+}

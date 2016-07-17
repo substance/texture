@@ -1,22 +1,14 @@
-'use strict';
+import JATSExporter from '../jats/JATSExporter'
+import JATSTransformer from './JATSTransformer'
 
-var JATSExporter = require('../jats/JATSExporter');
-var JATSTransformer = require('./JATSTransformer');
+class AuthorExporter extends JATSExporter {
 
-function AuthorExporter() {
-  AuthorExporter.super.apply(this, arguments);
+  exportDocument(doc) {
+    let trafo = new JATSTransformer()
+    doc = trafo.toJATS(doc)
+    return super.exportDocument(doc)
+  }
+
 }
 
-AuthorExporter.Prototype = function() {
-  var _super = AuthorExporter.super.prototype;
-
-  this.exportDocument = function(doc) {
-    var trafo = new JATSTransformer();
-    doc = trafo.toJATS(doc);
-    return _super.exportDocument.call(this, doc);
-  };
-};
-
-JATSExporter.extend(AuthorExporter);
-
-module.exports = AuthorExporter;
+export default AuthorExporter

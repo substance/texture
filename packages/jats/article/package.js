@@ -1,21 +1,18 @@
-'use strict';
+import ArticleNode from './ArticleNode'
+import ArticleConverter from './ArticleConverter'
+import ScientistArticle from './ScientistArticle'
+import ArticleComponent from './ArticleComponent'
 
-var ArticleNode = require('./ArticleNode');
-var ArticleConverter = require('./ArticleConverter');
-var ScientistArticle = require('./ScientistArticle');
-var ArticleComponent = require('./ArticleComponent');
-
-module.exports = {
+export default {
   name: 'article',
   configure: function(config) {
     config.defineSchema({
       name: 'scientist-article',
       ArticleClass: ScientistArticle,
       defaultTextType: 'paragraph'
-    });
-
-    config.addNode(ArticleNode);
-    config.addConverter('jats', ArticleConverter);
-    config.addComponent(ArticleNode.static.name, ArticleComponent);
+    })
+    config.addNode(ArticleNode)
+    config.addConverter('jats', ArticleConverter)
+    config.addComponent(ArticleNode.static.name, ArticleComponent)
   }
-};
+}

@@ -1,4 +1,3 @@
-'use strict';
 /* eslint-disable no-console, no-invalid-this */
 /* globals Promise */
 
@@ -9,7 +8,7 @@ var eslint = require('gulp-eslint');
 var tape = require('gulp-tape');
 var tapSpec = require('tap-spec');
 var bundleStyles = require('substance/util/bundleStyles');
-var _browserify = require('substance/util/_browserify');
+var bundleJS = require('substance/util/bundleJS');
 var examples = require('./examples/config').examples;
 var path = require('path');
 var gulpFile = require('gulp-file');
@@ -53,7 +52,7 @@ gulp.task('browserify', function() {
   examples.forEach(function(exampleFolder) {
     gulp.src('./examples/'+exampleFolder+'/app.js')
       .pipe(through2.obj(function (file, enc, next) {
-        _browserify({
+        bundleJS({
           sourcePath: file.path,
           jsx: true, es6: true
         }, function(err, buf) {

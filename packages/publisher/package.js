@@ -20,9 +20,9 @@ module.exports = {
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.
-    config.import(require('../inline-wrapper/InlineWrapperPackage'));
+    config.import(require('../inline-wrapper/package'));
 
     // catch all converters
-    config.import(require('../unsupported/UnsupportedNodePackage'));
+    config.import(require('../unsupported/package'));
   }
 };

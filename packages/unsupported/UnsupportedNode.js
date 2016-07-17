@@ -1,12 +1,6 @@
-'use strict';
+import BlockNode from 'substance/model/BlockNode'
 
-var BlockNode = require('substance/model/BlockNode');
-
-function UnsupportedNode() {
-  UnsupportedNode.super.apply(this, arguments);
-}
-
-BlockNode.extend(UnsupportedNode);
+class UnsupportedNode extends BlockNode {}
 
 UnsupportedNode.static.name = 'unsupported';
 
@@ -15,4 +9,4 @@ UnsupportedNode.static.defineSchema({
   tagName: 'string'
 });
 
-module.exports = UnsupportedNode;
+export default UnsupportedNode;

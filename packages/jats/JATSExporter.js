@@ -1,48 +1,38 @@
-'use strict';
+import isString from 'lodash/isString'
+import XMLExporter from 'substance/model/XMLExporter'
 
-var isString = require('lodash/isString');
-var XMLExporter = require('substance/model/XMLExporter');
+class JATSExporter extends XMLExporter {
 
-function JATSExporter(config) {
-  JATSExporter.super.call(this, config);
-}
+  exportDocument(doc) {
+    this.state.doc = doc
 
-JATSExporter.Prototype = function() {
+    var articleEl = this.convertNode(doc.get('article'))
+    return articleEl.outerHTML
+  }
 
-  var _super = JATSExporter.super.prototype;
-
-  this.exportDocument = function(doc) {
-    this.state.doc = doc;
-
-    var articleEl = this.convertNode(doc.get('article'));
-    return articleEl.outerHTML;
-  };
-
-  this.convertNode = function(node) {
-    var el = _super.convertNode.apply(this, arguments);
+  convertNode(node) {
+    var el = super.convertNode(node)
     if (isString(node)) {
-      node = this.state.doc.get(node);
+      node = this.state.doc.get(node)
     }
-    el.attr(node.attributes);
-    return el;
-  };
+    el.attr(node.attributes)
+    return el
+  }
 
-  this.convertNodes = function(nodes) {
-    var els = [];
-    var converter = this;
+  convertNodes(nodes) {
+    var els = []
+    var converter = this
     if (nodes._isArrayIterator) {
       while(nodes.hasNext()) {
-        els.push(converter.convertNode(nodes.next()));
+        els.push(converter.convertNode(nodes.next()))
       }
     } else {
       nodes.forEach(function(node) {
-        els.push(converter.convertNode(node));
-      });
+        els.push(converter.convertNode(node))
+      })
     }
-    return els;
-  };
-};
+    return els
+  }
+}
 
-XMLExporter.extend(JATSExporter);
-
-module.exports = JATSExporter;
+export default JATSExporter

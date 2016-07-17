@@ -1,23 +1,15 @@
-'use strict';
+import JATSImporter from '../jats/JATSImporter'
+import JATSTransformer from './JATSTransformer'
 
-var JATSImporter = require('../jats/JATSImporter');
-var JATSTransformer = require('./JATSTransformer');
+class AuthorImporter extends JATSImporter {
 
-function AuthorImporter() {
-  AuthorImporter.super.apply(this, arguments);
+  importDocument(...args) {
+    var doc = super.importDocument(...args)
+    var trafo = new JATSTransformer()
+    doc = trafo.fromJATS(doc)
+    return doc
+  }
+
 }
 
-AuthorImporter.Prototype = function() {
-  var _super = AuthorImporter.super.prototype;
-
-  this.importDocument = function() {
-    var doc = _super.importDocument.apply(this, arguments);
-    var trafo = new JATSTransformer();
-    doc = trafo.fromJATS(doc);
-    return doc;
-  };
-};
-
-JATSImporter.extend(AuthorImporter);
-
-module.exports = AuthorImporter;
+export default AuthorImporter

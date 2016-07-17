@@ -1,14 +1,12 @@
-'use strict';
+import ArticleMeta from './ArticleMeta'
+import ArticleMetaConverter from './ArticleMetaConverter'
+import ArticleMetaComponent from './ArticleMetaComponent'
 
-var ArticleMeta = require('./ArticleMeta');
-var ArticleMetaConverter = require('./ArticleMetaConverter');
-var ArticleMetaComponent = require('./ArticleMetaComponent');
-
-module.exports = {
+export default {
   name: 'article-meta',
   configure: function(config) {
-    config.addNode(ArticleMeta);
-    config.addConverter('jats', ArticleMetaConverter);
-    config.addComponent(ArticleMeta.static.name, ArticleMetaComponent);
+    config.addNode(ArticleMeta)
+    config.addConverter('jats', ArticleMetaConverter)
+    config.addComponent(ArticleMeta.static.name, ArticleMetaComponent)
   }
-};
+}

@@ -1,18 +1,12 @@
-'use strict';
+import InlineNode from 'substance/model/InlineNode'
 
-var InlineNode = require('substance/model/InlineNode');
-
-function UnsupportedInlineNode() {
-  UnsupportedInlineNode.super.apply(this, arguments);
-}
-
-InlineNode.extend(UnsupportedInlineNode);
+class UnsupportedInlineNode extends InlineNode {}
 
 UnsupportedInlineNode.static.name = 'unsupported-inline';
 
 UnsupportedInlineNode.static.defineSchema({
   xml: 'string',
   tagName: 'string'
-});
+})
 
-module.exports = UnsupportedInlineNode;
+export default UnsupportedInlineNode;

@@ -1,11 +1,5 @@
-'use strict';
+import Document from 'substance/model/Document'
 
-var Document = require('substance/model/Document');
+class ScientistArticle extends Document {}
 
-function ScientistArticle(schema) {
-  ScientistArticle.super.call(this, schema);
-}
-
-Document.extend(ScientistArticle);
-
-module.exports = ScientistArticle;
+export default ScientistArticle

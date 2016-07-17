@@ -1,56 +1,36 @@
-'use strict';
+import Component from 'substance/ui/Component'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+class ArticleComponent extends Component {
 
-function ArticleComponent() {
-  Component.apply(this, arguments);
+  render($$) {
+    var node = this.props.node
+    var doc = node.getDocument()
+    var configurator = this.props.configurator
+
+    var frontEl = renderNodeComponent(this, $$, doc.get('front'), {
+      disabled: this.props.disabled,
+      configurator: configurator
+    })
+
+    var bodyEl = renderNodeComponent(this, $$, doc.get(this.props.bodyId), {
+      disabled: this.props.disabled,
+      configurator: configurator
+    })
+
+    var backEl = renderNodeComponent(this, $$, doc.get('back'), {
+      disabled: this.props.disabled,
+      configurator: configurator
+    })
+
+    return (
+      <div class="sc-article" data-id="{this.props.node.id}">
+        { frontEl }
+        { bodyEl }
+        { backEl }
+      </div>
+    )
+  }
 }
 
-ArticleComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-    var configurator = this.props.configurator;
-    var el = $$('div')
-      .addClass('sc-article')
-      .attr('data-id', this.props.node.id);
-
-    // Render front
-    var front = doc.get('front');
-    if (front) {
-      var frontEl = renderNodeComponent(this, $$, front, {
-        disabled: this.props.disabled,
-        configurator: configurator
-      });
-      el.append(frontEl);
-    }
-
-    // Render body
-    var body = doc.get(this.props.bodyId);
-    if (body) {
-      var bodyEl = renderNodeComponent(this, $$, body, {
-        disabled: this.props.disabled,
-        configurator: configurator
-      });
-      el.append(bodyEl);
-    }
-
-    // Render back matter
-    var back = doc.get('back');
-    if (back) {
-      var backEl = renderNodeComponent(this, $$, back, {
-        disabled: this.props.disabled,
-        configurator: configurator
-      });
-      el.append(backEl);
-    }
-
-    return el;
-  };
-};
-
-Component.extend(ArticleComponent);
-
-module.exports = ArticleComponent;
+export default ArticleComponent;

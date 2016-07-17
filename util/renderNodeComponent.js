@@ -3,6 +3,7 @@
 var extend = require('lodash/extend');
 
 module.exports = function renderNodeComponent(self, $$, node, props) {
+  if (!node) return;
   props = props || {};
   var componentRegistry = self.props.componentRegistry || self.context.componentRegistry;
   var ComponentClass = componentRegistry.get(node.type);

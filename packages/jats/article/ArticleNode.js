@@ -1,14 +1,8 @@
-'use strict';
+import DocumentNode from 'substance/model/DocumentNode'
 
-var DocumentNode = require('substance/model/DocumentNode');
+class ArticleNode extends DocumentNode {}
 
-function ArticleNode() {
-  ArticleNode.super.apply(this, arguments);
-}
-
-DocumentNode.extend(ArticleNode);
-
-ArticleNode.static.name = 'article';
+ArticleNode.static.name = 'article'
 
 /*
   Attributes
@@ -35,6 +29,6 @@ ArticleNode.static.defineSchema({
   floatsGroup: { type: 'id', optional: true },
   subArticles: { type: ['id'], optional: true },
   responses: { type: ['id'], optional: true },
-});
+})
 
-module.exports = ArticleNode;
+export default ArticleNode

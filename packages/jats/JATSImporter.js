@@ -1,112 +1,99 @@
-'use strict';
+import last from 'lodash/last'
+import DOMImporter from 'substance/model/DOMImporter'
+import XMLImporter from 'substance/model/XMLImporter'
+import DefaultDOMElement from 'substance/ui/DefaultDOMElement'
+import UnsupportedNodeJATSConverter from '../unsupported/UnsupportedNodeJATSConverter'
+import inBrowser from 'substance/util/inBrowser'
 
-var last = require('lodash/last');
-var DOMImporter = require('substance/model/DOMImporter');
-var XMLImporter = require('substance/model/XMLImporter');
-var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
-var UnsupportedNodeJATSConverter = require('../unsupported/UnsupportedNodeJATSConverter');
-var inBrowser = require('substance/util/inBrowser');
+class JATSImporter extends XMLImporter {
 
-function JATSImporter(config) {
-  config.enableInlineWrapper = true;
-  JATSImporter.super.call(this, config);
-  this.state = new JATSImporter.State();
-}
+  constructor(config) {
+    config.enableInlineWrapper = true
+    super(config)
+    this.state = new JATSImporter.State()
+  }
 
-JATSImporter.Prototype = function() {
-
-  var _super = JATSImporter.super.prototype;
-
-  this.importDocument = function(xmlString) {
-    this.reset();
-    var xmlDoc = DefaultDOMElement.parseXML(xmlString, 'fullDoc');
+  importDocument(xmlString) {
+    this.reset()
+    var xmlDoc = DefaultDOMElement.parseXML(xmlString, 'fullDoc')
     // HACK: server side impl gives an array
-    var articleEl;
+    var articleEl
     if (inBrowser) {
-      articleEl = xmlDoc.find('article');
+      articleEl = xmlDoc.find('article')
     } else {
       // HACK: this should be more convenient
       for (var idx = 0; idx < xmlDoc.length; idx++) {
         if (xmlDoc[idx].tagName === 'article') {
-          articleEl = xmlDoc[idx];
+          articleEl = xmlDoc[idx]
         }
       }
     }
-    this.convertDocument(articleEl);
-    var doc = this.generateDocument();
-    return doc;
-  };
+    this.convertDocument(articleEl)
+    var doc = this.generateDocument()
+    return doc
+  }
 
-  this.convertDocument = function(articleElement) {
-    this.convertElement(articleElement);
-  };
+  convertDocument(articleElement) {
+    this.convertElement(articleElement)
+  }
 
-  this.convertElements = function(elements, startIdx, endIdx) {
+  convertElements(elements, startIdx, endIdx) {
     if (arguments.length < 2) {
-      startIdx = 0;
+      startIdx = 0
     }
     if(arguments.length < 3) {
-      endIdx = elements.length;
+      endIdx = elements.length
     }
-    var nodes = [];
+    var nodes = []
     for (var i = startIdx; i < endIdx; i++) {
-      nodes.push(this.convertElement(elements[i]));
+      nodes.push(this.convertElement(elements[i]))
     }
-    return nodes;
-  };
+    return nodes
+  }
 
-  this._converterCanBeApplied = function(converter, el) {
-    return converter.matchElement(el, this);
-  };
+  _converterCanBeApplied(converter, el) {
+    return converter.matchElement(el, this)
+  }
 
-  this._getUnsupportedNodeConverter = function() {
-    return UnsupportedNodeJATSConverter;
-  };
+  _getUnsupportedNodeConverter() {
+    return UnsupportedNodeJATSConverter
+  }
 
-  this._nodeData = function(el) {
-    var nodeData = _super._nodeData.apply(this, arguments);
-    nodeData.attributes = el.getAttributes();
-    return nodeData;
-  };
+  _nodeData(el, type) {
+    var nodeData = super._nodeData(el, type)
+    nodeData.attributes = el.getAttributes()
+    return nodeData
+  }
 
+}
 
-};
+class JATSImporterState extends DOMImporter.State {
 
-XMLImporter.extend(JATSImporter);
-
-JATSImporter.State = function() {
-  JATSImporter.State.super.call(this);
-};
-
-JATSImporter.State.Prototype = function() {
-
-  var _super = JATSImporter.State.super.prototype;
-
-  this.reset = function() {
-    _super.reset.call(this);
+  reset() {
+    super.reset()
     // stack for list types
-    this.lists = [];
-    this.listItemLevel = 1;
-  };
+    this.lists = []
+    this.listItemLevel = 1
+  }
 
-  this.getCurrentListItemLevel = function() {
-    return this.listItemLevel;
-  };
+  getCurrentListItemLevel() {
+    return this.listItemLevel
+  }
 
-  this.increaseListItemLevel = function() {
-    return this.listItemLevel++;
-  };
+  increaseListItemLevel() {
+    return this.listItemLevel++
+  }
 
-  this.decreaseListItemLevel = function() {
-    return this.listItemLevel--;
-  };
+  decreaseListItemLevel() {
+    return this.listItemLevel--
+  }
 
-  this.getCurrentList = function() {
-    return last(this.lists);
-  };
+  getCurrentList() {
+    return last(this.lists)
+  }
 
-};
+}
 
-DOMImporter.State.extend(JATSImporter.State);
+JATSImporter.State = JATSImporterState
 
-module.exports = JATSImporter;
+export default JATSImporter

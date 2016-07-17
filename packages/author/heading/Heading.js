@@ -1,20 +1,14 @@
-'use strict';
+import TextBlock from 'substance/model/TextBlock'
 
-var TextBlock = require('substance/model/TextBlock');
+class HeadingNode extends TextBlock {}
 
-function HeadingNode() {
-  HeadingNode.super.apply(this, arguments);
-}
-
-TextBlock.extend(HeadingNode);
-
-HeadingNode.static.name = "heading";
+HeadingNode.static.name = "heading"
 
 HeadingNode.static.defineSchema({
   // just a reference to the original node
   // which will be used to retain XML attributes
   sectionId: { type: 'id', optional: true },
   level: { type: "number", default: 1 },
-});
+})
 
-module.exports = HeadingNode;
+export default HeadingNode

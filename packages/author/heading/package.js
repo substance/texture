@@ -1,10 +1,8 @@
-'use strict';
+import Heading from './Heading'
+import HeadingComponent from 'substance/packages/heading/HeadingComponent'
+import HeadingHTMLConverter from 'substance/packages/heading/HeadingHTMLConverter';
 
-var Heading = require('./Heading');
-var HeadingComponent = require('substance/packages/heading/HeadingComponent');
-var HeadingHTMLConverter = require('substance/packages/heading/HeadingHTMLConverter');
-
-module.exports = {
+export default {
   name: 'heading',
   configure: function(config) {
     config.addNode(Heading);
@@ -36,4 +34,4 @@ module.exports = {
     });
     config.addStyle(__dirname+"/_heading.scss");
   }
-};
+}

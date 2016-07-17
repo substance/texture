@@ -1,16 +1,16 @@
 'use strict';
 /* eslint-disable no-console, no-invalid-this */
+/* globals Promise */
 
 var gulp = require('gulp');
-var browserify = require('browserify');
 var uglify = require('gulp-uglify');
 var through2 = require('through2');
 var eslint = require('gulp-eslint');
 var tape = require('gulp-tape');
 var tapSpec = require('tap-spec');
 var bundleStyles = require('substance/util/bundleStyles');
+var _browserify = require('substance/util/_browserify');
 var examples = require('./examples/config').examples;
-var fs = require('fs');
 var path = require('path');
 var gulpFile = require('gulp-file');
 
@@ -51,12 +51,14 @@ gulp.task('browserify', function() {
   examples.forEach(function(exampleFolder) {
     gulp.src('./examples/'+exampleFolder+'/app.js')
       .pipe(through2.obj(function (file, enc, next) {
-        browserify(file.path)
-          .bundle(function (err, res) {
-            if (err) { return next(err); }
-            file.contents = res;
-            next(null, file);
-          });
+        _browserify({
+          sourcePath: file.path,
+          jsx: true, es6: true
+        }, function(err, buf) {
+          if (err) { return next(err); }
+          file.contents = buf;
+          next(null, file);
+        });
       }))
       .on('error', function (error) {
         console.log(error.stack);

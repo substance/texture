@@ -6,8 +6,14 @@
     "substance": "substance/substance#refactorings"
   },
   "devDependencies": {
+    "babel-plugin-syntax-jsx": "^6.8.0",
+    "babel-plugin-transform-es2015-modules-commonjs-simple": "^6.7.4",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babelify": "^7.3.0",
     "browserify": "substance/node-browserify#d3caeb6dcdaa97a258d099c7231a57f0f60ec876",
     "express": "4.13.4",
+    "electron-prebuilt": "1.2.7",
+    "electron-utils": "github:substance/electron-utils",
     "font-awesome": "4.5.0",
     "glob": "7.0.3",
     "gulp": "3.9.1",
@@ -28,9 +34,11 @@
     "vinyl-source-stream": "1.1.0",
     "yargs": "4.7.1"
   },
+  "main": "main.js",
   "scripts": {
     "bundle": "gulp",
-    "test": "gulp test"
+    "test": "gulp test",
+    "app": "./node_modules/.bin/electron ."
   },
   "version": "1.0.0-alpha"
 }

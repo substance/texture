@@ -22,7 +22,9 @@ serverUtils.serveStyles(app, '/science-writer/app.css', {
   configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/science-writer/package'),
 });
-serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'));
+serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'), {
+  jsx: true
+});
 serverUtils.serveHTML(app, '/science-writer', path.join(__dirname, 'examples/science-writer', 'index.html'), {});
 
 // static served data

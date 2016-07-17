@@ -14,7 +14,10 @@ serverUtils.serveStyles(app, '/jats-editor/app.css', {
   configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/jats-editor/package')
 });
-serverUtils.serveJS(app, '/jats-editor/app.js', path.join(__dirname, 'examples/jats-editor', 'app.js'));
+serverUtils.serveJS(app, '/jats-editor/app.js', path.join(__dirname, 'examples/jats-editor', 'app.js'), {
+  jsx: true,
+  es6: "modules"
+});
 serverUtils.serveHTML(app, '/jats-editor', path.join(__dirname, 'examples/jats-editor', 'index.html'), {});
 
 serverUtils.serveStyles(app, '/science-writer/app.css', {
@@ -23,7 +26,11 @@ serverUtils.serveStyles(app, '/science-writer/app.css', {
   configPath: require.resolve('./examples/science-writer/package'),
 });
 serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'), {
-  jsx: true
+  jsx: true,
+  // we can rely on native es6 support
+  // only imports/exports need to be transpiled
+  // for compatibility with browserify
+  es6: "modules"
 });
 serverUtils.serveHTML(app, '/science-writer', path.join(__dirname, 'examples/science-writer', 'index.html'), {});
 

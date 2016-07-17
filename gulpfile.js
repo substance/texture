@@ -25,15 +25,15 @@ gulp.task('assets', function () {
     .pipe(gulp.dest('./dist/fonts'));
 });
 
-gulp.task('sass', function(done) {
+gulp.task('css', function(done) {
   Promise.all(examples.map(function(exampleFolder) {
     return bundleStyles({
       rootDir: __dirname,
-      configuratorPath: require.resolve('./packages/common/BaseConfigurator'),
+      configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
       configPath: require.resolve('./examples/'+exampleFolder+'/package'),
-      sass: {
+      less: {
         sourceMap: false,
-        outputStyle: 'compressed'
+        compress: true
       }
     }).then(function(css) {
       var distPath = path.join(__dirname, 'dist', exampleFolder);
@@ -91,4 +91,6 @@ gulp.task('test:server', ['lint'], function() {
 
 gulp.task('test', ['test:server']);
 
-gulp.task('default', ['assets', 'sass', 'browserify']);
+gulp.task('bundle', ['assets', 'css', 'browserify']);
+
+gulp.task('default', ['bundle']);

@@ -34,7 +34,9 @@ gulp.task('css', function(done) {
       less: {
         sourceMap: false,
         compress: true
-      }
+      },
+      es6: true,
+      jsx: true
     }).then(function(css) {
       var distPath = path.join(__dirname, 'dist', exampleFolder);
       gulpFile('app.css', css, { src: true })

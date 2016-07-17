@@ -1,14 +1,22 @@
 module.exports = {
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+    }
+  },
   "env": {
     "browser": true,
     "commonjs": true,
     "node": true
   },
+  "plugins": [ "react" ],
   "extends": "eslint:recommended",
   "globals": {
-    "QUnit": true
+    "Promise": true
   },
   "rules": {
+    "react/jsx-uses-react": [2, { "pragma": "$$" }],
+    "react/jsx-uses-vars": 2,
     // 0 - off, 1 - warning, 2 - error
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "semi": [2, "always"],

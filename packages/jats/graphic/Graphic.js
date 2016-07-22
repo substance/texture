@@ -16,9 +16,9 @@ Graphic.Prototype = function() {
 
 Container.extend(Graphic);
 
-Graphic.static.name = 'graphic';
+Graphic.type = 'graphic';
 
-Graphic.static.defineSchema({
+Graphic.define({
   attributes: { type: 'object', default: {} },
 });
 

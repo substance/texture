@@ -7,15 +7,11 @@ function EditExtLinkTool() {
   EditExtLinkTool.super.apply(this, arguments);
 }
 
-EditExtLinkTool.Prototype = function() {
-};
-
 EditLinkTool.extend(EditExtLinkTool);
 
-EditExtLinkTool.static.urlPropertyPath = ['attributes', 'xlink:href'];
-EditExtLinkTool.static.name = 'edit-ext-link';
+EditExtLinkTool.urlPropertyPath = ['attributes', 'xlink:href'];
 
-EditExtLinkTool.static.getProps = function(commandStates) {
+EditExtLinkTool.getProps = function(commandStates) {
   if (commandStates['ext-link'].mode === 'edit') {
     return clone(commandStates['ext-link']);
   } else {

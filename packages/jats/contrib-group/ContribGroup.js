@@ -8,9 +8,9 @@ function ContribGroup() {
 
 Container.extend(ContribGroup);
 
-ContribGroup.static.name = "contrib-group";
+ContribGroup.type = "contrib-group";
 
-ContribGroup.static.defineSchema({
+ContribGroup.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] }
 });

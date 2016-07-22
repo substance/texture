@@ -8,7 +8,7 @@ module.exports = {
   name: 'back',
   configure: function(config) {
     config.addNode(Back);
+    config.addComponent(Back.type, BackComponent);
     config.addConverter('jats', BackConverter);
-    config.addComponent(Back.static.name, BackComponent);
   }
 };

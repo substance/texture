@@ -8,8 +8,8 @@ module.exports = {
   name: 'article-title',
   configure: function(config) {
     config.addNode(ArticleTitle);
+    config.addComponent(ArticleTitle.type, ArticleTitleComponent);
     config.addConverter('jats', ArticleTitleConverter);
-    config.addComponent(ArticleTitle.static.name, ArticleTitleComponent);
     config.addStyle(__dirname, '_article-title.scss');
   }
 };

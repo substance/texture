@@ -2,6 +2,8 @@ import DocumentNode from 'substance/model/DocumentNode'
 
 class ArticleNode extends DocumentNode {}
 
+ArticleNode.type = 'article'
+
 /*
   Attributes
     article-type Type of Article
@@ -20,7 +22,6 @@ class ArticleNode extends DocumentNode {}
 */
 
 ArticleNode.define({
-  type: 'article',
   attributes: { type: 'object', default: {} },
   front: { type: 'id' },
   body: { type: 'id', optional: true },

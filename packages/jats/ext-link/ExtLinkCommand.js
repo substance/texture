@@ -18,6 +18,4 @@ ExtLinkCommand.Prototype = function() {
 
 LinkCommand.extend(ExtLinkCommand);
 
-ExtLinkCommand.static.name = 'ext-link';
-
 module.exports = ExtLinkCommand;

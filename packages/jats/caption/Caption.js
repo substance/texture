@@ -19,7 +19,7 @@ Caption.Prototype = function() {
 
 Container.extend(Caption);
 
-Caption.static.name = 'caption';
+Caption.type = 'caption';
 
 /*
   Attributes
@@ -33,7 +33,7 @@ Caption.static.name = 'caption';
   Content
     ( title?, (p)* )
 */
-Caption.static.defineSchema({
+Caption.define({
   attributes: { type: 'object', default: {} },
   title: { type: 'title', optional: true },
   nodes: { type: ['p'], default: [] }

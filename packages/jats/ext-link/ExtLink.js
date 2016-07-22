@@ -9,14 +9,14 @@ function ExtLink() {
 
 PropertyAnnotation.extend(ExtLink);
 
-ExtLink.static.name = "ext-link";
+ExtLink.type = "ext-link";
 
-ExtLink.static.defineSchema({
+ExtLink.define({
   attributes: { type: 'object', default: {} },
 });
 
 
 // in presence of overlapping annotations will try to render this as one element
-ExtLink.static.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
+ExtLink.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
 
 module.exports = ExtLink;

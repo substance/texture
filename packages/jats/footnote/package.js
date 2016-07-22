@@ -8,7 +8,7 @@ module.exports = {
   name: 'footnote',
   configure: function(config) {
     config.addNode(Footnote);
-    config.addComponent(Footnote.static.name, FootnoteComponent);
+    config.addComponent(Footnote.type, FootnoteComponent);
     config.addConverter('jats', FootnoteConverter);
     config.addStyle(__dirname, '_footnote.scss');
   }

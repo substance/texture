@@ -1,17 +1,12 @@
-'use strict';
+import TextNode = from 'substance/model/TextNode'
 
-var TextNode = require('substance/model/TextNode');
+class ArticleTitle extends TextNode {}
 
-function ArticleTitle() {
-  ArticleTitle.super.apply(this, arguments);
-}
+ArticleTitle.type = 'article-title'
 
-TextNode.extend(ArticleTitle);
-
-ArticleTitle.static.name = 'article-title';
-
-ArticleTitle.static.defineSchema({
+ArticleTitle.define({
   attributes: { type: 'object', default: {} },
-});
+})
 
-module.exports = ArticleTitle;
+exports default ArticleTitle
+

@@ -8,9 +8,9 @@ function Label() {
 
 TextNode.extend(Label);
 
-Label.static.name = 'label';
+Label.type = 'label';
 
-Label.static.defineSchema({
+Label.defineSchema({
   attributes: { type: 'object', default: {} },
 });
 

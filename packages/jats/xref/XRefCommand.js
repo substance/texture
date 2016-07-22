@@ -12,6 +12,4 @@ XRefCommand.Prototype = function() {
 
 InlineNodeCommand.extend(XRefCommand);
 
-XRefCommand.static.name = 'xref';
-
 module.exports = XRefCommand;

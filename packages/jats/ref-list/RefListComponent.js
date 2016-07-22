@@ -35,7 +35,7 @@ RefListComponent.Prototype = function() {
 Component.extend(RefListComponent);
 
 // Isolated Nodes config
-RefListComponent.static.fullWidth = true;
-RefListComponent.static.noStyle = true;
+RefListComponent.fullWidth = true;
+RefListComponent.noStyle = true;
 
 module.exports = RefListComponent;

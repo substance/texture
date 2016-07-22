@@ -13,13 +13,13 @@ function Ref() {
 
 DocumentNode.extend(Ref);
 
-Ref.static.name = 'ref';
+Ref.type = 'ref';
 
 /*
   Content
   (label?, (citation-alternatives | element-citation | mixed-citation | nlm-citation | note | x)+)
 */
-Ref.static.defineSchema({
+Ref.defineSchema({
   attributes: { type: 'object', default: {} },
   xmlContent: {type: 'string', default: ''}
 });

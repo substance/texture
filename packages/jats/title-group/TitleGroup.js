@@ -8,8 +8,7 @@ function TitleGroup() {
 
 Container.extend(TitleGroup);
 
-TitleGroup.static.name = "title-group";
-
+TitleGroup.type = 'title-group';
 /*
   Content
   (
@@ -20,6 +19,5 @@ TitleGroup.static.defineSchema({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] }
 });
-
 
 module.exports = TitleGroup;

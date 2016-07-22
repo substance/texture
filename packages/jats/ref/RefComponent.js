@@ -19,7 +19,7 @@ RefComponent.Prototype = function() {
 Component.extend(RefComponent);
 
 // Isolated Nodes config
-RefComponent.static.fullWidth = true;
-RefComponent.static.noStyle = true;
+RefComponent.fullWidth = true;
+RefComponent.noStyle = true;
 
 module.exports = RefComponent;

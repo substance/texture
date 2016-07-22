@@ -32,7 +32,7 @@ SectionComponent.Prototype = function() {
 
 Component.extend(SectionComponent);
 
-SectionComponent.static.fullWidth = true;
-SectionComponent.static.noStyle = true;
+SectionComponent.fullWidth = true;
+SectionComponent.noStyle = true;
 
 module.exports = SectionComponent;

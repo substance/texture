@@ -8,7 +8,7 @@ module.exports = {
   name: 'ref-list',
   configure: function(config) {
     config.addNode(RefList);
-    config.addComponent(RefList.static.name, RefListComponent);
+    config.addComponent(RefList.type, RefListComponent);
     config.addConverter('jats', RefListConverter);
     config.addStyle(__dirname, '_ref-list.scss');
   }

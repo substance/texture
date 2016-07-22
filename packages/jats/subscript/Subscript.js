@@ -8,9 +8,9 @@ function Subscript() {
 
 Annotation.extend(Subscript);
 
-Subscript.static.name = 'subscript';
+Subscript.type = 'subscript';
 
-Subscript.static.defineSchema({
+Subscript.defineSchema({
   attributes: { type: 'object', default: {} },
 });
 

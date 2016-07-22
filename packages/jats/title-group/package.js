@@ -9,6 +9,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(TitleGroup);
     config.addConverter('jats', TitleGroupConverter);
-    config.addComponent(TitleGroup.static.name, TitleGroupComponent);
+    config.addComponent(TitleGroup.type, TitleGroupComponent);
   }
 };

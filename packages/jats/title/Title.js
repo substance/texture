@@ -8,7 +8,7 @@ function Title() {
 
 TextNode.extend(Title);
 
-Title.static.name = 'title';
+Title.type = 'title';
 
 Title.static.defineSchema({
   attributes: { type: 'object', default: {} },

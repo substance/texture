@@ -9,9 +9,9 @@ function XRef() {
 
 InlineNode.extend(XRef);
 
-XRef.static.name = 'xref';
+XRef.type = 'xref';
 
-XRef.static.defineSchema({
+XRef.defineSchema({
   attributes: { type: 'object', default: {} },
   targets: {type: ['id'], default: []},
   label: { type: 'text', optional: true }

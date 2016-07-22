@@ -10,7 +10,7 @@ module.exports = {
 
   configure: function(config) {
     config.addNode(Paragraph);
-    config.addComponent(Paragraph.static.name, ParagraphComponent);
+    config.addComponent(Paragraph.type, ParagraphComponent);
     config.addConverter('jats', ParagraphConverter);
     config.addTextType({
       name: 'paragraph',

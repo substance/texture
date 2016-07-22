@@ -10,10 +10,10 @@ module.exports = {
   name: 'xref',
   configure: function(config) {
     config.addNode(XRef);
-    config.addComponent(XRef.static.name, XRefComponent);
+    config.addComponent(XRef.type, XRefComponent);
     config.addConverter('jats', XRefConverter);
-    config.addCommand(XRefCommand);
-    config.addTool(XRefTool, { overlay: true });
+    config.addCommand(XRef.type, XRefCommand);
+    config.addTool(XRef.type, XRefTool, { overlay: true });
     config.addStyle(__dirname, '_xref.scss');
     config.addLabel('xref', {
       en: 'Cross Reference'

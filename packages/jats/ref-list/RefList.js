@@ -13,7 +13,7 @@ function RefList() {
 
 Container.extend(RefList);
 
-RefList.static.name = 'ref-list';
+RefList.type = 'ref-list';
 
   /*
     (
@@ -29,7 +29,7 @@ RefList.static.name = 'ref-list';
       (ref-list)*
     )
   */
-RefList.static.defineSchema({
+RefList.defineSchema({
   attributes: { type: 'object', default: {} },
   label: { type: 'label', optional: true },
   title: { type: 'title', optional: true },

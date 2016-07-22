@@ -2,8 +2,6 @@ import DocumentNode from 'substance/model/DocumentNode'
 
 class ArticleNode extends DocumentNode {}
 
-ArticleNode.static.name = 'article'
-
 /*
   Attributes
     article-type Type of Article
@@ -21,7 +19,8 @@ ArticleNode.static.name = 'article'
     (front, body?, back?, floats-group?, (sub-article* | response*))
 */
 
-ArticleNode.static.defineSchema({
+ArticleNode.define({
+  type: 'article',
   attributes: { type: 'object', default: {} },
   front: { type: 'id' },
   body: { type: 'id', optional: true },

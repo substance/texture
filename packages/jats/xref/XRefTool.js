@@ -1,30 +1,25 @@
-'use strict';
-
-var Component = require('substance/ui/Component');
-var clone = require('lodash/clone');
-var Modal = require('substance/ui/Modal');
-var XRefTargets = require('./XRefTargets');
-var Prompt = require('substance/ui/Prompt');
-var deleteSelection = require('substance/model/transform/deleteSelection');
+import Component from 'substance/ui/Component'
+import clone from 'lodash/clone'
+import Modal from 'substance/ui/Modal'
+import XRefTargets from './XRefTargets'
+import Prompt from 'substance/ui/Prompt'
+import deleteSelection from 'substance/model/transform/deleteSelection'
 
 /*
   Edit a reference in a prompt.
 */
-function XRefTool() {
-  XRefTool.super.apply(this, arguments);
+class XRefTool extends Component {
+  constructor(...args) {
+    super(...args)
+    this.handleActions({
+      'closeModal': this._doneEditing,
+      'doneEditing': this._doneEditing
+    })
+  }
 
-  this.handleActions({
-    'closeModal': this._doneEditing,
-    'doneEditing': this._doneEditing
-  });
-}
-
-XRefTool.Prototype = function() {
-
-  this.render = function($$) {
-    // if ($$.capturing) console.log("Rendering XRefTool, state=", this.state);
-    var node = this.props.node;
-    var el = $$('div').addClass('sc-xref-tool');
+  render($$) {
+    var node = this.props.node
+    var el = $$('div').addClass('sc-xref-tool')
 
     el.append(
       $$(Prompt).append(
@@ -35,7 +30,7 @@ XRefTool.Prototype = function() {
         $$(Prompt.Action, {name: 'delete', title: this.getLabel('delete-xref')})
           .on('click', this._onDelete)
       )
-    );
+    )
 
     if (this.state.edit) {
       el.append(
@@ -46,39 +41,34 @@ XRefTool.Prototype = function() {
             node: node
           }).ref('targets')
         )
-      );
+      )
     }
     return el;
-  };
+  }
 
-  this._onEdit = function() {
-    this.setState({
-      edit: true
-    });
-  };
+  _onEdit() {
+    this.setState({edit: true})
+  }
 
-  this._doneEditing = function() {
-    this.setState({
-      edit: false
-    });
-  };
+  _doneEditing() {
+    this.setState({edit: false})
+  }
 
-  this._onDelete = function() {
+  _onDelete() {
     var ds = this.context.documentSession;
     ds.transaction(function(tx, args) {
-      return deleteSelection(tx, args);
-    });
-  };
-};
+      return deleteSelection(tx, args)
+    })
+  }
 
-Component.extend(XRefTool);
+}
 
 XRefTool.getProps = function(commandStates) {
   if (commandStates['xref'].active) {
-    return clone(commandStates['xref']);
+    return clone(commandStates['xref'])
   } else {
     return undefined;
   }
 };
 
-module.exports = XRefTool;
+export default XRefTool

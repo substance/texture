@@ -1,31 +1,23 @@
-'use strict';
+import Component from 'substance/ui/Component'
+import TextPropertyEditor from 'substance/ui/TextPropertyEditor'
 
-var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+class XRefComponent extends Component {
+  render($$) {
+    var node = this.props.node
 
-function XRefComponent() {
-  XRefComponent.super.apply(this, arguments);
+    return (
+      <span class={'sc-xref sm-'+node.referenceType}
+        data-id={this.props.node.id}>
+        <TextPropertyEditor
+          disabled={this.props.disabled}
+          tagName="span"
+          path={[node.id, 'label']}
+          withoutBreak={true}
+          ref="labelEditor"
+        />
+      </span>
+    )
+  }
 }
 
-XRefComponent.Prototype = function() {
-
-  this.render = function($$) { // eslint-disable-line
-    var node = this.props.node;
-    var el = $$('span').addClass('sc-xref');
-
-    var labelEditor = $$(TextPropertyEditor, {
-      disabled: this.props.disabled,
-      tagName: 'span',
-      path: [node.id, 'label'],
-      withoutBreak: true
-    }).ref('labelEditor');
-    el.append(labelEditor);
-
-    el.addClass('sm-'+node.referenceType);
-    return el;
-  };
-};
-
-Component.extend(XRefComponent);
-
-module.exports = XRefComponent;
+export default XRefComponent

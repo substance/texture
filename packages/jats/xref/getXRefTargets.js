@@ -1,14 +1,12 @@
-'use strict';
-
-var includes = require('lodash/includes');
-var map = require('lodash/map');
-var orderBy = require('lodash/orderBy');
+import includes from 'lodash/includes'
+import map from 'lodash/map'
+import orderBy from 'lodash/orderBy'
 
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
   'bibr': ['ref'],
   'table': ['table-wrap']
-};
+}
 
 /*
   Computes available targets for a given reference node
@@ -23,28 +21,28 @@ var TARGET_TYPES = {
   ]
 */
 function getXRefTargets(node) {
-  var doc = node.getDocument();
-  var selectedTargets = node.targets;
-  var nodesByType = doc.getIndex('type');
-  var refType = node.referenceType;
-  var targetTypes = TARGET_TYPES[refType];
-  var targets = [];
+  var doc = node.getDocument()
+  var selectedTargets = node.targets
+  var nodesByType = doc.getIndex('type')
+  var refType = node.referenceType
+  var targetTypes = TARGET_TYPES[refType]
+  var targets = []
 
   targetTypes.forEach(function(targetType) {
-    var nodesForType = map(nodesByType.get(targetType));
+    var nodesForType = map(nodesByType.get(targetType))
 
     nodesForType.forEach(function(node) {
-      var isSelected = includes(selectedTargets, node.id);
+      var isSelected = includes(selectedTargets, node.id)
       targets.push({
         selected: isSelected,
         node: node
-      });
-    });
-  });
+      })
+    })
+  })
 
   // Makes the selected targets go to top
-  targets = orderBy(targets, ['selected'], ['desc']);
-  return targets;
+  targets = orderBy(targets, ['selected'], ['desc'])
+  return targets
 }
 
-module.exports = getXRefTargets;
+export default getXRefTargets

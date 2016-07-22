@@ -18,7 +18,7 @@ export default {
     config.import(require('../jats/package'))
     config.import(require('./heading/package'))
     config.import(require('../common/package'))
-    config.addStyle(__dirname, 'author.less')
+    config.addStyle(__dirname, '_author.scss')
 
 
     // support inline wrappers, for all hybrid types that can be

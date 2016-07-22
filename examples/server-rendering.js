@@ -34,6 +34,6 @@ var Reader = Component.extend({
 });
 
 var $el = jQuery('<div>');
-Reader.static.mount($el[0]);
+Reader.mount($el[0]);
 
 fs.writeFileSync('./prerendered.html', $el.html());

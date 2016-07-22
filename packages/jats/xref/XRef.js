@@ -29,6 +29,6 @@ Object.defineProperties(XRef.prototype, {
 });
 
 // In presence of overlapping annotations will try to render this as one element
-XRef.static.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
+XRef.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
 
 module.exports = XRef;

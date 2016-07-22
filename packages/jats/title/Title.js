@@ -10,7 +10,7 @@ TextNode.extend(Title);
 
 Title.type = 'title';
 
-Title.static.defineSchema({
+Title.define({
   attributes: { type: 'object', default: {} },
 });
 

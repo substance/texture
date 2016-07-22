@@ -1,4 +1,4 @@
-import TextNode = from 'substance/model/TextNode'
+import TextNode from 'substance/model/TextNode'
 
 class ArticleTitle extends TextNode {}
 
@@ -8,5 +8,5 @@ ArticleTitle.define({
   attributes: { type: 'object', default: {} },
 })
 
-exports default ArticleTitle
+export default ArticleTitle
 

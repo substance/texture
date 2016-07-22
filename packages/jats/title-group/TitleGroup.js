@@ -15,7 +15,7 @@ TitleGroup.type = 'title-group';
     article-title, subtitle*, trans-title-group*, alt-title*, fn-group?
   )
 */
-TitleGroup.static.defineSchema({
+TitleGroup.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] }
 });

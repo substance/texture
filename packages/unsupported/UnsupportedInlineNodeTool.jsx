@@ -66,14 +66,12 @@ class UnsupportedInlineNodeTool extends Component {
 
 }
 
-UnsupportedInlineNodeTool.static.getProps = function(commandStates) {
+UnsupportedInlineNodeTool.getProps = function(commandStates) {
   if (commandStates['unsupported-inline'].active) {
     return clone(commandStates['unsupported-inline'])
   } else {
     return undefined
   }
 }
-
-UnsupportedInlineNodeTool.static.name = 'unsupported-inline'
 
 export default UnsupportedInlineNodeTool

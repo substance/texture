@@ -2,9 +2,9 @@ import InlineNode from 'substance/model/InlineNode'
 
 class UnsupportedInlineNode extends InlineNode {}
 
-UnsupportedInlineNode.static.name = 'unsupported-inline';
+UnsupportedInlineNode.type = 'unsupported-inline';
 
-UnsupportedInlineNode.static.defineSchema({
+UnsupportedInlineNode.define({
   xml: 'string',
   tagName: 'string'
 })

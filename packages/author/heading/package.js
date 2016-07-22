@@ -6,7 +6,7 @@ export default {
   name: 'heading',
   configure: function(config) {
     config.addNode(Heading);
-    config.addComponent(Heading.static.name, HeadingComponent);
+    config.addComponent(Heading.type, HeadingComponent);
     config.addConverter('html', HeadingHTMLConverter);
     config.addTextType({
       name: 'heading1',

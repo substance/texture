@@ -2,9 +2,9 @@ import BlockNode from 'substance/model/BlockNode'
 
 class UnsupportedNode extends BlockNode {}
 
-UnsupportedNode.static.name = 'unsupported';
+UnsupportedNode.type = 'unsupported';
 
-UnsupportedNode.static.defineSchema({
+UnsupportedNode.define({
   xml: 'string',
   tagName: 'string'
 });

@@ -14,7 +14,7 @@ class UnsupportedNodeComponent extends Component {
 
 }
 
-UnsupportedNodeComponent.static.fullWidth = true
-UnsupportedNodeComponent.static.noStyle = true
+UnsupportedNodeComponent.fullWidth = true
+UnsupportedNodeComponent.noStyle = true
 
 export default UnsupportedNodeComponent

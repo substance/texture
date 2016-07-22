@@ -9,8 +9,8 @@ module.exports = {
   name: 'figure',
   configure: function(config) {
     config.addNode(Figure);
-    config.addComponent(Figure.static.name, FigureComponent);
-    config.addComponent(Figure.static.name+'-target', FigureTarget);
+    config.addComponent(Figure.type, FigureComponent);
+    config.addComponent(Figure.type+'-target', FigureTarget);
     config.addConverter('jats', FigureConverter);
     config.addStyle(__dirname, '_figure.scss');
     config.addStyle(__dirname, '_figure-target.scss');

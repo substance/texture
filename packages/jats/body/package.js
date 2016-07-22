@@ -8,7 +8,7 @@ module.exports = {
   name: 'body',
   configure: function(config) {
     config.addNode(Body);
+    config.addComponent(Body.type, BodyComponent);
     config.addConverter('jats', BodyConverter);
-    config.addComponent(Body.static.name, BodyComponent);
   }
 };

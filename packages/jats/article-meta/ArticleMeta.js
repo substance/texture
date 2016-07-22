@@ -2,9 +2,9 @@ import DocumentNode from 'substance/model/DocumentNode'
 
 class ArticleMeta extends DocumentNode {}
 
-ArticleMeta.static.name = 'article-meta'
+ArticleMeta.type = 'article-meta';
 
-ArticleMeta.static.defineSchema({
+ArticleMeta.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] }
 })

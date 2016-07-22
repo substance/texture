@@ -8,9 +8,8 @@ function Bold() {
 
 Annotation.extend(Bold);
 
-Bold.static.name = 'bold';
-
-Bold.static.defineSchema({
+Bold.define({
+  type: 'bold',
   attributes: { type: 'object', default: {} },
 });
 

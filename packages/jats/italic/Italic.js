@@ -8,9 +8,9 @@ function Italic() {
 
 Annotation.extend(Italic);
 
-Italic.static.name = 'italic';
+Italic.type = 'italic';
 
-Italic.static.defineSchema({
+Italic.define({
   attributes: { type: 'object', default: {} },
 });
 

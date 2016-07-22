@@ -12,7 +12,7 @@ export default {
       defaultTextType: 'paragraph'
     })
     config.addNode(ArticleNode)
+    config.addComponent(ArticleNode.type, ArticleComponent)
     config.addConverter('jats', ArticleConverter)
-    config.addComponent(ArticleNode.static.name, ArticleComponent)
   }
 }

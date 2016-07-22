@@ -8,7 +8,7 @@ module.exports = {
   name: 'caption',
   configure: function(config) {
     config.addNode(Caption);
-    config.addComponent(Caption.static.name, CaptionComponent);
+    config.addComponent(Caption.type, CaptionComponent);
     config.addConverter('jats', CaptionConverter);
   }
 };

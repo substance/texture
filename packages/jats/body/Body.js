@@ -8,8 +8,6 @@ function Body() {
 
 Container.extend(Body);
 
-Body.static.name = "body";
-
 /*
   Content
    (address | alternatives | array | boxed-text | chem-struct-wrap | code | fig | fig-group | graphic | media | preformat | supplementary-material | table-wrap | table-wrap-group | disp-formula | disp-formula-group | def-list | list | tex-math | mml:math | p | related-article | related-object | ack | disp-quote | speech | statement | verse-group | x)*,
@@ -17,11 +15,12 @@ Body.static.name = "body";
    sig-block?
 */
 
-Body.static.defineSchema({
+Body.type = 'body';
+
+Body.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] },
   sigBlock: { type: ['sig-block'], optional: true }
 });
-
 
 module.exports = Body;

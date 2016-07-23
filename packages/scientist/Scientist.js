@@ -2,8 +2,8 @@
 
 var Component = require('substance/ui/Component');
 var DocumentSession = require('substance/model/DocumentSession');
-var Publisher = require('../../packages/publisher/Publisher');
-var Author = require('../../packages/author/Author');
+var Publisher = require('../publisher/Publisher');
+var Author = require('../author/Author');
 
 /*
   JATSEditor Component

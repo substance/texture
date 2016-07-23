@@ -3,7 +3,7 @@
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.2.1",
-    "substance": "substance/substance#tool-fixes"
+    "substance": "substance/substance#refactorings"
   },
   "devDependencies": {
     "babel-plugin-syntax-jsx": "^6.8.0",

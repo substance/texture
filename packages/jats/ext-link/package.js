@@ -7,7 +7,6 @@ var AnnotationTool = require('substance/ui/AnnotationTool');
 var ExtLinkCommand = require('./ExtLinkCommand');
 var EditExtLinkTool = require('./EditExtLinkTool');
 
-
 module.exports = {
   name: 'ext-link',
   configure: function(config) {
@@ -15,8 +14,8 @@ module.exports = {
     config.addComponent(ExtLink.type, ExtLinkComponent);
     config.addConverter('jats', ExtLinkConverter);
 
-    config.addCommand(ExtLink.type, ExtLinkCommand);
-    config.addTool(ExtLink.type, AnnotationTool, { nodeType: ExtLink.type });
+    config.addCommand(ExtLink.type, ExtLinkCommand, { nodeType: ExtLink.type });
+    config.addTool(ExtLink.type, AnnotationTool);
     config.addTool('edit-ext-link', EditExtLinkTool, { overlay: true });
     config.addIcon(ExtLink.type, { 'fontawesome': 'fa-link'});
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' });

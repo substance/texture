@@ -10,7 +10,7 @@ export default {
     config.addNode(XRef)
     config.addComponent(XRef.type, XRefComponent)
     config.addConverter('jats', XRefConverter)
-    config.addCommand(XRef.type, XRefCommand)
+    config.addCommand(XRef.type, XRefCommand, {nodeType: 'xref'})
     config.addTool(XRef.type, XRefTool, { overlay: true })
     config.addStyle(__dirname, '_xref.scss')
     config.addLabel('xref', {

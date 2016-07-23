@@ -24,7 +24,7 @@ class ArticleComponent extends Component {
     })
 
     return (
-      <div class="sc-article" data-id="{this.props.node.id}">
+      <div class="sc-article" data-id={node.id}>
         { frontEl }
         { bodyEl }
         { backEl }

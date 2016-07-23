@@ -7,11 +7,13 @@ var path = require('path');
 var PORT = process.env.PORT || 5001;
 var serverUtils = require('substance/util/server');
 var app = express();
+var watchify = require('watchify');
 
 var browserifyConfig = require('./package').browserify;
 browserifyConfig.debug = true;
 browserifyConfig.cache = {};
 browserifyConfig.packageCache = {};
+browserifyConfig.plugin= [ watchify ];
 var babelConfig = cloneDeep(require('./package').babel);
 
 // Writer example integration
@@ -19,7 +21,6 @@ serverUtils.serveStyles(app, '/jats-editor/app.css', {
   rootDir: __dirname,
   configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/jats-editor/package'),
-  browserify: browserifyConfig,
   babel: babelConfig
 });
 serverUtils.serveJS(app, '/jats-editor/app.js', path.join(__dirname, 'examples/jats-editor', 'app.js'), {
@@ -32,7 +33,6 @@ serverUtils.serveStyles(app, '/science-writer/app.css', {
   rootDir: __dirname,
   configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/science-writer/package'),
-  browserify: browserifyConfig,
   babel: babelConfig
 });
 serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'), {

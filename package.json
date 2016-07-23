@@ -32,6 +32,7 @@
     "through2": "2.0.1",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
+    "watchify": "^3.7.0",
     "yargs": "4.7.1"
   },
   "main": "main.js",
@@ -41,20 +42,35 @@
     "app": "./node_modules/.bin/electron ."
   },
   "browserify": {
-    "extensions": [".js", ".jsx"]
+    "extensions": [
+      ".js",
+      ".jsx"
+    ]
   },
   "babel": {
     "presets": [
       "es2015-webpack"
     ],
     "plugins": [
-      ["transform-es2015-modules-commonjs-simple", {
-        "noMangle": true, "addExports": true
-      }],
+      [
+        "transform-es2015-modules-commonjs-simple",
+        {
+          "noMangle": true,
+          "addExports": true
+        }
+      ],
       "syntax-jsx",
-      [ "transform-react-jsx", {"pragma": "$$"}]
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "$$"
+        }
+      ]
     ],
-    "ignore": ["node_modules", "substance/substance"]
+    "ignore": [
+      "node_modules",
+      "substance/substance"
+    ]
   },
   "version": "1.0.0-alpha"
 }

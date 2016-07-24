@@ -11,7 +11,8 @@ InlineNode.extend(UnsupportedInlineNode);
 UnsupportedInlineNode.type = 'unsupported-inline';
 
 UnsupportedInlineNode.define({
-  xml: 'string',
+  attributes: { type: 'object', default: {} },
+  xmlContent: {type: 'string', default: ''},
   tagName: 'string'
 });
 

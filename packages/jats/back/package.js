@@ -10,5 +10,6 @@ module.exports = {
     config.addNode(Back);
     config.addConverter('jats', BackConverter);
     config.addComponent(Back.type, BackComponent);
+    config.addStyle(__dirname, '_back.scss');
   }
 };

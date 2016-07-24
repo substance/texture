@@ -2,11 +2,6 @@
 
 var DocumentNode = require('substance/model/DocumentNode');
 
-/*
-  ref
-
-  One item in a bibliographic list.
-*/
 function Contrib() {
   Contrib.super.apply(this, arguments);
 }
@@ -21,7 +16,8 @@ Contrib.type = 'contrib';
 */
 Contrib.define({
   attributes: { type: 'object', default: {} },
-  xmlContent: {type: 'string', default: ''}
+  xmlContent: {type: 'string', default: ''},
+  tagName: 'string'
 });
 
 module.exports = Contrib;

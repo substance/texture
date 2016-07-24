@@ -10,7 +10,7 @@ var JATSEditorPackage = require('./package');
 var configurator = new ScientistConfigurator().import(JATSEditorPackage);
 
 window.onload = function() {
-  window.app = Scientist.static.mount({
+  window.app = Scientist.mount({
     mode: 'publisher',
     documentId: 'elife-00007',
     configurator: configurator

@@ -18,7 +18,7 @@ Section.Prototype = function() {
 
 Container.extend(Section);
 
-Section.static.name = "section";
+Section.type = "section";
 
 /*
   Content Model
@@ -33,7 +33,7 @@ Section.static.name = "section";
     )
 */
 
-Section.static.defineSchema({
+Section.define({
   attributes: { type: 'object', default: {} },
   meta: { type: 'id', optional: true },
   label: { type: 'id', optional:true },

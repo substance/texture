@@ -9,6 +9,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(Front);
     config.addConverter('jats', FrontConverter);
-    config.addComponent(Front.static.name, FrontComponent);
+    config.addComponent(Front.type, FrontComponent);
   }
 };

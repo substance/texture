@@ -9,6 +9,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(ArticleMeta);
     config.addConverter('jats', ArticleMetaConverter);
-    config.addComponent(ArticleMeta.static.name, ArticleMetaComponent);
+    config.addComponent(ArticleMeta.type, ArticleMetaComponent);
   }
 };

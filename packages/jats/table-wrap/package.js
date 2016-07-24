@@ -8,7 +8,7 @@ module.exports = {
   name: 'table-wrap',
   configure: function(config) {
     config.addNode(TableWrap);
-    config.addComponent(TableWrap.static.name, TableWrapComponent);
+    config.addComponent(TableWrap.type, TableWrapComponent);
     config.addConverter('jats', TableWrapConverter);
   }
 };

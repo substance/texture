@@ -13,13 +13,13 @@ function Contrib() {
 
 DocumentNode.extend(Contrib);
 
-Contrib.static.name = 'contrib';
+Contrib.type = 'contrib';
 
 /*
   Content
   (label?, (citation-alternatives | element-citation | mixed-citation | nlm-citation | note | x)+)
 */
-Contrib.static.defineSchema({
+Contrib.define({
   attributes: { type: 'object', default: {} },
   xmlContent: {type: 'string', default: ''}
 });

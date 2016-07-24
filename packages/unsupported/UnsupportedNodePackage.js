@@ -14,10 +14,10 @@ module.exports = {
   configure: function(config) {
     config.addNode(UnsupportedNode);
     config.addNode(UnsupportedInlineNode);
-    config.addComponent(UnsupportedNode.static.name, UnsupportedNodeComponent);
-    config.addComponent(UnsupportedInlineNode.static.name, UnsupportedInlineNodeComponent);
-    config.addCommand(UnsupportedInlineNodeCommand);
-    config.addTool(UnsupportedInlineNodeTool, { overlay: true });
+    config.addComponent(UnsupportedNode.type, UnsupportedNodeComponent);
+    config.addComponent(UnsupportedInlineNode.type, UnsupportedInlineNodeComponent);
+    config.addCommand(UnsupportedInlineNode.type, UnsupportedInlineNodeCommand, {nodeType: UnsupportedInlineNode.type});
+    config.addTool(UnsupportedInlineNode.type, UnsupportedInlineNodeTool, { overlay: true });
     config.addConverter('jats', UnsupportedNodeJATSConverter);
     config.addConverter('jats', UnsupportedInlineNodeJATSConverter);
   }

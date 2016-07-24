@@ -8,13 +8,13 @@ function Footnote() {
 
 Container.extend(Footnote);
 
-Footnote.static.name = 'footnote';
+Footnote.type = 'footnote';
 
 /*
   Content
     (label?, p+)
 */
-Footnote.static.defineSchema({
+Footnote.define({
   attributes: { type: 'object', default: {} },
   label: { type: 'label', optional: true },
   nodes: { type: ['p'], default: [] }

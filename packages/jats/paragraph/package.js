@@ -10,13 +10,13 @@ module.exports = {
 
   configure: function(config) {
     config.addNode(Paragraph);
-    config.addComponent(Paragraph.static.name, ParagraphComponent);
+    config.addComponent(Paragraph.type, ParagraphComponent);
     config.addConverter('jats', ParagraphConverter);
     config.addTextType({
-      name: 'paragraph',
-      data: {type: 'paragraph'}
+      name: Paragraph.type,
+      data: {type: Paragraph.type}
     });
-    config.addLabel('paragraph', {
+    config.addLabel(Paragraph.type, {
       en: 'Paragraph',
       de: 'Paragraph'
     });

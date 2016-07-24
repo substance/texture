@@ -8,9 +8,9 @@ function ArticleMeta() {
 
 DocumentNode.extend(ArticleMeta);
 
-ArticleMeta.static.name = 'article-meta';
+ArticleMeta.type = 'article-meta';
 
-ArticleMeta.static.defineSchema({
+ArticleMeta.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] }
 });

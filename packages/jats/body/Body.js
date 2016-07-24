@@ -8,7 +8,7 @@ function Body() {
 
 Container.extend(Body);
 
-Body.static.name = "body";
+Body.type = "body";
 
 /*
   Content
@@ -17,7 +17,7 @@ Body.static.name = "body";
    sig-block?
 */
 
-Body.static.defineSchema({
+Body.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] },
   sigBlock: { type: ['sig-block'], optional: true }

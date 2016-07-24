@@ -8,7 +8,7 @@ function Front() {
 
 Container.extend(Front);
 
-Front.static.name = "front";
+Front.type = "front";
 
 /*
   Content
@@ -18,7 +18,7 @@ Front.static.name = "front";
     )
 */
 
-Front.static.defineSchema({
+Front.define({
   attributes: { type: 'object', default: {} },
   journalMeta: { type: 'journal-meta', optional: true },
   articleMeta: { type: 'article-meta' },

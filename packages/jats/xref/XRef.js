@@ -9,9 +9,9 @@ function XRef() {
 
 InlineNode.extend(XRef);
 
-XRef.static.name = 'xref';
+XRef.type = 'xref';
 
-XRef.static.defineSchema({
+XRef.define({
   attributes: { type: 'object', default: {} },
   targets: {type: ['id'], default: []},
   label: { type: 'text', optional: true }
@@ -29,6 +29,6 @@ Object.defineProperties(XRef.prototype, {
 });
 
 // In presence of overlapping annotations will try to render this as one element
-XRef.static.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
+XRef.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
 
 module.exports = XRef;

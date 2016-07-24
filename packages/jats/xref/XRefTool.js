@@ -73,14 +73,12 @@ XRefTool.Prototype = function() {
 
 Component.extend(XRefTool);
 
-XRefTool.static.getProps = function(commandStates) {
+XRefTool.getProps = function(commandStates) {
   if (commandStates['xref'].active) {
     return clone(commandStates['xref']);
   } else {
     return undefined;
   }
 };
-
-XRefTool.static.name = 'xref';
 
 module.exports = XRefTool;

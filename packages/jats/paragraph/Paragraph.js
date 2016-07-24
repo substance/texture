@@ -8,9 +8,9 @@ function ParagraphNode() {
 
 TextBlock.extend(ParagraphNode);
 
-ParagraphNode.static.name = "paragraph";
+ParagraphNode.type = "paragraph";
 
-ParagraphNode.static.defineSchema({
+ParagraphNode.define({
   attributes: { type: 'object', default: {} },
 });
 

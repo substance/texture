@@ -16,6 +16,6 @@ module.exports = {
 
     config.addNode(ArticleNode);
     config.addConverter('jats', ArticleConverter);
-    config.addComponent(ArticleNode.static.name, ArticleComponent);
+    config.addComponent(ArticleNode.type, ArticleComponent);
   }
 };

@@ -8,6 +8,4 @@ function BoldCommand() {
 
 AnnotationCommand.extend(BoldCommand);
 
-BoldCommand.static.name = 'bold';
-
 module.exports = BoldCommand;

@@ -8,9 +8,9 @@ function Monospace() {
 
 Annotation.extend(Monospace);
 
-Monospace.static.name = 'monospace';
+Monospace.type = 'monospace';
 
-Monospace.static.defineSchema({
+Monospace.define({
   attributes: { type: 'object', default: {} },
 });
 

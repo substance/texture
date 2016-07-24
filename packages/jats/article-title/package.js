@@ -9,7 +9,7 @@ module.exports = {
   configure: function(config) {
     config.addNode(ArticleTitle);
     config.addConverter('jats', ArticleTitleConverter);
-    config.addComponent(ArticleTitle.static.name, ArticleTitleComponent);
+    config.addComponent(ArticleTitle.type, ArticleTitleComponent);
     config.addStyle(__dirname, '_article-title.scss');
   }
 };

@@ -8,7 +8,7 @@ module.exports = {
   name: 'graphic',
   configure: function(config) {
     config.addNode(Graphic);
-    config.addComponent(Graphic.static.name, GraphicComponent);
+    config.addComponent(Graphic.type, GraphicComponent);
     config.addConverter('jats', GraphicConverter);
     config.addStyle(__dirname, '_graphic.scss');
   }

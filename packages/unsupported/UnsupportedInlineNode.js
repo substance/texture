@@ -8,9 +8,9 @@ function UnsupportedInlineNode() {
 
 InlineNode.extend(UnsupportedInlineNode);
 
-UnsupportedInlineNode.static.name = 'unsupported-inline';
+UnsupportedInlineNode.type = 'unsupported-inline';
 
-UnsupportedInlineNode.static.defineSchema({
+UnsupportedInlineNode.define({
   xml: 'string',
   tagName: 'string'
 });

@@ -9,7 +9,7 @@ module.exports = {
   configure: function(config) {
     config.addNode(ContribGroup);
     config.addConverter('jats', ContribGroupConverter);
-    config.addComponent(ContribGroup.static.name, ContribGroupComponent);
+    config.addComponent(ContribGroup.type, ContribGroupComponent);
     config.addStyle(__dirname, '_contrib-group.scss');
   }
 };

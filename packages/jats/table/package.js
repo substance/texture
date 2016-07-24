@@ -8,7 +8,7 @@ module.exports = {
   name: 'table',
   configure: function(config) {
     config.addNode(Table);
-    config.addComponent(Table.static.name, TableComponent);
+    config.addComponent(Table.type, TableComponent);
     config.addConverter('jats', TableConverter);
   }
 };

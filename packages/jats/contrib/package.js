@@ -8,7 +8,7 @@ module.exports = {
   name: 'contrib',
   configure: function(config) {
     config.addNode(Contrib);
-    config.addComponent(Contrib.static.name, ContribComponent);
+    config.addComponent(Contrib.type, ContribComponent);
     config.addConverter('jats', ContribConverter);
     config.addStyle(__dirname, '_contrib.scss');
   }

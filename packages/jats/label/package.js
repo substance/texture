@@ -8,7 +8,7 @@ module.exports = {
   name: 'label',
   configure: function(config) {
     config.addNode(Label);
-    config.addComponent(Label.static.name, LabelComponent);
+    config.addComponent(Label.type, LabelComponent);
     config.addConverter('jats', LabelConverter);
   }
 };

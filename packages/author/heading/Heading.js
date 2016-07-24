@@ -8,9 +8,9 @@ function HeadingNode() {
 
 TextBlock.extend(HeadingNode);
 
-HeadingNode.static.name = "heading";
+HeadingNode.type = "heading";
 
-HeadingNode.static.defineSchema({
+HeadingNode.define({
   // just a reference to the original node
   // which will be used to retain XML attributes
   sectionId: { type: 'id', optional: true },

@@ -8,7 +8,7 @@ function TitleGroup() {
 
 Container.extend(TitleGroup);
 
-TitleGroup.static.name = "title-group";
+TitleGroup.type = "title-group";
 
 /*
   Content
@@ -16,7 +16,7 @@ TitleGroup.static.name = "title-group";
     article-title, subtitle*, trans-title-group*, alt-title*, fn-group?
   )
 */
-TitleGroup.static.defineSchema({
+TitleGroup.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] }
 });

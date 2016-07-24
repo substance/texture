@@ -7,5 +7,7 @@ function UnsupportedInlineNodeCommand() {
 }
 
 InlineNodeCommand.extend(UnsupportedInlineNodeCommand);
-UnsupportedInlineNodeCommand.static.name = 'unsupported-inline';
+
+UnsupportedInlineNodeCommand.type = 'unsupported-inline';
+
 module.exports = UnsupportedInlineNodeCommand;

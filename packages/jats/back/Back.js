@@ -13,7 +13,7 @@ function Back() {
 
 Container.extend(Back);
 
-Back.static.name = 'back';
+Back.type = 'back';
 
 /*
   Attributes
@@ -24,7 +24,7 @@ Back.static.name = 'back';
     (label?, title*, (ack | app-group | bio | fn-group | glossary | ref-list | notes | sec)*)
 */
 
-Back.static.defineSchema({
+Back.define({
   attributes: { type: 'object', default: {} },
   label: { type: 'label', optional:true },
   titles: { type: ['title'], default: [] },

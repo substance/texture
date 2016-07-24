@@ -8,6 +8,6 @@ function TableWrap() {
 
 Figure.extend(TableWrap);
 
-TableWrap.static.name = 'table-wrap';
+TableWrap.type = 'table-wrap';
 
 module.exports = TableWrap;

@@ -8,9 +8,9 @@ function ArticleTitle() {
 
 TextNode.extend(ArticleTitle);
 
-ArticleTitle.static.name = 'article-title';
+ArticleTitle.type = 'article-title';
 
-ArticleTitle.static.defineSchema({
+ArticleTitle.define({
   attributes: { type: 'object', default: {} },
 });
 

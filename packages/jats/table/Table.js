@@ -10,8 +10,8 @@ function Table() {
 
 BlockNode.extend(Table);
 
-Table.static.name = 'table';
-Table.static.defineSchema({
+Table.type = 'table';
+Table.define({
   attributes: { type: 'object', default: {} },
   htmlContent: {type: 'string'}
 });

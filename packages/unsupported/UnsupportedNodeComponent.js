@@ -28,7 +28,7 @@ UnsupportedNodeComponent.Prototype = function() {
 
 Component.extend(UnsupportedNodeComponent);
 
-UnsupportedNodeComponent.static.fullWidth = true;
-UnsupportedNodeComponent.static.noStyle = true;
+UnsupportedNodeComponent.fullWidth = true;
+UnsupportedNodeComponent.noStyle = true;
 
 module.exports = UnsupportedNodeComponent;

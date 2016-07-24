@@ -8,9 +8,9 @@ function Superscript() {
 
 Annotation.extend(Superscript);
 
-Superscript.static.name = 'superscript';
+Superscript.type = 'superscript';
 
-Superscript.static.defineSchema({
+Superscript.define({
   attributes: { type: 'object', default: {} },
 });
 

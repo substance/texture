@@ -7,6 +7,5 @@ function ExtLinkTool() {
 }
 
 AnnotationTool.extend(ExtLinkTool);
-ExtLinkTool.static.name = 'ext-link';
 
 module.exports = ExtLinkTool;

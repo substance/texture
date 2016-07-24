@@ -8,7 +8,7 @@ function Figure() {
 
 DocumentNode.extend(Figure);
 
-Figure.static.name = 'figure';
+Figure.type = 'figure';
 
 /*
   Attribute
@@ -31,7 +31,7 @@ Figure.static.name = 'figure';
       (attrib | permissions)*
     )
 */
-Figure.static.defineSchema({
+Figure.define({
   attributes: { type: 'object', default: {} },
   objectIds: { type: ['string'], default: [] },
   label: { type: 'label', optional: true },

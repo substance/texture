@@ -14,6 +14,7 @@ module.exports = {
       defaultTextType: 'paragraph'
     });
 
+    config.addStyle(__dirname, '_article.scss');
     config.addNode(ArticleNode);
     config.addConverter('jats', ArticleConverter);
     config.addComponent(ArticleNode.type, ArticleComponent);

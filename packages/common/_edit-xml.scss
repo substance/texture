@@ -3,10 +3,11 @@
 
   textarea {
     font-family: $font-family-code;
-    font-size: $font-size-code;
+    font-size: $font-size-code - 2px;
     border: 1px solid #ddd;
-    padding: 20px;
-    resize: none;
+    padding: 10px;
+    width: 100%;
+    // resize: none;
   }
 
   .se-tag {
@@ -29,6 +30,6 @@
 
 .sc-xml-editor textarea {
   width: 100%;
-  height: 300px;
+  height: 270px;
 }
 

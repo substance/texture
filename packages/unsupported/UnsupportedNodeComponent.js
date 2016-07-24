@@ -17,7 +17,7 @@ UnsupportedNodeComponent.Prototype = function() {
         $$('button').addClass('se-toggle').append(
           $$('pre').append(
             $$('code').append(
-              this.props.node.tagName
+              '<'+this.props.node.tagName+'>'
             )
           )
         )

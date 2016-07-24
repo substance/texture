@@ -34,7 +34,7 @@ XMLAttributeEditor.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
-    var el = $$('div').addClass('sc-edit-xml-attributes');
+    var el = $$('div').addClass('sc-xml-attribute-editor');
     var attributeStr = this._getAttributeString(node);
     el.append(
       $$('textarea')

@@ -1,6 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
+var Tool = require('substance/ui/Tool');
 var clone = require('lodash/clone');
 var Modal = require('substance/ui/Modal');
 var XRefTargets = require('./XRefTargets');
@@ -71,7 +71,7 @@ XRefTool.Prototype = function() {
   };
 };
 
-Component.extend(XRefTool);
+Tool.extend(XRefTool);
 
 XRefTool.getProps = function(commandStates) {
   if (commandStates['xref'].active) {

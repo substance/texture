@@ -8,13 +8,20 @@ var PORT = process.env.PORT || 5001;
 var serverUtils = require('substance/util/server');
 var app = express();
 
+var browserifyConfig = {
+  debug: true
+};
+
 // Writer example integration
 serverUtils.serveStyles(app, '/jats-editor/app.css', {
   rootDir: __dirname,
   configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
-  configPath: require.resolve('./examples/jats-editor/package')
+  configPath: require.resolve('./examples/jats-editor/package'),
 });
-serverUtils.serveJS(app, '/jats-editor/app.js', path.join(__dirname, 'examples/jats-editor', 'app.js'));
+serverUtils.serveJS(app, '/jats-editor/app.js', {
+  sourcePath: path.join(__dirname, 'examples/jats-editor', 'app.js'),
+  browserify: browserifyConfig,
+});
 serverUtils.serveHTML(app, '/jats-editor', path.join(__dirname, 'examples/jats-editor', 'index.html'), {});
 
 serverUtils.serveStyles(app, '/science-writer/app.css', {
@@ -22,7 +29,10 @@ serverUtils.serveStyles(app, '/science-writer/app.css', {
   configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
   configPath: require.resolve('./examples/science-writer/package'),
 });
-serverUtils.serveJS(app, '/science-writer/app.js', path.join(__dirname, 'examples/science-writer', 'app.js'));
+serverUtils.serveJS(app, '/science-writer/app.js', {
+  sourcePath: path.join(__dirname, 'examples/science-writer', 'app.js'),
+  browserify: browserifyConfig,
+});
 serverUtils.serveHTML(app, '/science-writer', path.join(__dirname, 'examples/science-writer', 'index.html'), {});
 
 // static served data

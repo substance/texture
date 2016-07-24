@@ -1,6 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
+var Tool = require('substance/ui/Tool');
 var clone = require('lodash/clone');
 var Modal = require('substance/ui/Modal');
 var Prompt = require('substance/ui/Prompt');
@@ -70,7 +70,7 @@ UnsupportedInlineNodeTool.Prototype = function() {
   };
 };
 
-Component.extend(UnsupportedInlineNodeTool);
+Tool.extend(UnsupportedInlineNodeTool);
 
 UnsupportedInlineNodeTool.getProps = function(commandStates) {
   if (commandStates['unsupported-inline'].active) {

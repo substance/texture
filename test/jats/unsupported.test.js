@@ -14,7 +14,7 @@ var simple =
   '</foo-bar>';
 test.withFixture(simple, 'Im-/Exporting of unsupported node type', function(t) {
   // import
-  var importer = t.fixture.createImporter('article');
+  var importer = t.fixture.createImporter();
   var node = importer.convertElement(t.fixture.xmlElement);
   t.equal(node.xmlContent, '<x>hello</x><y>world</y>');
   // export

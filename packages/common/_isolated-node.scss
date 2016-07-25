@@ -13,27 +13,3 @@
   background: rgba(163, 205, 253, 0.3);
   outline: 2px solid #A3CDFD;
 }
-
-/*
-  Enable below rules for debugging to check whether proper
-  modifiers are applied
-*/
-
-// .sc-isolated-node > .se-container:hover, {
-//   background: rgba(163, 205, 253, 0.3);
-//   outline: 2px solid #A3CDFD; // rgba(#A3CDFD, 0.4);
-// }
-
-// .sc-isolated-node > .se-container {
-//   // padding: 10px 5px;
-// }
-
-// .sc-isolated-node.sm-co-focused > .se-container {
-//   background: #fff;
-//   outline: none;
-// }
-
-// .sc-isolated-node.sm-focused > .se-container {
-//   background: #fff;
-//   outline: 2px solid #A3CDFD;
-// }

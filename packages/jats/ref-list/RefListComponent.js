@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var ContainerEditor = require('substance/ui/ContainerEditor');
 var renderNodeComponent = require('../../../util/renderNodeComponent');
 
 function RefListComponent() {
@@ -24,10 +23,22 @@ RefListComponent.Prototype = function() {
         })
       );
     }
-    el.append(
-      $$(ContainerEditor, { node: node }).ref('contentEditor')
-        .addClass('se-content')
-    );
+
+    // Ref elements
+    var children = node.nodes;
+    children.forEach(function(nodeId) {
+      var childNode = doc.get(nodeId);
+      if (childNode.type !== 'unsupported') {
+        el.append(
+          renderNodeComponent(this, $$, childNode, {
+            disabled: this.props.disabled
+          })
+        );
+      } else {
+        console.info(childNode.type+ ' inside <ref-list> currently not supported by the editor.');
+      }
+    }.bind(this));
+
     return el;
   };
 };

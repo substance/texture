@@ -4,11 +4,15 @@ $fa-font-path:  "../fonts" !default;
 .sc-publisher {
   .se-context-section {
     background: #fafafa;
-    border-right: 1px solid $border-color;
+    border-left: 1px solid $border-color;
 
     .se-toc-entries {
       padding-right: 20px;
     }
+  }
+
+  .sc-body .sc-container-editor > * {
+    margin-bottom: 20px;
   }
 
   .sc-toolbar {

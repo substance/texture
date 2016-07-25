@@ -1,7 +1,7 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var ContainerEditor = require('substance/ui/ContainerEditor');
+var renderNodeComponent = require('../../../util/renderNodeComponent');
 
 function BackComponent() {
   Component.apply(this, arguments);
@@ -11,19 +11,26 @@ BackComponent.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
-    var configurator = this.props.configurator;
+    var doc = node.getDocument();
+
     var el = $$('div')
       .addClass('sc-back')
       .attr('data-id', this.props.node.id);
 
-    el.append(
-      $$(ContainerEditor, {
-        disabled: this.props.disabled,
-        node: node,
-        commands: configurator.getSurfaceCommandNames(),
-        textTypes: configurator.getTextTypes()
-      }).ref('back')
-    );
+    // Ref elements
+    var children = node.nodes;
+    children.forEach(function(nodeId) {
+      var childNode = doc.get(nodeId);
+      if (childNode.type !== 'unsupported') {
+        el.append(
+          renderNodeComponent(this, $$, childNode, {
+            disabled: this.props.disabled
+          })
+        );
+      } else {
+        console.info(childNode.type+ ' inside <back> currently not supported by the editor.');
+      }
+    }.bind(this));
 
     return el;
   };

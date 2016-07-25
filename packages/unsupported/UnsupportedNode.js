@@ -11,7 +11,8 @@ BlockNode.extend(UnsupportedNode);
 UnsupportedNode.type = 'unsupported';
 
 UnsupportedNode.define({
-  xml: 'string',
+  attributes: { type: 'object', default: {} },
+  xmlContent: {type: 'string', default: ''},
   tagName: 'string'
 });
 

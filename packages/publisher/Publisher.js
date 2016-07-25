@@ -17,9 +17,9 @@ PublisherWriter.Prototype = function() {
   this.render = function($$) {
     var el = $$('div').addClass('sc-publisher');
     el.append(
-      $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
-        this._renderContextSection($$),
-        this._renderMainSection($$)
+      $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
+        this._renderMainSection($$),
+        this._renderContextSection($$)
       )
     );
     return el;
@@ -47,7 +47,7 @@ PublisherWriter.Prototype = function() {
     var contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
-      scrollbarPosition: 'right',
+      scrollbarPosition: 'left',
       overlay: Overlay,
     }).ref('contentPanel');
 

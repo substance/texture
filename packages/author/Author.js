@@ -17,9 +17,9 @@ Author.Prototype = function() {
   this.render = function($$) {
     var el = $$('div').addClass('sc-author');
     el.append(
-      $$(SplitPane, {splitType: 'vertical', sizeA: '300px'}).append(
-        this._renderContextSection($$),
-        this._renderMainSection($$)
+      $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
+        this._renderMainSection($$),
+        this._renderContextSection($$)
       )
     );
     return el;
@@ -49,7 +49,7 @@ Author.Prototype = function() {
     var contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
-      scrollbarPosition: 'right',
+      scrollbarPosition: 'left',
       overlay: Overlay,
     }).ref('contentPanel');
 

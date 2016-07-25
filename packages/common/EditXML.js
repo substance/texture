@@ -13,9 +13,10 @@ EditXML.Prototype = function() {
   this.render = function($$) {
     var node = this.props.node;
     var el = $$('div').addClass('sc-edit-xml');
+    var tagName = node.tagName;
 
     el.append(
-      $$('div').addClass('se-tag sm-open-tag-start').append('<contrib')
+      $$('div').addClass('se-tag sm-open-tag-start').append('<'+tagName)
     );
 
     el.append(
@@ -35,7 +36,7 @@ EditXML.Prototype = function() {
     );
 
     el.append(
-      $$('div').addClass('se-tag sm-end-tag').append('</contrib>')
+      $$('div').addClass('se-tag sm-end-tag').append('</'+tagName+'>')
     );
 
     el.append(

@@ -1,5 +1,7 @@
 'use strict';
 
+var UnsupportedNodeJATSConverter = require('./UnsupportedNodeJATSConverter');
+
 module.exports = {
 
   type: 'unsupported-inline',
@@ -8,14 +10,6 @@ module.exports = {
     return true;
   },
 
-  import: function(el, node) {
-    node.xml = el.outerHTML;
-    node.tagName = el.tagName;
-  },
-
-  export: function(node, el) {
-    el.innerHTML = node.xml;
-    return el.children[0];
-  }
-
+  import: UnsupportedNodeJATSConverter.import,
+  export: UnsupportedNodeJATSConverter.export
 };

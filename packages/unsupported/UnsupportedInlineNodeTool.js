@@ -4,7 +4,7 @@ var Tool = require('substance/ui/Tool');
 var clone = require('lodash/clone');
 var Modal = require('substance/ui/Modal');
 var Prompt = require('substance/ui/Prompt');
-var EditXML = require('./EditXML');
+var EditXML = require('../common/EditXML');
 var deleteSelection = require('substance/model/transform/deleteSelection');
 
 /*
@@ -61,7 +61,7 @@ UnsupportedInlineNodeTool.Prototype = function() {
           width: 'medium'
         }).append(
           $$(EditXML, {
-            path: [node.id, 'xml']
+            node: node
           })
         )
       );

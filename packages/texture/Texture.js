@@ -10,14 +10,14 @@ var Author = require('../../packages/author/Author');
 
   Based on given mode prop, displays the Publisher, Author or Reader component
 */
-function Scientist() {
+function Texture() {
   Component.apply(this, arguments);
 
   var configurator = this.props.configurator;
   this.xmlStore = configurator.getXMLStore();
 }
 
-Scientist.Prototype = function() {
+Texture.Prototype = function() {
 
   this.getChildContext = function() {
     return {
@@ -88,7 +88,7 @@ Scientist.Prototype = function() {
   // ------------------------------------
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-scientist');
+    var el = $$('div').addClass('sc-texture');
 
     if (this.state.error) {
       el.append('ERROR: ', this.state.error.message);
@@ -109,18 +109,17 @@ Scientist.Prototype = function() {
       ActiveModeClass = Author;
     }
 
-    // Display reader for mobile and writer on desktop
     el.append(
       $$(ActiveModeClass, {
         documentId: this.props.documentId,
         documentSession: this.state.documentSession,
         configurator: configurator
-      }).ref('publisher')
+      }).ref(this.props.mode)
     );
     return el;
   };
 };
 
-Component.extend(Scientist);
+Component.extend(Texture);
 
-module.exports = Scientist;
+module.exports = Texture;

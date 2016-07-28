@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  examples: ['jats-editor', 'science-writer']
+  examples: ['author', 'publisher']
 };

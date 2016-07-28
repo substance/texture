@@ -13,27 +13,27 @@ var browserifyConfig = {
 };
 
 // Writer example integration
-serverUtils.serveStyles(app, '/jats-editor/app.css', {
+serverUtils.serveStyles(app, '/publisher/app.css', {
   rootDir: __dirname,
-  configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
-  configPath: require.resolve('./examples/jats-editor/package'),
+  configuratorPath: require.resolve('./packages/texture/TextureConfigurator'),
+  configPath: require.resolve('./examples/publisher/package'),
 });
-serverUtils.serveJS(app, '/jats-editor/app.js', {
-  sourcePath: path.join(__dirname, 'examples/jats-editor', 'app.js'),
+serverUtils.serveJS(app, '/publisher/app.js', {
+  sourcePath: path.join(__dirname, 'examples/publisher', 'app.js'),
   browserify: browserifyConfig,
 });
-serverUtils.serveHTML(app, '/jats-editor', path.join(__dirname, 'examples/jats-editor', 'index.html'), {});
+serverUtils.serveHTML(app, '/publisher', path.join(__dirname, 'examples/publisher', 'index.html'), {});
 
-serverUtils.serveStyles(app, '/science-writer/app.css', {
+serverUtils.serveStyles(app, '/author/app.css', {
   rootDir: __dirname,
-  configuratorPath: require.resolve('./packages/scientist/ScientistConfigurator'),
-  configPath: require.resolve('./examples/science-writer/package'),
+  configuratorPath: require.resolve('./packages/texture/TextureConfigurator'),
+  configPath: require.resolve('./examples/author/package'),
 });
-serverUtils.serveJS(app, '/science-writer/app.js', {
-  sourcePath: path.join(__dirname, 'examples/science-writer', 'app.js'),
+serverUtils.serveJS(app, '/author/app.js', {
+  sourcePath: path.join(__dirname, 'examples/author', 'app.js'),
   browserify: browserifyConfig,
 });
-serverUtils.serveHTML(app, '/science-writer', path.join(__dirname, 'examples/science-writer', 'index.html'), {});
+serverUtils.serveHTML(app, '/author', path.join(__dirname, 'examples/author', 'index.html'), {});
 
 // static served data
 app.use('/data', express.static(path.join(__dirname, 'examples/data')));

@@ -8,15 +8,15 @@ var uniq = require('lodash/uniq');
   Top-level configurator for scientist. Has sub-configurators for
   all available modules (author, publisher, reader).
 */
-function ScientistConfigurator() {
-  ScientistConfigurator.super.apply(this, arguments);
+function TextureConfigurator() {
+  TextureConfigurator.super.apply(this, arguments);
 
   // Extend config
   this.config.configurators = {};
   this.config.XMLStoreClass = null;
 }
 
-ScientistConfigurator.Prototype = function() {
+TextureConfigurator.Prototype = function() {
 
   /*
     Provision of sub configurators (e.g. Author, Publisher, Reader
@@ -52,6 +52,6 @@ ScientistConfigurator.Prototype = function() {
   };
 };
 
-Configurator.extend(ScientistConfigurator);
+Configurator.extend(TextureConfigurator);
 
-module.exports = ScientistConfigurator;
+module.exports = TextureConfigurator;

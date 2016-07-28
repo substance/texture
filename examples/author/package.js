@@ -1,13 +1,13 @@
 'use strict';
 
-var ScientistPackage = require('../../packages/scientist/package');
+var TexturePackage = require('../../packages/texture/package');
 var ExampleXMLStore = require('../ExampleXMLStore');
 
 module.exports = {
-  name: 'science-writer',
+  name: 'author-example',
   configure: function(config) {
-    // Use the default Scientist package
-    config.import(ScientistPackage);
+    // Use the default Texture package
+    config.import(TexturePackage);
 
     // Define XML Store
     config.setXMLStore(ExampleXMLStore);

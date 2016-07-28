@@ -7,29 +7,27 @@
       <title-group>
         <article-title>Kitchen sink <italic>example</italic> for authors</article-title>
       </title-group>
-
-      <!-- only first contrib-group considered in author mode -->
       <contrib-group>
-        <contrib contrib-type="author" id="author-1">
+        <contrib contrib-type="author">
           <name>
-            <surname>Doe</surname>
-            <given-names>John</given-names>
+            <surname>Forster</surname>
+            <given-names>Anne Williams</given-names>
           </name>
-          <bio>
-            <p>John Doe biography</p>
-          </bio>
+          <role>research physiotherapist</role>
+          <xref ref-type="aff" rid="StLukes"/>
+          <xref ref-type="aff" rid="RoyalInf"/>
         </contrib>
-        <contrib contrib-type="author" id="author-1">
+        <contrib contrib-type="author">
           <name>
-            <surname>Doe</surname>
-            <given-names>Jane</given-names>
+            <surname>Young</surname>
+            <given-names>John G.</given-names>
           </name>
-          <bio>
-            <p>Jane Doe biography</p>
-          </bio>
+          <role>consultant physician</role>
+          <xref ref-type="aff" rid="RoyalInf"/>
         </contrib>
+        <aff id="StLukes">Department of Health Care for the Elderly, St Luke&#x2019;s Hospital, Bradford BD5 0NA</aff>
+        <aff id="RoyalInf">Academic Section of Geriatric Medicine, Royal Infirmary, Glasgow G4 0SF</aff>
       </contrib-group>
-
       <!-- only one abstract element is considered in Author mode -->
       <abstract>
         <p>This is an <bold>article abstract</bold>, with a single paragraph</p>

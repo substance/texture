@@ -1,19 +1,19 @@
-# Substance Scientist [![Build Status](https://travis-ci.org/substance/scientist.svg?branch=develop)](https://travis-ci.org/substance/scientist)
+# Texture [![Build Status](https://travis-ci.org/substance/texture.svg?branch=develop)](https://travis-ci.org/substance/texture)
 
-This is a work-in progress. The project name Scientist is temporary and may be changed with the first beta release.
+Texture is a collection of components for realizing content production systems. It has first-class support for JATS, the de facto standard for archiving and interchange of scientific open-access journals and its contents with XML.
 
 ## Install
 
 Clone the repository.
 
 ```bash
-$ git clone https://github.com/substance/scientist.git
+$ git clone https://github.com/substance/texture.git
 ```
 
 Navigate to the source directory.
 
 ```bash
-$ cd scientist
+$ cd texture
 ```
 
 At the moment, the default branch provides the develop version.
@@ -47,16 +47,16 @@ $ npm test
 
 ## Usage
 
-Here's how you can integrate Scientist into your web app.
+Here's how you can integrate Texture into your web app.
 
 ```js
 // app.js
-var Scientist = require('substance-scientist');
-var myScientistPackage = require('./myScientistPackage');
-var configurator = new Scientist.Configurator(myScientistPackage);
+var Texture = require('substance-texture');
+var myTexturePackage = require('./myTexturePackage');
+var configurator = new Texture.Configurator(myTexturePackage);
 
 window.onload = function() {
-  window.app = Scientist.static.mount({
+  window.app = Texture.mount({
     mode: 'publisher', // or 'author' or 'reader'
     documentId: 'doc-1',
     configurator: configurator
@@ -64,29 +64,29 @@ window.onload = function() {
 };
 ```
 
-Scientist is fully configurable. So you need to supply a custom configuration via a package defintion.
+Texture is fully configurable. So you need to supply a custom configuration via a package defintion.
 
 ```js
-// myScientistPackage.js
+// myTexturePackage.js
 var MyXMLStore = require('../MyXMLStore');
-var scientistPackage = require('substance-scientist/packages/scientist/package');
+var texturePackage = require('substance-texture/packages/texture/package');
 var path = require('path');
 
 module.exports = {
-  name: 'my-scientist',
+  name: 'my-texture',
   configure: function(config) {
-    // Use the default Scientist package
-    config.import(scientistPackage);
+    // Use the default Texture package
+    config.import(texturePackage);
 
     // Define XML Store
     config.setXMLStore(MyXMLStore);
     // Add your custom app styles
-    config.addStyle(__dirname, 'my-scientist.scss');
+    config.addStyle(__dirname, 'my-texture.scss');
   }
 };
 ```
 
-In order to connect Scientist to a backend you need to define an XML Store:
+In order to connect Texture to a backend you need to define an XML Store:
 
 ```js
 // MyXMLStore.js
@@ -149,9 +149,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # Credits
 
-Scientist is developed by the [Substance Consortium](http://substance.io/consortium/) formed by the [Public Knowledge Project](https://pkp.sfu.ca/2016/04/27/substance-consortium/) (PKP), the [Collaborative Knowledge Foundation](http://coko.foundation/blog.html#substance_consortium) (CoKo) and [Érudit](https://apropos.erudit.org/fr/creation-dun-consortium-autour-de-substance/).
+Texture is developed by the [Substance Consortium](http://substance.io/consortium/) formed by the [Public Knowledge Project](https://pkp.sfu.ca/2016/04/27/substance-consortium/) (PKP), the [Collaborative Knowledge Foundation](http://coko.foundation/blog.html#substance_consortium) (CoKo) and [Érudit](https://apropos.erudit.org/fr/creation-dun-consortium-autour-de-substance/).
 
-Thanks goes to the following people, who made Scientist possible:
+Thanks goes to the following people, who make Texture possible:
 
 - Alex Garnett (leadership, concept)
 - Juan Pablo Alperin (leadership, concept)

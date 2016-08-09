@@ -129,25 +129,43 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Alpha 2
 
-*ETA: 25 July 2016*
+*ETA: September 2016*
 
 - Update to Substance Beta 5
-- Author:
-  - Cover editing (title, abstract, authors, etc.)
-- Publisher:
-  - Front matter editor (JATS `<front>`)
-  - XML navigation bar (breadcrumbs, similar to XPath)
-  - Edit references (XML, for fixing)
-  - Add references (template for `<element-citation>`)
+- Front matter editing for title + abstract (JATS `<front>`)
+- Editing of authors (create, update and delete contrib elements)
+- Create and edit xref elements
+
+
+### Alpha 3
+
+*ETA: October 2016*
+
+Goal is to provide proof of concepts for the discussed tagging workflow (get from unstructured text to structured JATS). For example:
+
+- Quality measures for Meta data (#72)
+- Identify authors in the text and turn them into <contrib> nodes (#75)
+- Turn a sequence of paragraphs into a reference list (#74)
+- Identify title as text and tag as article title (#76)
+- Update to Substance Beta 6
+
+### Alpha 4
+
+Elaborate results of Alpha 3 based on an agreed minimal set of functionalities. For example:
+
+- Document structure fixes (tag headings and set heading level)
+- Author tagging
+- Figure tagging (caption editing etc.)
+- Figure placement
+- Bibliography tagging
+
+With these results organisations can start to test Texture-based QC-workflow with real articles.
+
+*ETA: Winter 2016*
 
 ### Beta
 
-*ETA: Fall 2016*
-
-- Creating content (contextual)
-- Add references via CrossRef search or pasting BibTex
-- Support more elements
-- Extended JATS, [Stencila](https://stenci.la/) Package
+Feature-complete release ready to be tested by publishers.
 
 # Credits
 

@@ -12,6 +12,7 @@ var browserifyConfig = {
   debug: true
 };
 
+
 // Writer example integration
 serverUtils.serveStyles(app, '/publisher/app.css', {
   rootDir: __dirname,
@@ -39,6 +40,9 @@ serverUtils.serveHTML(app, '/author', path.join(__dirname, 'examples/author', 'i
 app.use('/data', express.static(path.join(__dirname, 'examples/data')));
 app.use(express.static(path.join(__dirname, 'examples')));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
+
+app.use(express.static(__dirname));
+app.use('/substance', express.static(path.join(__dirname, 'node_modules/substance')));
 
 serverUtils.serveTestSuite(app, "test/**/*.test.js");
 

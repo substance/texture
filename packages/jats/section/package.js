@@ -10,6 +10,5 @@ module.exports = {
     config.addNode(Section);
     config.addComponent('section', SectionComponent);
     config.addConverter('jats', SectionConverter);
-    config.addStyle(__dirname, '_section.scss');
   }
 };

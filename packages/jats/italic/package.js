@@ -8,6 +8,5 @@ module.exports = {
   configure: function(config) {
     config.addNode(Italic);
     config.addConverter('jats', ItalicConverter);
-    config.addStyle(__dirname, '_italic.scss');
   }
 };

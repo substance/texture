@@ -1,0 +1,5 @@
+@import './jats/_index.css';
+@import './unsupported/_index.css';
+@import './common/_index.css';
+@import './author/_index.css';
+@import './publisher/_index.css';

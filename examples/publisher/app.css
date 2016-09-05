@@ -8,4 +8,4 @@
 /* Using url here, so font-awesome does not get bundled. */
 @import url('../font-awesome/css/font-awesome.min.css');
 body { overflow: hidden; }
-.sc-author { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }
+.sc-publisher { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }

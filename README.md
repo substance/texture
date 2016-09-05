@@ -82,8 +82,6 @@ module.exports = {
 
     // Define XML Store
     config.setXMLStore(MyXMLStore);
-    // Add your custom app styles
-    config.addStyle(__dirname, 'my-texture.scss');
   }
 };
 ```

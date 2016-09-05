@@ -10,6 +10,5 @@ module.exports = {
     config.addNode(Footnote);
     config.addComponent(Footnote.type, FootnoteComponent);
     config.addConverter('jats', FootnoteConverter);
-    config.addStyle(__dirname, '_footnote.scss');
   }
 };

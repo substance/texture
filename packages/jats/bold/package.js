@@ -13,7 +13,6 @@ module.exports = {
     config.addCommand(Bold.type, BoldCommand, { nodeType: Bold.type });
     config.addTool(Bold.type, BoldTool);
     config.addIcon(Bold.type, { 'fontawesome': 'fa-bold' });
-    config.addStyle(__dirname, '_bold.scss');
     config.addLabel(Bold.type, {
       en: 'Bold'
     });

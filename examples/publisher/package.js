@@ -10,6 +10,5 @@ module.exports = {
 
     // Define XML Store
     config.setXMLStore(ExampleXMLStore);
-    config.addStyle(__dirname, 'app.scss');
   }
 };

@@ -134,7 +134,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 - Editing of authors (create, update and delete contrib elements)
 - Create and edit xref elements
 
-
 ### Alpha 3
 
 *ETA: October 2016*

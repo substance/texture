@@ -1,0 +1,27 @@
+.sc-figure-target {
+  font-size: var(--small-font-size);
+  border-bottom: 1px solid 10;
+  padding: var(--default-padding);
+  background: #fafafa;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+  overflow: auto;
+}
+.sc-figure-target:hover {
+  background: #fff;
+}
+.sc-figure-target.sm-selected {
+  border-left: 4px solid #91bb04;
+  background: #fff;
+}
+.sc-figure-target .se-thumbnail {
+  margin-right: var(--default-padding);
+  width: 100px;
+  float: left;
+}
+.sc-figure-target .se-label {
+  float: left;
+}
+.sc-figure-target .se-title {
+  float: left;
+}

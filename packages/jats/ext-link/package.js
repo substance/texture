@@ -23,6 +23,5 @@ module.exports = {
     config.addLabel(ExtLink.type, {
       en: 'Link'
     });
-    config.addStyle(__dirname, '_ext-link.scss');
   }
 };

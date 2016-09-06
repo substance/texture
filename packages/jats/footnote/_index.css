@@ -1,0 +1,8 @@
+.sc-footnote {
+  background: var(--fill-light-color);
+  font-size: var(--small-font-size);
+  padding-left: var(--default-padding);
+  padding-right: var(--default-padding);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}

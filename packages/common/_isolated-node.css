@@ -9,7 +9,7 @@
   background: transparent;
 }
 
-.sc-isolated-node.sm-selected > .se-container, {
+.sc-isolated-node.sm-selected > .se-container {
   background: rgba(163, 205, 253, 0.3);
   outline: 2px solid #A3CDFD;
 }

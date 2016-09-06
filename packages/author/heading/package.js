@@ -34,6 +34,5 @@ module.exports = {
       en: 'Heading 3',
       de: 'Überschrift 3'
     });
-    config.addStyle(__dirname+"/_heading.scss");
   }
 };

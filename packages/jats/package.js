@@ -32,7 +32,6 @@ module.exports = {
     config.import(require('./subscript/package'));
     config.import(require('./superscript/package'));
     config.import(require('./table/package'));
-    // config.import(require('./table-wrap/package'));
     config.import(require('./title/package'));
 
     config.addImporter('jats', JATSImporter);

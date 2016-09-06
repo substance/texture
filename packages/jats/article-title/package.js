@@ -10,6 +10,5 @@ module.exports = {
     config.addNode(ArticleTitle);
     config.addConverter('jats', ArticleTitleConverter);
     config.addComponent(ArticleTitle.type, ArticleTitleComponent);
-    config.addStyle(__dirname, '_article-title.scss');
   }
 };

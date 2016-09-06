@@ -10,6 +10,5 @@ module.exports = {
     config.addNode(ContribGroup);
     config.addConverter('jats', ContribGroupConverter);
     config.addComponent(ContribGroup.type, ContribGroupComponent);
-    config.addStyle(__dirname, '_contrib-group.scss');
   }
 };

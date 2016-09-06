@@ -42,8 +42,7 @@ EditXML.Prototype = function() {
     el.append(
       $$('div').addClass('se-actions').append(
         $$(Button).append('Save').on('click', this._save),
-        $$(Button).addClass('se-cancel').append('Cancel').on('click', this._cancel),
-        $$(Button).addClass('se-delete').append('Delete').on('click', this._delete)
+        $$(Button).addClass('se-cancel').append('Cancel').on('click', this._cancel)
       )
     );
     return el;
@@ -68,7 +67,6 @@ EditXML.Prototype = function() {
     var newXML = this.refs.xmlEditor.getXML();
 
     // TODO: add validity checks. E.g. try to parse XML string
-
     documentSession.transaction(function(tx) {
       tx.set([node.id, 'xmlContent'], newXML);
       tx.set([node.id, 'attributes'], newAttributes);

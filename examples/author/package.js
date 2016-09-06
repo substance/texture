@@ -8,9 +8,7 @@ module.exports = {
   configure: function(config) {
     // Use the default Texture package
     config.import(TexturePackage);
-
     // Define XML Store
     config.setXMLStore(ExampleXMLStore);
-    config.addStyle(__dirname, 'app.scss');
   }
 };

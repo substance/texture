@@ -2,14 +2,13 @@
 
 var DOMElement = require('substance/ui/DefaultDOMElement');
 
-var namesToHTML = function (ref) {
+var namesToHTML = function(ref) {
   var nameElements = ref.findAll('name');
   var nameEls = [];
   for (var i = 0; i < nameElements.length; i++) {
     var name = nameElements[i];
     var nameEl = DOMElement.createElement('span');
     nameEl.addClass('name');
-
     nameEl.text(name.find('surname').text() + ' ' + name.find('given-names').text());
     if (i > 0 && i < nameElements.length) {
       var comma = DOMElement.createElement('span');
@@ -18,7 +17,6 @@ var namesToHTML = function (ref) {
     }
     nameEls.push(nameEl);
   }
-
   return nameEls;
 };
 
@@ -135,25 +133,22 @@ var refToHTML = function (ref) {
   //   </mixed-citation>
   // </ref>
 
-  ref = DOMElement.parseXML(ref);
+  ref = ref.getDOM();
 
   // TODO: remove safeguard for multiple citation elements
   if(Array.isArray(ref)) {
     ref = ref[0];
   }
-
   var el = DOMElement.createElement('div');
-
-  if (ref.is('mixed-citation') || ref.is('element-citation')) {
+  if (ref.is('mixed-citation')) {
+    el.appendChild(ref.textContent);
+  } else if (ref.is('element-citation')) {
     el.appendChild(titleToHTML(ref));
     var names = namesToHTML(ref);
-
     for (var i = 0; i < names.length; i++) {
       el.appendChild(names[i]);
     }
-
     el.appendChild(metaToHTML(ref));
-
     el.appendChild(URItoHTML(ref));
   } else {
     el.text('Citation type is unsupported');

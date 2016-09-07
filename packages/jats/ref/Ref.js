@@ -1,6 +1,7 @@
 'use strict';
 
 var DocumentNode = require('substance/model/DocumentNode');
+var DOMElement = require('substance/ui/DefaultDOMElement');
 
 /*
   ref
@@ -10,6 +11,24 @@ var DocumentNode = require('substance/model/DocumentNode');
 function Ref() {
   Ref.super.apply(this, arguments);
 }
+
+Ref.Prototype = function() {
+  /*
+    Checks if ref is a plain text citation, with no formatting / tagging etc.
+  */
+  this.isPlain = function() {
+
+  };
+
+  /*
+    Get parsed DOM version of XML content
+  */
+  this.getDOM = function() {
+    return DOMElement.parseXML(this.xmlContent);
+  };
+
+};
+
 
 DocumentNode.extend(Ref);
 

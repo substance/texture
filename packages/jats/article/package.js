@@ -2,15 +2,15 @@
 
 var ArticleNode = require('./ArticleNode');
 var ArticleConverter = require('./ArticleConverter');
-var ScientistArticle = require('./ScientistArticle');
+var TextureArticle = require('./TextureArticle');
 var ArticleComponent = require('./ArticleComponent');
 
 module.exports = {
   name: 'article',
   configure: function(config) {
     config.defineSchema({
-      name: 'scientist-article',
-      ArticleClass: ScientistArticle,
+      name: 'texture-article',
+      ArticleClass: TextureArticle,
       defaultTextType: 'paragraph'
     });
     config.addNode(ArticleNode);

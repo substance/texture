@@ -11,7 +11,7 @@ function RefComponent() {
 RefComponent.Prototype = function() {
   this.render = function($$) {
     var el = $$('div').addClass('sc-ref');
-    el.html(refToHTML(this.props.node.xmlContent));
+    el.html(refToHTML(this.props.node));
     return el;
   };
 };

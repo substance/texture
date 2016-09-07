@@ -21,7 +21,7 @@ RefTarget.Prototype = function() {
       el.addClass('sm-selected');
     }
     var node = this.props.node;
-    el.html(refToHTML(node.xmlContent));
+    el.html(refToHTML(node));
     return el;
   };
 };

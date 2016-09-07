@@ -4,6 +4,10 @@ module.exports = {
     "commonjs": true,
     "node": true
   },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6
+  },
   "extends": "eslint:recommended",
   "globals": {
     "QUnit": true
@@ -43,7 +47,7 @@ module.exports = {
     "use-isnan": 2,
     "valid-jsdoc": 0,
     "valid-typeof": 2,
-    "strict": [2, "safe"],
+    "strict": 0, // [2, "safe"],
 
     // Best practices
     "accessor-pairs": 0,

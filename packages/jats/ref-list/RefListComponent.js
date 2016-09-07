@@ -3,13 +3,20 @@
 var Component = require('substance/ui/Component');
 var renderNodeComponent = require('../../../util/renderNodeComponent');
 
-function RefListComponent() {
-  Component.apply(this, arguments);
-}
+class RefListComponent extends Component {
+  didMount() {
+    super.didMount();
+    var node = this.props.node;
+    node.on('nodes:changed', this.rerender, this);
+  }
 
-RefListComponent.Prototype = function() {
+  dispose() {
+    super.dispose();
+    var node = this.props.node;
+    node.off(this);
+  }
 
-  this.render = function($$) {
+  render($$) {
     var node = this.props.node;
     var doc = node.getDocument();
     var el = $$('div').addClass('sc-ref-list');
@@ -40,10 +47,8 @@ RefListComponent.Prototype = function() {
     }.bind(this));
 
     return el;
-  };
-};
-
-Component.extend(RefListComponent);
+  }
+}
 
 // Isolated Nodes config
 RefListComponent.fullWidth = true;

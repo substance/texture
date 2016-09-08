@@ -1,6 +1,4 @@
-'use strict';
-
-var BlockNode = require('substance/model/BlockNode');
+import { BlockNode } from 'substance'
 
 function UnsupportedNode() {
   UnsupportedNode.super.apply(this, arguments);
@@ -16,4 +14,4 @@ UnsupportedNode.define({
   tagName: 'string'
 });
 
-module.exports = UnsupportedNode;
+export default UnsupportedNode;

@@ -1,6 +1,6 @@
 'use strict';
 
-var AnnotationComponent = require('substance/ui/AnnotationComponent');
+import { AnnotationComponent } from 'substance'
 
 function ExtLinkComponent() {
   ExtLinkComponent.super.apply(this, arguments);
@@ -38,4 +38,4 @@ ExtLinkComponent.Prototype = function() {
 
 AnnotationComponent.extend(ExtLinkComponent);
 
-module.exports = ExtLinkComponent;
+export default ExtLinkComponent;

@@ -1,10 +1,10 @@
 'use strict';
 
-var AnnotationTool = require('substance/ui/AnnotationTool');
+import { AnnotationTool } from 'substance'
 
 function BoldTool() {
   BoldTool.super.apply(this, arguments);
 }
 AnnotationTool.extend(BoldTool);
 
-module.exports = BoldTool;
+export default BoldTool;

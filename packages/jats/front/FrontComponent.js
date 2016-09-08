@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 function FrontComponent() {
   Component.apply(this, arguments);
@@ -32,4 +32,4 @@ FrontComponent.Prototype = function() {
 
 Component.extend(FrontComponent);
 
-module.exports = FrontComponent;
+export default FrontComponent;

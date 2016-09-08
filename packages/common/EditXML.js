@@ -1,9 +1,6 @@
-'use strict';
-
-var Component = require('substance/ui/Component');
-var XMLAttributeEditor = require('./XMLAttributeEditor');
-var XMLEditor = require('./XMLEditor');
-var Button = require('substance/ui/Button');
+import { Button, Component } from 'substance'
+import XMLAttributeEditor from './XMLAttributeEditor'
+import XMLEditor from './XMLEditor'
 
 function EditXML() {
   EditXML.super.apply(this, arguments);
@@ -77,4 +74,4 @@ EditXML.Prototype = function() {
 
 Component.extend(EditXML);
 
-module.exports = EditXML;
+export default EditXML;

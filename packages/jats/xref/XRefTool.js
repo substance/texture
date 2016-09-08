@@ -1,11 +1,8 @@
 'use strict';
 
-var Tool = require('substance/ui/Tool');
-var clone = require('lodash/clone');
-var Modal = require('substance/ui/Modal');
-var XRefTargets = require('./XRefTargets');
-var Prompt = require('substance/ui/Prompt');
-var deleteSelection = require('substance/model/transform/deleteSelection');
+import clone from 'lodash/clone'
+import { deleteSelection, Modal, Prompt, Tool } from 'substance'
+import XRefTargets from './XRefTargets'
 
 /*
   Edit a reference in a prompt.
@@ -81,4 +78,4 @@ XRefTool.getProps = function(commandStates) {
   }
 };
 
-module.exports = XRefTool;
+export default XRefTool;

@@ -1,6 +1,4 @@
-'use strict';
-
-var Component = require('substance/ui/Component');
+import { Component } from 'substance'
 
 function UnsupportedInlineNodeComponent() {
   Component.apply(this, arguments);
@@ -22,4 +20,4 @@ UnsupportedInlineNodeComponent.Prototype = function() {
 
 Component.extend(UnsupportedInlineNodeComponent);
 
-module.exports = UnsupportedInlineNodeComponent;
+export default UnsupportedInlineNodeComponent;

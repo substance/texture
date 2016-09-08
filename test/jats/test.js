@@ -1,14 +1,14 @@
 'use strict';
 
-var test = require('substance/test/test');
+import test from 'substance/test/test'
 
-var forEach = require('lodash/forEach');
-var includes = require('lodash/includes');
-var isArray = require('lodash/isArray');
-var oo = require('substance/util/oo');
-var DOMElement = require('substance/ui/DOMElement');
-var createJATSConfigurator = require('./createJATSConfigurator');
-var JATSImporter = require('../../packages/jats/JATSImporter');
+import forEach from 'lodash/forEach'
+import includes from 'lodash/includes'
+import isArray from 'lodash/isArray'
+import oo from 'substance/util/oo'
+import DOMElement from 'substance/ui/DOMElement'
+import createJATSConfigurator from './createJATSConfigurator'
+import JATSImporter from '../../packages/jats/JATSImporter'
 
 test = test.withExtension('withFixture', function(fixtureXML) {
   var tapeArgs = Array.prototype.slice.call(arguments, 1);
@@ -76,4 +76,4 @@ JATSFixture.Prototype = function() {
 
 oo.initClass(JATSFixture);
 
-module.exports = test;
+export default test;

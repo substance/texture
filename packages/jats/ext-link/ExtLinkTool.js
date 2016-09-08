@@ -1,6 +1,6 @@
 'use strict';
 
-var AnnotationTool = require('substance/ui/AnnotationTool');
+import { AnnotationTool } from 'substance'
 
 function ExtLinkTool() {
   ExtLinkTool.super.apply(this, arguments);
@@ -8,4 +8,4 @@ function ExtLinkTool() {
 
 AnnotationTool.extend(ExtLinkTool);
 
-module.exports = ExtLinkTool;
+export default ExtLinkTool;

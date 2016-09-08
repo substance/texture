@@ -1,6 +1,4 @@
-'use strict';
-
-var DocumentNode = require('substance/model/DocumentNode');
+import { DocumentNode } from 'substance'
 
 function ArticleNode() {
   ArticleNode.super.apply(this, arguments);
@@ -37,4 +35,4 @@ ArticleNode.define({
   responses: { type: ['id'], optional: true },
 });
 
-module.exports = ArticleNode;
+export default ArticleNode;

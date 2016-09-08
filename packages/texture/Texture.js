@@ -1,9 +1,6 @@
-'use strict';
-
-var Component = require('substance/ui/Component');
-var DocumentSession = require('substance/model/DocumentSession');
-var Publisher = require('../../packages/publisher/Publisher');
-var Author = require('../../packages/author/Author');
+import { Component, DocumentSession } from 'substance'
+import Publisher from '../../packages/publisher/Publisher'
+import Author from '../../packages/author/Author'
 
 /*
   JATSEditor Component
@@ -122,4 +119,4 @@ Texture.Prototype = function() {
 
 Component.extend(Texture);
 
-module.exports = Texture;
+export default Texture;

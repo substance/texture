@@ -1,7 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var ContainerEditor = require('substance/ui/ContainerEditor');
+import { Component, ContainerEditor } from 'substance'
 
 function BodyComponent() {
   Component.apply(this, arguments);
@@ -31,4 +30,4 @@ BodyComponent.Prototype = function() {
 
 Component.extend(BodyComponent);
 
-module.exports = BodyComponent;
+export default BodyComponent;

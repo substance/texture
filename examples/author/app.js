@@ -1,16 +1,21 @@
-'use strict';
+import { substanceGlobals } from 'substance'
+import Package from './package'
+import TextureConfigurator from '../../packages/texture/TextureConfigurator'
+import Texture from '../../packages/texture/Texture'
 
-var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
+var config = new TextureConfigurator().import(Package);
 
-var Texture = require('../../packages/texture/Texture');
-var TextureConfigurator = require('../../packages/texture/TextureConfigurator');
-var configurator = new TextureConfigurator().import(require('./package'));
+if (typeof window !== 'undefined') {
+  window.onload = function() {
+    window.app = Texture.mount({
+      mode: 'author',
+      documentId: 'kitchen-sink-author',
+      configurator: config
+    }, document.body);
+  };
+}
 
-window.onload = function() {
-  window.app = Texture.mount({
-    mode: 'author',
-    documentId: 'kitchen-sink-author',
-    configurator: configurator
-  }, document.body);
-};
+export default {
+  config: config
+}

@@ -1,11 +1,11 @@
 'use strict';
 
-var Bold = require('./Bold');
-var BoldConverter = require('./BoldConverter');
-var BoldTool = require('./BoldTool');
-var BoldCommand = require('./BoldCommand');
+import Bold from './Bold'
+import BoldConverter from './BoldConverter'
+import BoldTool from './BoldTool'
+import BoldCommand from './BoldCommand'
 
-module.exports = {
+export default {
   name: 'bold',
   configure: function(config) {
     config.addNode(Bold);

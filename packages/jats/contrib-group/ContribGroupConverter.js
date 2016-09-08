@@ -1,10 +1,10 @@
 'use strict';
 
-var XMLIterator = require('../../../util/XMLIterator');
+import XMLIterator from '../../../util/XMLIterator'
 
 var CONTRIB_GROUP = ['contrib', 'address', 'aff', 'aff-alternatives', 'author-comment', 'bio', 'email', 'etal', 'ext-link', 'fn', 'on-behalf-of', 'role', 'uri', 'xref', 'x'];
 
-module.exports = {
+export default {
 
   type: 'contrib-group',
   tagName: 'contrib-group',

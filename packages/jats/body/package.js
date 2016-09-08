@@ -1,10 +1,10 @@
 'use strict';
 
-var Body = require('./Body');
-var BodyConverter = require('./BodyConverter');
-var BodyComponent = require('./BodyComponent');
+import Body from './Body'
+import BodyConverter from './BodyConverter'
+import BodyComponent from './BodyComponent'
 
-module.exports = {
+export default {
   name: 'body',
   configure: function(config) {
     config.addNode(Body);

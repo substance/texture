@@ -1,9 +1,9 @@
 'use strict';
 
-var JATS = require('../JATS');
-var XMLIterator = require('../../../util/XMLIterator');
+import JATS from '../JATS'
+import XMLIterator from '../../../util/XMLIterator'
 
-module.exports = {
+export default {
 
   type: 'body',
   tagName: 'body',

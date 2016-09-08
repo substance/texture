@@ -1,8 +1,8 @@
 'use strict';
 
-var FigureConverter = require('../figure/FigureConverter');
+import FigureConverter from '../figure/FigureConverter'
 
-module.exports = {
+export default {
 
   type: 'table-wrap',
   tagName: 'table-wrap',

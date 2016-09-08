@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 function TitleGroupComponent() {
   Component.apply(this, arguments);
@@ -34,4 +34,4 @@ TitleGroupComponent.Prototype = function() {
 
 Component.extend(TitleGroupComponent);
 
-module.exports = TitleGroupComponent;
+export default TitleGroupComponent;

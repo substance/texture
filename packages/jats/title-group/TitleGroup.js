@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function TitleGroup() {
   TitleGroup.super.apply(this, arguments);
@@ -22,4 +22,4 @@ TitleGroup.define({
 });
 
 
-module.exports = TitleGroup;
+export default TitleGroup;

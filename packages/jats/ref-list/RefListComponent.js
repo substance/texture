@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 class RefListComponent extends Component {
   didMount() {
@@ -54,4 +54,4 @@ class RefListComponent extends Component {
 RefListComponent.fullWidth = true;
 RefListComponent.noStyle = true;
 
-module.exports = RefListComponent;
+export default RefListComponent;

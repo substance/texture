@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 function BackComponent() {
   Component.apply(this, arguments);
@@ -38,4 +38,4 @@ BackComponent.Prototype = function() {
 
 Component.extend(BackComponent);
 
-module.exports = BackComponent;
+export default BackComponent;

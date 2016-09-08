@@ -1,10 +1,10 @@
 'use strict';
 
-var Label = require('./Label');
-var LabelConverter = require('./LabelConverter');
-var LabelComponent = require('./LabelComponent');
+import Label from './Label'
+import LabelConverter from './LabelConverter'
+import LabelComponent from './LabelComponent'
 
-module.exports = {
+export default {
   name: 'label',
   configure: function(config) {
     config.addNode(Label);

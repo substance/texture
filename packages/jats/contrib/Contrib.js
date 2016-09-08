@@ -1,6 +1,6 @@
 'use strict';
 
-var DocumentNode = require('substance/model/DocumentNode');
+import { DocumentNode } from 'substance'
 
 class Contrib extends DocumentNode {
 
@@ -23,4 +23,4 @@ Contrib.define({
   xmlContent: { type: 'string', default: ''}
 });
 
-module.exports = Contrib;
+export default Contrib;

@@ -1,6 +1,6 @@
 'use strict';
 
-var TitleComponent = require('../title/TitleComponent');
+import TitleComponent from '../title/TitleComponent'
 
 function ArticleTitleComponent() {
   ArticleTitleComponent.super.apply(this, arguments);
@@ -20,4 +20,4 @@ ArticleTitleComponent.Prototype = function() {
 
 TitleComponent.extend(ArticleTitleComponent);
 
-module.exports = ArticleTitleComponent;
+export default ArticleTitleComponent;

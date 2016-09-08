@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 /*
   ref-list
@@ -36,4 +36,4 @@ RefList.define({
   nodes: { type: ['id'], default: [] },
 });
 
-module.exports = RefList;
+export default RefList;

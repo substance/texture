@@ -1,14 +1,12 @@
-'use strict';
+import XRef from './XRef'
+import XRefComponent from './XRefComponent'
+import XRefConverter from './XRefConverter'
+import XRefCommand from './XRefCommand'
+import XRefTool from './XRefTool'
+import AddXRefCommand from './AddXRefCommand'
+import AddXRefTool from './AddXRefTool'
 
-var XRef = require('./XRef');
-var XRefComponent = require('./XRefComponent');
-var XRefConverter = require('./XRefConverter');
-var XRefCommand = require('./XRefCommand');
-var XRefTool = require('./XRefTool');
-var AddXRefCommand = require('./AddXRefCommand');
-var AddXRefTool = require('./AddXRefTool');
-
-module.exports = {
+export default {
   name: 'xref',
   configure: function(config) {
     config.addNode(XRef);

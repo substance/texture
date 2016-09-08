@@ -1,8 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var ContainerEditor = require('substance/ui/ContainerEditor');
+import { Component, ContainerEditor, TextPropertyEditor } from 'substance'
 
 function CaptionComponent() {
   Component.apply(this, arguments);
@@ -40,4 +38,4 @@ CaptionComponent.Prototype = function() {
 
 Component.extend(CaptionComponent);
 
-module.exports = CaptionComponent;
+export default CaptionComponent;

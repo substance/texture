@@ -1,10 +1,10 @@
 'use strict';
 
-var Table = require('./Table');
-var TableComponent = require('./TableComponent');
-var TableConverter = require('./TableConverter');
+import Table from './Table'
+import TableComponent from './TableComponent'
+import TableConverter from './TableConverter'
 
-module.exports = {
+export default {
   name: 'table',
   configure: function(config) {
     config.addNode(Table);

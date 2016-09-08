@@ -1,10 +1,10 @@
 'use strict';
 
-var XMLIterator = require('../../../util/XMLIterator');
+import XMLIterator from '../../../util/XMLIterator'
 
-var JATS = require('../JATS');
+import JATS from '../JATS'
 
-module.exports = {
+export default {
 
   type: 'article-meta',
   tagName: 'article-meta',

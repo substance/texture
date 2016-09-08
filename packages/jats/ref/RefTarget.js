@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var refToHTML = require('./refToHTML');
+import { Component } from 'substance'
+import refToHTML from './refToHTML'
 
 /*
   Renders a keyboard-selectable ref target item
@@ -28,4 +28,4 @@ RefTarget.Prototype = function() {
 
 Component.extend(RefTarget);
 
-module.exports = RefTarget;
+export default RefTarget;

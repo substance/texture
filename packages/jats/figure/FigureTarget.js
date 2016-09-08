@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 /*
   Renders a keyboard-selectable figure target item
@@ -74,4 +74,4 @@ FigureTarget.Prototype = function() {
 
 Component.extend(FigureTarget);
 
-module.exports = FigureTarget;
+export default FigureTarget;

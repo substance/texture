@@ -1,9 +1,9 @@
 'use strict';
 
-var Subscript = require('./Subscript');
-var SubscriptConverter = require('./SubscriptConverter');
+import Subscript from './Subscript'
+import SubscriptConverter from './SubscriptConverter'
 
-module.exports = {
+export default {
   name: 'subscript',
   configure: function(config) {
     config.addNode(Subscript);

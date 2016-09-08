@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
 
   type: "ext-link",
   tagName: "ext-link",

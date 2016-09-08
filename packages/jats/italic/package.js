@@ -1,9 +1,9 @@
 'use strict';
 
-var Italic = require('./Italic');
-var ItalicConverter = require('./ItalicConverter');
+import Italic from './Italic'
+import ItalicConverter from './ItalicConverter'
 
-module.exports = {
+export default {
   name: 'italic',
   configure: function(config) {
     config.addNode(Italic);

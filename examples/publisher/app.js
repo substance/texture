@@ -1,12 +1,10 @@
-'use strict';
+import { substanceGlobals } from 'substance'
+import Package from './package'
+import Texture from '../../packages/texture/Texture'
+import TextureConfigurator from '../../packages/texture/TextureConfigurator'
 
-var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
-
-var Texture = require('../../packages/texture/Texture');
-var TextureConfigurator = require('../../packages/texture/TextureConfigurator');
-
-var configurator = new TextureConfigurator().import(require('./package'));
+var configurator = new TextureConfigurator().import(Package);
 
 window.onload = function() {
   window.app = Texture.mount({

@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function Body() {
   Body.super.apply(this, arguments);
@@ -24,4 +24,4 @@ Body.define({
 });
 
 
-module.exports = Body;
+export default Body;

@@ -1,8 +1,6 @@
 'use strict';
 
-// TODO: we should be able to inherit from JATSNode to share properties.
-
-var BlockNode = require('substance/model/BlockNode');
+import { BlockNode } from 'substance'
 
 function Table() {
   Table.super.apply(this, arguments);
@@ -16,4 +14,4 @@ Table.define({
   htmlContent: {type: 'string'}
 });
 
-module.exports = Table;
+export default Table;

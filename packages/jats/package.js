@@ -1,41 +1,69 @@
-'use strict';
+import JATSImporter from './JATSImporter'
+import JATSExporter from './JATSExporter'
 
-var JATSImporter = require('./JATSImporter');
-var JATSExporter = require('./JATSExporter');
+import AffPackage from './aff/package'
+import ArticlePackage from './article/package'
+import ArticleMetaPackage from './article-meta/package'
+import ArticleTitlePackage from './article-title/package'
+import ContribPackage from './contrib/package'
+import ContribGroupPackage from './contrib-group/package'
+import BackPackage from './back/package'
+import BodyPackage from './body/package'
+import BoldPackage from './bold/package'
+import CaptionPackage from './caption/package'
+import ExtLinkPackage from './ext-link/package'
+import FigurePackage from './figure/package'
+import FootnotePackage from './footnote/package'
+import FrontPackage from './front/package'
+import GraphicPackage from './graphic/package'
+import ItalicPackage from './italic/package'
+import LabelPackage from './label/package'
+import MonospacePackage from './monospace/package'
+import ParagraphPackage from './paragraph/package'
+import RefPackage from './ref/package'
+import RefListPackage from './ref-list/package'
+import SectionPackage from './section/package'
+import SubscriptPackage from './subscript/package'
+import SuperscriptPackage from './superscript/package'
+import TablePackage from './table/package'
+import TitlePackage from './title/package'
+import TitleGroupPackage from './title-group/package'
+import XrefPackage from './xref/package'
 
-module.exports = {
+
+export default {
   name: 'jats',
   configure: function(config) {
-    config.import(require('./aff/package'));
-    config.import(require('./article/package'));
-    config.import(require('./article-meta/package'));
-    config.import(require('./title-group/package'));
-    config.import(require('./article-title/package'));
-    config.import(require('./contrib-group/package'));
-    config.import(require('./contrib/package'));
-    config.import(require('./back/package'));
-    config.import(require('./body/package'));
-    config.import(require('./bold/package'));
-    config.import(require('./caption/package'));
-    config.import(require('./xref/package'));
-    config.import(require('./ext-link/package'));
-    config.import(require('./figure/package'));
-    config.import(require('./footnote/package'));
-    config.import(require('./front/package'));
-    config.import(require('./graphic/package'));
-    config.import(require('./italic/package'));
-    config.import(require('./label/package'));
-    config.import(require('./monospace/package'));
-    config.import(require('./paragraph/package'));
-    config.import(require('./ref/package'));
-    config.import(require('./ref-list/package'));
-    config.import(require('./section/package'));
-    config.import(require('./subscript/package'));
-    config.import(require('./superscript/package'));
-    config.import(require('./table/package'));
-    config.import(require('./title/package'));
+    config.import(AffPackage)
+    config.import(ArticlePackage)
+    config.import(ArticleMetaPackage)
+    config.import(ArticleTitlePackage)
+    config.import(ContribPackage)
+    config.import(ContribGroupPackage)
+    config.import(BackPackage)
+    config.import(BodyPackage)
+    config.import(BoldPackage)
+    config.import(CaptionPackage)
+    config.import(ExtLinkPackage)
+    config.import(FigurePackage)
+    config.import(FootnotePackage)
+    config.import(FrontPackage)
+    config.import(GraphicPackage)
+    config.import(ItalicPackage)
+    config.import(LabelPackage)
+    config.import(MonospacePackage)
+    config.import(ParagraphPackage)
+    config.import(RefPackage)
+    config.import(RefListPackage)
+    config.import(SectionPackage)
+    config.import(SubscriptPackage)
+    config.import(SuperscriptPackage)
+    config.import(TablePackage)
+    config.import(TitlePackage)
+    config.import(TitleGroupPackage)
+    config.import(XrefPackage)
 
     config.addImporter('jats', JATSImporter);
     config.addExporter('jats', JATSExporter);
   }
-};
+}

@@ -1,15 +1,15 @@
 'use strict';
 
-var ProseEditorConfigurator = require('substance/packages/prose-editor/ProseEditorConfigurator');
+import { ProseEditorPackage } from 'substance'
+import AuthorPackage from '../author/package'
+import PublisherPackage from '../publisher/package'
 
-var AuthorPackage = require('../author/package');
-var PublisherPackage = require('../publisher/package');
-
-module.exports = {
+export default {
   name: 'scientist',
   configure: function(config) {
+    var Configurator = ProseEditorPackage.Configurator
     // Default configuration for available scientist modes
-    config.addConfigurator('author', new ProseEditorConfigurator().import(AuthorPackage));
-    config.addConfigurator('publisher', new ProseEditorConfigurator().import(PublisherPackage));
+    config.addConfigurator('author', new Configurator().import(AuthorPackage));
+    config.addConfigurator('publisher', new Configurator().import(PublisherPackage));
   }
 };

@@ -1,7 +1,7 @@
 'use strict';
 
-var JATS = require('../JATS');
-var XMLIterator = require('../../../util/XMLIterator');
+import JATS from '../JATS'
+import XMLIterator from '../../../util/XMLIterator'
 
 var ACCESS_OR_LINK = JATS.ACCESS.concat(JATS.ADDRESS_LINK);
 var FIGURE_CONTENT = JATS.BLOCK_MATH
@@ -12,7 +12,7 @@ var FIGURE_CONTENT = JATS.BLOCK_MATH
   .concat(JATS.LIST)
   .concat(JATS.SIMPLE_DISPLAY);
 
-module.exports = {
+export default {
 
   type: 'figure',
   tagName: 'fig',

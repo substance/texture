@@ -1,6 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
+import { Component } from 'substance'
 
 function UnsupportedNodeComponent() {
   Component.apply(this, arguments);
@@ -31,4 +31,4 @@ Component.extend(UnsupportedNodeComponent);
 UnsupportedNodeComponent.fullWidth = true;
 UnsupportedNodeComponent.noStyle = true;
 
-module.exports = UnsupportedNodeComponent;
+export default UnsupportedNodeComponent;

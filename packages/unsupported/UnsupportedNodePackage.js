@@ -1,15 +1,15 @@
 'use strict';
 
-var UnsupportedNode = require('./UnsupportedNode');
-var UnsupportedInlineNode = require('./UnsupportedInlineNode');
-var UnsupportedNodeComponent = require('./UnsupportedNodeComponent');
-var UnsupportedInlineNodeComponent = require('./UnsupportedInlineNodeComponent');
-var UnsupportedNodeJATSConverter = require('./UnsupportedNodeJATSConverter');
-var UnsupportedInlineNodeJATSConverter = require('./UnsupportedInlineNodeJATSConverter');
-var UnsupportedInlineNodeCommand = require('./UnsupportedInlineNodeCommand');
-var UnsupportedInlineNodeTool = require('./UnsupportedInlineNodeTool');
+import UnsupportedNode from './UnsupportedNode'
+import UnsupportedInlineNode from './UnsupportedInlineNode'
+import UnsupportedNodeComponent from './UnsupportedNodeComponent'
+import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
+import UnsupportedNodeJATSConverter from './UnsupportedNodeJATSConverter'
+import UnsupportedInlineNodeJATSConverter from './UnsupportedInlineNodeJATSConverter'
+import UnsupportedInlineNodeCommand from './UnsupportedInlineNodeCommand'
+import UnsupportedInlineNodeTool from './UnsupportedInlineNodeTool'
 
-module.exports = {
+export default {
   name: 'unsupported',
   configure: function(config) {
     config.addNode(UnsupportedNode);

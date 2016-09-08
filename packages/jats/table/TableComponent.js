@@ -1,6 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
+import { Component } from 'substance'
 
 function TableComponent() {
   Component.apply(this, arguments);
@@ -20,4 +20,4 @@ TableComponent.Prototype = function() {
 
 Component.extend(TableComponent);
 
-module.exports = TableComponent;
+export default TableComponent;

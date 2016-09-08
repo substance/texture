@@ -1,10 +1,10 @@
 'use strict';
 
-var XMLIterator = require('../../../util/XMLIterator');
+import XMLIterator from '../../../util/XMLIterator'
 
 var FRONT_CONTENT = ['def-list', 'list', 'ack', 'bio', 'fn-group', 'glossary', 'notes'];
 
-module.exports = {
+export default {
 
   type: 'front',
   tagName: 'front',

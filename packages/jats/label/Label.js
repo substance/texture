@@ -1,6 +1,6 @@
 'use strict';
 
-var TextNode = require('substance/model/TextNode');
+import { TextNode } from 'substance'
 
 function Label() {
   Label.super.apply(this, arguments);
@@ -14,4 +14,4 @@ Label.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = Label;
+export default Label;

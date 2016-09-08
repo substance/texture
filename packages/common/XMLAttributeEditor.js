@@ -1,7 +1,5 @@
-'use strict';
-
-var Component = require('substance/ui/Component');
-var map = require('lodash/map');
+import map from 'lodash/map'
+import { Component } from 'substance'
 
 function XMLAttributeEditor() {
   XMLAttributeEditor.super.apply(this, arguments);
@@ -47,4 +45,4 @@ XMLAttributeEditor.Prototype = function() {
 
 Component.extend(XMLAttributeEditor);
 
-module.exports = XMLAttributeEditor;
+export default XMLAttributeEditor;

@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 class ContribGroupComponent extends Component {
   didMount() {
@@ -42,4 +42,4 @@ class ContribGroupComponent extends Component {
 
 }
 
-module.exports = ContribGroupComponent;
+export default ContribGroupComponent;

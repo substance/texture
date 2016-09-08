@@ -1,6 +1,6 @@
 'use strict';
 
-var Annotation = require('substance/model/Annotation');
+import { Annotation } from 'substance'
 
 function Subscript() {
   Subscript.super.apply(this, arguments);
@@ -14,4 +14,4 @@ Subscript.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = Subscript;
+export default Subscript;

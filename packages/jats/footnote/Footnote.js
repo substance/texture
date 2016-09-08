@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function Footnote() {
   Footnote.super.apply(this, arguments);
@@ -20,4 +20,4 @@ Footnote.define({
   nodes: { type: ['p'], default: [] }
 });
 
-module.exports = Footnote;
+export default Footnote;

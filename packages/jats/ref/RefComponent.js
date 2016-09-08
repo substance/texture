@@ -1,7 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var refToHTML = require('./refToHTML');
+import { Component } from 'substance'
+import refToHTML from './refToHTML'
 
 
 function RefComponent() {
@@ -22,4 +22,4 @@ Component.extend(RefComponent);
 RefComponent.fullWidth = true;
 RefComponent.noStyle = true;
 
-module.exports = RefComponent;
+export default RefComponent;

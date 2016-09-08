@@ -1,6 +1,4 @@
-'use strict';
-
-var TextBlock = require('substance/model/TextBlock');
+import { TextBlock } from 'substance'
 
 function HeadingNode() {
   HeadingNode.super.apply(this, arguments);
@@ -17,4 +15,4 @@ HeadingNode.define({
   level: { type: "number", default: 1 },
 });
 
-module.exports = HeadingNode;
+export default HeadingNode;

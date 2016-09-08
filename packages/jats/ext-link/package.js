@@ -1,14 +1,13 @@
 'use strict';
 
-var ExtLink = require('./ExtLink');
-var ExtLinkConverter = require('./ExtLinkConverter');
-var ExtLinkComponent = require('./ExtLinkComponent');
-var ExtLinkTool = require('./ExtLinkTool');
-var ExtLinkCommand = require('./ExtLinkCommand');
-var EditExtLinkTool = require('./EditExtLinkTool');
+import ExtLink from './ExtLink'
+import ExtLinkConverter from './ExtLinkConverter'
+import ExtLinkComponent from './ExtLinkComponent'
+import ExtLinkTool from './ExtLinkTool'
+import ExtLinkCommand from './ExtLinkCommand'
+import EditExtLinkTool from './EditExtLinkTool'
 
-
-module.exports = {
+export default {
   name: 'ext-link',
   configure: function(config) {
     config.addNode(ExtLink);
@@ -24,4 +23,4 @@ module.exports = {
       en: 'Link'
     });
   }
-};
+}

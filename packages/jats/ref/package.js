@@ -1,13 +1,11 @@
-'use strict';
+import Ref from './Ref'
+import RefComponent from './RefComponent'
+import RefTarget from './RefTarget'
+import RefConverter from './RefConverter'
+import TagRefCommand from './TagRefCommand'
+import TagRefTool from './TagRefTool'
 
-var Ref = require('./Ref');
-var RefComponent = require('./RefComponent');
-var RefTarget = require('./RefTarget');
-var RefConverter = require('./RefConverter');
-var TagRefCommand = require('./TagRefCommand');
-var TagRefTool = require('./TagRefTool');
-
-module.exports = {
+export default {
   name: 'ref',
   configure: function(config) {
     config.addNode(Ref);
@@ -18,4 +16,4 @@ module.exports = {
     config.addTool('tag-ref', TagRefTool);
     config.addIcon('tag-ref', { 'fontawesome': 'fa-bullseye' });
   }
-};
+}

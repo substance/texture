@@ -1,14 +1,14 @@
 'use strict';
 
-var ArticleTitle = require('./ArticleTitle');
-var ArticleTitleConverter = require('./ArticleTitleConverter');
-var ArticleTitleComponent = require('./ArticleTitleComponent');
+import ArticleTitle from './ArticleTitle'
+import ArticleTitleConverter from './ArticleTitleConverter'
+import ArticleTitleComponent from './ArticleTitleComponent'
 
-module.exports = {
+export default {
   name: 'article-title',
   configure: function(config) {
     config.addNode(ArticleTitle);
     config.addConverter('jats', ArticleTitleConverter);
     config.addComponent(ArticleTitle.type, ArticleTitleComponent);
   }
-};
+}

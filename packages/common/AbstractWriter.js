@@ -1,7 +1,6 @@
-'use strict';
-
-var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var SaveHandler = require('./SaveHandler');
+import { ProseEditorPackage } from 'substance'
+import SaveHandler from './SaveHandler'
+const ProseEditor = ProseEditorPackage.ProseEditor
 
 // TODO: we need to think if it is really a good idea to
 // derive from ProseEditor here
@@ -69,4 +68,4 @@ AbstractWriter.Prototype = function() {
 
 ProseEditor.extend(AbstractWriter);
 
-module.exports = AbstractWriter;
+export default AbstractWriter;

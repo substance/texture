@@ -1,8 +1,6 @@
-'use strict';
-
-var Configurator = require('substance/util/Configurator');
-var forEach = require('lodash/forEach');
-var uniq = require('lodash/uniq');
+import forEach from 'lodash/forEach'
+import uniq from 'lodash/uniq'
+import { Configurator } from 'substance'
 
 /*
   Top-level configurator for scientist. Has sub-configurators for
@@ -54,4 +52,4 @@ TextureConfigurator.Prototype = function() {
 
 Configurator.extend(TextureConfigurator);
 
-module.exports = TextureConfigurator;
+export default TextureConfigurator

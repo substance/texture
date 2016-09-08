@@ -1,10 +1,10 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var Modal = require('substance/ui/Modal');
-var EditXML = require('../../common/EditXML');
-var EditContrib = require('./EditContrib');
-var getAdapter = require('./contribUtils').getAdapter;
+import { Component, Modal } from 'substance'
+import EditXML from '../../common/EditXML'
+import contribToHTML from './contribToHTML'
+import EditContrib from './EditContrib'
+import { getAdapter } from './contribUtils'
 
 function ContribComponent() {
   ContribComponent.super.apply(this, arguments);
@@ -65,4 +65,4 @@ ContribComponent.Prototype = function() {
 
 Component.extend(ContribComponent);
 
-module.exports = ContribComponent;
+export default ContribComponent;

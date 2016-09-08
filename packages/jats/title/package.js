@@ -1,10 +1,10 @@
 'use strict';
 
-var Title = require('./Title');
-var TitleConverter = require('./TitleConverter');
-var TitleComponent = require('./TitleComponent');
+import Title from './Title'
+import TitleConverter from './TitleConverter'
+import TitleComponent from './TitleComponent'
 
-module.exports = {
+export default {
   name: 'title',
   configure: function(config) {
     config.addNode(Title);

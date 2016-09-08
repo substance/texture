@@ -1,11 +1,9 @@
-'use strict';
+import ArticleNode from './ArticleNode'
+import ArticleConverter from './ArticleConverter'
+import TextureArticle from './TextureArticle'
+import ArticleComponent from './ArticleComponent'
 
-var ArticleNode = require('./ArticleNode');
-var ArticleConverter = require('./ArticleConverter');
-var TextureArticle = require('./TextureArticle');
-var ArticleComponent = require('./ArticleComponent');
-
-module.exports = {
+export default {
   name: 'article',
   configure: function(config) {
     config.defineSchema({
@@ -17,4 +15,4 @@ module.exports = {
     config.addConverter('jats', ArticleConverter);
     config.addComponent(ArticleNode.type, ArticleComponent);
   }
-};
+}

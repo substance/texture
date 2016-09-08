@@ -1,7 +1,5 @@
-'use strict';
-
-var JATSImporter = require('../jats/JATSImporter');
-var JATSTransformer = require('./JATSTransformer');
+import JATSImporter from '../jats/JATSImporter'
+import JATSTransformer from './JATSTransformer'
 
 function AuthorImporter() {
   AuthorImporter.super.apply(this, arguments);
@@ -20,4 +18,4 @@ AuthorImporter.Prototype = function() {
 
 JATSImporter.extend(AuthorImporter);
 
-module.exports = AuthorImporter;
+export default AuthorImporter;

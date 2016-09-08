@@ -1,8 +1,8 @@
 'use strict';
 
-var extend = require('lodash/extend');
+import extend from 'lodash/extend'
 
-module.exports = function renderNodeComponent(self, $$, node, props) {
+export default function renderNodeComponent(self, $$, node, props) {
   props = props || {};
   var componentRegistry = self.props.componentRegistry || self.context.componentRegistry;
   var ComponentClass = componentRegistry.get(node.type);

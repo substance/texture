@@ -1,8 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var ContainerEditor = require('substance/ui/ContainerEditor');
+import { Component, ContainerEditor, TextPropertyEditor } from 'substance'
 
 function SectionComponent() {
   SectionComponent.super.apply(this, arguments);
@@ -35,4 +33,4 @@ Component.extend(SectionComponent);
 SectionComponent.fullWidth = true;
 SectionComponent.noStyle = true;
 
-module.exports = SectionComponent;
+export default SectionComponent;

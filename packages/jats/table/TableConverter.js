@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
 
   type: 'table', // Substance node model
   tagName: 'table', // Used as a matcher

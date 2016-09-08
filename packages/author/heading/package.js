@@ -1,15 +1,13 @@
-'use strict';
+import Heading from './Heading'
+import HeadingComponent from './HeadingComponent'
+import { HeadingPackage as CorePackage } from 'substance'
 
-var Heading = require('./Heading');
-var HeadingComponent = require('substance/packages/heading/HeadingComponent');
-var HeadingHTMLConverter = require('substance/packages/heading/HeadingHTMLConverter');
-
-module.exports = {
+export default {
   name: 'heading',
   configure: function(config) {
     config.addNode(Heading);
     config.addComponent(Heading.type, HeadingComponent);
-    config.addConverter('html', HeadingHTMLConverter);
+    config.addConverter('html', CorePackage.HeadingHTMLConverter);
     config.addTextType({
       name: 'heading1',
       data: {type: 'heading', level: 1}
@@ -35,4 +33,4 @@ module.exports = {
       de: 'Überschrift 3'
     });
   }
-};
+}

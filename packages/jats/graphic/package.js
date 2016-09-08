@@ -1,10 +1,10 @@
 'use strict';
 
-var Graphic = require('./Graphic');
-var GraphicComponent = require('./GraphicComponent');
-var GraphicConverter = require('./GraphicConverter');
+import Graphic from './Graphic'
+import GraphicComponent from './GraphicComponent'
+import GraphicConverter from './GraphicConverter'
 
-module.exports = {
+export default {
   name: 'graphic',
   configure: function(config) {
     config.addNode(Graphic);

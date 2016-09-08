@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(test, tagName, type) {
+export default function(test, tagName, type) {
   type = type || tagName;
   var fixture = '<'+tagName+'>abc<bold id="b1">def</bold>ghi</'+tagName+'>';
   test.withFixture(fixture, 'Importing/exporting <'+tagName+'>', function(t) {

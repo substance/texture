@@ -1,12 +1,10 @@
-'use strict';
+import Contrib from './Contrib'
+import ContribComponent from './ContribComponent'
+import ContribConverter from './ContribConverter'
+import TagContribCommand from './TagContribCommand'
+import TagContribTool from './TagContribTool'
 
-var Contrib = require('./Contrib');
-var ContribComponent = require('./ContribComponent');
-var ContribConverter = require('./ContribConverter');
-var TagContribCommand = require('./TagContribCommand');
-var TagContribTool = require('./TagContribTool');
-
-module.exports = {
+export default {
   name: 'contrib',
   configure: function(config) {
     config.addNode(Contrib);
@@ -16,4 +14,4 @@ module.exports = {
     config.addTool('tag-contrib', TagContribTool);
     config.addIcon('tag-contrib', { 'fontawesome': 'fa-bullseye' });
   }
-};
+}

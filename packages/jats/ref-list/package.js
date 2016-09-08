@@ -1,10 +1,10 @@
 'use strict';
 
-var RefList = require('./RefList');
-var RefListConverter = require('./RefListConverter');
-var RefListComponent = require('./RefListComponent');
+import RefList from './RefList'
+import RefListConverter from './RefListConverter'
+import RefListComponent from './RefListComponent'
 
-module.exports = {
+export default {
   name: 'ref-list',
   configure: function(config) {
     config.addNode(RefList);

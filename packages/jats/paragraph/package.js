@@ -1,10 +1,10 @@
 'use strict';
 
-var Paragraph = require('./Paragraph');
-var ParagraphComponent = require('./ParagraphComponent');
-var ParagraphConverter = require('./ParagraphConverter');
+import Paragraph from './Paragraph'
+import ParagraphComponent from './ParagraphComponent'
+import ParagraphConverter from './ParagraphConverter'
 
-module.exports = {
+export default {
 
   name: 'paragraph',
 

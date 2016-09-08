@@ -17,7 +17,7 @@ Ref.Prototype = function() {
     Checks if ref is a plain text citation, with no formatting / tagging etc.
   */
   this.isPlain = function() {
-
+    // TODO:
   };
 
   /*

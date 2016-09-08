@@ -3,13 +3,20 @@
 var Component = require('substance/ui/Component');
 var renderNodeComponent = require('../../../util/renderNodeComponent');
 
-function ContribGroupComponent() {
-  Component.apply(this, arguments);
-}
+class ContribGroupComponent extends Component {
+  didMount() {
+    super.didMount();
+    var node = this.props.node;
+    node.on('nodes:changed', this.rerender, this);
+  }
 
-ContribGroupComponent.Prototype = function() {
+  dispose() {
+    super.dispose();
+    var node = this.props.node;
+    node.off(this);
+  }
 
-  this.render = function($$) {
+  render($$) {
     var node = this.props.node;
     var doc = node.getDocument();
 
@@ -31,9 +38,8 @@ ContribGroupComponent.Prototype = function() {
 
     // el.append($$('button').addClass('se-add-author').append('Add Author'));
     return el;
-  };
-};
+  }
 
-Component.extend(ContribGroupComponent);
+}
 
 module.exports = ContribGroupComponent;

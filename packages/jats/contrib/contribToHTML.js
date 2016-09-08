@@ -3,13 +3,14 @@
 var DOMElement = require('substance/ui/DefaultDOMElement');
 var toDOM = require('../../../util/toDOM');
 
-// TODO: this is dup of refToHTML -> generalize
+// TODO: this is partially a dup of refToHTML -> generalize
 var namesToHTML = function (el) {
   var nameElements = el.findAll('name');
   var nameEls = [];
+  var nameEl;
   for (var i = 0; i < nameElements.length; i++) {
     var name = nameElements[i];
-    var nameEl = DOMElement.createElement('span');
+    nameEl = DOMElement.createElement('span');
     nameEl.addClass('name');
 
     nameEl.text(name.find('surname').text() + ' ' + name.find('given-names').text());
@@ -18,6 +19,14 @@ var namesToHTML = function (el) {
       comma.text(', ');
       nameEls.push(comma);
     }
+    nameEls.push(nameEl);
+  }
+
+  // Consider first string-name element if present
+  var stringNameElement = el.find('string-name');
+  if (stringNameElement) {
+    nameEl = DOMElement.createElement('span').addClass('name');
+    nameEl.text(stringNameElement.textContent);
     nameEls.push(nameEl);
   }
   return nameEls;

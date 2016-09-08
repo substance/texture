@@ -9,20 +9,14 @@
       </title-group>
       <contrib-group>
         <contrib contrib-type="author">
-          <name>
-            <surname>Aufreiter</surname>
-            <given-names>Michael</given-names>
-          </name>
+          <string-name>Michael Aufreiter</string-name>
           <xref ref-type="aff" rid="Substance"/>
         </contrib>
         <contrib contrib-type="author">
-          <name>
-            <surname>Buchtala</surname>
-            <given-names>Oliver</given-names>
-          </name>
+          <string-name>Oliver Buchtala</string-name>
           <xref ref-type="aff" rid="Substance"/>
         </contrib>
-        <aff id="StLukes">Substance Software GmbH, Linz, Austria</aff>
+        <aff id="Substance">Substance Software GmbH, Linz, Austria</aff>
       </contrib-group>
       <!-- only one abstract element is considered in Author mode -->
       <abstract>

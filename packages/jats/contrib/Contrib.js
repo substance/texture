@@ -22,8 +22,8 @@ Contrib.type = 'contrib';
 */
 Contrib.define({
   attributes: { type: 'object', default: {} },
-  xmlContent: { type: 'string', default: ''},
-  tagName: 'string'
+  xmlContent: { type: 'string', default: ''}// ,
+  // tagName: 'string'
 });
 
 module.exports = Contrib;

@@ -1,7 +1,5 @@
-'use strict';
-
-var Tool = require('substance/ui/Tool');
+import { Tool } from 'substance'
 
 class TagContribTool extends Tool {}
 
-module.exports = TagContribTool;
+export default TagContribTool

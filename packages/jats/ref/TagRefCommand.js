@@ -1,8 +1,4 @@
-'use strict';
-
-var Command = require('substance/ui/Command');
-var uuid = require('substance/util/uuid');
-var Selection = require('substance/model/Selection');
+import { Command, uuid, Selection } from 'substance'
 
 class TagRefCommand extends Command {
 
@@ -80,4 +76,4 @@ class TagRefCommand extends Command {
   }
 
 }
-module.exports = TagRefCommand;
+export default TagRefCommand

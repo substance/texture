@@ -1,6 +1,4 @@
-'use strict';
-
-var Document = require('substance/model/Document');
+import { Document } from 'substance'
 
 class TextureArticle extends Document {
   /*
@@ -22,4 +20,4 @@ class TextureArticle extends Document {
   }
 }
 
-module.exports = TextureArticle;
+export default TextureArticle

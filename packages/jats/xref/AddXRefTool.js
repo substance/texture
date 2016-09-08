@@ -1,6 +1,4 @@
-'use strict';
-
-var AnnotationTool = require('substance/ui/AnnotationTool');
+import { AnnotationTool } from 'substance'
 
 function AddXRefTool() {
   AddXRefTool.super.apply(this, arguments);
@@ -8,4 +6,4 @@ function AddXRefTool() {
 
 AnnotationTool.extend(AddXRefTool);
 
-module.exports = AddXRefTool;
+export default AddXRefTool

@@ -1,10 +1,5 @@
-'use strict';
+import { Tool } from 'substance'
 
-var Tool = require('substance/ui/Tool');
+class TagRefTool extends Tool {}
 
-function TagRefTool() {
-  TagRefTool.super.apply(this, arguments);
-}
-Tool.extend(TagRefTool);
-
-module.exports = TagRefTool;
+export default TagRefTool

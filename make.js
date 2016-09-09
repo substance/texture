@@ -11,6 +11,7 @@ b.task('substance', function() {
 
 // copy assets
 b.task('assets', function() {
+  b.copy('examples/index.html', './dist/')
   b.copy('texture.css', './dist/')
   b.copy('packages/**/*.css', './dist/')
   b.copy('examples/data', './dist/data')
@@ -45,3 +46,9 @@ b.task('minify_examples', function() {
 
 //b.task('default', ['clean', 'assets', 'examples', 'minify_examples'])
 b.task('default', ['clean', 'assets', 'examples'])
+
+// starts a server when CLI argument '-s' is set
+b.setServerPort(5555)
+b.serve({
+  static: true, route: '/', folder: 'dist'
+})

@@ -3,7 +3,6 @@
 var Component = require('substance/ui/Component');
 var Modal = require('substance/ui/Modal');
 var EditXML = require('../../common/EditXML');
-var contribToHTML = require('./contribToHTML');
 
 function ContribComponent() {
   ContribComponent.super.apply(this, arguments);
@@ -20,9 +19,12 @@ ContribComponent.Prototype = function() {
 
   this.render = function($$) {
     var node = this.props.node;
+    var contrib = node.getObject();
+    console.log('contrib', contrib);
     var el = $$('div').addClass('sc-contrib')
       .append(
-        $$('div').addClass('se-name').html(contribToHTML(node))
+        $$('div').addClass('se-name')
+          .append(contrib.fullName)
           .on('click', this._toggleEditor)
       );
 

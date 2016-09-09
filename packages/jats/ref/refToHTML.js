@@ -2,6 +2,10 @@
 
 var DOMElement = require('substance/ui/DefaultDOMElement');
 
+/*
+  TODO: Get rid of HTML renderer. Instead extract data as
+  JSON and then pass it to a component for rendering
+*/
 var namesToHTML = function(ref) {
   var nameElements = ref.findAll('name');
   var nameEls = [];

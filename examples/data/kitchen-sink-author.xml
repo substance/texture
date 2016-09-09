@@ -12,11 +12,11 @@
           <string-name>Michael Aufreiter</string-name>
           <xref ref-type="aff" rid="Substance"/>
         </contrib>
-        <contrib contrib-type="author">
+        <contrib contrib-type="author" generator="texture">
           <string-name>Oliver Buchtala</string-name>
           <xref ref-type="aff" rid="Substance"/>
         </contrib>
-        <aff id="Substance">Substance Software GmbH, Linz, Austria</aff>
+        <aff id="Substance" generator="texture">Substance Software GmbH, Linz, Austria</aff>
       </contrib-group>
       <!-- only one abstract element is considered in Author mode -->
       <abstract>
@@ -41,10 +41,10 @@
     <!-- only the first ref-list element is considered in Author mode -->
     <ref-list>
       <title>References</title>
-      <ref id="bib1">
+      <ref id="bib1" generator="texture">
         <mixed-citation publication-type="journal">Bailey KA, Pereira SL, Widom J, Reeve JN. 2000. Archaeal histone selection of nucleosome positioning sequences and the procaryotic origin of histone-dependent genome evolution. J Mol Biol 303:25–34.</mixed-citation>
       </ref>
-      <ref id="bib2">
+      <ref id="bib2" generator="texture">
         <mixed-citation publication-type="journal">Altschul SF, Gish W, Miller W, Myers EW, Lipman DJ. 1990. Basic local alignment search tool. J Mol Biol 215:403–10.</mixed-citation>
       </ref>
     </ref-list>

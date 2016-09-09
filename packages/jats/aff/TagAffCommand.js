@@ -38,7 +38,10 @@ class TagAffCommand extends Command {
       var newAff = {
         id: uuid('aff'),
         type: 'aff',
-        xmlContent: stringName
+        xmlContent: stringName,
+        attributes: {
+          generator: 'texture'
+        }
       };
 
       var affNode = tx.create(newAff);

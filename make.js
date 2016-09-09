@@ -6,7 +6,7 @@ b.task('clean', function() {
 
 // this optional task makes it easier to work on Substance core
 b.task('substance', function() {
-  b.make('substance')
+  b.make('substance', 'clean', 'css', 'browser:umd')
 })
 
 // copy assets
@@ -27,7 +27,6 @@ examples.forEach(function(example) {
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
       external: ['substance'],
-      nodeResolve: { include: ['node_modules/lodash/**'] },
       commonjs: { include: ['node_modules/lodash/**'] },
       dest: './dist/'+example+'/app.js',
       format: 'umd',
@@ -44,8 +43,9 @@ b.task('minify_examples', function() {
   })
 })
 
-//b.task('default', ['clean', 'assets', 'examples', 'minify_examples'])
-b.task('default', ['clean', 'assets', 'examples'])
+b.task('default', ['clean', 'assets', 'examples', 'minify_examples'])
+
+b.task('dev', ['substance', 'clean', 'assets', 'examples'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

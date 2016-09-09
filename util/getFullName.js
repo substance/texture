@@ -1,10 +1,13 @@
 'use strict';
 
+var toDOM = require('./toDOM');
+
 /*
   Extract name from elements that contain
   name or string-name nodes (e.g. contrib, mixed-citation, element-citation)
 */
-function extractFullName(el) {
+function getFullName(node) {
+  var el = toDOM(node);
   var name = el.find('name');
   var stringName = el.find('string-name');
 
@@ -17,4 +20,4 @@ function extractFullName(el) {
   }
 }
 
-module.exports = extractFullName;
+module.exports = getFullName;

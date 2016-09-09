@@ -4,6 +4,7 @@ var Component = require('substance/ui/Component');
 var Modal = require('substance/ui/Modal');
 var EditXML = require('../../common/EditXML');
 var EditContrib = require('./EditContrib');
+var getAdapter = require('./contribUtils').getAdapter;
 
 function ContribComponent() {
   ContribComponent.super.apply(this, arguments);
@@ -19,9 +20,7 @@ function ContribComponent() {
 ContribComponent.Prototype = function() {
 
   this.render = function($$) {
-    var node = this.props.node;
-    var contrib = node.getObject();
-    console.log('contrib', contrib);
+    var contrib = getAdapter(this.props.node);
     var el = $$('div').addClass('sc-contrib')
       .append(
         $$('div').addClass('se-name')
@@ -33,7 +32,7 @@ ContribComponent.Prototype = function() {
       // Conforms to strict markup enforced by texture
       // for visual editing
       var EditorClass;
-      if (node.isStrict()) {
+      if (contrib.strict) {
         EditorClass = EditContrib;
       } else {
         EditorClass = EditXML;
@@ -43,9 +42,7 @@ ContribComponent.Prototype = function() {
         $$(Modal, {
           width: 'medium'
         }).append(
-          $$(EditorClass, {
-            node: node
-          })
+          $$(EditorClass, contrib)
         )
       );
     }

@@ -1,5 +1,2 @@
-.sc-contrib .se-name {
-  background: #eee;
-  cursor: pointer;
-  padding: 0px 3px;
-}
+@import './_contrib.css';
+@import './_edit-contrib.css';

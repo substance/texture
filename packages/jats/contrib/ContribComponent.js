@@ -3,6 +3,7 @@
 var Component = require('substance/ui/Component');
 var Modal = require('substance/ui/Modal');
 var EditXML = require('../../common/EditXML');
+var EditContrib = require('./EditContrib');
 
 function ContribComponent() {
   ContribComponent.super.apply(this, arguments);
@@ -29,11 +30,20 @@ ContribComponent.Prototype = function() {
       );
 
     if (this.state.editXML) {
+      // Conforms to strict markup enforced by texture
+      // for visual editing
+      var EditorClass;
+      if (node.isStrict()) {
+        EditorClass = EditContrib;
+      } else {
+        EditorClass = EditXML;
+      }
+
       el.append(
         $$(Modal, {
           width: 'medium'
         }).append(
-          $$(EditXML, {
+          $$(EditorClass, {
             node: node
           })
         )

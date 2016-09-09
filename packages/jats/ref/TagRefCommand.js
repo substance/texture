@@ -52,7 +52,10 @@ class TagRefCommand extends Command {
         var newRef = {
           id: uuid('ref'),
           type: 'ref',
-          xmlContent: '<mixed-citation>'+p.content+'</mixed-citation>'
+          xmlContent: '<mixed-citation>'+p.content+'</mixed-citation>',
+          attributes: {
+            generator: 'texture'
+          }
         };
         var refNode = tx.create(newRef);
         refListNode.show(refNode.id);

@@ -12,10 +12,6 @@ function extractAffiliations(el) {
 
 class Contrib extends DocumentNode {
 
-  toElement() {
-    return toDOM(this);
-  }
-
   /*
     Turns the xmlContent string into JSON, ready to be
     rendered by a component.
@@ -27,6 +23,17 @@ class Contrib extends DocumentNode {
       fullName: extractFullName(el),
       affiliations: extractAffiliations(el)
     };
+  }
+
+  /*
+    Returns true if node follows strict texture-enforced markup
+  */
+  isStrict() {
+    return this.attributes.generator === 'texture';
+  }
+
+  toElement() {
+    return toDOM(this);
   }
 }
 
@@ -44,8 +51,7 @@ Contrib.type = 'contrib';
 */
 Contrib.define({
   attributes: { type: 'object', default: {} },
-  xmlContent: { type: 'string', default: ''}// ,
-  // tagName: 'string'
+  xmlContent: { type: 'string', default: ''}
 });
 
 module.exports = Contrib;

@@ -13,7 +13,7 @@ EditXML.Prototype = function() {
   this.render = function($$) {
     var node = this.props.node;
     var el = $$('div').addClass('sc-edit-xml');
-    var tagName = node.tagName;
+    var tagName = node.tagName || node.constructor.type;
 
     el.append(
       $$('div').addClass('se-tag sm-open-tag-start').append('<'+tagName)

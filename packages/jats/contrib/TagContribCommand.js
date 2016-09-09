@@ -38,7 +38,10 @@ class TagContribCommand extends Command {
       var newContrib = {
         id: uuid('contrib'),
         type: 'contrib',
-        xmlContent: '<string-name>'+stringName+'</string-name>'
+        xmlContent: '<string-name>'+stringName+'</string-name>',
+        attributes: {
+          generator: 'texture'
+        }
       };
 
       var contribNode = tx.create(newContrib);

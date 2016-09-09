@@ -11,8 +11,11 @@ b.task('substance', function() {
 
 // copy assets
 b.task('assets', function() {
-  b.copy('examples/data', './dist/')
-  b.copy('node_modules/font-awesome/fonts', './dist/')
+  b.copy('texture.css', './dist/')
+  b.copy('packages/**/*.css', './dist/')
+  b.copy('examples/data', './dist/data')
+  b.copy('node_modules/font-awesome', './dist/font-awesome')
+  b.copy('node_modules/substance/dist', './dist/substance')
 })
 
 var examples = ['author', 'publisher']
@@ -20,7 +23,11 @@ var examples = ['author', 'publisher']
 examples.forEach(function(example) {
   b.task(example, function() {
     b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
+    b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
+      external: ['substance'],
+      nodeResolve: { include: ['node_modules/lodash/**'] },
+      commonjs: { include: ['node_modules/lodash/**'] },
       dest: './dist/'+example+'/app.js',
       format: 'umd',
       moduleName: example
@@ -36,4 +43,5 @@ b.task('minify_examples', function() {
   })
 })
 
-b.task('default', ['clean', 'assets', 'examples', 'minify_examples'])
+//b.task('default', ['clean', 'assets', 'examples', 'minify_examples'])
+b.task('default', ['clean', 'assets', 'examples'])

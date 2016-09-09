@@ -8,7 +8,7 @@
         <article-title>Turn Word documents into structured <italic>JATS</italic> with Texture</article-title>
       </title-group>
       <contrib-group>
-        <contrib contrib-type="author">
+        <contrib contrib-type="author" generator="texture">
           <string-name>Michael Aufreiter</string-name>
           <xref ref-type="aff" rid="Substance"/>
         </contrib>
@@ -17,6 +17,8 @@
           <xref ref-type="aff" rid="Substance"/>
         </contrib>
         <aff id="Substance" generator="texture">Substance Software GmbH, Linz, Austria</aff>
+        <aff id="Erudit" generator="texture">Consortium Erudit, Montreal, Canada</aff>
+        <aff id="Coko" generator="texture">Collaborative Knowledge Foundation, San Francisco, US</aff>
       </contrib-group>
       <!-- only one abstract element is considered in Author mode -->
       <abstract>
@@ -27,8 +29,8 @@
   <body>
     <sec id="s1">
       <title>Introduction</title>
-      <p id="p1">Texture is a tool for publishers for creating structured JATS documents based on <bold>Word</bold> or InDesign submissions. Texture is developed by the Substance Consortium (<xref ref-type="bibr" rid="bib1">[1]</xref>) formed by the Public Knowledge Project (PKP), the Collaborative Knowledge Foundation (CoKo) and Érudit.</p>
-      <p>The tool is available as open source on Github (<xref ref-type="bibr" rid="bib2">[2]</xref>) and</p>
+      <p id="p1">Texture is a tool for publishers for creating structured JATS documents based on <bold>Word</bold> or InDesign submissions.</p>
+      <p id="p1">The original document is imported with annotations preserved. Then the user starts tagging semantic entities in the document, such as marking up the reference list, the authors, affiliations etc. Saving the document produces valid JATS 1.1 XML.</p>
     </sec>
     <sec id="s2">
       <title>Create a bibliography</title>

@@ -1,6 +1,9 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
+var Icon = require('substance/ui/FontAwesomeIcon');
+
+var getAdapter = require('./affUtils').getAdapter;
 
 class AffComponent extends Component {
   constructor(...args) {
@@ -8,9 +11,10 @@ class AffComponent extends Component {
   }
 
   render($$) {
-    var aff = this.props.node.getObject();
+    var aff = getAdapter(this.props.node);
     var el = $$('div').addClass('sc-aff')
-      .append(aff.name);
+      .append($$(Icon, {icon: 'fa-building-o'}))
+      .append(' '+aff.name);
     return el;
   }
 }

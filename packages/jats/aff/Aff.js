@@ -4,20 +4,6 @@ var DocumentNode = require('substance/model/DocumentNode');
 var toDOM = require('../../../util/toDOM');
 
 class Aff extends DocumentNode {
-  toElement() {
-    return toDOM(this);
-  }
-
-  /*
-    Turns the xmlContent string into JSON, ready to be
-    rendered by a component.
-  */
-  getObject() {
-    var el = this.toElement();
-    return {
-      name: el.textContent
-    };
-  }
 }
 
 Aff.type = 'aff';

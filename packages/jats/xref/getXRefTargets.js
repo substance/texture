@@ -1,8 +1,8 @@
 'use strict';
 
-var includes = require('lodash/includes');
-var map = require('lodash/map');
-var orderBy = require('lodash/orderBy');
+import includes from 'lodash/includes'
+import map from 'lodash/map'
+import orderBy from 'lodash/orderBy'
 
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
@@ -47,4 +47,4 @@ function getXRefTargets(node) {
   return targets;
 }
 
-module.exports = getXRefTargets;
+export default getXRefTargets;

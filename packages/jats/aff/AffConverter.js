@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
 
   type: 'aff',
   tagName: 'aff',
@@ -12,4 +10,4 @@ module.exports = {
   export: function(node, el, converter) { // eslint-disable-line
     el.innerHTML = node.xmlContent;
   }
-};
+}

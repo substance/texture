@@ -1,6 +1,6 @@
 'use strict';
 
-var AnnotationCommand = require('substance/ui/AnnotationCommand');
+import { AnnotationCommand } from 'substance'
 
 function BoldCommand() {
   BoldCommand.super.apply(this, arguments);
@@ -8,4 +8,4 @@ function BoldCommand() {
 
 AnnotationCommand.extend(BoldCommand);
 
-module.exports = BoldCommand;
+export default BoldCommand;

@@ -1,11 +1,11 @@
 'use strict';
 
-var Figure = require('./Figure');
-var FigureComponent = require('./FigureComponent');
-var FigureTarget = require('./FigureTarget');
-var FigureConverter = require('./FigureConverter');
+import Figure from './Figure'
+import FigureComponent from './FigureComponent'
+import FigureTarget from './FigureTarget'
+import FigureConverter from './FigureConverter'
 
-module.exports = {
+export default {
   name: 'figure',
   configure: function(config) {
     config.addNode(Figure);

@@ -1,11 +1,6 @@
-'use strict';
-
-var Tool = require('substance/ui/Tool');
-var clone = require('lodash/clone');
-var Modal = require('substance/ui/Modal');
-var Prompt = require('substance/ui/Prompt');
-var EditXML = require('../common/EditXML');
-var deleteSelection = require('substance/model/transform/deleteSelection');
+import clone from 'lodash/clone'
+import { Modal, Prompt, Tool, deleteSelection } from 'substance'
+import EditXML from '../common/EditXML'
 
 /*
   Prompt shown when an unsupported node is selected.
@@ -80,4 +75,4 @@ UnsupportedInlineNodeTool.getProps = function(commandStates) {
   }
 };
 
-module.exports = UnsupportedInlineNodeTool;
+export default UnsupportedInlineNodeTool;

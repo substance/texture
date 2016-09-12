@@ -1,10 +1,10 @@
 'use strict';
 
-var Footnote = require('./Footnote');
-var FootnoteComponent = require('./FootnoteComponent');
-var FootnoteConverter = require('./FootnoteConverter');
+import Footnote from './Footnote'
+import FootnoteComponent from './FootnoteComponent'
+import FootnoteConverter from './FootnoteConverter'
 
-module.exports = {
+export default {
   name: 'footnote',
   configure: function(config) {
     config.addNode(Footnote);

@@ -1,8 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var TextProperty = require('substance/ui/TextPropertyComponent');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
+import { Component, TextPropertyComponent } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 function FootnoteComponent() {
   Component.apply(this, arguments);
@@ -20,7 +19,7 @@ FootnoteComponent.Prototype = function() {
 
     if (node.label) {
       var label = doc.get(node.label);
-      el.append($$(TextProperty, {
+      el.append($$(TextPropertyComponent, {
         path: label.getTextPath()
       }));
     }
@@ -41,4 +40,4 @@ FootnoteComponent.Prototype = function() {
 
 Component.extend(FootnoteComponent);
 
-module.exports = FootnoteComponent;
+export default FootnoteComponent;

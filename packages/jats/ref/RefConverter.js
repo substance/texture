@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
 
   type: 'ref',
   tagName: 'ref',
@@ -16,4 +14,5 @@ module.exports = {
     el.innerHTML = node.xmlContent;
   }
 
-};
+}
+

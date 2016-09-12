@@ -1,10 +1,10 @@
 'use strict';
 
-var Back = require('./Back');
-var BackConverter = require('./BackConverter');
-var BackComponent = require('./BackComponent');
+import Back from './Back'
+import BackConverter from './BackConverter'
+import BackComponent from './BackComponent'
 
-module.exports = {
+export default {
   name: 'back',
   configure: function(config) {
     config.addNode(Back);

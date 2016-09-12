@@ -1,6 +1,6 @@
 'use strict';
 
-var Annotation = require('substance/model/Annotation');
+import { Annotation } from 'substance'
 
 function Italic() {
   Italic.super.apply(this, arguments);
@@ -14,4 +14,4 @@ Italic.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = Italic;
+export default Italic;

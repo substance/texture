@@ -1,8 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var renderNodeComponent = require('../../../util/renderNodeComponent');
-
+import { Component } from 'substance'
+import renderNodeComponent from '../../../util/renderNodeComponent'
 
 function ArticleMetaComponent() {
   Component.apply(this, arguments);
@@ -35,4 +34,4 @@ ArticleMetaComponent.Prototype = function() {
 
 Component.extend(ArticleMetaComponent);
 
-module.exports = ArticleMetaComponent;
+export default ArticleMetaComponent;

@@ -1,7 +1,7 @@
 'use strict';
 
-var isString = require('lodash/isString');
-var XMLExporter = require('substance/model/XMLExporter');
+import isString from 'lodash/isString'
+import { XMLExporter } from 'substance'
 
 function JATSExporter(config) {
   JATSExporter.super.call(this, config);
@@ -45,4 +45,4 @@ JATSExporter.Prototype = function() {
 
 XMLExporter.extend(JATSExporter);
 
-module.exports = JATSExporter;
+export default JATSExporter;

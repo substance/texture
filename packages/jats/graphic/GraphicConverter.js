@@ -1,14 +1,14 @@
 'use strict';
 
-var JATS = require('../JATS');
-var XMLIterator = require('../../../util/XMLIterator');
+import JATS from '../JATS'
+import XMLIterator from '../../../util/XMLIterator'
 
 var GRAPHIC_ELEMENTS = JATS.ACCESS
     .concat(JATS.ADDRESS_LINK)
     .concat(['caption', 'object-id', 'kwd-group', 'label'])
     .concat(JATS.DISPLAY_BACK_MATTER);
 
-module.exports = {
+export default {
 
   type: 'graphic',
   tagName: 'graphic',

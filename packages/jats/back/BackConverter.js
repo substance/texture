@@ -1,9 +1,9 @@
 'use strict';
 
-var XMLIterator = require('../../../util/XMLIterator');
+import XMLIterator from '../../../util/XMLIterator'
 var BACK_CONTENT = ["ack", "app-group", "bio", "fn-group", "glossary", "ref-list", "notes", "sec"];
 
-module.exports = {
+export default {
 
   type: 'back',
   tagName: 'back',

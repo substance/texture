@@ -1,6 +1,6 @@
 'use strict';
 
-var Annotation = require('substance/model/Annotation');
+import { Annotation } from 'substance'
 
 function Monospace() {
   Monospace.super.apply(this, arguments);
@@ -14,4 +14,4 @@ Monospace.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = Monospace;
+export default Monospace;

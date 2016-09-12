@@ -62,7 +62,7 @@ JATS.PARA_LEVEL = JATS.BLOCK_DISPLAY
   .concat(JATS.REST_OF_PARA)
   .concat(JATS.X);
 
-module.exports = JATS;
+export default JATS;
 
 
 

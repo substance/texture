@@ -1,16 +1,44 @@
-'use strict';
+import { substanceGlobals } from 'substance'
+import Package from './package'
+import Texture from '../../packages/texture/Texture'
+import TextureConfigurator from '../../packages/texture/TextureConfigurator'
+import Author from '../../packages/author/Author'
 
-var substanceGlobals = require('substance/util/substanceGlobals');
 substanceGlobals.DEBUG_RENDERING = true;
 
-var Texture = require('../../packages/texture/Texture');
-var TextureConfigurator = require('../../packages/texture/TextureConfigurator');
-var configurator = new TextureConfigurator().import(require('./package'));
+class App extends Texture {
 
-window.onload = function() {
-  window.app = Texture.mount({
-    mode: 'author',
-    documentId: 'kitchen-sink-author',
-    configurator: configurator
-  }, document.body);
-};
+  render($$) {
+    let el = $$('div').addClass('sc-author-example')
+
+    if (this.state.error) {
+      el.append(this.state.error)
+    }
+
+    if (this.state.documentSession) {
+      el.append($$(Author, {
+        documentId: this.props.documentId,
+        documentSession: this.state.documentSession,
+        configurator: this.getConfigurator()
+      }))
+    }
+
+    return el
+  }
+}
+
+App.Configurator = TextureConfigurator
+
+if (typeof window !== 'undefined') {
+  window.onload = function() {
+    let configurator = new TextureConfigurator()
+    configurator.import(Package)
+    var app = App.mount({
+      configurator: configurator,
+      documentId: 'elife-00007'
+    }, document.body)
+    window.app = app
+  };
+}
+
+export default App

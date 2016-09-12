@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function Front() {
   Front.super.apply(this, arguments);
@@ -25,4 +25,4 @@ Front.define({
   nodes: { type: ['id'], default: [] }
 });
 
-module.exports = Front;
+export default Front;

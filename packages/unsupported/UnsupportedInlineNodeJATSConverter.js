@@ -1,8 +1,6 @@
-'use strict';
+import UnsupportedNodeJATSConverter from './UnsupportedNodeJATSConverter'
 
-var UnsupportedNodeJATSConverter = require('./UnsupportedNodeJATSConverter');
-
-module.exports = {
+export default {
 
   type: 'unsupported-inline',
 
@@ -12,4 +10,5 @@ module.exports = {
 
   import: UnsupportedNodeJATSConverter.import,
   export: UnsupportedNodeJATSConverter.export
-};
+
+}

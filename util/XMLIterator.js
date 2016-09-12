@@ -1,25 +1,20 @@
-'use strict';
+import isString from 'lodash/isString'
+import { ArrayIterator, makeMap } from 'substance'
 
-var isString = require('lodash/isString');
-var oo = require('substance/util/oo');
-var ArrayIterator = require('substance/util/ArrayIterator');
-var makeMap = require('substance/util/makeMap');
+export default class XMLIterator {
+  constructor(elements) {
+    this.it = new ArrayIterator(elements);
+  }
 
-function XMLIterator(elements) {
-  this.it = new ArrayIterator(elements);
-}
-
-XMLIterator.Prototype = function() {
-
-  this.optional = function(tagName, cb) {
+  optional(tagName, cb) {
     this._one(tagName, true, cb);
-  };
+  }
 
-  this.required = function(tagName, cb) {
+  required(tagName, cb) {
     this._one(tagName, false, cb);
-  };
+  }
 
-  this._one = function(tagName, optional, cb) {
+  _one(tagName, optional, cb) {
     if (this.it.hasNext()) {
       var el = this.it.next();
       if (el.tagName === tagName) {
@@ -29,9 +24,9 @@ XMLIterator.Prototype = function() {
       }
     }
     if (!optional) throw new Error("Expecting element '"+ tagName +"'.");
-  };
+  }
 
-  this._manyOf = function(tagNames, cb) {
+  _manyOf(tagNames, cb) {
     if (isString(tagNames)) tagNames = [tagNames];
     var count = 0;
     tagNames = makeMap(tagNames);
@@ -46,26 +41,22 @@ XMLIterator.Prototype = function() {
       }
     }
     return count;
-  };
+  }
 
-  this.manyOf = function(tagNames, cb) {
+  manyOf(tagNames, cb) {
     return this._manyOf(tagNames, cb);
-  };
+  }
 
-  this.oneOrMoreOf = function(tagNames, cb) {
+  oneOrMoreOf(tagNames, cb) {
     var count = this._manyOf(tagNames, cb);
     if (count === 0) {
       throw new Error('Expecting at least one element of ' + String(tagNames));
     }
     return count;
-  };
+  }
 
-  this.hasNext = function() {
+  hasNext() {
     return this.it.hasNext();
-  };
+  }
 
-};
-
-oo.initClass(XMLIterator);
-
-module.exports = XMLIterator;
+}

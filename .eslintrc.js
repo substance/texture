@@ -10,12 +10,12 @@ module.exports = {
   },
   "extends": "eslint:recommended",
   "globals": {
-    "QUnit": true
+    "Promise": true
   },
   "rules": {
     // 0 - off, 1 - warning, 2 - error
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "semi": [2, "always"],
+    "semi": [0, "never"],
     "comma-dangle": [2, "only-multiline"],
     "no-cond-assign": 2,
     "no-console": [2, { allow: ["warn", "info", "error", "assert"] }],

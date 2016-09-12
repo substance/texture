@@ -1,6 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
+import { Component } from 'substance'
 
 function GraphicComponent() {
   Component.apply(this, arguments);
@@ -24,4 +24,4 @@ GraphicComponent.Prototype = function() {
 
 Component.extend(GraphicComponent);
 
-module.exports = GraphicComponent;
+export default GraphicComponent;

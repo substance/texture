@@ -1,11 +1,11 @@
 'use strict';
 
-var Configurator = require('substance/util/Configurator');
-var JATSPackage = require('../../packages/jats/package');
-var InlineWrapperPackage = require('../../packages/inline-wrapper/InlineWrapperPackage');
-var UnsupportedNodePackage = require('../../packages/unsupported/UnsupportedNodePackage');
+import Configurator from 'substance/util/Configurator'
+import JATSPackage from '../../packages/jats/package'
+import InlineWrapperPackage from '../../packages/inline-wrapper/InlineWrapperPackage'
+import UnsupportedNodePackage from '../../packages/unsupported/UnsupportedNodePackage'
 
-module.exports = function createJATSConfigurator() {
+export default function createJATSConfigurator() {
   var configurator = new Configurator();
   configurator.import(JATSPackage);
     // support inline wrappers, for all hybrid types that can be

@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function Section() {
   Section.super.apply(this, arguments);
@@ -42,5 +42,5 @@ Section.define({
   backMatter: { type: ['id'], default: [] }
 });
 
-module.exports = Section;
+export default Section;
 

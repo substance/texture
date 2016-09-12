@@ -1,6 +1,6 @@
 'use strict';
 
-var Annotation = require('substance/model/Annotation');
+import { Annotation } from 'substance'
 
 function Bold() {
   Bold.super.apply(this, arguments);
@@ -14,4 +14,4 @@ Bold.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = Bold;
+export default Bold;

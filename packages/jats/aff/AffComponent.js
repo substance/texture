@@ -1,9 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var Icon = require('substance/ui/FontAwesomeIcon');
-
-var getAdapter = require('./affUtils').getAdapter;
+import { Component, FontAwesomeIcon as Icon } from 'substance'
+import { getAdapter } from './affUtils'
 
 class AffComponent extends Component {
   constructor(...args) {
@@ -19,4 +17,4 @@ class AffComponent extends Component {
   }
 }
 
-module.exports = AffComponent;
+export default AffComponent

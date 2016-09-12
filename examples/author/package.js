@@ -1,14 +1,10 @@
-'use strict';
+import AuthorPackage from '../../packages/author/package'
+import ExampleXMLStore from '../ExampleXMLStore'
 
-var TexturePackage = require('../../packages/texture/package');
-var ExampleXMLStore = require('../ExampleXMLStore');
-
-module.exports = {
+export default {
   name: 'author-example',
   configure: function(config) {
-    // Use the default Texture package
-    config.import(TexturePackage);
-    // Define XML Store
+    config.import(AuthorPackage)
     config.setXMLStore(ExampleXMLStore);
   }
 };

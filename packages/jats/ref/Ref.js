@@ -1,7 +1,4 @@
-'use strict';
-
-var DocumentNode = require('substance/model/DocumentNode');
-var DOMElement = require('substance/ui/DefaultDOMElement');
+import { DocumentNode, DefaultDOMElement as DOMElement } from 'substance'
 
 /*
   ref
@@ -43,4 +40,4 @@ Ref.define({
   xmlContent: {type: 'string', default: ''}
 });
 
-module.exports = Ref;
+export default Ref;

@@ -1,12 +1,6 @@
-'use strict';
-
-var AbstractWriter = require('../common/AbstractWriter');
-var SplitPane = require('substance/ui/SplitPane');
-var ScrollPane = require('substance/ui/ScrollPane');
-var Layout = require('substance/ui/Layout');
-var Overlay = require('substance/ui/DefaultOverlay');
-var PublisherTOCProvider = require('./PublisherTOCProvider');
-var TOC = require('substance/ui/TOC');
+import { SplitPane, ScrollPane, Layout, Overlay, TOC }  from 'substance'
+import AbstractWriter from '../common/AbstractWriter'
+import PublisherTOCProvider from './PublisherTOCProvider'
 
 function PublisherWriter() {
   PublisherWriter.super.apply(this, arguments);
@@ -87,4 +81,4 @@ PublisherWriter.Prototype = function() {
 
 AbstractWriter.extend(PublisherWriter);
 
-module.exports = PublisherWriter;
+export default PublisherWriter;

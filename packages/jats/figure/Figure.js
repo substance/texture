@@ -1,6 +1,6 @@
 'use strict';
 
-var DocumentNode = require('substance/model/DocumentNode');
+import { DocumentNode } from 'substance'
 
 function Figure() {
   Figure.super.apply(this, arguments);
@@ -48,4 +48,4 @@ Figure.define({
   permissions: { type: ['permissions'], default: [] },
 });
 
-module.exports = Figure;
+export default Figure;

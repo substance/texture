@@ -1,6 +1,4 @@
-'use strict';
-
-var InlineNodeCommand = require('substance/ui/InlineNodeCommand');
+import { InlineNodeCommand } from 'substance'
 
 function AddXRefCommand() {
   AddXRefCommand.super.apply(this, arguments);
@@ -19,4 +17,4 @@ AddXRefCommand.Prototype = function() {
 
 InlineNodeCommand.extend(AddXRefCommand);
 
-module.exports = AddXRefCommand;
+export default AddXRefCommand

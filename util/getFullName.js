@@ -1,6 +1,4 @@
-'use strict';
-
-var toDOM = require('./toDOM');
+import toDOM  from './toDOM'
 
 /*
   Extract name from elements that contain
@@ -20,4 +18,4 @@ function getFullName(node) {
   }
 }
 
-module.exports = getFullName;
+export default getFullName

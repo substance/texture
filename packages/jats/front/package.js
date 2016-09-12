@@ -1,10 +1,10 @@
 'use strict';
 
-var Front = require('./Front');
-var FrontConverter = require('./FrontConverter');
-var FrontComponent = require('./FrontComponent');
+import Front from './Front'
+import FrontConverter from './FrontConverter'
+import FrontComponent from './FrontComponent'
 
-module.exports = {
+export default {
   name: 'front',
   configure: function(config) {
     config.addNode(Front);

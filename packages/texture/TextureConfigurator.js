@@ -1,57 +1,23 @@
-'use strict';
+import { ProseEditorPackage } from 'substance'
+// TODO: we should have a better base Configurator in core
+const Configurator = ProseEditorPackage.Configurator
 
-var Configurator = require('substance/util/Configurator');
-var forEach = require('lodash/forEach');
-var uniq = require('lodash/uniq');
+class TextureConfigurator extends Configurator {
 
-/*
-  Top-level configurator for scientist. Has sub-configurators for
-  all available modules (author, publisher, reader).
-*/
-function TextureConfigurator() {
-  TextureConfigurator.super.apply(this, arguments);
+  constructor(...args) {
+    super(...args)
+    this.config.XMLStoreClass = null
+  }
 
-  // Extend config
-  this.config.configurators = {};
-  this.config.XMLStoreClass = null;
-}
-
-TextureConfigurator.Prototype = function() {
-
-  /*
-    Provision of sub configurators (e.g. Author, Publisher, Reader
-    receive their own configurator)
-  */
-  this.addConfigurator = function(name, configurator) {
-    this.config.configurators[name] = configurator;
-  };
-
-  this.getConfigurator = function(name) {
-    return this.config.configurators[name];
-  };
-
-  this.setXMLStore = function(XMLStoreClass) {
+  setXMLStore(XMLStoreClass) {
     this.config.XMLStoreClass = XMLStoreClass;
-  };
+  }
 
-  this.getXMLStore = function() {
+  getXMLStore() {
     var XMLStoreClass = this.config.XMLStoreClass;
     return new XMLStoreClass();
-  };
+  }
 
-  this.getStyles = function() {
-    var styles = [].concat(this.config.styles);
+}
 
-    forEach(this.config.configurators, function(configurator) {
-      styles = styles.concat(configurator.getStyles());
-    });
-
-    // Remove duplicates with _.uniq, since publisher, author,
-    // reader use a lot of shared styles
-    return uniq(styles);
-  };
-};
-
-Configurator.extend(TextureConfigurator);
-
-module.exports = TextureConfigurator;
+export default TextureConfigurator

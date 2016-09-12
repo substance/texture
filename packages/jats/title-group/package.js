@@ -1,10 +1,10 @@
 'use strict';
 
-var TitleGroup = require('./TitleGroup');
-var TitleGroupConverter = require('./TitleGroupConverter');
-var TitleGroupComponent = require('./TitleGroupComponent');
+import TitleGroup from './TitleGroup'
+import TitleGroupConverter from './TitleGroupConverter'
+import TitleGroupComponent from './TitleGroupComponent'
 
-module.exports = {
+export default {
   name: 'title-group',
   configure: function(config) {
     config.addNode(TitleGroup);

@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function Caption() {
   Caption.super.apply(this, arguments);
@@ -39,4 +39,4 @@ Caption.define({
   nodes: { type: ['p'], default: [] }
 });
 
-module.exports = Caption;
+export default Caption;

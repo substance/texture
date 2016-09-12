@@ -1,8 +1,6 @@
-'use strict';
+import XMLIterator from '../../../util/XMLIterator'
 
-var XMLIterator = require('../../../util/XMLIterator');
-
-module.exports = {
+export default {
 
   type: 'article',
   tagName: 'article',

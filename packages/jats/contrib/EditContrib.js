@@ -1,9 +1,7 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var Input = require('substance/ui/Input');
-var Button = require('substance/ui/Button');
-var saveContrib = require('./contribUtils').saveContrib;
+import { Component, Input, Button } from 'substance'
+import { saveContrib } from './contribUtils'
 
 class EditContrib extends Component {
 
@@ -93,4 +91,4 @@ function getSelectedOptions(sel, fn) {
   return opts;
 }
 
-module.exports = EditContrib;
+export default EditContrib

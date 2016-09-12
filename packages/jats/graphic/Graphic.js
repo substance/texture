@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function Graphic() {
   Graphic.super.apply(this, arguments);
@@ -22,4 +22,4 @@ Graphic.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = Graphic;
+export default Graphic;

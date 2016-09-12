@@ -1,7 +1,4 @@
-"use strict";
-
-var EventEmitter = require('substance/util/EventEmitter');
-var TOCProvider = require('substance/ui/TOCProvider');
+import { EventEmitter, TOCProvider } from 'substance'
 
 /*
   Manages a table of content for Publisher.
@@ -85,4 +82,4 @@ PublisherTOCProvider.Prototype = function() {
 
 EventEmitter.extend(PublisherTOCProvider);
 
-module.exports = PublisherTOCProvider;
+export default PublisherTOCProvider;

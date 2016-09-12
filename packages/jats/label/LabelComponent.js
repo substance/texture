@@ -1,7 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+import { Component, TextPropertyEditor } from 'substance'
 
 function LabelComponent() {
   LabelComponent.super.apply(this, arguments);
@@ -23,4 +22,4 @@ LabelComponent.Prototype = function() {
 
 Component.extend(LabelComponent);
 
-module.exports = LabelComponent;
+export default LabelComponent;

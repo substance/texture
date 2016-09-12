@@ -1,6 +1,6 @@
 'use strict';
 
-var TextNode = require('substance/model/TextNode');
+import { TextNode } from 'substance'
 
 function ArticleTitle() {
   ArticleTitle.super.apply(this, arguments);
@@ -14,4 +14,4 @@ ArticleTitle.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = ArticleTitle;
+export default ArticleTitle;

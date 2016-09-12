@@ -1,7 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+import { Component, TextPropertyEditor } from 'substance'
 
 function TitleComponent() {
   TitleComponent.super.apply(this, arguments);
@@ -23,4 +22,4 @@ TitleComponent.Prototype = function() {
 
 Component.extend(TitleComponent);
 
-module.exports = TitleComponent;
+export default TitleComponent;

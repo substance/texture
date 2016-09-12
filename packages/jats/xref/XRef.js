@@ -1,7 +1,6 @@
 'use strict';
 
-var InlineNode = require('substance/model/InlineNode');
-var Fragmenter = require('substance/model/Fragmenter');
+import { Fragmenter, InlineNode } from 'substance'
 
 function XRef() {
   XRef.super.apply(this, arguments);
@@ -31,4 +30,4 @@ Object.defineProperties(XRef.prototype, {
 // In presence of overlapping annotations will try to render this as one element
 XRef.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
 
-module.exports = XRef;
+export default XRef;

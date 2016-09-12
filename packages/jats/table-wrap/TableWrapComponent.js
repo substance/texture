@@ -1,6 +1,6 @@
 'use strict';
 
-var FigureComponent = require('../figure/FigureComponent');
+import FigureComponent from '../figure/FigureComponent'
 
 function TableWrapComponent() {
   TableWrapComponent.super.apply(this, arguments);
@@ -8,4 +8,4 @@ function TableWrapComponent() {
 
 FigureComponent.extend(TableWrapComponent);
 
-module.exports = TableWrapComponent;
+export default TableWrapComponent;

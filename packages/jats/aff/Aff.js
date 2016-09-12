@@ -1,7 +1,7 @@
 'use strict';
 
-var DocumentNode = require('substance/model/DocumentNode');
-var toDOM = require('../../../util/toDOM');
+import { DocumentNode } from 'substance'
+import toDOM from '../../../util/toDOM'
 
 class Aff extends DocumentNode {
 }
@@ -26,4 +26,4 @@ Aff.define({
   xmlContent: { type: 'string', default: ''}
 });
 
-module.exports = Aff;
+export default Aff

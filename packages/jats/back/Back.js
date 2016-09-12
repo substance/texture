@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 /*
   Back matter
@@ -31,4 +31,4 @@ Back.define({
   nodes: { type: ['id'], default: [] },
 });
 
-module.exports = Back;
+export default Back;

@@ -2,7 +2,7 @@
 
 var test = require('./test').module('jats/paragraph');
 
-var testTextNode = require('./testTextNode');
+import testTextNode from './testTextNode'
 
 var withAttributes =
   '<p id="myp"'+

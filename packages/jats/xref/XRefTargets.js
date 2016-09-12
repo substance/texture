@@ -1,10 +1,10 @@
 'use strict';
 
-var clone = require('lodash/clone');
-var find = require('lodash/find');
-var without = require('lodash/without');
-var Component = require('substance/ui/Component');
-var getXRefTargets = require('./getXRefTargets');
+import clone from 'lodash/clone'
+import find from 'lodash/find'
+import without from 'lodash/without'
+import { Component } from 'substance'
+import getXRefTargets from './getXRefTargets'
 
 /*
   Editing of XRefTargets
@@ -84,4 +84,4 @@ XRefTargets.Prototype = function() {
 
 Component.extend(XRefTargets);
 
-module.exports = XRefTargets;
+export default XRefTargets;

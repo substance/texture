@@ -1,11 +1,11 @@
 'use strict';
 
-var JATS = require('../JATS');
-var XMLIterator = require('../../../util/XMLIterator');
+import JATS from '../JATS'
+import XMLIterator from '../../../util/XMLIterator'
 
 var REFLIST_CONTENT = ['ref', 'ref-list'].concat(JATS.PARA_LEVEL);
 
-module.exports = {
+export default {
 
   type: 'ref-list',
   tagName: 'ref-list',

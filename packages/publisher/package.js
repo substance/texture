@@ -1,23 +1,26 @@
-'use strict';
+import { Overlay, Toolbar, BasePackage, PersistencePackage } from 'substance'
+import JATSPackage from '../jats/package'
+import CommonPackage from '../common/package'
+import InlineWrapperPackage from '../inline-wrapper/InlineWrapperPackage'
+import UnsupportedNodePackage from '../unsupported/UnsupportedNodePackage'
 
-var Overlay = require('substance/ui/Overlay');
-var Toolbar = require('substance/ui/Toolbar');
-
-module.exports = {
+export default {
   name: 'publisher',
   configure: function(config) {
-    // Now import base packages
-    config.import(require('substance/packages/base/BasePackage'));
-    config.import(require('substance/packages/persistence/PersistencePackage'));
+    config.import(BasePackage);
+    config.import(PersistencePackage);
+    // TODO: see substance#712
     config.addComponent('overlay', Overlay);
     // TODO: this should be used as default, too
     config.setToolbarClass(Toolbar);
-    config.import(require('../jats/package'));
-    config.import(require('../common/package'));
+
+    config.import(JATSPackage);
+    config.import(CommonPackage);
+
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.
-    config.import(require('../inline-wrapper/InlineWrapperPackage'));
+    config.import(InlineWrapperPackage);
     // catch all converters
-    config.import(require('../unsupported/UnsupportedNodePackage'));
+    config.import(UnsupportedNodePackage);
   }
-};
+}

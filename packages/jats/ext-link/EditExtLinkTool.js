@@ -1,13 +1,13 @@
 'use strict';
 
-var EditLinkTool = require('substance/packages/link/EditLinkTool');
-var clone = require('lodash/clone');
+import { LinkPackage } from 'substance'
+import clone from 'lodash/clone'
 
 function EditExtLinkTool() {
   EditExtLinkTool.super.apply(this, arguments);
 }
 
-EditLinkTool.extend(EditExtLinkTool);
+LinkPackage.EditLinkTool.extend(EditExtLinkTool);
 
 EditExtLinkTool.urlPropertyPath = ['attributes', 'xlink:href'];
 
@@ -19,4 +19,4 @@ EditExtLinkTool.getProps = function(commandStates) {
   }
 };
 
-module.exports = EditExtLinkTool;
+export default EditExtLinkTool;

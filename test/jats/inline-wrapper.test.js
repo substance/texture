@@ -2,7 +2,7 @@
 
 var test = require('./test').module('jats/inline-wrapper');
 
-var createJATSConfigurator = require('./createJATSConfigurator');
+import createJATSConfigurator from './createJATSConfigurator'
 
 test('Exporting a wrapped jats node', function(t) {
   var configurator = createJATSConfigurator();

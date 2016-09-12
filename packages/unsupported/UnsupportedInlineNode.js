@@ -1,6 +1,4 @@
-'use strict';
-
-var InlineNode = require('substance/model/InlineNode');
+import { InlineNode } from 'substance'
 
 function UnsupportedInlineNode() {
   UnsupportedInlineNode.super.apply(this, arguments);
@@ -16,4 +14,4 @@ UnsupportedInlineNode.define({
   tagName: 'string'
 });
 
-module.exports = UnsupportedInlineNode;
+export default UnsupportedInlineNode;

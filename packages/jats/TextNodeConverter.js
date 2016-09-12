@@ -1,8 +1,8 @@
 'use strict';
 
-var extend = require('lodash/extend');
+import extend from 'lodash/extend'
 
-module.exports = {
+export default {
   import: function(el, node, converter) {
     node.content = converter.annotatedText(el, [node.id, 'content']);
   },

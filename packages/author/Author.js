@@ -1,65 +1,53 @@
-'use strict';
+import { SplitPane, ScrollPane, Layout, Overlay, TOC } from 'substance'
+import AbstractWriter from '../common/AbstractWriter'
+import AuthorTOCProvider from './AuthorTOCProvider'
 
-var AbstractWriter = require('../common/AbstractWriter');
-var SplitPane = require('substance/ui/SplitPane');
-var ScrollPane = require('substance/ui/ScrollPane');
-var Layout = require('substance/ui/Layout');
-var Overlay = require('substance/ui/DefaultOverlay');
-var AuthorTOCProvider = require('./AuthorTOCProvider');
-var TOC = require('substance/ui/TOC');
+class Author extends AbstractWriter {
 
-function Author() {
-  Author.super.apply(this, arguments);
-}
-
-Author.Prototype = function() {
-
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-author');
+  render($$) {
+    let el = $$('div').addClass('sc-author')
     el.append(
       $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
         this._renderMainSection($$),
         this._renderContextSection($$)
       )
-    );
-    return el;
-  };
+    )
+    return el
+  }
 
-  this._renderContextSection = function($$) {
+  _renderContextSection($$) {
     return $$('div').addClass('se-context-section').append(
       $$(TOC)
-    );
-  };
+    )
+  }
 
-  this._renderMainSection = function($$) {
-    var mainSection = $$('div').addClass('se-main-sectin');
-    var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
+  _renderMainSection($$) {
+    let mainSection = $$('div').addClass('se-main-sectin')
+    let splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
       // inherited from  ProseEditor
       this._renderToolbar($$),
       this._renderContentPanel($$)
-    );
-    mainSection.append(splitPane);
-    return mainSection;
-  };
+    )
+    mainSection.append(splitPane)
+    return mainSection
+  }
 
+  _renderContentPanel($$) {
+    const doc = this.documentSession.getDocument()
+    const ArticleComponent = this.componentRegistry.get('article')
+    const article = doc.get('article')
 
-  this._renderContentPanel = function($$) {
-    var doc = this.documentSession.getDocument();
-
-    var contentPanel = $$(ScrollPane, {
+    let contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
       scrollbarPosition: 'left',
       overlay: Overlay,
-    }).ref('contentPanel');
+    }).ref('contentPanel')
 
-    var layout = $$(Layout, {
+    let layout = $$(Layout, {
       width: 'large'
-    });
+    })
 
-    var ArticleComponent = this.componentRegistry.get('article');
-
-    var article = doc.get('article');
     layout.append(
       $$(ArticleComponent, {
         node: article,
@@ -67,26 +55,24 @@ Author.Prototype = function() {
         disabled: this.props.disabled,
         configurator: this.props.configurator
       })
-    );
+    )
 
-    contentPanel.append(layout);
-    return contentPanel;
-  };
+    contentPanel.append(layout)
+    return contentPanel
+  }
 
-  this._scrollTo = function(nodeId) {
-    this.refs.contentPanel.scrollTo(nodeId);
-  };
+  _scrollTo(nodeId) {
+    this.refs.contentPanel.scrollTo(nodeId)
+  }
 
-  this._getExporter = function() {
-    return this.props.configurator.createExporter('jats');
-  };
+  _getExporter() {
+    return this.props.configurator.createExporter('jats')
+  }
 
-  this._getTOCProvider = function() {
-    return new AuthorTOCProvider(this.documentSession);
-  };
+  _getTOCProvider() {
+    return new AuthorTOCProvider(this.documentSession)
+  }
 
-};
+}
 
-AbstractWriter.extend(Author);
-
-module.exports = Author;
+export default Author

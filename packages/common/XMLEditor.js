@@ -1,6 +1,4 @@
-'use strict';
-
-var Component = require('substance/ui/Component');
+import { Component } from 'substance'
 
 function XMLEditor() {
   XMLEditor.super.apply(this, arguments);
@@ -27,4 +25,4 @@ XMLEditor.Prototype = function() {
 
 Component.extend(XMLEditor);
 
-module.exports = XMLEditor;
+export default XMLEditor;

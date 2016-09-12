@@ -1,6 +1,6 @@
 'use strict';
 
-var Container = require('substance/model/Container');
+import { Container } from 'substance'
 
 function ContribGroup() {
   ContribGroup.super.apply(this, arguments);
@@ -15,4 +15,4 @@ ContribGroup.define({
   nodes: { type: ['id'], default: [] }
 });
 
-module.exports = ContribGroup;
+export default ContribGroup;

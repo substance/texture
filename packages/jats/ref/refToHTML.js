@@ -1,6 +1,4 @@
-'use strict';
-
-var DOMElement = require('substance/ui/DefaultDOMElement');
+import { DefaultDOMElement as DOMElement } from 'substance'
 
 /*
   TODO: Get rid of HTML renderer. Instead extract data as
@@ -162,4 +160,4 @@ var refToHTML = function (ref) {
 
 };
 
-module.exports = refToHTML;
+export default refToHTML;

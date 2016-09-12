@@ -1,11 +1,6 @@
-'use strict';
-
-var last = require('lodash/last');
-var DOMImporter = require('substance/model/DOMImporter');
-var XMLImporter = require('substance/model/XMLImporter');
-var DefaultDOMElement = require('substance/ui/DefaultDOMElement');
-var UnsupportedNodeJATSConverter = require('../unsupported/UnsupportedNodeJATSConverter');
-var inBrowser = require('substance/util/inBrowser');
+import last from 'lodash/last'
+import { DefaultDOMElement, DOMImporter, XMLImporter, inBrowser } from 'substance'
+import UnsupportedNodeJATSConverter from '../unsupported/UnsupportedNodeJATSConverter'
 
 function JATSImporter(config) {
   config.enableInlineWrapper = true;
@@ -109,4 +104,4 @@ JATSImporter.State.Prototype = function() {
 
 DOMImporter.State.extend(JATSImporter.State);
 
-module.exports = JATSImporter;
+export default JATSImporter;

@@ -1,7 +1,6 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
-var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+import { Component, TextPropertyEditor } from 'substance'
 
 function XRefComponent() {
   XRefComponent.super.apply(this, arguments);
@@ -28,4 +27,4 @@ XRefComponent.Prototype = function() {
 
 Component.extend(XRefComponent);
 
-module.exports = XRefComponent;
+export default XRefComponent;

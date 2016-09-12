@@ -1,13 +1,10 @@
-'use strict';
+import { InlineWrapperPackage } from 'substance'
+import InlineWrapperJATSConverter from './InlineWrapperJATSConverter'
 
-var SubstanceInlineWrapperPackage = require('substance/packages/inline-wrapper/InlineWrapperPackage');
-var InlineWrapperJATSConverter = require('./InlineWrapperJATSConverter');
-
-module.exports = {
+export default {
   name: 'inline-wrapper',
-
   configure: function(config) {
-    config.import(SubstanceInlineWrapperPackage);
+    config.import(InlineWrapperPackage);
     config.addConverter('jats', InlineWrapperJATSConverter);
   }
-};
+}

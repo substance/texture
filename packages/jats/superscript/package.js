@@ -1,9 +1,9 @@
 'use strict';
 
-var Superscript = require('./Superscript');
-var SuperscriptConverter = require('./SuperscriptConverter');
+import Superscript from './Superscript'
+import SuperscriptConverter from './SuperscriptConverter'
 
-module.exports = {
+export default {
   name: 'superscript',
   configure: function(config) {
     config.addNode(Superscript);

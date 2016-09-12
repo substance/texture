@@ -1,10 +1,10 @@
 'use strict';
 
-var Section = require('./Section');
-var SectionComponent = require('./SectionComponent');
-var SectionConverter = require('./SectionConverter');
+import Section from './Section'
+import SectionComponent from './SectionComponent'
+import SectionConverter from './SectionConverter'
 
-module.exports = {
+export default {
   name: 'section',
   configure: function(config) {
     config.addNode(Section);

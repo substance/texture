@@ -1,10 +1,10 @@
 'use strict';
 
-var TableWrap = require('./TableWrap');
-var TableWrapConverter = require('./TableWrapConverter');
-var TableWrapComponent = require('./TableWrapComponent');
+import TableWrap from './TableWrap'
+import TableWrapConverter from './TableWrapConverter'
+import TableWrapComponent from './TableWrapComponent'
 
-module.exports = {
+export default {
   name: 'table-wrap',
   configure: function(config) {
     config.addNode(TableWrap);

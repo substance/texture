@@ -1,6 +1,6 @@
 'use strict';
 
-var TextBlock = require('substance/model/TextBlock');
+import { TextBlock } from 'substance'
 
 function ParagraphNode() {
   ParagraphNode.super.apply(this, arguments);
@@ -14,4 +14,4 @@ ParagraphNode.define({
   attributes: { type: 'object', default: {} },
 });
 
-module.exports = ParagraphNode;
+export default ParagraphNode;

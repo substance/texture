@@ -1,8 +1,8 @@
 'use strict';
 
-var XMLIterator = require('../../../util/XMLIterator');
+import XMLIterator from '../../../util/XMLIterator'
 
-module.exports = {
+export default {
 
   type: 'caption',
   tagName: 'caption',

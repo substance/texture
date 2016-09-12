@@ -1,9 +1,5 @@
-'use strict';
-
-var last = require('lodash/last');
-var oo = require('substance/util/oo');
-var JSONConverter = require('substance/model/JSONConverter');
-var annotationHelpers = require('substance/model/annotationHelpers');
+import last from 'lodash/last'
+import { oo, JSONConverter, annotationHelpers } from 'substance'
 
 /*
   EXPERIMENTAL:
@@ -153,4 +149,4 @@ JATSTransformer.Prototype = function() {
 
 oo.initClass(JATSTransformer);
 
-module.exports = JATSTransformer;
+export default JATSTransformer;

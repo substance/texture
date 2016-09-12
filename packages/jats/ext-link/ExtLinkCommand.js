@@ -1,6 +1,6 @@
 'use strict';
 
-var LinkCommand = require('substance/packages/link/LinkCommand');
+import { LinkPackage } from 'substance'
 
 function ExtLinkCommand() {
   ExtLinkCommand.super.apply(this, arguments);
@@ -16,6 +16,6 @@ ExtLinkCommand.Prototype = function() {
   };
 };
 
-LinkCommand.extend(ExtLinkCommand);
+LinkPackage.LinkCommand.extend(ExtLinkCommand);
 
-module.exports = ExtLinkCommand;
+export default ExtLinkCommand;

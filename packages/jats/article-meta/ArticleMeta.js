@@ -1,6 +1,4 @@
-'use strict';
-
-var DocumentNode = require('substance/model/DocumentNode');
+import { DocumentNode } from 'substance'
 
 function ArticleMeta() {
   ArticleMeta.super.apply(this, arguments);
@@ -15,4 +13,4 @@ ArticleMeta.define({
   nodes: { type: ['id'], default: [] }
 });
 
-module.exports = ArticleMeta;
+export default ArticleMeta;

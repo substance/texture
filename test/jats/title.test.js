@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('./test').module('jats/title');
-var testTextNode = require('./testTextNode');
+import testTextNode from './testTextNode'
 
 var withAttributes =
   '<title id="title1" content-type="x" xml:base="y" specific-use="z">Introduction</title>';

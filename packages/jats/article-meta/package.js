@@ -1,10 +1,10 @@
 'use strict';
 
-var ArticleMeta = require('./ArticleMeta');
-var ArticleMetaConverter = require('./ArticleMetaConverter');
-var ArticleMetaComponent = require('./ArticleMetaComponent');
+import ArticleMeta from './ArticleMeta'
+import ArticleMetaConverter from './ArticleMetaConverter'
+import ArticleMetaComponent from './ArticleMetaComponent'
 
-module.exports = {
+export default {
   name: 'article-meta',
   configure: function(config) {
     config.addNode(ArticleMeta);

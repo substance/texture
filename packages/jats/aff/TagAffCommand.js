@@ -1,10 +1,6 @@
 'use strict';
 
-var Command = require('substance/ui/Command');
-var uuid = require('substance/util/uuid');
-var documentHelpers = require('substance/model/documentHelpers');
-var deleteSelection = require('substance/model/transform/deleteSelection');
-
+import { Command, uuid, documentHelpers, deleteSelection } from 'substance'
 
 class TagAffCommand extends Command {
 
@@ -54,4 +50,4 @@ class TagAffCommand extends Command {
   }
 
 }
-module.exports = TagAffCommand;
+export default TagAffCommand

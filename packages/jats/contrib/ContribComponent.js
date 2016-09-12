@@ -2,7 +2,6 @@
 
 import { Component, Modal } from 'substance'
 import EditXML from '../../common/EditXML'
-import contribToHTML from './contribToHTML'
 import EditContrib from './EditContrib'
 import { getAdapter } from './contribUtils'
 

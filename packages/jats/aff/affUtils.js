@@ -1,6 +1,4 @@
-'use strict';
-
-var toDOM = require('../../../util/toDOM');
+import toDOM from '../../../util/toDOM'
 
 /*
   Get all affiliations for a doc
@@ -24,7 +22,4 @@ function getAdapter(node) {
   };
 }
 
-module.exports = {
-  getAffs: getAffs,
-  getAdapter: getAdapter
-};
+export { getAffs, getAdapter }

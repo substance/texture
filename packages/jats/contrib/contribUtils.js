@@ -1,6 +1,6 @@
-var toDOM = require('../../../util/toDOM');
-var getFullName = require('../../../util/getFullName');
-var getAffs = require('../aff/affUtils').getAffs;
+import toDOM from '../../../util/toDOM'
+import getFullName from '../../../util/getFullName'
+import { getAffs } from '../aff/affUtils'
 
 /*
   For given contrib node get the assigned affiliation ids as an object
@@ -55,8 +55,4 @@ function saveContrib(documentSession, contribData) {
   });
 }
 
-module.exports = {
-  affsForContrib: affsForContrib,
-  getAdapter: getAdapter,
-  saveContrib: saveContrib
-};
+export { affsForContrib, getAdapter, saveContrib}

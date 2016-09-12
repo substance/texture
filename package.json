@@ -3,7 +3,7 @@
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "substance/substance#develop"
+    "substance": "substance/substance#jsnext"
   },
   "devDependencies": {
     "eslint": "^3.2.2",
@@ -12,7 +12,7 @@
     "substance-bundler": "*",
     "tap-spec": "4.1.1",
     "tape": "4.5.1",
-    "yargs": "^4.8.1"
+    "uglify-js": "^2.7.3"
   },
   "scripts": {
     "bundle": "node make",

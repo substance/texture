@@ -1,8 +1,5 @@
-'use strict';
-
 import { Component } from 'substance'
 import refToHTML from './refToHTML'
-
 
 function RefComponent() {
   RefComponent.super.apply(this, arguments);

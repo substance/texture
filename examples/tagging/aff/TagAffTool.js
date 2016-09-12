@@ -1,5 +1,3 @@
-'use strict';
-
 import { Tool } from 'substance'
 
 class TagAffTool extends Tool {}

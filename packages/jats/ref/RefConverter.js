@@ -1,5 +1,3 @@
-'use strict';
-
 export default {
 
   type: 'ref',
@@ -16,4 +14,5 @@ export default {
     el.innerHTML = node.xmlContent;
   }
 
-};
+}
+

@@ -1,5 +1,3 @@
-'use strict';
-
 import { DefaultDOMElement as DOMElement } from 'substance'
 
 /*

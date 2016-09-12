@@ -1,5 +1,3 @@
-'use strict';
-
 import { Component } from 'substance'
 import refToHTML from './refToHTML'
 

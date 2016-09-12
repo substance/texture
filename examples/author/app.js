@@ -27,6 +27,8 @@ class App extends Texture {
   }
 }
 
+App.Configurator = TextureConfigurator
+
 if (typeof window !== 'undefined') {
   window.onload = function() {
     let configurator = new TextureConfigurator()

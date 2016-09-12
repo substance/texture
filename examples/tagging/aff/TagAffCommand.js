@@ -1,5 +1,3 @@
-'use strict';
-
 import { Command, uuid, documentHelpers, deleteSelection } from 'substance'
 
 class TagAffCommand extends Command {

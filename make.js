@@ -4,11 +4,6 @@ b.task('clean', function() {
   b.rm('./dist')
 })
 
-// this optional task makes it easier to work on Substance core
-b.task('substance', function() {
-  b.make('substance', 'clean', 'css', 'browser:umd')
-})
-
 // copy assets
 b.task('assets', function() {
   b.copy('examples/index.html', './dist/')
@@ -16,13 +11,18 @@ b.task('assets', function() {
   b.copy('packages/**/*.css', './dist/')
   b.copy('examples/data', './dist/data')
   b.copy('node_modules/font-awesome', './dist/font-awesome')
+})
+
+// this optional task makes it easier to work on Substance core
+b.task('substance', function() {
+  b.make('substance', 'clean', 'css', 'browser:umd')
   b.copy('node_modules/substance/dist', './dist/substance')
 })
 
 var examples = ['author', 'publisher']
 // options for js bundling
 examples.forEach(function(example) {
-  b.task(example, function() {
+  b.task("example:"+example, function() {
     b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
@@ -37,7 +37,9 @@ examples.forEach(function(example) {
   })
 })
 
-b.task('examples', examples)
+b.task('examples', examples.map(function(example)  {
+  return "example:"+example
+}))
 
 b.task('minify:examples', function() {
   examples.forEach(function(folder) {
@@ -47,9 +49,14 @@ b.task('minify:examples', function() {
 
 b.task('minify', ['minify:examples'])
 
-b.task('default', ['clean', 'assets', 'examples', 'minify'])
+var basics = ['clean', 'assets', 'substance']
 
-b.task('dev', ['substance', 'clean', 'assets', 'examples'])
+// build all
+b.task('default', basics.concat(['examples', 'minify']))
+
+// for dev purpose build only author relevant stuff
+b.task('author', basics.concat('example:author'))
+b.task('publisher', basics.concat('example:publisher'))
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

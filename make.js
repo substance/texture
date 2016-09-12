@@ -26,6 +26,8 @@ examples.forEach(function(example) {
     b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
+      // need buble if we want to minify later
+      buble: true,
       external: ['substance'],
       commonjs: { include: ['node_modules/lodash/**'] },
       dest: './dist/'+example+'/app.js',
@@ -37,13 +39,15 @@ examples.forEach(function(example) {
 
 b.task('examples', examples)
 
-b.task('minify_examples', function() {
+b.task('minify:examples', function() {
   examples.forEach(function(folder) {
     b.minify('./dist/'+folder+'/app.js')
   })
 })
 
-b.task('default', ['clean', 'assets', 'examples', 'minify_examples'])
+b.task('minify', ['minify:examples'])
+
+b.task('default', ['clean', 'assets', 'examples', 'minify'])
 
 b.task('dev', ['substance', 'clean', 'assets', 'examples'])
 

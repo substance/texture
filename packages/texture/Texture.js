@@ -1,60 +1,72 @@
 import { Component, DocumentSession } from 'substance'
-import Publisher from '../../packages/publisher/Publisher'
-import Author from '../../packages/author/Author'
 
 /*
   JATSEditor Component
 
   Based on given mode prop, displays the Publisher, Author or Reader component
 */
-function Texture() {
-  Component.apply(this, arguments);
+class Texture extends Component {
 
-  var configurator = this.props.configurator;
-  this.xmlStore = configurator.getXMLStore();
-}
+  constructor(parent, props) {
+    super(parent, props)
 
-Texture.Prototype = function() {
+    if (!props.configurator) {
+      throw new Error("'configurator' is required")
+    }
+    this.configurator = props.configurator
+    this.xmlStore = this.configurator.getXMLStore()
+  }
 
-  this.getChildContext = function() {
+  getChildContext() {
     return {
       xmlStore: this.xmlStore
-    };
-  };
+    }
+  }
 
-  this.getInitialState = function() {
+  getInitialState() {
     return {
       documentSession: null,
       error: null
-    };
-  };
+    }
+  }
 
-  this.didMount = function() {
+  didMount() {
     // load the document after mounting
     this._loadDocument(this.props.documentId);
-  };
+  }
 
-  this.willReceiveProps = function(newProps) {
+  willReceiveProps(newProps) {
     if (newProps.documentId !== this.props.documentId) {
       this.dispose();
       this.state = this.getInitialState();
       this._loadDocument(newProps.documentId);
     }
-  };
+  }
 
-  this.dispose = function() {
-    this._dispose();
-  };
-
-  this._dispose = function() {
+  dispose() {
     // Note: we need to clear everything, as the childContext
     // changes which is immutable
     this.empty();
-  };
+  }
 
-  this._loadDocument = function() {
-    var configurator = this.getChildConfigurator();
+  render($$) {
+    var el = $$('div').addClass('sc-texture');
+    if (this.state.error) {
+      el.append(this.state.error)
+    }
+    return el;
+  }
 
+  getConfigurator() {
+    return this.configurator
+  }
+
+  createDocumentSession(doc) {
+    return new DocumentSession(doc)
+  }
+
+  _loadDocument() {
+    const configurator = this.getConfigurator();
     this.xmlStore.readXML(this.props.documentId, function(err, xml) {
       if (err) {
         console.error(err);
@@ -63,60 +75,15 @@ Texture.Prototype = function() {
         });
         return;
       }
-
       var importer = configurator.createImporter('jats');
       var doc = importer.importDocument(xml);
       // HACK: For debug purposes
       window.doc = doc;
-      var documentSession = new DocumentSession(doc);
-
       this.setState({
-        documentSession: documentSession
+        documentSession: this.createDocumentSession(doc)
       });
     }.bind(this));
-  };
-
-  this.getChildConfigurator = function() {
-    var scientistConfigurator = this.props.configurator;
-    return scientistConfigurator.getConfigurator(this.props.mode);
-  };
-
-  // Rendering
-  // ------------------------------------
-
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-texture');
-
-    if (this.state.error) {
-      el.append('ERROR: ', this.state.error.message);
-      return el;
-    }
-
-    if (!this.state.documentSession) {
-      return el;
-    }
-
-    // Depending on the chosen mode, instantiate
-    var ActiveModeClass;
-    var configurator = this.getChildConfigurator();
-
-    if (this.props.mode === 'publisher') {
-      ActiveModeClass = Publisher;
-    } else if (this.props.mode === 'author') {
-      ActiveModeClass = Author;
-    }
-
-    el.append(
-      $$(ActiveModeClass, {
-        documentId: this.props.documentId,
-        documentSession: this.state.documentSession,
-        configurator: configurator
-      }).ref(this.props.mode)
-    );
-    return el;
-  };
-};
-
-Component.extend(Texture);
+  }
+}
 
 export default Texture;

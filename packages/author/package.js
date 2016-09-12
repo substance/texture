@@ -13,8 +13,6 @@ export default {
     // Now import base packages
     config.import(BasePackage);
     config.import(PersistencePackage);
-    // TODO: this should be used as default, too
-    config.setToolbarClass(Toolbar);
 
     config.import(JATSPackage);
     config.import(HeadingPackage);

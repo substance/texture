@@ -1,21 +1,42 @@
 import { substanceGlobals } from 'substance'
 import Package from './package'
-import TextureConfigurator from '../../packages/texture/TextureConfigurator'
 import Texture from '../../packages/texture/Texture'
+import TextureConfigurator from '../../packages/texture/TextureConfigurator'
+import Author from '../../packages/author/Author'
 
 substanceGlobals.DEBUG_RENDERING = true;
-var config = new TextureConfigurator().import(Package);
+
+class App extends Texture {
+
+  render($$) {
+    let el = $$('div').addClass('sc-author-example')
+
+    if (this.state.error) {
+      el.append(this.state.error)
+    }
+
+    if (this.state.documentSession) {
+      el.append($$(Author, {
+        documentId: this.props.documentId,
+        documentSession: this.state.documentSession,
+        configurator: this.getConfigurator()
+      }))
+    }
+
+    return el
+  }
+}
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
-    window.app = Texture.mount({
-      mode: 'author',
-      documentId: 'kitchen-sink-author',
-      configurator: config
-    }, document.body);
+    let configurator = new TextureConfigurator()
+    configurator.import(Package)
+    var app = App.mount({
+      configurator: configurator,
+      documentId: 'elife-00007'
+    }, document.body)
+    window.app = app
   };
 }
 
-export default {
-  config: config
-}
+export default App

@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
     configurator.import(TaggingPackage)
     var app = App.mount({
       configurator: configurator,
-      documentId: 'elife-00007'
+      documentId: 'kitchen-sink-author'
     }, document.body)
     window.app = app
   };

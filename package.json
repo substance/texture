@@ -15,6 +15,7 @@
   },
   "scripts": {
     "bundle": "node make",
+    "start": "node make -s -w",
     "test": "gulp test"
   },
   "version": "1.0.0-alpha.2"

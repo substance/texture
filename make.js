@@ -22,7 +22,7 @@ b.task('substance', function() {
 var examples = ['author', 'publisher']
 // options for js bundling
 examples.forEach(function(example) {
-  b.task("example:"+example, function() {
+  b.task(example, function() {
     b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
@@ -37,9 +37,7 @@ examples.forEach(function(example) {
   })
 })
 
-b.task('examples', examples.map(function(example)  {
-  return "example:"+example
-}))
+b.task('examples', examples)
 
 b.task('minify:examples', function() {
   examples.forEach(function(folder) {
@@ -49,14 +47,8 @@ b.task('minify:examples', function() {
 
 b.task('minify', ['minify:examples'])
 
-var basics = ['clean', 'assets', 'substance']
-
 // build all
-b.task('default', basics.concat(['examples', 'minify']))
-
-// for dev purpose build only author relevant stuff
-b.task('author', basics.concat('example:author'))
-b.task('publisher', basics.concat('example:publisher'))
+b.task('default', (['clean', 'assets', 'substance', 'examples' /*, 'minify'*/]))
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

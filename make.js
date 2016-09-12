@@ -19,10 +19,8 @@ b.task('substance', function() {
   b.copy('node_modules/substance/dist', './dist/substance')
 })
 
-var examples = ['author', 'publisher']
-// options for js bundling
-examples.forEach(function(example) {
-  b.task(example, function() {
+function buildExample(example) {
+  return function() {
     b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
@@ -34,21 +32,17 @@ examples.forEach(function(example) {
       format: 'umd',
       moduleName: example
     })
-  })
-})
+  }
+}
 
-b.task('examples', examples)
+b.task('author', ['clean', 'substance', 'assets'], buildExample('author'))
+b.task('publisher', ['clean', 'substance', 'assets'], buildExample('publisher'))
+b.task('tagging', ['author'], buildExample('tagging'))
 
-b.task('minify:examples', function() {
-  examples.forEach(function(folder) {
-    b.minify('./dist/'+folder+'/app.js')
-  })
-})
-
-b.task('minify', ['minify:examples'])
+b.task('examples', ['author', 'publisher', 'tagging'])
 
 // build all
-b.task('default', (['clean', 'assets', 'substance', 'examples' /*, 'minify'*/]))
+b.task('default', ['examples'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

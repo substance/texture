@@ -8,7 +8,7 @@
   "devDependencies": {
     "eslint": "^3.2.2",
     "font-awesome": "4.5.0",
-    "substance-bundler": "^0.4.12",
+    "substance-bundler": "^0.4.16",
     "tap-spec": "4.1.1",
     "tape": "4.5.1"
   },

@@ -25,7 +25,7 @@ function buildExample(example) {
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
       // need buble if we want to minify later
-      buble: true,
+      // buble: true,
       external: ['substance'],
       commonjs: { include: ['node_modules/lodash/**'] },
       dest: './dist/'+example+'/app.js',

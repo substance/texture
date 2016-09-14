@@ -1,4 +1,8 @@
+import TextureToolbar from './TextureToolbar'
+
 export default {
   name: 'common',
-  configure: function() {}
+  configure: function(config) {
+    config.setToolbarClass(TextureToolbar)
+  }
 }

@@ -1,4 +1,4 @@
-import { Overlay, Toolbar, BasePackage, PersistencePackage } from 'substance'
+import { Overlay, BasePackage, PersistencePackage } from 'substance'
 import JATSPackage from '../jats/package'
 import CommonPackage from '../common/package'
 import InlineWrapperPackage from '../inline-wrapper/InlineWrapperPackage'
@@ -11,8 +11,6 @@ export default {
     config.import(PersistencePackage);
     // TODO: see substance#712
     config.addComponent('overlay', Overlay);
-    // TODO: this should be used as default, too
-    config.setToolbarClass(Toolbar);
 
     config.import(JATSPackage);
     config.import(CommonPackage);

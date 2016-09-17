@@ -15,8 +15,8 @@ export default {
     config.addComponent(ExtLink.type, ExtLinkComponent);
 
     config.addCommand(ExtLink.type, ExtLinkCommand, {nodeType: ExtLink.type});
-    config.addTool(ExtLink.type, ExtLinkTool);
-    config.addTool('edit-ext-link', EditExtLinkTool, { overlay: true });
+    config.addTool(ExtLink.type, ExtLinkTool, {target: 'annotations'});
+    config.addTool('edit-ext-link', EditExtLinkTool, { target: 'overlay' });
     config.addIcon(ExtLink.type, { 'fontawesome': 'fa-link'});
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' });
     config.addLabel(ExtLink.type, {

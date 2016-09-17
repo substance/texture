@@ -1,4 +1,4 @@
-import { Toolbar, BasePackage, PersistencePackage } from 'substance'
+import { BasePackage, PersistencePackage } from 'substance'
 import AuthorImporter from './AuthorImporter'
 import AuthorExporter from './AuthorExporter'
 import JATSPackage from '../jats/package'

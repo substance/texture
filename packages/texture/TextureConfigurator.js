@@ -10,12 +10,12 @@ class TextureConfigurator extends Configurator {
   }
 
   setXMLStore(XMLStoreClass) {
-    this.config.XMLStoreClass = XMLStoreClass;
+    this.config.XMLStoreClass = XMLStoreClass
   }
 
   getXMLStore() {
-    var XMLStoreClass = this.config.XMLStoreClass;
-    return new XMLStoreClass();
+    var XMLStoreClass = this.config.XMLStoreClass
+    return new XMLStoreClass()
   }
 
 }

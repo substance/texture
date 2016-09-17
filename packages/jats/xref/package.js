@@ -14,20 +14,21 @@ export default {
     config.addConverter('jats', XRefConverter);
 
     // TODO: is there a way to use only one command for the two different tools
-    config.addCommand(XRef.type, XRefCommand, {nodeType: XRef.type});
-    config.addCommand('add-xref', AddXRefCommand, {nodeType: XRef.type});
-    config.addTool('add-xref', AddXRefTool);
-    config.addTool(XRef.type, XRefTool, { overlay: true });
+    config.addCommand(XRef.type, XRefCommand, {nodeType: XRef.type})
+    config.addCommand('add-xref', AddXRefCommand, {nodeType: XRef.type})
+    config.addTool('add-xref', AddXRefTool, {target: 'insert'})
+    config.addTool(XRef.type, XRefTool, { overlay: true })
+    config.addLabel('add-xref', 'Cross Reference')
 
-    config.addIcon('add-xref', { 'fontawesome': 'fa-external-link' });
+    config.addIcon('add-xref', { 'fontawesome': 'fa-external-link' })
     config.addLabel(XRef.type, {
       en: 'Cross Reference'
-    });
+    })
     config.addLabel('edit-xref', {
       en: 'Edit Reference'
-    });
+    })
     config.addLabel('delete-xref', {
       en: 'Delete Reference'
-    });
+    })
   }
-};
+}

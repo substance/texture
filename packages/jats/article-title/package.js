@@ -10,5 +10,6 @@ export default {
     config.addNode(ArticleTitle);
     config.addConverter('jats', ArticleTitleConverter);
     config.addComponent(ArticleTitle.type, ArticleTitleComponent);
+    config.addLabel('article-title.content', 'Title');
   }
 }

@@ -11,7 +11,7 @@ export default {
     config.addNode(Bold);
     config.addConverter('jats', BoldConverter);
     config.addCommand(Bold.type, BoldCommand, { nodeType: Bold.type });
-    config.addTool(Bold.type, BoldTool);
+    config.addTool(Bold.type, BoldTool, {target: 'annotations'});
     config.addIcon(Bold.type, { 'fontawesome': 'fa-bold' });
     config.addLabel(Bold.type, {
       en: 'Bold'

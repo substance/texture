@@ -1,8 +1,9 @@
-import TextureToolbar from './TextureToolbar'
+import { ToolDropdown } from 'substance'
 
 export default {
   name: 'common',
   configure: function(config) {
-    config.setToolbarClass(TextureToolbar)
+    config.addComponent('tool-target-insert', ToolDropdown)
+    config.addLabel('insert', 'Insert');
   }
 }

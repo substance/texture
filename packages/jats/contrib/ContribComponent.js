@@ -1,6 +1,6 @@
 'use strict';
 
-import { Component, Modal } from 'substance'
+import { Component } from 'substance'
 import EditXML from '../../common/EditXML'
 import EditContrib from './EditContrib'
 import { getAdapter } from './contribUtils'
@@ -19,6 +19,7 @@ function ContribComponent() {
 ContribComponent.Prototype = function() {
 
   this.render = function($$) {
+    var Modal = this.getComponent('modal');
     var contrib = getAdapter(this.props.node);
     var el = $$('div').addClass('sc-contrib')
       .append(

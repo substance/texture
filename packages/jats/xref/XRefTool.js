@@ -1,7 +1,7 @@
 'use strict';
 
 import clone from 'lodash/clone'
-import { deleteSelection, Modal, Prompt, Tool } from 'substance'
+import { deleteSelection, Tool } from 'substance'
 import XRefTargets from './XRefTargets'
 
 /*
@@ -19,6 +19,9 @@ function XRefTool() {
 XRefTool.Prototype = function() {
 
   this.render = function($$) {
+    var Modal = this.getComponent('modal');
+    var Prompt = this.getComponent('prompt');
+
     // if ($$.capturing) console.log("Rendering XRefTool, state=", this.state);
     var node = this.props.node;
     var el = $$('div').addClass('sc-xref-tool');

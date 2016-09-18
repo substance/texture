@@ -1,5 +1,5 @@
+import { Tool, deleteSelection } from 'substance'
 import clone from 'lodash/clone'
-import { Modal, Prompt, Tool, deleteSelection } from 'substance'
 import EditXML from '../common/EditXML'
 
 /*
@@ -38,6 +38,8 @@ UnsupportedInlineNodeTool.Prototype = function() {
   this.render = function($$) {
     var el = $$('div').addClass('sc-unsupported-node-tool');
     var node = this.props.node;
+    var Modal = this.getComponent('modal');
+    var Prompt = this.getComponent('prompt');
 
     el.append(
       $$(Prompt).append(

@@ -1,4 +1,4 @@
-import { SplitPane, ScrollPane, Layout, Overlay, TOC }  from 'substance'
+import { Overlay, TOC } from 'substance'
 import AbstractWriter from '../common/AbstractWriter'
 import PublisherTOCProvider from './PublisherTOCProvider'
 
@@ -9,6 +9,7 @@ function PublisherWriter() {
 PublisherWriter.Prototype = function() {
 
   this.render = function($$) {
+    var SplitPane = this.getComponent('split-pane');
     var el = $$('div').addClass('sc-publisher');
     el.append(
       $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
@@ -26,6 +27,7 @@ PublisherWriter.Prototype = function() {
   };
 
   this._renderMainSection = function($$) {
+    var SplitPane = this.getComponent('split-pane');
     var mainSection = $$('div').addClass('se-main-section');
     var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
       this._renderToolbar($$),
@@ -37,6 +39,8 @@ PublisherWriter.Prototype = function() {
 
   this._renderContentPanel = function($$) {
     var doc = this.documentSession.getDocument();
+    var Layout = this.getComponent('layout');
+    var ScrollPane = this.getComponent('scroll-pane');
 
     var contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,

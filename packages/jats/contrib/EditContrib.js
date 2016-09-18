@@ -1,6 +1,6 @@
 'use strict';
 
-import { Component, Input, Button } from 'substance'
+import { Component } from 'substance'
 import { saveContrib } from './contribUtils'
 
 class EditContrib extends Component {
@@ -10,6 +10,9 @@ class EditContrib extends Component {
   }
 
   render($$) {
+    var Input = this.getComponent('input');
+    var Button = this.getComponent('button');
+
     var el = $$('div').addClass('sc-edit-contrib');
     var affs = this.props.affs;
     var fullName = this.props.fullName;

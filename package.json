@@ -3,7 +3,7 @@
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "substance/substance#develop"
+    "substance": "substance/substance#es6-syntax"
   },
   "devDependencies": {
     "eslint": "^3.2.2",

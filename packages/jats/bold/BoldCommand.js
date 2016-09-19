@@ -2,10 +2,6 @@
 
 import { AnnotationCommand } from 'substance'
 
-function BoldCommand() {
-  BoldCommand.super.apply(this, arguments);
-}
+class BoldCommand extends AnnotationCommand {}
 
-AnnotationCommand.extend(BoldCommand);
-
-export default BoldCommand;
+export default BoldCommand

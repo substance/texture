@@ -1,20 +1,14 @@
 import { InlineNodeCommand } from 'substance'
 
-function AddXRefCommand() {
-  AddXRefCommand.super.apply(this, arguments);
-}
-
-AddXRefCommand.Prototype = function() {
-  this.createNodeData = function() {
+class AddXRefCommand extends InlineNodeCommand {
+  createNodeData() {
     return {
       attributes: {'ref-type': 'bibr'},
       targets: [],
       label: '???',
       type: 'xref'
-    };
-  };
-};
-
-InlineNodeCommand.extend(AddXRefCommand);
+    }
+  }
+}
 
 export default AddXRefCommand

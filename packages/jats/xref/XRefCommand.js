@@ -2,10 +2,6 @@
 
 import { InlineNodeCommand } from 'substance'
 
-function XRefCommand() {
-  XRefCommand.super.apply(this, arguments);
-}
+class XRefCommand extends InlineNodeCommand {}
 
-InlineNodeCommand.extend(XRefCommand);
-
-export default XRefCommand;
+export default XRefCommand

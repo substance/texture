@@ -5,67 +5,62 @@ const ProseEditor = ProseEditorPackage.ProseEditor
 // TODO: we need to think if it is really a good idea to
 // derive from ProseEditor here
 // There would be a lot of code redundancy
-function AbstractWriter() {
-  AbstractWriter.super.apply(this, arguments);
+class AbstractWriter extends ProseEditor {
+  constructor(...args) {
+    super(...args)
 
-  this.handleActions({
-    'tocEntrySelected': this.tocEntrySelected
-  });
-}
+    this.handleActions({
+      'tocEntrySelected': this.tocEntrySelected
+    })
+  }
 
-AbstractWriter.Prototype = function() {
+  _initialize() {
+    super._initialize.apply(this, arguments);
 
-  var _super = AbstractWriter.super.prototype;
+    this.exporter = this._getExporter()
+    this.tocProvider = this._getTOCProvider()
+    this.saveHandler = this._getSaveHandler()
+    this.documentSession.setSaveHandler(this.saveHandler)
+  }
 
-  this._initialize = function() {
-    _super._initialize.apply(this, arguments);
+  getChildContext() {
+    let childContext = super.getChildContext.apply(this, arguments)
+    childContext.tocProvider = this.tocProvider
+    return childContext
+  }
 
-    this.exporter = this._getExporter();
-    this.tocProvider = this._getTOCProvider();
-    this.saveHandler = this._getSaveHandler();
-    this.documentSession.setSaveHandler(this.saveHandler);
-  };
+  _renderToolbar($$) { // eslint-disable-line
+    return super._renderToolbar.apply(this, arguments)
+  }
 
-  this.getChildContext = function() {
-    var childContext = _super.getChildContext.apply(this, arguments);
-    childContext.tocProvider = this.tocProvider;
-    return childContext;
-  };
+  _renderContentPanel($$) { // eslint-disable-line
+    throw new Error("This method is abstract.")
+  }
 
-  this._renderToolbar = function($$) { // eslint-disable-line
-    return _super._renderToolbar.apply(this, arguments);
-  };
+  tocEntrySelected(nodeId) {
+    return this._scrollTo(nodeId)
+  }
 
-  this._renderContentPanel = function($$) { // eslint-disable-line
-    throw new Error("This method is abstract.");
-  };
+  _scrollTo(nodeId) { // eslint-disable-line
+    throw new Error("This method is abstract.")
+  }
 
-  this.tocEntrySelected = function(nodeId) {
-    return this._scrollTo(nodeId);
-  };
+  _getExporter() {
+    throw new Error("This method is abstract.")
+  }
 
-  this._scrollTo = function(nodeId) { // eslint-disable-line
-    throw new Error("This method is abstract.");
-  };
+  _getTOCProvider() {
+    throw new Error("This method is abstract.")
+  }
 
-  this._getExporter = function() {
-    throw new Error("This method is abstract.");
-  };
-
-  this._getTOCProvider = function() {
-    throw new Error("This method is abstract.");
-  };
-
-  this._getSaveHandler = function() {
+  _getSaveHandler() {
     return new SaveHandler({
       documentId: this.props.documentId,
       xmlStore: this.context.xmlStore,
       exporter: this.exporter
-    });
-  };
+    })
+  }
 
-};
+}
 
-ProseEditor.extend(AbstractWriter);
-
-export default AbstractWriter;
+export default AbstractWriter

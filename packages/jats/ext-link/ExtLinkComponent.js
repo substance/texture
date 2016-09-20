@@ -2,40 +2,32 @@
 
 import { AnnotationComponent } from 'substance'
 
-function ExtLinkComponent() {
-  ExtLinkComponent.super.apply(this, arguments);
+class ExtLinkComponent extends AnnotationComponent {
+
+  didMount() {
+    super.didMount.apply(this, arguments)
+
+    var node = this.props.node
+    node.on('properties:changed', this.rerender, this)
+  }
+
+  dispose() {
+    super.dispose.apply(this, arguments)
+
+    var node = this.props.node
+    node.off(this)
+  }
+
+  render($$) { // eslint-disable-line
+    var node = this.props.node;
+    var el = super.render.apply(this, arguments)
+
+    el.tagName = 'a'
+    el.attr('href', node.attributes['xlink:href'])
+
+    return el
+  }
+
 }
 
-ExtLinkComponent.Prototype = function() {
-
-  var _super = ExtLinkComponent.super.prototype;
-
-  this.didMount = function() {
-    _super.didMount.apply(this, arguments);
-
-    var node = this.props.node;
-    node.on('properties:changed', this.rerender, this);
-  };
-
-  this.dispose = function() {
-    _super.dispose.apply(this, arguments);
-
-    var node = this.props.node;
-    node.off(this);
-  };
-
-  this.render = function($$) { // eslint-disable-line
-    var node = this.props.node;
-    var el = _super.render.apply(this, arguments);
-
-    el.tagName = 'a';
-    el.attr('href', node.attributes['xlink:href']);
-
-    return el;
-  };
-
-};
-
-AnnotationComponent.extend(ExtLinkComponent);
-
-export default ExtLinkComponent;
+export default ExtLinkComponent

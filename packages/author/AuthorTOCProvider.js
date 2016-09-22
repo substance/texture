@@ -1,11 +1,11 @@
 import { TOCProvider } from 'substance'
 
-function AuthorTOCProvider(documentSession) {
-  TOCProvider.call(this, documentSession.getDocument(), {
-    containerId: 'bodyFlat'
-  });
+class AuthorTOCProvider extends TOCProvider {
+  constructor(documentSession) {
+    super(documentSession.getDocument(), {
+      containerId: 'bodyFlat'
+    })
+  }
 }
 
-TOCProvider.extend(AuthorTOCProvider);
-
-export default AuthorTOCProvider;
+export default AuthorTOCProvider

@@ -1,4 +1,4 @@
-import { SplitPane, ScrollPane, Layout, Overlay, TOC } from 'substance'
+import { SplitPane, ScrollPane, Layout, ProseEditorOverlayTools, TOC } from 'substance'
 import AbstractWriter from '../common/AbstractWriter'
 import AuthorTOCProvider from './AuthorTOCProvider'
 
@@ -41,7 +41,7 @@ class Author extends AbstractWriter {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
       scrollbarPosition: 'left',
-      overlay: Overlay,
+      overlay: ProseEditorOverlayTools,
     }).ref('contentPanel')
 
     let layout = $$(Layout, {

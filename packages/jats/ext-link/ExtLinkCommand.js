@@ -1,8 +1,8 @@
 'use strict';
 
-import { LinkPackage } from 'substance'
+import { LinkCommand } from 'substance'
 
-class ExtLinkCommand extends LinkPackage.LinkCommand {
+class ExtLinkCommand extends LinkCommand {
 
   getAnnotationData() {
     return {

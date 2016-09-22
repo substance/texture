@@ -73,12 +73,5 @@ XRefTool.Prototype = function() {
 
 Tool.extend(XRefTool);
 
-XRefTool.getProps = function(commandStates) {
-  if (commandStates['xref'].active) {
-    return clone(commandStates['xref']);
-  } else {
-    return undefined;
-  }
-};
 
 export default XRefTool;

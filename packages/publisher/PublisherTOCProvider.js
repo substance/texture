@@ -10,76 +10,74 @@ import { EventEmitter, TOCProvider } from 'substance'
 
   @prop {model/DocumentSession}
 */
-function PublisherTOCProvider(documentSession) {
-  EventEmitter.apply(this, arguments);
+class PublisherTOCProvider extends EventEmitter {
+  constructor(documentSession) {
+    super(documentSession)
 
-  this.documentSession = documentSession;
-  this.entries = this.computeEntries();
-  if (this.entries.length > 0) {
-    this.activeEntry = this.entries[0].id;
-  } else {
-    this.activeEntry = null;
+    this.documentSession = documentSession
+    this.entries = this.computeEntries()
+    if (this.entries.length > 0) {
+      this.activeEntry = this.entries[0].id
+    } else {
+      this.activeEntry = null;
+    }
+    this.documentSession.on('update', this.handleDocumentChange, this)
   }
-  this.documentSession.on('update', this.handleDocumentChange, this);
-}
 
-PublisherTOCProvider.Prototype = function() {
+  dispose() {
+    this.documentSession.disconnect(this)
+  }
 
-  this.dispose = function() {
-    this.documentSession.disconnect(this);
-  };
-
-  this.getDocument = function() {
-    return this.documentSession.getDocument();
-  };
+  getDocument() {
+    return this.documentSession.getDocument()
+  }
 
   // Inspects a document change and recomputes the
   // entries if necessary
-  this.handleDocumentChange = function(change) { // eslint-disable-line
-    var needsUpdate = false;
+  handleDocumentChange(change) { // eslint-disable-line
+    let needsUpdate = false
     if (needsUpdate) {
-      this.entries = this.computeEntries();
-      this.emit('toc:updated');
+      this.entries = this.computeEntries()
+      this.emit('toc:updated')
     }
-  };
+  }
 
-  this._computeEntriesForContainer = function(container, level) {
-    var doc = this.getDocument();
-    var entries = [];
+  _computeEntriesForContainer(container, level) {
+    let doc = this.getDocument()
+    let entries = []
     container.nodes.forEach(function(nodeId) {
-      var node = doc.get(nodeId);
+      let node = doc.get(nodeId)
       if (node.type === 'section') {
         entries.push({
           id: node.id,
           name: node.getTitle(),
           level: level,
           node: node
-        });
+        })
 
         // Sections may contain subsections
         entries = entries.concat(
           this._computeEntriesForContainer(node, level + 1)
-        );
+        )
       }
-    }.bind(this));
-    return entries;
-  };
+    }.bind(this))
+    return entries
+  }
 
-  this.computeEntries = function() {
-    var doc = this.getDocument();
-    var body = doc.get('body');
-    var level = 1;
-    var entries = this._computeEntriesForContainer(body, level);
-    return entries;
-  };
+  computeEntries() {
+    let doc = this.getDocument()
+    let body = doc.get('body')
+    let level = 1
+    let entries = this._computeEntriesForContainer(body, level)
+    return entries
+  }
 
-  this.getEntries = function() {
-    return this.entries;
-  };
+  getEntries() {
+    return this.entries
+  }
 
-  this.markActiveEntry = TOCProvider.prototype.markActiveEntry;
-};
+}
 
-EventEmitter.extend(PublisherTOCProvider);
+PublisherTOCProvider.prototype.markActiveEntry = TOCProvider.prototype.markActiveEntry
 
-export default PublisherTOCProvider;
+export default PublisherTOCProvider

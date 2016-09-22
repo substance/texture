@@ -1,9 +1,5 @@
 import { AnnotationTool } from 'substance'
 
-function AddXRefTool() {
-  AddXRefTool.super.apply(this, arguments);
-}
-
-AnnotationTool.extend(AddXRefTool);
+class AddXRefTool extends AnnotationTool {}
 
 export default AddXRefTool

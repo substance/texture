@@ -2,20 +2,15 @@
 
 import { LinkPackage } from 'substance'
 
-function ExtLinkCommand() {
-  ExtLinkCommand.super.apply(this, arguments);
-}
+class ExtLinkCommand extends LinkPackage.LinkCommand {
 
-ExtLinkCommand.Prototype = function() {
-  this.getAnnotationData = function() {
+  getAnnotationData() {
     return {
       attributes: {
         'xlink:href': ''
       }
-    };
-  };
-};
+    }
+  }
+}
 
-LinkPackage.LinkCommand.extend(ExtLinkCommand);
-
-export default ExtLinkCommand;
+export default ExtLinkCommand

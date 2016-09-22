@@ -1,10 +1,5 @@
-'use strict';
-
 import { AnnotationTool } from 'substance'
 
-function BoldTool() {
-  BoldTool.super.apply(this, arguments);
-}
-AnnotationTool.extend(BoldTool);
+class BoldTool extends AnnotationTool {}
 
-export default BoldTool;
+export default BoldTool

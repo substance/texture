@@ -1,11 +1,5 @@
-'use strict';
-
 import { AnnotationTool } from 'substance'
 
-function ExtLinkTool() {
-  ExtLinkTool.super.apply(this, arguments);
-}
+class ExtLinkTool extends AnnotationTool {}
 
-AnnotationTool.extend(ExtLinkTool);
-
-export default ExtLinkTool;
+export default ExtLinkTool

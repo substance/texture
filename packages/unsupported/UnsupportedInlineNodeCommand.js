@@ -1,11 +1,7 @@
 import { InlineNodeCommand } from 'substance'
 
-function UnsupportedInlineNodeCommand() {
-  UnsupportedInlineNodeCommand.super.apply(this, arguments);
-}
+class UnsupportedInlineNodeCommand extends InlineNodeCommand {}
 
-InlineNodeCommand.extend(UnsupportedInlineNodeCommand);
+UnsupportedInlineNodeCommand.type = 'unsupported-inline'
 
-UnsupportedInlineNodeCommand.type = 'unsupported-inline';
-
-export default UnsupportedInlineNodeCommand;
+export default UnsupportedInlineNodeCommand

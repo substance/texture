@@ -1,56 +1,59 @@
 import { Tool, deleteSelection } from 'substance'
-import clone from 'lodash/clone'
 import EditXML from '../common/EditXML'
 
 /*
   Prompt shown when an unsupported node is selected.
 */
-function UnsupportedInlineNodeTool() {
-  UnsupportedInlineNodeTool.super.apply(this, arguments);
 
-  this.handleActions({
-    'closeModal': this._closeModal,
-    'xmlSaved': this._closeModal
-  });
-}
+class UnsupportedInlineNodeTool extends Tool {
+  constructor(...args) {
+    super(...args)
+    this.handleActions({
+      'closeModal': this._closeModal,
+      'xmlSaved': this._closeModal
+    })
+  }
 
-UnsupportedInlineNodeTool.Prototype = function() {
 
-  this._closeModal = function() {
+  _closeModal() {
     this.setState({
       editXML: false
-    });
-  };
+    })
+  }
 
-  this._onEdit = function() {
+  _onEdit() {
     this.setState({
       editXML: true
-    });
-  };
+    })
+  }
 
-  this._onDelete = function() {
-    var ds = this.context.documentSession;
+  _onDelete() {
+    let ds = this.context.documentSession
     ds.transaction(function(tx, args) {
-      return deleteSelection(tx, args);
-    });
-  };
+      return deleteSelection(tx, args)
+    })
+  }
 
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-unsupported-node-tool');
-    var node = this.props.node;
-    var Modal = this.getComponent('modal');
-    var Prompt = this.getComponent('prompt');
+  render($$) {
+    let el = $$('div').addClass('sc-unsupported-node-tool')
+    let node = this.props.node
+    let Modal = this.getComponent('modal')
+    let Button = this.getComponent('button')
 
     el.append(
-      $$(Prompt).append(
-        $$(Prompt.Label, {label: 'Unsupported Element'}),
-        $$(Prompt.Separator),
-        $$(Prompt.Action, {name: 'edit', title: 'Edit XML'})
-          .on('click', this._onEdit),
-        $$(Prompt.Action, {name: 'delete', title: 'Delete Element'})
-          .on('click', this._onDelete)
-      )
-    );
+      $$(Button, {
+        icon: 'edit',
+        style: this.props.style
+      })
+      .attr('title', 'Edit XML')
+      .on('click', this._onEdit),
+      $$(Button, {
+        icon: 'delete',
+        style: this.props.style
+      })
+      .attr('title', 'Delete Element')
+      .on('click', this._onDelete)
+    )
 
     if (this.state.editXML) {
       el.append(
@@ -64,10 +67,9 @@ UnsupportedInlineNodeTool.Prototype = function() {
       );
     }
     return el;
-  };
-};
+  }
 
-Tool.extend(UnsupportedInlineNodeTool);
+}
 
 
 export default UnsupportedInlineNodeTool;

@@ -1,6 +1,6 @@
-import { InlineNodeCommand } from 'substance'
+import { InsertInlineNodeCommand } from 'substance'
 
-class AddXRefCommand extends InlineNodeCommand {
+class AddXRefCommand extends InsertInlineNodeCommand {
   createNodeData() {
     return {
       attributes: {'ref-type': 'bibr'},

@@ -1,8 +1,8 @@
 import XRef from './XRef'
 import XRefComponent from './XRefComponent'
 import XRefConverter from './XRefConverter'
-import XRefCommand from './XRefCommand'
-import XRefTool from './XRefTool'
+import EditXRefCommand from './EditXRefCommand'
+import EditXRefTool from './EditXRefTool'
 import AddXRefCommand from './AddXRefCommand'
 import AddXRefTool from './AddXRefTool'
 
@@ -13,13 +13,13 @@ export default {
     config.addComponent(XRef.type, XRefComponent);
     config.addConverter('jats', XRefConverter);
 
-    // TODO: is there a way to use only one command for the two different tools
-    config.addCommand(XRef.type, XRefCommand, {nodeType: XRef.type})
+    config.addCommand('edit-xref', EditXRefCommand, {nodeType: XRef.type})
     config.addCommand('add-xref', AddXRefCommand, {nodeType: XRef.type})
-    config.addTool('add-xref', AddXRefTool, {target: 'insert'})
-    config.addTool(XRef.type, XRefTool, { overlay: true })
-    config.addLabel('add-xref', 'Cross Reference')
 
+    config.addTool('add-xref', AddXRefTool, {target: 'insert'})
+    config.addTool('edit-xref', EditXRefTool, { target: 'overlay' })
+
+    config.addLabel('add-xref', 'Cross Reference')
     config.addIcon('add-xref', { 'fontawesome': 'fa-external-link' })
     config.addLabel(XRef.type, {
       en: 'Cross Reference'

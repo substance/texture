@@ -18,3 +18,8 @@
   width: 100%;
   height: 400px;
 }
+
+.sc-unsupported-node-tool > * {
+  display: inline-block;
+  margin-right: 5px;
+}

@@ -1,6 +1,6 @@
-import { InlineNodeCommand } from 'substance'
+import { EditInlineNodeCommand } from 'substance'
 
-class UnsupportedInlineNodeCommand extends InlineNodeCommand {}
+class UnsupportedInlineNodeCommand extends EditInlineNodeCommand {}
 
 UnsupportedInlineNodeCommand.type = 'unsupported-inline'
 

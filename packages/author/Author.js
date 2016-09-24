@@ -42,6 +42,7 @@ class Author extends AbstractWriter {
       scrollbarType: 'substance',
       scrollbarPosition: 'left',
       overlay: ProseEditorOverlayTools,
+      highlights: this.contentHighlights
     }).ref('contentPanel')
 
     let layout = $$(Layout, {

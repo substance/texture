@@ -1,19 +1,14 @@
 import { Component } from 'substance'
 import refToHTML from './refToHTML'
 
-function RefComponent() {
-  RefComponent.super.apply(this, arguments);
+class RefComponent extends Component {
+  render($$) {
+    var el = $$('div').addClass('sc-ref')
+    el.attr('data-id', this.props.node.id)
+    el.html(refToHTML(this.props.node))
+    return el
+  }
 }
-
-RefComponent.Prototype = function() {
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-ref');
-    el.html(refToHTML(this.props.node));
-    return el;
-  };
-};
-
-Component.extend(RefComponent);
 
 // Isolated Nodes config
 RefComponent.fullWidth = true;

@@ -42,7 +42,6 @@ export default {
   */
 
   import: function(el, node, converter) {
-
     var iterator = new XMLIterator(el.getChildren());
     iterator.manyOf('object-id', function(child) {
       node.objectIds.push(child.textContent);

@@ -24,5 +24,13 @@ export default {
     config.addLabel(ExtLink.type, {
       en: 'Link'
     });
+    config.addLabel('open-link', {
+      en: 'Open Link',
+      de: 'Link öffnen'
+    });
+    config.addLabel('delete-link', {
+      en: 'Remove Link',
+      de: 'Link löschen'
+    });
   }
 }

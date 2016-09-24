@@ -1,6 +1,5 @@
-import { ProseEditorPackage } from 'substance'
+import { ProseEditor, Highlights } from 'substance'
 import SaveHandler from './SaveHandler'
-const ProseEditor = ProseEditorPackage.ProseEditor
 
 // TODO: we need to think if it is really a good idea to
 // derive from ProseEditor here
@@ -21,6 +20,9 @@ class AbstractWriter extends ProseEditor {
     this.tocProvider = this._getTOCProvider()
     this.saveHandler = this._getSaveHandler()
     this.documentSession.setSaveHandler(this.saveHandler)
+
+    let doc = this.props.documentSession.getDocument()
+    this.contentHighlights = new Highlights(doc)
   }
 
   getChildContext() {
@@ -59,6 +61,31 @@ class AbstractWriter extends ProseEditor {
       xmlStore: this.context.xmlStore,
       exporter: this.exporter
     })
+  }
+
+  /*
+    TODO: this should live in the xref package with the ability
+    for other packages to manage their own highlights.
+  */
+  documentSessionUpdated() {
+    super.documentSessionUpdated()
+    let documentSession = this.documentSession
+    let sel = documentSession.getSelection()
+    let selectionState = documentSession.getSelectionState()
+
+    let xrefs = selectionState.getAnnotationsForType('xref')
+    let highlights = {
+      'fig': [],
+      'bibr': []
+    }
+
+    if (xrefs.length === 1 && xrefs[0].getSelection().equals(sel) ) {
+      let xref = xrefs[0]
+      // highlights.xref = [ xref.id ]
+      highlights[xref.referenceType] = xref.targets.concat([xref.id])
+    }
+
+    this.contentHighlights.set(highlights)
   }
 
 }

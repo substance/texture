@@ -10,6 +10,7 @@ class Texture extends Component {
   constructor(parent, props) {
     super(parent, props)
 
+
     if (!props.configurator) {
       throw new Error("'configurator' is required")
     }
@@ -77,6 +78,7 @@ class Texture extends Component {
       }
       var importer = configurator.createImporter('jats');
       var doc = importer.importDocument(xml);
+
       // HACK: For debug purposes
       window.doc = doc;
       this.setState({

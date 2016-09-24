@@ -47,6 +47,7 @@ PublisherWriter.Prototype = function() {
       scrollbarType: 'substance',
       scrollbarPosition: 'left',
       overlay: Overlay,
+      highlights: this.contentHighlights
     }).ref('contentPanel');
 
     var layout = $$(Layout, {

@@ -12,7 +12,6 @@ FigureComponent.Prototype = function() {
   this.render = function($$) {
     var node = this.props.node;
     var doc = node.getDocument();
-
     var el = $$('div')
       .addClass('sc-figure')
       .attr('data-id', this.props.node.id);

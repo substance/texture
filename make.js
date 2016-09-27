@@ -15,7 +15,7 @@ b.task('assets', function() {
 
 // this optional task makes it easier to work on Substance core
 b.task('substance', function() {
-  b.make('substance', 'clean', 'css', 'browser:umd')
+  b.make('substance', 'clean', 'css', 'browser')
   b.copy('node_modules/substance/dist', './dist/substance')
 })
 
@@ -38,7 +38,6 @@ function buildExample(example) {
 b.task('author', ['clean', 'substance', 'assets'], buildExample('author'))
 b.task('publisher', ['clean', 'substance', 'assets'], buildExample('publisher'))
 b.task('tagging', ['author'], buildExample('tagging'))
-
 b.task('examples', ['author', 'publisher', 'tagging'])
 
 // build all

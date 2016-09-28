@@ -1,21 +1,15 @@
 import JATSImporter from '../jats/JATSImporter'
 import JATSTransformer from './JATSTransformer'
 
-function AuthorImporter() {
-  AuthorImporter.super.apply(this, arguments);
+class AuthorImporter extends JATSImporter {
+
+  importDocument(...args) {
+    let doc = super.importDocument(...args)
+    let trafo = new JATSTransformer()
+    doc = trafo.fromJATS(doc)
+    return doc
+  }
+
 }
 
-AuthorImporter.Prototype = function() {
-  var _super = AuthorImporter.super.prototype;
-
-  this.importDocument = function() {
-    var doc = _super.importDocument.apply(this, arguments);
-    var trafo = new JATSTransformer();
-    doc = trafo.fromJATS(doc);
-    return doc;
-  };
-};
-
-JATSImporter.extend(AuthorImporter);
-
-export default AuthorImporter;
+export default AuthorImporter

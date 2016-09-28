@@ -3,18 +3,18 @@ export default {
   type: 'unsupported',
 
   matchElement: function() {
-    return true;
+    return true
   },
 
   import: function(el, node) {
-    node.xmlContent = el.innerHTML;
-    node.tagName = el.tagName;
+    node.xmlContent = el.innerHTML
+    node.tagName = el.tagName
   },
 
   export: function(node, el) {
-    el.tagName = node.tagName;
-    el.innerHTML = node.xmlContent;
-    return el;
+    el.tagName = node.tagName
+    el.innerHTML = node.xmlContent
+    return el
   }
 
-};
+}

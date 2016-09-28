@@ -63,7 +63,7 @@ export default {
     config.import(TitleGroupPackage)
     config.import(XrefPackage)
 
-    config.addImporter('jats', JATSImporter);
-    config.addExporter('jats', JATSExporter);
+    config.addImporter('jats', JATSImporter)
+    config.addExporter('jats', JATSExporter)
   }
 }

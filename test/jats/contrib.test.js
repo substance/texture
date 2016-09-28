@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/contrib');
+const test = module('jats/contrib')
 
 // ATTENTION: refs are treated only as XML
 var withAttributes =

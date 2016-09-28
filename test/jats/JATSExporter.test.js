@@ -1,8 +1,7 @@
-'use strict';
-
-var test = require('./test').module('jats/JATSExporter');
-
+import { module } from './test'
 import createJATSConfigurator from './createJATSConfigurator'
+
+const test = module('jats/JATSExporter')
 
 test('Exporting a node via id', function(t) {
   var configurator = createJATSConfigurator();

@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/ext-link');
+const test = module('jats/ext-link')
 
 var withAttributes =
   '<ext-link id="mybold"'+

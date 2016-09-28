@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/subscript');
+const test = module('jats/subscript')
 
 var withAttributes =
   '<sub id="mysubscript"'+

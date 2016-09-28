@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/ref-list');
+const test = module('jats/ref-list')
 
 var withAttributes =
   '<ref-list id="myp"'+

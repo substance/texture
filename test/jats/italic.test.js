@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/italic');
+const test = module('jats/italic')
 
 var withAttributes =
   '<italic id="myitalic"'+

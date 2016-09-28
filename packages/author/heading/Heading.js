@@ -1,18 +1,14 @@
 import { TextBlock } from 'substance'
 
-function HeadingNode() {
-  HeadingNode.super.apply(this, arguments);
-}
+class HeadingNode extends TextBlock {}
 
-TextBlock.extend(HeadingNode);
-
-HeadingNode.type = "heading";
+HeadingNode.type = "heading"
 
 HeadingNode.define({
   // just a reference to the original node
   // which will be used to retain XML attributes
   sectionId: { type: 'id', optional: true },
-  level: { type: "number", default: 1 },
-});
+  level: { type: "number", default: 1 }
+})
 
-export default HeadingNode;
+export default HeadingNode

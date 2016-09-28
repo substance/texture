@@ -1,37 +1,29 @@
-'use strict';
-
 import { Component } from 'substance'
 import renderNodeComponent from '../../../util/renderNodeComponent'
 
-function TitleGroupComponent() {
-  Component.apply(this, arguments);
-}
+class TitleGroupComponent extends Component {
 
-TitleGroupComponent.Prototype = function() {
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
 
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-
-    var el = $$('div')
+    let el = $$('div')
       .addClass('sc-title-group')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
-    var children = node.nodes;
+    let children = node.nodes
     children.forEach(function(nodeId) {
-      var childNode = doc.get(nodeId);
+      let childNode = doc.get(nodeId)
       if (childNode.type !== 'unsupported') {
         el.append(
           renderNodeComponent(this, $$, childNode, {
             disabled: this.props.disabled
           })
-        );
+        )
       }
-    }.bind(this));
-    return el;
-  };
-};
+    }.bind(this))
+    return el
+  }
+}
 
-Component.extend(TitleGroupComponent);
-
-export default TitleGroupComponent;
+export default TitleGroupComponent

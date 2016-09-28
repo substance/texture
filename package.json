@@ -9,9 +9,7 @@
     "eslint": "^3.2.2",
     "font-awesome": "4.5.0",
     "substance-bundler": "^0.4.20",
-    "substance-test": "^0.2.2",
-    "tap-spec": "4.1.1",
-    "tape": "4.5.1"
+    "substance-test": "^0.2.2"
   },
   "scripts": {
     "bundle": "node make",

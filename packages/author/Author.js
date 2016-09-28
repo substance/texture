@@ -22,9 +22,8 @@ class Author extends AbstractWriter {
   }
 
   _renderMainSection($$) {
-    let mainSection = $$('div').addClass('se-main-sectin')
+    let mainSection = $$('div').addClass('se-main-section')
     let splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
-      // inherited from  ProseEditor
       this._renderToolbar($$),
       this._renderContentPanel($$)
     )

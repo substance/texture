@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/table-wrap');
+const test = module('jats/table-wrap')
 
 // ATTENTION: table-wraps are not fully covered
 var withAttributes =

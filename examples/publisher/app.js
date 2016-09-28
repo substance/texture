@@ -1,15 +1,23 @@
 import { substanceGlobals } from 'substance'
-import Package from './package'
 import Texture from '../../packages/texture/Texture'
 import TextureConfigurator from '../../packages/texture/TextureConfigurator'
+import PublisherPackage from '../../packages/publisher/PublisherPackage'
+import ExampleXMLStore from '../ExampleXMLStore'
 
-substanceGlobals.DEBUG_RENDERING = true;
-var configurator = new TextureConfigurator().import(Package);
+substanceGlobals.DEBUG_RENDERING = true
 
-window.onload = function() {
-  window.app = Texture.mount({
-    mode: 'publisher',
-    documentId: 'elife-00007',
-    configurator: configurator
-  }, document.body);
-};
+/* Configure example */
+let configurator = new TextureConfigurator()
+  .import(PublisherPackage)
+  .setXMLStore(ExampleXMLStore)
+
+if (typeof window !== 'undefined') {
+  window.onload = function() {
+    var app = Texture.mount({
+      configurator: configurator,
+      documentId: 'elife-15278'
+    }, document.body)
+    window.app = app
+  }
+}
+

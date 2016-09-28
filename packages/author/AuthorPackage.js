@@ -6,26 +6,29 @@ import HeadingPackage from './heading/package'
 import CommonPackage from '../common/package'
 import InlineWrapperPackage from '../inline-wrapper/InlineWrapperPackage'
 import UnsupportedNodePackage from '../unsupported/UnsupportedNodePackage'
+import Author from './Author'
 
 export default {
   name: 'author',
   configure: function(config) {
-    // Now import base packages
-    config.import(BasePackage);
-    config.import(PersistencePackage);
+    config.setInterfaceComponentClass(Author)
 
-    config.import(JATSPackage);
-    config.import(HeadingPackage);
-    config.import(CommonPackage);
+    // Now import base packages
+    config.import(BasePackage)
+    config.import(PersistencePackage)
+
+    config.import(JATSPackage)
+    config.import(HeadingPackage)
+    config.import(CommonPackage)
 
     // support inline wrappers, for all hybrid types that can be
     // block-level but also inline.
-    config.import(InlineWrapperPackage);
+    config.import(InlineWrapperPackage)
     // catch all converters
-    config.import(UnsupportedNodePackage);
+    config.import(UnsupportedNodePackage)
 
     // Override Importer/Exporter
-    config.addImporter('jats', AuthorImporter);
-    config.addExporter('jats', AuthorExporter);
+    config.addImporter('jats', AuthorImporter)
+    config.addExporter('jats', AuthorExporter)
   }
 }

@@ -53,65 +53,42 @@ Here's how you can integrate Texture into your web app.
 
 ```js
 // app.js
-var Texture = require('substance-texture');
-var myTexturePackage = require('./myTexturePackage');
-var configurator = new Texture.Configurator(myTexturePackage);
+import { Texture, TextureConfigurator, AuthorPackage } from 'substance-texture'
+import MyXMLStore from './MyXMLStore'
+
+let configurator = new TextureConfigurator()
+configurator
+  .import(AuthorPackage)
+  .setXMLStore(MyXMLStore)
 
 window.onload = function() {
   window.app = Texture.mount({
-    mode: 'publisher', // or 'author' or 'reader'
     documentId: 'doc-1',
     configurator: configurator
-  }, document.body);
-};
+  }, document.body)
+}
 ```
 
-Texture is fully configurable. So you need to supply a custom configuration via a package defintion.
-
-```js
-// myTexturePackage.js
-var MyXMLStore = require('../MyXMLStore');
-var texturePackage = require('substance-texture/packages/texture/package');
-var path = require('path');
-
-module.exports = {
-  name: 'my-texture',
-  configure: function(config) {
-    // Use the default Texture package
-    config.import(texturePackage);
-
-    // Define XML Store
-    config.setXMLStore(MyXMLStore);
-  }
-};
-```
+Texture is fully configurable. So you need to supply a custom configuration by importing packages.
 
 In order to connect Texture to a backend you need to define an XML Store:
 
 ```js
 // MyXMLStore.js
-var oo = require('substance/util/oo');
-var request = require('substance/util/request');
+import { request } from 'substance'
 
-function MyXMLStore() {}
+export default class MyXMLStore {
+  readXML(documentId, cb) {
+    request('GET', 'https://myserver.com/documents/'+documentId+'.xml', null, cb)
+  }
 
-MyXMLStore.Prototype = function() {
-  this.readXML = function(documentId, cb) {
-    request('GET', 'https://myserver.com/documents/'+documentId+'.xml', null, cb);
-  };
-
-  this.writeXML = function(documentId, xml, cb) {
-    var data = {content: xml};
+  writeXML(documentId, xml, cb) {
+    var data = { content: xml }
     var url = 'https://myserver.com/documents/'+documentId+'.xml'
-    request('PUT', url, data, cb);
-  };
-};
-
-oo.initClass(MyXMLStore);
-
-module.exports = MyXMLStore;
+    request('PUT', url, data, cb)
+  }
+}
 ```
-
 
 ## Bundle examples
 
@@ -125,18 +102,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Roadmap
 
-### Alpha 2
-
-*ETA: September 2016*
-
-- Update to Substance Beta 5
-- Front matter editing for title + abstract (JATS `<front>`)
-- Editing of authors (create, update and delete contrib elements)
-- Create and edit xref elements
-
 ### Alpha 3
 
-*ETA: October 2016*
+*ETA: November 2016*
 
 Goal is to provide proof of concepts for the discussed tagging workflow (get from unstructured text to structured JATS). For example:
 

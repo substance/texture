@@ -1,6 +1,5 @@
-'use strict';
-
-import Configurator from 'substance/util/Configurator'
+import { module } from './test'
+import { Configurator } from 'substance'
 import JATSPackage from '../../packages/jats/package'
 import InlineWrapperPackage from '../../packages/inline-wrapper/InlineWrapperPackage'
 import UnsupportedNodePackage from '../../packages/unsupported/UnsupportedNodePackage'

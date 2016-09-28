@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/superscript');
+const test = module('jats/superscript')
 
 var withAttributes =
   '<sup id="mysuperscript"'+

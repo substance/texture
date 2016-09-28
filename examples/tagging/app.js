@@ -1,14 +1,25 @@
-import App from '../author/app'
-import TaggingPackage from './TaggingPackage'
+import { substanceGlobals } from 'substance'
+import Texture from '../../packages/texture/Texture'
+import TextureConfigurator from '../../packages/texture/TextureConfigurator'
+import AuthorPackage from '../../packages/author/AuthorPackage'
+import TaggingPackage from '../../packages/tagging/TaggingPackage'
+import ExampleXMLStore from '../ExampleXMLStore'
+
+substanceGlobals.DEBUG_RENDERING = true
+
+/* Configure example */
+let configurator = new TextureConfigurator()
+  .import(AuthorPackage)
+  // enable tagging abilities
+  .import(TaggingPackage)
+  .setXMLStore(ExampleXMLStore)
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
-    let configurator = new App.Configurator()
-    configurator.import(TaggingPackage)
-    var app = App.mount({
+    var app = Texture.mount({
       configurator: configurator,
-      documentId: 'kitchen-sink-author'
+      documentId: 'elife-15278'
     }, document.body)
     window.app = app
-  };
+  }
 }

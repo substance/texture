@@ -1,8 +1,7 @@
-'use strict';
-
-var test = require('./test').module('jats/inline-wrapper');
-
+import { module } from './test'
 import createJATSConfigurator from './createJATSConfigurator'
+
+const test = module('jats/inline-wrapper')
 
 test('Exporting a wrapped jats node', function(t) {
   var configurator = createJATSConfigurator();

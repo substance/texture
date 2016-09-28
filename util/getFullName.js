@@ -5,16 +5,16 @@ import toDOM  from './toDOM'
   name or string-name nodes (e.g. contrib, mixed-citation, element-citation)
 */
 function getFullName(node) {
-  var el = toDOM(node);
-  var name = el.find('name');
-  var stringName = el.find('string-name');
+  var el = toDOM(node)
+  var name = el.find('name')
+  var stringName = el.find('string-name')
 
   if (name) {
-    var surname = name.find('surname').text();
-    var givenNames = name.find('given-names').text();
-    return [givenNames, surname];
+    var surname = name.find('surname').text()
+    var givenNames = name.find('given-names').text()
+    return [givenNames, surname].join(' ')
   } else if (stringName) {
-    return stringName.text();
+    return stringName.text()
   }
 }
 

@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/figure');
+const test = module('jats/figure')
 
 var withAttributes =
   '<fig id="myfig"'+

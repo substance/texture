@@ -8,14 +8,13 @@
   "devDependencies": {
     "eslint": "^3.2.2",
     "font-awesome": "4.5.0",
-    "substance-bundler": "^0.4.16",
-    "tap-spec": "4.1.1",
-    "tape": "4.5.1"
+    "substance-bundler": "^0.4.20",
+    "substance-test": "^0.2.2"
   },
   "scripts": {
     "bundle": "node make",
     "start": "node make -s -w",
-    "test": "gulp test"
+    "test": "node test"
   },
   "version": "1.0.0-alpha.2"
 }

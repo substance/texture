@@ -1,10 +1,10 @@
-import { ProseEditor, Highlights } from 'substance'
+import { ProseEditor, Highlights, Toolbar, AbstractEditor } from 'substance'
 import SaveHandler from './SaveHandler'
 
 // TODO: we need to think if it is really a good idea to
 // derive from ProseEditor here
 // There would be a lot of code redundancy
-class AbstractWriter extends ProseEditor {
+class AbstractWriter extends AbstractEditor {
   constructor(...args) {
     super(...args)
 
@@ -31,8 +31,11 @@ class AbstractWriter extends ProseEditor {
     return childContext
   }
 
-  _renderToolbar($$) { // eslint-disable-line
-    return super._renderToolbar.apply(this, arguments)
+  _renderToolbar($$) {
+    let commandStates = this.commandManager.getCommandStates()
+    return $$(Toolbar, {
+      commandStates: commandStates
+    }).ref('toolbar')
   }
 
   _renderContentPanel($$) { // eslint-disable-line
@@ -63,12 +66,16 @@ class AbstractWriter extends ProseEditor {
     })
   }
 
-  /*
-    TODO: this should live in the xref package with the ability
-    for other packages to manage their own highlights.
-  */
+
   documentSessionUpdated() {
-    super.documentSessionUpdated()
+    let toolbar = this.refs.toolbar
+    if (toolbar) {
+      let commandStates = this.commandManager.getCommandStates()
+      toolbar.setProps({
+        commandStates: commandStates
+      })
+    }
+
     let documentSession = this.documentSession
     let sel = documentSession.getSelection()
     let selectionState = documentSession.getSelectionState()
@@ -81,7 +88,6 @@ class AbstractWriter extends ProseEditor {
 
     if (xrefs.length === 1 && xrefs[0].getSelection().equals(sel) ) {
       let xref = xrefs[0]
-      // highlights.xref = [ xref.id ]
       highlights[xref.referenceType] = xref.targets.concat([xref.id])
     }
 

@@ -7,7 +7,8 @@ import orderBy from 'lodash/orderBy'
 var TARGET_TYPES = {
   'fig': ['figure', 'fig-group'],
   'bibr': ['ref'],
-  'table': ['table-wrap']
+  'table': ['table-wrap'],
+  'other': ['figure']
 };
 
 /*

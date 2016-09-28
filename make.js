@@ -19,6 +19,10 @@ b.task('substance', function() {
   b.copy('node_modules/substance/dist', './dist/substance')
 })
 
+b.task('substance:all', function() {
+  b.make('substance')
+})
+
 function buildExample(example) {
   return function() {
     b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
@@ -82,7 +86,7 @@ b.task('test:server', function() {
   });
 })
 
-b.task('test', ['test:clean', 'test:assets', 'test:browser', 'test:server'])
+b.task('test', ['substance:all', 'test:clean', 'test:assets', 'test:browser', 'test:server'])
 
 
 // starts a server when CLI argument '-s' is set

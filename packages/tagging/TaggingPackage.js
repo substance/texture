@@ -1,4 +1,3 @@
-import AuthorExamplePackage from '../author/package'
 import { ToolDropdown } from 'substance'
 import TagAffCommand from './aff/TagAffCommand'
 import TagAffTool from './aff/TagAffTool'
@@ -10,7 +9,6 @@ import TagContribTool from './contrib/TagContribTool'
 export default {
   name: 'tagging-example',
   configure: function(config) {
-    config.import(AuthorExamplePackage)
 
     // Tagging
     // -------

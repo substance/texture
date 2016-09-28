@@ -43,6 +43,48 @@ b.task('examples', ['author', 'publisher', 'tagging'])
 // build all
 b.task('default', ['examples'])
 
+
+b.task('test:clean', function() {
+  b.rm('dist/test')
+})
+
+b.task('test:assets', function() {
+  b.copy('./node_modules/substance-test/dist/*', './dist/test', { root: './node_modules/substance-test/dist' })
+})
+
+b.task('test:browser', function() {
+  b.js('./test/index.js', {
+    // buble necessary here, as travis has old browser versions
+    buble: true,
+    ignore: ['substance-cheerio'],
+    external: ['substance-test', 'substance'],
+    commonjs: { include: ['node_modules/lodash/**'] },
+    targets: [
+      { dest: './dist/test/tests.js', format: 'umd', moduleName: 'tests' }
+    ]
+  });
+})
+
+b.task('test:server', function() {
+  b.js('./test/index.js', {
+    // buble necessary here, for nodejs
+    buble: true,
+    external: ['substance-test', 'substance'],
+    commonjs: {
+      include: [
+        'node_modules/lodash/**',
+        'node_modules/substance-cheerio/**'
+      ]
+    },
+    targets: [
+      { dest: './dist/test/run-tests.js', format: 'cjs' },
+    ]
+  });
+})
+
+b.task('test', ['test:clean', 'test:assets', 'test:browser', 'test:server'])
+
+
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)
 b.serve({

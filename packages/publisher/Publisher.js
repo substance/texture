@@ -2,45 +2,40 @@ import { Overlay, TOC } from 'substance'
 import AbstractWriter from '../common/AbstractWriter'
 import PublisherTOCProvider from './PublisherTOCProvider'
 
-function PublisherWriter() {
-  PublisherWriter.super.apply(this, arguments);
-}
-
-PublisherWriter.Prototype = function() {
-
-  this.render = function($$) {
-    var SplitPane = this.getComponent('split-pane');
-    var el = $$('div').addClass('sc-publisher');
+class Publisher extends AbstractWriter {
+  render($$) {
+    var SplitPane = this.componentRegistry.get('split-pane')
+    var el = $$('div').addClass('sc-publisher')
     el.append(
       $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
         this._renderMainSection($$),
         this._renderContextSection($$)
       )
-    );
-    return el;
-  };
+    )
+    return el
+  }
 
-  this._renderContextSection = function($$) {
+  _renderContextSection($$) {
     return $$('div').addClass('se-context-section').append(
       $$(TOC)
-    );
-  };
+    )
+  }
 
-  this._renderMainSection = function($$) {
-    var SplitPane = this.getComponent('split-pane');
-    var mainSection = $$('div').addClass('se-main-section');
+  _renderMainSection($$) {
+    var SplitPane = this.componentRegistry.get('split-pane')
+    var mainSection = $$('div').addClass('se-main-section')
     var splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
       this._renderToolbar($$),
       this._renderContentPanel($$)
     );
-    mainSection.append(splitPane);
-    return mainSection;
-  };
+    mainSection.append(splitPane)
+    return mainSection
+  }
 
-  this._renderContentPanel = function($$) {
-    var doc = this.documentSession.getDocument();
-    var Layout = this.getComponent('layout');
-    var ScrollPane = this.getComponent('scroll-pane');
+  _renderContentPanel($$) {
+    var doc = this.documentSession.getDocument()
+    var Layout = this.componentRegistry.get('layout')
+    var ScrollPane = this.componentRegistry.get('scroll-pane')
 
     var contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
@@ -54,9 +49,9 @@ PublisherWriter.Prototype = function() {
       width: 'large'
     });
 
-    var ArticleComponent = this.componentRegistry.get('article');
+    var ArticleComponent = this.componentRegistry.get('article')
 
-    var article = doc.get('article');
+    var article = doc.get('article')
     layout.append(
       $$(ArticleComponent, {
         node: article,
@@ -65,25 +60,22 @@ PublisherWriter.Prototype = function() {
         configurator: this.props.configurator
       })
     );
+    contentPanel.append(layout)
+    return contentPanel
+  }
 
-    contentPanel.append(layout);
-    return contentPanel;
-  };
+  _scrollTo(nodeId) {
+    this.refs.contentPanel.scrollTo(nodeId)
+  }
 
-  this._scrollTo = function(nodeId) {
-    this.refs.contentPanel.scrollTo(nodeId);
-  };
+  _getExporter() {
+    return this.props.configurator.createExporter('jats')
+  }
 
-  this._getExporter = function() {
-    return this.props.configurator.createExporter('jats');
-  };
+  _getTOCProvider() {
+    return new PublisherTOCProvider(this.documentSession)
+  }
+}
 
-  this._getTOCProvider = function() {
-    return new PublisherTOCProvider(this.documentSession);
-  };
 
-};
-
-AbstractWriter.extend(PublisherWriter);
-
-export default PublisherWriter;
+export default Publisher;

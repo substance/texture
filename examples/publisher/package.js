@@ -1,11 +1,10 @@
-import TexturePackage from '../../packages/texture/package'
+import PublisherPackage from '../../packages/publisher/package'
 import ExampleXMLStore from '../ExampleXMLStore'
 
 export default {
   name: 'publisher-example',
   configure: function(config) {
-    config.import(TexturePackage);
-    // Define XML Store
+    config.import(PublisherPackage)
     config.setXMLStore(ExampleXMLStore);
   }
 }

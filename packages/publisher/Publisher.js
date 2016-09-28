@@ -1,4 +1,4 @@
-import { Overlay, TOC } from 'substance'
+import { ProseEditorOverlayTools, TOC } from 'substance'
 import AbstractWriter from '../common/AbstractWriter'
 import PublisherTOCProvider from './PublisherTOCProvider'
 
@@ -41,7 +41,7 @@ class Publisher extends AbstractWriter {
       tocProvider: this.tocProvider,
       scrollbarType: 'substance',
       scrollbarPosition: 'left',
-      overlay: Overlay,
+      overlay: ProseEditorOverlayTools,
       highlights: this.contentHighlights
     }).ref('contentPanel');
 

@@ -35,7 +35,7 @@ if (typeof window !== 'undefined') {
     configurator.import(Package)
     var app = App.mount({
       configurator: configurator,
-      documentId: 'elife-00007'
+      documentId: 'elife-15278'
     }, document.body)
     window.app = app
   };

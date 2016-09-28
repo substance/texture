@@ -47,7 +47,7 @@ class Publisher extends AbstractWriter {
 
     var layout = $$(Layout, {
       width: 'large'
-    });
+    })
 
     var ArticleComponent = this.componentRegistry.get('article')
 

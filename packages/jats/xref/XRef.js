@@ -2,11 +2,7 @@
 
 import { Fragmenter, InlineNode } from 'substance'
 
-function XRef() {
-  XRef.super.apply(this, arguments);
-}
-
-InlineNode.extend(XRef);
+class XRef extends InlineNode {}
 
 XRef.type = 'xref';
 
@@ -14,20 +10,20 @@ XRef.define({
   attributes: { type: 'object', default: {} },
   targets: {type: ['id'], default: []},
   label: { type: 'text', optional: true }
-});
+})
 
 Object.defineProperties(XRef.prototype, {
   referenceType: {
     get: function() {
-      return this.attributes['ref-type'];
+      return this.attributes['ref-type']
     },
     set: function(refType) {
-      this.attributes['ref-type'] = refType;
+      this.attributes['ref-type'] = refType
     }
   }
-});
+})
 
 // In presence of overlapping annotations will try to render this as one element
-XRef.fragmentation = Fragmenter.SHOULD_NOT_SPLIT;
+XRef.fragmentation = Fragmenter.SHOULD_NOT_SPLIT
 
-export default XRef;
+export default XRef

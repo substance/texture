@@ -2,29 +2,23 @@
 
 import { Component, TextPropertyEditor } from 'substance'
 
-function XRefComponent() {
-  XRefComponent.super.apply(this, arguments);
-}
+class XRefComponent extends Component {
 
-XRefComponent.Prototype = function() {
+  render($$) { // eslint-disable-line
+    let node = this.props.node
+    let el = $$('span').addClass('sc-xref')
 
-  this.render = function($$) { // eslint-disable-line
-    var node = this.props.node;
-    var el = $$('span').addClass('sc-xref');
-
-    var labelEditor = $$(TextPropertyEditor, {
+    let labelEditor = $$(TextPropertyEditor, {
       disabled: this.props.disabled,
       tagName: 'span',
       path: [node.id, 'label'],
       withoutBreak: true
-    }).ref('labelEditor');
-    el.append(labelEditor);
+    }).ref('labelEditor')
+    el.append(labelEditor)
 
-    el.addClass('sm-'+node.referenceType);
-    return el;
-  };
-};
+    el.addClass('sm-'+node.referenceType)
+    return el
+  }
+}
 
-Component.extend(XRefComponent);
-
-export default XRefComponent;
+export default XRefComponent

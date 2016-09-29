@@ -1,17 +1,11 @@
-'use strict';
-
 import { Annotation } from 'substance'
 
-function Subscript() {
-  Subscript.super.apply(this, arguments);
-}
+class Subscript extends Annotation {}
 
-Annotation.extend(Subscript);
-
-Subscript.type = 'subscript';
+Subscript.type = 'subscript'
 
 Subscript.define({
-  attributes: { type: 'object', default: {} },
-});
+  attributes: { type: 'object', default: {} }
+})
 
-export default Subscript;
+export default Subscript

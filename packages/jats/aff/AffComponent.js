@@ -7,11 +7,11 @@ class AffComponent extends Component {
   }
 
   render($$) {
-    var aff = getAdapter(this.props.node);
-    var el = $$('div').addClass('sc-aff')
+    let aff = getAdapter(this.props.node)
+    let el = $$('div').addClass('sc-aff')
       .append($$(Icon, {icon: 'fa-building-o'}))
       .append(' '+aff.name)
-    return el;
+    return el
   }
 }
 

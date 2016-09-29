@@ -1,5 +1,3 @@
-'use strict';
-
 import { Container } from 'substance'
 
 /*
@@ -7,13 +5,9 @@ import { Container } from 'substance'
 
   Material published with an article but following the narrative flow.
 */
-function Back() {
-  Back.super.apply(this, arguments);
-}
+class Back extends Container {}
 
-Container.extend(Back);
-
-Back.type = 'back';
+Back.type = 'back'
 
 /*
   Attributes
@@ -28,7 +22,7 @@ Back.define({
   attributes: { type: 'object', default: {} },
   label: { type: 'label', optional:true },
   titles: { type: ['title'], default: [] },
-  nodes: { type: ['id'], default: [] },
-});
+  nodes: { type: ['id'], default: [] }
+})
 
-export default Back;
+export default Back

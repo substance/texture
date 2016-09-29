@@ -1,23 +1,17 @@
 import { Component } from 'substance'
 
-function UnsupportedInlineNodeComponent() {
-  Component.apply(this, arguments);
-}
+class UnsupportedInlineNodeComponent extends Component {
 
-UnsupportedInlineNodeComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var el = $$('span')
+  render($$) {
+    let el = $$('span')
       .addClass('sc-unsupported-inline-node')
       .attr('data-id', this.props.node.id)
       .attr('contenteditable', false)
       .append(
         '<'+this.props.node.tagName+'>'
-      );
-    return el;
-  };
-};
+      )
+    return el
+  }
+}
 
-Component.extend(UnsupportedInlineNodeComponent);
-
-export default UnsupportedInlineNodeComponent;
+export default UnsupportedInlineNodeComponent

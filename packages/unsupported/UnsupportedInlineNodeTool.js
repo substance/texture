@@ -64,12 +64,11 @@ class UnsupportedInlineNodeTool extends Tool {
             node: node
           })
         )
-      );
+      )
     }
-    return el;
+    return el
   }
 
 }
 
-
-export default UnsupportedInlineNodeTool;
+export default UnsupportedInlineNodeTool

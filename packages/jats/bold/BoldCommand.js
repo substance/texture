@@ -1,5 +1,3 @@
-'use strict';
-
 import { AnnotationCommand } from 'substance'
 
 class BoldCommand extends AnnotationCommand {}

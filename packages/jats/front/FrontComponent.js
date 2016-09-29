@@ -1,35 +1,27 @@
-'use strict';
-
 import { Component } from 'substance'
 import renderNodeComponent from '../../../util/renderNodeComponent'
 
-function FrontComponent() {
-  Component.apply(this, arguments);
-}
+class FrontComponent extends Component {
 
-FrontComponent.Prototype = function() {
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
 
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-
-    var el = $$('div')
+    let el = $$('div')
       .addClass('sc-front')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
     // Render articlemeta
-    var articleMeta = doc.get(node.articleMeta);
+    let articleMeta = doc.get(node.articleMeta)
 
     el.append(
       renderNodeComponent(this, $$, articleMeta, {
         disabled: this.props.disabled
       })
-    );
+    )
 
-    return el;
-  };
-};
+    return el
+  }
+}
 
-Component.extend(FrontComponent);
-
-export default FrontComponent;
+export default FrontComponent

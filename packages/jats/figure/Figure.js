@@ -1,14 +1,8 @@
-'use strict';
-
 import { DocumentNode } from 'substance'
 
-function Figure() {
-  Figure.super.apply(this, arguments);
-}
+class Figure extends DocumentNode {}
 
-DocumentNode.extend(Figure);
-
-Figure.type = 'figure';
+Figure.type = 'figure'
 
 /*
   Attribute
@@ -45,7 +39,7 @@ Figure.define({
   uris: { type: ['uri'], default: [] },
   contentNodes: { type: ['id'], default: [] },
   attribs: { type: ['attrib'], default: [] },
-  permissions: { type: ['permissions'], default: [] },
-});
+  permissions: { type: ['permissions'], default: [] }
+})
 
-export default Figure;
+export default Figure

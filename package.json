@@ -6,7 +6,6 @@
     "substance": "substance/substance#develop"
   },
   "devDependencies": {
-    "eslint": "^3.2.2",
     "font-awesome": "4.5.0",
     "substance-bundler": "^0.4.20",
     "substance-test": "^0.2.2"

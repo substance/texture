@@ -4,87 +4,87 @@ import { DefaultDOMElement as DOMElement } from 'substance'
   TODO: Get rid of HTML renderer. Instead extract data as
   JSON and then pass it to a component for rendering
 */
-var namesToHTML = function(ref) {
-  var nameElements = ref.findAll('name');
-  var nameEls = [];
-  for (var i = 0; i < nameElements.length; i++) {
-    var name = nameElements[i];
-    var nameEl = DOMElement.createElement('span');
-    nameEl.addClass('name');
-    nameEl.text(name.find('surname').text() + ' ' + name.find('given-names').text());
+let namesToHTML = function(ref) {
+  let nameElements = ref.findAll('name')
+  let nameEls = []
+  for (let i = 0; i < nameElements.length; i++) {
+    let name = nameElements[i]
+    let nameEl = DOMElement.createElement('span')
+    nameEl.addClass('name')
+    nameEl.text(name.find('surname').text() + ' ' + name.find('given-names').text())
     if (i > 0 && i < nameElements.length) {
-      var comma = DOMElement.createElement('span');
-      comma.text(', ');
-      nameEls.push(comma);
+      let comma = DOMElement.createElement('span')
+      comma.text(', ')
+      nameEls.push(comma)
     }
-    nameEls.push(nameEl);
+    nameEls.push(nameEl)
   }
-  return nameEls;
-};
+  return nameEls
+}
 
-var titleToHTML = function (ref) {
-  var articleTitle = ref.find('article-title');
-  var title = DOMElement.createElement('div');
-  title.addClass('title');
+let titleToHTML = function (ref) {
+  let articleTitle = ref.find('article-title')
+  let title = DOMElement.createElement('div')
+  title.addClass('title')
 
   if (articleTitle) {
-    title.text(articleTitle.text() + '. ');
+    title.text(articleTitle.text() + '. ')
   } else {
-    title.text('Untitled. ');
+    title.text('Untitled. ')
   }
 
-  return title;
-};
+  return title
+}
 
-var metaToHTML = function (ref) {
+let metaToHTML = function (ref) {
 
   // Example: "Cellular and Molecular Life Sciences, 70: 2657-2675, 2013"
 
-  var meta = DOMElement.createElement('div');
+  let meta = DOMElement.createElement('div')
 
-  meta.addClass('meta');
+  meta.addClass('meta')
 
-  var metaText = '';
+  let metaText = ''
 
-  var source = ref.find('source');
-  if (source) metaText += source.text() + ', ';
+  let source = ref.find('source')
+  if (source) metaText += source.text() + ', '
 
-  var volume = ref.find('volume');
-  if (volume) metaText += volume.text() + ': ';
+  let volume = ref.find('volume')
+  if (volume) metaText += volume.text() + ': '
 
-  var fpage = ref.find('fpage');
-  if (fpage) metaText += fpage.text() + '-';
+  let fpage = ref.find('fpage')
+  if (fpage) metaText += fpage.text() + '-'
 
-  var lpage = ref.find('lpage');
-  if (lpage) metaText += lpage.text() + ', ';
+  let lpage = ref.find('lpage')
+  if (lpage) metaText += lpage.text() + ', '
 
-  var year = ref.find("year");
-  if (year) metaText += year.text();
+  let year = ref.find("year");
+  if (year) metaText += year.text()
 
-  meta.text(metaText);
-  return meta;
-};
+  meta.text(metaText)
+  return meta
+}
 
-var URItoHTML = function (ref) {
-  var el = DOMElement.createElement('div');
-  el.addClass('doi');
+let URItoHTML = function (ref) {
+  let el = DOMElement.createElement('div')
+  el.addClass('doi')
 
-  var doi = ref.find("pub-id[pub-id-type='doi'], ext-link[ext-link-type='doi']");
-  var uri = ref.find("ext-link[ext-link-type='uri']");
+  let doi = ref.find("pub-id[pub-id-type='doi'], ext-link[ext-link-type='doi']")
+  let uri = ref.find("ext-link[ext-link-type='uri']")
 
-  var url;
+  let url
 
   if (doi) {
-    url = 'http://dx.doi.org/' + doi.text();
+    url = 'http://dx.doi.org/' + doi.text()
   } else if (uri) {
-    url = uri.getAttribute('xlink:href');
+    url = uri.getAttribute('xlink:href')
   }
 
-  el.appendChild(DOMElement.createElement('a').setAttribute('href', url).text(url));
-  return el;
-};
+  el.appendChild(DOMElement.createElement('a').setAttribute('href', url).text(url))
+  return el
+}
 
-var refToHTML = function (ref) {
+let refToHTML = function (ref) {
 
   // ref element to HTML - https://jats.nlm.nih.gov/archiving/tag-library/0.4/n-ac60.html
   // ------------------
@@ -135,29 +135,29 @@ var refToHTML = function (ref) {
   //   </mixed-citation>
   // </ref>
 
-  ref = ref.getDOM();
+  ref = ref.getDOM()
 
   // TODO: remove safeguard for multiple citation elements
   if(Array.isArray(ref)) {
-    ref = ref[0];
+    ref = ref[0]
   }
-  var el = DOMElement.createElement('div');
+  let el = DOMElement.createElement('div')
   if (ref.is('mixed-citation')) {
-    el.appendChild(ref.textContent);
+    el.appendChild(ref.textContent)
   } else if (ref.is('element-citation')) {
-    el.appendChild(titleToHTML(ref));
-    var names = namesToHTML(ref);
-    for (var i = 0; i < names.length; i++) {
-      el.appendChild(names[i]);
+    el.appendChild(titleToHTML(ref))
+    let names = namesToHTML(ref)
+    for (let i = 0; i < names.length; i++) {
+      el.appendChild(names[i])
     }
-    el.appendChild(metaToHTML(ref));
-    el.appendChild(URItoHTML(ref));
+    el.appendChild(metaToHTML(ref))
+    el.appendChild(URItoHTML(ref))
   } else {
-    el.text('Citation type is unsupported');
+    el.text('Citation type is unsupported')
   }
 
-  return el.outerHTML;
+  return el.outerHTML
 
-};
+}
 
-export default refToHTML;
+export default refToHTML

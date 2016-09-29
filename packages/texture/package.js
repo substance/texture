@@ -1,6 +1,3 @@
-'use strict';
-
-import { ProseEditorPackage } from 'substance'
 import AuthorPackage from '../author/package'
 import PublisherPackage from '../publisher/package'
 

@@ -1,56 +1,48 @@
-'use strict';
-
 import { Component } from 'substance'
 import renderNodeComponent from '../../../util/renderNodeComponent'
 
-function FigureComponent() {
-  Component.apply(this, arguments);
-}
+class FigureComponent extends Component {
 
-FigureComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-    var el = $$('div')
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
+    let el = $$('div')
       .addClass('sc-figure')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
     if (node.label) {
-      var label = doc.get(node.label);
+      let label = doc.get(node.label)
       el.append(
         renderNodeComponent(this, $$, label, {
           disabled: this.props.disabled
         }).ref('label')
-      );
+      )
     }
 
     // Display figure content
     node.contentNodes.forEach(function(nodeId) {
-      var childNode = doc.get(nodeId);
+      let childNode = doc.get(nodeId)
       el.append(
         renderNodeComponent(this, $$, childNode, {
           disabled: this.props.disabled
         })
-      );
-    }.bind(this));
+      )
+    }.bind(this))
 
     // Display Captions
     node.captions.forEach(function(nodeId) {
-      var captionNode = doc.get(nodeId);
+      let captionNode = doc.get(nodeId)
       el.append(
         renderNodeComponent(this, $$, captionNode, {
           disabled: this.props.disabled
         }).ref('caption')
-      );
-    }.bind(this));
+      )
+    }.bind(this))
 
     // TODO: we should provide a UI to the rest of the node's content
     // in an overlay
-    return el;
-  };
-};
+    return el
+  }
+}
 
-Component.extend(FigureComponent);
-
-export default FigureComponent;
+export default FigureComponent

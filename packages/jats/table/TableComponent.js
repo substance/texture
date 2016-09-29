@@ -1,23 +1,15 @@
-'use strict';
-
 import { Component } from 'substance'
 
-function TableComponent() {
-  Component.apply(this, arguments);
-}
+class TableComponent extends Component {
 
-TableComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var el = $$('table')
+  render($$) {
+    let el = $$('table')
       .addClass('sc-table')
       .attr('data-id', this.props.node.id)
-      .html(this.props.node.htmlContent);
+      .html(this.props.node.htmlContent)
 
-    return el;
-  };
-};
+    return el
+  }
+}
 
-Component.extend(TableComponent);
-
-export default TableComponent;
+export default TableComponent

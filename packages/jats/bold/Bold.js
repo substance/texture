@@ -1,17 +1,11 @@
-'use strict';
-
 import { Annotation } from 'substance'
 
-function Bold() {
-  Bold.super.apply(this, arguments);
-}
+class Bold extends Annotation {}
 
-Annotation.extend(Bold);
-
-Bold.type = 'bold';
+Bold.type = 'bold'
 
 Bold.define({
-  attributes: { type: 'object', default: {} },
-});
+  attributes: { type: 'object', default: {} }
+})
 
-export default Bold;
+export default Bold

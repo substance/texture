@@ -3,46 +3,38 @@
 import isString from 'lodash/isString'
 import { XMLExporter } from 'substance'
 
-function JATSExporter(config) {
-  JATSExporter.super.call(this, config);
-}
+class JATSExporter extends XMLExporter {
 
-JATSExporter.Prototype = function() {
+  exportDocument(doc) {
+    this.state.doc = doc
 
-  var _super = JATSExporter.super.prototype;
+    let articleEl = this.convertNode(doc.get('article'))
+    return articleEl.outerHTML
+  }
 
-  this.exportDocument = function(doc) {
-    this.state.doc = doc;
-
-    var articleEl = this.convertNode(doc.get('article'));
-    return articleEl.outerHTML;
-  };
-
-  this.convertNode = function(node) {
-    var el = _super.convertNode.apply(this, arguments);
+  convertNode(node) {
+    let el = super.convertNode(node)
     if (isString(node)) {
-      node = this.state.doc.get(node);
+      node = this.state.doc.get(node)
     }
-    el.attr(node.attributes);
-    return el;
-  };
+    el.attr(node.attributes)
+    return el
+  }
 
-  this.convertNodes = function(nodes) {
-    var els = [];
-    var converter = this;
+  convertNodes(nodes) {
+    let els = []
+    let converter = this
     if (nodes._isArrayIterator) {
       while(nodes.hasNext()) {
-        els.push(converter.convertNode(nodes.next()));
+        els.push(converter.convertNode(nodes.next()))
       }
     } else {
       nodes.forEach(function(node) {
-        els.push(converter.convertNode(node));
-      });
+        els.push(converter.convertNode(node))
+      })
     }
-    return els;
-  };
-};
+    return els
+  }
+}
 
-XMLExporter.extend(JATSExporter);
-
-export default JATSExporter;
+export default JATSExporter

@@ -1,25 +1,17 @@
-'use strict';
-
 import { Component, TextPropertyEditor } from 'substance'
 
-function LabelComponent() {
-  LabelComponent.super.apply(this, arguments);
-}
+class LabelComponent extends Component {
 
-LabelComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-label');
-    var node = this.props.node;
-    var labelEditor = $$(TextPropertyEditor, {
+  render($$) {
+    let el = $$('div').addClass('sc-label')
+    let node = this.props.node
+    let labelEditor = $$(TextPropertyEditor, {
       disabled: this.props.disabled,
       path: node.getTextPath()
-    }).ref('labelEditor');
-    el.append(labelEditor);
-    return el;
-  };
-};
+    }).ref('labelEditor')
+    el.append(labelEditor)
+    return el
+  }
+}
 
-Component.extend(LabelComponent);
-
-export default LabelComponent;
+export default LabelComponent

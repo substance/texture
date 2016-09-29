@@ -1,5 +1,3 @@
-'use strict';
-
 import JATS from '../JATS'
 import XMLIterator from '../../../util/XMLIterator'
 
@@ -34,59 +32,59 @@ export default {
 
   import: function(el, node, converter) {
 
-    var children = el.getChildren();
-    var iterator = new XMLIterator(children);
+    let children = el.getChildren()
+    let iterator = new XMLIterator(children)
 
     iterator.optional('sec-meta', function(child) {
-      node.meta = converter.convertElement(child).id;
-    });
+      node.meta = converter.convertElement(child).id
+    })
     iterator.optional('label', function(child) {
-      node.label = converter.convertElement(child).id;
-    });
+      node.label = converter.convertElement(child).id
+    })
     iterator.optional('title', function(child) {
-      node.title = converter.convertElement(child).id;
-    });
+      node.title = converter.convertElement(child).id
+    })
 
     iterator.manyOf(JATS.PARA_LEVEL, function(child) {
-      node.nodes.push(converter.convertElement(child).id);
-    });
+      node.nodes.push(converter.convertElement(child).id)
+    })
 
     iterator.manyOf(['sec'], function(child) {
-      node.nodes.push(converter.convertElement(child).id);
-    });
+      node.nodes.push(converter.convertElement(child).id)
+    })
 
     iterator.manyOf(["notes","fn-group","glossary","ref-list"], function(child) {
-      node.backMatter.push(converter.convertElement(child).id);
-    });
+      node.backMatter.push(converter.convertElement(child).id)
+    })
 
     if (iterator.hasNext()) {
-      throw new Error('Illegal JATS: ' + el.outerHTML);
+      throw new Error('Illegal JATS: ' + el.outerHTML)
     }
   },
 
   export: function(node, el, converter) {
-    var $$ = converter.$$;
+    let $$ = converter.$$
 
-    el.attr(node.xmlAttributes);
+    el.attr(node.xmlAttributes)
     if (node.meta) {
       el.append(
         $$('sec-meta').append(
           converter.convertNode(node.meta)
         )
-      );
+      )
     }
     if(node.label) {
-      el.append(converter.convertNode(node.label));
+      el.append(converter.convertNode(node.label))
     }
     if(node.title) {
-      el.append(converter.convertNode(node.title));
+      el.append(converter.convertNode(node.title))
     }
     node.nodes.forEach(function(nodeId) {
-      el.append(converter.convertNode(nodeId));
-    });
+      el.append(converter.convertNode(nodeId))
+    })
     node.backMatter.forEach(function(nodeId) {
-      el.append(converter.convertNode(nodeId));
-    });
+      el.append(converter.convertNode(nodeId))
+    })
   }
 
-};
+}

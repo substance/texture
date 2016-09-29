@@ -1,25 +1,18 @@
-'use strict';
-
 import { Component } from 'substance'
 import renderNodeComponent from '../../../util/renderNodeComponent'
 
-function ArticleMetaComponent() {
-  Component.apply(this, arguments);
-}
+class ArticleMetaComponent extends Component {
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
 
-ArticleMetaComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-
-    var el = $$('div')
+    let el = $$('div')
       .addClass('sc-article-meta')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
-    var children = node.nodes;
+    let children = node.nodes
     children.forEach(function(nodeId) {
-      var childNode = doc.get(nodeId);
+      let childNode = doc.get(nodeId)
       if (childNode.type !== 'unsupported') {
         el.append(
           renderNodeComponent(this, $$, childNode, {
@@ -27,11 +20,9 @@ ArticleMetaComponent.Prototype = function() {
           })
         );
       }
-    }.bind(this));
-    return el;
-  };
-};
+    }.bind(this))
+    return el
+  }
+}
 
-Component.extend(ArticleMetaComponent);
-
-export default ArticleMetaComponent;
+export default ArticleMetaComponent

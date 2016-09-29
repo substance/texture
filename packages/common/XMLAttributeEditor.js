@@ -1,48 +1,42 @@
 import map from 'lodash/map'
 import { Component } from 'substance'
 
-function XMLAttributeEditor() {
-  XMLAttributeEditor.super.apply(this, arguments);
-}
+class XMLAttributeEditor extends Component {
 
-XMLAttributeEditor.Prototype = function() {
-
-  this._getAttributeString = function() {
+  _getAttributeString() {
     return map(this.props.attributes, function(val, key) {
-      return key+'='+val;
-    }).join('\n');
-  };
+      return key+'='+val
+    }).join('\n')
+  }
 
-  this._parseAttributesFromString = function(newAttrs) {
-    newAttrs = newAttrs.split('\n');
-    var res = {};
+  _parseAttributesFromString(newAttrs) {
+    newAttrs = newAttrs.split('\n')
+    let res = {}
 
     newAttrs.forEach(function(attr) {
-      var parts = attr.split('=');
-      res[parts[0]] = parts[1];
-    });
-    return res;
-  };
+      let parts = attr.split('=')
+      res[parts[0]] = parts[1]
+    })
+    return res
+  }
 
   /* Returns the changed attributes */
-  this.getAttributes = function() {
-    var attrStr = this.refs.attributesEditor.val();
-    return this._parseAttributesFromString(attrStr);
-  };
+  getAttributes() {
+    let attrStr = this.refs.attributesEditor.val()
+    return this._parseAttributesFromString(attrStr)
+  }
 
-  this.render = function($$) {
-    var node = this.props.node;
-    var el = $$('div').addClass('sc-xml-attribute-editor');
-    var attributeStr = this._getAttributeString(node);
+  render($$) {
+    let node = this.props.node
+    let el = $$('div').addClass('sc-xml-attribute-editor')
+    let attributeStr = this._getAttributeString(node)
     el.append(
       $$('textarea')
         .ref('attributesEditor')
         .append(attributeStr)
-    );
-    return el;
-  };
-};
+    )
+    return el
+  }
+}
 
-Component.extend(XMLAttributeEditor);
-
-export default XMLAttributeEditor;
+export default XMLAttributeEditor

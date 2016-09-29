@@ -9,9 +9,9 @@ import AddXRefTool from './AddXRefTool'
 export default {
   name: 'xref',
   configure: function(config) {
-    config.addNode(XRef);
-    config.addComponent(XRef.type, XRefComponent);
-    config.addConverter('jats', XRefConverter);
+    config.addNode(XRef)
+    config.addComponent(XRef.type, XRefComponent)
+    config.addConverter('jats', XRefConverter)
 
     config.addCommand('edit-xref', EditXRefCommand, {nodeType: XRef.type})
     config.addCommand('add-xref', AddXRefCommand, {nodeType: XRef.type})

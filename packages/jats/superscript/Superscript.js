@@ -1,17 +1,11 @@
-'use strict';
-
 import { Annotation } from 'substance'
 
-function Superscript() {
-  Superscript.super.apply(this, arguments);
-}
+class Superscript extends Annotation {}
 
-Annotation.extend(Superscript);
-
-Superscript.type = 'superscript';
+Superscript.type = 'superscript'
 
 Superscript.define({
-  attributes: { type: 'object', default: {} },
-});
+  attributes: { type: 'object', default: {} }
+})
 
-export default Superscript;
+export default Superscript

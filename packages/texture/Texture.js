@@ -1,6 +1,4 @@
 import { Component, DocumentSession } from 'substance'
-import Author from '../author/Author'
-import Publisher from '../publisher/Publisher'
 
 /*
   Texture Component
@@ -88,8 +86,8 @@ class Texture extends Component {
         })
         return
       }
-      var importer = configurator.createImporter('jats')
-      var doc = importer.importDocument(xml)
+      let importer = configurator.createImporter('jats')
+      let doc = importer.importDocument(xml)
 
       // HACK: For debug purposes
       window.doc = doc

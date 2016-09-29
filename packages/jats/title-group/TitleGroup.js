@@ -1,14 +1,8 @@
-'use strict';
-
 import { Container } from 'substance'
 
-function TitleGroup() {
-  TitleGroup.super.apply(this, arguments);
-}
+class TitleGroup extends Container {}
 
-Container.extend(TitleGroup);
-
-TitleGroup.type = "title-group";
+TitleGroup.type = "title-group"
 
 /*
   Content
@@ -21,5 +15,4 @@ TitleGroup.define({
   nodes: { type: ['id'], default: [] }
 });
 
-
-export default TitleGroup;
+export default TitleGroup

@@ -1,41 +1,38 @@
-'use strict';
-
 import { Component } from 'substance'
 import EditXML from '../../common/EditXML'
 import EditContrib from './EditContrib'
 import { getAdapter } from './contribUtils'
 
-function ContribComponent() {
-  ContribComponent.super.apply(this, arguments);
+class ContribComponent extends Component {
+  constructor(...args) {
+    super(...args)
 
-  this.handleActions({
-    'closeModal': this._closeModal,
-    'xmlSaved': this._closeModal
-  });
+    this.handleActions({
+      'closeModal': this._closeModal,
+      'xmlSaved': this._closeModal
+    })
 
-  this.props.node.on('properties:changed', this.rerender, this);
-}
+    this.props.node.on('properties:changed', this.rerender, this)
+  }
 
-ContribComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var Modal = this.getComponent('modal');
-    var contrib = getAdapter(this.props.node);
-    var el = $$('div').addClass('sc-contrib')
+  render($$) {
+    let Modal = this.getComponent('modal')
+    let contrib = getAdapter(this.props.node)
+    let el = $$('div').addClass('sc-contrib')
       .append(
         $$('div').addClass('se-name')
           .append(contrib.fullName)
           .on('click', this._toggleEditor)
-      );
+      )
 
     if (this.state.editXML) {
       // Conforms to strict markup enforced by texture
       // for visual editing
-      var EditorClass;
+      let EditorClass
       if (contrib.strict) {
-        EditorClass = EditContrib;
+        EditorClass = EditContrib
       } else {
-        EditorClass = EditXML;
+        EditorClass = EditXML
       }
 
       el.append(
@@ -44,25 +41,23 @@ ContribComponent.Prototype = function() {
         }).append(
           $$(EditorClass, contrib)
         )
-      );
+      )
     }
-    return el;
-  };
+    return el
+  }
 
-  this._closeModal = function() {
+  _closeModal() {
     this.setState({
       editXML: false
-    });
-  };
+    })
+  }
 
-  this._toggleEditor = function() {
+  _toggleEditor() {
     this.setState({
       editXML: true
-    });
-  };
+    })
+  }
 
-};
+}
 
-Component.extend(ContribComponent);
-
-export default ContribComponent;
+export default ContribComponent

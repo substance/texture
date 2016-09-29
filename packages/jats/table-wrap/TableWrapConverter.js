@@ -1,5 +1,3 @@
-'use strict';
-
 import FigureConverter from '../figure/FigureConverter'
 
 export default {
@@ -9,4 +7,4 @@ export default {
 
   import: FigureConverter.import,
   export: FigureConverter.export
-};
+}

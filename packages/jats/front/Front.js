@@ -1,14 +1,8 @@
-'use strict';
-
 import { Container } from 'substance'
 
-function Front() {
-  Front.super.apply(this, arguments);
-}
+class Front extends Container {}
 
-Container.extend(Front);
-
-Front.type = "front";
+Front.type = "front"
 
 /*
   Content
@@ -23,6 +17,6 @@ Front.define({
   journalMeta: { type: 'journal-meta', optional: true },
   articleMeta: { type: 'article-meta' },
   nodes: { type: ['id'], default: [] }
-});
+})
 
-export default Front;
+export default Front

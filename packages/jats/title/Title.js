@@ -1,17 +1,11 @@
-'use strict';
-
 import { TextNode } from 'substance'
 
-function Title() {
-  Title.super.apply(this, arguments);
-}
+class Title extends TextNode {}
 
-TextNode.extend(Title);
-
-Title.type = 'title';
+Title.type = 'title'
 
 Title.define({
-  attributes: { type: 'object', default: {} },
-});
+  attributes: { type: 'object', default: {} }
+})
 
-export default Title;
+export default Title

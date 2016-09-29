@@ -1,9 +1,7 @@
-'use strict';
-
 // Helpers to define strict converters
 // everything here is taken from JATS 1.1 green http://jats.nlm.nih.gov/archiving/tag-library/1.1/
 
-var JATS = {
+let JATS = {
   ABSTRACT: ['abstract'],
   ACCESS: ['alt-text','long-desc'],
   ADDRESS_LINK: ['email','ext-link','uri'],
@@ -39,9 +37,9 @@ var JATS = {
   SUBSUP: ['sub','sup'],
   TITLE_GROUP: ['article-title', 'subtitle', 'trans-title-group', 'alt-title', 'fn-group'],
   X: ['x'],
-};
+}
 
-JATS.ARTICLE_LINK = ['inline-supplementary-material'].concat(JATS.RELATED_ARTICLE);
+JATS.ARTICLE_LINK = ['inline-supplementary-material'].concat(JATS.RELATED_ARTICLE)
 JATS.ALL_PHRASE = JATS.ADDRESS_LINK
   .concat(JATS.ARTICLE_LINK)
   .concat(JATS.APPEARANCE)
@@ -52,7 +50,7 @@ JATS.ALL_PHRASE = JATS.ADDRESS_LINK
   .concat(JATS.PHRASE)
   .concat(JATS.SIMPLE_LINK)
   .concat(JATS.SUBSUP)
-  .concat(JATS.X);
+  .concat(JATS.X)
 JATS.PARA_LEVEL = JATS.BLOCK_DISPLAY
   .concat(JATS.BLOCK_MATH)
   .concat(JATS.LIST)
@@ -60,9 +58,6 @@ JATS.PARA_LEVEL = JATS.BLOCK_DISPLAY
   .concat(JATS.NOTHING_BUT_PARA)
   .concat(JATS.RELATED_ARTICLE)
   .concat(JATS.REST_OF_PARA)
-  .concat(JATS.X);
+  .concat(JATS.X)
 
-export default JATS;
-
-
-
+export default JATS

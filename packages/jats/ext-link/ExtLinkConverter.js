@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 export default {
 
@@ -30,4 +30,4 @@ export default {
       tex-math | mml:math | abbrev | milestone-end | milestone-start | named-content |
       styled-content | fn | target | xref | sub | sup | x)*
   */
-};
+}

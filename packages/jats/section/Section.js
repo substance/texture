@@ -1,24 +1,16 @@
-'use strict';
-
 import { Container } from 'substance'
 
-function Section() {
-  Section.super.apply(this, arguments);
+class Section extends Container {
+
+  getTitle() {
+    let titleNode = this.getDocument().get(this.title)
+    if (titleNode) {
+      return titleNode.getText()
+    }
+  }
 }
 
-Section.Prototype = function() {
-
-  this.getTitle = function() {
-    var titleNode = this.getDocument().get(this.title);
-    if (titleNode) {
-      return titleNode.getText();
-    }
-  };
-};
-
-Container.extend(Section);
-
-Section.type = "section";
+Section.type = "section"
 
 /*
   Content Model
@@ -40,7 +32,6 @@ Section.define({
   title: { type: 'id', optional: true },
   nodes: { type: ['id'], default: [] },
   backMatter: { type: ['id'], default: [] }
-});
+})
 
-export default Section;
-
+export default Section

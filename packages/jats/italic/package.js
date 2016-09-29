@@ -1,5 +1,3 @@
-'use strict';
-
 import Italic from './Italic'
 import ItalicConverter from './ItalicConverter'
 import ItalicTool from './ItalicTool'

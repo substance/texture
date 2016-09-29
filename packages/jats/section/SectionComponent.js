@@ -1,36 +1,27 @@
-'use strict';
-
 import { Component, ContainerEditor, TextPropertyEditor } from 'substance'
 
-function SectionComponent() {
-  SectionComponent.super.apply(this, arguments);
-}
+class SectionComponent extends Component {
 
-SectionComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-    var el = $$('div').addClass('sc-section');
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
+    let el = $$('div').addClass('sc-section')
 
     if (node.title) {
-      var title = doc.get(node.title);
+      let title = doc.get(node.title)
       el.append(
         $$(TextPropertyEditor, { path: title.getTextPath() }).addClass('se-title').ref('titleEditor')
-      );
+      )
     }
     el.append(
       $$(ContainerEditor, { node: node }).ref('contentEditor')
         .addClass('se-content')
-    );
-    return el;
-  };
+    )
+    return el
+  }
+}
 
-};
+SectionComponent.fullWidth = true
+SectionComponent.noStyle = true
 
-Component.extend(SectionComponent);
-
-SectionComponent.fullWidth = true;
-SectionComponent.noStyle = true;
-
-export default SectionComponent;
+export default SectionComponent

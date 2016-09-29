@@ -2,76 +2,71 @@ import { Button, Component } from 'substance'
 import XMLAttributeEditor from './XMLAttributeEditor'
 import XMLEditor from './XMLEditor'
 
-function EditXML() {
-  EditXML.super.apply(this, arguments);
-}
+class EditXML extends Component {
 
-EditXML.Prototype = function() {
-  this.render = function($$) {
-    var node = this.props.node;
-    var el = $$('div').addClass('sc-edit-xml');
-    var tagName = node.tagName || node.constructor.type;
+  render($$) {
+    let node = this.props.node
+    let el = $$('div').addClass('sc-edit-xml')
+    let tagName = node.tagName || node.constructor.type
 
     el.append(
       $$('div').addClass('se-tag sm-open-tag-start').append('<'+tagName)
-    );
+    )
 
     el.append(
       $$(XMLAttributeEditor, {
         attributes: node.attributes
       }).ref('attributesEditor')
-    );
+    )
 
     el.append(
       $$('div').addClass('se-tag sm-open-tag-end').append('>')
-    );
+    )
 
     el.append(
       $$(XMLEditor, {
         xml: node.xmlContent
       }).ref('xmlEditor')
-    );
+    )
 
     el.append(
       $$('div').addClass('se-tag sm-end-tag').append('</'+tagName+'>')
-    );
+    )
 
     el.append(
       $$('div').addClass('se-actions').append(
         $$(Button).append('Save').on('click', this._save),
         $$(Button).addClass('se-cancel').append('Cancel').on('click', this._cancel)
       )
-    );
-    return el;
-  };
+    )
+    return el
+  }
 
-  this._cancel = function() {
+  _cancel() {
     this.send('closeModal');
-  };
+  }
 
-  this._delete = function() {
+  _delete() {
     console.warn('Not yet implemented');
     // TODO: this is actually not very trivial as we don't
     // know the node's context. E.g. when deleting
     // a contrib node we need to remove the id from
-  };
+  }
 
-  this._save = function() {
-    var documentSession = this.context.documentSession;
-    var node = this.props.node;
+  _save() {
+    let documentSession = this.context.documentSession
+    let node = this.props.node
 
-    var newAttributes = this.refs.attributesEditor.getAttributes();
-    var newXML = this.refs.xmlEditor.getXML();
+    let newAttributes = this.refs.attributesEditor.getAttributes()
+    let newXML = this.refs.xmlEditor.getXML()
 
     // TODO: add validity checks. E.g. try to parse XML string
     documentSession.transaction(function(tx) {
-      tx.set([node.id, 'xmlContent'], newXML);
-      tx.set([node.id, 'attributes'], newAttributes);
-    });
-    this.send('closeModal');
-  };
-};
+      tx.set([node.id, 'xmlContent'], newXML)
+      tx.set([node.id, 'attributes'], newAttributes)
+    })
+    this.send('closeModal')
+  }
+}
 
-Component.extend(EditXML);
-
-export default EditXML;
+export default EditXML

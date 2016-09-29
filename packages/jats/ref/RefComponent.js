@@ -11,7 +11,7 @@ class RefComponent extends Component {
 }
 
 // Isolated Nodes config
-RefComponent.fullWidth = true;
-RefComponent.noStyle = true;
+RefComponent.fullWidth = true
+RefComponent.noStyle = true
 
-export default RefComponent;
+export default RefComponent

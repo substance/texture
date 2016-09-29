@@ -1,13 +1,7 @@
-'use strict';
-
 import Figure from '../figure/Figure'
 
-function TableWrap() {
-  TableWrap.super.apply(this, arguments);
-}
+class TableWrap extends Figure {}
 
-Figure.extend(TableWrap);
+TableWrap.type = 'table-wrap'
 
-TableWrap.type = 'table-wrap';
-
-export default TableWrap;
+export default TableWrap

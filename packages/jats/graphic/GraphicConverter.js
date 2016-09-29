@@ -1,12 +1,10 @@
-'use strict';
-
 import JATS from '../JATS'
 import XMLIterator from '../../../util/XMLIterator'
 
-var GRAPHIC_ELEMENTS = JATS.ACCESS
+let GRAPHIC_ELEMENTS = JATS.ACCESS
     .concat(JATS.ADDRESS_LINK)
     .concat(['caption', 'object-id', 'kwd-group', 'label'])
-    .concat(JATS.DISPLAY_BACK_MATTER);
+    .concat(JATS.DISPLAY_BACK_MATTER)
 
 export default {
 
@@ -41,15 +39,15 @@ export default {
   */
 
   import: function(el, node, converter) {
-    var iterator = new XMLIterator(el.getChildren());
+    let iterator = new XMLIterator(el.getChildren())
     iterator.manyOf(GRAPHIC_ELEMENTS, function(child) {
-      node.nodes.push(converter.convertElement(child).id);
-    });
-    if (iterator.hasNext()) throw new Error('Illegal JATS: ' + el.outerHTML);
+      node.nodes.push(converter.convertElement(child).id)
+    })
+    if (iterator.hasNext()) throw new Error('Illegal JATS: ' + el.outerHTML)
   },
 
   export: function(node, el, converter) {
-    el.append(converter.convertNodes(node.nodes));
+    el.append(converter.convertNodes(node.nodes))
   }
 
-};
+}

@@ -5,31 +5,25 @@ import { DocumentNode, DefaultDOMElement as DOMElement } from 'substance'
 
   One item in a bibliographic list.
 */
-function Ref() {
-  Ref.super.apply(this, arguments);
-}
+class Ref extends DocumentNode {
 
-Ref.Prototype = function() {
   /*
     Checks if ref is a plain text citation, with no formatting / tagging etc.
   */
-  this.isPlain = function() {
+  isPlain() {
     // TODO:
-  };
+  }
 
   /*
     Get parsed DOM version of XML content
   */
-  this.getDOM = function() {
-    return DOMElement.parseXML(this.xmlContent);
-  };
+  getDOM() {
+    return DOMElement.parseXML(this.xmlContent)
+  }
 
-};
+}
 
-
-DocumentNode.extend(Ref);
-
-Ref.type = 'ref';
+Ref.type = 'ref'
 
 /*
   Content
@@ -38,6 +32,6 @@ Ref.type = 'ref';
 Ref.define({
   attributes: { type: 'object', default: {} },
   xmlContent: {type: 'string', default: ''}
-});
+})
 
-export default Ref;
+export default Ref

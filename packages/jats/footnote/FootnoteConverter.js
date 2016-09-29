@@ -1,5 +1,3 @@
-'use strict';
-
 import XMLIterator from '../../../util/XMLIterator'
 
 export default {
@@ -20,21 +18,21 @@ export default {
   */
 
   import: function(el, node, converter) {
-    var iterator = new XMLIterator(el.getChildren());
+    var iterator = new XMLIterator(el.getChildren())
     iterator.optional('label', function(child) {
-      node.label = converter.convertElement(child).id;
-    });
+      node.label = converter.convertElement(child).id
+    })
     iterator.oneOrMoreOf('p', function(child) {
-      node.nodes.push(converter.convertElement(child).id);
-    });
-    if (iterator.hasNext()) throw new Error('Illegal JATS: ' + el.outerHTML);
+      node.nodes.push(converter.convertElement(child).id)
+    })
+    if (iterator.hasNext()) throw new Error('Illegal JATS: ' + el.outerHTML)
   },
 
   export: function(node, el, converter) {
     if (node.label) {
-      el.append(converter.convertNode(node.label));
+      el.append(converter.convertNode(node.label))
     }
-    el.append(converter.convertNodes(node.nodes));
+    el.append(converter.convertNodes(node.nodes))
   }
 
-};
+}

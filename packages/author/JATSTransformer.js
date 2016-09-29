@@ -1,5 +1,5 @@
 import last from 'lodash/last'
-import { oo, JSONConverter, annotationHelpers } from 'substance'
+import { JSONConverter, annotationHelpers } from 'substance'
 
 /*
   EXPERIMENTAL:
@@ -24,129 +24,125 @@ import { oo, JSONConverter, annotationHelpers } from 'substance'
       is used at the same time with the JATS editing interface.
 */
 
-function JATSTransformer() {}
+class JATSTransformer {
 
-JATSTransformer.Prototype = function() {
+  fromJATS(doc) {
+    let jsonConverter = new JSONConverter()
+    let json = doc.toJSON()
+    let converted = doc.newInstance()
+    jsonConverter.importDocument(converted, json)
 
-  this.fromJATS = function(doc) {
-    var jsonConverter = new JSONConverter();
-    var json = doc.toJSON();
-    var converted = doc.newInstance();
-    jsonConverter.importDocument(converted, json);
+    let body = doc.get('body')
+    let nodes = body.getNodes()
 
-    var body = doc.get('body');
-    var nodes = body.getNodes();
-
-    var nodeIds = _flattenSections(converted, nodes, [], 1);
+    let nodeIds = _flattenSections(converted, nodes, [], 1)
     converted.create({
       id: 'bodyFlat',
       type: 'body',
       nodes: nodeIds
-    });
-    return converted;
-  };
-
-  function _flattenSections(doc, nodes, result, level) {
-    nodes.forEach(function(node) {
-      if (node.type === 'section') {
-        var id = 'h_' + node.id;
-        var titleId = node.title;
-        doc.create({
-          id: id,
-          type: 'heading',
-          sectionId: node.id,
-          level: level,
-          content: node.getTitle(),
-        });
-        if (titleId) {
-          annotationHelpers.transferAnnotations(doc, [titleId, 'content'], 0, [id, 'content'], 0);
-        }
-        result.push(id);
-        result = _flattenSections(doc, node.getNodes(), result, level+1);
-        result = result.concat(node.backMatter);
-      } else {
-        result.push(node.id);
-      }
-    });
-    return result;
+    })
+    return converted
   }
 
-  this.toJATS = function(doc) {
-    var jsonConverter = new JSONConverter();
-    var json = doc.toJSON();
-    var converted = doc.newInstance();
-    jsonConverter.importDocument(converted, json);
+  toJATS(doc) {
+    let jsonConverter = new JSONConverter()
+    let json = doc.toJSON()
+    let converted = doc.newInstance()
+    jsonConverter.importDocument(converted, json)
 
-    var body = converted.get('bodyFlat');
-    var nodeIds = _createSections(converted, body.getNodes());
+    let body = converted.get('bodyFlat')
+    let nodeIds = _createSections(converted, body.getNodes())
     if (converted.get('body')) {
-      converted.set(['body', 'nodes'], nodeIds);
+      converted.set(['body', 'nodes'], nodeIds)
     } else {
       converted.create({
         id: 'body',
         type: 'body',
         nodes: nodeIds
-      });
+      })
     }
-    return converted;
-  };
-
-  var _isSectionBackMatter = {
-    "notes": true,
-    "fn-group": true,
-    "glossary": true,
-    "ref-list": true
-  };
-
-  function _createSections(doc, nodes) {
-    var stack = [{
-      nodes: [],
-      backMatter: []
-    }];
-
-    function _createSection(item) {
-      var title = doc.create({
-        type: 'title',
-        content: item.node.getText(),
-      });
-      annotationHelpers.transferAnnotations(doc, item.node.getTextPath(), 0, title.getTextPath(), 0);
-      return doc.create({
-        type: 'section',
-        title: title.id,
-        nodes: item.nodes,
-        backMatter: item.backMatter
-      });
-    }
-    var item, sec;
-
-    for (var i=0; i < nodes.length; i++) {
-      var node = nodes[i];
-      if (node.type === 'heading') {
-        while (stack.length >= node.level+1) {
-          item = stack.pop();
-          sec = _createSection(item);
-          last(stack).nodes.push(sec.id);
-        }
-        stack.push({
-          node: node,
-          nodes: [],
-          backMatter: [],
-        });
-      } else if (_isSectionBackMatter[node.type]) {
-        last(stack).backMatter.push(node.id);
-      } else {
-        last(stack).nodes.push(node.id);
-      }
-    }
-    while (stack.length > 1) {
-      item = stack.pop();
-      sec = _createSection(item);
-      last(stack).nodes.push(sec.id);
-    }
-    return stack[0].nodes;
+    return converted
   }
-};
+}
 
-oo.initClass(JATSTransformer);
+let _isSectionBackMatter = {
+  "notes": true,
+  "fn-group": true,
+  "glossary": true,
+  "ref-list": true
+}
 
-export default JATSTransformer;
+function _flattenSections(doc, nodes, result, level) {
+  nodes.forEach(function(node) {
+    if (node.type === 'section') {
+      let id = 'h_' + node.id;
+      let titleId = node.title;
+      doc.create({
+        id: id,
+        type: 'heading',
+        sectionId: node.id,
+        level: level,
+        content: node.getTitle(),
+      })
+      if (titleId) {
+        annotationHelpers.transferAnnotations(doc, [titleId, 'content'], 0, [id, 'content'], 0)
+      }
+      result.push(id)
+      result = _flattenSections(doc, node.getNodes(), result, level+1)
+      result = result.concat(node.backMatter)
+    } else {
+      result.push(node.id)
+    }
+  })
+  return result
+}
+
+function _createSections(doc, nodes) {
+  let stack = [{
+    nodes: [],
+    backMatter: []
+  }]
+
+  function _createSection(item) {
+    let title = doc.create({
+      type: 'title',
+      content: item.node.getText(),
+    })
+    annotationHelpers.transferAnnotations(doc, item.node.getTextPath(), 0, title.getTextPath(), 0)
+    return doc.create({
+      type: 'section',
+      title: title.id,
+      nodes: item.nodes,
+      backMatter: item.backMatter
+    })
+  }
+  let item, sec
+
+  for (let i=0; i < nodes.length; i++) {
+    let node = nodes[i]
+    if (node.type === 'heading') {
+      while (stack.length >= node.level+1) {
+        item = stack.pop()
+        sec = _createSection(item)
+        last(stack).nodes.push(sec.id)
+      }
+      stack.push({
+        node: node,
+        nodes: [],
+        backMatter: []
+      })
+    } else if (_isSectionBackMatter[node.type]) {
+      last(stack).backMatter.push(node.id)
+    } else {
+      last(stack).nodes.push(node.id)
+    }
+  }
+  while (stack.length > 1) {
+    item = stack.pop()
+    sec = _createSection(item)
+    last(stack).nodes.push(sec.id)
+  }
+  return stack[0].nodes
+}
+
+export default JATSTransformer

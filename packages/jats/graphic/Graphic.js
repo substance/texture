@@ -1,25 +1,17 @@
-'use strict';
-
 import { Container } from 'substance'
 
-function Graphic() {
-  Graphic.super.apply(this, arguments);
+class Graphic extends Container {
+
+  getHref() {
+    return this.attributes['xlink:href']
+  }
+
 }
 
-Graphic.Prototype = function() {
-
-  this.getHref = function() {
-    return this.attributes['xlink:href'];
-  };
-
-};
-
-Container.extend(Graphic);
-
-Graphic.type= 'graphic';
+Graphic.type = 'graphic'
 
 Graphic.define({
-  attributes: { type: 'object', default: {} },
-});
+  attributes: { type: 'object', default: {} }
+})
 
-export default Graphic;
+export default Graphic

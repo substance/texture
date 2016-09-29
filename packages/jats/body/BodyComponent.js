@@ -1,19 +1,13 @@
-'use strict';
-
 import { Component, ContainerEditor } from 'substance'
 
-function BodyComponent() {
-  Component.apply(this, arguments);
-}
+class BodyComponent extends Component {
 
-BodyComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var node = this.props.node;
-    var configurator = this.props.configurator;
-    var el = $$('div')
+  render($$) {
+    let node = this.props.node
+    let configurator = this.props.configurator
+    let el = $$('div')
       .addClass('sc-body')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
     el.append(
       $$(ContainerEditor, {
@@ -22,12 +16,9 @@ BodyComponent.Prototype = function() {
         commands: configurator.getSurfaceCommandNames(),
         textTypes: configurator.getTextTypes()
       }).ref('body')
-    );
-    return el;
-  };
-};
+    )
+    return el
+  }
+}
 
-
-Component.extend(BodyComponent);
-
-export default BodyComponent;
+export default BodyComponent

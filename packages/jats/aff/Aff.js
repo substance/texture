@@ -1,12 +1,8 @@
-'use strict';
-
 import { DocumentNode } from 'substance'
-import toDOM from '../../../util/toDOM'
 
-class Aff extends DocumentNode {
-}
+class Aff extends DocumentNode {}
 
-Aff.type = 'aff';
+Aff.type = 'aff'
 
 /*
   Content
@@ -24,6 +20,6 @@ Aff.type = 'aff';
 Aff.define({
   attributes: { type: 'object', default: {} },
   xmlContent: { type: 'string', default: ''}
-});
+})
 
 export default Aff

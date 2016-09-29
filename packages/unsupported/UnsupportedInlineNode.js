@@ -1,17 +1,13 @@
 import { InlineNode } from 'substance'
 
-function UnsupportedInlineNode() {
-  UnsupportedInlineNode.super.apply(this, arguments);
-}
+class UnsupportedInlineNode extends InlineNode {}
 
-InlineNode.extend(UnsupportedInlineNode);
-
-UnsupportedInlineNode.type = 'unsupported-inline';
+UnsupportedInlineNode.type = 'unsupported-inline'
 
 UnsupportedInlineNode.define({
   attributes: { type: 'object', default: {} },
   xmlContent: {type: 'string', default: ''},
   tagName: 'string'
-});
+})
 
-export default UnsupportedInlineNode;
+export default UnsupportedInlineNode

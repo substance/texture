@@ -1,17 +1,11 @@
-'use strict';
-
 import { TextNode } from 'substance'
 
-function Label() {
-  Label.super.apply(this, arguments);
-}
+class Label extends TextNode {}
 
-TextNode.extend(Label);
-
-Label.type = 'label';
+Label.type = 'label'
 
 Label.define({
-  attributes: { type: 'object', default: {} },
-});
+  attributes: { type: 'object', default: {} }
+})
 
-export default Label;
+export default Label

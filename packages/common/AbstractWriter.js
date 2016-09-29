@@ -1,4 +1,4 @@
-import { ProseEditor, Highlights, Toolbar, AbstractEditor } from 'substance'
+import { Highlights, Toolbar, AbstractEditor } from 'substance'
 import SaveHandler from './SaveHandler'
 
 // TODO: we need to think if it is really a good idea to

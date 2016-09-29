@@ -1,15 +1,9 @@
-'use strict';
-
 import { Component } from 'substance'
 
-function UnsupportedNodeComponent() {
-  Component.apply(this, arguments);
-}
+class UnsupportedNodeComponent extends Component {
 
-UnsupportedNodeComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var el = $$('span')
+  render($$) {
+    let el = $$('span')
       .addClass('sc-unsupported-inline-node')
       .attr('data-id', this.props.node.id)
       .attr('contenteditable', false)
@@ -21,14 +15,12 @@ UnsupportedNodeComponent.Prototype = function() {
             )
           )
         )
-      );
-    return el;
-  };
-};
+      )
+    return el
+  }
+}
 
-Component.extend(UnsupportedNodeComponent);
+UnsupportedNodeComponent.fullWidth = true
+UnsupportedNodeComponent.noStyle = true
 
-UnsupportedNodeComponent.fullWidth = true;
-UnsupportedNodeComponent.noStyle = true;
-
-export default UnsupportedNodeComponent;
+export default UnsupportedNodeComponent

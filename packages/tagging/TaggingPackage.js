@@ -38,4 +38,3 @@ export default {
     config.addLabel('tag-contrib', 'Author')
   }
 }
-

@@ -4,6 +4,6 @@ export default {
   name: 'common',
   configure: function(config) {
     config.addComponent('tool-target-insert', ToolDropdown)
-    config.addLabel('insert', 'Insert');
+    config.addLabel('insert', 'Insert')
   }
 }

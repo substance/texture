@@ -1,26 +1,20 @@
-'use strict';
-
 import { Component } from 'substance'
 import renderNodeComponent from '../../../util/renderNodeComponent'
 
-function BackComponent() {
-  Component.apply(this, arguments);
-}
+class BackComponent extends Component {
 
-BackComponent.Prototype = function() {
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
 
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-
-    var el = $$('div')
+    let el = $$('div')
       .addClass('sc-back')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
     // Ref elements
-    var children = node.nodes;
+    let children = node.nodes
     children.forEach(function(nodeId) {
-      var childNode = doc.get(nodeId);
+      let childNode = doc.get(nodeId)
       if (childNode.type !== 'unsupported') {
         el.append(
           renderNodeComponent(this, $$, childNode, {
@@ -28,14 +22,12 @@ BackComponent.Prototype = function() {
           })
         );
       } else {
-        console.info(childNode.type+ ' inside <back> currently not supported by the editor.');
+        console.info(childNode.type+ ' inside <back> currently not supported by the editor.')
       }
-    }.bind(this));
+    }.bind(this))
 
-    return el;
-  };
-};
+    return el
+  }
+}
 
-Component.extend(BackComponent);
-
-export default BackComponent;
+export default BackComponent

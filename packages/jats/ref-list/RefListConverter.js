@@ -1,9 +1,7 @@
-'use strict';
-
 import JATS from '../JATS'
 import XMLIterator from '../../../util/XMLIterator'
 
-var REFLIST_CONTENT = ['ref', 'ref-list'].concat(JATS.PARA_LEVEL);
+let REFLIST_CONTENT = ['ref', 'ref-list'].concat(JATS.PARA_LEVEL)
 
 export default {
 
@@ -25,27 +23,27 @@ export default {
     )
   */
   import: function(el, node, converter) {
-    var iterator = new XMLIterator(el.getChildren());
+    let iterator = new XMLIterator(el.getChildren())
     iterator.optional('label', function(child) {
-      node.label = converter.convertElement(child).id;
-    });
+      node.label = converter.convertElement(child).id
+    })
     iterator.optional('title', function(child) {
-      node.title = converter.convertElement(child).id;
-    });
+      node.title = converter.convertElement(child).id
+    })
     iterator.manyOf(REFLIST_CONTENT, function(child) {
-      node.nodes.push(converter.convertElement(child).id);
-    });
-    if (iterator.hasNext()) throw new Error('Illegal JATS: ' + el.outerHTML);
+      node.nodes.push(converter.convertElement(child).id)
+    })
+    if (iterator.hasNext()) throw new Error('Illegal JATS: ' + el.outerHTML)
   },
 
   export: function(node, el, converter) {
     if(node.label) {
-      el.append(converter.convertNode(node.label));
+      el.append(converter.convertNode(node.label))
     }
     if(node.title) {
-      el.append(converter.convertNode(node.title));
+      el.append(converter.convertNode(node.title))
     }
-    el.append(converter.convertNodes(node.nodes));
+    el.append(converter.convertNodes(node.nodes))
   }
 
-};
+}

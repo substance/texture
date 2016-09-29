@@ -1,5 +1,3 @@
-'use strict';
-
 import { LinkCommand } from 'substance'
 
 class ExtLinkCommand extends LinkCommand {

@@ -1,14 +1,8 @@
-'use strict';
-
 import { Container } from 'substance'
 
-function Body() {
-  Body.super.apply(this, arguments);
-}
+class Body extends Container {}
 
-Container.extend(Body);
-
-Body.type = "body";
+Body.type = "body"
 
 /*
   Content
@@ -21,7 +15,6 @@ Body.define({
   attributes: { type: 'object', default: {} },
   nodes: { type: ['id'], default: [] },
   sigBlock: { type: ['sig-block'], optional: true }
-});
+})
 
-
-export default Body;
+export default Body

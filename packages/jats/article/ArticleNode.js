@@ -1,12 +1,8 @@
 import { DocumentNode } from 'substance'
 
-function ArticleNode() {
-  ArticleNode.super.apply(this, arguments);
-}
+class ArticleNode extends DocumentNode {}
 
-DocumentNode.extend(ArticleNode);
-
-ArticleNode.type = 'article';
+ArticleNode.type = 'article'
 
 /*
   Attributes
@@ -32,7 +28,7 @@ ArticleNode.define({
   back: { type: 'id', optional: true },
   floatsGroup: { type: 'id', optional: true },
   subArticles: { type: ['id'], optional: true },
-  responses: { type: ['id'], optional: true },
-});
+  responses: { type: ['id'], optional: true }
+})
 
-export default ArticleNode;
+export default ArticleNode

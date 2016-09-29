@@ -10,9 +10,9 @@ export default {
       name: 'texture-article',
       ArticleClass: TextureArticle,
       defaultTextType: 'paragraph'
-    });
-    config.addNode(ArticleNode);
-    config.addConverter('jats', ArticleConverter);
-    config.addComponent(ArticleNode.type, ArticleComponent);
+    })
+    config.addNode(ArticleNode)
+    config.addConverter('jats', ArticleConverter)
+    config.addComponent(ArticleNode.type, ArticleComponent)
   }
 }

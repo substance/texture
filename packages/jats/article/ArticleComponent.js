@@ -1,54 +1,49 @@
 import { Component } from 'substance'
 import renderNodeComponent from '../../../util/renderNodeComponent'
 
-function ArticleComponent() {
-  Component.apply(this, arguments);
-}
+class ArticleComponent extends Component {
 
-ArticleComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-    var configurator = this.props.configurator;
-    var el = $$('div')
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
+    let configurator = this.props.configurator
+    let el = $$('div')
       .addClass('sc-article')
-      .attr('data-id', this.props.node.id);
+      .attr('data-id', this.props.node.id)
 
     // Render front
-    var front = doc.get('front');
+    let front = doc.get('front')
     if (front) {
-      var frontEl = renderNodeComponent(this, $$, front, {
+      let frontEl = renderNodeComponent(this, $$, front, {
         disabled: this.props.disabled,
         configurator: configurator
-      });
-      el.append(frontEl);
+      })
+      el.append(frontEl)
     }
 
     // Render body
-    var body = doc.get(this.props.bodyId);
+    let body = doc.get(this.props.bodyId)
     if (body) {
-      var bodyEl = renderNodeComponent(this, $$, body, {
+      let bodyEl = renderNodeComponent(this, $$, body, {
         disabled: this.props.disabled,
         configurator: configurator
-      });
-      el.append(bodyEl);
+      })
+      el.append(bodyEl)
     }
 
     // Render back matter
-    var back = doc.get('back');
+    let back = doc.get('back')
     if (back) {
-      var backEl = renderNodeComponent(this, $$, back, {
+      let backEl = renderNodeComponent(this, $$, back, {
         disabled: this.props.disabled,
         configurator: configurator
       });
-      el.append(backEl);
+      el.append(backEl)
     }
 
-    return el;
-  };
-};
+    return el
+  }
 
-Component.extend(ArticleComponent);
+}
 
-export default ArticleComponent;
+export default ArticleComponent

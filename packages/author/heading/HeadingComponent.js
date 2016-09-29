@@ -6,7 +6,6 @@ class HeadingComponent extends TextBlockComponent {
     let el = super.render($$)
     return el.addClass("sc-heading sm-level-"+this.props.node.level)
   }
-
 }
 
 export default HeadingComponent

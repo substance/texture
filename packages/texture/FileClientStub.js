@@ -23,5 +23,4 @@ class FileClientStub {
   }
 }
 
-
 export default FileClientStub

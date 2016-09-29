@@ -1,28 +1,22 @@
 import { Component } from 'substance'
 
-function XMLEditor() {
-  XMLEditor.super.apply(this, arguments);
-}
+class XMLEditor extends Component {
 
-XMLEditor.Prototype = function() {
+  getXML() {
+    return this.refs.xml.val()
+  }
 
-  this.getXML = function() {
-    return this.refs.xml.val();
-  };
-
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-xml-editor');
+  render($$) {
+    let el = $$('div').addClass('sc-xml-editor')
 
     el.append(
       $$('textarea')
         .ref('xml')
         .append(this.props.xml)
-    );
-    return el;
-  };
+    )
+    return el
+  }
 
-};
+}
 
-Component.extend(XMLEditor);
-
-export default XMLEditor;
+export default XMLEditor

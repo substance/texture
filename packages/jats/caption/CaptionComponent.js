@@ -1,41 +1,33 @@
-'use strict';
-
 import { Component, ContainerEditor, TextPropertyEditor } from 'substance'
 
-function CaptionComponent() {
-  Component.apply(this, arguments);
-}
+class CaptionComponent extends Component {
 
-CaptionComponent.Prototype = function() {
+  render($$) {
+    let node = this.props.node
+    let doc = node.getDocument()
 
-  this.render = function($$) {
-    var node = this.props.node;
-    var doc = node.getDocument();
-
-    var el = $$('div')
+    let el = $$('div')
       .addClass('sc-caption')
-      .attr('data-id', node.id);
+      .attr('data-id', node.id)
 
     if (node.title) {
-      var title = doc.get(node.title);
+      let title = doc.get(node.title);
       el.append($$(TextPropertyEditor, {
         disabled: this.props.disabled,
         path: title.getTextPath()
-      })).ref('title');
+      })).ref('title')
     }
 
-    var contentEl = $$('div').addClass('se-content');
-    var contentEditor = $$(ContainerEditor, {
+    let contentEl = $$('div').addClass('se-content')
+    let contentEditor = $$(ContainerEditor, {
       disabled: this.props.disabled,
       node: node
-    }).ref('content');
-    contentEl.append(contentEditor);
-    el.append(contentEl);
+    }).ref('content')
+    contentEl.append(contentEditor)
+    el.append(contentEl)
 
-    return el;
-  };
-};
+    return el
+  }
+}
 
-Component.extend(CaptionComponent);
-
-export default CaptionComponent;
+export default CaptionComponent

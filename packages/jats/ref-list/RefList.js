@@ -1,5 +1,3 @@
-'use strict';
-
 import { Container } from 'substance'
 
 /*
@@ -7,13 +5,9 @@ import { Container } from 'substance'
 
   List of bibliographic references for a document or document component.
 */
-function RefList() {
-  RefList.super.apply(this, arguments);
-}
+class RefList extends Container {}
 
-Container.extend(RefList);
-
-RefList.type = 'ref-list';
+RefList.type = 'ref-list'
 
   /*
     (
@@ -33,7 +27,7 @@ RefList.define({
   attributes: { type: 'object', default: {} },
   label: { type: 'label', optional: true },
   title: { type: 'title', optional: true },
-  nodes: { type: ['id'], default: [] },
-});
+  nodes: { type: ['id'], default: [] }
+})
 
-export default RefList;
+export default RefList

@@ -1,25 +1,17 @@
-'use strict';
-
 import { Component, TextPropertyEditor } from 'substance'
 
-function TitleComponent() {
-  TitleComponent.super.apply(this, arguments);
-}
+class TitleComponent extends Component {
 
-TitleComponent.Prototype = function() {
-
-  this.render = function($$) {
-    var el = $$('div').addClass('sc-title');
-    var node = this.props.node;
-    var titleEditor = $$(TextPropertyEditor, {
+  render($$) {
+    let el = $$('div').addClass('sc-title')
+    let node = this.props.node
+    let titleEditor = $$(TextPropertyEditor, {
       disabled: this.props.disabled,
       path: node.getTextPath()
-    }).ref('titleEditor');
-    el.append(titleEditor);
-    return el;
-  };
-};
+    }).ref('titleEditor')
+    el.append(titleEditor)
+    return el
+  }
+}
 
-Component.extend(TitleComponent);
-
-export default TitleComponent;
+export default TitleComponent

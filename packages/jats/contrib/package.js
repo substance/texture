@@ -5,8 +5,8 @@ import ContribConverter from './ContribConverter'
 export default {
   name: 'contrib',
   configure: function(config) {
-    config.addNode(Contrib);
-    config.addComponent(Contrib.type, ContribComponent);
-    config.addConverter('jats', ContribConverter);
+    config.addNode(Contrib)
+    config.addComponent(Contrib.type, ContribComponent)
+    config.addConverter('jats', ContribConverter)
   }
 }

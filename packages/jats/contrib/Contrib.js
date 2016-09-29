@@ -1,10 +1,6 @@
-'use strict';
-
 import { DocumentNode } from 'substance'
 
-class Contrib extends DocumentNode {
-
-}
+class Contrib extends DocumentNode {}
 
 Contrib.type = 'contrib';
 
@@ -21,6 +17,6 @@ Contrib.type = 'contrib';
 Contrib.define({
   attributes: { type: 'object', default: {} },
   xmlContent: { type: 'string', default: ''}
-});
+})
 
-export default Contrib;
+export default Contrib

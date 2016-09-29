@@ -16,7 +16,7 @@ let configurator = new TextureConfigurator()
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
-    var app = Texture.mount({
+    let app = Texture.mount({
       configurator: configurator,
       documentId: 'elife-15278'
     }, document.body)

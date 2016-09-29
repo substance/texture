@@ -1,11 +1,5 @@
-'use strict';
-
 import FigureComponent from '../figure/FigureComponent'
 
-function TableWrapComponent() {
-  TableWrapComponent.super.apply(this, arguments);
-}
+class TableWrapComponent extends FigureComponent {}
 
-FigureComponent.extend(TableWrapComponent);
-
-export default TableWrapComponent;
+export default TableWrapComponent

@@ -1,4 +1,4 @@
-var b = require('substance-bundler');
+var b = require('substance-bundler')
 
 b.task('clean', function() {
   b.rm('./dist')
@@ -44,7 +44,7 @@ b.task('publisher', ['clean', 'substance', 'assets'], buildExample('publisher'))
 b.task('tagging', ['author'], buildExample('tagging'))
 b.task('examples', ['author', 'publisher', 'tagging'])
 
-// build all
+// build all examples
 b.task('default', ['examples'])
 
 var TEST ='.test/'
@@ -69,7 +69,7 @@ b.task('test:browser', function() {
     targets: [
       { dest: TEST+'tests.js', format: 'umd', moduleName: 'tests' }
     ]
-  });
+  })
 })
 
 b.task('test:server', function() {
@@ -86,10 +86,12 @@ b.task('test:server', function() {
     targets: [
       { dest: TEST+'tests.cjs.js', format: 'cjs' },
     ]
-  });
+  })
 })
 
 b.task('test', ['substance:all', 'test:clean', 'test:assets', 'test:browser', 'test:server'])
+
+
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

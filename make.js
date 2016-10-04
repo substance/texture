@@ -47,13 +47,16 @@ b.task('examples', ['author', 'publisher', 'tagging'])
 // build all
 b.task('default', ['examples'])
 
+var TEST ='.test/'
 
 b.task('test:clean', function() {
-  b.rm('dist/test')
+  b.rm(TEST)
 })
 
 b.task('test:assets', function() {
-  b.copy('./node_modules/substance-test/dist/*', './dist/test', { root: './node_modules/substance-test/dist' })
+  // TODO: it would be nice to treat such glob patterns
+  // differently, so that we do not need to specify glob root
+  b.copy('./node_modules/substance-test/dist/*', TEST, { root: './node_modules/substance-test/dist' })
 })
 
 b.task('test:browser', function() {
@@ -64,7 +67,7 @@ b.task('test:browser', function() {
     external: ['substance-test', 'substance'],
     commonjs: { include: ['node_modules/lodash/**'] },
     targets: [
-      { dest: './dist/test/tests.js', format: 'umd', moduleName: 'tests' }
+      { dest: TEST+'tests.js', format: 'umd', moduleName: 'tests' }
     ]
   });
 })
@@ -76,18 +79,17 @@ b.task('test:server', function() {
     external: ['substance-test', 'substance'],
     commonjs: {
       include: [
-        'node_modules/lodash/**',
-        'node_modules/substance-cheerio/**'
+        '/**/lodash/**',
+        '/**/substance-cheerio/**'
       ]
     },
     targets: [
-      { dest: './dist/test/run-tests.js', format: 'cjs' },
+      { dest: TEST+'tests.cjs.js', format: 'cjs' },
     ]
   });
 })
 
 b.task('test', ['substance:all', 'test:clean', 'test:assets', 'test:browser', 'test:server'])
-
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

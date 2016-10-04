@@ -7,8 +7,8 @@
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
-    "substance-bundler": "^0.4.20",
-    "substance-test": "^0.2.2"
+    "substance-bundler": "0.4.24",
+    "substance-test": "0.2.3"
   },
   "scripts": {
     "bundle": "node make",

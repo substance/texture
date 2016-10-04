@@ -3,3 +3,4 @@ logs
 dist
 node_modules
 .lock-wscript
+.test

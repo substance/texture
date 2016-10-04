@@ -1,9 +1,10 @@
+import { LinkCommand, EditAnnotationCommand } from 'substance'
 import ExtLink from './ExtLink'
 import ExtLinkConverter from './ExtLinkConverter'
 import ExtLinkComponent from './ExtLinkComponent'
 import ExtLinkTool from './ExtLinkTool'
-import ExtLinkCommand from './ExtLinkCommand'
-import EditExtLinkCommand from './EditExtLinkCommand'
+
+// import EditExtLinkCommand from './EditExtLinkCommand'
 import EditExtLinkTool from './EditExtLinkTool'
 
 export default {
@@ -13,8 +14,8 @@ export default {
     config.addConverter('jats', ExtLinkConverter)
     config.addComponent(ExtLink.type, ExtLinkComponent)
 
-    config.addCommand(ExtLink.type, ExtLinkCommand, {nodeType: ExtLink.type})
-    config.addCommand('edit-ext-link', EditExtLinkCommand, {nodeType: ExtLink.type})
+    config.addCommand(ExtLink.type, LinkCommand, {nodeType: ExtLink.type})
+    config.addCommand('edit-ext-link', EditAnnotationCommand, {nodeType: ExtLink.type})
     config.addTool(ExtLink.type, ExtLinkTool, {target: 'annotations'})
     config.addTool('edit-ext-link', EditExtLinkTool, { target: 'overlay' })
     config.addIcon(ExtLink.type, { 'fontawesome': 'fa-link'})

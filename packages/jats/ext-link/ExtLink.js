@@ -2,10 +2,12 @@ import { Annotation, Fragmenter } from 'substance'
 
 class ExtLink extends Annotation {}
 
-ExtLink.type = "ext-link"
+ExtLink.type = 'ext-link'
 
 ExtLink.define({
-  attributes: { type: 'object', default: {} }
+  attributes: {
+    type: 'object', default: {'xlink:href': ''}
+  }
 })
 
 // in presence of overlapping annotations will try to render this as one element

@@ -29,12 +29,14 @@ function buildExample(example) {
     b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
     b.js('examples/'+example+'/app.js', {
       // need buble if we want to minify later
-      // buble: true,
+      buble: false,
       external: ['substance'],
       commonjs: { include: ['node_modules/lodash/**'] },
-      dest: './dist/'+example+'/app.js',
-      format: 'umd',
-      moduleName: example
+      targets: [{
+        // useStrict: false, // need for Safari 9 to work
+        dest: './dist/'+example+'/app.js',
+        format: 'umd', moduleName: example,
+      }]
     })
   }
 }
@@ -90,7 +92,6 @@ b.task('test:server', function() {
 })
 
 b.task('test', ['substance:all', 'test:clean', 'test:assets', 'test:browser', 'test:server'])
-
 
 
 // starts a server when CLI argument '-s' is set

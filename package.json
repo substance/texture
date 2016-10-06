@@ -3,11 +3,11 @@
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "substance/substance#ede6e10ecf1bd94c80504d85b23d5ee5bf4ada91"
+    "substance": "substance/substance#15a707669810e67f7bcaf17709fa1b79c5acee7c"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.4.24",
+    "substance-bundler": "0.4.26",
     "substance-test": "0.2.5"
   },
   "scripts": {

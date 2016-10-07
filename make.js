@@ -114,6 +114,7 @@ function _textureJS(DEST, transpileToES5) {
 }
 
 function _distCopyAssets(DIST) {
+  "use strict";
   b.copy('./node_modules/font-awesome', DIST+'font-awesome')
 
   // Landing page

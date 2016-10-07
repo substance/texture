@@ -5,7 +5,7 @@ import includes from 'lodash/includes'
 import isArray from 'lodash/isArray'
 import { DefaultDOMElement } from 'substance'
 import createJATSConfigurator from './createJATSConfigurator'
-import JATSImporter from '../../packages/jats/JATSImporter'
+import JATSImporter from '../../lib/jats/JATSImporter'
 
 let _test = test.withExtension('withFixture', function(fixtureXML) {
   var tapeArgs = Array.prototype.slice.call(arguments, 1)

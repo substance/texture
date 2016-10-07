@@ -1,8 +1,8 @@
 import { module } from './test'
 import { Configurator } from 'substance'
-import JATSPackage from '../../packages/jats/package'
-import InlineWrapperPackage from '../../packages/inline-wrapper/InlineWrapperPackage'
-import UnsupportedNodePackage from '../../packages/unsupported/UnsupportedNodePackage'
+import JATSPackage from '../../lib/jats/package'
+import InlineWrapperPackage from '../../lib/inline-wrapper/InlineWrapperPackage'
+import UnsupportedNodePackage from '../../lib/unsupported/UnsupportedNodePackage'
 
 export default function createJATSConfigurator() {
   var configurator = new Configurator();

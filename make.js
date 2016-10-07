@@ -1,80 +1,21 @@
 var b = require('substance-bundler')
+var fs = require('fs')
+var path = require('path')
 
-b.task('clean', function() {
-  b.rm('./dist')
-})
-
-// copy assets
-b.task('assets', function() {
-  b.copy('examples/index.html', './dist/')
-  b.copy('texture.css', './dist/')
-  b.copy('packages/**/*.css', './dist/')
-  b.copy('examples/data', './dist/data')
-  b.copy('node_modules/font-awesome', './dist/font-awesome')
-})
-
-// this optional task makes it easier to work on Substance core
-b.task('substance', function() {
-  b.make('substance', 'clean', 'css', 'browser:pure')
-  b.copy('node_modules/substance/dist', './dist/substance')
-})
-
-b.task('substance:all', function() {
-  b.make('substance')
-})
-
-function buildExample(example) {
-  return function() {
-    b.copy('examples/'+example+'/index.html', './dist/'+example+'/')
-    b.copy('examples/'+example+'/*.css', './dist/'+example+'/', { root: 'examples/'+example })
-    b.js('examples/'+example+'/app.js', {
-      // need buble if we want to minify later
-      buble: false,
-      external: ['substance'],
-      commonjs: { include: ['node_modules/lodash/**'] },
-      targets: [{
-        // useStrict: false, // need for Safari 9 to work
-        dest: './dist/'+example+'/app.js',
-        format: 'umd', moduleName: example,
-      }]
-    })
-  }
-}
-
-b.task('author', ['clean', 'substance', 'assets'], buildExample('author'))
-b.task('publisher', ['clean', 'substance', 'assets'], buildExample('publisher'))
-b.task('tagging', ['author'], buildExample('tagging'))
-b.task('examples', ['author', 'publisher', 'tagging'])
-
-// build all examples
-b.task('default', ['examples'])
-
+var DIST = 'dist/'
+var NPM = '.npm/'
+var NPMDIST = NPM+'dist/'
 var TEST ='.test/'
 
-b.task('test:clean', function() {
+b.task('test:server', function() {
+  // Cleanup
   b.rm(TEST)
-})
+  b.make('substance')
 
-b.task('test:assets', function() {
   // TODO: it would be nice to treat such glob patterns
   // differently, so that we do not need to specify glob root
   b.copy('./node_modules/substance-test/dist/*', TEST, { root: './node_modules/substance-test/dist' })
-})
 
-b.task('test:browser', function() {
-  b.js('./test/index.js', {
-    // buble necessary here, as travis has old browser versions
-    buble: true,
-    ignore: ['substance-cheerio'],
-    external: ['substance-test', 'substance'],
-    commonjs: { include: ['node_modules/lodash/**'] },
-    targets: [
-      { dest: TEST+'tests.js', format: 'umd', moduleName: 'tests' }
-    ]
-  })
-})
-
-b.task('test:server', function() {
   b.js('./test/index.js', {
     // buble necessary here, for nodejs
     buble: true,
@@ -91,8 +32,111 @@ b.task('test:server', function() {
   })
 })
 
-b.task('test', ['substance:all', 'test:clean', 'test:assets', 'test:browser', 'test:server'])
+b.task('test:browser', function() {
+  b.js('./test/index.js', {
+    // buble necessary here, as travis has old browser versions
+    buble: true,
+    ignore: ['substance-cheerio'],
+    external: ['substance-test', 'substance'],
+    commonjs: { include: ['node_modules/lodash/**'] },
+    targets: [
+      { dest: TEST+'tests.js', format: 'umd', moduleName: 'tests' }
+    ]
+  })
+})
 
+b.task('test', ['test:browser', 'test:server'])
+
+/* Development bundle */
+b.task('dev', function() {
+  _buildDist(DIST, false)
+})
+
+/* Prepare NPM bundle */
+b.task('npm', function() {
+  // Cleanup
+  b.rm(NPM)
+  _buildDist(NPMDIST, true)
+
+  // Copy source
+  b.copy('index.es.js', NPM)
+  b.copy('lib/**/*.js', NPM)
+
+  // Copy stuff
+  [
+    'package.json',
+    'LICENSE.md',
+    'README.md',
+    'CHANGELOG.md',
+    'make.js'
+  ].forEach(function(f) {
+    b.copy(f, NPM)
+  })
+})
+
+b.task('default', ['dev'])
+
+function _buildDist(DIST, transpileToES5) {
+  // Bundle Substance and Texture JS
+  _substanceJS(DIST+'substance', transpileToES5)
+  _textureJS(DIST, transpileToES5)
+  // Bundle CSS
+  b.css('texture.css', DIST+'texture.css')
+  // Copy assets
+  _distCopyAssets(DIST)
+}
+
+function _substanceJS(DEST, transpileToES5) {
+  if (transpileToES5) {
+    b.make('substance', 'clean', 'css', 'browser')
+  } else {
+    b.make('substance', 'clean', 'css', 'browser:pure')
+
+  }
+  b.copy('node_modules/substance/dist', DEST)
+}
+
+
+function _textureJS(DEST, transpileToES5) {
+  b.js('./index.es.js', {
+    buble: transpileToES5,
+    external: ['substance'],
+    commonjs: { include: ['node_modules/lodash/**'] },
+    targets: [{
+      useStrict: !transpileToES5,
+      dest: DEST+'texture.js',
+      format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture'
+    }]
+  })
+}
+
+function _distCopyAssets(DIST) {
+  b.copy('./node_modules/font-awesome', DIST+'font-awesome')
+
+  // Landing page
+  b.copy('./index.html', DIST+'index.html')
+  // Examples
+  b.copy('./examples', DIST+'examples')
+
+  // Convert XML files to data.js
+  b.custom('Bundle XML files as data.js', {
+    src: ['data/*.xml'],
+    dest: DIST+'examples/data.js',
+    execute: function(files) {
+      let xmls = {}
+      files.forEach(function(f) {
+        let xml = fs.readFileSync(f, 'utf8')
+        let docId = path.basename(f, '.xml')
+        xmls[docId] = xml
+      })
+      let out = [
+        "window.XMLFILES = ",
+        JSON.stringify(xmls)
+      ].join('')
+      fs.writeFileSync(DIST+'examples/data.js', out)
+    }
+  })
+}
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

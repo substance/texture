@@ -1,5 +1,5 @@
 {
-  "name": "substance-scientist",
+  "name": "substance-scientist-tmp",
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.4.26",
+    "substance-bundler": "0.5.0",
     "substance-test": "0.2.5"
   },
   "scripts": {

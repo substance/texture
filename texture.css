@@ -1,1 +1,2 @@
-@import './packages/_index.css';
+@import './node_modules/substance/dist/substance.next.css';
+@import './lib/_index.css';

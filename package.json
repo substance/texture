@@ -1,13 +1,13 @@
 {
-  "name": "substance-scientist",
+  "name": "substance-texture",
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-beta.5.4"
+    "substance": "1.0.0-beta.5.5"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.4.26",
+    "substance-bundler": "0.5.1",
     "substance-test": "0.2.5"
   },
   "scripts": {

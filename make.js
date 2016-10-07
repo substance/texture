@@ -49,7 +49,8 @@ b.task('test', ['test:browser', 'test:server'])
 
 /* Development bundle */
 b.task('dev', function() {
-  _buildDist(DIST, false)
+  b.rm(DIST)
+  _buildDist(DIST, true)
 })
 
 /* Prepare NPM bundle */
@@ -63,7 +64,7 @@ b.task('npm', function() {
   b.copy('lib/**/*.js', NPM)
 
   // Copy stuff
-  [
+  ;[
     'package.json',
     'LICENSE.md',
     'README.md',
@@ -81,17 +82,19 @@ function _buildDist(DIST, transpileToES5) {
   _substanceJS(DIST+'substance', transpileToES5)
   _textureJS(DIST, transpileToES5)
   // Bundle CSS
-  b.css('texture.css', DIST+'texture.css')
+  b.css('texture.css', DIST+'texture.css', {variables: transpileToES5})
+  b.css('./node_modules/substance/dist/substance-pagestyle.css', DIST+'texture-pagestyle.css', {variables: transpileToES5})
+  b.css('./node_modules/substance/dist/substance-reset.css', DIST+'texture-reset.css', {variables: transpileToES5})
+
   // Copy assets
   _distCopyAssets(DIST)
 }
 
 function _substanceJS(DEST, transpileToES5) {
   if (transpileToES5) {
-    b.make('substance', 'clean', 'css', 'browser')
+    b.make('substance', 'clean', 'browser')
   } else {
-    b.make('substance', 'clean', 'css', 'browser:pure')
-
+    b.make('substance', 'clean', 'browser:pure')
   }
   b.copy('node_modules/substance/dist', DEST)
 }

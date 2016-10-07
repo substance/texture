@@ -19,20 +19,18 @@
     .sc-author { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }
   </style>
   <script>
-    const {
-      TextureConfigurator, Texture, ExampleXMLStore, AuthorPackage, TaggingPackage
-    } = texture
+    var t = window.texture;
 
     /* Configure example */
-    let configurator = new TextureConfigurator()
-      .import(AuthorPackage)
+    var configurator = new t.TextureConfigurator()
+      .import(t.AuthorPackage)
       // enable tagging abilities
-      .import(TaggingPackage)
-      .setXMLStore(ExampleXMLStore, XMLFILES)
+      .import(t.TaggingPackage)
+      .setXMLStore(t.ExampleXMLStore, XMLFILES)
 
     if (typeof window !== 'undefined') {
       window.onload = function() {
-        let app = Texture.mount({
+        var app = t.Texture.mount({
           configurator: configurator,
           documentId: 'kitchen-sink-author'
         }, document.body)

@@ -19,18 +19,16 @@
     .sc-author { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }
   </style>
   <script>
-    const {
-      TextureConfigurator, Texture, ExampleXMLStore, PublisherPackage
-    } = texture
+    var t = texture;
 
     /* Author Configuration */
-    let configurator = new TextureConfigurator()
-      .import(PublisherPackage)
-      .setXMLStore(ExampleXMLStore, XMLFILES)
+    var configurator = new t.TextureConfigurator()
+      .import(t.PublisherPackage)
+      .setXMLStore(t.ExampleXMLStore, XMLFILES)
 
     if (typeof window !== 'undefined') {
       window.onload = function() {
-        var app = Texture.mount({
+        var app = t.Texture.mount({
           configurator: configurator,
           documentId: 'elife-15278'
         }, document.body)

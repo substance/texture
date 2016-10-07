@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/table');
+const test = module('jats/table')
 
 var withAttributes =
   '<table id="mytable"'+

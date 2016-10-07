@@ -1,0 +1,43 @@
+<html>
+<head>
+  <title>Texture Publisher</title>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="../substance/substance.js"></script>
+  <script type="text/javascript" src="../texture.js"></script>
+  <script type="text/javascript" src="./data.js"></script>
+  <style>
+    /* Substance Component styles */
+    @import '../substance/substance.css';
+    /* Texture Component styles */
+    @import '../texture.css';
+    /* You may want to use your own reset and pagestyle */
+    @import '../substance/substance-reset.css';
+    @import '../substance/substance-pagestyle.css';
+    /* Using url here, so font-awesome does not get bundled. */
+    @import url('../font-awesome/css/font-awesome.min.css');
+    body { overflow: hidden; }
+    .sc-author { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }
+  </style>
+  <script>
+    var t = texture;
+
+    /* Author Configuration */
+    var configurator = new t.TextureConfigurator()
+      .import(t.PublisherPackage)
+      .setXMLStore(t.ExampleXMLStore, XMLFILES)
+
+    if (typeof window !== 'undefined') {
+      window.onload = function() {
+        var app = t.Texture.mount({
+          configurator: configurator,
+          documentId: 'elife-15278'
+        }, document.body)
+        window.app = app
+      }
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+/* Scrollbar overrides for highlights */
+.sc-scrollbar .se-highlight.sm-fig {
+  background-color: #91bb04;
+}
+
+.sc-scrollbar .se-highlight.sm-bibr {
+  background-color: #0b9dd9;
+}

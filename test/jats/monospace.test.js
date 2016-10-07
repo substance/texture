@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/monospace');
+const test = module('jats/monospace')
 
 var withAttributes =
   '<monospace id="mymonospace"'+

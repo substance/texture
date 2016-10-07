@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/bold');
+const test = module('jats/bold')
 
 var withAttributes =
   '<bold id="mybold"'+

@@ -1,0 +1,3 @@
+.sc-contrib-group { padding-bottom: var(--default-padding); overflow: auto; }
+.sc-contrib-group > .sc-contrib { float: left; margin-right: var(--default-padding); }
+.sc-contrib-group .se-add-author { color: var(--link-color); }

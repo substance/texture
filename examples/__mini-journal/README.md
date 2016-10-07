@@ -1,1 +1,0 @@
-This is not functional yet. We just wanted to preserve an earlier working implementation using substance/ui/ResponsiveApplication.

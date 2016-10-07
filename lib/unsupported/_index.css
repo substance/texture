@@ -1,0 +1,25 @@
+.sc-unsupported-block-node {
+  font-family: var(--font-family-code);
+  font-size: var(--small-font-size) - 2;
+  border: 1px dashed var(--border-color);
+}
+
+.sc-unsupported-inline-node {
+  font-family: var(--font-family-code);
+  font-size: var(--small-font-size) - 2;
+  border: 1px dashed var(--border-color);
+  color: #E3710C;
+  cursor: pointer !important;
+}
+
+.sc-edit-xml { padding: var(--default-padding); }
+
+.sc-edit-xml textarea {
+  width: 100%;
+  height: 400px;
+}
+
+.sc-unsupported-node-tool > * {
+  display: inline-block;
+  margin-right: 5px;
+}

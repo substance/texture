@@ -1,8 +1,7 @@
-'use strict';
+import { module } from './test'
+import testTextNode from './testTextNode'
 
-var test = require('./test').module('jats/paragraph');
-
-var testTextNode = require('./testTextNode');
+const test = module('jats/paragraph')
 
 var withAttributes =
   '<p id="myp"'+

@@ -1,0 +1,29 @@
+.sc-section > .se-title {
+  font-size: var(--h1-font-size);
+  margin-bottom: var(--h1-font-size);
+}
+
+.sc-section .sc-section > .se-title {
+  font-size: var(--h2-font-size);
+  margin-bottom: var(--h2-font-size);
+}
+
+.sc-section .sc-section .sc-section > .se-title {
+  font-size: var(--h3-font-size);
+  margin-bottom: var(--h3-font-size);
+}
+
+.sc-section > .se-section {
+  font-size: var(--h1-font-size);
+  margin-bottom: var(--h1-font-size);
+}
+
+.sc-section .sc-section > .se-title {
+  font-size: var(--h2-font-size);
+  margin-bottom: var(--h2-font-size);
+}
+
+.sc-section .sc-section .sc-section > .se-title {
+  font-size: var(--h3-font-size);
+  margin-bottom: var(--h3-font-size);
+}

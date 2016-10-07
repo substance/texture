@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/caption');
+const test = module('jats/caption')
 
 // attributes should be preserved
 var withAttributes =

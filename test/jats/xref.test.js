@@ -1,6 +1,6 @@
-'use strict';
+import { module } from './test'
 
-var test = require('./test').module('jats/xref');
+const test = module('jats/xref')
 
 // attributes should be preserved
 var withAttributes =

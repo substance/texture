@@ -1,0 +1,4 @@
+.sc-monospace {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-code);
+}

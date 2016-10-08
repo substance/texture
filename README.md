@@ -37,9 +37,9 @@ Start the dev server
 $ npm run start
 ```
 
-And navigate to [http://localhost:5001](http://localhost:5001)
+And navigate to [http://localhost:5555](http://localhost:5555)
 
-To run the tests in the browser navigate to `http://localhost:5001/test`
+To run the tests in the browser navigate to `http://localhost:5555/test`
 
 To run the test suite headless:
 

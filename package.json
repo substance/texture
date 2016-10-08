@@ -3,7 +3,7 @@
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-beta.5.5"
+    "substance": "1.0.0-beta.5.8"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
@@ -15,5 +15,10 @@
     "start": "node make -s -w",
     "test": "node test"
   },
-  "version": "1.0.0-alpha.2"
+  "version": "1.0.0-alpha.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/substance/texture.git"
+  },
+  "license": "MIT"
 }

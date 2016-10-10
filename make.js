@@ -54,7 +54,7 @@ b.task('test', ['test:browser', 'test:server'])
 /* Development bundle */
 b.task('dev', function() {
   b.rm(DIST)
-  _buildDist(DIST, true)
+  _buildDist(DIST, false)
 })
 
 /* Prepare NPM bundle */

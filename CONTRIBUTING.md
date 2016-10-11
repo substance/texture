@@ -1,6 +1,6 @@
 # Implement a new JATS element
 
-Each JATS element is realized as a [package](packages/jats/caption), containing a node definition, a converter and a component for rendering / editing.
+Each JATS element is realized as a [package](lib/jats/caption), containing a node definition, a converter and a component for rendering / editing.
 
 ## Choose the right node type
 
@@ -46,22 +46,22 @@ Example elements: `<fig>`, `<ref-list>`
 
 Use the following examples as a reference implementation.
 
-- [Paragraph](packages/jats/paragraph/Paragraph.js) (Text Node)
-- [ExtLink](packages/jats/ext-link/ExtLink.js) (Annotation Node)
-- [XRef](packages/jats/xref/XRef.js) (Inline Node)
-- [Body](packages/jats/body/Body.js) (Container Node)
-- [Figure](packages/jats/figure/Figure.js) (Document Node)
+- [Paragraph](lib/jats/paragraph/Paragraph.js) (Text Node)
+- [ExtLink](lib/jats/ext-link/ExtLink.js) (Annotation Node)
+- [XRef](lib/jats/xref/XRef.js) (Inline Node)
+- [Body](lib/jats/body/Body.js) (Container Node)
+- [Figure](lib/jats/figure/Figure.js) (Document Node)
 
 
 ## Define a converter
 
 A converter is needed to map from JATS XML to Substance document nodes.
 
-- [Paragraph Converter](packages/jats/paragraph/ParagraphConverter.js) (Text Node)
-- [ExtLink Converter](packages/jats/ext-link/ExtLinkConverter.js) (Annotation Node)
-- [XRef Converter](packages/jats/xref/XRefConverter.js) (Inline Node)
-- [Body Converter](packages/jats/body/BodyConverter.js) (Container Node)
-- [Figure Converter](packages/jats/figure/FigureConverter.js) (Document Node)
+- [Paragraph Converter](lib/jats/paragraph/ParagraphConverter.js) (Text Node)
+- [ExtLink Converter](lib/jats/ext-link/ExtLinkConverter.js) (Annotation Node)
+- [XRef Converter](lib/jats/xref/XRefConverter.js) (Inline Node)
+- [Body Converter](lib/jats/body/BodyConverter.js) (Container Node)
+- [Figure Converter](lib/jats/figure/FigureConverter.js) (Document Node)
 
 
 ## Write a converter test
@@ -79,8 +79,8 @@ It's important you test your converter throughly, otherwise content could be los
 
 In order to make the content editable, you have to define components for each JATS element.
 
-- [Paragraph Component](packages/jats/paragraph/Paragraph.js) (Text Node)
-- [ExtLink Component](packages/jats/ext-link/ExtLink.js) (Annotation Node)
-- [XRef Component](packages/jats/xref/XRef.js) (Inline Node)
-- [Body Component](packages/jats/body/Body.js) (Container Node)
-- [Figure Component](packages/jats/figure/Figure.js) (Document Node)
+- [Paragraph Component](lib/jats/paragraph/Paragraph.js) (Text Node)
+- [ExtLink Component](lib/jats/ext-link/ExtLink.js) (Annotation Node)
+- [XRef Component](lib/jats/xref/XRef.js) (Inline Node)
+- [Body Component](lib/jats/body/Body.js) (Container Node)
+- [Figure Component](lib/jats/figure/Figure.js) (Document Node)

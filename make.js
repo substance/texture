@@ -1,3 +1,7 @@
+/*
+  IMPORTANT: Don't use ES6 here, as some people are still on Node 4.
+*/
+
 var b = require('substance-bundler')
 var fs = require('fs')
 var path = require('path')
@@ -126,13 +130,13 @@ function _distCopyAssets(DIST) {
     src: ['data/*.xml'],
     dest: DIST+'examples/data.js',
     execute: function(files) {
-      let xmls = {}
+      var xmls = {}
       files.forEach(function(f) {
-        let xml = fs.readFileSync(f, 'utf8')
-        let docId = path.basename(f, '.xml')
+        var xml = fs.readFileSync(f, 'utf8')
+        var docId = path.basename(f, '.xml')
         xmls[docId] = xml
       })
-      let out = [
+      var out = [
         "window.XMLFILES = ",
         JSON.stringify(xmls)
       ].join('')

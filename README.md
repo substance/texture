@@ -109,7 +109,7 @@ See [Texture website](http://substance.io/texture).
 
 Texture is developed by the [Substance Consortium](http://substance.io/consortium/) formed by the [Public Knowledge Project](https://pkp.sfu.ca/2016/04/27/substance-consortium/) (PKP), the [Collaborative Knowledge Foundation](http://coko.foundation/blog.html#substance_consortium) (CoKo), [SciELO](http://www.scielo.org/) and [Érudit](https://apropos.erudit.org/fr/creation-dun-consortium-autour-de-substance/).
 
-Thanks goes to the following people, who make Texture possible:
+The following people make Texture possible:
 
 - Alex Garnett (leadership, concept)
 - Juan Pablo Alperin (leadership, concept)
@@ -121,6 +121,6 @@ Thanks goes to the following people, who make Texture possible:
 - Davin Baragiotta (concept, dev)
 - David Cormier (dev)
 - Sophy Ouch (design)
+- Fabio Batalha Cunha dos Santos (leadership, concept)
 - Michael Aufreiter (dev)
 - Oliver Buchtala (dev)
-- ...

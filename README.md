@@ -105,6 +105,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 See [Texture website](http://substance.io/texture). 
 
 
+## License
+
+Texture is open source, and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/). 
+
 ## Credits
 
 Texture is developed by the [Substance Consortium](http://substance.io/consortium/) formed by the [Public Knowledge Project](https://pkp.sfu.ca/2016/04/27/substance-consortium/) (PKP), the [Collaborative Knowledge Foundation](http://coko.foundation/blog.html#substance_consortium) (CoKo), [SciELO](http://www.scielo.org/) and [Érudit](https://apropos.erudit.org/fr/creation-dun-consortium-autour-de-substance/).

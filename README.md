@@ -102,37 +102,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Roadmap
 
-### Alpha 3
+Please see [Texture website](http://substance.io/texture). 
 
-*ETA: November 2016*
 
-Goal is to provide proof of concepts for the discussed tagging workflow (get from unstructured text to structured JATS). For example:
-
-- Quality measures for Meta data (#72)
-- Identify authors in the text and turn them into <contrib> nodes (#75)
-- Turn a sequence of paragraphs into a reference list (#74)
-- Identify title as text and tag as article title (#76)
-- Update to Substance Beta 6
-
-### Alpha 4
-
-Elaborate results of Alpha 3 based on an agreed minimal set of functionalities. For example:
-
-- Document structure fixes (tag headings and set heading level)
-- Author tagging
-- Figure tagging (caption editing etc.)
-- Figure placement
-- Bibliography tagging
-
-With these results organisations can start to test Texture-based QC-workflow with real articles.
-
-*ETA: Winter 2016*
-
-### Beta
-
-Feature-complete release ready to be tested by publishers.
-
-# Credits
+## Credits
 
 Texture is developed by the [Substance Consortium](http://substance.io/consortium/) formed by the [Public Knowledge Project](https://pkp.sfu.ca/2016/04/27/substance-consortium/) (PKP), the [Collaborative Knowledge Foundation](http://coko.foundation/blog.html#substance_consortium) (CoKo), [SciELO](http://www.scielo.org/) and [Érudit](https://apropos.erudit.org/fr/creation-dun-consortium-autour-de-substance/).
 

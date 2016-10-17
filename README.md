@@ -102,7 +102,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Roadmap
 
-Please see [Texture website](http://substance.io/texture). 
+See [Texture website](http://substance.io/texture). 
 
 
 ## Credits

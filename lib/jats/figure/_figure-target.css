@@ -1,27 +1,25 @@
 .sc-figure-target {
-  font-size: var(--small-font-size);
-  border-bottom: 1px solid 10;
-  padding: var(--default-padding);
-  background: #fafafa;
-  border-left: 4px solid transparent;
+  font-size: 11px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 5px var(--default-padding);
+  color: #A5A5A5;
+  padding-left: 30px;
+  font-weight: 600;
   cursor: pointer;
-  overflow: auto;
+  position: relative;
+  overflow: hidden;
+  min-width: 400px;
 }
-.sc-figure-target:hover {
-  background: #fff;
-}
+
 .sc-figure-target.sm-selected {
-  border-left: 4px solid #91bb04;
-  background: #fff;
+  color: #fff;
+  font-weight: 600;
 }
 .sc-figure-target .se-thumbnail {
   margin-right: var(--default-padding);
-  width: 100px;
+  width: 50px;
   float: left;
 }
-.sc-figure-target .se-label {
-  float: left;
-}
-.sc-figure-target .se-title {
-  float: left;
+.sc-figure-target .se-details {
+  margin-left: 70px;
 }

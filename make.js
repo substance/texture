@@ -71,6 +71,7 @@ function _buildTestsBrowser(transpileToES5) {
       dest: TEST+'tests.js',
       format: 'umd', moduleName: 'tests'
     },
+    commonjs: true,
     buble: transpileToES5,
     external: { 'substance-test': 'substanceTest' },
   })
@@ -156,19 +157,15 @@ b.task('assets:test', function() {
   b.copy('./node_modules/substance-test/dist/*', TEST, { root: './node_modules/substance-test/dist' })
 })
 
-b.task('build:test:browser', ['test:clean', 'test:assets'], function() {
-  _buildTestsBrowser(true)
-})
-
-b.task('build:test:browser:pure', ['test:clean', 'test:assets'], function() {
-  _buildTestsBrowser()
-})
-
 b.task('build:test:node', ['clean:test', 'assets:test'], _buildTestsNode)
 
 b.task('run:test:node', ['build:test:node'], _runTestsNode)
 
 b.task('run:test', ['run:test:node'])
+
+b.task('test:browser', ['clean:test', 'assets:test'], function() {
+  _buildTestsBrowser()
+})
 
 b.task('test', ['run:test'])
 
@@ -196,6 +193,5 @@ b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 /* HTTP server */
 
 b.setServerPort(5555)
-b.serve({
-  static: true, route: '/', folder: 'dist'
-})
+b.serve({ static: true, route: '/', folder: 'dist' })
+b.serve({ static: true, route: '/test/', folder: '.test' })

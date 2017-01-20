@@ -1,4 +1,5 @@
-.sc-edit-xref-tool > * {
-  display: inline-block;
-  margin-right: 5px;
+.sc-edit-xref-tool {
+  max-width: 400px;
+  max-height: 400px;
+  overflow: auto;
 }

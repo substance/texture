@@ -7,13 +7,13 @@
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.5.1",
-    "substance-test": "0.2.5"
+    "substance-bundler": "0.7.1",
+    "substance-test": "0.5.1"
   },
   "scripts": {
     "bundle": "node make",
-    "start": "node make -s -w",
-    "test": "node test"
+    "start": "node make dev -s -w",
+    "test": "node make test"
   },
   "version": "1.0.0-alpha.2",
   "repository": {

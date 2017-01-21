@@ -131,7 +131,11 @@ b.task('assets', function() {
   _copyAssets(DIST)
 })
 
-b.task('build:browser', function() {
+b.task('substance:css', function() {
+  b.make('substance', 'css')
+})
+
+b.task('build:browser', ['substance:css'], function() {
   _buildLib(DIST, true)
   _buildCSS(DIST, true)
 })

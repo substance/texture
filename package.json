@@ -3,17 +3,17 @@
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-beta.5.8"
+    "substance": "substance/substance#0029bbb8bf3d96331171f341fb2860cf1f08aa7d"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.5.1",
-    "substance-test": "0.2.5"
+    "substance-bundler": "0.7.1",
+    "substance-test": "0.5.1"
   },
   "scripts": {
     "bundle": "node make",
-    "start": "node make -s -w",
-    "test": "node test"
+    "start": "node make dev -s -w",
+    "test": "node make test"
   },
   "version": "1.0.0-alpha.2",
   "repository": {

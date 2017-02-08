@@ -32,6 +32,7 @@
       <p id="p1">Texture is a tool for publishers to creating structured JATS documents based on <bold>Word</bold> or InDesign submissions.</p>
       <p id="p1">The original document is imported with annotations preserved. Then the user starts tagging semantic entities in the document, such as marking up the reference list, the authors, affiliations etc. Saving the document produces valid JATS 1.1 XML (<xref ref-type="bibr" rid="bib1"></xref>).</p>
       <p>This is an <unsupported-el foo="bar">Unsupported element</unsupported-el>.</p>
+      <p>Here we reference a footnote<xref ref-type="fn" rid="fn1 fn2"></xref>.</p>
     </sec>
     <sec id="s2">
       <title>Create a bibliography</title>
@@ -51,5 +52,13 @@
         <mixed-citation publication-type="journal">Altschul SF, Gish W, Miller W, Myers EW, Lipman DJ. 1990. Basic local alignment search tool. J Mol Biol 215:403–10.</mixed-citation>
       </ref>
     </ref-list>
+    <fn-group>
+    <fn id="fn1">
+      <p>I am footnote number one</p>
+    </fn>
+    <fn id="fn2">
+      <p>I am footnote number two</p>
+    </fn>
+    </fn-group>
   </back>
 </article>

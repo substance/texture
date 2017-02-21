@@ -33,8 +33,8 @@ function _buildLib(DEST, transpileToES5) {
 function _buildCSS(DEST, transpileToES5) {
   // Bundle CSS
   b.css('texture.css', DEST+'texture.css', {variables: transpileToES5})
-  b.css('./node_modules/substance/dist/substance-pagestyle.css', DEST+'texture-pagestyle.css', {variables: transpileToES5})
-  b.css('./node_modules/substance/dist/substance-reset.css', DEST+'texture-reset.css', {variables: transpileToES5})
+  b.css('./node_modules/substance/substance-pagestyle.css', DEST+'texture-pagestyle.css', {variables: transpileToES5})
+  b.css('./node_modules/substance/substance-reset.css', DEST+'texture-reset.css', {variables: transpileToES5})
 }
 
 function _copyAssets(DEST) {

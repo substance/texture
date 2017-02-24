@@ -194,6 +194,31 @@ b.task('build:npm', function() {
 
 b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 
+// Experimental: XSD driven editor
+b.task('xsd', ['clean', 'assets'], function() {
+  b.custom('Bundle XML files as xsd.js', {
+    src: ['data/*.xsd'],
+    dest: 'dist/examples/xsd/xsd.js',
+    execute: function(files) {
+      var xmls = {}
+      files.forEach(function(f) {
+        var xml = fs.readFileSync(f, 'utf8')
+        var docId = path.basename(f, '.xsd')
+        xmls[docId] = xml
+      })
+      var out = [
+        "window.XSD = ",
+        JSON.stringify(xmls)
+      ].join('')
+      fs.writeFileSync('dist/examples/xsd/xsd.js', out)
+    }
+  })
+  b.js('./lib/xsd/demo.js', {
+    dest: 'dist/examples/xsd/demo.js',
+    format: 'umd', moduleName: 'xsd'
+  })
+})
+
 /* HTTP server */
 
 b.setServerPort(5555)

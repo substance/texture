@@ -1,22 +1,29 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "node": true
-  },
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 6
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsxnec": true,
+    },
   },
   "extends": "eslint:recommended",
-  "globals": {
-    "Promise": true,
-    "Map": true
-  },
+  "globals": [
+    // browser
+    "window", "document", "URL", "XMLHttpRequest",
+    // browser / nodejs
+    "console", "setTimeout", "setInterval", "clearInterval",
+    // nodejs
+    "global",
+    // EcmaScript 6
+    "Promise", "Map", "Set", "WeakMap", "Symbol",
+    // commonjs
+    "require", "module", "exports"
+    //
+  ].reduce((m, key)=>{m[key]=true;return m}, {}),
   "rules": {
     // 0 - off, 1 - warning, 2 - error
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "semi": [0, "never"],
+    "semi": [0, "always"],
     "comma-dangle": [2, "only-multiline"],
     "no-cond-assign": 2,
     "no-console": [2, { allow: ["warn", "info", "error", "assert"] }],
@@ -41,6 +48,7 @@ module.exports = {
     // turned of as we want to be able to use this.hasOwnProperty() for instance
     "no-prototype-builtins": 0,
     "no-regex-spaces": 2,
+    "no-restricted-globals": [2, "Document", "Node"],
     "no-sparse-arrays": 0,
     "no-unexpected-multiline": 2,
     "no-unreachable": 2,
@@ -48,7 +56,7 @@ module.exports = {
     "use-isnan": 2,
     "valid-jsdoc": 0,
     "valid-typeof": 2,
-    "strict": 0, // [2, "safe"],
+    "strict": [2, "safe"],
 
     // Best practices
     "accessor-pairs": 0,

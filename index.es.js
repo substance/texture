@@ -13,4 +13,3 @@ export { default as PublisherPackage } from './lib/publisher/PublisherPackage'
 
 // tagging
 export { default as TaggingPackage } from './lib/tagging/TaggingPackage'
-

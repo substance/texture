@@ -195,7 +195,28 @@ b.task('build:npm', function() {
 b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 
 // Experimental: XSD driven editor
+
+function buildVFS() {
+  b.custom('Creating test vfs...', {
+    src: './data/*.xml',
+    dest: 'tmp/vfs.js',
+    execute(files) {
+      const rootDir = b.rootDir
+      const vfs = {}
+      files.forEach((f) => {
+        if (b.isDirectory(f)) return
+        let content = fs.readFileSync(f).toString()
+        let relPath = path.relative(rootDir, f).replace(/\\/g, '/')
+        vfs[relPath] = content
+      })
+      const data = ['export default ', JSON.stringify(vfs, null, 2)].join('')
+      b.writeSync('tmp/vfs.js', data)
+    }
+  })
+}
+
 b.task('xsd', ['clean', 'assets'], function() {
+  buildVFS()
   b.custom('Bundle XML files as xsd.js', {
     src: ['data/*.xsd'],
     dest: 'dist/examples/xsd/xsd.js',

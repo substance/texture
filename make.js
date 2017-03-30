@@ -121,10 +121,6 @@ b.task('assets', function() {
   _copyAssets(DIST)
 })
 
-b.task('substance:css', function() {
-  b.make('substance', 'css')
-})
-
 b.task('build:browser', ['substance:css'], function() {
   _buildLib(DIST, true)
   _buildCSS(DIST, true)
@@ -186,7 +182,7 @@ b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 
 // Experimental: XSD driven editor
 
-b.task('xsd', ['clean', 'assets'], function() {
+b.task('jats', ['clean', 'assets'], function() {
   b.js('./lib/xsd/compileXSD.js', {
     dest: 'tmp/compileXSD.js',
     format: 'cjs',
@@ -200,9 +196,12 @@ b.task('xsd', ['clean', 'assets'], function() {
       const xsdString = fs.readFileSync('data/JATS.xsd', 'utf8')
       const xsdData = compileXSD(xsdString)
       const code = `export default ${JSON.stringify(xsdData)}`
-      b.writeFileSync('lib/util/JATS.js', code)
+      b.writeSync('lib/util/JATS.js', code)
     }
   })
+})
+
+b.task('xsd', ['assets'], () => {
   b.js('./lib/xsd/demo.js', {
     dest: 'dist/examples/xsd/demo.js',
     format: 'umd', moduleName: 'xsd',

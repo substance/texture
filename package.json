@@ -2,8 +2,8 @@
   "name": "substance-texture",
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
-    "lodash": "^4.14.1",
-    "substance": "substance/substance#0029bbb8bf3d96331171f341fb2860cf1f08aa7d"
+    "lodash-es": "^4.17.4",
+    "substance": "1.0.0-beta.7-preview.7"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",

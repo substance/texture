@@ -2,7 +2,10 @@
   IMPORTANT: Don't use ES6 here, as some people are still on Node 4.
 */
 
+/* global __dirname, process */
+
 var b = require('substance-bundler')
+var vfs = require('substance-bundler/extensions/vfs')
 var fs = require('fs')
 var path = require('path')
 
@@ -39,29 +42,16 @@ function _buildCSS(DEST, transpileToES5) {
 
 function _copyAssets(DEST) {
   b.copy('./node_modules/font-awesome', DEST+'font-awesome')
-
+  b.copy('./node_modules/substance/dist', DEST+'substance')
   // Landing page
   b.copy('./index.html', DEST+'index.html')
   // Examples
   b.copy('./examples', DEST+'examples')
-
-  // Convert XML files to data.js
-  b.custom('Bundle XML files as data.js', {
-    src: ['data/*.xml'],
-    dest: DEST+'examples/data.js',
-    execute: function(files) {
-      var xmls = {}
-      files.forEach(function(f) {
-        var xml = fs.readFileSync(f, 'utf8')
-        var docId = path.basename(f, '.xml')
-        xmls[docId] = xml
-      })
-      var out = [
-        "window.XMLFILES = ",
-        JSON.stringify(xmls)
-      ].join('')
-      fs.writeFileSync(DEST+'examples/data.js', out)
-    }
+  // examples data as in-memory fs
+  vfs(b, {
+    src: './data/*',
+    dest: DEST+'examples/vfs.js',
+    format: 'umd', moduleName: 'VFS'
   })
 }
 
@@ -196,39 +186,30 @@ b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 
 // Experimental: XSD driven editor
 
-function buildVFS() {
-  b.custom('Creating test vfs...', {
-    src: './data/*',
-    dest: 'tmp/vfs.js',
-    execute(files) {
-      const rootDir = b.rootDir
-      const vfs = {}
-      files.forEach((f) => {
-        if (b.isDirectory(f)) return
-        let content = fs.readFileSync(f).toString()
-        let relPath = path.relative(rootDir, f).replace(/\\/g, '/')
-        vfs[relPath] = content
-      })
-      const data = ['window.VFS = ', JSON.stringify(vfs, null, 2)].join('')
-      b.writeSync('tmp/vfs.js', data)
+b.task('xsd', ['clean', 'assets'], function() {
+  b.js('./lib/xsd/compileXSD.js', {
+    dest: 'tmp/compileXSD.js',
+    format: 'cjs',
+    external: ['substance']
+  })
+  b.custom('Compiling JATS xsd...', {
+    src: 'data/JATS.xsd',
+    dest: 'lib/util/JATS.js',
+    execute() {
+      const compileXSD = require('./tmp/compileXSD')
+      const xsdString = fs.readFileSync('data/JATS.xsd', 'utf8')
+      const xsdData = compileXSD(xsdString)
+      const code = `export default ${JSON.stringify(xsdData)}`
+      b.writeFileSync('lib/util/JATS.js', code)
     }
   })
-}
-
-b.task('xsd', ['clean', 'assets'], function() {
-  buildVFS()
-  b.copy('node_modules/substance/dist', 'dist/substance')
-  b.copy('tmp/vfs.js', 'dist/examples/')
-  b.copy('examples/xsd.html', 'dist/examples/')
   b.js('./lib/xsd/demo.js', {
-    target: {
-      dest: 'dist/examples/xsd/demo.js',
-      format: 'umd', moduleName: 'xsd',
-      globals: {
-        'substance': 'window.substance'
-      }
-    },
-    external: ['substance']
+    dest: 'dist/examples/xsd/demo.js',
+    format: 'umd', moduleName: 'xsd',
+    external: {
+      substance: 'window.substance',
+      vfs: 'window.VFS'
+    }
   })
 })
 

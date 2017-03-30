@@ -198,7 +198,7 @@ b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 
 function buildVFS() {
   b.custom('Creating test vfs...', {
-    src: './data/*.xml',
+    src: './data/*',
     dest: 'tmp/vfs.js',
     execute(files) {
       const rootDir = b.rootDir
@@ -209,7 +209,7 @@ function buildVFS() {
         let relPath = path.relative(rootDir, f).replace(/\\/g, '/')
         vfs[relPath] = content
       })
-      const data = ['export default ', JSON.stringify(vfs, null, 2)].join('')
+      const data = ['window.VFS = ', JSON.stringify(vfs, null, 2)].join('')
       b.writeSync('tmp/vfs.js', data)
     }
   })
@@ -217,26 +217,18 @@ function buildVFS() {
 
 b.task('xsd', ['clean', 'assets'], function() {
   buildVFS()
-  b.custom('Bundle XML files as xsd.js', {
-    src: ['data/*.xsd'],
-    dest: 'dist/examples/xsd/xsd.js',
-    execute: function(files) {
-      var xmls = {}
-      files.forEach(function(f) {
-        var xml = fs.readFileSync(f, 'utf8')
-        var docId = path.basename(f, '.xsd')
-        xmls[docId] = xml
-      })
-      var out = [
-        "window.XSD = ",
-        JSON.stringify(xmls)
-      ].join('')
-      fs.writeFileSync('dist/examples/xsd/xsd.js', out)
-    }
-  })
+  b.copy('node_modules/substance/dist', 'dist/substance')
+  b.copy('tmp/vfs.js', 'dist/examples/')
+  b.copy('examples/xsd.html', 'dist/examples/')
   b.js('./lib/xsd/demo.js', {
-    dest: 'dist/examples/xsd/demo.js',
-    format: 'umd', moduleName: 'xsd'
+    target: {
+      dest: 'dist/examples/xsd/demo.js',
+      format: 'umd', moduleName: 'xsd',
+      globals: {
+        'substance': 'window.substance'
+      }
+    },
+    external: ['substance']
   })
 })
 

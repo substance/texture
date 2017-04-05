@@ -49,7 +49,7 @@ function _copyAssets(DEST) {
   b.copy('./examples', DEST+'examples')
   // examples data as in-memory fs
   vfs(b, {
-    src: './data/*',
+    src: './data/**/*',
     dest: DEST+'examples/vfs.js',
     format: 'umd', moduleName: 'VFS'
   })

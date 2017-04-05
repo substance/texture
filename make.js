@@ -183,17 +183,22 @@ b.task('npm', ['clean:npm', 'assets:npm', 'build:npm'])
 // Experimental: XSD driven editor
 
 b.task('jats', ['clean', 'assets'], function() {
+  const XSD_PATH = 'data/JATS/JATS-archive-oasis-article1-mathml3-elements.xsd'
   b.js('./lib/xsd/compileXSD.js', {
     dest: 'tmp/compileXSD.js',
     format: 'cjs',
     external: ['substance']
   })
   b.custom('Compiling JATS xsd...', {
-    src: 'data/JATS.xsd',
+    // TODO: ATM we can't import/include other xsd files
+    // as soon this is working we should use
+    // 'data/JATS/JATS-archive-oasis-article1-mathml3.xsd'
+    // instead
+    src: XSD_PATH,
     dest: 'lib/util/JATS.js',
     execute() {
       const compileXSD = require('./tmp/compileXSD')
-      const xsdString = fs.readFileSync('data/JATS.xsd', 'utf8')
+      const xsdString = fs.readFileSync(XSD_PATH, 'utf8')
       const xsdData = compileXSD(xsdString)
       const code = `export default ${JSON.stringify(xsdData)}`
       b.writeSync('lib/util/JATS.js', code)

@@ -1,0 +1,225 @@
+<?xml-stylesheet href="xsd.xsl" type="text/xsl"?>
+<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
+            xmlns:c="http://www.w3.org/ns/xproc-step"
+            xmlns:oasis="http://www.niso.org/standards/z39-96/ns/oasis-exchange/table"
+            xmlns:mml="http://www.w3.org/1998/Math/MathML"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.niso.org/standards/z39-96/ns/oasis-exchange/table"><!--* Allow references to unqualified names *-->
+   <xsd:import/>
+   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"/>
+   <!--* Some imports may need to be added manually *-->
+   <xsd:element name="colspec">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:attribute name="align" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="center"/>
+                  <xsd:enumeration value="char"/>
+                  <xsd:enumeration value="justify"/>
+                  <xsd:enumeration value="left"/>
+                  <xsd:enumeration value="right"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute name="char" use="optional" type="xsd:string"/>
+         <xsd:attribute name="charoff" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colname" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colnum" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colwidth" use="optional" type="xsd:string"/>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="rowsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="entry">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType mixed="true">
+         <xsd:group ref="tbl.entry.mdl" minOccurs="0" maxOccurs="unbounded"/>
+         <xsd:attribute name="align" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="center"/>
+                  <xsd:enumeration value="char"/>
+                  <xsd:enumeration value="justify"/>
+                  <xsd:enumeration value="left"/>
+                  <xsd:enumeration value="right"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute name="char" use="optional" type="xsd:string"/>
+         <xsd:attribute name="charoff" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colname" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="morerows" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="nameend" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="namest" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="rowsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="valign" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="bottom"/>
+                  <xsd:enumeration value="middle"/>
+                  <xsd:enumeration value="top"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="row">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:group ref="tbl.row.mdl"/>
+         </xsd:choice>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="rowsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="valign" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="bottom"/>
+                  <xsd:enumeration value="middle"/>
+                  <xsd:enumeration value="top"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="table">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:group ref="tbl.table.mdl"/>
+         </xsd:choice>
+         <xsd:attribute name="colsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="content-type" use="optional" type="xsd:string"/>
+         <xsd:attribute name="frame" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="all"/>
+                  <xsd:enumeration value="bottom"/>
+                  <xsd:enumeration value="none"/>
+                  <xsd:enumeration value="sides"/>
+                  <xsd:enumeration value="top"/>
+                  <xsd:enumeration value="topbot"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="rowsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="specific-use" use="optional" type="xsd:string"/>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="tbody">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:group ref="orow.qname"/>
+            </xsd:choice>
+         </xsd:choice>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="valign" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="bottom"/>
+                  <xsd:enumeration value="middle"/>
+                  <xsd:enumeration value="top"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="tgroup">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:group ref="tbl.tgroup.mdl"/>
+         </xsd:sequence>
+         <xsd:attribute name="align" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="center"/>
+                  <xsd:enumeration value="char"/>
+                  <xsd:enumeration value="justify"/>
+                  <xsd:enumeration value="left"/>
+                  <xsd:enumeration value="right"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute name="cols" use="required" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="colsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="rowsep" use="optional" type="xsd:NMTOKEN"/>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="thead">
+      <xsd:annotation>
+         <xsd:documentation/>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:group ref="orow.qname"/>
+            </xsd:choice>
+         </xsd:choice>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="valign" use="optional">
+            <xsd:simpleType>
+               <xsd:annotation>
+                  <xsd:documentation/>
+               </xsd:annotation>
+               <xsd:restriction base="xsd:NMTOKEN">
+                  <xsd:enumeration value="bottom"/>
+                  <xsd:enumeration value="middle"/>
+                  <xsd:enumeration value="top"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation/>
+</xsd:schema>
+

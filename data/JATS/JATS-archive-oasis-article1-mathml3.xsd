@@ -1,0 +1,56 @@
+<?xml-stylesheet href="xsd.xsl" type="text/xsl"?>
+<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
+            xmlns:c="http://www.w3.org/ns/xproc-step"
+            xmlns:mml="http://www.w3.org/1998/Math/MathML"
+            xmlns:oasis="http://www.niso.org/standards/z39-96/ns/oasis-exchange/table"
+            xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:annotation>
+      <xsd:documentation>
+         <div xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:dxdy="http://mulberrytech.com/2014/dxdy"
+              xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
+              class="bodytext">
+              <h1>MODULE: JATS-archive-oasis-article1-mathml3 DTD in XSD form (driver file)</h1>
+              <h2>MODEL: Journal Archiving and Interchange DTD with OASIS and XHTML Tables with MATML 3.0 </h2>
+              <h2>VERSION:  1.1</h2>
+              <h2>DATE:  December 2015</h2>
+              <p>An alternative Archiving DTD with one addition: 
+                the OASIS table model is defined in addition to 
+                the XHTML table model. (Both table models are
+                used in this DTD, with the OASIS CALS model given 
+                a hard-coded namespace prefix of "oasis".) This
+                DTD uses MathML 3.0.</p>
+              <dl>
+                <dt>SYSTEM</dt>
+                <dd>
+                  <p>Journal Archiving and Interchange model of the JATS Suite</p>
+               </dd>
+                <dt>PURPOSE</dt>
+                <dd>
+                  <p>Driver file: include and import all other schema documents</p>
+               </dd>
+                <dt>CREATED FOR</dt>
+                <dd>
+                  <p>NLM/NCBI</p> 
+               </dd>
+                
+              </dl>
+            </div>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.w3.org/1999/xlink"
+               schemaLocation="standard-modules/xlink.xsd"/>
+   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
+               schemaLocation="standard-modules/mathml3/mathml3.xsd"/>
+   <xsd:import namespace="http://www.niso.org/standards/z39-96/ns/oasis-exchange/table"
+               schemaLocation="module-oasis.xsd"/>
+   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
+               schemaLocation="module-ali.xsd"/>
+   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
+               schemaLocation="standard-modules/xml.xsd"/>
+   <xsd:include schemaLocation="JATS-archive-oasis-article1-mathml3-elements.xsd"/>
+</xsd:schema>
+

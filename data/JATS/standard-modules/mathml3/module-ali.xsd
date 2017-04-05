@@ -1,0 +1,46 @@
+<?xml-stylesheet href="xsd.xsl" type="text/xsl"?>
+<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
+            xmlns:c="http://www.w3.org/ns/xproc-step"
+            xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.niso.org/schemas/ali/1.0/"><!--* Allow references to unqualified names *-->
+   <xsd:import/>
+   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+   <!--* Some imports may need to be added manually *-->
+   <xsd:element name="free_to_read">
+      <xsd:annotation>
+         <xsd:documentation>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+               <h3>Free to Read (Niso Ali)</h3>
+            </div>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:attribute name="content-type" use="optional" type="xsd:string"/>
+         <xsd:attribute name="end_date" use="optional" type="xsd:string"/>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="specific-use" use="optional" type="xsd:string"/>
+         <xsd:attribute name="start_date" use="optional" type="xsd:string"/>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="license_ref">
+      <xsd:annotation>
+         <xsd:documentation>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+               <h3>License Reference (Niso Ali)</h3>
+            </div>
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType mixed="true">
+         <xsd:group ref="license-ref-model"/>
+         <xsd:attribute name="content-type" use="optional" type="xsd:string"/>
+         <xsd:attribute name="id" use="optional" type="xsd:ID"/>
+         <xsd:attribute name="specific-use" use="optional" type="xsd:string"/>
+         <xsd:attribute name="start_date" use="optional" type="xsd:string"/>
+         <xsd:attribute ref="xml:base" use="optional"/>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation/>
+</xsd:schema>
+

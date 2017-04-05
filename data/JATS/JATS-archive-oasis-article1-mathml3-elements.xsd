@@ -1,4 +1,3 @@
-<!-- JATS-archive-oasis-article1-mathml3-elements.xsd -->
 <?xml-stylesheet href="xsd.xsl" type="text/xsl"?>
 <xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
             xmlns:c="http://www.w3.org/ns/xproc-step"
@@ -15,10 +14,10 @@
               <h2>MODEL: Journal Archiving and Interchange DTD with OASIS and XHTML Tables with MATML 3.0</h2>
               <h2>VERSION:  1.1</h2>
               <h2>DATE:  December 2015</h2>
-              <p>An alternative Archiving DTD with one addition:
-                the OASIS table model is defined in addition to
+              <p>An alternative Archiving DTD with one addition: 
+                the OASIS table model is defined in addition to 
                 the XHTML table model. (Both table models are
-                used in this DTD, with the OASIS CALS model given
+                used in this DTD, with the OASIS CALS model given 
                 a hard-coded namespace prefix of "oasis".) This
                 DTD uses MathML 3.0.</p>
               <dl>
@@ -33,9 +32,9 @@
                </dd>
                 <dt>CREATED FOR</dt>
                 <dd>
-                  <p>NLM/NCBI</p>
+                  <p>NLM/NCBI</p> 
                </dd>
-
+                
               </dl>
             </div>
           </xsd:documentation>
@@ -8668,3 +8667,4 @@
       </xsd:choice>
    </xsd:group>
 </xsd:schema>
+

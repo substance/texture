@@ -1,40 +1,54 @@
 <html>
-<head>
-  <title>Texture Author</title>
-  <meta charset="UTF-8">
-  <script type="text/javascript" src="../texture.js"></script>
-  <script type="text/javascript" src="./data.js"></script>
-  <style>
-    /* Texture Component styles */
-    @import '../texture.css';
-    /* You may want to use your own reset and pagestyle */
-    @import '../texture-reset.css';
-    @import '../texture-pagestyle.css';
-    /* Using url here, so font-awesome does not get bundled. */
-    @import url('../font-awesome/css/font-awesome.min.css');
-    body { overflow: hidden; }
-    .sc-author { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }
-  </style>
-  <script>
-    var t = window.texture;
+  <head>
+    <title>Texture Author</title>
+    <meta charset="UTF-8">
+    <style>
+      /* Texture Component styles */
+      @import '../dist/texture.css';
+      /* You may want to use your own reset and pagestyle */
+      @import '../dist/texture-reset.css';
+      @import '../dist/texture-pagestyle.css';
+      @import '../node_modules/font-awesome/css/font-awesome.min.css';
 
-    /* Author Configuration */
-    var configurator = new t.TextureConfigurator()
-      .import(t.AuthorPackage)
-      .setXMLStore(t.ExampleXMLStore, XMLFILES)
+      body { overflow: hidden; }
 
-    if (typeof window !== 'undefined') {
-      window.onload = function() {
-        var app = t.Texture.mount({
-          configurator: configurator,
-          documentId: 'elife-15278'
-        }, document.body)
-        window.app = app
+      .sc-author {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top: 0px;
       }
-    }
-  </script>
-</head>
-<body>
+    </style>
+    <script type="text/javascript" src="../node_modules/substance/dist/substance.js"></script>
+    <script type="text/javascript" src="../dist/texture.js"></script>
+    <script type="text/javascript" src="../tmp/vfs.js"></script>
+    <script type="text/javascript">
+      const { Configurator, EditorSession, DefaultDOMElement } = window.substance
+      const { TextureBasePackage, AuthorPackage, jats2texture, importTextureJATS } = window.texture
 
-</body>
+      window.onload = function() {
+        // configuration
+        let cfg = new Configurator()
+        cfg.import(TextureBasePackage)
+        cfg.import(AuthorPackage)
+        // load XML file
+        const xmlStr = vfs.readFileSync('data/elife-15278.xml')
+        const dom = jats2texture(xmlStr)
+        // import
+        const importer = cfg.createImporter('texture-jats')
+        const doc = importer.importDocument(dom)
+        // create editor session
+        const editorSession = new EditorSession(doc, {
+          configurator: cfg
+        })
+        // mount user interface
+        AuthorPackage.AuthorInterface.mount({
+          editorSession: editorSession
+        }, document.body)
+      }
+    </script>
+  </head>
+  <body>
+  </body>
 </html>

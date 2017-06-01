@@ -21,6 +21,7 @@
       }
     </style>
     <script type="text/javascript" src="../node_modules/substance/dist/substance.js"></script>
+    <script type="text/javascript" src="../node_modules/texture-jats/dist/texture-jats.js"></script>
     <script type="text/javascript" src="../dist/texture.js"></script>
     <script type="text/javascript" src="../tmp/vfs.js"></script>
     <script type="text/javascript">
@@ -43,7 +44,7 @@
           configurator: cfg
         })
         // mount user interface
-        AuthorPackage.AuthorInterface.mount({
+        AuthorPackage.Author.mount({
           editorSession: editorSession
         }, document.body)
       }

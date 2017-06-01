@@ -66,9 +66,11 @@ function _buildLib(DEST, transpileToES5) {
       format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture',
       // useStrict: !transpileToES5
     },
-    external: [ 'substance' ],
-    // buble: transpileToES5,
-    commonjs: false,
+    external: [ 'substance', 'texture-jats'],
+    globals: {
+      'substance': 'substance',
+      'texture-jats': 'TextureJATS'
+    }
   })
 }
 

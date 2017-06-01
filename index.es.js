@@ -1,7 +1,7 @@
 export { TextureJATSPackage, jats2texture } from 'texture-jats'
 
-export { default as TextureBasePackage } from './packages/base/TextureBasePackage'
-export { default as AuthorPackage } from './packages/author/AuthorPackage'
+export { default as TextureBasePackage } from './lib/packages/base/TextureBasePackage'
+export { default as AuthorPackage } from './lib/packages/author/AuthorPackage'
 
 // // texture
 // export { default as Texture } from './lib/texture/Texture'

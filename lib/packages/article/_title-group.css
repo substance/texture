@@ -1,0 +1,6 @@
+.sc-title-group .se-article-title {
+  padding-bottom: var(--default-padding);
+  font-weight: var(--strong-font-weight);
+  letter-spacing: var(--heading-letterspacing);
+  font-size: var(--title-font-size);
+}

@@ -1,3 +1,6 @@
+@import './packages/base/_index.css';
+@import './packages/article/_index.css';
+
 /*
 @import './jats/_index.css';
 @import './unsupported/_index.css';

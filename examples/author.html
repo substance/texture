@@ -34,8 +34,9 @@
         cfg.import(TextureBasePackage)
         cfg.import(AuthorPackage)
         // load XML file
-        const xmlStr = vfs.readFileSync('data/elife-15278.xml')
-        const dom = jats2texture(xmlStr)
+        const xmlStr = vfs.readFileSync('data/kitchen-sink.xml')
+        const dom = DefaultDOMElement.parseXML(xmlStr)
+        // const dom = jats2texture(xmlStr)
         // import
         const importer = cfg.createImporter('texture-jats')
         const doc = importer.importDocument(dom)

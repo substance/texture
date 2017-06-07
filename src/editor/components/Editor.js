@@ -33,8 +33,9 @@ class Author extends AbstractWriter {
 
   _renderContentPanel($$) {
     const doc = this.editorSession.getDocument()
+    const configurator = this.getConfigurator()
     const ArticleComponent = this.getComponent('article')
-    // const Overlay = this.getComponent('overlay')
+    const Overlay = this.getComponent('overlay')
     // const ContextMenu = this.getComponent('context-menu')
     // const Dropzones = this.componentRegistry.get('dropzones', 'strict')
 
@@ -59,8 +60,11 @@ class Author extends AbstractWriter {
     )
 
     contentPanel.append(
-      layout
-      // $$(Overlay),
+      layout,
+      $$(Overlay, {
+        toolPanel: configurator.getToolPanel('main-overlay'),
+        theme: 'dark'
+      }),
       // $$(ContextMenu),
       // $$(Dropzones)
     )

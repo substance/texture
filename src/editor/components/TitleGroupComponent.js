@@ -10,13 +10,12 @@ export default class TitleGroupComponent extends Component {
 
     // article-title is mandatory
     const articleTitle = node.get('article-title')
-    let titleEl = $$(this.getComponent('text-property'), {
+    let titleEl = $$(this.getComponent('text-property-editor'), {
       path: articleTitle.getTextPath(),
       disabled: this.props.disabled
     }).addClass('se-article-title').ref('title')
 
     // TODO: sub-title etc.
-
     el.append(titleEl)
 
     return el

@@ -1,6 +1,7 @@
 import { Highlights, Toolbar, AbstractEditor } from 'substance'
 import SaveHandler from './SaveHandler'
 import NumberedLabelGenerator from './NumberedLabelGenerator'
+import { getXrefTargets } from './util'
 
 class AbstractWriter extends AbstractEditor {
 
@@ -26,6 +27,10 @@ class AbstractWriter extends AbstractEditor {
     let sortNumeric = function(a, b){ return a-b }
     // NOTE: Supported ref-types are hard-coded for now
     this.labelGenerator = new NumberedLabelGenerator(editorSession, this.exporter, {
+      'fn': function(targets) {
+        let positions = targets.map(t => t.position).sort(sortNumeric)
+        return positions.join(',') || '???'
+      },
       'bibr': function(targets) {
         let positions = targets.map(t => t.position).sort(sortNumeric)
         return '[' + (positions.join(',') || '???') + ']'
@@ -114,7 +119,8 @@ class AbstractWriter extends AbstractEditor {
     }
     if (xrefs.length === 1 && xrefs[0].getSelection().equals(sel) ) {
       let xref = xrefs[0]
-      highlights[xref.referenceType] = xref.targets.concat([xref.id])
+      let targets = getXrefTargets(xref)
+      highlights[xref.referenceType] = targets.concat([xref.id])
     }
     this.contentHighlights.set(highlights)
   }

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1 20151215//EN" "http://jats.nlm.nih.gov/archiving/1.1/JATS-archivearticle1.dtd">
+<!--
+  Kitchen XML for our texture editor.
+
+  We use a restricted JATS version, which is suitable for Texture to reason
+  about.
+
+  We include all content that is required by the members of the Substance
+  Consortium (Public Knowledge Project, SciELO, Erudit)
+
+  Documents modelled after this kitchen sink can be fully edited visually.
+-->
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Texture Kitchen Sink</article-title>
+        <subtitle>The Subtitle</subtitle>
+        <trans-title-group  xml:lang="de">
+          <trans-title>Texture Küchenspüle</trans-title>
+          <trans-subtitle>Der Untertitel</trans-subtitle>
+        </trans-title-group>
+      </title-group>
+      <contrib-group>
+        <!-- Texture supports in-place string name editing of authors -->
+        <contrib contrib-type="author">
+          <string-name>John Doe</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Jane Doe</string-name>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Foo University</institution>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>Bar Ltd</institution>
+        </aff>
+      </contrib-group>
+      <!-- Publication date, as required by SciELO -->
+      <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
+          <day>29</day>
+          <month>01</month>
+          <year>1999</year>
+      </pub-date>
+      <!-- Pages elements, as required by SciELO -->
+      <volume>318</volume>      
+      <issue>7187</issue>
+      <fpage>837</fpage>
+      <lpage>841</lpage>
+      <!-- Support for Electronic Location Identifier, as required by SciELO -->
+      <!-- TODO: we need this supported -->
+      <!-- <elocation-id seq="1">051101</elocation-id> -->
+      <!-- Publication history, as required by SciELO -->
+      <history>
+        <date date-type="received" iso-8601-date="1998-01-05">
+          <day>05</day>
+          <month>01</month>
+          <year>1998</year>
+        </date>
+        <date date-type="rev-request" iso-8601-date="1998-03-14">
+          <day>14</day>
+          <month>03</month>
+          <year>1998</year>
+        </date>
+        <date date-type="rev-received" iso-8601-date="1998-05-24">
+          <day>24</day>
+          <month>05</month>
+          <year>1998</year>
+        </date>
+        <date date-type="accepted" iso-8601-date="1998-06-06">
+          <day>06</day>
+          <month>06</month>
+          <year>1998</year>
+        </date>
+      </history>
+
+      <!-- The abstract can contain multiple paragraphs -->
+      <abstract>
+        <abstract-content>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r2"/></p>
+        </abstract-content>
+      </abstract>
+      <trans-abstract xml:lang="de">Deutsche Übersetzung</trans-abstract>
+    </article-meta>
+  </front>
+  <body>
+    <body-content>
+      <!-- We use HTML-style headings instead of sections in the Texture format -->
+      <heading level="1">Heading Level 1</heading>
+      <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor sit amet.<ext-link ext-link-type="uri" xlink:href="http://substance.io">Example link</ext-link></p>
+      <heading level="2">Heading Level 2</heading>
+      <p>Lorem ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet.<xref ref-type="bibr" rid="r1 r2"/></p>
+      <disp-quote>
+        <p>Blockquote example</p>
+        <attrib>Ecclesiastes 10:1</attrib>
+      </disp-quote>
+    </body-content>
+  </body>
+  <back>
+    <fn-group>
+      <fn id="fn1">
+        <p>I am footnote number one</p>
+      </fn>
+      <fn id="fn2">
+        <p>I am footnote number two</p>
+      </fn>
+    </fn-group>
+    <ref-list>
+      <title>References</title>
+      <!-- In Texture editing stage we use unstructured text to describe references -->
+      <ref id="r1"><string-citation>Reference number one</string-citation></ref>
+      <ref id="r2"><string-citation>Reference number two</string-citation></ref>
+    </ref-list>
+  </back>
+</article>

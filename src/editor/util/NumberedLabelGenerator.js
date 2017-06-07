@@ -36,7 +36,6 @@ class NumberedLabelGenerator extends EventEmitter {
     super()
     this.editorSession = editorSession
     this.document = editorSession.getDocument()
-    this.exporter = exporter
     // refTypes that should be considered e.g.
     this.refTypes = refTypes
     // Holds positions for referenced items
@@ -68,7 +67,7 @@ class NumberedLabelGenerator extends EventEmitter {
         needsRecompute = true
       }
     })
-    // When an xref the targets property of an xref is updated we recompute
+    // When the targets property of an xref is updated we recompute
     Object.keys(change.updated).forEach((nodeId) => {
       var node = doc.get(nodeId)
       if (node && node.type === 'xref' && change.isAffected([nodeId, 'targets'])) {
@@ -83,6 +82,7 @@ class NumberedLabelGenerator extends EventEmitter {
 
 
   _computePositions() {
+
     // Reset positions
     this.positions = {}
     Object.keys(this.refTypes).forEach((refType) => {
@@ -94,6 +94,7 @@ class NumberedLabelGenerator extends EventEmitter {
     Object.keys(this.refTypes).forEach((refType) => {
       counters[refType] = 0
     })
+
 
     const xrefs = this.document.getXRefs()
     xrefs.forEach((xref) => {
@@ -115,6 +116,7 @@ class NumberedLabelGenerator extends EventEmitter {
       })
     })
     this.emit('labels:generated')
+    // console.log('computing positions', this.positions)
     // console.info('positions', this.positions)
   }
 

@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { getXrefTargets } from '../../common/util'
+import { getXrefTargets } from '../util'
 
 export default class XrefComponent extends Component {
 

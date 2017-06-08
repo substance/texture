@@ -3,7 +3,7 @@ import { Component } from 'substance'
 /*
   Simplistic back-matter displaying references and appendixes
 */
-export default class SimpleBackComponent extends Component {
+export default class BackComponent extends Component {
 
   render($$) {
     const node = this.props.node
@@ -12,14 +12,12 @@ export default class SimpleBackComponent extends Component {
       .attr('data-id', node.id)
 
     // TODO: show all, or think about how to render the whole back matter
-
     let refList = node.find('ref-list')
     if (refList) {
     	el.append(
     		$$(this.getComponent('ref-list'), { node })
     	)
     }
-
     return el
   }
 

@@ -67,10 +67,7 @@ class AbstractWriter extends AbstractEditor {
   _renderToolbar($$) {
     let commandStates = this.commandManager.getCommandStates()
     return $$(Toolbar, {
-      // TODO: How can we make this extensible (e.g. the tag group should be
-      // activated by the TaggingPackage)
-      toolGroups: ['text', 'document', 'annotations', 'default', 'insert', 'tag'],
-      commandStates: commandStates
+      toolPanel: configurator.getToolPanel('toolbar')
     }).ref('toolbar')
   }
 

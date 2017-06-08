@@ -1,5 +1,5 @@
 import { SplitPanePackage, ScrollPane, SplitPane, Layout } from 'substance'
-import AbstractWriter from '../../common/AbstractWriter'
+import { AbstractWriter } from '../util'
 // import AuthorTOCProvider from './AuthorTOCProvider'
 
 class Author extends AbstractWriter {
@@ -34,7 +34,7 @@ class Author extends AbstractWriter {
   _renderContentPanel($$) {
     const doc = this.editorSession.getDocument()
     const configurator = this.getConfigurator()
-    const ArticleComponent = this.getComponent('article')
+    const ManuscriptComponent = this.getComponent('manuscript')
     const Overlay = this.getComponent('overlay')
     // const ContextMenu = this.getComponent('context-menu')
     // const Dropzones = this.componentRegistry.get('dropzones', 'strict')
@@ -53,7 +53,7 @@ class Author extends AbstractWriter {
     })
 
     layout.append(
-      $$(ArticleComponent, {
+      $$(ManuscriptComponent, {
         node: article,
         disabled: this.props.disabled
       })

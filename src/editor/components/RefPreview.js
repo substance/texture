@@ -1,14 +1,14 @@
 import { Component } from 'substance'
 
 /*
-  Renders a keyboard-selectable ref target item
+  Renders a keyboard-selectable ref preview item
 */
-class RefTarget extends Component {
+export default class RefPreview extends Component {
 
   render($$) {
     let labelGenerator = this.context.labelGenerator
     let el = $$('div')
-      .addClass('sc-ref-target')
+      .addClass('sc-ref-preview')
       .attr({'data-id': this.props.node.id})
 
     if (this.props.selected) {
@@ -22,14 +22,14 @@ class RefTarget extends Component {
     )
 
     let node = this.props.node
-    let TextProperty = this.getComponent('text')
+    let stringCitation = node.find('string-citation')
+    let TextNode = this.getComponent('text-node')
     el.append(
-      $$(TextProperty, {
-        path: node.getTextPath()
+      $$(TextNode, {
+        node: stringCitation
       })
     )
     return el
   }
 }
 
-export default RefTarget

@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 
-export default class ArticleComponent extends Component {
+export default class ManuscriptComponent extends Component {
 
   render($$) {
     const node = this.props.node

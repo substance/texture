@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Texture Author</title>
+    <title>Texture Editor</title>
     <meta charset="UTF-8">
     <style>
       /* Texture Component styles */
@@ -26,13 +26,12 @@
     <script type="text/javascript" src="../tmp/vfs.js"></script>
     <script type="text/javascript">
       const { Configurator, EditorSession, DefaultDOMElement } = window.substance
-      const { TextureBasePackage, AuthorPackage, jats2texture, importTextureJATS } = window.texture
+      const { EditorPackage, jats2texture, importTextureJATS } = window.texture
 
       window.onload = function() {
         // configuration
         let cfg = new Configurator()
-        cfg.import(TextureBasePackage)
-        cfg.import(AuthorPackage)
+        cfg.import(EditorPackage)
         // load XML file
         const xmlStr = vfs.readFileSync('data/kitchen-sink.xml')
         const dom = DefaultDOMElement.parseXML(xmlStr)
@@ -45,7 +44,7 @@
           configurator: cfg
         })
         // mount user interface
-        AuthorPackage.Author.mount({
+        EditorPackage.Editor.mount({
           editorSession: editorSession
         }, document.body)
       }

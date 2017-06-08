@@ -3,7 +3,7 @@ import { Component } from 'substance'
 /*
   Simplistic front-matter displaying title, abstract and authors
 */
-export default class SimpleFrontComponent extends Component {
+export default class FrontComponent extends Component {
 
   render($$) {
     const node = this.props.node

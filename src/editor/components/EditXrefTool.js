@@ -1,5 +1,5 @@
 import { Tool, clone, find, without } from 'substance'
-import { getAvailableXrefTargets } from '../../common/util'
+import { getAvailableXrefTargets, getXrefTargets } from '../util'
 
 /*
   Editing of XRefTargets
@@ -28,7 +28,7 @@ export default class EditXRefTool extends Tool {
     let el = $$('div').addClass('sc-edit-xref-tool')
 
     this.state.targets.forEach(function(target) {
-      let TargetComponent = this.getComponent(target.node.type+'-target')
+      let TargetComponent = this.getComponent(target.node.type+'-preview')
       let props = clone(target)
       // Disable editing in TargetComponent
       props.disabled = true
@@ -46,7 +46,7 @@ export default class EditXRefTool extends Tool {
     // console.log('XRefTargets: toggling target of ', node.id);
 
     // Update model
-    let newTargets = node.targets
+    let newTargets = getXrefTargets(node)
     if (newTargets.indexOf(targetNode.id) >= 0) {
       newTargets = without(newTargets, targetNode.id)
     } else {
@@ -62,8 +62,13 @@ export default class EditXRefTool extends Tool {
     // Flip the selected flag
     target.selected = !target.selected
 
-    editorSession.transaction(function(tx) {
-      tx.set([node.id, 'targets'], newTargets)
+    const nodeId = node.id
+
+    editorSession.transaction(function(doc) {
+      doc.set([node.id, 'attributes', 'rid'], newTargets.join(' '))
+      // TODO: we want this instead!
+      // let node = tx.get(node.id)
+      // node.setAttribute('rid', newTargets.join(' '))
     })
 
     // Triggers a rerender

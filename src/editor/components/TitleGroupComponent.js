@@ -20,5 +20,4 @@ export default class TitleGroupComponent extends Component {
 
     return el
   }
-
 }

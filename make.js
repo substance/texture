@@ -127,3 +127,7 @@ function _runTestsNode() {
     }
   })
 }
+
+// starts a server when CLI argument '-s' is set
+b.setServerPort(4000)
+b.serve({ static: true, route: '/', folder: '.' })

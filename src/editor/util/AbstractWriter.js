@@ -1,7 +1,7 @@
 import { Highlights, Toolbar, AbstractEditor } from 'substance'
 import SaveHandler from './SaveHandler'
 import NumberedLabelGenerator from './NumberedLabelGenerator'
-import { getXrefTargets } from './util'
+import getXrefTargets from './getXrefTargets'
 
 class AbstractWriter extends AbstractEditor {
 

@@ -14,7 +14,7 @@ export default class TextureContainerEditor extends ContainerEditor {
       if (ComponentClass) {
         el = $$(ComponentClass, { node })
       } else {
-        el = $$(this.getComponent('text'), { node })
+        el = $$(this.getComponent('text-node'), { node })
       }
     } else {
       if (ComponentClass) {

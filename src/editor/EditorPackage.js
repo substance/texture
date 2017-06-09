@@ -64,58 +64,64 @@ export default {
     // Tools
     config.addTool('edit-xref', EditXrefTool)
 
-    // config.addAnnotationTool({
-    //   name: 'bold',
-    //   commandGroup: 'formatting',
-    //   icon: 'fa-lasdf',
-    //   label: 'Strong text'
-    // })
-
-    // config.addAnnotationTool({
-    //   name: 'link',
-    //   commandGroup: 'formatting',
-    //   icon: 'fa-link',
-    //   label: 'Link',
-    //   shortcut: 'CMD+B'
-    // })
-
-    // // Insert Table
-    // config.addInsertTool({
-    //   name: 'table',
-    //   commandGroup: 'insert',
-    //   icon: 'fa-table',
-    //   label: 'Table',
-    //   shortcut: 'CMD+T'
-    // })
-    // config.addTextTypeTool({
-    //   name: 'heading1',
-    //   commandGroup: 'switch-text-type'
-    //   icon: 'fa-heading'
-    // })
-
-    config.addCommand('bold', AnnotationCommand, {
+    // Annotation tools
+    config.addAnnotationTool({
+      name: 'bold',
       nodeType: 'bold',
-      commandGroup: 'annotations'
+      commandGroup: 'formatting',
+      icon: 'fa-bold',
+      label: 'Strong',
+      accelerator: 'cmd+b'
     })
-    config.addIcon('bold', { 'fontawesome': 'fa-bold' })
-    config.addLabel('bold', 'Bold')
 
+    config.addAnnotationTool({
+      name: 'italic',
+      nodeType: 'italic',
+      commandGroup: 'formatting',
+      icon: 'fa-italic',
+      label: 'Emphasize',
+      accelerator: 'cmd+i'
+    })
+
+    config.addTextTypeTool({
+      name: 'heading1',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        attributes: { level: 1 }
+      },
+      icon: 'fa-header',
+      label: 'Heading 1',
+      accelerator: 'cmd+alt+1'
+    })
+
+    config.addTextTypeTool({
+      name: 'heading1',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        attributes: { level: 2 }
+      },
+      icon: 'fa-header',
+      label: 'Heading 2',
+      accelerator: 'cmd+alt+1'
+    })
 
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [
-      // {
-      //   name: 'text-types',
-      //   type: 'tool-dropdown',
-      //   showDisabled: true,
-      //   style: 'descriptive',
-      //   commandGroups: ['text-types']
-      // },
+      {
+        name: 'text-types',
+        type: 'tool-dropdown',
+        showDisabled: true,
+        style: 'descriptive',
+        commandGroups: ['text-types']
+      },
       {
         name: 'annotations',
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['annotations']
+        commandGroups: ['formatting']
       },
       // {
       //   name: 'insert',

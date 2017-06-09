@@ -25,12 +25,12 @@
     <script type="text/javascript" src="../dist/texture.js"></script>
     <script type="text/javascript" src="../tmp/vfs.js"></script>
     <script type="text/javascript">
-      const { Configurator, EditorSession, DefaultDOMElement } = window.substance
-      const { EditorPackage, jats2texture, importTextureJATS } = window.texture
+      const { EditorSession, DefaultDOMElement } = window.substance
+      const { EditorPackage, jats2texture, importTextureJATS, TextureConfigurator } = window.texture
 
       window.onload = function() {
         // configuration
-        let cfg = new Configurator()
+        let cfg = new TextureConfigurator()
         cfg.import(EditorPackage)
         // load XML file
         const xmlStr = vfs.readFileSync('data/kitchen-sink.xml')

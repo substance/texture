@@ -83,16 +83,13 @@ export default {
       accelerator: 'cmd+i'
     })
 
-    config.addTextTypeTool({
-      name: 'heading1',
-      commandGroup: 'text-types',
-      nodeSpec: {
-        type: 'heading',
-        attributes: { level: 1 }
-      },
-      icon: 'fa-header',
-      label: 'Heading 1',
-      accelerator: 'cmd+alt+1'
+    config.addAnnotationTool({
+      name: 'ext-link',
+      nodeType: 'ext-link',
+      commandGroup: 'formatting',
+      icon: 'fa-link',
+      label: 'Link',
+      accelerator: 'cmd+k'
     })
 
     config.addTextTypeTool({
@@ -100,11 +97,46 @@ export default {
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
-        attributes: { level: 2 }
+        attributes: { level: '1' }
+      },
+      icon: 'fa-header',
+      label: 'Heading 1',
+      accelerator: 'cmd+alt+1'
+    })
+
+    config.addTextTypeTool({
+      name: 'heading2',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        attributes: { level: '2' }
       },
       icon: 'fa-header',
       label: 'Heading 2',
-      accelerator: 'cmd+alt+1'
+      accelerator: 'cmd+alt+2'
+    })
+
+    config.addTextTypeTool({
+      name: 'heading3',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        attributes: { level: '3' }
+      },
+      icon: 'fa-header',
+      label: 'Heading 3',
+      accelerator: 'cmd+alt+3'
+    })
+
+    config.addTextTypeTool({
+      name: 'paragraph',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'p'
+      },
+      icon: 'fa-paragraph',
+      label: 'Paragraph',
+      accelerator: 'cmd+alt+0'
     })
 
     // Declarative spec for tool display

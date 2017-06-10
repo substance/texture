@@ -15,11 +15,14 @@ export default class TextureConfigurator extends Configurator {
   addTextTypeTool(spec) {
     this.addCommand(spec.name, SwitchTextTypeCommand, {
       spec: spec.nodeSpec,
-      commandGroup: spec.commandGroup
+      commandGroup: 'text-types'
     })
-
     this.addIcon(spec.name, { 'fontawesome': spec.icon })
     this.addLabel(spec.name, spec.label)
     this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+  }
+
+  addInsertTool(spec) {
+
   }
 }

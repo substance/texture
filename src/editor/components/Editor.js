@@ -5,7 +5,7 @@ import { AbstractWriter } from '../util'
 class Author extends AbstractWriter {
 
   render($$) {
-    let el = $$('div').addClass('sc-author')
+    let el = $$('div').addClass('sc-editor')
     el.append(
       $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
         this._renderMainSection($$),

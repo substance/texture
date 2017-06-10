@@ -1,10 +1,17 @@
 .sc-editor .se-toolbar-wrapper {
   z-index: 1000;
+  background: #fafbfc;
+  border-bottom: 1px solid #e1e4e8;
 }
 
 .sc-editor .sc-container-editor {
   padding:  20px 0;
   margin: 0 auto;
+}
+
+.sc-editor .se-context-section {
+  background: #fafbfc;
+  border-left: 1px solid #e1e4e8;
 }
 
 .sc-front {

@@ -1,8 +1,9 @@
 import { SplitPanePackage, ScrollPane, SplitPane, Layout } from 'substance'
 import { AbstractWriter } from '../util'
-// import AuthorTOCProvider from './AuthorTOCProvider'
+import TOC from './TOC'
+import TOCProvider from '../util/TOCProvider'
 
-class Author extends AbstractWriter {
+export default class Editor extends AbstractWriter {
 
   render($$) {
     let el = $$('div').addClass('sc-editor')
@@ -17,7 +18,7 @@ class Author extends AbstractWriter {
 
   _renderContextSection($$) {
     return $$('div').addClass('se-context-section').append(
-      // $$(TOC)
+      $$(TOC)
     )
   }
 
@@ -85,9 +86,18 @@ class Author extends AbstractWriter {
   }
 
   _getTOCProvider() {
-    return null
+    let containerId = this._getBodyContentContainerId()
+    let doc = this.editorSession.getDocument()
+    return new TOCProvider(doc, {
+      containerId: containerId
+    })
+  }
+
+  _getBodyContentContainerId() {
+    const doc = this.editorSession.getDocument()
+    let bodyContent = doc.article.find('body-content')
+    return bodyContent.id
   }
 
 }
 
-export default Author

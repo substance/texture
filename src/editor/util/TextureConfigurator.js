@@ -9,7 +9,9 @@ export default class TextureConfigurator extends Configurator {
     })
     this.addIcon(spec.name, { 'fontawesome': spec.icon })
     this.addLabel(spec.name, spec.label)
-    this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+    if (spec.accelerator) {
+      this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+    }
   }
 
   addTextTypeTool(spec) {
@@ -19,7 +21,10 @@ export default class TextureConfigurator extends Configurator {
     })
     this.addIcon(spec.name, { 'fontawesome': spec.icon })
     this.addLabel(spec.name, spec.label)
-    this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+    if (spec.accelerator) {
+      this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+    }
+
   }
 
   addInsertTool(spec) {

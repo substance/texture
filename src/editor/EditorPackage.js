@@ -87,6 +87,22 @@ export default {
     })
 
     config.addAnnotationTool({
+      name: 'sub',
+      nodeType: 'sub',
+      commandGroup: 'formatting',
+      icon: 'fa-subscript',
+      label: 'Subscript'
+    })
+
+    config.addAnnotationTool({
+      name: 'sup',
+      nodeType: 'sup',
+      commandGroup: 'formatting',
+      icon: 'fa-superscript',
+      label: 'Superscript'
+    })
+
+    config.addAnnotationTool({
       name: 'ext-link',
       nodeType: 'ext-link',
       commandGroup: 'formatting',

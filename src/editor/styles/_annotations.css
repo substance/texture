@@ -9,3 +9,13 @@
 .sc-ext-link {
   color: #2079DC;
 }
+
+.sc-sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.sc-sup {
+  vertical-align: super;
+  font-size: smaller;
+}

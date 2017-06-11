@@ -2,6 +2,7 @@ import {
   BasePackage as SubstanceBasePackage,
   TextPropertyEditor,
   EditInlineNodeCommand,
+  EditAnnotationCommand,
   AnnotationCommand
 } from 'substance'
 import { TextureJATSPackage } from 'texture-jats'
@@ -13,6 +14,7 @@ import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeComponent'
 
 import EditXrefTool from './components/EditXrefTool'
+import EditExtLinkTool from './components/EditExtLinkTool'
 import AbstractComponent from './components/AbstractComponent'
 import ContainerNodeComponent from './components/ContainerNodeComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
@@ -51,6 +53,7 @@ export default {
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('xref', XrefComponent)
+
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)
@@ -138,6 +141,16 @@ export default {
       label: 'Paragraph',
       accelerator: 'cmd+alt+0'
     })
+
+    config.addCommand('edit-ext-link', EditAnnotationCommand, {
+      nodeType: 'ext-link',
+      commandGroup: 'prompt'
+    })
+
+    // ExtLink
+    config.addTool('edit-ext-link', EditExtLinkTool)
+    config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
+    config.addLabel('open-link', 'Open Link')
 
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [

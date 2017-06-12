@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ....................................................................... -->
+<!-- MathML Qualified Names Module  ........................................ -->
+<!--
+  file: mathml3-qname-1.mod
+  
+  This is the Mathematical Markup Language (MathML) 2.0, an XML 
+  application for describing mathematical notation and capturing 
+  both its structure and content.
+  
+  Copyright 1998-2010 W3C (MIT, INRIA, Keio), All Rights Reserved.
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+    PUBLIC "-//W3C//ENTITIES MathML 3.0 Qualified Names 1.0//EN"
+    SYSTEM "mathml3-qname.mod"
+  
+  Revisions:
+  (none)
+  .......................................................................
+-->
+<!--
+  MathML Qualified Names
+  
+  This module is contained in two parts, labeled Section 'A' and 'B':
+  
+    Section A declares parameter entities to support namespace-
+    qualified names, namespace declarations, and name prefixing 
+    for MathML.
+  
+    Section B declares parameter entities used to provide
+    namespace-qualified names for all MathML element types.
+  
+  This module is derived from the XHTML Qualified Names Template module.
+-->
+<!-- Section A: XHTML XML Namespace Framework :::::::::::::::::::: -->
+<!-- XLink ............... -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="XLINK.xmlns.attrib">
+    <empty/>
+  </define>
+  <!-- W3C XML Schema ............... -->
+  <!-- MathML .............. -->
+  <define name="MATHML.xmlns.extra.attrib">
+    <empty/>
+  </define>
+  <define name="MATHML.xmlns.attrib">
+    <ref name="MATHML.xmlns.extra.attrib"/>
+  </define>
+</grammar>
+<!--
+  ignores subsequent instantiation of this module when
+  used as external subset rather than module fragment.
+  NOTE: Do not modify this parameter entity, otherwise
+  a recursive parsing situation may result.
+-->
+<!-- Section B: MathML Qualified Names ::::::::::::::::::::::::::::: -->
+<!--
+  9. This section declares parameter entities used to provide
+  namespace-qualified names for all MathML element types.
+-->

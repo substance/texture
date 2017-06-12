@@ -5,7 +5,8 @@ import {
   EditAnnotationCommand,
   AnnotationCommand
 } from 'substance'
-import { TextureJATSPackage } from 'texture-jats'
+
+import TextureJATSPackage from '../article/TextureJATSPackage'
 
 import Editor from './components/Editor'
 import TextNodeComponent from './components/TextNodeComponent'

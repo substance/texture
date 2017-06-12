@@ -6,6 +6,10 @@ const vfs = require('substance-bundler/extensions/vfs')
 
 const DIST = 'dist/'
 const TMP = 'tmp/'
+const RNG_SEARCH_DIRS = [
+  path.join(__dirname, 'data', 'rng'),
+  path.join(__dirname, 'src', 'article')
+]
 
 b.task('clean', function() {
   b.rm(DIST)
@@ -15,12 +19,17 @@ b.task('clean', function() {
 b.task('assets', function() {
 })
 
-b.task('build:browser', ['substance:css'], function() {
+// compiles TextureJATS and does some evaluation
+b.task('compile:schema', () => {
+  _compileSchema('TextureJATS', 'src/article/TextureJATS.rng', RNG_SEARCH_DIRS, 'src/article')
+})
+
+b.task('build:browser', ['compile:schema'], () => {
   _buildLib(DIST, true)
   _buildCSS(DIST, true)
 })
 
-b.task('build:browser:pure', function() {
+b.task('build:browser:pure', ['compile:schema'], () => {
   _buildLib(DIST, false)
   _buildCSS(DIST, false)
 })
@@ -124,6 +133,32 @@ function _runTestsNode() {
           }
         })
       });
+    }
+  })
+}
+
+function _compileSchema(name, src, searchDirs, baseDir='generated', options = {} ) {
+  const DEST = `tmp/${name}.data.js`
+  const CLASSIFICATION = `${baseDir}/${name}.classification.json`
+  const ISSUES = `tmp/${name}.issues.txt`
+  const entry = path.basename(src)
+  b.custom(`Compiling schema '${name}'...`, {
+    src: ['data/rng/*.rng', 'src/**/*.rng'],
+    dest: DEST,
+    execute() {
+      const { compileRNG, serializeXMLSchema, checkSchema } = require('substance')
+      let manualClassification
+      if (fs.existsSync(CLASSIFICATION)) {
+        manualClassification = JSON.parse(fs.readFileSync(CLASSIFICATION))
+      }
+      const xmlSchema = compileRNG(fs, searchDirs, entry, manualClassification)
+      let schemaData = serializeXMLSchema(xmlSchema)
+      b.writeSync(DEST, `export default ${JSON.stringify(schemaData)}`)
+      if (options.debug) {
+        const issues = checkSchema(xmlSchema)
+        const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
+        b.writeSync(ISSUES, issuesData)
+      }
     }
   })
 }

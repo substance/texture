@@ -94,6 +94,7 @@
     <choice>
       <ref name="citation-alternatives"/>
       <ref name="element-citation"/>
+      <ref name="string-citation"/>
     </choice>
   </define>
 
@@ -105,6 +106,14 @@
 
   <define name="mixed-citation">
     <element name="mixed-citation">
+      <zeroOrMore>
+        <text />
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="string-citation">
+    <element name="string-citation">
       <zeroOrMore>
         <text />
       </zeroOrMore>

@@ -17,6 +17,11 @@ b.task('clean', function() {
 })
 
 b.task('assets', function() {
+  vfs(b, {
+    src: ['./data/**/*'],
+    dest: 'tmp/vfs.js',
+    format: 'umd', moduleName: 'vfs'
+  })
 })
 
 // compiles TextureJATS and does some evaluation
@@ -42,14 +47,6 @@ b.task('build:dev', ['clean', 'assets', 'build:browser:pure'])
 b.task('default', ['clean', 'assets', 'build'])
 
 b.task('dev', ['clean', 'assets', 'build:dev'])
-
-b.task('demo', ['clean', 'build:dev'], () => {
-  vfs(b, {
-    src: ['./data/**/*'],
-    dest: 'tmp/vfs.js',
-    format: 'umd', moduleName: 'vfs'
-  })
-})
 
 /* TESTS */
 

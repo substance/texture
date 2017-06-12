@@ -1,5 +1,5 @@
 import { XMLDocument } from 'substance'
-import TextureJATS from '../jats/TextureJATS'
+import TextureJATS from './TextureJATS'
 
 export default
 class JATSDocument extends XMLDocument {

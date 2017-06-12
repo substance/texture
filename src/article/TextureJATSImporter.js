@@ -1,6 +1,9 @@
-import { DefaultDOMElement, DOMImporter, map, isString } from 'substance'
-import Validator from '../xml/Validator'
-import TextureJATS from '../jats/TextureJATS'
+import {
+  DefaultDOMElement, DOMImporter, isString,
+  XMLValidator
+} from 'substance'
+
+import TextureJATS from './TextureJATS'
 
 export default
 class TextureJATSImporter extends DOMImporter {
@@ -14,7 +17,7 @@ class TextureJATSImporter extends DOMImporter {
     }, context)
 
     this.xmlSchema = TextureJATS
-    this.validator = new Validator(this.xmlSchema)
+    this.validator = new XMLValidator(this.xmlSchema)
   }
 
   importDocument(dom) {
@@ -100,7 +103,7 @@ class TextureJATSImporter extends DOMImporter {
     }
   }
 
-  _convertPropertyAnnotation(el, nodeData) {
+  _convertPropertyAnnotation() {
     throw new Error('stand-alone annotations are not supported.')
   }
 

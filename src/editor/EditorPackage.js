@@ -3,7 +3,7 @@ import {
   TextPropertyEditor,
   EditInlineNodeCommand,
   EditAnnotationCommand,
-  AnnotationCommand
+  SchemaDrivenCommandManager
 } from 'substance'
 
 import TextureJATSPackage from '../article/TextureJATSPackage'
@@ -28,8 +28,6 @@ import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
 
-import TextureCommandManager from './util/TextureCommandManager'
-
 export default {
   name: 'author',
   configure(config) {
@@ -39,7 +37,7 @@ export default {
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
-    config.setCommandManagerClass(TextureCommandManager)
+    config.setCommandManagerClass(SchemaDrivenCommandManager)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

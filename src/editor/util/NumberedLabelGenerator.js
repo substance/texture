@@ -1,4 +1,5 @@
 import { EventEmitter } from 'substance'
+import getXRefTargets from './getXRefTargets'
 
 /*
   @example
@@ -98,14 +99,12 @@ class NumberedLabelGenerator extends EventEmitter {
 
     const xrefs = this.document.getXRefs()
     xrefs.forEach((xref) => {
-      // Skip elements that have no target assinged
-      if (!xref.attributes['rid']) return
+      // Skip elements that have no target assigned
+      if (!xref.getAttribute('rid')) return
 
-      let targetIds = xref.attributes['rid'].split(' ')
-      let refType = xref.attributes['ref-type']
-      if (!this.refTypes[refType]) {
-        return
-      }
+      let targetIds = getXRefTargets(xref)
+      let refType = xref.getAttribute('ref-type')
+      if (!this.refTypes[refType]) return
 
       targetIds.forEach((targetId) => {
         if (!this.positions[refType][targetId]) {

@@ -28,13 +28,18 @@ import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
 
-// TODO: add imports
+import TextureCommandManager from './util/TextureCommandManager'
 
 export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
     config.import(TextureJATSPackage)
+
+    // EXPERIMENTAL:
+    // a CommandManager that uses the xmlSchema to inhibit commands
+    // which would generate disallowed content
+    config.setCommandManagerClass(TextureCommandManager)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

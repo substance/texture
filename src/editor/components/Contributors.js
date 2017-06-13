@@ -15,9 +15,10 @@ export default class Contributors extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-affiliations')
-    let stringAffs = getStringAffs(this.context.editorSession)
+    let editorSession = this.context.editorSession
+    let article = editorSession.getDocument().article
+    let affs = article.findAll('aff')
     let contribs = getContribs(this.context.editorSession)
-
 
     el.append(
       $$(MetadataSection, {
@@ -30,7 +31,7 @@ export default class Contributors extends Component {
       contribs.forEach((contrib) => {
         el.append(
           this._renderName($$, contrib),
-          this._renderAffiliations($$, contrib)
+          this._renderAffiliations($$, contrib, affs)
         )
       })
 
@@ -55,8 +56,33 @@ export default class Contributors extends Component {
     )
   }
 
-  _renderAffiliations($$, contrib) {
-    return $$('div')
+  _renderAffiliations($$, contrib, affs) {
+    return $$('div').addClass('se-affiliations').append(
+      $$('div').addClass('se-label').append('Affiliations'),
+      this._renderAffChoices($$, contrib, affs)
+    )
+  }
+
+  _renderAffChoices($$, contrib, affs) {
+    let el = $$('div').addClass('')
+    affs.forEach((aff) => {
+      let stringAff = aff.find('string-aff')
+      let selected = $$('input').attr({ type: 'checkbox' })
+      if (this._getAffReferences(contrib).indexOf(aff.id) >= 0) {
+        selected.attr('checked', true)
+      }
+      el.append(
+        $$('div').addClass('se-aff').append(
+          selected,
+          $$('span').append(stringAff.getText())
+        )
+      )
+    })
+    return el
+  }
+
+  _getAffReferences(contrib) {
+    return contrib.getAttribute('aff-ids').split(' ')
   }
 
   _toggle() {

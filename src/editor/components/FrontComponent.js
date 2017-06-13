@@ -13,12 +13,12 @@ export default class FrontComponent extends Component {
       .attr('data-id', node.id)
 
     // article-meta is mandatory
-    const articleMeta = node.get('article-meta')
+    const articleMeta = node.findChild('article-meta')
 
     // Title
 
     // title-group is optional
-    const titleGroup = articleMeta.get('title-group')
+    const titleGroup = articleMeta.findChild('title-group')
     let titleGroupEl
     if (titleGroup) {
       titleGroupEl = $$(this.getComponent('title-group'), {
@@ -34,7 +34,7 @@ export default class FrontComponent extends Component {
     // Abstract
 
     // There can be multiple abstracts. We just take the first
-    const abstract = articleMeta.get('abstract')
+    const abstract = articleMeta.findChild('abstract')
     let abstractEl
     if (abstract) {
       abstractEl = $$(this.getComponent('abstract'), {

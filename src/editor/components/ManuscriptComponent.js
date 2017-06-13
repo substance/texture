@@ -10,17 +10,17 @@ export default class ManuscriptComponent extends Component {
 
     const FrontComponent = this.getComponent('front')
     el.append($$(FrontComponent, {
-      node: node.get('front')
+      node: node.findChild('front')
     }).ref('front'))
 
     const BodyComponent = this.getComponent('body')
     el.append($$(BodyComponent, {
-      node: node.get('body')
+      node: node.findChild('body')
     }).ref('body'))
 
     const BackComponent = this.getComponent('back')
     el.append($$(BackComponent, {
-      node: node.get('back')
+      node: node.findChild('back')
     }).ref('back'))
 
     return el

@@ -9,7 +9,7 @@ export default class AbstractComponent extends Component {
       .attr('data-id', node.id)
 
     // There can be multiple abstracts. We just take the first
-    const content = node.get('abstract-content')
+    const content = node.findChild('abstract-content')
     let contentEl
     if (content) {
       contentEl = $$(this.getComponent('container'), {

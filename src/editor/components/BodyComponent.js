@@ -9,7 +9,7 @@ export default class BodyComponent extends Component {
       .attr('data-id', node.id)
 
     // There can be multiple abstracts. We just take the first
-    const content = node.get('body-content')
+    const content = node.findChild('body-content')
     let contentEl
     if (content) {
       contentEl = $$(this.getComponent('container'), {

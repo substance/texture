@@ -9,7 +9,7 @@ export default class TitleGroupComponent extends Component {
       .attr('data-id', node.id)
 
     // article-title is mandatory
-    const articleTitle = node.get('article-title')
+    const articleTitle = node.findChild('article-title')
     let titleEl = $$(this.getComponent('text-property-editor'), {
       path: articleTitle.getTextPath(),
       disabled: this.props.disabled

@@ -150,18 +150,66 @@
     </choice>
   </define>
 
-  <define name="aff-elements">
-    <choice>
-      <ref name="address.class"/>
-      <ref name="label.class"/>
-    </choice>
-  </define>
   <define name="aff">
     <element name="aff">
       <ref name="aff-attlist"/>
       <zeroOrMore>
         <choice>
-          <ref name="aff-elements"/>
+          <ref name="string-aff"/>
+          <ref name="address"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="string-aff">
+    <element name="string-aff">
+      <zeroOrMore>
+        <text />
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="element-aff">
+    <element name="element-aff">
+      <zeroOrMore>
+        <choice>
+          <ref name="address.class"/>
+          <ref name="email"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="contrib">
+    <element name="contrib">
+      <ref name="contrib-attlist"/>
+      <attribute name="aff-ids">
+        <data type="IDREFS"/>
+      </attribute>
+      <zeroOrMore>
+        <choice>
+          <ref name="string-contrib"/>
+          <ref name="element-contrib"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="string-contrib">
+    <element name="string-contrib">
+      <zeroOrMore>
+        <text />
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="element-contrib">
+    <element name="element-contrib">
+      <zeroOrMore>
+        <choice>
+          <ref name="name"/>
+          <ref name="email"/>
         </choice>
       </zeroOrMore>
     </element>

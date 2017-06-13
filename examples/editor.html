@@ -39,6 +39,7 @@
         // import
         const importer = cfg.createImporter('texture-jats')
         const doc = importer.importDocument(dom)
+        window.doc = doc
         // create editor session
         const editorSession = new EditorSession(doc, {
           configurator: cfg

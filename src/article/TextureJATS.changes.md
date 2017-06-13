@@ -1,3 +1,11 @@
+54. Allow `<string-name>` inside `<aff>`
+
+Used to define an unstructured (text-only) affiliation.
+
+53. Introduce `<string-citation>`
+
+We prefer to explicitly define unstructured (text-only) references.
+
 52. Introduce `<body-content>`
 
 We prefer to wrap content from meta-data.

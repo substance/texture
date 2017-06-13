@@ -24,23 +24,21 @@
       </title-group>
       <contrib-group>
         <!-- Texture supports in-place string name editing of authors -->
-        <contrib contrib-type="author">
-          <string-name>John Doe</string-name>
-          <xref ref-type="aff" rid="aff1">1</xref>
+        <contrib contrib-type="author" aff-ids="aff1 aff2">
+          <string-contrib>John Doe</string-contrib>
         </contrib>
-        <contrib contrib-type="author">
-          <string-name>Jane Doe</string-name>
-          <xref ref-type="aff" rid="aff2">2</xref>
+        <contrib contrib-type="author" aff-ids="aff2">
+          <string-contrib>Jane Doe</string-contrib>
         </contrib>
+      </contrib-group>
+      <aff-group>
         <aff id="aff1">
-          <label>1</label>
-          <institution>Foo University</institution>
+          <string-aff>Foo University, London, UK</string-aff>
         </aff>
         <aff id="aff2">
-          <label>2</label>
-          <institution>Bar Ltd</institution>
+          <string-aff>Bar Ltd, London, UK</string-aff>
         </aff>
-      </contrib-group>
+      </aff-group>
       <!-- Publication date, as required by SciELO -->
       <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
           <day>29</day>
@@ -48,7 +46,7 @@
           <year>1999</year>
       </pub-date>
       <!-- Pages elements, as required by SciELO -->
-      <volume>318</volume>      
+      <volume>318</volume>
       <issue>7187</issue>
       <fpage>837</fpage>
       <lpage>841</lpage>

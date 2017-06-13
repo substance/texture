@@ -3,7 +3,7 @@ import {
   TextPropertyEditor,
   EditInlineNodeCommand,
   EditAnnotationCommand,
-  AnnotationCommand
+  SchemaDrivenCommandManager
 } from 'substance'
 
 import TextureJATSPackage from '../article/TextureJATSPackage'
@@ -28,13 +28,16 @@ import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
 
-// TODO: add imports
-
 export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
     config.import(TextureJATSPackage)
+
+    // EXPERIMENTAL:
+    // a CommandManager that uses the xmlSchema to inhibit commands
+    // which would generate disallowed content
+    config.setCommandManagerClass(SchemaDrivenCommandManager)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

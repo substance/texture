@@ -4,7 +4,7 @@ export default
 class HeadingComponent extends TextNodeComponent {
 
   getLevel() {
-    return this.props.node.attributes['level'] || 1
+    return parseInt(this.props.node.level, 10) || 1
   }
 
   getTagName() {

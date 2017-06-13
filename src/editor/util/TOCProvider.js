@@ -81,7 +81,7 @@ class TOCProvider extends EventEmitter {
         entries.push({
           id: node.id,
           name: node.content,
-          level: node.attributes.level,
+          level: parseInt(node.level, 10),
           node: node
         })
       }

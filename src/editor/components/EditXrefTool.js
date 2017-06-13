@@ -65,10 +65,8 @@ export default class EditXRefTool extends Tool {
     const nodeId = node.id
 
     editorSession.transaction(function(doc) {
-      doc.set([node.id, 'attributes', 'rid'], newTargets.join(' '))
-      // TODO: we want this instead!
-      // let node = tx.get(node.id)
-      // node.setAttribute('rid', newTargets.join(' '))
+      let xref = doc.get(node.id)
+      xref.setAttribute('rid', newTargets.join(' '))
     })
 
     // Triggers a rerender

@@ -1,7 +1,7 @@
 export default function getXrefTargets(xref) {
-  let targetsString = xref.attributes.rid
-  if (targetsString) {
-    return targetsString.split(' ')
+  let idrefs = xref.getAttribute('rid')
+  if (idrefs) {
+    return idrefs.split(' ')
   } else {
     return []
   }

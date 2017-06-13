@@ -1,4 +1,5 @@
 import { includes, map, orderBy } from 'substance'
+import getXrefTargets from './getXrefTargets'
 
 
 let TARGET_TYPES = {
@@ -23,15 +24,14 @@ let TARGET_TYPES = {
 */
 export default function getAvailableXrefTargets(node, labelGenerator) {
   let doc = node.getDocument()
-  let selectedTargets = node.targets
+  let selectedTargets = getXrefTargets(node)
   let nodesByType = doc.getIndex('type')
-  let refType = node.attributes['ref-type']
+  let refType = node.getAttribute('ref-type')
   let targetTypes = TARGET_TYPES[refType]
   let targets = []
 
-  targetTypes.forEach(function(targetType) {
+  targetTypes.forEach((targetType) => {
     let nodesForType = map(nodesByType.get(targetType))
-
     nodesForType.forEach(function(node) {
       let isSelected = includes(selectedTargets, node.id)
       targets.push({

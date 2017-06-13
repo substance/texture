@@ -1,9 +1,29 @@
-import { SplitPanePackage, ScrollPane, SplitPane, Layout } from 'substance'
+import { ScrollPane, SplitPane, Layout } from 'substance'
 import { AbstractWriter } from '../util'
 import TOC from './TOC'
 import TOCProvider from '../util/TOCProvider'
+import MetadataComponent from './MetadataComponent'
 
 export default class Editor extends AbstractWriter {
+
+  getInitialState() {
+    return {
+      contextId: 'metadata'
+    }
+  }
+
+  didMount() {
+    this.handleActions({
+      'switchTab': this._switchTab
+    })
+  }
+
+  _switchTab(contextId) {
+    console.log('LE Context', contextId)
+    this.setState({
+      contextId: contextId
+    })
+  }
 
   render($$) {
     let el = $$('div').addClass('sc-editor')
@@ -17,8 +37,24 @@ export default class Editor extends AbstractWriter {
   }
 
   _renderContextSection($$) {
+    const TabbedPane = this.getComponent('tabbed-pane')
+
+    let ContextComponent
+    if (this.state.contextId === 'toc') {
+      ContextComponent = TOC
+    } else if (this.state.contextId === 'metadata') {
+      ContextComponent = MetadataComponent
+    }
     return $$('div').addClass('se-context-section').append(
-      $$(TOC)
+      $$(TabbedPane, {
+        tabs: [
+          { id: 'toc', name: 'Contents' },
+          { id: 'metadata', name: 'Metadata' }
+        ],
+        activeTab: this.state.contextId
+      }).ref('tabbedPane').append(
+        $$(ContextComponent)
+      )
     )
   }
 
@@ -65,7 +101,7 @@ export default class Editor extends AbstractWriter {
       $$(Overlay, {
         toolPanel: configurator.getToolPanel('main-overlay'),
         theme: 'dark'
-      }),
+      })
       // $$(ContextMenu),
       // $$(Dropzones)
     )

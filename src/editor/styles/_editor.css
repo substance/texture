@@ -2,6 +2,8 @@
   z-index: 1000;
   background: #fafbfc;
   border-bottom: 1px solid #e1e4e8;
+  padding: 3px;
+  padding-bottom: 4px;
 }
 
 .sc-editor .sc-container-editor {

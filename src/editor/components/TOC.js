@@ -1,4 +1,4 @@
-import { Component, FontAwesomeIcon as Icon } from 'substance'
+import { Component } from 'substance'
 
 export default class TOC extends Component {
 
@@ -36,7 +36,6 @@ export default class TOC extends Component {
         .ref(entry.id)
         .on('click', this.handleClick)
         .append(
-          $$(Icon, {icon: 'fa-caret-right'}),
           entry.name
         );
       if (activeEntry === entry.id) {

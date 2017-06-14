@@ -4,20 +4,15 @@
 .sc-toc {}
 .sc-toc .se-toc-entries { padding: 20px 0px; }
 .sc-toc .se-toc-entries .se-toc-entry {
-  color: #777;
+  color: #222;
   font-weight: 600;
   letter-spacing: var(--heading-letterspacing);
+  font-family: 'Avenir Next', Helvetica;
   display: block;
   padding: 2px 0px;
   position: relative;
 }
-.sc-toc .se-toc-entries .se-toc-entry i.fa {
-  font-size: 12px;
-  visibility: hidden;
-  display: inline-block;
-  padding-right: 5px;
-}
-.sc-toc .se-toc-entries .se-toc-entry.sm-active { color: #222; }
+.sc-toc .se-toc-entries .se-toc-entry.sm-active { color: #222; text-decoration: underline; }
 .sc-toc .se-toc-entries .se-toc-entry.sm-active i.fa { visibility: visible; }
 .sc-toc .se-toc-entries .se-toc-entry:hover { color: #222; }
 .sc-toc .se-toc-entries .se-toc-entry.sm-level-1 { font-size: 16px; margin-left: 20px; }

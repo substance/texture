@@ -1,6 +1,6 @@
 .sc-editor .se-toolbar-wrapper {
   z-index: 1000;
-  background: #fafbfc;
+  /*background: #fafbfc;*/
   border-bottom: 1px solid #e1e4e8;
   padding: 3px;
   padding-bottom: 4px;
@@ -11,6 +11,11 @@
   margin: 0 auto;
 }
 
+/* Add padding to each child except last one */
+.sc-editor .sc-container-editor > * {
+  margin: 10px 0;
+}
+
 .sc-editor .se-context-section {
   background: #fafbfc;
   border-left: 1px solid #e1e4e8;
@@ -19,4 +24,10 @@
 .sc-front {
   padding: 30px 0;
   border-bottom: 1px solid #ddd;
+}
+
+/* General editor styles */
+
+.sc-heading {
+  font-family: 'Avenir Next', Helvetica;
 }

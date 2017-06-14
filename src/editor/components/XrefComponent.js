@@ -19,7 +19,7 @@ export default class XrefComponent extends Component {
     let targets = getXrefTargets(node)
     let generatedLabel = labelGenerator.getLabel(refType, targets)
     el.append(generatedLabel)
-    el.addClass('sm-'+node.referenceType)
+    el.addClass('sm-'+refType)
     return el
   }
 }

@@ -102,7 +102,7 @@
   <back>
     <fn-group>
       <fn id="fn1">
-        <p>I am footnote number one</p>
+        <p>I am footnote <i>number one</i>. Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
       </fn>
       <fn id="fn2">
         <p>I am footnote number two</p>
@@ -111,8 +111,10 @@
     <ref-list>
       <title>References</title>
       <!-- In Texture editing stage we use unstructured text to describe references -->
-      <ref id="r1"><string-citation>Reference number one</string-citation></ref>
-      <ref id="r2"><string-citation>Reference number two</string-citation></ref>
+      <ref id="r1"><string-citation>Al-Khayat HA, Kensler RW, Squire JM, Marston SB, Morris EP. 2013. Atomic model of the human cardiac muscle myosin filament. PNAS 110:318–323. doi: 10.1073/pnas.1212708110, PMID: 23251030</string-citation></ref>
+      <ref id="r2"><string-citation>Alamo L, Li XE, Espinoza-Fonseca LM, Pinto A, Thomas DD, Lehman W, Padro´ n R. 2015. Tarantula myosin free head regulatory light chain phosphorylation stiffens N-terminal extension, releasing it and blocking its docking back. Molecular bioSystems 11:2180–2189. doi: 10.1039/C5MB00163C, PMID: 26038302</string-citation></ref>
+      <ref id="r3"><string-citation>Alamo L, Qi D, Wriggers W, Pinto A, Zhu J, Bilbao A, Gillilan RE, Hu S, Padro´ n R. 2016. Conserved intramolecular interactions maintain myosin interacting-heads motifs explaining tarantula muscle super-relaxed state structural basis. Journal of Molecular Biology 428:1142–1164. doi: 10.1016/j.jmb.2016.01.027, PMID: 26 851071</string-citation></ref>
+      <ref id="r4"><string-citation>Alamo L, Wriggers W, Pinto A, Ba´ rtoli F, Salazar L, Zhao FQ, Craig R, Padro´ n R. 2008. Three-dimensional reconstruction of tarantula myosin filaments suggests how phosphorylation may regulate myosin activity. Journal of Molecular Biology 384:780–797. doi: 10.1016/j.jmb.2008.10.013, PMID: 18951904</string-citation></ref>
     </ref-list>
   </back>
 </article>

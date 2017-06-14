@@ -6,5 +6,9 @@
 /* References */
 @import './_ref-preview.css';
 @import './_edit-xref-tool.css';
+@import './_ref-list.css';
+@import './_xref';
+/* Footnotes */
+@import './_fn-preview.css';
 /* Metadata */
 @import './_metadata.css';

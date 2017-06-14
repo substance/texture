@@ -30,6 +30,7 @@ import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
+import FnPreview from './components/FnPreview'
 
 export default {
   name: 'author',
@@ -67,6 +68,7 @@ export default {
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)
+    config.addComponent('fn-preview', FnPreview)
 
     // Commands
     config.addCommand('edit-xref', EditInlineNodeCommand, {

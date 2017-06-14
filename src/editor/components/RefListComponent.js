@@ -1,6 +1,6 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
 
-class RefListComponent extends Component {
+class RefListComponent extends NodeComponent {
 
   render($$) {
     let node = this.props.node

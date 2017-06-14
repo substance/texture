@@ -10,7 +10,7 @@ import TextureJATSPackage from '../article/TextureJATSPackage'
 
 import Editor from './components/Editor'
 import TextNodeComponent from './components/TextNodeComponent'
-import HeadingComponent from './components/HeadingComponent'
+import PlainTextComponent from './components/PlainTextComponent'
 import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeComponent'
 
@@ -23,6 +23,7 @@ import ContributorsComponent from './components/ContributorsComponent'
 import EditXrefTool from './components/EditXrefTool'
 import EditExtLinkTool from './components/EditExtLinkTool'
 import FrontComponent from './components/FrontComponent'
+import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
@@ -44,6 +45,7 @@ export default {
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
     config.addComponent('text-property-editor', TextPropertyEditor)
+    config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('container', ContainerNodeComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)

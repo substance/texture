@@ -26,7 +26,6 @@ export default class ContributorsComponent extends NodeComponent {
     )
 
     if (this.state.expanded) {
-      // we render all available affs as checkboxes
       let affs = doc.findAll('article-meta > aff-group > aff')
       contribGroup.getChildren().forEach((contrib) => {
         el.append(
@@ -34,7 +33,6 @@ export default class ContributorsComponent extends NodeComponent {
           this._renderAffiliations($$, contrib, affs)
         )
       })
-
       el.append(
         $$('button')
           .append('Add Contributor')
@@ -64,6 +62,7 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _renderAffChoices($$, contrib, affs) {
+    const PlainText = this.getComponent('plain-text-property')
     let el = $$('div').addClass('')
     affs.forEach((aff) => {
       let stringAff = aff.find('string-aff')
@@ -74,7 +73,7 @@ export default class ContributorsComponent extends NodeComponent {
       el.append(
         $$('div').addClass('se-aff').append(
           selected,
-          $$('span').append(stringAff.getText())
+          $$(PlainText, { path: stringAff.getTextPath() })
         )
       )
     })
@@ -82,7 +81,8 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _getAffReferences(contrib) {
-    return contrib.getAttribute('aff-ids').split(' ')
+    let attrIds = contrib.getAttribute('aff-ids') || ''
+    return attrIds.split(' ')
   }
 
   _toggle() {
@@ -92,6 +92,16 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _addContributor() {
-    // TODO:
+    const nodeId = this.props.node.id
+    const editorSession = this.context.editorSession
+    editorSession.transaction((doc) => {
+      let contribGroup = doc.get(nodeId)
+      let contrib = doc.createElement('contrib').attr('aff-type', 'foo')
+      contrib.append(
+        doc.createElement('string-contrib')
+      )
+      contribGroup.append(contrib)
+    })
   }
+
 }

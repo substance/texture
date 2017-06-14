@@ -59,9 +59,10 @@ export default class AffiliationsComponent extends NodeComponent {
   }
 
   _addAffiliation() {
-    let editorSession = this.context.editorSession
+    const nodeId = this.props.node.id
+    const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {
-      let affGroup = doc.find('aff-group')
+      let affGroup = doc.get(nodeId)
       let aff = doc.createElement('aff').attr('aff-type', 'foo')
       aff.append(
         doc.createElement('string-aff')

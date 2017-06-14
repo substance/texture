@@ -71,7 +71,7 @@ class NumberedLabelGenerator extends EventEmitter {
     // When the targets property of an xref is updated we recompute
     Object.keys(change.updated).forEach((nodeId) => {
       var node = doc.get(nodeId)
-      if (node && node.type === 'xref' && change.isAffected([nodeId, 'targets'])) {
+      if (node && node.type === 'xref' && change.hasUpdated([nodeId, 'attributes', 'rid'])) {
         needsRecompute = true
       }
     })

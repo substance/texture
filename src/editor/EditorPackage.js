@@ -206,9 +206,8 @@ export default {
     config.addToolPanel('main-overlay', [
       {
         name: 'prompt',
-        type: 'tool-group',
+        type: 'tool-prompt',
         showDisabled: false,
-        style: 'descriptive',
         commandGroups: ['prompt']
       }
     ])

@@ -1,0 +1,27 @@
+.sc-ref-list .se-title {
+  font-family: 'Avenir Next';
+  font-size: 26px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+
+.sc-ref {
+  padding-bottom: 20px;
+}
+
+.sc-string-citation {
+  font-size: 14px;
+  position: relative;
+}
+
+.sc-string-citation .se-label {
+  font-family: 'Avenir Next';
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  font-size: 20px;
+}
+
+.sc-string-citation > .sc-text-property-editor {
+  padding-left: 40px;
+}

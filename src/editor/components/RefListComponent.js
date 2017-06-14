@@ -21,7 +21,7 @@ class RefListComponent extends NodeComponent {
     let title = node.find('title')
     if (title) {
       el.append(
-        $$('div').addClass('sm-title').append(
+        $$('div').addClass('se-title').append(
           $$(this.getComponent('text-property-editor'), {
             path: title.getTextPath(),
             disabled: this.props.disabled
@@ -46,6 +46,10 @@ class RefListComponent extends NodeComponent {
         $$(RefComponent, { node: ref })
       )
     })
+
+    el.append(
+      $$('a').attr({href: '#'}).append('Add Reference')
+    )
     return el
   }
 

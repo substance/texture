@@ -19,3 +19,11 @@
   vertical-align: super;
   font-size: smaller;
 }
+
+.sc-underline {
+  text-decoration: underline;
+}
+
+.sc-strike {
+  text-decoration: line-through;
+}

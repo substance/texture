@@ -3,4 +3,8 @@
 @import './_unsupported.css';
 @import './_annotations.css';
 @import './_toc.css';
+/* References */
+@import './_ref-preview.css';
+@import './_edit-xref-tool.css';
+/* Metadata */
 @import './_metadata.css';

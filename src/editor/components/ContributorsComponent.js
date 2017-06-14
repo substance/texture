@@ -1,11 +1,10 @@
-import { Component, FontAwesomeIcon as Icon } from 'substance'
+import { NodeComponent } from 'substance'
 import MetadataSection from './MetadataSection'
-import { getStringAffs, getContribs } from '../util'
 
 /*
   Edit affiliations for a publication in this MetadataSection
 */
-export default class Contributors extends Component {
+export default class ContributorsComponent extends NodeComponent {
 
   getInitialState() {
     return {
@@ -14,11 +13,10 @@ export default class Contributors extends Component {
   }
 
   render($$) {
+    const contribGroup = this.props.node
+    const doc = contribGroup.getDocument()
+
     let el = $$('div').addClass('sc-affiliations')
-    let editorSession = this.context.editorSession
-    let article = editorSession.getDocument().article
-    let affs = article.findAll('aff')
-    let contribs = getContribs(this.context.editorSession)
 
     el.append(
       $$(MetadataSection, {
@@ -28,7 +26,9 @@ export default class Contributors extends Component {
     )
 
     if (this.state.expanded) {
-      contribs.forEach((contrib) => {
+      // we render all available affs as checkboxes
+      let affs = doc.findAll('article-meta > aff-group > aff')
+      contribGroup.getChildren().forEach((contrib) => {
         el.append(
           this._renderName($$, contrib),
           this._renderAffiliations($$, contrib, affs)

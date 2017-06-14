@@ -1,11 +1,10 @@
-import { Component, FontAwesomeIcon as Icon } from 'substance'
+import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
 import MetadataSection from './MetadataSection'
-import { getStringAffs } from '../util'
 
 /*
   Edit affiliations for a publication in this MetadataSection
 */
-export default class Affiliatons extends Component {
+export default class AffiliationsComponent extends NodeComponent {
 
   getInitialState() {
     return {
@@ -14,9 +13,11 @@ export default class Affiliatons extends Component {
   }
 
   render($$) {
+    const doc = this.context.editorSession.getDocument()
+    const affGroup = this.props.node
+    const TextPropertyEditor = this.getComponent('text-property-editor')
+
     let el = $$('div').addClass('sc-affiliations')
-    let stringAffs = getStringAffs(this.context.editorSession)
-    let TextPropertyEditor = this.getComponent('text-property-editor')
 
     el.append(
       $$(MetadataSection, {
@@ -26,16 +27,20 @@ export default class Affiliatons extends Component {
     )
 
     if (this.state.expanded) {
-      stringAffs.forEach((stringAff) => {
-        el.append(
-          $$('div').addClass('se-aff').append(
-            $$(TextPropertyEditor, {
-              history: 'affs',
-              path: stringAff.getTextPath(),
-              disabled: this.props.disabled
-            }).ref(stringAff.id)
+      affGroup.getChildren().forEach((aff) => {
+        let stringAff = aff.findChild('string-aff')
+        // at the moment we only render string-affs
+        if (stringAff) {
+          el.append(
+            $$('div').addClass('se-aff').append(
+              $$(TextPropertyEditor, {
+                history: 'affs',
+                path: stringAff.getTextPath(),
+                disabled: this.props.disabled
+              }).ref(stringAff.id)
+            )
           )
-        )
+        }
       })
 
       el.append(

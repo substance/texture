@@ -14,14 +14,16 @@ import HeadingComponent from './components/HeadingComponent'
 import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeComponent'
 
-import EditXrefTool from './components/EditXrefTool'
-import EditExtLinkTool from './components/EditExtLinkTool'
 import AbstractComponent from './components/AbstractComponent'
-import ContainerNodeComponent from './components/ContainerNodeComponent'
-import ManuscriptComponent from './components/ManuscriptComponent'
+import AffiliationsComponent from './components/AffiliationsComponent'
 import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
+import ContainerNodeComponent from './components/ContainerNodeComponent'
+import ContributorsComponent from './components/ContributorsComponent'
+import EditXrefTool from './components/EditXrefTool'
+import EditExtLinkTool from './components/EditExtLinkTool'
 import FrontComponent from './components/FrontComponent'
+import ManuscriptComponent from './components/ManuscriptComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
@@ -49,10 +51,12 @@ export default {
 
     // Article content
     config.addComponent('abstract', AbstractComponent)
-    config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('affiliations', AffiliationsComponent)
     config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
+    config.addComponent('contributors', ContributorsComponent)
     config.addComponent('front', FrontComponent)
+    config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)

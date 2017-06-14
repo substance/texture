@@ -2,11 +2,21 @@ import { NodeComponent } from 'substance'
 
 class RefListComponent extends NodeComponent {
 
-  render($$) {
-    let node = this.props.node
-    let doc = node.getDocument()
-    let el = $$('div').addClass('sc-ref-list')
+  didMount() {
+    super.didMount()
 
+    this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
+  }
+
+  dispose() {
+    super.dispose()
+  }
+
+  render($$) {
+    const labelGenerator = this.context.labelGenerator
+    const node = this.props.node
+
+    let el = $$('div').addClass('sc-ref-list')
     // NOTE: We don't yet expose RefList.label to the editor
     let title = node.find('title')
     if (title) {
@@ -19,17 +29,30 @@ class RefListComponent extends NodeComponent {
         )
       )
     }
-
     let refs = node.findAll('ref')
-    refs.forEach((ref) => {
+    let entries = refs.map((ref) => {
+      return {
+        pos: labelGenerator.getPosition('bibr', ref.id),
+        ref
+      }
+    })
+    entries.sort((a,b) => {
+      return a.pos - b.pos
+    })
+    entries.forEach((entry) => {
+      const ref = entry.ref
       let RefComponent = this.getComponent('ref')
       el.append(
-        $$(RefComponent, {
-          node: ref
-        })
+        $$(RefComponent, { node: ref })
       )
     })
     return el
+  }
+
+  _onLabelsChanged(refType) {
+    if (refType === 'bibr') {
+      this.rerender()
+    }
   }
 }
 

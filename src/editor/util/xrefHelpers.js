@@ -1,13 +1,20 @@
 import { includes, map, orderBy } from 'substance'
-import getXrefTargets from './getXrefTargets'
 
-
-let TARGET_TYPES = {
+export const XREF_TARGET_TYPES = {
   'fn': ['fn'],
   'fig': ['figure', 'fig-group'],
   'bibr': ['ref'],
   'table': ['table-wrap'],
   'other': ['figure']
+}
+
+export function getXrefTargets(xref) {
+  let idrefs = xref.getAttribute('rid')
+  if (idrefs) {
+    return idrefs.split(' ')
+  } else {
+    return []
+  }
 }
 
 /*
@@ -22,12 +29,12 @@ let TARGET_TYPES = {
     ,...
   ]
 */
-export default function getAvailableXrefTargets(node, labelGenerator) {
+export function getAvailableXrefTargets(node, labelGenerator) {
   let doc = node.getDocument()
   let selectedTargets = getXrefTargets(node)
   let nodesByType = doc.getIndex('type')
   let refType = node.getAttribute('ref-type')
-  let targetTypes = TARGET_TYPES[refType]
+  let targetTypes = XREF_TARGET_TYPES[refType]
   let targets = []
 
   targetTypes.forEach((targetType) => {

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'substance'
-import getXRefTargets from './getXRefTargets'
+import { getXrefTargets, XREF_TARGET_TYPES } from './xrefHelpers'
 
 /*
   @example
@@ -31,7 +31,7 @@ import getXRefTargets from './getXRefTargets'
   labelGenerator.getLabel('fig', ['fig-bacteria', 'fig-virus']) => 'Figure 1,2'
   ```
 */
-class NumberedLabelGenerator extends EventEmitter {
+export default class NumberedLabelGenerator extends EventEmitter {
 
   constructor(editorSession, exporter, refTypes) {
     super()
@@ -42,81 +42,12 @@ class NumberedLabelGenerator extends EventEmitter {
     // Holds positions for referenced items
     // e.g. { 'figxyz': 2 }
     this.positions = {}
-    // initial computation
-    this._computePositions()
+
     this.editorSession.onUpdate('document', this._onDocumentChanged, this)
   }
 
   dispose() {
     this.editorSession.off(this)
-  }
-
-  /*
-    Determine based on document change whether the labels need to be
-    recomputed or not.
-  */
-  _onDocumentChanged(change) {
-    let doc = this.document
-    let needsRecompute = false
-
-    let affected = Object.assign({}, change.deleted, change.created)
-
-    // When an xref is deleted we need to recompute labels
-    Object.keys(affected).forEach((nodeId) => {
-      var node = affected[nodeId]
-      if (node && node.type === 'xref') {
-        needsRecompute = true
-      }
-    })
-    // When the targets property of an xref is updated we recompute
-    Object.keys(change.updated).forEach((nodeId) => {
-      var node = doc.get(nodeId)
-      if (node && node.type === 'xref' && change.hasUpdated([nodeId, 'attributes', 'rid'])) {
-        needsRecompute = true
-      }
-    })
-
-    if (needsRecompute) {
-      this._computePositions()
-    }
-  }
-
-
-  _computePositions() {
-
-    // Reset positions
-    this.positions = {}
-    Object.keys(this.refTypes).forEach((refType) => {
-      this.positions[refType] = {}
-    })
-
-    // Init Counters
-    let counters = {}
-    Object.keys(this.refTypes).forEach((refType) => {
-      counters[refType] = 0
-    })
-
-
-    const xrefs = this.document.getXRefs()
-    xrefs.forEach((xref) => {
-      // Skip elements that have no target assigned
-      if (!xref.getAttribute('rid')) return
-
-      let targetIds = getXRefTargets(xref)
-      let refType = xref.getAttribute('ref-type')
-      if (!this.refTypes[refType]) return
-
-      targetIds.forEach((targetId) => {
-        if (!this.positions[refType][targetId]) {
-          // Increment counter and use as new pos
-          let pos = ++counters[refType]
-          this.positions[refType][targetId] = pos
-        }
-      })
-    })
-    this.emit('labels:generated')
-    // console.log('computing positions', this.positions)
-    // console.info('positions', this.positions)
   }
 
   /*
@@ -129,7 +60,7 @@ class NumberedLabelGenerator extends EventEmitter {
     ```
   */
   getPosition(refType, targetId) {
-    return this.positions[refType][targetId]
+    return this._getPositions(refType)[targetId]
   }
 
   /*
@@ -141,7 +72,6 @@ class NumberedLabelGenerator extends EventEmitter {
     if (typeof targetIds === 'string') {
       targetIds = [ targetIds ]
     }
-
     // Compute target objects
     let targets = []
     targetIds.forEach((targetId) => {
@@ -152,6 +82,91 @@ class NumberedLabelGenerator extends EventEmitter {
     let result = this.refTypes[refType](targets)
     return result
   }
-}
 
-export default NumberedLabelGenerator
+  /*
+    Determine based on document change whether the labels need to be
+    recomputed or not.
+  */
+  _onDocumentChanged(change) {
+    let doc = this.document
+    let needsRecompute = {}
+
+    // When an xref is deleted we need to recompute labels
+    let affected = Object.assign({}, change.deleted, change.created)
+    Object.keys(affected).forEach((nodeId) => {
+      var node = affected[nodeId]
+      if (node && node.type === 'xref') {
+        const refType = node.refType
+        needsRecompute[refType] = true
+      }
+    })
+    // When the targets property of an xref is updated we recompute
+    Object.keys(change.updated).forEach((nodeId) => {
+      var node = doc.get(nodeId)
+      if (node && node.type === 'xref' && change.hasUpdated([nodeId, 'attributes', 'rid'])) {
+        const refType = node.refType
+        needsRecompute[refType] = true
+      }
+    })
+    // recompute positions for all invalidated reftypes
+    Object.keys(needsRecompute).forEach((refType) => {
+      this.positions[refType] = this._computePositions(refType)
+      this.emit('labels:generated', refType)
+    })
+  }
+
+  _computePositions(refType) {
+    switch (refType) {
+      case 'bibr':
+      case 'fn': {
+        return this._computePositionsOrderByRef(refType)
+      }
+      default:
+        return this._computePositionsOrderByTarget(refType)
+    }
+  }
+
+  _computePositionsOrderByRef(refType) {
+    const positions = {}
+    let counter = 1
+    const xrefs = this.document.findAll(`xref[ref-type="${refType}"]`)
+    xrefs.forEach((xref) => {
+      let targetIds = getXrefTargets(xref)
+      targetIds.forEach((targetId) => {
+        // if this targetId has been referenced the first time
+        // here, we store the current counter as position
+        if (!positions.hasOwnProperty(targetId)) {
+          positions[targetId] = counter++
+        }
+      })
+    })
+    return positions
+  }
+
+  _computePositionsOrderTarget(refType) {
+    const positions = {}
+
+    const article = this.doc.get('article')
+    const body = article.findChild('body')
+
+    const selector = (XREF_TARGET_TYPES[refType] || []).join(',')
+    const targets = body.findAll(selector)
+
+    // TODO: there might be targets which should not be included
+    // here
+    // for now we take all of them
+    for (let i = 0; i < targets.length; i++) {
+      positions[targets[i]] = i+1
+    }
+    return positions
+  }
+
+
+  _getPositions(refType) {
+    if (!this.positions[refType]) {
+      this.positions[refType] = this._computePositions(refType)
+    }
+    return this.positions[refType]
+  }
+
+}

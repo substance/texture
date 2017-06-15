@@ -8,6 +8,9 @@
 @import './_edit-xref-tool.css';
 @import './_ref-list.css';
 @import './_xref';
+/* Figures */
+@import './_fig.css';
+@import './_graphic.css';
 /* Footnotes */
 @import './_fn-preview.css';
 /* Metadata */

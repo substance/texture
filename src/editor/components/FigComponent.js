@@ -9,6 +9,17 @@ export default class FigComponent extends Component {
       .addClass('sc-fig')
       .attr('data-id', node.id)
 
+
+    const graphic = node.findChild('graphic')
+    let graphicEl
+    if (graphic) {
+      graphicEl = $$(this.getComponent('graphic'), {
+        node: graphic,
+        disabled: this.props.disabled
+      })
+    }
+    el.append(graphicEl.ref('graphic'))
+
     const caption = node.findChild('caption')
     let captionEl
     if (caption) {

@@ -9,12 +9,12 @@
   padding-bottom: 20px;
 }
 
-.sc-string-citation {
+.sc-ref .sc-string-citation {
   font-size: 14px;
   position: relative;
 }
 
-.sc-string-citation .se-label {
+.sc-ref .sc-string-citation .se-label {
   font-family: 'Avenir Next';
   position: absolute;
   left: 0px;

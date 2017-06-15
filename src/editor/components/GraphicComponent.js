@@ -1,19 +1,17 @@
 import { Component } from 'substance'
 
-class GraphicComponent extends Component {
+export default class GraphicComponent extends Component {
 
   render($$) {
-    let node = this.props.node
+    const node = this.props.node
+    const url = node.getAttribute('xlink:href')
+
     let el = $$('div')
       .addClass('sc-graphic')
       .attr('data-id', node.id)
     el.append(
-      $$('img').attr({
-        src: node.getHref()
-      })
+      $$('img').attr({src: url})
     )
     return el
   }
 }
-
-export default GraphicComponent

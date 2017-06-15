@@ -2,10 +2,9 @@ import { includes, map, orderBy } from 'substance'
 
 export const XREF_TARGET_TYPES = {
   'fn': ['fn'],
-  'fig': ['figure', 'fig-group'],
+  'fig': ['fig', 'fig-group'],
   'bibr': ['ref'],
-  'table': ['table-wrap'],
-  'other': ['figure']
+  'table': ['table-wrap']
 }
 
 export function getXrefTargets(xref) {

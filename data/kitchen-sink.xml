@@ -92,7 +92,7 @@
       <heading level="1">Heading Level 1</heading>
       <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor sit amet.<ext-link ext-link-type="uri" xlink:href="http://substance.io">Example link</ext-link></p>
       <heading level="2">Heading Level 2</heading>
-      <p>Lorem ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet.<xref ref-type="bibr" rid="r1 r2"/></p>
+      <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet.<xref ref-type="bibr" rid="r1 r2"/></p>
       <fig id="fig1" position="float">
         <caption>
           <title>Behavioural design and implantation details.</title>

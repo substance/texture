@@ -3,6 +3,7 @@
 @import './_unsupported.css';
 @import './_annotations.css';
 @import './_toc.css';
+@import './_caption.css';
 /* References */
 @import './_ref-preview.css';
 @import './_edit-xref-tool.css';

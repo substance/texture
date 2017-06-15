@@ -83,7 +83,7 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r2"/></p>
         </abstract-content>
       </abstract>
-      <trans-abstract xml:lang="de">Deutsche Übersetzung</trans-abstract>
+      <!-- <trans-abstract xml:lang="de">Deutsche Übersetzung</trans-abstract> -->
     </article-meta>
   </front>
   <body>
@@ -93,21 +93,24 @@
       <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor sit amet.<ext-link ext-link-type="uri" xlink:href="http://substance.io">Example link</ext-link></p>
       <heading level="2">Heading Level 2</heading>
       <p>Lorem ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet.<xref ref-type="bibr" rid="r1 r2"/></p>
-
-
       <fig id="fig1" position="float">
         <caption>
-          <!-- <title>Behavioural design and implantation details.</title> -->
-          <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
-        </caption>
+          <title>Behavioural design and implantation details.</title>
+          <caption-content>
+            <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+          </caption-content><!--
+          for some reason if we had whitespace here the compilation crashes
+     --></caption>
         <graphic mime-subtype="jpeg" mimetype="image" xlink:href="https://iiif.elifesciences.org/lax:15278/elife-15278-fig1-v1.tif/full/1076,/0/default.jpg"/>
       </fig>
-
       <fig id="fig2" position="float">
         <caption>
-          <!-- <title>Behavioural design and implantation details.</title> -->
-          <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
-        </caption>
+          <title>Visual object processing in area AIP.</title>
+          <caption-content>
+            <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+          </caption-content><!--
+          for some reason if we had whitespace here the compilation crashes
+       --></caption>
         <graphic mime-subtype="jpeg" mimetype="image" xlink:href="https://iiif.elifesciences.org/lax:15278/elife-15278-fig2-v1.tif/full/1076,/0/default.jpg"/>
       </fig>
       <disp-quote>
@@ -119,7 +122,7 @@
   <back>
     <fn-group>
       <fn id="fn1">
-        <p>I am footnote <i>number one</i>. Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+        <p>I am footnote <italic>number one</italic>. Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
       </fn>
       <fn id="fn2">
         <p>I am footnote number two</p>

@@ -1,6 +1,0 @@
-@import './_figure-target.css';
-
-.sc-figure {
-  padding: var(--default-padding);
-  border: 1px solid var(--border-color);
-}

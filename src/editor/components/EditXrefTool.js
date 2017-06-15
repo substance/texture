@@ -6,19 +6,24 @@ import { getAvailableXrefTargets, getXrefTargets } from '../util'
 */
 export default class EditXRefTool extends Tool {
 
-  _getNode() {
-    return this.context.editorSession.getDocument().get(this.props.commandState.nodeId)
+  _getNode(nodeId) {
+    return this.context.editorSession.getDocument().get(nodeId)
   }
 
   getInitialState() {
+    return this._computeState(this.props.commandState.nodeId)
+  }
+
+  _computeState(nodeId) {
     return {
-      targets: getAvailableXrefTargets(this._getNode(), this.context.labelGenerator)
+      targets: getAvailableXrefTargets(this._getNode(nodeId), this.context.labelGenerator)
     }
   }
 
-  // this.willReceiveProps = function() {
-  //   console.log('XRefTargets.willReceiveProps', this.__id__);
-  // };
+  willReceiveProps(props) {
+    let newState = this._computeState(props.commandState.nodeId)
+    this.setState(newState)
+  }
 
   // this.dispose = function() {
   //   console.log('XRefTargets.dispose', this.__id__);
@@ -26,7 +31,6 @@ export default class EditXRefTool extends Tool {
 
   render($$) {
     let el = $$('div').addClass('sc-edit-xref-tool')
-
     this.state.targets.forEach(function(target) {
       let TargetComponent = this.getComponent(target.node.type+'-preview')
       let props = clone(target)
@@ -41,7 +45,7 @@ export default class EditXRefTool extends Tool {
   }
 
   _toggleTarget(targetNode) {
-    let node = this._getNode()
+    let node = this._getNode(this.props.commandState.nodeId)
     let editorSession = this.context.editorSession
     // console.log('XRefTargets: toggling target of ', node.id);
 
@@ -62,8 +66,6 @@ export default class EditXRefTool extends Tool {
     // Flip the selected flag
     target.selected = !target.selected
 
-    const nodeId = node.id
-
     editorSession.transaction(function(doc) {
       let xref = doc.get(node.id)
       xref.setAttribute('rid', newTargets.join(' '))
@@ -75,74 +77,3 @@ export default class EditXRefTool extends Tool {
     })
   }
 }
-
-
-/*
-  Shown in OverlayTools
-*/
-// class EditXRefTool extends Tool {
-//   constructor(...args) {
-//     super(...args)
-//     this.handleActions({
-//       'closeModal': this._doneEditing,
-//       'doneEditing': this._doneEditing
-//     })
-//   }
-//
-//   render($$) {
-//     let Modal = this.getComponent('modal')
-//     let Button = this.getComponent('button')
-//
-//     let node = this.props.node
-//     let el = $$('div').addClass('sc-edit-xref-tool')
-//
-//     el.append(
-//       $$(Button, {
-//         icon: 'edit',
-//         style: this.props.style
-//       })
-//       .attr('title', this.getLabel('edit-xref'))
-//       .on('click', this._onEdit),
-//       $$(Button, {
-//         icon: 'delete',
-//         style: this.props.style
-//       })
-//       .attr('title', this.getLabel('delete-xref'))
-//       .on('click', this._onDelete)
-//     )
-//
-//     if (this.state.edit) {
-//       el.append(
-//         $$(Modal, {
-//           width: 'large'
-//         }).append(
-//           $$(XRefTargets, {
-//             node: node
-//           }).ref('targets')
-//         )
-//       )
-//     }
-//     return el;
-//   }
-//
-//   _onEdit() {
-//     this.setState({
-//       edit: true
-//     })
-//   }
-//
-//   _doneEditing() {
-//     this.setState({
-//       edit: false
-//     })
-//   }
-//
-//   _onDelete() {
-//     var editorSession = this.context.editorSession;
-//     editorSession.transaction(function(tx) {
-//       tx.deleteSelection()
-//     })
-//   }
-// }
-//
-// export default EditXRefTool;

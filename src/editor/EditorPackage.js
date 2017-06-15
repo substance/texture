@@ -22,7 +22,10 @@ import ContainerNodeComponent from './components/ContainerNodeComponent'
 import ContributorsComponent from './components/ContributorsComponent'
 import EditXrefTool from './components/EditXrefTool'
 import EditExtLinkTool from './components/EditExtLinkTool'
+import FigComponent from './components/FigComponent'
+import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
+import GraphicComponent from './components/GraphicComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import RefListComponent from './components/RefListComponent'
@@ -59,12 +62,14 @@ export default {
     config.addComponent('body', BodyComponent)
     config.addComponent('contributors', ContributorsComponent)
     config.addComponent('front', FrontComponent)
+    config.addComponent('fig', FigComponent)
+    config.addComponent('graphic', GraphicComponent)
+    config.addComponent('caption', CaptionComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('xref', XrefComponent)
-
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)

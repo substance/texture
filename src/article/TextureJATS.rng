@@ -845,6 +845,23 @@
     </element>
   </define>
 
+  <define name="caption-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <optional>
+      <ref name="caption-content"/>
+    </optional>
+  </define>
+  <define name="caption-content">
+    <element name="caption-content">
+      <ref name="caption-body-parts"/>
+      <zeroOrMore>
+        <ref name="just-para.class"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <define name="body-model">
     <optional>
       <ref name="body-content"/>

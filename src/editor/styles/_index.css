@@ -3,11 +3,15 @@
 @import './_unsupported.css';
 @import './_annotations.css';
 @import './_toc.css';
+@import './_caption.css';
 /* References */
 @import './_ref-preview.css';
 @import './_edit-xref-tool.css';
 @import './_ref-list.css';
 @import './_xref';
+/* Figures */
+@import './_fig.css';
+@import './_graphic.css';
 /* Footnotes */
 @import './_fn-preview.css';
 /* Metadata */

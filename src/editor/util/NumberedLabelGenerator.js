@@ -143,24 +143,20 @@ export default class NumberedLabelGenerator extends EventEmitter {
     return positions
   }
 
-  _computePositionsOrderTarget(refType) {
+  _computePositionsOrderByTarget(refType) {
     const positions = {}
-
-    const article = this.doc.get('article')
+    const article = this.document.get('article')
     const body = article.findChild('body')
-
     const selector = (XREF_TARGET_TYPES[refType] || []).join(',')
     const targets = body.findAll(selector)
-
     // TODO: there might be targets which should not be included
     // here
     // for now we take all of them
     for (let i = 0; i < targets.length; i++) {
-      positions[targets[i]] = i+1
+      positions[targets[i].id] = i+1
     }
     return positions
   }
-
 
   _getPositions(refType) {
     if (!this.positions[refType]) {

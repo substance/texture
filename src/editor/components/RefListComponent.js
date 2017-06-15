@@ -4,7 +4,6 @@ class RefListComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
-
     this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
   }
 
@@ -48,7 +47,9 @@ class RefListComponent extends NodeComponent {
     })
 
     el.append(
-      $$('a').attr({href: '#'}).append('Add Reference')
+      $$('a').attr({href: '#'})
+        .append('Add Reference')
+        .on('click', this._addRef)
     )
     return el
   }
@@ -58,10 +59,28 @@ class RefListComponent extends NodeComponent {
       this.rerender()
     }
   }
+
+  /*
+    Insert new Reference
+
+    <ref>
+      <string-citation>Please enter publication name</string-citation>
+    </ref>
+  */
+  _addRef() {
+    const editorSession = this.context.editorSession
+    editorSession.transaction((doc) => {
+      let refList = doc.find('ref-list')
+      let ref = doc.createElement('ref')
+      let stringCitation = doc.createElement('string-citation')
+      // TODO: Ability to add text to a text node
+      // e.g. stringCitation.text('Please enter publication name')
+      ref.append(stringCitation)
+      refList.append(ref)
+    })
+    this.rerender()
+  }
 }
 
-// Isolated Nodes config
-RefListComponent.fullWidth = true
-RefListComponent.noStyle = true
 
 export default RefListComponent

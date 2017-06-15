@@ -35,6 +35,7 @@ import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
+import InsertXrefCommand from './commands/InsertXrefCommand'
 
 export default {
   name: 'author',
@@ -82,10 +83,25 @@ export default {
       nodeType: 'xref',
       commandGroup: 'prompt'
     })
+    config.addCommand('insert-xref-bibr', InsertXrefCommand, {
+      refType: 'bibr',
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-fig', InsertXrefCommand, {
+      refType: 'fig',
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-fn', InsertXrefCommand, {
+      refType: 'fn',
+      commandGroup: 'insert-xref'
+    })
+
+    config.addLabel('insert-xref-bibr', 'Citation')
+    config.addLabel('insert-xref-fig', 'Figure Reference')
+    config.addLabel('insert-xref-fn', 'Footnote Reference')
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
-
     // Annotation tools
     config.addAnnotationTool({
       name: 'bold',
@@ -203,13 +219,13 @@ export default {
         style: 'minimal',
         commandGroups: ['formatting']
       },
-      // {
-      //   name: 'insert',
-      //   type: 'tool-dropdown',
-      //   showDisabled: true,
-      //   style: 'descriptive',
-      //   commandGroups: ['insert']
-      // }
+      {
+        name: 'insert',
+        type: 'tool-dropdown',
+        showDisabled: true,
+        style: 'descriptive',
+        commandGroups: ['insert-xref']
+      }
     ])
 
     config.addToolPanel('main-overlay', [

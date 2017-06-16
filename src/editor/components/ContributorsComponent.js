@@ -62,22 +62,19 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _renderAffChoices($$, contrib, affs) {
-    const PlainText = this.getComponent('plain-text-property')
-    let el = $$('div').addClass('')
+    let props = {
+      options: [],
+      selectedOptions: this._getAffReferences(contrib),
+      maxItems: 2
+    }
+
     affs.forEach((aff) => {
       let stringAff = aff.find('string-aff')
-      let selected = $$('input').attr({ type: 'checkbox' })
-      if (this._getAffReferences(contrib).indexOf(aff.id) >= 0) {
-        selected.attr('checked', true)
-      }
-      el.append(
-        $$('div').addClass('se-aff').append(
-          selected,
-          $$(PlainText, { path: stringAff.getTextPath() })
-        )
-      )
+      props.options.push({id: aff.id, label: stringAff.getText()})
     })
-    return el
+
+    let MultiSelect = this.getComponent('multi-select')
+    return $$(MultiSelect, props)
   }
 
   _getAffReferences(contrib) {

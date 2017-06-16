@@ -1,5 +1,6 @@
 import {
   BasePackage as SubstanceBasePackage,
+  MultiSelectPackage,
   TextPropertyEditor,
   EditInlineNodeCommand,
   EditAnnotationCommand,
@@ -41,6 +42,7 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
+    config.import(MultiSelectPackage)
     config.import(TextureJATSPackage)
 
     // EXPERIMENTAL:

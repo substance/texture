@@ -88,6 +88,16 @@ export default class ContributorsComponent extends NodeComponent {
     })
   }
 
+  // TODO: connect this method and call it appropriately when
+  // multiselect.on('change') fired.
+  _updateAffiliations(contribId, affIds) {
+    const editorSession = this.context.editorSession
+    editorSession.transaction((doc) => {
+      let contrib = doc.get(contribId)
+      contrib.setAttribute('aff-ids', affIds)
+    })
+  }
+
   _addContributor() {
     const nodeId = this.props.node.id
     const editorSession = this.context.editorSession

@@ -75,6 +75,8 @@ export default class ContributorsComponent extends NodeComponent {
 
     let MultiSelect = this.getComponent('multi-select')
     return $$(MultiSelect, props)
+      .ref(contrib.id + '_affs')
+      .on('click', this._updateAffiliations.bind(this, contrib.id))
   }
 
   _getAffReferences(contrib) {
@@ -88,13 +90,13 @@ export default class ContributorsComponent extends NodeComponent {
     })
   }
 
-  // TODO: connect this method and call it appropriately when
-  // multiselect.on('change') fired.
-  _updateAffiliations(contribId, affIds) {
+  _updateAffiliations(contribId) {
     const editorSession = this.context.editorSession
+    let affSelector = this.refs[contribId + '_affs']
+    let affIds = affSelector.getSelectedOptions()
     editorSession.transaction((doc) => {
       let contrib = doc.get(contribId)
-      contrib.setAttribute('aff-ids', affIds)
+      contrib.setAttribute('aff-ids', affIds.join(' '))
     })
   }
 

@@ -88,28 +88,32 @@ export default class NumberedLabelGenerator extends EventEmitter {
     recomputed or not.
   */
   _onDocumentChanged(change) {
-    let doc = this.document
+    const doc = this.document
     let needsRecompute = {}
 
     // When an xref is deleted we need to recompute labels
-    let affected = Object.assign({}, change.deleted, change.created)
+    const affected = Object.assign({}, change.deleted, change.created)
     Object.keys(affected).forEach((nodeId) => {
-      var node = affected[nodeId]
-      if (node && node.type === 'xref') {
-        const refType = node.refType
+      const nodeData = affected[nodeId]
+      if (nodeData && nodeData.type === 'xref') {
+        // console.log('Created or deleted xref')
+        // ATTENTION: for deleted nodes we don't get a rich
+        // node instance object anymore, only the data record.
+        const refType = nodeData.attributes['ref-type']
         needsRecompute[refType] = true
       }
     })
     // When the targets property of an xref is updated we recompute
     Object.keys(change.updated).forEach((nodeId) => {
-      var node = doc.get(nodeId)
+      const node = doc.get(nodeId)
       if (node && node.type === 'xref' && change.hasUpdated([nodeId, 'attributes', 'rid'])) {
-        const refType = node.refType
+        const refType = node.attributes['ref-type']
         needsRecompute[refType] = true
       }
     })
     // recompute positions for all invalidated reftypes
     Object.keys(needsRecompute).forEach((refType) => {
+      // console.log('Recomputing labels for refType %s', refType)
       this.positions[refType] = this._computePositions(refType)
       this.emit('labels:generated', refType)
     })

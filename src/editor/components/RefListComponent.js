@@ -31,7 +31,9 @@ class RefListComponent extends NodeComponent {
     let refs = node.findAll('ref')
     let entries = refs.map((ref) => {
       return {
-        pos: labelGenerator.getPosition('bibr', ref.id),
+        // NOTE: refs without a position, i.e. which are not referenced
+        // should end up at the end of the list
+        pos: labelGenerator.getPosition('bibr', ref.id) || Number.MAX_VALUE,
         ref
       }
     })

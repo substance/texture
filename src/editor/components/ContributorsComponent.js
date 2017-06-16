@@ -29,12 +29,14 @@ export default class ContributorsComponent extends NodeComponent {
       let affs = doc.findAll('article-meta > aff-group > aff')
       contribGroup.getChildren().forEach((contrib) => {
         el.append(
-          this._renderName($$, contrib),
-          this._renderAffiliations($$, contrib, affs)
+          $$('div').addClass('se-metadata-contributor').append(
+            this._renderName($$, contrib),
+            this._renderAffiliations($$, contrib, affs)
+          )
         )
       })
       el.append(
-        $$('button')
+        $$('button').addClass('se-metadata-contributor-add')
           .append('Add Contributor')
           .on('click', this._addContributor)
       )
@@ -50,7 +52,7 @@ export default class ContributorsComponent extends NodeComponent {
       $$(TextPropertyEditor, {
         path: stringContrib.getTextPath(),
         disabled: this.props.disabled
-      }).ref(stringContrib.id)
+      }).ref(stringContrib.id).addClass('se-text-input')
     )
   }
 

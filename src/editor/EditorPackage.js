@@ -1,6 +1,7 @@
 import {
   BasePackage as SubstanceBasePackage,
   MultiSelectPackage,
+  FindAndReplacePackage,
   TextPropertyEditor,
   EditInlineNodeCommand,
   EditAnnotationCommand,
@@ -42,6 +43,7 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
+    config.import(FindAndReplacePackage)
     config.import(MultiSelectPackage)
     config.import(TextureJATSPackage)
 
@@ -236,6 +238,14 @@ export default {
         type: 'tool-prompt',
         showDisabled: false,
         commandGroups: ['prompt']
+      }
+    ])
+
+    config.addToolPanel('workflow', [
+      {
+        name: 'workflow',
+        type: 'tool-group',
+        commandGroups: ['workflows']
       }
     ])
   },

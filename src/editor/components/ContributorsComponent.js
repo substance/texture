@@ -78,7 +78,7 @@ export default class ContributorsComponent extends NodeComponent {
     let MultiSelect = this.getComponent('multi-select')
     return $$(MultiSelect, props)
       .ref(contrib.id + '_affs')
-      .on('click', this._updateAffiliations.bind(this, contrib.id))
+      .on('change', this._updateAffiliations.bind(this, contrib.id))
   }
 
   _getAffReferences(contrib) {

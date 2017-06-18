@@ -78,7 +78,18 @@
 }
 
 .sc-metadata .se-aff {
+  display: flex;
   font-size: 14px;
   padding: 10px;
   border-bottom: 1px solid #e1e4e8;
+}
+
+.sc-metadata .se-aff .se-text-input {
+  flex: 100 0 0;
+  padding: 10px;
+}
+
+.sc-metadata .se-aff .se-remove-aff {
+  padding: 10px;
+  flex: 0 0 0;
 }

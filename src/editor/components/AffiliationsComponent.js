@@ -37,7 +37,10 @@ export default class AffiliationsComponent extends NodeComponent {
                 history: 'affs',
                 path: stringAff.getTextPath(),
                 disabled: this.props.disabled
-              }).ref(stringAff.id)
+              }).addClass('se-text-input').ref(stringAff.id),
+              $$('div').addClass('se-remove-aff').append(
+                $$(Icon, { icon: 'fa-remove' })
+              ).on('click', this._removeAffiliation.bind(this, stringAff.id))
             )
           )
         }
@@ -69,5 +72,23 @@ export default class AffiliationsComponent extends NodeComponent {
       )
       affGroup.append(aff)
     })
+  }
+
+  _removeAffiliation(affStringId) {
+    // TODO: Find a way to do this properly
+    const nodeId = this.props.node.id
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
+    let affGroup = doc.get(nodeId)
+    let affId = doc.get(affStringId).parentNode.id
+    let affIndex = affGroup.childNodes.indexOf(affId)
+
+    if(affIndex > -1) {
+      affGroup.childNodes = affGroup.childNodes.splice(1, affIndex)
+      editorSession.transaction((doc) => {
+        doc.delete(affId)
+        doc.delete(affStringId)
+      })
+    }
   }
 }

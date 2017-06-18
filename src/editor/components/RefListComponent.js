@@ -77,6 +77,7 @@ class RefListComponent extends NodeComponent {
       let stringCitation = doc.createElement('string-citation')
       // TODO: Ability to add text to a text node
       // e.g. stringCitation.text('Please enter publication name')
+      stringCitation.setText('Please enter publication name')
       ref.append(stringCitation)
       refList.append(ref)
     })

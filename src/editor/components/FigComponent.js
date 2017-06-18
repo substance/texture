@@ -1,6 +1,16 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
 
-export default class FigComponent extends Component {
+export default class FigComponent extends NodeComponent {
+
+  didMount() {
+    super.didMount()
+    this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
+  }
+
+  dispose() {
+    super.dispose()
+    this.context.labelGenerator.off(this)
+  }
 
   render($$) {
     const node = this.props.node
@@ -39,4 +49,11 @@ export default class FigComponent extends Component {
 
     return el
   }
+
+  _onLabelsChanged(refType) {
+    if (refType === 'fig') {
+      this.rerender()
+    }
+  }
+
 }

@@ -83,11 +83,12 @@ export default class AffiliationsComponent extends NodeComponent {
     let affIndex = affGroup.childNodes.indexOf(affId)
 
     if(affIndex > -1) {
-      affGroup.childNodes = affGroup.childNodes.splice(1, affIndex)
+      affGroup.childNodes.splice(affIndex, 1)
       editorSession.transaction((doc) => {
         doc.delete(affId)
         doc.delete(affStringId)
       })
+      this.rerender()
     }
   }
 }

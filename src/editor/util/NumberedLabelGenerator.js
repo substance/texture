@@ -1,5 +1,7 @@
-import { EventEmitter } from 'substance'
-import { getXrefTargets, XREF_TARGET_TYPES } from './xrefHelpers'
+import { EventEmitter, ObjectOperation, isArrayEqual } from 'substance'
+import { getXrefTargets, REF_TYPES, XREF_TARGET_TYPES } from './xrefHelpers'
+
+const { CREATE, DELETE, SET, UPDATE } = ObjectOperation
 
 /*
   @example
@@ -42,7 +44,14 @@ export default class NumberedLabelGenerator extends EventEmitter {
     // Holds positions for referenced items
     // e.g. { 'figxyz': 2 }
     this.positions = {}
+    this._needsRecompute = {}
 
+    // we use this to determine the order of referenced resources, such as figures
+    this.content = editorSession.getDocument().find('article > body > body-content')
+
+    // this is used to detect relevant updates as early as possible
+    // before content has been deleted
+    this.document.on('operation:applied', this._onOperation, this)
     this.editorSession.onUpdate('document', this._onDocumentChanged, this)
   }
 
@@ -84,37 +93,65 @@ export default class NumberedLabelGenerator extends EventEmitter {
   }
 
   /*
+    Invalidating the computed positions on certain changes
+    - if an ´<xref>´ is created or deleted
+    - if the rid attribute of a ´<xref>´ is changed
+    - if a ref-type content is inserted into the body
+
+    TODO: this could still be improved. For example,
+    for figures and such, `xrefs` do not matter for labelling.
+  */
+  _onOperation(op) {
+    const doc = this.document
+    switch (op.type) {
+      case CREATE:
+      case DELETE: {
+        const nodeData = op.val
+        if (nodeData.type === 'xref') {
+          const refType = nodeData.attributes['ref-type']
+          if (refType) {
+            this._needsRecompute[refType] = true
+          }
+        }
+        break
+      }
+      case UPDATE: {
+        if (isArrayEqual(op.path, this.content.getContentPath())) {
+          let nodeId = op.diff.val
+          let node = doc.get(nodeId)
+          const refType = REF_TYPES[node.type]
+          if (refType) {
+            this._needsRecompute[refType] = true
+          }
+        }
+        break
+      }
+      case SET: {
+        if (op.path[1] === 'attributes' && op.path[2] === 'rid') {
+          const nodeId = op.path[0]
+          const node = doc.get(nodeId)
+          if (node && node.type === 'xref') {
+            const refType = node.getAttribute('ref-type')
+            this._needsRecompute[refType] = true
+          }
+        }
+        break
+      }
+      default:
+        //
+    }
+  }
+
+  /*
     Determine based on document change whether the labels need to be
     recomputed or not.
   */
-  _onDocumentChanged(change) {
-    const doc = this.document
-    let needsRecompute = {}
-
-    // When an xref is deleted we need to recompute labels
-    const affected = Object.assign({}, change.deleted, change.created)
-    Object.keys(affected).forEach((nodeId) => {
-      const nodeData = affected[nodeId]
-      if (nodeData && nodeData.type === 'xref') {
-        // console.log('Created or deleted xref')
-        // ATTENTION: for deleted nodes we don't get a rich
-        // node instance object anymore, only the data record.
-        const refType = nodeData.attributes['ref-type']
-        needsRecompute[refType] = true
-      }
-    })
-    // When the targets property of an xref is updated we recompute
-    Object.keys(change.updated).forEach((nodeId) => {
-      const node = doc.get(nodeId)
-      if (node && node.type === 'xref' && change.hasUpdated([nodeId, 'attributes', 'rid'])) {
-        const refType = node.attributes['ref-type']
-        needsRecompute[refType] = true
-      }
-    })
+  _onDocumentChanged() {
     // recompute positions for all invalidated reftypes
-    Object.keys(needsRecompute).forEach((refType) => {
+    Object.keys(this._needsRecompute).forEach((refType) => {
       // console.log('Recomputing labels for refType %s', refType)
       this.positions[refType] = this._computePositions(refType)
+      delete this._needsRecompute[refType]
       this.emit('labels:generated', refType)
     })
   }
@@ -149,10 +186,9 @@ export default class NumberedLabelGenerator extends EventEmitter {
 
   _computePositionsOrderByTarget(refType) {
     const positions = {}
-    const article = this.document.get('article')
-    const body = article.findChild('body')
+    const content = this.content
     const selector = (XREF_TARGET_TYPES[refType] || []).join(',')
-    const targets = body.findAll(selector)
+    const targets = content.findAll(selector)
     // TODO: there might be targets which should not be included
     // here
     // for now we take all of them

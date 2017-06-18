@@ -1,11 +1,21 @@
 import { includes, map, orderBy } from 'substance'
 
-export const XREF_TARGET_TYPES = {
-  'fn': ['fn'],
-  'fig': ['fig', 'fig-group'],
-  'bibr': ['ref'],
-  'table': ['table-wrap']
+// left side: node type
+// right side: ref-type
+export const REF_TYPES = {
+  'fig': 'fig',
+  'fig-group': 'fig',
+  'fn': 'fn',
+  'ref': 'bibr',
+  'table-wrap': 'table'
 }
+
+export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {
+  const refType = REF_TYPES[type]
+  if (!m[refType]) m[refType] = []
+  m[refType].push(type)
+  return m
+}, {})
 
 export function getXrefTargets(xref) {
   let idrefs = xref.getAttribute('rid')

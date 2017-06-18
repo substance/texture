@@ -37,21 +37,6 @@ export default class ArticleInfoComponent extends NodeComponent {
         this._renderTextEditor($$, fPage, 'First Page', 'number'),
         this._renderTextEditor($$, lPage, 'Last Page', 'number')
       )
-
-      // let affs = doc.findAll('article-meta > aff-group > aff')
-      // contribGroup.getChildren().forEach((contrib) => {
-      //   el.append(
-      //     $$('div').addClass('se-metadata-contributor').append(
-      //       this._renderName($$, contrib),
-      //       this._renderAffiliations($$, contrib, affs)
-      //     )
-      //   )
-      // })
-      // el.append(
-      //   $$('button').addClass('se-metadata-contributor-add')
-      //     .append('Add Contributor')
-      //     .on('click', this._addContributor)
-      // )
     }
     return el
   }

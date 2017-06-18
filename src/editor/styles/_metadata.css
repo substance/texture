@@ -36,6 +36,7 @@
 }
 
 .se-metadata-contributor {
+  position: relative;
   font-size: 14px;
   border-bottom: 1px solid #e1e4e8;
   padding: 15px 5px;
@@ -58,6 +59,12 @@
   font-size: 14px;
   color: #2079DC;
   border-bottom: 1px solid #e1e4e8;
+}
+
+.se-remove-contributor {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 .se-metadata-contributor .se-label,

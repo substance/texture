@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
 import MetadataSection from './MetadataSection'
 
 /*
@@ -31,7 +31,10 @@ export default class ContributorsComponent extends NodeComponent {
         el.append(
           $$('div').addClass('se-metadata-contributor').append(
             this._renderName($$, contrib),
-            this._renderAffiliations($$, contrib, affs)
+            this._renderAffiliations($$, contrib, affs),
+            $$(Icon, {icon: 'fa-remove'})
+              .addClass('se-remove-contributor')
+              .on('click', this._removeContributor.bind(this, contrib.id))
           )
         )
       })
@@ -113,6 +116,17 @@ export default class ContributorsComponent extends NodeComponent {
       )
       contribGroup.append(contrib)
     })
+  }
+
+  _removeContributor(contribId) {
+    const contribGroup = this.props.node
+    const editorSession = this.context.editorSession
+    let contribIndex = contribGroup.childNodes.indexOf(contribId)
+    contribGroup.childNodes.splice(contribIndex, 1)
+    editorSession.transaction((doc) => {
+      doc.delete(contribId)
+    })
+    this.rerender()
   }
 
 }

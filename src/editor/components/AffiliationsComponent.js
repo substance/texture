@@ -13,7 +13,6 @@ export default class AffiliationsComponent extends NodeComponent {
   }
 
   render($$) {
-    const doc = this.context.editorSession.getDocument()
     const affGroup = this.props.node
     const TextPropertyEditor = this.getComponent('text-property-editor')
 

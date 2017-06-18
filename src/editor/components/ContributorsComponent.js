@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
 import MetadataSection from './MetadataSection'
 
 /*
@@ -29,12 +29,17 @@ export default class ContributorsComponent extends NodeComponent {
       let affs = doc.findAll('article-meta > aff-group > aff')
       contribGroup.getChildren().forEach((contrib) => {
         el.append(
-          this._renderName($$, contrib),
-          this._renderAffiliations($$, contrib, affs)
+          $$('div').addClass('se-metadata-contributor').append(
+            this._renderName($$, contrib),
+            this._renderAffiliations($$, contrib, affs),
+            $$(Icon, {icon: 'fa-remove'})
+              .addClass('se-remove-contributor')
+              .on('click', this._removeContributor.bind(this, contrib.id))
+          )
         )
       })
       el.append(
-        $$('button')
+        $$('button').addClass('se-metadata-contributor-add')
           .append('Add Contributor')
           .on('click', this._addContributor)
       )
@@ -50,7 +55,7 @@ export default class ContributorsComponent extends NodeComponent {
       $$(TextPropertyEditor, {
         path: stringContrib.getTextPath(),
         disabled: this.props.disabled
-      }).ref(stringContrib.id)
+      }).ref(stringContrib.id).addClass('se-text-input')
     )
   }
 
@@ -62,22 +67,21 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _renderAffChoices($$, contrib, affs) {
-    const PlainText = this.getComponent('plain-text-property')
-    let el = $$('div').addClass('')
+    let props = {
+      options: [],
+      selectedOptions: this._getAffReferences(contrib),
+      maxItems: 2
+    }
+
     affs.forEach((aff) => {
       let stringAff = aff.find('string-aff')
-      let selected = $$('input').attr({ type: 'checkbox' })
-      if (this._getAffReferences(contrib).indexOf(aff.id) >= 0) {
-        selected.attr('checked', true)
-      }
-      el.append(
-        $$('div').addClass('se-aff').append(
-          selected,
-          $$(PlainText, { path: stringAff.getTextPath() })
-        )
-      )
+      props.options.push({id: aff.id, label: stringAff.getText()})
     })
-    return el
+
+    let MultiSelect = this.getComponent('multi-select')
+    return $$(MultiSelect, props)
+      .ref(contrib.id + '_affs')
+      .on('change', this._updateAffiliations.bind(this, contrib.id))
   }
 
   _getAffReferences(contrib) {
@@ -88,6 +92,16 @@ export default class ContributorsComponent extends NodeComponent {
   _toggle() {
     this.setState({
       expanded: !this.state.expanded
+    })
+  }
+
+  _updateAffiliations(contribId) {
+    const editorSession = this.context.editorSession
+    let affSelector = this.refs[contribId + '_affs']
+    let affIds = affSelector.getSelectedOptions()
+    editorSession.transaction((doc) => {
+      let contrib = doc.get(contribId)
+      contrib.setAttribute('aff-ids', affIds.join(' '))
     })
   }
 
@@ -102,6 +116,17 @@ export default class ContributorsComponent extends NodeComponent {
       )
       contribGroup.append(contrib)
     })
+  }
+
+  _removeContributor(contribId) {
+    const contribGroup = this.props.node
+    const editorSession = this.context.editorSession
+    let contribIndex = contribGroup.childNodes.indexOf(contribId)
+    contribGroup.childNodes.splice(contribIndex, 1)
+    editorSession.transaction((doc) => {
+      doc.delete(contribId)
+    })
+    this.rerender()
   }
 
 }

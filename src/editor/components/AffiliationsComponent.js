@@ -13,7 +13,6 @@ export default class AffiliationsComponent extends NodeComponent {
   }
 
   render($$) {
-    const doc = this.context.editorSession.getDocument()
     const affGroup = this.props.node
     const TextPropertyEditor = this.getComponent('text-property-editor')
 
@@ -37,14 +36,17 @@ export default class AffiliationsComponent extends NodeComponent {
                 history: 'affs',
                 path: stringAff.getTextPath(),
                 disabled: this.props.disabled
-              }).ref(stringAff.id)
+              }).addClass('se-text-input').ref(stringAff.id),
+              $$('div').addClass('se-remove-aff').append(
+                $$(Icon, { icon: 'fa-remove' })
+              ).on('click', this._removeAffiliation.bind(this, stringAff.id))
             )
           )
         }
       })
 
       el.append(
-        $$('button')
+        $$('button').addClass('se-metadata-affiliation-add')
           .append('Add Affiliation')
           .on('click', this._addAffiliation)
       )
@@ -69,5 +71,24 @@ export default class AffiliationsComponent extends NodeComponent {
       )
       affGroup.append(aff)
     })
+  }
+
+  _removeAffiliation(affStringId) {
+    // TODO: Find a way to do this properly
+    const nodeId = this.props.node.id
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
+    let affGroup = doc.get(nodeId)
+    let affId = doc.get(affStringId).parentNode.id
+    let affIndex = affGroup.childNodes.indexOf(affId)
+
+    if(affIndex > -1) {
+      affGroup.childNodes.splice(affIndex, 1)
+      editorSession.transaction((doc) => {
+        doc.delete(affId)
+        doc.delete(affStringId)
+      })
+      this.rerender()
+    }
   }
 }

@@ -1,5 +1,7 @@
 import {
   BasePackage as SubstanceBasePackage,
+  MultiSelectPackage,
+  FindAndReplacePackage,
   TextPropertyEditor,
   EditInlineNodeCommand,
   EditAnnotationCommand,
@@ -16,6 +18,7 @@ import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeCo
 
 import AbstractComponent from './components/AbstractComponent'
 import AffiliationsComponent from './components/AffiliationsComponent'
+import ArticleInfoComponent from './components/ArticleInfoComponent'
 import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
 import ContainerNodeComponent from './components/ContainerNodeComponent'
@@ -28,6 +31,7 @@ import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
+import PubHistoryComponent from './components/PubHistoryComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
@@ -41,6 +45,8 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
+    config.import(FindAndReplacePackage)
+    config.import(MultiSelectPackage)
     config.import(TextureJATSPackage)
 
     // EXPERIMENTAL:
@@ -60,6 +66,7 @@ export default {
     // Article content
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('affiliations', AffiliationsComponent)
+    config.addComponent('article-info', ArticleInfoComponent)
     config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
     config.addComponent('contributors', ContributorsComponent)
@@ -68,6 +75,7 @@ export default {
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)
@@ -234,6 +242,14 @@ export default {
         type: 'tool-prompt',
         showDisabled: false,
         commandGroups: ['prompt']
+      }
+    ])
+
+    config.addToolPanel('workflow', [
+      {
+        name: 'workflow',
+        type: 'tool-group',
+        commandGroups: ['workflows']
       }
     ])
   },

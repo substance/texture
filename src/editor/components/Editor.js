@@ -1,4 +1,4 @@
-import { ScrollPane, SplitPane, Layout } from 'substance'
+import { ScrollPane, SplitPane, Layout, WorkflowPane } from 'substance'
 import { AbstractWriter } from '../util'
 import TOC from './TOC'
 import TOCProvider from '../util/TOCProvider'
@@ -59,10 +59,16 @@ export default class Editor extends AbstractWriter {
   }
 
   _renderMainSection($$) {
+    const configurator = this.getConfigurator()
     let mainSection = $$('div').addClass('se-main-section')
     let splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
       this._renderToolbar($$),
-      this._renderContentPanel($$)
+      $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
+        this._renderContentPanel($$),
+        $$(WorkflowPane, {
+          toolPanel: configurator.getToolPanel('workflow')
+        })
+      )
     )
     mainSection.append(splitPane)
     return mainSection

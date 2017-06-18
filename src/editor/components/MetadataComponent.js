@@ -10,6 +10,13 @@ export default class MetadataComponent extends Component {
 
     let scrollPane = $$(ScrollPane).ref('metadataScroll')
 
+    scrollPane.append($$(this.getComponent('article-info'), { node: articleMeta }))
+
+    const history = articleMeta.findChild('history')
+    if (history) {
+      scrollPane.append($$(this.getComponent('pub-history'), { node: history }))
+    }
+
     const contribGroup = articleMeta.findChild('contrib-group')
     if (contribGroup) {
       scrollPane.append($$(this.getComponent('contributors'), { node: contribGroup }))

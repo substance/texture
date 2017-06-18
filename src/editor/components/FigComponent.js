@@ -4,11 +4,15 @@ export default class FigComponent extends Component {
 
   render($$) {
     const node = this.props.node
+    const labelGenerator = this.context.labelGenerator
 
     let el = $$('div')
       .addClass('sc-fig')
       .attr('data-id', node.id)
 
+    let label = labelGenerator.getLabel('fig', [node.id])
+    let labelEl = $$('div').addClass('se-label').text(label)
+    el.append(labelEl)
 
     const graphic = node.findChild('graphic')
     let graphicEl

@@ -39,7 +39,7 @@ export default class AffiliationsComponent extends NodeComponent {
               }).addClass('se-text-input').ref(stringAff.id),
               $$('div').addClass('se-remove-aff').append(
                 $$(Icon, { icon: 'fa-remove' })
-              ).on('click', this._removeAffiliation.bind(this, stringAff.id))
+              ).on('click', this._removeAffiliation.bind(this, aff.id))
             )
           )
         }
@@ -73,22 +73,14 @@ export default class AffiliationsComponent extends NodeComponent {
     })
   }
 
-  _removeAffiliation(affStringId) {
+  _removeAffiliation(affId) {
     // TODO: Find a way to do this properly
     const nodeId = this.props.node.id
     const editorSession = this.context.editorSession
-    const doc = editorSession.getDocument()
-    let affGroup = doc.get(nodeId)
-    let affId = doc.get(affStringId).parentNode.id
-    let affIndex = affGroup.childNodes.indexOf(affId)
-
-    if(affIndex > -1) {
-      affGroup.childNodes.splice(affIndex, 1)
-      editorSession.transaction((doc) => {
-        doc.delete(affId)
-        doc.delete(affStringId)
-      })
-      this.rerender()
-    }
+    editorSession.transaction((doc) => {
+      const affGroup = doc.get(nodeId)
+      let aff = affGroup.find(`aff#${affId}`)
+      affGroup.removeChild(aff)
+    })
   }
 }

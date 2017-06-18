@@ -31,6 +31,7 @@ import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
+import PubHistoryComponent from './components/PubHistoryComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
@@ -74,6 +75,7 @@ export default {
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)

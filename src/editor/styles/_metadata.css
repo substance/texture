@@ -23,12 +23,14 @@
   background: #fff;
 }
 
-.sc-article-info {
+.sc-article-info,
+.sc-publication-history {
   background: #fff;
   font-size: 14px;
 }
 
-.sc-article-info .se-metadata-item:last-child {
+.sc-article-info .se-metadata-item:last-child,
+.sc-publication-history .se-metadata-item:last-child {
   padding-bottom: 20px;
   border-bottom: 1px solid #e1e4e8;
 }
@@ -41,7 +43,8 @@
 
 .se-metadata-contributor .se-name,
 .se-metadata-contributor .se-affiliations,
-.sc-article-info .se-metadata-item {
+.sc-article-info .se-metadata-item,
+.sc-publication-history .se-metadata-item {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;

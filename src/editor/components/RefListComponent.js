@@ -9,6 +9,7 @@ class RefListComponent extends NodeComponent {
 
   dispose() {
     super.dispose()
+    this.context.labelGenerator.off(this)
   }
 
   render($$) {

@@ -39,6 +39,8 @@ import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
+import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
+import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
 export default {
@@ -103,6 +105,14 @@ export default {
       refType: 'fn',
       commandGroup: 'insert-xref'
     })
+    config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
+      commandGroup: 'text-level'
+    })
+    config.addCommand('increase-heading-level', IncreaseHeadingLevelCommand, {
+      commandGroup: 'text-level'
+    })
+    config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
+    config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
     config.addLabel('insert-xref-bibr', 'Citation')
     config.addLabel('insert-xref-fig', 'Figure Reference')

@@ -119,6 +119,16 @@ export default class Editor extends AbstractWriter {
   }
 
   tocEntrySelected(nodeId) {
+    let node = this.doc.get(nodeId)
+    let containerId = node.parentNode.id
+    let editorSession = this.getEditorSession()
+    let sel = editorSession.setSelection({
+      type: 'property',
+      path: node.getPath(),
+      startOffset: 0,
+      surfaceId: containerId,
+      containerId: containerId
+    })
     return this._scrollTo('*[data-id="'+nodeId+'"]')
   }
 

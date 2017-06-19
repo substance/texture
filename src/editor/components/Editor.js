@@ -115,7 +115,7 @@ export default class Editor extends AbstractWriter {
   }
 
   _scrollTo(nodeId) {
-    this.refs.contentPanel.scrollTo(nodeId)
+    this.refs.contentPanel.scrollTo(`[data-id="${nodeId}"]`)
   }
 
   getConfigurator() {

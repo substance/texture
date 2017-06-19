@@ -252,6 +252,16 @@ export default {
         commandGroups: ['workflows']
       }
     ])
+
+    // Configure metadata panel
+    config.setMetadataSpec([
+      { section: 'contributors', label: 'Contributors', nodeSelector: 'article-meta contrib-group' },
+      { section: 'affiliations', label: 'Affiliations', nodeSelector: 'article-meta aff-group' },
+      { section: 'pub-history', label: 'Publication History', nodeSelector: 'article-meta' },
+      { section: 'article-info', label: 'Article Record', nodeSelector: 'article-meta' },
+      // { section: 'publication-history', label: 'Publication History', nodeSelector: 'article-meta' },
+      // { section: 'Translations', component: 'translations', nodeSelector: 'article-meta' }
+    ])
   },
   Editor
 }

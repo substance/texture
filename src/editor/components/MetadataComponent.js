@@ -1,33 +1,47 @@
 import { Component } from 'substance'
+import MetadataSection from './MetadataSection'
 
 export default class MetadataComponent extends Component {
 
   render($$) {
     const ScrollPane = this.getComponent('scroll-pane')
+    const metadataSpec = this.props.metadataSpec
     const doc = this.context.editorSession.getDocument()
-    const articleMeta = doc.find('article-meta')
+    // const articleMeta = doc.find('article-meta')
     let el = $$('div').addClass('sc-metadata')
 
     let scrollPane = $$(ScrollPane).ref('metadataScroll')
 
-    scrollPane.append($$(this.getComponent('article-info'), { node: articleMeta }))
+    metadataSpec.forEach((entry) => {
+      if (entry.section) {
+        let isActive = entry.section === this.state.activeSection
 
-    const history = articleMeta.findChild('history')
-    if (history) {
-      scrollPane.append($$(this.getComponent('pub-history'), { node: history }))
-    }
+        scrollPane.append(
+          $$(MetadataSection, {
+            label: entry.label,
+            expanded: isActive
+          }).on('click', this._switchSection.bind(this, entry.section))
+        )
 
-    const contribGroup = articleMeta.findChild('contrib-group')
-    if (contribGroup) {
-      scrollPane.append($$(this.getComponent('contributors'), { node: contribGroup }))
-    }
-
-    const affGroup = articleMeta.findChild('aff-group')
-    if (affGroup) {
-      scrollPane.append($$(this.getComponent('affiliations'), { node: affGroup }))
-    }
+        if (isActive) {
+          const node = doc.find(entry.nodeSelector)
+          let Component = this.getComponent(entry.section)
+          scrollPane.append(
+            $$(Component, { node: node })
+          )
+        }
+      } else {
+        console.warn('TODO: Support section grouping')
+      }
+    })
 
     el.append(scrollPane)
     return el
+  }
+
+  _switchSection(sectionName) {
+    this.setState({
+      activeSection: sectionName
+    })
   }
 }

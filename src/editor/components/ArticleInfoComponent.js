@@ -1,43 +1,27 @@
 import { NodeComponent } from 'substance'
-import MetadataSection from './MetadataSection'
 
 /*
   Edit article information in this MetadataSection
 */
 export default class ArticleInfoComponent extends NodeComponent {
 
-  getInitialState() {
-    return {
-      expanded: true
-    }
-  }
-
   render($$) {
     let el = $$('div').addClass('sc-article-info')
 
+    let articleMeta = this.props.node
+    let pubDate = articleMeta.findChild('pub-date')
+    let volume = articleMeta.findChild('volume')
+    let issue = articleMeta.findChild('issue')
+    let fPage = articleMeta.findChild('fpage')
+    let lPage = articleMeta.findChild('lpage')
+
     el.append(
-      $$(MetadataSection, {
-        label: 'Article Information',
-        expanded: this.state.expanded
-      }).on('click', this._toggle)
+      this._renderDateEditor($$, pubDate, 'Publication Date'),
+      this._renderTextEditor($$, volume, 'Volume', 'number'),
+      this._renderTextEditor($$, issue, 'Issue' ,'text'),
+      this._renderTextEditor($$, fPage, 'First Page', 'number'),
+      this._renderTextEditor($$, lPage, 'Last Page', 'number')
     )
-
-    if (this.state.expanded) {
-      let articleMeta = this.props.node
-      let pubDate = articleMeta.findChild('pub-date')
-      let volume = articleMeta.findChild('volume')
-      let issue = articleMeta.findChild('issue')
-      let fPage = articleMeta.findChild('fpage')
-      let lPage = articleMeta.findChild('lpage')
-
-      el.append(
-        this._renderDateEditor($$, pubDate, 'Publication Date'),
-        this._renderTextEditor($$, volume, 'Volume', 'number'),
-        this._renderTextEditor($$, issue, 'Issue' ,'text'),
-        this._renderTextEditor($$, fPage, 'First Page', 'number'),
-        this._renderTextEditor($$, lPage, 'Last Page', 'number')
-      )
-    }
     return el
   }
 
@@ -83,12 +67,6 @@ export default class ArticleInfoComponent extends NodeComponent {
     let id = metaEl.id
     let value = this.refs[id].val()
     metaEl.setAttribute('iso-8601-date', value)
-  }
-
-  _toggle() {
-    this.setState({
-      expanded: !this.state.expanded
-    })
   }
 
 }

@@ -1,6 +1,6 @@
-import { Component, TextPropertyComponent } from 'substance'
+import { NodeComponent, TextPropertyComponent } from 'substance'
 
-export default class TextNodeComponent extends Component {
+export default class TextNodeComponent extends NodeComponent {
 
   render($$) {
     const node = this.props.node

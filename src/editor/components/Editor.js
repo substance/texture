@@ -118,6 +118,20 @@ export default class Editor extends AbstractWriter {
     this.refs.contentPanel.scrollTo(`[data-id="${nodeId}"]`)
   }
 
+  tocEntrySelected(nodeId) {
+    let node = this.doc.get(nodeId)
+    let containerId = node.parentNode.id
+    let editorSession = this.getEditorSession()
+    let sel = editorSession.setSelection({
+      type: 'property',
+      path: node.getPath(),
+      startOffset: 0,
+      surfaceId: containerId,
+      containerId: containerId
+    })
+    return this._scrollTo('*[data-id="'+nodeId+'"]')
+  }
+
   getConfigurator() {
     return this.props.editorSession.configurator
   }

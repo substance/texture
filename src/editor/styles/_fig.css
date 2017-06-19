@@ -1,0 +1,8 @@
+.sc-fig {
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.sc-fig > .se-label {
+  font-style: italic;
+}

@@ -1,16 +1,4 @@
-// texture
-export { default as Texture } from './lib/texture/Texture'
-export { default as TextureConfigurator } from './lib/texture/TextureConfigurator'
-export { default as ExampleXMLStore } from './lib/texture/ExampleXMLStore'
-
-// author
-export { default as Author } from './lib/author/Author'
-export { default as AuthorPackage } from './lib/author/AuthorPackage'
-
-// publisher
-export { default as Publisher } from './lib/publisher/Publisher'
-export { default as PublisherPackage } from './lib/publisher/PublisherPackage'
-
-// tagging
-export { default as TaggingPackage } from './lib/tagging/TaggingPackage'
-
+export { default as TextureJATSPackage } from './src/article/TextureJATSPackage'
+export { default as jats2texture } from './src/article/jats2texture'
+export { default as EditorPackage } from './src/editor/EditorPackage'
+export { default as TextureConfigurator } from './src/editor/util/TextureConfigurator'

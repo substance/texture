@@ -1,0 +1,10 @@
+.sc-title-group .se-article-title {
+  padding-bottom: var(--default-padding);
+  font-weight: var(--strong-font-weight);
+  letter-spacing: var(--heading-letterspacing);
+  font-size: var(--title-font-size);
+
+  font-family: 'Avenir Next', Helvetica;
+  font-weight: 600;
+  text-align: center;
+}

@@ -16,10 +16,11 @@
     <article-meta>
       <title-group>
         <article-title>Texture Kitchen Sink</article-title>
-        <subtitle>The Subtitle</subtitle>
-        <trans-title-group  xml:lang="de">
-          <trans-title>Texture Küchenspüle</trans-title>
-          <trans-subtitle>Der Untertitel</trans-subtitle>
+        <!-- NOTE: Other than regular JATS we only put title translations into
+        the title group. For subtitles there will be trans-subtitle-group -->
+        <trans-title-group>
+          <trans-title xml:lang="de">Texture Küchenspüle</trans-title>
+          <trans-title xml:lang="cz">Czech title translation</trans-title>
         </trans-title-group>
       </title-group>
       <contrib-group>
@@ -76,14 +77,17 @@
           <year>1998</year>
         </date>
       </history>
-
-      <!-- The abstract can contain multiple paragraphs -->
       <abstract>
+        <!-- We wrap all content in a separate container node -->
         <abstract-content>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r2"/></p>
         </abstract-content>
       </abstract>
-      <!-- <trans-abstract xml:lang="de">Deutsche Übersetzung</trans-abstract> -->
+      <trans-abstract-group>
+        <trans-abstract xml:lang="de"><!-- for some reason if we had whitespace here the compilation crashes
+       --><abstract-content><p>Deutsche Übersetzung</p></abstract-content><!--
+     --></trans-abstract>
+      </trans-abstract-group>
     </article-meta>
   </front>
   <body>

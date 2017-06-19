@@ -32,6 +32,7 @@ import GraphicComponent from './components/GraphicComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import PubHistoryComponent from './components/PubHistoryComponent'
+import TranslationsComponent from './components/TranslationsComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
@@ -69,6 +70,7 @@ export default {
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('affiliations', AffiliationsComponent)
     config.addComponent('article-info', ArticleInfoComponent)
+    config.addComponent('translations', TranslationsComponent)
     config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
     config.addComponent('contributors', ContributorsComponent)
@@ -269,6 +271,7 @@ export default {
       { section: 'affiliations', label: 'Affiliations', nodeSelector: 'article-meta aff-group' },
       { section: 'pub-history', label: 'Publication History', nodeSelector: 'article-meta' },
       { section: 'article-info', label: 'Article Record', nodeSelector: 'article-meta' },
+      { section: 'translations', label: 'Translations', nodeSelector: 'article-meta' }
       // { section: 'publication-history', label: 'Publication History', nodeSelector: 'article-meta' },
       // { section: 'Translations', component: 'translations', nodeSelector: 'article-meta' }
     ])

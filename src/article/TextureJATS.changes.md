@@ -1,3 +1,9 @@
+56. Use `<trans-title-group>` to only hold title translations
+
+For `<trans-subtitle>` we use a separate container `<trans-subtitle>`.
+
+55. Introduce `<trans-abstract-group>` to hold all `<trans-abstract>` elements
+
 54. Allow `<string-name>` inside `<aff>`
 
 Used to define an unstructured (text-only) affiliation.

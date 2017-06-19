@@ -19,7 +19,6 @@ export default class Editor extends AbstractWriter {
   }
 
   _switchTab(contextId) {
-    console.log('LE Context', contextId)
     this.setState({
       contextId: contextId
     })
@@ -38,12 +37,15 @@ export default class Editor extends AbstractWriter {
 
   _renderContextSection($$) {
     const TabbedPane = this.getComponent('tabbed-pane')
+    const configurator = this.getConfigurator()
 
-    let ContextComponent
+    let contextComponent
     if (this.state.contextId === 'toc') {
-      ContextComponent = TOC
+      contextComponent = $$(TOC)
     } else if (this.state.contextId === 'metadata') {
-      ContextComponent = MetadataComponent
+      contextComponent = $$(MetadataComponent, {
+        metadataSpec: configurator.getMetadataSpec()
+      })
     }
     return $$('div').addClass('se-context-section').append(
       $$(TabbedPane, {
@@ -53,7 +55,7 @@ export default class Editor extends AbstractWriter {
         ],
         activeTab: this.state.contextId
       }).ref('tabbedPane').append(
-        $$(ContextComponent)
+        contextComponent
       )
     )
   }
@@ -156,4 +158,3 @@ export default class Editor extends AbstractWriter {
   }
 
 }
-

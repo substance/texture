@@ -1,63 +1,40 @@
 import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
-import MetadataSection from './MetadataSection'
 
 /*
   Edit affiliations for a publication in this MetadataSection
 */
 export default class AffiliationsComponent extends NodeComponent {
 
-  getInitialState() {
-    return {
-      expanded: true
-    }
-  }
-
   render($$) {
     const affGroup = this.props.node
     const TextPropertyEditor = this.getComponent('text-property-editor')
-
     let el = $$('div').addClass('sc-affiliations')
 
-    el.append(
-      $$(MetadataSection, {
-        label: 'Affiliations',
-        expanded: this.state.expanded
-      }).on('click', this._toggle)
-    )
-
-    if (this.state.expanded) {
-      affGroup.getChildren().forEach((aff) => {
-        let stringAff = aff.findChild('string-aff')
-        // at the moment we only render string-affs
-        if (stringAff) {
-          el.append(
-            $$('div').addClass('se-aff').append(
-              $$(TextPropertyEditor, {
-                history: 'affs',
-                path: stringAff.getTextPath(),
-                disabled: this.props.disabled
-              }).addClass('se-text-input').ref(stringAff.id),
-              $$('div').addClass('se-remove-aff').append(
-                $$(Icon, { icon: 'fa-remove' })
-              ).on('click', this._removeAffiliation.bind(this, aff.id))
-            )
+    affGroup.getChildren().forEach((aff) => {
+      let stringAff = aff.findChild('string-aff')
+      // at the moment we only render string-affs
+      if (stringAff) {
+        el.append(
+          $$('div').addClass('se-aff').append(
+            $$(TextPropertyEditor, {
+              history: 'affs',
+              path: stringAff.getTextPath(),
+              disabled: this.props.disabled
+            }).addClass('se-text-input').ref(stringAff.id),
+            $$('div').addClass('se-remove-aff').append(
+              $$(Icon, { icon: 'fa-remove' })
+            ).on('click', this._removeAffiliation.bind(this, aff.id))
           )
-        }
-      })
-
-      el.append(
-        $$('button').addClass('se-metadata-affiliation-add')
-          .append('Add Affiliation')
-          .on('click', this._addAffiliation)
-      )
-    }
-    return el
-  }
-
-  _toggle() {
-    this.setState({
-      expanded: !this.state.expanded
+        )
+      }
     })
+
+    el.append(
+      $$('button').addClass('se-metadata-affiliation-add')
+        .append('Add Affiliation')
+        .on('click', this._addAffiliation)
+    )
+    return el
   }
 
   _addAffiliation() {

@@ -1,49 +1,33 @@
 import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
-import MetadataSection from './MetadataSection'
 
 /*
   Edit affiliations for a publication in this MetadataSection
 */
 export default class ContributorsComponent extends NodeComponent {
 
-  getInitialState() {
-    return {
-      expanded: true
-    }
-  }
 
   render($$) {
     const contribGroup = this.props.node
     const doc = contribGroup.getDocument()
-
     let el = $$('div').addClass('sc-affiliations')
-
-    el.append(
-      $$(MetadataSection, {
-        label: 'Contributors',
-        expanded: this.state.expanded
-      }).on('click', this._toggle)
-    )
-
-    if (this.state.expanded) {
-      let affs = doc.findAll('article-meta > aff-group > aff')
-      contribGroup.getChildren().forEach((contrib) => {
-        el.append(
-          $$('div').addClass('se-metadata-contributor').append(
-            this._renderName($$, contrib),
-            this._renderAffiliations($$, contrib, affs),
-            $$(Icon, {icon: 'fa-remove'})
-              .addClass('se-remove-contributor')
-              .on('click', this._removeContributor.bind(this, contrib.id))
-          )
-        )
-      })
+    let affs = doc.findAll('article-meta > aff-group > aff')
+    
+    contribGroup.getChildren().forEach((contrib) => {
       el.append(
-        $$('button').addClass('se-metadata-contributor-add')
-          .append('Add Contributor')
-          .on('click', this._addContributor)
+        $$('div').addClass('se-metadata-contributor').append(
+          this._renderName($$, contrib),
+          this._renderAffiliations($$, contrib, affs),
+          $$(Icon, {icon: 'fa-remove'})
+            .addClass('se-remove-contributor')
+            .on('click', this._removeContributor.bind(this, contrib.id))
+        )
       )
-    }
+    })
+    el.append(
+      $$('button').addClass('se-metadata-contributor-add')
+        .append('Add Contributor')
+        .on('click', this._addContributor)
+    )
     return el
   }
 
@@ -87,12 +71,6 @@ export default class ContributorsComponent extends NodeComponent {
   _getAffReferences(contrib) {
     let attrIds = contrib.getAttribute('aff-ids') || ''
     return attrIds.split(' ')
-  }
-
-  _toggle() {
-    this.setState({
-      expanded: !this.state.expanded
-    })
   }
 
   _updateAffiliations(contribId) {

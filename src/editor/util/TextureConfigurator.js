@@ -27,7 +27,12 @@ export default class TextureConfigurator extends Configurator {
 
   }
 
-  addInsertTool(spec) {
-
+  setMetadataSpec(metadataSpec) {
+    this.config.metadataSpec = metadataSpec
   }
+
+  getMetadataSpec() {
+    return this.config.metadataSpec
+  }
+
 }

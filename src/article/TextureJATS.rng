@@ -895,6 +895,7 @@
         <choice>
           <ref name="sec.class"/>
           <ref name="para-level"/>
+          <ref name="table-fig"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -1040,10 +1041,15 @@
     <element name="fig">
       <ref name="title"/>
       <ref name="caption"/>
-      <choice>
-        <ref name="graphic"/>
-        <ref name="table"/>
-      </choice>
+      <ref name="graphic"/>
+    </element>
+  </define>
+
+  <define name="table-fig">
+    <element name="table-fig">
+      <ref name="title"/>
+      <ref name="caption"/>
+      <ref name="table"/>
     </element>
   </define>
 

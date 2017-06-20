@@ -97,7 +97,7 @@
       <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor sit amet.<ext-link ext-link-type="uri" xlink:href="http://substance.io">Example link</ext-link></p>
       <heading level="2">Heading Level 2</heading>
       <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet.<xref ref-type="bibr" rid="r1 r2"/></p>
-      <fig id="fig1" fig-type="graphic">
+      <fig id="fig1">
         <title>Behavioural design and implantation details.</title>
         <caption>
           <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
@@ -105,7 +105,7 @@
         <graphic mime-subtype="jpeg" mimetype="image" xlink:href="https://iiif.elifesciences.org/lax:15278/elife-15278-fig1-v1.tif/full/1076,/0/default.jpg"/>
       </fig>
       <p>Some text.</p>
-      <fig id="fig2" fig-type="graphic">
+      <fig id="fig2">
         <title>Visual object processing in area AIP.</title>
         <caption>
           <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
@@ -116,8 +116,8 @@
         <p>Blockquote example</p>
         <attrib>Ecclesiastes 10:1</attrib>
       </disp-quote>
-      <p>Hello World</p>
-      <fig id="table1" fig-type="table">
+      <p>Hello World <xref ref-type="table" rid="table1"/></p>
+      <table-fig id="table1">
         <title>Patient Care at End of Follow Up</title>
         <caption>
         <p>Numbers of patients receiving institutional care at
@@ -188,7 +188,7 @@
           </tr>
           </tbody>
         </table>
-      </fig>
+      </table-fig>
     </body-content>
   </body>
   <back>

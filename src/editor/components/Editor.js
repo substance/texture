@@ -131,7 +131,7 @@ export default class Editor extends AbstractWriter {
       surfaceId: containerId,
       containerId: containerId
     })
-    return this._scrollTo('*[data-id="'+nodeId+'"]')
+    return this._scrollTo(nodeId)
   }
 
   getConfigurator() {

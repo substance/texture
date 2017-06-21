@@ -145,3 +145,11 @@
   border-radius: 3px;
   font-size: 14px;
 }
+
+.sc-translations .se-add-translation {
+  width: 100%;
+  padding: 10px;
+  font-family: 'Avenir Next';
+  font-size: 14px;
+  color: #2079DC;
+}

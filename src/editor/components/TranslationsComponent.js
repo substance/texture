@@ -2,7 +2,9 @@ import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
 
 const languages = {
   cz: 'Czech',
-  de: 'German'
+  de: 'German',
+  es: 'Spanish',
+  fr: 'French'
 }
 
 /*
@@ -22,7 +24,6 @@ export default class TranslationsComponent extends NodeComponent {
   _renderTitleTranslations($$) {
     let articleMeta = this.props.node
     let transTitleGroup = articleMeta.find('title-group trans-title-group')
-    console.log('transTitleGroup', transTitleGroup)
     let translations = transTitleGroup.childNodes
     let el = $$('div').addClass('se-title-translations')
     el.append($$('div').addClass('se-translation-header').append('Title Translations'))
@@ -30,13 +31,18 @@ export default class TranslationsComponent extends NodeComponent {
       el.append(this._renderTitleEditor($$, nodeId))
     })
 
+    el.append(
+      $$('button').addClass('se-add-translation')
+        .append('Add Title Translation')
+        .on('click', this._addTitleTranslation)
+    )
+
     return el
   }
 
   _renderAbstractTranslations($$) {
     let articleMeta = this.props.node
     let transAbstractGroup = articleMeta.find('trans-abstract-group')
-    console.log('transAbstractGroup', transAbstractGroup)
     let translations = transAbstractGroup.childNodes
     let el = $$('div').addClass('se-abstract-translations')
     el.append($$('div').addClass('se-translation-header').append('Abstract Translations'))
@@ -44,12 +50,20 @@ export default class TranslationsComponent extends NodeComponent {
       el.append(this._renderAbstractEditor($$, nodeId))
     })
 
+    el.append(
+      $$('button').addClass('se-add-translation')
+        .append('Add Abstract Translation')
+        .on('click', this._addAbstractTranslation)
+    )
+
     return el
   }
 
   _renderLanguageSelector($$, node) {
     let currentLanguage = node.getAttribute('xml:lang')
-    let el = $$('select').addClass('se-language-selector')
+    let el = $$('select').addClass('se-language-selector').append(
+      $$('option').attr({disabled: 'disabled', selected: 'selected'}).append('Select language...')
+    ).on('change', this._onLanguageChange.bind(this, node))
     
     for(let lang in languages) {
       if(languages[lang]) {
@@ -76,7 +90,7 @@ export default class TranslationsComponent extends NodeComponent {
         this._renderLanguageSelector($$, node),
         $$('div').addClass('se-remove-translation').append(
           $$(Icon, { icon: 'fa-remove' })
-        ).on('click', this._removeTranslation.bind(this, node.id))
+        ).on('click', this._removeTitleTranslation.bind(this, node.id))
       ),
       $$(TextPropertyEditor, {
         history: '',
@@ -100,7 +114,7 @@ export default class TranslationsComponent extends NodeComponent {
         this._renderLanguageSelector($$, node),
         $$('div').addClass('se-remove-translation').append(
           $$(Icon, { icon: 'fa-remove' })
-        ).on('click', this._removeTranslation.bind(this, node.id))
+        ).on('click', this._removeAbstractTranslation.bind(this, node.id))
       ),
       $$(Abstract, {
         node: node, 
@@ -111,8 +125,69 @@ export default class TranslationsComponent extends NodeComponent {
     return el
   }
 
-  _removeTranslation(nodeId) {
+  _addTitleTranslation() {
+    const articleMeta = this.props.node
+    const transTitleGroup = articleMeta.find('title-group trans-title-group')
+    const editorSession = this.context.editorSession
 
+    editorSession.transaction((doc) => {
+      let titleGroup = doc.get(transTitleGroup.id)
+      let title = doc.createElement('trans-title')
+      titleGroup.append(title)
+    })
+
+    this.rerender()
+  }
+
+  _addAbstractTranslation() {
+    const articleMeta = this.props.node
+    const transAbstractGroup = articleMeta.find('trans-abstract-group')
+    const editorSession = this.context.editorSession
+
+    editorSession.transaction((doc) => {
+      let abstractGroup = doc.get(transAbstractGroup.id)
+      let abstract = doc.createElement('trans-abstract')
+      let abstractContent = doc.createElement('abstract-content')
+      let abstractContentPlaceholder = doc.createElement('p')
+      abstractContent.append(abstractContentPlaceholder)
+      abstract.append(abstractContent)
+      abstractGroup.append(abstract)
+    })
+
+    this.rerender()
+  }
+
+  _removeTitleTranslation(nodeId) {
+    const articleMeta = this.props.node
+    const transTitleGroup = articleMeta.find('title-group trans-title-group')
+    const editorSession = this.context.editorSession
+
+    editorSession.transaction((doc) => {
+      let titleGroup = doc.get(transTitleGroup.id)
+      let title = titleGroup.find(`trans-title#${nodeId}`)
+      titleGroup.removeChild(title)
+    })
+
+    this.rerender()
+  }
+
+  _removeAbstractTranslation(nodeId) {
+    const articleMeta = this.props.node
+    const transAbstractGroup = articleMeta.find('trans-abstract-group')
+    const editorSession = this.context.editorSession
+
+    editorSession.transaction((doc) => {
+      let abstractGroup = doc.get(transAbstractGroup.id)
+      let abstract = abstractGroup.find(`trans-abstract#${nodeId}`)
+      abstractGroup.removeChild(abstract)
+    })
+
+    this.rerender()
+  }
+
+  _onLanguageChange(node, e) {
+    let value = e.target.value
+    node.setAttribute('xml:lang', value)
   }
 
 }

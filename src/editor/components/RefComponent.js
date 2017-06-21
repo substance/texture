@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, FontAwesomeIcon as Icon } from 'substance'
 
 export default class RefComponent extends Component {
   render($$) {
@@ -17,7 +17,13 @@ export default class RefComponent extends Component {
           $$(TextPropertyEditor, {
             path: stringCitation.getTextPath(),
             disabled: this.props.disabled
-          })
+          }),
+          $$('span').addClass('se-remove-ref')
+            .append(
+              $$(Icon, { icon: 'fa-remove' }),
+              'Remove reference'
+            )
+            .on('click', this._removeRef.bind(this, ref.id))
         )
 
       )
@@ -25,6 +31,10 @@ export default class RefComponent extends Component {
       console.warn('No string citation found')
     }
     return el
+  }
+
+  _removeRef(refId) {
+    // Here we must remove reference and all related xrefs
   }
 }
 

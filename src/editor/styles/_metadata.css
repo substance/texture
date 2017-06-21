@@ -103,3 +103,45 @@
   padding: 2px 0px 2px 10px;
   flex: 0 0 0;
 }
+
+.sc-translations .se-translation-header {
+  padding: 5px 10px;
+  background: #4e4e4e;
+  font-family: 'Avenir Next';
+  font-size: 12px;
+  color: #fff;
+}
+
+.sc-translations .se-translation {
+  padding: 10px 8px 10px;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.sc-translations .se-translation .se-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sc-translations .se-translation .se-options .se-language-selector {
+  margin: 4px 0px;
+}
+
+.sc-translations .se-translation .se-options .se-remove-translation {
+  cursor: pointer;
+}
+
+.sc-translations .se-title-translations .sc-text-property-editor {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.sc-translations .sc-abstract {
+  margin-top: 10px;
+  padding: 0px 10px;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  font-size: 14px;
+}

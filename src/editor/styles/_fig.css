@@ -6,3 +6,8 @@
 .sc-fig > .se-label {
   font-style: italic;
 }
+
+.sc-fig .se-title {
+  padding-top: 20px;
+  font-weight: 600;
+}

@@ -7,7 +7,8 @@ export const REF_TYPES = {
   'fig-group': 'fig',
   'fn': 'fn',
   'ref': 'bibr',
-  'table-wrap': 'table'
+  'table-fig': 'table',
+  'table-fig-group': 'table'
 }
 
 export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {

@@ -29,6 +29,7 @@ import FigComponent from './components/FigComponent'
 import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
+import TableComponent from './components/TableComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import PubHistoryComponent from './components/PubHistoryComponent'
@@ -40,6 +41,7 @@ import XrefComponent from './components/XrefComponent'
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
+import TableFigPreview from './components/TableFigPreview'
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
@@ -76,7 +78,9 @@ export default {
     config.addComponent('contributors', ContributorsComponent)
     config.addComponent('front', FrontComponent)
     config.addComponent('fig', FigComponent)
+    config.addComponent('table-fig', FigComponent)
     config.addComponent('graphic', GraphicComponent)
+    config.addComponent('table', TableComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('pub-history', PubHistoryComponent)
@@ -89,6 +93,7 @@ export default {
     config.addComponent('ref-preview', RefPreview)
     config.addComponent('fn-preview', FnPreview)
     config.addComponent('fig-preview', FigPreview)
+    config.addComponent('table-fig-preview', TableFigPreview)
 
     // Commands
     config.addCommand('edit-xref', EditInlineNodeCommand, {

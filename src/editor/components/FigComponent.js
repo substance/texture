@@ -1,5 +1,5 @@
 import { NodeComponent } from 'substance'
-
+import { REF_TYPES } from '../util'
 export default class FigComponent extends NodeComponent {
 
   didMount() {
@@ -17,22 +17,30 @@ export default class FigComponent extends NodeComponent {
     const labelGenerator = this.context.labelGenerator
 
     let el = $$('div')
-      .addClass('sc-fig')
+      .addClass('sc-'+node.type)
       .attr('data-id', node.id)
 
-    let label = labelGenerator.getLabel('fig', [node.id])
+    let label = labelGenerator.getLabel(REF_TYPES[node.type], [node.id])
     let labelEl = $$('div').addClass('se-label').text(label)
     el.append(labelEl)
 
-    const graphic = node.findChild('graphic')
-    let graphicEl
-    if (graphic) {
-      graphicEl = $$(this.getComponent('graphic'), {
-        node: graphic,
+    const figType = this._getContentType()
+    const content = node.findChild(figType)
+    let contentEl
+    if (content) {
+      contentEl = $$(this.getComponent(figType), {
+        node: content,
         disabled: this.props.disabled
       })
+      el.append(contentEl.ref('content'))
     }
-    el.append(graphicEl.ref('graphic'))
+
+    const title = node.findChild('title')
+    let titleEl = $$(this.getComponent('text-property-editor'), {
+      path: title.getTextPath(),
+      disabled: this.props.disabled
+    }).addClass('se-title').ref('figTitle')
+    el.append(titleEl)
 
     const caption = node.findChild('caption')
     let captionEl
@@ -50,8 +58,15 @@ export default class FigComponent extends NodeComponent {
     return el
   }
 
+  _getContentType() {
+    switch(this.props.node.type) {
+      case 'table-fig': return 'table'
+      default: return 'graphic'
+    }
+  }
+
   _onLabelsChanged(refType) {
-    if (refType === 'fig') {
+    if (refType === this.props.node.type) {
       this.rerender()
     }
   }

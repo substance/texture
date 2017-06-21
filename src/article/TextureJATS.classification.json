@@ -1,7 +1,7 @@
 {
   "abbrev": "inline-element",
   "abstract-content": "container",
-  "caption-content": "container",
+  "caption": "container",
   "bold": "annotation",
   "body-content": "container",
   "break": "inline-element",

@@ -43,7 +43,7 @@ class AbstractWriter extends AbstractEditor {
         let positions = targets.map(t => t.position).sort(sortNumeric)
         return 'Table ' + (positions.join(',') || '???')
       },
-      // E.g. eLife videos are refernced as other
+      // E.g. eLife videos are referenced as other
       'other': function(targets) {
         let positions = targets.map(t => t.position).sort(sortNumeric)
         return 'Other ' + (positions.join(',') || '???')

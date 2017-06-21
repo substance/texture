@@ -107,7 +107,6 @@ function secToHeadings(article) {
 function _replaceEl(el, els) {
   const parent = el.parentNode
   const next = el.nextSibling
-  const L = els.length
   els.forEach(_el => parent.insertBefore(_el, next))
   el.remove()
 }

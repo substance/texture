@@ -1,8 +1,7 @@
 import { ScrollPane, SplitPane, Layout, WorkflowPane } from 'substance'
 import { AbstractWriter } from '../util'
-import TOC from './TOC'
 import TOCProvider from '../util/TOCProvider'
-import MetadataComponent from './MetadataComponent'
+import ContextSection from './ContextSection'
 
 export default class Editor extends AbstractWriter {
 
@@ -36,27 +35,11 @@ export default class Editor extends AbstractWriter {
   }
 
   _renderContextSection($$) {
-    const TabbedPane = this.getComponent('tabbed-pane')
     const configurator = this.getConfigurator()
-
-    let contextComponent
-    if (this.state.contextId === 'toc') {
-      contextComponent = $$(TOC)
-    } else if (this.state.contextId === 'metadata') {
-      contextComponent = $$(MetadataComponent, {
-        metadataSpec: configurator.getMetadataSpec()
-      })
-    }
     return $$('div').addClass('se-context-section').append(
-      $$(TabbedPane, {
-        tabs: [
-          { id: 'toc', name: 'Contents' },
-          { id: 'metadata', name: 'Metadata' }
-        ],
-        activeTab: this.state.contextId
-      }).ref('tabbedPane').append(
-        contextComponent
-      )
+      $$(ContextSection, {
+        panelsSpec: configurator.getPanelsSpec()
+      })
     )
   }
 
@@ -124,7 +107,7 @@ export default class Editor extends AbstractWriter {
     let node = this.doc.get(nodeId)
     let containerId = node.parentNode.id
     let editorSession = this.getEditorSession()
-    let sel = editorSession.setSelection({
+    editorSession.setSelection({
       type: 'property',
       path: node.getPath(),
       startOffset: 0,

@@ -27,12 +27,12 @@ export default class TextureConfigurator extends Configurator {
 
   }
 
-  setMetadataSpec(metadataSpec) {
-    this.config.metadataSpec = metadataSpec
+  setPanelsSpec(panelsSpec) {
+    this.config.panelsSpec = panelsSpec
   }
 
-  getMetadataSpec() {
-    return this.config.metadataSpec
+  getPanelsSpec() {
+    return this.config.panelsSpec
   }
 
 }

@@ -33,6 +33,7 @@ import TableComponent from './components/TableComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import PubHistoryComponent from './components/PubHistoryComponent'
+import TOC from './components/TOC'
 import TranslationsComponent from './components/TranslationsComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
@@ -84,6 +85,8 @@ export default {
     config.addComponent('caption', CaptionComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('pub-history', PubHistoryComponent)
+    config.addComponent('toc', TOC)
+
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)
@@ -270,15 +273,32 @@ export default {
       }
     ])
 
-    // Configure metadata panel
-    config.setMetadataSpec([
-      { section: 'contributors', label: 'Contributors', nodeSelector: 'article-meta contrib-group' },
-      { section: 'affiliations', label: 'Affiliations', nodeSelector: 'article-meta aff-group' },
-      { section: 'pub-history', label: 'Publication History', nodeSelector: 'article-meta' },
-      { section: 'article-info', label: 'Article Record', nodeSelector: 'article-meta' },
-      { section: 'translations', label: 'Translations', nodeSelector: 'article-meta' }
-      // { section: 'publication-history', label: 'Publication History', nodeSelector: 'article-meta' },
-      // { section: 'Translations', component: 'translations', nodeSelector: 'article-meta' }
+    // Add labels for groups
+    config.addLabel('structure', 'Structure')
+    config.addLabel('article-info', 'Article Information')
+
+    // Add labels for panels
+    config.addLabel('toc', 'Table of Contents')
+    config.addLabel('article-record', 'Article Record')
+    config.addLabel('affiliations', 'Manage Affiliations')
+    config.addLabel('contributors', 'Authors & contributors')
+    config.addLabel('translations', 'Translations')
+    config.addLabel('pub-data', 'Publication Data')
+    config.addLabel('pub-history', 'Publication History')
+
+    /*
+      Define panel structure
+    */
+    config.setPanelsSpec([
+      { group: 'structure' },
+      { panel: 'toc' },
+      { group: 'article-info' },
+      { panel: 'contributors' },
+      // { panel: 'affiliations' },
+      // { panel: 'translations' },
+      // { group: 'pub-data' },
+      // { panel: 'article-record' },
+      // { panel: 'pub-history' }
     ])
   },
   Editor

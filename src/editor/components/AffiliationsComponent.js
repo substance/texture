@@ -51,7 +51,6 @@ export default class AffiliationsComponent extends NodeComponent {
   }
 
   _removeAffiliation(affId) {
-    // TODO: Find a way to do this properly
     const nodeId = this.props.node.id
     const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {

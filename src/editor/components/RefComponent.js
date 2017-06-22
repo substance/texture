@@ -24,7 +24,6 @@ export default class RefComponent extends Component {
             )
             .on('click', this._removeRef.bind(this, ref.id))
         )
-
       )
     } else {
       console.warn('No string citation found')
@@ -36,6 +35,7 @@ export default class RefComponent extends Component {
     let editorSession = this.context.editorSession
     let docSource = editorSession.getDocument()
     let xrefs = docSource.getXRefs()
+    let needRerender = true
     editorSession.transaction(doc => {
       xrefs.forEach(xrefItem => {
         let xref = doc.get(xrefItem.id)
@@ -45,12 +45,14 @@ export default class RefComponent extends Component {
         if(ridIndex > -1) {
           idrefs.splice(ridIndex, 1)
           xref.setAttribute('rid', idrefs.join(' '))
+          needRerender = false
         }
       })
       let refList = doc.find('ref-list')
       let ref = refList.find(`ref#${refId}`)
       refList.removeChild(ref)
     })
+    if(needRerender) this.parent.rerender()
   }
 }
 

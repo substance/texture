@@ -25,6 +25,7 @@
   position: absolute;
   top: 8px;
   right: 8px;
+  cursor: pointer;
 }
 
 .sc-contributors .se-metadata-contributor .se-label {

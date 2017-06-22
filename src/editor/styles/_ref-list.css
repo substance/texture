@@ -23,10 +23,11 @@
 }
 
 .sc-ref .sc-string-citation .se-remove-ref {
-  display: inline-block;
-  margin-left: 40px;
-  margin-top: 5px;
-  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  margin-top: -10px;
+  font-size: 14px;
   color: var(--link-color);
   cursor: pointer;
 }
@@ -37,4 +38,5 @@
 
 .sc-string-citation > .sc-text-property-editor {
   padding-left: 40px;
+  margin-right: 40px;
 }

@@ -50,6 +50,11 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _renderAffChoices($$, contrib, affs) {
+    if(affs.length === 0) {
+      return $$('div').addClass('se-empty')
+        .append('Please add affiliations first')
+    }
+
     let props = {
       options: [],
       selectedOptions: this._getAffReferences(contrib),

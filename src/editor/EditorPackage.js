@@ -35,6 +35,8 @@ import ManuscriptComponent from './components/ManuscriptComponent'
 import PubHistoryComponent from './components/PubHistoryComponent'
 import TOC from './components/TOC'
 import TranslationsComponent from './components/TranslationsComponent'
+import FnGroupComponent from './components/FnGroupComponent'
+import FnComponent from './components/FnComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
@@ -87,6 +89,8 @@ export default {
     config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('toc', TOC)
 
+    config.addComponent('fn-group', FnGroupComponent)
+    config.addComponent('fn', FnComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('title-group', TitleGroupComponent)

@@ -1,9 +1,9 @@
 import { NodeComponent } from 'substance'
 
 /*
-  Edit article information in this MetadataSection
+  Edit article record in this MetadataSection
 */
-export default class ArticleInfoComponent extends NodeComponent {
+export default class ArticleRecordComponent extends NodeComponent {
 
   render($$) {
     let el = $$('div').addClass('sc-article-info')

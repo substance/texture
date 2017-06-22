@@ -5,13 +5,12 @@ import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
 */
 export default class ContributorsComponent extends NodeComponent {
 
-
   render($$) {
     const contribGroup = this.props.node
     const doc = contribGroup.getDocument()
     let el = $$('div').addClass('sc-affiliations')
     let affs = doc.findAll('article-meta > aff-group > aff')
-    
+
     contribGroup.getChildren().forEach((contrib) => {
       el.append(
         $$('div').addClass('se-metadata-contributor').append(

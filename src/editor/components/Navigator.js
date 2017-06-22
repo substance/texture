@@ -11,74 +11,59 @@ export default class Navigator extends Component {
   render($$) {
     let el = $$('div').addClass('sc-navigator')
     const panelsSpec = this.props.panelsSpec
-    let iconName = this.state.expanded ? 'fa-angle-down' : 'fa-angle-right'
-    let label = this.labelProvider.getLabel(this.props.contextId)
+    let label = this.context.labelProvider.getLabel(this.props.contextId)
     el.append(
       $$('div').addClass('se-toggle').append(
         $$('div').addClass('se-label').append(
           label
         ),
         $$('div').addClass('se-expanded').append(
-          $$(Icon, { icon: iconName })
+          $$(Icon, { icon: 'fa-angle-down' })
         )
       ).on('click', this._toggle)
     )
 
     if (this.state.expanded) {
-      // el.append(
-      //   $$('div').addClass('se-dropdown-content').append('TODO')
-      // )
       let menuEl = $$('div').addClass('se-menu')
-
       panelsSpec.forEach((entry) => {
         if (entry.panel) {
-          let label = this.labelProvider.getLabel(entry.panel)
-          // let isActive = entry.panel === this.state.contextId
-
+          let label = this.context.labelProvider.getLabel(entry.panel)
+          let isActive = entry.panel === this.props.contextId
+          let menuItem = $$('button').addClass('se-menu-item').append(
+            label
+          ).on('click', this._panelSelected.bind(this, entry.panel))
+          if (isActive) {
+            menuItem.addClass('sm-active')
+          }
           menuEl.append(
-            $$('div').addClas('se-panel').append(
-              label
-            ).on('click', this._panelSelected.bind(this, entry.panel))
+            menuItem
           )
-
-          // scrollPane.append(
-          //   $$(MetadataSection, {
-          //     label: entry.label,
-          //     expanded: isActive
-          //   }).on('click', this._switchSection.bind(this, entry.section))
-          // )
-
-          // if (isActive) {
-          //   const node = doc.find(entry.nodeSelector)
-          //   let Component = this.getComponent(entry.section)
-          //   scrollPane.append(
-          //     $$(Component, { node: node })
-          //   )
-          // }
         } else if (entry.group) {
-          let label = this.labelProvider.getLabel(entry.group)
+          let label = this.context.labelProvider.getLabel(entry.group)
           menuEl.append(
-            $$('div').addClas('se-group').append(
+            $$('div').addClass('se-menu-group').append(
               label
             )
           )
         }
       })
-
+      el.append(menuEl)
     }
     return el
   }
 
   _panelSelected(contextId) {
-    this.send('')
+    this.send('navigate', contextId)
+    // Close popup
+    this.setState({
+      expanded: false
+    })
   }
 
   _toggle() {
     this.setState({
-      expanded: this.state.expanded
+      expanded: !this.state.expanded
     })
   }
-
-
 
 }

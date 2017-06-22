@@ -18,7 +18,7 @@ import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeCo
 
 import AbstractComponent from './components/AbstractComponent'
 import AffiliationsComponent from './components/AffiliationsComponent'
-import ArticleInfoComponent from './components/ArticleInfoComponent'
+import ArticleRecordComponent from './components/ArticleRecordComponent'
 import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
 import ContainerNodeComponent from './components/ContainerNodeComponent'
@@ -72,7 +72,7 @@ export default {
     // Article content
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('affiliations', AffiliationsComponent)
-    config.addComponent('article-info', ArticleInfoComponent)
+    config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('translations', TranslationsComponent)
     config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
@@ -294,11 +294,11 @@ export default {
       { panel: 'toc' },
       { group: 'article-info' },
       { panel: 'contributors' },
-      // { panel: 'affiliations' },
-      // { panel: 'translations' },
-      // { group: 'pub-data' },
-      // { panel: 'article-record' },
-      // { panel: 'pub-history' }
+      { panel: 'affiliations' },
+      { panel: 'translations' },
+      { group: 'pub-data' },
+      { panel: 'article-record' },
+      { panel: 'pub-history' }
     ])
   },
   Editor

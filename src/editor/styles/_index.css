@@ -4,18 +4,19 @@
 @import './_annotations.css';
 @import './_toc.css';
 @import './_caption.css';
-/* References */
 @import './_ref-preview.css';
 @import './_edit-xref-tool.css';
 @import './_ref-list.css';
 @import './_xref';
-/* Figures */
 @import './_fig.css';
 @import './_graphic.css';
 @import './_fig-preview.css';
-/* Tables */
 @import './_table-fig-preview.css';
-/* Footnotes */
 @import './_fn-preview.css';
-/* Metadata */
-@import './_metadata.css';
+@import './_contributors.css';
+@import './_affiliations.css';
+@import './_navigator.css';
+@import './_pub-history.css';
+@import './_article-info.css';
+@import './_translations.css';
+@import './_context-section.css';

@@ -15,11 +15,9 @@ export default class TOC extends Component {
   render($$) {
     let tocProvider = this.context.tocProvider
     let activeEntry = tocProvider.activeEntry
-    let ScrollPane = this.getComponent('scroll-pane')
-
     let tocEntries = $$("div")
       .addClass("se-toc-entries")
-      .ref('tocEntries');
+      .ref('tocEntries')
 
     let entries = tocProvider.getEntries()
     for (let i = 0; i < entries.length; i++) {
@@ -37,7 +35,7 @@ export default class TOC extends Component {
         .on('click', this.handleClick)
         .append(
           entry.name
-        );
+        )
       if (activeEntry === entry.id) {
         tocEntryEl.addClass("sm-active")
       }
@@ -45,10 +43,8 @@ export default class TOC extends Component {
     }
 
     let el = $$('div').addClass('sc-toc').append(
-      $$(ScrollPane).ref('panelEl').append(
-        tocEntries
-      )
-    );
+      tocEntries
+    )
     return el
   }
 

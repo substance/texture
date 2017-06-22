@@ -11,6 +11,7 @@ export default class TitleGroupComponent extends Component {
     // article-title is mandatory
     const articleTitle = node.findChild('article-title')
     let titleEl = $$(this.getComponent('text-property-editor'), {
+      name: 'titleEditor',
       path: articleTitle.getTextPath(),
       disabled: this.props.disabled
     }).addClass('se-article-title').ref('title')

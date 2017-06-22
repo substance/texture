@@ -11,8 +11,10 @@ export default class BodyComponent extends Component {
     // There can be multiple abstracts. We just take the first
     const content = node.findChild('body-content')
     let contentEl
+    
     if (content) {
       contentEl = $$(this.getComponent('container'), {
+        name: 'bodyEditor',
         node: content,
         disabled: this.props.disabled
       })

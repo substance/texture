@@ -51,7 +51,9 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
-    config.import(FindAndReplacePackage)
+    config.import(FindAndReplacePackage, {
+      targetSurfaces: ['titleEditor', 'abstractEditor', 'bodyEditor']
+    })
     config.import(MultiSelectPackage)
     config.import(TextureJATSPackage)
 

@@ -8,6 +8,7 @@ export default class ContainerNodeComponent extends Component {
     let el = $$('div').addClass('sc-'+node.type)
       .attr('data-id', node.id)
     el.append($$(ContainerEditor, {
+      name: this.props.name,
       containerId: node.id,
       disabled: this.props.disabled
     }).ref('container'))

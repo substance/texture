@@ -32,11 +32,7 @@
   cursor: pointer;
 }
 
-.sc-ref .sc-string-citation .se-remove-ref .fa {
-  margin-right: 4px;
-}
-
-.sc-string-citation > .sc-text-property-editor {
+.sc-ref .sc-string-citation > .sc-text-property-editor {
   padding-left: 40px;
   margin-right: 40px;
 }

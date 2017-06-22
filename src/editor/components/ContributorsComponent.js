@@ -96,14 +96,13 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _removeContributor(contribId) {
-    const contribGroup = this.props.node
+    const nodeId = this.props.node.id
     const editorSession = this.context.editorSession
-    let contribIndex = contribGroup.childNodes.indexOf(contribId)
-    contribGroup.childNodes.splice(contribIndex, 1)
     editorSession.transaction((doc) => {
-      doc.delete(contribId)
+      const contribGroup = doc.get(nodeId)
+      let contrib = contribGroup.find(`contrib#${contribId}`)
+      contribGroup.removeChild(contrib)
     })
-    this.rerender()
   }
 
 }

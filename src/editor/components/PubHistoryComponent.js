@@ -36,7 +36,11 @@ export default class PubHistoryComponent extends NodeComponent {
   _updateDateProp(metaEl) {
     let id = metaEl.id
     let value = this.refs[id].val()
-    metaEl.setAttribute('iso-8601-date', value)
+    let editorSession = this.context.editorSession
+    editorSession.transaction(doc => {
+      let metaProp = doc.get(id)
+      metaProp.setAttribute('iso-8601-date', value)
+    })
   }
 
   _toggle() {

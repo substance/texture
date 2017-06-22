@@ -2,3 +2,29 @@
   background: #fff;
   font-size: 14px;
 }
+
+.sc-article-info .se-metadata-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  padding: 5px 0px;
+}
+
+.sc-article-info .se-text-input {
+  border: 1px solid #dadada;
+  width: 200px;
+  border-radius: 3px;
+  padding: 2px 10px;
+  font-size: 14px;
+}
+
+.sc-article-info .se-text-input:focus {
+  border-color: #4e92df;
+}
+
+.sc-article-info .se-label {
+  flex: 0 0 150px;
+  padding: 10px;
+  color: #838383;
+  font-weight: 200;
+}

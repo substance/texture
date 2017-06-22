@@ -1,22 +1,19 @@
-.se-metadata-contributor {
+.sc-contributors .se-metadata-contributor {
   position: relative;
   font-size: 14px;
   border-bottom: 1px solid #e1e4e8;
   padding: 15px 5px;
 }
 
-.se-metadata-contributor .se-name,
-.se-metadata-contributor .se-affiliations,
-.sc-article-info .se-metadata-item,
-.sc-publication-history .se-metadata-item {
+.sc-contributors .se-metadata-contributor .se-name,
+.sc-contributors .se-metadata-contributor .se-affiliations {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   padding: 5px 0px;
 }
 
-.se-metadata-contributor-add,
-.se-metadata-affiliation-add {
+.sc-contributors .se-metadata-contributor-add  {
   width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -24,21 +21,20 @@
   border-bottom: 1px solid #e1e4e8;
 }
 
-.se-remove-contributor {
+.sc-contributors .se-metadata-contributor .se-remove-contributor {
   position: absolute;
   top: 8px;
   right: 8px;
 }
 
-.se-metadata-contributor .se-label,
-.se-metadata-item .se-label {
+.sc-contributors .se-metadata-contributor .se-label {
   flex: 0 0 150px;
   padding: 10px;
   color: #838383;
   font-weight: 200;
 }
 
-.sc-metadata .se-text-input {
+..sc-contributors se-metadata-contributor .se-text-input {
   border: 1px solid #dadada;
   width: 200px;
   border-radius: 3px;
@@ -46,6 +42,6 @@
   font-size: 14px;
 }
 
-.sc-metadata .se-text-input:focus {
+.sc-contributors .se-metadata-contributor .se-text-input:focus {
   border-color: #4e92df;
 }

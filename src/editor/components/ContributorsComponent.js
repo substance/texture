@@ -1,14 +1,14 @@
 import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
 
 /*
-  Edit affiliations for a publication in this MetadataSection
+  Edit contributors for a publication in this MetadataSection
 */
 export default class ContributorsComponent extends NodeComponent {
 
   render($$) {
     const contribGroup = this.props.node
     const doc = contribGroup.getDocument()
-    let el = $$('div').addClass('sc-affiliations')
+    let el = $$('div').addClass('sc-contributors')
     let affs = doc.findAll('article-meta > aff-group > aff')
 
     contribGroup.getChildren().forEach((contrib) => {

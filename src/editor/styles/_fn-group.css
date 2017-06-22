@@ -1,0 +1,42 @@
+.sc-fn-group {
+  margin-top: 30px;
+}
+
+.sc-fn-group .se-title {
+  font-family: 'Avenir Next';
+  font-size: 26px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+
+.sc-fn-item {
+  padding-bottom: 20px;
+}
+
+.sc-fn-item .se-fn-container {
+  font-size: 14px;
+  position: relative;
+}
+
+.sc-fn-item .se-fn-container .se-label {
+  font-family: 'Avenir Next';
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  font-size: 20px;
+}
+
+.sc-fn-item .se-fn-container .se-remove-ref {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  margin-top: -10px;
+  font-size: 14px;
+  color: var(--link-color);
+  cursor: pointer;
+}
+
+.sc-fn-item .se-fn-container .sc-fn {
+  padding-left: 40px;
+  margin-right: 40px;
+}

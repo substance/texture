@@ -20,7 +20,7 @@ export default class RefComponent extends Component {
           }),
           $$('span').addClass('se-remove-ref')
             .append(
-              $$(Icon, { icon: 'fa-remove' }),
+              $$(Icon, { icon: 'fa-trash' }),
               'Remove reference'
             )
             .on('click', this._removeRef.bind(this, ref.id))

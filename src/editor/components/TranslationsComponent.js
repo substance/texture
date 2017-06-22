@@ -89,7 +89,7 @@ export default class TranslationsComponent extends NodeComponent {
       $$('div').addClass('se-options').append(
         this._renderLanguageSelector($$, node),
         $$('div').addClass('se-remove-translation').append(
-          $$(Icon, { icon: 'fa-remove' })
+          $$(Icon, { icon: 'fa-trash' })
         ).on('click', this._removeTitleTranslation.bind(this, node.id))
       ),
       $$(TextPropertyEditor, {
@@ -113,7 +113,7 @@ export default class TranslationsComponent extends NodeComponent {
       $$('div').addClass('se-options').append(
         this._renderLanguageSelector($$, node),
         $$('div').addClass('se-remove-translation').append(
-          $$(Icon, { icon: 'fa-remove' })
+          $$(Icon, { icon: 'fa-trash' })
         ).on('click', this._removeAbstractTranslation.bind(this, node.id))
       ),
       $$(Abstract, {

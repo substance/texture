@@ -16,7 +16,7 @@ export default class ContributorsComponent extends NodeComponent {
         $$('div').addClass('se-metadata-contributor').append(
           this._renderName($$, contrib),
           this._renderAffiliations($$, contrib, affs),
-          $$(Icon, {icon: 'fa-remove'})
+          $$(Icon, {icon: 'fa-trash'})
             .addClass('se-remove-contributor')
             .on('click', this._removeContributor.bind(this, contrib.id))
         )

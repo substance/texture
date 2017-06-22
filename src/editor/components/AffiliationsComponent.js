@@ -22,7 +22,7 @@ export default class AffiliationsComponent extends NodeComponent {
               disabled: this.props.disabled
             }).addClass('se-text-input').ref(stringAff.id),
             $$('div').addClass('se-remove-aff').append(
-              $$(Icon, { icon: 'fa-remove' })
+              $$(Icon, { icon: 'fa-trash' })
             ).on('click', this._removeAffiliation.bind(this, aff.id))
           )
         )

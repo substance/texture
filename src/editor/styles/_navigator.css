@@ -5,20 +5,29 @@
 
 .sc-navigator .se-menu {
   position: absolute;
-  top: 50px;
-  right: 20px;
+  top: 45px;
+  right: 5px;
   z-index: 5000;
-  background: #212121;
-  padding: 40px;
+  background: rgba(33, 33, 33, 0.95);
+  padding: 15px 40px;
+  border-radius: 5px;
+  width: 300px;
 }
 
 .sc-navigator .se-menu .se-menu-item {
   display: block;
+  margin-bottom: 10px;
   color: white;
 }
 
+.sc-navigator .se-menu .se-menu-item.sm-active {
+  text-decoration: underline;
+}
+
 .sc-navigator .se-menu .se-menu-group {
-  color: rgba(255,255,255,0.5);
+  margin: 20px 0 10px;
+  font-size: 12px;
+  color: #7d7d7d;
 }
 
 .sc-navigator .se-toggle {

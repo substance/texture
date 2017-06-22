@@ -94,7 +94,7 @@ export default class ContributorsComponent extends NodeComponent {
       let contribGroup = doc.get(nodeId)
       let contrib = doc.createElement('contrib').attr('aff-type', 'foo')
       contrib.append(
-        doc.createElement('string-contrib')
+        doc.createElement('string-contrib').setTextContent('Enter contributor\'s name')
       )
       contribGroup.append(contrib)
     })

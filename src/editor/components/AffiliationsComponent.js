@@ -44,7 +44,7 @@ export default class AffiliationsComponent extends NodeComponent {
       let affGroup = doc.get(nodeId)
       let aff = doc.createElement('aff').attr('aff-type', 'foo')
       aff.append(
-        doc.createElement('string-aff')
+        doc.createElement('string-aff').setTextContent('Enter affiliation title')
       )
       affGroup.append(aff)
     })

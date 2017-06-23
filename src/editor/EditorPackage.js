@@ -45,6 +45,7 @@ import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
+import SeparatorComponent from './components/SeparatorComponent'
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
@@ -86,6 +87,7 @@ export default {
     config.addComponent('translations', TranslationsComponent)
     config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
+    config.addComponent('separator', SeparatorComponent)
     config.addComponent('contributors', ContributorsComponent)
     config.addComponent('front', FrontComponent)
     config.addComponent('fig', FigComponent)
@@ -152,6 +154,8 @@ export default {
     config.addLabel('insert-xref-fig', 'Figure Reference')
     config.addLabel('insert-xref-table', 'Table Reference')
     config.addLabel('insert-xref-fn', 'Footnote Reference')
+    config.addLabel('manuscript-start', 'Manuscript starts here')
+    config.addLabel('manuscript-end', 'Manuscript ends here')
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)

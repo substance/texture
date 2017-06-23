@@ -13,10 +13,18 @@ export default class ManuscriptComponent extends Component {
       node: node.findChild('front')
     }).ref('front'))
 
+    el.append($$(this.getComponent('separator'), {
+      label: 'manuscript-start'
+    }))
+
     const BodyComponent = this.getComponent('body')
     el.append($$(BodyComponent, {
       node: node.findChild('body')
     }).ref('body'))
+
+    el.append($$(this.getComponent('separator'), {
+      label: 'manuscript-end'
+    }))
 
     const BackComponent = this.getComponent('back')
     el.append($$(BackComponent, {

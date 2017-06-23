@@ -12,6 +12,7 @@ export default class Editor extends AbstractWriter {
   }
 
   didMount() {
+    super.didMount()
     this.handleActions({
       'switchTab': this._switchTab
     })

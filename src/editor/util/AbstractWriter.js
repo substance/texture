@@ -54,7 +54,6 @@ class AbstractWriter extends AbstractEditor {
 
   didMount() {
     super.didMount()
-
     this.getEditorSession().onUpdate(this._onSessionUpdate, this)
   }
 

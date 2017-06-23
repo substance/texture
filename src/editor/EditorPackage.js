@@ -58,7 +58,7 @@ export default {
   configure(config) {
     config.import(SubstanceBasePackage)
     config.import(FindAndReplacePackage, {
-      targetSurfaces: ['titleEditor', 'abstractEditor', 'bodyEditor']
+      rootElement: '.sc-article'
     })
     config.import(MultiSelectPackage)
     config.import(TextureJATSPackage)

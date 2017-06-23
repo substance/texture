@@ -32,6 +32,7 @@ import FigComponent from './components/FigComponent'
 import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
+import DispQuoteComponent from './components/DispQuoteComponent'
 import TableCellComponent from './components/TableCellComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
@@ -91,6 +92,7 @@ export default {
     config.addComponent('table-fig', FigComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('caption', CaptionComponent)
+    config.addComponent('disp-quote', DispQuoteComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('toc', TOC)

@@ -6,6 +6,7 @@
   "body-content": "container",
   "break": "inline-element",
   "chem-struct": "inline-element",
+  "disp-quote": "container",
   "ext-link": "annotation",
   "fixed-case": "annotation",
   "fn": "container",

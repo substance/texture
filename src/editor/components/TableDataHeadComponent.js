@@ -4,7 +4,7 @@ export default class TableDataHeadComponent extends NodeComponent {
 
   render($$) {
     let node = this.props.node
-    let el = $$('td').append(
+    let el = $$('th').append(
       $$(TextPropertyEditor, {
         history: '',
         path: node.getTextPath(),

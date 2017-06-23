@@ -146,8 +146,8 @@
           </tfoot>
           <tbody>
           <tr>
-          <td colspan="3"><hr/></td>
-          <td colspan="2"><hr/></td>
+          <td colspan="3"></td>
+          <td colspan="2"></td>
           </tr>
           <tr><th>Control group</th>
           <th align="center">Day hospital</th>
@@ -159,11 +159,11 @@
           <th align="center">Control</th>
           </tr>
           <tr>
-          <td colspan="7"><hr/></td></tr>
+          <td colspan="7"></td>
+          </tr>
           <tr>
           <td>Comprehensive care (5 trials)</td>
-          <td align="center">151/597<xref ref-type="table-fn"
-          rid="TF1-150"></xref></td>
+          <td align="center">151/597</td>
           <td align="center">159/584</td>
           <td align="center">0.91 (0.70 to 1.19)</td>
           <td></td>
@@ -182,8 +182,7 @@
           <td>No comprehensive care (3 trials)</td>
           <td align="center">37/411</td>
           <td align="center">&#x2002;66/403</td>
-          <td align="center">0.50<xref ref-type="table-fn"
-          rid="TF1-151"></xref> (0.26 to 0.96)</td>
+          <td align="center">0.50 (0.26 to 0.96)</td>
           <td></td>
           <td align="center">11.2</td>
           <td align="center">11.7</td>
@@ -194,7 +193,8 @@
           <td align="center">244/1214</td>
           <td align="center">0.77 (0.52 to 1.13)</td>
           <td></td>
-          <td align="center">15.0</td><td align="center">16.4</td>
+          <td align="center">15.0</td>
+          <td align="center">16.4</td>
           </tr>
           </tbody>
         </table>

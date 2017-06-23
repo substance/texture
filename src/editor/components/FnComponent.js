@@ -11,8 +11,7 @@ export default class FnComponent extends Component {
     let contentEl = $$(this.getComponent('container'), {
       node: node,
       disabled: this.props.disabled
-    })
-    
+    }).ref('editor')
     el.append(
       $$('div').addClass('se-fn-container').append(
         $$('div').addClass('se-label').append(
@@ -26,31 +25,10 @@ export default class FnComponent extends Component {
           .on('click', this._removeFn.bind(this, node.id))
       )
     )
-
     return el
   }
 
   _removeFn(fnId) {
-    let editorSession = this.context.editorSession
-    let docSource = editorSession.getDocument()
-    let xrefs = docSource.getXRefs()
-    let needRerender = true
-    editorSession.transaction(doc => {
-      xrefs.forEach(xrefItem => {
-        let xref = doc.get(xrefItem.id)
-        let idrefsString = xref.getAttribute('rid')
-        let idrefs = idrefsString.split(' ')
-        let ridIndex = idrefs.indexOf(fnId)
-        if(ridIndex > -1) {
-          idrefs.splice(ridIndex, 1)
-          xref.setAttribute('rid', idrefs.join(' '))
-          needRerender = false
-        }
-      })
-      let fnGroup = doc.find('fn-group')
-      let fn = fnGroup.find(`fn#${fnId}`)
-      fnGroup.removeChild(fn)
-    })
-    if(needRerender) this.parent.rerender()
+    this.send('removeFn', fnId)
   }
 }

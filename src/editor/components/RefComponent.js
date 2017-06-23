@@ -36,27 +36,6 @@ export default class RefComponent extends Component {
   }
 
   _removeRef(refId) {
-    let editorSession = this.context.editorSession
-    let docSource = editorSession.getDocument()
-    let xrefs = docSource.getXRefs()
-    let needRerender = true
-    editorSession.transaction(doc => {
-      xrefs.forEach(xrefItem => {
-        let xref = doc.get(xrefItem.id)
-        let idrefsString = xref.getAttribute('rid')
-        let idrefs = idrefsString.split(' ')
-        let ridIndex = idrefs.indexOf(refId)
-        if(ridIndex > -1) {
-          idrefs.splice(ridIndex, 1)
-          xref.setAttribute('rid', idrefs.join(' '))
-          needRerender = false
-        }
-      })
-      let refList = doc.find('ref-list')
-      let ref = refList.find(`ref#${refId}`)
-      refList.removeChild(ref)
-    })
-    if(needRerender) this.parent.rerender()
+    this.send('removeRef', refId)
   }
 }
-

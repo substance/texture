@@ -121,6 +121,10 @@ export default {
       refType: 'fig',
       commandGroup: 'insert-xref'
     })
+    config.addCommand('insert-xref-table', InsertXrefCommand, {
+      refType: 'table',
+      commandGroup: 'insert-xref'
+    })
     config.addCommand('insert-xref-fn', InsertXrefCommand, {
       refType: 'fn',
       commandGroup: 'insert-xref'
@@ -136,6 +140,7 @@ export default {
 
     config.addLabel('insert-xref-bibr', 'Citation')
     config.addLabel('insert-xref-fig', 'Figure Reference')
+    config.addLabel('insert-xref-table', 'Table Reference')
     config.addLabel('insert-xref-fn', 'Footnote Reference')
 
     // Tools

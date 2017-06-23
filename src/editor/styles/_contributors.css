@@ -25,6 +25,7 @@
   position: absolute;
   top: 8px;
   right: 8px;
+  cursor: pointer;
 }
 
 .sc-contributors .se-metadata-contributor .se-label {
@@ -34,12 +35,13 @@
   font-weight: 200;
 }
 
-..sc-contributors se-metadata-contributor .se-text-input {
+.sc-contributors .se-metadata-contributor .se-text-input {
   border: 1px solid #dadada;
   width: 200px;
   border-radius: 3px;
   padding: 2px 10px;
   font-size: 14px;
+  background: #fff;
 }
 
 .sc-contributors .se-metadata-contributor .se-text-input:focus {

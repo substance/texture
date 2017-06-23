@@ -16,7 +16,7 @@ export default class ContributorsComponent extends NodeComponent {
         $$('div').addClass('se-metadata-contributor').append(
           this._renderName($$, contrib),
           this._renderAffiliations($$, contrib, affs),
-          $$(Icon, {icon: 'fa-remove'})
+          $$(Icon, {icon: 'fa-trash'})
             .addClass('se-remove-contributor')
             .on('click', this._removeContributor.bind(this, contrib.id))
         )
@@ -50,6 +50,11 @@ export default class ContributorsComponent extends NodeComponent {
   }
 
   _renderAffChoices($$, contrib, affs) {
+    if(affs.length === 0) {
+      return $$('div').addClass('se-empty')
+        .append('Please add affiliations first')
+    }
+
     let props = {
       options: [],
       selectedOptions: this._getAffReferences(contrib),
@@ -89,21 +94,20 @@ export default class ContributorsComponent extends NodeComponent {
       let contribGroup = doc.get(nodeId)
       let contrib = doc.createElement('contrib').attr('aff-type', 'foo')
       contrib.append(
-        doc.createElement('string-contrib')
+        doc.createElement('string-contrib').setTextContent('Enter contributor\'s name')
       )
       contribGroup.append(contrib)
     })
   }
 
   _removeContributor(contribId) {
-    const contribGroup = this.props.node
+    const nodeId = this.props.node.id
     const editorSession = this.context.editorSession
-    let contribIndex = contribGroup.childNodes.indexOf(contribId)
-    contribGroup.childNodes.splice(contribIndex, 1)
     editorSession.transaction((doc) => {
-      doc.delete(contribId)
+      const contribGroup = doc.get(nodeId)
+      let contrib = contribGroup.find(`contrib#${contribId}`)
+      contribGroup.removeChild(contrib)
     })
-    this.rerender()
   }
 
 }

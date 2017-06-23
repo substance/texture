@@ -30,6 +30,7 @@
   border: 1px solid #dadada;
   border-radius: 3px;
   font-size: 14px;
+  background: #fff;
 }
 
 .sc-translations .sc-abstract {
@@ -38,6 +39,7 @@
   border: 1px solid #dadada;
   border-radius: 3px;
   font-size: 14px;
+  background: #fff;
 }
 
 .sc-translations .se-add-translation {

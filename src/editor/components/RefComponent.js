@@ -18,14 +18,12 @@ export default class RefComponent extends Component {
             path: stringCitation.getTextPath(),
             disabled: this.props.disabled
           }),
-          $$('span').addClass('se-remove-ref')
+          $$('div').addClass('se-remove-ref')
             .append(
-              $$(Icon, { icon: 'fa-remove' }),
-              'Remove reference'
+              $$(Icon, { icon: 'fa-trash' })
             )
             .on('click', this._removeRef.bind(this, ref.id))
         )
-
       )
     } else {
       console.warn('No string citation found')
@@ -34,7 +32,27 @@ export default class RefComponent extends Component {
   }
 
   _removeRef(refId) {
-    // Here we must remove reference and all related xrefs
+    let editorSession = this.context.editorSession
+    let docSource = editorSession.getDocument()
+    let xrefs = docSource.getXRefs()
+    let needRerender = true
+    editorSession.transaction(doc => {
+      xrefs.forEach(xrefItem => {
+        let xref = doc.get(xrefItem.id)
+        let idrefsString = xref.getAttribute('rid')
+        let idrefs = idrefsString.split(' ')
+        let ridIndex = idrefs.indexOf(refId)
+        if(ridIndex > -1) {
+          idrefs.splice(ridIndex, 1)
+          xref.setAttribute('rid', idrefs.join(' '))
+          needRerender = false
+        }
+      })
+      let refList = doc.find('ref-list')
+      let ref = refList.find(`ref#${refId}`)
+      refList.removeChild(ref)
+    })
+    if(needRerender) this.parent.rerender()
   }
 }
 

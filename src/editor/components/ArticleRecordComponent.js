@@ -58,8 +58,8 @@ export default class ArticleRecordComponent extends NodeComponent {
     let path = metaEl.getPath()
     let value = this.refs[id].val()
     let editorSession = this.context.editorSession
-    editorSession.transaction(tx => {
-      tx.set(path, value)
+    editorSession.transaction(doc => {
+      doc.set(path, value)
     })
   }
 

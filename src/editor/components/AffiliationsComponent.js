@@ -22,7 +22,7 @@ export default class AffiliationsComponent extends NodeComponent {
               disabled: this.props.disabled
             }).addClass('se-text-input').ref(stringAff.id),
             $$('div').addClass('se-remove-aff').append(
-              $$(Icon, { icon: 'fa-remove' })
+              $$(Icon, { icon: 'fa-trash' })
             ).on('click', this._removeAffiliation.bind(this, aff.id))
           )
         )
@@ -44,14 +44,13 @@ export default class AffiliationsComponent extends NodeComponent {
       let affGroup = doc.get(nodeId)
       let aff = doc.createElement('aff').attr('aff-type', 'foo')
       aff.append(
-        doc.createElement('string-aff')
+        doc.createElement('string-aff').setTextContent('Enter affiliation title')
       )
       affGroup.append(aff)
     })
   }
 
   _removeAffiliation(affId) {
-    // TODO: Find a way to do this properly
     const nodeId = this.props.node.id
     const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {

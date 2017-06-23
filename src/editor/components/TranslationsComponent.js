@@ -89,7 +89,7 @@ export default class TranslationsComponent extends NodeComponent {
       $$('div').addClass('se-options').append(
         this._renderLanguageSelector($$, node),
         $$('div').addClass('se-remove-translation').append(
-          $$(Icon, { icon: 'fa-remove' })
+          $$(Icon, { icon: 'fa-trash' })
         ).on('click', this._removeTitleTranslation.bind(this, node.id))
       ),
       $$(TextPropertyEditor, {
@@ -113,7 +113,7 @@ export default class TranslationsComponent extends NodeComponent {
       $$('div').addClass('se-options').append(
         this._renderLanguageSelector($$, node),
         $$('div').addClass('se-remove-translation').append(
-          $$(Icon, { icon: 'fa-remove' })
+          $$(Icon, { icon: 'fa-trash' })
         ).on('click', this._removeAbstractTranslation.bind(this, node.id))
       ),
       $$(Abstract, {
@@ -132,7 +132,7 @@ export default class TranslationsComponent extends NodeComponent {
 
     editorSession.transaction((doc) => {
       let titleGroup = doc.get(transTitleGroup.id)
-      let title = doc.createElement('trans-title')
+      let title = doc.createElement('trans-title').setTextContent('Enter title translation')
       titleGroup.append(title)
     })
 
@@ -148,7 +148,7 @@ export default class TranslationsComponent extends NodeComponent {
       let abstractGroup = doc.get(transAbstractGroup.id)
       let abstract = doc.createElement('trans-abstract')
       let abstractContent = doc.createElement('abstract-content')
-      let abstractContentPlaceholder = doc.createElement('p')
+      let abstractContentPlaceholder = doc.createElement('p').setTextContent('Enter abstract translation')
       abstractContent.append(abstractContentPlaceholder)
       abstract.append(abstractContent)
       abstractGroup.append(abstract)

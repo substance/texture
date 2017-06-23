@@ -1,5 +1,4 @@
 .sc-publication-history {
-  background: #fff;
   font-size: 14px;
 }
 
@@ -16,6 +15,7 @@
   border-radius: 3px;
   padding: 2px 10px;
   font-size: 14px;
+  background: #fff;
 }
 
 .sc-publication-history .se-text-input:focus {

@@ -8,6 +8,7 @@
   "chem-struct": "inline-element",
   "ext-link": "annotation",
   "fixed-case": "annotation",
+  "fn": "container",
   "hr": "inline-element",
   "inline-formula": "inline-element",
   "inline-graphic": "inline-element",

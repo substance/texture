@@ -1,20 +1,24 @@
-.sc-ref-list .se-title {
+.sc-fn-group {
+  margin-top: 30px;
+}
+
+.sc-fn-group .se-title {
   font-family: 'Avenir Next';
   font-size: 26px;
   font-weight: 600;
   padding-bottom: 20px;
 }
 
-.sc-ref {
+.sc-fn-item {
   padding-bottom: 20px;
 }
 
-.sc-ref .sc-string-citation {
+.sc-fn-item .se-fn-container {
   font-size: 14px;
   position: relative;
 }
 
-.sc-ref .sc-string-citation .se-label {
+.sc-fn-item .se-fn-container .se-label {
   font-family: 'Avenir Next';
   position: absolute;
   left: 0px;
@@ -22,7 +26,7 @@
   font-size: 20px;
 }
 
-.sc-ref .sc-string-citation .se-remove-ref {
+.sc-fn-item .se-fn-container .se-remove-ref {
   position: absolute;
   top: 50%;
   right: 0px;
@@ -32,7 +36,7 @@
   cursor: pointer;
 }
 
-.sc-ref .sc-string-citation > .sc-text-property-editor {
+.sc-fn-item .se-fn-container .sc-fn {
   padding-left: 40px;
   margin-right: 40px;
 }

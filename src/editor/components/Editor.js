@@ -26,7 +26,7 @@ export default class Editor extends AbstractWriter {
   render($$) {
     let el = $$('div').addClass('sc-editor')
     el.append(
-      $$(SplitPane, {splitType: 'vertical', sizeB: '40%'}).append(
+      $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
         this._renderMainSection($$),
         this._renderContextSection($$)
       )

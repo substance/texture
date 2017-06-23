@@ -8,23 +8,24 @@ export default class TextureContainerEditor extends ContainerEditor {
 
   _renderNode($$, node) {
     if (!node) throw new Error("'node' is mandatory")
+    let props = { node }
     let el
     let ComponentClass = this.getComponent(node.type, true)
     if (node.isText()) {
       if (ComponentClass) {
-        el = $$(ComponentClass, { node })
+        el = $$(ComponentClass, props)
       } else {
-        el = $$(this.getComponent('text-node'), { node })
+        el = $$(this.getComponent('text-node'), props)
       }
     } else {
       if (ComponentClass) {
         if (ComponentClass.prototype._isCustomNodeComponent || ComponentClass.prototype._isIsolatedNodeComponent) {
-          el = $$(ComponentClass, { node: node })
+          el = $$(ComponentClass, props)
         } else {
-          el = $$(IsolatedNodeComponent, { node: node })
+          el = $$(IsolatedNodeComponent, props)
         }
       } else {
-        el = $$(this.getComponent('unsupported'), { node })
+        el = $$(this.getComponent('unsupported'), props)
       }
     }
     el.ref(node.id)

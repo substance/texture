@@ -10,6 +10,7 @@ export default class TextNodeComponent extends NodeComponent {
       .attr('data-id', node.id)
 
     el.append($$(TextPropertyComponent, {
+      placeholder: this.props.placeholder,
       path: node.getPath()
     }).ref('text'))
 

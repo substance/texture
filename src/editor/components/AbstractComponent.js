@@ -13,6 +13,7 @@ export default class AbstractComponent extends Component {
     let contentEl
     if (content) {
       contentEl = $$(this.getComponent('container'), {
+        placeholder: 'Enter Abstract',
         name: 'abstractEditor',
         node: content,
         disabled: this.props.disabled

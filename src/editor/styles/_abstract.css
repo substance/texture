@@ -2,13 +2,12 @@
   border: 1px solid transparent;
   border-radius: 5px;
   padding: 10px;
+  margin: 0 -10px;
 }
 
 .sc-abstract-content .container-node:hover {
   position: relative;
   border: 1px solid #e1e4e8;
-  border-radius: 5px;
-  padding: 10px;
 }
 
 .sc-abstract-content .container-node:hover::before {

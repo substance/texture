@@ -1,0 +1,24 @@
+/*
+  Globally available button styles
+
+  Use these with care, as they may be leaking into components.
+*/
+
+/*
+  Big Button
+  ------------------------------------------------------------
+*/
+.sg-big-button {
+  margin-top: 20px;
+  font-size: 12px;
+  background: var(--link-color);
+  font-family: 'Avenir Next';
+  font-weight: 500;
+  padding: 5px 20px;
+  color: white;
+  border-radius: 20px;
+}
+
+.sg-big-button:focus {
+  background: #017CAC;
+}

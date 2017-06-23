@@ -9,6 +9,7 @@ export default class FnComponent extends Component {
 
     let label = this.context.labelGenerator.getPosition('fn', node.id)
     let contentEl = $$(this.getComponent('container'), {
+      placeholder: 'Enter Footnote',
       node: node,
       disabled: this.props.disabled
     }).ref('editor')

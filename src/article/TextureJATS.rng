@@ -2,6 +2,19 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="JATS-archive-oasis-article1-mathml3.rng"/>
 
+  <define name="disp-quote-content">
+    <element name="disp-quote-content">
+      <ref name="just-para.class"/>
+    </element>
+  </define>
+
+  <define name="disp-quote-model">
+    <ref name="disp-quote-content"/>
+    <optional>
+      <ref name="attrib"/>
+    </optional>
+  </define>
+
   <!-- Stubs -->
   <define name="mml.math">
     <element name="mml:math">
@@ -1037,5 +1050,13 @@
       <ref name="table"/>
     </element>
   </define>
+
+  <define name="caption">
+    <element name="caption">
+      <ref name="just-para.class"/>
+    </element>
+  </define>
+
+
 
 </grammar>

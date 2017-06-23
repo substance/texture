@@ -113,7 +113,9 @@
         <graphic mime-subtype="jpeg" mimetype="image" xlink:href="https://iiif.elifesciences.org/lax:15278/elife-15278-fig2-v1.tif/full/1076,/0/default.jpg"/>
       </fig>
       <disp-quote>
-        <p>Blockquote example</p>
+        <disp-quote-content>
+          <p>Blockquote example</p>
+        </disp-quote-content>
         <attrib>Ecclesiastes 10:1</attrib>
       </disp-quote>
       <p>Hello World <xref ref-type="table" rid="table1"/></p>

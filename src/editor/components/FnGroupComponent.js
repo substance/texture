@@ -43,11 +43,15 @@ class FnGroupComponent extends NodeComponent {
       )
     })
 
+
     el.append(
-      $$('a').attr({href: '#'})
-        .append('Add Footnote')
-        .on('click', this._addFn)
+      $$('div').append(
+        $$('button').addClass('sg-big-button')
+          .append('Add Footnote')
+          .on('click', this._addFn)
+      )
     )
+
     return el
   }
 
@@ -69,7 +73,7 @@ class FnGroupComponent extends NodeComponent {
     editorSession.transaction((doc) => {
       let fnGroup = doc.find('fn-group')
       let fn = doc.createElement('fn')
-      let fnPlaceholder = doc.createElement('p').setTextContent('Please enter footnote content')
+      let fnPlaceholder = doc.createElement('p')
       fn.append(fnPlaceholder)
       fnGroup.append(fn)
     })

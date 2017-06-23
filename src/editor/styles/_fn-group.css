@@ -18,12 +18,29 @@
   position: relative;
 }
 
+.sc-fn-item .se-fn-container .container-node {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+
+.sc-fn-item .se-fn-container .container-node:hover {
+  border: 1px solid #e1e4e8;
+}
+
+.sc-fn-item .se-fn-container .container-node:focus {
+  border: 1px solid var(--link-color);
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+
 .sc-fn-item .se-fn-container .se-label {
   font-family: 'Avenir Next';
   position: absolute;
   left: 0px;
-  top: 0px;
-  font-size: 20px;
+  top: 10px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .sc-fn-item .se-fn-container .se-remove-ref {

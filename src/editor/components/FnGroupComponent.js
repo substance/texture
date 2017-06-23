@@ -1,10 +1,14 @@
-import { NodeComponent } from 'substance'
+import { NodeComponent, without } from 'substance'
 
 class FnGroupComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
     this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
+
+    this.handleActions({
+      'removeFn': this._removeFn
+    })
   }
 
   dispose() {
@@ -20,7 +24,6 @@ class FnGroupComponent extends NodeComponent {
       $$('div').addClass('se-title').append('Footnotes')
     )
 
-
     let fns = node.findAll('fn')
     let entries = fns.map((fn) => {
       return {
@@ -28,6 +31,7 @@ class FnGroupComponent extends NodeComponent {
         fn
       }
     })
+
     entries.sort((a,b) => {
       return a.pos - b.pos
     })
@@ -35,7 +39,7 @@ class FnGroupComponent extends NodeComponent {
       const fn = entry.fn
       let FnComponent = this.getComponent('fn')
       el.append(
-        $$(FnComponent, { node: fn })
+        $$(FnComponent, { node: fn }).ref(fn.id)
       )
     })
 
@@ -68,6 +72,24 @@ class FnGroupComponent extends NodeComponent {
       let fnPlaceholder = doc.createElement('p').setTextContent('Please enter footnote content')
       fn.append(fnPlaceholder)
       fnGroup.append(fn)
+    })
+    this.rerender()
+  }
+
+  _removeFn(fnId) {
+    let editorSession = this.context.editorSession
+    editorSession.transaction(doc => {
+      let xrefIndex = doc.getIndex('xrefs')
+      let xrefs = xrefIndex.get(fnId)
+      xrefs.forEach((xrefId) => {
+        let xref = doc.get(xrefId)
+        let idrefs = xref.attr('rid').split(' ')
+        idrefs = without(idrefs, fnId)
+        xref.setAttribute('rid', idrefs.join(' '))
+      })
+      let fnGroup = doc.find('fn-group')
+      let fn = fnGroup.find(`fn#${fnId}`)
+      fnGroup.removeChild(fn)
     })
     this.rerender()
   }

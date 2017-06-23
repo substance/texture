@@ -1,10 +1,14 @@
-import { NodeComponent } from 'substance'
+import { NodeComponent, without } from 'substance'
 
 class RefListComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
     this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
+
+    this.handleActions({
+      'removeRef': this._removeRef
+    })
   }
 
   dispose() {
@@ -45,7 +49,7 @@ class RefListComponent extends NodeComponent {
       const ref = entry.ref
       let RefComponent = this.getComponent('ref')
       el.append(
-        $$(RefComponent, { node: ref })
+        $$(RefComponent, { node: ref }).ref(ref.id)
       )
     })
 
@@ -84,6 +88,25 @@ class RefListComponent extends NodeComponent {
     })
     this.rerender()
   }
+
+  _removeRef(refId) {
+    let editorSession = this.context.editorSession
+    editorSession.transaction(doc => {
+      let xrefIndex = doc.getIndex('xrefs')
+      let xrefs = xrefIndex.get(refId)
+      xrefs.forEach((xrefId) => {
+        let xref = doc.get(xrefId)
+        let idrefs = xref.attr('rid').split(' ')
+        idrefs = without(idrefs, refId)
+        xref.setAttribute('rid', idrefs.join(' '))
+      })
+      let fnGroup = doc.find('ref-list')
+      let ref = fnGroup.find(`ref#${refId}`)
+      fnGroup.removeChild(ref)
+    })
+    this.rerender()
+  }
+
 }
 
 

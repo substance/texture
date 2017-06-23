@@ -11,6 +11,7 @@ export const REF_TYPES = {
   'table-fig-group': 'table'
 }
 
+
 export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {
   const refType = REF_TYPES[type]
   if (!m[refType]) m[refType] = []
@@ -48,7 +49,9 @@ export function getAvailableXrefTargets(node, labelGenerator) {
   let targets = []
 
   targetTypes.forEach((targetType) => {
-    let nodesForType = map(nodesByType.get(targetType))
+    let nodesForType = map(nodesByType.get(targetType)).filter((node) => {
+      return Boolean(node.parentNode)
+    })
     nodesForType.forEach(function(node) {
       let isSelected = includes(selectedTargets, node.id)
       targets.push({

@@ -14,12 +14,34 @@
   position: relative;
 }
 
+.sc-ref .sc-text-property-editor {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.sc-ref .sc-text-property-editor:hover {
+  border: 1px solid #e1e4e8;
+}
+
+.sc-ref .sc-text-property-editor:focus {
+  border: 1px solid var(--link-color);
+  border-radius: 5px;
+  padding: 10px;
+}
+
 .sc-ref .sc-string-citation .se-label {
   font-family: 'Avenir Next';
   position: absolute;
   left: 0px;
-  top: 0px;
-  font-size: 20px;
+  top: 10px;
+  width: 25px;
+  height: 25px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 50px;
+  color: #fff;
+  background: var(--default-text-color);
 }
 
 .sc-ref .sc-string-citation .se-remove-ref {
@@ -33,6 +55,6 @@
 }
 
 .sc-ref .sc-string-citation > .sc-text-property-editor {
-  padding-left: 40px;
+  margin-left: 40px;
   margin-right: 40px;
 }

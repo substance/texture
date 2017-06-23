@@ -1,16 +1,16 @@
-.sc-abstract-content .container-node {
+.sc-abstract .sc-abstract-content .container-node {
   border: 1px solid transparent;
   border-radius: 5px;
   padding: 10px;
   margin: 0 -10px;
 }
 
-.sc-abstract-content .container-node:hover {
+.sc-abstract .sc-abstract-content .container-node:hover {
   position: relative;
   border: 1px solid #e1e4e8;
 }
 
-.sc-abstract-content .container-node:hover::before {
+.sc-abstract .sc-abstract-content .container-node:hover::before {
   content: "Abstract";
   position: absolute;
   display: block;
@@ -23,14 +23,14 @@
   text-align: center;
 }
 
-.sc-abstract-content .container-node:focus {
+.sc-abstract .sc-abstract-content .container-node:focus {
   position: relative;
   border: 1px solid var(--link-color);
   border-radius: 5px;
   padding: 10px;
 }
 
-.sc-abstract-content .container-node:focus::before {
+.sc-abstract .sc-abstract-content .container-node:focus::before {
   content: "Abstract";
   position: absolute;
   display: block;

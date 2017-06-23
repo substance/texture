@@ -93,7 +93,7 @@ export default class TranslationsComponent extends NodeComponent {
         ).on('click', this._removeTitleTranslation.bind(this, node.id))
       ),
       $$(TextPropertyEditor, {
-        history: '',
+        placeholder: 'Enter title translation',
         path: node.getTextPath(),
         disabled: this.props.disabled
       }).ref(node.id)
@@ -106,8 +106,20 @@ export default class TranslationsComponent extends NodeComponent {
     let editorSession = this.context.editorSession
     let doc = editorSession.getDocument()
     let node = doc.get(nodeId)
-    let Abstract = this.getComponent('abstract')
     let el = $$('div').addClass('se-translation')
+
+    let abstractContent = node.findChild('abstract-content')
+    let abstractEl = $$('div')
+      .addClass('sc-abstract-translation')
+      .attr('data-id', node.id)
+
+    abstractEl.append(
+      $$(this.getComponent('container'), {
+        placeholder: 'Enter abstract translation',
+        node: abstractContent,
+        disabled: this.props.disabled
+      })
+    )
 
     el.append(
       $$('div').addClass('se-options').append(
@@ -116,10 +128,7 @@ export default class TranslationsComponent extends NodeComponent {
           $$(Icon, { icon: 'fa-trash' })
         ).on('click', this._removeAbstractTranslation.bind(this, node.id))
       ),
-      $$(Abstract, {
-        node: node,
-        disabled: this.props.disabled
-      }).ref(node.id)
+      abstractEl
     )
 
     return el
@@ -132,7 +141,7 @@ export default class TranslationsComponent extends NodeComponent {
 
     editorSession.transaction((doc) => {
       let titleGroup = doc.get(transTitleGroup.id)
-      let title = doc.createElement('trans-title').setTextContent('Enter title translation')
+      let title = doc.createElement('trans-title')
       titleGroup.append(title)
     })
 
@@ -148,7 +157,7 @@ export default class TranslationsComponent extends NodeComponent {
       let abstractGroup = doc.get(transAbstractGroup.id)
       let abstract = doc.createElement('trans-abstract')
       let abstractContent = doc.createElement('abstract-content')
-      let abstractContentPlaceholder = doc.createElement('p').setTextContent('Enter abstract translation')
+      let abstractContentPlaceholder = doc.createElement('p')
       abstractContent.append(abstractContentPlaceholder)
       abstract.append(abstractContent)
       abstractGroup.append(abstract)

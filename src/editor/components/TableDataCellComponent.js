@@ -1,10 +1,10 @@
 import { NodeComponent } from 'substance'
 
-export default class TableComponent extends NodeComponent {
+export default class TableDataCellComponent extends NodeComponent {
 
   render($$) {
     let node = this.props.node
-    let el = $$('div').addClass('sc-table')
+    let el = $$('td')
     node.childNodes.forEach(child => {
       let doc = this.context.doc
       let childNode = doc.get(child)

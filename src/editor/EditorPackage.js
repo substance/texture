@@ -30,6 +30,12 @@ import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import TableComponent from './components/TableComponent'
+import TableBodyComponent from './components/TableBodyComponent'
+import TableHeadComponent from './components/TableHeadComponent'
+import TableFootComponent from './components/TableFootComponent'
+import TableRowComponent from './components/TableRowComponent'
+import TableDataCellComponent from './components/TableDataCellComponent'
+import TableDataHeadComponent from './components/TableDataHeadComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import PubHistoryComponent from './components/PubHistoryComponent'
@@ -85,11 +91,18 @@ export default {
     config.addComponent('fig', FigComponent)
     config.addComponent('table-fig', FigComponent)
     config.addComponent('graphic', GraphicComponent)
-    config.addComponent('table', TableComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('toc', TOC)
+
+    config.addComponent('table', TableComponent)
+    config.addComponent('tbody', TableBodyComponent)
+    config.addComponent('thead', TableHeadComponent)
+    config.addComponent('tfoot', TableFootComponent)
+    config.addComponent('tr', TableRowComponent)
+    config.addComponent('td', TableDataCellComponent)
+    config.addComponent('th', TableHeadComponent)
 
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('fn', FnComponent)

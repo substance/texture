@@ -1,17 +1,21 @@
 import { NodeComponent, TextPropertyEditor } from 'substance'
 
-export default class TableDataHeadComponent extends NodeComponent {
+export default class TableCellComponent extends NodeComponent {
 
   render($$) {
     let node = this.props.node
-    let el = $$('th').append(
+    let el = $$(node.type)
+    el.attr({
+      colspan: node.attr('colspan'),
+      rowspan: node.attr('rowspan')
+    })
+    el.append(
       $$(TextPropertyEditor, {
-        history: '',
         path: node.getTextPath(),
         disabled: this.props.disabled
-      })
+      }).ref('editor')
     )
-
     return el
   }
+
 }

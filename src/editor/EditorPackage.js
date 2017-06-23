@@ -25,19 +25,14 @@ import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
 import ContainerNodeComponent from './components/ContainerNodeComponent'
 import ContributorsComponent from './components/ContributorsComponent'
+import ElementNodeComponent from './components/ElementNodeComponent'
 import EditXrefTool from './components/EditXrefTool'
 import EditExtLinkTool from './components/EditExtLinkTool'
 import FigComponent from './components/FigComponent'
 import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
-import TableComponent from './components/TableComponent'
-import TableBodyComponent from './components/TableBodyComponent'
-import TableHeadComponent from './components/TableHeadComponent'
-import TableFootComponent from './components/TableFootComponent'
-import TableRowComponent from './components/TableRowComponent'
-import TableDataCellComponent from './components/TableDataCellComponent'
-import TableDataHeadComponent from './components/TableDataHeadComponent'
+import TableCellComponent from './components/TableCellComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import PubHistoryComponent from './components/PubHistoryComponent'
@@ -100,13 +95,13 @@ export default {
     config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('toc', TOC)
 
-    config.addComponent('table', TableComponent)
-    config.addComponent('tbody', TableBodyComponent)
-    config.addComponent('thead', TableHeadComponent)
-    config.addComponent('tfoot', TableFootComponent)
-    config.addComponent('tr', TableRowComponent)
-    config.addComponent('td', TableDataCellComponent)
-    config.addComponent('th', TableDataHeadComponent)
+    config.addComponent('table', ElementNodeComponent)
+    config.addComponent('tbody', ElementNodeComponent)
+    config.addComponent('thead', ElementNodeComponent)
+    config.addComponent('tfoot', ElementNodeComponent)
+    config.addComponent('tr', ElementNodeComponent)
+    config.addComponent('td', TableCellComponent)
+    config.addComponent('th', TableCellComponent)
 
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('fn', FnComponent)

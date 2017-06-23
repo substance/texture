@@ -1,6 +1,6 @@
-import { NodeComponent } from 'substance'
+import ElementNodeComponent from './ElementNodeComponent'
 
-export default class TableFootComponent extends NodeComponent {
+export default class TableFootComponent extends ElementNodeComponent {
 
   render($$) {
     let node = this.props.node

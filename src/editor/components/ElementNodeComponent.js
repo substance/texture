@@ -1,10 +1,10 @@
-import ElementNodeComponent from './ElementNodeComponent'
+import { NodeComponent } from 'substance'
 
-export default class TableHeadComponent extends ElementNodeComponent {
+export default class ElementNodeComponent extends NodeComponent {
 
   render($$) {
     let node = this.props.node
-    let el = $$('thead')
+    let el = $$('tbody')
     node.childNodes.forEach(child => {
       let doc = this.context.doc
       let childNode = doc.get(child)
@@ -15,5 +15,10 @@ export default class TableHeadComponent extends ElementNodeComponent {
     })
 
     return el
+  }
+
+  getTagName() {
+    let node = this.props.node
+    return node.type
   }
 }

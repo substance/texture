@@ -6,6 +6,7 @@ export default class TableCellComponent extends NodeComponent {
     let node = this.props.node
     let el = $$(node.type)
     el.attr({
+      align: node.attr('align'),
       colspan: node.attr('colspan'),
       rowspan: node.attr('rowspan')
     })

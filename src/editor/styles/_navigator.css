@@ -1,0 +1,62 @@
+/* Navigator styles */
+.sc-navigator {
+  position: relative;
+}
+
+.sc-navigator .se-menu {
+  position: absolute;
+  top: 45px;
+  right: 5px;
+  z-index: 5000;
+  background: rgb(33, 33, 33);
+  padding: 15px 40px;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.sc-navigator .se-menu .se-menu-item {
+  display: block;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.sc-navigator .se-menu .se-menu-item.sm-active {
+  text-decoration: underline;
+}
+
+.sc-navigator .se-menu .se-menu-group {
+  margin: 20px 0 10px;
+  font-size: 12px;
+  color: #7d7d7d;
+}
+
+.sc-navigator .se-toggle {
+  font-family: 'Avenir Next';
+  font-weight: 500;
+  font-size: 14px;
+  height: 40px;
+  display: flex;
+  border-top: none;
+  border-bottom: 1px solid #e1e4e8;
+  cursor: pointer;
+}
+
+.sc-navigator .se-toggle:hover {
+  background: #eee;
+}
+
+.sc-navigator .se-toggle .se-label {
+  flex: 100 0 0;
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: 600;
+  padding: 1px 10px;
+}
+
+.sc-navigator .se-toggle .se-expanded {
+  padding: 0 10px;
+  font-size: 25px;
+  line-height: 40px;
+
+  flex: 0 0 0;
+}

@@ -1,0 +1,60 @@
+.sc-fn-group {
+  margin-top: 30px;
+}
+
+.sc-fn-group .se-title {
+  font-family: 'Avenir Next';
+  font-size: 26px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+
+.sc-fn-item {
+  margin-left: -40px;
+  padding-bottom: 5px;
+}
+
+.sc-fn-item .se-fn-container {
+  font-size: 14px;
+  position: relative;
+}
+
+.sc-fn-item .se-fn-container .container-node {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+
+.sc-fn-item .se-fn-container .container-node:hover {
+  border: 1px solid #e1e4e8;
+}
+
+.sc-fn-item .se-fn-container .container-node:focus {
+  border: 1px solid var(--link-color);
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+
+.sc-fn-item .se-fn-container .se-label {
+  font-family: 'Avenir Next';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.sc-fn-item .se-fn-container .se-remove-ref {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  margin-top: -10px;
+  font-size: 14px;
+  color: var(--link-color);
+  cursor: pointer;
+}
+
+.sc-fn-item .se-fn-container .sc-fn {
+  padding-left: 30px;
+  margin-right: 30px;
+}

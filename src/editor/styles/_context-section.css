@@ -1,0 +1,4 @@
+.sc-context-section .sc-scroll-pane {
+  /* HACK: find a better way */
+  top: 40px;
+}

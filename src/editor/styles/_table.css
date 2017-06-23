@@ -1,0 +1,36 @@
+.sc-table-fig {
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.sc-table-fig > .se-label {
+    font-style: italic;
+}
+
+.sc-table-fig .se-title {
+  padding-top: 20px;
+  font-weight: 600;
+}
+
+.sc-table {
+  border-collapse: collapse;
+  margin: 25px 0px;
+  width: 100%;
+}
+
+.sc-table th {
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  font-family: 'Avenir Next';
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px;
+}
+
+.sc-table td {
+  border: 1px solid #e0e0e0;
+  font-family: 'Avenir Next';
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px;
+}

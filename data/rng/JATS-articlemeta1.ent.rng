@@ -1,0 +1,2180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Journal Article Metadata Elements -->
+<!-- VERSION:   ANSI/NISO JATS Version 1.1 (Z39.96-2015) -->
+<!-- DATE:      December 2015 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) JATS DTD Suite Journal Article Metadata Elements v1.1 20151215//EN"
+       Delivered as file "JATS-articlemeta1.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     JATS DTD Suite -->
+<!---->
+<!-- PURPOSE:    Names all elements used to describe the journal -->
+<!-- in which the journal article is published. -->
+<!---->
+<!-- TAG SET SPONSOR -->
+<!-- National Center for Biotechnology -->
+<!-- Information (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- This module was created for the JATS DTD Suite. -->
+<!-- Digital archives and publishers may use the -->
+<!-- DTD as is for markup of journal literature or -->
+<!-- related material for archiving and transferring -->
+<!-- such material between archives or create a -->
+<!-- custom XML DTD from the Suite for -->
+<!-- these purposes. -->
+<!---->
+<!-- This is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the JATS DTD Suite -->
+<!-- and intend to stay compatible with the suite, -->
+<!-- then please include the following statement -->
+<!-- as a comment in all of your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the ANSI/NISO Z39.96 Journal Article Tag -->
+<!-- Suite (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the ANSI/NISO Z39.96 Journal Article -->
+<!-- Tag Suite (JATS)." -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. for the NISO Z39.96 -->
+<!-- Working Group. Mulberry Technologies was -->
+<!-- supported by National Center for Biotechnology -->
+<!-- Information (NCBI), a center of the US National -->
+<!-- Library of Medicine (NLM). -->
+<!---->
+<!-- This module is part of the JATS DTD Suite. The -->
+<!-- Suite is a continuation of work done by NCBI, -->
+<!-- Mulberry Technologies, and Inera Inc. on the NLM -->
+<!--              Journal Archiving and Interchange DTD Suite, which -->
+<!-- was originally released in December, 2002. -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Inera Inc.'s collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+       =============================================================
+       JATS Version 1.1                (DAL/BTU) v1.1  (2015-12-15)
+  
+       JATS is a continuing maintenance NISO Standard, which
+       requires voting by the ANSI and NISO memberships to be changed. 
+       JATS 1.1 was approved in late 2015, so the formal public 
+       identifiers were changed in the modules and the catalogs.
+       No model or attribute changes were made at this time. 
+  
+   31. JATS became version "1.1" and "v1.1 20151215"
+  
+       =============================================================
+       JATS Version 1.1d3             (DAL/BTU) v1.1d3  (2015-03-01)
+  
+       The changes in this release are in response to NISO 
+       License and Indicators Recommended Practice.
+  
+       NISO JATS is a continuing maintenance NISO Standard, which 
+       requires voting by the NISO membership to be changed. This
+       Committee Draft 1.1d3 will be sent to the NISO voting
+       membership, to become (if approved) NISO JATS 1.1.
+  
+       This draft DTD represents an interim version of the
+       non-normative JATS DTD Suite, as an indication to JATS users
+       the decisions that have been made by the JATS Standing
+       Committee.
+  
+   30. JATS became version "1.1d3" and "v1.1d3 20150301"
+  
+       =============================================================
+       JATS Version 1.1d2              (DAL/BTU) v1.1d2 (2014-09-30)
+  
+       NISO JATS is a continuing maintenance NISO Standard, which 
+       requires voting by the NISO membership to be changed. This
+       Committee Draft 1.1d2 will be sent to the NISO voting
+       membership, to become (if approved) NISO JATS 1.1.
+  
+       This catalog represents an interim version of the
+       non-normative JATS DTD Suite, as an indication to JATS users
+       the decisions that have been made by the JATS Standing
+       Committee.
+  
+   29. <VOLUME> INSIDE <ARTICLE-META>
+     - Allowed <volume> to repeat inside <article-meta>, the types to 
+       be distinguished using @content-type
+     - Added new optional element <volume-issue-group> inside 
+       <article-meta) following all volume and issue elements
+       to hold volume-issue pairs (or n-tuples) when a second
+       and subsequent <volume> has its own related issue
+       information.
+     - Made <issue> repeatable, for those who choose not to use
+       the new wrapper element.
+  
+   28. JATS became version "1.1d2" and "v1.1d2 20140930//EN"
+  
+       =============================================================
+       NISO JATS Version 1.1d1           (DAL/BTU) v1.1 (2013-11-15)
+  
+       ANSI/NISO Z39.96-2012 (pre-release for V1.0 BITS; Version 1.1d1) 
+  
+       NISO JATS Standing Committee met and answered the requests and
+       suggestions from the NISO request forms.
+  
+       Details concerning ANSI/NISO Z39.96-2012 JATS-based DTDs,  
+       XSDs, RNGs and supporting documentation are available at
+             http://jats.nlm.nih.gov/1.0/
+  
+   27. NEW <era> ELEMENT
+       Added <era> through date-model
+        - <pub-date>
+  
+   26. GLOBAL ATTRIBUTES - Added the new parameter entity 
+           %jats-common-atts;
+       to every element in this module. This PE adds (for now) the
+       @id attribute and the @xml:base attribute to every element,
+       whether metadata or narrative.
+       Since the @id in this parameter entity is optional, a second
+       parameter entity jats-common-atts-id-required was also added.
+       The two are kept in sync with the jats-base-atts parameter 
+       entity.
+       This added a new attribute list to:
+        - article-categories
+        - article-meta
+        - counts
+        - history
+        - title-group                          
+  
+   25. ABSTRACTS AND KEYWORDS
+         Changed "abstract*" to "(%abstract.class;)*"
+         and "kwd-group*" to "(%kwd-group.class;)*" since those
+         classes now exist. Elements should have a limited number of
+         ways to be invoked.
+          - article-meta (through %article-meta-model;)
+  
+       =============================================================
+       NISO JATS Version 1.0             (DAL/BTU) v1.0 (2012-xx-xx)
+  
+       ANSI/NISO Z39.96-2012 (Version 1.0) 
+  
+       Details concerning ANSI/NISO Z39.96-2012 JATS-based DTDs,  
+       XSDs, RNGs and supporting documentation are available at
+             http://jats.nlm.nih.gov/1.0/
+  
+   24. RELATED OBJECT - Added <related-object> everywhere
+       <related-article> was used, including inside 
+       <article-meta> using article-meta-model.
+  
+   23. CONTRIB-GROUP AND CONTRIB MODULE SHIFT - Moved <contrib>
+       and <contrib-group> to common.ent, since they are now used
+       in both article metadata and journal metadata.
+  
+   22. CONTRIBUTOR MODEL - Added "contrib-id.class" to the beginning
+       at the <contrib> model, to hold identifiers for people,
+       such as publishers-specific IDs, ORCIDs, and JST and NII 
+       identifiers.
+  
+   21. COUNTS - Generic <count> element added to the <counts>
+       wrapper. This element is allowed to repeat, to count
+       anything a publisher or archive may wish to count.
+       The @count-type attribute will name what is being counted
+       (such as figures, tables, sections, contributors, images,
+       etc.) The @count attribute will state how many of the 
+       objects are in the document.
+  
+       Although a publisher or archive could choose to label
+       all the counted objects in a document this way, the
+       specific count elements (fig-count, equation-count,
+       word-count, etc.) will be retained for backwards
+       compatibility.
+  
+       New parameter entities: count-atts.
+  
+   20. PUBLICATION DATE ATTRIBUTES - Added to the attributes for
+       <pub-date> (through @pub-date-atts):
+         a) @iso-8601-date - ISO 8601 standard date format
+            of the publication date. Format  YYYY-MM-DDThh:mm:ss 
+         b) @calendar - Name of the calendar used (@calendar) in
+            naming this publication date (such as "Gregorian", 
+            "Japanese" (Emperor years), or "Islamic").
+         c) @date-type to record lifecycle information as to which
+            publication date is involved (such as retracted, corrected,
+            preprint).
+         d) @publication-format to hold what format or media was 
+            published on this date (such as "print" or
+            "electronic").
+         e) @xml:lang (comments below said was this added for 0.4).
+  
+   19. COMPOUND KEYWORD PARTS - Allowed the individual compound 
+       keyword parts (<compound-kwd-part> to be as complex as 
+       ordinary keywords <kwd>), by giving them the same model 
+       as <kwd>.
+  
+   18. NESTED KEYWORDS - Added new keyword type element for nested
+       keywords (<nested-kwd>), to hold hierarchical keywords such
+       as taxonomic structures. New PEs %nested-kwd-model; and
+       %nested-kwd-atts;
+  
+   17. MODULE MOVEMENT (from increased reference content)
+  
+       a) Element <degrees> - Moved <degrees> and its parameter
+          entities from this module from JATS-common.ent.
+  
+       b) Element <supplement> - Moved <supplement> and its parameter
+          entities from this module from JATS-common.ent.
+  
+       c) Element <conf-sponsor> - Moved <conf-sponsor> and its parameter
+          entities from this module from JATS-common.ent.
+  
+       d) Element <on-behalf-of> - Moved <on-behalf-of> and its parameter
+          entities from this module from JATS-common.ent.
+  
+   16. Added name comment to %counts-model;
+  
+   15. Updated the DTD-version attribute to "1.0" and the formal
+       public identifier to the date: "v1.0 20120330//EN".
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, the version number that would
+       have been "NLM Version 3.1 Draft" has become NISO JATS
+       "Version 0.4".
+  
+       Details on NISO Trial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+   14. Updated the DTD-version attribute to "0.4" 
+  
+   13. Updated the public identifier to "v0.4 20110131", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+             http://jats.nlm.nih.gov/0.4.
+  
+   12. UNSTRUCTURED KEYWORD GROUP ATTRIBUTES - Made
+       %unstructured-kwd-group-atts; into its own PE, as
+       documentation stated had already been done.
+  
+   11. KEYWORD ATTRIBUTES - To make the tag set more consistent,
+       added @content-type to <kwd>, since <compound-kwd> already
+       took this attribute. Through %kwd-atts;
+  
+   10. I18N - At the request of the SBJ Working Group (Japan)
+       made <series-text> repeatable inside <article-categories> using
+       %article-categories-model;
+  
+    9. TITLE ELEMENTS - Removed the dependency which had both
+       <subtitle> and <alt-title> modeled with the same parameter
+       entity %title-elements;. Created new PEs for each element
+       but set them (as the default) to %title-elements so that no
+       customization would break. Models changed:
+         - alt-title    %alt-title-elements; defined in common.ent
+         - subtitle     %subtitle-elements; (moved to this
+             module)
+  
+    8. AFFILIATION ALTERNATIVES - Added the element <aff-alternatives>
+       to <article-meta> through %article meta-model;. This element
+       will hold multiple <aff>s that are a representation of a
+       single affiliation, for example, the name of an institution
+       in two languages or two scripts.
+  
+    7. @SPECIFIC-USE and @XML:LANG - Added the @specific-use and
+       @xml:lang to the following elements:
+        - alt-title through alt-title-atts (both)
+        - article-id through article-id-atts (@specific-use only)
+        - author-comment through author-comment-atts (both)
+        - author-notes through author-notes-atts (both)
+        - article-id through article-id-atts (@xml:lang)
+        - contrib through contrib-atts (@specific-use only)
+        - contrib-group through contrib-group-atts (@xml:lang)
+        - corresp through corresp-atts (@specific-use)
+        - degrees through degrees-atts (both)
+        - kwd-group through kwd-group-atts (@specific-use only
+               @xml:lang already there)
+        - on-behalf-of through on-behalf-of-atts (both) NEW PE
+        - product through product-atts (both)
+        - pub-date through pub-date-atts (@xml:lang)
+        - self-uri through self-uri-atts (both)
+        - series-text through series-text-atts (both)
+        - series-title through series-title-atts (both)
+        - string-conf through string-conf-atts (both)
+        - subj-group through subj-group-atts (both)
+        - subtitle through subtitle-atts (@specific only
+               @xml:lang already there)
+        - supplement through supplement-atts (both)
+  
+    6. TITLE ELEMENTS - Removed the dependency which had both
+       <subtitle> and <alt-title> modeled with the same parameter
+       entity %title-elements;. Created new PEs for each element
+       but set them (as the default) to %title-elements so that no
+       customization would break.
+  
+    5. COUNT ATTRIBUTES - Removed the dependency which had all of
+       the count elements using a single attribute list (%count-atts;)
+       Created new attributes list PEs for each of them: equation-count,
+       fig-count, page-count, ref-count, table-count, and word-count.
+       *****Customization Alert: New parameter entities could break
+       some customizations. Check the attribute list parameter entity
+       for each of the count elements. *****
+  
+    4. COMPOUND SUBJECT - Created a new element <compound-subject>
+       that acts just like <compound-kwd>, in that it takes one or
+       more <compound-subject-part>s to allow a complex, multi-
+       part subject to be captured. New elements, attribute lists,
+       and parameter entities. (An example of a compound subject
+       is a code with a textual keyword (A11 Permeability).
+       Allowed <compound-subject> as an alternative to <subject>
+       inside a <subj-group>.
+  
+    3. SERIES TEXT ATTRIBUTES - Both <series-title> and
+       <series-text> used to use the PE %series-title-atts;. Added the
+       PE %series-text-atts;, which is the only one <series-text>
+       uses. No documents need change.
+       *****Customization Alert: New parameter entity could break some
+       customizations. Check your <series-text> attributes. *****
+  
+    2. TRANSLATED ABSTRACT ATTRIBUTES - Both <abstract> and
+       <trans-abstract> used to use the PE %abstract-atts;. Added the
+       PE %trans-abstract-atts;, which is the only one <trans-abstract>
+       uses. No documents need change.
+       *****Customization Alert: New parameter entity could break some
+       customizations. Check your <trans-abstract> attributes. *****
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://dtd.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!--
+  Details concerning 
+  ANSI/NISO Z39.96-2015 JATS-based DTDs, XSDs, 
+  RNGs and supporting documentation are available at
+        http://jats.nlm.nih.gov/1.1/
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+<!-- ============================================================= -->
+<!-- ABSTRACT ATTRIBUTES -->
+<!-- Attributes for the <abstract> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="abstract-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="abstract-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ALTERNATE TITLE ATTRIBUTES -->
+  <!-- Attributes for the <alt-title> element -->
+  <define name="alt-title-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="alt-title-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ARTICLE CATEGORIES ATTRIBUTES -->
+  <!--
+    Attributes for the <article-categories> 
+    element
+  -->
+  <define name="article-categories-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- ARTICLE METADATA ATTRIBUTES -->
+  <!-- Attributes for the <article-meta> element -->
+  <define name="article-meta-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- AUTHOR COMMENT ATTRIBUTES -->
+  <!--                     Attributes for the <author-comment> element -->
+  <define name="author-comment-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- AUTHOR NOTES ATTRIBUTES -->
+  <!-- Attributes for the <author-notes> element -->
+  <define name="author-notes-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ARTICLE IDENTIFIER ATTRIBUTES -->
+  <!-- Attributes for the <article-id> element -->
+  <!-- COMPOUND KEYWORD ATTRIBUTES -->
+  <!-- Attributes for the <compound-kwd> element -->
+  <define name="compound-kwd-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- COMPOUND KEYWORD PART ATTRIBUTES -->
+  <!--
+    Attributes for the <compound-kwd-part>
+    element
+  -->
+  <define name="compound-kwd-part-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- COMPOUND SUBJECT ATTRIBUTES -->
+  <!-- Attributes for the <compound-subject> element -->
+  <define name="compound-subject-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- COMPOUND SUBJECT PART ATTRIBUTES -->
+  <!--
+    Attributes for the <compound-subject-part>
+    element
+  -->
+  <define name="compound-subject-part-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- CONFERENCE ACRONYM ATTRIBUTES -->
+  <!-- Attributes for the <conf-acronym> element -->
+  <define name="conf-acronym-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- CONFERENCE NUMBER ATTRIBUTES -->
+  <!-- Attributes for the <conf-num> element -->
+  <define name="conf-num-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- CONFERENCE THEME ATTRIBUTES -->
+  <!-- Attributes for the <conf-theme> element -->
+  <define name="conf-theme-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- CONFERENCE ATTRIBUTES -->
+  <!-- Attributes for the <conference> element -->
+  <define name="conference-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- CORRESPONDING ATTRIBUTES -->
+  <!-- Attributes for the <corresp> element -->
+  <define name="corresp-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- COUNT ATTRIBUTES -->
+  <!-- Attributes for the <count> element -->
+  <define name="count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count-type"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- COUNTS ATTRIBUTES -->
+  <!-- Attributes for the <counts> element -->
+  <define name="counts-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- EQUATION COUNT ATTRIBUTES -->
+  <!--                     Attributes for the <equation-count> element -->
+  <define name="equation-count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- FIGURE COUNT ATTRIBUTES -->
+  <!-- Attributes for the <fig-count> element -->
+  <define name="fig-count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- HISTORY ATTRIBUTES -->
+  <!-- Attributes for the <history> element -->
+  <define name="history-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- KEYWORD ATTRIBUTES -->
+  <!-- Attributes for the <kwd> element -->
+  <define name="kwd-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- KEYWORD GROUP ATTRIBUTES -->
+  <!-- Attributes for the <kwd-group> element -->
+  <define name="kwd-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="kwd-group-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- NESTED KEYWORD ATTRIBUTES -->
+  <!-- Attributes for the <nested-kwd> element -->
+  <define name="nested-kwd-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- PAGE COUNT ATTRIBUTES -->
+  <!-- Attributes for the <page-count> element -->
+  <define name="page-count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- PRODUCT ATTRIBUTES -->
+  <!-- Attributes for the <product> element -->
+  <define name="product-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="product-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- PUBLICATION DATE ATTRIBUTES -->
+  <!-- Attributes for the <pub-date> element -->
+  <define name="pub-date-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="pub-type"/>
+    </optional>
+    <optional>
+      <attribute name="publication-format"/>
+    </optional>
+    <optional>
+      <attribute name="date-type"/>
+    </optional>
+    <optional>
+      <attribute name="iso-8601-date"/>
+    </optional>
+    <optional>
+      <attribute name="calendar"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- REFERENCE (CITATION) COUNT ATTRIBUTES -->
+  <!-- Attributes for the <ref-count> element -->
+  <define name="ref-count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- SELF URI ATTRIBUTES -->
+  <!-- Attributes for the <self-uri> element -->
+  <define name="self-uri-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- SERIES TEXT ATTRIBUTES -->
+  <!-- Attributes for the <series-text> element -->
+  <define name="series-text-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SERIES TITLE ATTRIBUTES -->
+  <!-- Attributes for the <series-title> element -->
+  <define name="series-title-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STRING CONFERENCE ATTRIBUTES -->
+  <!-- Attributes for the <string-conf> element -->
+  <define name="string-conf-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SUBJECT GROUP ATTRIBUTES -->
+  <!-- Attributes for the <subj-group> element -->
+  <define name="subj-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="subj-group-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SUBJECT ATTRIBUTES -->
+  <!-- Attributes for the <subject> element -->
+  <define name="subject-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- SUBTITLE ATTRIBUTES -->
+  <!-- Attributes for the <subtitle> element -->
+  <define name="subtitle-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- TABLE COUNT ATTRIBUTES -->
+  <!-- Attributes for the <table-count> element -->
+  <define name="table-count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- TITLE GROUP ATTRIBUTES -->
+  <!-- Attributes for the <title-group> element -->
+  <define name="title-group-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- TRANSLATED ABSTRACT ATTRIBUTES -->
+  <!--                     Attributes for the <trans-abstract> element -->
+  <define name="trans-abstract-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="abstract-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- UNSTRUCTURED KEYWORD GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the <unstructured-kwd-group>
+    element
+  -->
+  <define name="unstructured-kwd-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="kwd-group-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- WORD COUNT ATTRIBUTES -->
+  <!-- Attributes for the <word-count> element -->
+  <define name="word-count-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="count">
+      <data type="NMTOKEN"/>
+    </attribute>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ARTICLE METADATA -->
+  <!-- ============================================================= -->
+  <!-- ARTICLE METADATA MODEL -->
+  <!--
+    Complete content model for the <article-meta>
+    element, which names the journal article
+    metadata
+  -->
+  <!--
+    ELEM   address links (email | ext-link | uri)
+    Defined in %funding.ent;
+  -->
+  <!-- ELEM   aff          Defined in %common.ent; -->
+  <!--
+    ELEM   copyright-statement
+    Defined in %common.ent;
+  -->
+  <!--
+    ELEM   copyright-year
+    Defined in %common.ent;
+  -->
+  <!--
+    ELEM   custom-meta-group
+    Defined in %common.ent;
+  -->
+  <!-- ELEM   elocation-id Defined in %common.ent; -->
+  <!-- ELEM   ext-link     Defined in %common.ent; -->
+  <!-- ELEM   fpage        Defined in %common.ent; -->
+  <!--
+    ELEM   funding-group
+    Defined in %funding.ent;
+  -->
+  <!-- ELEM   isbn         Defined in %common.ent; -->
+  <!-- ELEM   issue        Defined in %common.ent; -->
+  <!-- ELEM   issue-id     Defined in %common.ent; -->
+  <!-- ELEM   issue-title  Defined in %common.ent; -->
+  <!--
+    ELEM   issue-sponsor
+    Defined in %common.ent;
+  -->
+  <!-- ELEM   license      Defined in %common.ent; -->
+  <!-- ELEM   lpage        Defined in %common.ent; -->
+  <!-- ELEM   page-range   Defined in %common.ent; -->
+  <!-- ELEM   permissions  Defined in %common.ent; -->
+  <!--
+    ELEM   related-article and related-object
+    Defined in %common.ent;
+  -->
+  <!--
+    ELEM   supplementary-material
+    Defined in %display.ent;
+  -->
+  <!-- ELEM   volume       Defined in %common.ent; -->
+  <!-- ELEM   volume-id    Defined in %common.ent; -->
+  <!--
+    ELEM   volume-series
+    Defined in %common.ent;
+  -->
+  <!-- ARTICLE METADATA -->
+  <!--
+    Metadata that identifies this article, for
+    example, bibliographic information such as
+    the title, author, and copyright year.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=article-meta
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=article-meta
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=article-meta
+  -->
+  <define name="article-meta">
+    <element name="article-meta">
+      <ref name="article-meta-attlist"/>
+      <ref name="article-meta-model"/>
+    </element>
+  </define>
+  <define name="article-meta-attlist" combine="interleave">
+    <ref name="article-meta-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ARTICLE METADATA ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- ARTICLE IDENTIFIER -->
+  <!--
+    Optional element, used to hold one of the
+    "unique identifiers" that have been assigned
+    at various times to an article.  Such
+    identifiers may come from a publisher, a
+    jobber, from PubMed Central, etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=article-id
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=article-id
+  -->
+  <define name="article-id">
+    <element name="article-id">
+      <ref name="article-id-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="article-id-attlist" combine="interleave">
+    <ref name="article-id-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ARTICLE GROUPING DATA (ARTICLE METADATA) -->
+  <!-- ============================================================= -->
+  <!-- ARTICLE CATEGORIES MODEL -->
+  <!--
+    Complete content model for the
+    <article-categories> element
+  -->
+  <define name="article-categories-model">
+    <zeroOrMore>
+      <ref name="subj-group"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="series-title"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="series-text"/>
+    </zeroOrMore>
+  </define>
+  <!-- ARTICLE GROUPING DATA -->
+  <!--
+    Container for elements that may be used to
+    group articles into related clusters
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=article-categories
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=article-categories
+  -->
+  <define name="article-categories">
+    <element name="article-categories">
+      <ref name="article-categories-attlist"/>
+      <ref name="article-categories-model"/>
+    </element>
+  </define>
+  <define name="article-categories-attlist" combine="interleave">
+    <ref name="article-categories-atts"/>
+  </define>
+  <!-- SUBJECT GROUP MODEL -->
+  <!--
+    Complete content model for the <subj-group>
+    element
+  -->
+  <define name="subj-group-model">
+    <oneOrMore>
+      <choice>
+        <ref name="subject"/>
+        <ref name="compound-subject"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="subj-group"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    GROUPING ARTICLES IN TITLED CATEGORIES
+    Container element that collects multiple
+    subjects and/or hierarchically lower subject
+    groups.
+    Remarks: For some journals, articles are
+    grouped into categories, with the category
+    indicated in the article's display.
+    Sometimes the grouping or category refers
+    to the type of article, such as "Essay",
+    "Commentary", or "Article".  Sometimes the
+    grouping refers to subject areas, such as
+    "Physical Sciences", "Biological Sciences",
+    or "Social Sciences".
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=subj-group
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=subj-group
+  -->
+  <define name="subj-group">
+    <element name="subj-group">
+      <ref name="subj-group-attlist"/>
+      <ref name="subj-group-model"/>
+    </element>
+  </define>
+  <define name="subj-group-attlist" combine="interleave">
+    <ref name="subj-group-atts"/>
+  </define>
+  <!-- SUBJECT ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters inside the content model of the
+    <subject> element
+  -->
+  <!-- SUBJECT NAME -->
+  <!--
+    The name of one of the subject groups used
+    to describe an article.  Such groups are
+    used, typically, to provide headings for
+    groups of articles in a printed or online
+    generated Table of Contents.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=subject
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=subject
+  -->
+  <define name="subject">
+    <element name="subject">
+      <ref name="subject-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="subject-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="subject-attlist" combine="interleave">
+    <ref name="subject-atts"/>
+  </define>
+  <!-- COMPOUND SUBJECT MODEL -->
+  <!--
+    Complete content model for the
+    <compound-subject> element
+  -->
+  <define name="compound-subject-model">
+    <oneOrMore>
+      <ref name="compound-subject-part"/>
+    </oneOrMore>
+  </define>
+  <!-- COMPOUND SUBJECT NAME -->
+  <!--
+    Container element to hold all the parts of a
+    multi-part subject, for example, a subject that
+    is comprised of both a term and a code value
+    that represents that term.
+    Related Elements: If a subject is only a word
+    or phrase (Neuroscience, Physical Sciences),
+    the simple <subject> element can be used to
+    capture this information. If a subject is
+    logically both a term and a code
+    (A11 Permeability) but only one of those
+    objects needs to be captured, a <subject>
+    element may also be used. If it is useful to
+    record both the code and the term, they can
+    each be captured as one
+    <compound-subject-part>s inside a
+    <compound-subject>.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=compound-subject
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=compound-subject
+  -->
+  <define name="compound-subject">
+    <element name="compound-subject">
+      <ref name="compound-subject-attlist"/>
+      <ref name="compound-subject-model"/>
+    </element>
+  </define>
+  <define name="compound-subject-attlist" combine="interleave">
+    <ref name="compound-subject-atts"/>
+  </define>
+  <!-- COMPOUND SUBJECT PART ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters inside the content model of the
+    <compound-subject> element
+  -->
+  <define name="compound-subject-part-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- COMPOUND SUBJECT PART NAME -->
+  <!--
+    The name of one of the subject groups used
+    to describe an article, when that article is
+    a multi-part rather than a simple subject.
+    Such groups are used, typically, to provide
+    headings for groups of articles in a printed
+    or online generated Table of Contents. The
+    @content type attribute should be used to
+    indicate the type of part ("text", "code",
+    "sponsor", etc.).
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=compound-subject-part
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=compound-subject-part
+  -->
+  <define name="compound-subject-part">
+    <element name="compound-subject-part">
+      <ref name="compound-subject-part-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="compound-subject-part-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="compound-subject-part-attlist" combine="interleave">
+    <ref name="compound-subject-part-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- SERIES INFORMATION -->
+  <!-- ============================================================= -->
+  <!--
+                        GROUPING ARTICLES IN SERIES
+    Series (as used in the <series-title> and
+    <series-text> elements described below) is
+    used in two different senses. Some issues of
+    journals are part of a series and will have
+    series information just as they have an
+    issue number as part of the article metadata,
+    to describe the issue of the journal in which
+    the article is published.  The second usage
+    is for groupings of articles within one
+    issue of a journal. For example, in some
+    journals, articles are grouped into a
+    series such as "From the Cover" and
+    identified as part of a series.
+    The Series Title element names the series
+    and the Series Text element provides textual
+    description (if any) describing the series.
+  -->
+  <!-- SERIES TITLE ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters inside the content model of the
+    <series-title> element
+  -->
+  <define name="series-title-elements">
+    <ref name="rendition-plus"/>
+  </define>
+  <!-- SERIES TITLE -->
+  <!--
+    Title of the journal series (bibliographic
+    meaning) or the title of a  series of
+    articles internal to one issue of a journal
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=series-title
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=series-title
+  -->
+  <define name="series-title">
+    <element name="series-title">
+      <ref name="series-title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="series-title-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="series-title-attlist" combine="interleave">
+    <ref name="series-title-atts"/>
+  </define>
+  <!-- SERIES TEXT ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters inside the content model of the
+    <series-text> element
+  -->
+  <define name="series-text-elements">
+    <ref name="rendition-plus"/>
+  </define>
+  <!-- SERIES TEXT: HEADER TEXT to DESCRIBE -->
+  <!--
+    Textual description of the series of articles
+    that are named in a <series-title> element
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=series-text
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=series-text
+  -->
+  <define name="series-text">
+    <element name="series-text">
+      <ref name="series-text-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="series-text-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="series-text-attlist" combine="interleave">
+    <ref name="series-text-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- TOP-LEVEL ARTICLE METADATA CONTINUED -->
+  <!-- ============================================================= -->
+  <!-- AUTHOR NOTES MODEL -->
+  <!-- Content model for an <author-notes> element. -->
+  <!-- AUTHOR NOTE GROUP -->
+  <!--
+    Footnotes to authors or notes about authors
+    (and, potentially other contributors) are
+    collected in the Author note group.
+    References to these footnotes are made
+    using the <xref> element.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=author-notes
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=author-notes
+  -->
+  <define name="author-notes">
+    <element name="author-notes">
+      <ref name="author-notes-attlist"/>
+      <ref name="author-notes-model"/>
+    </element>
+  </define>
+  <define name="author-notes-attlist" combine="interleave">
+    <ref name="author-notes-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PRODUCT REVIEW INFORMATION (PRODUCT METADATA) -->
+  <!-- ============================================================= -->
+  <!-- PRODUCT ELEMENTS -->
+  <!--
+    Elements that may be used inside the
+    <product> element
+    Design Note: All inline mixes begin with an
+    OR bar, but since %simple-text; is an inline
+    mix, the OR bar is already there.
+  -->
+  <!-- PRODUCT INFORMATION -->
+  <!--
+    Used as a wrapper for metadata for a product
+    (such as a book, software package, hardware
+    component, web site, etc.) that is being
+    reviewed.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=product
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=product
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=product
+  -->
+  <define name="product">
+    <element name="product">
+      <ref name="product-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="product-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="product-attlist" combine="interleave">
+    <ref name="product-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PUBLICATION HISTORY ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- HISTORY MODEL -->
+  <!-- The content model for the <history> element -->
+  <!-- HISTORY:  DOCUMENT HISTORY -->
+  <!--
+    Used as a container for dates related to the
+    processing history of the document, such as
+    received date and accepted date.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=history
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=history
+  -->
+  <define name="history">
+    <element name="history">
+      <ref name="history-attlist"/>
+      <ref name="history-model"/>
+    </element>
+  </define>
+  <define name="history-attlist" combine="interleave">
+    <ref name="history-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FURTHER METADATA ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- SELF-URI ELEMENTS -->
+  <!--
+    Elements to be mixed with data characters
+    inside the <self-uri> element
+  -->
+  <!-- URI FOR THIS SAME ARTICLE ONLINE -->
+  <!--
+    Sometimes an article is available in several
+    forms, for example there is the version that
+    was published in print and there is the same
+    article (possibly expanded or with different
+    graphics) available online.
+       The URI (such as a URL) may be used as a
+    live link, typically naming a web site or the
+    element content may name the URL, e.g., and
+    use the link attributes to hold the real link:
+       <self-uri xlink:href="...">An expanded
+       version of this article is available
+       online</self-uri>
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=self-uri
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=self-uri
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=self-uri
+  -->
+  <define name="self-uri">
+    <element name="self-uri">
+      <ref name="self-uri-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="self-uri-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="self-uri-attlist" combine="interleave">
+    <ref name="self-uri-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ABSTRACTS -->
+  <!-- ============================================================= -->
+  <!-- ABSTRACT MODEL -->
+  <!-- Content model for an <abstract> element -->
+  <define name="abstract-model">
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <ref name="sec-opt-title-model"/>
+  </define>
+  <!-- ABSTRACT -->
+  <!--
+    A short summation of the content of an
+    article.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=abstract
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=abstract
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=abstract
+  -->
+  <define name="abstract">
+    <element name="abstract">
+      <ref name="abstract-attlist"/>
+      <ref name="abstract-model"/>
+    </element>
+  </define>
+  <define name="abstract-attlist" combine="interleave">
+    <ref name="abstract-atts"/>
+  </define>
+  <!-- TRANSLATED ABSTRACT MODEL -->
+  <!-- Content model for an <trans-abstract> element. -->
+  <!-- TRANSLATED ABSTRACT -->
+  <!--
+    An abstract that has been translated into
+    another language
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=trans-abstract
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=trans-abstract
+  -->
+  <define name="trans-abstract">
+    <element name="trans-abstract">
+      <ref name="trans-abstract-attlist"/>
+      <ref name="trans-abstract-model"/>
+    </element>
+  </define>
+  <define name="trans-abstract-attlist" combine="interleave">
+    <ref name="trans-abstract-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- KEYWORD ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- KEYWORD GROUP MODEL -->
+  <!-- Content model for a <kwd-group> element -->
+  <!-- KEYWORD GROUP -->
+  <!--
+    Container element for one set of keywords
+    <kwd>s used to describe a document.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=kwd-group
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=kwd-group
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=kwd-group
+  -->
+  <define name="kwd-group">
+    <element name="kwd-group">
+      <ref name="kwd-group-attlist"/>
+      <ref name="kwd-group-model"/>
+    </element>
+  </define>
+  <define name="kwd-group-attlist" combine="interleave">
+    <ref name="kwd-group-atts"/>
+  </define>
+  <!-- ELEM   title        Defined in %common.ent; -->
+  <!-- KEYWORD CONTENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a keyword.
+  -->
+  <!-- KEYWORD -->
+  <!--
+    One subject term, critical expression, key
+    phrase, abbreviation, indexing word, etc.
+    that is associated with the whole document
+    and can be used for identification and
+    indexing purposes.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=kwd
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=kwd
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=kwd
+  -->
+  <define name="kwd">
+    <element name="kwd">
+      <ref name="kwd-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="kwd-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="kwd-attlist" combine="interleave">
+    <ref name="kwd-atts"/>
+  </define>
+  <!-- COMPOUND KEYWORD MODEL -->
+  <!--
+    The content model of the <compound-kwd>
+    element
+  -->
+  <define name="compound-kwd-model">
+    <oneOrMore>
+      <ref name="compound-kwd-part"/>
+    </oneOrMore>
+  </define>
+  <!-- COMPOUND KEYWORD -->
+  <!--
+    Some keywords are simple, a text word or
+    phrase; such keywords can be tagged using the
+    <kwd> element. But other keywords are more
+    complicated:
+     - a code and a term
+     - an abbreviation and its expansion
+     - a hierarchical keyword that carries all
+       the parts of its hierarchy (as index
+       terms do)
+    This element was created to handle these
+    special cases.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=compound-kwd
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=compound-kwd
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=compound-kwd
+  -->
+  <define name="compound-kwd">
+    <element name="compound-kwd">
+      <ref name="compound-kwd-attlist"/>
+      <ref name="compound-kwd-model"/>
+    </element>
+  </define>
+  <define name="compound-kwd-attlist" combine="interleave">
+    <ref name="compound-kwd-atts"/>
+  </define>
+  <!-- COMPOUND KEYWORD PART ELEMENTS -->
+  <!--
+    Elements to be mixed with data characters
+    inside the <compound-kwd-part> element
+  -->
+  <!-- COMPOUND KEYWORD PART -->
+  <!--
+    This element was created to hold one
+    component of a complex keyword, for example
+    one for the code and one for the term.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=compound-kwd-part
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=compound-kwd-part
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=compound-kwd-part
+  -->
+  <define name="compound-kwd-part">
+    <element name="compound-kwd-part">
+      <ref name="compound-kwd-part-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="compound-kwd-part-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="compound-kwd-part-attlist" combine="interleave">
+    <ref name="compound-kwd-part-atts"/>
+  </define>
+  <!-- NESTED KEYWORD MODEL -->
+  <!--
+    The content model of the <nested-kwd>
+    element
+  -->
+  <define name="nested-kwd-model">
+    <oneOrMore>
+      <ref name="nested-kwd.class"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="nested-kwd"/>
+    </zeroOrMore>
+  </define>
+  <!-- NESTED KEYWORD -->
+  <!--
+    Hierarchical or nested keyword, in which the
+    levels of a taxonomy that describe the
+    article can be described.
+  -->
+  <define name="nested-kwd">
+    <element name="nested-kwd">
+      <ref name="nested-kwd-attlist"/>
+      <ref name="nested-kwd-model"/>
+    </element>
+  </define>
+  <define name="nested-kwd-attlist" combine="interleave">
+    <ref name="nested-kwd-atts"/>
+  </define>
+  <!-- UNSTRUCTURED KEYWORD GROUP ELEMENTS -->
+  <!-- Content model for a <kwd-group> element -->
+  <define name="unstructured-kwd-group-elements">
+    <ref name="just-rendition"/>
+  </define>
+  <!-- UNSTRUCTURED KEYWORD GROUP -->
+  <!--
+    Container element for one set of keywords
+    used to describe a document where the
+    individual keywords are not tagged as
+    separate <kwd>s but instead are all run
+    together in one long text field.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=unstructured-kwd-group
+  -->
+  <define name="unstructured-kwd-group">
+    <element name="unstructured-kwd-group">
+      <ref name="unstructured-kwd-group-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="unstructured-kwd-group-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="unstructured-kwd-group-attlist" combine="interleave">
+    <ref name="unstructured-kwd-group-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- STILL FURTHER ARTICLE METADATA -->
+  <!-- ============================================================= -->
+  <!-- CORRESPONDENCE INFORMATION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the correspondence information.
+  -->
+  <!-- CORRESPONDENCE INFORMATION -->
+  <!--
+    Optional element, used as a container for
+    information concerning which of the authors
+    (or other contributors) is the corresponding
+    contributor, to whom information requests
+    should be addressed.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=corresp
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=corresp
+  -->
+  <define name="corresp">
+    <element name="corresp">
+      <ref name="corresp-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="corresp-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="corresp-attlist" combine="interleave">
+    <ref name="corresp-atts"/>
+  </define>
+  <!-- PUBLICATION DATE MODEL -->
+  <!-- The content model for the element <pub-date> -->
+  <!-- PUBLICATION DATE -->
+  <!--
+    Date of publication or release of the
+    material in one particular format.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=pub-date
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=pub-date
+  -->
+  <define name="pub-date">
+    <element name="pub-date">
+      <ref name="pub-date-attlist"/>
+      <ref name="pub-date-model"/>
+    </element>
+  </define>
+  <define name="pub-date-attlist" combine="interleave">
+    <ref name="pub-date-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- CONFERENCE INFORMATION ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- CONFERENCE MODEL -->
+  <!-- Content model for the <conference> element -->
+  <!-- CONFERENCE INFORMATION -->
+  <!--
+    The container element for the information
+    about a single conference and its
+    proceedings.
+    Design Note: Conference elements were largely
+    based on Cross-Ref.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=conference
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=conference
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=conference
+  -->
+  <define name="conference">
+    <element name="conference">
+      <ref name="conference-attlist"/>
+      <ref name="conference-model"/>
+    </element>
+  </define>
+  <define name="conference-attlist" combine="interleave">
+    <ref name="conference-atts"/>
+  </define>
+  <!-- ELEM   conf-date     Defined in %common.ent; -->
+  <!-- ELEM   conf-loc      Defined in %common.ent; -->
+  <!-- ELEM   conf-name     Defined in %common.ent; -->
+  <!-- ELEM   conf-sponsor  Defined in %common.ent; -->
+  <!-- CONFERENCE ACRONYM ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the conference acronym.
+    Design Note: All inline mixes begin with an
+    OR bar, but since %simple-text; is an online
+    mix, the OR bar is already there.
+  -->
+  <define name="conf-acronym-elements">
+    <ref name="simple-text"/>
+  </define>
+  <!-- CONFERENCE ACRONYM -->
+  <!--
+    The short name, popular name, or "jargon
+    name" for a conference, for example,
+    "Extreme" for "Extreme Markup Languages" or
+    "SIGGRAPH" for "Special Interest Group on
+    Computer Graphics".
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=conf-acronym
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=conf-acronym
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=conf-acronym
+  -->
+  <define name="conf-acronym">
+    <element name="conf-acronym">
+      <ref name="conf-acronym-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="conf-acronym-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="conf-acronym-attlist" combine="interleave">
+    <ref name="conf-acronym-atts"/>
+  </define>
+  <!-- CONFERENCE NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the conference number.
+    Design Note: All inline mixes begin with an
+    OR bar, but since %simple-text; is an inline
+    mix, the OR bar is already there.
+  -->
+  <define name="conf-num-elements">
+    <ref name="simple-text"/>
+  </define>
+  <!-- CONFERENCE NUMBER -->
+  <!--
+    The sequential number of the conference.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=conf-num
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=conf-num
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=conf-num
+  -->
+  <define name="conf-num">
+    <element name="conf-num">
+      <ref name="conf-num-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="conf-num-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="conf-num-attlist" combine="interleave">
+    <ref name="conf-num-atts"/>
+  </define>
+  <!-- CONFERENCE THEME ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the conference theme.
+    Design Note: All inline mixes begin with an
+    OR bar, but since %simple-text; is an online
+    mix, the OR bar is already there.
+  -->
+  <define name="conf-theme-elements">
+    <ref name="simple-text"/>
+  </define>
+  <!-- CONFERENCE THEME -->
+  <!--
+    The theme, slogan, or major subject area of
+    the conference.  For example, the name of an
+    annual conference may be "16th ACH Gathering"
+    but each year has different theme topic,
+    such as "Database Integration" or "Topic
+    Map Subject Access".
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=conf-theme
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=conf-theme
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=conf-theme
+  -->
+  <define name="conf-theme">
+    <element name="conf-theme">
+      <ref name="conf-theme-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="conf-theme-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="conf-theme-attlist" combine="interleave">
+    <ref name="conf-theme-atts"/>
+  </define>
+  <!-- STRING CONFERENCE NAME ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the extended text name of the conference
+    <string-conf>
+    Design Note: %simple-text; begins with an
+    OR bar.
+  -->
+  <define name="string-conf-elements">
+    <choice>
+      <ref name="simple-text"/>
+      <ref name="conference.class"/>
+    </choice>
+  </define>
+  <!-- STRING CONFERENCE NAME -->
+  <!--
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=string-conf
+  -->
+  <define name="string-conf">
+    <element name="string-conf">
+      <ref name="string-conf-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="string-conf-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="string-conf-attlist" combine="interleave">
+    <ref name="string-conf-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- COUNTING INFORMATION (ARTICLE METADATA) -->
+  <!-- ============================================================= -->
+  <!-- COUNTS MODEL -->
+  <!-- Content model for the <counts> element. -->
+  <define name="counts-model">
+    <zeroOrMore>
+      <ref name="count"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="fig-count"/>
+    </optional>
+    <optional>
+      <ref name="table-count"/>
+    </optional>
+    <optional>
+      <ref name="equation-count"/>
+    </optional>
+    <optional>
+      <ref name="ref-count"/>
+    </optional>
+    <optional>
+      <ref name="page-count"/>
+    </optional>
+    <optional>
+      <ref name="word-count"/>
+    </optional>
+  </define>
+  <!-- COUNTS -->
+  <!--
+    Wrapper element to hold all metadata that
+    "counts how many of something appear in the
+    article
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=counts
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=counts
+  -->
+  <define name="counts">
+    <element name="counts">
+      <ref name="counts-attlist"/>
+      <ref name="counts-model"/>
+    </element>
+  </define>
+  <define name="counts-attlist" combine="interleave">
+    <ref name="counts-atts"/>
+  </define>
+  <!-- COUNT -->
+  <!--
+    Generic <count> element to count anything a 
+    publisher or archive may wish to count in a 
+    document. The @count-type attribute will name 
+    what is being counted (such as figures, 
+    tables, sections, contributors, images,
+    etc.) The @count attribute will state how 
+    many of the objects are in the document. 
+    
+    Although a publisher or archive could choose 
+    to label all the counted objects in a document
+    using this element, the specific count 
+    elements (fig-count, equation-count,
+    word-count, etc.) will be retained for 
+    backwards compatibility, and may still be
+    used.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=count
+  -->
+  <define name="count">
+    <element name="count">
+      <ref name="count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="count-attlist" combine="interleave">
+    <ref name="count-atts"/>
+  </define>
+  <!-- EQUATION COUNT -->
+  <!--
+    Number of display equations <disp-formula>
+    that appear in the article. Inline-equations
+    <inline-formula> are not counted. No
+    distinction is made between numbered and
+    unnumbered equations, both are counted.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=equation-count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=equation-count
+  -->
+  <define name="equation-count">
+    <element name="equation-count">
+      <ref name="equation-count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="equation-count-attlist" combine="interleave">
+    <ref name="equation-count-atts"/>
+  </define>
+  <!-- FIGURE COUNT -->
+  <!--
+    Number of Figures <fig> that appear in the
+    article. Loose <graphic>s that appear
+    outside figures are not counted.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=fig-count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=fig-count
+  -->
+  <define name="fig-count">
+    <element name="fig-count">
+      <ref name="fig-count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="fig-count-attlist" combine="interleave">
+    <ref name="fig-count-atts"/>
+  </define>
+  <!-- TABLE COUNT -->
+  <!--
+    Number of tables (Table Wrapper <table-wrap>
+    elements that appear in the article. Arrays
+    are not counted as tables.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=table-count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=table-count
+  -->
+  <define name="table-count">
+    <element name="table-count">
+      <ref name="table-count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="table-count-attlist" combine="interleave">
+    <ref name="table-count-atts"/>
+  </define>
+  <!-- REFERENCE COUNT -->
+  <!--
+    Number of reference citations (whether
+    <mixed-citation>s, <element-citation>s, or
+    <nlm-citation>s) that appear in the
+    bibliographic reference list <ref-list>
+    in the article
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=ref-count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=ref-count
+  -->
+  <define name="ref-count">
+    <element name="ref-count">
+      <ref name="ref-count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="ref-count-attlist" combine="interleave">
+    <ref name="ref-count-atts"/>
+  </define>
+  <!-- PAGE COUNT -->
+  <!--
+    Number of pages in a print article, counting
+    each page or partial page as one. Electronic
+    articles do not have page counts.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=page-count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=page-count
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=page-count
+  -->
+  <define name="page-count">
+    <element name="page-count">
+      <ref name="page-count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="page-count-attlist" combine="interleave">
+    <ref name="page-count-atts"/>
+  </define>
+  <!-- WORD COUNT -->
+  <!--
+    Approximate number of words that appear in
+    the textual portion of an
+    article (not including the words in the
+    metadata or header information)
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=word-count
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=word-count
+  -->
+  <define name="word-count">
+    <element name="word-count">
+      <ref name="word-count-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="word-count-attlist" combine="interleave">
+    <ref name="word-count-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- TITLE GROUP ELEMENTS (BIBLIOGRAPHIC) -->
+  <!-- ============================================================= -->
+  <!-- TITLE GROUP MODEL -->
+  <!--                     Content model for the <title-group> element -->
+  <define name="title-group-model">
+    <ref name="article-title"/>
+    <zeroOrMore>
+      <ref name="subtitle"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="trans-title-group"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="alt-title"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="fn-group"/>
+    </optional>
+  </define>
+  <!-- TITLE GROUP -->
+  <!--
+    Wrapper element to hold the various article
+    titles.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=title-group
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=title-group
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=title-group
+  -->
+  <define name="title-group">
+    <element name="title-group">
+      <ref name="title-group-attlist"/>
+      <ref name="title-group-model"/>
+    </element>
+  </define>
+  <define name="title-group-attlist" combine="interleave">
+    <ref name="title-group-atts"/>
+  </define>
+  <!--
+    ELEM   article-title
+    Defined in %common.ent;
+  -->
+  <!-- ELEM   trans-title  Defined in %common.ent; -->
+  <!-- SUBTITLE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a paragraph <subtitle>.
+    An earlier version of this tag set used the
+    parameter entity %title-elements; for many
+    title elements including <subtitle>.
+  -->
+  <define name="subtitle-elements">
+    <ref name="title-elements"/>
+  </define>
+  <!-- ARTICLE SUBTITLE -->
+  <!--
+    Secondary title of a journal article
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=subtitle
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=subtitle
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=subtitle
+  -->
+  <define name="subtitle">
+    <element name="subtitle">
+      <ref name="subtitle-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="subtitle-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="subtitle-attlist" combine="interleave">
+    <ref name="subtitle-atts"/>
+  </define>
+  <!-- ALTERNATE TITLE -->
+  <!--
+    A "different" version of an article title,
+    usually created so that it can be processed
+    in a special way, for example a short
+    version of the title for use in a Table of
+    Contents, an ASCII title, a right-running-
+    head title, etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=alt-title
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=alt-title
+  -->
+  <define name="alt-title">
+    <element name="alt-title">
+      <ref name="alt-title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="alt-title-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="alt-title-attlist" combine="interleave">
+    <ref name="alt-title-atts"/>
+  </define>
+  <!-- AUTHOR COMMENT MODEL -->
+  <!--
+    Content model for the <author-comment>
+    element
+  -->
+  <define name="author-comment-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="just-para.class"/>
+    </oneOrMore>
+  </define>
+  <!-- AUTHOR COMMENT -->
+  <!--
+    Used for extra textual material associated
+    with a contributor such as an author or
+    editor
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/1.1/index.html?elem=author-comment
+    http://jats.nlm.nih.gov/publishing/tag-library/1.1/index.html?elem=author-comment
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/1.1/index.html?elem=author-comment
+  -->
+  <define name="author-comment">
+    <element name="author-comment">
+      <ref name="author-comment-attlist"/>
+      <ref name="author-comment-model"/>
+    </element>
+  </define>
+  <define name="author-comment-attlist" combine="interleave">
+    <ref name="author-comment-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Article Metadata Elements  =========== -->

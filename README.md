@@ -1,4 +1,4 @@
-# Texture [![Build Status](https://travis-ci.org/substance/texture.svg?branch=develop)](https://travis-ci.org/substance/texture)
+# Texture
 
 Texture is a toolset for the production of scientific content. It has first-class support for JATS, the de facto standard for archiving and interchange of scientific open-access contents with XML.
 ![Texture User Interface](texture.png)
@@ -101,12 +101,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Roadmap
 
-See [Texture website](http://substance.io/texture). 
+See [Texture website](http://substance.io/texture).
 
 
 ## License
 
-Texture is open source, and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/). 
+Texture is open source, and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/).
 
 ## Credits
 

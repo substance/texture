@@ -8,7 +8,7 @@
   top: 45px;
   right: 5px;
   z-index: 5000;
-  background: rgba(33, 33, 33, 0.95);
+  background: rgb(33, 33, 33);
   padding: 15px 40px;
   border-radius: 5px;
   width: 300px;
@@ -41,12 +41,22 @@
   cursor: pointer;
 }
 
+.sc-navigator .se-toggle:hover {
+  background: #eee;
+}
+
 .sc-navigator .se-toggle .se-label {
   flex: 100 0 0;
-  padding: 10px;
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: 600;
+  padding: 1px 10px;
 }
 
 .sc-navigator .se-toggle .se-expanded {
-  padding: 10px;
+  padding: 0 10px;
+  font-size: 25px;
+  line-height: 40px;
+
   flex: 0 0 0;
 }

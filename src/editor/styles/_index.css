@@ -2,6 +2,8 @@
 @import './_title-group.css';
 @import './_unsupported.css';
 @import './_annotations.css';
+@import './_affiliations-list.css';
+@import './_authors-list.css';
 @import './_toc.css';
 @import './_caption.css';
 @import './_ref-preview.css';

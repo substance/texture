@@ -31,6 +31,17 @@ export default class FrontComponent extends Component {
     }
     el.append(titleGroupEl)
 
+    // Authors and affiliations
+    let authorsListEl = $$(this.getComponent('authors-list'), {
+      node: node
+    })
+    el.append(authorsListEl)
+
+    let affiliationsListEl = $$(this.getComponent('affiliations-list'), {
+      node: node
+    })
+    el.append(affiliationsListEl)
+
     // Abstract
 
     // There can be multiple abstracts. We just take the first
@@ -46,10 +57,6 @@ export default class FrontComponent extends Component {
       abstractEl = $$('div').addClass('sc-abstract')
     }
     el.append(abstractEl.ref('abstract'))
-
-    // Authors
-
-    // TODO
 
     return el
   }

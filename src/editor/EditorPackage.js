@@ -18,6 +18,8 @@ import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeCo
 
 import AbstractComponent from './components/AbstractComponent'
 import AffiliationsComponent from './components/AffiliationsComponent'
+import AffiliationsListComponent from './components/AffiliationsListComponent'
+import AuthorsListComponent from './components/AuthorsListComponent'
 import ArticleRecordComponent from './components/ArticleRecordComponent'
 import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
@@ -76,6 +78,8 @@ export default {
     // Article content
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('affiliations', AffiliationsComponent)
+    config.addComponent('affiliations-list', AffiliationsListComponent)
+    config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('translations', TranslationsComponent)
     config.addComponent('back', BackComponent)

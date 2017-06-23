@@ -104,17 +104,21 @@ export default class Editor extends AbstractWriter {
   }
 
   tocEntrySelected(nodeId) {
-    let node = this.doc.get(nodeId)
-    let containerId = node.parentNode.id
-    let editorSession = this.getEditorSession()
-    editorSession.setSelection({
-      type: 'property',
-      path: node.getPath(),
-      startOffset: 0,
-      surfaceId: containerId,
-      containerId: containerId
-    })
-    return this._scrollTo(nodeId)
+    const node = this.doc.get(nodeId)
+    const editorSession = this.getEditorSession()
+    const nodeComponent = this.refs.contentPanel.find(`[data-id="${nodeId}"]`)
+    if (nodeComponent) {
+      // TODO: it needs to be easier to retrieve the surface
+      let surface = nodeComponent.context.surface
+      editorSession.setSelection({
+        type: 'property',
+        path: node.getPath(),
+        startOffset: 0,
+        surfaceId: surface.id,
+        containerId: surface.getContainerId()
+      })
+      return this._scrollTo(nodeId)
+    }
   }
 
   getConfigurator() {

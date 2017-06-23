@@ -1,29 +1,18 @@
-.sc-title-group .se-article-title {
-  padding-bottom: var(--default-padding);
-  font-weight: var(--strong-font-weight);
-  letter-spacing: var(--heading-letterspacing);
-  font-size: var(--title-font-size);
-
-  font-family: 'Avenir Next', Helvetica;
-  font-weight: 600;
-  text-align: center;
-}
-
-.sc-title-group .se-article-title {
+.sc-abstract-content .container-node {
   border: 1px solid transparent;
   border-radius: 5px;
   padding: 10px;
 }
 
-.sc-title-group .se-article-title:hover {
+.sc-abstract-content .container-node:hover {
   position: relative;
   border: 1px solid #e1e4e8;
   border-radius: 5px;
   padding: 10px;
 }
 
-.sc-title-group .se-article-title:hover::before {
-  content: "Title";
+.sc-abstract-content .container-node:hover::before {
+  content: "Abstract";
   position: absolute;
   display: block;
   top: -14px;
@@ -33,19 +22,17 @@
   margin-left: -50px;
   background: #fff;
   text-align: center;
-  font-size: 16px;
-  font-weight: 500;
 }
 
-.sc-title-group .se-article-title:focus {
+.sc-abstract-content .container-node:focus {
   position: relative;
   border: 1px solid var(--link-color);
   border-radius: 5px;
   padding: 10px;
 }
 
-.sc-title-group .se-article-title:focus::before {
-  content: "Title";
+.sc-abstract-content .container-node:focus::before {
+  content: "Abstract";
   position: absolute;
   display: block;
   top: -14px;
@@ -56,6 +43,4 @@
   background: #fff;
   text-align: center;
   color: var(--link-color);
-  font-size: 16px;
-  font-weight: 500;
 }

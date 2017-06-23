@@ -54,9 +54,11 @@ class RefListComponent extends NodeComponent {
     })
 
     el.append(
-      $$('a').attr({href: '#'})
-        .append('Add Reference')
-        .on('click', this._addRef)
+      $$('div').append(
+        $$('button').addClass('sg-big-button')
+          .append('Add Reference')
+          .on('click', this._addRef)
+      )
     )
     return el
   }
@@ -80,9 +82,6 @@ class RefListComponent extends NodeComponent {
       let refList = doc.find('ref-list')
       let ref = doc.createElement('ref')
       let stringCitation = doc.createElement('string-citation')
-      // TODO: Ability to add text to a text node
-      // e.g. stringCitation.text('Please enter publication name')
-      stringCitation.setText('Please enter publication name')
       ref.append(stringCitation)
       refList.append(ref)
     })

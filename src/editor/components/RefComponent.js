@@ -19,6 +19,7 @@ export default class RefComponent extends Component {
       }
       stringCitationEl.append(
         $$(TextPropertyEditor, {
+          placeholder: 'Enter Reference',
           path: stringCitation.getTextPath(),
           disabled: this.props.disabled
         }),

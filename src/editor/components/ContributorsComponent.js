@@ -36,7 +36,7 @@ export default class ContributorsComponent extends NodeComponent {
     return $$('div').addClass('se-name').append(
       $$('div').addClass('se-label').append('Name'),
       $$(TextPropertyEditor, {
-        placeholder: 'Please enter name',
+        placeholder: 'Enter Name',
         path: stringContrib.getTextPath(),
         disabled: this.props.disabled
       }).ref(stringContrib.id).addClass('se-text-input')

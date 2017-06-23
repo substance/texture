@@ -10,7 +10,8 @@
 }
 
 .sc-fn-item {
-  padding-bottom: 20px;
+  margin-left: -40px;
+  padding-bottom: 5px;
 }
 
 .sc-fn-item .se-fn-container {
@@ -37,7 +38,7 @@
 .sc-fn-item .se-fn-container .se-label {
   font-family: 'Avenir Next';
   position: absolute;
-  left: 0px;
+  left: 10px;
   top: 10px;
   font-size: 16px;
   line-height: 20px;
@@ -54,6 +55,6 @@
 }
 
 .sc-fn-item .se-fn-container .sc-fn {
-  padding-left: 40px;
-  margin-right: 40px;
+  padding-left: 30px;
+  margin-right: 30px;
 }

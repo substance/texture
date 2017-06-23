@@ -16,8 +16,7 @@ class IncreaseHeadingLevelCommand extends Command {
       let node = doc.get(path[0])
       if (node 
         && node.isBlock() 
-        && node.type === 'heading' 
-        && node.getAttribute('level') < 3) {
+        && node.type === 'heading') {
         commandState.active = true
       } else {
         commandState.disabled = true
@@ -32,12 +31,15 @@ class IncreaseHeadingLevelCommand extends Command {
   execute(params) {
     let sel = params.selection
     let editorSession = params.editorSession
-
+    let doc = editorSession.getDocument()
     let path = sel.getPath()
-    editorSession.transaction((txDoc) => {
-      let node = txDoc.get(path[0])
-      node.setAttribute('level', String(parseInt(node.level, 10) + 1))
-    })
+    let node = doc.get(path[0])
+    if(node.getAttribute('level') < 3) {
+      editorSession.transaction((txDoc) => {
+        let node = txDoc.get(path[0])
+        node.setAttribute('level', String(parseInt(node.level, 10) + 1))
+      })
+    }
   }
 }
 

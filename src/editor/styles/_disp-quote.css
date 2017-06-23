@@ -1,3 +1,12 @@
 .sc-disp-quote {
-  padding: 0px 10px;
+  padding: 10px;
+}
+
+.sc-disp-quote .sc-disp-quote-content {
+  border-left: 2px solid var(--default-text-color);
+  padding-left: 20px;
+}
+
+.sc-disp-quote .se-attribution {
+  text-align: right;
 }

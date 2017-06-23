@@ -17,7 +17,7 @@ export default class AffiliationsComponent extends NodeComponent {
         el.append(
           $$('div').addClass('se-aff').append(
             $$(TextPropertyEditor, {
-              history: 'affs',
+              placeholder: 'Enter affiliation title',
               path: stringAff.getTextPath(),
               disabled: this.props.disabled
             }).addClass('se-text-input').ref(stringAff.id),
@@ -44,7 +44,7 @@ export default class AffiliationsComponent extends NodeComponent {
       let affGroup = doc.get(nodeId)
       let aff = doc.createElement('aff').attr('aff-type', 'foo')
       aff.append(
-        doc.createElement('string-aff').setTextContent('Enter affiliation title')
+        doc.createElement('string-aff')
       )
       affGroup.append(aff)
     })

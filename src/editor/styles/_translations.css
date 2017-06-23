@@ -33,13 +33,21 @@
   background: #fff;
 }
 
-.sc-translations .sc-abstract {
+.sc-translations .se-title-translations .sc-text-property-editor:focus {
+  border-color: #4e92df;
+}
+
+.sc-translations .sc-abstract-translation .sc-container-editor {
   margin-top: 10px;
   padding: 0px 10px;
   border: 1px solid #dadada;
   border-radius: 3px;
   font-size: 14px;
   background: #fff;
+}
+
+.sc-translations .sc-abstract-translation .sc-container-editor:focus {
+  border-color: #4e92df;
 }
 
 .sc-translations .se-add-translation {

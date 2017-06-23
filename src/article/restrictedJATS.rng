@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="JATS.rng"/>
+
+  <!-- Groups which are shared by several elements -->
+
+  <!--
+    Changes
+      - replace address-link.class with just ext-link
+        i.e. remove <email> and <uri>
+      - remove math.class, i.e. removed mml.math and text-math
+    Transformation:
+      - replace <email> and <uri> with <named-content>
+      - wrap math in <inline-math>
+  -->
+  <define name="all-phrase">
+    <choice>
+      <ref name="ext-link"/>
+      <ref name="article-link.class"/>
+      <ref name="appearance.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+      <ref name="x.class"/>
+    </choice>
+  </define>
+
+  <!--
+    Changes:
+      - Removed all block level elements
+      - Removed inline definitions of citations
+
+    Transformation:
+      - pull block-level elements one level higher
+      - put citations into ref-list
+  -->
+  <define name="p-elements">
+    <choice>
+      <ref name="all-phrase"/>
+    </choice>
+  </define>
+
+  <!--
+    Changes:
+      - removed math.class
+    Transformation:
+      - use display-formula instead
+  -->
+  <define name="para-level">
+    <choice>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="list.class"/>
+      <ref name="nothing-but-para.class"/>
+      <ref name="related-article.class"/>
+      <ref name="rest-of-para.class"/>
+      <ref name="x.class"/>
+    </choice>
+  </define>
+
+  <!--
+    Change:
+      - removed <ext-link> as it is an annotation
+    Transformation:
+      - use <email> or <uri> instead
+  -->
+  <define name="references.class">
+    <choice>
+      <ref name="annotation"/>
+      <ref name="article-title"/>
+      <ref name="chapter-title"/>
+      <ref name="collab"/>
+      <ref name="collab-alternatives"/>
+      <ref name="comment"/>
+      <ref name="conf-acronym"/>
+      <ref name="conf-date"/>
+      <ref name="conf-loc"/>
+      <ref name="conf-name"/>
+      <ref name="conf-sponsor"/>
+      <ref name="data-title"/>
+      <ref name="date"/>
+      <ref name="date-in-citation"/>
+      <ref name="day"/>
+      <ref name="edition"/>
+      <ref name="email"/>
+      <ref name="elocation-id"/>
+      <ref name="etal"/>
+      <ref name="fpage"/>
+      <ref name="gov"/>
+      <ref name="institution"/>
+      <ref name="institution-wrap"/>
+      <ref name="isbn"/>
+      <ref name="issn"/>
+      <ref name="issn-l"/>
+      <ref name="issue"/>
+      <ref name="issue-id"/>
+      <ref name="issue-part"/>
+      <ref name="issue-title"/>
+      <ref name="lpage"/>
+      <ref name="month"/>
+      <ref name="name"/>
+      <ref name="name-alternatives"/>
+      <ref name="object-id"/>
+      <ref name="page-range"/>
+      <ref name="part-title"/>
+      <ref name="patent"/>
+      <ref name="person-group"/>
+      <ref name="pub-id"/>
+      <ref name="publisher-loc"/>
+      <ref name="publisher-name"/>
+      <ref name="role"/>
+      <ref name="season"/>
+      <ref name="series"/>
+      <ref name="size"/>
+      <ref name="source"/>
+      <ref name="std"/>
+      <ref name="string-name"/>
+      <ref name="supplement"/>
+      <ref name="trans-source"/>
+      <ref name="trans-title"/>
+      <ref name="uri"/>
+      <ref name="version"/>
+      <ref name="volume"/>
+      <ref name="volume-id"/>
+      <ref name="volume-series"/>
+      <ref name="year"/>
+    </choice>
+  </define>
+
+  <!-- Redefinitions -->
+
+  <!--
+    Changes:
+      - replaced all-phrase with a selection of pure math content
+        - math.class: mathml or tex,
+        - graphic: if given as image,
+        - x: generated
+    Transformation:
+      - Not available: due to the arbitrarity of the original spec,
+        it is impossible to write a universal transformer
+  -->
+  <define name="inline-formula">
+    <element name="inline-formula">
+      <!-- attributes -->
+      <ref name="inline-formula-attlist"/>
+      <!-- elements -->
+      <choice>
+        <ref name="x"/>
+        <ref name="math.class"/>
+        <ref name="graphic"/>
+      </choice>
+    </element>
+  </define>
+
+  <!--
+    Changes:
+      - replaced mixed-content with a selection of structured data
+        separating meta-data from content
+    Transformation:
+      - Not available: due to the arbitrarity of the original spec,
+        it is impossible to write a universal transformer
+  -->
+  <define name="disp-formula">
+    <element name="disp-formula">
+      <!-- attributes -->
+      <ref name="disp-formula-attlist"/>
+      <!-- elements -->
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="abstract"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="kwd-group"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="access.class"/>
+      </zeroOrMore>
+      <choice>
+        <ref name="x"/>
+        <ref name="math.class"/>
+        <ref name="graphic"/>
+      </choice>
+      <zeroOrMore>
+        <choice>
+          <ref name="attrib"/>
+          <ref name="permissions"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Changes:
+      -
+  -->
+  <define name="element-citation">
+    <element name="element-citation">
+      <ref name="element-citation-attlist"/>
+      <oneOrMore>
+        <choice>
+          <ref name="related-article"/>
+          <ref name="related-object"/>
+          <ref name="citation-additions.class"/>
+          <ref name="label.class"/>
+          <ref name="references.class"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <!--
+    Changes:
+      - in general, the structured pieces have been removed because
+        this element seems to be intended as a text-node primarily
+      - removed address.class
+      - removed contrib-group.class
+      - removed contrib-info.class
+      - removed math.class
+
+    TODO: how can existing JATS be mapped? need samples for that, as intention of spec
+    is unclear.
+  -->
+  <define name="collab">
+    <element name="collab">
+      <ref name="collab-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="article-link.class"/>
+          <ref name="appearance.class"/>
+          <ref name="break.class"/>
+          <ref name="emphasis.class"/>
+          <ref name="inline-display.class"/>
+          <ref name="inline-math.class"/>
+          <ref name="phrase.class"/>
+          <ref name="subsup.class"/>
+          <ref name="x.class"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Changes:
+      - in general, the structured pieces have been removed because
+        this element seems to be intended as a text-node primarily
+      - removed address.class
+
+    TODO: look at samples to come up with a transformation strategy.
+  -->
+  <define name="conf-loc">
+    <element name="conf-loc">
+      <ref name="conf-loc-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!-- Correspondence -->
+
+  <!--
+    Changes:
+      - removed structured content, as this to be used as a text-node primarily
+      - removed "address.class"
+      - removed "label.class"
+
+    Transformation: TODO learn from samples
+  -->
+  <define name="corresp">
+    <element name="corresp">
+      <ref name="corresp-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="all-phrase"/>
+          <ref name="break.class"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Changes:
+      - removed structured content, as this to be used as a text-node primarily
+      - removed "address.class"
+
+    Transformation: TODO learn from samples
+  -->
+  <define name="publisher-loc">
+    <element name="publisher-loc">
+      <ref name="publisher-loc-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="all-phrase"/>
+          <ref name="break.class"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Changes:
+      - removed textual content, as this to be used as an element node primarily
+      - removed "x.class"
+
+    Transformation: TODO learn from samples
+  -->
+  <define name="person-group">
+    <element name="person-group">
+      <ref name="person-group-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="name.class"/>
+          <ref name="person-group-info.class"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+</grammar>

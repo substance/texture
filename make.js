@@ -7,7 +7,6 @@ const vfs = require('substance-bundler/extensions/vfs')
 const DIST = 'dist/'
 const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
-  path.join(__dirname, 'data', 'rng'),
   path.join(__dirname, 'src', 'article')
 ]
 
@@ -18,7 +17,7 @@ b.task('clean', function() {
 
 b.task('assets', function() {
   vfs(b, {
-    src: ['./data/**/*'],
+    src: ['./data/**/*', './src/article/*.rng', './src/article/*.json'],
     dest: 'tmp/vfs.js',
     format: 'umd', moduleName: 'vfs'
   })
@@ -48,20 +47,13 @@ b.task('default', ['clean', 'assets', 'build'])
 
 b.task('dev', ['clean', 'assets', 'build:dev'])
 
-/* TESTS */
-
-b.task('build:test:node', ['clean:test'], _buildTestsNode)
-
-b.task('run:test:node', ['build:test:node'], _runTestsNode)
-
-b.task('run:test', ['run:test:node'])
-
-b.task('test:browser', ['clean:test', 'assets:test'], function() {
-  _buildTestsBrowser()
+b.task('test', () => {
+  // TODO implement a test-suite
+  // A test-suite should cover
+  // - basic functionality of components
+  // - import from JATS -> restrictedJATS
+  // - transformation between restrictedJATS and TextureJATS
 })
-
-b.task('test', ['run:test'])
-
 
 /* HELPERS */
 
@@ -86,57 +78,26 @@ function _buildCSS(DEST, transpileToES5) {
   b.css('./node_modules/substance/substance-reset.css', DEST+'texture-reset.css', {variables: transpileToES5})
 }
 
-function _buildTestsBrowser(transpileToES5) {
-  b.js('./test/index.js', {
-    target: {
-      dest: TEST+'tests.js',
-      format: 'umd', moduleName: 'tests'
-    },
-    commonjs: true,
-    buble: transpileToES5,
-    external: { 'substance-test': 'substanceTest' },
-  })
-}
-
-function _buildTestsNode() {
-  b.js('./test/index.js', {
-    target: {
-      dest: TEST+'tests.cjs.js',
-      format: 'cjs'
-    },
-    external: ['substance-test'],
-    buble: true,
-    commonjs: true
-  })
-}
-
-function _runTestsNode() {
-  b.custom('Running nodejs tests...', {
-    execute: function() {
-      let cp = require('child_process')
-      return new Promise(function(resolve, reject) {
-        const child = cp.fork(path.join(__dirname, '.test/run-tests.js'))
-        child.on('message', function(msg) {
-          if (msg === 'done') { resolve() }
-        })
-        child.on('error', function(error) {
-          reject(new Error(error))
-        })
-        child.on('close', function(exitCode) {
-          if (exitCode !== 0) {
-            process.exit(exitCode)
-          } else {
-            resolve()
-          }
-        })
-      });
+// we used this internally just to get a single-file version of
+// the offficial JATS 1.1 rng data set
+function _singleJATSFile() {
+  const SRC = 'data/rng/JATS-archive-oasis-article1-mathml3.rng'
+  const DEST = 'src/article/JATS.rng'
+  const entry = path.basename(SRC)
+  b.custom(`Pulling JATS spec into a single file...`, {
+    src: ['data/rng/*.rng'],
+    dest: DEST,
+    execute() {
+      const { loadRNG } = require('substance')
+      let rng = loadRNG(fs, ['data/rng'], entry)
+      let xml = rng.serialize()
+      b.writeSync(DEST, xml)
     }
   })
 }
 
 function _compileSchema(name, src, searchDirs, baseDir='generated', options = {} ) {
   const DEST = `tmp/${name}.data.js`
-  const CLASSIFICATION = `${baseDir}/${name}.classification.json`
   const ISSUES = `tmp/${name}.issues.txt`
   const entry = path.basename(src)
   b.custom(`Compiling schema '${name}'...`, {
@@ -144,11 +105,7 @@ function _compileSchema(name, src, searchDirs, baseDir='generated', options = {}
     dest: DEST,
     execute() {
       const { compileRNG, serializeXMLSchema, checkSchema } = require('substance')
-      let manualClassification
-      if (fs.existsSync(CLASSIFICATION)) {
-        manualClassification = JSON.parse(fs.readFileSync(CLASSIFICATION))
-      }
-      const xmlSchema = compileRNG(fs, searchDirs, entry, manualClassification)
+      const xmlSchema = compileRNG(fs, searchDirs, entry)
       let schemaData = serializeXMLSchema(xmlSchema)
       b.writeSync(DEST, `export default ${JSON.stringify(schemaData)}`)
       if (options.debug) {

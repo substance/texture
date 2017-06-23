@@ -102,7 +102,7 @@ export default {
     config.addComponent('tfoot', TableFootComponent)
     config.addComponent('tr', TableRowComponent)
     config.addComponent('td', TableDataCellComponent)
-    config.addComponent('th', TableHeadComponent)
+    config.addComponent('th', TableDataHeadComponent)
 
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('fn', FnComponent)

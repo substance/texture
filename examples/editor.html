@@ -38,9 +38,11 @@
           configurator: cfg
         })
         // mount user interface
-        EditorPackage.Editor.mount({
+        const editor = EditorPackage.Editor.mount({
           editorSession: editorSession
         }, document.body)
+
+        window.editor = editor
       }
     </script>
   </head>

@@ -5,7 +5,8 @@ import {
   TextPropertyEditor,
   EditInlineNodeCommand,
   EditAnnotationCommand,
-  SchemaDrivenCommandManager
+  SchemaDrivenCommandManager,
+  substanceGlobals
 } from 'substance'
 
 import TextureJATSPackage from '../article/TextureJATSPackage'
@@ -53,6 +54,8 @@ import TableFigPreview from './components/TableFigPreview'
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
+
+substanceGlobals.DEBUG_RENDERING = true
 
 export default {
   name: 'author',

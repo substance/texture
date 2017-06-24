@@ -10,22 +10,27 @@ export default class ContributorsComponent extends NodeComponent {
     const doc = contribGroup.getDocument()
     let el = $$('div').addClass('sc-contributors')
     let affs = doc.findAll('article-meta > aff-group > aff')
-
     contribGroup.getChildren().forEach((contrib) => {
       el.append(
-        $$('div').addClass('se-metadata-contributor').append(
-          this._renderName($$, contrib),
-          this._renderAffiliations($$, contrib, affs),
-          $$(Icon, {icon: 'fa-trash'})
-            .addClass('se-remove-contributor')
-            .on('click', this._removeContributor.bind(this, contrib.id))
-        )
+        this._renderContributor($$, contrib, affs)
       )
     })
     el.append(
       $$('button').addClass('se-metadata-contributor-add')
         .append('Add Contributor')
         .on('click', this._addContributor)
+    )
+    return el
+  }
+
+  _renderContributor($$, contrib, affs) {
+    let el = $$('div').addClass('se-metadata-contributor')
+    el.append(
+      this._renderName($$, contrib),
+      this._renderAffiliations($$, contrib, affs),
+      $$(Icon, {icon: 'fa-trash'})
+        .addClass('se-remove-contributor')
+        .on('click', this._removeContributor.bind(this, contrib.id))
     )
     return el
   }

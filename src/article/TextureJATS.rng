@@ -441,4 +441,41 @@
     </optional>
   </define>
 
+  <define name="trans-abstract-group">
+    <element name="trans-abstract-group">
+      <zeroOrMore>
+        <choice>
+          <ref name="trans-abstract"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="trans-abstract-model">
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <!-- TODO: how to make this non-optional? -->
+    <optional>
+      <ref name="abstract-content"/>
+    </optional>
+  </define>
+
+  <define name="trans-title-group">
+    <element name="trans-title-group">
+      <zeroOrMore>
+        <choice>
+          <ref name="trans-title"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="td.content">
+    <ref name="simple-formatted-text"/>
+  </define>
+  <define name="th.content">
+    <ref name="simple-formatted-text"/>
+  </define>
+
 </grammar>

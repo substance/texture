@@ -270,7 +270,7 @@ export default {
       {
         name: 'text-types',
         type: 'tool-dropdown',
-        showDisabled: true,
+        showDisabled: false,
         style: 'descriptive',
         commandGroups: ['text-types']
       },

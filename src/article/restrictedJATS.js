@@ -5,7 +5,7 @@ const restrictedJATS = deserializeXMLSchema(restrictedJATSData)
 
 // TODO: this should come from compilation
 restrictedJATS.getName = function() {
-  return 'restrictedJATS'
+  return 'restricted-jats'
 }
 
 restrictedJATS.getVersion = function() {

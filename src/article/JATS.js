@@ -5,7 +5,7 @@ const JATS = deserializeXMLSchema(JATSData)
 
 // TODO: this should come from compilation
 JATS.getName = function() {
-  return 'JATS'
+  return 'jats'
 }
 
 JATS.getVersion = function() {

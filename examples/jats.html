@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Importing JATS</title>
+    <meta charset="UTF-8">
+    <style>
+      /* Texture Component styles */
+      @import '../dist/texture.css';
+      /* You may want to use your own reset and pagestyle */
+      @import '../dist/texture-reset.css';
+      @import '../dist/texture-pagestyle.css';
+      @import '../node_modules/font-awesome/css/font-awesome.min.css';
+      body { overflow: hidden; }
+    </style>
+    <script type="text/javascript" src="../node_modules/substance/dist/substance.js"></script>
+    <script type="text/javascript" src="../dist/texture.js"></script>
+    <script type="text/javascript" src="../tmp/vfs.js"></script>
+    <script type="text/javascript">
+      const { DefaultDOMElement, validateXMLSchema } = window.substance
+      const { JATSImporter, JATSImportDialog } = window.texture
+
+      window.onload = function() {
+        const EXAMPLE = 'data/jats/scielo/ahead-of-print/1678-8060-mioc-0074-02760160042.xml'
+        console.log('Loading JATS file...', EXAMPLE)
+        let jats = vfs.readFileSync(EXAMPLE, 'utf8')
+        let importer = new JATSImporter()
+        JATSImportDialog.mount({importer}, window.document.body)
+        importer.import(jats)
+      }
+
+      // function _check(jats) {
+      //   let dom = DefaultDOMElement.parseXML(jats)
+      //   if (dom) {
+      //     console.log('ok.')
+      //   } else {
+      //     console.error('Could not parse XML.')
+      //   }
+
+      //   console.log('Validating JATS...')
+      //   let result = validateXMLSchema(JATS, dom)
+      //   if (result.errors) {
+      //     console.error('This is not valid JATS:', result.errors)
+      //     return
+      //   } else {
+      //     console.log('ok.')
+      //   }
+
+      //   console.log('Validating restrictedJATS...')
+      //   result = validateXMLSchema(restrictedJATS, dom)
+      //   if (result.errors) {
+      //     console.error("This does not adhere to Texture's JATS restrictions", result.errors)
+      //     return
+      //   } else {
+      //     console.log('ok.')
+      //   }
+      // }
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

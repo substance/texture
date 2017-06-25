@@ -1,0 +1,11 @@
+.sc-import-stage.sm-initial {
+  color: #eee;
+}
+
+.sc-import-stage.sm-errored {
+  color: red;
+}
+
+.sc-import-stage.sm-finished {
+  color: green;
+}

@@ -12,4 +12,9 @@ TextureJATS.getVersion = function() {
   return '1.1'
 }
 
+TextureJATS.getStartElement = function() {
+  return 'article'
+}
+
+
 export default TextureJATS

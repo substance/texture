@@ -22,7 +22,7 @@ b.task('clean', function() {
 
 b.task('assets', function() {
   vfs(b, {
-    src: ['./data/**/*', './src/article/*.rng', './src/article/*.json'],
+    src: ['./data/**/*.xml', './src/article/*.rng', './src/article/*.json'],
     dest: 'tmp/vfs.js',
     format: 'umd', moduleName: 'vfs'
   })

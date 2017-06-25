@@ -12,4 +12,9 @@ restrictedJATS.getVersion = function() {
   return '1.1'
 }
 
+restrictedJATS.getStartElement = function() {
+  return 'article'
+}
+
+
 export default restrictedJATS

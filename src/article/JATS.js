@@ -12,4 +12,9 @@ JATS.getVersion = function() {
   return '1.1'
 }
 
+JATS.getStartElement = function() {
+  return 'article'
+}
+
+
 export default JATS

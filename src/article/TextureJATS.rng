@@ -436,6 +436,16 @@
     </element>
   </define>
 
+  <!-- pulled <title> out of <caption> -->
+  <define name="caption">
+    <element name="caption">
+      <ref name="caption-attlist"/>
+      <zeroOrMore>
+        <ref name="just-para.class"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <define name="table-fig">
     <element name="table-fig">
       <ref name="title"/>

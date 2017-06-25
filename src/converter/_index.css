@@ -1,3 +1,8 @@
+.sc-jats-import-dialog {
+  max-height: 600px;
+  overflow: auto;
+}
+
 .sc-import-stage.sm-initial {
   color: #eee;
 }

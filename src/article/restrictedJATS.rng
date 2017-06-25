@@ -717,17 +717,11 @@
       <ref name="funding-source-attlist"/>
       <zeroOrMore>
         <choice>
-          <ref name="funding-source-elements"/>
+          <text />
+          <ref name="simple-text"/>
         </choice>
       </zeroOrMore>
     </element>
-  </define>
-  <define name="funding-source-elements">
-    <choice>
-      <ref name="x"/>
-      <ref name="institution"/>
-      <ref name="institution-wrap"/>
-    </choice>
   </define>
 
   <define name="on-behalf-of-elements">
@@ -767,12 +761,6 @@
       <ref name="phrase-content.class"/>
       <ref name="subsup.class"/>
     </choice>
-  </define>
-
-  <define name="caption">
-    <element name="caption">
-      <ref name="just-para.class"/>
-    </element>
   </define>
 
 </grammar>

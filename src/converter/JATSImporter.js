@@ -1,5 +1,6 @@
 import { EventEmitter, DefaultDOMElement, validateXMLSchema } from 'substance'
 import { JATS, restrictedJATS, TextureJATS } from '../article'
+import { r2t } from './r2t'
 
 /*
   Goal:
@@ -53,7 +54,12 @@ export default class JATSImporter extends EventEmitter {
 
   _transform(mode, dom) {
     this.emit(`begin:${mode}`)
-    // TODO: apply single transformations
+    if (mode  === 'r2t') {
+      // we maintain this as a monolith
+      r2t(dom)
+    } else {
+      // TODO: apply single transformations
+    }
     this.emit(`end:${mode}`)
     return true
   }

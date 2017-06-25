@@ -95,6 +95,22 @@
     </zeroOrMore>
   </define>
 
+  <!--
+    Changes:
+      - Removed all block level elements
+      - Removed inline definitions of citations
+
+    Transformation:
+      - pull block-level elements one level higher
+      - put citations into ref-list
+  -->
+  <define name="p-elements">
+    <choice>
+      <ref name="all-phrase"/>
+    </choice>
+  </define>
+
+
   <!-- Citations -->
 
   <!--

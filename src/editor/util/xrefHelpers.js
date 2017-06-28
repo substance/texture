@@ -7,8 +7,8 @@ export const REF_TYPES = {
   'fig-group': 'fig',
   'fn': 'fn',
   'ref': 'bibr',
-  'table-fig': 'table',
-  'table-fig-group': 'table'
+  'table-wrap': 'table',
+  'table-wrap-group': 'table'
 }
 
 

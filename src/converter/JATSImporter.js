@@ -1,6 +1,7 @@
 import { EventEmitter, DefaultDOMElement, validateXMLSchema } from 'substance'
 import { JATS, restrictedJATS, TextureJATS } from '../article'
 import { r2t } from './r2t'
+import { j2r } from './j2r'
 
 /*
   Goal:
@@ -18,7 +19,9 @@ export default class JATSImporter extends EventEmitter {
     try {
       dom = DefaultDOMElement.parseXML(xml)
     } catch(err) {
-      this.emit('error:parse', err)
+      this.emit('error:parse', {
+        msg: String(err)
+      })
       return
     }
     this.emit('end:parse')
@@ -43,8 +46,11 @@ export default class JATSImporter extends EventEmitter {
     this.emit(`begin:validate-${name}`)
     let res = validateXMLSchema(schema, dom)
     if (res.errors) {
+      // TODO: we need better errors
       res.errors.forEach((err) => {
-        this.emit(`error:validate-${name}`, err)
+        this.emit(`error:validate-${name}`, {
+          msg: err
+        })
       })
       return false
     }
@@ -54,13 +60,29 @@ export default class JATSImporter extends EventEmitter {
 
   _transform(mode, dom) {
     this.emit(`begin:${mode}`)
-    if (mode  === 'r2t') {
-      // we maintain this as a monolith
-      r2t(dom)
-    } else {
-      // TODO: apply single transformations
+    const api = this._createAPI(dom, mode)
+    switch (mode) {
+      case 'j2r':
+        j2r(dom, api)
+        break
+      case 'r2t':
+        r2t(dom, api)
+        break
+      default:
+        //
     }
     this.emit(`end:${mode}`)
     return true
   }
+
+  _createAPI(dom, mode) {
+    const self = this
+    let api = {
+      error(data) {
+        self.emit(`error:${mode}`, data)
+      }
+    }
+    return api
+  }
+
 }

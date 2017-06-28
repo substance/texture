@@ -61,7 +61,7 @@ class ImportStage extends Component {
   _renderError($$, err) {
     let el = $$('div').addClass('se-error')
     // TODO: maybe we will have more structured errors
-    el.append(String(err))
+    el.append(err.msg)
     return el
   }
 

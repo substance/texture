@@ -1,4 +1,4 @@
-import unwrapChildren from '../util/unwrapChildren'
+import { unwrapChildren } from '../util/domHelpers'
 
 export default class WrapBodyContent {
 

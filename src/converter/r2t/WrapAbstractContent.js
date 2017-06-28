@@ -1,4 +1,4 @@
-import unwrapChildren from '../util/unwrapChildren'
+import { unwrapChildren } from '../util/domHelpers'
 
 const ABSTRACT_META = ['object-id','sec-meta', 'label', 'title'].reduce((m, n) => { m[n] = true; return m}, {})
 const ABSTRACT_BACK = ['notes','fn-group','glossary','ref-list'].reduce((m, n) => { m[n] = true; return m}, {})

@@ -95,7 +95,7 @@ export default {
     config.addComponent('contributors', ContributorsComponent)
     config.addComponent('front', FrontComponent)
     config.addComponent('fig', FigComponent)
-    config.addComponent('table-fig', FigComponent)
+    config.addComponent('table-wrap', FigComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
@@ -123,7 +123,7 @@ export default {
     config.addComponent('ref-preview', RefPreview)
     config.addComponent('fn-preview', FnPreview)
     config.addComponent('fig-preview', FigPreview)
-    config.addComponent('table-fig-preview', TableFigPreview)
+    config.addComponent('table-wrap-preview', TableFigPreview)
 
     // Commands
     config.addCommand('edit-xref', EditInlineNodeCommand, {

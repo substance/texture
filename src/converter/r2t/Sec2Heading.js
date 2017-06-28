@@ -1,4 +1,4 @@
-import replaceWith from '../util/replaceWith'
+import { replaceWith } from '../util/domHelpers'
 
 export default class Sec2Heading {
 

@@ -167,10 +167,28 @@
 
   <!--
     Introducing <element-aff> and <string-aff> corresponding
-    to citations: every aff can either be given in a structured
-    or in a formatted way.
+    to citations: every aff can either be given in a
+    structured or in a formatted way.
 
     TODO: define a transformation from real JATS
+    Looking at Scielo's tagging style, we find support for
+    this approach, where <institution content-type="original"> for the textual form, and the other parts are probably tagged manually, to infer
+    finer grained details.
+    ...
+    <aff id="aff01">
+      <label>1</label>
+      <institution content-type="orgname">Fundação Oswaldo Cruz</institution>
+      <institution content-type="orgdiv1">Escola Nacional de Saúde Pública Sérgio Arouca</institution>
+      <institution content-type="orgdiv2">Centro de Estudos da Saúde do Trabalhador e Ecologia Humana</institution>
+      <addr-line>
+        <named-content content-type="city">Manguinhos</named-content>
+        <named-content content-type="state">RJ</named-content>
+      </addr-line>
+      <country country="BR">Brasil</country>
+      <email>maurosilva@foo.com</email>
+      <institution content-type="original">Prof. da Fundação Oswaldo Cruz; da Escola Nacional de Saúde Pública Sérgio Arouca, do Centro de Estudos da Saúde do Trabalhador e Ecologia Humana. RJ - Manguinhos / Brasil. maurosilva@foo.com</institution>
+    </aff>
+    ...
   -->
   <define name="aff">
     <element name="aff">
@@ -193,6 +211,7 @@
     <element name="element-aff">
       <zeroOrMore>
         <choice>
+          <ref name="label"/>
           <ref name="address.class"/>
           <ref name="email"/>
         </choice>
@@ -282,7 +301,6 @@
         <choice>
           <ref name="sec.class"/>
           <ref name="para-level"/>
-          <ref name="table-fig"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -430,8 +448,15 @@
 
   <define name="fig">
     <element name="fig">
-      <ref name="title"/>
-      <ref name="caption"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
       <ref name="graphic"/>
     </element>
   </define>
@@ -446,11 +471,21 @@
     </element>
   </define>
 
-  <define name="table-fig">
-    <element name="table-fig">
-      <ref name="title"/>
-      <ref name="caption"/>
+  <define name="table-wrap">
+    <element name="table-wrap">
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
       <ref name="table"/>
+      <optional>
+        <ref name="table-wrap-foot"/>
+      </optional>
     </element>
   </define>
 

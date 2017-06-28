@@ -60,7 +60,7 @@ export default class FigComponent extends NodeComponent {
 
   _getContentType() {
     switch(this.props.node.type) {
-      case 'table-fig': return 'table'
+      case 'table-wrap': return 'table'
       default: return 'graphic'
     }
   }

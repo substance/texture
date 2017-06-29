@@ -26,8 +26,12 @@ export default class ContextSection extends Component {
 
   _getNode() {
     const doc = this.context.editorSession.getDocument()
-    let selector = NODE_SELECTORS[this.state.contextId] || 'article-meta'
-    return doc.find(selector)
+    if (this.state.nodeId) {
+      return doc.get(this.state.nodeId)
+    } else {
+      let selector = NODE_SELECTORS[this.state.contextId] || 'article-meta'
+      return doc.find(selector)
+    }
   }
 
   /*

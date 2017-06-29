@@ -5,23 +5,18 @@ import ContextSection from './ContextSection'
 
 export default class Editor extends AbstractWriter {
 
-  getInitialState() {
-    return {
-      contextId: 'metadata'
-    }
-  }
-
   didMount() {
     super.didMount()
     this.handleActions({
-      'switchTab': this._switchTab
+      'switchContext': this._switchContext
     })
   }
 
-  _switchTab(contextId) {
-    this.setState({
-      contextId: contextId
-    })
+  /*
+    Switches the state of the context panel
+  */
+  _switchContext(state) {
+    this.refs.contextSection.setState(state)
   }
 
   render($$) {
@@ -40,7 +35,7 @@ export default class Editor extends AbstractWriter {
     return $$('div').addClass('se-context-section').append(
       $$(ContextSection, {
         panelsSpec: configurator.getPanelsSpec()
-      })
+      }).ref('contextSection')
     )
   }
 

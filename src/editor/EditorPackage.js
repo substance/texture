@@ -28,6 +28,7 @@ import ContainerNodeComponent from './components/ContainerNodeComponent'
 import ContributorsComponent from './components/ContributorsComponent'
 import ElementNodeComponent from './components/ElementNodeComponent'
 import EditXrefTool from './components/EditXrefTool'
+import EditRef from './components/EditRef'
 import EditExtLinkTool from './components/EditExtLinkTool'
 import FigComponent from './components/FigComponent'
 import CaptionComponent from './components/CaptionComponent'
@@ -114,6 +115,7 @@ export default {
     config.addComponent('fn', FnComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('ref', RefComponent)
+    config.addComponent('edit-ref', EditRef)
     config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('xref', XrefComponent)
 
@@ -317,6 +319,7 @@ export default {
     config.addLabel('translations', 'Translations')
     config.addLabel('pub-data', 'Publication Data')
     config.addLabel('pub-history', 'Publication History')
+    config.addLabel('edit-ref', 'Edit Reference')
 
     /*
       Define panel structure

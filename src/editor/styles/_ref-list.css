@@ -7,31 +7,16 @@
 
 .sc-ref {
   padding-bottom: 5px;
+  position: relative;
 }
 
-.sc-ref .sc-string-citation {
+.sc-ref {
   margin-left: -40px;
   font-size: 14px;
   position: relative;
 }
 
-.sc-ref .sc-text-property-editor {
-  border: 1px solid transparent;
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.sc-ref .sc-text-property-editor:hover {
-  border: 1px solid #e1e4e8;
-}
-
-.sc-ref .sc-text-property-editor:focus {
-  border: 1px solid var(--link-color);
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.sc-ref .sc-string-citation .se-label {
+.sc-ref .se-label {
   font-family: 'Avenir Next';
   position: absolute;
   left: 5px;
@@ -45,7 +30,7 @@
   background: var(--default-text-color);
 }
 
-.sc-ref .sc-string-citation .se-remove-ref {
+.sc-ref .se-remove-ref {
   position: absolute;
   top: 50%;
   right: 0px;
@@ -55,7 +40,14 @@
   cursor: pointer;
 }
 
-.sc-ref .sc-string-citation > .sc-text-property-editor {
-  margin-left: 30px;
-  margin-right: 30px;
+.sc-ref .sc-element-citation {
+  padding-left: 40px;
+}
+
+.sc-ref .sc-element-citation:hover {
+  background: #eee;
+}
+
+.sc-ref .sc-element-citation {
+  cursor: pointer;
 }

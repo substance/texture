@@ -11,9 +11,13 @@ export default class ElementCitationComponent extends Component {
   _renderArticleTitle($$) {
     // TODO: use text property so annotations are rendered if present
     let articleTitle = this.props.node.find('article-title')
-    return $$('div').addClass('se-article-title').append(
-      articleTitle.content
-    )
+    if(articleTitle) {
+      return $$('div').addClass('se-article-title').append(
+        articleTitle.content
+      )
+    } else {
+      return
+    }
   }
 
   _renderAuthors($$) {

@@ -282,7 +282,41 @@
         <pub-id pub-id-type="doi">10.1002/cne.21892</pub-id>
         </element-citation>
       </ref>
-
+      <ref>
+        <element-citation publication-type="book">
+        <person-group person-group-type="author">
+        <name>
+        <surname>Al-Ibrahim</surname>
+        <given-names>MS</given-names>
+        </name>
+        <name>
+        <surname>Gross</surname>
+        <given-names>JY</given-names>
+        </name>
+        <name>
+        <surname>Walker</surname>
+        <given-names>HK</given-names>
+        </name>
+        <name>
+        <surname>Hall</surname>
+        <given-names>WD</given-names>
+        </name>
+        <name>
+        <surname>Hurst</surname>
+        <given-names>JW</given-names>
+        </name>
+        </person-group>
+        <chapter-title>Tobacco use</chapter-title>
+        <source>Clinical methods: the history, physical,
+        and laboratory examinations</source>
+        <publisher-loc>Stoneham (MA)</publisher-loc>
+        <publisher-name>Butterworth Publishers</publisher-name>
+        <date-in-citation content-type="copyright-year"
+        iso-8601-date="1990">1990</date-in-citation>
+        <fpage>214</fpage>
+        <lpage>216</lpage>
+        </element-citation>
+      </ref>
     </ref-list>
   </back>
 </article>

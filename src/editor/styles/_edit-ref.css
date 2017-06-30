@@ -1,0 +1,36 @@
+.sc-edit-ref {
+  padding: 10px;
+}
+
+.sc-edit-ref .se-label {
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.sc-edit-ref .se-article-title .se-label {
+  margin-top: 5px;
+}
+
+.sc-edit-ref .se-text-input {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.sc-edit-ref .se-form {
+  display: flex;
+  align-items: center;
+}
+
+.sc-edit-ref .se-form > div {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.sc-edit-ref .se-form > div:last-child {
+  margin-right: 0px;
+}

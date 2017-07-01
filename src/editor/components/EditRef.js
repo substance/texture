@@ -49,7 +49,7 @@ export default class EditRef extends Component {
     let publicationType = node.getAttribute('publication-type')
     let el = $$('div').addClass('se-ref-type')
 
-    let switcher = $$('select')
+    let switcher = $$('select').on('change', this._onRefTypeChange)
     refTypes.forEach(refType => {
       let option = $$('option').attr('value', refType.id).append(refType.label)
       if(publicationType === refType.id) option.attr('selected', 'selected')
@@ -286,6 +286,18 @@ export default class EditRef extends Component {
     })
 
     this.rerender()
+  }
+
+  _onRefTypeChange(e) {
+    const node = this.props.node
+    let value = e.target.value
+
+    let editorSession = this.context.editorSession
+    editorSession.transaction(doc => {
+      let elementCitation = doc.get(node.id)
+      elementCitation.setAttribute('publication-type', value)
+      // TODO: switch form
+    })
   }
 
   /*

@@ -2,6 +2,21 @@ import { Component, FontAwesomeIcon as Icon } from 'substance'
 import ElementCitationComponent from './ElementCitationComponent'
 
 export default class RefComponent extends Component {
+
+  didMount() {
+    this.context.editorSession.on('ref:updated', this._onRefUpdated, this)
+  }
+
+  dispose() {
+    this.context.editorSession.off(this)
+  }
+
+  _onRefUpdated(refId) {
+    if (this.props.node.id === refId) {
+      this.rerender()
+    }
+  }
+
   render($$) {
     let el = $$('div').addClass('sc-ref')
     let ref = this.props.node

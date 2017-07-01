@@ -29,7 +29,7 @@ export default class EditRef extends Component {
 
   _renderJournalRefForm($$) {
     let el = $$('div').addClass('se-journal-ref')
-    
+
     el.append(
       this._renderRefTypeSwitcher($$),
       this._renderArticleTitle($$),
@@ -111,12 +111,12 @@ export default class EditRef extends Component {
           placeholder: 'Given Names',
           value: givenName.getTextContent()
         }).ref(givenName.id).addClass('se-text-input')
-        .on('change', this._onInputChange.bind(this, givenName.id)),
+        .on('change', this._onUpdateTextElement.bind(this, givenName.id)),
         $$('input', {
           placeholder: 'Surname',
           path: surname.getTextContent()
         }).ref(surname.id).addClass('se-text-input')
-        .on('change', this._onInputChange.bind(this, givenName.id)),
+        .on('change', this._onUpdateTextElement.bind(this, surname.id)),
         $$(Icon, {icon: 'fa-trash'})
           .addClass('se-remove-author')
           .on('click', this._removeAuthor.bind(this, author.id))
@@ -374,14 +374,12 @@ export default class EditRef extends Component {
       let author = personGroup.find(`name#${authorId}`)
       personGroup.removeChild(author)
     })
-
     this.rerender()
   }
 
   _onRefTypeChange(e) {
     const node = this.props.node
     let value = e.target.value
-
     let editorSession = this.context.editorSession
     editorSession.transaction(doc => {
       let elementCitation = doc.get(node.id).find('element-citation')
@@ -390,8 +388,19 @@ export default class EditRef extends Component {
     })
   }
 
-  _onInputChange(elementId) {
-    let value = this.refs[elementId].val()
+  /*
+    This updates a text node with new text
+  */
+  _onUpdateTextElement(nodeId) {
+    let newValue = this.refs[nodeId].val()
+    let editorSession = this.context.editorSession
+    editorSession.transaction((doc) => {
+      let element = doc.get(nodeId)
+      element.setText(newValue)
+    })
+    // Trigger custom ref:updated which leads to an update of the rendered
+    // record (see RefComponent)
+    editorSession.emit('ref:updated', this.props.node.id)
   }
 
   /*

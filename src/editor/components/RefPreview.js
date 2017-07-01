@@ -1,5 +1,8 @@
 import { Component } from 'substance'
 
+import ElementCitationTitle from './ElementCitationTitle'
+import ElementCitationAuthorsAndYear from './ElementCitationAuthorsAndYear'
+
 /*
   Renders a keyboard-selectable ref preview item
 */
@@ -21,15 +24,11 @@ export default class RefPreview extends Component {
       )
     )
 
-    let node = this.props.node
-    let stringCitation = node.find('string-citation')
-    let TextNode = this.getComponent('text-node')
+    let node = this.props.node.find('element-citation')
     el.append(
-      $$(TextNode, {
-        node: stringCitation
-      })
+      $$(ElementCitationTitle, {node}),
+      $$(ElementCitationAuthorsAndYear, {node})
     )
     return el
   }
 }
-

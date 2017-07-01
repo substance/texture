@@ -21,8 +21,9 @@ export default class EditRef extends Component {
       el.append(this._renderJournalRefForm($$))
     } else if (publicationType === 'book') {
       el.append(this._renderBookRefForm($$))
+    } else {
+      el.append(`Editing of the publication type ${publicationType} is not yet supported in this Alpha version.`)
     }
-
     return el
   }
 
@@ -376,15 +377,8 @@ export default class EditRef extends Component {
     this.rerender()
   }
 
-  _onRefTypeChange(e) {
-    const node = this.props.node
-    let value = e.target.value
-    let editorSession = this.context.editorSession
-    editorSession.transaction(doc => {
-      let elementCitation = doc.get(node.id).find('element-citation')
-      elementCitation.setAttribute('publication-type', value)
-      // TODO: switch form
-    })
+  _onRefTypeChange() {
+    alert('Switching the publication type is not yet supported in this Alpha version.') // eslint-disable-line
   }
 
   /*
@@ -400,13 +394,6 @@ export default class EditRef extends Component {
     // Trigger custom ref:updated which leads to an update of the rendered
     // record (see RefComponent)
     editorSession.emit('ref:updated', this.props.node.id)
-  }
-
-  /*
-    TODO: Rewrite ElementCitation with new data
-  */
-  _updateRef() {
-
   }
 
 }

@@ -92,7 +92,7 @@ class RefListComponent extends NodeComponent {
         doc.createElement('fpage'),
         doc.createElement('lpage'),
         doc.createElement('pub-id').attr('pub-id-type', 'doi'),
-        doc.createElement('pub-id').attr('pub-id-type', 'pubmed')
+        doc.createElement('pub-id').attr('pub-id-type', 'pmid')
       )
       ref.append(elementCitation)
       refList.append(ref)

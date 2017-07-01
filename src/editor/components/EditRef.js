@@ -39,7 +39,7 @@ export default class EditRef extends Component {
       this._renderPages($$),
       this._renderDOI($$),
       this._renderPMID($$),
-      this._renderNote($$)
+      this._renderComment($$)
     )
 
     return el
@@ -57,7 +57,7 @@ export default class EditRef extends Component {
       this._renderPublisherName($$),
       this._renderPublishingYear($$),
       this._renderPages($$),
-      this._renderNote($$)
+      this._renderComment($$)
     )
 
     return el
@@ -107,16 +107,8 @@ export default class EditRef extends Component {
       let surname = author.find('surname')
       let givenName = author.find('given-names')
       let authorEl = $$('div').addClass('se-author se-form').append(
-        $$('input', {
-          placeholder: 'Given Names',
-          value: givenName.getTextContent()
-        }).ref(givenName.id).addClass('se-text-input')
-        .on('change', this._onUpdateTextElement.bind(this, givenName.id)),
-        $$('input', {
-          placeholder: 'Surname',
-          value: surname.getTextContent()
-        }).ref(surname.id).addClass('se-text-input')
-        .on('change', this._onUpdateTextElement.bind(this, surname.id)),
+        this._renderTextElement($$, givenName, 'Given names'),
+        this._renderTextElement($$, surname, 'Surname'),
         $$(Icon, {icon: 'fa-trash'})
           .addClass('se-remove-author')
           .on('click', this._removeAuthor.bind(this, author.id))
@@ -167,16 +159,11 @@ export default class EditRef extends Component {
 
   _renderPublisherLocation($$) {
     let publisherLoc = this.props.node.find('publisher-loc')
-    let TextPropertyEditor = this.getComponent('text-property-editor')
 
     if(publisherLoc) {
       return $$('div').addClass('se-chapter-title').append(
         $$('div').addClass('se-label').append('Publisher Location'),
-        $$(TextPropertyEditor, {
-          placeholder: 'Publisher location',
-          path: publisherLoc.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(publisherLoc.id).addClass('se-text-input')
+        this._renderTextElement($$, publisherLoc, 'Publisher location')
       )
     } else {
       return
@@ -185,16 +172,11 @@ export default class EditRef extends Component {
 
   _renderPublisherName($$) {
     let publisherName = this.props.node.find('publisher-name')
-    let TextPropertyEditor = this.getComponent('text-property-editor')
 
     if(publisherName) {
       return $$('div').addClass('se-chapter-title').append(
         $$('div').addClass('se-label').append('Publisher Name'),
-        $$(TextPropertyEditor, {
-          placeholder: 'Publisher name',
-          path: publisherName.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(publisherName.id).addClass('se-text-input')
+        this._renderTextElement($$, publisherName, 'Publisher name')
       )
     } else {
       return
@@ -203,16 +185,11 @@ export default class EditRef extends Component {
 
   _renderPublishingYear($$) {
     let publisherYear = this.props.node.find('year')
-    let TextPropertyEditor = this.getComponent('text-property-editor')
 
     if(publisherYear) {
       return $$('div').addClass('se-chapter-title').append(
         $$('div').addClass('se-label').append('Publishing Year'),
-        $$(TextPropertyEditor, {
-          placeholder: 'Publishing year',
-          path: publisherYear.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(publisherYear.id).addClass('se-text-input')
+        this._renderTextElement($$, publisherYear, 'Publisher year', 'number')
       )
     } else {
       return
@@ -220,40 +197,27 @@ export default class EditRef extends Component {
   }
 
   _renderPeriodical($$) {
-    let TextPropertyEditor = this.getComponent('text-property-editor')
     let el = $$('div').addClass('se-pereodical')
     let form = $$('div').addClass('se-form')
 
     let volume = this.props.node.find('volume')
     if(volume) {
       form.append(
-        $$(TextPropertyEditor, {
-          placeholder: 'Volume',
-          path: volume.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(volume.id).addClass('se-text-input')
+        this._renderTextElement($$, volume, 'Volume')
       )
     }
 
     let issue = this.props.node.find('issue')
     if(issue) {
       form.append(
-        $$(TextPropertyEditor, {
-          placeholder: 'Issue',
-          path: issue.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(issue.id).addClass('se-text-input')
+        this._renderTextElement($$, issue, 'Issue')
       )
     }
 
     let year = this.props.node.find('year')
     if(year) {
       form.append(
-        $$(TextPropertyEditor, {
-          placeholder: 'Year',
-          path: year.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(year.id).addClass('se-text-input')
+        this._renderTextElement($$, year, 'Year')
       )
     }
 
@@ -266,22 +230,13 @@ export default class EditRef extends Component {
   }
 
   _renderPages($$) {
-    let TextPropertyEditor = this.getComponent('text-property-editor')
     let el = $$('div').addClass('se-pages')
 
     let firstPage = this.props.node.find('fpage')
-    let firstPageEditor = $$(TextPropertyEditor, {
-      placeholder: 'From',
-      path: firstPage.getTextPath(),
-      disabled: this.props.disabled
-    }).ref(firstPage.id).addClass('se-text-input')
+    let firstPageEditor = this._renderTextElement($$, firstPage, 'From')
 
     let lastPage = this.props.node.find('lpage')
-    let lastPageEditor = $$(TextPropertyEditor, {
-      placeholder: 'To',
-      path: lastPage.getTextPath(),
-      disabled: this.props.disabled
-    }).ref(lastPage.id).addClass('se-text-input')
+    let lastPageEditor = this._renderTextElement($$, lastPage, 'To')
 
     el.append(
       $$('div').addClass('se-label').append('Pages (from-to)'),
@@ -296,16 +251,11 @@ export default class EditRef extends Component {
 
   _renderDOI($$) {
     let doi = this.props.node.find('pub-id[pub-id-type=doi]')
-    let TextPropertyEditor = this.getComponent('text-property-editor')
 
     if(doi) {
       return $$('div').addClass('se-doi').append(
         $$('div').addClass('se-label').append('DOI'),
-        $$(TextPropertyEditor, {
-          placeholder: 'DOI of article',
-          path: doi.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(doi.id).addClass('se-text-input')
+        this._renderTextElement($$, doi, 'DOI of article')
       )
     } else {
       return
@@ -314,38 +264,45 @@ export default class EditRef extends Component {
 
   _renderPMID($$) {
     let pmid = this.props.node.find('pub-id[pub-id-type=pmid]')
-    let TextPropertyEditor = this.getComponent('text-property-editor')
 
     if(pmid) {
       return $$('div').addClass('se-pmid').append(
         $$('div').addClass('se-label').append('PMID'),
-        $$(TextPropertyEditor, {
-          placeholder: 'PubMed identifier',
-          path: pmid.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(pmid.id).addClass('se-text-input')
+        this._renderTextElement($$, pmid, 'PubMed identifier')
       )
     } else {
       return
     }
   }
 
-  _renderNote($$) {
-    let note = this.props.node.find('comment')
+  _renderComment($$) {
+    let comment = this.props.node.find('comment')
     let TextPropertyEditor = this.getComponent('text-property-editor')
 
-    if(note) {
-      return $$('div').addClass('se-note').append(
-        $$('div').addClass('se-label').append('Note'),
+    if(comment) {
+      return $$('div').addClass('se-comment').append(
+        $$('div').addClass('se-label').append('Comment'),
         $$(TextPropertyEditor, {
-          placeholder: 'Additional notes',
-          path: note.getTextPath(),
+          placeholder: 'Additional comments',
+          path: comment.getTextPath(),
           disabled: this.props.disabled
-        }).ref(note.id).addClass('se-text-input')
+        }).ref(comment.id).addClass('se-text-input')
       )
     } else {
       return
     }
+  }
+
+  _renderTextElement($$, node, placeholder, type) {
+    let el = $$('input', {
+      placeholder: placeholder,
+      value: node.getTextContent()
+    }).ref(node.id).addClass('se-text-input')
+    .on('change', this._onUpdateTextElement.bind(this, node.id))
+
+    if(type) el.attr('type', type)
+
+    return el
   }
 
   _addAuthor() {

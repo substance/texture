@@ -13,9 +13,18 @@ export default class EditRef extends Component {
       - Implement only publication-type="journal" and publication-type="book"
   */
   render($$) {
-    return $$('div').addClass('sc-edit-ref').append(
-      this._renderJournalRefForm($$)
-    )
+    let elementCitation = this.props.node.find('element-citation')
+    let publicationType = elementCitation.getAttribute('publication-type')
+
+    let el = $$('div').addClass('sc-edit-ref')
+
+    if(publicationType === 'journal') {
+      el.append(this._renderJournalRefForm($$))
+    } else if (publicationType === 'book') {
+      el.append(this._renderBookRefForm($$))
+    }
+
+    return el
   }
 
   _renderJournalRefForm($$) {
@@ -25,7 +34,7 @@ export default class EditRef extends Component {
       this._renderRefTypeSwitcher($$),
       this._renderArticleTitle($$),
       this._renderAuthors($$),
-      this._renderJournalTitle($$),
+      this._renderSource($$, 'Jounal Title'),
       this._renderPeriodical($$),
       this._renderPages($$),
       this._renderDOI($$),
@@ -36,17 +45,27 @@ export default class EditRef extends Component {
     return el
   }
 
-  /*
-    TODO: implement book reference form
-  */
   _renderBookRefForm($$) {
     let el = $$('div').addClass('se-book-ref')
+
+    el.append(
+      this._renderRefTypeSwitcher($$),
+      this._renderSource($$, 'Book Title'),
+      this._renderAuthors($$),
+      this._renderChapterTitle($$),
+      this._renderPublisherLocation($$),
+      this._renderPublisherName($$),
+      this._renderPublishingYear($$),
+      this._renderPages($$),
+      this._renderNote($$)
+    )
+
     return el
   }
 
   _renderRefTypeSwitcher($$) {
-    let node = this.props.node
-    let publicationType = node.getAttribute('publication-type')
+    let elementCitation = this.props.node.find('element-citation')
+    let publicationType = elementCitation.getAttribute('publication-type')
     let el = $$('div').addClass('se-ref-type')
 
     let switcher = $$('select').on('change', this._onRefTypeChange)
@@ -115,18 +134,90 @@ export default class EditRef extends Component {
     return el
   }
 
-  _renderJournalTitle($$) {
-    let journalTitle = this.props.node.find('source')
+  _renderSource($$, label) {
+    let source = this.props.node.find('source')
     let TextPropertyEditor = this.getComponent('text-property-editor')
 
-    return $$('div').addClass('se-journal-title').append(
-      $$('div').addClass('se-label').append('Journal Title'),
+    return $$('div').addClass('se-source').append(
+      $$('div').addClass('se-label').append(label),
       $$(TextPropertyEditor, {
-        placeholder: 'Journal title',
-        path: journalTitle.getTextPath(),
+        placeholder: label,
+        path: source.getTextPath(),
         disabled: this.props.disabled
-      }).ref(journalTitle.id).addClass('se-text-input')
+      }).ref(source.id).addClass('se-text-input')
     )
+  }
+
+  _renderChapterTitle($$) {
+    let chapterTitle = this.props.node.find('chapter-title')
+    let TextPropertyEditor = this.getComponent('text-property-editor')
+
+    if(chapterTitle) {
+      return $$('div').addClass('se-chapter-title').append(
+        $$('div').addClass('se-label').append('Chapter Title'),
+        $$(TextPropertyEditor, {
+          placeholder: 'Chapter title',
+          path: chapterTitle.getTextPath(),
+          disabled: this.props.disabled
+        }).ref(chapterTitle.id).addClass('se-text-input')
+      )
+    } else {
+      return
+    }
+  }
+
+  _renderPublisherLocation($$) {
+    let publisherLoc = this.props.node.find('publisher-loc')
+    let TextPropertyEditor = this.getComponent('text-property-editor')
+
+    if(publisherLoc) {
+      return $$('div').addClass('se-chapter-title').append(
+        $$('div').addClass('se-label').append('Publisher Location'),
+        $$(TextPropertyEditor, {
+          placeholder: 'Publisher location',
+          path: publisherLoc.getTextPath(),
+          disabled: this.props.disabled
+        }).ref(publisherLoc.id).addClass('se-text-input')
+      )
+    } else {
+      return
+    }
+  }
+
+  _renderPublisherName($$) {
+    let publisherName = this.props.node.find('publisher-name')
+    let TextPropertyEditor = this.getComponent('text-property-editor')
+
+    if(publisherName) {
+      return $$('div').addClass('se-chapter-title').append(
+        $$('div').addClass('se-label').append('Publisher Name'),
+        $$(TextPropertyEditor, {
+          placeholder: 'Publisher name',
+          path: publisherName.getTextPath(),
+          disabled: this.props.disabled
+        }).ref(publisherName.id).addClass('se-text-input')
+      )
+    } else {
+      return
+    }
+  }
+
+  _renderPublishingYear($$) {
+    let publisherYear = this.props.node.find('year')
+    let TextPropertyEditor = this.getComponent('text-property-editor')
+
+    if(publisherYear) {
+      return $$('div').addClass('se-chapter-title').append(
+        $$('div').addClass('se-label').append('Publishing Year'),
+        $$(TextPropertyEditor, {
+          placeholder: 'Publishing year',
+          path: publisherYear.getTextPath(),
+          disabled: this.props.disabled
+        }).ref(publisherYear.id).addClass('se-text-input')
+      )
+    } else {
+      return
+    }
   }
 
   _renderPeriodical($$) {
@@ -294,7 +385,7 @@ export default class EditRef extends Component {
 
     let editorSession = this.context.editorSession
     editorSession.transaction(doc => {
-      let elementCitation = doc.get(node.id)
+      let elementCitation = doc.get(node.id).find('element-citation')
       elementCitation.setAttribute('publication-type', value)
       // TODO: switch form
     })

@@ -98,7 +98,6 @@ export default class EditRef extends Component {
   }
 
   _renderAuthors($$) {
-    let TextPropertyEditor = this.getComponent('text-property-editor')
     let authorNames = this.props.node.findAll('person-group[person-group-type=author] name')
     let el = $$('div').addClass('se-authors').append(
       $$('div').addClass('se-label').append('Authors')
@@ -108,16 +107,16 @@ export default class EditRef extends Component {
       let surname = author.find('surname')
       let givenName = author.find('given-names')
       let authorEl = $$('div').addClass('se-author se-form').append(
-        $$(TextPropertyEditor, {
+        $$('input', {
           placeholder: 'Given Names',
-          path: givenName.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(givenName.id).addClass('se-text-input'),
-        $$(TextPropertyEditor, {
+          value: givenName.getTextContent()
+        }).ref(givenName.id).addClass('se-text-input')
+        .on('change', this._onInputChange.bind(this, givenName.id)),
+        $$('input', {
           placeholder: 'Surname',
-          path: surname.getTextPath(),
-          disabled: this.props.disabled
-        }).ref(surname.id).addClass('se-text-input'),
+          path: surname.getTextContent()
+        }).ref(surname.id).addClass('se-text-input')
+        .on('change', this._onInputChange.bind(this, givenName.id)),
         $$(Icon, {icon: 'fa-trash'})
           .addClass('se-remove-author')
           .on('click', this._removeAuthor.bind(this, author.id))
@@ -389,6 +388,10 @@ export default class EditRef extends Component {
       elementCitation.setAttribute('publication-type', value)
       // TODO: switch form
     })
+  }
+
+  _onInputChange(elementId) {
+    let value = this.refs[elementId].val()
   }
 
   /*

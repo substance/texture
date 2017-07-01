@@ -102,6 +102,7 @@ class RefListComponent extends NodeComponent {
       )
       ref.append(elementCitation)
       refList.append(ref)
+      doc.setSelection(null)
     })
     this.rerender()
   }
@@ -120,6 +121,7 @@ class RefListComponent extends NodeComponent {
       let fnGroup = doc.find('ref-list')
       let ref = fnGroup.find(`ref#${refId}`)
       fnGroup.removeChild(ref)
+      doc.setSelection(null)
     })
     this.rerender()
   }

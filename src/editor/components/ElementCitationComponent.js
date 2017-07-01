@@ -1,13 +1,16 @@
-import { Component, TextPropertyComponent } from 'substance'
+import { Component } from 'substance'
+
+import ElementCitationTitle from './ElementCitationTitle'
+import ElementCitationAuthorsAndYear from './ElementCitationAuthorsAndYear'
 
 export default class ElementCitationComponent extends Component {
   render($$) {
-    let elementCitation = this.props.node
-    let publicationType = elementCitation.getAttribute('publication-type')
+    let node = this.props.node
+    let publicationType = node.getAttribute('publication-type')
 
     let el = $$('div').addClass('sc-element-citation').append(
-      this._renderTitle($$),
-      this._renderAuthorsAndYear($$)
+      $$(ElementCitationTitle, { node }),
+      $$(ElementCitationAuthorsAndYear, { node })
     )
 
     if(publicationType === 'journal') {
@@ -21,46 +24,6 @@ export default class ElementCitationComponent extends Component {
     }
 
     return el
-  }
-
-  _renderTitle($$) {
-    let articleTitle = this.props.node.find('article-title')
-    let chapterTitle = this.props.node.find('chapter-title')
-
-    if(articleTitle) {
-      if(articleTitle.content !== '') {
-        return $$(TextPropertyComponent, {
-          path: articleTitle.getPath()
-        }).ref(articleTitle.id).addClass('se-article-title')
-      }
-    } else if(chapterTitle) {
-      if(chapterTitle.content !== '') {
-        return $$(TextPropertyComponent, {
-          path: chapterTitle.getPath()
-        }).ref(chapterTitle.id).addClass('se-chapter-title')
-      }
-    }
-      
-    return $$('div').addClass('se-empty-title').append('Click to edit reference')
-  }
-
-  _renderAuthorsAndYear($$) {
-    let authorNames = this.props.node.findAll('person-group[person-group-type=author] name')
-    let year = this.props.node.find('year')
-
-    let authors = authorNames.map(author => {
-      let surname = author.find('surname')
-      let givenName = author.find('given-names')
-
-      return givenName.content + ' ' + surname.content
-    })
-
-    let authorsString = authors.join(', ')
-    if(year) {
-      if(year.content !== '') authorsString += ' (' + year.content + ')'
-    }
-
-    return $$('div').addClass('se-authors').append(authorsString)
   }
 
   _renderJournalData($$) {
@@ -160,7 +123,6 @@ export default class ElementCitationComponent extends Component {
           .append('https://doi.org/' + doi.content)
       }
     }
-
     return
   }
 

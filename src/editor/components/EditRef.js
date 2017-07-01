@@ -1,4 +1,8 @@
 import { Component, FontAwesomeIcon as Icon } from 'substance'
+const refTypes = [
+  {id: 'joural', label: 'Journal article'},
+  {id: 'book', label: 'Book chapter'},
+]
 
 export default class EditRef extends Component {
 
@@ -18,6 +22,7 @@ export default class EditRef extends Component {
     let el = $$('div').addClass('se-journal-ref')
     
     el.append(
+      this._renderRefTypeSwitcher($$),
       this._renderArticleTitle($$),
       this._renderAuthors($$),
       this._renderJournalTitle($$),
@@ -36,6 +41,26 @@ export default class EditRef extends Component {
   */
   _renderBookRefForm($$) {
     let el = $$('div').addClass('se-book-ref')
+    return el
+  }
+
+  _renderRefTypeSwitcher($$) {
+    let node = this.props.node
+    let publicationType = node.getAttribute('publication-type')
+    let el = $$('div').addClass('se-ref-type')
+
+    let switcher = $$('select')
+    refTypes.forEach(refType => {
+      let option = $$('option').attr('value', refType.id).append(refType.label)
+      if(publicationType === refType.id) option.attr('selected', 'selected')
+      switcher.append(option)
+    })
+
+    el.append(
+      $$('div').addClass('se-label').append('Type'),
+      $$('div').addClass('se-select').append(switcher)
+    )
+
     return el
   }
 
@@ -88,8 +113,6 @@ export default class EditRef extends Component {
     )
 
     return el
-    // let authorNames = elementCitation.findAll('person-group[person-group-type=author] name')
-    // TODO: Render editors for author data, including add new author functionality
   }
 
   _renderJournalTitle($$) {

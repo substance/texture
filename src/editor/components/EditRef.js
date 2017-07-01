@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, FontAwesomeIcon as Icon } from 'substance'
 
 export default class EditRef extends Component {
 
@@ -54,9 +54,40 @@ export default class EditRef extends Component {
   }
 
   _renderAuthors($$) {
-    return $$('div').addClass('se-authors').append(
-      'TODO: edit authors'
+    let TextPropertyEditor = this.getComponent('text-property-editor')
+    let authorNames = this.props.node.findAll('person-group[person-group-type=author] name')
+    let el = $$('div').addClass('se-authors').append(
+      $$('div').addClass('se-label').append('Authors')
     )
+
+    authorNames.forEach(author => {
+      let surname = author.find('surname')
+      let givenName = author.find('given-names')
+      let authorEl = $$('div').addClass('se-author se-form').append(
+        $$(TextPropertyEditor, {
+          placeholder: 'Given Names',
+          path: givenName.getTextPath(),
+          disabled: this.props.disabled
+        }).ref(givenName.id).addClass('se-text-input'),
+        $$(TextPropertyEditor, {
+          placeholder: 'Surname',
+          path: surname.getTextPath(),
+          disabled: this.props.disabled
+        }).ref(surname.id).addClass('se-text-input'),
+        $$(Icon, {icon: 'fa-trash'})
+          .addClass('se-remove-author')
+          .on('click', this._removeAuthor.bind(this, author.id))
+      )
+      el.append(authorEl)
+    })
+
+    el.append(
+      $$('button').addClass('sg-big-button')
+        .append('Add Author')
+        .on('click', this._addAuthor)
+    )
+
+    return el
     // let authorNames = elementCitation.findAll('person-group[person-group-type=author] name')
     // TODO: Render editors for author data, including add new author functionality
   }
@@ -202,6 +233,36 @@ export default class EditRef extends Component {
     } else {
       return
     }
+  }
+
+  _addAuthor() {
+    const node = this.props.node
+    const personGroupId = node.find('person-group[person-group-type=author]').id
+    const editorSession = this.context.editorSession
+    editorSession.transaction((doc) => {
+      let personGroup = doc.get(personGroupId)
+      let name = doc.createElement('name').append(
+        doc.createElement('given-names'),
+        doc.createElement('surname')
+      )
+
+      personGroup.append(name)
+    })
+
+    this.rerender()
+  }
+
+  _removeAuthor(authorId) {
+    const node = this.props.node
+    const personGroupId = node.find('person-group[person-group-type=author]').id
+    const editorSession = this.context.editorSession
+    editorSession.transaction((doc) => {
+      let personGroup = doc.get(personGroupId)
+      let author = personGroup.find(`name#${authorId}`)
+      personGroup.removeChild(author)
+    })
+
+    this.rerender()
   }
 
   /*

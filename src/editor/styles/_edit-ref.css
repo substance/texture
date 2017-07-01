@@ -23,7 +23,7 @@
 
 .sc-edit-ref .se-form {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
 .sc-edit-ref .se-form > div {

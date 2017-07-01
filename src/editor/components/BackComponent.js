@@ -15,7 +15,7 @@ export default class BackComponent extends Component {
     let refList = node.find('ref-list')
     if (refList) {
       el.append(
-        $$(this.getComponent('ref-list'), { node })
+        $$(this.getComponent('ref-list'), { node: refList })
       )
     }
 

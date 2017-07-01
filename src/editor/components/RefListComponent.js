@@ -9,10 +9,16 @@ class RefListComponent extends NodeComponent {
     this.handleActions({
       'removeRef': this._removeRef
     })
+
+    // Ensure we re-render when
+    this.context.editorSession.onRender('document', this.rerender, this, {
+      path: [this.props.node.id, 'content']
+    })
   }
 
   dispose() {
     super.dispose()
+    this.context.editorSession.off(this)
     this.context.labelGenerator.off(this)
   }
 

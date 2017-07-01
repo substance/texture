@@ -15,7 +15,6 @@ export default class EditRef extends Component {
   render($$) {
     let elementCitation = this.props.node.find('element-citation')
     let publicationType = elementCitation.getAttribute('publication-type')
-
     let el = $$('div').addClass('sc-edit-ref')
 
     if(publicationType === 'journal') {
@@ -114,7 +113,7 @@ export default class EditRef extends Component {
         .on('change', this._onUpdateTextElement.bind(this, givenName.id)),
         $$('input', {
           placeholder: 'Surname',
-          path: surname.getTextContent()
+          value: surname.getTextContent()
         }).ref(surname.id).addClass('se-text-input')
         .on('change', this._onUpdateTextElement.bind(this, surname.id)),
         $$(Icon, {icon: 'fa-trash'})

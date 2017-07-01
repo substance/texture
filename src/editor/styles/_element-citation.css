@@ -1,0 +1,20 @@
+.sc-element-citation .sc-element-citation-title {
+  font-weight: 600;
+  display: block;
+  font-size: 16px;
+}
+
+.sc-element-citation .sc-element-citation-authors-and-year {
+  font-weight: 400;
+  display: block;
+  font-size: 16px;
+}
+
+.sc-element-citation .se-doi-link {
+  font-size: 11px;
+  color: inherit;
+}
+
+.sc-element-citation .se-scholar-links a {
+  color: inherit;
+}

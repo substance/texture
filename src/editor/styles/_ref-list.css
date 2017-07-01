@@ -33,7 +33,7 @@
 .sc-ref .se-remove-ref {
   position: absolute;
   top: 50%;
-  right: 0px;
+  right: 15px;
   margin-top: -10px;
   font-size: 14px;
   color: var(--link-color);
@@ -42,6 +42,7 @@
 
 .sc-ref .sc-element-citation {
   padding-left: 40px;
+  padding-right: 40px;
 }
 
 .sc-ref .sc-element-citation:hover {

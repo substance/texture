@@ -1,0 +1,87 @@
+.sc-edit-ref {
+  padding: 10px;
+}
+
+.sc-edit-ref .se-label {
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.sc-edit-ref .se-ref-type .se-label {
+  margin-top: 5px;
+}
+
+.sc-edit-ref .se-ref-type select::after {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 7px solid #666;
+  margin-top: -3px;
+}
+
+.sc-edit-ref .se-text-input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.sc-edit-ref .se-form {
+  display: flex;
+  align-items: baseline;
+}
+
+.sc-edit-ref .se-form > * {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.sc-edit-ref .se-form > *:last-child {
+  margin-right: 0px;
+}
+
+.sc-edit-ref .se-remove-author {
+  flex: 0;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.sc-edit-ref .se-select {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+}
+
+.sc-edit-ref .se-select select {
+  width: 100%;
+  margin: 0;
+  outline: none;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #dadada;
+  box-sizing: border-box;
+  font-size: 14px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.sc-edit-ref .se-select::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  z-index: 2;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 7px solid #666;
+  margin-top: -3px;
+}

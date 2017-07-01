@@ -25,7 +25,8 @@
         let jats = vfs.readFileSync(EXAMPLE, 'utf8')
         let importer = new JATSImporter()
         JATSImportDialog.mount({importer}, window.document.body)
-        importer.import(jats)
+        let dom = importer.import(jats)
+        console.log(dom.getNativeElement())
       }
 
       // function _check(jats) {

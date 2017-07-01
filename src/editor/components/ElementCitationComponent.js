@@ -28,16 +28,20 @@ export default class ElementCitationComponent extends Component {
     let chapterTitle = this.props.node.find('chapter-title')
 
     if(articleTitle) {
-      return $$(TextPropertyComponent, {
-        path: articleTitle.getPath()
-      }).ref(articleTitle.id).addClass('se-article-title')
+      if(articleTitle.content !== '') {
+        return $$(TextPropertyComponent, {
+          path: articleTitle.getPath()
+        }).ref(articleTitle.id).addClass('se-article-title')
+      }
     } else if(chapterTitle) {
-      return $$(TextPropertyComponent, {
-        path: chapterTitle.getPath()
-      }).ref(chapterTitle.id).addClass('se-chapter-title')
-    } else {
-      return
+      if(chapterTitle.content !== '') {
+        return $$(TextPropertyComponent, {
+          path: chapterTitle.getPath()
+        }).ref(chapterTitle.id).addClass('se-chapter-title')
+      }
     }
+      
+    return $$('div').addClass('se-empty-title').append('Click to edit reference')
   }
 
   _renderAuthorsAndYear($$) {
@@ -52,7 +56,9 @@ export default class ElementCitationComponent extends Component {
     })
 
     let authorsString = authors.join(', ')
-    if(year) authorsString += ' (' + year.content + ')'
+    if(year) {
+      if(year.content !== '') authorsString += ' (' + year.content + ')'
+    }
 
     return $$('div').addClass('se-authors').append(authorsString)
   }
@@ -67,30 +73,40 @@ export default class ElementCitationComponent extends Component {
     let journalEl = $$('div').addClass('se-journal-data')
 
     if(source) {
-      journalEl.append(
-        $$('em').addClass('se-journal-name').append(source.content + ' ')
-      )
+      if(source.content !== '') {
+        journalEl.append(
+          $$('em').addClass('se-journal-name').append(source.content + ' ')
+        )
+      }
     }
 
     if(volume) {
-      journalEl.append(
-        $$('strong').addClass('se-journal-volume').append(volume.content)
-      )
+      if(volume.content !== '') {
+        journalEl.append(
+          $$('strong').addClass('se-journal-volume').append(volume.content)
+        )
+      }
     }
 
     if(issue) {
-      journalEl.append(
-        $$('strong').addClass('se-journal-issue').append('.' + issue.content)
-      )
+      if(issue.content !== '') {
+        journalEl.append(
+          $$('strong').addClass('se-journal-issue').append('.' + issue.content)
+        )
+      }
     }
 
     if(fpage) {
-      journalEl.append(':' + fpage.content)
+      if(fpage.content !== '') {
+        journalEl.append(':' + fpage.content)
 
-      if(lpage) {
-        journalEl.append('-' + lpage.content)
-      } else {
-        journalEl.append('.')
+        if(lpage) {
+          if(lpage.content !== '') {
+            journalEl.append('-' + lpage.content)
+          } else {
+            journalEl.append('.')
+          }
+        }
       }
     }
 
@@ -138,12 +154,14 @@ export default class ElementCitationComponent extends Component {
     let doi = this.props.node.find('pub-id[pub-id-type=doi]')
 
     if(doi) {
-      return $$('a').addClass('se-doi-link')
-        .attr({target: '_blank', href: 'https://doi.org/' + doi.content})
-        .append('https://doi.org/' + doi.content)
-    } else {
-      return
+      if(doi.content !== '') {
+        return $$('a').addClass('se-doi-link')
+          .attr({target: '_blank', href: 'https://doi.org/' + doi.content})
+          .append('https://doi.org/' + doi.content)
+      }
     }
+
+    return
   }
 
   _renderScholarLinks($$) {
@@ -152,21 +170,29 @@ export default class ElementCitationComponent extends Component {
     let el = $$('div').addClass('se-scholar-links')
 
     if(pmid) {
-      el.append(
-        $$('a').addClass('se-pubmed-link')
-          .attr({target: '_blank', href: 'https://www.ncbi.nlm.nih.gov/pubmed/' + pmid.content})
-          .append('PubMed'),
-        ' | '
-      )
+      if(pmid.content !== '') {
+        el.append(
+          $$('a').addClass('se-pubmed-link')
+            .attr({target: '_blank', href: 'https://www.ncbi.nlm.nih.gov/pubmed/' + pmid.content})
+            .append('PubMed'),
+          ' | '
+        )
+      }
     }
 
-    el.append(
-      $$('a').addClass('se-google-scholar-link')
-        .attr({target: '_blank', href: 'https://scholar.google.com/scholar_lookup?title=' + articleTitle.content})
-        .append('Google Scholar')
-    )
+    if(articleTitle) {
+      if(articleTitle.content !== '') {
+        el.append(
+          $$('a').addClass('se-google-scholar-link')
+            .attr({target: '_blank', href: 'https://scholar.google.com/scholar_lookup?title=' + articleTitle.content})
+            .append('Google Scholar')
+        )
 
-    return el
+        return el
+      }
+    }
+
+    return
   }
 
 }

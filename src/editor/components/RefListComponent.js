@@ -81,8 +81,20 @@ class RefListComponent extends NodeComponent {
     editorSession.transaction((doc) => {
       let refList = doc.find('ref-list')
       let ref = doc.createElement('ref')
-      let stringCitation = doc.createElement('string-citation')
-      ref.append(stringCitation)
+      let elementCitation = doc.createElement('element-citation').attr('publication-type', 'journal')
+      elementCitation.append(
+        doc.createElement('person-group').attr('person-group-type', 'author'),
+        doc.createElement('year').attr('iso-8601-date', ''),
+        doc.createElement('article-title'),
+        doc.createElement('source'),
+        doc.createElement('volume'),
+        doc.createElement('issue'),
+        doc.createElement('fpage'),
+        doc.createElement('lpage'),
+        doc.createElement('pub-id').attr('pub-id-type', 'doi'),
+        doc.createElement('pub-id').attr('pub-id-type', 'pubmed')
+      )
+      ref.append(elementCitation)
       refList.append(ref)
     })
     this.rerender()

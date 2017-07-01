@@ -1,3 +1,9 @@
+.sc-element-citation .se-empty-title {
+  padding: 10px 0px;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
 .sc-element-citation .se-article-title,
 .sc-element-citation .se-chapter-title {
   font-weight: 600;

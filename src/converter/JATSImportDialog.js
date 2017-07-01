@@ -1,5 +1,6 @@
 import { Component } from 'substance'
 import { JATS, JATS4R, TextureJATS } from '../article'
+import { printElement } from './util/domHelpers'
 
 export default class JATSImportDialog extends Component {
 
@@ -61,7 +62,15 @@ class ImportStage extends Component {
   _renderError($$, err) {
     let el = $$('div').addClass('se-error')
     // TODO: maybe we will have more structured errors
-    el.append(err.msg)
+    el.append(
+      $$('div').addClass('se-message').text(err.msg)
+    )
+    if (err.el) {
+      el.append(
+        $$('pre').addClass('se-element').text(printElement(err.el, { maxLevel: 1}))
+      )
+    }
+
     return el
   }
 

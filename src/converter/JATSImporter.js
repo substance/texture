@@ -39,6 +39,8 @@ export default class JATSImporter extends EventEmitter {
     if (!this._validate(TextureJATS, dom)) return
 
     this.emit('end')
+
+    return dom
   }
 
   _validate(schema, dom) {
@@ -48,9 +50,7 @@ export default class JATSImporter extends EventEmitter {
     if (res.errors) {
       // TODO: we need better errors
       res.errors.forEach((err) => {
-        this.emit(`error:validate-${name}`, {
-          msg: err
-        })
+        this.emit(`error:validate-${name}`, err)
       })
       return false
     }

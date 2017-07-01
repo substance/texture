@@ -1,7 +1,9 @@
 import CollectAffs from './CollectAffs'
+import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
 
 const trafos = [
-  CollectAffs
+  CollectAffs,
+  UnwrapBlockLevelElements,
 ].map(C => new C())
 
 export function j2r(dom) {

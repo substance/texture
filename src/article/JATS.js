@@ -1,5 +1,5 @@
 import { deserializeXMLSchema } from 'substance'
-import JATSData from '../../tmp/JATS.data'
+import JATSData from '../../tmp/JATS-publishing.data'
 
 const JATS = deserializeXMLSchema(JATSData)
 

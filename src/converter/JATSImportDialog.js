@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { JATS, restrictedJATS, TextureJATS } from '../article'
+import { JATS, JATS4R, TextureJATS } from '../article'
 
 export default class JATSImportDialog extends Component {
 
@@ -16,7 +16,7 @@ export default class JATSImportDialog extends Component {
     // transforming JATS -> restricted JATS
     el.append($$(ImportStage, {importer, stage: `j2r`}))
     // validating restricted JATS
-    el.append($$(ImportStage, {importer, stage: `validate-${restrictedJATS.getName()}`}))
+    el.append($$(ImportStage, {importer, stage: `validate-${JATS4R.getName()}`}))
     // transforming restricted JATS -> TextureJATS
     el.append($$(ImportStage, {importer, stage: `r2t`}))
     // validating TextureJATS
@@ -83,9 +83,9 @@ class ImportStage extends Component {
 const TITLES = {
   'parse': 'Parse XML',
   'validate-jats': 'Validate JATS',
-  'validate-restricted-jats': 'Validate restricted JATS',
+  'validate-restricted-jats': 'Validate JATS4R',
   'validate-texture-jats': 'Validate Texture JATS',
-  'j2r': 'Transform JATS -> restricted JATS',
+  'j2r': 'Transform JATS -> JATS4R',
   'r2t': 'Transform restricted JATS -> TextureJATS'
 }
 

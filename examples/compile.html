@@ -17,10 +17,11 @@
     <script type="text/javascript" src="../node_modules/substance/dist/substance.js"></script>
     <script type="text/javascript" src="../tmp/vfs.js"></script>
     <script type="text/javascript">
-      const { compileRNG } = window.substance
+      const { compileRNG, checkSchema } = window.substance
       window.onload = function() {
-        debugger
-        compileRNG(vfs, ['data/rng', 'src/article'], 'TextureJATS.rng')
+        let xmlSchema = compileRNG(vfs, ['src/article'], 'TextureJATS.rng')
+        let issues = checkSchema(xmlSchema)
+        console.log(issues)
       }
     </script>
   </head>

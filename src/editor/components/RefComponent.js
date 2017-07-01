@@ -5,18 +5,12 @@ export default class RefComponent extends Component {
 
   didMount() {
     this.context.editorSession.on('ref:updated', this._onRefUpdated, this)
-
     // HACK: Ensure we trigger a rerender whenever the article-title or chapter-title is changed
-    let articleTitle = this.props.node.find('article-title')
-    let chapterTitle = this.props.node.find('chapter-title')
-    if (articleTitle) {
+    let node = this.props.node
+    let title = node.find('article-title') || node.find('chapter-title')
+    if (title) {
       this.context.editorSession.onRender('document', this.rerender, this, {
-        path: [articleTitle.id, 'content']
-      })
-    }
-    if (chapterTitle) {
-      this.context.editorSession.onRender('document', this.rerender, this, {
-        path: [chapterTitle.id, 'content']
+        path: [title.id, 'content']
       })
     }
   }

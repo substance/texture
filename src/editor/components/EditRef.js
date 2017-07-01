@@ -347,6 +347,7 @@ export default class EditRef extends Component {
     editorSession.transaction((doc) => {
       let element = doc.get(nodeId)
       element.setText(newValue)
+      doc.setSelection(null)
     })
     // Trigger custom ref:updated which leads to an update of the rendered
     // record (see RefComponent)

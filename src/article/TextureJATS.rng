@@ -171,8 +171,10 @@
   <define name="abstract-content">
     <element name="abstract-content">
       <zeroOrMore>
-        <ref name="heading"/>
-        <ref name="para-level"/>
+        <choice>
+          <ref name="heading"/>
+          <ref name="para-level"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>

@@ -20,7 +20,7 @@
       const { JATSImporter, JATSImportDialog } = window.texture
 
       window.onload = function() {
-        const EXAMPLE = 'data/jats/scielo/ahead-of-print/1678-8060-mioc-0074-02760160042.xml'
+        const EXAMPLE = 'data/jats/scielo/ahead-of-print.xml'
         console.log('Loading JATS file...', EXAMPLE)
         let jats = vfs.readFileSync(EXAMPLE, 'utf8')
         let importer = new JATSImporter()

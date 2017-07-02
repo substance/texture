@@ -3,6 +3,7 @@ import WrapAbstractContent from './WrapAbstractContent'
 import WrapBodyContent from './WrapBodyContent'
 import Sec2Heading from './Sec2Heading'
 import TransformAff from './TransformAff'
+import WrapTransAbstracts from './WrapTransAbstracts'
 import ExtractCaptionTitle from './ExtractCaptionTitle'
 
 const trafos = [
@@ -11,6 +12,7 @@ const trafos = [
   WrapBodyContent,
   Sec2Heading,
   TransformAff,
+  WrapTransAbstracts,
   ExtractCaptionTitle
 ].map(C => new C())
 

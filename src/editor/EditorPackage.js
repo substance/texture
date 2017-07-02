@@ -24,6 +24,7 @@ import AuthorsListComponent from './components/AuthorsListComponent'
 import ArticleRecordComponent from './components/ArticleRecordComponent'
 import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
+import BreakComponent from './components/BreakComponent'
 import ContainerNodeComponent from './components/ContainerNodeComponent'
 import ContributorsComponent from './components/ContributorsComponent'
 import ElementNodeComponent from './components/ElementNodeComponent'
@@ -45,9 +46,11 @@ import FnGroupComponent from './components/FnGroupComponent'
 import FnComponent from './components/FnComponent'
 import RefListComponent from './components/RefListComponent'
 import RefComponent from './components/RefComponent'
+import SeparatorComponent from './components/SeparatorComponent'
+import SigBlockComponent from './components/SigBlockComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
-import SeparatorComponent from './components/SeparatorComponent'
+
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
@@ -82,7 +85,7 @@ export default {
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
-    // Article content
+    // Node components
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('affiliations', AffiliationsComponent)
     config.addComponent('affiliations-list', AffiliationsListComponent)
@@ -91,35 +94,37 @@ export default {
     config.addComponent('translations', TranslationsComponent)
     config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
-    config.addComponent('separator', SeparatorComponent)
-    config.addComponent('contributors', ContributorsComponent)
+    config.addComponent('break', BreakComponent)
+    config.addComponent('caption', CaptionComponent)
+    config.addComponent('col', ElementNodeComponent)
+    config.addComponent('colgroup', ElementNodeComponent)
+    config.addComponent('disp-quote', DispQuoteComponent)
     config.addComponent('front', FrontComponent)
     config.addComponent('fig', FigComponent)
-    config.addComponent('table-wrap', FigComponent)
-    config.addComponent('graphic', GraphicComponent)
-    config.addComponent('caption', CaptionComponent)
-    config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('manuscript', ManuscriptComponent)
-    config.addComponent('pub-history', PubHistoryComponent)
-    config.addComponent('toc', TOC)
-
-    config.addComponent('table', ElementNodeComponent)
-    config.addComponent('tbody', ElementNodeComponent)
-    config.addComponent('thead', ElementNodeComponent)
-    config.addComponent('tfoot', ElementNodeComponent)
-    config.addComponent('tr', ElementNodeComponent)
-    config.addComponent('td', TableCellComponent)
-    config.addComponent('th', TableCellComponent)
-    config.addComponent('colgroup', ElementNodeComponent)
-    config.addComponent('col', ElementNodeComponent)
-
-    config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('fn', FnComponent)
-    config.addComponent('ref-list', RefListComponent)
+    config.addComponent('fn-group', FnGroupComponent)
+    config.addComponent('graphic', GraphicComponent)
+    config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('ref', RefComponent)
-    config.addComponent('edit-ref', EditRef)
+    config.addComponent('ref-list', RefListComponent)
+    config.addComponent('separator', SeparatorComponent)
+    config.addComponent('sig-block', SigBlockComponent)
+    config.addComponent('table', ElementNodeComponent)
+    config.addComponent('table-wrap', FigComponent)
+    config.addComponent('tbody', ElementNodeComponent)
+    config.addComponent('td', TableCellComponent)
+    config.addComponent('tfoot', ElementNodeComponent)
+    config.addComponent('th', TableCellComponent)
+    config.addComponent('thead', ElementNodeComponent)
     config.addComponent('title-group', TitleGroupComponent)
+    config.addComponent('toc', TOC)
+    config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
+
+    // Panels and other displays
+    config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('contributors', ContributorsComponent)
+    config.addComponent('edit-ref', EditRef)
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)
@@ -163,6 +168,8 @@ export default {
     config.addLabel('insert-xref-fn', 'Footnote Reference')
     config.addLabel('manuscript-start', 'Manuscript starts here')
     config.addLabel('manuscript-end', 'Manuscript ends here')
+    config.addLabel('sig-block-start', 'Signature Block starts here')
+    config.addLabel('sig-block-end', 'Signature Block ends here')
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)

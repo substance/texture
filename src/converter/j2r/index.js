@@ -1,9 +1,11 @@
 import CollectAffs from './CollectAffs'
 import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
+import HomogenizeSigBlocks from './HomogenizeSigBlocks'
 
 const trafos = [
   CollectAffs,
   UnwrapBlockLevelElements,
+  HomogenizeSigBlocks
 ].map(C => new C())
 
 export function j2r(dom, api) {

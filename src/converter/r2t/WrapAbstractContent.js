@@ -6,7 +6,7 @@ const ABSTRACT_BACK = ['notes','fn-group','glossary','ref-list'].reduce((m, n) =
 export default class WrapAbstractContent {
 
   import(dom) {
-    let abstracts = dom.findAll('abstract')
+    let abstracts = dom.findAll('abstract').concat(dom.findAll('trans-abstract'))
     abstracts.forEach( (abstract) => {
       // restructure child nodes
       const meta = []

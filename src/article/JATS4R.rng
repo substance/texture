@@ -289,8 +289,16 @@
   -->
   <define name="inline-supplementary-material">
     <element name="inline-supplementary-material">
+      <ref name="inline-supplementary-material-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
+
 
   <!--
     WIP: either inline or structured
@@ -342,6 +350,7 @@
     <choice>
       <ref name="address-link.class"/>
       <!-- <ref name="article-link.class"/> -->
+      <ref name="inline-supplementary-material"/>
       <!--<ref name="block-display.class"/>-->
       <!--<ref name="block-math.class"/>-->
       <!--<ref name="citation.class"/>-->
@@ -566,8 +575,7 @@
   <!--
     This simplification is inspired by SciELO's guideline
 
-    - <sig-block> is part of the body, typically at the end
-    - it contains one <sig> element
+    - it contains one or more <sig> elements
     - within <sig>, text, <bold>, and <italic> can be used,
       and <break> to separate lines. Extra whitespace is not considered.
     - persons, and contributors must be defined in <front>
@@ -586,7 +594,9 @@
   <define name="sig-block">
     <element name="sig-block">
       <ref name="sig-block-attlist"/>
-      <ref name="sig.class"/>
+      <oneOrMore>
+        <ref name="sig.class"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="sig">
@@ -624,6 +634,7 @@
     <choice>
       <ref name="address-link.class"/>
       <!-- <ref name="article-link.class"/> -->
+      <ref name="inline-supplementary-material"/>
       <ref name="emphasis.class"/>
       <ref name="inline-display.class"/>
       <ref name="inline-math.class"/>
@@ -703,6 +714,7 @@
             <ref name="phrase.class"/>
             <ref name="simple-link.class"/>
             <ref name="subsup.class"/>
+            <ref name="inline-supplementary-material"/>
           </choice>
         </zeroOrMore>
         <zeroOrMore>
@@ -749,135 +761,5 @@
       </zeroOrMore>
     </element>
   </define>
-
-<!--
-
-  <define name="article-link.class">
-    <choice>
-      <ref name="xref"/>
-    </choice>
-  </define>
-
-  <define name="inline-supplementary-material">
-    <element name="inline-supplementary-material">
-      <empty/>
-    </element>
-  </define>
-
-  <define name="data-title-elements">
-    <choice>
-      <ref name="ext-link"/>
-      <ref name="emphasis.class"/>
-      <ref name="phrase-content.class"/>
-      <ref name="subsup.class"/>
-    </choice>
-  </define>
-
-  <define name="address-link.class">
-    <choice>
-      <ref name="email"/>
-      <ref name="uri"/>
-    </choice>
-  </define>
-
-  <define name="contrib-info.class">
-    <choice>
-      <ref name="address"/>
-      <ref name="aff"/>
-      <ref name="aff-alternatives"/>
-      <ref name="author-comment"/>
-      <ref name="bio"/>
-      <ref name="email"/>
-      <ref name="etal"/>
-      <ref name="fn"/>
-      <ref name="on-behalf-of"/>
-      <ref name="role"/>
-      <ref name="uri"/>
-      <ref name="xref"/>
-    </choice>
-  </define>
-
-  <define name="string-conf-elements">
-    <ref name="simple-text"/>
-  </define>
-
-  <define name="struct-title-elements">
-    <choice>
-      <ref name="all-phrase"/>
-      <ref name="break.class"/>
-    </choice>
-  </define>
-
-  <define name="funding-statement-elements">
-    <choice>
-      <ref name="all-phrase"/>
-    </choice>
-  </define>
-
-  <define name="addr-line-elements">
-    <choice>
-      <ref name="simple-text"/>
-    </choice>
-  </define>
-
-  <define name="conf-date">
-    <element name="conf-date">
-      <ref name="conf-date-attlist"/>
-      <zeroOrMore>
-        <ref name="conf-date-elements"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="conf-date-elements">
-    <choice>
-      <ref name="date-parts.class"/>
-    </choice>
-  </define>
-
-  <define name="string-date-elements">
-    <choice>
-      <ref name="all-phrase"/>
-    </choice>
-  </define>
-
-  <define name="string-name-elements">
-    <choice>
-      <ref name="all-phrase"/>
-    </choice>
-  </define>
-
-  <define name="history-elements">
-    <choice>
-      <ref name="date.class"/>
-    </choice>
-  </define>
-  <define name="history-model">
-    <zeroOrMore>
-      <ref name="history-elements"/>
-    </zeroOrMore>
-  </define>
-
-  <define name="supplement-elements">
-    <choice>
-      <ref name="simple-text"/>
-    </choice>
-  </define>
-
-
-  <define name="simple-link.class">
-    <choice>
-      <ref name="target"/>
-      <ref name="xref"/>
-    </choice>
-  </define>
-
-  <define name="copyright-holder-elements">
-    <choice>
-      <ref name="subsup.class"/>
-      <ref name="x.class"/>
-    </choice>
-  </define>
-
-  -->
 
 </grammar>

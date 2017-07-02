@@ -14,7 +14,6 @@
    -->
   <!-- Annotations -->
   <s:elementType name="bold" s:type="annotation"/>
-  <s:elementType name="bold" s:type="annotation"/>
   <s:elementType name="ext-link" s:type="annotation"/>
   <s:elementType name="fixed-case" s:type="annotation"/>
   <s:elementType name="italic" s:type="annotation"/>
@@ -172,6 +171,7 @@
   <define name="abstract-content">
     <element name="abstract-content">
       <zeroOrMore>
+        <ref name="heading"/>
         <ref name="para-level"/>
       </zeroOrMore>
     </element>
@@ -952,6 +952,7 @@
       <choice>
         <text/>
         <ref name="simple-phrase"/>
+        <ref name="break"/>
       </choice>
     </zeroOrMore>
   </define>
@@ -991,6 +992,7 @@
       <choice>
         <text/>
         <ref name="simple-phrase"/>
+        <ref name="break"/>
       </choice>
     </zeroOrMore>
   </define>

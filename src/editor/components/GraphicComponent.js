@@ -10,7 +10,7 @@ export default class GraphicComponent extends Component {
       .addClass('sc-graphic')
       .attr('data-id', node.id)
     el.append(
-      $$('img').attr({src: url})
+      $$('img').attr({src: url}).ref('image')
     )
     return el
   }

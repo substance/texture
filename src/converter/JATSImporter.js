@@ -13,6 +13,7 @@ export default class JATSImporter extends EventEmitter {
 
   import(xml) {
     let dom
+    this.errors = []
     this.emit('begin')
 
     if (isString(xml)) {
@@ -44,21 +45,26 @@ export default class JATSImporter extends EventEmitter {
 
     this.emit('end')
 
-    return dom
+    if (this.errors.length > 0) {
+      return false
+    } else {
+      return dom
+    }
   }
 
   _validate(schema, dom) {
     const name = schema.getName()
-    this.emit(`begin:validate-${name}`)
+    const channel = `validate-${name}`
+    this.emit(`begin:${channel}`)
     let res = validateXMLSchema(schema, dom)
     if (res.errors) {
       // TODO: we need better errors
       res.errors.forEach((err) => {
-        this.emit(`error:validate-${name}`, err)
+        this._error(channel, err)
       })
       return false
     }
-    this.emit(`end:validate-${name}`)
+    this.emit(`end:${channel}`)
     return true
   }
 
@@ -79,14 +85,19 @@ export default class JATSImporter extends EventEmitter {
     return true
   }
 
-  _createAPI(dom, mode) {
+  _createAPI(dom, channel) {
     const self = this
     let api = {
       error(data) {
-        self.emit(`error:${mode}`, data)
+        self._error(`error:${channel}`, data)
       }
     }
     return api
+  }
+
+  _error(channel, err) {
+    this.errors.push(err)
+    this.emit(`error:${channel}`, err)
   }
 
 }

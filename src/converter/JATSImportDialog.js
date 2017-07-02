@@ -92,7 +92,7 @@ class ImportStage extends Component {
 const TITLES = {
   'parse': 'Parse XML',
   'validate-jats': 'Validate JATS',
-  'validate-restricted-jats': 'Validate JATS4R',
+  'validate-jats4r': 'Validate JATS4R',
   'validate-texture-jats': 'Validate Texture JATS',
   'j2r': 'Transform JATS -> JATS4R',
   'r2t': 'Transform restricted JATS -> TextureJATS'

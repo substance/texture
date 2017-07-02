@@ -10,7 +10,7 @@ export default class UnwrapBlockLevelElements {
     dom.findAll('p').forEach(_pBlock)
   }
 
-  export(dom) {
+  export() {
     console.error('TODO: implement UnwrapBlockLevelElements.export()')
   }
 
@@ -36,10 +36,23 @@ function _pBlock(p) {
       // and insert the block element and the new one after the current <p>
       let pos = parent.getChildIndex(p)+1
       parent.insertAt(pos, child)
-      if (siblings.length > 0) {
+      if (siblings.length > 0 && _needsP(siblings)) {
         newP.append(siblings)
         parent.insertAt(pos+1, newP)
       }
     }
   }
+  // if the original <p> is now empty, remove it
+  if (!_needsP(p.childNodes)) {
+    p.parentNode.removeChild(p)
+  }
+}
+
+function _needsP(nodes) {
+  for (let i = 0; i < nodes.length; i++) {
+    let child = nodes[i]
+    // don't prune if there is something else left
+    if (!child.isTextNode() || !(/^\s*$/.exec(child.textContent)) ) return true
+  }
+  return false
 }

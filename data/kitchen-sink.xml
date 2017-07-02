@@ -1,15 +1,7 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1 20151215//EN" "http://jats.nlm.nih.gov/archiving/1.1/JATS-archivearticle1.dtd">
+<!DOCTYPE article PUBLIC "TextureJATS 1.1" "http://texture.substance.io/TextureJATS-1.1.dtd">
 <!--
   Kitchen XML for our texture editor.
-
-  We use a restricted JATS version, which is suitable for Texture to reason
-  about.
-
-  We include all content that is required by the members of the Substance
-  Consortium (Public Knowledge Project, SciELO, Erudit)
-
-  Documents modelled after this kitchen sink can be fully edited visually.
 -->
 <article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>

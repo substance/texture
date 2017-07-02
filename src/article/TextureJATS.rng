@@ -626,6 +626,16 @@
     </element>
   </define>
 
+  <define name="front-model">
+    <optional>
+      <ref name="journal-meta"/>
+    </optional>
+    <ref name="article-meta"/>
+    <optional>
+      <ref name="front-back.class"/>
+    </optional>
+  </define>
+
   <!-- WIP
     TODO: refine requirements; see if the structured elements
           are really necessary, or simple phrase content is enough.

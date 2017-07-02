@@ -110,6 +110,8 @@ export default {
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('td', TableCellComponent)
     config.addComponent('th', TableCellComponent)
+    config.addComponent('colgroup', ElementNodeComponent)
+    config.addComponent('col', ElementNodeComponent)
 
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('fn', FnComponent)

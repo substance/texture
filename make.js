@@ -7,8 +7,12 @@ const vfs = require('substance-bundler/extensions/vfs')
 const DIST = 'dist/'
 const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
-  path.join(__dirname, 'data', 'rng'),
   path.join(__dirname, 'src', 'article')
+]
+const RNG_FILES = [
+  'src/article/JATS-publishing.rng',
+  'src/article/JATS4R.rng',
+  'src/article/TextureJATS.rng'
 ]
 
 b.task('clean', function() {
@@ -18,16 +22,33 @@ b.task('clean', function() {
 
 b.task('assets', function() {
   vfs(b, {
-    src: ['./data/**/*'],
+    src: ['./data/**/*.xml', './src/article/*.rng', './src/article/*.json'],
     dest: 'tmp/vfs.js',
     format: 'umd', moduleName: 'vfs'
   })
 })
 
-// compiles TextureJATS and does some evaluation
-b.task('compile:schema', () => {
-  _compileSchema('TextureJATS', 'src/article/TextureJATS.rng', RNG_SEARCH_DIRS, 'src/article')
+b.task('single-jats-file', _singleJATSFile)
+
+b.task('compile:jats', () => {
+  _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1))
 })
+
+b.task('compile:jats4r', () => {
+  _compileSchema('JATS4R', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0,2))
+})
+
+b.task('compile:texture-jats', () => {
+  _compileSchema('TextureJATS', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3))
+})
+
+b.task('compile:debug', () => {
+  _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
+  _compileSchema('JATS4R', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0,2), { debug: true })
+  _compileSchema('TextureJATS', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3), { debug: true })
+})
+
+b.task('compile:schema', ['compile:jats', 'compile:jats4r', 'compile:texture-jats'])
 
 b.task('build:browser', ['compile:schema'], () => {
   _buildLib(DIST, true)
@@ -48,20 +69,13 @@ b.task('default', ['clean', 'assets', 'build'])
 
 b.task('dev', ['clean', 'assets', 'build:dev'])
 
-/* TESTS */
-
-b.task('build:test:node', ['clean:test'], _buildTestsNode)
-
-b.task('run:test:node', ['build:test:node'], _runTestsNode)
-
-b.task('run:test', ['run:test:node'])
-
-b.task('test:browser', ['clean:test', 'assets:test'], function() {
-  _buildTestsBrowser()
+b.task('test', () => {
+  // TODO implement a test-suite
+  // A test-suite should cover
+  // - basic functionality of components
+  // - import from JATS -> restrictedJATS
+  // - transformation between restrictedJATS and TextureJATS
 })
-
-b.task('test', ['run:test'])
-
 
 /* HELPERS */
 
@@ -86,69 +100,16 @@ function _buildCSS(DEST, transpileToES5) {
   b.css('./node_modules/substance/substance-reset.css', DEST+'texture-reset.css', {variables: transpileToES5})
 }
 
-function _buildTestsBrowser(transpileToES5) {
-  b.js('./test/index.js', {
-    target: {
-      dest: TEST+'tests.js',
-      format: 'umd', moduleName: 'tests'
-    },
-    commonjs: true,
-    buble: transpileToES5,
-    external: { 'substance-test': 'substanceTest' },
-  })
-}
-
-function _buildTestsNode() {
-  b.js('./test/index.js', {
-    target: {
-      dest: TEST+'tests.cjs.js',
-      format: 'cjs'
-    },
-    external: ['substance-test'],
-    buble: true,
-    commonjs: true
-  })
-}
-
-function _runTestsNode() {
-  b.custom('Running nodejs tests...', {
-    execute: function() {
-      let cp = require('child_process')
-      return new Promise(function(resolve, reject) {
-        const child = cp.fork(path.join(__dirname, '.test/run-tests.js'))
-        child.on('message', function(msg) {
-          if (msg === 'done') { resolve() }
-        })
-        child.on('error', function(error) {
-          reject(new Error(error))
-        })
-        child.on('close', function(exitCode) {
-          if (exitCode !== 0) {
-            process.exit(exitCode)
-          } else {
-            resolve()
-          }
-        })
-      });
-    }
-  })
-}
-
-function _compileSchema(name, src, searchDirs, baseDir='generated', options = {} ) {
+function _compileSchema(name, src, searchDirs, deps, options = {} ) {
   const DEST = `tmp/${name}.data.js`
-  const CLASSIFICATION = `${baseDir}/${name}.classification.json`
   const ISSUES = `tmp/${name}.issues.txt`
   const entry = path.basename(src)
   b.custom(`Compiling schema '${name}'...`, {
-    src: ['data/rng/*.rng', 'src/**/*.rng'],
+    src: deps,
     dest: DEST,
     execute() {
       const { compileRNG, serializeXMLSchema, checkSchema } = require('substance')
-      let manualClassification
-      if (fs.existsSync(CLASSIFICATION)) {
-        manualClassification = JSON.parse(fs.readFileSync(CLASSIFICATION))
-      }
-      const xmlSchema = compileRNG(fs, searchDirs, entry, manualClassification)
+      const xmlSchema = compileRNG(fs, searchDirs, entry)
       let schemaData = serializeXMLSchema(xmlSchema)
       b.writeSync(DEST, `export default ${JSON.stringify(schemaData)}`)
       if (options.debug) {
@@ -156,6 +117,50 @@ function _compileSchema(name, src, searchDirs, baseDir='generated', options = {}
         const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
         b.writeSync(ISSUES, issuesData)
       }
+    }
+  })
+}
+
+// we used this internally just to get a single-file version of
+// the offficial JATS 1.1 rng data set
+function _singleJATSFile() {
+  // const RNG_DIR = 'data/jats/archiving'
+  // const ENTRY = 'JATS-archive-oasis-article1-mathml3.rng'
+  // const DEST = 'src/article/JATS-archiving.rng'
+  const RNG_DIR = 'data/jats/publishing'
+  const ENTRY = 'JATS-journalpublishing-oasis-article1-mathml3.rng'
+  const DEST = 'src/article/JATS-publishing.rng'
+  b.custom(`Pulling JATS spec into a single file...`, {
+    src: [RNG_DIR+'/*.rng'],
+    dest: DEST,
+    execute() {
+      const { loadRNG } = require('substance')
+      let rng = loadRNG(fs, [RNG_DIR], ENTRY)
+      // sort definitions by name
+      let grammar = rng.find('grammar')
+      let others = []
+      let defines = []
+      grammar.getChildren().forEach((child) => {
+        if (child.tagName === 'define') {
+          defines.push(child)
+        } else {
+          others.push(child)
+        }
+      })
+      defines.sort((a,b) => {
+        const aname = a.getAttribute('name').toLowerCase()
+        const bname = b.getAttribute('name').toLowerCase()
+        if (aname < bname) return -1
+        if (bname < aname) return 1
+        return 0
+      })
+      grammar.empty()
+      defines.concat(others).forEach((el) => {
+        grammar.appendChild('\n  ')
+        grammar.appendChild(el)
+      })
+      let xml = rng.serialize()
+      b.writeSync(DEST, xml)
     }
   })
 }

@@ -1,15 +1,7 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1 20151215//EN" "http://jats.nlm.nih.gov/archiving/1.1/JATS-archivearticle1.dtd">
+<!DOCTYPE article PUBLIC "TextureJATS 1.1" "http://texture.substance.io/TextureJATS-1.1.dtd">
 <!--
   Kitchen XML for our texture editor.
-
-  We use a restricted JATS version, which is suitable for Texture to reason
-  about.
-
-  We include all content that is required by the members of the Substance
-  Consortium (Public Knowledge Project, SciELO, Erudit)
-
-  Documents modelled after this kitchen sink can be fully edited visually.
 -->
 <article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
@@ -119,7 +111,7 @@
         <attrib>Ecclesiastes 10:1</attrib>
       </disp-quote>
       <p>Hello World <xref ref-type="table" rid="table1"/></p>
-      <table-fig id="table1">
+      <table-wrap id="table1">
         <title>Patient Care at End of Follow Up</title>
         <caption>
         <p>Numbers of patients receiving institutional care at
@@ -129,78 +121,82 @@
         </caption>
         <table frame="box" rules="all" cellpadding="5">
           <thead>
-          <tr>
-          <th></th>
-          <th colspan="3" align="center"
-          rowspan="1">Institutional care</th>
-          <th></th>
-          <th colspan="2" align="center"
-          rowspan="1">&#x2003;Bed use (days)</th>
-          </tr>
+            <tr>
+              <th></th>
+              <th colspan="3" align="center"
+              rowspan="1">Institutional care</th>
+              <th></th>
+              <th colspan="2" align="center"
+              rowspan="1">Bed use (days)</th>
+              </tr>
           </thead>
           <tfoot>
-          <tr>
-          <th></th>
-          <th>Institutional care</th>
-          <th></th>
-          <th>&#x2003;Bed use (days)</th>
-          </tr>
-          </tfoot>
+            <tr>
+              <th></th>
+              <th colspan="3" align="center"
+              rowspan="1">Institutional care</th>
+              <th></th>
+              <th colspan="2" align="center"
+              rowspan="1">Bed use (days)</th>
+            </tr>
+            </tfoot>
           <tbody>
-          <tr>
-          <td colspan="3"></td>
-          <td colspan="2"></td>
-          </tr>
-          <tr><th>Control group</th>
-          <th align="center">Day hospital</th>
-          <th align="center">Control</th>
-          <th align="center">Odds ratio (95&#x0025; CI)</th>
-          <th></th>
-          <th></th>
-          <th align="center">Day hospital</th>
-          <th align="center">Control</th>
-          </tr>
-          <tr>
-          <td colspan="7"></td>
-          </tr>
-          <tr>
-          <td>Comprehensive care (5 trials)</td>
-          <td align="center">151/597</td>
-          <td align="center">159/584</td>
-          <td align="center">0.91 (0.70 to 1.19)</td>
-          <td></td>
-          <td align="center">20.5</td>
-          <td align="center">21.4</td></tr>
-          <tr>
-          <td>Domiciliary care (4 trials)</td>
-          <td align="center">20/216</td>
-          <td align="center">&#x2002;19/227</td>
-          <td align="center">1.61 (0.30 to 8.55)</td>
-          <td></td>
-          <td align="center">&#x2002;7.7</td>
-          <td align="center">11.1</td>
-          </tr>
-          <tr>
-          <td>No comprehensive care (3 trials)</td>
-          <td align="center">37/411</td>
-          <td align="center">&#x2002;66/403</td>
-          <td align="center">0.50 (0.26 to 0.96)</td>
-          <td></td>
-          <td align="center">11.2</td>
-          <td align="center">11.7</td>
-          </tr>
-          <tr>
-          <td>Total</td>
-          <td align="center">208/1224</td>
-          <td align="center">244/1214</td>
-          <td align="center">0.77 (0.52 to 1.13)</td>
-          <td></td>
-          <td align="center">15.0</td>
-          <td align="center">16.4</td>
-          </tr>
+            <tr>
+              <td colspan="3"></td>
+              <td colspan="2"></td>
+              <td colspan="2"></td>
+            </tr>
+            <tr>
+              <th>Control group</th>
+              <th align="center">Day hospital</th>
+              <th align="center">Control</th>
+              <th align="center">Odds ratio (95&#x0025; CI)</th>
+              <th></th>
+              <th></th>
+              <th align="center">Day hospital</th>
+              <th align="center">Control</th>
+            </tr>
+            <tr>
+              <td colspan="7"></td>
+            </tr>
+            <tr>
+              <td>Comprehensive care (5 trials)</td>
+              <td align="center">151/597</td>
+              <td align="center">159/584</td>
+              <td align="center">0.91 (0.70 to 1.19)</td>
+              <td></td>
+              <td align="center">20.5</td>
+              <td align="center">21.4</td></tr>
+            <tr>
+              <td>Domiciliary care (4 trials)</td>
+              <td align="center">20/216</td>
+              <td align="center">&#x2002;19/227</td>
+              <td align="center">1.61 (0.30 to 8.55)</td>
+              <td></td>
+              <td align="center">&#x2002;7.7</td>
+              <td align="center">11.1</td>
+            </tr>
+            <tr>
+              <td>No comprehensive care (3 trials)</td>
+              <td align="center">37/411</td>
+              <td align="center">&#x2002;66/403</td>
+              <td align="center">0.50 (0.26 to 0.96)</td>
+              <td></td>
+              <td align="center">11.2</td>
+              <td align="center">11.7</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td align="center">208/1224</td>
+              <td align="center">244/1214</td>
+              <td align="center">0.77 (0.52 to 1.13)</td>
+              <td></td>
+              <td align="center">15.0</td>
+              <td align="center">16.4</td>
+            </tr>
           </tbody>
         </table>
-      </table-fig>
+      </table-wrap>
     </body-content>
   </body>
   <back>

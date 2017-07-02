@@ -1,0 +1,1439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Journal Publishing DTD Customize Content and -->
+<!-- Attributes Module -->
+<!-- VERSION:   ANSI/NISO JATS Version 1.1 (Z39.96-2015) -->
+<!-- DATE:      December 2015 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Content and Attributes Module v1.1 20151215//EN"
+  Delivered as file "JATS-journalpubcustom-models1.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Journal Publishing DTD of the JATS DTD Suite -->
+<!---->
+<!-- PURPOSE:    To declare the Parameter Entities (PEs) used to -->
+<!-- over-ride the content models, parts of content -->
+<!-- models, or attribute lists of the JATS DTD Suite -->
+<!---->
+<!-- Or-groups within models should use mixes or -->
+<!-- classes rather than name elements directly. -->
+<!---->
+<!-- Note: Since PEs must be declared before they -->
+<!-- are used, this module must be called before the -->
+<!-- content modules that declare elements. -->
+<!---->
+<!-- TAG SET SPONSOR -->
+<!-- National Center for Biotechnology -->
+<!-- Information (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- This DTD was created from the JATS DTD Suite. -->
+<!-- Digital archives and publishers may use the -->
+<!-- DTD as is for markup of journal literature or -->
+<!-- related material for archiving and transferring -->
+<!-- such material between archives or create a -->
+<!-- custom XML DTD from the Suite for -->
+<!-- these purposes. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the JATS DTD Suite -->
+<!-- and intend to stay compatible with the suite, -->
+<!-- then please include the following statement -->
+<!-- as a comment in all of your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the ANSI/NISO Z39.96 Journal Article Tag -->
+<!-- Suite (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the ANSI/NISO Z39.96 Journal Article -->
+<!-- Tag Suite (JATS)." -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- September 2004 -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. for the NISO Z39.96 -->
+<!-- Working Group. Mulberry Technologies was -->
+<!-- supported by National Center for Biotechnology -->
+<!-- Information (NCBI), a center of the US National -->
+<!-- Library of Medicine (NLM). -->
+<!---->
+<!-- The Journal Publishing DTD is built from the -->
+<!-- Archiving and Interchange DTD Suite. -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+       =============================================================
+       JATS Version 1.1                (DAL/BTU) v1.1  (2015-12-15)
+  
+       JATS is a continuing maintenance NISO Standard, which
+       requires voting by the ANSI and NISO memberships to be changed. 
+       JATS 1.1 was approved in late 2015, so the formal public 
+       identifiers were changed in the modules and the catalogs.
+       No model or attribute changes were made at this time. 
+  
+   25. JATS became version "1.1" and "v1.1 20151215"
+  
+       =============================================================
+       JATS Version 1.1d3             (DAL/BTU) v1.1d3  (2015-03-01)
+  
+       The changes in this release are in response to NISO 
+       License and Indicators Recommended Practice.
+  
+       NISO JATS is a continuing maintenance NISO Standard, which 
+       requires voting by the NISO membership to be changed. This
+       Committee Draft 1.1d3 will be sent to the NISO voting
+       membership, to become (if approved) NISO JATS 1.1.
+  
+       This draft DTD represents an interim version of the
+       non-normative JATS DTD Suite, as an indication to JATS users
+       the decisions that have been made by the JATS Standing
+       Committee.
+  
+   24. JATS became version "1.1d3" and "v1.1d3 20150301"
+  
+       =============================================================
+       JATS Version 1.1d2              (DAL/BTU) v1.1d2 (2014-09-30)
+  
+       NISO JATS is a continuing maintenance NISO Standard, which 
+       requires voting by the NISO membership to be changed. This
+       Committee Draft 1.1d2 will be sent to the NISO voting
+       membership, to become (if approved) NISO JATS 1.1.
+  
+       This catalog represents an interim version of the
+       non-normative JATS DTD Suite, as an indication to JATS users
+       the decisions that have been made by the JATS Standing
+       Committee.
+  
+   23. <VOLUME> INSIDE <ARTICLE-META>
+     - Allowed <volume> to repeat inside <article-meta>, the types to 
+       be distinguished using @content-type
+     - Added new optional element <volume-issue-group> inside 
+       <article-meta) following all volume and issue elements
+       to hold volume-issue pairs (or n-tuples) when a second
+       and subsequent <volume> has its own related issue
+       information.
+     - Made <issue> repeatable, for those who choose not to use
+       the new wrapper element.
+  
+   32. VERSION ELEMENTS
+       The new element <version> uses the PE %-just-rendition,
+       but Authoring has set that PE to null, so the <version>
+       element added <sup> and <sub> to be like the content
+       of <edition>.
+  
+   31. VALUE LIST FOR PERSON-GROUP-TYPE
+       Added "curator" to the list of preson-group role values.
+  
+   30. EDITION ELEMENTS - Added <sub> and <sup> to the model of
+       edition. These were needed now that the "Edition" element
+       has been renamed and repurposed as "Edition Statement".
+  
+   29. JATS became version "1.1d2" and "v1.1d2 20140930//EN"
+  
+   28. CONFERENCE LOCATION ELEMENTS AND PUBLISHER LOCATION ELEMENTS
+        - Added 3 new OPTIONAL elements: <city>, <state>, 
+          and <postal-code> by adding address.class
+  
+       =============================================================
+       NISO JATS Version 1.1d1           (DAL/BTU) v1.1 (2013-11-15)
+  
+       ANSI/NISO Z39.96-2012 (pre-release for V1.0 BITS; Version 1.1d1) 
+  
+       NISO JATS Standing Committee met and answered the requests and
+       suggestions from the NISO request forms.
+  
+       Details concerning ANSI/NISO Z39.96-2012 JATS-based DTDs,  
+       XSDs, RNGs and supporting documentation are available at
+             http://jats.nlm.nih.gov/1.0/
+  
+   27. ON-BEHALF-OF NEW CONTENT
+       Added <xref>, <fn>, and <target> (the simple links) to 
+       <on-behalf-of>.
+  
+   26. ADDED <string-date> to <mixed-citation> and <element-citation>
+       through citation-elements.
+  
+   25. NEW ELEMENT <era>
+       Added to the model of <date>, optional following year,
+       through date-model.
+  
+   24. XML Base
+       Added the attribute @xml:base to the Global (common)
+       attributes used on all elements.
+  
+   23. INSTITUTION-WRAP ADDED
+       Added the element <institution-wrap> to the following elements
+       through the institution-wrap.class:
+        - <conf-sponsor>
+        - <publisher-name>
+        - <std-organization>
+  
+   22.  GLOBAL ATTRIBUTES - Added the new parameter entity 
+           %jats-common-atts;
+       to every element in this module. This PE adds (for now) the
+       @id attribute and the @xml:base attribute to every element,
+       whether metadata or narrative.
+       Since the @id in this parameter entity is optional, a second
+       parameter entity jats-common-atts-id-required was also added.
+       The two are kept in sync with the jats-base-atts parameter 
+       entity.
+       All attribute lists in this module changed.
+  
+   21. ABSTRACTS AND KEYWORDS ON NEW STRUCTURES
+       - Added <abstract> (through %abstract.class;) and <kwd-group> 
+         (through %kwd-group.class;) to the following elements:
+          - ack (through %ack-model;)
+          - fig (through %fig-model;)
+          - fig-group (through %fig-group-model;)
+  
+       - Changed "abstract*" to "(%abstract.class;)*"
+         and "kwd-group*" to "(%kwd-group.class;)*" since those
+         classes now exist. Elements should have a limited number of
+         ways to be invoked.
+          - article-meta (through %article-meta-model;)
+  
+   20. ACKNOWLEDGEMENT MODEL
+       - Added optional, repeatable <kwd-group> to the beginning of 
+         <ack> (through %ack-model;).
+  
+       =============================================================
+       NISO JATS Version 1.0             (DAL/BTU) v1.0 (2012-xx-xx)
+  
+       ANSI/NISO Z39.96-2012 (Version 1.0) 
+  
+       Details concerning ANSI/NISO Z39.96-2012 JATS-based DTDs,  
+       XSDs, RNGs and supporting documentation are available at
+             http://jats.nlm.nih.gov/1.0/
+  
+   19. RELATED OBJECT - Added <related-object> everywhere
+       <related-article> was used, including inside 
+       <article-meta> using article-meta-model.
+  
+   18. CONTRIBUTOR MODEL - Added "contrib-id.class" to the beginning
+       at the <contrib> model, to hold identifiers for people,
+       such as publishers-specific IDs and ORCIDs.
+  
+   17. STANDARDS ORGANIZATION - Added std-organization-elements
+       to reduce what was allowed in the names of standards bodies.
+  
+   16. JOURNAL METADATA MODEL
+       - Added <issn-l> as an optional element to <journal-meta>
+       - Added contributors and affiliations to journal metadata through
+         contrib-group.class (which resolves to <contrib-group>) and 
+         aff-alternatives.class (which resolves to <aff> or
+         <aff-alternatives>), using the journal-meta-model.
+  
+   15. JOURNAL METADATA MODEL
+  
+   14. PARAGRAPH PARAMETER ENTITY SYNTAX CHANGE (no models changed)
+       Fixed content models that were stated as "p*" and "sec*"
+       to use the %just-para.class;, %sec.class, and %ref-list.class; 
+       classes. Element models that were changed include:
+        - abstract
+        - ack
+        - trans-abstract
+  
+   13. Updated the DTD-version attribute to "1.0" and the formal
+       public identifier to the date: "v1.0 20120330//EN".
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, the version number that would
+       have been "NLM Version 3.1 Draft" has become NISO JATS
+       "Version 0.4".
+  
+       Details on NISO Trial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+   12. Updated the DTD-version attribute to "0.4" 
+  
+   11. Updated the public identifier to "v0.4 20110131", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+   10. POSITION ATTRIBUTE - Added the value "background"
+  
+    9. PREFORMAT - Added <alt-text> and <long-desc> to <preformat> by
+       adding %access.class; to %preformat-elements;
+  
+    8. INITIALS - Removed the attribute over-ride for <surname> and
+       <given-names> to allow the use of @initials.
+  
+    7. JOURNAL METADATA- Added <notes> to repeat within <journal-meta>
+       (through %journal-meta-model; and added @xml:lang and
+       @specific-use to the attributes of <notes> through %notes-atts;
+  
+    6. AFFILIATION ALTERNATIVES - Added the element <aff-alternatives>
+       to <article-meta> through %article meta-model;. This element
+       will hold multiple <aff>s that are a representation of a
+       single affiliation, for example, the name of an institution
+       in two languages or two scripts.
+  
+    5. PERSON-GROUP - Became a mixed-content model, so the parameter
+       entity %person-group-model: was changed to
+       %person-group-elements;, which will be mixed with #PCDATA
+       as defined in references.ent. The PE person-group-model has
+       been retained in references.ent for compatibility, but has been
+       set to the mixed model using person-group-elements.
+  
+    4. @SPECIFIC-USE and @XML:LANG - Added the @specific-use and
+       @xml:lang to %display-atts;. Also added these attributes
+       to the following over-rides:
+        - inline-graphic through inline-graphic-atts (both)
+        - fn through fn-atts (added @specific-use, @xml:lang already
+            there)
+        - person-group through person-group-atts (both)
+  
+    3. LABEL - Added optional <label> to <fig-group> using
+       %fig-group-model; as the first element in model, before caption
+  
+    2. SELF URI - Added <self-uri> to <journal-meta> (directly
+       following <notes>) so that an XML document can point to the
+       journal home page.
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://dtd.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!--
+  Details concerning 
+  ANSI/NISO Z39.96-2015 JATS-based DTDs, XSDs, 
+  RNGs and supporting documentation are available at
+        http://jats.nlm.nih.gov/1.1/
+-->
+<!-- ============================================================= -->
+<!-- INLINE MIXES TO OVER-RIDE CONTENT MODELS -->
+<!--                     (ELEMENTS TO BE ADDED TO #PCDATA IN MODELS) -->
+<!-- ============================================================= -->
+<!-- ABBREVIATED JOURNAL TITLE ELEMENTS -->
+<!--
+  The elements that can be included along with
+  data characters inside the content model of
+  a <abbrev-journal-title>
+  Removed the face markup, %just-rendition;
+-->
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="abbrev-journal-title-elements">
+    <notAllowed/>
+  </define>
+  <!-- CITATION ELEMENTS -->
+  <!--
+    Content for both types of citation. These
+    elements may be mixed with #PCDATA in the
+    <mixed-citation> element (in which all
+    punctuation and spacing are left intact), and
+    they also constitute the choices that can be
+    used to form the all-element-content of the
+    <element-citation> element (in which
+    punctuation and spacing are removed).
+    Design Note: All inline mixes begin with an
+    OR bar.
+  -->
+  <define name="citation-elements">
+    <choice>
+      <ref name="citation-additions.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="label.class"/>
+      <ref name="phrase.class"/>
+      <ref name="references.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- CONFERENCE ACRONYM ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the conference acronym.
+    Removed %simple-text;
+  -->
+  <define name="conf-acronym-elements">
+    <notAllowed/>
+  </define>
+  <!-- CONFERENCE LOCATION ELEMENTS -->
+  <!--
+    Elements for use in the <conf-loc> element
+    Removed %simple-text;
+  -->
+  <define name="conf-loc-elements">
+    <ref name="address.class"/>
+  </define>
+  <!-- CONFERENCE NAME ELEMENTS -->
+  <!--
+    Elements for use in the <conf-name> element.
+    Removed %simple-text;
+  -->
+  <define name="conf-name-elements">
+    <notAllowed/>
+  </define>
+  <!-- CONFERENCE NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the conference number.
+    Removed %simple-text;
+  -->
+  <define name="conf-num-elements">
+    <notAllowed/>
+  </define>
+  <!-- CONFERENCE SPONSOR  ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the conference sponsor.
+    Removed %simple-text;
+  -->
+  <define name="conf-sponsor-elements">
+    <ref name="institution-wrap.class"/>
+  </define>
+  <!-- DEGREE(S) ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <degrees>
+    Removed %just-rendition;
+  -->
+  <define name="degrees-elements">
+    <notAllowed/>
+  </define>
+  <!-- EDITION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    Removed %just-rendition;
+  -->
+  <define name="edition-elements">
+    <ref name="subsup.class"/>
+  </define>
+  <!-- FAX NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <fax>
+    Removed %just-rendition;
+  -->
+  <define name="fax-elements">
+    <notAllowed/>
+  </define>
+  <!-- GIVEN (FIRST) NAMES ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <given-names>
+    Removed %just-rendition;
+  -->
+  <define name="given-names-elements">
+    <notAllowed/>
+  </define>
+  <!-- INSTITUTION NAME ELEMENTS -->
+  <!--
+    Elements for use in the <institution>
+    element
+    Removed %break.class; and %emphasis.class;
+  -->
+  <define name="institution-elements">
+    <ref name="subsup.class"/>
+  </define>
+  <!-- ISSUE TITLE ELEMENTS -->
+  <!--
+    Elements for use with data characters inside
+    the model for the <issue> element
+    Removed %just-rendition;
+  -->
+  <define name="issue-elements">
+    <notAllowed/>
+  </define>
+  <!-- JOURNAL TITLE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <journal-title>
+    Removed %just-rendition;
+  -->
+  <define name="journal-title-elements">
+    <notAllowed/>
+  </define>
+  <!-- KEYWORD CONTENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a keyword <kwd>.
+  -->
+  <define name="kwd-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- PATENT NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <patent>
+    Removed %just-rendition;
+  -->
+  <define name="patent-elements">
+    <notAllowed/>
+  </define>
+  <!-- PERSON GROUP MODEL -->
+  <!-- Content model for the <person-group> element -->
+  <define name="person-group-elements">
+    <choice>
+      <ref name="name.class"/>
+      <ref name="person-group-info.class"/>
+      <ref name="string-name.class"/>
+    </choice>
+  </define>
+  <!-- PHONE NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <phone number>
+    Removed %just-rendition;
+  -->
+  <define name="phone-elements">
+    <notAllowed/>
+  </define>
+  <!-- PREFIX ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <prefix>
+    Removed %just-rendition;
+  -->
+  <define name="prefix-elements">
+    <notAllowed/>
+  </define>
+  <!-- PREFORMATTED TEXT ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters, inside the content model for the
+    <preformat> element, in which whitespace,
+    such as tabs, line feeds, and spaces will
+    be preserved
+  -->
+  <define name="preformat-elements">
+    <choice>
+      <ref name="access.class"/>
+      <ref name="address-link.class"/>
+      <ref name="display-back-matter.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="phrase.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- PUBLISHER'S LOCATION ELEMENTS -->
+  <!--
+                        Elements for use in the Publisher Location
+    <publisher-loc> element
+    Removed emphasis.class;, and %subsup.class;
+  -->
+  <define name="publisher-loc-elements">
+    <choice>
+      <ref name="address.class"/>
+      <ref name="address-link.class"/>
+    </choice>
+  </define>
+  <!-- PUBLISHER'S NAME ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <publisher-name>
+    Removed %just-rendition;
+  -->
+  <define name="publisher-name-elements">
+    <ref name="institution-wrap.class"/>
+  </define>
+  <!-- STANDARDS ORGANIZATION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <std-organization>.
+    Removed emphasis.class.
+  -->
+  <define name="std-organization-elements">
+    <choice>
+      <ref name="institution-wrap.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- SUFFIX ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <suffix>
+    Removed %just-rendition;
+  -->
+  <define name="suffix-elements">
+    <notAllowed/>
+  </define>
+  <!-- SURNAME ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <surname>
+    Removed %just-rendition;
+  -->
+  <define name="surname-elements">
+    <notAllowed/>
+  </define>
+  <!-- URI ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <uri>
+    Removed %just-rendition;
+  -->
+  <define name="uri-elements">
+    <notAllowed/>
+  </define>
+  <!-- VERSION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <version>
+  -->
+  <define name="version-elements">
+    <ref name="subsup.class"/>
+  </define>
+  <!-- VOLUME NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <volume>
+    Removed %just-rendition;
+  -->
+  <define name="volume-elements">
+    <notAllowed/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDES OF CONTENT MODELS (FULL MODELS) -->
+  <!-- ============================================================= -->
+  <!-- ABSTRACT MODEL -->
+  <!--
+                        Abstracts may contain one or more paragraphs
+    (as a typical abstract does) or titled
+    sections, as is done in many physics
+    articles.
+    Unlike the default model in the base DTD
+    Suite, this <abstract> requires that all
+    sections in the abstract start with titles.
+  -->
+  <define name="abstract-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- ACKNOWLEDGMENTS MODEL -->
+  <!-- Content model for the <ack> element -->
+  <define name="ack-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="ref-list.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- ANONYMOUS MODEL -->
+  <!--
+    Unlike in Green, <anonymous> is empty. When
+    present, it is used to generate the text
+    "anonymous" or "anon.", etc.
+  -->
+  <define name="anonymous-model">
+    <empty/>
+  </define>
+  <!-- ARRAY CONTENT MODEL -->
+  <!--
+    The element used to contain material in
+    rows and columns that is just a block insert
+    into the text flow, not numbered or called a
+    table, and not titled or captioned
+  -->
+  <define name="array-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <zeroOrMore>
+        <ref name="just-base-display.class"/>
+      </zeroOrMore>
+      <ref name="tbody.class"/>
+    </choice>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- ARTICLE METADATA MODEL -->
+  <!--
+    Full content model for the metadata that is
+    specific to the article.
+    Unlike in Archive DTD, some of the metadata
+    is required here.
+  -->
+  <define name="article-meta-model">
+    <zeroOrMore>
+      <ref name="article-id"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="article-categories"/>
+    </optional>
+    <ref name="title-group"/>
+    <zeroOrMore>
+      <choice>
+        <ref name="contrib-group.class"/>
+        <ref name="aff-alternatives.class"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <ref name="author-notes"/>
+    </optional>
+    <oneOrMore>
+      <ref name="pub-date"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="volume"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="volume-id"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="volume-series"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="issue"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="issue-id"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="issue-title"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="issue-sponsor"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="issue-part"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="volume-issue-group"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="isbn"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="supplement"/>
+    </optional>
+    <optional>
+      <choice>
+        <group>
+          <ref name="fpage"/>
+          <optional>
+            <ref name="lpage"/>
+          </optional>
+          <optional>
+            <ref name="page-range"/>
+          </optional>
+        </group>
+        <ref name="elocation-id"/>
+      </choice>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="address-link.class"/>
+        <ref name="product"/>
+        <ref name="supplementary-material"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <ref name="history"/>
+    </optional>
+    <optional>
+      <ref name="permissions"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="self-uri"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="related-article.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="trans-abstract"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="funding-group"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="conference"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="counts"/>
+    </optional>
+    <optional>
+      <ref name="custom-meta-group"/>
+    </optional>
+  </define>
+  <!-- CONFERENCE MODEL -->
+  <!--
+    The content model of the <conference>
+    element
+  -->
+  <define name="conference-model">
+    <ref name="conf-date"/>
+    <oneOrMore>
+      <choice>
+        <ref name="conf-name"/>
+        <ref name="conf-acronym"/>
+      </choice>
+    </oneOrMore>
+    <optional>
+      <ref name="conf-num"/>
+    </optional>
+    <optional>
+      <ref name="conf-loc"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="conf-sponsor"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="conf-theme"/>
+    </optional>
+  </define>
+  <!-- CONTRIBUTOR MODEL -->
+  <!-- Content model for the <contrib> element -->
+  <define name="contrib-model">
+    <zeroOrMore>
+      <ref name="contrib-id.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="name.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="degree.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="contrib-info.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- DATE ELEMENTS MODEL -->
+  <!--
+    The content models for elements that describe
+    dates, such as Publication Date <pub-date> and
+    History Dates <date>.  The <string-date>
+    element holds dates for which months and
+    years are not given, for example "first
+    quarter", "spring", etc.
+    Unlike the base DTD Suite, this <date>
+    requires a <year> and may not take a string
+    date as an alternative.
+  -->
+  <define name="date-model">
+    <optional>
+      <choice>
+        <group>
+          <optional>
+            <ref name="day"/>
+          </optional>
+          <optional>
+            <ref name="month"/>
+          </optional>
+        </group>
+        <ref name="season"/>
+      </choice>
+    </optional>
+    <ref name="year"/>
+    <optional>
+      <ref name="era"/>
+    </optional>
+  </define>
+  <!-- DEFINITION LIST: DEFINITION ITEM ELEMENTS -->
+  <!-- The content model of a <def-item>. -->
+  <define name="def-item-model">
+    <ref name="term"/>
+    <zeroOrMore>
+      <ref name="def"/>
+    </zeroOrMore>
+  </define>
+  <!-- FIGURE-LIKE CONTENT MODEL -->
+  <!--
+    Content model for the Figure element and any
+    similarly structured elements
+    Made <label> and <caption> non-repeatable.
+  -->
+  <define name="fig-model">
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="block-math.class"/>
+        <ref name="chem-struct-wrap.class"/>
+        <ref name="intable-para.class"/>
+        <ref name="just-table.class"/>
+        <ref name="just-para.class"/>
+        <ref name="list.class"/>
+        <ref name="simple-display.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- FIGURE GROUP MODEL -->
+  <!-- Content model for a <fig-group> -->
+  <define name="fig-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="fig-display.class"/>
+        <ref name="just-base-display.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- JOURNAL METADATA MODEL -->
+  <!--
+    Content model for the journal metadata
+    element <journal-meta>
+  -->
+  <define name="journal-meta-model">
+    <oneOrMore>
+      <ref name="journal-id"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="journal-title-group"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="contrib-group.class"/>
+        <ref name="aff-alternatives.class"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="issn"/>
+    </oneOrMore>
+    <optional>
+      <ref name="issn-l"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="isbn"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="publisher"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="notes"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="self-uri"/>
+    </zeroOrMore>
+  </define>
+  <!-- LIST MODEL -->
+  <!-- Content model for the <list> element -->
+  <define name="list-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="list-item.class"/>
+    </oneOrMore>
+  </define>
+  <!-- ON BEHALF OF CONTENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <on-behalf-of>
+    Design Note: -%rendition-plus; begins with
+    an OR bar, so this inline mix beguines with
+    an OR bar.
+  -->
+  <define name="on-behalf-of-elements">
+    <choice>
+      <ref name="rendition-plus"/>
+      <ref name="institution-wrap.class"/>
+      <ref name="simple-link.class"/>
+    </choice>
+  </define>
+  <!-- REFERENCE ITEM MODEL -->
+  <!-- Content model for the <ref> element -->
+  <define name="ref-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="citation.class"/>
+        <ref name="note.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- CONTENT MODEL FOR A STRUCTURAL SECTION -->
+  <!--
+    The model for a section that requires that a
+    either <title> or a <label> (which in some
+    journals takes the place of a title) must be
+    present. One or the other must be present
+    for autogeneration of a Table of Contents or
+    other navigation.
+  -->
+  <define name="sec-model">
+    <optional>
+      <ref name="sec-meta"/>
+    </optional>
+    <choice>
+      <group>
+        <ref name="label"/>
+        <optional>
+          <ref name="title"/>
+        </optional>
+      </group>
+      <ref name="title"/>
+    </choice>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec-back-matter-mix"/>
+    </zeroOrMore>
+  </define>
+  <!-- TRANSLATED ABSTRACT MODEL -->
+  <!--
+    Content model for an <trans-abstract>
+    element
+  -->
+  <define name="trans-abstract-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- ============================================================= -->
+  <!-- DUPLICATE ATTRIBUTE DECLARATIONS -->
+  <!-- (These are unchanged from the base Suite, -->
+  <!--                     but are used in attribute over-rides below) -->
+  <!-- ============================================================= -->
+  <!-- COMMON ATTRIBUTES -->
+  <!--
+    These lists of attributes will be added to 
+    nearly every element, in both the document 
+    metadata and the document body, of the entire 
+    Tag Set:
+      - including table elements for both the 
+          XHTML-inspired and OASIS-inspired
+          table model elements
+      - excluding only <mml:math> and 
+          <xi:include> (whose namespaces JATS
+          does not control).
+       Great care should be taken to use these
+    attributes judiciously, not as a shortcut to
+    thinking through where an attribute should be
+    used. Potential use cases include adding
+    @xml:lang or some RDFa attribute to every 
+    elements.
+  -->
+  <!-- JATS BASE ATTRIBUTES -->
+  <!--
+    Holds all the common attributes except @id.
+    Used to keep the two common attribute lists 
+    in sync. To add a global attribute, modify
+    this list.
+  -->
+  <!-- JATS COMMON ATTRIBUTES -->
+  <!--
+    Holds all the common attributes, as defined in
+    the base attribute parameter entity, plus an
+    optional @id.
+  -->
+  <!-- JATS COMMON ATTRIBUTES (ID REQUIRED) -->
+  <!--
+    Holds all the common attributes, as defined in
+    the base attribute parameter entity, plus a 
+    required @id.
+  -->
+  <!-- DISPLAY ATTRIBUTES -->
+  <!--
+    Attributes used for several of the block
+    display elements
+  -->
+  <define name="display-atts">
+    <optional>
+      <attribute name="position" a:defaultValue="float">
+        <choice>
+          <value>anchor</value>
+          <value>background</value>
+          <value>float</value>
+          <value>margin</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="orientation" a:defaultValue="portrait">
+        <choice>
+          <value>portrait</value>
+          <value>landscape</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- XLINK LINK ATTRIBUTES -->
+  <!--
+    Attributes for any element that must be a
+    link
+  -->
+  <define name="link-atts">
+    <optional>
+      <attribute name="xlink:type">
+        <choice>
+          <value>simple</value>
+        </choice>
+      </attribute>
+    </optional>
+    <attribute name="xlink:href"/>
+    <optional>
+      <attribute name="xlink:role"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:title"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:show">
+        <choice>
+          <value>embed</value>
+          <value>new</value>
+          <value>none</value>
+          <value>other</value>
+          <value>replace</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:actuate">
+        <choice>
+          <value>none</value>
+          <value>onLoad</value>
+          <value>onRequest</value>
+          <value>other</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- MIGHT LINK XLINK ATTRIBUTES -->
+  <!--
+    Attributes for any element that may be a link
+    but need not be one
+  -->
+  <define name="might-link-atts">
+    <optional>
+      <attribute name="xlink:type">
+        <choice>
+          <value>simple</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:href"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:role"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:title"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:show">
+        <choice>
+          <value>embed</value>
+          <value>new</value>
+          <value>none</value>
+          <value>other</value>
+          <value>replace</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:actuate">
+        <choice>
+          <value>none</value>
+          <value>onLoad</value>
+          <value>onRequest</value>
+          <value>other</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDES OF ATTRIBUTE LISTS -->
+  <!-- ============================================================= -->
+  <!-- FOOTNOTE TYPE VALUES -->
+  <!--
+    Used to mark the semantics of the footnote,
+    what information does this footnote convey.
+  -->
+  <define name="fn-types">
+    <choice>
+      <value>abbr</value>
+      <value>com</value>
+      <value>con</value>
+      <value>conflict</value>
+      <value>corresp</value>
+      <value>current-aff</value>
+      <value>deceased</value>
+      <value>edited-by</value>
+      <value>equal</value>
+      <value>financial-disclosure</value>
+      <value>on-leave</value>
+      <value>participating-researchers</value>
+      <value>presented-at</value>
+      <value>presented-by</value>
+      <value>present-address</value>
+      <value>previously-at</value>
+      <value>study-group-members</value>
+      <value>supplementary-material</value>
+      <value>supported-by</value>
+      <value>other</value>
+    </choice>
+  </define>
+  <!-- FOOTNOTE ATTRIBUTES -->
+  <!--
+    Attribute list for Footnote element
+    Unlike base, "fn-type" values have been made
+    explicit and removed the symbol attribute
+  -->
+  <define name="fn-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="fn-type">
+        <choice>
+          <ref name="fn-types"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="symbol"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- INLINE GRAPHIC ATTRIBUTES -->
+  <!--
+    Attributes for Inline Graphic
+    <inline-graphic>
+  -->
+  <define name="inline-graphic-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="baseline-shift"/>
+    </optional>
+    <optional>
+      <attribute name="mimetype"/>
+    </optional>
+    <optional>
+      <attribute name="mime-subtype"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="link-atts"/>
+  </define>
+  <!-- PERSON GROUP ATTRIBUTES -->
+  <!-- Attributes for the <person-group> element -->
+  <define name="person-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="person-group-type">
+        <choice>
+          <value>allauthors</value>
+          <value>assignee</value>
+          <value>author</value>
+          <value>compiler</value>
+          <value>curator</value>
+          <value>director</value>
+          <value>editor</value>
+          <value>guest-editor</value>
+          <value>inventor</value>
+          <value>translator</value>
+          <value>transed</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SECTION ATTRIBUTES -->
+  <!-- Attribute list for Section element -->
+  <define name="sec-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="sec-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+</grammar>
+<!-- ================== End Publishing Content/ATT Override ====== -->

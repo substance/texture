@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    JATS Namespaced OASIS XML Table Module -->
+<!-- VERSION:   NISO 1.1 -->
+<!-- DATE:      December 2015 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//OASIS//DTD XML Exchange Table Model 19990315//EN"
+       Delivered as file "oasis-exchange.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     JATS DTD Suite -->
+<!---->
+<!-- PURPOSE:    Duplicates the OASIS Open exchange CALS table -->
+<!-- model (XML version) with only one addition, the -->
+<!-- elements have been assigned an namespace, -->
+<!-- typically: -->
+<!-- xmlns:oasis   CDATA   #FIXED -->
+<!-- "http://docs.oasis-open.org/ns/oasis-exchange/table" -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+       =============================================================
+       JATS Version 1.1                (DAL/BTU) v1.1  (2015-12-15)
+  
+       JATS is a continuing maintenance NISO Standard, which
+       requires voting by the ANSI and NISO memberships to be changed. 
+       JATS 1.1 was approved in late 2015, so the formal public 
+       identifiers were changed in the modules and the catalogs.
+       No model or attribute changes were made at this time. 
+  
+    8. JATS became version "1.1" and "v1.1 20151215"
+  
+       =============================================================
+       JATS Version 1.1d3             (DAL/BTU) v1.1d3  (2015-03-01)
+  
+       The changes in this release are in response to NISO 
+       License and Indicators Recommended Practice.
+  
+       NISO JATS is a continuing maintenance NISO Standard, which 
+       requires voting by the NISO membership to be changed. This
+       Committee Draft 1.1d3 will be sent to the NISO voting
+       membership, to become (if approved) NISO JATS 1.1.
+  
+       This draft DTD represents an interim version of the
+       non-normative JATS DTD Suite, as an indication to JATS users
+       the decisions that have been made by the JATS Standing
+       Committee.
+  
+    7. ERROR IN COMMENT FIXED
+       The 'Typical Invocation' comment at the top of the document
+       has an in correct fpi:
+       "-//NLM//DTD JATS Namespaced OASIS XML Table Module v1.1d2 
+        20140930//EN"
+       comment was changed to the correct:
+       "-//OASIS//DTD XML Exchange Table Model 19990315//EN"
+  
+    6. JATS became version "1.1d3" and "v1.1 20150301//EN"
+  
+       =============================================================
+       JATS Version 1.1d2              (DAL/BTU) v1.1d2 (2014-09-30)
+  
+       NISO JATS is a continuing maintenance NISO Standard, which 
+       requires voting by the NISO membership to be changed. This
+       Committee Draft 1.1d2 will be sent to the NISO voting
+       membership, to become (if approved) NISO JATS 1.1.
+  
+       This catalog represents an interim version of the
+       non-normative JATS DTD Suite, as an indication to JATS users
+       the decisions that have been made by the JATS Standing
+       Committee.
+  
+    5. JATS became version "1.1d2" and "v1.1d2 20140930//EN"
+  
+       =============================================================
+       NISO JATS Version 1.0             (DAL/BTU) v1.0 (2012-xx-xx)
+  
+       If approved by the voting members of NISO, this will become the
+       Version 1.0 NISO JATS Z39.96-2012 NISO Standard. 
+  
+    4. Updated the DTD-version attribute to "1.0" and the formal
+       public identifier to the date: "v1.0 20120330//EN".
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, the version number that would
+       have been "NLM Version 3.1 Draft" has become NISO JATS
+       "Version 0.4".
+  
+       Details on NISO Trial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    3. Updated the DTD-version attribute to "0.4" 
+  
+    2. Updated the public identifier to "v0.4 20110131", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov./3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- XML EXCHANGE TABLE MODEL DECLARATION MODULE -->
+<!--
+  This set of declarations defines the XML version of the Exchange
+  Table Model as of the date shown in the Formal Public Identifier
+  (FPI) for this entity.
+  
+  This set of declarations may be referred to using a public external
+  entity declaration and reference as shown in the following three
+  lines-
+  
+  <!ENTITY % calstblx
+    PUBLIC "-//OASIS//DTD XML Exchange Table Model 19990315//EN">
+    %calstblx;
+  
+  If various parameter entities used within this set of declarations
+  are to be given non-default values, the appropriate declarations
+  should be given before calling in this package (i.e., before the
+  "%calstblx;" reference).
+-->
+<!--
+  The motivation for this XML version of the Exchange Table Model
+  is simply to create an XML version of the SGML Exchange Table
+  Model. By design, no effort has been made to "improve" the model.
+  
+  This XML version incorporates the logical bare minimum changes
+  necessary to make the Exchange Table Model a valid XML DTD.
+-->
+<!--
+  The XML version of the Exchange Table Model differs from
+  the SGML version in the following ways-
+  
+  The following parameter entities have been removed-
+  
+    - tbl.table.excep, tbl.hdft.excep, tbl.row.excep, tbl.entry.excep
+      There are no exceptions in XML. The following normative
+      statement is made in lieu of exceptions- the exchange table model
+      explicitly forbids a table from occurring within another table.
+      If the content model of an entry includes a table element, then this
+      cannot be enforced by the DTD, but it is a deviation from the
+      exchange table model to include a table within a table.
+  
+    - tbl.hdft.name, tbl.hdft.mdl, tbl.hdft.excep, tbl.hdft.att
+      The motivation for these elements was to change the table
+      header/footer elements. Since XML does not allow element
+      declarations to contain name groups, and the exchange table model
+      does not allow a table to contain footers, the continued presence
+      of these attributes seems unnecessary.
+  
+  The following parameter entity has been added-
+  
+    - tbl.thead.att
+      This entity parameterizes the attributes on thead. It replaces
+      the tbl.hdft.att parameter entity.
+  
+  Other miscellaneous changes-
+  
+    - Tag omission indicators have been removed
+    - Comments have been removed from declarations
+    - NUMBER attributes have been changed to NMTOKEN
+    - NUTOKEN attributes have been to changed to NMTOKEN
+    - Removed the grouping characters around the content model
+      parameter entry for the 'entry' element. This is necessary
+      so that an entry can contain #PCDATA and be defined as an
+      optional, repeatable OR group beginning with #PCDATA.
+-->
+<!--
+  This entity includes a set of element and attribute declarations
+  that partially defines the Exchange table model.  However, the
+  model is not well-defined without the accompanying natural language
+  description of the semantics (meanings) of these various elements,
+  attributes, and attribute values.  The semantic writeup, also
+  available from SGML Open, should be used in conjunction with this entity.
+-->
+<!--
+  In order to use the Exchange table model, various parameter entity
+  declarations are required.  A brief description is as follows-
+  
+  
+  ENTITY NAME      WHERE USED              WHAT IT IS
+  
+  %yesorno         In ATTLIST of-          An attribute declared value
+                   almost all elements     for a "boolean" attribute
+  
+  ENTITY NAME      WHERE USED              WHAT IT IS
+  
+  %yesorno         In ATTLIST of-          An attribute declared value
+                   almost all elements     for a "boolean" attribute
+  
+  %paracon         In content model of-    The "text" (logical content)
+                   <entry>                 of the model group for <entry>
+  
+  %titles          In content model of-    The "title" part of the model
+                   table element           group for the table element
+  
+  %tbl.table.name  In declaration of-      The name of the "table"
+                   table element           element
+  
+  %tbl.table-titles.mdl In content model of- The model group for the title
+                   table elements          part of the content model for
+                                           table element
+  
+  %tbl.table.mdl   In content model of-    The model group for the content
+                   table elements          model for table element, often
+                                           (and by default) defined
+                                           in terms of %tbl.table-titles.mdl
+                                           and tgroup
+  
+  %tbl.table.att   In ATTLIST of-          Additional attributes on the
+                   table element           table element
+  
+  %bodyatt         In ATTLIST of-          Additional attributes on the
+                   table element           table element (for backward
+                                           compatibility with the SGML model)
+  
+  %tbl.tgroup.mdl  In content model of-    The model group for the content
+                   <tgroup>                model for <tgroup>
+  
+  %tbl.tgroup.att  In ATTLIST of-          Additional attributes on the
+                   <tgroup>                <tgroup> element
+  
+  %tbl.thead.att   In ATTLIST of-          Additional attributes on the
+                   <thead>                 <thead> element
+  
+  %tbl.tbody.att   In ATTLIST of-          Additional attributes on the
+                   <tbody>                 <tbody> element
+  
+  %tbl.colspec.att In ATTLIST of-          Additional attributes on the
+                   <colspec>               <colspec> element
+  
+  %tbl.row.mdl     In content model of-    The model group for the content
+                   <row>                   model for <row>
+  
+  %tbl.row.att     In ATTLIST of-          Additional attributes on the
+                   <row>                   <row> element
+  
+  %tbl.entry.mdl   In content model of-    The model group for the content
+                   <entry>                 model for <entry>
+  
+  %tbl.entry.att   In ATTLIST of-          Additional attributes on the
+                   <entry>                 <entry> element
+  
+  This set of declarations will use the default definitions shown below
+  for any of these parameter entities that are not declared before this
+  set of declarations is referenced.
+-->
+<!--
+  These definitions are not directly related to the table model, but are
+  used in the default CALS table model and may be defined elsewhere (and
+  prior to the inclusion of this table module) in the referencing DTD.
+-->
+<!-- no if zero(s), yes if any other value -->
+<!-- default for use in entry content -->
+<!--
+  The parameter entities as defined below change and simplify the CALS
+  table model as published (as part of the Example DTD) in MIL-HDBK-28001.
+  The resulting simplified DTD has support from the SGML Open vendors and is
+  therefore more interoperable among different systems.
+  
+  These following declarations provide the Exchange default definitions
+  for these entities.  However, these entities can be redefined (by giving
+  the appropriate parameter entity declaration(s) prior to the reference
+  to this Table Model declaration set entity) to fit the needs of the
+  current application.
+  
+  Note, however, that changes may have significant effect on the ability
+  to interchange table information.  These changes may manifest themselves
+  in usability, presentation, and possible structure information
+  degradation.
+-->
+<grammar xmlns:oasis="http://www.niso.org/standards/z39-96/ns/oasis-exchange/table" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="tbl.table.mdl">
+    <choice>
+      <ref name="tbl.table-titles.mdl"/>
+      <ref name="tbl.table-main.mdl"/>
+    </choice>
+  </define>
+  <define name="bodyatt">
+    <empty/>
+  </define>
+  <define name="tbl.entry.mdl">
+    <zeroOrMore>
+      <ref name="paracon"/>
+    </zeroOrMore>
+  </define>
+  <!-- =====  Element and attribute declarations follow. ===== -->
+  <!--
+        Default declarations previously defined in this entity and
+        referenced below include-
+        ENTITY % tbl.table.name       "table"
+        ENTITY % tbl.table-titles.mdl "%titles;,"
+        ENTITY % tbl.table.mdl        "%tbl.table-titles; tgroup+"
+        ENTITY % tbl.table.att        "
+    pgwide          %yesorno;       #IMPLIED "
+  -->
+  <define name="oasis.table">
+    <element name="oasis:table">
+      <ref name="oasis.table-attlist"/>
+      <ref name="tbl.table.mdl"/>
+    </element>
+  </define>
+  <define name="oasis.table-attlist" combine="interleave">
+    <optional>
+      <attribute name="frame">
+        <choice>
+          <value>top</value>
+          <value>bottom</value>
+          <value>topbot</value>
+          <value>all</value>
+          <value>sides</value>
+          <value>none</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="colsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <ref name="tbl.table.att"/>
+    <ref name="bodyatt"/>
+  </define>
+  <!--
+    Default declarations previously defined in this entity and
+    referenced below include-
+    ENTITY % tbl.tgroup.mdl    "colspec*,thead?,tbody"
+    ENTITY % tbl.tgroup.att    ""
+  -->
+  <define name="oasis.tgroup">
+    <element name="oasis:tgroup">
+      <ref name="oasis.tgroup-attlist"/>
+      <ref name="tbl.tgroup.mdl"/>
+    </element>
+  </define>
+  <define name="oasis.tgroup-attlist" combine="interleave">
+    <attribute name="cols">
+      <data type="NMTOKEN"/>
+    </attribute>
+    <optional>
+      <attribute name="colsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+          <value>justify</value>
+          <value>char</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="tbl.tgroup.att"/>
+  </define>
+  <!--
+    Default declarations previously defined in this entity and
+    referenced below include-
+    ENTITY % tbl.colspec.att   ""
+  -->
+  <define name="oasis.colspec">
+    <element name="oasis:colspec">
+      <ref name="oasis.colspec-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="oasis.colspec-attlist" combine="interleave">
+    <optional>
+      <attribute name="colnum">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="colname">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="colwidth"/>
+    </optional>
+    <optional>
+      <attribute name="colsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+          <value>justify</value>
+          <value>char</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="char"/>
+    </optional>
+    <optional>
+      <attribute name="charoff">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="tbl.colspec.att"/>
+  </define>
+  <!--
+    Default declarations previously defined in this entity and
+    referenced below include-
+    ENTITY % tbl.thead.att      ""
+  -->
+  <define name="oasis.thead">
+    <element name="oasis:thead">
+      <ref name="oasis.thead-attlist"/>
+      <oneOrMore>
+        <ref name="oasis.row"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="oasis.thead-attlist" combine="interleave">
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="tbl.thead.att"/>
+  </define>
+  <!--
+    Default declarations previously defined in this entity and
+    referenced below include-
+    ENTITY % tbl.tbody.att     ""
+  -->
+  <define name="oasis.tbody">
+    <element name="oasis:tbody">
+      <ref name="oasis.tbody-attlist"/>
+      <oneOrMore>
+        <ref name="oasis.row"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="oasis.tbody-attlist" combine="interleave">
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="tbl.tbody.att"/>
+  </define>
+  <!--
+    Default declarations previously defined in this entity and
+    referenced below include-
+    ENTITY % tbl.row.mdl       "entry+"
+    ENTITY % tbl.row.att       ""
+  -->
+  <define name="oasis.row">
+    <element name="oasis:row">
+      <ref name="oasis.row-attlist"/>
+      <ref name="tbl.row.mdl"/>
+    </element>
+  </define>
+  <define name="oasis.row-attlist" combine="interleave">
+    <optional>
+      <attribute name="rowsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="tbl.row.att"/>
+  </define>
+  <!--
+    Default declarations previously defined in this entity and
+    referenced below include-
+    ENTITY % paracon           "#PCDATA"
+    ENTITY % tbl.entry.mdl     "(%paracon;)*"
+    ENTITY % tbl.entry.att     ""
+  -->
+  <define name="oasis.entry">
+    <element name="oasis:entry">
+      <ref name="oasis.entry-attlist"/>
+      <ref name="tbl.entry.mdl"/>
+    </element>
+  </define>
+  <define name="oasis.entry-attlist" combine="interleave">
+    <optional>
+      <attribute name="colname">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="namest">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="nameend">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="morerows">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="colsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowsep">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+          <value>justify</value>
+          <value>char</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="char"/>
+    </optional>
+    <optional>
+      <attribute name="charoff">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="tbl.entry.att"/>
+  </define>
+</grammar>
+<!-- ================== End OASIS Exchange Module ================== -->

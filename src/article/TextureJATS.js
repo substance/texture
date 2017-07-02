@@ -12,4 +12,11 @@ TextureJATS.getVersion = function() {
   return '1.1'
 }
 
+TextureJATS.getStartElement = function() {
+  return 'article'
+}
+
+TextureJATS.uri = "http://texture.substance.io/jats/1.1/TextureJATS.dtd"
+
+
 export default TextureJATS

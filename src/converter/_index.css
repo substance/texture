@@ -1,0 +1,27 @@
+.sc-jats-import-dialog {
+  max-height: 600px;
+  overflow: auto;
+}
+
+.sc-import-stage.sm-initial {
+  color: #eee;
+}
+
+.sc-import-stage.sm-errored {
+  color: red;
+}
+
+.sc-import-stage.sm-finished {
+  color: green;
+}
+
+.sc-import-stage > .se-errors > .se-error {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border: solid 1px red;
+  background: rgba(200, 0, 0 , 0.25)
+}
+
+.sc-import-stage > .se-errors > .se-error > .se-element {
+  color: #666;
+}

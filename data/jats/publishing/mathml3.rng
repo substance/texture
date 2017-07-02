@@ -1,0 +1,4094 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ================================================================= -->
+<!--
+  IEEE NISO JATS MODS                    Name Collisions 03/02/2012
+  
+  The following changes have been made (with the permission of the
+  W3C MathML Committee, to this DTD):
+  
+  1) %product.class; is defined below and also defined in 
+  JATS-default-classes.ent. Renamed class in the MathML DTD
+  until JATS names can be changed. Renamed the parameter entity
+  to "mml-product.class".
+  
+  2) The parameter entity named "name" was commented out. It is never
+  used in the MathML 3.0 DTD, and its presence causes processing
+  errors in the Mulberry Tag LIbrary software.
+  
+  3) id CDATA #IMPLIED ==> id ID #implied
+  
+-->
+<!-- ================================================================= -->
+<!-- MathML 3.0 DTD  ....................................................... -->
+<!-- file: mathml3.dtd -->
+<!--
+  MathML 3.0 DTD
+  
+  This is the Mathematical Markup Language (MathML) 3.0, an XML
+  application for describing mathematical notation and capturing
+  both its structure and content.
+  
+  Copyright &#xa9; 1998-2010 W3C&#xae; (MIT, ERCIM, Keio), All Rights 
+  Reserved. W3C liability, trademark, document use and software
+  licensing rules apply. 
+  
+  Permission to use, copy, modify and distribute the MathML 2.0 DTD and
+  its accompanying documentation for any purpose and without fee is
+  hereby granted in perpetuity, provided that the above copyright notice
+  and this paragraph appear in all copies.  The copyright holders make
+  no representation about the suitability of the DTD for any purpose.
+  
+  It is provided "as is" without expressed or implied warranty.
+  
+  This entity may be identified by the PUBLIC and SYSTEM identifiers:
+  
+    PUBLIC "-//W3C//DTD MathML 3.0//EN"
+    SYSTEM "mathml3.dtd"
+  
+  Revisions: editor and revision history at EOF
+-->
+<!--
+  Entity used to enable marked sections which enforces stricter		
+  checking of MathML syntax rules		
+-->
+<!-- MathML Qualified Names module ............................... -->
+<grammar xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="mathml3-qname1.mod.rng"/>
+  <!--
+    if %NS.prefixed; is INCLUDE, include all NS attributes, 
+    otherwise just those associated with MathML
+  -->
+  <define name="MATHML.NamespaceDecl.attrib">
+    <ref name="MATHML.xmlns.attrib"/>
+  </define>
+  <!-- MathML Character Entities .............................................. -->
+  <define name="MalignExpression">
+    <choice>
+      <ref name="mml.maligngroup"/>
+      <ref name="mml.malignmark"/>
+    </choice>
+  </define>
+  <define name="TokenExpression">
+    <choice>
+      <ref name="mml.mi"/>
+      <ref name="mml.mn"/>
+      <ref name="mml.mo"/>
+      <ref name="mml.mtext"/>
+      <ref name="mml.mspace"/>
+      <ref name="mml.ms"/>
+    </choice>
+  </define>
+  <define name="PresentationExpression">
+    <choice>
+      <ref name="TokenExpression"/>
+      <ref name="MalignExpression"/>
+      <ref name="mml.mrow"/>
+      <ref name="mml.mfrac"/>
+      <ref name="mml.msqrt"/>
+      <ref name="mml.mroot"/>
+      <ref name="mml.mstyle"/>
+      <ref name="mml.merror"/>
+      <ref name="mml.mpadded"/>
+      <ref name="mml.mphantom"/>
+      <ref name="mml.mfenced"/>
+      <ref name="mml.menclose"/>
+      <ref name="mml.msub"/>
+      <ref name="mml.msup"/>
+      <ref name="mml.msubsup"/>
+      <ref name="mml.munder"/>
+      <ref name="mml.mover"/>
+      <ref name="mml.munderover"/>
+      <ref name="mml.mmultiscripts"/>
+      <ref name="mml.mtable"/>
+      <ref name="mml.mstack"/>
+      <ref name="mml.mlongdiv"/>
+      <ref name="mml.maction"/>
+    </choice>
+  </define>
+  <!-- end of mathml3-strict-content.rng -->
+  <define name="cn.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="mml.mglyph"/>
+        <ref name="mml.sep"/>
+        <ref name="PresentationExpression"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- start of mathml3-content.rng -->
+  <!-- start of mathml3-strict-content.rng -->
+  <define name="mml.cn">
+    <element name="mml:cn">
+      <ref name="mml.cn-attlist"/>
+      <ref name="cn.content"/>
+    </element>
+  </define>
+  <define name="ci.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="mml.mglyph"/>
+        <ref name="PresentationExpression"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="mml.ci">
+    <element name="mml:ci">
+      <ref name="mml.ci-attlist"/>
+      <ref name="ci.content"/>
+    </element>
+  </define>
+  <define name="csymbol.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="mml.mglyph"/>
+        <ref name="PresentationExpression"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="mml.csymbol">
+    <element name="mml:csymbol">
+      <ref name="mml.csymbol-attlist"/>
+      <ref name="csymbol.content"/>
+    </element>
+  </define>
+  <define name="BvarQ">
+    <zeroOrMore>
+      <ref name="mml.bvar"/>
+    </zeroOrMore>
+  </define>
+  <define name="DomainQ">
+    <zeroOrMore>
+      <choice>
+        <ref name="mml.domainofapplication"/>
+        <ref name="mml.condition"/>
+        <group>
+          <ref name="mml.lowlimit"/>
+          <optional>
+            <ref name="mml.uplimit"/>
+          </optional>
+        </group>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="constant-arith.class">
+    <choice>
+      <ref name="mml.exponentiale"/>
+      <ref name="mml.imaginaryi"/>
+      <ref name="mml.notanumber"/>
+      <ref name="mml.true"/>
+      <ref name="mml.false"/>
+      <ref name="mml.pi"/>
+      <ref name="mml.eulergamma"/>
+      <ref name="mml.infinity"/>
+    </choice>
+  </define>
+  <define name="constant-set.class">
+    <choice>
+      <ref name="mml.integers"/>
+      <ref name="mml.reals"/>
+      <ref name="mml.rationals"/>
+      <ref name="mml.naturalnumbers"/>
+      <ref name="mml.complexes"/>
+      <ref name="mml.primes"/>
+      <ref name="mml.emptyset"/>
+    </choice>
+  </define>
+  <define name="binary-linalg.class">
+    <choice>
+      <ref name="mml.vectorproduct"/>
+      <ref name="mml.scalarproduct"/>
+      <ref name="mml.outerproduct"/>
+    </choice>
+  </define>
+  <define name="nary-linalg.class">
+    <ref name="mml.selector"/>
+  </define>
+  <define name="unary-linalg.class">
+    <choice>
+      <ref name="mml.determinant"/>
+      <ref name="mml.transpose"/>
+    </choice>
+  </define>
+  <define name="nary-constructor.class">
+    <choice>
+      <ref name="mml.vector"/>
+      <ref name="mml.matrix"/>
+      <ref name="mml.matrixrow"/>
+    </choice>
+  </define>
+  <define name="nary-stats.class">
+    <choice>
+      <ref name="mml.mean"/>
+      <ref name="mml.sdev"/>
+      <ref name="mml.variance"/>
+      <ref name="mml.median"/>
+      <ref name="mml.mode"/>
+    </choice>
+  </define>
+  <define name="unary-elementary.class">
+    <choice>
+      <ref name="mml.sin"/>
+      <ref name="mml.cos"/>
+      <ref name="mml.tan"/>
+      <ref name="mml.sec"/>
+      <ref name="mml.csc"/>
+      <ref name="mml.cot"/>
+      <ref name="mml.sinh"/>
+      <ref name="mml.cosh"/>
+      <ref name="mml.tanh"/>
+      <ref name="mml.sech"/>
+      <ref name="mml.csch"/>
+      <ref name="mml.coth"/>
+      <ref name="mml.arcsin"/>
+      <ref name="mml.arccos"/>
+      <ref name="mml.arctan"/>
+      <ref name="mml.arccosh"/>
+      <ref name="mml.arccot"/>
+      <ref name="mml.arccoth"/>
+      <ref name="mml.arccsc"/>
+      <ref name="mml.arccsch"/>
+      <ref name="mml.arcsec"/>
+      <ref name="mml.arcsech"/>
+      <ref name="mml.arcsinh"/>
+      <ref name="mml.arctanh"/>
+    </choice>
+  </define>
+  <define name="limit.class">
+    <ref name="mml.limit"/>
+  </define>
+  <define name="mml-product.class">
+    <ref name="mml.product"/>
+  </define>
+  <define name="sum.class">
+    <ref name="mml.sum"/>
+  </define>
+  <define name="unary-set.class">
+    <ref name="mml.card"/>
+  </define>
+  <define name="nary-set-reln.class">
+    <choice>
+      <ref name="mml.subset"/>
+      <ref name="mml.prsubset"/>
+    </choice>
+  </define>
+  <define name="binary-set.class">
+    <choice>
+      <ref name="mml.in"/>
+      <ref name="mml.notin"/>
+      <ref name="mml.notsubset"/>
+      <ref name="mml.notprsubset"/>
+      <ref name="mml.setdiff"/>
+    </choice>
+  </define>
+  <define name="nary-set.class">
+    <choice>
+      <ref name="mml.union"/>
+      <ref name="mml.intersect"/>
+      <ref name="mml.cartesianproduct"/>
+    </choice>
+  </define>
+  <define name="nary-setlist-constructor.class">
+    <choice>
+      <ref name="mml.set"/>
+      <ref name="mml.list"/>
+    </choice>
+  </define>
+  <define name="unary-veccalc.class">
+    <choice>
+      <ref name="mml.divergence"/>
+      <ref name="mml.grad"/>
+      <ref name="mml.curl"/>
+      <ref name="mml.laplacian"/>
+    </choice>
+  </define>
+  <define name="partialdiff.class">
+    <ref name="mml.partialdiff"/>
+  </define>
+  <define name="Differential-Operator.class">
+    <ref name="mml.diff"/>
+  </define>
+  <define name="int.class">
+    <ref name="mml.int"/>
+  </define>
+  <define name="binary-reln.class">
+    <choice>
+      <ref name="mml.neq"/>
+      <ref name="mml.approx"/>
+      <ref name="mml.factorof"/>
+      <ref name="mml.tendsto"/>
+    </choice>
+  </define>
+  <define name="nary-reln.class">
+    <choice>
+      <ref name="mml.eq"/>
+      <ref name="mml.gt"/>
+      <ref name="mml.lt"/>
+      <ref name="mml.geq"/>
+      <ref name="mml.leq"/>
+    </choice>
+  </define>
+  <define name="quantifier.class">
+    <choice>
+      <ref name="mml.forall"/>
+      <ref name="mml.exists"/>
+    </choice>
+  </define>
+  <define name="binary-logical.class">
+    <choice>
+      <ref name="mml.implies"/>
+      <ref name="mml.equivalent"/>
+    </choice>
+  </define>
+  <define name="unary-logical.class">
+    <ref name="mml.not"/>
+  </define>
+  <define name="nary-logical.class">
+    <choice>
+      <ref name="mml.and"/>
+      <ref name="mml.or"/>
+      <ref name="mml.xor"/>
+    </choice>
+  </define>
+  <define name="nary-arith.class">
+    <choice>
+      <ref name="mml.plus"/>
+      <ref name="mml.times"/>
+      <ref name="mml.gcd"/>
+      <ref name="mml.lcm"/>
+    </choice>
+  </define>
+  <define name="nary-minmax.class">
+    <choice>
+      <ref name="mml.max"/>
+      <ref name="mml.min"/>
+    </choice>
+  </define>
+  <define name="unary-arith.class">
+    <choice>
+      <ref name="mml.factorial"/>
+      <ref name="mml.abs"/>
+      <ref name="mml.conjugate"/>
+      <ref name="mml.arg"/>
+      <ref name="mml.real"/>
+      <ref name="mml.imaginary"/>
+      <ref name="mml.floor"/>
+      <ref name="mml.ceiling"/>
+      <ref name="mml.exp"/>
+    </choice>
+  </define>
+  <define name="binary-arith.class">
+    <choice>
+      <ref name="mml.quotient"/>
+      <ref name="mml.divide"/>
+      <ref name="mml.minus"/>
+      <ref name="mml.power"/>
+      <ref name="mml.rem"/>
+      <ref name="mml.root"/>
+    </choice>
+  </define>
+  <define name="nary-functional.class">
+    <ref name="mml.compose"/>
+  </define>
+  <define name="lambda.class">
+    <ref name="mml.lambda"/>
+  </define>
+  <define name="unary-functional.class">
+    <choice>
+      <ref name="mml.inverse"/>
+      <ref name="mml.ident"/>
+      <ref name="mml.domain"/>
+      <ref name="mml.codomain"/>
+      <ref name="mml.image"/>
+      <ref name="mml.ln"/>
+      <ref name="mml.log"/>
+      <ref name="mml.moment"/>
+    </choice>
+  </define>
+  <define name="interval.class">
+    <ref name="mml.interval"/>
+  </define>
+  <define name="DeprecatedContExp">
+    <choice>
+      <ref name="mml.reln"/>
+      <ref name="mml.fn"/>
+      <ref name="mml.declare"/>
+    </choice>
+  </define>
+  <define name="CommonDeprecatedAtt">
+    <optional>
+      <attribute name="other"/>
+    </optional>
+  </define>
+  <define name="Qualifier">
+    <choice>
+      <ref name="DomainQ"/>
+      <ref name="mml.degree"/>
+      <ref name="mml.momentabout"/>
+      <ref name="mml.logbase"/>
+    </choice>
+  </define>
+  <define name="ContExp">
+    <choice>
+      <ref name="mml.piecewise"/>
+      <ref name="DeprecatedContExp"/>
+      <ref name="interval.class"/>
+      <ref name="unary-functional.class"/>
+      <ref name="lambda.class"/>
+      <ref name="nary-functional.class"/>
+      <ref name="binary-arith.class"/>
+      <ref name="unary-arith.class"/>
+      <ref name="nary-minmax.class"/>
+      <ref name="nary-arith.class"/>
+      <ref name="nary-logical.class"/>
+      <ref name="unary-logical.class"/>
+      <ref name="binary-logical.class"/>
+      <ref name="quantifier.class"/>
+      <ref name="nary-reln.class"/>
+      <ref name="binary-reln.class"/>
+      <ref name="int.class"/>
+      <ref name="Differential-Operator.class"/>
+      <ref name="partialdiff.class"/>
+      <ref name="unary-veccalc.class"/>
+      <ref name="nary-setlist-constructor.class"/>
+      <ref name="nary-set.class"/>
+      <ref name="binary-set.class"/>
+      <ref name="nary-set-reln.class"/>
+      <ref name="unary-set.class"/>
+      <ref name="sum.class"/>
+      <ref name="mml-product.class"/>
+      <ref name="limit.class"/>
+      <ref name="unary-elementary.class"/>
+      <ref name="nary-stats.class"/>
+      <ref name="nary-constructor.class"/>
+      <ref name="unary-linalg.class"/>
+      <ref name="nary-linalg.class"/>
+      <ref name="binary-linalg.class"/>
+      <ref name="constant-set.class"/>
+      <ref name="constant-arith.class"/>
+      <ref name="mml.semantics"/>
+      <ref name="mml.cn"/>
+      <ref name="mml.ci"/>
+      <ref name="mml.csymbol"/>
+      <ref name="mml.apply"/>
+      <ref name="mml.bind"/>
+      <ref name="mml.share"/>
+      <ref name="mml.cerror"/>
+      <ref name="mml.cbytes"/>
+      <ref name="mml.cs"/>
+    </choice>
+  </define>
+  <define name="CommonAtt">
+    <ref name="MATHML.NamespaceDecl.attrib"/>
+    <optional>
+      <attribute name="xlink:href"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:type"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="xml:space">
+        <choice>
+          <value>default</value>
+          <value>preserve</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xref"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="href"/>
+    </optional>
+    <ref name="CommonDeprecatedAtt"/>
+  </define>
+  <define name="apply.content">
+    <ref name="ContExp"/>
+    <ref name="BvarQ"/>
+    <zeroOrMore>
+      <ref name="Qualifier"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="ContExp"/>
+    </zeroOrMore>
+  </define>
+  <define name="mml.apply">
+    <element name="mml:apply">
+      <ref name="mml.apply-attlist"/>
+      <ref name="apply.content"/>
+    </element>
+  </define>
+  <define name="mml.apply-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+  </define>
+  <define name="bind.content">
+    <ref name="apply.content"/>
+  </define>
+  <define name="mml.bind">
+    <element name="mml:bind">
+      <ref name="mml.bind-attlist"/>
+      <ref name="bind.content"/>
+    </element>
+  </define>
+  <define name="mml.bind-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+  </define>
+  <define name="src">
+    <optional>
+      <attribute name="src"/>
+    </optional>
+  </define>
+  <define name="mml.share">
+    <element name="mml:share">
+      <ref name="mml.share-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.share-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="src"/>
+  </define>
+  <define name="mml.cerror">
+    <element name="mml:cerror">
+      <ref name="mml.cerror-attlist"/>
+      <ref name="mml.csymbol"/>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.cerror-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+  </define>
+  <define name="mml.cbytes">
+    <element name="mml:cbytes">
+      <ref name="mml.cbytes-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="mml.cs">
+    <element name="mml:cs">
+      <ref name="mml.cs-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="DefEncAtt">
+    <optional>
+      <attribute name="encoding"/>
+    </optional>
+    <optional>
+      <attribute name="definitionURL"/>
+    </optional>
+  </define>
+  <define name="mml.cn-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="base"/>
+    </optional>
+  </define>
+  <define name="mml.ci-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+  </define>
+  <define name="mml.csymbol-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="cd"/>
+    </optional>
+  </define>
+  <define name="mml.bvar">
+    <element name="mml:bvar">
+      <ref name="mml.bvar-attlist"/>
+      <choice>
+        <group>
+          <ref name="mml.degree"/>
+          <choice>
+            <ref name="mml.ci"/>
+            <ref name="mml.semantics"/>
+          </choice>
+        </group>
+        <group>
+          <choice>
+            <ref name="mml.ci"/>
+            <ref name="mml.semantics"/>
+          </choice>
+          <optional>
+            <ref name="mml.degree"/>
+          </optional>
+        </group>
+      </choice>
+    </element>
+  </define>
+  <define name="mml.bvar-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.cbytes-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.cs-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sep">
+    <element name="mml:sep">
+      <ref name="mml.sep-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sep-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.domainofapplication">
+    <element name="mml:domainofapplication">
+      <ref name="mml.domainofapplication-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.domainofapplication-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.condition">
+    <element name="mml:condition">
+      <ref name="mml.condition-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.condition-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.uplimit">
+    <element name="mml:uplimit">
+      <ref name="mml.uplimit-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.uplimit-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.lowlimit">
+    <element name="mml:lowlimit">
+      <ref name="mml.lowlimit-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.lowlimit-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.degree">
+    <element name="mml:degree">
+      <ref name="mml.degree-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.degree-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.momentabout">
+    <element name="mml:momentabout">
+      <ref name="mml.momentabout-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.momentabout-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.logbase">
+    <element name="mml:logbase">
+      <ref name="mml.logbase-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.logbase-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.piecewise">
+    <element name="mml:piecewise">
+      <ref name="mml.piecewise-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="mml.piece"/>
+          <ref name="mml.otherwise"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.piecewise-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.piece">
+    <element name="mml:piece">
+      <ref name="mml.piece-attlist"/>
+      <ref name="ContExp"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.piece-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.otherwise">
+    <element name="mml:otherwise">
+      <ref name="mml.otherwise-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.otherwise-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.reln">
+    <element name="mml:reln">
+      <ref name="mml.reln-attlist"/>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.reln-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.fn">
+    <element name="mml:fn">
+      <ref name="mml.fn-attlist"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.fn-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <define name="mml.declare">
+    <element name="mml:declare">
+      <ref name="mml.declare-attlist"/>
+      <oneOrMore>
+        <ref name="ContExp"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="mml.declare-attlist" combine="interleave">
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="scope"/>
+    </optional>
+    <optional>
+      <attribute name="nargs"/>
+    </optional>
+    <optional>
+      <attribute name="occurrence">
+        <choice>
+          <value>prefix</value>
+          <value>infix</value>
+          <value>function-model</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.interval">
+    <element name="mml:interval">
+      <ref name="mml.interval-attlist"/>
+      <ref name="ContExp"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.interval-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="closure"/>
+    </optional>
+  </define>
+  <define name="mml.inverse">
+    <element name="mml:inverse">
+      <ref name="mml.inverse-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.inverse-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.ident">
+    <element name="mml:ident">
+      <ref name="mml.ident-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.ident-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.domain">
+    <element name="mml:domain">
+      <ref name="mml.domain-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.domain-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.codomain">
+    <element name="mml:codomain">
+      <ref name="mml.codomain-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.codomain-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.image">
+    <element name="mml:image">
+      <ref name="mml.image-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.image-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.ln">
+    <element name="mml:ln">
+      <ref name="mml.ln-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.ln-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.log">
+    <element name="mml:log">
+      <ref name="mml.log-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.log-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.moment">
+    <element name="mml:moment">
+      <ref name="mml.moment-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.moment-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.lambda">
+    <element name="mml:lambda">
+      <ref name="mml.lambda-attlist"/>
+      <ref name="BvarQ"/>
+      <ref name="DomainQ"/>
+      <ref name="ContExp"/>
+    </element>
+  </define>
+  <define name="mml.lambda-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.compose">
+    <element name="mml:compose">
+      <ref name="mml.compose-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.compose-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.quotient">
+    <element name="mml:quotient">
+      <ref name="mml.quotient-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.quotient-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.divide">
+    <element name="mml:divide">
+      <ref name="mml.divide-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.divide-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.minus">
+    <element name="mml:minus">
+      <ref name="mml.minus-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.minus-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.power">
+    <element name="mml:power">
+      <ref name="mml.power-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.power-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.rem">
+    <element name="mml:rem">
+      <ref name="mml.rem-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.rem-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.root">
+    <element name="mml:root">
+      <ref name="mml.root-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.root-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.factorial">
+    <element name="mml:factorial">
+      <ref name="mml.factorial-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.factorial-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.abs">
+    <element name="mml:abs">
+      <ref name="mml.abs-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.abs-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.conjugate">
+    <element name="mml:conjugate">
+      <ref name="mml.conjugate-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.conjugate-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arg">
+    <element name="mml:arg">
+      <ref name="mml.arg-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arg-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.real">
+    <element name="mml:real">
+      <ref name="mml.real-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.real-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.imaginary">
+    <element name="mml:imaginary">
+      <ref name="mml.imaginary-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.imaginary-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.floor">
+    <element name="mml:floor">
+      <ref name="mml.floor-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.floor-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.ceiling">
+    <element name="mml:ceiling">
+      <ref name="mml.ceiling-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.ceiling-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.exp">
+    <element name="mml:exp">
+      <ref name="mml.exp-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.exp-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.max">
+    <element name="mml:max">
+      <ref name="mml.max-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.max-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.min">
+    <element name="mml:min">
+      <ref name="mml.min-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.min-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.plus">
+    <element name="mml:plus">
+      <ref name="mml.plus-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.plus-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.times">
+    <element name="mml:times">
+      <ref name="mml.times-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.times-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.gcd">
+    <element name="mml:gcd">
+      <ref name="mml.gcd-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.gcd-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.lcm">
+    <element name="mml:lcm">
+      <ref name="mml.lcm-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.lcm-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.and">
+    <element name="mml:and">
+      <ref name="mml.and-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.and-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.or">
+    <element name="mml:or">
+      <ref name="mml.or-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.or-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.xor">
+    <element name="mml:xor">
+      <ref name="mml.xor-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.xor-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.not">
+    <element name="mml:not">
+      <ref name="mml.not-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.not-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.implies">
+    <element name="mml:implies">
+      <ref name="mml.implies-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.implies-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.equivalent">
+    <element name="mml:equivalent">
+      <ref name="mml.equivalent-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.equivalent-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.forall">
+    <element name="mml:forall">
+      <ref name="mml.forall-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.forall-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.exists">
+    <element name="mml:exists">
+      <ref name="mml.exists-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.exists-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.eq">
+    <element name="mml:eq">
+      <ref name="mml.eq-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.eq-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.gt">
+    <element name="mml:gt">
+      <ref name="mml.gt-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.gt-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.lt">
+    <element name="mml:lt">
+      <ref name="mml.lt-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.lt-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.geq">
+    <element name="mml:geq">
+      <ref name="mml.geq-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.geq-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.leq">
+    <element name="mml:leq">
+      <ref name="mml.leq-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.leq-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.neq">
+    <element name="mml:neq">
+      <ref name="mml.neq-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.neq-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.approx">
+    <element name="mml:approx">
+      <ref name="mml.approx-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.approx-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.factorof">
+    <element name="mml:factorof">
+      <ref name="mml.factorof-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.factorof-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.tendsto">
+    <element name="mml:tendsto">
+      <ref name="mml.tendsto-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.tendsto-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+  </define>
+  <define name="mml.int">
+    <element name="mml:int">
+      <ref name="mml.int-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.int-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.diff">
+    <element name="mml:diff">
+      <ref name="mml.diff-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.diff-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.partialdiff">
+    <element name="mml:partialdiff">
+      <ref name="mml.partialdiff-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.partialdiff-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.divergence">
+    <element name="mml:divergence">
+      <ref name="mml.divergence-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.divergence-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.grad">
+    <element name="mml:grad">
+      <ref name="mml.grad-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.grad-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.curl">
+    <element name="mml:curl">
+      <ref name="mml.curl-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.curl-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.laplacian">
+    <element name="mml:laplacian">
+      <ref name="mml.laplacian-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.laplacian-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.set">
+    <element name="mml:set">
+      <ref name="mml.set-attlist"/>
+      <zeroOrMore>
+        <ref name="BvarQ"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="DomainQ"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.set-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+  </define>
+  <define name="mml.list">
+    <element name="mml:list">
+      <ref name="mml.list-attlist"/>
+      <zeroOrMore>
+        <ref name="BvarQ"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="DomainQ"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.list-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="order">
+        <choice>
+          <value>numeric</value>
+          <value>lexicographic</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.union">
+    <element name="mml:union">
+      <ref name="mml.union-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.union-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.intersect">
+    <element name="mml:intersect">
+      <ref name="mml.intersect-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.intersect-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.cartesianproduct">
+    <element name="mml:cartesianproduct">
+      <ref name="mml.cartesianproduct-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.cartesianproduct-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.in">
+    <element name="mml:in">
+      <ref name="mml.in-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.in-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.notin">
+    <element name="mml:notin">
+      <ref name="mml.notin-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.notin-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.notsubset">
+    <element name="mml:notsubset">
+      <ref name="mml.notsubset-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.notsubset-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.notprsubset">
+    <element name="mml:notprsubset">
+      <ref name="mml.notprsubset-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.notprsubset-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.setdiff">
+    <element name="mml:setdiff">
+      <ref name="mml.setdiff-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.setdiff-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.subset">
+    <element name="mml:subset">
+      <ref name="mml.subset-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.subset-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.prsubset">
+    <element name="mml:prsubset">
+      <ref name="mml.prsubset-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.prsubset-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.card">
+    <element name="mml:card">
+      <ref name="mml.card-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.card-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sum">
+    <element name="mml:sum">
+      <ref name="mml.sum-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sum-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.product">
+    <element name="mml:product">
+      <ref name="mml.product-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.product-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.limit">
+    <element name="mml:limit">
+      <ref name="mml.limit-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.limit-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sin">
+    <element name="mml:sin">
+      <ref name="mml.sin-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sin-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.cos">
+    <element name="mml:cos">
+      <ref name="mml.cos-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.cos-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.tan">
+    <element name="mml:tan">
+      <ref name="mml.tan-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.tan-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sec">
+    <element name="mml:sec">
+      <ref name="mml.sec-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sec-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.csc">
+    <element name="mml:csc">
+      <ref name="mml.csc-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.csc-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.cot">
+    <element name="mml:cot">
+      <ref name="mml.cot-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.cot-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sinh">
+    <element name="mml:sinh">
+      <ref name="mml.sinh-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sinh-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.cosh">
+    <element name="mml:cosh">
+      <ref name="mml.cosh-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.cosh-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.tanh">
+    <element name="mml:tanh">
+      <ref name="mml.tanh-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.tanh-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sech">
+    <element name="mml:sech">
+      <ref name="mml.sech-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sech-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.csch">
+    <element name="mml:csch">
+      <ref name="mml.csch-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.csch-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.coth">
+    <element name="mml:coth">
+      <ref name="mml.coth-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.coth-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arcsin">
+    <element name="mml:arcsin">
+      <ref name="mml.arcsin-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arcsin-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arccos">
+    <element name="mml:arccos">
+      <ref name="mml.arccos-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arccos-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arctan">
+    <element name="mml:arctan">
+      <ref name="mml.arctan-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arctan-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arccosh">
+    <element name="mml:arccosh">
+      <ref name="mml.arccosh-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arccosh-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arccot">
+    <element name="mml:arccot">
+      <ref name="mml.arccot-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arccot-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arccoth">
+    <element name="mml:arccoth">
+      <ref name="mml.arccoth-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arccoth-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arccsc">
+    <element name="mml:arccsc">
+      <ref name="mml.arccsc-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arccsc-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arccsch">
+    <element name="mml:arccsch">
+      <ref name="mml.arccsch-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arccsch-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arcsec">
+    <element name="mml:arcsec">
+      <ref name="mml.arcsec-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arcsec-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arcsech">
+    <element name="mml:arcsech">
+      <ref name="mml.arcsech-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arcsech-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arcsinh">
+    <element name="mml:arcsinh">
+      <ref name="mml.arcsinh-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arcsinh-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.arctanh">
+    <element name="mml:arctanh">
+      <ref name="mml.arctanh-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.arctanh-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.mean">
+    <element name="mml:mean">
+      <ref name="mml.mean-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.mean-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.sdev">
+    <element name="mml:sdev">
+      <ref name="mml.sdev-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.sdev-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.variance">
+    <element name="mml:variance">
+      <ref name="mml.variance-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.variance-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.median">
+    <element name="mml:median">
+      <ref name="mml.median-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.median-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.mode">
+    <element name="mml:mode">
+      <ref name="mml.mode-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.mode-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.vector">
+    <element name="mml:vector">
+      <ref name="mml.vector-attlist"/>
+      <ref name="BvarQ"/>
+      <ref name="DomainQ"/>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.vector-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.matrix">
+    <element name="mml:matrix">
+      <ref name="mml.matrix-attlist"/>
+      <ref name="BvarQ"/>
+      <ref name="DomainQ"/>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.matrix-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.matrixrow">
+    <element name="mml:matrixrow">
+      <ref name="mml.matrixrow-attlist"/>
+      <ref name="BvarQ"/>
+      <ref name="DomainQ"/>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.matrixrow-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.determinant">
+    <element name="mml:determinant">
+      <ref name="mml.determinant-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.determinant-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.transpose">
+    <element name="mml:transpose">
+      <ref name="mml.transpose-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.transpose-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.selector">
+    <element name="mml:selector">
+      <ref name="mml.selector-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.selector-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.vectorproduct">
+    <element name="mml:vectorproduct">
+      <ref name="mml.vectorproduct-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.vectorproduct-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.scalarproduct">
+    <element name="mml:scalarproduct">
+      <ref name="mml.scalarproduct-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.scalarproduct-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.outerproduct">
+    <element name="mml:outerproduct">
+      <ref name="mml.outerproduct-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.outerproduct-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.integers">
+    <element name="mml:integers">
+      <ref name="mml.integers-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.integers-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.reals">
+    <element name="mml:reals">
+      <ref name="mml.reals-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.reals-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.rationals">
+    <element name="mml:rationals">
+      <ref name="mml.rationals-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.rationals-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.naturalnumbers">
+    <element name="mml:naturalnumbers">
+      <ref name="mml.naturalnumbers-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.naturalnumbers-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.complexes">
+    <element name="mml:complexes">
+      <ref name="mml.complexes-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.complexes-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.primes">
+    <element name="mml:primes">
+      <ref name="mml.primes-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.primes-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.emptyset">
+    <element name="mml:emptyset">
+      <ref name="mml.emptyset-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.emptyset-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.exponentiale">
+    <element name="mml:exponentiale">
+      <ref name="mml.exponentiale-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.exponentiale-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.imaginaryi">
+    <element name="mml:imaginaryi">
+      <ref name="mml.imaginaryi-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.imaginaryi-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.notanumber">
+    <element name="mml:notanumber">
+      <ref name="mml.notanumber-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.notanumber-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.true">
+    <element name="mml:true">
+      <ref name="mml.true-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.true-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.false">
+    <element name="mml:false">
+      <ref name="mml.false-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.false-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.pi">
+    <element name="mml:pi">
+      <ref name="mml.pi-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.pi-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.eulergamma">
+    <element name="mml:eulergamma">
+      <ref name="mml.eulergamma-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.eulergamma-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <define name="mml.infinity">
+    <element name="mml:infinity">
+      <ref name="mml.infinity-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.infinity-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+  </define>
+  <!-- end of mathml3-common.rng -->
+  <define name="MathExpression">
+    <choice>
+      <ref name="ContExp"/>
+      <ref name="PresentationExpression"/>
+    </choice>
+  </define>
+  <!-- end of mathml3-content.rng -->
+  <!-- start of mathml3-presentation.rng -->
+  <define name="ImpliedMrow">
+    <zeroOrMore>
+      <ref name="MathExpression"/>
+    </zeroOrMore>
+  </define>
+  <define name="TableRowExpression">
+    <choice>
+      <ref name="mml.mtr"/>
+      <ref name="mml.mlabeledtr"/>
+    </choice>
+  </define>
+  <define name="TableCellExpression">
+    <ref name="mml.mtd"/>
+  </define>
+  <define name="MstackExpression">
+    <choice>
+      <ref name="MathExpression"/>
+      <ref name="mml.mscarries"/>
+      <ref name="mml.msline"/>
+      <ref name="mml.msrow"/>
+      <ref name="mml.msgroup"/>
+    </choice>
+  </define>
+  <define name="MsrowExpression">
+    <choice>
+      <ref name="MathExpression"/>
+      <ref name="mml.none"/>
+    </choice>
+  </define>
+  <define name="MultiScriptExpression">
+    <choice>
+      <ref name="MathExpression"/>
+      <ref name="mml.none"/>
+    </choice>
+    <choice>
+      <ref name="MathExpression"/>
+      <ref name="mml.none"/>
+    </choice>
+  </define>
+  <define name="mpadded-length">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="linestyle">
+    <choice>
+      <value>none</value>
+      <value>solid</value>
+      <value>dashed</value>
+    </choice>
+  </define>
+  <define name="columnalignstyle">
+    <choice>
+      <value>left</value>
+      <value>center</value>
+      <value>right</value>
+    </choice>
+  </define>
+  <define name="unsigned-integer">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="integer">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="number">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="character">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="color">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="positive-integer">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="token.content">
+    <choice>
+      <text/>
+      <ref name="mml.mglyph"/>
+      <ref name="mml.malignmark"/>
+    </choice>
+  </define>
+  <define name="mml.mi">
+    <element name="mml:mi">
+      <ref name="mml.mi-attlist"/>
+      <zeroOrMore>
+        <ref name="token.content"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="length">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="DeprecatedTokenAtt">
+    <optional>
+      <attribute name="fontfamily"/>
+    </optional>
+    <optional>
+      <attribute name="fontweight">
+        <choice>
+          <value>normal</value>
+          <value>bold</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fontstyle">
+        <choice>
+          <value>normal</value>
+          <value>italic</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fontsize">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="color">
+        <ref name="color"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="background"/>
+    </optional>
+  </define>
+  <define name="TokenAtt">
+    <optional>
+      <attribute name="mathvariant">
+        <choice>
+          <value>normal</value>
+          <value>bold</value>
+          <value>italic</value>
+          <value>bold-italic</value>
+          <value>double-struck</value>
+          <value>bold-fraktur</value>
+          <value>script</value>
+          <value>bold-script</value>
+          <value>fraktur</value>
+          <value>sans-serif</value>
+          <value>bold-sans-serif</value>
+          <value>sans-serif-italic</value>
+          <value>sans-serif-bold-italic</value>
+          <value>monospace</value>
+          <value>initial</value>
+          <value>tailed</value>
+          <value>looped</value>
+          <value>stretched</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mathsize"/>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="DeprecatedTokenAtt"/>
+  </define>
+  <define name="CommonPresAtt">
+    <optional>
+      <attribute name="mathcolor">
+        <ref name="color"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mathbackground"/>
+    </optional>
+  </define>
+  <define name="mml.mi-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="TokenAtt"/>
+  </define>
+  <define name="mml.mn">
+    <element name="mml:mn">
+      <ref name="mml.mn-attlist"/>
+      <zeroOrMore>
+        <ref name="token.content"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mn-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="TokenAtt"/>
+  </define>
+  <define name="mml.mo">
+    <element name="mml:mo">
+      <ref name="mml.mo-attlist"/>
+      <zeroOrMore>
+        <ref name="token.content"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mo-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="TokenAtt"/>
+    <optional>
+      <attribute name="form">
+        <choice>
+          <value>prefix</value>
+          <value>infix</value>
+          <value>postfix</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fence">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="separator">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stretchy">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="symmetric">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="maxsize"/>
+    </optional>
+    <optional>
+      <attribute name="minsize">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="largeop">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="movablelimits">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="accent">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreak">
+        <choice>
+          <value>auto</value>
+          <value>newline</value>
+          <value>nobreak</value>
+          <value>goodbreak</value>
+          <value>badbreak</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lineleading">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreakstyle">
+        <choice>
+          <value>before</value>
+          <value>after</value>
+          <value>duplicate</value>
+          <value>infixlinebreakstyle</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreakmultchar"/>
+    </optional>
+    <optional>
+      <attribute name="indentalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indenttarget"/>
+    </optional>
+    <optional>
+      <attribute name="indentalignfirst">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftfirst"/>
+    </optional>
+    <optional>
+      <attribute name="indentalignlast">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftlast"/>
+    </optional>
+  </define>
+  <define name="mml.mtext">
+    <element name="mml:mtext">
+      <ref name="mml.mtext-attlist"/>
+      <zeroOrMore>
+        <ref name="token.content"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mtext-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="TokenAtt"/>
+  </define>
+  <define name="mml.mspace">
+    <element name="mml:mspace">
+      <ref name="mml.mspace-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.mspace-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="TokenAtt"/>
+    <optional>
+      <attribute name="width">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="depth">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreak">
+        <choice>
+          <value>auto</value>
+          <value>newline</value>
+          <value>nobreak</value>
+          <value>goodbreak</value>
+          <value>badbreak</value>
+          <value>indentingnewline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.ms">
+    <element name="mml:ms">
+      <ref name="mml.ms-attlist"/>
+      <zeroOrMore>
+        <ref name="token.content"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.ms-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="TokenAtt"/>
+    <optional>
+      <attribute name="lquote"/>
+    </optional>
+    <optional>
+      <attribute name="rquote"/>
+    </optional>
+  </define>
+  <define name="mglyph.deprecatedattributes">
+    <optional>
+      <attribute name="index">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mathvariant">
+        <choice>
+          <value>normal</value>
+          <value>bold</value>
+          <value>italic</value>
+          <value>bold-italic</value>
+          <value>double-struck</value>
+          <value>bold-fraktur</value>
+          <value>script</value>
+          <value>bold-script</value>
+          <value>fraktur</value>
+          <value>sans-serif</value>
+          <value>bold-sans-serif</value>
+          <value>sans-serif-italic</value>
+          <value>sans-serif-bold-italic</value>
+          <value>monospace</value>
+          <value>initial</value>
+          <value>tailed</value>
+          <value>looped</value>
+          <value>stretched</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mathsize"/>
+    </optional>
+    <ref name="DeprecatedTokenAtt"/>
+  </define>
+  <define name="mglyph.attributes">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="src"/>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+  </define>
+  <define name="mml.mglyph">
+    <element name="mml:mglyph">
+      <ref name="mml.mglyph-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.mglyph-attlist" combine="interleave">
+    <ref name="mglyph.attributes"/>
+    <ref name="mglyph.deprecatedattributes"/>
+  </define>
+  <define name="mml.msline">
+    <element name="mml:msline">
+      <ref name="mml.msline-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.msline-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="length">
+        <ref name="unsigned-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="leftoverhang">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rightoverhang">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mslinethickness"/>
+    </optional>
+  </define>
+  <define name="mml.none">
+    <element name="mml:none">
+      <ref name="mml.none-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.none-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+  </define>
+  <define name="mml.mprescripts">
+    <element name="mml:mprescripts">
+      <ref name="mml.mprescripts-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.mprescripts-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+  </define>
+  <define name="mml.malignmark">
+    <element name="mml:malignmark">
+      <ref name="mml.malignmark-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.malignmark-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="edge">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.maligngroup">
+    <element name="mml:maligngroup">
+      <ref name="mml.maligngroup-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mml.maligngroup-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="groupalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>decimalpoint</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mrow">
+    <element name="mml:mrow">
+      <ref name="mml.mrow-attlist"/>
+      <zeroOrMore>
+        <ref name="MathExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mrow-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mfrac">
+    <element name="mml:mfrac">
+      <ref name="mml.mfrac-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.mfrac-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="linethickness"/>
+    </optional>
+    <optional>
+      <attribute name="numalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="denomalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="bevelled">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.msqrt">
+    <element name="mml:msqrt">
+      <ref name="mml.msqrt-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mml.msqrt-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+  </define>
+  <define name="mml.mroot">
+    <element name="mml:mroot">
+      <ref name="mml.mroot-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.mroot-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+  </define>
+  <define name="mml.mstyle">
+    <element name="mml:mstyle">
+      <ref name="mml.mstyle-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mstyle.deprecatedattributes">
+    <ref name="DeprecatedTokenAtt"/>
+    <optional>
+      <attribute name="veryverythinmathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="verythinmathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="thinmathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mediummathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="thickmathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="verythickmathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="veryverythickmathspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mstyle.generalattributes">
+    <optional>
+      <attribute name="accent">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="accentunder">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alignmentscope"/>
+    </optional>
+    <optional>
+      <attribute name="bevelled">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charspacing"/>
+    </optional>
+    <optional>
+      <attribute name="close"/>
+    </optional>
+    <optional>
+      <attribute name="columnalign"/>
+    </optional>
+    <optional>
+      <attribute name="columnlines"/>
+    </optional>
+    <optional>
+      <attribute name="columnspacing"/>
+    </optional>
+    <optional>
+      <attribute name="columnspan">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnwidth"/>
+    </optional>
+    <optional>
+      <attribute name="crossout"/>
+    </optional>
+    <optional>
+      <attribute name="denomalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="depth">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="edge">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalcolumns">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalrows">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fence">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form">
+        <choice>
+          <value>prefix</value>
+          <value>infix</value>
+          <value>postfix</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="frame">
+        <choice>
+          <ref name="linestyle"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="framespacing"/>
+    </optional>
+    <optional>
+      <attribute name="groupalign"/>
+    </optional>
+    <optional>
+      <attribute name="height">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignfirst">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignlast">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftfirst"/>
+    </optional>
+    <optional>
+      <attribute name="indentshiftlast"/>
+    </optional>
+    <optional>
+      <attribute name="indenttarget"/>
+    </optional>
+    <optional>
+      <attribute name="largeop">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="leftoverhang">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="length">
+        <ref name="unsigned-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreak">
+        <choice>
+          <value>auto</value>
+          <value>newline</value>
+          <value>nobreak</value>
+          <value>goodbreak</value>
+          <value>badbreak</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreakmultchar"/>
+    </optional>
+    <optional>
+      <attribute name="linebreakstyle">
+        <choice>
+          <value>before</value>
+          <value>after</value>
+          <value>duplicate</value>
+          <value>infixlinebreakstyle</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lineleading">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linethickness"/>
+    </optional>
+    <optional>
+      <attribute name="location">
+        <choice>
+          <value>w</value>
+          <value>nw</value>
+          <value>n</value>
+          <value>ne</value>
+          <value>e</value>
+          <value>se</value>
+          <value>s</value>
+          <value>sw</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="longdivstyle"/>
+    </optional>
+    <optional>
+      <attribute name="lquote"/>
+    </optional>
+    <optional>
+      <attribute name="lspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mathsize"/>
+    </optional>
+    <optional>
+      <attribute name="mathvariant">
+        <choice>
+          <value>normal</value>
+          <value>bold</value>
+          <value>italic</value>
+          <value>bold-italic</value>
+          <value>double-struck</value>
+          <value>bold-fraktur</value>
+          <value>script</value>
+          <value>bold-script</value>
+          <value>fraktur</value>
+          <value>sans-serif</value>
+          <value>bold-sans-serif</value>
+          <value>sans-serif-italic</value>
+          <value>sans-serif-bold-italic</value>
+          <value>monospace</value>
+          <value>initial</value>
+          <value>tailed</value>
+          <value>looped</value>
+          <value>stretched</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="maxsize"/>
+    </optional>
+    <optional>
+      <attribute name="minlabelspacing">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="minsize">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="movablelimits">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mslinethickness"/>
+    </optional>
+    <optional>
+      <attribute name="notation"/>
+    </optional>
+    <optional>
+      <attribute name="numalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="open"/>
+    </optional>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rightoverhang">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowalign"/>
+    </optional>
+    <optional>
+      <attribute name="rowlines"/>
+    </optional>
+    <optional>
+      <attribute name="rowspacing"/>
+    </optional>
+    <optional>
+      <attribute name="rowspan">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rquote"/>
+    </optional>
+    <optional>
+      <attribute name="rspace">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="selection">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="separator">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="separators"/>
+    </optional>
+    <optional>
+      <attribute name="shift">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="side">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>leftoverlap</value>
+          <value>rightoverlap</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stackalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>decimalpoint</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stretchy">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="subscriptshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="superscriptshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="symmetric">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mstyle.specificattributes">
+    <optional>
+      <attribute name="scriptlevel">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="displaystyle">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="scriptsizemultiplier">
+        <ref name="number"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="scriptminsize">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="infixlinebreakstyle">
+        <choice>
+          <value>before</value>
+          <value>after</value>
+          <value>duplicate</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="decimalpoint">
+        <ref name="character"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mstyle-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="mstyle.specificattributes"/>
+    <ref name="mstyle.generalattributes"/>
+    <ref name="mstyle.deprecatedattributes"/>
+  </define>
+  <define name="mml.merror">
+    <element name="mml:merror">
+      <ref name="mml.merror-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mml.merror-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+  </define>
+  <define name="mml.mpadded">
+    <element name="mml:mpadded">
+      <ref name="mml.mpadded-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mml.mpadded-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="height">
+        <ref name="mpadded-length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="depth">
+        <ref name="mpadded-length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <ref name="mpadded-length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lspace">
+        <ref name="mpadded-length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="voffset">
+        <ref name="mpadded-length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mphantom">
+    <element name="mml:mphantom">
+      <ref name="mml.mphantom-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mml.mphantom-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+  </define>
+  <define name="mml.mfenced">
+    <element name="mml:mfenced">
+      <ref name="mml.mfenced-attlist"/>
+      <zeroOrMore>
+        <ref name="MathExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mfenced-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="open"/>
+    </optional>
+    <optional>
+      <attribute name="close"/>
+    </optional>
+    <optional>
+      <attribute name="separators"/>
+    </optional>
+  </define>
+  <define name="mml.menclose">
+    <element name="mml:menclose">
+      <ref name="mml.menclose-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mml.menclose-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="notation"/>
+    </optional>
+  </define>
+  <define name="mml.msub">
+    <element name="mml:msub">
+      <ref name="mml.msub-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.msub-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="subscriptshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.msup">
+    <element name="mml:msup">
+      <ref name="mml.msup-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.msup-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="superscriptshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="msubsup.attributes">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="subscriptshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="superscriptshift">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.msubsup">
+    <element name="mml:msubsup">
+      <ref name="mml.msubsup-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.msubsup-attlist" combine="interleave">
+    <ref name="msubsup.attributes"/>
+  </define>
+  <define name="mml.munder">
+    <element name="mml:munder">
+      <ref name="mml.munder-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.munder-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="accentunder">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mover">
+    <element name="mml:mover">
+      <ref name="mml.mover-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.mover-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="accent">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.munderover">
+    <element name="mml:munderover">
+      <ref name="mml.munderover-attlist"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+      <ref name="MathExpression"/>
+    </element>
+  </define>
+  <define name="mml.munderover-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="accent">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="accentunder">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mmultiscripts">
+    <element name="mml:mmultiscripts">
+      <ref name="mml.mmultiscripts-attlist"/>
+      <ref name="MathExpression"/>
+      <zeroOrMore>
+        <ref name="MultiScriptExpression"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="mml.mprescripts"/>
+        <zeroOrMore>
+          <ref name="MultiScriptExpression"/>
+        </zeroOrMore>
+      </optional>
+    </element>
+  </define>
+  <define name="mml.mmultiscripts-attlist" combine="interleave">
+    <ref name="msubsup.attributes"/>
+  </define>
+  <define name="mml.mtable">
+    <element name="mml:mtable">
+      <ref name="mml.mtable-attlist"/>
+      <zeroOrMore>
+        <ref name="TableRowExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mtable-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="rowalign"/>
+    </optional>
+    <optional>
+      <attribute name="columnalign"/>
+    </optional>
+    <optional>
+      <attribute name="groupalign"/>
+    </optional>
+    <optional>
+      <attribute name="alignmentscope"/>
+    </optional>
+    <optional>
+      <attribute name="columnwidth"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="rowspacing"/>
+    </optional>
+    <optional>
+      <attribute name="columnspacing"/>
+    </optional>
+    <optional>
+      <attribute name="rowlines"/>
+    </optional>
+    <optional>
+      <attribute name="columnlines"/>
+    </optional>
+    <optional>
+      <attribute name="frame">
+        <choice>
+          <ref name="linestyle"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="framespacing"/>
+    </optional>
+    <optional>
+      <attribute name="equalrows">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalcolumns">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="displaystyle">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="side">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>leftoverlap</value>
+          <value>rightoverlap</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="minlabelspacing">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mlabeledtr">
+    <element name="mml:mlabeledtr">
+      <ref name="mml.mlabeledtr-attlist"/>
+      <oneOrMore>
+        <ref name="TableCellExpression"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="mtr.attributes">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="rowalign">
+        <choice>
+          <value>top</value>
+          <value>bottom</value>
+          <value>center</value>
+          <value>baseline</value>
+          <value>axis</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnalign"/>
+    </optional>
+    <optional>
+      <attribute name="groupalign"/>
+    </optional>
+  </define>
+  <define name="mml.mlabeledtr-attlist" combine="interleave">
+    <ref name="mtr.attributes"/>
+  </define>
+  <define name="mml.mtr">
+    <element name="mml:mtr">
+      <ref name="mml.mtr-attlist"/>
+      <zeroOrMore>
+        <ref name="TableCellExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mtr-attlist" combine="interleave">
+    <ref name="mtr.attributes"/>
+  </define>
+  <define name="mml.mtd">
+    <element name="mml:mtd">
+      <ref name="mml.mtd-attlist"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mml.mtd-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="rowspan">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnspan">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowalign">
+        <choice>
+          <value>top</value>
+          <value>bottom</value>
+          <value>center</value>
+          <value>baseline</value>
+          <value>axis</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnalign">
+        <choice>
+          <ref name="columnalignstyle"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="groupalign"/>
+    </optional>
+  </define>
+  <define name="mml.mstack">
+    <element name="mml:mstack">
+      <ref name="mml.mstack-attlist"/>
+      <zeroOrMore>
+        <ref name="MstackExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mstack-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="stackalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>decimalpoint</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charspacing"/>
+    </optional>
+  </define>
+  <define name="mml.mlongdiv">
+    <element name="mml:mlongdiv">
+      <ref name="mml.mlongdiv-attlist"/>
+      <ref name="MstackExpression"/>
+      <ref name="MstackExpression"/>
+      <oneOrMore>
+        <ref name="MstackExpression"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="msgroup.attributes">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="shift">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mlongdiv-attlist" combine="interleave">
+    <ref name="msgroup.attributes"/>
+    <optional>
+      <attribute name="longdivstyle"/>
+    </optional>
+  </define>
+  <define name="mml.msgroup">
+    <element name="mml:msgroup">
+      <ref name="mml.msgroup-attlist"/>
+      <zeroOrMore>
+        <ref name="MstackExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.msgroup-attlist" combine="interleave">
+    <ref name="msgroup.attributes"/>
+  </define>
+  <define name="mml.msrow">
+    <element name="mml:msrow">
+      <ref name="mml.msrow-attlist"/>
+      <zeroOrMore>
+        <ref name="MsrowExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.msrow-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mscarries">
+    <element name="mml:mscarries">
+      <ref name="mml.mscarries-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="MsrowExpression"/>
+          <ref name="mml.mscarry"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mscarries-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="location">
+        <choice>
+          <value>w</value>
+          <value>nw</value>
+          <value>n</value>
+          <value>ne</value>
+          <value>e</value>
+          <value>se</value>
+          <value>s</value>
+          <value>sw</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="crossout"/>
+    </optional>
+    <optional>
+      <attribute name="scriptsizemultiplier">
+        <ref name="number"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mml.mscarry">
+    <element name="mml:mscarry">
+      <ref name="mml.mscarry-attlist"/>
+      <zeroOrMore>
+        <ref name="MsrowExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.mscarry-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="location">
+        <choice>
+          <value>w</value>
+          <value>nw</value>
+          <value>n</value>
+          <value>ne</value>
+          <value>e</value>
+          <value>se</value>
+          <value>s</value>
+          <value>sw</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="crossout"/>
+    </optional>
+  </define>
+  <define name="mml.maction">
+    <element name="mml:maction">
+      <ref name="mml.maction-attlist"/>
+      <oneOrMore>
+        <ref name="MathExpression"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="mml.maction-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="CommonPresAtt"/>
+    <optional>
+      <attribute name="actiontype"/>
+    </optional>
+    <optional>
+      <attribute name="selection">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- end of mathml3-presentation.rng -->
+  <!-- start of mathml3-common.rng -->
+  <define name="mml.math">
+    <element name="mml:math">
+      <ref name="mml.math-attlist"/>
+      <zeroOrMore>
+        <ref name="MathExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="math.deprecatedattributes">
+    <optional>
+      <attribute name="mode"/>
+    </optional>
+    <optional>
+      <attribute name="macros"/>
+    </optional>
+  </define>
+  <define name="mml.math-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <optional>
+      <attribute name="display">
+        <choice>
+          <value>block</value>
+          <value>inline</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="maxwidth">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="overflow">
+        <choice>
+          <value>linebreak</value>
+          <value>scroll</value>
+          <value>elide</value>
+          <value>truncate</value>
+          <value>scale</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="altimg"/>
+    </optional>
+    <optional>
+      <attribute name="altimg-width">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="altimg-height">
+        <ref name="length"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="altimg-valign"/>
+    </optional>
+    <optional>
+      <attribute name="alttext"/>
+    </optional>
+    <optional>
+      <attribute name="cdgroup"/>
+    </optional>
+    <ref name="math.deprecatedattributes"/>
+    <ref name="CommonPresAtt"/>
+    <ref name="mstyle.specificattributes"/>
+    <ref name="mstyle.generalattributes"/>
+  </define>
+  <!--
+    <!ENTITY % name "
+    name CDATA #REQUIRED">
+  -->
+  <define name="annotation.attributes">
+    <ref name="CommonAtt"/>
+    <optional>
+      <attribute name="cd"/>
+    </optional>
+    <optional>
+      <attribute name="name"/>
+    </optional>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="src"/>
+    </optional>
+  </define>
+  <define name="mml.annotation">
+    <element name="mml:annotation">
+      <ref name="mml.annotation-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="mml.annotation-attlist" combine="interleave">
+    <ref name="annotation.attributes"/>
+  </define>
+  <define name="mml.annotation-xml">
+    <element name="mml:annotation-xml">
+      <ref name="mml.annotation-xml-attlist"/>
+      <ref name="annotation-xml.model"/>
+    </element>
+  </define>
+  <define name="mml.annotation-xml-attlist" combine="interleave">
+    <ref name="annotation.attributes"/>
+  </define>
+  <define name="mml.semantics">
+    <element name="mml:semantics">
+      <ref name="mml.semantics-attlist"/>
+      <ref name="MathExpression"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="mml.annotation"/>
+          <ref name="mml.annotation-xml"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mml.semantics-attlist" combine="interleave">
+    <ref name="CommonAtt"/>
+    <ref name="DefEncAtt"/>
+    <optional>
+      <attribute name="cd"/>
+    </optional>
+    <optional>
+      <attribute name="name"/>
+    </optional>
+  </define>
+</grammar>

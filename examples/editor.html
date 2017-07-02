@@ -47,7 +47,8 @@
           let dialog = JATSImportDialog.mount({importer: jatsImporter}, window.document.body)
           dom = jatsImporter.import(dom)
           if (!dom) {
-            throw new Error('Could not transform to TextureJATS.')
+            console.error('Could not transform to TextureJATS')
+            return
           } else {
             dialog.remove()
           }

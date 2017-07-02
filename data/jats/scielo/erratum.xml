@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.0 20120330//EN" "JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink"
+  article-type="correction" dtd-version="1.0" specific-use="sps-1.5" xml:lang="pt">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">epec</journal-id>
+      <journal-title-group>
+        <journal-title>Ensaio Pesquisa em Educação em Ciências (Belo
+          Horizonte)</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Ens. Pesqui. Educ. Ciênc. (Belo
+          Horizonte)</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">1415-2150</issn>
+      <issn pub-type="epub">1983-2117</issn>
+      <publisher>
+        <publisher-name>Faculdade de Educação da Universidade Federal de Minas
+          Gerais</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.1590/1983-21172015170315</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Errata</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Erratum: RECONTEXTUALIZAÇÃO DO CURRÍCULO NACIONAL PARA O ENSINO MÉDIO
+          DE FÍSICA NO DISCURSO DE PROFESSORES</article-title>
+        <trans-title-group xml:lang="en">
+          <trans-title>RECONTEXTUALIZATION OF NATIONAL CURRICULUM FOR TEACHING PHYSICS IN MIDDLE SCHOOL IN
+        THE DISCOURSE OF TEACHERS</trans-title>
+        </trans-title-group>
+      </title-group>
+      <pub-date pub-type="epub-ppub">
+        <season>Jan-Apr</season>
+        <year>2016</year>
+      </pub-date>
+      <volume>18</volume>
+      <issue>1</issue>
+      <fpage>165</fpage>
+      <lpage>165</lpage>
+      <permissions>
+        <license license-type="open-access"
+          xlink:href="http://creativecommons.org/licenses/by-nc/4.0/" xml:lang="pt">
+          <license-p>Este é um artigo publicado em acesso aberto (Open Access) sob a
+            licença Creative Commons Attribution</license-p>
+        </license>
+      </permissions>
+      <related-article related-article-type="corrected-article" id="ra1"
+        xlink:href="10.1590/1983-21172014160303" ext-link-type="doi"/>
+    </article-meta>
+  </front>
+  <body>
+    <p>Por solicitação dos autores, no artigo RECONTEXTUALIZAÇÃO DO CURRÍCULO NACIONAL PARA O
+      ENSINO MÉDIO DE FÍSICA NO DISCURSO DE PROFESSORES, publicado pelo periódico Ensaio
+      Pesquisa em Educação em Ciências, vol.16 no.3, Sept./Dec. 2014, a lista de autores fica
+      assim alterada: </p>
+    <p><bold>Onde se lia:</bold></p>
+    <p>Roberta Comissanha *</p>
+    <p>Josiane de Souza **</p>
+    <p>Fernanda Ostermann ***</p>
+    <p>Flávia Rezende ****</p>
+    <p><bold>Leia-se:</bold></p>
+    <p>Flavia Rezende *</p>
+    <p>Fernanda Ostermann **</p>
+    <p>Josiane de Souza ***</p>
+    <p>Roberta Comissanha de Carvalho ****</p>
+  </body>
+</article>

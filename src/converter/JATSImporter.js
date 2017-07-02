@@ -1,4 +1,4 @@
-import { EventEmitter, DefaultDOMElement, validateXMLSchema } from 'substance'
+import { EventEmitter, DefaultDOMElement, validateXMLSchema, isString } from 'substance'
 import { JATS, JATS4R, TextureJATS } from '../article'
 import { r2t } from './r2t'
 import { j2r } from './j2r'
@@ -15,16 +15,20 @@ export default class JATSImporter extends EventEmitter {
     let dom
     this.emit('begin')
 
-    this.emit('begin:parse')
-    try {
-      dom = DefaultDOMElement.parseXML(xml)
-    } catch(err) {
-      this.emit('error:parse', {
-        msg: String(err)
-      })
-      return
+    if (isString(xml)) {
+      this.emit('begin:parse')
+      try {
+        dom = DefaultDOMElement.parseXML(xml)
+      } catch(err) {
+        this.emit('error:parse', {
+          msg: String(err)
+        })
+        return
+      }
+      this.emit('end:parse')
+    } else if (xml._isDOMElement) {
+      dom = xml
     }
-    this.emit('end:parse')
 
     if (!this._validate(JATS, dom)) return
 

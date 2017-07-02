@@ -3,33 +3,42 @@ import { Component } from 'substance'
 export default class ManuscriptComponent extends Component {
 
   render($$) {
-    const node = this.props.node
+    const article = this.props.node
     let el = $$('div')
       .addClass('sc-article')
-      .attr('data-id', node.id)
+      .attr('data-id', article.id)
 
+    // front is mandatory
+    const front = article.findChild('front')
     const FrontComponent = this.getComponent('front')
     el.append($$(FrontComponent, {
-      node: node.findChild('front')
+      node: front
     }).ref('front'))
 
-    el.append($$(this.getComponent('separator'), {
-      label: 'manuscript-start'
-    }))
+    // body is optional
+    // TODO: do we really want this? Otherwise we need to change TextureJATS
+    // and create an empty body on import
+    const body = article.findChild('body')
+    if (body) {
+      el.append($$(this.getComponent('separator'), {
+        label: 'manuscript-start'
+      }))
+      const BodyComponent = this.getComponent('body')
+      el.append($$(BodyComponent, {
+        node: body
+      }).ref('body'))
+      el.append($$(this.getComponent('separator'), {
+        label: 'manuscript-end'
+      }))
+    }
 
-    const BodyComponent = this.getComponent('body')
-    el.append($$(BodyComponent, {
-      node: node.findChild('body')
-    }).ref('body'))
-
-    el.append($$(this.getComponent('separator'), {
-      label: 'manuscript-end'
-    }))
-
-    const BackComponent = this.getComponent('back')
-    el.append($$(BackComponent, {
-      node: node.findChild('back')
-    }).ref('back'))
+    const back = article.findChild('back')
+    if (back) {
+      const BackComponent = this.getComponent('back')
+      el.append($$(BackComponent, {
+        node: back
+      }).ref('back'))
+    }
 
     return el
   }

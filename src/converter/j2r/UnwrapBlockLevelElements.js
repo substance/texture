@@ -17,7 +17,7 @@ export default class UnwrapBlockLevelElements {
 }
 
 // TODO: add all of them
-const BLOCKS = ['fig', 'fig-group', 'media']
+const BLOCKS = ['fig', 'fig-group', 'media', 'list', 'disp-formula', 'disp-quote']
 const isBlock = BLOCKS.reduce((m, n) => { m[n] = true; return m}, {})
 
 function _pBlock(p) {

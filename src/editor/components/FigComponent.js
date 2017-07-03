@@ -39,7 +39,7 @@ export default class FigComponent extends NodeComponent {
     let titleEl = $$(this.getComponent('text-property-editor'), {
       path: title.getTextPath(),
       disabled: this.props.disabled
-    }).addClass('se-title').ref('figTitle')
+    }).addClass('se-title').ref('title')
     el.append(titleEl)
 
     const caption = node.findChild('caption')
@@ -51,16 +51,17 @@ export default class FigComponent extends NodeComponent {
       })
     } else {
       // TODO: ability to add a caption
-      captionEl = $$('div').addClass('sc-abstract').append('TODO: ADD CAPTION')
     }
-    el.append(captionEl.ref('abstract'))
+    el.append(captionEl.ref('caption'))
 
     return el
   }
 
   _getContentType() {
     switch(this.props.node.type) {
-      case 'table-wrap': return 'table'
+      case 'table-wrap': {
+        return 'table'
+      }
       default: return 'graphic'
     }
   }

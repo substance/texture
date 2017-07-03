@@ -293,14 +293,13 @@ export default class EditRef extends Component {
     }
   }
 
-  _renderTextElement($$, node, placeholder, type) {
-    let el = $$('input', {
+  _renderTextElement($$, node, placeholder) {
+    let TextPropertyEditor = this.getComponent('text-property-editor')
+    let el = $$(TextPropertyEditor, {
       placeholder: placeholder,
-      value: node.getTextContent()
+      path: node.getTextPath(),
+      disabled: this.props.disabled
     }).ref(node.id).addClass('se-text-input')
-    .on('change', this._onUpdateTextElement.bind(this, node.id))
-
-    if(type) el.attr('type', type)
 
     return el
   }

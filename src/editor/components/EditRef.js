@@ -201,25 +201,18 @@ export default class EditRef extends Component {
     let form = $$('div').addClass('se-form')
 
     let volume = this.props.node.find('volume')
-    if(volume) {
-      form.append(
-        this._renderTextElement($$, volume, 'Volume')
-      )
-    }
-
     let issue = this.props.node.find('issue')
-    if(issue) {
-      form.append(
-        this._renderTextElement($$, issue, 'Issue')
-      )
-    }
-
     let year = this.props.node.find('year')
-    if(year) {
-      form.append(
-        this._renderTextElement($$, year, 'Year')
-      )
-    }
+
+    form.append(
+      this._renderTextElement($$, volume, 'Volume')
+    )
+    form.append(
+      this._renderTextElement($$, issue, 'Issue')
+    )
+    form.append(
+      this._renderTextElement($$, year, 'Year')
+    )
 
     el.append(
       $$('div').addClass('se-label').append('Volume / Issue / Year'),

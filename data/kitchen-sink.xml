@@ -210,8 +210,6 @@
     </fn-group>
     <ref-list>
       <title>References</title>
-
-
       <ref id="r1">
         <element-citation publication-type="journal">
         <person-group person-group-type="author">
@@ -234,6 +232,7 @@
         <volume>29</volume>
         <fpage>6436</fpage>
         <lpage>6448</lpage>
+        <issue></issue>
         <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
@@ -271,10 +270,11 @@
         <volume>512</volume>
         <fpage>183</fpage>
         <lpage>217</lpage>
+        <issue></issue>
         <pub-id pub-id-type="doi">10.1002/cne.21892</pub-id>
         </element-citation>
       </ref>
-      <ref>
+      <ref id="r3">
         <element-citation publication-type="book">
         <person-group person-group-type="author">
         <name>
@@ -305,9 +305,10 @@
         <year iso-8601-date="2009">1990</year>
         <fpage>214</fpage>
         <lpage>216</lpage>
+        <issue></issue>
         </element-citation>
       </ref>
-      <ref>
+      <!--<ref>
         <element-citation publication-type="webpage">
           <person-group person-group-type="author">
             <collab>Secretaría de Desarrollo Urbano y Medio Ambiente (SEDUMA)</collab>
@@ -319,7 +320,7 @@
           <month>04</month>
           <year>2013</year>
         </element-citation>
-      </ref>
+      </ref> -->
 
     </ref-list>
   </back>

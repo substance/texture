@@ -406,6 +406,20 @@
   </define>
 
   <!--
+    We only support plain text contrib elements for now
+
+    TODO: support structured <contrib>, like we did with <element-citation>
+  -->
+  <define name="contrib">
+    <element name="contrib">
+      <element name="string-contrib">
+        <text/>
+      </element>
+    </element>
+  </define>
+
+
+  <!--
     Using <body-content> internally so that we have a pure container.
 
     TODO: we should think about

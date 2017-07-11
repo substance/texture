@@ -18,25 +18,25 @@ $ cd texture
 ```
 
 At the moment, the default branch provides the develop version.
-To get the latest stable version switch to the `master` branch:
+To get the latest stable version switch to the `master` branch.
 
 ```bash
 $ git checkout master
 ```
 
-Install via npm
+Install via npm.
 
 ```bash
 $ npm install
 ```
 
-Start the dev server
+Start the dev server.
 
 ```bash
 $ npm run start
 ```
 
-And navigate to [http://localhost:5555](http://localhost:5555)
+And navigate to [http://localhost:5555](http://localhost:5555).
 
 ## Usage
 

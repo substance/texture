@@ -769,8 +769,10 @@
           <ref name="fpage"/>
           <ref name="lpage"/>
           <ref name="issue"/>
+          <ref name="elocation-id"/>
           <!-- TODO: how can we support multiple pub-ids, other than doi -->
           <ref name="pub-id"/>
+
         </group>
         <group>
           <!-- publication-type="book" -->
@@ -782,6 +784,7 @@
           <ref name="fpage"/>
           <ref name="lpage"/>
           <ref name="issue"/>
+          <ref name="elocation-id"/>
         </group>
       </choice>
     </element>

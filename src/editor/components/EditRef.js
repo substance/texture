@@ -36,6 +36,7 @@ export default class EditRef extends Component {
       this._renderAuthors($$),
       this._renderSource($$, 'Jounal Title'),
       this._renderPeriodical($$),
+      this._renderElocation($$),
       this._renderPages($$),
       this._renderDOI($$),
       this._renderPMID($$),
@@ -194,6 +195,23 @@ export default class EditRef extends Component {
     } else {
       return
     }
+  }
+
+  _renderElocation($$) {
+    let el = $$('div').addClass('se-elocation')
+    let form = $$('div').addClass('se-form')
+    let elocationId = this.props.node.find('elocation-id')
+
+    form.append(
+      this._renderTextElement($$, elocationId, 'Electronic Location Identifier')
+    )
+
+    el.append(
+      $$('div').addClass('se-label').append('Electronic Location Identifier'),
+      form
+    )
+
+    return el
   }
 
   _renderPeriodical($$) {

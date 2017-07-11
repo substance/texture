@@ -18,38 +18,31 @@ $ cd texture
 ```
 
 At the moment, the default branch provides the develop version.
-To get the latest stable version switch to the `master` branch:
+To get the latest stable version switch to the `master` branch.
 
 ```bash
 $ git checkout master
 ```
 
-Install via npm
+Install via npm.
 
 ```bash
 $ npm install
 ```
 
-Start the dev server
+Start the dev server.
 
 ```bash
 $ npm run start
 ```
 
-And navigate to [http://localhost:5555](http://localhost:5555)
-
-To run the tests in the browser navigate to `http://localhost:5555/test`
-
-To run the test suite headless:
-
-```
-$ npm test
-```
+And navigate to [http://localhost:5555](http://localhost:5555).
 
 ## Usage
 
-Here's how you can integrate Texture into your web app.
+Please see examples for usage.
 
+<!--
 ```js
 // app.js
 import { Texture, TextureConfigurator, AuthorPackage } from 'substance-texture'
@@ -88,21 +81,12 @@ export default class MyXMLStore {
   }
 }
 ```
+-->
 
-## Bundle examples
-
-```bash
-$ npm run bundle
-```
-
-## Contribute
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Roadmap
 
-See [Texture website](http://substance.io/texture).
-
+See [ROADMAP.md](ROADMAP.md).
 
 ## License
 

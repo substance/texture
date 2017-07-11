@@ -36,6 +36,7 @@ export default class EditRef extends Component {
       this._renderAuthors($$),
       this._renderSource($$, 'Jounal Title'),
       this._renderPeriodical($$),
+      this._renderElocation($$),
       this._renderPages($$),
       this._renderDOI($$),
       this._renderPMID($$),
@@ -196,30 +197,40 @@ export default class EditRef extends Component {
     }
   }
 
+  _renderElocation($$) {
+    let el = $$('div').addClass('se-elocation')
+    let form = $$('div').addClass('se-form')
+    let elocationId = this.props.node.find('elocation-id')
+
+    form.append(
+      this._renderTextElement($$, elocationId, 'Electronic Location Identifier')
+    )
+
+    el.append(
+      $$('div').addClass('se-label').append('Electronic Location Identifier'),
+      form
+    )
+
+    return el
+  }
+
   _renderPeriodical($$) {
     let el = $$('div').addClass('se-pereodical')
     let form = $$('div').addClass('se-form')
 
     let volume = this.props.node.find('volume')
-    if(volume) {
-      form.append(
-        this._renderTextElement($$, volume, 'Volume')
-      )
-    }
-
     let issue = this.props.node.find('issue')
-    if(issue) {
-      form.append(
-        this._renderTextElement($$, issue, 'Issue')
-      )
-    }
-
     let year = this.props.node.find('year')
-    if(year) {
-      form.append(
-        this._renderTextElement($$, year, 'Year')
-      )
-    }
+
+    form.append(
+      this._renderTextElement($$, volume, 'Volume')
+    )
+    form.append(
+      this._renderTextElement($$, issue, 'Issue')
+    )
+    form.append(
+      this._renderTextElement($$, year, 'Year')
+    )
 
     el.append(
       $$('div').addClass('se-label').append('Volume / Issue / Year'),

@@ -788,6 +788,22 @@
   </define>
 
   <!--
+    year, source, publisher-loc, publisher-name, fpage, lpage, issue must be
+    plain text only in Texture
+  -->
+  <define name="year"><element name="year"><text/></element></define>
+  <define name="source"><element name="source"><text/></element></define>
+  <define name="volume"><element name="volume"><text/></element></define>
+  <define name="fpage"><element name="fpage"><text/></element></define>
+  <define name="lpage"><element name="lpage"><text/></element></define>
+  <define name="issue"><element name="issue"><text/></element></define>
+  <define name="issue"><element name="issue"><text/></element></define>
+  <define name="pub-id"><element name="pub-id"><text/></element></define>
+  <define name="publisher-name"><element name="publisher-name"><text/></element></define>
+  <define name="publisher-loc"><element name="publisher-loc"><text/></element></define>
+  <define name="elocation-id"><element name="elocation-id"><text/></element></define>
+
+  <!--
     We force using <element-citation> for structured representation
     and use <mixed-citation> only as textual form
   -->

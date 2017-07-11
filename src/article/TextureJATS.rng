@@ -735,6 +735,44 @@
     </choice>
   </define>
 
+
+  <!--
+    We use a strict definition for element-citation in Texture.
+
+    TODO: support remaining publication types
+  -->
+  <define name="element-citation">
+    <element name="element-citation">
+      <ref name="element-citation-attlist"/>
+      <ref name="person-group"/>
+      <choice>
+        <group>
+          <!-- publication-type="journal" -->
+          <ref name="year"/>
+          <ref name="article-title"/>
+          <ref name="source"/>
+          <ref name="volume"/>
+          <ref name="fpage"/>
+          <ref name="lpage"/>
+          <ref name="issue"/>
+          <!-- TODO: how can we support multiple pub-ids, other than doi -->
+          <ref name="pub-id"/>
+        </group>
+        <group>
+          <!-- publication-type="book" -->
+          <ref name="chapter-title"/>
+          <ref name="source"/>
+          <ref name="publisher-loc"/>
+          <ref name="publisher-name"/>
+          <ref name="year"/>
+          <ref name="fpage"/>
+          <ref name="lpage"/>
+          <ref name="issue"/>
+        </group>
+      </choice>
+    </element>
+  </define>
+
   <!--
     We force using <element-citation> for structured representation
     and use <mixed-citation> only as textual form

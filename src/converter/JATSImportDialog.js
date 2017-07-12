@@ -1,27 +1,19 @@
 import { Component } from 'substance'
-import { JATS, JATS4R, TextureJATS } from '../article'
 import { printElement } from './util/domHelpers'
 
 export default class JATSImportDialog extends Component {
 
   render($$) {
-    const importer = this.props.importer
+    const errors = this.props.errors
     let el = $$('div').addClass('sc-jats-import-dialog')
-
     el.append($$('h1').addClass('se-title').text('Importing JATS'))
 
-    // parsing XML
-    el.append($$(ImportStage, {importer, stage: `parse`}))
-    // validating JATS
-    el.append($$(ImportStage, {importer, stage: `validate-${JATS.getName()}`}))
-    // transforming JATS -> restricted JATS
-    el.append($$(ImportStage, {importer, stage: `j2r`}))
-    // validating restricted JATS
-    el.append($$(ImportStage, {importer, stage: `validate-${JATS4R.getName()}`}))
-    // transforming restricted JATS -> TextureJATS
-    el.append($$(ImportStage, {importer, stage: `r2t`}))
-    // validating TextureJATS
-    el.append($$(ImportStage, {importer, stage: `validate-${TextureJATS.getName()}`}))
+    Object.keys(errors).forEach((stageName) => {
+      el.append($$(ImportStage, {
+        stage: stageName,
+        errors: errors[stageName]
+      }))
+    })
 
     return el
   }
@@ -30,26 +22,12 @@ export default class JATSImportDialog extends Component {
 
 class ImportStage extends Component {
 
-  didMount() {
-    this.props.importer.on(`begin:${this.props.stage}`, this._onBegin, this)
-    this.props.importer.on(`error:${this.props.stage}`, this._onError, this)
-    this.props.importer.on(`end:${this.props.stage}`, this._onEnd, this)
-  }
-
-  getInitialState() {
-    return {
-      state: 'initial'
-    }
-  }
-
   render($$) {
-    const { state, errors } = this.state
+    const errors = this.props.errors
     let el = $$('div').addClass('sc-import-stage')
-
     el.append($$('h2').addClass('se-title').text(_getTitle(this.props.stage)))
 
-    el.addClass(`sm-${state}`)
-    if (errors) {
+    if (this.props.errors.length > 0) {
       let errorsEl = $$('div').addClass('se-errors')
       errors.forEach((err) => {
         errorsEl.append(this._renderError($$, err))
@@ -70,23 +48,8 @@ class ImportStage extends Component {
         $$('pre').addClass('se-element').text(printElement(err.el, { maxLevel: 1}))
       )
     }
-
     return el
   }
-
-  _onBegin() {
-    this.extendState({ state: 'started' })
-  }
-
-  _onError(err) {
-    let errors = (this.state.errors || []).concat([err])
-    this.extendState({ state: 'errored', errors })
-  }
-
-  _onEnd() {
-    this.extendState({ state: 'finished' })
-  }
-
 }
 
 const TITLES = {

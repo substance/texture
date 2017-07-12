@@ -13,20 +13,25 @@ export default class JATSImporter extends EventEmitter {
 
   import(xml) {
     let dom
-    this.errors = []
-    this.emit('begin')
+
+    this.errors = {
+      'parse': [],
+      'validate-jats': [],
+      'validate-jats4r': [],
+      'validate-texture-jats': [],
+      'j2r': [],
+      'r2t': []
+    }
 
     if (isString(xml)) {
-      this.emit('begin:parse')
       try {
         dom = DefaultDOMElement.parseXML(xml)
       } catch(err) {
-        this.emit('error:parse', {
+        this._error('parse', {
           msg: String(err)
         })
         return
       }
-      this.emit('end:parse')
     } else if (xml._isDOMElement) {
       dom = xml
     }
@@ -43,19 +48,16 @@ export default class JATSImporter extends EventEmitter {
 
     if (!this._validate(TextureJATS, dom)) return
 
-    this.emit('end')
+    return dom
+  }
 
-    if (this.errors.length > 0) {
-      return false
-    } else {
-      return dom
-    }
+  hasErrored() {
+    return this._hasErrored
   }
 
   _validate(schema, dom) {
     const name = schema.getName()
     const channel = `validate-${name}`
-    this.emit(`begin:${channel}`)
     let res = validateXMLSchema(schema, dom)
     if (res.errors) {
       // TODO: we need better errors
@@ -64,12 +66,10 @@ export default class JATSImporter extends EventEmitter {
       })
       return false
     }
-    this.emit(`end:${channel}`)
     return true
   }
 
   _transform(mode, dom) {
-    this.emit(`begin:${mode}`)
     const api = this._createAPI(dom, mode)
     switch (mode) {
       case 'j2r':
@@ -81,7 +81,6 @@ export default class JATSImporter extends EventEmitter {
       default:
         //
     }
-    this.emit(`end:${mode}`)
     return true
   }
 
@@ -89,15 +88,15 @@ export default class JATSImporter extends EventEmitter {
     const self = this
     let api = {
       error(data) {
-        self._error(`error:${channel}`, data)
+        self._error(channel, data)
       }
     }
     return api
   }
 
   _error(channel, err) {
-    this.errors.push(err)
-    this.emit(`error:${channel}`, err)
+    this._hasErrored = true
+    this.errors[channel].push(err)
   }
 
 }

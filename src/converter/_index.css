@@ -1,5 +1,12 @@
 .sc-jats-import-dialog {
-  max-height: 600px;
+  position: fixed;
+  left: 50px;
+  right: 50px;
+  top: 50px;
+  bottom: 50px;
+  padding: 20px;
+  background: #f1f1f1;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
   overflow: auto;
 }
 

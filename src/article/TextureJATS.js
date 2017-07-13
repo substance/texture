@@ -16,6 +16,11 @@ TextureJATS.getStartElement = function() {
   return 'article'
 }
 
+TextureJATS.getDocTypeParams = function() {
+  return ['article', 'TextureJATS 1.1', 'http://texture.substance.io/TextureJATS-1.1.dtd']
+}
+
+
 TextureJATS.uri = "http://texture.substance.io/jats/1.1/TextureJATS.dtd"
 
 

@@ -121,9 +121,11 @@ export default class Editor extends AbstractWriter {
     return this.props.editorSession.configurator
   }
 
+  /*
+    Exporter provided by Texture
+  */
   _getExporter() {
-    // return this.getConfigurator().createExporter('texture-jats')
-    return null
+    return this.context.exporter
   }
 
   _getTOCProvider() {
@@ -139,5 +141,6 @@ export default class Editor extends AbstractWriter {
     let bodyContent = doc.article.find('body-content')
     return bodyContent.id
   }
+
 
 }

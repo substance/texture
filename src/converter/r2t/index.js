@@ -5,6 +5,7 @@ import Sec2Heading from './Sec2Heading'
 import TransformAff from './TransformAff'
 import WrapTransAbstracts from './WrapTransAbstracts'
 import ExtractCaptionTitle from './ExtractCaptionTitle'
+import UpdateDocType from './UpdateDocType'
 
 const trafos = [
   PruneText,
@@ -13,7 +14,8 @@ const trafos = [
   Sec2Heading,
   TransformAff,
   WrapTransAbstracts,
-  ExtractCaptionTitle
+  ExtractCaptionTitle,
+  UpdateDocType
 ].map(C => new C())
 
 export function r2t(dom, api) {

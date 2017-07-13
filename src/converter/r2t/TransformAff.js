@@ -11,11 +11,13 @@ export default class TransformAff {
 
   export(dom) {
     let affGroup = dom.find('aff-group')
-    let affs=affGroup.findAll('aff')
-    affs.forEach((aff) => {
-      _exportAff(aff)
-    })
-    unwrapChildren(affGroup)
+    if (affGroup) {
+      let affs=affGroup.findAll('aff')
+      affs.forEach((aff) => {
+        _exportAff(aff)
+      })
+      unwrapChildren(affGroup)
+    }
   }
 }
 

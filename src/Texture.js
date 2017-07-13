@@ -4,24 +4,39 @@ import EditorPackage from './editor/EditorPackage'
 import TextureConfigurator from './editor/util/TextureConfigurator'
 import JATSImporter from './converter/JATSImporter'
 import JATSImportDialog from './converter/JATSImportDialog'
+import JATSExporter from './converter/JATSExporter'
 
 /*
   Texture Component
   Based on given mode prop, displays the Publisher, Author or Reader component
 */
-class Texture extends Component {
+export default class Texture extends Component {
 
   constructor(parent, props) {
     super(parent, props)
     this.configurator = new TextureConfigurator()
     this.configurator.import(EditorPackage)
     this.jatsImporter = new JATSImporter()
+    this.jatsExporter = new JATSExporter()
   }
 
   getInitialState() {
     return {
       editorSession: null,
       loadingError: null
+    }
+  }
+
+  getChildContext() {
+    return {
+      xmlStore: {
+        readXML: this.props.readXML,
+        writeXML: this.props.writeXML
+      },
+      exporter: this.jatsExporter,
+      // HACK: Find a better way to pass this information to SaveHandler, as
+      // this does not get updated when new props arrive
+      documentId: this.props.documentId
     }
   }
 
@@ -74,9 +89,7 @@ class Texture extends Component {
   _loadDocument() {
     const configurator = this.getConfigurator()
     this.props.readXML(this.props.documentId, function(err, xmlStr) {
-
       let dom = DefaultDOMElement.parseXML(xmlStr)
-
       if (err) {
         console.error(err)
         this.setState({
@@ -84,9 +97,7 @@ class Texture extends Component {
         })
         return
       }
-
       const doctype = dom.getDoctype()
-
       if (doctype.publicId !== 'TextureJATS 1.1') {
         dom = this.jatsImporter.import(dom)
         if (this.jatsImporter.hasErrored()) {
@@ -97,7 +108,6 @@ class Texture extends Component {
           return
         }
       }
-
       const importer = configurator.createImporter('texture-jats')
       const doc = importer.importDocument(dom)
 
@@ -106,14 +116,10 @@ class Texture extends Component {
       const editorSession = new EditorSession(doc, {
         configurator: configurator
       })
-
       this.setState({
         editorSession: editorSession
       })
-
     }.bind(this))
   }
 
 }
-
-export default Texture

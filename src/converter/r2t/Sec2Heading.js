@@ -11,7 +11,7 @@ export default class Sec2Heading {
   }
 
   export(dom) {
-    console.error('TODO: implement Sec2Heading.export()')
+    console.error('TODO: implement Sec2Heading.export()', dom)
   }
 
 }

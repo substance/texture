@@ -16,5 +16,8 @@ restrictedJATS.getStartElement = function() {
   return 'article'
 }
 
+restrictedJATS.getDocTypeParams = function() {
+  return ['article', 'JATS4R 1.1', 'http://texture.substance.io/JATS4R-1.1.dtd']
+}
 
 export default restrictedJATS

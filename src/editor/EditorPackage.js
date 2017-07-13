@@ -6,7 +6,8 @@ import {
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
-  substanceGlobals
+  substanceGlobals,
+  PersistencePackage
 } from 'substance'
 
 import TextureJATSPackage from '../article/TextureJATSPackage'
@@ -65,6 +66,7 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
+    config.import(PersistencePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
@@ -180,7 +182,7 @@ export default {
       commandGroup: 'formatting',
       icon: 'fa-bold',
       label: 'Strong',
-      accelerator: 'cmd+b'
+      accelerator: 'CommandOrControl+B'
     })
 
     config.addAnnotationTool({
@@ -189,7 +191,7 @@ export default {
       commandGroup: 'formatting',
       icon: 'fa-italic',
       label: 'Emphasize',
-      accelerator: 'cmd+i'
+      accelerator: 'CommandOrControl+I'
     })
 
     config.addAnnotationTool({
@@ -214,7 +216,7 @@ export default {
       commandGroup: 'formatting',
       icon: 'fa-link',
       label: 'Link',
-      accelerator: 'cmd+k'
+      accelerator: 'CommandOrControl+K'
     })
 
     config.addTextTypeTool({
@@ -226,7 +228,7 @@ export default {
       },
       icon: 'fa-header',
       label: 'Heading 1',
-      accelerator: 'cmd+alt+1'
+      accelerator: 'CommandOrControl+Alt+1'
     })
 
     config.addTextTypeTool({
@@ -238,7 +240,7 @@ export default {
       },
       icon: 'fa-header',
       label: 'Heading 2',
-      accelerator: 'cmd+alt+2'
+      accelerator: 'CommandOrControl+Alt+2'
     })
 
     config.addTextTypeTool({
@@ -250,7 +252,7 @@ export default {
       },
       icon: 'fa-header',
       label: 'Heading 3',
-      accelerator: 'cmd+alt+3'
+      accelerator: 'CommandOrControl+Alt+3'
     })
 
     config.addTextTypeTool({
@@ -261,7 +263,7 @@ export default {
       },
       icon: 'fa-paragraph',
       label: 'Paragraph',
-      accelerator: 'cmd+alt+0'
+      accelerator: 'CommandOrControl+Alt+0'
     })
 
     config.addCommand('edit-ext-link', EditAnnotationCommand, {
@@ -282,6 +284,13 @@ export default {
         showDisabled: false,
         style: 'descriptive',
         commandGroups: ['text-types']
+      },
+      {
+        name: 'persistence',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'descriptive',
+        commandGroups: ['persistence']
       },
       {
         name: 'annotations',

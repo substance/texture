@@ -1,3 +1,4 @@
+
 export default class SaveHandler {
 
   constructor(context) {
@@ -8,8 +9,11 @@ export default class SaveHandler {
     return new Promise((resolve, reject) => {
       let exporter = this.context.exporter
       let doc = editorSession.getDocument()
-      let articleEl = exporter.exportDocument(doc)
-      let xml = articleEl.outerHTML
+      let dom = doc.toXML()
+      let jatsDom = exporter.export(dom)
+      let xml = jatsDom.serialize()
+      // console.info('Exported XML', jatsDom.getNativeElement())
+      // console.info('Exported XML', xml)
       this.context.xmlStore.writeXML(this.context.documentId, xml, (err) => {
         if (err) {
           reject(err)

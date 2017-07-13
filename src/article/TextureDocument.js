@@ -2,13 +2,16 @@ import { XMLDocument } from 'substance'
 import TextureJATS from './TextureJATS'
 import XrefIndex from './XrefIndex'
 
-export default
-class JATSDocument extends XMLDocument {
+export default class TextureDocument extends XMLDocument {
 
   _initialize() {
     super._initialize()
     // special index for xref lookup
     this.addIndex('xrefs', new XrefIndex())
+  }
+
+  getDocTypeParams() {
+    return ['article', 'TextureJATS 1.1', 'http://texture.substance.io/TextureJATS-1.1.dtd']
   }
 
   getXMLSchema() {

@@ -16,4 +16,5 @@ export function j2r(dom, api) {
 
 export function r2j(dom) {
   // nothing: restricted JATS is valid JATS
+  return dom
 }

@@ -23,6 +23,10 @@ We will add a layer of a virtual file system, to represent images and other asse
 We will add the ability to upload images in the document. This includes drag+drop of images from the file system, as well as moving them around in the document.
 
 
+#### Test suite for document transforms
+
+Bugs in JATS->JATS4R or JATS4R->TextureJATS transformations could cause data loss. We need to fully test them.
+
 ## Beta 1
 
 Texture enters Beta stage and can be used in practice by publishers and individuals at own risk.

@@ -114,10 +114,8 @@
       <table-wrap id="table1">
         <title>Patient Care at End of Follow Up</title>
         <caption>
-        <p>Numbers of patients receiving institutional care at
-        the end of scheduled follow up and use of hospital beds
-        among those allocated to day hospital or alternative
-        services</p>
+        <p>Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds
+        among those allocated to day hospital or alternative services</p>
         </caption>
         <table frame="box" rules="all" cellpadding="5">
           <thead>

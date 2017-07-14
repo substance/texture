@@ -1,13 +1,13 @@
-.sc-table-fig {
+.sc-table-wrap {
   border: 1px solid #ddd;
   padding: 20px;
 }
 
-.sc-table-fig > .se-label {
+.sc-table-wrap > .se-label {
     font-style: italic;
 }
 
-.sc-table-fig .se-title {
+.sc-table-wrap .se-title {
   padding-top: 20px;
   font-weight: 600;
 }

@@ -319,13 +319,13 @@ export default class EditRef extends Component {
     const node = this.props.node
     const personGroupId = node.find('person-group[person-group-type=author]').id
     const editorSession = this.context.editorSession
+    editorSession.setSelection(null)
     editorSession.transaction((doc) => {
       let personGroup = doc.get(personGroupId)
       let name = doc.createElement('name').append(
         doc.createElement('given-names'),
         doc.createElement('surname')
       )
-
       personGroup.append(name)
     })
 
@@ -336,6 +336,7 @@ export default class EditRef extends Component {
     const node = this.props.node
     const personGroupId = node.find('person-group[person-group-type=author]').id
     const editorSession = this.context.editorSession
+    editorSession.setSelection(null)
     editorSession.transaction((doc) => {
       let personGroup = doc.get(personGroupId)
       let author = personGroup.find(`name#${authorId}`)

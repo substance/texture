@@ -33,6 +33,7 @@ b.task('assets', function() {
 b.task('release-assets', function() {
   console.info('creating a release bundle at ./bundle')
   b.copy('./dist', './bundle/dist')
+  b.copy('./assets', './bundle/assets')
   b.copy('./tmp', './bundle/tmp')
   b.copy('./index.html', './bundle/index.html')
   b.copy('./examples', './bundle/examples')

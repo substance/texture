@@ -94,7 +94,7 @@
         <caption>
           <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
         </caption>
-        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="https://iiif.elifesciences.org/lax:15278/elife-15278-fig1-v1.tif/full/1076,/0/default.jpg"/>
+        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="../assets/fig1.jpg"/>
       </fig>
       <p>Some text.</p>
       <fig id="fig2">
@@ -102,7 +102,7 @@
         <caption>
           <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
         </caption>
-        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="https://iiif.elifesciences.org/lax:15278/elife-15278-fig2-v1.tif/full/1076,/0/default.jpg"/>
+        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="../assets/fig1.jpg"/>
       </fig>
       <disp-quote>
         <disp-quote-content>

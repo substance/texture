@@ -5,6 +5,7 @@ const path = require('path')
 const vfs = require('substance-bundler/extensions/vfs')
 
 const DIST = 'dist/'
+const BUNDLE = 'bundle/'
 const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
   path.join(__dirname, 'src', 'article')
@@ -16,6 +17,7 @@ const RNG_FILES = [
 ]
 
 b.task('clean', function() {
+  b.rm(BUNDLE)
   b.rm(DIST)
   b.rm(TMP)
 })
@@ -26,6 +28,16 @@ b.task('assets', function() {
     dest: 'tmp/vfs.js',
     format: 'umd', moduleName: 'vfs'
   })
+})
+
+b.task('release-assets', function() {
+  console.info('creating a release bundle at ./bundle')
+  b.copy('./dist', './bundle/dist')
+  b.copy('./tmp', './bundle/tmp')
+  b.copy('./index.html', './bundle/index.html')
+  b.copy('./examples', './bundle/examples')
+  b.copy('./node_modules/font-awesome', './bundle/node_modules/font-awesome')
+  b.copy('./node_modules/substance', './bundle/node_modules/substance')
 })
 
 b.task('single-jats-file', _singleJATSFile)
@@ -66,6 +78,9 @@ b.task('build:dev', ['clean', 'assets', 'build:browser:pure'])
 
 // default build: creates a dist folder with a production bundle
 b.task('default', ['clean', 'assets', 'build'])
+
+// Creates a release bundle
+b.task('release', ['default', 'release-assets'])
 
 b.task('dev', ['clean', 'assets', 'build:dev'])
 

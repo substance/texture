@@ -66,7 +66,7 @@ window.app = Texture.mount({
 
 ```
 
-See our [test example](examples/editor.html) for a complete intergration scenario.
+See our [test example](examples/editor.html) for a complete integration scenario.
 
 
 ## Development

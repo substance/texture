@@ -3,7 +3,73 @@
 Texture is a toolset for the production of scientific content. It has first-class support for JATS, the de facto standard for archiving and interchange of scientific open-access contents with XML.
 ![Texture User Interface](texture.png)
 
-## Install
+## Roadmap
+
+Texture is still at an early alpha stage: there are likely to be missing features, bugs and API changes. But we would :heart: to get your suggestions and :bug: reports.
+
+- ![prod](https://img.shields.io/badge/status-prod-green.svg) = ready for production use
+- ![beta](https://img.shields.io/badge/status-beta-yellow.svg) = ready for beta user testing
+- ![alpha](https://img.shields.io/badge/status-alpha-red.svg) = ready for alpha testing; use with caution
+- Planned for release (e.g. `Alpha 4`)
+
+We generally only plan one or two releases ahead. We aim to do quaterly releases, towards a 1.0 release in 2018. Please see our more detailed [ROADMAP.md](ROADMAP.md) document.
+
+Feature                                | Ready
+:------------------------------------- | :------------:
+General editing                        | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
+Copy & Paste (from Word, etc.)         | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
+Find and Replace                       | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Auto-numbered labels (`xref`, `fig`, etc. ) | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
+Reference editing (`element-citation`) | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Authors and Affiliations               | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Article Record (`issue`, `fpage`, etc.) | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Translations                           | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+**Supported Content**                  |
+Article Title                          | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Abstract                               | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Paragraph                              | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Headings                               | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Image                                  | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Figure                                 | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+List                                   | Alpha 4
+Table                                  | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Bold & Italic                          | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Ext-Link                               | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Subscript & Superscript                | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Blockquote                             | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
+**Transformations**                    |
+JATS4R -> TextureJATS                  | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+TextureJATS -> JATS4R                  | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+JATS -> JATS4R                         | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Testsuite for transformations          | Alpha 4
+**Integration**                        |
+Virtual Filesystem for XML + assets    | Alpha 4
+Archive File Format (based on .tar.gz) | Beta 1
+Desktop app for OSX, Windows, Linux    | Beta 1
+
+
+
+## Usage
+
+```js
+const { Texture } = window.texture
+
+window.app = Texture.mount({
+  documentId: 'some-doc-id',
+  readXML: function(documentId, cb) {
+    // fetch an XML string to be read by the editor
+  },
+  writeXML: function(documentId, xml, cb) {
+    // write the XML string to a store
+  }
+}, document.body)
+
+```
+
+See our [test example](examples/editor.html) for a complete intergration scenario.
+
+
+## Development
 
 Clone the repository.
 
@@ -36,57 +102,8 @@ Start the dev server.
 $ npm run start
 ```
 
-And navigate to [http://localhost:5555](http://localhost:5555).
+And navigate to [http://localhost:4000](http://localhost:4000).
 
-## Usage
-
-Please see examples for usage.
-
-<!--
-```js
-// app.js
-import { Texture, TextureConfigurator, AuthorPackage } from 'substance-texture'
-import MyXMLStore from './MyXMLStore'
-
-let configurator = new TextureConfigurator()
-configurator
-  .import(AuthorPackage)
-  .setXMLStore(MyXMLStore)
-
-window.onload = function() {
-  window.app = Texture.mount({
-    documentId: 'doc-1',
-    configurator: configurator
-  }, document.body)
-}
-```
-
-Texture is fully configurable. So you need to supply a custom configuration by importing packages.
-
-In order to connect Texture to a backend you need to define an XML Store:
-
-```js
-// MyXMLStore.js
-import { request } from 'substance'
-
-export default class MyXMLStore {
-  readXML(documentId, cb) {
-    request('GET', 'https://myserver.com/documents/'+documentId+'.xml', null, cb)
-  }
-
-  writeXML(documentId, xml, cb) {
-    var data = { content: xml }
-    var url = 'https://myserver.com/documents/'+documentId+'.xml'
-    request('PUT', url, data, cb)
-  }
-}
-```
--->
-
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md).
 
 ## License
 

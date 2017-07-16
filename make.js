@@ -25,20 +25,13 @@ b.task('clean', function() {
 b.task('assets', function() {
   vfs(b, {
     src: ['./data/**/*.xml', './src/article/*.rng', './src/article/*.json'],
-    dest: 'tmp/vfs.js',
+    dest: DIST+'/vfs.js',
     format: 'umd', moduleName: 'vfs'
   })
-})
-
-b.task('release-assets', function() {
-  console.info('creating a release bundle at ./bundle')
-  b.copy('./dist', './bundle/dist')
-  b.copy('./assets', './bundle/assets')
-  b.copy('./tmp', './bundle/tmp')
-  b.copy('./index.html', './bundle/index.html')
-  b.copy('./examples', './bundle/examples')
-  b.copy('./node_modules/font-awesome', './bundle/node_modules/font-awesome')
-  b.copy('./node_modules/substance', './bundle/node_modules/substance')
+  b.copy('./assets', DIST+'assets')
+  b.copy('./examples', DIST)
+  b.copy('./node_modules/font-awesome', DIST+'font-awesome')
+  b.copy('./node_modules/substance/dist', DIST+'substance/dist')
 })
 
 b.task('single-jats-file', _singleJATSFile)
@@ -79,10 +72,6 @@ b.task('build:dev', ['clean', 'assets', 'build:browser:pure'])
 
 // default build: creates a dist folder with a production bundle
 b.task('default', ['clean', 'assets', 'build'])
-
-// Creates a release bundle
-b.task('release', ['default', 'release-assets'])
-
 b.task('dev', ['clean', 'assets', 'build:dev'])
 
 b.task('test', () => {
@@ -183,4 +172,4 @@ function _singleJATSFile() {
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(4000)
-b.serve({ static: true, route: '/', folder: '.' })
+b.serve({ static: true, route: '/', folder: './dist' })

@@ -800,7 +800,6 @@
   <define name="fpage"><element name="fpage"><text/></element></define>
   <define name="lpage"><element name="lpage"><text/></element></define>
   <define name="issue"><element name="issue"><text/></element></define>
-  <define name="issue"><element name="issue"><text/></element></define>
   <define name="pub-id"><element name="pub-id"><text/></element></define>
   <define name="publisher-name"><element name="publisher-name"><text/></element></define>
   <define name="publisher-loc"><element name="publisher-loc"><text/></element></define>

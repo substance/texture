@@ -108,15 +108,16 @@ function _buildCSS(DEST, transpileToES5) {
 function _compileSchema(name, src, searchDirs, deps, options = {} ) {
   const DEST = `tmp/${name}.data.js`
   const ISSUES = `tmp/${name}.issues.txt`
+  const SCHEMA = `tmp/${name}.schema.md`
   const entry = path.basename(src)
   b.custom(`Compiling schema '${name}'...`, {
     src: deps,
     dest: DEST,
     execute() {
-      const { compileRNG, serializeXMLSchema, checkSchema } = require('substance')
+      const { compileRNG, checkSchema } = require('substance')
       const xmlSchema = compileRNG(fs, searchDirs, entry)
-      let schemaData = serializeXMLSchema(xmlSchema)
-      b.writeSync(DEST, `export default ${JSON.stringify(schemaData)}`)
+      b.writeSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
+      b.writeSync(SCHEMA, xmlSchema.toMD())
       if (options.debug) {
         const issues = checkSchema(xmlSchema)
         const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')

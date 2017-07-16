@@ -1,6 +1,6 @@
 import {
   DefaultDOMElement, DOMImporter, isString,
-  XMLValidator
+  ValidatingChildNodeIterator
 } from 'substance'
 
 import TextureJATS from './TextureJATS'
@@ -17,7 +17,6 @@ class TextureJATSImporter extends DOMImporter {
     }, context)
 
     this.xmlSchema = TextureJATS
-    this.validator = new XMLValidator(this.xmlSchema)
   }
 
   importDocument(dom) {
@@ -92,7 +91,10 @@ class TextureJATSImporter extends DOMImporter {
   }
 
   getChildNodeIterator(el) {
-    return this.validator.getValidatingChildNodeIterator(el)
+    // TODO: this looks very hacky. Why do we need el plus it?
+    let schema = this.xmlSchema.getElementSchema(el.tagName)
+    let it = el.getChildNodeIterator()
+    return new ValidatingChildNodeIterator(el, it, schema.expr)
   }
 
   _getIdForElement(el, type) {

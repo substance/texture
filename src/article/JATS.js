@@ -1,7 +1,7 @@
-import { deserializeXMLSchema } from 'substance'
+import { XMLSchema } from 'substance'
 import JATSData from '../../tmp/JATS-publishing.data'
 
-const JATS = deserializeXMLSchema(JATSData)
+const JATS = XMLSchema.fromJSON(JATSData)
 
 // TODO: this should come from compilation
 JATS.getName = function() {
@@ -10,10 +10,6 @@ JATS.getName = function() {
 
 JATS.getVersion = function() {
   return '1.1'
-}
-
-JATS.getStartElement = function() {
-  return 'article'
 }
 
 JATS.getDocTypeParams = function() {

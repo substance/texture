@@ -91,7 +91,7 @@
         <caption>
           <p>Example figure taken from <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://doi.org/10.7554/eLife.15278" ext-link-type="uri" xlink:type="simple">Schaffelhofer, Scherberger 2016</ext-link>.</p>
         </caption>
-        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="../assets/fig1.jpg"/>
+        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig1.jpg"/>
       </fig>
       <p>With Texture, editors can use an interface similar to a classic word processor. This makes the difficult job of manually crafting XML (such as in the <italic>Oxygen</italic> software) unnecessary for most workflows and provides a more natural approach to content curation. The user interface can be extended to reflect specialized viewing modes; Texture can be customized for different user roles to provide different levels of complexity. For some editors, the interface could be toggled to more closely resemble a professional XML suite, allowing a user to pop out a raw attribute editor for any given element. </p>
       <p>Texture is designed to be embeddable. It provides a set of components that can be configured to fit different integration scenarios. For example, Texture will be soon available as a stand-alone desktop application (using <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://electron.atom.io/" ext-link-type="uri" xlink:type="simple">Electron</ext-link>), ready to read and write JATS XML files from local filesystems. In contrast, Open Journal Systems (OJS) will integrate Texture into their web-based journal management software, where documents are read from and saved to a database.</p>
@@ -110,7 +110,7 @@
         <caption>
           <p>Example figure taken from <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://doi.org/10.7554/eLife.15278" ext-link-type="uri" xlink:type="simple">Schaffelhofer, Scherberger 2016</ext-link>.</p>
         </caption>
-        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="../assets/fig2.jpg"/>
+        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig2.jpg"/>
       </fig>
       <p>When using the Open Typesetting Stack plugin in Open Journal Systems, authors and editors have the option to hand off any uploaded Word or PDF documents to OTS, whereupon they are replaced with OTS' JATS output for the remainder of the publishing workflow. As OTS' JATS output is generally not good enough to go directly to publication, users of OJS have the ability to continue editing directly in a Texture instance that is accessible from the OJS interface. The goal is to get authors and editors away from the original Word manuscript as early as possible in the publishing process, so that carrying forward changes to the eventual layout draft entails minimal duplicated effort. When articles are ready for publication, they can be resubmitted to OTS through another plugin hook, and it will return PDF and ePub transformations to OJS to be published alongside the XML.<xref ref-type="fn" rid="bibd2e190"/> More information, and a video demonstration, is available at <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://pkp.sfu.ca/open-typesetting-stack/" ext-link-type="uri" xlink:type="simple">https://pkp.sfu.ca/open-typesetting-stack/</ext-link>.</p>
 

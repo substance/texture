@@ -17,10 +17,10 @@ export default class JATSImporter extends EventEmitter {
     this.errors = {
       'parse': [],
       'validate-jats': [],
-      'validate-jats4r': [],
-      'validate-texture-jats': [],
       'j2r': [],
-      'r2t': []
+      'validate-jats4r': [],
+      'r2t': [],
+      'validate-texture-jats': [],
     }
 
     if (isString(xml)) {

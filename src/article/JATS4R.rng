@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="JATS-publishing.rng"/>
+  <include href="JATS-archiving.rng"/>
 
   <!--
     WIP: it should be clear how to use this.

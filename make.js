@@ -10,8 +10,9 @@ const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
   path.join(__dirname, 'src', 'article')
 ]
+
 const RNG_FILES = [
-  'src/article/JATS-publishing.rng',
+  'src/article/JATS-archiving.rng',
   'src/article/JATS4R.rng',
   'src/article/TextureJATS.rng'
 ]
@@ -37,7 +38,7 @@ b.task('assets', function() {
 b.task('single-jats-file', _singleJATSFile)
 
 b.task('compile:jats', () => {
-  _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1))
+  _compileSchema('JATS-archiving', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1))
 })
 
 b.task('compile:jats4r', () => {
@@ -49,7 +50,7 @@ b.task('compile:texture-jats', () => {
 })
 
 b.task('compile:debug', () => {
-  _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
+  _compileSchema('JATS-archiving', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
   _compileSchema('JATS4R', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0,2), { debug: true })
   _compileSchema('TextureJATS', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3), { debug: true })
 })
@@ -130,12 +131,12 @@ function _compileSchema(name, src, searchDirs, deps, options = {} ) {
 // we used this internally just to get a single-file version of
 // the offficial JATS 1.1 rng data set
 function _singleJATSFile() {
-  // const RNG_DIR = 'data/jats/archiving'
-  // const ENTRY = 'JATS-archive-oasis-article1-mathml3.rng'
-  // const DEST = 'src/article/JATS-archiving.rng'
-  const RNG_DIR = 'data/jats/publishing'
-  const ENTRY = 'JATS-journalpublishing-oasis-article1-mathml3.rng'
-  const DEST = 'src/article/JATS-publishing.rng'
+  const RNG_DIR = 'data/jats/archiving'
+  const ENTRY = 'JATS-archive-oasis-article1-mathml3.rng'
+  const DEST = 'src/article/JATS-archiving.rng'
+  // const RNG_DIR = 'data/jats/publishing'
+  // const ENTRY = 'JATS-journalpublishing-oasis-article1-mathml3.rng'
+  // const DEST = 'src/article/JATS-publishing.rng'
   b.custom(`Pulling JATS spec into a single file...`, {
     src: [RNG_DIR+'/*.rng'],
     dest: DEST,

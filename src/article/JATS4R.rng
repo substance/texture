@@ -27,13 +27,31 @@
   <define name="aff">
     <element name="aff">
       <ref name="aff-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <!-- <text/> -->
-          <ref name="aff-elements"/>
-        </choice>
-      </zeroOrMore>
+      <interleave>
+        <zeroOrMore><ref name="addr-line"/></zeroOrMore>
+        <optional><ref name="label"/></optional>
+        <optional><ref name="city"/></optional>
+        <optional><ref name="country"/></optional>
+        <optional><ref name="fax"/></optional>
+        <zeroOrMore><ref name="institution"/></zeroOrMore>
+        <zeroOrMore><ref name="institution-wrap"/></zeroOrMore>
+        <optional><ref name="phone"/></optional>
+        <optional><ref name="postal-code"/></optional>
+        <optional><ref name="state"/></optional>
+        <optional><ref name="email"/></optional>
+        <zeroOrMore><ref name="ext-link"/></zeroOrMore>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="x"/></zeroOrMore>
+      </interleave>
     </element>
+  </define>
+
+  <!-- in JATS4R we want to have simpler phrase content -->
+  <define name="all-phrase">
+    <choice>
+      <ref name="simple-phrase"/>
+      <ref name="x.class"/>
+    </choice>
   </define>
 
   <!--
@@ -146,13 +164,8 @@
       <ref name="corresp-attlist"/>
       <zeroOrMore>
         <choice>
-          <text/>
-          <!-- <ref name="address.class"/> -->
-          <ref name="address-link.class"/>
-          <ref name="emphasis.class"/>
-          <!-- <ref name="label.class"/> -->
-          <ref name="phrase-content.class"/>
-          <ref name="subsup.class"/>
+          <text />
+          <ref name="all-phrase"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -243,7 +256,7 @@
         <optional><ref name="chapter-title"/></optional>
         <optional><ref name="collab"/></optional>
         <optional><ref name="collab-alternatives"/></optional>
-        <optional><ref name="comment"/></optional>
+        <zeroOrMore><ref name="comment"/></zeroOrMore>
         <optional><ref name="conf-acronym"/></optional>
         <optional><ref name="conf-date"/></optional>
         <optional><ref name="conf-loc"/></optional>
@@ -300,6 +313,47 @@
     </element>
   </define>
 
+
+  <define name="fig">
+    <element name="fig">
+      <ref name="fig-attlist"/>
+      <zeroOrMore>
+        <ref name="id.class"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption.class"/>
+      </optional>
+      <ref name="graphic"/>
+      <zeroOrMore>
+        <ref name="display-back-matter.class"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="funding-source">
+    <element name="funding-source">
+      <ref name="funding-source-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="history">
+    <element name="history">
+      <ref name="history-attlist"/>
+      <zeroOrMore>
+        <ref name="date"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <!--
     WIP: We should make it crystal clear how to tag content
     for different use-cases.
@@ -349,6 +403,16 @@
     </element>
   </define>
 
+  <define name="media">
+    <element name="media">
+      <ref name="media-attlist"/>
+      <interleave>
+        <zeroOrMore><ref name="id.class"/></zeroOrMore>
+        <optional><ref name="label.class"/></optional>
+        <optional><ref name="caption.class"/></optional>
+      </interleave>
+    </element>
+  </define>
 
   <!--
     WIP: either inline or structured
@@ -540,7 +604,7 @@
       <ref name="email"/>
       <ref name="elocation-id"/>
       <ref name="etal"/>
-      <!--<ref name="ext-link"/>-->
+      <ref name="ext-link"/>
       <ref name="fpage"/>
       <ref name="gov"/>
       <ref name="institution"/>
@@ -682,7 +746,8 @@
   -->
   <define name="simple-phrase">
     <choice>
-      <ref name="address-link.class"/>
+      <!-- <ref name="address-link.class"/> -->
+      <ref name="ext-link"/>
       <!-- <ref name="article-link.class"/> -->
       <ref name="inline-supplementary-material"/>
       <ref name="emphasis.class"/>
@@ -694,6 +759,7 @@
       <ref name="subsup.class"/>
     </choice>
   </define>
+
   <!--
     Just use plain text. If you want to add information about the person
     add a <contrib> to the front matter.

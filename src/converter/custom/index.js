@@ -1,9 +1,11 @@
 import MixedAffConverter from './TransformMixedAff'
 import ScieloAffConverter from './ScieloAffConverter'
+import Hackz from './Hackz'
 
 const trafos = [
   MixedAffConverter,
   ScieloAffConverter,
+  Hackz
 ].map(C => new C())
 
 const CUSTOM = {

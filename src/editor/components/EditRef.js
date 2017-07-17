@@ -202,14 +202,17 @@ export default class EditRef extends Component {
     let form = $$('div').addClass('se-form')
     let elocationId = this.props.node.find('elocation-id')
 
-    form.append(
-      this._renderTextElement($$, elocationId, 'Electronic Location Identifier')
-    )
-
-    el.append(
-      $$('div').addClass('se-label').append('Electronic Location Identifier'),
-      form
-    )
+    // TODO: we want this to be just one field
+    // which is either used as elocation-id or as page range
+    if (elocationId) {
+      form.append(
+        this._renderTextElement($$, elocationId, 'Electronic Location Identifier')
+      )
+      el.append(
+        $$('div').addClass('se-label').append('Electronic Location Identifier'),
+        form
+      )
+    }
 
     return el
   }
@@ -222,18 +225,37 @@ export default class EditRef extends Component {
     let issue = this.props.node.find('issue')
     let year = this.props.node.find('year')
 
-    form.append(
-      this._renderTextElement($$, volume, 'Volume')
-    )
-    form.append(
-      this._renderTextElement($$, issue, 'Issue')
-    )
-    form.append(
-      this._renderTextElement($$, year, 'Year')
-    )
+    let label = []
+
+    if (!volume) {
+      console.error('FIXME: volume is missing')
+    } else {
+      label.push('Volume')
+      form.append(
+        this._renderTextElement($$, volume, 'Volume')
+      )
+    }
+
+    if (!issue) {
+      console.error('FIXME: issue is missing')
+    } else {
+      label.push('Issue')
+      form.append(
+        this._renderTextElement($$, issue, 'Issue')
+      )
+    }
+
+    if (!year) {
+      console.error('FIXME: year is missing')
+    } else {
+      label.push('Year')
+      form.append(
+        this._renderTextElement($$, year, 'Year')
+      )
+    }
 
     el.append(
-      $$('div').addClass('se-label').append('Volume / Issue / Year'),
+      $$('div').addClass('se-label').append(label.join(' / ')),
       form
     )
 
@@ -244,11 +266,15 @@ export default class EditRef extends Component {
     let el = $$('div').addClass('se-pages')
 
     let firstPage = this.props.node.find('fpage')
-    let firstPageEditor = this._renderTextElement($$, firstPage, 'From')
-
     let lastPage = this.props.node.find('lpage')
-    let lastPageEditor = this._renderTextElement($$, lastPage, 'To')
 
+    if (!firstPage || !lastPage) {
+      console.error('FIXME: fpage and lpage is missing')
+      return el
+    }
+
+    let firstPageEditor = this._renderTextElement($$, firstPage, 'From')
+    let lastPageEditor = this._renderTextElement($$, lastPage, 'To')
     el.append(
       $$('div').addClass('se-label').append('Pages (from-to)'),
       $$('div').addClass('se-form').append(

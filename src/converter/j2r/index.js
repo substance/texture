@@ -10,7 +10,7 @@ const trafos = [
   HomogenizeSigBlocks
 ].map(C => new C())
 
-export default function j2r(dom, api) {
+export function j2r(dom, api) {
   for (let i = 0; i < trafos.length; i++) {
     trafos[i].import(dom, api)
   }

@@ -755,13 +755,17 @@
 
     TODO: support remaining publication types
   -->
+  <!--
+
+  !! NOTE: disabled this, because we need attribute-sensitive
+      schemas first to do it properly
+
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>
       <ref name="person-group"/>
       <choice>
         <group>
-          <!-- publication-type="journal" -->
           <ref name="year"/>
           <ref name="article-title"/>
           <ref name="source"/>
@@ -770,12 +774,11 @@
           <ref name="lpage"/>
           <ref name="issue"/>
           <ref name="elocation-id"/>
-          <!-- TODO: how can we support multiple pub-ids, other than doi -->
+          TODO: how can we support multiple pub-ids, other than doi
           <ref name="pub-id"/>
 
         </group>
         <group>
-          <!-- publication-type="book" -->
           <ref name="chapter-title"/>
           <ref name="source"/>
           <ref name="publisher-loc"/>
@@ -789,7 +792,7 @@
       </choice>
     </element>
   </define>
-
+ -->
   <!--
     year, source, publisher-loc, publisher-name, fpage, lpage, issue must be
     plain text only in Texture

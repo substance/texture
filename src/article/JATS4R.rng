@@ -106,30 +106,30 @@
   <define name="contrib">
     <element name="contrib">
       <ref name="contrib-attlist"/>
-      <zeroOrMore>
-        <ref name="contrib-id.class"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="name.class"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="degree.class"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <choice>
-          <!-- <ref name="address"/> -->
-          <!-- <ref name="aff"/> -->
-          <!-- <ref name="aff-alternatives"/> -->
-          <ref name="author-comment"/>
-          <ref name="bio"/>
-          <ref name="email"/>
-          <ref name="ext-link"/>
-          <ref name="on-behalf-of"/>
-          <ref name="role"/>
-          <ref name="uri"/>
-          <ref name="xref"/>
-        </choice>
-      </zeroOrMore>
+      <interleave>
+        <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
+        <optional><ref name="anonymous"/></optional>
+        <optional><ref name="collab"/></optional>
+        <optional><ref name="collab-alternatives"/></optional>
+        <optional><ref name="name"/></optional>
+        <optional><ref name="name-alternatives"/></optional>
+        <optional><ref name="string-name"/></optional>
+        <optional><ref name="degrees"/></optional>
+        <!-- <optional><ref name="address"/></optional> -->
+        <!-- <optional><ref name="aff"/></optional> -->
+        <!-- <optional><ref name="aff-alternatives"/></optional> -->
+        <optional><ref name="author-comment"/></optional>
+        <optional><ref name="bio"/></optional>
+        <optional><ref name="email"/></optional>
+        <optional><ref name="etal"/></optional>
+        <optional><ref name="ext-link"/></optional>
+        <!-- <optional><ref name="fn"/></optional> -->
+        <optional><ref name="on-behalf-of"/></optional>
+        <optional><ref name="role"/></optional>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="xref"/></zeroOrMore>
+        <optional><ref name="x"/></optional>
+      </interleave>
     </element>
   </define>
 

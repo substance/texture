@@ -17,7 +17,7 @@ export default class TransformContrib {
 
 function _importContrib(contrib) {
   const doc = contrib.getOwnerDocument()
-  let x = aff.find('x[specific-use=display]')
+  let x = contrib.find('x[specific-use=display]')
   let stringContrib = doc.createElement('string-contrib')
   let elementContrib = doc.createElement('element-contrib')
   if (x) {

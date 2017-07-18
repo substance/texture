@@ -5,21 +5,25 @@
     <meta charset="UTF-8">
     <style>
       /* Texture Component styles */
-      @import '../dist/texture.css';
+      @import './texture.css';
       /* You may want to use your own reset and pagestyle */
-      @import '../dist/texture-reset.css';
-      @import '../dist/texture-pagestyle.css';
-      @import '../node_modules/font-awesome/css/font-awesome.min.css';
+      @import './texture-reset.css';
+      @import './texture-pagestyle.css';
+      @import './font-awesome/css/font-awesome.min.css';
 
       body { overflow: hidden; }
 
     </style>
-    <script type="text/javascript" src="../node_modules/substance/dist/substance.js"></script>
-    <script type="text/javascript" src="../tmp/vfs.js"></script>
+    <script type="text/javascript" src="./substance/dist/substance.js"></script>
+    <script type="text/javascript" src="./vfs.js"></script>
     <script type="text/javascript">
       const { compileRNG, checkSchema } = window.substance
       window.onload = function() {
-        let xmlSchema = compileRNG(vfs, ['src/article'], 'TextureJATS.rng')
+        // const ENTRY = 'TextureJATS.rng'
+        const ENTRY = 'JATS-publishing.rng'
+        let xmlSchema = compileRNG(vfs, ['src/article'], ENTRY)
+        // console.log(JSON.stringify(xmlSchema, 0, 2))
+        console.log(xmlSchema.toMD())
         let issues = checkSchema(xmlSchema)
         console.log(issues)
       }

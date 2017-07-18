@@ -1,44 +1,29 @@
-import { unwrapChildren } from '../util/domHelpers'
-
 export default class TransformAff {
 
-  import(dom, converter) {
+  import(dom) {
     let allAffs = dom.findAll('aff')
     allAffs.forEach((aff) => {
-      _importAff(aff, converter)
+      _importAff(aff)
     })
   }
 
   export(dom) {
-    let affGroup = dom.find('aff-group')
-    if (affGroup) {
-      let affs=affGroup.findAll('aff')
-      affs.forEach((aff) => {
-        _exportAff(aff)
-      })
-      unwrapChildren(affGroup)
-    }
+    let allAffs = dom.findAll('aff')
+    allAffs.forEach((aff) => {
+      _exportAff(aff)
+    })
   }
 }
 
-function _importAff(aff, converter) {
-  // following the Scielo spec there should be
-  // an 'institution[content-type="original"]'
-  // which contains the pure textual form (as created by the author)
+function _importAff(aff) {
   const doc = aff.getOwnerDocument()
-  let original = aff.find('institution[content-type="original"]')
-  if (!original) {
-    converter.error({
-      msg: 'Could not find textual representation of <aff>.',
-      el: aff
-    })
-  }
+  let x = aff.find('x[specific-use=display]')
   let stringAff = doc.createElement('string-aff')
-  if (original) {
-    aff.removeChild(original)
-    stringAff.append(original.childNodes)
-  }
   let elementAff = doc.createElement('element-aff')
+  if (x) {
+    stringAff.append(x.childNodes)
+    aff.removeChild(x)
+  }
   elementAff.append(aff.children)
   aff.append(stringAff, elementAff)
 }
@@ -46,15 +31,14 @@ function _importAff(aff, converter) {
 function _exportAff(aff) {
   const doc = aff.getOwnerDocument()
   let stringAff = aff.find('string-aff')
-  if (stringAff) {
-    let institutionEl = doc.createElement('institution')
-    institutionEl.attr('content-type', 'original')
-    institutionEl.append(stringAff.childNodes)
-    aff.replaceChild(stringAff, institutionEl)
-  }
   let elementAff = aff.find('element-aff')
+  aff.empty()
+  if (stringAff) {
+    let x = doc.createElement('x').attr('specific-use', 'display')
+    x.append(stringAff.childNodes)
+    aff.append(x)
+  }
   if (elementAff) {
-    unwrapChildren(elementAff)
-    aff.removeChild(elementAff)
+    aff.append(elementAff.children)
   }
 }

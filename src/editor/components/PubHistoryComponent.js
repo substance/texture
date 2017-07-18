@@ -9,14 +9,12 @@ export default class PubHistoryComponent extends NodeComponent {
     let el = $$('div').addClass('sc-publication-history')
     let history = this.props.node
     let dates = history.findAll('date')
-    let received = dates.find(date => { return date.getAttribute('date-type') === 'received' })
-    let revReceived = dates.find(date => { return date.getAttribute('date-type') === 'rev-received' })
-    let accepted = dates.find(date => { return date.getAttribute('date-type') === 'accepted' })
-    el.append(
-      this._renderDateEditor($$, received, 'Received'),
-      this._renderDateEditor($$, revReceived, 'Review Received'),
-      this._renderDateEditor($$, accepted, 'Accepted')
-    )
+    dates.forEach((date) => {
+      const type = date.attr('date-type')
+      el.append(
+        this._renderDateEditor($$, date, this.getLabel(type))
+      )
+    })
     return el
   }
 

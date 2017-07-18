@@ -2,6 +2,7 @@ import { EventEmitter, DefaultDOMElement, validateXMLSchema, isString } from 'su
 import { JATS, JATS4R, TextureJATS } from '../article'
 import { r2t } from './r2t'
 import { j2r } from './j2r'
+import custom from './custom'
 
 /*
   Goal:
@@ -17,10 +18,11 @@ export default class JATSImporter extends EventEmitter {
     this.errors = {
       'parse': [],
       'validate-jats': [],
-      'validate-jats4r': [],
-      'validate-texture-jats': [],
+      'custom': [],
       'j2r': [],
-      'r2t': []
+      'validate-jats4r': [],
+      'r2t': [],
+      'validate-texture-jats': [],
     }
 
     if (isString(xml)) {
@@ -36,17 +38,20 @@ export default class JATSImporter extends EventEmitter {
       dom = xml
     }
 
-    if (!this._validate(JATS, dom)) return
+    if (!this._validate(JATS, dom)) return dom
+
+    // Custom transformations
+    if (!this._transform('custom', dom)) return dom
 
     // JATS -> restricted JATS
-    if (!this._transform('j2r',dom)) return
+    if (!this._transform('j2r', dom)) return dom
 
-    if (!this._validate(JATS4R, dom)) return
+    if (!this._validate(JATS4R, dom)) return dom
 
     // restrictedJATS -> TextureJATS
-    if (!this._transform('r2t',dom)) return
+    if (!this._transform('r2t',dom)) return dom
 
-    if (!this._validate(TextureJATS, dom)) return
+    if (!this._validate(TextureJATS, dom)) return dom
 
     return dom
   }
@@ -59,8 +64,7 @@ export default class JATSImporter extends EventEmitter {
     const name = schema.getName()
     const channel = `validate-${name}`
     let res = validateXMLSchema(schema, dom)
-    if (res.errors) {
-      // TODO: we need better errors
+    if (!res.ok) {
       res.errors.forEach((err) => {
         this._error(channel, err)
       })
@@ -77,6 +81,9 @@ export default class JATSImporter extends EventEmitter {
         break
       case 'r2t':
         r2t(dom, api)
+        break
+      case 'custom':
+        custom.import(dom, api)
         break
       default:
         //

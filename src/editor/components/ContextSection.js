@@ -7,7 +7,8 @@ import Navigator from './Navigator'
 // be introduced without having to update this map
 let NODE_SELECTORS = {
   'contributors': 'article-meta contrib-group',
-  'affiliations': 'article-meta aff-group'
+  'affiliations': 'article-meta aff-group',
+  'pub-history': 'article-meta > history',
 }
 
 export default class ContextSection extends Component {
@@ -44,21 +45,27 @@ export default class ContextSection extends Component {
     let contextId = this.state.contextId
     let node = this._getNode()
     let el = $$('div').addClass('sc-context-section')
-    let ComponentClass = this.getComponent(contextId)
 
+    let ComponentClass = this.getComponent(contextId)
     el.append(
       $$(Navigator, {
         contextId: contextId,
         panelsSpec: panelsSpec
-      }).ref('navigator'),
-      $$(ScrollPane)
-        .append(
-          $$(ComponentClass, {
-            node: node
-          })
-        )
-        .ref('contextSectionScroll')
+      }).ref('navigator')
     )
+    if (!node) {
+      console.error('FIXME: could not find node for context section.')
+    } else {
+      el.append(
+        $$(ScrollPane)
+          .append(
+            $$(ComponentClass, {
+              node: node
+            })
+          )
+          .ref('contextSectionScroll')
+      )
+    }
     return el
   }
 

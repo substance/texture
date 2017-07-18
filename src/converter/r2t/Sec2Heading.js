@@ -1,3 +1,4 @@
+import { last } from 'substance'
 import { replaceWith } from '../util/domHelpers'
 
 export default class Sec2Heading {
@@ -11,7 +12,18 @@ export default class Sec2Heading {
   }
 
   export(dom) {
-    console.error('TODO: implement Sec2Heading.export()', dom)
+    let allHeadings = dom.findAll('heading')
+    let containers = []
+    allHeadings.forEach((heading)=> {
+      let container = heading.parentNode
+      if (!container._sec2heading) {
+        containers.push(container)
+        container._sec2heading = true
+      }
+    })
+    containers.forEach((container) => {
+      _createSections(container)
+    })
   }
 
 }
@@ -53,4 +65,34 @@ function _flattenSec(sec, level) {
   }
 
   return result
+}
+
+function _createSections(container) {
+  const doc = container.getOwnerDocument()
+  const children = container.children
+  // clear the container first
+  container.empty()
+  let stack = [{
+    el: container
+  }]
+  for (let i=0; i < children.length; i++) {
+    let child = children[i]
+    if (child.tagName === 'heading') {
+      let level = child.attr('level') || 1
+      while (stack.length >= level+1) {
+        stack.pop()
+      }
+      // TODO: transfer attributes
+      let sec = doc.createElement('sec')
+      let attributes = child.getAttributes()
+      delete attributes['level']
+      sec.attr(attributes)
+      last(stack).el.appendChild(sec)
+      stack.push({
+        el: sec
+      })
+    } else {
+      last(stack).el.appendChild(child)
+    }
+  }
 }

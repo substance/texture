@@ -1,23 +1,20 @@
-import { deserializeXMLSchema } from 'substance'
-import restrictedJATSData from '../../tmp/JATS4R.data'
+import { XMLSchema } from 'substance'
+import JATS4RData from '../../tmp/JATS4R.data'
 
-const restrictedJATS = deserializeXMLSchema(restrictedJATSData)
+const JATS4R = XMLSchema.fromJSON(JATS4RData)
+
 
 // TODO: this should come from compilation
-restrictedJATS.getName = function() {
+JATS4R.getName = function() {
   return 'jats4r'
 }
 
-restrictedJATS.getVersion = function() {
+JATS4R.getVersion = function() {
   return '1.1'
 }
 
-restrictedJATS.getStartElement = function() {
-  return 'article'
-}
-
-restrictedJATS.getDocTypeParams = function() {
+JATS4R.getDocTypeParams = function() {
   return ['article', 'JATS4R 1.1', 'http://texture.substance.io/JATS4R-1.1.dtd']
 }
 
-export default restrictedJATS
+export default JATS4R

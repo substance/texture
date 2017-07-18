@@ -25,6 +25,19 @@ export function findChild(el, cssSelector) {
   }
 }
 
+export function isMixed(el) {
+  let childNodes = el.childNodes
+  const L = childNodes.length
+  const isMixed = false
+  for (var i = 0; i < L; i++) {
+    const childNode = childNodes[i]
+    if (childNode.isTextNode() && !/^\s*$/.exec(childNode.textContent)) {
+      return true
+    }
+  }
+  return false
+}
+
 export function printElement(el, options = {}) {
   let maxLevel = options.maxLevel || 1000
   let res = _printElement(el, 1, maxLevel)

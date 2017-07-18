@@ -211,37 +211,46 @@
     <element name="aff">
       <ref name="aff-attlist"/>
       <!-- TODO: we should use <interleave> here -->
-      <optional>
-        <ref name="string-aff"/>
-      </optional>
-      <optional>
-        <ref name="element-aff"/>
-      </optional>
+      <interleave>
+        <optional>
+          <ref name="string-aff"/>
+        </optional>
+        <optional>
+          <ref name="element-aff"/>
+        </optional>
+      </interleave>
     </element>
   </define>
 
-  <!-- TODO
-    I'd prefer to go for structured-first approach,
-    and define a way to get the plain-text representation in
-  -->
   <define name="string-aff">
     <element name="string-aff">
-      <choice>
-        <text />
-        <ref name="simple-phrase"/>
-      </choice>
+      <zeroOrMore>
+        <choice>
+          <text />
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
 
   <define name="element-aff">
     <element name="element-aff">
-      <zeroOrMore>
-        <choice>
-          <ref name="label"/>
-          <ref name="address.class"/>
-          <ref name="email"/>
-        </choice>
-      </zeroOrMore>
+      <interleave>
+        <zeroOrMore><ref name="addr-line"/></zeroOrMore>
+        <optional><ref name="label"/></optional>
+        <optional><ref name="city"/></optional>
+        <optional><ref name="country"/></optional>
+        <optional><ref name="fax"/></optional>
+        <zeroOrMore><ref name="institution"/></zeroOrMore>
+        <zeroOrMore><ref name="institution-wrap"/></zeroOrMore>
+        <optional><ref name="phone"/></optional>
+        <optional><ref name="postal-code"/></optional>
+        <optional><ref name="state"/></optional>
+        <optional><ref name="email"/></optional>
+        <zeroOrMore><ref name="ext-link"/></zeroOrMore>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="x"/></zeroOrMore>
+      </interleave>
     </element>
   </define>
 
@@ -417,6 +426,65 @@
       </element>
     </element>
   </define>
+
+  <define name="string-contrib">
+  </define>
+
+  <define name="contrib">
+    <element name="contrib">
+      <ref name="contrib-attlist"/>
+      <!-- TODO: we should use <interleave> here -->
+      <interleave>
+        <optional>
+          <ref name="string-contrib"/>
+        </optional>
+        <optional>
+          <ref name="element-contrib"/>
+        </optional>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="string-contrib">
+    <element name="string-contrib">
+      <zeroOrMore>
+        <choice>
+          <text />
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="element-contrib">
+    <element name="element-contrib">
+      <interleave>
+        <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
+        <optional><ref name="anonymous"/></optional>
+        <optional><ref name="collab"/></optional>
+        <optional><ref name="collab-alternatives"/></optional>
+        <optional><ref name="name"/></optional>
+        <optional><ref name="name-alternatives"/></optional>
+        <optional><ref name="string-name"/></optional>
+        <optional><ref name="degrees"/></optional>
+        <!-- <optional><ref name="address"/></optional> -->
+        <!-- <optional><ref name="aff"/></optional> -->
+        <!-- <optional><ref name="aff-alternatives"/></optional> -->
+        <optional><ref name="author-comment"/></optional>
+        <optional><ref name="bio"/></optional>
+        <optional><ref name="email"/></optional>
+        <optional><ref name="etal"/></optional>
+        <optional><ref name="ext-link"/></optional>
+        <!-- <optional><ref name="fn"/></optional> -->
+        <optional><ref name="on-behalf-of"/></optional>
+        <optional><ref name="role"/></optional>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="xref"/></zeroOrMore>
+        <optional><ref name="x"/></optional>
+      </interleave>
+    </element>
+  </define>
+
 
 
   <!--
@@ -627,6 +695,11 @@
     </choice>
   </define>
 
+<!--
+  !! NOTE: deactivated this, as this restriction is not capable
+     of modelling the current JATS4R <fig>
+     We need to introduce a JATS4R restriction first, then
+     we may deviate from that using a converter. !!
   <define name="fig">
     <element name="fig">
       <optional>
@@ -641,6 +714,31 @@
       <ref name="graphic"/>
     </element>
   </define>
+ -->
+
+  <define name="fig">
+    <element name="fig">
+      <ref name="fig-attlist"/>
+      <zeroOrMore>
+        <ref name="id.class"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <optional>
+        <ref name="caption.class"/>
+      </optional>
+      <ref name="graphic"/>
+      <zeroOrMore>
+        <ref name="display-back-matter.class"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+
 
   <define name="front-model">
     <optional>
@@ -749,19 +847,34 @@
     </choice>
   </define>
 
+  <define name="media">
+    <element name="media">
+      <ref name="media-attlist"/>
+      <interleave>
+        <zeroOrMore><ref name="id.class"/></zeroOrMore>
+        <optional><ref name="label.class"/></optional>
+        <optional><ref name="caption.class"/></optional>
+        <optional><ref name="title"/></optional>
+      </interleave>
+    </element>
+  </define>
 
   <!--
     We use a strict definition for element-citation in Texture.
 
     TODO: support remaining publication types
   -->
+  <!--
+
+  !! NOTE: disabled this, because we need attribute-sensitive
+      schemas first to do it properly
+
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>
       <ref name="person-group"/>
       <choice>
         <group>
-          <!-- publication-type="journal" -->
           <ref name="year"/>
           <ref name="article-title"/>
           <ref name="source"/>
@@ -770,12 +883,11 @@
           <ref name="lpage"/>
           <ref name="issue"/>
           <ref name="elocation-id"/>
-          <!-- TODO: how can we support multiple pub-ids, other than doi -->
+          TODO: how can we support multiple pub-ids, other than doi
           <ref name="pub-id"/>
 
         </group>
         <group>
-          <!-- publication-type="book" -->
           <ref name="chapter-title"/>
           <ref name="source"/>
           <ref name="publisher-loc"/>
@@ -789,7 +901,7 @@
       </choice>
     </element>
   </define>
-
+ -->
   <!--
     year, source, publisher-loc, publisher-name, fpage, lpage, issue must be
     plain text only in Texture
@@ -799,7 +911,6 @@
   <define name="volume"><element name="volume"><text/></element></define>
   <define name="fpage"><element name="fpage"><text/></element></define>
   <define name="lpage"><element name="lpage"><text/></element></define>
-  <define name="issue"><element name="issue"><text/></element></define>
   <define name="issue"><element name="issue"><text/></element></define>
   <define name="pub-id"><element name="pub-id"><text/></element></define>
   <define name="publisher-name"><element name="publisher-name"><text/></element></define>

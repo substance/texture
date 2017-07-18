@@ -1,7 +1,7 @@
-import { deserializeXMLSchema } from 'substance'
+import { XMLSchema } from 'substance'
 import TextureJATSData from '../../tmp/TextureJATS.data'
 
-const TextureJATS = deserializeXMLSchema(TextureJATSData)
+const TextureJATS = XMLSchema.fromJSON(TextureJATSData)
 
 // TODO: this should come from compilation
 TextureJATS.getName = function() {
@@ -10,10 +10,6 @@ TextureJATS.getName = function() {
 
 TextureJATS.getVersion = function() {
   return '1.1'
-}
-
-TextureJATS.getStartElement = function() {
-  return 'article'
 }
 
 TextureJATS.getDocTypeParams = function() {

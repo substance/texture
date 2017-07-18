@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="JATS-publishing.rng"/>
+  <include href="JATS-archiving.rng"/>
 
   <!--
     WIP: it should be clear how to use this.
@@ -27,13 +27,31 @@
   <define name="aff">
     <element name="aff">
       <ref name="aff-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <!-- <text/> -->
-          <ref name="aff-elements"/>
-        </choice>
-      </zeroOrMore>
+      <interleave>
+        <zeroOrMore><ref name="addr-line"/></zeroOrMore>
+        <optional><ref name="label"/></optional>
+        <optional><ref name="city"/></optional>
+        <optional><ref name="country"/></optional>
+        <optional><ref name="fax"/></optional>
+        <zeroOrMore><ref name="institution"/></zeroOrMore>
+        <zeroOrMore><ref name="institution-wrap"/></zeroOrMore>
+        <optional><ref name="phone"/></optional>
+        <optional><ref name="postal-code"/></optional>
+        <optional><ref name="state"/></optional>
+        <optional><ref name="email"/></optional>
+        <zeroOrMore><ref name="ext-link"/></zeroOrMore>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="x"/></zeroOrMore>
+      </interleave>
     </element>
+  </define>
+
+  <!-- in JATS4R we want to have simpler phrase content -->
+  <define name="all-phrase">
+    <choice>
+      <ref name="simple-phrase"/>
+      <ref name="x.class"/>
+    </choice>
   </define>
 
   <!--
@@ -106,30 +124,30 @@
   <define name="contrib">
     <element name="contrib">
       <ref name="contrib-attlist"/>
-      <zeroOrMore>
-        <ref name="contrib-id.class"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="name.class"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="degree.class"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <choice>
-          <!-- <ref name="address"/> -->
-          <!-- <ref name="aff"/> -->
-          <!-- <ref name="aff-alternatives"/> -->
-          <ref name="author-comment"/>
-          <ref name="bio"/>
-          <ref name="email"/>
-          <ref name="ext-link"/>
-          <ref name="on-behalf-of"/>
-          <ref name="role"/>
-          <ref name="uri"/>
-          <ref name="xref"/>
-        </choice>
-      </zeroOrMore>
+      <interleave>
+        <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
+        <optional><ref name="anonymous"/></optional>
+        <optional><ref name="collab"/></optional>
+        <optional><ref name="collab-alternatives"/></optional>
+        <optional><ref name="name"/></optional>
+        <optional><ref name="name-alternatives"/></optional>
+        <optional><ref name="string-name"/></optional>
+        <optional><ref name="degrees"/></optional>
+        <!-- <optional><ref name="address"/></optional> -->
+        <!-- <optional><ref name="aff"/></optional> -->
+        <!-- <optional><ref name="aff-alternatives"/></optional> -->
+        <optional><ref name="author-comment"/></optional>
+        <optional><ref name="bio"/></optional>
+        <optional><ref name="email"/></optional>
+        <optional><ref name="etal"/></optional>
+        <optional><ref name="ext-link"/></optional>
+        <!-- <optional><ref name="fn"/></optional> -->
+        <optional><ref name="on-behalf-of"/></optional>
+        <optional><ref name="role"/></optional>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="xref"/></zeroOrMore>
+        <optional><ref name="x"/></optional>
+      </interleave>
     </element>
   </define>
 
@@ -146,13 +164,8 @@
       <ref name="corresp-attlist"/>
       <zeroOrMore>
         <choice>
-          <text/>
-          <!-- <ref name="address.class"/> -->
-          <ref name="address-link.class"/>
-          <ref name="emphasis.class"/>
-          <!-- <ref name="label.class"/> -->
-          <ref name="phrase-content.class"/>
-          <ref name="subsup.class"/>
+          <text />
+          <ref name="all-phrase"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -235,18 +248,109 @@
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>
-      <oneOrMore>
+      <interleave>
+        <optional><ref name="string-date"/></optional>
+        <optional><ref name="label"/></optional>
+        <optional><ref name="annotation"/></optional>
+        <optional><ref name="article-title"/></optional>
+        <optional><ref name="chapter-title"/></optional>
+        <optional><ref name="collab"/></optional>
+        <optional><ref name="collab-alternatives"/></optional>
+        <zeroOrMore><ref name="comment"/></zeroOrMore>
+        <optional><ref name="conf-acronym"/></optional>
+        <optional><ref name="conf-date"/></optional>
+        <optional><ref name="conf-loc"/></optional>
+        <optional><ref name="conf-name"/></optional>
+        <optional><ref name="conf-sponsor"/></optional>
+        <optional><ref name="data-title"/></optional>
+        <optional><ref name="date"/></optional>
+        <optional><ref name="date-in-citation"/></optional>
+        <optional><ref name="day"/></optional>
+        <optional><ref name="edition"/></optional>
+        <optional><ref name="email"/></optional>
+        <optional><ref name="elocation-id"/></optional>
+        <optional><ref name="etal"/></optional>
+        <optional><ref name="fpage"/></optional>
+        <optional><ref name="gov"/></optional>
+        <optional><ref name="institution"/></optional>
+        <optional><ref name="institution-wrap"/></optional>
+        <optional><ref name="isbn"/></optional>
+        <optional><ref name="issn"/></optional>
+        <optional><ref name="issn-l"/></optional>
+        <optional><ref name="issue"/></optional>
+        <optional><ref name="issue-id"/></optional>
+        <optional><ref name="issue-part"/></optional>
+        <optional><ref name="issue-title"/></optional>
+        <optional><ref name="lpage"/></optional>
+        <optional><ref name="month"/></optional>
+        <optional><ref name="name"/></optional>
+        <optional><ref name="name-alternatives"/></optional>
+        <optional><ref name="object-id"/></optional>
+        <optional><ref name="page-range"/></optional>
+        <optional><ref name="part-title"/></optional>
+        <optional><ref name="patent"/></optional>
+        <ref name="person-group"/>
+        <optional><ref name="pub-id"/></optional>
+        <optional><ref name="publisher-loc"/></optional>
+        <optional><ref name="publisher-name"/></optional>
+        <optional><ref name="role"/></optional>
+        <optional><ref name="season"/></optional>
+        <optional><ref name="series"/></optional>
+        <optional><ref name="size"/></optional>
+        <optional><ref name="source"/></optional>
+        <optional><ref name="std"/></optional>
+        <optional><ref name="string-name"/></optional>
+        <optional><ref name="supplement"/></optional>
+        <optional><ref name="trans-source"/></optional>
+        <optional><ref name="trans-title"/></optional>
+        <optional><ref name="uri"/></optional>
+        <optional><ref name="version"/></optional>
+        <optional><ref name="volume"/></optional>
+        <optional><ref name="volume-id"/></optional>
+        <optional><ref name="volume-series"/></optional>
+        <optional><ref name="year"/></optional>
+      </interleave>
+    </element>
+  </define>
+
+
+  <define name="fig">
+    <element name="fig">
+      <ref name="fig-attlist"/>
+      <zeroOrMore>
+        <ref name="id.class"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption.class"/>
+      </optional>
+      <ref name="graphic"/>
+      <zeroOrMore>
+        <ref name="display-back-matter.class"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="funding-source">
+    <element name="funding-source">
+      <ref name="funding-source-attlist"/>
+      <zeroOrMore>
         <choice>
-          <ref name="citation-additions.class"/>
-          <!--<ref name="emphasis.class"/>-->
-          <!-- <ref name="inline-display.class"/> -->
-          <!-- <ref name="inline-math.class"/> -->
-          <ref name="label.class"/>
-          <!-- <ref name="phrase.class"/> -->
-          <ref name="references.class"/>
-          <!-- <ref name="subsup.class"/> -->
+          <text/>
+          <ref name="simple-phrase"/>
         </choice>
-      </oneOrMore>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="history">
+    <element name="history">
+      <ref name="history-attlist"/>
+      <zeroOrMore>
+        <ref name="date"/>
+      </zeroOrMore>
     </element>
   </define>
 
@@ -299,6 +403,16 @@
     </element>
   </define>
 
+  <define name="media">
+    <element name="media">
+      <ref name="media-attlist"/>
+      <interleave>
+        <zeroOrMore><ref name="id.class"/></zeroOrMore>
+        <optional><ref name="label.class"/></optional>
+        <optional><ref name="caption.class"/></optional>
+      </interleave>
+    </element>
+  </define>
 
   <!--
     WIP: either inline or structured
@@ -490,7 +604,7 @@
       <ref name="email"/>
       <ref name="elocation-id"/>
       <ref name="etal"/>
-      <!--<ref name="ext-link"/>-->
+      <ref name="ext-link"/>
       <ref name="fpage"/>
       <ref name="gov"/>
       <ref name="institution"/>
@@ -632,7 +746,8 @@
   -->
   <define name="simple-phrase">
     <choice>
-      <ref name="address-link.class"/>
+      <!-- <ref name="address-link.class"/> -->
+      <ref name="ext-link"/>
       <!-- <ref name="article-link.class"/> -->
       <ref name="inline-supplementary-material"/>
       <ref name="emphasis.class"/>
@@ -644,6 +759,7 @@
       <ref name="subsup.class"/>
     </choice>
   </define>
+
   <!--
     Just use plain text. If you want to add information about the person
     add a <contrib> to the front matter.

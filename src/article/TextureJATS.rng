@@ -1181,6 +1181,9 @@
     </zeroOrMore>
   </define>
 
+  <!--
+    Wrapping all <trans-abstract>s into a <trans-abstract-group>
+  -->
   <define name="trans-abstract-group">
     <element name="trans-abstract-group">
       <zeroOrMore>
@@ -1206,19 +1209,6 @@
         <ref name="title"/>
       </optional>
       <ref name="abstract-content"/>
-    </element>
-  </define>
-
-  <!--
-    Introduced this to have a better place where to put <trans-title> elements
-  -->
-  <define name="trans-title-group">
-    <element name="trans-title-group">
-      <zeroOrMore>
-        <choice>
-          <ref name="trans-title"/>
-        </choice>
-      </zeroOrMore>
     </element>
   </define>
 

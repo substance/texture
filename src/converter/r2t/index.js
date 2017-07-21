@@ -1,7 +1,9 @@
 import PruneText from './PruneText'
 import WrapAbstractContent from './WrapAbstractContent'
 import WrapBodyContent from './WrapBodyContent'
+import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
+import WrapAff from './WrapAff'
 import WrapTransAbstracts from './WrapTransAbstracts'
 import ExtractCaptionTitle from './ExtractCaptionTitle'
 import UpdateDocType from './UpdateDocType'
@@ -12,7 +14,9 @@ const trafos = [
   PruneText,
   WrapAbstractContent,
   WrapBodyContent,
+  WrapDispQuoteContent,
   Sec2Heading,
+  WrapAff,
   WrapTransAbstracts,
   ExtractCaptionTitle,
   UpdateDocType,

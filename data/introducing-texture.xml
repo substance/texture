@@ -5,6 +5,9 @@
     <article-meta>
       <title-group>
         <article-title>Introducing Texture, an Open Source WYSIWYG Javascript Editor for JATS</article-title>
+        <trans-title-group>
+          <trans-title xml:lang="de"></trans-title>
+        </trans-title-group>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author" aff-ids="aff1">
@@ -67,7 +70,7 @@
       </abstract>
       <trans-abstract-group>
         <trans-abstract xml:lang="de">
-          <abstract-content><p>Deutsche Übersetzung</p></abstract-content>
+          <abstract-content><p></p></abstract-content>
         </trans-abstract>
       </trans-abstract-group>
     </article-meta>

@@ -36,7 +36,7 @@ export default [
     matchElement(el) {
       return el.getStyle('text-decoration') === 'underline'
     },
-    export(node, el, converter) {
+    export(node, el) {
       el.setStyle('text-decoration', 'underline')
     }
   },
@@ -46,7 +46,7 @@ export default [
     matchElement(el) {
       return el.getStyle('text-decoration') === 'line-through'
     },
-    export(node, el, converter) {
+    export(node, el) {
       el.setStyle('text-decoration', 'line-through')
     }
   },
@@ -71,7 +71,7 @@ export default [
   {
     type: 'ext-link',
     tagName: 'a',
-    import(el, node, converter) {
+    import(el, node) {
       let href = el.getAttribute('href')
       if (href) {
         node.attributes = {
@@ -79,7 +79,7 @@ export default [
         }
       }
     },
-    export(node, el, converter) {
+    export(node, el) {
       el.setAttribute('href', node.attributes['xlink:href'])
     }
   }

@@ -1,5 +1,3 @@
-import { isMixed } from '../util/domHelpers'
-
 /*
   Some destructive conversions, we need right now, as
   we do not have a better model.
@@ -7,7 +5,7 @@ import { isMixed } from '../util/domHelpers'
 
 export default class Hackz {
 
-  import(dom, converter) {
+  import(dom) {
     _forcePlainText(dom)
     _noEmailInP(dom)
   }

@@ -8,12 +8,14 @@
   "devDependencies": {
     "font-awesome": "4.5.0",
     "substance-bundler": "^0.18.3",
-    "substance-test": "0.5.1"
+    "substance-test": "0.5.1",
+    "eslint": "^3.17.1"
   },
   "scripts": {
     "bundle": "node make",
     "start": "node make dev -s -w",
-    "test": "node make test"
+    "test": "npm run lint && node make test",
+    "lint": "eslint -c .eslintrc.js src index.es.js"
   },
   "version": "1.0.0-alpha.2",
   "repository": {

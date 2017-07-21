@@ -40,7 +40,6 @@ export default class ContextSection extends Component {
     clicked brings up a dropdown to navigate.
   */
   render($$) {
-    const ScrollPane = this.getComponent('scroll-pane')
     const panelsSpec = this.props.panelsSpec
     let contextId = this.state.contextId
     let node = this._getNode()
@@ -57,13 +56,11 @@ export default class ContextSection extends Component {
       console.error('FIXME: could not find node for context section.')
     } else {
       el.append(
-        $$(ScrollPane)
-          .append(
-            $$(ComponentClass, {
-              node: node
-            })
-          )
-          .ref('contextSectionScroll')
+        $$('div').addClass('se-context-content').append(
+          $$(ComponentClass, {
+            node: node
+          })
+        )
       )
     }
     return el

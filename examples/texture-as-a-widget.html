@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texture Editor</title>
+    <meta charset="UTF-8">
+    <style>
+      /* Texture Component styles */
+      @import './texture.css';
+      /* You may want to use your own reset and pagestyle */
+      @import './texture-reset.css';
+      @import './texture-pagestyle.css';
+      @import './font-awesome/css/font-awesome.min.css';
+
+      /* Custom integration styles */
+      body {
+        padding: 50px;
+      }
+      #texture_editor {
+        margin: 20px;
+        height: 500px;
+        border: 1px solid #ddd;
+      }
+
+    </style>
+    <script type="text/javascript" src="./substance/dist/substance.js"></script>
+    <script type="text/javascript" src="./texture.js"></script>
+    <script type="text/javascript" src="./vfs.js"></script>
+    <script type="text/javascript">
+      const { Texture } = window.texture
+
+      // Loading XML: In this example we use a bundled virtual file-system
+      const DEFAULT_FILE = 'data/introducing-texture.xml' // without leading '/'
+
+      let htmlParams = new URLSearchParams(location.search.slice(1))
+      let file = htmlParams.get('file') || DEFAULT_FILE
+
+      window.onload = function() {
+        window.app = Texture.mount({
+          documentId: file,
+          /*
+            Implement your own logic to read and write XML
+          */
+          readXML: function(documentId, cb) {
+            xmlStr = vfs.readFileSync(documentId)
+            cb(null, xmlStr)
+          },
+          writeXML: function(documentId, xml, cb) {
+            console.log('writeXML needs to be implemented for saving.')
+            console.log('XML', xml)
+            cb(null)
+          }
+        }, document.getElementById('texture_editor'))
+      }
+    </script>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Texture embedded as a widget (not recommended)</h1>
+    </div>
+    <!--
+      This is the div where texture gets injected. Make sure, it is providing
+      enough screenspace (width + height) for texture to fit in.
+    -->
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rhoncus orci neque, a fringilla nisl tincidunt eu. Morbi viverra lorem eros, sed accumsan tellus varius eu. In hac habitasse platea dictumst. Nam nec malesuada elit. Sed euismod molestie dolor sit amet cursus. In massa ante, tincidunt et tortor at, pharetra laoreet lectus. Nunc sed scelerisque mauris. Curabitur tincidunt, lorem vitae finibus finibus, mi nulla pellentesque ante, sed pellentesque diam tellus non magna. Etiam vitae fermentum purus. Morbi dictum lorem non suscipit rutrum. Donec lacinia odio eget libero blandit consequat. Praesent ut ligula leo.
+    </p>
+    <div id="texture_editor">
+
+    </div>
+    <p>
+      Integer vel euismod odio. Maecenas et enim non ligula rhoncus tincidunt. Ut congue dui ut cursus sodales. Praesent pretium, eros id eleifend blandit, lorem lectus elementum magna, eget pulvinar neque libero eget dui. Aenean vitae ligula vitae lectus tincidunt bibendum at cursus ipsum. Maecenas sed purus massa. Etiam odio est, venenatis et purus sit amet, luctus pellentesque massa. Proin malesuada nibh id dapibus ullamcorper. Vestibulum sem massa, sagittis sed lectus nec, tincidunt sodales dui. Pellentesque viverra consequat ultricies. Duis rhoncus mi vitae nunc sollicitudin dictum. Praesent non tortor sit amet massa consequat dictum. Nulla bibendum interdum enim, eu suscipit elit commodo vitae. Proin vestibulum commodo pellentesque. Aenean eget dapibus justo, vel luctus libero. Etiam suscipit pretium pharetra. Praesent venenatis, velit sit amet blandit pulvinar, ante augue faucibus orci, eget pellentesque nibh augue sit amet lacus. Etiam dignissim egestas blandit. Cras in nibh at arcu semper tempus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed tempor erat nec mi molestie, sed pretium massa consectetur. Quisque gravida dui sed commodo faucibus. Fusce in ullamcorper lacus, vel placerat risus. Donec hendrerit facilisis sapien, non bibendum ex dignissim sed. Donec eu eleifend libero. Proin elementum blandit ante, id venenatis eros ornare vel. Vestibulum lacinia ligula at augue dapibus pharetra eget at nulla. Suspendisse elit diam, commodo et nulla non, tristique malesuada neque. Aliquam suscipit sem et sem faucibus varius. Quisque bibendum cursus sem vitae suscipit. Nullam molestie, felis et vestibulum aliquet, erat risus tincidunt dui, non semper lorem orci ut ex. Vestibulum consectetur sit amet lorem non ornare. Cras tempor aliquam ipsum nec semper. Sed posuere eu ex feugiat auctor. Integer euismod ante aliquet rhoncus dictum. Donec placerat consequat dapibus. Donec fringilla tortor egestas velit elementum, sed posuere velit dapibus. Etiam interdum sagittis felis in lacinia. Nulla sem sem, interdum quis tellus eu, semper scelerisque lectus. In nec nibh quis elit tristique sollicitudin a quis mauris.
+    </p>
+  </body>
+</html>

@@ -9,6 +9,7 @@ import ExtractCaptionTitle from './ExtractCaptionTitle'
 import UpdateDocType from './UpdateDocType'
 import TransformAff from './TransformAff'
 import TransformContrib from './TransformContrib'
+import PruneEmptyElements from './PruneEmptyElements'
 
 const trafos = [
   PruneText,
@@ -21,7 +22,8 @@ const trafos = [
   ExtractCaptionTitle,
   UpdateDocType,
   TransformAff,
-  TransformContrib
+  TransformContrib,
+  PruneEmptyElements
 ].map(C => new C())
 
 export function r2t(dom, api) {

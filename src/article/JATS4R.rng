@@ -313,6 +313,12 @@
     </element>
   </define>
 
+  <define name="elocation-id">
+    <element name="elocation-id">
+      <ref name="elocation-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
 
   <define name="fig">
     <element name="fig">
@@ -400,6 +406,13 @@
           <ref name="simple-phrase"/>
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="issue">
+    <element name="issue">
+      <ref name="issue-attlist"/>
+      <optional><text/></optional>
     </element>
   </define>
 
@@ -539,6 +552,7 @@
       </zeroOrMore>
     </element>
   </define>
+
   <define name="product-elements">
     <choice>
       <!-- <ref name="article-link.class"/> -->
@@ -574,6 +588,13 @@
           <!-- <ref name="address-link.class"/> -->
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="publisher-name">
+    <element name="publisher-name">
+      <ref name="publisher-name-attlist"/>
+      <optional><text/></optional>
     </element>
   </define>
 
@@ -645,7 +666,6 @@
       <ref name="volume-series"/>
       <ref name="year"/>
     </choice>
-
   </define>
 
   <!-- WIP
@@ -761,8 +781,17 @@
   </define>
 
   <!--
-    Just use plain text. If you want to add information about the person
-    add a <contrib> to the front matter.
+    WIP: for now we only allow plain text
+  -->
+  <define name="source">
+    <element name="source">
+      <ref name="source-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <!--
+    Just use plain text. If you want to add information about the person add a <contrib> to the front matter.
 
     Note: <speech> is probably not used in scientific publications.
   -->
@@ -875,6 +904,13 @@
           </choice>
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="volume">
+    <element name="volume">
+      <ref name="volume-attlist"/>
+      <optional><text/></optional>
     </element>
   </define>
 

@@ -1,6 +1,7 @@
-import { XMLDocument } from 'substance'
+import { XMLDocument, EditingInterface } from 'substance'
 import TextureJATS from './TextureJATS'
 import XrefIndex from './XrefIndex'
+import TextureEditing from './TextureEditing'
 
 export default class TextureDocument extends XMLDocument {
 
@@ -27,4 +28,9 @@ export default class TextureDocument extends XMLDocument {
     // this traverses the article in the same way as css-select
     return articleEl.findAll('xref')
   }
+
+  createEditingInterface() {
+    return new EditingInterface(this, { editing: new TextureEditing() })
+  }
+
 }

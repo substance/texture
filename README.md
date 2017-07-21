@@ -1,4 +1,4 @@
-# Texture [![Build Status](https://travis-ci.org/substance/texture.svg?branch=devel)](https://travis-ci.org/substance/texture)
+# Texture [![Build Status](https://travis-ci.org/substance/texture.svg?branch=develop)](https://travis-ci.org/substance/texture)
 
 Texture is a toolset for the production of scientific content. It has first-class support for JATS, the de facto standard for archiving and interchange of scientific open-access contents with XML.
 ![Texture User Interface](texture.png)

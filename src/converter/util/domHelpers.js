@@ -9,12 +9,12 @@ export function replaceWith(el, els) {
 
 export function unwrapChildren(el) {
   let parent = el.parentNode
-  let next = el.nextSibling
   let children = el.children
   let L = children.length
   for (let i = 0; i < L; i++) {
-    parent.insertBefore(children[i], next)
+    parent.insertBefore(children[i], el)
   }
+  parent.removeChild(el)
 }
 
 export function findChild(el, cssSelector) {

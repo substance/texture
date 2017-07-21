@@ -47,8 +47,7 @@ function _exportAff(aff) {
     aff.removeChild(normalized)
     let el = doc.createElement('institution').attr('content-type', 'normalized')
     el.textContent = _normalizedInstitution(aff)
-    let insertPos = JATSPublishing.getElementSchema('aff').findFirstValidPos(aff, 'institution')
-    aff.insertAt(insertPos, el)
+    aff.insertAt(0, el)
   }
   // let display = aff.find(`x[specific-use=normalized]`)
 }

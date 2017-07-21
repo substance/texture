@@ -1,4 +1,13 @@
-.sc-context-section .sc-scroll-pane {
-  /* HACK: find a better way */
-  top: 40px;
+.sc-context-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-context-section > .sc-navigator {
+  flex: 0 0 40px;
+}
+
+.sc-context-section > .se-context-content {
+  flex: 1 1 0;
+  overflow: auto;
 }

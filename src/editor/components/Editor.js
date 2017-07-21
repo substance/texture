@@ -22,36 +22,29 @@ export default class Editor extends AbstractWriter {
   render($$) {
     let el = $$('div').addClass('sc-editor')
     el.append(
-      $$(SplitPane, {splitType: 'vertical', sizeB: '400px'}).append(
-        this._renderMainSection($$),
-        this._renderContextSection($$)
-      )
+      this._renderMainSection($$),
+      this._renderContextSection($$)
     )
     return el
   }
 
   _renderContextSection($$) {
     const configurator = this.getConfigurator()
-    return $$('div').addClass('se-context-section').append(
-      $$(ContextSection, {
-        panelsSpec: configurator.getPanelsSpec()
-      }).ref('contextSection')
-    )
+    return $$(ContextSection, {
+      panelsSpec: configurator.getPanelsSpec()
+    }).ref('contextSection')
   }
 
   _renderMainSection($$) {
     const configurator = this.getConfigurator()
     let mainSection = $$('div').addClass('se-main-section')
-    let splitPane = $$(SplitPane, {splitType: 'horizontal'}).append(
+    mainSection.append(
       this._renderToolbar($$),
-      $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
-        this._renderContentPanel($$),
-        $$(WorkflowPane, {
-          toolPanel: configurator.getToolPanel('workflow')
-        })
-      )
+      this._renderContentPanel($$),
+      $$(WorkflowPane, {
+        toolPanel: configurator.getToolPanel('workflow')
+      })
     )
-    mainSection.append(splitPane)
     return mainSection
   }
 

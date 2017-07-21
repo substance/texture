@@ -12,6 +12,24 @@ const languages = {
 */
 export default class TranslationsComponent extends NodeComponent {
 
+  didMount() {
+    super.didMount()
+
+    const articleMeta = this.props.node
+    let titleGroup = articleMeta.findChild('title-group')
+    if (titleGroup) {
+      this.context.editorSession.onRender('document', this.rerender, this, { path: [titleGroup.id]})
+    }
+    let transAbstractGroup = articleMeta.findChild('trans-abstract-group')
+    if (transAbstractGroup) {
+      this.context.editorSession.onRender('document', this.rerender, this, { path: [transAbstractGroup.id]})
+    }
+  }
+
+  dispose() {
+    super.dispose()
+  }
+
   render($$) {
     let el = $$('div').addClass('sc-translations')
     el.append(
@@ -22,15 +40,13 @@ export default class TranslationsComponent extends NodeComponent {
   }
 
   _renderTitleTranslations($$) {
-    let articleMeta = this.props.node
-    let transTitleGroup = articleMeta.find('title-group trans-title-group')
-    let translations = transTitleGroup.childNodes
+    const articleMeta = this.props.node
+    const transTitleGroups = articleMeta.findAll('title-group > trans-title-group')
     let el = $$('div').addClass('se-title-translations')
     el.append($$('div').addClass('se-translation-header').append('Title Translations'))
-    translations.forEach(nodeId => {
-      el.append(this._renderTitleEditor($$, nodeId))
+    transTitleGroups.forEach((transTitleGroup) => {
+      el.append(this._renderTitleEditor($$, transTitleGroup))
     })
-
     el.append(
       $$('button').addClass('se-add-translation')
         .append('Add Title Translation')
@@ -42,29 +58,31 @@ export default class TranslationsComponent extends NodeComponent {
 
   _renderAbstractTranslations($$) {
     let articleMeta = this.props.node
-    let transAbstractGroup = articleMeta.find('trans-abstract-group')
-    let translations = transAbstractGroup.childNodes
+    let transAbstractGroup = articleMeta.findChild('trans-abstract-group')
     let el = $$('div').addClass('se-abstract-translations')
-    el.append($$('div').addClass('se-translation-header').append('Abstract Translations'))
-    translations.forEach(nodeId => {
-      el.append(this._renderAbstractEditor($$, nodeId))
-    })
-
+    if (transAbstractGroup) {
+      let transAbstracts = transAbstractGroup.getChildren()
+      el.append($$('div').addClass('se-translation-header').append('Abstract Translations'))
+      transAbstracts.forEach(transAbstract => {
+        el.append(this._renderAbstractEditor($$, transAbstract))
+      })
+    }
     el.append(
       $$('button').addClass('se-add-translation')
         .append('Add Abstract Translation')
         .on('click', this._addAbstractTranslation)
     )
-
     return el
   }
 
   _renderLanguageSelector($$, node) {
     let currentLanguage = node.getAttribute('xml:lang')
-    let el = $$('select').addClass('se-language-selector').append(
-      $$('option').attr({disabled: 'disabled', selected: 'selected'}).append('Select language...')
-    ).on('change', this._onLanguageChange.bind(this, node))
-
+    let el = $$('select').addClass('se-language-selector')
+      .append(
+        $$('option').attr({disabled: 'disabled', selected: 'selected'})
+          .append('Select language...')
+      )
+      .on('change', this._onLanguageChange.bind(this, node))
     for(let lang in languages) {
       if(languages[lang]) {
         let option = $$('option')
@@ -74,87 +92,71 @@ export default class TranslationsComponent extends NodeComponent {
         el.append(option)
       }
     }
-
     return el
   }
 
-  _renderTitleEditor($$, nodeId) {
-    let editorSession = this.context.editorSession
-    let doc = editorSession.getDocument()
-    const node = doc.get(nodeId)
+  _renderTitleEditor($$, transTitleGroup) {
     const TextPropertyEditor = this.getComponent('text-property-editor')
+    let transTitle = transTitleGroup.findChild('trans-title')
     let el = $$('div').addClass('se-translation')
-
+    // TODO: add support for subtitles
     el.append(
       $$('div').addClass('se-options').append(
-        this._renderLanguageSelector($$, node),
+        this._renderLanguageSelector($$, transTitleGroup),
         $$('div').addClass('se-remove-translation').append(
           $$(Icon, { icon: 'fa-trash' })
-        ).on('click', this._removeTitleTranslation.bind(this, node.id))
+        ).on('click', this._removeTitleTranslation.bind(this, transTitleGroup.id))
       ),
       $$(TextPropertyEditor, {
         placeholder: 'Enter title translation',
-        path: node.getTextPath(),
+        path: transTitle.getTextPath(),
         disabled: this.props.disabled
-      }).ref(node.id)
+      }).ref(transTitle.id)
     )
-
     return el
   }
 
-  _renderAbstractEditor($$, nodeId) {
-    let editorSession = this.context.editorSession
-    let doc = editorSession.getDocument()
-    let node = doc.get(nodeId)
+  _renderAbstractEditor($$, transAbstract) {
+    const ContainerEditor = this.getComponent('container')
     let el = $$('div').addClass('se-translation')
-
-    let abstractContent = node.findChild('abstract-content')
-    let abstractEl = $$('div')
+    let abstractContent = transAbstract.findChild('abstract-content')
+    let transEl = $$('div')
       .addClass('sc-abstract-translation')
-      .attr('data-id', node.id)
-
-    abstractEl.append(
-      $$(this.getComponent('container'), {
+      .attr('data-id', transAbstract.id)
+    transEl.append(
+      $$(ContainerEditor, {
         placeholder: 'Enter abstract translation',
         node: abstractContent,
         disabled: this.props.disabled
-      })
+      }).ref(abstractContent.id)
     )
-
     el.append(
       $$('div').addClass('se-options').append(
-        this._renderLanguageSelector($$, node),
+        this._renderLanguageSelector($$, transAbstract),
         $$('div').addClass('se-remove-translation').append(
           $$(Icon, { icon: 'fa-trash' })
-        ).on('click', this._removeAbstractTranslation.bind(this, node.id))
+        ).on('click', this._removeAbstractTranslation.bind(this, transAbstract.id))
       ),
-      abstractEl
+      transEl
     )
 
     return el
   }
 
   _addTitleTranslation() {
-    const articleMeta = this.props.node
-    const transTitleGroup = articleMeta.find('title-group trans-title-group')
     const editorSession = this.context.editorSession
-
     editorSession.transaction((doc) => {
-      let titleGroup = doc.get(transTitleGroup.id)
-      let title = doc.createElement('trans-title')
-      titleGroup.append(title)
+      let titleGroup = doc.find('article-meta > title-group')
+      let transTitleGroup = doc.createElement('trans-title-group')
+      transTitleGroup.append(doc.createElement('trans-title'))
+      titleGroup.append(transTitleGroup)
     })
-
-    this.rerender()
   }
 
   _addAbstractTranslation() {
-    const articleMeta = this.props.node
-    const transAbstractGroup = articleMeta.find('trans-abstract-group')
     const editorSession = this.context.editorSession
-
     editorSession.transaction((doc) => {
-      let abstractGroup = doc.get(transAbstractGroup.id)
+      let abstractGroup = doc.find('article-meta > trans-abstract-group')
       let abstract = doc.createElement('trans-abstract')
       let abstractContent = doc.createElement('abstract-content')
       let abstractContentPlaceholder = doc.createElement('p')
@@ -162,36 +164,24 @@ export default class TranslationsComponent extends NodeComponent {
       abstract.append(abstractContent)
       abstractGroup.append(abstract)
     })
-
-    this.rerender()
   }
 
   _removeTitleTranslation(nodeId) {
-    const articleMeta = this.props.node
-    const transTitleGroup = articleMeta.find('title-group trans-title-group')
     const editorSession = this.context.editorSession
-
     editorSession.transaction((doc) => {
-      let titleGroup = doc.get(transTitleGroup.id)
-      let title = titleGroup.find(`trans-title#${nodeId}`)
+      let titleGroup = doc.get('article-meta > title-group')
+      let title = doc.get(nodeId)
       titleGroup.removeChild(title)
     })
-
-    this.rerender()
   }
 
   _removeAbstractTranslation(nodeId) {
-    const articleMeta = this.props.node
-    const transAbstractGroup = articleMeta.find('trans-abstract-group')
     const editorSession = this.context.editorSession
-
     editorSession.transaction((doc) => {
-      let abstractGroup = doc.get(transAbstractGroup.id)
-      let abstract = abstractGroup.find(`trans-abstract#${nodeId}`)
-      abstractGroup.removeChild(abstract)
+      let abstractGroup = doc.find('article-meta > trans-abstract-group')
+      let transAbstract = doc.get(nodeId)
+      abstractGroup.removeChild(transAbstract)
     })
-
-    this.rerender()
   }
 
   _onLanguageChange(node, e) {

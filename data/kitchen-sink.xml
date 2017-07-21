@@ -8,11 +8,11 @@
     <article-meta>
       <title-group>
         <article-title>Texture Kitchen Sink</article-title>
-        <!-- NOTE: Other than regular JATS we only put title translations into
-        the title group. For subtitles there will be trans-subtitle-group -->
-        <trans-title-group>
-          <trans-title xml:lang="de">Texture Küchenspüle</trans-title>
-          <trans-title xml:lang="cz">Czech title translation</trans-title>
+        <trans-title-group xml:lang="de">
+          <trans-title>Texture Küchenspüle</trans-title>
+        </trans-title-group>
+        <trans-title-group xml:lang="cz">
+          <trans-title>Czech title translation</trans-title>
         </trans-title-group>
       </title-group>
       <contrib-group>

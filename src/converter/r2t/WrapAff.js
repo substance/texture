@@ -1,5 +1,4 @@
 import { unwrapChildren } from '../util/domHelpers'
-import { TextureJATS } from '../../article'
 
 export default class WrapAff {
 

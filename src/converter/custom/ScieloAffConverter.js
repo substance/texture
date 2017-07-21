@@ -1,5 +1,3 @@
-import { JATSPublishing } from '../../article'
-
 export default class ScieloAffConverter {
 
   import(dom, converter) {

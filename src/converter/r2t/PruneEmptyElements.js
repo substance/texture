@@ -1,7 +1,7 @@
 export default class PruneEmptyElements {
 
-  import(dom) {
-    // usually nothing to do here
+  import() {
+    // nothing to do here
   }
 
   export(dom) {

@@ -1,4 +1,4 @@
-import { ScrollPane, SplitPane, Layout, WorkflowPane } from 'substance'
+import { ScrollPane, Layout, WorkflowPane } from 'substance'
 import { AbstractWriter } from '../util'
 import TOCProvider from '../util/TOCProvider'
 import ContextSection from './ContextSection'

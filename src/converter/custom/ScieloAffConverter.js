@@ -50,9 +50,9 @@ function _exportAff(aff) {
     let insertPos = JATSPublishing.getElementSchema('aff').findFirstValidPos(aff, 'institution')
     aff.insertAt(insertPos, el)
   }
-  let display = aff.find(`x[specific-use=normalized]`)
+  // let display = aff.find(`x[specific-use=normalized]`)
 }
 
-function _normalizedInstitution(aff) {
-
+function _normalizedInstitution(/*aff*/) {
+  return '_normalizedInstitution not implemented'
 }

@@ -1,4 +1,6 @@
 import { t2r } from './r2t'
+import { validateXMLSchema } from 'substance'
+import { JATS4R } from '../article'
 
 export default class JATSExporter {
   /*
@@ -8,6 +10,14 @@ export default class JATSExporter {
   export(dom) {
     const api = this._createAPI(dom)
     t2r(dom, api)
+
+    let res = validateXMLSchema(JATS4R, dom)
+    if (!res.ok) {
+      res.errors.forEach((err) => {
+        console.error(err.msg, err.el)
+      })
+    }
+
     return dom
   }
 

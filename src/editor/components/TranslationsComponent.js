@@ -20,10 +20,8 @@ export default class TranslationsComponent extends NodeComponent {
     if (titleGroup) {
       this.context.editorSession.onRender('document', this.rerender, this, { path: [titleGroup.id]})
     }
-    let transAbstractGroup = articleMeta.findChild('trans-abstract-group')
-    if (transAbstractGroup) {
-      this.context.editorSession.onRender('document', this.rerender, this, { path: [transAbstractGroup.id]})
-    }
+    // TODO: in future, we could introduce an <abstract-group>
+    // as a container for all <abstract> and <trans-abstracts>
   }
 
   dispose() {
@@ -43,25 +41,25 @@ export default class TranslationsComponent extends NodeComponent {
     const articleMeta = this.props.node
     const transTitleGroups = articleMeta.findAll('title-group > trans-title-group')
     let el = $$('div').addClass('se-title-translations')
-    el.append($$('div').addClass('se-translation-header').append('Title Translations'))
-    transTitleGroups.forEach((transTitleGroup) => {
-      el.append(this._renderTitleEditor($$, transTitleGroup))
-    })
+    if (transTitleGroups.length > 0) {
+      el.append($$('div').addClass('se-translation-header').append('Title Translations'))
+      transTitleGroups.forEach((transTitleGroup) => {
+        el.append(this._renderTitleEditor($$, transTitleGroup))
+      })
+    }
     el.append(
       $$('button').addClass('se-add-translation')
         .append('Add Title Translation')
         .on('click', this._addTitleTranslation)
     )
-
     return el
   }
 
   _renderAbstractTranslations($$) {
     let articleMeta = this.props.node
-    let transAbstractGroup = articleMeta.findChild('trans-abstract-group')
+    let transAbstracts = articleMeta.findAll('trans-abstract')
     let el = $$('div').addClass('se-abstract-translations')
-    if (transAbstractGroup) {
-      let transAbstracts = transAbstractGroup.getChildren()
+    if (transAbstracts.length > 0) {
       el.append($$('div').addClass('se-translation-header').append('Abstract Translations'))
       transAbstracts.forEach(transAbstract => {
         el.append(this._renderAbstractEditor($$, transAbstract))
@@ -156,31 +154,29 @@ export default class TranslationsComponent extends NodeComponent {
   _addAbstractTranslation() {
     const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {
-      let abstractGroup = doc.find('article-meta > trans-abstract-group')
-      let abstract = doc.createElement('trans-abstract')
-      let abstractContent = doc.createElement('abstract-content')
-      let abstractContentPlaceholder = doc.createElement('p')
-      abstractContent.append(abstractContentPlaceholder)
-      abstract.append(abstractContent)
-      abstractGroup.append(abstract)
+      let articleMeta = doc.get(this.props.node.id)
+      let transAbstract = doc.createElement('trans-abstract')
+      let content = doc.createElement('abstract-content')
+      let placeholder = doc.createElement('p')
+      content.append(placeholder)
+      transAbstract.append(content)
+      articleMeta.append(transAbstract)
     })
   }
 
   _removeTitleTranslation(nodeId) {
     const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {
-      let titleGroup = doc.get('article-meta > title-group')
       let title = doc.get(nodeId)
-      titleGroup.removeChild(title)
+      title.parentNode.removeChild(title)
     })
   }
 
   _removeAbstractTranslation(nodeId) {
     const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {
-      let abstractGroup = doc.find('article-meta > trans-abstract-group')
       let transAbstract = doc.get(nodeId)
-      abstractGroup.removeChild(transAbstract)
+      transAbstract.parentNode.removeChild(transAbstract)
     })
   }
 

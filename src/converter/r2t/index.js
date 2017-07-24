@@ -4,7 +4,6 @@ import WrapBodyContent from './WrapBodyContent'
 import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
 import WrapAff from './WrapAff'
-import WrapTransAbstracts from './WrapTransAbstracts'
 import ExtractCaptionTitle from './ExtractCaptionTitle'
 import UpdateDocType from './UpdateDocType'
 import TransformAff from './TransformAff'
@@ -18,7 +17,6 @@ const trafos = [
   WrapDispQuoteContent,
   Sec2Heading,
   WrapAff,
-  WrapTransAbstracts,
   ExtractCaptionTitle,
   UpdateDocType,
   TransformAff,

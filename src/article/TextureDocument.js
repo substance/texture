@@ -1,4 +1,4 @@
-import { XMLDocument, EditingInterface } from 'substance'
+import { XMLDocument, XMLEditingInterface } from 'substance'
 import TextureJATS from './TextureJATS'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
@@ -30,7 +30,7 @@ export default class TextureDocument extends XMLDocument {
   }
 
   createEditingInterface() {
-    return new EditingInterface(this, { editing: new TextureEditing() })
+    return new XMLEditingInterface(this, { editing: new TextureEditing() })
   }
 
 }

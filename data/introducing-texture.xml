@@ -60,11 +60,9 @@
           <p>Texture is a WYSIWYG editor app that allows users to turn raw content into structured content, and add as much semantic information as needed for the production of scientific publications. Texture is open source software built on top of Substance (http://substance.io), an advanced Javascript content authoring library. While the Substance library is format agnostic, the Texture editor uses JATS XML as a native exchange format. The Substance library that Texture is built on already supports real-time collaborative authoring, and the easy-to-use WYSIWYG interface would make Texture an attractive alternative to Google Docs. For some editors, the interface could be toggled to more closely resemble a professional XML suite, allowing a user to pop out a raw attribute editor for any given element. Texture-authored documents could then be brought into the journal management system directly, skipping the conversion step, and move straight into a document-centric publishing workflow.</p>
         </abstract-content>
       </abstract>
-      <trans-abstract-group>
-        <trans-abstract xml:lang="de">
-          <abstract-content><p></p></abstract-content>
-        </trans-abstract>
-      </trans-abstract-group>
+      <trans-abstract xml:lang="de">
+        <abstract-content><p></p></abstract-content>
+      </trans-abstract>
     </article-meta>
   </front>
   <body>

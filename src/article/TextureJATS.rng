@@ -319,9 +319,6 @@
         <ref name="author-notes"/>
       </optional>
       <zeroOrMore>
-        <ref name="pub-date"/>
-      </zeroOrMore>
-      <zeroOrMore>
         <ref name="volume"/>
       </zeroOrMore>
       <zeroOrMore>
@@ -362,9 +359,7 @@
           <ref name="supplementary-material"/>
         </choice>
       </zeroOrMore>
-      <optional>
-        <ref name="history"/>
-      </optional>
+      <ref name="history"/>
       <optional>
         <ref name="permissions"/>
       </optional>
@@ -615,6 +610,27 @@
     </element>
   </define>
 
+  <!-- we use an interleaved model for sake of simplicity -->
+  <define name="date">
+    <element name="date">
+      <ref name="date-attlist"/>
+      <attribute name="format">
+        <choice>
+          <value>standard</value>
+          <value>seasonal</value>
+          <value>custom</value>
+        </choice>
+      </attribute>
+      <interleave>
+        <ref name="day"/>
+        <ref name="month"/>
+        <ref name="season"/>
+        <ref name="year"/>
+        <ref name="era"/>
+        <ref name="string-date"/>
+      </interleave>
+    </element>
+  </define>
 
   <!-- WIP
     Refactored def-list, def, term et. al

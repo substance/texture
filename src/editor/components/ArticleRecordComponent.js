@@ -5,6 +5,17 @@ const LABELS = {
   'electronic': 'Electronic'
 }
 
+const DATE_TYPES = {
+  'accepted': 'Accepted',
+  'corrected': 'Corrected',
+  'pub': 'Published',
+  'preprint': 'Preprint',
+  'retracted': 'Retracted',
+  'received': 'Received',
+  'rev-recd': 'Revision Received',
+  'rev-request': 'Revision Requested'
+}
+
 export default class ArticleRecordComponent extends NodeComponent {
 
 
@@ -49,6 +60,21 @@ export default class ArticleRecordComponent extends NodeComponent {
     } else if (contentLocType === 'electronic') {
       el.append(this._renderTextEditor($$, eLocationId, 'E-Location ID', 'text'))
     }
+
+    el.append(
+      this._renderHistory($$)
+    )
+    return el
+  }
+
+  _renderHistory($$) {
+    let el = $$('div').addClass('se-history')
+    let articleMeta = this.props.node
+    let history = articleMeta.find('history')
+    let dateTypes = Object.keys(DATE_TYPES)
+    dateTypes.forEach((dateType) => {
+      el.append(this._renderDateEditor($$, dateType, history))
+    })
     return el
   }
 
@@ -93,6 +119,56 @@ export default class ArticleRecordComponent extends NodeComponent {
         .on('change', this._updateTextProp.bind(this, metaEl))
     )
     return el
+  }
+
+  _renderDateEditor($$, dateType, history) {
+    let date = history.find(`date[date-type=${dateType}]`)
+    let el = $$('div').addClass('se-date-item')
+
+    if (date) {
+      let dateFormat = date.attr('format') || 'standard'
+      let year = date.find('year')
+      let month = date.find('month')
+      let day = date.find('day')
+      let season = date.find('season')
+
+      if (dateFormat === 'standard') {
+        // year+month+day
+        el.append(
+          $$('div').addClass('se-label').append(DATE_TYPES[dateType]),
+          $$('div').addClass('se-content').append(
+            $$('input').attr({ type: 'text', value: year.getText(), placeholder: 'YYYY' })
+              .ref(year.id)
+              .on('change', this._updateTextProp.bind(this, year)),
+            $$('input').attr({ type: 'text', value: month.getText(), placeholder: 'MM' })
+              .ref(month.id)
+              .on('change', this._updateTextProp.bind(this, month)),
+            $$('input').attr({ type: 'text', value: day.getText(), placeholder: 'DD' })
+              .ref(day.id)
+              .on('change', this._updateTextProp.bind(this, day))
+          )
+        )
+      } else if (dateFormat === 'seasonal') {
+        // season+year
+        el.append(
+          $$('div').addClass('se-label').append(DATE_TYPES[dateType]),
+          $$('div').addClass('se-content').append(
+            $$('input').attr({ type: 'text', value: year.getText(), placeholder: 'YYYY' })
+              .ref(year.id)
+              .on('change', this._updateTextProp.bind(this, year)),
+            $$('input').attr({ type: 'text', value: season.getText(), placeholder: 'Season' })
+              .ref(season.id)
+              .on('change', this._updateTextProp.bind(this, season))
+          )
+        )
+      } else if (dateFormat === 'custom') {
+        console.warn('string-date not yet supported')
+      }
+      return el
+    } else {
+      console.warn('date-type', dateType, 'not found in <history>')
+    }
+
   }
 
   _updateTextProp(metaEl) {

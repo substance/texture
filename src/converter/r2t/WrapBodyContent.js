@@ -19,8 +19,6 @@ export default class WrapBodyContent {
 
   export(dom) {
     let contentEls = dom.findAll('body-content')
-    contentEls.forEach((el) => {
-      unwrapChildren(el)
-    })
+    contentEls.forEach(unwrapChildren)
   }
 }

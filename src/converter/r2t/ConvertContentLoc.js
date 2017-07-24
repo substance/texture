@@ -22,7 +22,7 @@ export default class ConvertContentLoc {
       if (el) {
         contentLoc.append(el)
       } else {
-        contentLoc.append(dom.createElement(tagName).text("x"))
+        contentLoc.append(dom.createElement(tagName).append(""))
       }
     })
     // TODO: it would be better to have an interleave model

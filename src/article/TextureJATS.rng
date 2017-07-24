@@ -354,9 +354,7 @@
       <optional>
         <ref name="supplement"/>
       </optional>
-      <optional>
-        <ref name="content-loc"/>
-      </optional>
+      <ref name="content-loc"/>
       <zeroOrMore>
         <choice>
           <ref name="address-link.class"/>

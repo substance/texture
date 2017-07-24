@@ -31,11 +31,6 @@
           <string-aff>Substance Software GmbH</string-aff>
         </aff>
       </aff-group>
-      <pub-date publication-format="print" date-type="pub" iso-8601-date="2017-04-01">
-        <day>01</day>
-        <month>04</month>
-        <year>2017</year>
-      </pub-date>
       <volume></volume>
       <issue></issue>
       <content-loc type="print">
@@ -45,6 +40,11 @@
         <elocation-id></elocation-id>
       </content-loc>
       <history>
+        <date date-type="pub" publication-format="print" iso-8601-date="2017-04-01">
+          <day>01</day>
+          <month>04</month>
+          <year>2017</year>
+        </date>
         <date date-type="received" iso-8601-date="1998-01-05">
           <day></day>
           <month></month>

@@ -16,9 +16,6 @@ export default class CollectAffs {
     let allAffs = dom.findAll('aff')
     let articleMetaSchema = JATS.getElementSchema('article-meta')
     let pos = articleMetaSchema.findLastValidPos(articleMeta, 'aff')
-
-    // TODO: some sort of change tracking would be interesting
-    // <aff-alternatives> wraps the same affiliation given in different languages
     allAffs.forEach((aff) => {
       if (_needReplace(aff)) {
         _replaceAffWithXref(aff)

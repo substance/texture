@@ -24,7 +24,6 @@ function _importDate(date) {
     dateFormat = 'custom'
   }
   date.attr('format', dateFormat)
-
   // in TextureJATS we use a super-record, capable of containing all
   // variants
   let els = ['day', 'month', 'season', 'year', 'era', 'string-date'].map((name) => {
@@ -38,16 +37,8 @@ function _exportDate(date) {
   let children = date.getChildren()
   let dateFormat = date.attr('format')
   date.empty()
+  date.removeAttribute('format')
   switch (dateFormat) {
-    case 'standard': {
-      date.append(_pickButPruneEmptyOptionals(children, {
-        'day': 'optional',
-        'month': 'optional',
-        'year': 'required',
-        'era': 'optional'
-      }))
-      break
-    }
     case 'seasonal': {
       date.append(_pickButPruneEmptyOptionals(children, {
         'season': 'required',
@@ -62,8 +53,14 @@ function _exportDate(date) {
       }))
       break
     }
+    // 'standard'
     default:
-      throw new Error('FIXME: illegal state.')
+      date.append(_pickButPruneEmptyOptionals(children, {
+        'day': 'optional',
+        'month': 'optional',
+        'year': 'required',
+        'era': 'optional'
+      }))
   }
 }
 

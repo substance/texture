@@ -8,7 +8,7 @@ const LABELS = {
 const DATE_TYPES = {
   'accepted': 'Accepted',
   'corrected': 'Corrected',
-  'pub': 'Pub',
+  'pub': 'Published',
   'preprint': 'Preprint',
   'retracted': 'Retracted',
   'received': 'Received',

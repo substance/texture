@@ -10,6 +10,7 @@ import TransformAff from './TransformAff'
 import TransformContrib from './TransformContrib'
 import ConvertContentLoc from './ConvertContentLoc'
 import UnifyPublicationHistory from './UnifyPublicationHistory'
+import NormalizeHistoryDates from './NormalizeHistoryDates'
 import PruneEmptyElements from './PruneEmptyElements'
 
 // ATTENTION: the order of converters is critical,
@@ -20,6 +21,7 @@ const trafos = [
   PruneText,
   PruneEmptyElements,
   UnifyPublicationHistory,
+  NormalizeHistoryDates,
   ConvertContentLoc,
   ExtractCaptionTitle,
   WrapAff,

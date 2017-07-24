@@ -47,3 +47,7 @@
 .sc-contributors .se-metadata-contributor .se-text-input:focus {
   border-color: #4e92df;
 }
+
+.sc-contributors .sc-multi-select {
+  padding: 10px;
+}

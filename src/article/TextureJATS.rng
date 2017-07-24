@@ -544,6 +544,24 @@
     </element>
   </define>
 
+  <!-- A custom element that we use to wrap fpage, lpage, page-range, and elocation-id -->
+  <define name="content-loc">
+    <element name="content-loc">
+      <attribute name="type">
+        <choice>
+          <value>print</value>
+          <value>electronic</value>
+        </choice>
+      </attribute>
+      <interleave>
+        <ref name="fpage"/>
+        <ref name="lpage"/>
+        <ref name="page-range"/>
+        <ref name="elocation-id"/>
+      </interleave>
+    </element>
+  </define>
+
   <!-- WIP
     TODO: refine requirements; see if the structured elements
           are really necessary, or simple phrase content is enough.

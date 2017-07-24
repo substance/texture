@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "TextureJATS 1.1" "http://texture.substance.io/TextureJATS-1.1.dtd">
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.0 20120330//EN" "JATS-journalpublishing1.dtd">
 <!--
   Kitchen XML for our texture editor.
 -->
@@ -16,22 +16,33 @@
         </trans-title-group>
       </title-group>
       <contrib-group>
-        <!-- Texture supports in-place string name editing of authors -->
         <contrib contrib-type="author" aff-ids="aff1 aff2">
-          <string-contrib>John Doe</string-contrib>
+          <x specific-use="display">John Doe</x>
+          <name>
+            <surname>Doe</surname>
+            <given-names>John</given-names>
+          </name>
         </contrib>
         <contrib contrib-type="author" aff-ids="aff2">
-          <string-contrib>Jane Doe</string-contrib>
+          <x specific-use="display">Jane Doe</x>
+          <name>
+            <surname>Doe</surname>
+            <given-names>Jane</given-names>
+          </name>
         </contrib>
       </contrib-group>
-      <aff-group>
-        <aff id="aff1">
-          <string-aff>Foo University, London, UK</string-aff>
-        </aff>
-        <aff id="aff2">
-          <string-aff>Bar Ltd, London, UK</string-aff>
-        </aff>
-      </aff-group>
+      <aff id="aff1">
+        <x specific-use="display">Foo University, London, UK</x>
+        <institution>Foo University</institution>
+        <city>London</city>
+        <country>UK</country>
+      </aff>
+      <aff id="aff2">
+        <x specific-use="display">Bar Ltd, London, UK</x>
+        <institution>Bar Ltd</institution>
+        <city>London</city>
+        <country>UK</country>
+      </aff>
       <!-- Publication date, as required by SciELO -->
       <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
           <day>29</day>
@@ -41,12 +52,8 @@
       <!-- Pages elements, as required by SciELO -->
       <volume>318</volume>
       <issue>7187</issue>
-      <content-loc type="print">
-        <fpage>837</fpage>
-        <lpage>841</lpage>
-        <page-range></page-range>
-        <elocation-id></elocation-id>
-      </content-loc>
+      <fpage>837</fpage>
+      <lpage>841</lpage>
       <history>
         <date date-type="received" iso-8601-date="1998-01-05">
           <day>05</day>
@@ -70,55 +77,52 @@
         </date>
       </history>
       <abstract>
-        <!-- We wrap all content in a separate container node -->
-        <abstract-content>
-          <p><bold>Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r2"/></p>
-        </abstract-content>
+        <p><bold>Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r2"/></p>
       </abstract>
       <trans-abstract xml:lang="de">
-        <abstract-content><p>Deutsche Übersetzung</p></abstract-content>
+        <p>Deutsche Übersetzung</p>
       </trans-abstract>
     </article-meta>
   </front>
   <body>
-    <body-content>
-      <!-- We use HTML-style headings instead of sections in the Texture format -->
-      <heading level="1">Quisque malesuada</heading>
+    <!-- We use HTML-style headings instead of sections in the Texture format -->
+    <sec>
+      <title>Quisque malesuada</title>
       <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor <ext-link ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
-      <heading level="2">Orci varius natoque penatibus et magnis</heading>
-      <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet <xref ref-type="bibr" rid="r1 r2"/>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
-      <fig id="fig1">
-        <title>Behavioural design and implantation details.</title>
-        <caption>
-          <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
-        </caption>
-        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig1.jpg"/>
-      </fig>
-      <p>Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui..</p>
-      <fig id="fig2">
-        <title>Visual object processing in area AIP.</title>
-        <caption>
-          <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
-        </caption>
-        <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig2.jpg"/>
-      </fig>
-      <disp-quote>
-        <disp-quote-content>
+      <sec>
+        <title>Orci varius natoque penatibus et magnis</title>
+        <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet <xref ref-type="bibr" rid="r1 r2"/>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
+        <fig id="fig1">
+          <caption>
+            <title>Behavioural design and implantation details.</title>
+            <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+          </caption>
+          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig1.jpg"/>
+        </fig>
+        <p>Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui..</p>
+        <fig id="fig2">
+          <caption>
+            <title>Visual object processing in area AIP.</title>
+            <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+          </caption>
+          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig2.jpg"/>
+        </fig>
+        <disp-quote>
           <p>Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>
-        </disp-quote-content>
-        <attrib>Ecclesiastes 10:1</attrib>
-      </disp-quote>
-      <p>Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref ref-type="table" rid="table1"/>. </p>
+          <attrib>Ecclesiastes 10:1</attrib>
+        </disp-quote>
+        <p>Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref ref-type="table" rid="table1"/>. </p>
 
-      <table-wrap id="table1">
-        <title>Patient Care at End of Follow Up</title>
-        <caption>
-        <p>Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds
-        among those allocated to day hospital or alternative services</p>
-        </caption>
-        <table frame="hsides" rules="groups"><thead><tr><th valign="top"><bold>Mutant</bold></th><th valign="top"><bold>Lipid composition</bold></th><th valign="top"><bold>Depth parameter (Φ)</bold></th><th valign="top"><bold>Approx. distance to phosphate plane (Å)*</bold></th></tr></thead><tbody><tr><td valign="top">M173R1</td><td valign="top">20% PtdSer</td><td valign="bottom">+1.20 ± 0.10</td><td valign="bottom">+8.8</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.01 ± 0.20</td><td valign="bottom">+5.5</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">+0.66 ± 0.10</td><td valign="bottom">+7.4</td></tr><tr><td valign="top">F234R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−0.10 ± 0.10</td><td valign="bottom">+5.2</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−1.50 ± 0.03</td><td valign="bottom">–0.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom"> +0.00 ± 0.10</td><td valign="bottom">+5.5</td></tr><tr><td valign="top">V304R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−0.39 ± 0.20</td><td valign="bottom">+4.3</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−1.30 ± 0.10</td><td valign="bottom">+0.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.23 ± 0.10</td><td valign="bottom">+4.8</td></tr><tr><td valign="top">T329R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−2.00 ± 0.14</td><td valign="bottom">–5.4</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.80 ± 0.14</td><td valign="bottom">+2.8</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−2.10 ± 0.12</td><td valign="bottom">–7.3</td></tr><tr><td valign="top">G368R1</td><td valign="top">20% PtdSer</td><td valign="bottom">+0.60 ± 0.10</td><td valign="bottom">+7.2</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.64 ± 0.05</td><td valign="bottom">+3.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="top">+0.18 ± 0.10</td><td valign="top">+6.0</td></tr></tbody></table>
-      </table-wrap>
-    </body-content>
+        <table-wrap id="table1">
+          <caption>
+            <title>Patient Care at End of Follow Up</title>
+            <p>Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds
+            among those allocated to day hospital or alternative services</p>
+          </caption>
+          <table frame="hsides" rules="groups"><thead><tr><th valign="top"><bold>Mutant</bold></th><th valign="top"><bold>Lipid composition</bold></th><th valign="top"><bold>Depth parameter (Φ)</bold></th><th valign="top"><bold>Approx. distance to phosphate plane (Å)*</bold></th></tr></thead><tbody><tr><td valign="top">M173R1</td><td valign="top">20% PtdSer</td><td valign="bottom">+1.20 ± 0.10</td><td valign="bottom">+8.8</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.01 ± 0.20</td><td valign="bottom">+5.5</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">+0.66 ± 0.10</td><td valign="bottom">+7.4</td></tr><tr><td valign="top">F234R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−0.10 ± 0.10</td><td valign="bottom">+5.2</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−1.50 ± 0.03</td><td valign="bottom">–0.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom"> +0.00 ± 0.10</td><td valign="bottom">+5.5</td></tr><tr><td valign="top">V304R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−0.39 ± 0.20</td><td valign="bottom">+4.3</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−1.30 ± 0.10</td><td valign="bottom">+0.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.23 ± 0.10</td><td valign="bottom">+4.8</td></tr><tr><td valign="top">T329R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−2.00 ± 0.14</td><td valign="bottom">–5.4</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.80 ± 0.14</td><td valign="bottom">+2.8</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−2.10 ± 0.12</td><td valign="bottom">–7.3</td></tr><tr><td valign="top">G368R1</td><td valign="top">20% PtdSer</td><td valign="bottom">+0.60 ± 0.10</td><td valign="bottom">+7.2</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.64 ± 0.05</td><td valign="bottom">+3.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="top">+0.18 ± 0.10</td><td valign="top">+6.0</td></tr></tbody></table>
+        </table-wrap>
+      </sec>
+    </sec>
   </body>
   <back>
     <fn-group>
@@ -133,106 +137,99 @@
       <title>References</title>
       <ref id="r1">
         <element-citation publication-type="journal">
-        <person-group person-group-type="author">
-        <name>
-        <surname>Baumann</surname>
-        <given-names>MA</given-names>
-        </name>
-        <name>
-        <surname>Fluet</surname>
-        <given-names>MC</given-names>
-        </name>
-        <name>
-        <surname>Scherberger</surname>
-        <given-names>H</given-names>
-        </name>
-        </person-group>
-        <year iso-8601-date="2009">2009</year>
-        <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
-        <source>Journal of Neuroscience</source>
-        <volume>29</volume>
-        <fpage>6436</fpage>
-        <lpage>6448</lpage>
-        <issue></issue>
-        <elocation-id></elocation-id>
-        <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Baumann</surname>
+              <given-names>MA</given-names>
+            </name>
+            <name>
+              <surname>Fluet</surname>
+              <given-names>MC</given-names>
+            </name>
+            <name>
+              <surname>Scherberger</surname>
+              <given-names>H</given-names>
+            </name>
+          </person-group>
+          <year iso-8601-date="2009">2009</year>
+          <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
+          <source>Journal of Neuroscience</source>
+          <volume>29</volume>
+          <fpage>6436</fpage>
+          <lpage>6448</lpage>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
       <ref id="r2">
         <element-citation publication-type="journal">
-        <person-group person-group-type="author">
-        <name>
-        <surname>Belmalih</surname>
-        <given-names>A</given-names>
-        </name>
-        <name>
-        <surname>Borra</surname>
-        <given-names>E</given-names>
-        </name>
-        <name>
-        <surname>Contini</surname>
-        <given-names>M</given-names>
-        </name>
-        <name>
-        <surname>Gerbella</surname>
-        <given-names>M</given-names>
-        </name>
-        <name>
-        <surname>Rozzi</surname>
-        <given-names>S</given-names>
-        </name>
-        <name>
-        <surname>Luppino</surname>
-        <given-names>G</given-names>
-        </name>
-        </person-group>
-        <year iso-8601-date="2009">2009</year>
-        <article-title>Multimodal architectonic subdivision of the rostral part (area F5) of the macaque ventral premotor cortex</article-title>
-        <source>Journal of Comparative Neurology</source>
-        <volume>512</volume>
-        <fpage>183</fpage>
-        <lpage>217</lpage>
-        <issue></issue>
-        <elocation-id></elocation-id>
-        <pub-id pub-id-type="doi">10.1002/cne.21892</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Belmalih</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Borra</surname>
+              <given-names>E</given-names>
+            </name>
+            <name>
+              <surname>Contini</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Gerbella</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Rozzi</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Luppino</surname>
+              <given-names>G</given-names>
+            </name>
+          </person-group>
+          <year iso-8601-date="2009">2009</year>
+          <article-title>Multimodal architectonic subdivision of the rostral part (area F5) of the macaque ventral premotor cortex</article-title>
+          <source>Journal of Comparative Neurology</source>
+          <volume>512</volume>
+          <fpage>183</fpage>
+          <lpage>217</lpage>
+          <pub-id pub-id-type="doi">10.1002/cne.21892</pub-id>
         </element-citation>
       </ref>
       <ref id="r3">
         <element-citation publication-type="book">
-        <person-group person-group-type="author">
-        <name>
-        <surname>Al-Ibrahim</surname>
-        <given-names>MS</given-names>
-        </name>
-        <name>
-        <surname>Gross</surname>
-        <given-names>JY</given-names>
-        </name>
-        <name>
-        <surname>Walker</surname>
-        <given-names>HK</given-names>
-        </name>
-        <name>
-        <surname>Hall</surname>
-        <given-names>WD</given-names>
-        </name>
-        <name>
-        <surname>Hurst</surname>
-        <given-names>JW</given-names>
-        </name>
-        </person-group>
-        <chapter-title>Tobacco use</chapter-title>
-        <source>Clinical methods: the history, physical, and laboratory examinations</source>
-        <publisher-loc>Stoneham (MA)</publisher-loc>
-        <publisher-name>Butterworth Publishers</publisher-name>
-        <year iso-8601-date="2009">1990</year>
-        <fpage>214</fpage>
-        <lpage>216</lpage>
-        <issue></issue>
-        <elocation-id></elocation-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Al-Ibrahim</surname>
+              <given-names>MS</given-names>
+            </name>
+            <name>
+              <surname>Gross</surname>
+              <given-names>JY</given-names>
+            </name>
+            <name>
+              <surname>Walker</surname>
+              <given-names>HK</given-names>
+            </name>
+            <name>
+              <surname>Hall</surname>
+              <given-names>WD</given-names>
+            </name>
+            <name>
+              <surname>Hurst</surname>
+              <given-names>JW</given-names>
+            </name>
+          </person-group>
+          <chapter-title>Tobacco use</chapter-title>
+          <source>Clinical methods: the history, physical, and laboratory examinations</source>
+          <publisher-loc>Stoneham (MA)</publisher-loc>
+          <publisher-name>Butterworth Publishers</publisher-name>
+          <year iso-8601-date="2009">1990</year>
+          <fpage>214</fpage>
+          <lpage>216</lpage>
         </element-citation>
       </ref>
-
     </ref-list>
   </back>
 </article>

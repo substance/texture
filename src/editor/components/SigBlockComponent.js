@@ -12,13 +12,12 @@ export default class SigBlockComponent extends NodeComponent {
     }))
 
     let sigs = sigBlock.findAll('sig')
+
     sigs.forEach((sig) => {
-      // TODO: we need a UI concept
-      // for now this can only be edited, not created
-      el.append($$(TextNode, {
+      el.append($$(this.getComponent('container'), {
         node: sig,
         disabled: this.props.disabled
-      }))
+      })).ref(sig.id)
     })
 
     el.append($$(this.getComponent('separator'), {

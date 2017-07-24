@@ -57,6 +57,7 @@
   <s:elementType name="caption" s:type="container"/>
   <s:elementType name="disp-quote-content" s:type="container"/>
   <s:elementType name="fn" s:type="container"/>
+  <s:elementType name="sig" s:type="container"/>
   <!-- External = not editable in Texture -->
   <!-- TODO: we just don't know yet how to 'fix' the spec for <chem-struct> -->
   <s:elementType name="chem-struct" s:type="external"/>
@@ -318,6 +319,9 @@
       <optional>
         <ref name="author-notes"/>
       </optional>
+      <zeroOrMore>
+        <ref name="pub-date"/>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="volume"/>
       </zeroOrMore>
@@ -1022,6 +1026,16 @@
   -->
   <define name="sec.class">
     <ref name="heading"/>
+  </define>
+
+  <!-- For now implemented <sig> as a container with <p>s -->
+  <define name="sig">
+    <element name="sig">
+      <ref name="sig-attlist"/>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+    </element>
   </define>
 
   <!--

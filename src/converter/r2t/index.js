@@ -9,6 +9,7 @@ import UpdateDocType from './UpdateDocType'
 import TransformAff from './TransformAff'
 import TransformContrib from './TransformContrib'
 import ConvertContentLoc from './ConvertContentLoc'
+import ConvertSigBlock from './ConvertSigBlock'
 import UnifyPublicationHistory from './UnifyPublicationHistory'
 import NormalizeHistoryDates from './NormalizeHistoryDates'
 import PruneEmptyElements from './PruneEmptyElements'
@@ -18,11 +19,11 @@ import PruneEmptyElements from './PruneEmptyElements'
 // that adheres to the schema
 // ATM
 const trafos = [
-  PruneText,
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
   ConvertContentLoc,
+  ConvertSigBlock,
   ExtractCaptionTitle,
   WrapAff,
   TransformAff,
@@ -31,6 +32,7 @@ const trafos = [
   WrapBodyContent,
   WrapDispQuoteContent,
   Sec2Heading,
+  PruneText,
   UpdateDocType,
 ].map(C => new C())
 

@@ -729,7 +729,7 @@
     <element name="sig-block">
       <ref name="sig-block-attlist"/>
       <oneOrMore>
-        <ref name="sig.class"/>
+        <ref name="sig"/>
       </oneOrMore>
     </element>
   </define>
@@ -739,8 +739,8 @@
       <zeroOrMore>
         <choice>
           <text/>
-          <ref name="bold"/>
-          <ref name="italic"/>
+          <ref name="simple-phrase"/>
+          <ref name="break"/>
         </choice>
       </zeroOrMore>
     </element>

@@ -1,5 +1,6 @@
 {
   "name": "substance-texture",
+  "version": "1.0.0-alpha.3",
   "description": "A scientific editor and reader for JATS files.",
   "dependencies": {
     "lodash": "^4.14.1",
@@ -17,7 +18,6 @@
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },
-  "version": "1.0.0-alpha.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/substance/texture.git"

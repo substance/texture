@@ -15,8 +15,6 @@ export default class WrapDispQuoteContent {
 
   export(dom) {
     let contentEls = dom.findAll('disp-quote-content')
-    contentEls.forEach((el) => {
-      unwrapChildren(el)
-    })
+    contentEls.forEach(unwrapChildren)
   }
 }

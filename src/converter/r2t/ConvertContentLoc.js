@@ -25,9 +25,8 @@ export default class ConvertContentLoc {
         contentLoc.append(dom.createElement(tagName).append(""))
       }
     })
-    // TODO: it would be better to have an interleave model
-    // in JATS, i.e. without order, and instead reorder it correctly
-    // during export
+    // TODO: it would be better to have an interleave model,
+    // i.e. without order, and instead reorder it correctly during export
     let schema = TextureJATS.getElementSchema('article-meta')
     let pos = schema.findFirstValidPos(articleMeta, 'content-loc')
     articleMeta.insertAt(pos, contentLoc)

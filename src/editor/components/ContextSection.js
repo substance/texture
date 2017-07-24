@@ -15,7 +15,7 @@ export default class ContextSection extends Component {
 
   getInitialState() {
     return {
-      contextId: 'toc'
+      contextId: 'article-record'
     }
   }
 

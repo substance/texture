@@ -354,22 +354,7 @@
       <optional>
         <ref name="supplement"/>
       </optional>
-      <optional>
-        <choice>
-          <group>
-            <optional>
-              <ref name="fpage"/>
-              <optional>
-                <ref name="lpage"/>
-              </optional>
-            </optional>
-            <optional>
-              <ref name="page-range"/>
-            </optional>
-          </group>
-          <ref name="elocation-id"/>
-        </choice>
-      </optional>
+      <ref name="content-loc"/>
       <zeroOrMore>
         <choice>
           <ref name="address-link.class"/>
@@ -541,6 +526,24 @@
           <ref name="simple-phrase"/>
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <!-- A custom element that we use to wrap fpage, lpage, page-range, and elocation-id -->
+  <define name="content-loc">
+    <element name="content-loc">
+      <attribute name="type">
+        <choice>
+          <value>print</value>
+          <value>electronic</value>
+        </choice>
+      </attribute>
+      <interleave>
+        <ref name="fpage"/>
+        <ref name="lpage"/>
+        <ref name="page-range"/>
+        <ref name="elocation-id"/>
+      </interleave>
     </element>
   </define>
 

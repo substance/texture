@@ -336,7 +336,6 @@ export default {
     config.addLabel('contributors', 'Authors & Contributors')
     config.addLabel('translations', 'Translations')
     config.addLabel('pub-data', 'Publication Data')
-    config.addLabel('pub-history', 'Publication History')
     config.addLabel('edit-ref', 'Edit Reference')
 
     /*
@@ -350,8 +349,7 @@ export default {
       { panel: 'affiliations' },
       { panel: 'translations' },
       { group: 'pub-data' },
-      { panel: 'article-record' },
-      { panel: 'pub-history' }
+      { panel: 'article-record' }
     ])
   },
   Editor

@@ -1,15 +1,15 @@
-.sc-article-info {
+.sc-article-record {
   font-size: 14px;
 }
 
-.sc-article-info .se-metadata-item {
+.sc-article-record .se-metadata-item {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   padding: 5px 0px;
 }
 
-.sc-article-info .se-text-input {
+.sc-article-record .se-text-input {
   border: 1px solid #dadada;
   width: 200px;
   border-radius: 3px;
@@ -18,11 +18,11 @@
   background: #fff;
 }
 
-.sc-article-info .se-text-input:focus {
+.sc-article-record .se-text-input:focus {
   border-color: #4e92df;
 }
 
-.sc-article-info .se-label {
+.sc-article-record .se-label {
   flex: 0 0 150px;
   padding: 10px;
   color: #838383;

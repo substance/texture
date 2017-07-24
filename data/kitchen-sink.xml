@@ -41,12 +41,12 @@
       <!-- Pages elements, as required by SciELO -->
       <volume>318</volume>
       <issue>7187</issue>
-      <fpage>837</fpage>
-      <lpage>841</lpage>
-      <!-- Support for Electronic Location Identifier, as required by SciELO -->
-      <!-- TODO: we need this supported -->
-      <!-- <elocation-id seq="1">051101</elocation-id> -->
-      <!-- Publication history, as required by SciELO -->
+      <content-loc type="print">
+        <fpage>837</fpage>
+        <lpage>841</lpage>
+        <page-range></page-range>
+        <elocation-id></elocation-id>
+      </content-loc>
       <history>
         <date date-type="received" iso-8601-date="1998-01-05">
           <day>05</day>

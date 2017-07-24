@@ -5,7 +5,6 @@ const path = require('path')
 const vfs = require('substance-bundler/extensions/vfs')
 
 const DIST = 'dist/'
-const BUNDLE = 'bundle/'
 const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
   path.join(__dirname, 'src', 'article')
@@ -19,7 +18,6 @@ const RNG_FILES = [
 ]
 
 b.task('clean', function() {
-  b.rm(BUNDLE)
   b.rm(DIST)
   b.rm(TMP)
 })
@@ -34,6 +32,7 @@ b.task('assets', function() {
   b.copy('./examples', DIST)
   b.copy('./node_modules/font-awesome', DIST+'font-awesome')
   b.copy('./node_modules/substance/dist', DIST+'substance/dist')
+  _buildCSS(DIST)
 })
 
 b.task('single-jats-file', _singleJATSFile)
@@ -61,22 +60,20 @@ b.task('compile:debug', () => {
 b.task('compile:schema', ['compile:jats', 'compile:jats4r', 'compile:texture-jats'])
 
 b.task('build:browser', ['compile:schema'], () => {
-  _buildLib(DIST, true)
-  _buildCSS(DIST, true)
+  _buildLib(DIST, 'browser')
 })
 
-b.task('build:browser:pure', ['compile:schema'], () => {
-  _buildLib(DIST, false)
-  _buildCSS(DIST, false)
+b.task('build:nodejs', ['compile:schema'], () => {
+  _buildLib(DIST, 'nodejs')
 })
-
-b.task('build', ['clean', 'assets', 'build:browser'])
-
-b.task('build:dev', ['clean', 'assets', 'build:browser:pure'])
 
 // default build: creates a dist folder with a production bundle
-b.task('default', ['clean', 'assets', 'build'])
-b.task('dev', ['clean', 'assets', 'build:dev'])
+b.task('default', ['clean', 'assets', 'build:browser'])
+b.task('dev', ['default'])
+
+b.task('publish', ['clean', 'assets', 'compile:schema'], () => {
+  _buildLib(DIST, 'all')
+})
 
 b.task('test', () => {
   // TODO implement a test-suite
@@ -88,25 +85,39 @@ b.task('test', () => {
 
 /* HELPERS */
 
-function _buildLib(DEST, transpileToES5) {
-  b.js('./index.es.js', {
-    target: {
+function _buildLib(DEST, platform) {
+  let targets = []
+  if (platform === 'browser' || platform === 'all') {
+    targets.push({
       dest: DEST+'texture.js',
-      format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture',
-      // useStrict: !transpileToES5
-    },
-    external: [ 'substance', 'texture-jats'],
+      format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture'
+    })
+  }
+  if (platform === 'nodejs' || platform === 'all') {
+    targets.push({
+      dest: DEST+'texture.cjs.js',
+      format: 'cjs'
+    })
+  }
+  if (platform === 'es' || platform === 'all') {
+    targets.push({
+      dest: DEST+'texture.es.js',
+      format: 'es'
+    })
+  }
+  b.js('./index.es.js', {
+    targets,
+    external: ['substance'],
     globals: {
       'substance': 'substance',
-      'texture-jats': 'TextureJATS'
     }
   })
 }
 
-function _buildCSS(DEST, transpileToES5) {
-  b.css('texture.css', DEST+'texture.css', {variables: transpileToES5})
-  b.css('./node_modules/substance/substance-pagestyle.css', DEST+'texture-pagestyle.css', {variables: transpileToES5})
-  b.css('./node_modules/substance/substance-reset.css', DEST+'texture-reset.css', {variables: transpileToES5})
+function _buildCSS(DEST) {
+  b.css('texture.css', DEST+'texture.css')
+  b.css('./node_modules/substance/substance-pagestyle.css', DEST+'texture-pagestyle.css')
+  b.css('./node_modules/substance/substance-reset.css', DEST+'texture-reset.css')
 }
 
 function _compileSchema(name, src, searchDirs, deps, options = {} ) {

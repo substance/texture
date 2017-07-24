@@ -355,20 +355,7 @@
         <ref name="supplement"/>
       </optional>
       <optional>
-        <choice>
-          <group>
-            <optional>
-              <ref name="fpage"/>
-              <optional>
-                <ref name="lpage"/>
-              </optional>
-            </optional>
-            <optional>
-              <ref name="page-range"/>
-            </optional>
-          </group>
-          <ref name="elocation-id"/>
-        </choice>
+        <ref name="content-loc"/>
       </optional>
       <zeroOrMore>
         <choice>

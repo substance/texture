@@ -3,18 +3,15 @@ import { unwrapChildren } from '../util/domHelpers'
 export default class WrapDispQuoteContent {
 
   import(dom) {
-    let els = dom.findAll('disp-quote')
-    els.forEach((el) => {
-      const children = el.children
-      el.empty()
-      el.append(
-        dom.createElement('disp-quote-content').append(children)
-      )
+    dom.findAll('disp-quote').forEach((dispQuote) => {
+      let attribs = dispQuote.findAll('attrib')
+      let content = dom.createElement('disp-quote-content').append(dispQuote.children)
+      dispQuote.append(content)
+      dispQuote.append(attribs)
     })
   }
 
   export(dom) {
-    let contentEls = dom.findAll('disp-quote-content')
-    contentEls.forEach(unwrapChildren)
+    dom.findAll('disp-quote-content').forEach(unwrapChildren)
   }
 }

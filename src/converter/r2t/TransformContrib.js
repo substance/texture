@@ -24,7 +24,19 @@ function _importContrib(contrib) {
     stringContrib.append(x.childNodes)
     contrib.removeChild(x)
   } else {
-    stringContrib.textContent = contrib.textContent
+    // TODO: a proper renderer would be nice here
+    let name = contrib.find('name')
+    if (name) {
+      let givenNames = name.find('given-names')
+      let surname = name.find('surname')
+      if (givenNames && surname) {
+        stringContrib.textContent = givenNames.textContent + " " + surname.textContent
+      } else {
+        stringContrib.textContent = name.textContent
+      }
+    } else {
+      stringContrib.textContent = contrib.textContent
+    }
   }
   elementContrib.append(contrib.children)
   contrib.append(stringContrib, elementContrib)

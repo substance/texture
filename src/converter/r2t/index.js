@@ -1,4 +1,4 @@
-import PruneText from './PruneText'
+// import PruneText from './PruneText'
 import WrapAff from './WrapAff'
 import WrapAbstractContent from './WrapAbstractContent'
 import WrapBodyContent from './WrapBodyContent'
@@ -22,7 +22,6 @@ const trafos = [
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
-  ConvertContentLoc,
   ConvertSigBlock,
   ExtractCaptionTitle,
   WrapAff,
@@ -32,8 +31,10 @@ const trafos = [
   WrapBodyContent,
   WrapDispQuoteContent,
   Sec2Heading,
-  PruneText,
+  ConvertContentLoc,
   UpdateDocType,
+  // TODO: is this really necessary again?
+  // PruneText,
 ].map(C => new C())
 
 export function r2t(dom, api) {

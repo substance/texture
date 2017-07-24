@@ -682,9 +682,9 @@
     <element name="disp-quote">
       <ref name="disp-quote-attlist"/>
       <ref name="disp-quote-content"/>
-      <optional>
+      <zeroOrMore>
         <ref name="attrib"/>
-      </optional>
+      </zeroOrMore>
     </element>
   </define>
 

@@ -11,9 +11,11 @@ export default class ContributorsComponent extends NodeComponent {
     let el = $$('div').addClass('sc-contributors')
     let affs = doc.findAll('article-meta > aff-group > aff')
     contribGroup.getChildren().forEach((contrib) => {
-      el.append(
-        this._renderContributor($$, contrib, affs)
-      )
+      if (contrib.type === 'contrib') {
+        el.append(
+          this._renderContributor($$, contrib, affs)
+        )
+      }
     })
     el.append(
       $$('button').addClass('se-metadata-contributor-add')

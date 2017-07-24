@@ -9,19 +9,41 @@ export default class ArticleRecordComponent extends NodeComponent {
     let el = $$('div').addClass('sc-article-info')
 
     let articleMeta = this.props.node
+
+    // TODO: if not present we need either a way to
+    // add these or create and prune on Im-/Export
     let pubDate = articleMeta.findChild('pub-date')
     let volume = articleMeta.findChild('volume')
     let issue = articleMeta.findChild('issue')
-    let fPage = articleMeta.findChild('fpage')
-    let lPage = articleMeta.findChild('lpage')
+    let fpage = articleMeta.findChild('fpage')
+    let lpage = articleMeta.findChild('lpage')
 
-    el.append(
-      this._renderDateEditor($$, pubDate, 'Publication Date'),
-      this._renderTextEditor($$, volume, 'Volume', 'number'),
-      this._renderTextEditor($$, issue, 'Issue' ,'text'),
-      this._renderTextEditor($$, fPage, 'First Page', 'number'),
-      this._renderTextEditor($$, lPage, 'Last Page', 'number')
-    )
+
+    if (pubDate) {
+      el.append(
+        this._renderDateEditor($$, pubDate, 'Publication Date')
+      )
+    }
+    if (volume) {
+      el.append(
+        this._renderTextEditor($$, volume, 'Volume', 'number')
+      )
+    }
+    if (issue) {
+      el.append(
+        this._renderTextEditor($$, issue, 'Issue' ,'text')
+      )
+    }
+    if (fpage) {
+      el.append(
+        this._renderTextEditor($$, fpage, 'First Page', 'number')
+      )
+    }
+    if (lpage) {
+      el.append(
+        this._renderTextEditor($$, lpage, 'Last Page', 'number')
+      )
+    }
     return el
   }
 

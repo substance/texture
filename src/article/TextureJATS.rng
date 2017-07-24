@@ -294,7 +294,7 @@
   </define>
 
   <!--
-    Introduced <aff-group> and <trans-abstract-group>
+    Introduced some wrappers, such as <aff-group>
   -->
   <define name="article-meta">
     <element name="article-meta">
@@ -392,9 +392,8 @@
       <zeroOrMore>
         <ref name="abstract.class"/>
       </zeroOrMore>
-      <!-- we use an explicit trans-abstract-group instead trans-abstract -->
       <zeroOrMore>
-        <ref name="trans-abstract-group"/>
+        <ref name="trans-abstract"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="kwd-group.class"/>
@@ -1165,19 +1164,6 @@
         <ref name="break"/>
       </choice>
     </zeroOrMore>
-  </define>
-
-  <!--
-    Wrapping all <trans-abstract>s into a <trans-abstract-group>
-  -->
-  <define name="trans-abstract-group">
-    <element name="trans-abstract-group">
-      <zeroOrMore>
-        <choice>
-          <ref name="trans-abstract"/>
-        </choice>
-      </zeroOrMore>
-    </element>
   </define>
 
   <!--

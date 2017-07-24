@@ -4,7 +4,6 @@ export default class SigBlockComponent extends NodeComponent {
 
   render($$) {
     const sigBlock = this.props.node
-    const TextNode = this.getComponent('text-node')
 
     let el = $$('div').addClass('sc-sig-block')
     el.append($$(this.getComponent('separator'), {

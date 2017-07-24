@@ -319,9 +319,6 @@
         <ref name="author-notes"/>
       </optional>
       <zeroOrMore>
-        <ref name="pub-date"/>
-      </zeroOrMore>
-      <zeroOrMore>
         <ref name="volume"/>
       </zeroOrMore>
       <zeroOrMore>
@@ -362,9 +359,7 @@
           <ref name="supplementary-material"/>
         </choice>
       </zeroOrMore>
-      <optional>
-        <ref name="history"/>
-      </optional>
+      <ref name="history"/>
       <optional>
         <ref name="permissions"/>
       </optional>

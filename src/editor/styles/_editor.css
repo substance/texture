@@ -1,0 +1,62 @@
+
+.sc-editor .se-toolbar-wrapper {
+  z-index: 1000;
+  border-bottom: 1px solid #e1e4e8;
+  padding: 3px;
+  padding-bottom: 4px;
+}
+
+.sc-editor .sc-body-content > .sc-container-editor {
+  padding:  20px 0;
+  margin: 0 auto;
+}
+
+/* Add padding to each child except last one */
+.sc-editor .sc-container-editor > * {
+  margin: 10px 0;
+}
+
+.sc-editor {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.sc-editor > .sc-context-section {
+  flex: 0 2 400px;
+  background: #fafbfc;
+  border-left: 1px solid #e1e4e8;
+}
+
+.sc-editor > .se-main-section {
+  flex: 1 1 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sc-editor > .se-main-section > .se-toolbar-wrapper {
+  flex: 0 0 40px;
+}
+
+.sc-editor > .se-main-section > .sc-scroll-pane {
+  flex: 1 1 0;
+}
+
+.sc-editor > .se-main-section > .sc-workflow-pane {
+  flex: 0 0 0;
+}
+
+
+.sc-editor .se-main-section .sc-scroll-pane {
+  position: relative;
+}
+
+.sc-front {
+  padding-top: 30px;
+}
+
+/* General editor styles */
+.sc-heading {
+  font-family: 'Avenir Next', Helvetica;
+}

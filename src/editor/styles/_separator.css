@@ -1,0 +1,22 @@
+.sc-separator {
+  position: relative;
+  height: 3px;
+  margin: 20px 0px;
+  background: #e1e4e8;
+}
+
+.sc-separator .se-label {
+  position: absolute;
+  width: 200px;
+  top: -5px;
+  left: 50%;
+  margin-left: -100px;
+  padding: 0px 10px;
+  background: #fff;
+  font-family: 'Avenir Next';
+  font-size: 10px;
+  font-weight: 500;
+  color: #afafaf ;
+  text-transform: uppercase;
+  text-align: center;
+}

@@ -1,0 +1,1719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.0 20120330//EN" "D:\CLIENTES\dtd\JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" article-type="research-article"
+  dtd-version="1.0" specific-use="sps-1.5" xml:lang="es">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">ric</journal-id>
+      <journal-title-group>
+        <journal-title>Revista ingeniería de construcción</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Rev. ing.
+          constr.</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">0718-5073</issn>
+      <publisher>
+        <publisher-name>Pontificia Universidad Católica de Chile. Departamento de Ingeniería
+          y Gestión de la Construcción</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.4067/S0718-50732016000100001</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Artículo Original</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Análisis de las causas y consecuencias de los accidentes laborales
+          ocurridos en dos proyectos de construcción</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>González</surname>
+            <given-names>A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Bonilla</surname>
+            <given-names>J.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+          <xref ref-type="corresp" rid="c1"/>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Quintero</surname>
+            <given-names>M.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Reyes</surname>
+            <given-names>C.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Chavarro</surname>
+            <given-names>A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <aff id="aff1">
+          <label>1</label>
+          <institution content-type="orgname">Universidad Cooperativa de
+            Colombia</institution>
+          <addr-line>
+            <named-content content-type="city">Neiva</named-content>
+          </addr-line>
+          <country country="CO">Colombia</country>
+          <institution content-type="original">Universidad Cooperativa de Colombia, sede
+            Neiva. COLOMBIA</institution>
+          <institution content-type="normalized">Universidad Cooperativa de
+            Colombia</institution>
+        </aff>
+      </contrib-group>
+      <author-notes>
+        <corresp id="c1">Autor de Correspondencia: Docente, Investigadora de la Universidad
+          Cooperativa de Colombia sede Neiva. E-mail:
+            <email>jasmin.bonillas@campusucc.edu.co</email>
+        </corresp>
+      </author-notes>
+      <pub-date pub-type="epub-ppub">
+        <season>Jan-Apr</season>
+        <year>2016</year>
+      </pub-date>
+      <volume>31</volume>
+      <issue>1</issue>
+      <fpage>5</fpage>
+      <lpage>16</lpage>
+      <history>
+        <date date-type="received">
+          <day>15</day>
+          <month>10</month>
+          <year>2015</year>
+        </date>
+        <date date-type="accepted">
+          <day>10</day>
+          <month>03</month>
+          <year>2016</year>
+        </date>
+      </history>
+      <permissions>
+        <license license-type="open-access"
+          xlink:href="http://creativecommons.org/licenses/by/4.0/" xml:lang="es">
+          <license-p>Este es un artículo publicado en acceso abierto bajo una licencia
+            Creative Commons</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <title>Resumen:</title>
+        <p>Las labores que se realizan en los proyectos de construcción son consideradas de
+          alto riesgo al facilitar la ocurrencia de accidentes laborales que afectan la
+          integridad física, mental y social de los colaboradores como la productividad de
+          las empresas. Por tal motivo, el propósito de este artículo es analizar las
+          causas y consecuencias de los accidentes laborales ocurridos durante el segundo
+          semestre del año 2012 en dos proyectos de construcción de Neiva. El alcance fue
+          de tipo documental considerando como fuente de información los soportes de los
+          accidentes laborales reportados ante la Administradora de Riesgo Laborales
+          (ARL); para determinar las causas que dieron origen a dichos accidentes se
+          utilizó el modelo de Frank E. Bird. Se analizaron 117 accidentes en los que se
+          identificaron 195 faltas de control, 136 factores personales, 112 factores del
+          trabajo, 151 actos inseguros y 54 condiciones inseguras; lo anterior teniendo en
+          cuenta que en algunos accidentes se presentaron más de una causa. De esta manera
+          se concluye que el mayor porcentaje de accidentes de trabajo, ha sido generado
+          por faltas de control seguidos por actos inseguros. Por tal motivo se recomienda
+          la realización de programas de gestión de riesgos prioritarios, basados en una
+          adecuada identificación de peligros, que permitan mitigar y controlar los
+          riesgos, desarrollando a la vez en los trabajadores una cultura de autocuidado.
+        </p>
+      </abstract>
+      <kwd-group xml:lang="es">
+        <title>Palabras clave:</title>
+        <kwd>Accidente laboral</kwd>
+        <kwd>causas básicas</kwd>
+        <kwd>causas inmediatas</kwd>
+        <kwd>faltas de control</kwd>
+        <kwd>factores personales</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec sec-type="intro">
+      <title>1. Introducción</title>
+      <p> El sector de la construcción cuenta con un conjunto de riesgos laborales propios de
+        la actividad, los cuales son pertinentes al trabajo realizado en altura, labores de
+        excavación, el izado de materiales y el carácter temporal de sus centros de trabajo,
+        entre otros; lo anterior conlleva a que la ejecución del sistema de gestión de la
+        seguridad y salud en el trabajador de dicho sector, sea aplicado de manera diferente
+          (<xref ref-type="bibr" rid="B3">Armengou y Cuéllar, 2002</xref>). Por ello, es
+        claro resaltar que las actividades realizadas en las obras de construcción son
+        consideradas de alto riesgo y que por tanto pueden desencadenar accidentes de
+        trabajo.</p>
+      <p>Los accidentes laborales pueden generarse por causas inmediatas o básicas: las
+        inmediatas son las que producen el accidente de manera directa y están conformadas
+        por actos inseguros (comportamientos inadecuados de los trabajadores que pueden
+        originar un incidente laboral) y condiciones inseguras (Instalaciones, equipos,
+        maquinaria y herramientas que se encuentran en mal estado y ponen en riesgo de
+        sufrir un accidente a los trabajadores). Pero para lograr una solución efectiva de
+        los accidentes de trabajo es fundamental el reconocimiento y control de las causas
+        básicas, las cuales dan origen a las causas inmediatas integradas por factores
+        personales (Hábitos de trabajo incorrectos, Uso incorrecto de equipos, herramientas
+        e instalaciones; defectos físicos o mentales, deficiencias en la audición etc.) y
+        factores del trabajo (Supervisión y liderazgo deficiente; Políticas, procedimientos,
+        guías o practicas inadecuadas; Planeación y/o programación inadecuada del trabajo,
+        etc.) (<xref ref-type="bibr" rid="B5">Chinchilla, 2002</xref>).</p>
+      <p> Según las estadísticas de la Organización Internacional del Trabajo (OIT), en el
+        informe del Día mundial sobre la seguridad y la salud en el trabajo, “Alrededor del
+        4% del Producto Interno Bruto (PIB) mundial se pierde con el costo de las bajas, las
+        muertes y las enfermedades en forma de ausencias al trabajo, tratamientos y
+        prestaciones por incapacidad y por fallecimiento”.</p>
+      <p>La teoría de la pirámide de la accidentalidad desarrollada por Bird en 1969, reveló
+        que por cada accidente grave hay 10 accidentes leves, 30 accidentes con daño a la
+        propiedad y 600 accidentes sin daños ni pérdidas visibles (<xref ref-type="bibr"
+          rid="B5">Chinchilla, 2002</xref>). A este respecto refiere que al comparar la
+        cantidad de incidentes que no ocasionaron lesiones a las personas, con aquellos que
+        si lo ocasionaron; se considera que la implementación de un sistema de análisis de
+        los incidentes puede ser un medio fundamental para prevenir o controlar los
+        accidentes laborales.</p>
+      <p> Por otro lado, mencionan que en la salud y seguridad industrial actualmente es común
+        la práctica de las normas correspondientes; no obstante, dichas normas resultan en
+        numerables ocasiones mal aplicadas, generando dificultades en el desarrollo del
+        proyecto asociados a riesgos que si no son evaluados termina afectando el normal
+        desarrollo de la construcción. Los autores refieren los atrasos en la obra, las
+        pérdidas económicas y los sobrecostos como los principales problemas derivados por
+        la ausencia de planeación del riesgo en seguridad industrial y salud ocupacional.
+        Esta investigación señala que las condiciones de seguridad de obras en el contexto
+        colombiano son deficientes y por lo tanto, generan accidentes que provocan lesiones
+        de todo tipo, incapacidad y muertes. En este sentido, <xref ref-type="bibr" rid="B4"
+          >Buendía (2013)</xref> refiere la importancia de identificar las causas de los
+        accidentes en el área de la construcción, haciendo énfasis en que se debe buscar el
+        verdadero origen de todas las causas que desencadenan el incidente. Por su parte,
+        sostiene que la evaluación de riesgos es un proceso que orienta la toma de
+        decisiones sobre el tipo de acciones preventivas que se deben tomar para minimizar
+        los riesgos laborales.</p>
+      <p>Destaca que la industria de la construcción es una de las actividades laborales con
+        mayor riesgo, demostrado a partir de la elevada incidencia de los accidentes
+        presentados, que ocasionan pérdidas humanas y materiales. Las estadísticas son
+        fundamentales para identificar las causas de los accidentes y para orientar los
+        posibles planes de intervención, así como su efectividad.</p>
+      <p>Ellos afirman que para el año 2011, en Colombia el sector de la construcción obtuvo
+        la tasa de accidentalidad más alta, del 22.71%, de los cuales el 11% de accidentes
+        fueron severos o mortales. Durante el año 2012 en Colombia, de los 532 muertos
+        registrados por accidentes de trabajo, 136 corresponden al sector inmobiliario, 125
+        al de la construcción, mientras que en los campos de transporte, almacenamiento y
+        comunicaciones se presentó un total de 78 víctimas mortales. Lo que indica que en el
+        país 44 personas murieron cada mes por accidentes de trabajo. Estas cifras forman
+        parte de los reportes que las 10 Administradoras de Riesgos Laborales.</p>
+      <p>La federación de Aseguradores Colombianos refieren en una de sus publicaciones, que
+        en el año 2013 cada once horas y media un trabajador murió debido a un accidente
+        laboral y que el promedio de accidentalidad laboral en Colombia correspondió de 62
+        cada hora, lo que equivale a 1.487 casos diarios, debido a lo anterior se concluye
+        que el año pasado se presentaron 543.079 accidentes de trabajo en el país.</p>
+      <p>Lo anterior demuestra la necesidad de estudiar la accidentalidad en el sector de la
+        construcción, y con base en este estudio generar un análisis detallado de las causas
+        que originan los accidentes de trabajo, permitiendo que las empresas adopten este
+        proyecto como base para implementar medidas de prevención y control de la
+        accidentalidad, puesto que, ellos afirman, una obra bien organizada es, en general,
+        una obra segura, planificada, dirigida y controlada.</p>
+      <p>A partir de los resultados que arroja esta investigación, es importante valorar los
+        sistemas de protección respecto a la salud ocupacional y los servicios psicológicos.
+        Por eso este artículo es considerado importante al brindar un mayor conocimiento y
+        dar a conocer la necesidad que tienen las empresas del sector de la construcción, en
+        la implementación y seguimiento de un sistema de seguridad y salud en el trabajo
+        eficaz, en el cual se incluya capacitaciones, estimulación y simulacros que permitan
+        representar posibles riesgos laborales para luego ser prevenidos; además de
+        incorporar en el proceso de selección de personal un protocolo de evaluación
+        referente al funcionamiento ejecutivo, de tal manera que permita contar con un
+        personal idóneo que lleve a disminuir la accidentalidad en las obras, mejorando las
+        condiciones de trabajo, el bienestar de los colaboradores, y contribuyendo así en la
+        mejora de la productividad de las empresas constructoras.</p>
+    </sec>
+    <sec sec-type="materials|methods">
+      <title>2. Materiales y métodos</title>
+      <sec>
+        <title>2.1 Tipo de investigación:</title>
+        <p>El presente estudio se realizó desde un enfoque cuantitativo-descriptivo,
+          integrado al método de causalidad de Bird (<xref ref-type="bibr" rid="B5"
+            >Chinchilla, 2002</xref>). Consta de cinco variables las cuales manifiestan
+          el origen de las razones por las cuales se presentó el accidente, se describe el
+          accidente, las consecuencias en la persona, en la propiedad y ambiente de
+          trabajo: Falta de control, causas básicas, causas inmediatas, accidentes y
+          pérdidas</p>
+      </sec>
+      <sec>
+        <title>2.2 Población o unidad de análisis:</title>
+        <p> El alcance de esta investigación fue documental, al utilizar como fuente de
+          información los reportes de accidentes de trabajo ocurridos en dos proyectos de
+          construcción durante el segundo semestre de 2012, registrados ante la ARL,
+          convirtiéndose en la unidad de análisis de este estudio, la cual nos aporta la
+          siguiente información: fecha del accidente, descripción del accidente, nombre
+          del accidentado, cargo, parte del cuerpo afectada, tipo de lesión, agente del
+          accidente, mecanismo o forma del accidente.</p>
+      </sec>
+      <sec>
+        <title>2.3 Procedimiento:</title>
+        <p> Esta investigación corresponde a una revisión documental, ya que para efectuar
+          el análisis de las causas de los accidentes de trabajo ocurridos en los dos
+          proyectos de construcción, durante el segundo semestre del 2012, se utilizaron
+          como objeto de estudio los Formatos Únicos de reporte de Accidentes de Trabajo
+          (FURAT) (Ministerio de Protección social, 2005) que emite la aseguradora de
+          riesgos</p>
+        <p>laborales ARL; en este caso no se efectuó entrevista a los testigos y a los
+          lesionados, como tampoco se llevó a cabo un estudio del sitio del accidente, de
+          las herramientas y equipos involucrados, debido a que la investigación se está
+          realizando en un tiempo posterior a la ocurrencia de los eventos o sucesos. Para
+          comprender mejor el fenómeno de los accidentes laborales se ha tenido en cuenta
+          el modelo de causalidad de perdidas accidentales desarrollado por Frank E. Bird
+            (<xref ref-type="bibr" rid="B5">Chinchilla, 2002</xref>) el cual permite
+          encontrar el origen de los accidentes.</p>
+      </sec>
+      <sec>
+        <title>2.4 Instrumentos:</title>
+        <p>Para el desarrollo de la presente investigación, se utilizaron como instrumentos,
+          los FURAT (Formatos Únicos de Reporte de Accidentes de Trabajo) (Ministerio de
+          Protección social, 2005) reportados a la Aseguradora de Riesgos Laborales
+          durante el segundo semestre del año 2012; la matriz de análisis de causas de
+          accidentes de trabajo; y el documento utilizado por la ARL constituido por dos
+          métodos, el ILCI (International Loss Control Institute) empleado para el
+          análisis de las pérdidas y de las causas de los accidentes e incidentes de
+          trabajo y el Método Normativo Americano, para codificar las causas directas y
+          categorías analíticas.</p>
+      </sec>
+    </sec>
+    <sec sec-type="results">
+      <title>3. Resultados</title>
+      <p>El reporte estuvo conformada por 117 casos de accidentalidad, de los cuales 116 casos
+        fueron presentados por sujetos de sexo masculino y 1 caso fue representado por una
+        mujer (<xref ref-type="table" rid="t1">Tabla 1</xref>). Es necesario resaltar que
+        las actividades de construcciones civiles generalmente son realizadas por población
+        del género masculino.</p>
+
+      <table-wrap id="t1">
+        <label>Tabla 1</label>
+        <caption>
+          <title>Género de las personas pertenecientes a dos construcciones
+            civiles</title>
+        </caption>
+        <table frame="border" rules="all">
+          <colgroup width="25%">
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="center">CONSTRUCCIONES</th>
+              <th align="center">MASCULINO</th>
+              <th align="center">FEMENINO</th>
+              <th align="center">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center">Construcción 1</td>
+              <td align="center">62</td>
+              <td align="center">1</td>
+              <td align="center">63</td>
+            </tr>
+            <tr>
+              <td align="center">Construcción 2</td>
+              <td align="center">54</td>
+              <td align="center">0</td>
+              <td align="center">54</td>
+            </tr>
+            <tr>
+              <td align="center">Total</td>
+              <td align="center">116</td>
+              <td align="center">1</td>
+              <td align="center">117</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+
+      <p>Como se observa en la <xref ref-type="table" rid="t2">Tabla 2</xref>, los accidentes
+        laborales presentados en los dos proyectos de construcción tienen un porcentaje
+        similar, indicando la presencia de los mismos factores de riesgos que llevan a la
+        accidentalidad.</p>
+
+      <table-wrap id="t2">
+        <label>Tabla 2</label>
+        <caption>
+          <title>Número de accidentes laborales por proyecto de construcción</title>
+        </caption>
+        <table frame="border" rules="all">
+          <colgroup width="33%">
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>CONSTRUCCIONES</th>
+              <th>No DE CASOS</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Construcción 1</td>
+              <td>63</td>
+              <td>54</td>
+            </tr>
+            <tr>
+              <td>Construcción 2</td>
+              <td>54</td>
+              <td>46</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>117</td>
+              <td>100</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+
+      <p>El rango de edades donde más se presentan los casos de accidentes laborales está
+        comprendido entre los 18 a 35 años representando el 65% de la población (<xref
+          ref-type="fig" rid="f1">Figura 1</xref>), estos datos identifican que los casos
+        de accidentalidad se presentan con mayor frecuencia en la población joven.</p>
+      <p>
+        <fig id="f1">
+          <label>Figura 1</label>
+          <caption>
+            <title>Casos de accidentes por rango de edades. Fuente: los autores.</title>
+          </caption>
+          <graphic xlink:href="0718-5073-ric-31-01-0005-gf01.tif"/>
+        </fig>
+      </p>
+      <p>La frecuencia de los datos indica que las manos y los ojos son las partes del cuerpo
+        con mayor afectación (<xref ref-type="table" rid="t3">Tabla 3</xref>), ya que son
+        los miembros con más exposición durante las actividades de construcción.</p>
+
+      <table-wrap id="t3">
+        <label>Tabla 3</label>
+        <caption>
+          <title>Cantidad de accidentes laborales según la parte del cuerpo
+            afectada</title>
+        </caption>
+        <table frame="border" rules="all">
+          <colgroup width="33%">
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="left">PARTE DEL CUERPO AFECTADA</th>
+              <th align="center">No. DE CASOS</th>
+              <th align="center">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Manos</td>
+              <td align="center">23*</td>
+              <td align="center">20</td>
+            </tr>
+            <tr>
+              <td>Ojos</td>
+              <td align="center">21*</td>
+              <td align="center">18</td>
+            </tr>
+            <tr>
+              <td>Tronco</td>
+              <td align="center">18*</td>
+              <td align="center">15</td>
+            </tr>
+            <tr>
+              <td>Pies</td>
+              <td align="center">15</td>
+              <td align="center">13</td>
+            </tr>
+            <tr>
+              <td>Miembros Inferiores</td>
+              <td align="center">12</td>
+              <td align="center">10</td>
+            </tr>
+            <tr>
+              <td>Miembros Superiores</td>
+              <td align="center">8</td>
+              <td align="center">7</td>
+            </tr>
+            <tr>
+              <td>Cabeza</td>
+              <td align="center">7</td>
+              <td align="center">6</td>
+            </tr>
+            <tr>
+              <td>Lesiones Generales</td>
+              <td align="center">7</td>
+              <td align="center">6</td>
+            </tr>
+            <tr>
+              <td>Ubicaciones Múltiples</td>
+              <td align="center">3</td>
+              <td align="center">2</td>
+            </tr>
+            <tr>
+              <td>Abdomem</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td>Tórax</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td>Cabeza-Tronco</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <bold>Total</bold>
+              </td>
+              <td align="center">
+                <bold>117</bold>
+              </td>
+              <td align="center">
+                <bold>100</bold>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+
+      <p> El tipo de lesión más frecuente ocasionado en los casos de accidentes laborales son
+        los Golpes, contusiones o aplastamientos identificados en el 43% de los accidentes
+        estudiados (<xref ref-type="table" rid="t4">Tabla 4</xref>), estos tipos de lesiones
+        ocasionan perturbaciones en la salud de los trabajadores.</p>
+
+      <table-wrap id="t4">
+        <label>Tabla 4</label>
+        <caption>
+          <title>Tipo de lesión por los accidentes presentados</title>
+        </caption>
+        <table frame="border" rules="all">
+          <colgroup width="33%">
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>TIPO DE LESION</th>
+              <th align="center">No. DE CASOS</th>
+              <th align="center">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Golpe, contusión o aplastamiento</td>
+              <td align="center">50</td>
+              <td align="center">43</td>
+            </tr>
+            <tr>
+              <td>Trauma superficial</td>
+              <td align="center">23</td>
+              <td align="center">19</td>
+            </tr>
+            <tr>
+              <td>Torcedura, esguince o desgarro</td>
+              <td align="center">21</td>
+              <td align="center">18</td>
+            </tr>
+            <tr>
+              <td>Herida</td>
+              <td align="center">17</td>
+              <td align="center">14</td>
+            </tr>
+            <tr>
+              <td>Otro</td>
+              <td align="center">2</td>
+              <td align="center">2</td>
+            </tr>
+            <tr>
+              <td>Efecto de la electricidad</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td>Envenenamiento - intoxicación</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td>Fractura</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td>Herida - golpe, contusión</td>
+              <td align="center">1</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <bold>Total</bold>
+              </td>
+              <td align="center">
+                <bold>117</bold>
+              </td>
+              <td align="center">
+                <bold>100</bold>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+
+      <p>Según la <xref ref-type="table" rid="t3">Tabla 3</xref>, se reportaron 75 casos de
+        Como se observa en la <xref ref-type="table" rid="t2">Tabla 2</xref>, los mecanismos
+        accidentalidad, los cuales se dan por la mala manipulación causantes de los
+        accidentes con mayor frecuencia son las de materiales o sustancias. Caídas de
+        objetos, seguido de las pisadas, choques o golpes.</p>
+      <p>En la <xref ref-type="table" rid="t1">Tabla 1</xref>, se identifica que el mayor
+        porcentaje de las faltas de control, se da en el análisis y procedimientos de
+        trabajo con una frecuencia de 58 casos de los 117 accidentes y en las observaciones
+        planeadas del trabajo con 50 casos de los 117 accidentes estudiados.</p>
+      <p>Las causas básicas y los factores personales con mayor frecuencia indican que de los
+        117 casos estudiados, 70 se deben a la falta de juicio de los trabajadores, la cual
+        es causante de los accidentes laborales (<xref ref-type="table" rid="t2">Tabla
+          2</xref>). Los trabajadores no tienen un ritmo de trabajo adecuado mientras
+        laboran y no son conscientes de los riesgos a los que se exponen en cada
+        actividad.</p>
+      <p>La causas básicas-factores del trabajo que más inciden en los accidentes laborales
+        estudiados, fueron la Programación o planificación e Instrucción / orientación y/o
+        entrenamiento deficiente representadas en 35 y 23 casos de los 117 accidentes
+        estudiados respectivamente (<xref ref-type="table" rid="t3">Tabla 3</xref>). También
+        se registró que en varios accidentes se identifican causas básicas-factores del
+        trabajo.</p>
+      <p>Las causas básicas que son representativas en los accidentes laborales son los
+        factores personales representadas con el 55% de la incidencia en los casos de los
+        accidentes (<xref ref-type="fig" rid="f2">Figura 2</xref>).</p>
+      <p>
+        <fig id="f2">
+          <label>Figura 2</label>
+          <caption>
+            <title>Causas básicas que incluen en los accidentes presentados. Fuente: los
+              autores</title>
+          </caption>
+          <graphic xlink:href="0718-5073-ric-31-01-0005-gf02.tif"/>
+        </fig>
+      </p>
+      <p>Las causas inmediatas- actos inseguros del trabajo, con mayor frecuencia en los
+        accidentes laborales estudiados, fueron la Falta de asegurar y No usar equipo de
+        protección personal representadas en 38 y 29 casos de los 117 accidentes estudiados
+        respectivamente (<xref ref-type="table" rid="t1">Tabla 1</xref>).</p>
+      <p>Las causas inmediatas- condiciones inseguras del trabajo con más frecuencia en los
+        accidentes laborales estudiados, fueron las protecciones y barreras inadecuadas y el
+        equipo de protección inadecuado o impropio representadas en 15 y 13 casos de los 117
+        accidentes estudiados respectivamente. También podemos identificar que en varios
+        accidentes se identifican varias causas inmediatas-condiciones inseguras.</p>
+      <p>De las causas inmediatas encontramos que los accidentes son en su mayoría ocasionados
+        por los actos inseguros el 74%, ocurrieron por fallas humanas, las personas
+        desobedecen las prácticas y los procedimientos seguros sin tener en cuenta que
+        cuando incurren en sus actividades laborales pueden sufrir un accidente (<xref
+          ref-type="fig" rid="f3">Figura 3</xref>).</p>
+      <p>
+        <fig id="f3">
+          <label>Figura 3</label>
+          <caption>
+            <title>Causas inmediatas que inciden en los accidentes presentados. Fuente:
+              los autores.</title>
+          </caption>
+          <graphic xlink:href="0718-5073-ric-31-01-0005-gf03.tif"/>
+        </fig>
+      </p>
+      <p>La <xref ref-type="table" rid="t2">Tabla 2</xref>, nos indica que el mayor índice de
+        accidentalidad laboral entre los trabajadores se presenta el día lunes, esto debido
+        posiblemente al ser el día de iniciación de jornada laboral después de la jornada de
+        descanso del fin de semana, por lo cual el organismo humano tarda un tiempo en
+        adaptarse de nuevo al puesto de trabajo.</p>
+    </sec>
+    <sec sec-type="conclusions|discussion">
+      <title>4. Discusión y conclusiones</title>
+      <p> De acuerdo a los resultados obtenidos en la presente investigación, se encontró que
+        de los 117 accidentes laborales analizados, las manos y los ojos han sido las partes
+        más afectadas, con un total de 23 y 21 lesiones respectivamente. Con respecto a las
+        manos se considera que esto se debe a que son las partes del cuerpo primordiales
+        para la ejecución de toda actividad, específicamente de manufactura y uno de los
+        principales sectores donde se presentan accidentes laborales reportados a las ARL es
+        la construcción con 10.46%; por otro lado, los ojos son la segunda parte del cuerpo
+        más afectadas debido a la presencia de cuerpos extraños que se presentan en la
+        realización de las actividades en dicho sector. En cuanto a las causas se
+        identificaron 195 faltas de control, siendo las más relevantes la falta de Análisis
+        y procedimientos de trabajo, observaciones planeadas del trabajo y entrenamiento de
+        los trabajadores; 248 causas básicas, de las cuales 136 corresponden a factores
+        personales y 112 a factores del trabajo; 205 causas inmediatas, de las cuales 151
+        fueron por actos inseguros y 54 por condiciones inseguras.</p>
+      <p> De esta manera se concluye que la ocurrencia de los accidentes de trabajo han sido
+        generados en mayor parte por faltas de control, seguido de actos inseguros; que como
+        lo define <xref ref-type="bibr" rid="B5">Chinchilla (2002)</xref>, se deben a todo
+        tipo de acciones u omisiones cometidas por las personas que posibilitan que se
+        produzcan los accidentes; teniendo en cuenta lo anterior, la edad de los
+        trabajadores es un aspecto relevante ya que la presente investigación y otros
+        autores (<xref ref-type="bibr" rid="B2">Agencia Europea para la Seguridad y Salud en
+          el Trabajo, 2007</xref>) coinciden en que los trabajadores jóvenes (de 18 a 35
+        años) son los que sufren más accidentes laborales, debido a la falta de experiencia,
+        la falta de concientización de los peligros y riesgos presentes en los puestos de
+        trabajo. El tercer lugar de las principales causas de los accidentes laborales
+        analizados se debe a factores personales que tienen que ver con la capacidad del
+        trabajador (capacitación, destreza, aptitud, entre otros). Los principales
+        mecanismos causantes de los accidentes de trabajo son caídas de objetos (29%)
+        seguido de pisadas, choques o golpes (24%); resultados similares fueron encontrados
+        por otros autores (<xref ref-type="bibr" rid="B9">Cruz et al., 2009</xref>).</p>
+      <p> La falta de control sobre las actividades ocasiona una mayor exposición al riesgo,
+        cuando no se implementan medidas de control o barreras de control el trabajador está
+        totalmente expuesto a los riesgos asociados a la actividad. De acuerdo a los
+        estudios realizados se encontró que uno de los atributos que más se relacionaba con
+        la magnitud del riesgo percibido correspondía al temor, siendo evidente en
+        actividades como no usar los elementos de protección individual, el trabajar en
+        espacios de baja iluminación, el uso de instalaciones eléctricas en mal estado y la
+        exposición a gases y vapores, la magnitud del riesgo es alto junto con el temor. Lo
+        anterior puede presentarse debido a que las actividades estudiadas por Slovic et
+        al., correspondían a aquellas situaciones cotidianas a las que se expone la
+        población en general, mientras que las actividades objeto de este estudio,
+        corresponden a aquellas específicas a la población trabajadora en el sector de la
+        construcción, donde se pueden encontrar mayores beneficios para los expuestos.</p>
+      <p> Otro atributo que se menciona en los estudios realizados es el conocimiento por los
+        expuestos, donde en la mayoría de los estudios realizados ha encontrado que se
+        percibe mayor riesgo en aquellas actividades que se perciben como más conocidas. Sin
+        embargo, en este estudio el atributo conocido por los expuestos se encontró en un
+        valor alto de conocimiento, mientras que las actividades de exposición a ruido,
+        exposición a polvo, desorden en la obra y manipulación de objetos y herramientas
+        presentaron una magnitud de riesgo baja. De acuerdo a los resultados obtenidos en
+        este estudio, se evidencia que cuando se percibe que las consecuencias de alguna
+        actividad son inmediatas, los trabajadores manifiestan que la magnitud del riesgo es
+        más alta, mientras que al percibir que las consecuencias son demoradas, la gravedad
+        del daño se percibe como menor. En este sentido los trabajadores estarían aludiendo
+        a un sentimiento de inmediatez de las consecuencias para determinar la gravedad del
+        daño, que a un grado de temor o rechazo por aquellas actividades que se consideren
+        como más dañinas para la salud y el bienestar, al igual que lo encontrado en los
+        estudios tradicionales de percepción del riesgo.</p>
+      <p> Relacionando los resultados de la presente investigación y <xref ref-type="bibr"
+          rid="B8">Consumer (2003)</xref>, se identifica que los lunes son los días en los
+        se ha sufrido mayor cantidad de accidentes laborales; se afirma que tiene que ver
+        con la pérdida del ritmo que diariamente llevan los trabajadores durante sus
+        funciones, ya que al comenzar la actividad laboral tras un fin de semana de
+        descanso, el organismo humano tarda un tiempo en adaptarse al ejercicio en el
+        trabajo y a los peligros que lleva aparejados. Además de lo anterior, se presume que
+        el consumo de alcohol el fin de semana es muy común en los trabajadores del sector
+          (<xref ref-type="bibr" rid="B7">Comisión Ejecutiva Confederal de UGT,
+          2011</xref>) y esta acción conlleva a que el periodo de descanso, sueño y de
+        relajación antes de volver al trabajo se haya interrumpido, por tal motivo se
+        considera que dicha versión puede incidir en la ocurrencia de los accidentes.</p>
+      <p>De este modo para que las empresas de construcción cumplan a cabalidad con las
+        actividades requeridas en materia de seguridad y salud en el trabajo, se considera
+        indispensable la disponibilidad de recursos y la constante planificación por parte
+        de los agentes implicados para este estudio en específico. Por los resultados
+        obtenidos en la investigación, se sugiere a dicho sector efectuar un programa de
+        seguridad cuya finalidad se base en la adecuada identificación, reconocimiento,
+        evaluación y control de los diferentes peligros y riesgos que se originen en los
+        lugares de trabajo encaminado a la protección de las manos y los ojos, partes del
+        cuerpo más afectadas durante la ejecución de las actividades; así como también
+        proporcionar a los trabajadores la formación e información necesaria para el
+        desempeño de las funciones en óptimas condiciones de seguridad, en donde la
+        inducción diaria sobre el desarrollo de las actividades a través de una seguridad
+        basada en el comportamiento sea primordial para todos los trabajadores sin excepción
+        alguna, y además emprender programas de sensibilización y concienciación de tomar la
+        seguridad como un valor fundamental de tal manera que se contribuya en la
+        disminución de actos inseguros, que de manera constante se presentan durante el
+        desarrollo de las actividades laborales en los proyectos de construcción.</p>
+      <p> Asimismo, se recomienda a las empresas, elaborar y estandarizar el análisis y los
+        procedimientos de trabajo, especialmente las tareas críticas, las cuales se deben
+        identificar mediante un adecuado estudio de riesgos, que permita valorarlos para
+        diseñar programas de gestión que faciliten su intervención y control. Además como lo
+        indica la <xref ref-type="bibr" rid="B1">Agencia Europea para la Seguridad y la
+          Salud en el Trabajo (2002)</xref> el compromiso de la dirección es esencial para
+        el establecimiento de políticas claras en materia de salud y seguridad y para el
+        suministro de recursos adecuados para su ejecución”.</p>
+      <p>Se considera que la planeación es una de las partes fundamentales que toda
+        organización debe realizar para la prevención de los accidentes laborales, se trata
+        de reunir en un documento, de forma clara y detallada, toda la información
+        indispensable para realizar una actividad preventiva sistemática, coherente y
+        eficaz, frente a los riesgos del trabajo presentes en la actividad de una empresa
+          (<xref ref-type="bibr" rid="B6">Collado, 2008</xref>). El tiempo y el dinero
+        manejados en esta actividad se recuperan obteniendo resultados efectivos y rápidos;
+        es necesario tener claro que no basta con que se plasme en un papel, sino que se
+        lleve también a la práctica y para esto es fundamental que se supervise el
+        desarrollo adecuado del mismo. Los datos reflejados en la presente investigación
+        demuestran la necesidad de emprender el tema de la seguridad y la salud en el
+        trabajo en todas sus dimensiones y con la participación de todos los integrantes de
+        la organización, (empleadores, administradoras de riesgos laborales, contratistas,
+        trabajadores e instituciones de formación) y de esta forma se pueda realizar una
+        propuesta común, que tenga como objetivo mejorar la calidad de vida de los
+        trabajadores del sector, disminuyendo los incidentes de trabajo.</p>
+      <p>Por último, se considera de gran importancia profundizar en una futura investigación
+        el tema relacionado con los comportamientos de las personas y la motivación,
+        teniendo en cuenta que los actos inseguros hacen parte de las principales causas que
+        han generado accidentes laborales en dichos proyectos de construcción y que además
+        estos pueden ir relacionados con la motivación, ya que esta es la fuerza que
+        estimula a una persona a hacer algo provocado bien sea por un estímulo externo que
+        proviene del ambiente, problemas familiares, económicos o generado por procesos
+        mentales del trabajador, etc. Por lo tanto, un estudio psicológico relacionado con
+        dicho tema ayudaría a entender con mayor profundidad las causas básicas relacionadas
+        con los factores personales y las causas inmediatas relacionadas con los actos
+        inseguros de los trabajadores que laboran en este sector, el cual ha sido de gran
+        importancia para la economía del país (Portafolio.co, 2013? pero que a la vez
+        presenta a diario gran cantidad de peligros y riesgos latentes que pueden afectar la
+        integridad física, mental y social, de los colaboradores.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>Referencias</title>
+      <ref id="B1">
+        <mixed-citation>Agencia Europea para la seguridad y Salud en el Trabajo (2002),
+          Prevencion de Accidentes Laborales, 2002. (En línea). Disponible en: <ext-link
+            ext-link-type="uri"
+            xlink:href="https://osha.europa.eu/es/publications/magazine/4"
+            >https://osha.europa.eu/es/publications/magazine/4</ext-link> [Consultado: 5
+          Septiembre 2014].</mixed-citation>
+        <element-citation publication-type="webpage">
+          <person-group person-group-type="author">
+            <collab>Agencia Europea para la seguridad y Salud en el Trabajo</collab>
+          </person-group>
+          <year>2002</year>
+          <source>Prevencion de Accidentes Laborales, 2002</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="https://osha.europa.eu/es/publications/magazine/4"
+              >https://osha.europa.eu/es/publications/magazine/4</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">5 Septiembre
+            2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B2">
+        <mixed-citation>Agencia Europea para la Seguridad y Salud en el Trabajo. (2007),
+          Trabajadores jóvenes: Datos y cifras Exposición a los riesgos y efectos sobre la
+          salud. Disponible en: <ext-link ext-link-type="uri"
+            xlink:href="http://www.navarra.es/NR/rdonlyres/775A941B-AFBA-4A8E-AA9B-8E84507C12C4/160233/FACTS70.pdf"
+            >http://www.navarra.es/NR/rdonlyres/775A941B-AFBA-4A8E-AA9B-8E84507C12C4/160233/FACTS70.pdf</ext-link>.
+          (Consultado: 01 Septiembre 2014).</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <collab>Agencia Europea para la Seguridad y Salud en el Trabajo</collab>
+          </person-group>
+          <year>2007</year>
+          <source>Trabajadores jóvenes: Datos y cifras Exposición a los riesgos y efectos
+            sobre la salud</source>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://www.navarra.es/NR/rdonlyres/775A941B-AFBA-4A8E-AA9B-8E84507C12C4/160233/FACTS70.pdf"
+              >http://www.navarra.es/NR/rdonlyres/775A941B-AFBA-4A8E-AA9B-8E84507C12C4/160233/FACTS70.pdf</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">01 Septiembre
+            2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B3">
+        <mixed-citation>Armengou L., Cuellar O. (2002), “Seguridad y salud en el trabajo
+          construcción; una responsabilidad social de las empresas constructoras”. (En
+          línea). Disponible en: <ext-link ext-link-type="uri"
+            xlink:href="http://www.eben-spain.org/docs/Papeles/X/Armnguo-Olivr.pdf"
+            >http://www.eben-spain.org/docs/Papeles/X/Armnguo-Olivr.pdf</ext-link>.
+          (Consultado: 15 Agosto 2014).</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Armengou</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Cuellar</surname>
+              <given-names>O.</given-names>
+            </name>
+          </person-group>
+          <year>2002</year>
+          <source>“Seguridad y salud en el trabajo construcción; una responsabilidad
+            social de las empresas constructoras”</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://www.eben-spain.org/docs/Papeles/X/Armnguo-Olivr.pdf"
+              >http://www.eben-spain.org/docs/Papeles/X/Armnguo-Olivr.pdf</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">15 Agosto 2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B4">
+        <mixed-citation>Buendía S. (2013), El coordinador en materia de seguridad y salud
+          durante la elaboración del proyecto de obra: pieza angular de la prevención en
+          las obras de construcción. Tesis doctoral. Granada, Facultad de Derecho,
+          Universidad de Granada.</mixed-citation>
+        <element-citation publication-type="thesis">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Buendía</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <year>2013</year>
+          <source>El coordinador en materia de seguridad y salud durante la elaboración
+            del proyecto de obra: pieza angular de la prevención en las obras de
+            construcción</source>
+          <comment>Tesis doctoral</comment>
+          <publisher-loc>Granada</publisher-loc>
+          <publisher-name>Facultad de Derecho, Universidad de Granada</publisher-name>
+        </element-citation>
+      </ref>
+      <ref id="B5">
+        <mixed-citation>Chinchilla, S. (2002), Salud y Seguridad en el trabajo. (En línea).
+          Disponible en: <ext-link ext-link-type="uri"
+            xlink:href="http://books.google.com.co/books?id=Y35TDM74KmUC&amp;printsec=frontcover&amp;hl=es&amp;source=gbs_ge_summary_r&amp;cad=0#v=onepage&amp;q&amp;f= false"
+            >http://books.google.com.co/books?id=Y35TDM74KmUC&amp;printsec=frontcover&amp;hl=es&amp;source=gbs_ge_summary_r&amp;cad=0#v=onepage&amp;q&amp;f=
+            false</ext-link>. (Consultado: 15 agosto 2014).</mixed-citation>
+        <element-citation publication-type="webpage">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chinchilla</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <year>2002</year>
+          <source>Salud y Seguridad en el trabajo</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://books.google.com.co/books?id=Y35TDM74KmUC&amp;printsec=frontcover&amp;hl=es&amp;source=gbs_ge_summary_r&amp;cad=0#v=onepage&amp;q&amp;f= false"
+              >http://books.google.com.co/books?id=Y35TDM74KmUC&amp;printsec=frontcover&amp;hl=es&amp;source=gbs_ge_summary_r&amp;cad=0#v=onepage&amp;q&amp;f=
+              false</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">15 agosto 2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B6">
+        <mixed-citation>Collado S. (2008), Prevención De Riesgos Laborales: Principios y
+          Marco Normativo. (En línea). Disponible en: <ext-link ext-link-type="uri"
+            xlink:href="http://www.ehu.es/documents/2069587/2113963/15_7.pdf"
+            >http://www.ehu.es/documents/2069587/2113963/15_7.pdf</ext-link>.
+          (Consultado: 06 Septiembre 2014).</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Collado</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <year>2008</year>
+          <source>Prevención De Riesgos Laborales: Principios y Marco Normativo</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://www.ehu.es/documents/2069587/2113963/15_7.pdf"
+              >http://www.ehu.es/documents/2069587/2113963/15_7.pdf</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">06 Septiembre
+            2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B7">
+        <mixed-citation>Comisión Ejecutiva Confederal de UGT (2011), Prevención del consumo
+          de alcohol en el lugar de trabajo. (En línea). Disponible en: <ext-link
+            ext-link-type="uri"
+            xlink:href="http://www.ugt.es/actualidad/2012/enero/folleto%20alcoholismo_UGT.pdf"
+            >http://www.ugt.es/actualidad/2012/enero/folleto%20alcoholismo_UGT.pdf</ext-link>.
+          (Consultado: 5 Septiembre 2014)</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <collab>Comisión Ejecutiva Confederal de UGT</collab>
+          </person-group>
+          <year>2011</year>
+          <source>Prevención del consumo de alcohol en el lugar de trabajo</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://www.ugt.es/actualidad/2012/enero/folleto%20alcoholismo_UGT.pdf"
+              >http://www.ugt.es/actualidad/2012/enero/folleto%20alcoholismo_UGT.pdf</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">5 Septiembre
+            2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B8">
+        <mixed-citation>Consumer E. (2003), Los lunes se producen el 23,3% de los accidentes
+          laborales, según las estadísticas de Salud Laboral. (En línea). Disponible en:
+            <ext-link ext-link-type="uri"
+            xlink:href="http://www.consumer.es/web/es/salud/2003/04/07/59786.php"
+            >http://www.consumer.es/web/es/salud/2003/04/07/59786.php</ext-link>.
+          (Consultado: 03 Septiembre 2014).</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Consumer</surname>
+              <given-names>E.</given-names>
+            </name>
+          </person-group>
+          <year>2003</year>
+          <source>Los lunes se producen el 23,3% de los accidentes laborales, según las
+            estadísticas de Salud Laboral</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://www.consumer.es/web/es/salud/2003/04/07/59786.php"
+              >http://www.consumer.es/web/es/salud/2003/04/07/59786.php</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">03 Septiembre
+            2014</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B9">
+        <mixed-citation>Cruz M., Vicente J., Cabrera M., Castillo F. y Cabrera F. (2009),
+          Incidencia de accidentes laborales en trabajadores de la construcción,
+          reportados a la administradora de riesgos laborales, Santo Domingo, Republica
+          Dominicana. (En línea). Disponible en: <ext-link ext-link-type="uri"
+            xlink:href="http://www.bvs.org.do/revistas/rmd/2009/70/02/RMD-2009-70-02-062-065.pdf"
+            >http://www.bvs.org.do/revistas/rmd/2009/70/02/RMD-2009-70-02-062-065.pdf</ext-link>.
+          (Consultado: 02 Septiembre 2014).</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cruz</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Vicente</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Cabrera</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Castillo</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Cabrera</surname>
+              <given-names>F.</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <source>Incidencia de accidentes laborales en trabajadores de la construcción,
+            reportados a la administradora de riesgos laborales, Santo Domingo,
+            Republica Dominicana</source>
+          <comment>(En línea)</comment>
+          <comment>Disponible en: <ext-link ext-link-type="uri"
+              xlink:href="http://www.bvs.org.do/revistas/rmd/2009/70/02/RMD-2009-70-02-062-065.pdf"
+              >http://www.bvs.org.do/revistas/rmd/2009/70/02/RMD-2009-70-02-062-065.pdf</ext-link>
+          </comment>
+          <date-in-citation content-type="access-date">02 Septiembre
+            2014</date-in-citation>
+        </element-citation>
+      </ref>
+    </ref-list>
+  </back>
+  <sub-article article-type="translation" id="s1" xml:lang="en">
+    <front-stub>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Original Article</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Analysis of the causes and consequences of accidents occurring in two
+          constructions projects</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>González</surname>
+            <given-names>A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Bonilla</surname>
+            <given-names>J.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">1</xref>
+          <xref ref-type="corresp" rid="c2"/>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Quintero</surname>
+            <given-names>M.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Reyes</surname>
+            <given-names>C.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Chavarro</surname>
+            <given-names>A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">1</xref>
+        </contrib>
+        <aff id="aff2">
+          <label>1</label>
+          <institution content-type="orgname">Universidad Cooperativa de
+            Colombia</institution>
+          <addr-line>
+            <named-content content-type="city">Neiva</named-content>
+          </addr-line>
+          <country country="CO">Colombia</country>
+          <institution content-type="original">Universidad Cooperativa de Colombia, sede
+            Neiva. COLOMBIA</institution>
+          <institution content-type="normalized">Universidad Cooperativa de
+            Colombia</institution>
+        </aff>
+      </contrib-group>
+      <author-notes>
+        <corresp id="c2">Autor de Correspondencia: Docente, Investigadora de la Universidad
+          Cooperativa de Colombia sede Neiva. E-mail:
+            <email>jasmin.bonillas@campusucc.edu.co</email>
+        </corresp>
+      </author-notes>
+      <abstract>
+        <title>Abstract:</title>
+        <p>Work done on construction sites is considered to be high risk, resulting in
+          instances of occupational accidents that impact the physical, mental and social
+          integrity of the workers as well as company productivity. Therefore, the
+          objective of this article is to analyze the causes and consequences of
+          occupational accidents occured in the second semester of 2012 in two
+          construction projects in Neiva, Colombia. The approach is documentary, supported
+          by information sources of occupational accidents reported to the Administration
+          of Occupational Accidents (ARL in Spanish); the model developed by Frank E. Bird
+          was used to determine the causes of these accidents. A total of 117 accidents
+          were analyzed, detecting 195 failures of control, 136 personal factors, 112 work
+          related factors, 151 unsafe acts and 54 unsafe conditions; some accidents had
+          more than one cause. In this manner, the authors conclude that the largest
+          percentage of occupational accidents were caused by lack of control, followed by
+          unsafe acts. Therefore, the use of programs of risk management priorities is
+          recommended, based on the proper identification of hazards, allowing the
+          mitigation and control of risk; likewise developing a culture of self-care in
+          workers is recommended.</p>
+      </abstract>
+      <kwd-group xml:lang="en">
+        <title>Keywords:</title>
+        <kwd>Occupational accident</kwd>
+        <kwd>basic causes</kwd>
+        <kwd>immediate causes</kwd>
+        <kwd>lack of control</kwd>
+        <kwd>personal factors</kwd>
+      </kwd-group>
+    </front-stub>
+    <body>
+      <sec sec-type="intro">
+        <title>1. Introducción</title>
+        <p> The construction sector has a set of occupational hazards that are specific to
+          that activity, involving elevated work, excavation work, hoisting up materials,
+          the seasonal nature of their workplaces, and others; this means that the the
+          implentation of a management system for worker safety and health is applied
+          differently. It is important to note that the activities done on construction
+          sites are considered to be high risk and therefore may result in occupational
+          accidents.</p>
+        <p>Occupational accidents can result from immediate or basic causes; the immediate
+          causes directly produce the accident and are composed of unsafe acts
+          (inappropriate behavior of the workers that could result in a workplace
+          incident) and unsafe conditions (facilities, equipment, machinery and tools that
+          are faulty and that place the workers at risk of having an accident). But to
+          achieve an effective solution to occupational accidents, it is critical to
+          identify and control the basic causes which result in the immediate causes; they
+          include personal factors (incorrect work habits, incorrect use of equipment,
+          tools or facilities; physical or mental defects, hearing deficiencies, etc.) and
+          work factors (deficient supervision and leadership; unsuitable policies,
+          procedures, guides or practices; unsuitable work planning or scheduling) (<xref
+            ref-type="bibr" rid="B5">Chinchilla, 2002</xref>).</p>
+        <p>According to the statistics of the Worldwide Labor Organization (Organización
+          Internacional del Trabajo or OIT), in its report of the worldwide day for
+          occupational safety and health, “Approximately 4% of the worldwide Gross
+          National Product (GNP) is lost due to the costs of losses, deaths and illnesses,
+          resulting in work absences, treatments and payments due to disability or
+          death”.</p>
+        <p> The accidental pyramid theory developed by Bird in 1969 showed that for each
+          serious accident there are 10 less serious accidents, 30 accidents with property
+          damage and 600 accidents without visible damage or losses (<xref ref-type="bibr"
+            rid="B5">Chinchilla, 2002</xref>). Likewise, refers to comparing the amount
+          of incidents that do not cause personal injuries with those that do result in
+          injuries; he also states that the implementation of a system to analyze the
+          incidents can be a key path to prevent or control occupational accidents.</p>
+        <p>On the other hand, mention that currently in industrial health and safety it is
+          common to use corresponding standards; however, these standards are often poorly
+          applied, generating difficulties in project development associated with risks;
+          if these risks aren’t evaluated, they can end up affecting the regular progress
+          of construction. The authors refer to delays in the construction project, the
+          economic losses and overcharges as the main problems derived from the lack of
+          risk planning in occupational safety and health. This research indicates that
+          the safety conditions of the construction site within the Colombian context are
+          deficient and therefore result in accidents that cause all types of injuries,
+          disabilites and death.</p>
+        <p><xref ref-type="bibr" rid="B4">Buendía (2013)</xref> refers to the importance of
+          identifying the causes of the accidents at the construction site, emphasizing
+          that there must be a search for the true origen of all of the causes that set
+          off the incident. Likewise, states that risk evaluation is a process that is
+          focused on decisions being made about the type of preventive actions that should
+          be taken to minimize occupational risks.</p>
+        <p>Highlights that the construction industry is one of the highest risk occupational
+          activities, given the high incidence of the accidents shown which result in
+          human and material losses. Statistics are fundamental to identify the causes of
+          the accidents, to guide possible intervention plans as well as for the
+          effectiveness of those plans.</p>
+        <p> Affirm that for 2011 in Colombia, the construction sector had the highest
+          accident rate of 22.71%, of which 11% of the accidents were severe or fatal. In
+          Colombia during 2012, of the 532 deaths recorded in workplace accidents, 136 are
+          from the real estate sector, 125 from the construction sector; in the sectors of
+          transportation, storage and communications there were a total of 78 fatal
+          victims. This reflects that 44 people died each month due to occupational
+          accidents. These statistics are included in reports from 10 occupational risk
+          managers (Ministerio del Trabajo, 2013).</p>
+        <p>The Federation of Columbian Insurers, in one of their publications, indicate that
+          in 2013, every 11 and &#x00BD; hours a worker died due to an occupational
+          accident, and that there are an average of 62 occupational accidents per hour in
+          Colombia, or 1,487 cases per day. Therefore, they conclude that last year there
+          were 543,079 occupational accidents in the country.</p>
+        <p> This indicates the need to study the number of accidents in the construction
+          sector, and based on that study, to generate a detailed analysis of the causes
+          that generate those occupational accidents, allowing companies to adopt this
+          project as a foundation to implement measures for prevention and control of
+          accidents; state that a well organized job site is generally a job site that is
+          safe, planned, managed and controlled.</p>
+        <p>From the results of this research, it is important to value protection systems
+          relating to occupational health and psychological services. Therefore, this
+          article places importance on providing greater knowledge and communicating the
+          need that construction companies’ have for the implementation and tracking of a
+          safety and health system to be effective; this includes training, incentives and
+          simulations that represent the possible occupational risks so that they can then
+          be prevented. They also should incorporate evaluation protocol executive
+          functioning as part of personnel selection; this will allow them to have the
+          right people who will be able to reduce the rate of accidents at the job sites,
+          to improve working conditions and the welfare of collaborators, therefore to
+          improve the productivity of construction companies.</p>
+      </sec>
+      <sec sec-type="materials|methods">
+        <title>2. Materials and methods</title>
+        <sec>
+          <title>2.1 Type of research:</title>
+          <p>This study was done with a quantitative-descriptive perspective, integrating
+            Bird’s model of causation (<xref ref-type="bibr" rid="B5">Chinchilla,
+              2002</xref>). It includes five variables that indicate the origen of the
+            reasons that resulted in the accident, it describes the accident, as well as
+            the consequences to the individual, property and the work environment: lack
+            of control, basic causes, immediate causes, accidents and losses.</p>
+        </sec>
+        <sec>
+          <title>2.2 Population or unit of analysis:</title>
+          <p>The scope of this research was documentary; the source of information and the
+            unit of analysis of the research were the reports of occupational accidents
+            occured during the second semester of 2012, as registered with the ARL. This
+            provided the following information: date of the accident, description of the
+            accident, name of the person involved in the accident, position, part of the
+            body that was affected, type of injury, agent causing the accident,
+            mechanism or type of accident.</p>
+        </sec>
+        <sec>
+          <title>2.3 Process:</title>
+          <p> This research includes a documentary review. To conduct the analysis of the
+            causes of the occupational accidents that occured in the two construction
+            projects during the second semester of 2012, the units of study were the
+            Unique Forms for Occupational Accidents (FURAT in Spanish) (Ministry of
+            Social Protection 2005) that were issued by the occupational risk insurer
+            ARL. In this case, interviews with witnesses and injured individuals were
+            not conducted, nor was a study completed at the site of the accident, of the
+            tools and equipment involved, since the research was conducted after the
+            event had occured. To better understand the phenomenon of occupational
+            accidents, we should take into account the accident loss causation model
+            developed by Frank E. Bird (<xref ref-type="bibr" rid="B5">Chinchilla
+              2002</xref>) which allows the detection of the origen of the accidents.
+          </p>
+        </sec>
+        <sec>
+          <title>2.4 Instruments: </title>
+          <p>For the development of this research, the following instruments were used:
+            Unique Forms to Report Occupational Accidents (FURAT in Spanish) (Ministry
+            of Social Protection, 2005) reported to the Occupational Risk Insurer during
+            the second semester of 2012, and the analysis matrix of the causes of
+            occupational accidents. It also included the documentation used by ARL,
+            which is composed of two methods: the International Loss Control Institute
+            (ILCI) (Positiva, 2009) which used the for the analysis of losses and the
+            causes of the accidents and work incidents, and the Normative American
+            Method to code the direct causes and analytical categories.</p>
+        </sec>
+      </sec>
+      <sec sec-type="results">
+        <title>3. Results</title>
+        <p>The report included 117 accident cases; 116 of those were presented by men and 1
+          case involved a woman (<xref ref-type="table" rid="t5">Table 1</xref>). It is
+          important to note that civil construction projects are generally done by men. As
+          seen in <xref ref-type="table" rid="t6">Table 2</xref>, occupational accidents
+          occured at a similar rate in the two construction projects, indicating the
+          presence of the same risk factors which contribute to the number of accidents.
+          The age range where most occupational cases are seen is in the group of 18 to 35
+          years, which represents 65% of the population (<xref ref-type="fig" rid="f4"
+            >Figure 1</xref>); this data identifies that accident cases are more
+          frequently present in the younger population.</p>
+
+        <table-wrap id="t5">
+          <label>Table 1</label>
+          <caption>
+            <title>Gender of the people from the two civil construction projects</title>
+          </caption>
+          <table frame="border" rules="all">
+            <colgroup width="25%">
+              <col/>
+              <col/>
+              <col/>
+              <col/>
+            </colgroup>
+            <thead>
+              <tr>
+                <th align="center">CONSTRUCTION PROJECTS</th>
+                <th align="center">MALE</th>
+                <th align="center">FEMALE</th>
+                <th align="center">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="center">Construction 1</td>
+                <td align="center">62</td>
+                <td align="center">1</td>
+                <td align="center">63</td>
+              </tr>
+              <tr>
+                <td align="center">Construction 2</td>
+                <td align="center">54</td>
+                <td align="center">0</td>
+                <td align="center">54</td>
+              </tr>
+              <tr>
+                <td align="center">Total</td>
+                <td align="center">116</td>
+                <td align="center">1</td>
+                <td align="center">117</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+
+        <p>
+          <fig id="f4">
+            <label>Figure 1</label>
+            <caption>
+              <title>Accident cases by age range. Source: the authors</title>
+            </caption>
+            <graphic xlink:href="0718-5073-ric-31-01-0005-gf01-en.tif"/>
+          </fig>
+        </p>
+
+        <table-wrap id="t6">
+          <label>Table 2</label>
+          <caption>
+            <title>Number of occupational accidents by construction project</title>
+          </caption>
+          <table frame="border" rules="all">
+            <colgroup width="33%">
+              <col/>
+              <col/>
+              <col/>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>CONSTRUCTION PROJECTS</th>
+                <th>NUMBER OF CASES</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Construction 1</td>
+                <td>63</td>
+                <td>54</td>
+              </tr>
+              <tr>
+                <td>Construction 2</td>
+                <td>54</td>
+                <td>46</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>117</td>
+                <td>100</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+
+        <p>The data frequency indicates that hands and eyes are the parts of the body that
+          are most affected (<xref ref-type="table" rid="t7">Table 3</xref>) since they
+          are the parts that are most exposed during construction activities.</p>
+
+        <table-wrap id="t7">
+          <label>Table 3</label>
+          <caption>
+            <title>Number of occupational accidents according to the part of the body
+              that is affected</title>
+          </caption>
+          <table frame="border" rules="all">
+            <colgroup width="33%">
+              <col/>
+              <col/>
+              <col/>
+            </colgroup>
+            <thead>
+              <tr>
+                <th align="left">PART OF THE BODY AFFECTED</th>
+                <th align="center">NUMBER OF CASES</th>
+                <th align="center">%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hands</td>
+                <td align="center">23*</td>
+                <td align="center">20</td>
+              </tr>
+              <tr>
+                <td>Eyes</td>
+                <td align="center">21*</td>
+                <td align="center">18</td>
+              </tr>
+              <tr>
+                <td>Body</td>
+                <td align="center">18*</td>
+                <td align="center">15</td>
+              </tr>
+              <tr>
+                <td>Feet</td>
+                <td align="center">15</td>
+                <td align="center">13</td>
+              </tr>
+              <tr>
+                <td>Lower limbs</td>
+                <td align="center">12</td>
+                <td align="center">10</td>
+              </tr>
+              <tr>
+                <td>Higher limbs</td>
+                <td align="center">8</td>
+                <td align="center">7</td>
+              </tr>
+              <tr>
+                <td>Head</td>
+                <td align="center">7</td>
+                <td align="center">6</td>
+              </tr>
+              <tr>
+                <td>General Injuries</td>
+                <td align="center">7</td>
+                <td align="center">6</td>
+              </tr>
+              <tr>
+                <td>Multiple Locations</td>
+                <td align="center">3</td>
+                <td align="center">2</td>
+              </tr>
+              <tr>
+                <td>Abdomen</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td>Thorax</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td>Head-Body</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td align="right">
+                  <bold>Total</bold>
+                </td>
+                <td align="center">
+                  <bold>117</bold>
+                </td>
+                <td align="center">
+                  <bold>100</bold>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+
+        <p>The most frequent type of lesion in the occupational the parts of the body that
+          are most affected (<xref ref-type="table" rid="t7">Table 3</xref>) since
+          accidents was blow, contusion or crushing, identified in 43% they are the parts
+          that are most exposed during construction of the accidents in the study (<xref
+            ref-type="table" rid="t8">Table 4</xref>); these types of lesions
+          activities. Cause health problems for workers.</p>
+
+        <table-wrap id="t8">
+          <label>Table 4</label>
+          <caption>
+            <title>Type of injury caused by the recorded accidents</title>
+          </caption>
+          <table frame="border" rules="all">
+            <colgroup width="33%">
+              <col/>
+              <col/>
+              <col/>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>TYPE OF INJURY</th>
+                <th align="center">NUMBER OF CASES</th>
+                <th align="center">%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Blow, contusion or crushing</td>
+                <td align="center">50</td>
+                <td align="center">43</td>
+              </tr>
+              <tr>
+                <td>Superficial Trauma</td>
+                <td align="center">23</td>
+                <td align="center">19</td>
+              </tr>
+              <tr>
+                <td>Sprain, twist or tear</td>
+                <td align="center">21</td>
+                <td align="center">18</td>
+              </tr>
+              <tr>
+                <td>Wound</td>
+                <td align="center">17</td>
+                <td align="center">14</td>
+              </tr>
+              <tr>
+                <td>Other</td>
+                <td align="center">2</td>
+                <td align="center">2</td>
+              </tr>
+              <tr>
+                <td>Effect of electricity</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td>Poisoning</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td>Fracture</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td>Injury - blow, contusion</td>
+                <td align="center">1</td>
+                <td align="center">1</td>
+              </tr>
+              <tr>
+                <td align="right">
+                  <bold>Total</bold>
+                </td>
+                <td align="center">
+                  <bold>117</bold>
+                </td>
+                <td align="center">
+                  <bold>100</bold>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+
+        <p>According to <xref ref-type="table" rid="t7">Table 3</xref>, there were 75 cases
+          of As seen in <xref ref-type="table" rid="t5">Table 1</xref>, the most frequent
+          causal accidents reported which were due to the erroneous use of mechanisms were
+          falling objects, followed by being stepped materials or substances.</p>
+        <p>As seen in <xref ref-type="table" rid="t6">Table 2</xref>, the most frequent
+          causal mechanisms were falling objects, followed by being stepped on, crashes
+          and blows. <xref ref-type="table" rid="t6">Table 2</xref> indicates that the
+          largest percentage of lack of control is in the analysis and work processes,
+          with 58 cases of the 117 accidents studied.</p>
+        <p>Of the basic causes and personal factors most frequently cited in the 117 cases
+          studied, 70 indicated that workers’ lack of judgement was the cause of
+          occupational accidents (<xref ref-type="table" rid="t5">Table 1</xref>). Workers
+          don’t have an adequate work speed while they work, and they are not aware of the
+          risks that they are exposed to in each activity.</p>
+        <p>The basic causes-work factors that most frequently are involved in the
+          occupational accidents studied were Programming or Planning, and Insufficient
+          Instructions/Orientation/Training, representing 35 and 23 cases respectively of
+          the total of 117 accident cases studied (<xref ref-type="table" rid="t8">Table
+            4</xref>).</p>
+        <p>The main basic causes for occupational accidents were personal factors,
+          representing 55% of the accident cases (<xref ref-type="fig" rid="f5">Figure
+            2</xref>).</p>
+        <p>The immediate causes-unsafe work acts most frequently mentioned in the
+          occupational accident cases were lack of safety measures and not using personal
+          protection equipment, representing 38 and 29 cases respectively of the 117
+          accidents studied (<xref ref-type="table" rid="t5">Table 1</xref>).</p>
+        <p>
+          <fig id="f5">
+            <label>Figure 2</label>
+            <caption>
+              <title>Basic causes that impact the accidents studied. Source: the
+                authors</title>
+            </caption>
+            <graphic xlink:href="0718-5073-ric-31-01-0005-gf02-en.tif"/>
+          </fig>
+        </p>
+        <p>The immediate causes-unsecure work equipment in the occupational accidents
+          studied were the inadequate barriers and protections, as well as inadequate or
+          improper protection equipment, representing 15 and 13 cases respectively of the
+          117 accidents studied. Also we can see that various accidents identify various
+          immediate causesunsafe conditions.</p>
+        <p>In the review of the immediate causes, we found that accidents were mainly caused
+          by unsafe acts, representing 74%, which were caused by human error, with people
+          not following safety practices and procedures, and not being aware that they may
+          have an accident when they conduct those activities (<xref ref-type="fig"
+            rid="f6">Figure 3</xref>).</p>
+        <p>
+          <fig id="f6">
+            <label>Figure 3</label>
+            <caption>
+              <title>Immediate causes that influence the accidents studied. Source:
+                the authors</title>
+            </caption>
+            <graphic xlink:href="0718-5073-ric-31-01-0005-gf03-en.tif"/>
+          </fig>
+        </p>
+        <p>
+          <xref ref-type="table" rid="t6">Table 2</xref> illustrates that the highest
+          number of occupational accidents among workers occurs on Monday; this is
+          possibly due to being the first day of the work week after a rest period during
+          the weekend, since the human body takes some time to adjust to being back at
+          work again.</p>
+      </sec>
+      <sec sec-type="conclusions|discussion">
+        <title>4. Discussion &amp; conclusions</title>
+        <p>According to the results from this research, we found that among the 117
+          occupational accidents analyzed, the hands and eyes were the most affected body
+          parts, with a total of 23 and 21 injuries respectively. In regards to hands,
+          this is due to the fact that they are the main part of the body involved in the
+          entire activity, specifically in the case of manufacturing as well as
+          construction; one of the main areas where occupational accidents were reported
+          to the ARL is construction at 10.46%. Likewise, the eyes were the second part of
+          the body that are most impacted due to the presence of foreign bodies present
+          during activities in this sector (Quintero, 2010). In reviewing the causes, the
+          research identified 195 instances of lack of control, where the most relevant
+          were the lack of analysis and work processes, planned work observations and
+          worker training; 248 basic causes included 136 for personal factors, and 112 due
+          to work factors; there were 205 immediate causes, of which 151 were due to
+          unsafe acts and 54 due to unsafe conditions.</p>
+        <p> Therefore we conclude that the occurence of occupational accidents have mainly
+          been caused by lack of controls, followed by unsafe acts; as defined by <xref
+            ref-type="bibr" rid="B5">Chinchilla (2002)</xref>, they are due to all types
+          of actions or omissions done by individuals that allow these accidents to occur.
+          The the age of workers is a relevant aspect since this research and other
+          authors coincide that young workers (from 18 to 35 years) are the ones that have
+          the most work accidents, due to the lack of experience, as well as the lack of
+          awareness of the dangers and risks present in their positions at work. The third
+          most important cause of the occupational accidents analyzed was due to personal
+          factors related to workers’ abilities (training, skill, aptitude, and others).
+          The main causal mechanisms of occupational accidents were falling objects (29%)
+          followed by being stepped on, crashes or blows (24%); similar results were found
+          by other authors (<xref ref-type="bibr" rid="B9">Cruz et al., 2009</xref>).</p>
+        <p>The lack of control of these activities causes greater exposure to risk; when
+          control measures or control barriers are not implemented, the worker is totally
+          exposed to the risks associated with the activity. Studies conducted by Slovic
+          et al., (1982) found that one of the attributes that was most closely related to
+          the size of the perceived risk was fear, which is evident in activites such as
+          not using individual protections, working in low-lit spaces, the use of faulty
+          electrical installations and exposure to gases and vapors; the size of the risk
+          is high together with the fear. This can be seen in daily situations where the
+          general population is exposed, whereas the activities that were the subject of
+          this research were specifically for workers in the construction sector, where
+          there are greater benefits for those who are exposed.</p>
+        <p>Another attribute that is mentioned in studies done by Slovic et al., (1982) is
+          the knowledge of those who are exposed; many studies have found that more risk
+          is perceived in activities that are considered to be the most common activities.
+          However in this study, the attributes known to those exposed had a high value of
+          awareness, whereas they assigned a low value of risk to activites including
+          exposure to noise, to dust, unkept worksites and handling of objects and tools.
+          According to the results obtained in this study, we see that when an activity
+          has immediate consequences, workers state that the perceived size of the risk is
+          highest, whereas when consequences are peceived to be delayed, the importance of
+          the damage perceived is lower. Therefore workiers would be referring to a
+          sensation of immediacy of consequences to determine the seriousness of damages,
+          with a degree of fear or rejection for those activities that they consider to be
+          more harmful to health and wellbeing, in line with finding from traditional
+          studies regarding risk perception (Fischhoff, 1984).</p>
+        <p>Comparing the results of this research to the results obtained by Fontaneda et
+          al., (2010), and <xref ref-type="bibr" rid="B8">Consumer (2003)</xref>, Monday
+          is identified as one of the days when more occupational accidents happen; it
+          confirms that this has to do with the loss of daily momentum that workers have
+          with their operations, since when they are starting work after a weekend of rest
+          the human body takes some time to adjust to the movement at work and the dangers
+          that this carries. In addition, it is believed that alcohol consumption during
+          the weekend is common for the workers in this sector (<xref ref-type="bibr"
+            rid="B7">Confederate Executive Commission of UGT, 2011</xref>) and this
+          activity means that the rest period, sleep and relaxation prior to returning to
+          work may have been interrupted, so that this may also contribute to accidents
+          occuring.</p>
+        <p>In this manner, it is critical to have the resources and continual planning by
+          the agents involved in this specific study, so that construction companies can
+          fully comply with the required activities of occupational safety and health.
+          With the results obtained in this research, we suggest that this sector should
+          implement a safety program; this program would have the objective of the
+          appropriate identification, awareness, evaluation and control of the different
+          dangers and risks that originate in the workplace so as to protect hands and
+          eyes, which are the parts of the body that are most impacted during these
+          activities. Likewise we suggest that workers be provided with the necessary
+          training and information so they can perform their functions in optimal safety
+          conditions; daily training regarding basic safety behaviors is critical for each
+          and every worker; and finally we suggest implementing programs of appreciation
+          and awareness of safety as an essential value, so as to contribute to reducing
+          unsafe actions which constantly occur during work on construction projects.</p>
+        <p>Likewise, we recommend that companies create and standardize the analysis and
+          work processes, particularly critical taks which can be identified with an
+          appropriate risk evaluation, which will allow them to be quanitified so as to
+          design managment programs that will support thier intevention and control. In
+          addition, as is indicated in the European Agency for Occupational Safety and
+          Health , management’s commitment is essential to establish clear policies
+          regarding health and safety, and so as to supply the necessary resources for its
+          implementation.</p>
+        <p>Planning is considered to be a fundamental step that every organization should
+          conduct to prevent occupational accidents; all essential information should be
+          collected in a clear and detailed document, so as to implement systematic,
+          coherent and effictive preventive actions, to confront the occupational risks
+          inherent in the company’s activities (<xref ref-type="bibr" rid="B6">Collado,
+            2008</xref>). Time and money expended in this activity are recouped by
+          obtaining effective and quick results; it is important to clarify that it is not
+          enough to simply put it on paper, but rather it must be implemented. For that
+          reason, supervising the appropriate implementation of this is key. The data
+          presented in this research shows the need to undertake the topic of safety and
+          health in the workplace in all of its dimensions and with the participation of
+          all of those involved in the organization (employers, occupational risk
+          administrators, contractors, workers and educational institutions); this way
+          they can offer a common approach with the goal of improving the quality of life
+          for workers in this sector, reducing workplace incidents.</p>
+        <p>Finally, it is very important to contine to deepen the expertise with future
+          research on the topic of individuals’ behavior and motiviation, because unsafe
+          acts are the main causes of accidents in those construction projects; these
+          accidents may be related to motivation since this is the force that moves a
+          person to do something, and it can come from an external stimulus such as the
+          environment, family problems, economic problems, problems coming from the mind
+          of the worker, etc. Therefore, a psychological study of the topic would help to
+          deepen the understanding of the basic causes related to personal factors and the
+          immediate cuases related to the unsafe acts of workers who work in the
+          construction sector. This sector is such an important contributor to the
+          country’s economy (Portafolio.co, 2013) but on a daily basis it presents a large
+          amount of latent dangers and risks that can affect the physical, mental and
+          social integrity of the collaborators.</p>
+      </sec>
+    </body>
+  </sub-article>
+</article>

@@ -1,0 +1,10 @@
+.sc-unsupported {
+  background: #ccc;
+  margin: 5px 0px;
+}
+
+.sc-unsupported-inline-node {
+  display: inline-block;
+  background: #ccc;
+  margin: 5px 0px;
+}

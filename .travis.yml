@@ -3,7 +3,8 @@ cache:
   directories:
     - node_modules
 node_js:
-  - "4"
   - "6"
 before_script:
     - 'npm install'
+script:
+  - npm run test

@@ -1,0 +1,46 @@
+.sc-article-record {
+  font-size: 14px;
+}
+
+.sc-article-record .se-metadata-item,
+.sc-article-record .se-content-loc-type {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  padding: 5px 0px;
+}
+
+.sc-article-record input {
+  border: 1px solid #dadada;
+  width: 200px;
+  border-radius: 3px;
+  padding: 2px 10px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.sc-article-record input:focus {
+  border-color: #4e92df;
+}
+
+.sc-article-record .se-label {
+  flex: 0 0 150px;
+  padding: 10px;
+  color: #838383;
+  font-weight: 200;
+}
+
+.sc-article-record .se-date-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.sc-article-record .se-date-item input {
+  width: 70px;
+  margin-right: 5px;
+}
+
+.sc-article-record .se-date-item .se-content {
+  flex: 1 1 0;
+}

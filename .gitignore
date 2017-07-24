@@ -1,7 +1,9 @@
 logs
 *.log
 dist
+bundle
 node_modules
 .lock-wscript
 .test
 .npm
+/tmp

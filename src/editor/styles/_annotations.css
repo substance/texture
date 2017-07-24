@@ -1,0 +1,29 @@
+.sc-italic {
+  font-style: italic;
+}
+
+.sc-bold {
+  font-weight: bold;
+}
+
+.sc-ext-link {
+  color: #2079DC;
+}
+
+.sc-sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.sc-sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.sc-underline {
+  text-decoration: underline;
+}
+
+.sc-strike {
+  text-decoration: line-through;
+}

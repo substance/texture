@@ -1,0 +1,1441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.0 20120330//EN" "D:\CLIENTES\dtd\JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" article-type="research-article"
+  dtd-version="1.0" specific-use="sps-1.5" xml:lang="es">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">azm</journal-id>
+      <journal-title-group>
+        <journal-title>Acta zoológica mexicana</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Acta Zool. Mex</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">0065-1737</issn>
+      <publisher>
+        <publisher-name>Instituto de Ecología A.C.</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Artículos originales</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Evaluación Del Daño Por Retinia Arizonensis (Heinrich) (Lepidoptera:
+          Tortricidae), Parámetros Estructurales Y Regeneración Natural En Pinus Nelsonii
+          (Shaw) Y P. Cembroides (Zucc.) En Miquihuana, Tamaulipas, México</article-title>
+        <trans-title-group xml:lang="en">
+          <trans-title>Damage evaluation of (Lepidoptera: Tortricidae) (Heinrich),
+            structural parameters and natural regeneration in Pinus nelsonii (Shaw) and
+            P. cembroides ( Zucc.) in Miquihuana, Tamaulipas</trans-title>
+        </trans-title-group>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Fernando-Luis</surname>
+            <given-names>Irineo</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Sánchez-Ramos</surname>
+            <given-names>Gerardo</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Martinez-Ávalos</surname>
+            <given-names>José Guadalupe</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Reyes-Castillo</surname>
+            <given-names>Pedro</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <institution content-type="original">Universidad Nacional Autónoma de México,
+          Instituto de Ecología Aplicada, Cuernavaca, Morelos, México.</institution>
+        <institution content-type="normalized">Universidad Nacional Autónoma de
+          México</institution>
+        <institution content-type="orgname">Universidad Nacional Autónoma de
+          México</institution>
+        <institution content-type="orgdiv1">Instituto de Ecología Aplicada</institution>
+        <addr-line>
+          <named-content content-type="city">Cuernavaca</named-content>
+          <named-content content-type="state">Morelos</named-content>
+        </addr-line>
+        <country country="MX">Mexico</country>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <institution content-type="original">Universidad Nacionalista México Oaxaca de
+          Juárez, Oaxaca, México.</institution>
+        <institution content-type="normalized">Universidad Nacionalista México</institution>
+        <institution content-type="orgname">Universidad Nacionalista México</institution>
+        <addr-line>
+          <named-content content-type="city">Oaxaca</named-content>
+        </addr-line>
+        <country country="MX">Mexico</country>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <institution content-type="original">Universidad Nacional Autónoma de México,
+          Cuernavaca, Morelos, México&lt;gsanchez@uat.edu.mx&gt;.</institution>
+        <institution content-type="normalized">Universidad Nacional Autónoma de
+          México</institution>
+        <institution content-type="orgname">Universidad Nacional Autónoma de
+          México</institution>
+        <addr-line>
+          <named-content content-type="city">Cuernavaca</named-content>
+          <named-content content-type="state">Morelos</named-content>
+        </addr-line>
+        <country country="MX">Mexico</country>
+        <email>gsanchez@uat.edu.mx</email>
+      </aff>
+      <author-notes>
+        <fn fn-type="conflict">
+          <p><bold>Conflicto de Interés:</bold> Los autores declaran no tener conflicto de
+            interés para este estudio.</p>
+        </fn>
+        <fn fn-type="con">
+          <p><bold>Contribuciones:</bold> Los autores contribuyeron igualmente.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="epub-ppub">
+        <season>Sep-Dec</season>
+        <year>2015</year>
+      </pub-date>
+      <volume>31</volume>
+      <issue>3</issue>
+      <fpage>367</fpage>
+      <lpage>379</lpage>
+      <history>
+        <date date-type="received">
+          <day>20</day>
+          <month>10</month>
+          <year>2014</year>
+        </date>
+        <date date-type="accepted">
+          <day>14</day>
+          <month>07</month>
+          <year>2015</year>
+        </date>
+      </history>
+      <permissions>
+        <license license-type="open-access"
+          xlink:href="https://creativecommons.org/licenses/by-nc/4.0/" xml:lang="es">
+          <license-p>Este es un artículo publicado en acceso abierto bajo una licencia
+            Creative Commons</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <title>RESUMEN:</title>
+        <p>El presente trabajo tuvo como objetivo determinar la intensidad del daño de
+          Retinia arizonensis y su posible relación con algunos parámetros estructurales:
+          diámetro de tallo, altura y cobertura, así como con la regeneración natural de
+          los pinos piñoneros Pinus cembroides y P. nelsonii. Para su evaluación se
+          ubicaron sitios de 2,500 m<sup>2</sup> de cada especie; en P. cembroides se
+          contabilizaron 136 individuos de los cuales 135 presentaron un daño promedio de
+          10.5% (&#x00b1;8.1 D.E.) en brotes terminales. En P. nelsonii de un total de 47
+          individuos encontrados, 46 exhibieron daños por R. arizonensis, con un promedio
+          de 4.8% (&#x00b1;4.5 D.E.), ca 2 veces menos que en P. cembroides. Al realizar
+          la prueba de Kruskal-Wallis (H-Chi<sup>2</sup>) del porcentaje de daño de R.
+          arizonensis entre las especies, se observó marcada diferencia significativa (p
+          &lt; 0.001). Referente a la estructura, P. cembroides presentó los siguientes
+          valores promedio: diámetro del tallo = 10.7 cm (&#x00b1;8.0 D.E.), altura = 2.9
+          m (&#x00b1;1.0 D.E.) y cobertura = 3.0 m<sup>2</sup> (&#x00b1;1.8 D.E.). En
+          relación a P. nelsonii, los valores promedio fueron: diámetro del tallo = 10.7
+          cm (&#x00b1;4.3), altura = 3.6 m (&#x00b1;0.8) y cobertura = 4.2 m<sup>2</sup>
+          (&#x00b1;1.8), estas variables mostraron una amplia diferencia estadística (p
+          &lt; 0.001). Al medir la asociación del daño por R. arizonensis con las
+          variables estructurales, P. cembroides mostró correlación positiva marginal con
+          las variables altura, diámetro y cobertura con r<sup>2</sup> = 0.12, 0.16 y
+          0.18, respectivamente (p &lt; 0.001). Sin embargo, P. nelsonii no manifestó
+          correlación significativa entre el daño por R. arizonensis con los parámetros
+          estructurales. La influencia conjunta de las tres variables estructurales
+          (correlación múltiple r<sup>2</sup>) en el daño de R. arizonensis, quedó
+          mayormente explicada en P. cembroides con valor de r<sup>2</sup> de 0.19 como
+          altamente significativa (p &lt; 0.001). Para P. nelsonii la influencia de las
+          variables estructurales sobre el porcentaje de daño de R. arizonensis no fue
+          significativa (p = 0.128). La regeneración presentó una participación porcentual
+          (con respecto a los adultos) de 20.6% para P. cembroides y de 42.5% para P.
+          nelsonii, con altura promedio de 13.9 cm (&#x00b1;12.6) y 28.4 cm (&#x00b1;20.0)
+          en P. cembroides y P. nelsonii, respectivamente.</p>
+      </abstract>
+      <trans-abstract xml:lang="en">
+        <title>ABSTRACT:</title>
+        <p>The present study aims to determine the damage intensity of the pinyon pitch
+          nodule moth, Retinia arizonensis and their possible relationship to some
+          structural parameters: stem diameter, height and coverage, as well as the
+          natural regeneration of Pinus cembroides and P. nelsonii. For their evaluation,
+          sites with 2,500 m<sup>2</sup> of each species were located. A total of 136
+          individuals of P. cembroides were recorded, with an average damage of 10.5%
+          (&#x00b1;8.1 SD) in the terminal buds. In P. nelsonii, a total of 47 individuals
+          were found, 46 exhibited damage from R. arizonensis, averaging 4.8% (&#x00b1;4.5
+          SD), twice less than P. cembroides. We used the Kruskal-Wallis
+            (H-Chi<sup>2</sup>) to assess the damage of R. arizonensis between species,
+          marked significant difference (p &lt; 0.001) was observed. Relating to the
+          structure, P. cembroides showed the following mean values: stem diameter = 10.7
+          cm (&#x00b1;8.0 SD), height = 2.9 m (&#x00b1;1.0 SD) and coverage = 3.0
+            m<sup>2</sup> (&#x00b1;1.8 SD). With respect to P. nelsonii, these were:
+          stem diameter = 10.7 cm (&#x00b1;4.3), height = 3.6 m (&#x00b1;0.8) and coverage
+            m<sup>2</sup> = 4.2 (&#x00b1;1.8), these variables showed wide statistical
+          differences (p &lt; 0.001). When measuring the association of R. arizonensis
+          damage, with the structural variables, P. cembroides showed a positive marginal
+          correlation with the variables height, diameter and covering with r<sup>2</sup>
+          = 0.12, 0.16 and 0.18, respectively (p &lt; 0.001). However, P. nelsonii
+          expressed non-significant correlations among R. arizonensis damage with the
+          structural parameters. The combined influence of the three structural variables
+          (multiple correlation r<sup>2</sup>) of R. arizonensis damage, was mostly
+          explained in P. cembroides with r<sup>2</sup> value of 0.19 highly significant
+          (p &lt; 0.001). In relation to P. nelsonii, the structural variables influenced
+          on damage percentage of R. arizonensis were not significant (p = 0.128). Natural
+          regeneration showed percentage participation (relative to adult trees) of 20.6%
+          for P. cembroides and 42.5% for P. nelsonii with mean height of 13.9 cm
+          (&#x00b1;12.6) and 28.4 cm (&#x00b1;20.0) in P. cembroides and P. nelsonii,
+          respectively.</p>
+      </trans-abstract>
+      <kwd-group xml:lang="es">
+        <title>Palabras clave:</title>
+        <kwd>Retinia arizonensis</kwd>
+        <kwd>P. cembroides y P. nelsonii</kwd>
+        <kwd>estructura y regeneración natural</kwd>
+      </kwd-group>
+      <kwd-group xml:lang="en">
+        <title>Key words:</title>
+        <kwd>Retinia arizonensis</kwd>
+        <kwd>P. cembroides</kwd>
+        <kwd>P. nelsonii</kwd>
+        <kwd>structure and natural regeneration</kwd>
+      </kwd-group>
+      <funding-group>
+        <award-group>
+          <funding-source>Conselho Nacional de Desenvolvimento Científico e
+            Tecnológico</funding-source>
+          <award-id>302528/2011-3</award-id>
+        </award-group>
+        <award-group>
+          <funding-source>Fundação de Amparo à Pesquisa do Estado de São
+            Paulo</funding-source>
+          <award-id>2011/50680-2</award-id>
+        </award-group>
+      </funding-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec sec-type="intro">
+      <title>INTRODUCCIÓN</title>
+      <p>Las tres especies de pinos piñoneros presentes en Tamaulipas, se distribuyen en un
+        gradiente altitudinal que oscila de ~1,150 a 2,700 m snm es de amplia distribución,
+        en numerosos cerros y mesetas de la Sierra Madre Oriental, desde el estado de Puebla
+        hasta los estados de Coahuila, Nuevo León y Tamaulipas, México, incluso se extiende
+        hasta la frontera sur de los Estados Unidos de América. Se distribuye en forma
+        discreta y ocupa un área de ca 140,000 hectáreas en Tamaulipas (91% del área total
+        reportada para los bosques piñoneros), ocupando en esta zona el piso altitudinal de
+        ~1,700 a 2,100 m snm en un gradiente Norte-Sur, donde es más común a medida que
+        desciende.</p>
+      <p>Por otra parte, Pinus está catalogada como especie en peligro de extinción por la
+        Norma Oficial Mexicana y como vulnerable según criterios de la Unión Internacional
+        para la Conservación de la Naturaleza; su distribución se restringe en los estados
+        del noreste de México como sigue <xref ref-type="bibr" rid="B1">Adams, et-al.
+          (2009)</xref>.</p>
+      <p>Las poblaciones de los pinos piñoneros están expuestas a una serie de factores
+        negativos, tanto de origen natural, como antrópico, tales como: i) incendios, ii)
+        desmontes para la agricultura, iii) sobrepastoreo, iv) plagas y enfermedades, entre
+        otros, provocando fragilidad y susceptibilidad al ataque de insectos así como a la
+        fragmentación y disminución constante de la superficie boscosa <xref ref-type="bibr"
+          rid="B2">Cibrián &amp; Méndez (1987)</xref>. Posterior a la perturbación y en
+        etapas de sucesión temprana, la diversidad de especies de árboles disminuye con
+        relación a los bosques antiguos, lo que conlleva hacia una pérdida de los recursos
+        disponibles para el suelo.</p>
+      <p>
+        <list list-type="bullet">
+          <list-item>
+            <p>Curabitur pharetra arcu in diam bibendum molestie.</p>
+          </list-item>
+          <list-item>
+            <p>Maecenas id eros tincidunt, venenatis purus at, convallis dolor.</p>
+          </list-item>
+          <list-item>
+            <p>Praesent ac nunc commodo, faucibus eros efficitur, ultricies nunc.</p>
+          </list-item>
+          <list-item>
+            <p>Curabitur in orci id lorem porttitor gravida.</p>
+          </list-item>
+          <list-item>
+            <p>Integer placerat mi vel tellus convallis viverra.</p>
+          </list-item>
+        </list>
+      </p>
+      <p>Las plagas y enfermedades han mermado grandes superficies de bosques de pino y encino
+        en Tamaulipas (<xref ref-type="bibr" rid="B3">Cranshaw, 2006</xref>). Los insectos
+        herbívoros (principalmente larvas de Lepidoptera) pueden considerarse como uno de
+        los grupos de mayor representatividad e impacto en las comunidades ya que
+        constituyen ca 90% de los defoliadores de bosques; dentro de este Orden, la familia
+        Tortricidae se ubica entre las cuatro primeras en abundancia y diversidad. Se estima
+        que la intensidad y la ocurrencia del daño dependen de varios factores inherentes
+        del hospedante, tales como el diámetro del tallo (<xref ref-type="bibr" rid="B9"
+          >Jactel et al. 1996</xref>), la edad, la condición del vigor/estrés y la
+        presencia de compuestos volátiles químicos atrayentes o defensivos. Estos
+        compuestos, son producidos principalmente en las flores, pero también se encuentran
+        en los frutos, tallos, hojas y raíces. Los árboles de mayor dimensión, son más
+        fáciles de ser detectados por los herbívoros que los más pequeños, según “per se
+        size hypothesis” y la Teoría En Tamaulipas, aun cuando existen datos sobre la
+        distribución potencial de Retinia arizonensis para la región de Miquihuana, no hay
+        registros en la literatura especializada sobre el nivel daño que causa R.
+        arizonensis sobre pinos piñoneros. Sin embargo, durante el periodo
+        septiembre-noviembre del año 2012, se presentaron daños de R. arizonensis sobre los
+        brotes terminales de las dos especies piñoneras. Generando con ello, la necesidad de
+        conocer la dinámica de la interacción ecológica planta-herbívoro y el efecto que la
+        herbivoría causa sobre los pinos piñoneros así como <xref ref-type="bibr" rid="B5"
+          >Franklin &amp; Van Pelt (2004)</xref>.</p>
+      <p>Retinia arizonensis es una palomilla Lepidoptera de la familia Tortricidae, cuyo daño
+        consiste en barrenar brotes y conos. El adulto deposita de 1 a 3 huevecillos en la
+        base de las brácteas aciculares del brote en crecimiento, al emerger la larva se
+        alimenta del cambium formando galerías (sin daño aparente). El daño se observa a
+        principios de otoño, cuando las ramillas mueren y dan una apariencia de bandera
+        roja. Las larvas son de rojizo-amarillento con cabeza bien desarrollada. Durante el
+        invierno se forma una cámara de resina donde entra en diapausa, reiniciando su
+        actividad en primavera. La pupación ocurre a finales de abril a junio, en una bolsa
+        de seda en la parte más alta de la masa de resina para facilitar la emergencia del
+        adulto. Se presenta una generación por año dice <xref ref-type="bibr" rid="B6"
+          >Harper (1977)</xref>. El adulto es pequeño, sus alas anteriores miden de 15 a
+        20 mm con franjas irregulares de colores grises y café claro, con tonos
+        iridiscentes; las anteriores son café grisáceo muy obscuro (<xref ref-type="bibr"
+          rid="B4">Flores &amp; Martínez 1987</xref>).</p>
+    </sec>
+    <sec sec-type="materials|methods">
+      <title>MATERIAL Y MÉTODOS</title>
+      <p>Descripción del área de estudio. La investigación se desarrolló durante Septiembre
+        del 2012 en el Municipio de Miquihuana, Tamaulipas, situado en la región norte de la
+        Sierra Madre Oriental entre los paralelos 23° 47’ y 23° 24’ de latitud Norte y los
+        meridianos 99° 58’ y 99° 35’ de longitud Oeste, con una altitud entre 1,300 y 3,600
+        m snm (<xref ref-type="bibr" rid="B7">Jacobi &amp; Cranshaw, 2009</xref>). El uso
+        potencial del suelo y la vegetación está representado por: agricultura 8.4%, zona
+        urbana 0.2%, bosque 62.4%, matorral 27% y pastizal 2% (INEGI 2009). Los suelos son
+        relativamente homogéneos y pobres en materia orgánica (6.5%) con profundidad &lt;50
+        cm y pH entre 6.88.0 (<xref ref-type="bibr" rid="B8">Brasil, 1996</xref>).</p>
+      <p>Un aspecto elemental de los bosques es la estructura, la cual incluye la variedad de
+        disposiciones o arreglos individuales (vertical y horizontal) y espaciales. En lo
+        individual, se consideran registros de diversos tamaños y condiciones de árboles y
+        tallos. En lo espacial, se refiere a la disposición de estos individuos, es decir,
+        si están uniformemente espaciados o agrupados. Estas características estructurales
+        de los bosques, cada vez son más reconocidas y estudiadas por teóricos y prácticos,
+        ya que es un conocimiento básico para el desarrollo adecuado de planes de manejo,
+        para mantener la sanidad e implementar medidas, para reducir la susceptibilidad a
+        los incendios, entre otras aplicaciones. En Miquihuana, se han realizado algunos
+        trabajos sobre este aspecto, pero se carece de estudios concernientes a la
+        asociación de los herbívoros con respecto a la estructura de estas especies, mismos
+        que permitirán reconocer las características ecológicas y adaptativas de ambos
+        interactuantes (<xref ref-type="bibr" rid="B10">SEDUMA, 2013</xref>).</p>
+      <p>El presente estudio, tuvo como objetivo central determinar la intensidad del daño de
+        Retinia arizonensis y su posible relación con tres parámetros estructurales
+        (diámetro de tallo, altura y cobertura), así como con la regeneración natural de P.
+        cembroides y P. nelsonii, en la región piñonera de Miquihuana, Tamaulipas. Una
+        aplicación práctica de estos resultados, es prevenir la expansión de daños en ambas
+        especies, para advertir a las autoridades fitosanitarias del municipio y del estado
+        sobre el mantenimiento del ecosistema, en términos del funcionamiento y la
+        sanidad.</p>
+      <p>El bosque piñonero se encuentra en un clima Bsohwx, seco semicálido, con una
+        precipitación promedio anual de 362.6 mm. Esta zona se caracteriza por la presencia
+        de temperaturas extremas, la máxima llega a alcanzar los 41 °C en el mes de mayo y
+        la mínima de −5 °C durante el periodo diciembre-febrero. La vegetación asociada al
+        bosque piñonero es el matorral rosetófilo con dominancia de los elementos: Juniperus
+        flaccida Schlechtendal, J. monosperma (Engelm.) Sarg. (Cupresaceae); Dasylirion
+        texanum Scheele, Agave lecheguilla Torr. (Agavaceae); Rhus pachyrrachis</p>
+      <p>Hemsl., R. virens Lindh. ex A. Gray. (Anacardiaceae); Tillandsia recurvata (L.)
+        (Bromeliaceae); Opuntia stenopetala Engelm., O. rastrera F.A.C.Weber, O. tunicata
+        (Lehm.) F.M.Knuth, Thelocactus conothelos Backeb, Echinocactus platyacanthus Link
+        &amp; Otto, Ferocactus hamatacanthus (Muehlenpf.) y Acacia berlandieri Benth.
+        (Fabaceae).</p>
+      <p>Muestreo. Se establecieron dos sitios con daño aparente de R. arizonensis (Pc: Pinus
+        cembroides y Pn: Pinus nelsonii), cada uno comprendió un total de cuatro cuadrantes
+        de 25 &#x00d7; 25 m (2,500 m<sup>2</sup>, en total 5,000 m<sup>2</sup>), localizados
+        en el paralelo 23° 32’ de latitud Norte y el meridiano 99° 48’ de longitud Oeste;
+        con una altitud entre 1,860 y 1,981 m snm. El muestreo realizado fue subjetivo, ya
+        que se consideró a partir de la presencia de R. arizonensis en P. cembroides y P.
+        nelsonii en la mencionada región, y que significara &gt;10% de la superficie de
+        daño, para ambas especies.</p>
+      <p>Daño por Retinia arizonensis. Se realizó un recorrido en cada uno de los cuadrantes,
+        cuantificando el daño visualmente (% de daño/árbol), utilizando una retícula óptica
+        transparente (acetato cuadriculado de 28 &#x00d7; 21 cm, con cuadrícula de 1
+          cm<sup>2</sup>), se observaron las copas de los árboles desde una distancia de 5
+        m con cuatro puntos de observación (puntos cardinales), cubriendo la totalidad de
+        cada cuadrante y de cada especie. A cada individuo se le asignó el porcentaje de
+        daño (promedio de las cuatro lecturas), de acuerdo a la cubierta porcentual de la
+        retícula con yemas terminales y ramillas dañadas por el insecto (metodología tomada
+        y modificada para el presente proyecto) (<xref ref-type="table" rid="t5">Box
+          1</xref>). Adicionalmente, el porcentaje de daño se agrupó en siete clases
+        (véase <xref ref-type="table" rid="t2">Tabla 2</xref>).</p>
+      <table-wrap id="t5">
+        <label>Box 1</label>
+        <caption>
+          <title>De Humanis corporis fabrica libri septem, or the Fabrica, and
+            others.</title>
+        </caption>
+        <table frame="box" rules="groups">
+          <colgroup width="100%">
+            <col/>
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>De humani corporis fabrica libri septem, the Fabrica,1<sup>st</sup>
+                edition, came to light in 1543, by the printer Johannes Oporinus,
+                from Basel. It is one of the most influential books on human
+                anatomy, and considered one of the great scientific and artistic
+                oeuvre of mankind. The Fabrica is illustrated with detailed
+                illustrations, printed with woodcut engravings, in Venice, with the
+                identity of the artist is uncertain. Possibly the contribution was
+                of one of the artists, the Flemish Van Kalcar, and possibly of
+                others, of the atelier of master Titian, and some of the plates are
+                credited to Vesalius. It is constituted by 7 books, comprising all
+                systems of the human body.<break/> The Fabrica, 2<sup>nd</sup>
+                edition, released in 1555, dedicated to Charles V, is considered
+                more sumptuous than the 1<sup>st</sup> one. There are also
+                corrections, decrease of redundancies, as well as inclusion of
+                physiological experiments, by means of nervous section, e.g.,
+                section of the recurrent nerve, with consequent laryngeal
+                paralysis.<break/> De Humani corporis fabrica librorum Epitome, the
+                Epitome, printed in 1543, was intended by Vesalius to be a very
+                brief descriptive book, being a remarkable condensation of the
+                  1<sup>st</sup> edition of the main book. It has 6 chapters, the
+                  5<sup>th</sup> concerned with “The brain and the nervous
+                system”.<break/> These oeuvres constitute a milestone in the study
+                of human anatomy and neuroscience.<break/> However his work was not
+                limited to these publications, including, among others:<break/>
+                Paraphrasis in nonum librum Rhazae, 1<sup>st</sup> Vesalius’ book,
+                with Paraphrase of the ninth book by the most famous Arab physician
+                Rhazes [addressed] to King Almansor, deals with treatment of
+                diseases affecting the various parts of the body, with several
+                editions, between 1537 and 1592.</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <p>Densidad y estructura. En cada parcela se levantó un censo de P. cembroides y P.
+        nelsonii, considerando a los individuos con diámetros &#x2265; 2 cm y con una altura
+        de 80 cm sobre el ras del suelo. Paralelo al conteo de plantas, se midió el diámetro
+        de tallo, la altura de planta y la cobertura. El diámetro se midió con una forcípula
+        Haglöff, para la altura se consideraron las plantas &lt;2 m (medidas directamente
+        con un flexómetro Stanley), las de altura superior fueron medidas con un clinómetro
+        electrónico Haglöff. La cobertura, se midió con un densiómetro cóncavo de acuerdo a
+        Mostacedo. Además, los diámetros del tallo se agruparon en clases, utilizando la
+        fórmula anterior.</p>
+      <p>Asociación de variables estructurales con el porcentaje de daño por Retinia
+        arizonensis. Una vez evaluado el porcentaje de daño por R. arizonensis y las
+        variables diámetro, altura y cobertura, se determinó el grado de asociación de las
+        tres variables estructurales (en forma individual), utilizando el porcentaje de daño
+        de R. arizonensis, a través del coeficiente de determinación (r<sup>2</sup>),
+        &#x03c8; y la influencia conjunta de las tres variables estructurales con el daño de
+        R. arizonensis mediante una correlación múltiple (r<sup>2</sup>). Ambas
+        determinaciones se realizaron con el Software STATISTICA version 6.</p>
+      <p>Regeneración: Para evaluar la regeneración natural, se determinó el reclutamiento de
+        plántulas en cada uno de los cuadrantes por sitio, donde se evaluó el número y
+        altura de las plántulas. Para determinar posibles diferencias entre cuadrantes, se
+        utilizó la prueba de Kruskal-Wallis (H-Chi<sup>2</sup> y Ȓ + Ӱ) con el programa
+        estadístico PAST versión 2.15.</p>
+    </sec>
+    <sec sec-type="results">
+      <title>RESULTADOS</title>
+      <p>Daño por Retinia arizonensis. De Pinus cembroides se registraron un total de 136
+        plantas, de las cuales 135 presentaron algún porcentaje de daño por R. arizonensis.
+        De P. nelsonii se contabilizaron 47 plantas, de las que 46 exhibieron cierta
+        proporción de daño de R. arizonensis.</p>
+      <p>
+        <list list-type="alpha-lower">
+          <list-item>
+            <p>Nunc suscipit dui eget suscipit pellentesque;</p>
+          </list-item>
+          <list-item>
+            <p>Nam fringilla urna quis sollicitudin tristique;</p>
+          </list-item>
+          <list-item>
+            <p>Vivamus eget diam quis mi sodales bibendum.</p>
+          </list-item>
+        </list>
+      </p>
+      <p>Pinus cembroides presentó un daño promedio por Retinia arizonensis en brotes
+        terminales de 10.5% (&#x00b1;8.1 D.E.). En relación a P. nelsonii, el porcentaje de
+        daño promedio fue de 4.8% (&#x00b1;4.5), esto es, ca 2 veces menos que P. cembroides
+          (<xref ref-type="table" rid="t1">Tabla 1</xref>). Al realizar la prueba de
+        Kruskal-Wallis (H-Chi<sup>2</sup>) del porcentaje de ataque de R. arizonensis entre
+        P. cembroides y P. nelsonii, se observó marcada diferencia significativa (p &lt;
+        0.001). De igual manera, al aplicar la misma prueba entre los cuadrantes de cada
+        especie, tanto P. cembroides como P. nelsonii mostraron diferencias significativas
+        (p &lt; 0.001 y P = 0.016, respectivamente), lo cual indica que el daño de R.
+        arizonensis difieren entre los cuadrantes de cada especie y entre especies (<xref
+          ref-type="table" rid="t1">Tabla 1</xref>).</p>
+      <table-wrap id="t1">
+        <label>Tabla 1</label>
+        <caption>
+          <title>Daño causado por Retinia arizonensis en Pinus cembroides y P. nelsonii
+            (promedio, máximo y mínimo) en Miquihuana, Tamaulipas. </title>
+        </caption>
+        <table frame="hsides" rules="groups">
+          <colgroup width="25%">
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="left">&#x00a0;</th>
+              <th align="center">P. cembroides</th>
+              <th align="center">&#x00a0;</th>
+              <th align="center">P. nelsonii</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left">No. de inds. (n)</td>
+              <td align="center">135</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">46</td>
+            </tr>
+            <tr>
+              <td align="left">Promedio (% &#x00b1; 1 D.E.)</td>
+              <td align="center">10.6 (&#x00b1;8.1)</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">4.8 (&#x00b1;4.5)</td>
+            </tr>
+            <tr>
+              <td align="left">% Daño Máximo</td>
+              <td align="center">40</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">20</td>
+            </tr>
+            <tr>
+              <td align="left">% Daño Mínimo</td>
+              <td align="center">1</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">1</td>
+            </tr>
+            <tr>
+              <td align="left">Rango</td>
+              <td align="center">1-40</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">1-20</td>
+            </tr>
+            <tr>
+              <td align="left">Ámbito</td>
+              <td align="center">39</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">19</td>
+            </tr>
+            <tr>
+              <td align="left">Kruskal-Wallis</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">227.5</td>
+              <td align="center">&#x00a0;</td>
+            </tr>
+            <tr>
+              <td align="left">(H-x<sup>2</sup>)</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">p &lt; 0.001</td>
+              <td align="center">&#x00a0;</td>
+            </tr>
+          </tbody>
+        </table>
+        <table-wrap-foot>
+          <fn id="TFN1">
+            <p>DE = Desviación estándar, Máx y Mín = valor máximo y mínimo.</p>
+          </fn>
+        </table-wrap-foot>
+      </table-wrap>
+      <p>Respecto al promedio del daño porcentual por R. arizonensis, en P. cembroides fue ca
+        2 veces más que en P. nelsonii pero el número de plantas en P. cembroides se
+        distribuye en todas las categorías de daño, siendo mayor en la clase 1 con 57
+        plantas, seguido de la clase 2 con 41 plantas y la clase 3 con 15 plantas que, en su
+        conjunto, representa ca 83% del total de plantas y agrupa niveles de daño de 1 al
+        17.7% por este insecto; el resto de las plantas se integra en las clases 4, 5, 6 y 7
+        con daño que oscila entre 18% a 40%. En P. nelsonii el comportamiento del daño por
+        R. arizonensis fue distinto, ya que la mayoría de los individuos presentaron un daño
+        mínimo (clase 1:1-6.6%) con ca 83% y el resto de las plantas (17%) se ubicaron en
+        las clases 2, 3 y 4 con daños que oscilan entre 6.6-23.3; no se encontraron plantas
+        con daños superiores al 23.3% (<xref ref-type="table" rid="t2">Tabla 2</xref>).</p>
+      <table-wrap id="t2">
+        <label>Tabla 2</label>
+        <caption>
+          <title>Número de plantas por clases de daño por Retinia arizonensis en Pinus
+            cembroides y P.nelsonii en Miquihuana, Tamaulipas.</title>
+        </caption>
+        <table frame="hsides" rules="groups">
+          <colgroup width="14%">
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="center">&#x00a0;</th>
+              <th align="center">&#x00a0;</th>
+              <th align="center">&#x00a0;</th>
+              <th colspan="2" align="center">Pinus cembroides</th>
+              <th colspan="2" align="center">Pinus nelsonii</th>
+            </tr>
+            <tr>
+              <th align="center">Clase</th>
+              <th align="center">Rango (%)</th>
+              <th align="center">CC</th>
+              <th align="center">No. de árboles</th>
+              <th align="center">FR%</th>
+              <th align="center">No. de árboles</th>
+              <th align="center">FR%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center">1</td>
+              <td align="center">1.0-6.6</td>
+              <td align="center">3.8</td>
+              <td align="center">57</td>
+              <td align="center">0.42</td>
+              <td align="center">38</td>
+              <td align="center">0.83</td>
+            </tr>
+            <tr>
+              <td align="center">2</td>
+              <td align="center">6.6-12.1</td>
+              <td align="center">9.4</td>
+              <td align="center">41</td>
+              <td align="center">0.30</td>
+              <td align="center">4</td>
+              <td align="center">0.06</td>
+            </tr>
+            <tr>
+              <td align="center">3</td>
+              <td align="center">12.1-17.7</td>
+              <td align="center">14.9</td>
+              <td align="center">15</td>
+              <td align="center">0.11</td>
+              <td align="center">4</td>
+              <td align="center">0.09</td>
+            </tr>
+            <tr>
+              <td align="center">4</td>
+              <td align="center">17.7-23.3</td>
+              <td align="center">20.5</td>
+              <td align="center">8</td>
+              <td align="center">0.06</td>
+              <td align="center">1</td>
+              <td align="center">0.02</td>
+            </tr>
+            <tr>
+              <td align="center">5</td>
+              <td align="center">23.3-28.9</td>
+              <td align="center">26.1</td>
+              <td align="center">6</td>
+              <td align="center">0.04</td>
+              <td align="center">0</td>
+              <td align="center">0.00</td>
+            </tr>
+            <tr>
+              <td align="center">6</td>
+              <td align="center">28.9-34.4</td>
+              <td align="center">31.6</td>
+              <td align="center">6</td>
+              <td align="center">0.04</td>
+              <td align="center">0</td>
+              <td align="center">0.00</td>
+            </tr>
+            <tr>
+              <td align="center">7</td>
+              <td align="center">34.4-40.00</td>
+              <td align="center">37.2</td>
+              <td align="center">2</td>
+              <td align="center">0.02</td>
+              <td align="center">0</td>
+              <td align="center">0.00</td>
+            </tr>
+            <tr>
+              <td align="center">&#x00a0;</td>
+              <td align="center">Totales</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">135</td>
+              <td align="center">1.00</td>
+              <td align="center">46</td>
+              <td align="center">1.00</td>
+            </tr>
+          </tbody>
+        </table>
+        <table-wrap-foot>
+          <fn id="TFN2">
+            <p>CC = centro de clase, Fr = Frecuencia relativa.</p>
+          </fn>
+        </table-wrap-foot>
+      </table-wrap>
+      <p>Densidad y estructura. El arbolado adulto de Pinus cembroides agrupó un total de 136
+        individuos, en tanto que para P. nelsonii fueron 47 individuos.</p>
+      <p>Referente a la estructura, P. cembroides presentó los siguientes valores promedio
+        (&#x00b1;1 D.E.): diámetro de tallo de 10.7 cm (&#x00b1;8.0), altura de 2.9 m
+        (&#x00b1;1.0) y cobertura de 3.0 m<sup>2</sup> (&#x00b1;1.8). En relación a P.
+        nelsonii, estos valores fueron: diámetro de 10.7 cm (&#x00b1;4.3), altura de 3.6 m
+        (&#x00b1;0.8) y cobertura 4.2 m<sup>2</sup> (&#x00b1;1.8).</p>
+      <p>
+        <disp-formula id="e1">
+          <label>(1)</label>
+          <mml:math id="e01" overflow="scroll">
+            <mml:semantics definitionURL="" encoding="">
+              <mml:mstyle>
+                <mml:msub>
+                  <mml:mi>F</mml:mi>
+                  <mml:mn>1</mml:mn>
+                </mml:msub>
+                <mml:mfenced close=")" open="(">
+                  <mml:mrow>
+                    <mml:mfenced close="}" open="{">
+                      <mml:msub>
+                        <mml:mi>W</mml:mi>
+                        <mml:mi>js</mml:mi>
+                      </mml:msub>
+                    </mml:mfenced>
+                    <mml:mi>,</mml:mi>
+                    <mml:mo mathvariant="italic">&#x03bb;</mml:mo>
+                  </mml:mrow>
+                </mml:mfenced>
+                <mml:mo>=</mml:mo>
+                <mml:mo>⋯</mml:mo>
+                <mml:mo>=</mml:mo>
+                <mml:msub>
+                  <mml:mi>F</mml:mi>
+                  <mml:mi>n</mml:mi>
+                </mml:msub>
+                <mml:mfenced close=")" open="(">
+                  <mml:mrow>
+                    <mml:mfenced close="}" open="{">
+                      <mml:msub>
+                        <mml:mi>W</mml:mi>
+                        <mml:mi>js</mml:mi>
+                      </mml:msub>
+                    </mml:mfenced>
+                    <mml:mi>,</mml:mi>
+                    <mml:mo mathvariant="italic">&#x03bb;</mml:mo>
+                  </mml:mrow>
+                </mml:mfenced>
+                <mml:mo>=</mml:mo>
+                <mml:mn>0</mml:mn>
+              </mml:mstyle>
+            </mml:semantics>
+          </mml:math>
+        </disp-formula>
+      </p>
+      <p>Al compararse los promedios del diámetro y la altura en las dos especies, se aprecian
+        valores muy cercanos, siendo marginalmente superiores para P. nelsonii. Sin embargo,
+        para la variable cobertura P. nelsonii resultó ca 1.5 veces mayor a P. cembroides.
+        Al realizar la prueba de Kruskal-Wallis (H-Chi<sup>2</sup>) sobre las variables
+        estructurales de las dos especies, se obtuvo una amplia diferencia estadística (p
+        &lt; 0.001), incluso dentro de cada especie, excepto para la variable cobertura de
+        P. cembroides que fue de p = 0.133; el resto de las variables presentaron
+        diferencias significativas (<xref ref-type="table" rid="t3">Tabla 3</xref>).</p>
+      <table-wrap id="t3">
+        <label>Tabla 3</label>
+        <caption>
+          <title>Promedio máximo y mínimo de las variables estructurales de Pinus
+            cembroides y P. nelsonii en Miquihuana, Tamaulipas.</title>
+        </caption>
+        <table frame="hsides" rules="groups">
+          <colgroup width="25%">
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="center">Characteristics</th>
+              <th align="center">Total sample <break/> (n = 59)</th>
+              <th align="center">No tranexamic acid <break/> (group A) <break/> (n =
+                30)</th>
+              <th align="center">Tranexamic acid <break/> (group B) <break/> (n =
+                29)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center">
+                <bold>Gender</bold>
+              </td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">&#x00a0;</td>
+              <td align="center">&#x00a0;</td>
+            </tr>
+            <tr>
+              <td align="center">Feminine</td>
+              <td align="center">36.0 (61.0)</td>
+              <td align="center">18.0 (60.0)</td>
+              <td align="center">18.0 (62.1)</td>
+            </tr>
+            <tr>
+              <td align="center">Masculine</td>
+              <td align="center">23.0 (39.0)</td>
+              <td align="center">12.0 (40.0)</td>
+              <td align="center">11.0 (37.9)</td>
+            </tr>
+            <tr>
+              <td align="center">Age (years old)</td>
+              <td align="center">68.0</td>
+              <td align="center">68.5 </td>
+              <td align="center">68.0</td>
+            </tr>
+            <tr>
+              <td align="center">Median (Interquartile interval)</td>
+              <td align="center">(65.0 - 75.0)</td>
+              <td align="center">(65.0 - 75.0)</td>
+              <td align="center">(64.0 - 75.0)</td>
+            </tr>
+            <tr>
+              <td align="center">BMI</td>
+              <td align="center">27.0</td>
+              <td align="center">26.5</td>
+              <td align="center">27.0</td>
+            </tr>
+            <tr>
+              <td align="center">Median (Interquartile interval)</td>
+              <td align="center">(25.0 - 28.0)</td>
+              <td align="center">(24.0 - 29.0)</td>
+              <td align="center">(25.0 - 28.0)</td>
+            </tr>
+          </tbody>
+        </table>
+        <table-wrap-foot>
+          <fn id="TFN3">
+            <p>n = número de individuos, Máx y Mín = valor máximo y mínimo.</p>
+          </fn>
+        </table-wrap-foot>
+      </table-wrap>
+      <p>El <xref ref-type="table" rid="t3">Tabla 3</xref> y la <xref ref-type="fig" rid="f1"
+          >Figura 1</xref> presentan los promedios, desviaciones estándar, el rango, así
+        como los valores máximos y mínimos de los parámetros estructurales. Es notable, que
+        el ámbito del diámetro de tallo de P. cembroides es superior a P. nelsonii, ya que
+        se distribuye en las siete categorías, caso contrario ocurrió en P. nelsonii donde
+        los diámetros se concentran en las primeras cuatro clases.</p>
+      <p>
+        <fig id="f1">
+          <label>Figura 1</label>
+          <caption>
+            <title>Promedios y desviación estándar de las variables estructurales:
+              diámetro de tallo (D), altura (h) y cobertura (Cob) de Pinus cembroides
+              y P. nelsonii de Miquihuana, Tamaulipas.</title>
+          </caption>
+          <graphic xlink:href="0065-1737-azm-31-03-0367-gf01.tif"/>
+        </fig>
+      </p>
+      <p> Si bien, P. cembroides contiene individuos de todas las categorías diamétricas de
+        tallo (<xref ref-type="fig" rid="f1">Figura 1</xref>), el número de plantas se
+        concentra en las clases 1 y 2, presentando un 45% y 28% respectivamente, que
+        comprende tallos de 2 a 12.6 cm de diámetro; el otro porcentaje lo integran las
+        clases 3, 4, 5, 6 y 7 con diámetros de tallo de 12.6 cm a 39.0 cm. Respecto a P.
+        nelsonii, su población se agrupa en las primeras cuatro clases, siendo las clases 2
+        y 3 las más altas, representando un 49% y 25%, respectivamente, e integrando
+        diámetros de 7.3 cm a 17.9 cm. El resto de los individuos, se agrupan en las clases
+        1 y 4 con un 19% y 6%, respectivamente, presentando diámetros de tallo de 2 a 7.3 cm
+        para la clase 1, y 17.9 a 23.1 cm para la cuarta clase.</p>
+      <p>Asociación de las variables estructurales con el daño porcentual de Retinia
+        arizonensis: Pinus cembroides mostró una correlación positiva marginal con las
+        variables altura, diámetro y cobertura de tallo, presentando valores de
+          r<sup>2</sup> 0.12, 0.16 y 0.18, respectivamente (p &lt; 0.001). Sin embargo, P.
+        nelsonii no manifestó una correlación significativa entre el daño por R. arizonensis
+        y los parámetros estructurales, obteniendo valores de ~r<sup>2</sup> 0.05 y ~0.03 de
+        las variables diámetro de tallo y cobertura, respectivamente.</p>
+      <p>Respecto a la influencia conjunta de las tres variables estructurales (correlación
+        múltiple = r<sup>2</sup>) para cada especie sobre el daño de R. arizonensis quedó
+        mayormente explicada en P. cembroides con valor de r<sup>2</sup> = 0.19 siendo
+        altamente significativa (p &lt; 0.001) y, para P. nelsonii la influencia de las
+        variables estructurales sobre el porcentaje de daño de R. arizonensis no fue
+        significativo (p = 0.128) con valor de r<sup>2</sup> = 0.12.</p>
+      <p>Regeneración de plántulas: Se contabilizaron 28 plántulas de Pinus cembroides y 20 de
+        P. nelsonii, siendo la participación porcentual (con respecto a los adultos), de
+        20.6% para P. cembroides y 42.5% para P. nelsonii. Las plántulas de P. cembroides
+        presentaron una altura promedio de 13.9 cm (&#x00b1;12.6). En P. nelsonii, la altura
+        promedio fue de 28.4 cm (&#x00b1;20.0). Las alturas máximas fueron de 70 cm y 75 cm
+        en P. cembroides y P. nelsonii, respectivamente, y las mínimas de 5 cm en P.
+        cembroides y 10 cm en P. nelsonii. Al realizar la prueba de Kruskal-Wallis
+          (H-Chi<sup>2</sup>) sobre la variable altura de plántulas, se encontró marcada
+        diferencia significativa (p &lt; 0.001) entre ambas especies. Similarmente, dentro
+        de cada especie se encontraron diferencias significativas = p &lt; 0.001 (<xref
+          ref-type="table" rid="t4">Tabla 4</xref>).</p>
+      <table-wrap id="t4">
+        <label>Tabla 4</label>
+        <caption>
+          <title>Análisis estadístico de la variable altura de las plántulas de Pinus
+            cembroides y Pinus nelsonii de Miquihuana, Tamaulipas.</title>
+        </caption>
+        <table frame="hsides" rules="groups">
+          <colgroup width="33%">
+            <col/>
+            <col/>
+            <col/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="left">Estadístico</th>
+              <th align="center">P. cembroides</th>
+              <th align="center">P. nelsonii</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left">No. de Individuos</td>
+              <td align="center">28</td>
+              <td align="center">20</td>
+            </tr>
+            <tr>
+              <td align="left">Promedio (cm &#x00b1; 1 D.E.)</td>
+              <td align="center">13.9 (&#x00b1;12.6)</td>
+              <td align="center">28.4 (&#x00b1;20.0)</td>
+            </tr>
+            <tr>
+              <td align="left">Altura Máxima</td>
+              <td align="center">70</td>
+              <td align="center">75</td>
+            </tr>
+            <tr>
+              <td align="left">Altura Mínima</td>
+              <td align="center">5</td>
+              <td align="center">10</td>
+            </tr>
+            <tr>
+              <td align="left">Rango</td>
+              <td align="center">5-70</td>
+              <td align="center">10-75</td>
+            </tr>
+            <tr>
+              <td align="left">Ámbito</td>
+              <td align="center">65</td>
+              <td align="center">65</td>
+            </tr>
+            <tr>
+              <td align="left">Kruskal-Wallis</td>
+              <td align="center">71.26</td>
+              <td align="center">&#x00a0;</td>
+            </tr>
+            <tr>
+              <td align="left">(H-x<sup>2</sup>)</td>
+              <td align="center">p &lt; 0.001</td>
+              <td align="center">&#x00a0;</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </sec>
+    <sec sec-type="discussion">
+      <title>DISCUSIÓN</title>
+      <p>Daño por Retinia arizonensis: De los 137 individuos registrados de P. cembroides ca
+        99% presentaron diferentes niveles de daño por R. arizonensis. Para P. nelsonii el
+        comportamiento del daño es similar a P. cembroides, debido a que del total de
+        individuos (47), sólo uno se encontró en estado sano y ca 98% mostró algún nivel de
+        daño. Aun cuando las dos especies mostraron daño por R. arizonensis, para P.
+        cembroides el arbolado dañado (83%) se concentró en las primeras tres categorías (de
+        1 a 17.7%). Para P. nelsonii este mismo porcentaje de daño (83%) se agrupó en la
+        categoría 1 (de 1 a 6.6%) (<xref ref-type="table" rid="t1">Tablas 1</xref> y <xref
+          ref-type="table" rid="t2">2</xref>).</p>
+      <p>Resultados obtenidos por otros investigadores, sobre el daño que este insecto causa
+        sobre las especies piñoneras muestran lo siguiente: i) los bosques piñoneros (P.
+        cembroides) de Saltillo, Coahuila, México, presentaron ~80% de daño, causando una
+        mortalidad de ca 50% (Flores &amp; Morales 1985), ii) en la misma región, los
+        ataques severos y consecutivos de R. arizonensis adicionales a otros agentes nocivos
+        (e.g. plagas, sequías) causaron la muerte del 36% de las plantas bajo un sistema de
+        plantación comercial (Domínguez 2003), iii) otro hallazgo sobre el detrimento que
+        esta palomilla causa sobre P. cembroides, es el registrado en Cardonal, Hidalgo,
+        donde 55.6% de las ramillas terminales de los piñoneros presentaron mortalidad
+        (Morales 2013). Estos resultados son contrastantes con los obtenidos en el presente
+        estudio, donde los niveles de daño fueron desde 1.2 hasta 42 veces más, respecto a
+        los sitios mencionados.</p>
+      <p>
+        <disp-quote>
+          <p>“Con tu frente en mi frente,</p>
+          <p>con tu boca en mi boca,</p>
+          <p>atados nuestros cuerpos</p>
+          <p>al amor que nos quema,</p>
+          <p>deja que el viento pase</p>
+          <p>sin que pueda llevarme.”</p>
+          <p>Pablo Neruda</p>
+        </disp-quote>
+      </p>
+      <p>Densidad y estructura: La densidad encontrada para Pinus cembroides fue de 136
+        individuos (ca 3 veces más respecto a P. nelsonii con 47), esta especie mostró una
+        marcada uniformidad en todas las categorías diamétricas de los tallos. En contraste
+        con P. nelsonii, la distribución diamétrica se ubicó en las primeras cuatro clases,
+        exhibiendo menores valores de rango, ámbito y desviación estándar (<xref
+          ref-type="table" rid="t3">Tablas 3</xref> y <xref ref-type="table" rid="t4"
+          >4</xref>).</p>
+      <p>De acuerdo a las clases diamétricas, en las dos especies se consideran bosques
+        jóvenes ya que concentran su población en las primeras clases diamétricas,
+        presentando forma de “J invertida” en P. cembroides (<xref ref-type="fig" rid="f1"
+          >Figura 1</xref>). Estas discrepancias categóricas, observadas principalmente en
+        P. nelsonii, posiblemente se deban a la presencia de factores adversos como las
+        sequías y la colecta excesiva de semillas; resultados similares fueron obtenidos en
+        P. nelsonii, P. cembroides y P. pinceana <inline-formula>
+          <mml:math id="e2" overflow="scroll">
+            <mml:semantics definitionURL="" encoding="">
+              <mml:mstyle>
+                <mml:mrow>
+                  <mml:munder>
+                    <mml:mo>&#x2211;</mml:mo>
+                    <mml:mrow>
+                      <mml:mi>i</mml:mi>
+                      <mml:mo mathsize="50.0%">&#x2208;</mml:mo>
+                      <mml:mi>S</mml:mi>
+                    </mml:mrow>
+                  </mml:munder>
+                  <mml:mrow>
+                    <mml:mo mathvariant="italic">&#x03c0;</mml:mo>
+                    <mml:mi>i</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mn>1</mml:mn>
+                  </mml:mrow>
+                </mml:mrow>
+              </mml:mstyle>
+            </mml:semantics>
+          </mml:math>
+        </inline-formula>. Igualmente, en las categorías diamétricas &gt;23.1 cm, P.
+        nelsonii está ausente, éste es un factor ecológico que en el futuro podría limitar
+        su regeneración y, por lo tanto, la deriva genética, afectando la adaptación y el
+        éxito de la especie. Este aspecto se constata con la nominación de P. nelsonii como
+        especie en peligro de extinción por la Norma Oficial Mexicana NOM-059-SEMARNAT2010 y
+        como vulnerable según criterios de la Unión Internacional para la Conservación de la
+        Naturaleza. En contraposición, P. cembroides que, aún cuando el porcentaje de
+        plantas es bajo (8.1%) en esta categoría, mantiene árboles en todas las categorías
+        diamétricas, lo cual fundamenta y expresa que la adaptación al medio está regida por
+        una sucesión multigeneracional, donde la posibilidad del éxito reproductivo está
+        garantizado y la especie no presenta riesgos mediatos de supresión ecológica (<xref
+          ref-type="table" rid="t4">Tabla 4</xref> y <xref ref-type="fig" rid="f1">Figura
+          1</xref>) <inline-formula>
+          <mml:math id="e3" overflow="scroll">
+            <mml:semantics definitionURL="" encoding="">
+              <mml:mstyle>
+                <mml:mi>P</mml:mi>
+                <mml:mfenced close="}" open="{">
+                  <mml:mrow>
+                    <mml:msub>
+                      <mml:mi>K</mml:mi>
+                      <mml:mi>r</mml:mi>
+                    </mml:msub>
+                    <mml:mo>&#x2265;</mml:mo>
+                    <mml:mi>X</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mi>S</mml:mi>
+                    <mml:mi>(</mml:mi>
+                    <mml:mi>r</mml:mi>
+                    <mml:mi>)</mml:mi>
+                  </mml:mrow>
+                </mml:mfenced>
+                <mml:mo>&#x2264;</mml:mo>
+                <mml:mfrac>
+                  <mml:mrow>
+                    <mml:mi>E</mml:mi>
+                    <mml:mfenced close="]" open="[">
+                      <mml:msub>
+                        <mml:mi>K</mml:mi>
+                        <mml:mi>r</mml:mi>
+                      </mml:msub>
+                    </mml:mfenced>
+                  </mml:mrow>
+                  <mml:mrow>
+                    <mml:mi>X</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mi>S</mml:mi>
+                    <mml:mi>(</mml:mi>
+                    <mml:mi>r</mml:mi>
+                    <mml:mi>)</mml:mi>
+                  </mml:mrow>
+                </mml:mfrac>
+              </mml:mstyle>
+            </mml:semantics>
+          </mml:math>
+        </inline-formula> .</p>
+      <p>Asociación del daño por Retinia arizonensis con las variables estructurales. Respecto
+        a la influencia de las variables dasométricas sobre el daño por R. arizonensis, a
+        través de la determinación (r<sup>2</sup>), en P. cembroides fue significativo (p
+        &lt; 0.001) con una correlación positiva marginal con las variables altura, diámetro
+        de tallo y cobertura, presentando valores de 0.12, 0.16 y 0.18, respectivamente. En
+        P. nelsonii la influencia de las variables estructurales sobre el daño no fue
+        significativa, sin embargo, esta especie presentó ligera influencia en el diámetro
+        de tallo y la cobertura. En el efecto combinado de las tres variables estructurales
+        sobre el porcentaje de daño por R. arizonensis en P. cembroides mediante la
+        regresión múltiple (r<sup>2</sup>) se obtuvo un valor de 0.19, siendo altamente
+        significativa (p &lt; 0.001), lo cual indica que ca 20% de la varianza en el daño de
+        R. arizonensis es dependiente de las características estructurales de estos bosques.
+        Por su parte, en P. nelsonii la influencia de las variables estructurales sobre el
+        porcentaje de daño de R. arizonensis no fue significativa (p = 0.128) con valor de
+          r<sup>2</sup> correlación múltiple de 0.12. Los resultados obtenidos en el
+        presente estudio difieren de lo obtenido por quien encontró que al aumentar el
+        diámetro de P. cembroides disminuía el ataque por Retinia y que el mayor daño
+        observado fue en árboles con diámetros &#x2264; 4.0 cm. En la presente
+        investigación, los valores máximos de daño encontrados en P. cembroides ocurrieron
+        en individuos con tallos de 20 cm y con 3-3.5 m de altura; el individuo con menor
+        daño medía 2.5 cm de diámetro y 1.80 m de altura. En P. nelsonii el individuo que
+        presentó mayor daño por R. arizonensis (20% del follaje), exhibió un diámetro de
+        tallo de 14 cm y 4 m de altura, en tanto que el árbol con menor daño presentó
+        diámetro de tallo de ~8 a 12 cm con altura y de ~3 a 4 m. Lo anterior puede deberse
+        a que el estudio se realizó en una plantación con factores controlados como la edad,
+        distancia entre plantas y riego. El presente estudio se realizó bajo condiciones
+        naturales, donde se involucran otras variables diferenciales, tales como la edad de
+        planta, competencia intra e interespecífica y el microclima, entre otros. El mayor
+        daño encontrado en P. cembroides (ca 2 veces mayor) puede deberse -entre otras
+        causas- a que esta especie presenta mayor densidad, lo cual incrementa la
+        posibilidad de la interacción planta-insecto, lo que queda de manifiesto con lo
+        expuesto por Feeny. Así mismo, la expresión de mayor cobertura (mayor fronda) de
+        esta especie respecto a P. nelsonii, ha sido documentada anteriormente para
+        bosques.</p>
+      <p>Regeneración. El éxito de cualquier especie está basado en la regeneración natural,
+        la que se mide por la capacidad reproductiva (producción media de semillas), que
+        depende de la correcta polinización, amarre de frutos y la dispersión de semillas.
+        Posteriormente, la predación pre- y postdispersión, viablidad de la semilla,
+        germinación, crecimiento de las plántulas y el crecimiento vegetativo hasta alcanzar
+        la etapa juvenil. Todas estas fases requieren de una serie de factores ambientales,
+        clima y suelo que garanticen el éxito reproductivo. Respecto a este tema, que la
+        regeneración natural constituye uno de los problemas torales para la sucesión de las
+        especies piñoneras. En el presente estudio se encontraron 28 plántulas de Pinus
+        cembroides y 20 de P. nelsonii en los sitios de estudio. La proporción de
+        plántulas/adultos fue de 20.6 y 42.6%, respectivamente, para estas especies.
+        Estudios anteriores sobre esta variable en la misma zona de estudio fueron
+        realizados por donde la regeneración porcentual con respecto a los adultos fue de
+        49.6% para P. cembroides y 63.4% para P. nelsonii. La óptima regeneración observada
+        para ambas especies, puede deberse entre otros factores al buen contenido de materia
+        orgánica (10.3% en el sitio con P. cembroides y 8.6% en el sitio con P. nelsonii),
+        con lo que se clasifican como suelos ricos lo que mejora la captación de humedad que
+        es uno de los requisitos básicos para la germinación.</p>
+      <p>Pinus nelsonii presenta una estructura vertical y horizontal poco compacta, con
+        ramificación más abierta y una densidad de plantas adultas menor. Por otra parte P.
+        cembroides, al mostrarse con una estructura densa y copiosa, aumenta la competencia
+        por luz y nutrientes que también son elementales en la germinación. Además, algunos
+        autores mencionan que el incremento de la temperatura por el cambio climático mejora
+        la regeneración natural, sobre todo en las regiones frías. Sin embargo, estos
+        resultados son supuestos ya que estas plántulas pueden ser afectadas por las
+        sequías, la competencia por agua y nutrientes, así como daños por el pastoreo como
+        lo señalan en Pinus pinea (L).</p>
+      <p>Es indudable la necesidad de complementar los resultados sobre el daño de Retinia
+        arizonensis, así como los factores que favorecen el ataque de pinos piñoneros en la
+        región de Miquihuana, debido a que el porcentaje de plantas (ca 99% en P. cembroides
+        y ca 98% en P. nelsonii) con daños de diversa magnitud, supera a lo reportado por
+        otros investigadores. Así mismo, aun cuando los daños no provocan la muerte
+        inmediata de las plantas, retardan el crecimiento vegetativo y en consecuencia,
+        afectan la producción de conillos y conos, reduciendo por ende la producción de
+        semillas, lo que en el futuro afectará la regeneración natural de estos pinos
+        piñoneros.</p>
+    </sec>
+  </body>
+  <back>
+    <fn-group>
+      <fn fn-type="supported-by" id="fn1">
+        <p><bold>Soporte:</bold> Esta investigación fue apoyada por la Universitat de
+          Teherán de Ciencias Médicas y Servicios de Salud.</p>
+      </fn>
+    </fn-group>
+    <ack>
+      <title>AGRADECIMIENTOS</title>
+      <p>Al Conacyt, por la Beca otorgada al primer autor (IFL) para realizar estudios de
+        Doctorado. Al Comité de Tesis Doctoral del Instituto de Ecología Aplicada,
+        Universidad Autónoma de Tamaulipas: Gerardo Sánchez-Ramos (Director de Tesis y
+        Asesor), José Guadalupe Martínez-Ávalos (Coasesor), Humberto Suzán-Azpiri (Coasesor)
+        y José Villanueva-Díaz (Coasesor). Al “Conselho Nacional de Desenvolvimento
+        Científico e Tecnológico” (CNPq-302528/2011-3) y “Fundação de Amparo à Pesquisa do
+        Estado de São Paulo” (FAPESP-2011/50680-2).</p>
+    </ack>
+    <ref-list>
+      <title>LITERATURA CITADA</title>
+      <ref id="B1">
+        <mixed-citation>Adams, H. D., Guardiola-Claramonte, M., Barrón-Gafford, G. A.,
+          Villegas, J. C., Breshears, D. D., Zoug, C. B., Troch, P. A. &amp; Huxman, T. E.
+          The Brazilian Electoral Panel Studies (BEPS): Brazilian Public Opinion in the
+          2010 Presidential Elections. Technical Note No. IDB-TN-508, Inter-American
+          Development Bank, Department of Research and Chief Economist,
+          2009.</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Adams</surname>
+              <given-names>H. D.</given-names>
+            </name>
+            <name>
+              <surname>Guardiola-Claramonte</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Barrón-Gafford</surname>
+              <given-names>G. A.</given-names>
+            </name>
+            <name>
+              <surname>Villegas</surname>
+              <given-names>J. C.</given-names>
+            </name>
+            <name>
+              <surname>Breshears</surname>
+              <given-names>D. D.</given-names>
+            </name>
+            <name>
+              <surname>Zoug</surname>
+              <given-names>C. B.</given-names>
+            </name>
+            <name>
+              <surname>Troch</surname>
+              <given-names>P. A.</given-names>
+            </name>
+            <name>
+              <surname>Huxman</surname>
+              <given-names>T. E.</given-names>
+            </name>
+          </person-group>
+          <source>The Brazilian Electoral Panel Studies (BEPS): Brazilian Public Opinion
+            in the 2010 Presidential Elections</source>
+          <comment>Technical Note No. IDB-TN-508</comment>
+          <publisher-name>Inter-American Development Bank, Department of Research and
+            Chief Economist</publisher-name>
+          <year>2009</year>
+        </element-citation>
+      </ref>
+      <ref id="B2">
+        <mixed-citation>Cibrián, T. D. &amp; Méndez, T. “Euro SDR network on Digital camera
+            calibration”.<italic>Final Report</italic>,Institute of Photogrammetry,
+          University of Stuttgart, 1987.</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cibrián</surname>
+              <given-names>T. D.</given-names>
+            </name>
+            <name>
+              <surname>Méndez</surname>
+              <given-names>T.</given-names>
+            </name>
+            <collab>Euro SDR network on Digital camera calibration</collab>
+          </person-group>
+          <source>Final Report</source>
+          <publisher-name>Institute of Photogrammetry, University of
+            Stuttgart</publisher-name>
+          <year>1987</year>
+        </element-citation>
+      </ref>
+      <ref id="B3">
+        <mixed-citation>Cranshaw, W. S., Leatherman, D. A., Jacobi ,W. R. &amp; Mannix, L.
+          Estratégia eleitoral e eleições para Câmara dos Deputados no Brasil em 2006, no
+          prelo, 2006</mixed-citation>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cranshaw</surname>
+              <given-names>W. S.</given-names>
+            </name>
+            <name>
+              <surname>Leatherman</surname>
+              <given-names>D. A.</given-names>
+            </name>
+            <name>
+              <surname>Jacobi</surname>
+              <given-names>W. R.</given-names>
+            </name>
+            <name>
+              <surname>Mannix</surname>
+              <given-names>L.</given-names>
+            </name>
+          </person-group>
+          <source>Estratégia eleitoral e eleições para Câmara dos Deputados no Brasil em
+            2006</source>
+          <comment>no prelo</comment>
+          <year>2006</year>
+        </element-citation>
+      </ref>
+      <ref id="B4">
+        <mixed-citation>Flores, A. J. &amp; Martínez, R. S. 1987. Professores de ensino
+          superior: características de qualidade. Tese de Doutorado, Pontifícia
+          Universidade Católica de São Paulo, São Paulo .</mixed-citation>
+        <element-citation publication-type="thesis">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Flores</surname>
+              <given-names>A. J.</given-names>
+            </name>
+            <name>
+              <surname>Martínez</surname>
+              <given-names>R. S.</given-names>
+            </name>
+          </person-group>
+          <year>1987</year>
+          <source>Professores de ensino superior: características de qualidade</source>
+          <comment>Tese de Doutorado</comment>
+          <publisher-name>Pontifícia Universidade Católica de São Paulo</publisher-name>
+          <publisher-loc>São Paulo</publisher-loc>
+        </element-citation>
+      </ref>
+      <ref id="B5">
+        <mixed-citation>Franklin, J. F. &amp; Van Pelt, R. <italic>Em defesa da liberdade:
+            libertos e livres de cor nos tribu nais do Antigo Regime português (Mariana
+            e Lisboa, 1720-1819)</italic>(2004). Tese de doutorado, Departamento de
+          História, Instituto de Filosofia e Ciências Humanas, Universidade Estadual de
+          Campinas, 2004.</mixed-citation>
+        <element-citation publication-type="thesis">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Franklin</surname>
+              <given-names>J. F.</given-names>
+            </name>
+            <name>
+              <surname>Van Pelt</surname>
+              <given-names>R.</given-names>
+            </name>
+          </person-group>
+          <source>Em defesa da liberdade: libertos e livres de cor nos tribu nais do
+            Antigo Regime português (Mariana e Lisboa, 1720-1819)</source>
+          <year>2004</year>
+          <comment>Tese de doutorado</comment>
+          <publisher-name>Departamento de História, Instituto de Filosofia e Ciências
+            Humanas, Universidade Estadual de Campinas</publisher-name>
+          <year>2004</year>
+        </element-citation>
+      </ref>
+      <ref id="B6">
+        <mixed-citation>Harper, J. L. Interpretation of nominal compounds: combining
+          domain-independent and domain-specific information. In: INTERNATIONAL CONFERENCE
+          ON COMPUTATIONAL LINGUISTICS (COLING), 16., 1977, Stroudsburg. Proceedings...
+          Stroudsburg: Association of Computational Linguistics, 1977. v.1,
+          p.364-369.</mixed-citation>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Harper</surname>
+              <given-names>J. L.</given-names>
+            </name>
+          </person-group>
+          <article-title>Interpretation of nominal compounds: combining domain-independent
+            and domain-specific information</article-title>
+          <conf-name>INTERNATIONAL CONFERENCE ON COMPUTATIONAL LINGUISTICS (COLING),
+            16</conf-name>
+          <conf-date>1977</conf-date>
+          <conf-loc>Stroudsburg</conf-loc>
+          <source>Proceedings...</source>
+          <publisher-loc>Stroudsburg</publisher-loc>
+          <publisher-name>Association of Computational Linguistics</publisher-name>
+          <year>1977</year>
+          <volume>1</volume>
+          <fpage>364</fpage>
+          <lpage>369</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B7">
+        <mixed-citation>Jacobi, W. R. &amp; Cranshaw W. S. A temática 'saúde' na concepção
+          de professores dos anos iniciais do Ensino Fundamental: questões concernentes a
+          metodologias e aprendizagem. In: IX Seminário de Pesquisa em Educação da Região
+          Sul - IX ANPED SUL, 2012a, Caxias do Sul. Anais...Caxias do Sul: UCS, 2009. p.
+          1e-14e</mixed-citation>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jacobi</surname>
+              <given-names>W. R.</given-names>
+            </name>
+            <name>
+              <surname>Cranshaw</surname>
+              <given-names>W. S</given-names>
+            </name>
+          </person-group>
+          <article-title>A temática 'saúde' na concepção de professores dos anos iniciais
+            do Ensino Fundamental: questões concernentes a metodologias e
+            aprendizagem</article-title>
+          <conf-name>IX Seminário de Pesquisa em Educação da Região Sul - IX ANPED
+            SUL</conf-name>
+          <conf-date>2012a</conf-date>
+          <conf-loc>Caxias do Sul</conf-loc>
+          <source>Anais...</source>
+          <publisher-loc>Caxias do Sul</publisher-loc>
+          <publisher-name>UCS</publisher-name>
+          <year>2009</year>
+          <fpage>1e</fpage>
+          <lpage>14e</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B8">
+        <mixed-citation>Brasil, Lei n. 9.394, de 20 de dezembro de 1996. (1996, 23 de
+          dezembro). Estabelece as Diretrizes e Bases da Educação Nacional. Brasília:
+          Diário Oficial da União, seção 1 1996 </mixed-citation>
+        <element-citation publication-type="legal-doc">
+          <person-group person-group-type="author">
+            <collab>Brasil</collab>
+          </person-group>
+          <article-title>Lei n. 9.394, de 20 de dezembro de 1996. (1996, 23 de dezembro).
+            Estabelece as Diretrizes e Bases da Educação Nacional</article-title>
+          <publisher-loc>Brasília</publisher-loc>
+          <publisher-name>Diário Oficial da União</publisher-name>
+          <comment>seção 1</comment>
+          <year>1996</year>
+        </element-citation>
+      </ref>
+      <ref id="B9">
+        <mixed-citation>Jactel, H., Menassieu, P., Raise, G. &amp; Burban, C. (1996). A
+          saúde e a doença mental segundo a fenomenologia existencial. <italic>Revista da
+            Associação Brasileira de Daseinsanalyse</italic>, São Paulo,
+            <italic>16</italic>, 98-114</mixed-citation>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jactel</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Menassieu</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Raise</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Burban</surname>
+              <given-names>C.</given-names>
+            </name>
+          </person-group>
+          <year>1996</year>
+          <article-title>A saúde e a doença mental segundo a fenomenologia
+            existencial</article-title>
+          <source>Revista da Associação Brasileira de Daseinsanalyse</source>
+          <publisher-loc>São Paulo</publisher-loc>
+          <volume>16</volume>
+          <fpage>98</fpage>
+          <lpage>114</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B10">
+        <mixed-citation>Secretaría de Desarrollo Urbano y Medio Ambiente (SEDUMA). 2013.
+          Combaten Incendio en Miquihuana. Comunicado de prensa 0378-abril 27, 2013.
+          Disponible en: <ext-link ext-link-type="uri"
+            xlink:href="http://tamaulipas.gob.mx/2013/04/abaten-incendio-en-zona-de-miquihuana/"
+            >http://tamaulipas.gob.
+            mx/2013/04/abaten-incendio-en-zona-de-miquihuana/</ext-link>
+        </mixed-citation>
+        <element-citation publication-type="webpage">
+          <person-group person-group-type="author">
+            <collab>Secretaría de Desarrollo Urbano y Medio Ambiente (SEDUMA)</collab>
+          </person-group>
+          <year>2013</year>
+          <source>Combaten Incendio en Miquihuana</source>
+          <comment>Comunicado de prensa 0378</comment>
+          <day>27</day>
+          <month>04</month>
+          <year>2013</year>
+          <ext-link ext-link-type="uri"
+            xlink:href="http://tamaulipas.gob.mx/2013/04/abaten-incendio-en-zona-de-miquihuana/"
+            >http://tamaulipas.gob.
+            mx/2013/04/abaten-incendio-en-zona-de-miquihuana/</ext-link>
+        </element-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

@@ -2,14 +2,15 @@
   font-size: 14px;
 }
 
-.sc-article-record .se-metadata-item {
+.sc-article-record .se-metadata-item,
+.sc-article-record .se-content-loc-type {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   padding: 5px 0px;
 }
 
-.sc-article-record .se-text-input {
+.sc-article-record input {
   border: 1px solid #dadada;
   width: 200px;
   border-radius: 3px;
@@ -18,7 +19,7 @@
   background: #fff;
 }
 
-.sc-article-record .se-text-input:focus {
+.sc-article-record input:focus {
   border-color: #4e92df;
 }
 
@@ -27,4 +28,19 @@
   padding: 10px;
   color: #838383;
   font-weight: 200;
+}
+
+.sc-article-record .se-date-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.sc-article-record .se-date-item input {
+  width: 70px;
+  margin-right: 5px;
+}
+
+.sc-article-record .se-date-item .se-content {
+  flex: 1 1 0;
 }

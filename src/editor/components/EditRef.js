@@ -1,6 +1,6 @@
 import { Component, FontAwesomeIcon as Icon } from 'substance'
 const refTypes = [
-  {id: 'joural', label: 'Journal article'},
+  {id: 'journal', label: 'Journal article'},
   {id: 'book', label: 'Book chapter'},
 ]
 

@@ -354,7 +354,6 @@ export default class EditRef extends Component {
       )
       personGroup.append(name)
     })
-
     this.rerender()
   }
 

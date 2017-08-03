@@ -58,6 +58,7 @@ import FigPreview from './components/FigPreview'
 import TableFigPreview from './components/TableFigPreview'
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
+import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
 substanceGlobals.DEBUG_RENDERING = true
@@ -155,6 +156,11 @@ export default {
       refType: 'fn',
       commandGroup: 'insert-xref'
     })
+
+    config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
+      commandGroup: 'insert-block-element'
+    })
+
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
     })
@@ -168,6 +174,8 @@ export default {
     config.addLabel('insert-xref-fig', 'Figure Reference')
     config.addLabel('insert-xref-table', 'Table Reference')
     config.addLabel('insert-xref-fn', 'Footnote Reference')
+    config.addLabel('insert-disp-quote', 'Blockquote')
+
     config.addLabel('manuscript-start', 'Manuscript starts here')
     config.addLabel('manuscript-end', 'Manuscript ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
@@ -304,7 +312,7 @@ export default {
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
-        commandGroups: ['insert-xref']
+        commandGroups: ['insert-xref', 'insert-block-element']
       }
     ])
 

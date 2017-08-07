@@ -5,8 +5,10 @@ export default class WrapDispQuoteContent {
   import(dom) {
     dom.findAll('disp-quote').forEach((dispQuote) => {
       let attrib = dispQuote.find('attrib')
-      if (!attrib) {
-        // attrib element is required in TextureJATS.
+      // Pull off <attrib> element or create empty element
+      if (attrib) {
+        dispQuote.removeChild(attrib)
+      } else {
         attrib = dom.createElement('attrib')
       }
       let content = dom.createElement('disp-quote-content').append(dispQuote.children)

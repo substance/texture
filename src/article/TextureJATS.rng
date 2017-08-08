@@ -674,24 +674,20 @@
   </define>
 
   <!--
-    Pure container for content of <disp-quote>
-
-    TODO: transform
+    Wraps content in explicit <disp-quote-content> container
   -->
   <define name="disp-quote">
     <element name="disp-quote">
       <ref name="disp-quote-attlist"/>
       <ref name="disp-quote-content"/>
-      <zeroOrMore>
-        <ref name="attrib"/>
-      </zeroOrMore>
+      <ref name="attrib"/>
     </element>
   </define>
 
   <define name="disp-quote-content">
     <element name="disp-quote-content">
       <oneOrMore>
-        <ref name="just-para.class"/>
+        <ref name="para-level"/>
       </oneOrMore>
     </element>
   </define>

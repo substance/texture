@@ -241,6 +241,18 @@
 
   <!--
     Changes:
+      - Only allow para-level elements followed by an optional <attrib> element
+  -->
+  <define name="disp-quote">
+    <element name="disp-quote">
+      <ref name="disp-quote-attlist"/><!-- use original attributes -->
+      <zeroOrMore><ref name="para-level"/></zeroOrMore>
+      <optional><ref name="attrib"/></optional>
+    </element>
+  </define>
+
+  <!--
+    Changes:
       - Removed phrase and inline elements
 
     TODO: provide transformation

@@ -158,6 +158,7 @@ export default {
     })
 
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
+      nodeType: 'disp-quote',
       commandGroup: 'insert-block-element'
     })
 

@@ -1,6 +1,9 @@
 import { Editing, validateXMLSchema, isString, paste } from 'substance'
 import TextureJATS from './TextureJATS'
 
+/*
+  Proposal for Substance 2.0 XMLEditing implementation
+*/
 export default class TextureEditing extends Editing {
 
   // EXPERIMENTAL: run validation after pasting
@@ -18,7 +21,7 @@ export default class TextureEditing extends Editing {
     if (isString(content)) {
       paste(tx, {text: content})
     } else if (content._isDocument) {
-      paste(tx, {doc: content})
+      paste(tx, { doc: content })
     } else {
       throw new Error('Illegal content for paste.')
     }
@@ -30,7 +33,30 @@ export default class TextureEditing extends Editing {
       })
       throw new Error('Paste is violating the schema')
     }
-
   }
+
+  /*
+    2.0 API suggestion (pass only id, not data)
+  */
+  insertBlockNode(tx, nodeId) {
+    super.insertBlockNode(tx, { id: nodeId })
+  }
+
+  /*
+    2.0 API suggestion (pass only id, not data)
+  */
+  insertInlineNode(tx, nodeId) {
+    let node = tx.get(nodeId)
+    let sel = tx.selection
+    let text = "\uFEFF"
+    this.insertText(tx, text)
+    sel = tx.selection
+    let endOffset = tx.selection.end.offset
+    let startOffset = endOffset - text.length
+    tx.set([node.id, 'start'], { path: sel.path, offset: startOffset })
+    tx.set([node.id, 'end'], { path: sel.path, offset: endOffset })
+    return node
+  }
+
 
 }

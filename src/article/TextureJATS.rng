@@ -877,49 +877,82 @@
     </element>
   </define>
 
-  <!--
-    We use a strict definition for element-citation in Texture.
 
-    TODO: support remaining publication types
+
+  <!--
+    Changes:
+      - Removed phrase and inline elements
+
+    TODO: provide transformation
   -->
-  <!--
-
-  !! NOTE: disabled this, because we need attribute-sensitive
-      schemas first to do it properly
-
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>
-      <ref name="person-group"/>
-      <choice>
-        <group>
-          <ref name="year"/>
-          <ref name="article-title"/>
-          <ref name="source"/>
-          <ref name="volume"/>
-          <ref name="fpage"/>
-          <ref name="lpage"/>
-          <ref name="issue"/>
-          <ref name="elocation-id"/>
-          TODO: how can we support multiple pub-ids, other than doi
-          <ref name="pub-id"/>
-
-        </group>
-        <group>
-          <ref name="chapter-title"/>
-          <ref name="source"/>
-          <ref name="publisher-loc"/>
-          <ref name="publisher-name"/>
-          <ref name="year"/>
-          <ref name="fpage"/>
-          <ref name="lpage"/>
-          <ref name="issue"/>
-          <ref name="elocation-id"/>
-        </group>
-      </choice>
+      <interleave>
+        <ref name="string-date"/>
+        <ref name="label"/>
+        <ref name="annotation"/>
+        <ref name="article-title"/>
+        <ref name="chapter-title"/>
+        <ref name="collab"/>
+        <ref name="collab-alternatives"/>
+        <zeroOrMore><ref name="comment"/></zeroOrMore>
+        <ref name="conf-acronym"/>
+        <ref name="conf-date"/>
+        <ref name="conf-loc"/>
+        <ref name="conf-name"/>
+        <ref name="conf-sponsor"/>
+        <!-- custom content-loc element instead of fpage,lpage,page-range,e-location-id -->
+        <ref name="content-loc"/>
+        <ref name="data-title"/>
+        <ref name="date"/>
+        <ref name="date-in-citation"/>
+        <ref name="day"/>
+        <ref name="edition"/>
+        <ref name="email"/>
+        <ref name="etal"/>
+        <ref name="gov"/>
+        <ref name="institution"/>
+        <ref name="institution-wrap"/>
+        <ref name="isbn"/>
+        <ref name="issn"/>
+        <ref name="issn-l"/>
+        <ref name="issue"/>
+        <ref name="issue-id"/>
+        <ref name="issue-part"/>
+        <ref name="issue-title"/>
+        <ref name="month"/>
+        <ref name="name"/>
+        <ref name="name-alternatives"/>
+        <ref name="object-id"/>
+        <ref name="part-title"/>
+        <ref name="patent"/>
+        <ref name="person-group"/>
+        <ref name="pub-id"/>
+        <ref name="publisher-loc"/>
+        <ref name="publisher-name"/>
+        <ref name="role"/>
+        <ref name="season"/>
+        <ref name="series"/>
+        <ref name="size"/>
+        <ref name="source"/>
+        <ref name="std"/>
+        <ref name="string-name"/>
+        <ref name="supplement"/>
+        <ref name="trans-source"/>
+        <ref name="trans-title"/>
+        <ref name="uri"/>
+        <ref name="version"/>
+        <ref name="volume"/>
+        <ref name="volume-id"/>
+        <ref name="volume-series"/>
+        <ref name="year"/>
+      </interleave>
     </element>
   </define>
- -->
+
+
+
 
   <!--
     We force using <element-citation> for structured representation

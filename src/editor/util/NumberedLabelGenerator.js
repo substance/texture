@@ -107,7 +107,8 @@ export default class NumberedLabelGenerator extends EventEmitter {
       case CREATE:
       case DELETE: {
         const nodeData = op.val
-        if (nodeData.type === 'xref') {
+        // ATTENTION: nodeData does not necessarily contain attributes as they are optional
+        if (nodeData.type === 'xref' && nodeData.attributes) {
           const refType = nodeData.attributes['ref-type']
           if (refType) {
             this._needsRecompute[refType] = true
@@ -127,7 +128,7 @@ export default class NumberedLabelGenerator extends EventEmitter {
         break
       }
       case SET: {
-        if (op.path[1] === 'attributes' && op.path[2] === 'rid') {
+        if (op.path[1] === 'attributes' && (op.path[2] === 'rid' || op.path[2] === 'ref-type')) {
           const nodeId = op.path[0]
           const node = doc.get(nodeId)
           if (node && node.type === 'xref') {

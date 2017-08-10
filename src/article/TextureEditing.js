@@ -53,8 +53,11 @@ export default class TextureEditing extends Editing {
     sel = tx.selection
     let endOffset = tx.selection.end.offset
     let startOffset = endOffset - text.length
-    tx.set([node.id, 'start'], { path: sel.path, offset: startOffset })
-    tx.set([node.id, 'end'], { path: sel.path, offset: endOffset })
+    // TODO: introduce a coordinate operation for that
+    tx.set([node.id, 'start', 'path'], sel.path)
+    tx.set([node.id, 'start', 'offset'], startOffset)
+    tx.set([node.id, 'end', 'path'], sel.path)
+    tx.set([node.id, 'end', 'offset'], endOffset)
     return node
   }
 

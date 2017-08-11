@@ -1,7 +1,15 @@
-import { InsertNodeCommand } from 'substance'
+import InsertNodeCommand from './InsertNodeCommand'
 
 export default class InsertXrefCommand extends InsertNodeCommand {
-  createNodeData() {
-    throw new Error('TODO: Needs different approach with XML data model')
+
+  createNode(tx) {
+    let dispQuote = tx.createElement('disp-quote')
+    dispQuote.append(
+      tx.createElement('disp-quote-content').append(
+        tx.createElement('p').text('')
+      ),
+      tx.createElement('attrib').text('')
+    )
+    return dispQuote
   }
 }

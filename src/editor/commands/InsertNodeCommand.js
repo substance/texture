@@ -8,7 +8,7 @@ export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
     let editorSession = this._getEditorSession(params, context)
     editorSession.transaction((tx) => {
       let node = this.createNode(tx, params, context)
-      tx.insertBlockNode(node.id)
+      tx.insertBlockNode(node)
       this.setSelection(tx, node)
     })
   }

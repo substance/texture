@@ -38,15 +38,7 @@ export default class TextureEditing extends Editing {
   /*
     2.0 API suggestion (pass only id, not data)
   */
-  insertBlockNode(tx, nodeId) {
-    super.insertBlockNode(tx, { id: nodeId })
-  }
-
-  /*
-    2.0 API suggestion (pass only id, not data)
-  */
-  insertInlineNode(tx, nodeId) {
-    let node = tx.get(nodeId)
+  insertInlineNode(tx, node) {
     let sel = tx.selection
     let text = "\uFEFF"
     this.insertText(tx, text)

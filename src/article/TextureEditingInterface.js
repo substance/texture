@@ -17,21 +17,4 @@ export default class TextureEditingInterface extends EditingInterface {
     return this.getDocument().createElement(...args)
   }
 
-  /*
-    2.0 API suggestion (pass only id, not data)
-  */
-  insertBlockNode(nodeId) {
-    super.insertBlockNode({ id: nodeId })
-  }
-
-  /*
-    2.0 API suggestion (pass only id, not data)
-  */
-  insertInlineNode(nodeId) {
-    const sel = this._selection
-    if (sel && !sel.isNull() && sel.isPropertySelection()) {
-      return this._impl.insertInlineNode(this, nodeId)
-    }
-  }
-
 }

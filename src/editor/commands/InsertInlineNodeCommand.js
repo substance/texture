@@ -39,7 +39,7 @@ class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCommand {
     let editorSession = this._getEditorSession(params)
     editorSession.transaction((tx) => {
       let node = this.createNode(tx, params)
-      tx.insertInlineNode(node.id)
+      tx.insertInlineNode(node)
     })
   }
 

@@ -50,3 +50,12 @@ We will improve general usability and reliability. This includes improved copy&p
 #### Desktop Application
 
 We will provide integration of Texture into a desktop application. This allows users to open JATS files from disk. It will also support opening a self-contained archive format (essentially a gzipped file that contains the JATS XML file + assets such as images, supplements, etc.).
+
+
+## Unscheduled
+
+#### Support for group authors
+
+#### Image quality checker
+
+Implement a quality checker for images.

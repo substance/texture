@@ -133,7 +133,9 @@ export default class NumberedLabelGenerator extends EventEmitter {
           const node = doc.get(nodeId)
           if (node && node.type === 'xref') {
             const refType = node.getAttribute('ref-type')
-            this._needsRecompute[refType] = true
+            if (refType) {
+              this._needsRecompute[refType] = true
+            }
           }
         }
         break

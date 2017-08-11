@@ -4,7 +4,7 @@ import { getXrefTargets } from '../util'
 export default class XrefComponent extends Component {
 
   didMount() {
-    this.context.labelGenerator.on('labels:generated', this.rerender, this)
+    this.context.labelGenerator.on('labels:generated', this._onLabelsGenerated, this)
   }
 
   dispose() {
@@ -21,5 +21,11 @@ export default class XrefComponent extends Component {
     el.append(generatedLabel)
     el.addClass('sm-'+refType)
     return el
+  }
+
+  _onLabelsGenerated(refType) {
+    if (refType === this.getAttribute('ref-type')) {
+      this.rerender()
+    }
   }
 }

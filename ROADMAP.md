@@ -39,6 +39,10 @@ In this iteration we will add missing interfaces for inserting content from scra
 
 We will add support of editing abstracts, figure captions etc. The plan is to activate a translation mode, that shows all translations in the document, and provides UI element to create and delete translations. The reason we do this in the main editor panel, instead of the metadata section is that we want to have tools like Find&Replace workflows working for translations as well.
 
+#### Track Changes
+
+Same functionality as in Microsoft Word. Can be used for author proofing.
+
 #### General improvements
 
 We will improve general usability and reliability. This includes improved copy&paste, better interfaces for citing references, editing footnotes, and journal metadata.

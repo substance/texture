@@ -8,7 +8,7 @@ export default class InsertXrefCommand extends InsertInlineNodeCommand {
 
   createNode(tx) {
     let refType = this.config.refType
-    let xref = tx.createElement('xref').attr('publication-type', 'journal')
+    let xref = tx.createElement('xref')
     xref.attr('ref-type', refType)
     xref.attr('rid', '')
     return xref

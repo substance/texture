@@ -1,6 +1,7 @@
 const b = require('substance-bundler')
 const fs = require('fs')
 const path = require('path')
+const fork = require('substance-bundler/extensions/fork')
 // used to bundle example files for demo
 const vfs = require('substance-bundler/extensions/vfs')
 
@@ -66,6 +67,25 @@ b.task('build:browser', ['compile:schema'], () => {
 b.task('build:nodejs', ['compile:schema'], () => {
   _buildLib(DIST, 'nodejs')
 })
+
+b.task('test:assets', () => {
+  vfs(b, {
+    src: ['./test/fixture/**/*.xml'],
+    dest: './tmp/vfs.js',
+    format: 'umd', moduleName: 'vfs'
+  })
+})
+
+b.task('test:browser', ['build:browser', 'test:assets'], buildTestsBrowser)
+.describe('builds the test-suite for the browser (open test/index.html)')
+
+b.task('test:node', ['build:nodejs', 'test:assets'], () => {
+  buildTestsNode()
+  fork(b, require.resolve('substance-test/bin/test'),
+    './tmp/tests.cjs.js', { verbose: true })
+})
+.describe('runs the test suite in nodejs')
+
 
 // default build: creates a dist folder with a production bundle
 b.task('default', ['clean', 'assets', 'build:browser'])
@@ -188,6 +208,30 @@ function _singleJATSFile() {
         b.writeSync(DEST, xml)
       }
     })
+  })
+}
+
+function buildTestsBrowser() {
+  b.js('test/**/*.test.js', {
+    dest: 'tmp/tests.js',
+    format: 'umd', moduleName: 'tests',
+    external: {
+      'substance': 'window.substance',
+      'substance-test': 'window.substanceTest',
+      'texture': 'window.texture'
+    },
+  })
+}
+
+function buildTestsNode() {
+  b.js('test/**/*.test.js', {
+    dest: 'tmp/tests.cjs.js',
+    format: 'cjs',
+    external: ['substance-test'],
+    alias: {
+      'substance': path.join(__dirname, 'dist/substance/dist/substance.es.js'),
+      'texture': path.join(__dirname, 'dist/texture.es.js')
+    }
   })
 }
 

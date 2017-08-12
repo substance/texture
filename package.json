@@ -11,7 +11,7 @@
   "devDependencies": {
     "font-awesome": "4.5.0",
     "substance-bundler": "^0.18.3",
-    "substance-test": "0.5.1",
+    "substance-test": "^0.9.4",
     "eslint": "^3.17.1"
   },
   "scripts": {

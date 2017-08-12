@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.0 20120330//EN" "JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink"
+  article-type="research-article" dtd-version="1.0" specific-use="sps-1.5" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">Mem Inst Oswaldo Cruz</journal-id>
+      <journal-id journal-id-type="publisher-id">mioc</journal-id>
+      <journal-title-group>
+        <journal-title>Memórias do Instituto Oswaldo Cruz</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Mem. Inst. Oswaldo
+          Cruz</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">0074-0276</issn>
+      <issn pub-type="epub">1678-8060</issn>
+      <publisher>
+        <publisher-name>Instituto Oswaldo Cruz, Ministério da Saúde</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.1590/0074-02760160042</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Articles</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Analysis of the genetic diversity of <italic>Candida</italic>
+          isolates obtained from diabetic patients and kidney transplant
+          recipients</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Benedetti</surname>
+            <given-names>Volmir Pitt</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Savi</surname>
+            <given-names>Daiani Cristina</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">2</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Aluizio</surname>
+            <given-names>Rodrigo</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Adamoski</surname>
+            <given-names>Douglas</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Kava-Cordeiro</surname>
+            <given-names>Vanessa</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Galli-Terasawa</surname>
+            <given-names>Lygia V</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Glienke</surname>
+            <given-names>Chirlei</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">2</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <institution content-type="original">Universidade Paranaense, Departamento de
+          Microbiologia, Francisco Beltrão, PR, Brasil</institution>
+        <institution content-type="normalized">Universidade Paranaense</institution>
+        <institution content-type="orgname">Universidade Paranaense</institution>
+        <institution content-type="orgdiv1">Departamento de Microbiologia</institution>
+        <addr-line>
+          <named-content content-type="city">Francisco Beltrão</named-content>
+          <named-content content-type="state">PR</named-content>
+        </addr-line>
+        <country country="BR">Brazil</country>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <institution content-type="original">Universidade Federal do Paraná, Departamento de
+          Patologia Básica, Curitiba, PR, Brasil</institution>
+        <institution content-type="normalized">Universidade Federal do Paraná</institution>
+        <institution content-type="orgname">Universidade Federal do Paraná</institution>
+        <institution content-type="orgdiv1">Departamento de Patologia Básica</institution>
+        <addr-line>
+          <named-content content-type="city">Curitiba</named-content>
+          <named-content content-type="state">PR</named-content>
+        </addr-line>
+        <country country="BR">Brazil</country>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <institution content-type="original">Universidade Federal do Paraná, Departamento de
+          Genética, Curitiba, PR, Brasil</institution>
+        <institution content-type="normalized">Universidade Federal do Paraná</institution>
+        <institution content-type="orgname">Universidade Federal do Paraná</institution>
+        <institution content-type="orgdiv1">Departamento de Genética</institution>
+        <addr-line>
+          <named-content content-type="city">Curitiba</named-content>
+          <named-content content-type="state">PR</named-content>
+        </addr-line>
+        <country country="BR">Brazil</country>
+      </aff>
+      <pub-date pub-type="epub">
+        <year>2017</year>
+      </pub-date>
+      <fpage>00</fpage>
+      <lpage>00</lpage>
+      <history>
+        <date date-type="received">
+          <day>08</day>
+          <month>02</month>
+          <year>2016</year>
+        </date>
+        <date date-type="accepted">
+          <day>16</day>
+          <month>05</month>
+          <year>2016</year>
+        </date>
+      </history>
+      <permissions>
+        <license license-type="open-access"
+          xlink:href="http://creativecommons.org/licenses/by/4.0/" xml:lang="en">
+          <license-p>This is an open-access article distributed under the terms of the
+            Creative Commons Attribution License</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <title>Abstract:</title>
+        <p>Yeasts of the genus Candida have high genetic variability and are the most common
+          opportunistic pathogenic fungi in humans. In this study, we evaluated the
+          genetic diversity among 120 isolates of Candida spp. obtained from diabetic
+          patients, kidney transplant recipients and patients without any immune
+          deficiencies from Paraná state, Brazil. The analysis was performed using the
+          ITS1-5.8S-ITS2 region and a partial sequence of 28S rDNA. In the phylogenetic
+          analysis, we observed a consistent separation of the species C. albicans, C.
+          dubliniensis, C. glabrata, C. tropicalis, C. parapsilosis, C. metapsilosis and
+          C. orthopsilosis, however with low intraspecific variability. In the analysis of
+          the C. albicans species, two clades were formed. Clade A included the largest
+          number of isolates (91.2%) and the majority of isolates from GenBank (71.4%).
+          The phylogenetic analysis showed low intraspecific genetic diversity, and the
+          genetic polymorphisms between C. albicans isolates were similar to genetic
+          divergence found in other studies performed with isolates from Brazil. This low
+          genetic diversity of isolates can be explained by the geographic proximity of
+          the patients evaluated. It was observed that yeast colonisation was highest in
+          renal transplant recipients and diabetic patients and that C. albicans was the
+          species most frequently isolated.</p>
+      </abstract>
+      <kwd-group xml:lang="en">
+        <title>Key words:</title>
+        <kwd>ITS1-5.8S-ITS2 and 28S rDNA</kwd>
+        <kwd>Candida</kwd>
+        <kwd>diabetes</kwd>
+        <kwd>renal transplant recipient</kwd>
+      </kwd-group>
+      <funding-group>
+        <award-group>
+          <funding-source>University of Chile</funding-source>
+          <award-id>1140824</award-id>
+        </award-group>
+      </funding-group>
+    </article-meta>
+  </front>
+  <body>
+  </body>
+  <back>
+  </back>
+</article>

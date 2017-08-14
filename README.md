@@ -66,7 +66,7 @@ window.app = Texture.mount({
 
 ```
 
-See our [examples](examples) for a complete integration scenarios. The best way to start is downloading the zip file from the latest [release](https://github.com/substance/texture/releases).
+See our [examples](examples) for complete integration scenarios. The best way to start is downloading the zip file from the latest [release](https://github.com/substance/texture/releases).
 
 
 ## Development

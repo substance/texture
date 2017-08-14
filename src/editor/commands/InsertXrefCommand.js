@@ -1,15 +1,16 @@
-import { InsertInlineNodeCommand, uuid } from 'substance'
+import InsertInlineNodeCommand from './InsertInlineNodeCommand'
 
 export default class InsertXrefCommand extends InsertInlineNodeCommand {
-  createNodeData() {
+
+  getType() {
+    return 'xref'
+  }
+
+  createNode(tx) {
     let refType = this.config.refType
-    return {
-      id: uuid('xref'),
-      type: 'xref',
-      attributes: {
-        'ref-type': refType,
-        'rid': ''
-      }
-    }
+    let xref = tx.createElement('xref')
+    xref.attr('ref-type', refType)
+    xref.attr('rid', '')
+    return xref
   }
 }

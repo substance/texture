@@ -1,7 +1,8 @@
-import { XMLDocument, XMLEditingInterface } from 'substance'
+import { XMLDocument } from 'substance'
 import TextureJATS from './TextureJATS'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
+import TextureEditingInterface from './TextureEditingInterface'
 
 export default class TextureDocument extends XMLDocument {
 
@@ -12,7 +13,7 @@ export default class TextureDocument extends XMLDocument {
   }
 
   getDocTypeParams() {
-    return ['article', 'TextureJATS 1.1', 'http://texture.substance.io/TextureJATS-1.1.dtd']
+    return [ 'article', 'TextureJATS 1.1', 'http://texture.substance.io/TextureJATS-1.1.dtd' ]
   }
 
   getXMLSchema() {
@@ -30,7 +31,7 @@ export default class TextureDocument extends XMLDocument {
   }
 
   createEditingInterface() {
-    return new XMLEditingInterface(this, { editing: new TextureEditing() })
+    return new TextureEditingInterface(this, { editing: new TextureEditing() })
   }
 
 }

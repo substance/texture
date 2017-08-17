@@ -71,8 +71,8 @@ b.task('build:nodejs', ['compile:schema'], () => {
 b.task('test:assets', () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],
-    dest: './tmp/vfs.js',
-    format: 'umd', moduleName: 'vfs'
+    dest: './tmp/test-vfs.js',
+    format: 'es', moduleName: 'vfs'
   })
 })
 
@@ -219,7 +219,7 @@ function buildTestsBrowser() {
       'substance': 'window.substance',
       'substance-test': 'window.substanceTest',
       'texture': 'window.texture'
-    },
+    }
   })
 }
 

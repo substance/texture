@@ -2,20 +2,13 @@ import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 
 // TODO: export all trafos via index.es.js, and import {..} from '../../index.es.js'
-import ConvertElementCitation from '../../converter/r2t/ConvertElementCitation'
-
+import ConvertElementCitation from '../../src/converter/r2t/ConvertElementCitation'
 const test = module('Element Citation Converter')
-let fixture = vfs.readFileSync('fixture/element-citation.xml')
+import readFixture from '../fixture/readFixture'
+let fixture = readFixture('element-citation.xml')
 
-// All elements that are supported by the editor must be present
-// The transformer must create empty elements if they are not in the source
-// XML (JATS4R)
-const EDITABLE_ELEMENTS = [
-  'volume', 'issue', 'chapter-title', 'data-title'
-]
-
-test("r2t: Import", function(t) {
-  let dom = DefaultDOMElement.parseXML(xml)
+test("r2t: Import content-loc", function(t) {
+  let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertElementCitation()
   converter.import(dom)
 
@@ -26,12 +19,29 @@ test("r2t: Import", function(t) {
   t.ok(contentLoc.find('fpage'), 'contentLoc should have an fpage')
   t.ok(contentLoc.find('lpage'), 'contentLoc should have an lpage')
   t.ok(contentLoc.find('page-range'), 'empty page-range element should have been created')
-
-  // should have all possible elements expanded
-  t.ok(_hasElements(r1, EDITABLE_ELEMENTS), 'should have all editable elements expanded')
   t.end()
 })
 
+test("r2t: Create empty elements on import if not present", function(t) {
+  let dom = DefaultDOMElement.parseXML(fixture)
+  let converter = new ConvertElementCitation()
+  converter.import(dom)
+  let r1 = dom.find('#r1')
+  // should have all possible elements expanded
+  t.ok(_hasElements(r1, ConvertElementCitation.REQUIRED_ELEMENTS), 'should have all required elements expanded')
+  t.end()
+})
+
+test("r2t: Strip empty elements on export", function(t) {
+  let dom = DefaultDOMElement.parseXML(fixture)
+  let converter = new ConvertElementCitation()
+  converter.import(dom)
+  converter.export(dom)
+  let r1 = dom.find('#r1')
+  let issue = r1.find('issue')
+  t.notOk(issue, 'Should not have an empty issue element after export')
+  t.end()
+})
 
 function _hasElements(el, elementNames) {
   let result = true

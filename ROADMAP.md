@@ -54,6 +54,8 @@ We will provide integration of Texture into a desktop application. This allows u
 
 ## Unscheduled
 
+#### Track Changes
+
 #### Support for group authors
 
 #### Image quality checker

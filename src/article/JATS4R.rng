@@ -252,74 +252,36 @@
   </define>
 
   <!--
-    Changes:
-      - Removed phrase and inline elements
+    We develop the element citation incrementally, we only enable tags that can be
+    edited through the user interface so far. This is why many elements are
+    commented out.
 
-    TODO: provide transformation
+    NOTE: This must be kept in sync with TextureJATS.rng
   -->
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>
       <interleave>
-        <optional><ref name="string-date"/></optional>
-        <optional><ref name="label"/></optional>
-        <optional><ref name="annotation"/></optional>
         <optional><ref name="article-title"/></optional>
         <optional><ref name="chapter-title"/></optional>
-        <optional><ref name="collab"/></optional>
-        <optional><ref name="collab-alternatives"/></optional>
-        <zeroOrMore><ref name="comment"/></zeroOrMore>
-        <optional><ref name="conf-acronym"/></optional>
-        <optional><ref name="conf-date"/></optional>
-        <optional><ref name="conf-loc"/></optional>
-        <optional><ref name="conf-name"/></optional>
-        <optional><ref name="conf-sponsor"/></optional>
-        <optional><ref name="data-title"/></optional>
-        <optional><ref name="date"/></optional>
-        <optional><ref name="date-in-citation"/></optional>
-        <optional><ref name="day"/></optional>
+        <optional><ref name="comment"/></optional>
         <optional><ref name="edition"/></optional>
-        <optional><ref name="email"/></optional>
         <optional><ref name="elocation-id"/></optional>
-        <optional><ref name="etal"/></optional>
         <optional><ref name="fpage"/></optional>
-        <optional><ref name="gov"/></optional>
-        <optional><ref name="institution"/></optional>
-        <optional><ref name="institution-wrap"/></optional>
-        <optional><ref name="isbn"/></optional>
-        <optional><ref name="issn"/></optional>
-        <optional><ref name="issn-l"/></optional>
         <optional><ref name="issue"/></optional>
-        <optional><ref name="issue-id"/></optional>
-        <optional><ref name="issue-part"/></optional>
-        <optional><ref name="issue-title"/></optional>
         <optional><ref name="lpage"/></optional>
-        <optional><ref name="month"/></optional>
-        <optional><ref name="name"/></optional>
-        <optional><ref name="name-alternatives"/></optional>
-        <optional><ref name="object-id"/></optional>
         <optional><ref name="page-range"/></optional>
-        <optional><ref name="part-title"/></optional>
-        <optional><ref name="patent"/></optional>
         <ref name="person-group"/>
-        <optional><ref name="pub-id"/></optional>
+        <!--
+          TODO: specify different available pub-id-types per publication type
+        -->
+        <zeroOrMore>
+          <ref name="pub-id"/>
+        </zeroOrMore>
         <optional><ref name="publisher-loc"/></optional>
         <optional><ref name="publisher-name"/></optional>
-        <optional><ref name="role"/></optional>
-        <optional><ref name="season"/></optional>
-        <optional><ref name="series"/></optional>
-        <optional><ref name="size"/></optional>
         <optional><ref name="source"/></optional>
-        <optional><ref name="std"/></optional>
-        <optional><ref name="string-name"/></optional>
-        <optional><ref name="supplement"/></optional>
-        <optional><ref name="trans-source"/></optional>
-        <optional><ref name="trans-title"/></optional>
-        <optional><ref name="uri"/></optional>
-        <optional><ref name="version"/></optional>
         <optional><ref name="volume"/></optional>
-        <optional><ref name="volume-id"/></optional>
-        <optional><ref name="volume-series"/></optional>
         <optional><ref name="year"/></optional>
       </interleave>
     </element>
@@ -593,13 +555,7 @@
   <define name="publisher-loc">
     <element name="publisher-loc">
       <ref name="publisher-loc-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <!-- <ref name="address.class"/> -->
-          <!-- <ref name="address-link.class"/> -->
-        </choice>
-      </zeroOrMore>
+      <text/>
     </element>
   </define>
 

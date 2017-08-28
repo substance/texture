@@ -24,9 +24,13 @@ export default class ConvertElementCitation {
 const REQUIRED_ELEMENTS = [
   'article-title',
   'chapter-title',
-  'data-title',
+  'edition',
   'issue',
-  'volume'
+  'source',
+  'volume',
+  'year',
+  'publisher-loc',
+  'publisher-name'
 ]
 
 ConvertElementCitation.REQUIRED_ELEMENTS = REQUIRED_ELEMENTS

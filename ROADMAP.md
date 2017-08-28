@@ -51,7 +51,6 @@ We will improve general usability and reliability. This includes improved copy&p
 
 We will provide integration of Texture into a desktop application. This allows users to open JATS files from disk. It will also support opening a self-contained archive format (essentially a gzipped file that contains the JATS XML file + assets such as images, supplements, etc.).
 
-
 ## Unscheduled
 
 #### Track Changes
@@ -60,4 +59,11 @@ We will provide integration of Texture into a desktop application. This allows u
 
 #### Image quality checker
 
-Implement a quality checker for images.
+#### PubMed and CrossRef verification of references
+
+Possibility to check references against PubMed and or Crossref and pulling back in mismatch info for the author/editor to update. For Texture we need to develop an interface that allows for querying references online and return an accurate `element-citation`. This service must then be implemented by an embedding platform e.g. querying PubMed and/or CrossRef for data.
+
+
+### FundRef verification
+
+

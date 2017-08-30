@@ -33,10 +33,7 @@ export default class Texture extends Component {
         readXML: this.props.readXML,
         writeXML: this.props.writeXML
       },
-      exporter: this.jatsExporter,
-      // HACK: Find a better way to pass this information to SaveHandler, as
-      // this does not get updated when new props arrive
-      documentId: this.props.documentId
+      exporter: this.jatsExporter
     }
   }
 
@@ -71,6 +68,7 @@ export default class Texture extends Component {
     if (this.state.editorSession) {
       el.append(
         $$(EditorPackage.Editor, {
+          documentId: this.props.documentId,
           editorSession: this.state.editorSession
         })
       )

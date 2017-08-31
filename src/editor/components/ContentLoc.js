@@ -58,7 +58,7 @@ export default class ContentLoc extends NodeComponent {
 
     el.append(
       $$('div').addClass('se-label').append('Type'),
-      $$('div').addClass('se-select').append(select)
+      $$('div').addClass('sg-select').append(select)
     )
     return el
   }

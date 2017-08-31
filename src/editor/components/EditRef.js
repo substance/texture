@@ -53,7 +53,7 @@ export default class EditRef extends Component {
     })
     el.append(
       $$('div').addClass('se-label').append('Type'),
-      $$('div').addClass('se-select').append(switcher)
+      $$('div').addClass('sg-select').append(switcher)
     )
     return el
   }

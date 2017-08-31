@@ -53,19 +53,6 @@ export default class ArticleRecordComponent extends NodeComponent {
     return el
   }
 
-  _renderTextEditor($$, metaEl, name, type) {
-    let id = metaEl.id
-    let value = metaEl.getText()
-    let el = $$('div').addClass('se-metadata-item').append(
-      $$('div').addClass('se-label').append(name),
-      $$('input').attr({type: type, value: value})
-        .addClass('se-text-input')
-        .ref(id)
-        .on('change', this._updateTextProp.bind(this, metaEl))
-    )
-    return el
-  }
-
   _renderDateEditor($$, dateType, history) {
     let date = history.find(`date[date-type=${dateType}]`)
     let el = $$('div').addClass('se-date-item')

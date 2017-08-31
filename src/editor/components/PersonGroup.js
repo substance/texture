@@ -6,14 +6,14 @@ export default class PersonGroup extends NodeComponent {
 
   render($$) {
     let authorNames = this.props.node.findAll('name')
-    let el = $$('div').addClass('se-authors').append(
+    let el = $$('div').addClass('sc-authors').append(
       $$('div').addClass('se-label').append('Authors')
     )
   
     authorNames.forEach(author => {
       let surname = author.find('surname')
       let givenName = author.find('given-names')
-      let authorEl = $$('div').addClass('se-author se-form').append(
+      let authorEl = $$('div').addClass('se-author').append(
         $$(TextInput, {node: givenName, label: 'Given names'}).ref(givenName.id),
         $$(TextInput, {node: surname, label: 'Surname'}).ref(surname.id),
         $$(Icon, {icon: 'fa-trash'})

@@ -294,6 +294,8 @@
     </element>
   </define>
 
+
+
   <define name="fig">
     <element name="fig">
       <ref name="fig-attlist"/>
@@ -310,6 +312,12 @@
       <zeroOrMore>
         <ref name="display-back-matter.class"/>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="fpage">
+    <element name="fpage">
+      <optional><text/></optional>
     </element>
   </define>
 
@@ -386,6 +394,12 @@
   <define name="issue">
     <element name="issue">
       <ref name="issue-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="lpage">
+    <element name="lpage">
       <optional><text/></optional>
     </element>
   </define>
@@ -485,6 +499,12 @@
       <!-- <ref name="related-article.class"/> -->
       <ref name="rest-of-para.class"/>
     </choice>
+  </define>
+
+  <define name="page-range">
+    <element name="page-range">
+      <optional><text/></optional>
+    </element>
   </define>
 
   <!--
@@ -869,6 +889,12 @@
   <define name="volume">
     <element name="volume">
       <ref name="volume-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="year">
+    <element name="year">
       <optional><text/></optional>
     </element>
   </define>

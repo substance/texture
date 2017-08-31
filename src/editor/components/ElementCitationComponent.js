@@ -4,6 +4,7 @@ import ElementCitationTitle from './ElementCitationTitle'
 import ElementCitationAuthorsAndYear from './ElementCitationAuthorsAndYear'
 
 export default class ElementCitationComponent extends Component {
+
   render($$) {
     let node = this.props.node
     let publicationType = node.getAttribute('publication-type')

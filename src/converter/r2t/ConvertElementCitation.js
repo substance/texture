@@ -28,6 +28,7 @@ const REQUIRED_ELEMENTS = [
   'issue',
   'source',
   'volume',
+  'comment',
   'year',
   'publisher-loc',
   'publisher-name'

@@ -543,19 +543,10 @@
     </choice>
   </define>
 
-  <!--
-    WIP: Requirements not clear
-
-    Used in citations this can hold structural information.
-    I think we want to go into a direction, where this is not used mixed.
-
-    TODO: refine requirements
-    TODO: transform
-  -->
   <define name="publisher-loc">
     <element name="publisher-loc">
       <ref name="publisher-loc-attlist"/>
-      <text/>
+      <optional><text/></optional>
     </element>
   </define>
 

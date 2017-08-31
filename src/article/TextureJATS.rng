@@ -896,6 +896,7 @@
         <ref name="chapter-title"/>
         <!-- custom content-loc element instead of fpage,lpage,page-range,e-location-id -->
         <ref name="content-loc"/>
+        <ref name="comment"/>
         <ref name="edition"/>
         <ref name="issue"/>
         <ref name="person-group"/>

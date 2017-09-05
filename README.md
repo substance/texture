@@ -128,3 +128,13 @@ The following people make Texture possible:
 - Fabio Batalha Cunha dos Santos (leadership, concept)
 - Michael Aufreiter (dev)
 - Oliver Buchtala (dev)
+
+## FAQ
+
+**How can I test Texture with my own JATS-XML files?**
+
+The best way is to just download the [latest release](https://github.com/substance/texture/releases/) as a zip file and host it on a web-server. Next adjust `editor.html` and adjust `readXML` and `writeXML` functions. E.g. you can pull XML via Ajax based on a document id passed as an http parameter. Once you have that setup you can read your own files like so:
+
+```
+http://myserver.local/texture/editor.html?file=my_example_jats_document
+```

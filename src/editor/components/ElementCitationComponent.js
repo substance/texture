@@ -16,9 +16,7 @@ export default class ElementCitationComponent extends Component {
 
     if(publicationType === 'journal') {
       el.append(
-        this._renderJournalData($$),
-        this._renderDOILink($$),
-        this._renderScholarLinks($$)
+        this._renderJournalData($$)
       )
     } else if (publicationType === 'book') {
       el.append(this._renderBookData($$))
@@ -114,48 +112,5 @@ export default class ElementCitationComponent extends Component {
     return bookEl
   }
 
-  _renderDOILink($$) {
-    let doi = this.props.node.find('pub-id[pub-id-type=doi]')
-
-    if(doi) {
-      if(doi.content !== '') {
-        return $$('a').addClass('se-doi-link')
-          .attr({target: '_blank', href: 'https://doi.org/' + doi.content})
-          .append('https://doi.org/' + doi.content)
-      }
-    }
-    return
-  }
-
-  _renderScholarLinks($$) {
-    let pmid = this.props.node.find('pub-id[pub-id-type=pmid]')
-    let articleTitle = this.props.node.find('article-title')
-    let el = $$('div').addClass('se-scholar-links')
-
-    if(pmid) {
-      if(pmid.content !== '') {
-        el.append(
-          $$('a').addClass('se-pubmed-link')
-            .attr({target: '_blank', href: 'https://www.ncbi.nlm.nih.gov/pubmed/' + pmid.content})
-            .append('PubMed'),
-          ' | '
-        )
-      }
-    }
-
-    if(articleTitle) {
-      if(articleTitle.content !== '') {
-        el.append(
-          $$('a').addClass('se-google-scholar-link')
-            .attr({target: '_blank', href: 'https://scholar.google.com/scholar_lookup?title=' + articleTitle.content})
-            .append('Google Scholar')
-        )
-
-        return el
-      }
-    }
-
-    return
-  }
 
 }

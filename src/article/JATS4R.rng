@@ -577,6 +577,13 @@
     </element>
   </define>
 
+  <define name="pub-id">
+    <element name="pub-id">
+      <ref name="pub-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
   <!--
     Change:
       - removed <ext-link> as it is an annotation

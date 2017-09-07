@@ -1,15 +1,15 @@
 import { importContentLoc, exportContentLoc } from './contentLocHelpers'
 import { findChild } from '../util/domHelpers'
-import { PUB_ID_TYPES, REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
-
+import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
+import getAvailablePubIdTypes from '../../util/getAvailablePubIdTypes'
 export default class ConvertElementCitation {
 
-  import(dom) {
+  import(dom, converter) {
     let elementCitations = dom.findAll('element-citation')
     elementCitations.forEach((elementCitation) => {
       importContentLoc(elementCitation)
       _createEmptyElementsIfNotExist(elementCitation)
-      _expandPubIds(elementCitation)
+      _expandPubIds(elementCitation, converter)
     })
   }
 
@@ -47,15 +47,9 @@ function _stripEmptyElements(el) {
   We ensure that various pub-id-types are present based on the publication-type
 */
 function _expandPubIds(el) {
-  let publicationType = el.getAttribute('publication-type')
-  let requiredPubIdTypes = PUB_ID_TYPES[publicationType]
-  let numPubIds = el.findAll('pub-id').length
+  let availablePubIdTypes = getAvailablePubIdTypes()
 
-  if (requiredPubIdTypes !== numPubIds) {
-    console.warn(`Expected ${requiredPubIdTypes} pub-ids for ${publicationType}, got ${numPubIds}`)
-  }
-
-  requiredPubIdTypes.forEach((pubIdType) => {
+  availablePubIdTypes.forEach((pubIdType) => {
     let pubId = el.find(`pub-id[pub-id-type=${pubIdType}]`)
     if (!pubId) {
       el.append(

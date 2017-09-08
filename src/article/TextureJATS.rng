@@ -495,6 +495,7 @@
           <ref name="sec.class"/>
           <ref name="para-level"/>
           <ref name="cell"/>
+          <ref name="repro-fig"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -1182,7 +1183,7 @@
     Reproducible Elements
     ======================================================================
    -->
-
+   
   <define name="cell">
     <element name="cell">
       <ref name="source-code"/>
@@ -1200,6 +1201,16 @@
   <define name="output">
     <element name="output">
       <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="repro-fig">
+    <element name="repro-fig">
+      <ref name="caption"/>
+      <ref name="source-code"/>
+      <optional><ref name="source-code"/></optional>
+      <ref name="output"/>
+      <ref name="graphic"/>
     </element>
   </define>
 </grammar>

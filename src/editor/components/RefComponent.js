@@ -1,4 +1,4 @@
-import { Component, FontAwesomeIcon as Icon } from 'substance'
+import { Component } from 'substance'
 import ElementCitationComponent from './ElementCitationComponent'
 import Button from './Button'
 

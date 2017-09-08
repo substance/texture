@@ -1,4 +1,6 @@
 import { NodeComponent, without } from 'substance'
+import Button from './Button'
+import createEmptyRef from '../../util/createEmptyRef'
 
 class RefListComponent extends NodeComponent {
 
@@ -60,12 +62,10 @@ class RefListComponent extends NodeComponent {
     })
 
     el.append(
-      $$('div').append(
-        $$('button').addClass('sg-big-button')
-          .append('Add Reference')
-          .on('click', this._addRef)
-      )
+      $$(Button, {style: 'big', label: 'Add Reference'})
+        .on('click', this._addRef)
     )
+    
     return el
   }
 
@@ -86,21 +86,7 @@ class RefListComponent extends NodeComponent {
     const editorSession = this.context.editorSession
     editorSession.transaction((doc) => {
       let refList = doc.find('ref-list')
-      let ref = doc.createElement('ref')
-      let elementCitation = doc.createElement('element-citation').attr('publication-type', 'journal')
-      elementCitation.append(
-        doc.createElement('person-group').attr('person-group-type', 'author'),
-        doc.createElement('year').attr('iso-8601-date', ''),
-        doc.createElement('article-title'),
-        doc.createElement('source'),
-        doc.createElement('volume'),
-        doc.createElement('issue'),
-        doc.createElement('fpage'),
-        doc.createElement('lpage'),
-        doc.createElement('pub-id').attr('pub-id-type', 'doi'),
-        doc.createElement('pub-id').attr('pub-id-type', 'pmid')
-      )
-      ref.append(elementCitation)
+      let ref = createEmptyRef(doc)
       refList.append(ref)
       doc.setSelection(null)
     })

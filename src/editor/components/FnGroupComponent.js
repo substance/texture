@@ -1,4 +1,5 @@
 import { NodeComponent, without } from 'substance'
+import Button from './Button'
 
 class FnGroupComponent extends NodeComponent {
 
@@ -43,13 +44,9 @@ class FnGroupComponent extends NodeComponent {
       )
     })
 
-
     el.append(
-      $$('div').append(
-        $$('button').addClass('sg-big-button')
-          .append('Add Footnote')
-          .on('click', this._addFn)
-      )
+      $$(Button, {style: 'big', label: 'Add Footnote'})
+        .on('click', this._addFn)
     )
 
     return el

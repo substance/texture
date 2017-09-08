@@ -878,48 +878,39 @@
   </define>
 
   <!--
-    We use a strict definition for element-citation in Texture.
+    We develop the element citation incrementally, we only enable tags that can be
+    edited through the user interface so far. This is why many elements are
+    commented out.
 
-    TODO: support remaining publication types
+    NOTE: in TextureJATS all fields are required. This allows the user to switch
+          between different publication types without loosing data.
+
+    NOTE: This must be kept in sync with JATS4R.rng
   -->
-  <!--
-
-  !! NOTE: disabled this, because we need attribute-sensitive
-      schemas first to do it properly
 
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>
-      <ref name="person-group"/>
-      <choice>
-        <group>
-          <ref name="year"/>
-          <ref name="article-title"/>
-          <ref name="source"/>
-          <ref name="volume"/>
-          <ref name="fpage"/>
-          <ref name="lpage"/>
-          <ref name="issue"/>
-          <ref name="elocation-id"/>
-          TODO: how can we support multiple pub-ids, other than doi
+      <interleave>
+        <ref name="article-title"/>
+        <ref name="chapter-title"/>
+        <!-- custom content-loc element instead of fpage,lpage,page-range,e-location-id -->
+        <ref name="content-loc"/>
+        <ref name="comment"/>
+        <ref name="edition"/>
+        <ref name="issue"/>
+        <ref name="person-group"/>
+        <zeroOrMore>
           <ref name="pub-id"/>
-
-        </group>
-        <group>
-          <ref name="chapter-title"/>
-          <ref name="source"/>
-          <ref name="publisher-loc"/>
-          <ref name="publisher-name"/>
-          <ref name="year"/>
-          <ref name="fpage"/>
-          <ref name="lpage"/>
-          <ref name="issue"/>
-          <ref name="elocation-id"/>
-        </group>
-      </choice>
+        </zeroOrMore>
+        <ref name="publisher-loc"/>
+        <ref name="publisher-name"/>
+        <ref name="source"/>
+        <ref name="volume"/>
+        <ref name="year"/>
+      </interleave>
     </element>
   </define>
- -->
 
   <!--
     We force using <element-citation> for structured representation

@@ -1,6 +1,6 @@
-import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
-
+import { NodeComponent } from 'substance'
 import TextInput from './TextInput'
+import Button from './Button'
 
 export default class PersonGroup extends NodeComponent {
 
@@ -16,16 +16,14 @@ export default class PersonGroup extends NodeComponent {
       let authorEl = $$('div').addClass('se-author').append(
         $$(TextInput, {node: givenName, label: 'Given names'}).ref(givenName.id),
         $$(TextInput, {node: surname, label: 'Surname'}).ref(surname.id),
-        $$(Icon, {icon: 'fa-trash'})
-          .addClass('se-remove-author')
+        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-author')
           .on('click', this._removeAuthor.bind(this, author.id))
       )
       el.append(authorEl)
     })
   
     el.append(
-      $$('button').addClass('sg-big-button')
-        .append('Add Author')
+      $$(Button, {style: 'big', label: 'Add Author'})
         .on('click', this._addAuthor)
     )
   

@@ -51,3 +51,7 @@
 .sc-contributors .sc-multi-select {
   padding: 10px;
 }
+
+.sc-contributors > .sc-button {
+  margin: 10px auto;
+}

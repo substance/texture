@@ -1,4 +1,5 @@
 import { NodeComponent, without } from 'substance'
+import Button from './Button'
 import createEmptyRef from '../../util/createEmptyRef'
 
 class RefListComponent extends NodeComponent {
@@ -61,12 +62,10 @@ class RefListComponent extends NodeComponent {
     })
 
     el.append(
-      $$('div').append(
-        $$('button').addClass('sg-big-button')
-          .append('Add Reference')
-          .on('click', this._addRef)
-      )
+      $$(Button, {style: 'big', label: 'Add Reference'})
+        .on('click', this._addRef)
     )
+    
     return el
   }
 

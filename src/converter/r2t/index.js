@@ -9,6 +9,7 @@ import UpdateDocType from './UpdateDocType'
 import TransformAff from './TransformAff'
 import TransformContrib from './TransformContrib'
 import FnGroupConverter from './FnGroupConverter'
+import ConvertCodeCell from './ConvertCodeCell'
 import ConvertElementCitation from './ConvertElementCitation'
 import ConvertFig from './ConvertFig'
 import ConvertTableWrap from './ConvertTableWrap'
@@ -39,6 +40,7 @@ const trafos = [
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertContentLoc,
+  ConvertCodeCell,
   UpdateDocType,
   // TODO: is this really necessary again?
   // PruneText,

@@ -30,10 +30,10 @@ export default class AffiliationsComponent extends NodeComponent {
     })
 
     el.append(
-      $$('button').addClass('se-metadata-affiliation-add')
-        .append('Add Affiliation')
+      $$(Button, {style: 'big', label: 'Add Affiliation'})
         .on('click', this._addAffiliation)
     )
+
     return el
   }
 

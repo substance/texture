@@ -1,5 +1,6 @@
 .sc-affiliations {
   background: #fff;
+  padding-bottom: 1px;
 }
 
 .sc-affiliations .se-aff {
@@ -19,17 +20,6 @@
   flex: 0 0 0;
 }
 
-.sc-affiliations .se-metadata-affiliation-add {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  color: #2079DC;
-  border-bottom: 1px solid #e1e4e8;
-}
-
-.sc-affiliations .se-label {
-  flex: 0 0 150px;
-  padding: 10px;
-  color: #838383;
-  font-weight: 200;
+.sc-affiliations > .sc-button {
+  margin: 10px auto;
 }

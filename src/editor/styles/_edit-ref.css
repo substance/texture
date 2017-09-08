@@ -2,12 +2,10 @@
   padding: 10px;
 }
 
-.sc-edit-ref .se-label {
-  margin-top: 15px;
-  font-weight: 600;
-  font-size: 13px;
-}
-
 .sc-edit-ref .se-ref-type .se-label {
   margin-top: 5px;
+}
+
+.sc-edit-ref .sc-button {
+  margin-top: 15px;
 }

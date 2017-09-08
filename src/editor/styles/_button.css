@@ -27,7 +27,6 @@
   Big Button style
 */
 .sc-button.sm-style-big {
-  margin-top: 20px;
   font-size: 12px;
   background: var(--link-color);
   font-family: 'Avenir Next';

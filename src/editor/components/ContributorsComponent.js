@@ -1,4 +1,5 @@
-import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
+import { NodeComponent } from 'substance'
+import Button from './Button'
 
 /*
   Edit contributors for a publication in this MetadataSection
@@ -18,10 +19,10 @@ export default class ContributorsComponent extends NodeComponent {
       }
     })
     el.append(
-      $$('button').addClass('se-metadata-contributor-add')
-        .append('Add Contributor')
+      $$(Button, {style: 'big', label: 'Add Contributor'})
         .on('click', this._addContributor)
     )
+
     return el
   }
 
@@ -30,7 +31,7 @@ export default class ContributorsComponent extends NodeComponent {
     el.append(
       this._renderName($$, contrib),
       this._renderAffiliations($$, contrib, affs),
-      $$(Icon, {icon: 'fa-trash'})
+      $$(Button, {icon: 'trash'})
         .addClass('se-remove-contributor')
         .on('click', this._removeContributor.bind(this, contrib.id))
     )

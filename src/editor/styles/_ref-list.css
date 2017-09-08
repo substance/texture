@@ -52,3 +52,7 @@
 .sc-ref .sc-element-citation {
   cursor: pointer;
 }
+
+.sc-ref-list .sc-button {
+  margin-top: 20px;
+}

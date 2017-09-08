@@ -47,7 +47,7 @@ export default class ConvertCodeCell {
     })
   }
 
-  export(dom) {
+  export(/*dom*/) {
     console.error('TODO: implement ConvertCodeCell.export')
   }
 }

@@ -1,4 +1,5 @@
-import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
+import { NodeComponent } from 'substance'
+import Button from './Button'
 
 /*
   Edit affiliations for a publication in this MetadataSection
@@ -21,9 +22,8 @@ export default class AffiliationsComponent extends NodeComponent {
               path: stringAff.getTextPath(),
               disabled: this.props.disabled
             }).addClass('se-text-input').ref(stringAff.id),
-            $$('div').addClass('se-remove-aff').append(
-              $$(Icon, { icon: 'fa-trash' })
-            ).on('click', this._removeAffiliation.bind(this, aff.id))
+            $$(Button, {icon: 'trash'})
+              .on('click', this._removeAffiliation.bind(this, aff.id))
           )
         )
       }

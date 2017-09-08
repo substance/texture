@@ -1,4 +1,5 @@
-import { Component, FontAwesomeIcon as Icon } from 'substance'
+import { Component } from 'substance'
+import Button from './Button'
 
 export default class FnComponent extends Component {
   render($$) {
@@ -19,10 +20,7 @@ export default class FnComponent extends Component {
           label
         ),
         contentEl,
-        $$('div').addClass('se-remove-ref')
-          .append(
-            $$(Icon, { icon: 'fa-trash' })
-          )
+        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-ref')
           .on('click', this._removeFn.bind(this, node.id))
       )
     )

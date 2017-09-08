@@ -1,5 +1,6 @@
 import { Component, FontAwesomeIcon as Icon } from 'substance'
 import ElementCitationComponent from './ElementCitationComponent'
+import Button from './Button'
 
 export default class RefComponent extends Component {
 
@@ -48,12 +49,10 @@ export default class RefComponent extends Component {
     }
 
     el.append(
-      $$('div').addClass('se-remove-ref')
-        .append(
-          $$(Icon, { icon: 'fa-trash' })
-        )
+      $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-ref')
         .on('click', this._removeRef.bind(this, ref.id))
     )
+
     return el
   }
 

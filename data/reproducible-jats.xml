@@ -111,6 +111,19 @@
           <code specific-use="output" language="json"><![CDATA[{"execution_time": 1, "value_type": "string", "value": 'node v6.9.2' }]]></code>
         </alternatives></named-content>
       </code>
+
+      <!-- Reproducible figure -->
+      <fig id="f1" fig-type="repro-fig">
+        <caption>
+          <title>Biodiversity on Mars</title>
+          <p>Lorem ipsum</p>
+        </caption>
+        <alternatives>
+          <code specific-use="source" language="mini"><![CDATA[scatter3d(co_occurence_matrix)]]></code>
+          <code specific-use="output" language="json"><![CDATA[{"execution_time": 1, "value_type": "plot-ly", "value": {} }]]></code>
+        </alternatives>
+        <graphic specific-use="output" xlink:href="89f8b53e361f.png"/>
+      </fig>
     </sec>
   </body>
   <back>

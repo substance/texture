@@ -35,7 +35,9 @@ export default function convertSourceCode(el, converter) {
   }
 
   result.push(
-    el.createElement('output').append(output.textContent)
+    el.createElement('output').attr('language', output.attr('language')).append(
+      output.textContent
+    )
   )
   return result
 }

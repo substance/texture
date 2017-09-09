@@ -14,7 +14,7 @@ export default class ConvertCodeCell {
     let cells = dom.findAll('code[specific-use=cell]')
 
     cells.forEach((oldCell) => {
-      let cell = dom.createElement('cell')
+      let cell = dom.createElement('cell').attr('id', oldCell.id)
 
       cell.append(
         convertSourceCode(oldCell, converter)

@@ -2,8 +2,8 @@
   Extracts the code elements and returns array of source-code and code elements
 */
 export default function convertSourceCode(el, converter) {
-  let miniSource = el.find('code[language=mini]')
-  let nativeSource = el.find('code:not([language=mini])')
+  let miniSource = el.find('code[specific-use=source][language=mini]')
+  let nativeSource = el.find('code[specific-use=source]:not([language=mini])')
   let output = el.find('code[specific-use=output]')
   let miniSourceText
   let result = []

@@ -25,7 +25,9 @@ export default function createEmptyRef(doc) {
   )
   // Create all available pub id types
   availablePubIdTypes.forEach((pubIdType) => {
-    doc.createElement('pub-id').attr('pub-id-type', pubIdType)
+    elementCitation.append(
+      doc.createElement('pub-id').attr('pub-id-type', pubIdType)
+    )
   })
 
   ref.append(elementCitation)

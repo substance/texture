@@ -52,7 +52,20 @@ test("r2t: Export pure Mini cell ", function(t) {
   let converter = new ConvertCodeCell()
   converter.import(dom)
   converter.export(dom)
-  // TODO: check!
+
+  let code = dom.find('#cell1')
+  t.ok(code, 'code should be found')
+  t.equal(code.tagName, 'code', 'tagName should now be code')
+  let sourceCode = code.find('code[specific-use="source"]')
+  let outputCode = code.find('code[specific-use="output"]')
+
+  t.equal(sourceCode.attr('language'), 'mini', 'language should be "mini"')
+  t.equal(sourceCode.attr('specific-use'), 'source', 'specific-use should be "source"')
+  t.equal(sourceCode.textContent, 'x=5', 'Code should be the same')
+  t.equal(outputCode.attr('language'), 'json', 'output language should be "json"')
+  t.equal(outputCode.attr('specific-use'), 'output', 'specific-use should be "output"')
+  t.equal(outputCode.textContent, '{"execution_time": 1, "value_type": "number", "value": 5 }', 'Code should be the same')
+  
   t.end()
 })
 

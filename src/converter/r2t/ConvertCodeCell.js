@@ -23,7 +23,32 @@ export default class ConvertCodeCell {
     })
   }
 
-  export(/*dom*/) {
-    console.error('TODO: implement ConvertCodeCell.export')
+  export(dom) {
+    let cells = dom.findAll('cell')
+
+    cells.forEach(cell => {
+      let code = dom.createElement('code')
+        .attr('specific-use', 'cell')
+        .attr('id', cell .id)
+      let alternatives = dom.createElement('alternatives')
+      let sourceCode = cell.find('source-code')
+      let output = cell.find('output')
+      alternatives.append(
+        dom.createElement('code')
+          .attr('language', sourceCode.attr('language'))
+          .attr('specific-use', 'source')
+          .append(dom.createCDATASection(sourceCode.textContent)),
+        dom.createElement('code')
+          .attr('language', output.attr('language'))
+          .attr('specific-use', 'output')
+          .append(dom.createCDATASection(output.textContent))
+      )
+
+      code.append(
+        dom.createElement('named-content').append(alternatives)
+      )
+
+      cell.getParent().replaceChild(cell, code)
+    })
   }
 }

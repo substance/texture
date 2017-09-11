@@ -53,6 +53,6 @@
   cursor: pointer;
 }
 
-.sc-ref-list .sc-button {
+.sc-ref-list > .sc-button {
   margin-top: 20px;
 }

@@ -15,7 +15,7 @@ export default class ConvertCodeCell {
     let reproFigs = dom.findAll('fig[fig-type=repro-fig]')
 
     reproFigs.forEach((originalFig) => {
-      let reproFig = dom.createElement('repro-fig')
+      let reproFig = dom.createElement('repro-fig').attr('id', originalFig.id)
       reproFig.append(
         originalFig.find('caption'),
         ...convertSourceCode(originalFig, converter),
@@ -25,7 +25,36 @@ export default class ConvertCodeCell {
     })
   }
 
-  export(/*dom*/) {
-    console.error('TODO: implement ConvertCodeCell.export')
+  export(dom) {
+    let reproFigs = dom.findAll('repro-fig')
+
+    reproFigs.forEach(reproFig => {
+      let fig = dom.createElement('fig')
+        .attr('fig-type', 'repro-fig')
+        .attr('id', reproFig.id)
+      
+      let alternatives = dom.createElement('alternatives')
+      let sourceCode = reproFig.find('source-code')
+      let output = reproFig.find('output')
+
+      alternatives.append(
+        dom.createElement('code')
+          .attr('language', sourceCode.attr('language'))
+          .attr('specific-use', 'source')
+          .append(dom.createCDATASection(sourceCode.textContent)),
+        dom.createElement('code')
+          .attr('language', output.attr('language'))
+          .attr('specific-use', 'output')
+          .append(dom.createCDATASection(output.textContent))
+      )
+
+      fig.append(
+        reproFig.find('caption'),
+        alternatives,
+        reproFig.find('graphic')
+      )
+
+      reproFig.getParent().replaceChild(reproFig, fig)
+    })
   }
 }

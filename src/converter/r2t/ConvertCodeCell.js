@@ -31,13 +31,22 @@ export default class ConvertCodeCell {
         .attr('specific-use', 'cell')
         .attr('id', cell .id)
       let alternatives = dom.createElement('alternatives')
-      let sourceCode = cell.find('source-code')
+      let sourceCodes = cell.findAll('source-code')
       let output = cell.find('output')
+
+      sourceCodes.forEach(source => {
+        let isPseudoMini = source.textContent === 'node()' && source.attr('language') === 'mini'
+        if(!isPseudoMini) {
+          alternatives.append(
+            dom.createElement('code')
+              .attr('language', source.attr('language'))
+              .attr('specific-use', 'source')
+              .append(dom.createCDATASection(source.textContent))
+          )
+        }
+      })
+
       alternatives.append(
-        dom.createElement('code')
-          .attr('language', sourceCode.attr('language'))
-          .attr('specific-use', 'source')
-          .append(dom.createCDATASection(sourceCode.textContent)),
         dom.createElement('code')
           .attr('language', output.attr('language'))
           .attr('specific-use', 'output')

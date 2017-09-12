@@ -31,19 +31,53 @@ test("r2t: Import pure Mini cell", function(t) {
   let output = cell.find('output')
 
   t.equal(sourceCode.attr('language'), 'mini', 'language should be "mini"')
-  t.equal(sourceCode.textContent, 'x=5', 'Code should be the same')
+  t.equal(sourceCode.textContent, 'x=5', 'source code should be the same')
   t.equal(output.attr('language'), 'json', 'output language should be "json"')
-  t.equal(output.textContent, '{"execution_time": 1, "value_type": "number", "value": 5 }', 'Code should be the same')
+  t.equal(output.textContent, '{"execution_time": 1, "value_type": "number", "value": 5 }', 'output code should be the same')
   t.end()
 })
 
 test("r2t: Import Stencila local context cell", function(t) {
-  // TODO: implement
+  let dom = DefaultDOMElement.parseXML(fixture)
+  let converter = new ConvertCodeCell()
+  converter.import(dom)
+  let cell = dom.find('#cell2')
+  t.ok(cell, 'cell should be found')
+  t.equal(cell.tagName, 'cell', 'tagName should now be cell')
+  let sourceCodes = cell.findAll('source-code')
+  let sourceCodeMini = sourceCodes[0]
+  let sourceCodeNode = sourceCodes[1]
+  let output = cell.find('output')
+
+  t.equal(sourceCodes.length, 2, 'there should be two source-code items')
+  t.equal(sourceCodeMini.attr('language'), 'mini', 'language should be "mini"')
+  t.equal(sourceCodeMini.textContent, 'node(x)', 'source code should be the same')
+  t.equal(sourceCodeNode.attr('language'), 'node', 'language should be "node"')
+  t.equal(sourceCodeNode.textContent, "process.title + ' ' + process.version + ' x=' + x.toString() ", 'source code should be the same')
+  t.equal(output.attr('language'), 'json', 'output language should be "json"')
+  t.equal(output.textContent, '{"execution_time": 1, "value_type": "string", "value": \'node v6.9.2 x=5\' }', 'output code should be the same')
   t.end()
 })
 
 test("r2t: Import Jupyter global context cell", function(t) {
-  // TODO: implement
+  let dom = DefaultDOMElement.parseXML(fixture)
+  let converter = new ConvertCodeCell()
+  converter.import(dom)
+  let cell = dom.find('#cell3')
+  t.ok(cell, 'cell should be found')
+  t.equal(cell.tagName, 'cell', 'tagName should now be cell')
+  let sourceCodes = cell.findAll('source-code')
+  let sourceCodeMini = sourceCodes[0]
+  let sourceCodeNode = sourceCodes[1]
+  let output = cell.find('output')
+
+  t.equal(sourceCodes.length, 2, 'there should be two source-code items')
+  t.equal(sourceCodeMini.attr('language'), 'mini', 'language should be "mini"')
+  t.equal(sourceCodeMini.textContent, 'node()', 'source code should be the same')
+  t.equal(sourceCodeNode.attr('language'), 'node', 'language should be "node"')
+  t.equal(sourceCodeNode.textContent, "process.title + ' ' + process.version ", 'source code should be the same')
+  t.equal(output.attr('language'), 'json', 'output language should be "json"')
+  t.equal(output.textContent, '{"execution_time": 1, "value_type": "string", "value": \'node v6.9.2\' }', 'output code should be the same')
   t.end()
 })
 
@@ -61,10 +95,10 @@ test("r2t: Export pure Mini cell ", function(t) {
 
   t.equal(sourceCode.attr('language'), 'mini', 'language should be "mini"')
   t.equal(sourceCode.attr('specific-use'), 'source', 'specific-use should be "source"')
-  t.equal(sourceCode.textContent, 'x=5', 'Code should be the same')
+  t.equal(sourceCode.textContent, 'x=5', 'source code should be the same')
   t.equal(outputCode.attr('language'), 'json', 'output language should be "json"')
   t.equal(outputCode.attr('specific-use'), 'output', 'specific-use should be "output"')
-  t.equal(outputCode.textContent, '{"execution_time": 1, "value_type": "number", "value": 5 }', 'Code should be the same')
+  t.equal(outputCode.textContent, '{"execution_time": 1, "value_type": "number", "value": 5 }', 'output code should be the same')
   
   t.end()
 })
@@ -74,7 +108,26 @@ test("r2t: Export Stencila local context cell ", function(t) {
   let converter = new ConvertCodeCell()
   converter.import(dom)
   converter.export(dom)
-  // TODO: check!
+
+  let code = dom.find('#cell2')
+  t.ok(code, 'code should be found')
+  t.equal(code.tagName, 'code', 'tagName should now be code')
+  let sourceCodes = code.findAll('code[specific-use="source"]')
+  let sourceCodeMini = sourceCodes[0]
+  let sourceCodeNode = sourceCodes[1]
+  let outputCode = code.find('code[specific-use="output"]')
+
+  t.equal(sourceCodes.length, 2, 'there should be two source-code items')
+  t.equal(sourceCodeMini.attr('language'), 'mini', 'language should be "mini"')
+  t.equal(sourceCodeMini.attr('specific-use'), 'source', 'specific-use should be "source"')
+  t.equal(sourceCodeMini.textContent, 'node(x)', 'source code should be the same')
+  t.equal(sourceCodeNode.attr('language'), 'node', 'language should be "node"')
+  t.equal(sourceCodeNode.attr('specific-use'), 'source', 'specific-use should be "source"')
+  t.equal(sourceCodeNode.textContent, "process.title + ' ' + process.version + ' x=' + x.toString() ", 'source code should be the same')
+  t.equal(outputCode.attr('language'), 'json', 'output language should be "json"')
+  t.equal(outputCode.attr('specific-use'), 'output', 'specific-use should be "output"')
+  t.equal(outputCode.textContent, '{"execution_time": 1, "value_type": "string", "value": \'node v6.9.2 x=5\' }', 'output code should be the same')
+  
   t.end()
 })
 
@@ -83,6 +136,21 @@ test("r2t: Export Jupyter global context cell", function(t) {
   let converter = new ConvertCodeCell()
   converter.import(dom)
   converter.export(dom)
-  // TODO: check!
+  
+  let code = dom.find('#cell3')
+  t.ok(code, 'code should be found')
+  t.equal(code.tagName, 'code', 'tagName should now be code')
+  let sourceCodes = code.findAll('code[specific-use="source"]')
+  let sourceCodeNode = sourceCodes[0]
+  let outputCode = code.find('code[specific-use="output"]')
+
+  t.equal(sourceCodes.length, 1, 'there should be one source-code item')
+  t.equal(sourceCodeNode.attr('language'), 'node', 'language should be "node"')
+  t.equal(sourceCodeNode.attr('specific-use'), 'source', 'specific-use should be "source"')
+  t.equal(sourceCodeNode.textContent, "process.title + ' ' + process.version ", 'source code should be the same')
+  t.equal(outputCode.attr('language'), 'json', 'output language should be "json"')
+  t.equal(outputCode.attr('specific-use'), 'output', 'specific-use should be "output"')
+  t.equal(outputCode.textContent, '{"execution_time": 1, "value_type": "string", "value": \'node v6.9.2\' }', 'output code should be the same')
+
   t.end()
 })

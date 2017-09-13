@@ -8,6 +8,7 @@ import ExtractCaptionTitle from './ExtractCaptionTitle'
 import UpdateDocType from './UpdateDocType'
 import TransformAff from './TransformAff'
 import TransformContrib from './TransformContrib'
+import FnGroupConverter from './FnGroupConverter'
 import ConvertElementCitation from './ConvertElementCitation'
 import ConvertContentLoc from './ConvertContentLoc'
 import ConvertSigBlock from './ConvertSigBlock'
@@ -25,6 +26,7 @@ const trafos = [
   NormalizeHistoryDates,
   ConvertElementCitation,
   ConvertSigBlock,
+  FnGroupConverter,
   ExtractCaptionTitle,
   WrapAff,
   TransformAff,

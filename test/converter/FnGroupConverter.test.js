@@ -28,6 +28,9 @@ test("r2t: Import document with fn-group", function(t) {
   t.ok(fnGroup, 'should be one fn-group')
   t.ok(fnGroup.children.length > 0, 'fn-group should be non empty')
 
+  let xTags = fnGroup.find('x')
+  t.notOk(xTags, 'should be no x tags inside fn-group')
+
   t.end()
 })
 

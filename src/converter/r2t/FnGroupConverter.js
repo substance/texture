@@ -6,6 +6,13 @@ export default class FnGroupConverter {
       back.append(
         dom.createElement('fn-group')
       )
+    } else {
+      fnGroups.forEach(fnGroup => {
+        let xTags = fnGroup.findAll('x')
+        xTags.forEach(x => {
+          fnGroup.removeChild(x)
+        })
+      })
     }
   }
 

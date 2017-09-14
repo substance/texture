@@ -763,7 +763,6 @@
     <zeroOrMore>
       <choice>
         <ref name="fn-link.class"/>
-        <ref name="x.class"/>
       </choice>
     </zeroOrMore>
   </define>

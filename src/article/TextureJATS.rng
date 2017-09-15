@@ -762,7 +762,7 @@
   <define name="fn-group-model">
     <zeroOrMore>
       <choice>
-        <ref name="fn-link.class"/>
+        <ref name="fn"/>
       </choice>
     </zeroOrMore>
   </define>

@@ -756,7 +756,16 @@
     </element>
   </define>
 
-
+  <!--
+    Allow empty <fn-group>
+  -->
+  <define name="fn-group-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="fn"/>
+      </choice>
+    </zeroOrMore>
+  </define>
 
   <define name="front-model">
     <optional>

@@ -9,20 +9,8 @@
       <fn id="fn2">
         <p>Phasellus ex nulla, interdum condimentum pretium ac, auctor et tellus. Maecenas eu est a neque vestibulum laoreet. Mauris libero nulla, pretium eu iaculis id, mollis ac erat. Suspendisse rutrum gravida malesuada</p>
       </fn>
-      <fn id="fn3">
-        <p>
-          <fig>
-            <label>Fig 1</label>
-            <caption>
-              <title>bla</title>
-              <p>paragraph 1</p>
-            </caption>
-            <graphic/>
-          </fig>
-        </p>
-        <p>paragraph 2</p>
-        <disp-quote></disp-quote>
-      </fn>
+      <fn id="fn3"><p><disp-quote><p>disp_<bold>quote</bold></p></disp-quote></p></fn>
+      <fn id="fn4"><p><fig><caption><p>fig_caption</p></caption><graphic/></fig></p></fn>
     </fn-group>
   </back>
 </article>

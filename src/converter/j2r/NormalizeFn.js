@@ -1,28 +1,19 @@
 /*
-  Normilize Footnotes contents.
-  Removes everything except textual paragraphs from Footnotes.
+  Normalize footnotes contents.
+  Removes everything except textual paragraphs from footnotes.
 */
 export default class NormalizeFn {
 
   import(dom) {
     let fns = dom.findAll('fn')
     fns.forEach(fn => {
-      let paragraphs = []
-      let ptags = fn.findAll('p')
-      ptags.forEach(p => {
-        if(p.children.length === 0) {
-          paragraphs.push(p.getTextContent())
-        }
-      })
-
-      fn.children.forEach(child => {
-        fn.removeChild(child)
-      })
-      paragraphs.forEach(text => {
-        fn.append(
-          dom.createElement('p').append(text)
-        )
-      })
+      // Find all ptags that are nested in another p tag
+      let ptags = fn.findAll('p p')
+      // If any nested paragraphs are found we need to take action
+      if (ptags.length > 0) {
+        fn.empty()
+        fn.append(ptags)
+      }
     })
   }
 

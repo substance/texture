@@ -601,6 +601,30 @@
     </element>
   </define>
 
+  <define name="ref">
+    <element name="ref">
+      <ref name="ref-attlist"/>
+      <oneOrMore>
+        <ref name="element-citation"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="ref-list">
+    <element name="ref-list">
+      <ref name="ref-list-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="ref"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <!--
     Change:
       - removed <ext-link> as it is an annotation

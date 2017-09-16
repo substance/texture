@@ -315,6 +315,14 @@
     </element>
   </define>
 
+  <define name="fn">
+    <element name="fn">
+      <oneOrMore>
+        <ref name="p"/>
+      </oneOrMore>
+    </element>
+  </define>
+
   <define name="fpage">
     <element name="fpage">
       <optional><text/></optional>

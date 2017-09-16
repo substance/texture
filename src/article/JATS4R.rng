@@ -318,7 +318,7 @@
   <define name="fn">
     <element name="fn">
       <oneOrMore>
-        <ref name="just-para.class"/>
+        <ref name="p"/>
       </oneOrMore>
     </element>
   </define>

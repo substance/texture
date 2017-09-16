@@ -9,6 +9,14 @@
       <fn id="fn2">
         <p>Phasellus ex nulla, interdum condimentum pretium ac, auctor et tellus. Maecenas eu est a neque vestibulum laoreet. Mauris libero nulla, pretium eu iaculis id, mollis ac erat. Suspendisse rutrum gravida malesuada</p>
       </fn>
+      <fn id="fn3">
+        <p><disp-quote><p>paragraph 1</p></disp-quote></p>
+      </fn>
+      <fn id="fn4">
+        <p><element-citation><disp-quote><p>paragraph 1</p></disp-quote></element-citation></p>
+        <p>paragraph 2</p>
+        <disp-quote></disp-quote>
+      </fn>
     </fn-group>
   </back>
 </article>

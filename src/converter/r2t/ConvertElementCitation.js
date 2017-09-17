@@ -1,4 +1,4 @@
-import { importContentLoc, exportContentLoc } from './contentLocHelpers'
+import { importContentLoc, exportContentLoc } from './r2tHelpers'
 import { findChild } from '../util/domHelpers'
 import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
 import getAvailablePubIdTypes from '../../util/getAvailablePubIdTypes'

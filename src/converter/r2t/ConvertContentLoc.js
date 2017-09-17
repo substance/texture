@@ -1,4 +1,4 @@
-import { importContentLoc, exportContentLoc } from './contentLocHelpers'
+import { importContentLoc, exportContentLoc } from './r2tHelpers'
 export default class ConvertContentLoc {
 
   /*

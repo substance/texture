@@ -64,14 +64,12 @@ export function exportContentLoc(el) {
 }
 
 
-export function extractCaptionTitle(el) {
+export function extractCaptionTitle(el, insertPos) {
   let caption = findChild(el,'caption')
   if (!caption) return
   let titleEl = findChild(caption, 'title')
   if (titleEl) {
-    let schema = TextureJATS.getElementSchema(el.tagName)
-    let pos = schema.findLastValidPos(el, 'title')
-    el.insertAt(pos, titleEl)
+    el.insertAt(insertPos, titleEl)
   }
 }
 
@@ -83,34 +81,34 @@ export function wrapCaptionTitle(el) {
   }
 }
 
+export function expandObjectId(el, insertPos) {
+  let objectId = findChild(el, 'object-id')
+  if (!objectId) {
+    objectId = el.createElement('object-id').attr('pub-id-type', 'doi')
+    el.insertAt(insertPos, objectId)
+  }
+}
+
 /*
   Adds caption to el if not yet existing
 */
-export function expandCaption(el) {
+export function expandCaption(el, insertPos) {
   let caption = findChild(el, 'caption')
   if (!caption) {
     caption = el.createElement('caption').append(
       el.createElement('p')
     )
-    insertAtFirstValidPos(el, caption)
+    el.insertAt(insertPos, caption)
   }
 }
 
 /*
   Adds title if not present
 */
-export function expandTitle(el) {
+export function expandTitle(el, insertPos) {
   let title = findChild(el, 'title')
   if (!title) {
     title = el.createElement('title')
-    insertAtFirstValidPos(el, title)
-  }
-}
-
-export function expandObjectId(el) {
-  let objectId = findChild(el, 'object-id')
-  if (!objectId) {
-    objectId = el.createElement('object-id').attr('pub-id-type', 'doi')
-    insertAtFirstValidPos(el, objectId)
+    el.insertAt(insertPos, title)
   }
 }

@@ -1,12 +1,13 @@
-import { extractCaptionTitle, wrapCaptionTitle, expandCaption, expandTitle } from './r2tHelpers'
+import { extractCaptionTitle, wrapCaptionTitle, expandCaption, expandTitle, expandObjectId } from './r2tHelpers'
 export default class ConvertElementCitation {
 
   import(dom) {
     let figs = dom.findAll('fig')
     figs.forEach((fig) => {
-      extractCaptionTitle(fig)
-      expandCaption(fig)
-      expandTitle(fig)
+      expandObjectId(fig, 0)
+      extractCaptionTitle(fig, 1)
+      expandTitle(fig, 1)
+      expandCaption(fig, 2)
     })
   }
 

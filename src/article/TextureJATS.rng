@@ -725,6 +725,7 @@
     </element>
   </define>
 
+
   <!--
     Allow empty <fn-group>
   -->
@@ -1088,23 +1089,16 @@
   </define>
 
   <!--
-    Pulled out <title> from <caption>
+    NOTE: Pulled out <title> from <caption>
   -->
   <define name="table-wrap">
     <element name="table-wrap">
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <optional>
-        <ref name="caption"/>
-      </optional>
+      <ref name="table-wrap-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <ref name="object-id"/>
+      <ref name="title"/>
+      <ref name="caption"/>
       <ref name="table"/>
-      <optional>
-        <ref name="table-wrap-foot"/>
-      </optional>
     </element>
   </define>
 

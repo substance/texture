@@ -11,6 +11,7 @@ import TransformContrib from './TransformContrib'
 import FnGroupConverter from './FnGroupConverter'
 import ConvertElementCitation from './ConvertElementCitation'
 import ConvertFig from './ConvertFig'
+import ConvertTableWrap from './ConvertTableWrap'
 import ConvertContentLoc from './ConvertContentLoc'
 import ConvertSigBlock from './ConvertSigBlock'
 import UnifyPublicationHistory from './UnifyPublicationHistory'
@@ -29,6 +30,7 @@ const trafos = [
   ConvertSigBlock,
   FnGroupConverter,
   ConvertFig,
+  ConvertTableWrap,
   WrapAff,
   TransformAff,
   TransformContrib,

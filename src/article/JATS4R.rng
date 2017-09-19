@@ -793,6 +793,13 @@
     </element>
   </define>
 
+  <define name="object-id">
+    <element name="object-id">
+      <ref name="object-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
   <!--
     Just use plain text. If you want to add information about the person add a <contrib> to the front matter.
 
@@ -879,6 +886,17 @@
     </element>
   </define>
 
+  <define name="table-wrap">
+    <element name="table-wrap">
+      <ref name="table-wrap-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
+      <ref name="table"/>
+    </element>
+  </define>
 
   <!--
     WIP: disabled direct use of math as opposed to

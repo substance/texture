@@ -2,7 +2,7 @@ import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import ConvertFig from '../../src/converter/r2t/ConvertFig'
 
-const test = module('Normalize fig')
+const test = module('Convert Figure')
 import readFixture from '../fixture/readFixture'
 let fixture = readFixture('fig.xml')
 

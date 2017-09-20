@@ -502,12 +502,13 @@
   <!--
     Pulled <title> out of <caption>
   -->
+
   <define name="caption">
     <element name="caption">
       <ref name="caption-attlist"/>
-      <zeroOrMore>
-        <ref name="just-para.class"/>
-      </zeroOrMore>
+      <oneOrMore>
+        <ref name="p"/>
+      </oneOrMore>
     </element>
   </define>
 
@@ -713,48 +714,17 @@
     </choice>
   </define>
 
-<!--
-  !! NOTE: deactivated this, as this restriction is not capable
-     of modelling the current JATS4R <fig>
-     We need to introduce a JATS4R restriction first, then
-     we may deviate from that using a converter. !!
-  <define name="fig">
-    <element name="fig">
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <optional>
-        <ref name="caption"/>
-      </optional>
-      <ref name="graphic"/>
-    </element>
-  </define>
- -->
-
   <define name="fig">
     <element name="fig">
       <ref name="fig-attlist"/>
-      <zeroOrMore>
-        <ref name="id.class"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <optional>
-        <ref name="caption.class"/>
-      </optional>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <ref name="object-id"/>
+      <ref name="title"/>
+      <ref name="caption"/>
       <ref name="graphic"/>
-      <zeroOrMore>
-        <ref name="display-back-matter.class"/>
-      </zeroOrMore>
     </element>
   </define>
+
 
   <!--
     Allow empty <fn-group>
@@ -1119,23 +1089,16 @@
   </define>
 
   <!--
-    Pulled out <title> from <caption>
+    NOTE: Pulled out <title> from <caption>
   -->
   <define name="table-wrap">
     <element name="table-wrap">
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <optional>
-        <ref name="caption"/>
-      </optional>
+      <ref name="table-wrap-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <ref name="object-id"/>
+      <ref name="title"/>
+      <ref name="caption"/>
       <ref name="table"/>
-      <optional>
-        <ref name="table-wrap-foot"/>
-      </optional>
     </element>
   </define>
 

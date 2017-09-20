@@ -54,6 +54,18 @@
     </choice>
   </define>
 
+  <define name="caption">
+    <element name="caption">
+      <ref name="caption-attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <oneOrMore>
+        <ref name="p"/>
+      </oneOrMore>
+    </element>
+  </define>
+
   <!--
     WIP: is it possible to avoid <email> and <uri>?
   -->
@@ -294,24 +306,15 @@
     </element>
   </define>
 
-
-
   <define name="fig">
     <element name="fig">
       <ref name="fig-attlist"/>
-      <zeroOrMore>
-        <ref name="id.class"/>
-      </zeroOrMore>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <optional><ref name="object-id"/></optional>
       <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="caption.class"/>
+        <ref name="caption"/>
       </optional>
       <ref name="graphic"/>
-      <zeroOrMore>
-        <ref name="display-back-matter.class"/>
-      </zeroOrMore>
     </element>
   </define>
 
@@ -338,6 +341,12 @@
           <ref name="simple-phrase"/>
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="graphic">
+    <element name="graphic">
+      <ref name="graphic-attlist"/>
     </element>
   </define>
 
@@ -784,6 +793,13 @@
     </element>
   </define>
 
+  <define name="object-id">
+    <element name="object-id">
+      <ref name="object-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
   <!--
     Just use plain text. If you want to add information about the person add a <contrib> to the front matter.
 
@@ -870,6 +886,17 @@
     </element>
   </define>
 
+  <define name="table-wrap">
+    <element name="table-wrap">
+      <ref name="table-wrap-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
+      <ref name="table"/>
+    </element>
+  </define>
 
   <!--
     WIP: disabled direct use of math as opposed to

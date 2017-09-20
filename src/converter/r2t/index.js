@@ -4,12 +4,14 @@ import WrapAbstractContent from './WrapAbstractContent'
 import WrapBodyContent from './WrapBodyContent'
 import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
-import ExtractCaptionTitle from './ExtractCaptionTitle'
+
 import UpdateDocType from './UpdateDocType'
 import TransformAff from './TransformAff'
 import TransformContrib from './TransformContrib'
 import FnGroupConverter from './FnGroupConverter'
 import ConvertElementCitation from './ConvertElementCitation'
+import ConvertFig from './ConvertFig'
+import ConvertTableWrap from './ConvertTableWrap'
 import ConvertContentLoc from './ConvertContentLoc'
 import ConvertSigBlock from './ConvertSigBlock'
 import UnifyPublicationHistory from './UnifyPublicationHistory'
@@ -27,7 +29,8 @@ const trafos = [
   ConvertElementCitation,
   ConvertSigBlock,
   FnGroupConverter,
-  ExtractCaptionTitle,
+  ConvertFig,
+  ConvertTableWrap,
   WrapAff,
   TransformAff,
   TransformContrib,

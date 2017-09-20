@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <body>
+    <!-- fig with caption + title + graphic -->
+    <fig id="fig1"><caption><title>fig_title</title><p>fig_caption</p></caption><graphic xlink:href="fig1.jpg"/></fig>
+    <!-- fig without caption -->
+    <fig id="fig2"><graphic xlink:href="fig2.jpg"/></fig>
+    <!-- fig with caption but without title -->
+    <fig id="fig3"><caption><p>fig_caption</p></caption><graphic xlink:href="fig3.jpg"/></fig>
+  </body>
+</article>

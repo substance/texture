@@ -613,12 +613,6 @@
   <define name="ref-list">
     <element name="ref-list">
       <ref name="ref-list-attlist"/>
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
       <zeroOrMore>
         <ref name="ref"/>
       </zeroOrMore>

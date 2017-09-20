@@ -5,7 +5,7 @@ import FnGroupConverter from '../../src/converter/r2t/FnGroupConverter'
 const test = module('Footnote Group Converter')
 import readFixture from '../fixture/readFixture'
 let fixture = readFixture('fn-group.xml')
-let noFnGroupFixture = readFixture('no-fn-group.xml')
+let noFnGroupFixture = readFixture('empty-back.xml')
 
 test("r2t: Import document without fn-group", function(t) {
   let dom = DefaultDOMElement.parseXML(noFnGroupFixture)

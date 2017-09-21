@@ -1183,11 +1183,10 @@
     Reproducible Elements
     ======================================================================
    -->
-   
+
   <define name="cell">
     <element name="cell">
       <ref name="source-code"/>
-      <optional><ref name="source-code"/></optional>
       <ref name="output"/>
     </element>
   </define>
@@ -1208,9 +1207,7 @@
     <element name="repro-fig">
       <ref name="caption"/>
       <ref name="source-code"/>
-      <optional><ref name="source-code"/></optional>
       <ref name="output"/>
-      <ref name="graphic"/>
     </element>
   </define>
 </grammar>

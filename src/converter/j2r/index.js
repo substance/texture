@@ -2,6 +2,7 @@ import PruneText from './PruneText'
 import CollectAffs from './CollectAffs'
 import NormalizeFn from './NormalizeFn'
 import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
+import RefList from './RefList'
 // import HomogenizeSigBlocks from './HomogenizeSigBlocks'
 import WrapSig from './WrapSig'
 
@@ -9,6 +10,7 @@ const trafos = [
   // HomogenizeSigBlocks,
   WrapSig,
   NormalizeFn,
+  RefList,
   UnwrapBlockLevelElements,
   PruneText,
   // ATTENTION: all converters which require schema sensitive insertion

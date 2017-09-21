@@ -31,7 +31,7 @@ test("j2r: Cleaning up existing ref-list", function(t) {
   t.ok(refList, 'ref-list should exists')
   t.notOk(title, 'there shoud not be title inside ref-list')
   t.notOk(label, 'there shoud not be label inside ref-list')
-  t.equal(refs.length, 2, 'there should be two refs inside ref-list')
+  t.equal(refs.length, 1, 'there should be one ref inside ref-list')
 
   t.end()
 })

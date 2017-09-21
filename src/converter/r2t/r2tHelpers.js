@@ -112,3 +112,33 @@ export function expandTitle(el, insertPos) {
     el.insertAt(insertPos, title)
   }
 }
+
+export function importSourceCode(el) {
+  return el.createElement('source-code')
+    .attr('language', el.attr('language'))
+    .text(el.text())
+}
+
+export function exportSourceCode(el) {
+  return el.createElement('code')
+    .attr('specific-use', 'source')
+    .attr('language', el.attr('language'))
+    .append(
+      el.createCDATASection(el.textContent)
+    )
+}
+
+export function importOutput(el) {
+  return el.createElement('output')
+    .attr('language', el.attr('language'))
+    .text(el.text())
+}
+
+export function exportOutput(el) {
+  return el.createElement('code')
+    .attr('specific-use', 'output')
+    .attr('language', el.attr('language'))
+    .append(
+      el.createCDATASection(el.textContent)
+    )
+}

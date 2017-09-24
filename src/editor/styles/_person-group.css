@@ -1,18 +1,24 @@
-.sc-authors .se-author {
+.sc-person-group > .se-label {
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.sc-person-group .se-person {
   display: flex;
   align-items: baseline;
 }
 
-.sc-authors .se-author > * {
+.sc-person-group .se-person > * {
   flex: 1;
   margin-right: 20px;
 }
 
-.sc-authors .se-author > *:last-child {
+.sc-person-group .se-person > *:last-child {
   margin-right: 0px;
 }
 
-.sc-authors .se-author .se-remove-author {
+.sc-person-group .se-person .se-remove-person {
   flex: 0;
   margin-right: 10px;
   cursor: pointer;

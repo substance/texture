@@ -11,7 +11,7 @@ export default class JournalCitation extends Component {
     let articleTitle = this.props.node.find('article-title')
     let source = this.props.node.find('source')
     let edition = this.props.node.find('edition')
-    let editors = this.props.node.find('person-group[person-group-type="editors"]')
+    let editors = this.props.node.find('person-group[person-group-type="editor"]')
     let contentLoc = this.props.node.find('content-loc')
     let comment = this.props.node.find('comment')
     let publisherLoc = this.props.node.find('publisher-loc')

@@ -10,7 +10,7 @@ export default class PublisherNamePreviewComponent extends Component {
     if(publisherName) {
       el.append(publisherName)
     } else {
-      el.addClass('sm-placeholer').append('Publisher’s Name')
+      el.addClass('sm-placeholder').append('Publisher’s Name')
     }
 
     return el

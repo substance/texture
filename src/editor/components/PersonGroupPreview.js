@@ -16,12 +16,11 @@ export default class PersonGroupPreview extends Component {
 
     let el = $$('span')
       .addClass('sc-person-group-preview')
-      .append(personsString)
 
     if(persons.length > 0) {
       el.append(personsString)
     } else {
-      el.addClass('sm-placeholer').append(label)
+      el.addClass('sm-placeholder').append(label)
     }
 
     return el

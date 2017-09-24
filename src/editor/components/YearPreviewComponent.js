@@ -10,7 +10,7 @@ export default class YearPreviewComponent extends Component {
     if(year) {
       el.append(year)
     } else {
-      el.addClass('sm-placeholer').append('Year')
+      el.addClass('sm-placeholder').append('Year')
     }
 
     return el

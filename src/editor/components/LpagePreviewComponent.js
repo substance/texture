@@ -10,7 +10,7 @@ export default class LpagePreviewComponent extends Component {
     if(lpage) {
       el.append(lpage)
     } else {
-      el.addClass('sm-placeholer').append('Last Page')
+      el.addClass('sm-placeholder').append('Last Page')
     }
 
     return el

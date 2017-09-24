@@ -10,7 +10,7 @@ export default class FpagePreviewComponent extends Component {
     if(fpage) {
       el.append(fpage)
     } else {
-      el.addClass('sm-placeholer').append('First Page')
+      el.addClass('sm-placeholder').append('First Page')
     }
 
     return el

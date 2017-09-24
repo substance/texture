@@ -10,7 +10,7 @@ export default class PublisherLocPreviewComponent extends Component {
     if(publisherLoc) {
       el.append(publisherLoc)
     } else {
-      el.addClass('sm-placeholer').append('Publisher’s Location')
+      el.addClass('sm-placeholder').append('Publisher’s Location')
     }
 
     return el

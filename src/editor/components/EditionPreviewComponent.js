@@ -10,7 +10,7 @@ export default class EditionPreviewComponent extends Component {
     if(edition) {
       el.append(edition)
     } else {
-      el.addClass('sm-placeholer').append('Edition')
+      el.addClass('sm-placeholder').append('Edition')
     }
 
     return el

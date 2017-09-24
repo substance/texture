@@ -10,7 +10,7 @@ export default class ArticleTitlePreviewComponent extends Component {
     if(articleTitle) {
       el.append(articleTitle)
     } else {
-      el.addClass('sm-placeholer').append('Article Title')
+      el.addClass('sm-placeholder').append('Article Title')
     }
 
     return el

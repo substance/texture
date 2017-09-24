@@ -10,7 +10,7 @@ export default class VolumePreviewComponent extends Component {
     if(volume) {
       el.append(volume)
     } else {
-      el.addClass('sm-placeholer').append('Volume')
+      el.addClass('sm-placeholder').append('Volume')
     }
 
     return el

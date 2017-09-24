@@ -10,7 +10,7 @@ export default class SourcePreviewComponent extends Component {
     if(source) {
       el.append(source)
     } else {
-      el.addClass('sm-placeholer').append('Source')
+      el.addClass('sm-placeholder').append('Source')
     }
 
     return el

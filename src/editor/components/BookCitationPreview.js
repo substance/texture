@@ -1,27 +1,29 @@
 import { Component } from 'substance'
-import ElementCitationAuthorsList from './ElementCitationAuthorsList'
+import PersonGroupPreview from './PersonGroupPreview'
+import SourcePreviewComponent from './SourcePreviewComponent'
+import EditionPreviewComponent from './EditionPreviewComponent'
+import YearPreviewComponent from './YearPreviewComponent'
+import PublisherLocPreviewComponent from './PublisherLocPreviewComponent'
+import PublisherNamePreviewComponent from './PublisherNamePreviewComponent'
 
 export default class BookCitationPreview extends Component {
   render($$) {
     let node = this.props.node
-    let source = node.find('source').text()
-    let year = node.find('year').text()
-    let publisherLoc = node.find('publisher-loc').text()
-    let publisherName = node.find('publisher-name').text()
-
+    
     let el = $$('div').addClass('sc-book-citation-preview')
 
     el.append(
-      source,
-      '. ',
-      $$(ElementCitationAuthorsList, {node: node}),
-      ', editors. ',
-      '(',
-      year,
+      $$(SourcePreviewComponent, {node: node}),
+      ' (',
+      $$(EditionPreviewComponent, {node: node}),
+      '). ',
+      $$(PersonGroupPreview, {node: node, type: 'editor', label: 'Editors'}),
+      ', editors. (',
+      $$(YearPreviewComponent, {node: node}),
       ') ',
-      publisherLoc,
+      $$(PublisherLocPreviewComponent, {node: node}),
       ': ',
-      publisherName
+      $$(PublisherNamePreviewComponent, {node: node})
     )
 
     return el

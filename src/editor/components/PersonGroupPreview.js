@@ -4,6 +4,8 @@ export default class PersonGroupPreview extends Component {
   render($$) {
     let node = this.props.node
     let type = this.props.type
+    let label = this.props.label
+
     let personNames = node.findAll('person-group[person-group-type=' + type + '] name')
     let persons = personNames.map(person => {
       let surname = person.find('surname')
@@ -15,6 +17,12 @@ export default class PersonGroupPreview extends Component {
     let el = $$('span')
       .addClass('sc-person-group-preview')
       .append(personsString)
+
+    if(persons.length > 0) {
+      el.append(personsString)
+    } else {
+      el.addClass('sm-placeholer').append(label)
+    }
 
     return el
   }

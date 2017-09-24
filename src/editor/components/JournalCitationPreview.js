@@ -1,34 +1,36 @@
 import { Component } from 'substance'
-import ElementCitationAuthorsList from './ElementCitationAuthorsList'
+import PersonGroupPreview from './PersonGroupPreview'
+import YearPreviewComponent from './YearPreviewComponent'
+import ArticleTitlePreviewComponent from './ArticleTitlePreviewComponent'
+import SourcePreviewComponent from './SourcePreviewComponent'
+import VolumePreviewComponent from './VolumePreviewComponent'
+import FpagePreviewComponent from './FpagePreviewComponent'
+import LpagePreviewComponent from './LpagePreviewComponent'
 
 export default class JournalCitationPreview extends Component {
   render($$) {
     let node = this.props.node
-    let articleTitle = node.find('article-title').text()
-    let source = node.find('source').text()
-    let year = node.find('year').text()
-    let volume = node.find('volume').text()
-    let fpage = node.find('fpage').text()
-    let lpage = node.find('lpage').text()
 
     let el = $$('div').addClass('sc-journal-citation-preview')
 
     el.append(
-      $$(ElementCitationAuthorsList, {node: node}),
+      $$(PersonGroupPreview, {node: node, type: 'author', label: 'Authors'}),
       '. ',
-      year,
+      $$(PersonGroupPreview, {node: node, type: 'editor', label: 'Editors'}),
       '. ',
-      articleTitle,
+      $$(YearPreviewComponent, {node: node}),
       '. ',
-      source,
+      $$(ArticleTitlePreviewComponent, {node: node}),
+      '. ',
+      $$(SourcePreviewComponent, {node: node}),
       ' ',
       $$('bold').append(
-        volume
+        $$(VolumePreviewComponent, {node: node})
       ),
       ':',
-      fpage,
+      $$(FpagePreviewComponent, {node: node}),
       '-',
-      lpage
+      $$(LpagePreviewComponent, {node: node})
     )
 
     return el

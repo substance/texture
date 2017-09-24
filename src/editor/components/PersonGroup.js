@@ -5,8 +5,9 @@ import Button from './Button'
 export default class PersonGroup extends NodeComponent {
 
   render($$) {
+    let node = this.props.node
     let label = this.props.label
-    let personNames = this.props.node.findAll('name')
+    let personNames = node ? node.findAll('name') : []
     let el = $$('div').addClass('sc-person-group').append(
       $$('div').addClass('se-label').append(label)
     )
@@ -14,10 +15,10 @@ export default class PersonGroup extends NodeComponent {
     personNames.forEach(person => {
       let surname = person.find('surname')
       let givenName = person.find('given-names')
-      let personEl = $$('div').addClass('se-author').append(
+      let personEl = $$('div').addClass('se-person').append(
         $$(TextInput, {node: givenName, label: 'Given names'}).ref(givenName.id),
         $$(TextInput, {node: surname, label: 'Surname'}).ref(surname.id),
-        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-author')
+        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-person')
           .on('click', this._removePerson.bind(this, person.id))
       )
       el.append(personEl)

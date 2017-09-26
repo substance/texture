@@ -10,8 +10,8 @@ export default class JournalCitation extends Component {
     let el = $$('div').addClass('sc-journal-citation')
     let articleTitle = this.props.node.find('article-title')
     let source = this.props.node.find('source')
-    let authors = this.props.node.find('person-group[person-group-type="author"]')
-    let editors = this.props.node.find('person-group[person-group-type="editor"]')
+    let authorsGroup = this.props.node.find('person-group[person-group-type="author"]')
+    let editorsGroup = this.props.node.find('person-group[person-group-type="editor"]')
     let contentLoc = this.props.node.find('content-loc')
     let comment = this.props.node.find('comment')
     let year = this.props.node.find('year')
@@ -20,8 +20,8 @@ export default class JournalCitation extends Component {
 
     el.append(
       $$(TextInput, { node: articleTitle, label: 'Article Title' }),
-      $$(PersonGroup, { node: authors, label: 'Authors' }),
-      $$(PersonGroup, { node: editors, label: 'Editors' }),
+      $$(PersonGroup, { node: authorsGroup, label: 'Authors' }),
+      $$(PersonGroup, { node: editorsGroup, label: 'Editors' }),
       $$(TextInput, { node: source, label: 'Journal Title' }),
       $$(TextInput, { node: volume, label: 'Volume' }),
       $$(TextInput, { node: issue, label: 'Issue' }),

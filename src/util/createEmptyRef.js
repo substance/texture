@@ -1,21 +1,12 @@
-import getAvailablePubIdTypes from './getAvailablePubIdTypes'
+import { expandElementCitation } from '../converter/r2t/r2tHelpers'
 
+// TODO: we need to find a way to make sure the element-citation element is valid TextureJATS after creation
+// Currently we would fail late somewhere in the UI if we made a mistake here
 export default function createEmptyRef(doc) {
-  let availablePubIdTypes = getAvailablePubIdTypes()
   let ref = doc.createElement('ref')
   let elementCitation = doc.createElement('element-citation').attr('publication-type', 'journal')
+
   elementCitation.append(
-    doc.createElement('person-group').attr('person-group-type', 'author'),
-    doc.createElement('year').attr('iso-8601-date', ''),
-    doc.createElement('article-title'),
-    doc.createElement('chapter-title'),
-    doc.createElement('comment'),
-    doc.createElement('edition'),
-    doc.createElement('source'),
-    doc.createElement('volume'),
-    doc.createElement('publisher-loc'),
-    doc.createElement('publisher-name'),
-    doc.createElement('issue'),
     doc.createElement('content-loc').append(
       doc.createElement('fpage'),
       doc.createElement('lpage'),
@@ -23,13 +14,9 @@ export default function createEmptyRef(doc) {
       doc.createElement('elocation-id')
     )
   )
-  // Create all available pub id types
-  availablePubIdTypes.forEach((pubIdType) => {
-    elementCitation.append(
-      doc.createElement('pub-id').attr('pub-id-type', pubIdType)
-    )
-  })
 
+  // Creates empty elements of required fields if not present
+  expandElementCitation(elementCitation, doc)
   ref.append(elementCitation)
   return ref
 }

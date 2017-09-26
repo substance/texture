@@ -28,6 +28,7 @@ test("r2t: Create empty elements on import if not present", function(t) {
   let converter = new ConvertElementCitation()
   converter.import(dom)
   let r1 = dom.find('#r1')
+  console.log(r1.getNativeElement())
   // should have all possible elements expanded
   t.ok(_hasElements(r1, REQUIRED_ELEMENT_CITATION_ELEMENTS), 'should have all required elements expanded')
   t.end()
@@ -58,10 +59,15 @@ test("r2t: Strip empty elements on export", function(t) {
   t.end()
 })
 
-function _hasElements(el, elementNames) {
+function _hasElements(el, elements) {
   let result = true
-  elementNames.forEach((elementName) => {
-    if (!el.find(elementName)) {
+  elements.forEach((element) => {
+    let [tagName, attrib, attribVal] = element
+    let matcher = tagName
+    if (attrib) {
+      matcher = `${tagName}[${attrib}=${attribVal}]`
+    }
+    if (!el.find(matcher)) {
       result = false
     }
   })

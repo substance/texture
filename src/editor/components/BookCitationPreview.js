@@ -9,21 +9,21 @@ import PublisherNamePreviewComponent from './PublisherNamePreviewComponent'
 export default class BookCitationPreview extends Component {
   render($$) {
     let node = this.props.node
-    
+
     let el = $$('div').addClass('sc-book-citation-preview')
 
     el.append(
-      $$(SourcePreviewComponent, {node: node}),
+      $$(SourcePreviewComponent, { node: node }),
       ' (',
-      $$(EditionPreviewComponent, {node: node}),
+      $$(EditionPreviewComponent, { node: node }),
       '). ',
-      $$(PersonGroupPreview, {node: node, type: 'editor', label: 'Editors'}),
+      $$(PersonGroupPreview, { node: node, type: 'editor' }),
       ', editors. (',
-      $$(YearPreviewComponent, {node: node}),
+      $$(YearPreviewComponent, { node: node }),
       ') ',
-      $$(PublisherLocPreviewComponent, {node: node}),
+      $$(PublisherLocPreviewComponent, { node: node }),
       ': ',
-      $$(PublisherNamePreviewComponent, {node: node})
+      $$(PublisherNamePreviewComponent, { node: node })
     )
 
     return el

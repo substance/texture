@@ -28,7 +28,6 @@ test("r2t: Create empty elements on import if not present", function(t) {
   let converter = new ConvertElementCitation()
   converter.import(dom)
   let r1 = dom.find('#r1')
-  console.log(r1.getNativeElement())
   // should have all possible elements expanded
   t.ok(_hasElements(r1, REQUIRED_ELEMENT_CITATION_ELEMENTS), 'should have all required elements expanded')
   t.end()

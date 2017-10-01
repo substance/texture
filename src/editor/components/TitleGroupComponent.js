@@ -13,7 +13,7 @@ export default class TitleGroupComponent extends Component {
     let titleEl = $$(this.getComponent('text-property-editor'), {
       name: 'titleEditor',
       placeholder: 'Enter Title',
-      path: articleTitle.getTextPath(),
+      path: articleTitle.getPath(),
       disabled: this.props.disabled
     }).addClass('se-article-title').ref('title')
 

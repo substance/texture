@@ -12,10 +12,11 @@ class RefListComponent extends NodeComponent {
       'removeRef': this._removeRef
     })
 
+    // FIXME!
     // Ensure we re-render when
-    this.context.editorSession.onRender('document', this.rerender, this, {
-      path: [this.props.node.id, 'content']
-    })
+    // this.context.editorSession.onRender('document', this.rerender, this, {
+    //   path: this.props.node.getPath()
+    // })
   }
 
   dispose() {
@@ -35,7 +36,7 @@ class RefListComponent extends NodeComponent {
       el.append(
         $$('div').addClass('se-title').append(
           $$(this.getComponent('text-property-editor'), {
-            path: title.getTextPath(),
+            path: title.getPath(),
             disabled: this.props.disabled
           })
         )
@@ -65,7 +66,7 @@ class RefListComponent extends NodeComponent {
       $$(Button, {style: 'big', label: 'Add Reference'})
         .on('click', this._addRef)
     )
-    
+
     return el
   }
 

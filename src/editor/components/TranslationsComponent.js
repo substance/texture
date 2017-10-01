@@ -107,7 +107,7 @@ export default class TranslationsComponent extends NodeComponent {
       ),
       $$(TextPropertyEditor, {
         placeholder: 'Enter title translation',
-        path: transTitle.getTextPath(),
+        path: transTitle.getPath(),
         disabled: this.props.disabled
       }).ref(transTitle.id)
     )

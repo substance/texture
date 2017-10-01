@@ -5,7 +5,7 @@ export default class DispQuote extends Component {
     const node = this.props.node
     let quoteContent = node.find('disp-quote-content')
     let attribContent = node.find('attrib')
-    
+
     let el = $$('div')
       .addClass('sc-disp-quote')
       .attr('data-id', node.id)
@@ -17,10 +17,10 @@ export default class DispQuote extends Component {
 
     let attribContentEl = $$(TextPropertyEditor, {
       placeholder: 'Enter attribution',
-      path: attribContent.getTextPath(),
+      path: attribContent.getPath(),
       disabled: this.props.disabled
     }).addClass('se-attribution')
-    
+
     el.append(
       quoteContentEl,
       attribContentEl

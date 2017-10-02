@@ -58,10 +58,15 @@ test("r2t: Strip empty elements on export", function(t) {
   t.end()
 })
 
-function _hasElements(el, elementNames) {
+function _hasElements(el, elements) {
   let result = true
-  elementNames.forEach((elementName) => {
-    if (!el.find(elementName)) {
+  elements.forEach((element) => {
+    let [tagName, attrib, attribVal] = element
+    let matcher = tagName
+    if (attrib) {
+      matcher = `${tagName}[${attrib}=${attribVal}]`
+    }
+    if (!el.find(matcher)) {
       result = false
     }
   })

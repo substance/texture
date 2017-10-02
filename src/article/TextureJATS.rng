@@ -880,7 +880,9 @@
         <ref name="comment"/>
         <ref name="edition"/>
         <ref name="issue"/>
+        <zeroOrMore>
         <ref name="person-group"/>
+        </zeroOrMore>
         <zeroOrMore>
           <ref name="pub-id"/>
         </zeroOrMore>

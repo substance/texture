@@ -17,14 +17,12 @@
       </title-group>
       <contrib-group>
         <contrib contrib-type="author" aff-ids="aff1 aff2">
-          <x specific-use="display">John Doe</x>
           <name>
             <surname>Doe</surname>
             <given-names>John</given-names>
           </name>
         </contrib>
         <contrib contrib-type="author" aff-ids="aff2">
-          <x specific-use="display">Jane Doe</x>
           <name>
             <surname>Doe</surname>
             <given-names>Jane</given-names>
@@ -32,13 +30,11 @@
         </contrib>
       </contrib-group>
       <aff id="aff1">
-        <x specific-use="display">Foo University, London, UK</x>
         <institution>Foo University</institution>
         <city>London</city>
         <country>UK</country>
       </aff>
       <aff id="aff2">
-        <x specific-use="display">Bar Ltd, London, UK</x>
         <institution>Bar Ltd</institution>
         <city>London</city>
         <country>UK</country>

@@ -1,5 +1,4 @@
 import { Component } from 'substance'
-import ElementCitationComponent from './ElementCitationComponent'
 import Button from './Button'
 
 export default class RefComponent extends Component {
@@ -41,9 +40,18 @@ export default class RefComponent extends Component {
     }
 
     if (elementCitation) {
-      el.append(
-        $$(ElementCitationComponent, { node: elementCitation } ).on('click', this._editRef)
-      )
+      let publicationType = elementCitation.getAttribute('publication-type')
+      let PreviewComp = this.getComponent(publicationType + '-citation-preview')
+
+      if(PreviewComp) {
+        el.append(
+          $$(PreviewComp, {node: elementCitation})
+            .addClass('sm-element-citation-preview')
+            .on('click', this._editRef)
+        )
+      } else {
+        console.warn('No preview component found for publicationtype: ' + publicationType)
+      }
     } else {
       console.warn('No element citation found')
     }

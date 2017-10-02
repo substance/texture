@@ -56,6 +56,10 @@ import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
 import TableFigPreview from './components/TableFigPreview'
+
+import JournalCitationPreview from './components/JournalCitationPreview'
+import BookCitationPreview from './components/BookCitationPreview'
+
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
@@ -135,6 +139,10 @@ export default {
     config.addComponent('fig-preview', FigPreview)
     config.addComponent('table-wrap-preview', TableFigPreview)
 
+    // Preview components for element-citation
+    config.addComponent('journal-citation-preview', JournalCitationPreview)
+    config.addComponent('book-citation-preview', BookCitationPreview)
+    
     // Commands
     config.addCommand('edit-xref', EditInlineNodeCommand, {
       nodeType: 'xref',

@@ -283,7 +283,12 @@
         <optional><ref name="issue"/></optional>
         <optional><ref name="lpage"/></optional>
         <optional><ref name="page-range"/></optional>
-        <ref name="person-group"/>
+        <!--
+          TODO: specify different available person-groups per publication type
+        -->
+        <zeroOrMore>
+          <ref name="person-group"/>
+        </zeroOrMore>
         <!--
           TODO: specify different available pub-id-types per publication type
         -->

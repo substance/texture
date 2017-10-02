@@ -40,9 +40,13 @@
   cursor: pointer;
 }
 
-.sc-ref .sc-element-citation {
+.sc-ref .sm-element-citation-preview {
   padding-left: 40px;
   padding-right: 40px;
+}
+
+.sc-ref .sm-element-citation-preview .sm-placeholder {
+  color: #aaa;
 }
 
 .sc-ref .sc-element-citation:hover {

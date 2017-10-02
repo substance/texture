@@ -5,32 +5,34 @@ import Button from './Button'
 export default class PersonGroup extends NodeComponent {
 
   render($$) {
-    let authorNames = this.props.node.findAll('name')
-    let el = $$('div').addClass('sc-authors').append(
-      $$('div').addClass('se-label').append('Authors')
+    let node = this.props.node
+    let label = this.props.label
+    let personNames = node ? node.findAll('name') : []
+    let el = $$('div').addClass('sc-person-group').append(
+      $$('div').addClass('se-label').append(label)
     )
-  
-    authorNames.forEach(author => {
-      let surname = author.find('surname')
-      let givenName = author.find('given-names')
-      let authorEl = $$('div').addClass('se-author').append(
+
+    personNames.forEach(person => {
+      let surname = person.find('surname')
+      let givenName = person.find('given-names')
+      let personEl = $$('div').addClass('se-person').append(
         $$(TextInput, {node: givenName, label: 'Given names'}).ref(givenName.id),
         $$(TextInput, {node: surname, label: 'Surname'}).ref(surname.id),
-        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-author')
-          .on('click', this._removeAuthor.bind(this, author.id))
+        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-person')
+          .on('click', this._removePerson.bind(this, person.id))
       )
-      el.append(authorEl)
+      el.append(personEl)
     })
-  
+
     el.append(
-      $$(Button, {style: 'big', label: 'Add Author'})
-        .on('click', this._addAuthor)
+      $$(Button, {style: 'big', label: 'Add Person'})
+        .on('click', this._addPerson)
     )
-  
+
     return el
   }
 
-  _addAuthor() {
+  _addPerson() {
     const node = this.props.node
     const personGroupId = node.id
     const editorSession = this.context.editorSession
@@ -46,14 +48,14 @@ export default class PersonGroup extends NodeComponent {
     //this.rerender()
   }
 
-  _removeAuthor(authorId) {
+  _removePerson(personId) {
     const nodeId = this.props.node.id
     const editorSession = this.context.editorSession
     editorSession.setSelection(null)
     editorSession.transaction((doc) => {
       let personGroup = doc.get(nodeId)
-      let author = personGroup.find(`name#${authorId}`)
-      personGroup.removeChild(author)
+      let person = personGroup.find(`name#${personId}`)
+      personGroup.removeChild(person)
     })
     //this.rerender()
   }

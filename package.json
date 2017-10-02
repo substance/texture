@@ -1,9 +1,9 @@
 {
   "name": "substance-texture",
-  "version": "1.0.0-alpha.4-preview.1",
+  "version": "1.0.0-alpha.4-preview.2",
   "description": "A scientific word processor.",
   "main": "dist/texture.cjs.js",
-  "jsnext:main": "dist/texture.es.js",
+  "jsnext:main": "index.es.js",
   "dependencies": {
     "lodash": "^4.14.1",
     "substance": "1.0.0-preview.2"
@@ -27,7 +27,11 @@
   },
   "license": "MIT",
   "files": [
+    "src",
+    "dist",
+    "index.es.js",
     "*.md",
-    "dist"
+    "package.json",
+    "*.css"
   ]
 }

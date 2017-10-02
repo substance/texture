@@ -314,6 +314,10 @@
       <optional>
         <ref name="caption"/>
       </optional>
+      <!-- used to carry source code for reproducible figures -->
+      <optional>
+        <ref name="alternatives"/>
+      </optional>
       <ref name="graphic"/>
     </element>
   </define>
@@ -958,5 +962,6 @@
       <optional><text/></optional>
     </element>
   </define>
+
 
 </grammar>

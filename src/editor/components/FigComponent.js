@@ -37,7 +37,7 @@ export default class FigComponent extends NodeComponent {
 
     const title = node.findChild('title')
     let titleEl = $$(this.getComponent('text-property-editor'), {
-      path: title.getTextPath(),
+      path: title.getPath(),
       disabled: this.props.disabled
     }).addClass('se-title').ref('title')
     el.append(titleEl)

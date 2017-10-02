@@ -12,6 +12,10 @@ TextureJATS.getVersion = function() {
   return '1.1'
 }
 
+TextureJATS.getDefaultTextType = function() {
+  return 'p'
+}
+
 TextureJATS.getDocTypeParams = function() {
   return ['article', 'TextureJATS 1.1', 'http://texture.substance.io/TextureJATS-1.1.dtd']
 }

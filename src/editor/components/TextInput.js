@@ -18,7 +18,7 @@ export default class TextInput extends Component {
     el.append(
       $$(TextPropertyEditor, {
         placeholder: label,
-        path: node.getTextPath(),
+        path: node.getPath(),
         disabled: this.props.disabled
       }).ref(node.id).addClass('se-text-editor')
     )

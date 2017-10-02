@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <body>
+    <!-- Code Cell -->
+    <code id="cell1" specific-use="cell">
+      <named-content><alternatives>
+        <code specific-use="source" language="python"><![CDATA[x=5]]></code>
+        <code specific-use="output" language="json"><![CDATA[{}]]></code>
+      </alternatives></named-content>
+    </code>
+
+    <!-- Reproducible figure -->
+    <fig id="f1" fig-type="repro-fig">
+      <caption>
+        <title>Biodiversity on Mars</title>
+        <p>Lorem ipsum</p>
+      </caption>
+      <alternatives>
+        <code specific-use="source" language="mini"><![CDATA[scatter3d(data)]]></code>
+        <code specific-use="output" language="json"><![CDATA[{}]]></code>
+      </alternatives>
+    </fig>
+  </body>
+</article>

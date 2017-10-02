@@ -19,7 +19,7 @@ export default class AffiliationsComponent extends NodeComponent {
           $$('div').addClass('se-aff').append(
             $$(TextPropertyEditor, {
               placeholder: 'Enter affiliation title',
-              path: stringAff.getTextPath(),
+              path: stringAff.getPath(),
               disabled: this.props.disabled
             }).addClass('se-text-input').ref(stringAff.id),
             $$(Button, {icon: 'trash'})

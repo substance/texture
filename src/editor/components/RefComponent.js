@@ -11,7 +11,7 @@ export default class RefComponent extends Component {
     let title = node.find('article-title') || node.find('chapter-title')
     if (title) {
       this.context.editorSession.onRender('document', this.rerender, this, {
-        path: [title.id, 'content']
+        path: title.getPath()
       })
     }
   }

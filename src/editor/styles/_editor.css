@@ -47,7 +47,6 @@
   flex: 0 0 0;
 }
 
-
 .sc-editor .se-main-section .sc-scroll-pane {
   position: relative;
 }
@@ -59,4 +58,16 @@
 /* General editor styles */
 .sc-heading {
   font-family: 'Avenir Next', 'Lato', Helvetica;
+}
+
+h1.sc-heading {
+  font-size: 20px;
+}
+
+h2.sc-heading {
+  font-size: 18px;
+}
+
+h3.sc-heading {
+  font-size: 16px;
 }

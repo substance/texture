@@ -3,7 +3,7 @@
 }
 
 .sc-fn-group .se-title {
-  font-family: 'Avenir Next';
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 26px;
   font-weight: 600;
   padding-bottom: 20px;
@@ -40,7 +40,7 @@
 }
 
 .sc-fn-item .se-fn-container .se-label {
-  font-family: 'Avenir Next';
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   position: absolute;
   left: 10px;
   top: 10px;

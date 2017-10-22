@@ -4,7 +4,7 @@
   letter-spacing: var(--heading-letterspacing);
   font-size: var(--title-font-size);
 
-  font-family: 'Avenir Next', Helvetica;
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-weight: 600;
   text-align: center;
 }

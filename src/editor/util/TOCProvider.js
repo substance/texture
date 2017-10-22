@@ -77,11 +77,11 @@ class TOCProvider extends EventEmitter {
     let entries = []
     let contentNodes = doc.get(config.containerId).getChildren()
     forEach(contentNodes, function(node) {
-      if (node.isHeading && node.isHeading()) {
+      if (node.type === 'heading') {
         entries.push({
           id: node.id,
           name: node.getText(),
-          level: parseInt(node.getLevel(), 10),
+          level: parseInt(node.attr('level'), 10),
           node: node
         })
       }

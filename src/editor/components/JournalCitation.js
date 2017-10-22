@@ -20,8 +20,8 @@ export default class JournalCitation extends Component {
 
     el.append(
       $$(TextInput, { node: articleTitle, label: 'Article Title' }),
-      $$(PersonGroup, { node: authorsGroup, label: 'Authors' }),
-      $$(PersonGroup, { node: editorsGroup, label: 'Editors' }),
+      $$(PersonGroup, { node: authorsGroup, label: 'Authors' }).addClass('se-authors'),
+      $$(PersonGroup, { node: editorsGroup, label: 'Editors' }).addClass('se-editors'),
       $$(TextInput, { node: source, label: 'Journal Title' }),
       $$(TextInput, { node: volume, label: 'Volume' }),
       $$(TextInput, { node: issue, label: 'Issue' }),

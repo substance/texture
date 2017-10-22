@@ -1,9 +1,31 @@
 .sc-edit-ref {
-  padding: 10px;
+  font-size: 14px;
+  font-weight: 200;
+  padding: 10px 0px;
 }
 
-.sc-edit-ref .se-ref-type .se-label {
-  margin-top: 5px;
+.sc-edit-ref .sc-person-group {
+  border-bottom: 1px solid #e1e4e8;
+  padding: 0px 10px 20px;
+}
+
+.sc-edit-ref .se-authors {
+  border-top: 1px solid #e1e4e8;
+  margin-top: 20px;
+}
+
+.sc-edit-ref .se-ref-type,
+.sc-edit-ref .sc-content-loc,
+.sc-edit-ref .sc-edit-pubids {
+  padding: 0px 10px;
+}
+
+.sc-edit-ref > div > .sc-text-input {
+  padding: 0px 10px;
+}
+
+.sc-edit-ref .se-content-loc-type .se-label {
+  margin-top: 15px;
 }
 
 .sc-edit-ref .sc-button {

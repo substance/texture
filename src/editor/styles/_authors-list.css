@@ -5,3 +5,11 @@
   font-size: 20px;
   font-weight: 500;
 }
+
+.sc-authors-list .se-author {
+  display: inline-block;
+}
+
+.sc-authors-list .se-separator + .se-author {
+  margin-left: 0.25em;
+}

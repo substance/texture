@@ -5,3 +5,11 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+.sc-affiliations-list .se-affiliation {
+  display: inline-block;
+}
+
+.sc-affiliations-list .se-separator + .se-affiliation {
+  margin-left: 0.25em;
+}

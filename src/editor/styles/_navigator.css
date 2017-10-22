@@ -31,7 +31,7 @@
 }
 
 .sc-navigator .se-toggle {
-  font-family: 'Avenir Next';
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-weight: 500;
   font-size: 14px;
   height: 40px;

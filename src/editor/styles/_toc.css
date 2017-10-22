@@ -7,7 +7,7 @@
   color: #222;
   font-weight: 600;
   letter-spacing: var(--heading-letterspacing);
-  font-family: 'Avenir Next', Helvetica;
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   display: block;
   padding: 2px 0px;
   position: relative;

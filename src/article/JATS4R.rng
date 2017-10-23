@@ -323,7 +323,10 @@
       <optional>
         <ref name="alternatives"/>
       </optional>
-      <ref name="graphic"/>
+      <!-- Only optional to allow repro figs without graphic element -->
+      <optional>
+        <ref name="graphic"/>
+      </optional>
     </element>
   </define>
 

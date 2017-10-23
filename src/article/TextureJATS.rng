@@ -727,7 +727,6 @@
     </element>
   </define>
 
-
   <!--
     Allow empty <fn-group>
   -->
@@ -1207,9 +1206,12 @@
 
   <define name="repro-fig">
     <element name="repro-fig">
+      <ref name="fig-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <ref name="object-id"/>
+      <ref name="title"/>
       <ref name="caption"/>
-      <ref name="source-code"/>
-      <ref name="output"/>
+      <ref name="cell"/>
     </element>
   </define>
 </grammar>

@@ -31,6 +31,7 @@ const trafos = [
   ConvertElementCitation,
   ConvertSigBlock,
   FnGroupConverter,
+  ConvertReproFig,
   ConvertFig,
   ConvertTableWrap,
   WrapAff,
@@ -42,7 +43,6 @@ const trafos = [
   Sec2Heading,
   ConvertContentLoc,
   ConvertCodeCell,
-  ConvertReproFig,
   UpdateDocType,
   // TODO: is this really necessary again?
   // PruneText,

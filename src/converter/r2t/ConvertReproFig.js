@@ -1,5 +1,5 @@
 import {
-  importSourceCode, exportSourceCode, importOutput, exportOutput,
+  importSourceCode, importOutput,
   extractCaptionTitle, expandCaption, expandTitle, expandObjectId
 } from './r2tHelpers'
 

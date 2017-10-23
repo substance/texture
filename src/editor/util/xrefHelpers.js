@@ -4,6 +4,7 @@ import { includes, map, orderBy } from 'substance'
 // right side: ref-type
 export const REF_TYPES = {
   'fig': 'fig',
+  'repro-fig': 'fig',
   'fig-group': 'fig',
   'fn': 'fn',
   'ref': 'bibr',

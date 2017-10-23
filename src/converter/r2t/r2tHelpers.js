@@ -3,7 +3,6 @@ import { forEach } from 'substance'
 import { replaceWith, findChild } from '../util/domHelpers'
 import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
 
-
 /*
   el being <article-meta> or <element-citation>
 */

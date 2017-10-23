@@ -1,5 +1,6 @@
 // TODO: add index files for the other folders as well
 export * from './src/article/index'
+export * from './src/editor/util/index'
 export * from './src/converter/index'
 
 export { default as InsertNodeCommand } from './src/editor/commands/InsertNodeCommand'

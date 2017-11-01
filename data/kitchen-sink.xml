@@ -134,19 +134,19 @@
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
             <name>
-              <surname>Baumann</surname>
-              <given-names>MA</given-names>
-            </name>
-            <name>
-              <surname>Fluet</surname>
-              <given-names>MC</given-names>
-            </name>
-            <name>
-              <surname>Scherberger</surname>
-              <given-names>H</given-names>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="2009">2009</year>
+          <person-group person-group-type="editor">
+            <name>
+              <surname>Doe</surname>
+              <given-names>Jane</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
           <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
           <source>Journal of Neuroscience</source>
           <volume>29</volume>
@@ -156,73 +156,29 @@
         </element-citation>
       </ref>
       <ref id="r2">
-        <element-citation publication-type="journal">
-          <person-group person-group-type="author">
-            <name>
-              <surname>Belmalih</surname>
-              <given-names>A</given-names>
-            </name>
-            <name>
-              <surname>Borra</surname>
-              <given-names>E</given-names>
-            </name>
-            <name>
-              <surname>Contini</surname>
-              <given-names>M</given-names>
-            </name>
-            <name>
-              <surname>Gerbella</surname>
-              <given-names>M</given-names>
-            </name>
-            <name>
-              <surname>Rozzi</surname>
-              <given-names>S</given-names>
-            </name>
-            <name>
-              <surname>Luppino</surname>
-              <given-names>G</given-names>
-            </name>
-          </person-group>
-          <year iso-8601-date="2009">2009</year>
-          <article-title>Multimodal architectonic subdivision of the rostral part (area F5) of the macaque ventral premotor cortex</article-title>
-          <source>Journal of Comparative Neurology</source>
-          <volume>512</volume>
-          <fpage>183</fpage>
-          <lpage>217</lpage>
-          <pub-id pub-id-type="doi">10.1002/cne.21892</pub-id>
-        </element-citation>
-      </ref>
-      <ref id="r3">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
             <name>
-              <surname>Al-Ibrahim</surname>
-              <given-names>MS</given-names>
+              <surname>John</surname>
+              <given-names>Smith</given-names>
             </name>
+          </person-group>
+          <person-group person-group-type="editor">
             <name>
-              <surname>Gross</surname>
-              <given-names>JY</given-names>
-            </name>
-            <name>
-              <surname>Walker</surname>
-              <given-names>HK</given-names>
-            </name>
-            <name>
-              <surname>Hall</surname>
-              <given-names>WD</given-names>
-            </name>
-            <name>
-              <surname>Hurst</surname>
-              <given-names>JW</given-names>
+              <surname>Jane</surname>
+              <given-names>Smith</given-names>
             </name>
           </person-group>
           <chapter-title>Tobacco use</chapter-title>
           <source>Clinical methods: the history, physical, and laboratory examinations</source>
           <publisher-loc>Stoneham (MA)</publisher-loc>
           <publisher-name>Butterworth Publishers</publisher-name>
-          <year iso-8601-date="2009">1990</year>
+          <year>1990</year>
+          <month>10</month>
+          <day>5</day>
           <fpage>214</fpage>
           <lpage>216</lpage>
+          <page-range>214-216</page-range>
         </element-citation>
       </ref>
     </ref-list>

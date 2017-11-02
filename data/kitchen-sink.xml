@@ -131,31 +131,6 @@
     <ref-list>
       <title>References</title>
       <ref id="r1">
-        <element-citation publication-type="journal">
-          <person-group person-group-type="author">
-            <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
-            </name>
-          </person-group>
-          <person-group person-group-type="editor">
-            <name>
-              <surname>Doe</surname>
-              <given-names>Jane</given-names>
-            </name>
-          </person-group>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
-          <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
-          <source>Journal of Neuroscience</source>
-          <volume>29</volume>
-          <fpage>6436</fpage>
-          <lpage>6448</lpage>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
-        </element-citation>
-      </ref>
-      <ref id="r2">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
             <name>
@@ -179,6 +154,221 @@
           <fpage>214</fpage>
           <lpage>216</lpage>
           <page-range>214-216</page-range>
+        </element-citation>
+      </ref>
+      <ref id="r2">
+        <element-citation publication-type="preprint">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2010</year>
+          <month>10</month>
+          <day>5</day>
+          <article-title>Preprint title</article-title>
+          <source>Pre-print journal</source>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r3">
+        <element-citation publication-type="clinicaltrial">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2010</year>
+          <month>10</month>
+          <day>5</day>
+          <article-title>Clinical trial title</article-title>
+          <source>Pre-print journal</source>
+        </element-citation>
+      </ref>
+      <ref id="r4">
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2010</year>
+          <month>10</month>
+          <day>5</day>
+          <article-title>Conf proc title</article-title>
+          <conf-name>Conf name</conf-name>
+          <source>Confproc source</source>
+          <fpage>214</fpage>
+          <lpage>216</lpage>
+          <page-range>214-216</page-range>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r5">
+        <element-citation publication-type="data">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2010</year>
+          <month>10</month>
+          <day>5</day>
+          <data-title>Data set title</data-title>
+          <source>World Bank</source>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+          <pub-id pub-id-type="accession">ACCESSION_ID</pub-id>
+          <pub-id pub-id-type="ark">ARK_ID</pub-id>
+          <pub-id pub-id-type="archive">ARCHIVE_ID</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r6">
+        <element-citation publication-type="periodical">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <!-- TODO: verify why string-date is proposed for periodical pub type -->
+          <year>2010</year>
+          <month>10</month>
+          <day>5</day>
+          <article-title>Periodical title</article-title>
+          <source>Periodical source</source>
+          <volume>29</volume>
+          <fpage>6436</fpage>
+          <lpage>6448</lpage>
+          <page-range>6436-6448</page-range>
+        </element-citation>
+      </ref>
+      <ref id="r7">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <person-group person-group-type="editor">
+            <name>
+              <surname>Doe</surname>
+              <given-names>Jane</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
+          <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
+          <source>Journal of Neuroscience</source>
+          <volume>29</volume>
+          <fpage>6436</fpage>
+          <lpage>6448</lpage>
+          <page-range>6436-6448</page-range>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r8">
+        <element-citation publication-type="patent">
+          <person-group person-group-type="inventor">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <!--
+            TODO: JATS spec suggests using something like this instead:
+            <collab collab-type="assignee">Hospira, Inc.</collab>
+          -->
+          <person-group person-group-type="assignee">
+            <name>
+              <surname>Doe</surname>
+              <given-names>Jane</given-names>
+            </name>
+          </person-group>
+          <article-title>Patent title</article-title>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
+          <source>United States patent</source>
+          <patent country="US">US 6,980,855</patent>
+        </element-citation>
+      </ref>
+      <ref id="r9">
+        <element-citation publication-type="report">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
+          <publisher-name>Publisher name</publisher-name>
+          <publisher-loc>Publisher location</publisher-loc>
+          <pub-id pub-id-type="isbn">ISBN_NUMBER</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r10">
+        <element-citation publication-type="software">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <person-group person-group-type="curator">
+            <name>
+              <surname>Doe</surname>
+              <given-names>Jane</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
+          <source>Software Project</source>
+          <version>1.0.0-preview.7</version>
+          <publisher-name>Software publisher name</publisher-name>
+          <publisher-loc>Software publisher location</publisher-loc>
+          <pub-id pub-id-type="doi">SOFTWARE_DOI</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r11">
+        <element-citation publication-type="thesis">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
+          <article-title>Thesis title</article-title>
+          <publisher-name>Software publisher name</publisher-name>
+          <publisher-loc>Software publisher location</publisher-loc>
+          <pub-id pub-id-type="doi">THESIS_DOI</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="r12">
+        <element-citation publication-type="web">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
+            </name>
+          </person-group>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
+          <source>Website title</source>
+          <publisher-loc>Website publisher location?</publisher-loc>
+          <uri>http://example.com/example-page.html</uri>
         </element-citation>
       </ref>
     </ref-list>

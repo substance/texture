@@ -890,6 +890,14 @@
         <ref name="source"/>
         <ref name="volume"/>
         <ref name="year"/>
+        <ref name="month"/>
+        <ref name="day"/>
+
+        <ref name="conf-name"/>
+        <ref name="data-title"/>
+        <ref name="patent"/>
+        <ref name="version"/>
+        <ref name="uri"/>
       </interleave>
     </element>
   </define>

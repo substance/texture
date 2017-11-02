@@ -41,7 +41,7 @@ export default class RefComponent extends Component {
 
     if (elementCitation) {
       let publicationType = elementCitation.getAttribute('publication-type')
-      let PreviewComp = this.getComponent(publicationType + '-citation-preview')
+      let PreviewComp = this.getComponent(publicationType + '-citation-preview', true)
 
       if(PreviewComp) {
         el.append(
@@ -50,7 +50,9 @@ export default class RefComponent extends Component {
             .on('click', this._editRef)
         )
       } else {
-        console.warn('No preview component found for publicationtype: ' + publicationType)
+        el.append(
+          'No preview component found for publicationtype: ' + publicationType
+        )
       }
     } else {
       console.warn('No element citation found')

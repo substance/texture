@@ -55,6 +55,33 @@ export function exportContentLoc(el) {
   }
 }
 
+export function expandElementCitation(el, doc) {
+  REQUIRED_ELEMENT_CITATION_ELEMENTS.forEach((element) => {
+    let [tagName, attrib, attribVal] = element
+    let matcher = tagName
+    if (attrib) {
+      matcher = `${tagName}[${attrib}=${attribVal}]`
+    }
+    let childEl = el.find(matcher)
+    if (!childEl) {
+      childEl = doc.createElement(tagName)
+      if (attrib) {
+        childEl.attr(attrib, attribVal)
+      }
+      el.append(childEl)
+    }
+  })
+}
+
+// TODO: can we make this more robust?
+export function cleanupElementCitation(el) {
+  REQUIRED_ELEMENT_CITATION_ELEMENTS.forEach((tagName) => {
+    let childEl = findChild(el, tagName)
+    if (childEl.textContent === '' && childEl.children.length === 0) {
+      el.removeChild(childEl)
+    }
+  })
+}
 
 export function extractCaptionTitle(el, insertPos) {
   let caption = findChild(el,'caption')
@@ -133,33 +160,4 @@ export function exportOutput(el) {
     .append(
       el.createCDATASection(el.textContent)
     )
-}
-
-
-export function expandElementCitation(el, doc) {
-  REQUIRED_ELEMENT_CITATION_ELEMENTS.forEach((element) => {
-    let [tagName, attrib, attribVal] = element
-    let matcher = tagName
-    if (attrib) {
-      matcher = `${tagName}[${attrib}=${attribVal}]`
-    }
-    let childEl = el.find(matcher)
-    if (!childEl) {
-      childEl = doc.createElement(tagName)
-      if (attrib) {
-        childEl.attr(attrib, attribVal)
-      }
-      el.append(childEl)
-    }
-  })
-}
-
-// TODO: can we make this more robust?
-export function cleanupElementCitation(el) {
-  REQUIRED_ELEMENT_CITATION_ELEMENTS.forEach((tagName) => {
-    let childEl = findChild(el, tagName)
-    if (childEl.textContent === '' && childEl.children.length === 0) {
-      el.removeChild(childEl)
-    }
-  })
 }

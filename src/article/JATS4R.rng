@@ -300,6 +300,14 @@
         <optional><ref name="source"/></optional>
         <optional><ref name="volume"/></optional>
         <optional><ref name="year"/></optional>
+        <optional><ref name="month"/></optional>
+        <optional><ref name="day"/></optional>
+
+        <optional><ref name="conf-name"/></optional>
+        <optional><ref name="data-title"/></optional>
+        <optional><ref name="patent"/></optional>
+        <optional><ref name="version"/></optional>
+        <optional><ref name="uri"/></optional>
       </interleave>
     </element>
   </define>

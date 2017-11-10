@@ -2,6 +2,7 @@
 export * from './src/article/index'
 export * from './src/editor/util/index'
 export * from './src/converter/index'
+export * from './src/entities/index'
 
 export { default as InsertNodeCommand } from './src/editor/commands/InsertNodeCommand'
 export { default as Texture } from './src/Texture'

@@ -1,0 +1,12 @@
+/* Texture Component styles */
+@import url('../texture.css');
+/* You may want to use your own reset and pagestyle */
+@import url('../texture-reset.css');
+@import url('../substance/dist/substance.css');
+@import url('../texture-pagestyle.css');
+@import url('../font-awesome/css/font-awesome.min.css');
+body { overflow: hidden; }
+html,
+body {
+  height: 100%;
+}

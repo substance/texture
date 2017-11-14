@@ -24,6 +24,11 @@ export const REQUIRED_ELEMENT_CITATION_ELEMENTS = [
   ['year'],
   ['publisher-loc'],
   ['publisher-name'],
+  ['conf-name'],
+  ['data-title'],
+  ['patent'],
+  ['version'],
+  ['uri'],
   ['pub-id', 'pub-id-type', 'doi'],
   ['pub-id', 'pub-id-type', 'pmid'],
   ['pub-id', 'pub-id-type', 'isbn']

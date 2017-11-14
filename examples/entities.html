@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texture Editor</title>
+    <meta charset="UTF-8">
+    <style>
+      /* Texture Component styles */
+      @import './texture.css';
+      /* You may want to use your own reset and pagestyle */
+      @import './texture-reset.css';
+      @import './substance/dist/substance.css';
+      @import './texture-pagestyle.css';
+      @import './font-awesome/css/font-awesome.min.css';
+      body { overflow: hidden; }
+      html,
+      body {
+        height: 100%;
+      }
+    </style>
+    <script type="text/javascript" src="./substance/dist/substance.js"></script>
+    <script type="text/javascript" src="./texture.js"></script>
+    <script type="text/javascript">
+      const { Configurator, EditorSession } = window.substance
+      const { EntitiesPackage, EntityEditor } = window.texture
+
+      window.onload = function() {
+        let configurator = new Configurator()
+        configurator.import(EntitiesPackage)
+        let entityDb = configurator.createDocument()
+        // Book Citation
+        entityDb.create({
+          id: 'book-citation-1',
+          type: 'book-citation',
+          authors: ['person-1'],
+          editors: ['person-1'],
+          chapterTitle: '<strong>Tobacco</strong> use',
+          source: 'Clinical methods: the history, physical, and laboratory examinations',
+          publisherLoc: 'Stoneham (MA)',
+          publisherName: 'Butterworth Publishers',
+          year: '1990',
+          month: '10',
+          day: '5',
+          fpage: '214',
+          lpage: '216',
+          pageRange: '214-216'
+        })
+        // Person
+        entityDb.create({
+          id: 'person-1',
+          type: 'person',
+          givenNames: 'John',
+          surname: 'Smith'
+        })
+        entityDb.create({
+          id: 'person-2',
+          type: 'person',
+          givenNames: 'Jane',
+          surname: 'Apple'
+        })
+        entityDb.create({
+          id: 'person-3',
+          type: 'person',
+          givenNames: 'Susanne',
+          surname: 'Peer'
+        })
+        let editorSession = new EditorSession(entityDb, {
+          configurator
+        })
+        // Mount the editor to the DOM and run it
+        EntityEditor.mount({
+          editorSession: editorSession,
+          node: entityDb.get('book-citation-1')
+        }, document.body)
+      }
+    </script>
+  </head>
+  <body>
+    <div class="modal">
+
+    </div>
+  </body>
+</html>

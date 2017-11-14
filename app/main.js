@@ -3,6 +3,8 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+global.sharedObject = {args: process.argv}
+
 const { app } = electron
 
 // Keep a global reference of the window object, if you don't, the window will

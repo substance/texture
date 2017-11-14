@@ -1,10 +1,13 @@
 const { Texture } = window.texture
+let remote = require('electron').remote
+let args = remote.getGlobal('sharedObject').args
 
 // Loading XML: In this example we use a bundled virtual file-system
-const DEFAULT_FILE = 'data/introducing-texture.xml' // without leading '/'
+let file = 'data/introducing-texture.xml' // without leading '/'
 
-let htmlParams = new URLSearchParams(location.search.slice(1))
-let file = htmlParams.get('file') || DEFAULT_FILE
+if(args.length > 2) {
+  file = 'data/' + args[2]
+}
 
 window.onload = function() {
   window.app = Texture.mount({

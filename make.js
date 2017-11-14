@@ -68,6 +68,25 @@ b.task('build:nodejs', ['compile:schema'], () => {
   _buildLib(DIST, 'nodejs')
 })
 
+b.task('build:app', ['build:browser'], () => {
+  b.copy('app/index.html', 'dist/app/')
+  b.copy('app/main.js', 'dist/app/')
+  b.copy('app/package.json.in', 'dist/app/package.json')
+  b.css('app/editor.css', 'dist/app/editor.css', { variables: true })
+  b.js('app/editor.js', {
+    target: {
+      dest: 'dist/app/editor.js',
+      format: 'umd',
+      moduleName: 'editor'
+    },
+    external: ['substance', 'texture'],
+    globals: {
+      'substance': 'window.substance',
+      'texture': 'window.texture'
+    }
+  })
+})
+
 b.task('test:assets', () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],

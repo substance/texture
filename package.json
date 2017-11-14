@@ -9,6 +9,7 @@
     "substance": "1.0.0-preview.5"
   },
   "devDependencies": {
+    "electron": "^1.7.9",
     "font-awesome": "4.5.0",
     "substance-bundler": "^0.18.3",
     "substance-test": "^0.9.4",
@@ -18,6 +19,7 @@
     "prepublish": "node make publish",
     "bundle": "node make",
     "start": "node make dev -s -w",
+    "app": "node make build:app && node ./app/cli.js",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

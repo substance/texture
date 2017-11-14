@@ -6,4 +6,5 @@ node_modules
 .lock-wscript
 .test
 .npm
+.DS_Store
 /tmp

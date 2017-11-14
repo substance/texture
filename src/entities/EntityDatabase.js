@@ -5,8 +5,8 @@ export class BookCitation extends DocumentNode {}
 BookCitation.schema = {
   type: 'journal-citation',
   pubType: 'journal',
-  authors: { type: ['array', 'entity'], default: [] },
-  editors: { type: ['array', 'entity'], default: [] },
+  authors: { type: ['array', 'id'], default: [] },
+  editors: { type: ['array', 'id'], default: [] },
   chapterTitle: { type: 'text', optional: true },
   source: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
@@ -23,8 +23,8 @@ export class JournalCitation extends DocumentNode {}
 
 JournalCitation.schema = {
   type: 'book-citation',
-  authors: { type: ['array', 'entity'], default: [] },
-  editors: { type: ['array', 'entity'], default: [] },
+  authors: { type: ['array', 'id'], default: [] },
+  editors: { type: ['array', 'id'], default: [] },
   articleTitle: { type: 'text', optional: true },
   source: { type: 'string', optional: true },
   volume: { type: 'string', optional: true },
@@ -37,24 +37,23 @@ JournalCitation.schema = {
   doi: { type: 'string', optional: true}
 }
 
-export class Entity extends DocumentNode {}
-
-Entity.schema = {
-  type: 'entity',
-  entityType: { type: 'string'},
-  // entityId refererences the actual entity, which may change during life time.
-  // E.g. an entity could be changed to use a
-  targetId: { type: 'id' },
-}
-
 export class Person extends DocumentNode {}
 
 Person.schema = {
   type: 'person',
-  givenNames: 'string',
-  surname: 'string'
+  givenNames: { type: 'string', optional: true},
+  surname: { type: 'string', optional: true},
+  prefix: { type: 'string', optional: true},
+  suffix: { type: 'string', optional: true}
 }
 
 export default class EntityDatabase extends Document {
-
+  /*
+    Simple API to find records in the entity database.
+  */
+  find(qry) {
+    let nodesByType = this.getIndex('type')
+    let nodeIds = Object.keys(nodesByType.get(qry.type))
+    return nodeIds.map((nodeId) => this.get(nodeId))
+  }
 }

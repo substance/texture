@@ -21,19 +21,18 @@
     <script type="text/javascript" src="./texture.js"></script>
     <script type="text/javascript">
       const { Configurator, EditorSession } = window.substance
-      const { EntitiesPackage, CitationEditor } = window.texture
+      const { EntitiesPackage, EntityEditor } = window.texture
 
       window.onload = function() {
         let configurator = new Configurator()
         configurator.import(EntitiesPackage)
         let entityDb = configurator.createDocument()
-
         // Book Citation
         entityDb.create({
           id: 'book-citation-1',
           type: 'book-citation',
-          authors: ['contrib-1'],
-          editors: ['contrib-1'],
+          authors: ['person-1'],
+          editors: ['person-1'],
           chapterTitle: '<strong>Tobacco</strong> use',
           source: 'Clinical methods: the history, physical, and laboratory examinations',
           publisherLoc: 'Stoneham (MA)',
@@ -45,56 +44,39 @@
           lpage: '216',
           pageRange: '214-216'
         })
-        entityDb.create({
-          id: 'entity-1',
-          type: 'entity',
-          entityType: 'book-citation',
-          targetId: 'book-citation-1'
-        })
         // Person
         entityDb.create({
           id: 'person-1',
           type: 'person',
-          givenNames: 'Smith',
-          surname: 'John'
+          givenNames: 'John',
+          surname: 'Smith'
         })
         entityDb.create({
-          id: 'entity-2',
-          type: 'entity',
-          entityType: 'person',
-          targetId: 'person-1'
+          id: 'person-2',
+          type: 'person',
+          givenNames: 'Jane',
+          surname: 'Apple'
         })
-
+        entityDb.create({
+          id: 'person-3',
+          type: 'person',
+          givenNames: 'Susanne',
+          surname: 'Peer'
+        })
         let editorSession = new EditorSession(entityDb, {
           configurator
         })
-
         // Mount the editor to the DOM and run it
-        CitationEditor.mount({
+        EntityEditor.mount({
           editorSession: editorSession,
-          node: entityDb.get('entity-1')
+          node: entityDb.get('book-citation-1')
         }, document.body)
-
-
-        // console.log('le entity DB', entityDb)
-        // window.app = Texture.mount({
-        //   documentId: file,
-        //   /*
-        //     Implement your own logic to read and write XML
-        //   */
-        //   readXML: function(documentId, cb) {
-        //     xmlStr = vfs.readFileSync(documentId)
-        //     cb(null, xmlStr)
-        //   },
-        //   writeXML: function(documentId, xml, cb) {
-        //     console.log('writeXML needs to be implemented for saving.')
-        //     console.log('XML', xml)
-        //     cb(null)
-        //   }
-        // }, document.body)
       }
     </script>
   </head>
   <body>
+    <div class="modal">
+
+    </div>
   </body>
 </html>

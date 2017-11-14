@@ -19,7 +19,7 @@
     "prepublish": "node make publish",
     "bundle": "node make",
     "start": "node make dev -s -w",
-    "app": " ./node_modules/.bin/electron ./dist/app",
+    "app": "node make build:app && ./node_modules/.bin/electron ./dist/app",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

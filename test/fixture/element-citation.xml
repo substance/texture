@@ -11,6 +11,12 @@
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
+            <name>
+              <surname>Doe</surname>
+              <given-names>Jane</given-names>
+              <prefix>Dr</prefix>
+              <suffix>Jr</suffix>
+            </name>
           </person-group>
           <person-group person-group-type="editor">
             <name>
@@ -56,7 +62,6 @@
           <elocation-id>ELOCID</elocation-id>
         </element-citation>
       </ref>
-
     </ref-list>
   </back>
 </article>

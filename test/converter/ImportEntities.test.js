@@ -24,8 +24,8 @@ test("Import journal citation", function(t) {
   // with the old id?, and how to find the record after its id has changed?
   let r1 = entityDb.get('r1')
 
-  t.equal(r1.authors.length, 1)
-  t.equal(r1.authors.length, 1)
+  t.equal(r1.authors.length, 2)
+  t.equal(r1.editors.length, 1)
   // TODO: should we check for the actual person records every time in each test
   // or better create a separate unit test only for person extraction?
   t.equal(r1.year, '2009')

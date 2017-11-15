@@ -39,6 +39,32 @@ test("Import journal citation", function(t) {
   t.end()
 })
 
+test("Import book citation", function(t) {
+  let dom = DefaultDOMElement.parseXML(fixture)
+  let entityDb = _emptyEntityDb()
+  let api = _createAPI(entityDb)
+  let converter = new ImportEntities()
+
+  converter.import(dom, api)
+  let r2 = entityDb.get('r2')
+
+  t.equal(r2.authors.length, 1)
+  t.equal(r2.editors.length, 1)
+  t.equal(r2.chapterTitle, 'Tobacco use')
+  t.equal(r2.source, 'Clinical methods: the history, physical, and laboratory examinations')
+  t.equal(r2.publisherLoc, 'Stoneham (MA)')
+  t.equal(r2.publisherName, 'Butterworth Publishers')
+  t.equal(r2.year, '1990')
+  t.equal(r2.month, '10')
+  t.equal(r2.day, '5')
+  t.equal(r2.fpage, '214')
+  t.equal(r2.lpage, '216')
+  t.equal(r2.pageRange, '214-216')
+  t.equal(r2.elocationId, 'ELOCID')
+
+  t.end()
+})
+
 test("Extract persons from element citation", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let entityDb = _emptyEntityDb()

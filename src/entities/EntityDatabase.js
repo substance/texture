@@ -3,7 +3,7 @@ import { DocumentNode, Document } from 'substance'
 export class BookCitation extends DocumentNode {}
 
 BookCitation.schema = {
-  type: 'journal-citation',
+  type: 'book-citation',
   authors: { type: ['array', 'id'], default: [] },
   editors: { type: ['array', 'id'], default: [] },
   chapterTitle: { type: 'text', optional: true },
@@ -22,7 +22,7 @@ BookCitation.schema = {
 export class JournalCitation extends DocumentNode {}
 
 JournalCitation.schema = {
-  type: 'book-citation',
+  type: 'journal-citation',
   authors: { type: ['array', 'id'], default: [] },
   editors: { type: ['array', 'id'], default: [] },
   articleTitle: { type: 'text', optional: true },

@@ -1,29 +1,18 @@
 import { module } from 'substance-test'
-import { DefaultDOMElement } from 'substance'
+import {
+ DefaultDOMElement, Configurator
+} from 'substance'
+
 // TODO: export all trafos via index.es.js, and import {..} from '../../index.es.js'
 import ImportEntities from '../../src/converter/r2t/ImportEntities'
-const test = module('Import Entities')
+import { EntitiesPackage } from '../../src/entities'
 import readFixture from '../fixture/readFixture'
-let fixture = readFixture('element-citation.xml')
 
-function _emptyEntityDb() {
-  // TODO: Create an empty entity db
-}
-
-// By storing the errors we can later check for an error count in failing
-// tests.
-function _createAPI(entityDb) {
-  let errors = []
-  return {
-    entityDb,
-    error: function(data) {
-      errors.push(data)
-    }
-  }
-}
+const test = module('Import Entities')
+const fixture = readFixture('element-citation.xml')
 
 
-test("r2t: Import journal citation", function(t) {
+test("Import journal citation", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let entityDb = _emptyEntityDb()
   let api = _createAPI(entityDb)
@@ -51,3 +40,23 @@ test("r2t: Import journal citation", function(t) {
 
   t.end()
 })
+
+function _emptyEntityDb() {
+  // creating an in-memory model of the EntityDB
+  // which will be used to create records from JATS
+  let entitiesConf = new Configurator()
+  entitiesConf.import(EntitiesPackage)
+  return entitiesConf.createDocument()
+}
+
+// By storing the errors we can later check for an error count in failing
+// tests.
+function _createAPI(entityDB) {
+  let errors = []
+  return {
+    entityDB,
+    error: function(data) {
+      errors.push(data)
+    }
+  }
+}

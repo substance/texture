@@ -857,67 +857,6 @@
     </element>
   </define>
 
-  <!--
-    We develop the element citation incrementally, we only enable tags that can be
-    edited through the user interface so far. This is why many elements are
-    commented out.
-
-    NOTE: in TextureJATS all fields are required. This allows the user to switch
-          between different publication types without loosing data.
-
-    NOTE: This must be kept in sync with JATS4R.rng
-  -->
-
-  <define name="element-citation">
-    <element name="element-citation">
-      <ref name="element-citation-attlist"/>
-      <interleave>
-        <ref name="article-title"/>
-        <ref name="chapter-title"/>
-        <!-- custom content-loc element instead of fpage,lpage,page-range,e-location-id -->
-        <ref name="content-loc"/>
-        <ref name="comment"/>
-        <ref name="edition"/>
-        <ref name="issue"/>
-        <zeroOrMore>
-        <ref name="person-group"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="pub-id"/>
-        </zeroOrMore>
-        <ref name="publisher-loc"/>
-        <ref name="publisher-name"/>
-        <ref name="source"/>
-        <ref name="volume"/>
-        <ref name="year"/>
-        <ref name="month"/>
-        <ref name="day"/>
-
-        <ref name="conf-name"/>
-        <ref name="data-title"/>
-        <ref name="patent"/>
-        <ref name="version"/>
-        <ref name="uri"/>
-      </interleave>
-    </element>
-  </define>
-
-  <!--
-    We force using <element-citation> for structured representation
-    and use <mixed-citation> only as textual form
-  -->
-  <define name="mixed-citation">
-    <element name="mixed-citation">
-      <ref name="mixed-citation-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
   <!-- WIP
     Allowing only phrasing content
 
@@ -996,6 +935,12 @@
     <choice>
       <ref name="just-rendition"/>
     </choice>
+  </define>
+
+  <define name="ref">
+    <element name="ref">
+      <ref name="ref-attlist"/>
+    </element>
   </define>
 
   <!--

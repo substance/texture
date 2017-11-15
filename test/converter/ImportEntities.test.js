@@ -26,8 +26,6 @@ test("Import journal citation", function(t) {
 
   t.equal(r1.authors.length, 2)
   t.equal(r1.editors.length, 1)
-  // TODO: should we check for the actual person records every time in each test
-  // or better create a separate unit test only for person extraction?
   t.equal(r1.year, '2009')
   t.equal(r1.articleTitle, 'Journal article title')
   t.equal(r1.source, 'Journal article source')
@@ -37,6 +35,32 @@ test("Import journal citation", function(t) {
   t.equal(r1.pageRange, '6436-6448')
   t.equal(r1.elocationId, 'ELOCID')
   t.equal(r1.doi, '10.1523/JNEUROSCI.5479-08.2009')
+
+  t.end()
+})
+
+test("Extract persons from element citation", function(t) {
+  let dom = DefaultDOMElement.parseXML(fixture)
+  let entityDb = _emptyEntityDb()
+  let api = _createAPI(entityDb)
+  let converter = new ImportEntities()
+
+  converter.import(dom, api)
+
+  const r1 = entityDb.get('r1')
+  const authors = r1.authors
+  t.equal(authors.length, 2)
+  const author1 = entityDb.get(authors[0])
+  t.equal(author1.surname, 'Doe')
+  t.equal(author1.givenNames, 'John')
+  t.isNil(author1.prefix)
+  t.isNil(author1.suffix)
+
+  const author2 = entityDb.get(authors[1])
+  t.equal(author2.surname, 'Doe')
+  t.equal(author2.givenNames, 'Jane')
+  t.equal(author2.prefix, 'Dr')
+  t.equal(author2.suffix, 'Jr')
 
   t.end()
 })

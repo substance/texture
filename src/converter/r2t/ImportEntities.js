@@ -16,7 +16,8 @@ const ELEMENT_CITATION_ENTITY_DB_MAP = {
   'fpage': 'fpage',
   'lpage': 'lpage',
   'pageRange': 'page-range',
-  'doi': 'doi'
+  'elocationId': 'elocation-id',
+  'doi': 'pub-id'
 }
 
 export default class ImportEntities {
@@ -38,8 +39,6 @@ export default class ImportEntities {
 
     const entityDB = api.entityDB
     refs.forEach((refEl) => {
-      let refContent = refEl.children
-
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error('Could not find <element-citation>')
@@ -61,7 +60,7 @@ export default class ImportEntities {
     })
   }
 
-  export(dom) {
+  export(/*dom*/) {
     // TODO: serialize out the refs
   }
 }
@@ -80,6 +79,7 @@ function _createBibliographicEntity(elementCitation, entityDB) {
   // Extract authors and editors from element-citation
   const persons = _extractPersons(elementCitation, entityDB)
   let record = {
+    id: elementCitation.getParent().id,
     type,
     authors: persons.author,
     editors: persons.editor
@@ -92,7 +92,6 @@ function _createBibliographicEntity(elementCitation, entityDB) {
     const prop = _getElementCitationProperty(node, elementCitation)
     if(prop) record[node] = prop
   })
-
   // Create record
   const entity = entityDB.create(record)
 
@@ -138,7 +137,7 @@ function _extractPersons(elementCitation, entityDB) {
 function _getEntityNodes(type, entityDB) {
   const entityDBSchema = entityDB.getSchema()
   const nodeClass = entityDBSchema.getNodeClass(type)
-  return Object.keys(nodeClass)
+  return Object.keys(nodeClass.schema)
 }
 
 // Get child property value of element-citation

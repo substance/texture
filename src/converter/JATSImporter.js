@@ -1,8 +1,14 @@
-import { EventEmitter, DefaultDOMElement, validateXMLSchema, isString } from 'substance'
+import {
+  EventEmitter, DefaultDOMElement,
+  validateXMLSchema, isString,
+  Configurator
+} from 'substance'
 import { JATS, JATS4R, TextureJATS } from '../article'
 import { r2t } from './r2t'
 import { j2r } from './j2r'
 import custom from './custom'
+
+import { EntitiesPackage } from '../entities'
 
 /*
   Goal:
@@ -93,7 +99,15 @@ export default class JATSImporter extends EventEmitter {
 
   _createAPI(dom, channel) {
     const self = this
+
+    // creating an in-memory model of the EntityDB
+    // which will be used to create records from JATS
+    let entitiesConf = new Configurator()
+    entitiesConf.import(EntitiesPackage)
+    let entityDB = entitiesConf.createDocument()
+
     let api = {
+      entityDB,
       error(data) {
         self._error(channel, data)
       }

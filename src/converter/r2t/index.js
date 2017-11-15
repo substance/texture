@@ -11,7 +11,7 @@ import TransformContrib from './TransformContrib'
 import FnGroupConverter from './FnGroupConverter'
 import ConvertCodeCell from './ConvertCodeCell'
 import ConvertReproFig from './ConvertReproFig'
-import ConvertElementCitation from './ConvertElementCitation'
+import ImportEntities from './ImportEntities'
 import ConvertFig from './ConvertFig'
 import ConvertTableWrap from './ConvertTableWrap'
 import ConvertContentLoc from './ConvertContentLoc'
@@ -28,7 +28,7 @@ const trafos = [
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
-  ConvertElementCitation,
+  ImportEntities,
   ConvertSigBlock,
   FnGroupConverter,
   ConvertReproFig,

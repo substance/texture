@@ -3,8 +3,7 @@ import { DocumentNode, Document } from 'substance'
 export class BookCitation extends DocumentNode {}
 
 BookCitation.schema = {
-  type: 'journal-citation',
-  pubType: 'journal',
+  type: 'book-citation',
   authors: { type: ['array', 'id'], default: [] },
   editors: { type: ['array', 'id'], default: [] },
   chapterTitle: { type: 'text', optional: true },
@@ -16,13 +15,14 @@ BookCitation.schema = {
   day: { type: 'string', optional: true },
   fpage: { type: 'string', optional: true },
   lpage: { type: 'string', optional: true },
+  elocationId: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true }
 }
 
 export class JournalCitation extends DocumentNode {}
 
 JournalCitation.schema = {
-  type: 'book-citation',
+  type: 'journal-citation',
   authors: { type: ['array', 'id'], default: [] },
   editors: { type: ['array', 'id'], default: [] },
   articleTitle: { type: 'text', optional: true },
@@ -34,6 +34,7 @@ JournalCitation.schema = {
   fpage: { type: 'string', optional: true },
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
+  elocationId: { type: 'string', optional: true },
   doi: { type: 'string', optional: true}
 }
 

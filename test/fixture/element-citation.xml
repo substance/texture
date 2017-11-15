@@ -8,24 +8,30 @@
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
             <name>
-              <surname>Baumann</surname>
-              <given-names>MA</given-names>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
             </name>
             <name>
-              <surname>Fluet</surname>
-              <given-names>MC</given-names>
+              <surname>Doe</surname>
+              <given-names>Jane</given-names>
+              <prefix>Dr</prefix>
+              <suffix>Jr</suffix>
             </name>
+          </person-group>
+          <person-group person-group-type="editor">
             <name>
-              <surname>Scherberger</surname>
-              <given-names>H</given-names>
+              <surname>Smith</surname>
+              <given-names>Jane</given-names>
             </name>
           </person-group>
           <year iso-8601-date="2009">2009</year>
-          <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
-          <source>Journal of Neuroscience</source>
+          <article-title>Journal article title</article-title>
+          <source>Journal article source</source>
           <volume>29</volume>
           <fpage>6436</fpage>
           <lpage>6448</lpage>
+          <page-range>6436-6448</page-range>
+          <elocation-id>ELOCID</elocation-id>
           <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
@@ -33,33 +39,27 @@
         <element-citation publication-type="book">
           <person-group person-group-type="author">
             <name>
-              <surname>Al-Ibrahim</surname>
-              <given-names>MS</given-names>
+              <surname>Doe</surname>
+              <given-names>John</given-names>
             </name>
+          </person-group>
+          <person-group person-group-type="editor">
             <name>
-              <surname>Gross</surname>
-              <given-names>JY</given-names>
-            </name>
-            <name>
-              <surname>Walker</surname>
-              <given-names>HK</given-names>
-            </name>
-            <name>
-              <surname>Hall</surname>
-              <given-names>WD</given-names>
-            </name>
-            <name>
-              <surname>Hurst</surname>
-              <given-names>JW</given-names>
+              <surname>Smith</surname>
+              <given-names>Jane</given-names>
             </name>
           </person-group>
           <chapter-title>Tobacco use</chapter-title>
           <source>Clinical methods: the history, physical, and laboratory examinations</source>
           <publisher-loc>Stoneham (MA)</publisher-loc>
           <publisher-name>Butterworth Publishers</publisher-name>
-          <year iso-8601-date="2009">1990</year>
+          <year>1990</year>
+          <month>10</month>
+          <day>5</day>
           <fpage>214</fpage>
           <lpage>216</lpage>
+          <page-range>214-216</page-range>
+          <elocation-id>ELOCID</elocation-id>
         </element-citation>
       </ref>
     </ref-list>

@@ -114,13 +114,7 @@ b.task('publish', ['clean', 'assets', 'compile:schema'], () => {
   _buildLib(DIST, 'all')
 })
 
-b.task('test', () => {
-  // TODO implement a test-suite
-  // A test-suite should cover
-  // - basic functionality of components
-  // - import from JATS -> restrictedJATS
-  // - transformation between restrictedJATS and TextureJATS
-})
+b.task('test', ['test:node'])
 
 /* HELPERS */
 

@@ -4,7 +4,6 @@ export class BookCitation extends DocumentNode {}
 
 BookCitation.schema = {
   type: 'journal-citation',
-  pubType: 'journal',
   authors: { type: ['array', 'id'], default: [] },
   editors: { type: ['array', 'id'], default: [] },
   chapterTitle: { type: 'text', optional: true },

@@ -76,6 +76,7 @@ function _createBibliographicEntity(elementCitation, entityDB) {
     console.error('TODO: implement entity importer for', pubType, 'entity type')
     return
   }
+  // Extract authors and editors from element-citation
   const persons = _extractPersons(elementCitation, entityDB)
   let record = {
     type,
@@ -83,14 +84,15 @@ function _createBibliographicEntity(elementCitation, entityDB) {
     editors: persons.editor
   }
 
-  const schema = _getEntitySchema(type, entityDB)
-  const nodes = Object.keys(schema)
-
+  // Extract all other attributes for a certain pub-type
+  // and populate entity record
+  const nodes = _getEntityNodes(type, entityDB)
   nodes.forEach(node => {
-    const prop = _getCitationProperty(node, elementCitation)
+    const prop = _getElementCitationProperty(node, elementCitation)
     if(prop) record[node] = prop
   })
 
+  // Create record
   const entity = entityDB.create(record)
 
   return entity.id
@@ -130,13 +132,15 @@ function _extractPersons(elementCitation, entityDB) {
   return result
 }
 
-function _getEntitySchema(type, entityDB) {
+// Returns list of entity properties
+function _getEntityNodes(type, entityDB) {
   const entityDBSchema = entityDB.getSchema()
   const nodeClass = entityDBSchema.getNodeClass(type)
-  return nodeClass.schema
+  return Object.keys(nodeClass)
 }
 
-function _getCitationProperty(prop, elementCitation) {
+// Get child property value of element-citation
+function _getElementCitationProperty(prop, elementCitation) {
   let result
   const xmlProp = ELEMENT_CITATION_ENTITY_DB_MAP[prop]
   if(xmlProp) {

@@ -33,3 +33,19 @@ export const REQUIRED_ELEMENT_CITATION_ELEMENTS = [
   ['pub-id', 'pub-id-type', 'pmid'],
   ['pub-id', 'pub-id-type', 'isbn']
 ]
+
+export const ELEMENT_CITATION_ENTITY_DB_MAP = {
+  'articleTitle': 'article-title',
+  'chapterTitle': 'chapter-title',
+  'source': 'source',
+  'publisherLoc': 'publisher-loc',
+  'publisherName': 'publisher-name',
+  'volume': 'volume',
+  'year': 'year',
+  'month': 'month',
+  'day': 'day',
+  'fpage': 'fpage',
+  'lpage': 'lpage',
+  'pageRange': 'page-range',
+  'doi': 'doi'
+}

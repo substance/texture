@@ -13,8 +13,7 @@ const fixture = readFixture('element-citation.xml')
 
 
 test("Import journal citation", function(t) {
-  let entityDb = _emptyEntityDb()
-  _importEntities(entityDb)
+  let { entityDb } = _setup()
 
   // TODO: how can we turn the original id into a uuid, what to do
   // with the old id?, and how to find the record after its id has changed?
@@ -36,9 +35,7 @@ test("Import journal citation", function(t) {
 })
 
 test("Import book citation", function(t) {
-  let entityDb = _emptyEntityDb()
-  _importEntities(entityDb)
-
+  let { entityDb } = _setup()
   let r2 = entityDb.get('r2')
 
   t.equal(r2.authors.length, 1)
@@ -59,11 +56,10 @@ test("Import book citation", function(t) {
 })
 
 test("Extract persons from element citation", function(t) {
-  let entityDb = _emptyEntityDb()
-  _importEntities(entityDb)
-
+  let { entityDb } = _setup()
   const r1 = entityDb.get('r1')
   const authors = r1.authors
+
   t.equal(authors.length, 2)
   const author1 = entityDb.get(authors[0])
   t.equal(author1.surname, 'Doe')
@@ -101,10 +97,13 @@ function _createAPI(entityDB) {
 }
 
 // Import entities from XML, used in the beginning of each test
-function _importEntities(entityDb) {
+function _setup() {
+  let entityDb = _emptyEntityDb()
   let dom = DefaultDOMElement.parseXML(fixture)
   let api = _createAPI(entityDb)
   let converter = new ImportEntities()
 
   converter.import(dom, api)
+
+  return { converter, dom, entityDb }
 }

@@ -1,33 +1,39 @@
-import { ELEMENT_CITATION_ENTITY_DB_MAP } from '../../constants'
+const TYPES = {
+  'journal': 'journal-citation',
+  'book': 'book-citation'
+}
 
-/*
-  @daniel: this is just a sketch. Could not try it out as
-  it is all so preliminary.
-  Just a pointer how to start :)
+const ELEMENT_CITATION_ENTITY_DB_MAP = {
+  'articleTitle': 'article-title',
+  'chapterTitle': 'chapter-title',
+  'source': 'source',
+  'publisherLoc': 'publisher-loc',
+  'publisherName': 'publisher-name',
+  'volume': 'volume',
+  'year': 'year',
+  'month': 'month',
+  'day': 'day',
+  'fpage': 'fpage',
+  'lpage': 'lpage',
+  'pageRange': 'page-range',
+  'doi': 'doi'
+}
 
-  Mission:
-  Create entitites for references found in the JATS file
-  and remove them from the DOM.
-
-  - Turn JATS ref-lists into a flat version with 'shallow' refs
-    <ref-list>
-      <title>Bibliografía</title>
-      <ref id="B1" />
-    </ref-list>
-  - create entities from the content of the refs
-
-  > Note: we might need to think about id-disambiguation here,
-    i.e. making sure that the local entities do not collide
-    with existing ones (regarding id)... maybe it is a good
-    idea not to rely on local ids at all, i.e. always convert
-    local ids into global ones, where we can choose ids
-    which are propability->zero to collide
-*/
 export default class ImportEntities {
+  /*
+    During import we are extracting persons and then walk through
+    entity schema to pull properties out of element-citation
+    At the end we are cleaning ref elements and changing xref rids
+    to ids of newly created entities
 
+    > Note: we might need to think about id-disambiguation here,
+      i.e. making sure that the local entities do not collide
+      with existing ones (regarding id)... maybe it is a good
+      idea not to rely on local ids at all, i.e. always convert
+      local ids into global ones, where we can choose ids
+      which are propability->zero to collide
+  */
   import(dom, api) {
-    // let bibs = dom.findAll()
-    // let bibRefs = dom.findAll('xref[ref-type=bibr]')
     let refs = dom.findAll('ref')
 
     const entityDB = api.entityDB
@@ -58,11 +64,6 @@ export default class ImportEntities {
   export(dom) {
     // TODO: serialize out the refs
   }
-}
-
-const TYPES = {
-  'journal': 'journal-citation',
-  'book': 'book-citation'
 }
 
 function _createBibliographicEntity(elementCitation, entityDB) {
@@ -114,7 +115,6 @@ function _extractPersons(elementCitation, entityDB) {
       let record = {
         type: 'person'
       }
-
       const surname = person.find('surname')
       if(surname) record.surname = surname.text()
       const givenNames = person.find('given-names')
@@ -131,6 +131,8 @@ function _extractPersons(elementCitation, entityDB) {
 
   return result
 }
+
+/* HELPERS */
 
 // Returns list of entity properties
 function _getEntityNodes(type, entityDB) {

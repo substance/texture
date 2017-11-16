@@ -1,6 +1,7 @@
 import { t2r } from './r2t'
 import { validateXMLSchema } from 'substance'
 import { JATS4R } from '../article'
+import { createEntityDb } from '../entities'
 
 export default class JATSExporter {
   /*

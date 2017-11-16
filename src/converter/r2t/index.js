@@ -60,3 +60,25 @@ export function t2r(dom, api) {
     trafos[i].export(dom, api)
   }
 }
+
+export {
+  PruneEmptyElements,
+  UnifyPublicationHistory,
+  NormalizeHistoryDates,
+  ImportEntities,
+  ConvertSigBlock,
+  FnGroupConverter,
+  ConvertReproFig,
+  ConvertFig,
+  ConvertTableWrap,
+  WrapAff,
+  TransformAff,
+  TransformContrib,
+  WrapAbstractContent,
+  WrapBodyContent,
+  WrapDispQuoteContent,
+  Sec2Heading,
+  ConvertContentLoc,
+  ConvertCodeCell,
+  UpdateDocType
+}

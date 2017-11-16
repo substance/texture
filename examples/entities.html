@@ -20,8 +20,8 @@
     <script type="text/javascript" src="./substance/dist/substance.js"></script>
     <script type="text/javascript" src="./texture.js"></script>
     <script type="text/javascript">
-      const { Configurator, EditorSession } = window.substance
-      const { EntitiesPackage, EntityEditor } = window.texture
+      const { Configurator, EditorSession, Component } = window.substance
+      const { EntitiesPackage, EntityEditor, Bibliography, ReferenceManager } = window.texture
 
       window.onload = function() {
         let configurator = new Configurator()
@@ -33,6 +33,7 @@
           type: 'book-citation',
           authors: ['person-1'],
           editors: ['person-1'],
+          edition: 'AB',
           chapterTitle: '<strong>Tobacco</strong> use',
           source: 'Clinical methods: the history, physical, and laboratory examinations',
           publisherLoc: 'Stoneham (MA)',
@@ -66,17 +67,32 @@
         let editorSession = new EditorSession(entityDb, {
           configurator
         })
-        // Mount the editor to the DOM and run it
-        EntityEditor.mount({
-          editorSession: editorSession,
-          node: entityDb.get('book-citation-1')
-        }, document.body)
+
+        let referenceManager = new ReferenceManager(entityDb)
+        referenceManager.addReference('book-citation-1')
+
+        class App extends Component {
+          getChildContext() {
+            return {
+              editorSession,
+              referenceManager
+            }
+          }
+
+          render($$) {
+            let el = $$('div').addClass('se-app')
+            el.append(
+              $$(Bibliography)
+            )
+            return el
+          }
+        }
+
+        App.mount({}, document.body)
       }
     </script>
   </head>
   <body>
-    <div class="modal">
 
-    </div>
   </body>
 </html>

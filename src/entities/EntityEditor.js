@@ -44,7 +44,14 @@ export default class CitationEditor extends Component {
           console.warn('type ', property.type, 'not yet supported')
         }
       })
+
+      el.append(
+        $$('button').append('Save').on('click', this._save),
+        $$('button').append('Cancel').on('click', this._cancel)
+      )
     }
+
+
     return el
   }
 
@@ -72,6 +79,17 @@ export default class CitationEditor extends Component {
     })
   }
 
+  _save() {
+    let editorSession = this.props.editorSession
+    editorSession.transaction((tx) => {
+      tx.update(this.props.node.id, this.state.node)
+    })
+  }
+
+  _cancel() {
+    this.send('cancel')
+  }
+
   _closeDialog() {
     this.extendState({
       dialogProps: undefined
@@ -94,10 +112,6 @@ export default class CitationEditor extends Component {
       node,
       dialogProps: undefined
     })
-  }
-
-  _update() {
-    console.warn('TODO: Save record in the database')
   }
 
   _getSchema() {

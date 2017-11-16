@@ -4,6 +4,7 @@ export * from './src/editor/util/index'
 export * from './src/converter/index'
 export * from './src/entities/index'
 
+export { default as Bibliography } from './src/editor/components/Bibliography'
 export { default as InsertNodeCommand } from './src/editor/commands/InsertNodeCommand'
 export { default as Texture } from './src/Texture'
 export { default as EditorPackage } from './src/editor/EditorPackage'

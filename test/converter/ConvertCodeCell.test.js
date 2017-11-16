@@ -1,13 +1,13 @@
 import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-
-// TODO: export all trafos via index.es.js, and import {..} from '../../index.es.js'
-import ConvertCodeCell from '../../src/converter/r2t/ConvertCodeCell'
-const test = module('Convert Code Cell')
+import { ConvertCodeCell } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
-let fixture = readFixture('reproducible-jats.xml')
 
-test("r2t: Import cell", function(t) {
+const fixture = readFixture('reproducible-jats.xml')
+
+const test = module('ConvertCodeCell')
+
+test("Import code cell", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertCodeCell()
   converter.import(dom)
@@ -23,7 +23,7 @@ test("r2t: Import cell", function(t) {
   t.end()
 })
 
-test("r2t: Export cell", function(t) {
+test("Export code cell", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertCodeCell()
   converter.import(dom)

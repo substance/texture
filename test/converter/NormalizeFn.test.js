@@ -1,12 +1,13 @@
 import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import NormalizeFn from '../../src/converter/j2r/NormalizeFn'
-
-const test = module('Footnote Normalize Transformer')
+import { NormalizeFn } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
-let fixture = readFixture('fn-group.xml')
 
-test("j2r: Unwrap fn > p > disp-quote > p", function(t) {
+const fixture = readFixture('fn-group.xml')
+
+const test = module('NormalizeFn')
+
+test("Unwrap fn > p > disp-quote > p", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new NormalizeFn()
   converter.import(dom)
@@ -15,7 +16,7 @@ test("j2r: Unwrap fn > p > disp-quote > p", function(t) {
   t.end()
 })
 
-test("j2r: Removing all elements except inner p's", function(t) {
+test("Removing all elements except inner p's", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new NormalizeFn()
   converter.import(dom)

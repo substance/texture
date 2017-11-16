@@ -1,12 +1,13 @@
 import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import ConvertFig from '../../src/converter/r2t/ConvertFig'
-
-const test = module('Convert Figure')
+import { ConvertFig } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
-let fixture = readFixture('fig.xml')
 
-test("r2t: Extract caption title from figure", function(t) {
+const fixture = readFixture('fig.xml')
+
+const test = module('ConvertFig')
+
+test("Extract caption title from figure", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertFig()
   converter.import(dom)
@@ -16,7 +17,7 @@ test("r2t: Extract caption title from figure", function(t) {
   t.end()
 })
 
-test("r2t: Should expand title and caption if not there", function(t) {
+test("Should expand title and caption if not there", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertFig()
   converter.import(dom)
@@ -27,7 +28,7 @@ test("r2t: Should expand title and caption if not there", function(t) {
 })
 
 
-test("r2t: Should expand title if not there", function(t) {
+test("Should expand title if not there", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertFig()
   converter.import(dom)

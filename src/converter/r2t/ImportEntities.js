@@ -60,8 +60,18 @@ export default class ImportEntities {
     })
   }
 
-  export(/*dom*/) {
-    // TODO: serialize out the refs
+  export(dom, api) {
+    const entityDb = api.entityDb
+    const entities = entityDb.getNodes()
+    const entityIds = Object.keys(entities)
+
+    let refList = dom.find('ref-list')
+
+    entityIds.forEach(entityId => {
+      const entity = entities[entityId].toJSON()
+      const ref = _createRefElement({dom, entity, entityDb})
+      if(ref) refList.append(ref)
+    })
   }
 }
 
@@ -98,6 +108,46 @@ function _createBibliographicEntity(elementCitation, entityDb) {
   return entity.id
 }
 
+// Creating ref element from given entity record
+function _createRefElement({dom, entity, entityDb}) {
+  // We don't want to convert person entities to XML
+  // we want to create name element for each person reference
+  if(entity.type === 'person') return
+
+  const pubType = Object.keys(TYPES).find(type => {
+    return TYPES[type] === entity.type
+  })
+
+  if(!pubType) {
+    console.error('TODO: implement entity exporter for', entity.type, 'entity type')
+    return
+  }
+
+  let ref = dom.createElement('ref').attr('id', entity.id)
+  let elementCitation = dom.createElement('element-citation').attr('publication-type', pubType)
+
+  Object.keys(ELEMENT_CITATION_ENTITY_DB_MAP).forEach(prop => {
+    const value = entity[prop]
+    const elName = ELEMENT_CITATION_ENTITY_DB_MAP[prop]
+    if(value) {
+      let el = dom.createElement(elName).append(value)
+
+      if(elName === 'year') {
+        el.attr('iso-8601-date', value)
+      } else if(elName === 'pub-id') {
+        el.attr('pub-id-type', 'doi')
+      }
+
+      elementCitation.append(el)
+    }
+  })
+
+  _injectPersons({elementCitation, entity, entityDb})
+
+  ref.append(elementCitation)
+  return ref
+}
+
 // Extract persons from element citation, create entites
 // and returns their ids grouped by person type
 function _extractPersons(elementCitation, entityDb) {
@@ -129,6 +179,44 @@ function _extractPersons(elementCitation, entityDb) {
   })
 
   return result
+}
+
+// Injecting person-groups to element-citation
+// persons pulled out from entityDb
+function _injectPersons({elementCitation, entity, entityDb}) {
+  const authors = entity.authors
+  const authorsEl = elementCitation.createElement('person-group')
+    .attr('person-group-type', 'authors')
+
+  authors.forEach(author => {
+    authorsEl.append(_createNameElement(authorsEl, entityDb.get(author).toJSON()))
+  })
+
+  const editors = entity.editors
+  const editorsEl = elementCitation.createElement('person-group')
+    .attr('person-group-type', 'editors')
+
+  editors.forEach(editor => {
+    editorsEl.append(_createNameElement(editorsEl, entityDb.get(editor).toJSON()))
+  })
+
+  elementCitation.append(
+    authorsEl,
+    editorsEl
+  )
+}
+
+// Create name element with person populated from entity
+function _createNameElement(el, person) {
+  let nameEl = el.createElement('name')
+  Object.keys(person).forEach(prop => {
+    if(prop !== 'id' && prop !== 'type') {
+      nameEl.append(
+        el.createElement(prop).append(person[prop])
+      )
+    }
+  })
+  return nameEl
 }
 
 /* HELPERS */

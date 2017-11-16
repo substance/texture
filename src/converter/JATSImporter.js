@@ -1,14 +1,13 @@
 import {
   EventEmitter, DefaultDOMElement,
-  validateXMLSchema, isString,
-  Configurator
+  validateXMLSchema, isString
 } from 'substance'
 import { JATS, JATS4R, TextureJATS } from '../article'
 import { r2t } from './r2t'
 import { j2r } from './j2r'
 import custom from './custom'
 
-import { EntitiesPackage } from '../entities'
+import { createEntityDb } from '../entities'
 
 /*
   Goal:
@@ -18,69 +17,71 @@ import { EntitiesPackage } from '../entities'
 */
 export default class JATSImporter extends EventEmitter {
 
-  import(xml) {
-    let dom
+  import(xml, context = {}) {
+    let entityDb = context.entityDb || createEntityDb()
 
-    this.errors = {
-      'parse': [],
-      'validate-jats': [],
-      'custom': [],
-      'j2r': [],
-      'validate-jats4r': [],
-      'r2t': [],
-      'validate-texture-jats': [],
+    let state = {
+      dom: null,
+      errors: {
+        'parse': [],
+        'validate-jats': [],
+        'custom': [],
+        'j2r': [],
+        'validate-jats4r': [],
+        'r2t': [],
+        'validate-texture-jats': [],
+      },
+      hasErrored: false,
+      entityDb
     }
 
     if (isString(xml)) {
       try {
-        dom = DefaultDOMElement.parseXML(xml)
+        state.dom = DefaultDOMElement.parseXML(xml)
       } catch(err) {
-        this._error('parse', {
+        this._error(state, 'parse', {
           msg: String(err)
         })
         return
       }
     } else if (xml._isDOMElement) {
-      dom = xml
+      state.dom = xml
     }
 
-    if (!this._validate(JATS, dom)) return dom
+    if (!this._validate(JATS, state)) return state
 
     // Custom transformations
-    if (!this._transform('custom', dom)) return dom
+    if (!this._transform('custom', state)) return state
 
     // JATS -> restricted JATS
-    if (!this._transform('j2r', dom)) return dom
+    if (!this._transform('j2r', state)) return state
 
-    if (!this._validate(JATS4R, dom)) return dom
+    if (!this._validate(JATS4R, state)) return state
 
     // restrictedJATS -> TextureJATS
-    if (!this._transform('r2t',dom)) return dom
+    if (!this._transform('r2t', state)) return state
 
-    if (!this._validate(TextureJATS, dom)) return dom
+    if (!this._validate(TextureJATS, state)) return state
 
-    return dom
+    return state
   }
 
-  hasErrored() {
-    return this._hasErrored
-  }
-
-  _validate(schema, dom) {
+  _validate(schema, state) {
     const name = schema.getName()
     const channel = `validate-${name}`
-    let res = validateXMLSchema(schema, dom)
+    let res = validateXMLSchema(schema, state.dom)
     if (!res.ok) {
       res.errors.forEach((err) => {
-        this._error(channel, err)
+        this._error(state, channel, err)
       })
       return false
     }
     return true
   }
 
-  _transform(mode, dom) {
-    const api = this._createAPI(dom, mode)
+  _transform(mode, state) {
+    const api = this._createAPI(state, mode)
+    let dom = state.dom
     switch (mode) {
       case 'j2r':
         j2r(dom, api)
@@ -97,27 +98,20 @@ export default class JATSImporter extends EventEmitter {
     return true
   }
 
-  _createAPI(dom, channel) {
+  _createAPI(state, channel) {
     const self = this
-
-    // creating an in-memory model of the EntityDB
-    // which will be used to create records from JATS
-    let entitiesConf = new Configurator()
-    entitiesConf.import(EntitiesPackage)
-    let entityDB = entitiesConf.createDocument()
-
     let api = {
-      entityDB,
+      entityDb: state.entityDb,
       error(data) {
-        self._error(channel, data)
+        self._error(state, channel, data)
       }
     }
     return api
   }
 
-  _error(channel, err) {
-    this._hasErrored = true
-    this.errors[channel].push(err)
+  _error(state, channel, err) {
+    state.hasErrored = true
+    state.errors[channel].push(err)
   }
 
 }

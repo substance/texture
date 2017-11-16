@@ -135,6 +135,7 @@ b.task('test:node', ['build:nodejs', 'test:assets'], () => {
 
 // default build: creates a dist folder with a production bundle
 b.task('default', ['clean', 'assets', 'build:browser'])
+
 b.task('dev', ['default'])
 
 b.task('publish', ['clean', 'assets', 'compile:schema'], () => {
@@ -142,6 +143,8 @@ b.task('publish', ['clean', 'assets', 'compile:schema'], () => {
 })
 
 b.task('test', ['test:node'])
+
+b.task('app', ['build:app'])
 
 /* HELPERS */
 

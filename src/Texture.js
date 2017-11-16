@@ -5,6 +5,7 @@ import TextureConfigurator from './editor/util/TextureConfigurator'
 import JATSImporter from './converter/JATSImporter'
 import JATSImportDialog from './converter/JATSImportDialog'
 import JATSExporter from './converter/JATSExporter'
+import createEntityDb from './entities/createEntityDb'
 
 /*
   Texture Component
@@ -16,8 +17,9 @@ export default class Texture extends Component {
     super(parent, props)
     this.configurator = new TextureConfigurator()
     this.configurator.import(EditorPackage)
-    this.jatsImporter = new JATSImporter()
-    this.jatsExporter = new JATSExporter()
+
+    // TODO: we need where the best place is for the entityDb
+    this.entityDb = createEntityDb()
   }
 
   getInitialState() {
@@ -33,7 +35,14 @@ export default class Texture extends Component {
         readXML: this.props.readXML,
         writeXML: this.props.writeXML
       },
-      exporter: this.jatsExporter
+      exporter: {
+        export(dom) {
+          const entityDb = this.entityDb
+          let jatsExporter = new JATSExporter()
+          return jatsExporter.export(dom, { entityDb })
+        }
+      },
+      entityDb: this.entityDb
     }
   }
 
@@ -97,11 +106,12 @@ export default class Texture extends Component {
       }
       const doctype = dom.getDoctype()
       if (doctype.publicId !== 'TextureJATS 1.1') {
-        dom = this.jatsImporter.import(dom)
-        if (this.jatsImporter.hasErrored()) {
+        let jatsImporter = new JATSImporter()
+        let result = jatsImporter.import(dom, { entityDb: this.entityDb })
+        if (result.hasErrored) {
           console.error('Could not transform to TextureJATS')
           this.setState({
-            importerErrors: this.jatsImporter.errors
+            importerErrors: result.errors
           })
           return
         }

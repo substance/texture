@@ -83,10 +83,10 @@ function _emptyEntityDb() {
 
 // By storing the errors we can later check for an error count in failing
 // tests.
-function _createAPI(entityDB) {
+function _createAPI(entityDb) {
   let errors = []
   return {
-    entityDB,
+    entityDb,
     error: function(data) {
       errors.push(data)
     }

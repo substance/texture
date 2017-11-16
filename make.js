@@ -33,7 +33,10 @@ b.task('assets', function() {
   b.copy('./examples', DIST)
   b.copy('./node_modules/font-awesome', DIST+'font-awesome')
   b.copy('./node_modules/substance/dist', DIST+'substance/dist')
-  _buildCSS(DIST)
+
+  b.css('texture.css', DIST+'texture.css')
+  b.css('./node_modules/substance/substance-pagestyle.css', DIST+'texture-pagestyle.css')
+  b.css('./node_modules/substance/substance-reset.css', DIST+'texture-reset.css')
 })
 
 b.task('single-jats-file', _singleJATSFile)
@@ -68,6 +71,10 @@ b.task('build:nodejs', ['compile:schema'], () => {
   _buildLib(DIST, 'nodejs')
 })
 
+b.task('build:lib', ['compile:schema'], () => {
+  _buildLib(DIST, 'all')
+})
+
 b.task('build:app', ['build:browser'], () => {
   b.copy('app/index.html', 'dist/app/')
   b.copy('app/main.js', 'dist/app/')
@@ -95,16 +102,36 @@ b.task('test:assets', () => {
   })
 })
 
-b.task('test:browser', ['build:browser', 'test:assets'], buildTestsBrowser)
+b.task('test:browser', ['build:browser', 'test:assets'], () => {
+  b.copy('test/index.html', 'dist/test/index.html')
+  b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
+  b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
+  b.js('test/**/*.test.js', {
+    dest: 'dist/test/tests.js',
+    format: 'umd', moduleName: 'tests',
+    external: {
+      'substance': 'window.substance',
+      'substance-test': 'window.substanceTest',
+      'substance-texture': 'window.texture'
+    }
+  })
+})
 .describe('builds the test-suite for the browser (open test/index.html)')
 
 b.task('test:node', ['build:nodejs', 'test:assets'], () => {
-  buildTestsNode()
-  fork(b, require.resolve('substance-test/bin/test'),
-    './tmp/tests.cjs.js', { verbose: true })
+  const TEXTURE_NODEJS = path.join(__dirname, 'dist', 'texture.cjs.js')
+  b.js('test/**/*.test.js', {
+    dest: 'tmp/tests.cjs.js',
+    format: 'cjs',
+    external: ['substance-test', 'substance', 'substance-texture'],
+    // do not require substance-texture from 'node_modules' but from the dist folder
+    paths: {
+      'substance-texture': TEXTURE_NODEJS
+    }
+  })
+  fork(b, require.resolve('substance-test/bin/test'), './tmp/tests.cjs.js', { verbose: true })
 })
 .describe('runs the test suite in nodejs')
-
 
 // default build: creates a dist folder with a production bundle
 b.task('default', ['clean', 'assets', 'build:browser'])
@@ -147,11 +174,6 @@ function _buildLib(DEST, platform) {
   })
 }
 
-function _buildCSS(DEST) {
-  b.css('texture.css', DEST+'texture.css')
-  b.css('./node_modules/substance/substance-pagestyle.css', DEST+'texture-pagestyle.css')
-  b.css('./node_modules/substance/substance-reset.css', DEST+'texture-reset.css')
-}
 
 function _compileSchema(name, src, searchDirs, deps, options = {} ) {
   const DEST = `tmp/${name}.data.js`
@@ -224,30 +246,5 @@ function _singleJATSFile() {
   })
 }
 
-function buildTestsBrowser() {
-  b.js('test/**/*.test.js', {
-    dest: 'tmp/tests.js',
-    format: 'umd', moduleName: 'tests',
-    external: {
-      'substance': 'window.substance',
-      'substance-test': 'window.substanceTest',
-      'texture': 'window.texture'
-    }
-  })
-}
-
-function buildTestsNode() {
-  b.js('test/**/*.test.js', {
-    dest: 'tmp/tests.cjs.js',
-    format: 'cjs',
-    external: ['substance-test'],
-    alias: {
-      'substance': path.join(__dirname, 'dist/substance/dist/substance.es.js'),
-      'texture': path.join(__dirname, 'dist/texture.es.js')
-    }
-  })
-}
-
-// starts a server when CLI argument '-s' is set
 b.setServerPort(4000)
 b.serve({ static: true, route: '/', folder: './dist' })

@@ -1,13 +1,14 @@
 import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import FnGroupConverter from '../../src/converter/r2t/FnGroupConverter'
-
-const test = module('Footnote Group Converter')
+import { FnGroupConverter } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
-let fixture = readFixture('fn-group.xml')
-let noFnGroupFixture = readFixture('empty-back.xml')
 
-test("r2t: Import document without fn-group", function(t) {
+const fixture = readFixture('fn-group.xml')
+const noFnGroupFixture = readFixture('empty-back.xml')
+
+const test = module('FnGroupConverter')
+
+test("Import document without fn-group", function(t) {
   let dom = DefaultDOMElement.parseXML(noFnGroupFixture)
   let converter = new FnGroupConverter()
   converter.import(dom)
@@ -19,7 +20,7 @@ test("r2t: Import document without fn-group", function(t) {
   t.end()
 })
 
-test("r2t: Import document with fn-group", function(t) {
+test("Import document with fn-group", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new FnGroupConverter()
   converter.import(dom)
@@ -34,7 +35,7 @@ test("r2t: Import document with fn-group", function(t) {
   t.end()
 })
 
-test("r2t: Export empty fn-group", function(t) {
+test("Export empty fn-group", function(t) {
   let dom = DefaultDOMElement.parseXML(noFnGroupFixture)
   let converter = new FnGroupConverter()
   converter.import(dom)
@@ -46,7 +47,7 @@ test("r2t: Export empty fn-group", function(t) {
   t.end()
 })
 
-test("r2t: Export not empty fn-group", function(t) {
+test("Export not empty fn-group", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new FnGroupConverter()
   converter.import(dom)

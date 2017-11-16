@@ -24,3 +24,12 @@ export function j2r(dom, api) {
     trafos[i].import(dom, api)
   }
 }
+
+export {
+  PruneText,
+  CollectAffs,
+  NormalizeFn,
+  UnwrapBlockLevelElements,
+  RefList,
+  WrapSig
+}

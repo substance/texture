@@ -1,15 +1,16 @@
 import { module } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import RefListTransformer from '../../src/converter/j2r/RefList'
-
-const test = module('Reference List Transformer')
+import { RefList } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
-let fixture = readFixture('ref-list.xml')
-let emptyBackFixture = readFixture('empty-back.xml')
 
-test("j2r: Import document without ref-list", function(t) {
+const fixture = readFixture('ref-list.xml')
+const emptyBackFixture = readFixture('empty-back.xml')
+
+const test = module('RefList')
+
+test("Import document without ref-list", function(t) {
   let dom = DefaultDOMElement.parseXML(emptyBackFixture)
-  let converter = new RefListTransformer()
+  let converter = new RefList()
   converter.import(dom)
 
   let refList = dom.find('ref-list')
@@ -19,9 +20,9 @@ test("j2r: Import document without ref-list", function(t) {
   t.end()
 })
 
-test("j2r: Cleaning up existing ref-list", function(t) {
+test("Cleaning up existing ref-list", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
-  let converter = new RefListTransformer()
+  let converter = new RefList()
   converter.import(dom)
 
   let refList = dom.find('ref-list')

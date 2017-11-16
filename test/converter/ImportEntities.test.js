@@ -2,15 +2,12 @@ import { module } from 'substance-test'
 import {
  DefaultDOMElement, Configurator
 } from 'substance'
-
-// TODO: export all trafos via index.es.js, and import {..} from '../../index.es.js'
-import ImportEntities from '../../src/converter/r2t/ImportEntities'
-import { EntitiesPackage } from '../../src/entities'
+import { EntitiesPackage, ImportEntities } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
-const test = module('Import Entities')
 const fixture = readFixture('element-citation.xml')
 
+const test = module('ImportEntities')
 
 test("Import journal citation", function(t) {
   let { entityDb } = _setup()

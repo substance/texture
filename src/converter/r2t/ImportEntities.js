@@ -37,13 +37,13 @@ export default class ImportEntities {
   import(dom, api) {
     let refs = dom.findAll('ref')
 
-    const entityDB = api.entityDB
+    const entityDb = api.entityDb
     refs.forEach((refEl) => {
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error('Could not find <element-citation>')
       } else {
-        const entityId = _createBibliographicEntity(elementCitation, entityDB)
+        const entityId = _createBibliographicEntity(elementCitation, entityDb)
         if(entityId) {
           const bibRefs = dom.findAll('xref[ref-type=bibr][rid=' + refEl.id + ']')
           bibRefs.forEach(bibRef => {
@@ -65,7 +65,7 @@ export default class ImportEntities {
   }
 }
 
-function _createBibliographicEntity(elementCitation, entityDB) {
+function _createBibliographicEntity(elementCitation, entityDb) {
   let pubType = elementCitation.attr('publication-type')
 
   if (!pubType) throw new Error('element-citation[publication-type] is mandatory')
@@ -77,7 +77,7 @@ function _createBibliographicEntity(elementCitation, entityDB) {
     return
   }
   // Extract authors and editors from element-citation
-  const persons = _extractPersons(elementCitation, entityDB)
+  const persons = _extractPersons(elementCitation, entityDb)
   let record = {
     id: elementCitation.getParent().id,
     type,
@@ -87,20 +87,20 @@ function _createBibliographicEntity(elementCitation, entityDB) {
 
   // Extract all other attributes for a certain pub-type
   // and populate entity record
-  const nodes = _getEntityNodes(type, entityDB)
+  const nodes = _getEntityNodes(type, entityDb)
   nodes.forEach(node => {
     const prop = _getElementCitationProperty(node, elementCitation)
     if(prop) record[node] = prop
   })
   // Create record
-  const entity = entityDB.create(record)
+  const entity = entityDb.create(record)
 
   return entity.id
 }
 
 // Extract persons from element citation, create entites
 // and returns their ids grouped by person type
-function _extractPersons(elementCitation, entityDB) {
+function _extractPersons(elementCitation, entityDb) {
   let result = {
     author: [],
     editor: []
@@ -123,7 +123,7 @@ function _extractPersons(elementCitation, entityDB) {
       const prefix = person.find('prefix')
       if(prefix) record.prefix = prefix.text()
 
-      const entity = entityDB.create(record)
+      const entity = entityDb.create(record)
       if(result[type]) result[type].push(entity.id)
     })
   })
@@ -134,9 +134,9 @@ function _extractPersons(elementCitation, entityDB) {
 /* HELPERS */
 
 // Returns list of entity properties
-function _getEntityNodes(type, entityDB) {
-  const entityDBSchema = entityDB.getSchema()
-  const nodeClass = entityDBSchema.getNodeClass(type)
+function _getEntityNodes(type, entityDb) {
+  const entityDbSchema = entityDb.getSchema()
+  const nodeClass = entityDbSchema.getNodeClass(type)
   return Object.keys(nodeClass.schema)
 }
 

@@ -8,6 +8,7 @@ BookCitation.schema = {
   editors: { type: ['array', 'id'], default: [] },
   chapterTitle: { type: 'text', optional: true },
   source: { type: 'string', optional: true },
+  edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
   year: { type: 'string', optional: true },

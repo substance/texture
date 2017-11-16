@@ -52,7 +52,7 @@ export default class EntitySelector extends Component {
       if (this.state.entityIds.indexOf(entity.id) < 0) {
         selectEl.append(
           $$('option').attr({ value: entity.id }).append(
-            entityRenderers[entity.type](entity)
+            entityRenderers[entity.type]($$, entity.id, db)
           )
         )
       }

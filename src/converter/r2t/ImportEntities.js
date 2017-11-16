@@ -66,6 +66,7 @@ export default class ImportEntities {
     const entityIds = Object.keys(entities)
 
     let refList = dom.find('ref-list')
+    refList.empty()
 
     entityIds.forEach(entityId => {
       const entity = entities[entityId].toJSON()
@@ -186,7 +187,7 @@ function _extractPersons(elementCitation, entityDb) {
 function _injectPersons({elementCitation, entity, entityDb}) {
   const authors = entity.authors
   const authorsEl = elementCitation.createElement('person-group')
-    .attr('person-group-type', 'authors')
+    .attr('person-group-type', 'author')
 
   authors.forEach(author => {
     authorsEl.append(_createNameElement(authorsEl, entityDb.get(author).toJSON()))
@@ -194,7 +195,7 @@ function _injectPersons({elementCitation, entity, entityDb}) {
 
   const editors = entity.editors
   const editorsEl = elementCitation.createElement('person-group')
-    .attr('person-group-type', 'editors')
+    .attr('person-group-type', 'editor')
 
   editors.forEach(editor => {
     editorsEl.append(_createNameElement(editorsEl, entityDb.get(editor).toJSON()))
@@ -209,13 +210,20 @@ function _injectPersons({elementCitation, entity, entityDb}) {
 // Create name element with person populated from entity
 function _createNameElement(el, person) {
   let nameEl = el.createElement('name')
-  Object.keys(person).forEach(prop => {
-    if(prop !== 'id' && prop !== 'type') {
-      nameEl.append(
-        el.createElement(prop).append(person[prop])
-      )
-    }
-  })
+  nameEl.append(
+    el.createElement('surname').append(person.surname),
+    el.createElement('given-names').append(person.givenNames)
+  )
+  if(person.prefix) {
+    nameEl.append(
+      el.createElement('prefix').append(person.prefix)
+    )
+  }
+  if(person.suffix) {
+    nameEl.append(
+      el.createElement('suffix').append(person.suffix)
+    )
+  }
   return nameEl
 }
 

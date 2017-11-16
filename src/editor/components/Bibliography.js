@@ -47,6 +47,6 @@ export default class Bibliography extends Component {
   }
 
   _toggleEditor(referenceId) {
-    console.log('TODO: open editor for ', referenceId)
+    console.warn('TODO: open editor for ', referenceId)
   }
 }

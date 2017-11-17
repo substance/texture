@@ -6,12 +6,12 @@
   "jsnext:main": "index.es.js",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-preview.5"
+    "substance": "1.0.0-preview.9"
   },
   "devDependencies": {
     "electron": "^1.7.9",
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.18.5",
+    "substance-bundler": "0.19.1",
     "substance-test": "^0.9.4",
     "eslint": "^3.17.1"
   },

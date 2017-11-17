@@ -119,14 +119,13 @@ b.task('test:browser', ['build:browser', 'test:assets'], () => {
 .describe('builds the test-suite for the browser (open test/index.html)')
 
 b.task('test:node', ['build:nodejs', 'test:assets'], () => {
-  const TEXTURE_NODEJS = path.join(__dirname, 'dist', 'texture.cjs.js')
   b.js('test/**/*.test.js', {
     dest: 'tmp/tests.cjs.js',
     format: 'cjs',
     external: ['substance-test', 'substance', 'substance-texture'],
     // do not require substance-texture from 'node_modules' but from the dist folder
     paths: {
-      'substance-texture': TEXTURE_NODEJS
+      'substance-texture': '../dist/texture.cjs.js'
     }
   })
   fork(b, require.resolve('substance-test/bin/test'), './tmp/tests.cjs.js', { verbose: true })

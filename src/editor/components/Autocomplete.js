@@ -1,9 +1,15 @@
-import { Component, FontAwesomeIcon, Input } from 'substance'
+import { Component, FontAwesomeIcon } from 'substance'
 
 // data: {id: ‘entity-25’, html: ‘blablup’}
 // result: entityId
 
 export default class Autocomplete extends Component {
+  didMount() {
+    if(this.props.value) {
+      this.refs['input'].val(this.props.value)
+    }
+  }
+
   getInitialState() {
     return {
       data: this.props.data
@@ -26,7 +32,7 @@ export default class Autocomplete extends Component {
       dataList.append(itemEl)
     })
 
-    let input = $$('Input', {placeholder: this.props.placeholder, value: this.state.value})
+    let input = $$('input', {placeholder: this.props.placeholder})
       .addClass('se-input')
       .ref('input')
 

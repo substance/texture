@@ -1,6 +1,8 @@
-import { Component, Modal } from 'substance'
+import { Component, ModalPackage } from 'substance'
 import EntityEditor from '../../entities/EntityEditor'
 import entityRenderers from '../../entities/entityRenderers'
+
+const { Modal } = ModalPackage
 
 export default class Bibliography extends Component {
 
@@ -15,7 +17,7 @@ export default class Bibliography extends Component {
     let editorSession = this.context.editorSession
     let entityDb = this.context.editorSession.getDocument()
 
-    if (this.state.editEntity) {
+    if (this.state.entityId) {
       var modal = $$(Modal, {
         width: 'medium',
         textAlign: 'center'
@@ -27,6 +29,7 @@ export default class Bibliography extends Component {
           node: entityDb.get(this.state.entityId)
         })
       )
+      el.append(modal)
     }
 
     this.context.referenceManager.getBibliography().forEach((reference) => {
@@ -46,7 +49,9 @@ export default class Bibliography extends Component {
     return el
   }
 
-  _toggleEditor(referenceId) {
-    console.warn('TODO: open editor for ', referenceId)
+  _toggleEditor(entityId) {
+    this.setState({
+      entityId
+    })
   }
 }

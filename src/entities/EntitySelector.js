@@ -22,7 +22,7 @@ export default class EntitySelector extends Component {
     this.state.entityIds.forEach((entityId) => {
       let node = db.get(entityId)
       optionsEl.append(
-        entityRenderers[node.type](node)
+        entityRenderers[node.type]($$, node.id, db)
       )
     })
     el.append(optionsEl)

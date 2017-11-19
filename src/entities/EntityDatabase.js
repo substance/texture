@@ -16,8 +16,8 @@ BookCitation.schema = {
   day: { type: 'string', optional: true },
   fpage: { type: 'string', optional: true },
   lpage: { type: 'string', optional: true },
-  elocationId: { type: 'string', optional: true },
-  pageRange: { type: 'string', optional: true }
+  pageRange: { type: 'string', optional: true },
+  elocationId: { type: 'string', optional: true }
 }
 
 export class JournalCitation extends DocumentNode {}

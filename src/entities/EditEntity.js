@@ -1,7 +1,7 @@
 import { Component, forEach, isArray } from 'substance'
 import EditRelationship from './EditRelationship'
 import entityRenderers from './entityRenderers'
-
+import FormLabel from './FormLabel'
 
 export default class EditEntity extends Component {
 
@@ -22,7 +22,7 @@ export default class EditEntity extends Component {
   }
 
   render($$) {
-    let el = $$('div').addClass('sc-entity-editor')
+    let el = $$('div').addClass('sc-edit-entity')
     let schema = this._getSchema()
 
     // We render a dialog on top of the existing one
@@ -86,11 +86,6 @@ export default class EditEntity extends Component {
     })
   }
 
-  getLabel(name) {
-    let labelProvider = this.context.labelProvider
-    return labelProvider.getLabel(name)
-  }
-
   _save() {
     let editorSession = this.props.editorSession
     editorSession.transaction((tx) => {
@@ -101,7 +96,7 @@ export default class EditEntity extends Component {
   }
 
   _cancel() {
-    this.send('cancel')
+    this.send('closeModal')
   }
 
   _closeDialog() {
@@ -112,9 +107,9 @@ export default class EditEntity extends Component {
 
   _renderStringProperty(propertyName, $$) {
     return $$('div').append(
-      $$('div').addClass('se-label').append(
-        this.getLabel(propertyName)
-      ),
+      $$(FormLabel, {
+        name: propertyName
+      }),
       $$('input').attr({
         'data-property': propertyName,
         type: 'text', value: this.state.node[propertyName]

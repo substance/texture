@@ -7,7 +7,9 @@ const { Modal } = ModalPackage
 export default class Bibliography extends Component {
   didMount() {
     this.handleActions({
-      'done': this._doneEditing
+      'done': this._doneEditing,
+      'cancel': this._doneEditing,
+      'closeModal': this._doneEditing
     })
   }
 

@@ -1,7 +1,9 @@
 import { Component, forEach, isArray } from 'substance'
-import EntitySelector from './EntitySelector'
+import EditRelationship from './EditRelationship'
+import entityRenderers from './entityRenderers'
 
-export default class CitationEditor extends Component {
+
+export default class EditEntity extends Component {
 
   didMount() {
     this.handleActions({
@@ -26,7 +28,7 @@ export default class CitationEditor extends Component {
     // We render a dialog on top of the existing one
     if (this.state.dialogProps) {
       el.append(
-        $$(EntitySelector, this.state.dialogProps)
+        $$(EditRelationship, this.state.dialogProps)
       )
     } else {
       forEach(schema, (property, propertyName) => {
@@ -50,18 +52,23 @@ export default class CitationEditor extends Component {
         $$('button').append('Cancel').on('click', this._cancel)
       )
     }
-
-
     return el
   }
 
   _renderEntityList(propertyName, $$) {
     let el = $$('div').addClass('se-entity-list')
     let entities = this.state.node[propertyName]
-    el.append(
-      entities.join(', ')
-    )
+    let db = this._getDb()
 
+    entities.forEach((entityId, index) => {
+      let entity = db.get(entityId)
+      el.append(
+        entityRenderers[entity.type]($$, entity.id, db)
+      )
+      if (index < entities.length-1) {
+        el.append(', ')
+      }
+    })
     el.append(
       $$('button').append('Edit').on('click', this._openEntitySelector.bind(this, propertyName))
     )
@@ -79,11 +86,18 @@ export default class CitationEditor extends Component {
     })
   }
 
+  getLabel(name) {
+    let labelProvider = this.context.labelProvider
+    return labelProvider.getLabel(name)
+  }
+
   _save() {
     let editorSession = this.props.editorSession
     editorSession.transaction((tx) => {
-      tx.update(this.props.node.id, this.state.node)
+      tx.updateNode(this.props.node.id, this.state.node)
     })
+
+    this.send('done')
   }
 
   _cancel() {
@@ -99,10 +113,20 @@ export default class CitationEditor extends Component {
   _renderStringProperty(propertyName, $$) {
     return $$('div').append(
       $$('div').addClass('se-label').append(
-        propertyName
+        this.getLabel(propertyName)
       ),
-      $$('input').attr({ type: 'text', value: this.state.node[propertyName] })
+      $$('input').attr({
+        'data-property': propertyName,
+        type: 'text', value: this.state.node[propertyName]
+      })
+        .on('change', this._onTextChanged)
     )
+  }
+
+  _onTextChanged(e) {
+    let newVal = e.currentTarget.value
+    let propertyName = e.currentTarget.dataset.property
+    this.state.node[propertyName] = newVal
   }
 
   _onEntitiesSelected(property, entityIds) {
@@ -114,8 +138,12 @@ export default class CitationEditor extends Component {
     })
   }
 
+  _getDb() {
+    return this.props.editorSession.getDocument()
+  }
+
   _getSchema() {
-    let schema = this.props.editorSession.getDocument().schema
+    let schema = this._getDb().schema
     return schema.getNodeSchema(this.props.node.type)
   }
 }

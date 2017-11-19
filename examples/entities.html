@@ -21,7 +21,7 @@
     <script type="text/javascript" src="./texture.js"></script>
     <script type="text/javascript">
       const { Configurator, EditorSession, Component } = window.substance
-      const { EntitiesPackage, EntityEditor, Bibliography, ReferenceManager } = window.texture
+      const { EntitiesPackage, Bibliography, ReferenceManager } = window.texture
 
       window.onload = function() {
         let configurator = new Configurator()
@@ -68,6 +68,7 @@
           configurator
         })
 
+        let labelProvider = configurator.getLabelProvider()
         let referenceManager = new ReferenceManager(entityDb)
         referenceManager.addReference('book-citation-1')
 
@@ -75,7 +76,8 @@
           getChildContext() {
             return {
               editorSession,
-              referenceManager
+              referenceManager,
+              labelProvider
             }
           }
 

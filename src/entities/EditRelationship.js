@@ -2,12 +2,12 @@ import { Component } from 'substance'
 import entityRenderers from './entityRenderers'
 
 /*
-  Used to select multiple entities of allowed types.
+  Used to edit relationhips to other entities.
 
   On confirmation emits a change event carrying the property name and
   an array of entity ids.
 */
-export default class EntitySelector extends Component {
+export default class EditRelationship extends Component {
   getInitialState() {
     // We want to keep state in a plain old JS object while editing
     return {
@@ -65,7 +65,7 @@ export default class EntitySelector extends Component {
   }
 
   /*
-    Add new entity.
+    Add new entity target.
 
     NOTE: Not saved until confirmed.
   */

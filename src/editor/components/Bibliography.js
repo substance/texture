@@ -1,10 +1,15 @@
 import { Component, ModalPackage } from 'substance'
-import EntityEditor from '../../entities/EntityEditor'
+import EditEntity from '../../entities/EditEntity'
 import entityRenderers from '../../entities/entityRenderers'
 
 const { Modal } = ModalPackage
 
 export default class Bibliography extends Component {
+  didMount() {
+    this.handleActions({
+      'done': this._doneEditing
+    })
+  }
 
   getInitialState() {
     return {
@@ -24,7 +29,7 @@ export default class Bibliography extends Component {
       })
 
       modal.append(
-        $$(EntityEditor, {
+        $$(EditEntity, {
           editorSession: editorSession,
           node: entityDb.get(this.state.entityId)
         })
@@ -52,6 +57,12 @@ export default class Bibliography extends Component {
   _toggleEditor(entityId) {
     this.setState({
       entityId
+    })
+  }
+
+  _doneEditing() {
+    this.setState({
+      entityId: undefined
     })
   }
 }

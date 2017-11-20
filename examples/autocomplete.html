@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texture Editor</title>
+    <meta charset="UTF-8">
+    <style>
+      /* Texture Component styles */
+      @import './texture.css';
+      /* You may want to use your own reset and pagestyle */
+      @import './texture-reset.css';
+      @import './substance/dist/substance.css';
+      @import './texture-pagestyle.css';
+      @import './font-awesome/css/font-awesome.min.css';
+      body { overflow: hidden; }
+      html,
+      body {
+        height: 100%;
+      }
+      .sc-autocomplete {
+        margin: 100px auto;
+        max-width: 400px;
+      }
+      .se-data-item span {
+        border-left: 4px solid;
+        padding-left: 4px;
+      }
+      .se-data-item em {
+        float: right;
+      }
+      .se-data-item strong {
+        position: absolute;
+        right: 100px;
+      }
+    </style>
+    <script type="text/javascript" src="./substance/dist/substance.js"></script>
+    <script type="text/javascript" src="./texture.js"></script>
+    <script type="text/javascript">
+      const { Autocomplete } = window.texture
+
+      window.onload = function() {
+        window.app = Autocomplete.mount({
+          placeholder: 'Select a Party',
+          data: [
+            {id: 'Austrian People\'s Party', html: '<span style="border-color:#000000;">Austrian People\'s Party<strong>ÖVP</strong><em>1,586,106</em></span>'},
+            {id: 'Social Democratic Party of Austria', html: '<span style="border-color:#CE000C;">Social Democratic Party of Austria<strong>SPÖ</strong><em>1,351,918</em></span>'},
+            {id: 'Freedom Party of Austria', html: '<span style="border-color:#0056A2;">Freedom Party of Austria<strong>FPÖ</strong><em>1,310,614</em></span>'},
+            {id: 'The New Austria', html: '<span style="border-color:#E84188;">The New Austria<strong>NEOS</strong><em>264,317</em></span>'},
+            {id: 'Peter Pilz List', html: '<span style="border-color:#ADADAD;">Peter Pilz List<strong>PILZ</strong><em>220,088</em></span>'},
+            {id: 'The Green Alternative', html: '<span style="border-color:#88B626;">The Green Alternative<strong>GRÜNE</strong><em>189,467</em></span>'},
+            {id: 'My Vote Counts!', html: '<span style="border-color:#CD5C5C;">My Vote Counts!<strong>G!LT</strong><em>47,808</em></span>'},
+            {id: 'Communist Party of Austria Plus', html: '<span style="border-color:#AA0000;">Communist Party of Austria Plus<strong>KPÖ+</strong><em>39,074</em></span>'},
+            {id: 'The Whites', html: '<span style="border-color:lightblue;">The Whites<strong>WEIßE</strong><em>9,081</em></span>'},
+            {id: 'Free List Austria', html: '<span style="border-color:#0057B5;">Free List Austria<strong>FLÖ</strong><em>8,845</em></span>'},
+            {id: 'New Movement for the Future', html: '<span style="border-color:gold;">New Movement for the Future<strong>NBZ</strong><em>2,723</em></span>'},
+            {id: 'Homeless in Politics', html: '<span style="border-color:orange;">Homeless in Politics<strong>ODP</strong><em>757</em></span>'},
+            {id: 'Socialist Left Party', html: '<span style="border-color:#CC0033;">Socialist Left Party<strong>SLP</strong><em>705</em></span>'},
+            {id: 'EU Exit Party', html: '<span style="border-color:red;">EU Exit Party<strong>EUAUS</strong><em>681</em></span>'},
+            {id: 'Christian Party of Austria', html: '<span style="border-color:#FAD41B;">Christian Party of Austria<strong>CPÖ</strong><em>424</em></span>'},
+            {id: 'Men\'s Party', html: '<span style="border-color:brown;">Men\'s Party<strong>M</strong><em>220</em></span>'}
+          ]
+        }, document.body)
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

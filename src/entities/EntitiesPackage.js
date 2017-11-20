@@ -30,5 +30,10 @@ export default {
     config.addLabel('lpage', 'Last Page')
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('elocationId', 'E-Location ID')
+
+    config.addLabel('givenNames', 'Given names')
+    config.addLabel('surname', 'Surname')
+    config.addLabel('prefix', 'Prefix')
+    config.addLabel('suffix', 'Suffix')
   }
 }

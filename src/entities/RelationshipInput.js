@@ -1,7 +1,7 @@
 import { Component } from 'substance'
 import EditRelationship from './EditRelationship'
 import entityRenderers from './entityRenderers'
-
+import ModalDialog from '../shared/ModalDialog'
 
 /*
   Input that manages a list of entityIds, as needed for a multi-target
@@ -19,7 +19,8 @@ export default class RelationshipInput extends Component {
   didMount() {
     this.handleActions({
       'cancel': this._onCancel,
-      'entitiesSelected': this._onEntitiesSelected
+      'entitiesSelected': this._onEntitiesSelected,
+      'closeModal': this._onCancel,
     })
   }
 
@@ -30,10 +31,14 @@ export default class RelationshipInput extends Component {
 
     if (this.state.edit) {
       el.append(
-        $$(EditRelationship, {
-          entityIds: this.state.entityIds,
-          targetTypes: this.props.targetTypes
-        })
+        $$(ModalDialog, {
+          transparent: true
+        }).append(
+          $$(EditRelationship, {
+            entityIds: this.state.entityIds,
+            targetTypes: this.props.targetTypes
+          })
+        )
       )
     } else {
       entities.forEach((entityId, index) => {

@@ -1,6 +1,8 @@
 import { Component } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
+import ModalDialog from '../shared/ModalDialog'
+
 
 /*
   Used to edit relationhips to other entities.
@@ -20,13 +22,8 @@ export default class EditRelationship extends Component {
   didMount() {
     this.handleActions({
       'done': this._closeModal,
-      'cancel': this._closeModal
-    })
-  }
-
-  _closeModal() {
-    this.extendState({
-      create: undefined
+      'cancel': this._closeModal,
+      'closeModal': this._closeModal,
     })
   }
 
@@ -36,9 +33,13 @@ export default class EditRelationship extends Component {
 
     if (this.state.create) {
       el.append(
-        $$(CreateEntity, {
-          type: this.state.create
-        })
+        $$(ModalDialog, {
+          transparent: true
+        }).append(
+          $$(CreateEntity, {
+            type: this.state.create
+          })
+        )
       )
     }
 
@@ -129,5 +130,11 @@ export default class EditRelationship extends Component {
 
   _cancel() {
     this.send('cancel')
+  }
+
+  _closeModal() {
+    this.extendState({
+      create: undefined
+    })
   }
 }

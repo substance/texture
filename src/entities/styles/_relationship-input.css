@@ -1,12 +1,1 @@
-/*
- This works as a stacked modal
- TODO: investigate if can be done better
-*/
-.sc-relationship-input > .sc-edit-relationship {
- background: #fff;
- position: absolute;
- top: 0px;
- left: 0px;
- right: 0px;
- bottom: 0px;
-}
+.sc-relationship-input {}

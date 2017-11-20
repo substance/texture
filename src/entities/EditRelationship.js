@@ -1,32 +1,65 @@
 import { Component } from 'substance'
 import entityRenderers from './entityRenderers'
+import CreateEntity from './CreateEntity'
 
 /*
-  Used to select multiple entities of allowed types.
+  Used to edit relationhips to other entities.
 
   On confirmation emits a change event carrying the property name and
   an array of entity ids.
 */
-export default class EntitySelector extends Component {
+export default class EditRelationship extends Component {
   getInitialState() {
     // We want to keep state in a plain old JS object while editing
     return {
+      create: undefined,
       entityIds: this.props.entityIds
     }
   }
 
+  didMount() {
+    this.handleActions({
+      'done': this._closeModal,
+      'cancel': this._closeModal
+    })
+  }
+
+  _closeModal() {
+    this.extendState({
+      create: undefined
+    })
+  }
+
   render($$) {
-    let el = $$('div').addClass('sc-entity-selector')
-    let db = this.props.editorSession.getDocument()
+    let el = $$('div').addClass('sc-edit-relationship')
+    let db = this.context.db
+
+    if (this.state.create) {
+      el.append(
+        $$(CreateEntity, {
+          type: this.state.create
+        })
+      )
+    }
+
     let optionsEl = $$('div').addClass('se-options')
     this.state.entityIds.forEach((entityId) => {
       let node = db.get(entityId)
       optionsEl.append(
-        entityRenderers[node.type](node)
+        entityRenderers[node.type]($$, node.id, db)
       )
     })
     el.append(optionsEl)
     el.append(this._renderSelector($$))
+
+    // Render create buttons for each allowed target type
+    this.props.targetTypes.forEach(targetType => {
+      el.append(
+        $$('button').append('Create '+targetType)
+          .on('click', this._toggleCreate.bind(this, targetType))
+      )
+    })
+
     el.append(
       $$('button').append('Save').on('click', this._save),
       $$('button').append('Cancel').on('click', this._cancel)
@@ -34,16 +67,29 @@ export default class EntitySelector extends Component {
     return el
   }
 
+  _toggleCreate(targetType) {
+    this.extendState({
+      create: targetType
+    })
+  }
+
+  _getAvailableEntities(db) {
+    let availableEntities = []
+    this.props.targetTypes.forEach(targetType => {
+      availableEntities = availableEntities.concat(
+        db.find({ type: targetType })
+      )
+    })
+    return availableEntities
+  }
+
   /*
     TODO: we should provide auto complete functionality. Unfortunately we can't
     use datalist element, unless the text strings are unambiguous.
   */
   _renderSelector($$) {
-    let db = this.props.editorSession.getDocument()
-    // TODO: allow multiple target types
-    let availableEntities = db.find({
-      type: this.props.targetTypes[0]
-    })
+    let db = this.context.db
+    let availableEntities = this._getAvailableEntities(db)
     let el = $$('div').addClass('se-selector')
     let selectEl = $$('select')
       .ref('selector')
@@ -65,7 +111,7 @@ export default class EntitySelector extends Component {
   }
 
   /*
-    Add new entity.
+    Add new entity target.
 
     NOTE: Not saved until confirmed.
   */
@@ -78,7 +124,7 @@ export default class EntitySelector extends Component {
   }
 
   _save() {
-    this.send('entitiesSelected', this.props.property, this.state.entityIds)
+    this.send('entitiesSelected', this.state.entityIds)
   }
 
   _cancel() {

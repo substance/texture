@@ -1,2 +1,3 @@
 @import './src/editor/styles/_index.css';
+@import './src/entities/styles/_index.css';
 @import './src/converter/_index.css';

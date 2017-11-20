@@ -1,8 +1,17 @@
-import { Component, Modal } from 'substance'
-import EntityEditor from '../../entities/EntityEditor'
+import { Component, ModalPackage } from 'substance'
+import EditEntity from '../../entities/EditEntity'
 import entityRenderers from '../../entities/entityRenderers'
 
+const { Modal } = ModalPackage
+
 export default class Bibliography extends Component {
+  didMount() {
+    this.handleActions({
+      'done': this._doneEditing,
+      'cancel': this._doneEditing,
+      'closeModal': this._doneEditing
+    })
+  }
 
   getInitialState() {
     return {
@@ -12,25 +21,23 @@ export default class Bibliography extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-bibliography')
-    let editorSession = this.context.editorSession
-    let entityDb = this.context.editorSession.getDocument()
+    let db = this.context.db
 
-    if (this.state.editEntity) {
+    if (this.state.entityId) {
       var modal = $$(Modal, {
         width: 'medium',
         textAlign: 'center'
       })
-
       modal.append(
-        $$(EntityEditor, {
-          editorSession: editorSession,
-          node: entityDb.get(this.state.entityId)
+        $$(EditEntity, {
+          node: db.get(this.state.entityId)
         })
       )
+      el.append(modal)
     }
 
     this.context.referenceManager.getBibliography().forEach((reference) => {
-      let fragments = entityRenderers[reference.type]($$, reference.id, entityDb)
+      let fragments = entityRenderers[reference.type]($$, reference.id, db)
       el.append(
         $$('div').addClass('se-reference').append(
           $$('div').addClass('se-text').append(
@@ -46,7 +53,15 @@ export default class Bibliography extends Component {
     return el
   }
 
-  _toggleEditor(referenceId) {
-    console.warn('TODO: open editor for ', referenceId)
+  _toggleEditor(entityId) {
+    this.setState({
+      entityId
+    })
+  }
+
+  _doneEditing() {
+    this.setState({
+      entityId: undefined
+    })
   }
 }

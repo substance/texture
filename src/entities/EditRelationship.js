@@ -1,5 +1,6 @@
 import { Component } from 'substance'
 import entityRenderers from './entityRenderers'
+import CreateEntity from './CreateEntity'
 
 /*
   Used to edit relationhips to other entities.
@@ -11,13 +12,36 @@ export default class EditRelationship extends Component {
   getInitialState() {
     // We want to keep state in a plain old JS object while editing
     return {
+      create: undefined,
       entityIds: this.props.entityIds
     }
+  }
+
+  didMount() {
+    this.handleActions({
+      'done': this._closeModal,
+      'cancel': this._closeModal
+    })
+  }
+
+  _closeModal() {
+    this.extendState({
+      create: undefined
+    })
   }
 
   render($$) {
     let el = $$('div').addClass('sc-edit-relationship')
     let db = this.context.db
+
+    if (this.state.create) {
+      el.append(
+        $$(CreateEntity, {
+          type: this.state.create
+        })
+      )
+    }
+
     let optionsEl = $$('div').addClass('se-options')
     this.state.entityIds.forEach((entityId) => {
       let node = db.get(entityId)
@@ -27,11 +51,26 @@ export default class EditRelationship extends Component {
     })
     el.append(optionsEl)
     el.append(this._renderSelector($$))
+
+    // Render create buttons for each allowed target type
+    this.props.targetTypes.forEach(targetType => {
+      el.append(
+        $$('button').append('Create '+targetType)
+          .on('click', this._toggleCreate.bind(this, targetType))
+      )
+    })
+
     el.append(
       $$('button').append('Save').on('click', this._save),
       $$('button').append('Cancel').on('click', this._cancel)
     )
     return el
+  }
+
+  _toggleCreate(targetType) {
+    this.extendState({
+      create: targetType
+    })
   }
 
   _getAvailableEntities(db) {

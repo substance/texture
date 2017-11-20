@@ -31,13 +31,20 @@ function personRenderer($$, entityId, entityDb) {
   ]
 }
 
+function groupRenderer($$, entityId, entityDb) {
+  let { name } = entityDb.get(entityId)
+  return [
+    name
+  ]
+}
 
 /*
   Exports
 */
 export default {
   'person': personRenderer,
-  'book-citation': bookCitationRenderer
+  'book-citation': bookCitationRenderer,
+  'group': groupRenderer
 }
 
 /*

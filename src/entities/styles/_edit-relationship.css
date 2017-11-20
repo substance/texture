@@ -1,3 +1,16 @@
 .sc-edit-relationship {
   padding: 20px;
 }
+
+/*
+ This works as a stacked modal
+ TODO: investigate if can be done better
+*/
+.sc-edit-relationship > .sc-create-entity {
+ background: #fff;
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ right: 0px;
+ bottom: 0px;
+}

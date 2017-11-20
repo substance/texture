@@ -64,7 +64,7 @@
           givenNames: 'Susanne',
           surname: 'Peer'
         })
-        let editorSession = new EditorSession(entityDb, {
+        let dbSession = new EditorSession(entityDb, {
           configurator
         })
 
@@ -75,7 +75,8 @@
         class App extends Component {
           getChildContext() {
             return {
-              editorSession,
+              dbSession: dbSession,
+              db: entityDb,
               referenceManager,
               labelProvider
             }

@@ -16,8 +16,8 @@ export default class EditRelationship extends Component {
   }
 
   render($$) {
-    let el = $$('div').addClass('sc-entity-selector')
-    let db = this.props.editorSession.getDocument()
+    let el = $$('div').addClass('sc-edit-relationship')
+    let db = this.context.db
     let optionsEl = $$('div').addClass('se-options')
     this.state.entityIds.forEach((entityId) => {
       let node = db.get(entityId)
@@ -34,16 +34,23 @@ export default class EditRelationship extends Component {
     return el
   }
 
+  _getAvailableEntities(db) {
+    let availableEntities = []
+    this.props.targetTypes.forEach(targetType => {
+      availableEntities = availableEntities.concat(
+        db.find({ type: targetType })
+      )
+    })
+    return availableEntities
+  }
+
   /*
     TODO: we should provide auto complete functionality. Unfortunately we can't
     use datalist element, unless the text strings are unambiguous.
   */
   _renderSelector($$) {
-    let db = this.props.editorSession.getDocument()
-    // TODO: allow multiple target types
-    let availableEntities = db.find({
-      type: this.props.targetTypes[0]
-    })
+    let db = this.context.db
+    let availableEntities = this._getAvailableEntities(db)
     let el = $$('div').addClass('se-selector')
     let selectEl = $$('select')
       .ref('selector')
@@ -78,7 +85,7 @@ export default class EditRelationship extends Component {
   }
 
   _save() {
-    this.send('entitiesSelected', this.props.property, this.state.entityIds)
+    this.send('entitiesSelected', this.state.entityIds)
   }
 
   _cancel() {

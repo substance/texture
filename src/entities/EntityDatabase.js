@@ -4,8 +4,8 @@ export class BookCitation extends DocumentNode {}
 
 BookCitation.schema = {
   type: 'book-citation',
-  authors: { type: ['array', 'id'], default: [] },
-  editors: { type: ['array', 'id'], default: [] },
+  authors: { type: ['person', 'group'], default: [] },
+  editors: { type: ['person'], default: [] },
   chapterTitle: { type: 'text', optional: true },
   source: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
@@ -20,12 +20,16 @@ BookCitation.schema = {
   elocationId: { type: 'string', optional: true }
 }
 
+// authors: { type: 'person', default: [] },
+
+
+
 export class JournalCitation extends DocumentNode {}
 
 JournalCitation.schema = {
   type: 'journal-citation',
-  authors: { type: ['array', 'id'], default: [] },
-  editors: { type: ['array', 'id'], default: [] },
+  authors: { type: ['person', 'group'], default: [] },
+  editors: { type: ['person'], default: [] },
   articleTitle: { type: 'text', optional: true },
   source: { type: 'string', optional: true },
   volume: { type: 'string', optional: true },
@@ -47,6 +51,13 @@ Person.schema = {
   surname: { type: 'string', optional: true},
   prefix: { type: 'string', optional: true},
   suffix: { type: 'string', optional: true}
+}
+
+export class Group extends DocumentNode {}
+
+Group.schema = {
+  type: 'group',
+  name: { type: 'string', optional: true},
 }
 
 export default class EntityDatabase extends Document {

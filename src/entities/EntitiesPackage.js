@@ -1,5 +1,5 @@
 import EntityDatabase from './EntityDatabase'
-import { JournalCitation, BookCitation, Person } from './EntityDatabase'
+import { JournalCitation, BookCitation, Person, Group } from './EntityDatabase'
 
 export default {
   name: 'entities',
@@ -13,6 +13,7 @@ export default {
     config.addNode(JournalCitation)
     config.addNode(BookCitation)
     config.addNode(Person)
+    config.addNode(Group)
 
     // Labels
     config.addLabel('authors', 'Authors')

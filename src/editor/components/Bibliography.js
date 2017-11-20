@@ -21,26 +21,23 @@ export default class Bibliography extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-bibliography')
-    let editorSession = this.context.editorSession
-    let entityDb = this.context.editorSession.getDocument()
+    let db = this.context.db
 
     if (this.state.entityId) {
       var modal = $$(Modal, {
         width: 'medium',
         textAlign: 'center'
       })
-
       modal.append(
         $$(EditEntity, {
-          editorSession: editorSession,
-          node: entityDb.get(this.state.entityId)
+          node: db.get(this.state.entityId)
         })
       )
       el.append(modal)
     }
 
     this.context.referenceManager.getBibliography().forEach((reference) => {
-      let fragments = entityRenderers[reference.type]($$, reference.id, entityDb)
+      let fragments = entityRenderers[reference.type]($$, reference.id, db)
       el.append(
         $$('div').addClass('se-reference').append(
           $$('div').addClass('se-text').append(

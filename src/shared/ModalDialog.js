@@ -1,7 +1,7 @@
 import { Component } from 'substance'
 
 /**
-  Modal dialog component
+  ModalDialog component
 
   @class
   @component
@@ -11,7 +11,7 @@ import { Component } from 'substance'
   @example
 
   ```js
-  var form = $$(Modal, {
+  var form = $$(ModalDialog, {
     width: 'medium',
     textAlign: 'center'
   });

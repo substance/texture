@@ -1,8 +1,7 @@
-import { Component, ModalPackage } from 'substance'
+import { Component } from 'substance'
 import EditEntity from '../../entities/EditEntity'
 import entityRenderers from '../../entities/entityRenderers'
-
-const { Modal } = ModalPackage
+import ModalDialog from '../../shared/ModalDialog'
 
 export default class Bibliography extends Component {
   didMount() {
@@ -24,7 +23,7 @@ export default class Bibliography extends Component {
     let db = this.context.db
 
     if (this.state.entityId) {
-      var modal = $$(Modal, {
+      var modal = $$(ModalDialog, {
         width: 'medium',
         textAlign: 'center'
       })

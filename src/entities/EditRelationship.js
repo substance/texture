@@ -1,6 +1,8 @@
 import { Component } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
+import ModalDialog from '../shared/ModalDialog'
+import ModalLayout from '../shared/ModalLayout'
 
 /*
   Used to edit relationhips to other entities.
@@ -13,20 +15,13 @@ export default class EditRelationship extends Component {
     // We want to keep state in a plain old JS object while editing
     return {
       create: undefined,
-      entityIds: this.props.entityIds
+      entityIds: this.props.entityIds || []
     }
   }
 
   didMount() {
     this.handleActions({
-      'done': this._closeModal,
-      'cancel': this._closeModal
-    })
-  }
-
-  _closeModal() {
-    this.extendState({
-      create: undefined
+      'closeModal': this._closeModal
     })
   }
 
@@ -36,34 +31,58 @@ export default class EditRelationship extends Component {
 
     if (this.state.create) {
       el.append(
-        $$(CreateEntity, {
-          type: this.state.create
+        $$(ModalDialog, {
+          transparent: true
+        }).append(
+          $$(CreateEntity, {
+            type: this.state.create
+          })
+        )
+      )
+    } else {
+      let contentEl = $$('div').addClass('se-edit-relationship-content')
+
+      if (this.state.entityIds.length > 0) {
+        let optionsEl = $$('div').addClass('se-options')
+        this.state.entityIds.forEach((entityId) => {
+          let node = db.get(entityId)
+          optionsEl.append(
+            entityRenderers[node.type]($$, node.id, db)
+          )
         })
+        contentEl.append(optionsEl)
+      } else {
+        contentEl.append(
+          $$('div').addClass('se-empty').append('No Entries')
+        )
+      }
+
+      contentEl.append(this._renderSelector($$))
+
+      // Render create buttons for each allowed target type
+      this.props.targetTypes.forEach(targetType => {
+        contentEl.append(
+          $$('button').append('Create '+targetType)
+            .on('click', this._toggleCreate.bind(this, targetType))
+        )
+      })
+
+      el.append(
+        $$(ModalLayout).append(
+          contentEl,
+          $$('div').addClass('sg-actions').append(
+            $$('button')
+              .addClass('sm-primary')
+              .append('Save')
+              .on('click', this._save),
+            $$('button')
+              .append('Cancel')
+              .on('click', this._cancel)
+          )
+        )
       )
     }
 
-    let optionsEl = $$('div').addClass('se-options')
-    this.state.entityIds.forEach((entityId) => {
-      let node = db.get(entityId)
-      optionsEl.append(
-        entityRenderers[node.type]($$, node.id, db)
-      )
-    })
-    el.append(optionsEl)
-    el.append(this._renderSelector($$))
-
-    // Render create buttons for each allowed target type
-    this.props.targetTypes.forEach(targetType => {
-      el.append(
-        $$('button').append('Create '+targetType)
-          .on('click', this._toggleCreate.bind(this, targetType))
-      )
-    })
-
-    el.append(
-      $$('button').append('Save').on('click', this._save),
-      $$('button').append('Cancel').on('click', this._cancel)
-    )
     return el
   }
 
@@ -128,6 +147,12 @@ export default class EditRelationship extends Component {
   }
 
   _cancel() {
-    this.send('cancel')
+    this.send('closeModal')
+  }
+
+  _closeModal() {
+    this.extendState({
+      create: undefined
+    })
   }
 }

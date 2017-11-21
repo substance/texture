@@ -3,6 +3,6 @@
 }
 
 /* HACK: we should find a way to style this independently of sc-modal-layout */
-.sc-edit-relationship > .sc-modal-layout > .se-content {
+.sc-edit-relationship > .sc-modal-layout > .se-edit-relationship-content {
   padding: 20px;
 }

@@ -40,7 +40,7 @@ export default class EditRelationship extends Component {
         )
       )
     } else {
-      let contentEl = $$('div')
+      let contentEl = $$('div').addClass('se-edit-relationship-content')
 
       if (this.state.entityIds.length > 0) {
         let optionsEl = $$('div').addClass('se-options')

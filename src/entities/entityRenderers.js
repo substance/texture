@@ -31,7 +31,7 @@ function personRenderer($$, entityId, entityDb) {
   ]
 }
 
-function groupRenderer($$, entityId, entityDb) {
+function organisationRenderer($$, entityId, entityDb) {
   let { name } = entityDb.get(entityId)
   return [
     name
@@ -44,7 +44,7 @@ function groupRenderer($$, entityId, entityDb) {
 export default {
   'person': personRenderer,
   'book-citation': bookCitationRenderer,
-  'group': groupRenderer
+  'organisation': organisationRenderer
 }
 
 /*

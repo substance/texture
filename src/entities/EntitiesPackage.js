@@ -1,5 +1,5 @@
 import EntityDatabase from './EntityDatabase'
-import { JournalCitation, BookCitation, Person, Group } from './EntityDatabase'
+import { JournalCitation, BookCitation, Person, Organisation } from './EntityDatabase'
 
 export default {
   name: 'entities',
@@ -13,9 +13,9 @@ export default {
     config.addNode(JournalCitation)
     config.addNode(BookCitation)
     config.addNode(Person)
-    config.addNode(Group)
+    config.addNode(Organisation)
 
-    // Labels
+    // book-citation labels
     config.addLabel('authors', 'Authors')
     config.addLabel('editors', 'Editors')
     config.addLabel('chapterTitle', 'Chapter Title')
@@ -30,10 +30,13 @@ export default {
     config.addLabel('lpage', 'Last Page')
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('elocationId', 'E-Location ID')
-
+    // person labels
     config.addLabel('givenNames', 'Given names')
     config.addLabel('surname', 'Surname')
     config.addLabel('prefix', 'Prefix')
     config.addLabel('suffix', 'Suffix')
+    config.addLabel('affiliations', 'Affiliations')
+    // organisation labels
+    config.addLabel('name', 'Name')
   }
 }

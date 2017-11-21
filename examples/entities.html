@@ -64,6 +64,12 @@
           givenNames: 'Susanne',
           surname: 'Peer'
         })
+        entityDb.create({
+          id: 'organisation-1',
+          type: 'organisation',
+          name: 'Substance Consortium'
+        })
+
         let dbSession = new EditorSession(entityDb, {
           configurator
         })

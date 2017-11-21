@@ -1,0 +1,23 @@
+/*
+  A set of classes for style reuse, without requiring complete
+  component definitions.
+*/
+
+.sg-actions {
+  background: #f1f1f1;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  padding: 10px;
+}
+
+.sg-actions > button {
+  background: #444;
+  color: #fff;
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 20px;
+}
+
+.sg-actions > button.sm-primary {
+  background: #0065DE;
+}

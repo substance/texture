@@ -1,0 +1,14 @@
+.sc-modal-layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-modal-layout > .se-content {
+  flex: 1 1 0;
+  overflow: auto;
+}
+
+.sc-modal-layout .se-actions {
+  flex: 0 0 0;
+}

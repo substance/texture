@@ -29,7 +29,7 @@ export default class EntityForm extends Component {
             name: propertyName
           }),
           $$(RelationshipInput, {
-            entityIds: node[propertyName],
+            entityIds: node[propertyName] || [],
             targetTypes: property.definition.targetTypes,
           }).ref(property.name)
         )

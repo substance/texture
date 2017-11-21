@@ -41,15 +41,22 @@ export default class RelationshipInput extends Component {
         )
       )
     } else {
-      entities.forEach((entityId, index) => {
-        let entity = db.get(entityId)
+      if (entities.length > 0) {
+        entities.forEach((entityId, index) => {
+          let entity = db.get(entityId)
+          el.append(
+            entityRenderers[entity.type]($$, entity.id, db)
+          )
+          if (index < entities.length-1) {
+            el.append(', ')
+          }
+        })
+      } else {
         el.append(
-          entityRenderers[entity.type]($$, entity.id, db)
+          $$('div').addClass('se-empty').append('No Entries')
         )
-        if (index < entities.length-1) {
-          el.append(', ')
-        }
-      })
+      }
+
       el.append(
         $$('button').append('Edit').on('click', this._openRelationshipEditor)
       )

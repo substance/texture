@@ -1,3 +1,8 @@
 .sc-edit-relationship {
+  height: 100%;
+}
+
+/* HACK: we should find a way to style this independently of sc-modal-layout */
+.sc-edit-relationship > .sc-modal-layout > .se-content {
   padding: 20px;
 }

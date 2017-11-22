@@ -6,4 +6,5 @@
 @import './_create-entity.css';
 @import './_relationship-input.css';
 @import './_edit-relationship.css';
+@import './_entity-selector.css';
 @import './_globals';

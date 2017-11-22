@@ -17,7 +17,7 @@ export default class EntitySelector extends Component {
       $$('div').addClass('se-input-field').append(
         $$('input')
           .attr({
-            type: 'search',
+            type: 'text',
             value: this.state.searchString,
             placeholder: this.props.placeholder
           })
@@ -55,6 +55,16 @@ export default class EntitySelector extends Component {
         ).on('click', this._selectOption.bind(this, entity.id))
       )
     })
+
+    // Render options for creation
+    this.props.targetTypes.forEach(targetType => {
+      el.append(
+        $$('div').addClass('se-option').append(
+          $$('button').append('Create '+targetType)
+        )
+        .on('click', this._triggerCreate.bind(this, targetType))
+      )
+    })
     return el
   }
 
@@ -65,12 +75,7 @@ export default class EntitySelector extends Component {
   _renderCreate($$) {
     let el = $$('div').addClass('se-create')
     // Render create buttons for each allowed target type
-    this.props.targetTypes.forEach(targetType => {
-      el.append(
-        $$('button').append('Create '+targetType)
-          .on('click', this._triggerCreate.bind(this, targetType))
-      )
-    })
+
     return el
   }
 

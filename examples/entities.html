@@ -33,14 +33,34 @@
         let configurator = new Configurator()
         configurator.import(EntitiesPackage)
         let entityDb = configurator.createDocument()
-        // Book Citation
+
+
+        // Journal Article
         entityDb.create({
-          id: 'book-citation-1',
-          type: 'book-citation',
-          authors: ['person-1'],
-          editors: ['person-1'],
+          id: 'journal-article-1',
+          type: 'journal-article',
+          authors: ['person-1', 'person-2'],
+          editors: ['person-3'],
           edition: 'AB',
-          chapterTitle: '<strong>Tobacco</strong> use',
+          articleTitle: 'Context-specific grasp movement representation in the macaque anterior intraparietal area',
+          volume: '29',
+          source: 'Journal of Neuroscience',
+          year: '2015',
+          month: '6',
+          day: '5',
+          fpage: '42',
+          lpage: '63',
+          pageRange: '214-216',
+          doi: '10.1523/JNEUROSCI.5479-08.2009'
+        })
+        // Book
+        entityDb.create({
+          id: 'book-1',
+          type: 'book',
+          authors: ['person-1'],
+          editors: ['person-2'],
+          edition: 'AB',
+          chapterTitle: 'Tobacco use',
           source: 'Clinical methods: the history, physical, and laboratory examinations',
           publisherLoc: 'Stoneham (MA)',
           publisherName: 'Butterworth Publishers',
@@ -49,7 +69,8 @@
           day: '5',
           fpage: '214',
           lpage: '216',
-          pageRange: '214-216'
+          pageRange: '214-216',
+          isbn: '978-3711001610'
         })
         // Person
         entityDb.create({
@@ -82,7 +103,8 @@
 
         let labelProvider = configurator.getLabelProvider()
         let referenceManager = new ReferenceManager(entityDb)
-        referenceManager.addReference('book-citation-1')
+        referenceManager.addReference('book-1')
+        referenceManager.addReference('journal-article-1')
 
         class App extends Component {
           getChildContext() {

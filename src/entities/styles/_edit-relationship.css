@@ -2,6 +2,23 @@
   height: 100%;
 }
 
+.sc-edit-relationship table.se-entries {
+  width: 100%;
+}
+
+.sc-edit-relationship td {
+  padding: 5px 0px;
+}
+
+.sc-edit-relationship td.se-edit {
+  text-align: right;
+}
+
+.sc-edit-relationship td button {
+  display: inline-block;
+  margin-left: 10px;
+}
+
 /* HACK: we should find a way to style this independently of sc-modal-layout */
 .sc-edit-relationship > .sc-modal-layout > .se-edit-relationship-content {
   padding: 20px;

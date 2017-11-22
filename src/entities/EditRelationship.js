@@ -51,16 +51,25 @@ export default class EditRelationship extends Component {
       )
 
       if (this.state.entityIds.length > 0) {
-        let optionsEl = $$('div').addClass('se-options')
+        let tableEl = $$('table').addClass('se-entries')
         this.state.entityIds.forEach((entityId) => {
           let node = db.get(entityId)
-          optionsEl.append(
-            $$('div').addClass('se-option').append(
-              entityRenderers[node.type]($$, node.id, db)
+          tableEl.append(
+            $$('tr').addClass('se-entry').append(
+              $$('td').addClass('se-name').append(
+                entityRenderers[node.type]($$, node.id, db)
+              ),
+              $$('td').addClass('se-type').append(
+                node.type
+              ),
+              $$('td').addClass('se-edit').append(
+                $$('button').append('Edit'),
+                $$('button').append('Delete')
+              )
             )
           )
         })
-        contentEl.append(optionsEl)
+        contentEl.append(tableEl)
       } else {
         contentEl.append(
           $$('div').addClass('se-empty').append('No Entries')

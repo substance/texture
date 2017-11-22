@@ -1,9 +1,9 @@
 import { DocumentNode, Document } from 'substance'
 
-export class BookCitation extends DocumentNode {}
+export class Book extends DocumentNode {}
 
-BookCitation.schema = {
-  type: 'book-citation',
+Book.schema = {
+  type: 'book',
   authors: { type: ['person', 'organisation'], default: [] },
   editors: { type: ['person'], default: [] },
   chapterTitle: { type: 'text', optional: true },
@@ -17,13 +17,16 @@ BookCitation.schema = {
   fpage: { type: 'string', optional: true },
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
-  elocationId: { type: 'string', optional: true }
+  elocationId: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true},
+  isbn: { type: 'string', optional: true},
+  pmid: { type: 'string', optional: true}
 }
 
-export class JournalCitation extends DocumentNode {}
+export class JournalArticle extends DocumentNode {}
 
-JournalCitation.schema = {
-  type: 'journal-citation',
+JournalArticle.schema = {
+  type: 'journal-article',
   authors: { type: ['person', 'organisation'], default: [] },
   editors: { type: ['person'], default: [] },
   articleTitle: { type: 'text', optional: true },

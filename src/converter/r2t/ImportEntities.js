@@ -1,6 +1,6 @@
 const TYPES = {
-  'journal': 'journal-citation',
-  'book': 'book-citation'
+  'journal': 'journal-article',
+  'book': 'book'
 }
 
 const ELEMENT_CITATION_ENTITY_DB_MAP = {

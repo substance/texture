@@ -4,10 +4,9 @@
 */
 
 .sg-actions {
-  background: #f1f1f1;
   border-top: 1px solid #ddd;
-  text-align: center;
-  padding: 10px;
+  text-align: left;
+  padding: 20px;
 }
 
 .sg-actions > button {
@@ -20,4 +19,13 @@
 
 .sg-actions > button.sm-primary {
   background: #0065DE;
+}
+
+/* HACK: */
+.sc-modal-dialog input {
+  background: #EAEAEA;
+  border: none;
+  width: 100%;
+  padding: 3px 5px;
+  border-radius: 4px;
 }

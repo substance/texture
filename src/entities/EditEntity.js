@@ -1,6 +1,5 @@
 import { Component } from 'substance'
 import EntityForm from './EntityForm'
-import ModalLayout from '../shared/ModalLayout'
 import FormTitle from './FormTitle'
 
 export default class EditEntity extends Component {
@@ -9,24 +8,22 @@ export default class EditEntity extends Component {
     let el = $$('div').addClass('sc-edit-entity')
 
     el.append(
-      $$(ModalLayout).append(
-        $$('div').addClass('se-content').append(
-          $$(FormTitle, {
-            name: 'edit-'+this.props.node.type
-          }),
-          $$(EntityForm, {
-            node: this.props.node
-          }).ref('form')
-        ),
-        $$('div').addClass('sg-actions').append(
-          $$('button')
-            .addClass('sm-primary')
-            .append('Save')
-            .on('click', this._save),
-          $$('button')
-            .append('Cancel')
-            .on('click', this._cancel)
-        )
+      $$('div').addClass('se-content').append(
+        $$(FormTitle, {
+          name: 'edit-'+this.props.node.type
+        }),
+        $$(EntityForm, {
+          node: this.props.node
+        }).ref('form')
+      ),
+      $$('div').addClass('sg-actions').append(
+        $$('button')
+          .addClass('sm-primary')
+          .append('Save')
+          .on('click', this._save),
+        $$('button')
+          .append('Cancel')
+          .on('click', this._cancel)
       )
     )
     return el

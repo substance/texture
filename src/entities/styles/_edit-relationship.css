@@ -19,7 +19,6 @@
   margin-left: 10px;
 }
 
-/* HACK: we should find a way to style this independently of sc-modal-layout */
-.sc-edit-relationship > .sc-modal-layout > .se-edit-relationship-content {
+.sc-edit-relationship > .se-content {
   padding: 20px;
 }

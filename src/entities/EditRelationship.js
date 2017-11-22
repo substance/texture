@@ -2,7 +2,6 @@ import { Component } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
 import ModalDialog from '../shared/ModalDialog'
-import ModalLayout from '../shared/ModalLayout'
 import EntitySelector from './EntitySelector'
 import FormTitle from './FormTitle'
 
@@ -42,7 +41,7 @@ export default class EditRelationship extends Component {
         )
       )
     } else {
-      let contentEl = $$('div').addClass('se-edit-relationship-content')
+      let contentEl = $$('div').addClass('se-content')
 
       contentEl.append(
         $$(FormTitle, {
@@ -89,17 +88,15 @@ export default class EditRelationship extends Component {
       )
 
       el.append(
-        $$(ModalLayout).append(
-          contentEl,
-          $$('div').addClass('sg-actions').append(
-            $$('button')
-              .addClass('sm-primary')
-              .append('Save')
-              .on('click', this._save),
-            $$('button')
-              .append('Cancel')
-              .on('click', this._cancel)
-          )
+        contentEl,
+        $$('div').addClass('sg-actions').append(
+          $$('button')
+            .addClass('sm-primary')
+            .append('Save')
+            .on('click', this._save),
+          $$('button')
+            .append('Cancel')
+            .on('click', this._cancel)
         )
       )
     }

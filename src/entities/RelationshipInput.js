@@ -41,29 +41,29 @@ export default class RelationshipInput extends Component {
           })
         )
       )
-    } else {
-      if (entities.length > 0) {
-        entities.forEach((entityId, index) => {
-          let entity = db.get(entityId)
-          el.append(
-            $$('span').html(
-              entityRenderers[entity.type](entity.id, db)
-            )
-          )
-          if (index < entities.length-1) {
-            el.append(', ')
-          }
-        })
-      } else {
+    }
+    if (entities.length > 0) {
+      entities.forEach((entityId, index) => {
+        let entity = db.get(entityId)
         el.append(
-          $$('div').addClass('se-empty').append('No Entries')
+          $$('span').html(
+            entityRenderers[entity.type](entity.id, db)
+          )
         )
-      }
-
+        if (index < entities.length-1) {
+          el.append(', ')
+        }
+      })
+    } else {
       el.append(
-        $$('button').append('Edit').on('click', this._openRelationshipEditor)
+        $$('div').addClass('se-empty').append('No Entries')
       )
     }
+
+    el.append(
+      $$('button').append('Edit').on('click', this._openRelationshipEditor)
+    )
+
     return el
   }
 

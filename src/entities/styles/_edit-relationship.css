@@ -10,8 +10,24 @@
   padding: 5px 0px;
 }
 
-.sc-edit-relationship td.se-edit {
+.sc-edit-relationship td.se-actions {
+  white-space: nowrap;
   text-align: right;
+}
+
+.sc-edit-relationship td.se-type {
+  white-space: nowrap;
+  text-align: right;
+  padding: 0 5px;
+}
+
+.sc-edit-relationship td.se-type span {
+  background: #ddd;
+  padding: 2px 4px;
+  color: #777;
+  font-weight: 600;
+  border-radius: 3px;
+  font-size: 12px;
 }
 
 .sc-edit-relationship td button {

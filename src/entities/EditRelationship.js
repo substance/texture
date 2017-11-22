@@ -1,6 +1,7 @@
-import { Component } from 'substance'
+import { Component, without } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
+import EditEntity from './EditEntity'
 import ModalDialog from '../shared/ModalDialog'
 import EntitySelector from './EntitySelector'
 import FormTitle from './FormTitle'
@@ -15,7 +16,8 @@ export default class EditRelationship extends Component {
   getInitialState() {
     // We want to keep state in a plain old JS object while editing
     return {
-      create: undefined,
+      mode: undefined,
+      modeProps: undefined,
       entityIds: this.props.entityIds || []
     }
   }
@@ -29,15 +31,21 @@ export default class EditRelationship extends Component {
   render($$) {
     let el = $$('div').addClass('sc-edit-relationship')
     let db = this.context.db
+    let mode = this.state.mode
 
-    if (this.state.create) {
+    if (mode) {
+      let ModeComponent
+      if (mode === 'edit') {
+        ModeComponent = EditEntity
+      } else {
+        ModeComponent = CreateEntity
+      }
+
       el.append(
         $$(ModalDialog, {
           transparent: true
         }).append(
-          $$(CreateEntity, {
-            type: this.state.create
-          })
+          $$(ModeComponent, this.state.modeProps)
         )
       )
     } else {
@@ -59,11 +67,11 @@ export default class EditRelationship extends Component {
                 entityRenderers[node.type](node.id, db)
               ),
               $$('td').addClass('se-type').append(
-                node.type
+                $$('span').append(this.context.labelProvider.getLabel(node.type))
               ),
-              $$('td').addClass('se-edit').append(
-                $$('button').append('Edit'),
-                $$('button').append('Delete')
+              $$('td').addClass('se-actions').append(
+                $$('button').append('Edit').on('click', this._onEdit.bind(this, entityId)),
+                $$('button').append('Delete').on('click', this._onDelete.bind(this, entityId))
               )
             )
           )
@@ -105,12 +113,33 @@ export default class EditRelationship extends Component {
 
   _onCreate(targetType) {
     this.extendState({
-      create: targetType
+      mode: 'create',
+      modeProps: {
+        type: targetType
+      }
+    })
+  }
+
+  _onEdit(entityId) {
+    let db = this.context.db
+    let node = db.get(entityId)
+    this.extendState({
+      mode: 'edit',
+      modeProps: {
+        node
+      }
     })
   }
 
   _onAddNew(entityId) {
     let entityIds = this.state.entityIds.concat([ entityId ])
+    this.extendState({
+      entityIds: entityIds
+    })
+  }
+
+  _onDelete(entityId) {
+    let entityIds = without(this.state.entityIds, entityId)
     this.extendState({
       entityIds: entityIds
     })
@@ -126,7 +155,8 @@ export default class EditRelationship extends Component {
 
   _closeModal() {
     this.extendState({
-      create: undefined
+      mode: undefined,
+      modeProps: undefined
     })
   }
 }

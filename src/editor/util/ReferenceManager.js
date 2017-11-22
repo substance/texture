@@ -1,26 +1,14 @@
-import { without } from 'substance'
-
 export default class ReferenceManager {
-  constructor(entityDb) {
-    // Holds the bibliography in form of entity-ids
-    this._references = []
-    this.entityDb = entityDb
+  constructor(dbSession, articleId) {
+    this.dbSession = dbSession
+    this.db = dbSession.getDocument()
+    this.node = this.db.get(articleId)
   }
 
-  addReference(entityId) {
-    if (this._references.indexOf(entityId) < 0) {
-      this._references.push(entityId)
-    } else {
-      throw new Error('Reference already exists in bibliography')
-    }
-  }
-
-  removeReference(entityId) {
-    if (this._references.indexOf(entityId) >= 0) {
-      this._references = without(this._references, entityId)
-    } else {
-      throw new Error('Reference does not exist in bibliography')
-    }
+  updateReferences(entityIds) {
+    this.dbSession.transaction(tx => {
+      tx.set([this.node.id, 'references'], entityIds)
+    })
   }
 
   /*
@@ -28,8 +16,8 @@ export default class ReferenceManager {
   */
   getBibliography() {
     // TODO: determine order and label based on citations in the document
-    return this._references.map((entityId, index) => {
-      let entity = this.entityDb.get(entityId)
+    return this.node.references.map((entityId, index) => {
+      let entity = this.db.get(entityId)
       return {
         id: entityId,
         label: index + 1,

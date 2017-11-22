@@ -15,6 +15,9 @@ export default {
     config.addNode(Person)
     config.addNode(Organisation)
 
+    config.addLabel('book', 'Book')
+    config.addLabel('journal-article', 'Journal Article')
+
     // book labels
     config.addLabel('authors', 'Authors')
     config.addLabel('editors', 'Editors')
@@ -55,5 +58,6 @@ export default {
 
     config.addLabel('edit-authors', 'Edit Authors')
     config.addLabel('edit-editors', 'Edit Editors')
+    config.addLabel('edit-references', 'Edit References')
   }
 }

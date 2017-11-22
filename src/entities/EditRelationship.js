@@ -4,6 +4,7 @@ import CreateEntity from './CreateEntity'
 import ModalDialog from '../shared/ModalDialog'
 import ModalLayout from '../shared/ModalLayout'
 import EntitySelector from './EntitySelector'
+import FormTitle from './FormTitle'
 
 /*
   Used to edit relationhips to other entities.
@@ -43,6 +44,12 @@ export default class EditRelationship extends Component {
     } else {
       let contentEl = $$('div').addClass('se-edit-relationship-content')
 
+      contentEl.append(
+        $$(FormTitle, {
+          name: 'edit-'+this.props.propertyName
+        })
+      )
+
       if (this.state.entityIds.length > 0) {
         let optionsEl = $$('div').addClass('se-options')
         this.state.entityIds.forEach((entityId) => {
@@ -62,22 +69,15 @@ export default class EditRelationship extends Component {
 
       contentEl.append(
         $$(EntitySelector, {
-          placeholder: 'Select a person or organisation',
+          placeholder: 'Type to add new ...',
           targetTypes: this.props.targetTypes,
           showCreateDialog: true,
-          limit: 50
+          excludes: this.state.entityIds,
+          limit: 50,
+          onSelected: this._onAddNew.bind(this),
+          onCreate: this._onCreate.bind(this),
         })
-        // .on('selected', this._onSelected)
-        // .on('create', this._onCreate)
       )
-
-      // Render create buttons for each allowed target type
-      this.props.targetTypes.forEach(targetType => {
-        contentEl.append(
-          $$('button').append('Create '+targetType)
-            .on('click', this._toggleCreate.bind(this, targetType))
-        )
-      })
 
       el.append(
         $$(ModalLayout).append(
@@ -94,13 +94,19 @@ export default class EditRelationship extends Component {
         )
       )
     }
-
     return el
   }
 
-  _toggleCreate(targetType) {
+  _onCreate(targetType) {
     this.extendState({
       create: targetType
+    })
+  }
+
+  _onAddNew(entityId) {
+    let entityIds = this.state.entityIds.concat([ entityId ])
+    this.extendState({
+      entityIds: entityIds
     })
   }
 

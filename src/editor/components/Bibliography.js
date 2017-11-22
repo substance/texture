@@ -35,6 +35,12 @@ export default class Bibliography extends Component {
       el.append(modal)
     }
 
+    el.append(
+      $$('div').addClass('se-title').append(
+        'Bibliography'
+      )
+    )
+
     this.context.referenceManager.getBibliography().forEach((reference) => {
       let fragments = entityRenderers[reference.type]($$, reference.id, db)
       el.append(

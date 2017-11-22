@@ -16,6 +16,12 @@
       body {
         height: 100%;
       }
+
+      .sc-app {
+        width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+      }
     </style>
     <script type="text/javascript" src="./substance/dist/substance.js"></script>
     <script type="text/javascript" src="./texture.js"></script>
@@ -89,7 +95,7 @@
           }
 
           render($$) {
-            let el = $$('div').addClass('se-app')
+            let el = $$('div').addClass('sc-app')
             el.append(
               $$(Bibliography)
             )

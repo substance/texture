@@ -1,6 +1,7 @@
 import { Component } from 'substance'
 
 import EntityForm from './EntityForm'
+import FormTitle from './FormTitle'
 import ModalLayout from '../shared/ModalLayout'
 
 export default class CreateEntity extends Component {
@@ -10,11 +11,16 @@ export default class CreateEntity extends Component {
 
     el.append(
       $$(ModalLayout).append(
-        $$(EntityForm, {
-          node: {
-            type: this.props.type
-          }
-        }).ref('form'),
+        $$('div').addClass('se-content').append(
+          $$(FormTitle, {
+            name: 'create-'+this.props.type
+          }),
+          $$(EntityForm, {
+            node: {
+              type: this.props.type
+            }
+          }).ref('form')
+        ),
         $$('div').addClass('sg-actions').append(
           $$('button')
             .addClass('sm-primary')

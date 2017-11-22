@@ -1,9 +1,9 @@
 import { Component } from 'substance'
 
-export default class FormLabel extends Component {
+export default class FormTitle extends Component {
 
   render($$) {
-    let el = $$('div').addClass('sc-form-label')
+    let el = $$('div').addClass('sc-form-title')
     el.append(
       this._getLabel(this.props.name)
     )

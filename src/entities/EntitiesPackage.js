@@ -39,5 +39,18 @@ export default {
     config.addLabel('affiliations', 'Affiliations')
     // organisation labels
     config.addLabel('name', 'Name')
+
+
+    config.addLabel('edit-book-citation', 'Edit Book')
+    config.addLabel('add-book-citation', 'Add Book')
+    config.addLabel('edit-journal-citation', 'Edit Journal Publication')
+    config.addLabel('add-journal-citation', 'Add Journal Publication')
+    config.addLabel('add-person', 'Add Person')
+    config.addLabel('edit-person', 'Edit Person')
+    config.addLabel('add-organisation', 'Add Organisation')
+    config.addLabel('edit-organisation', 'Edit Organisation')
+
+    config.addLabel('edit-authors', 'Edit Authors')
+    config.addLabel('edit-editors', 'Edit Editors')
   }
 }

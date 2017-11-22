@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, without, DefaultDOMElement } from 'substance'
 import entityRenderers from './entityRenderers'
 
 export default class EntitySelector extends Component {
@@ -16,8 +16,12 @@ export default class EntitySelector extends Component {
     el.append(
       $$('div').addClass('se-input-field').append(
         $$('input')
-          .attr({type: 'search', value: this.state.searchString })
-          .on('change', this._onSearchStringChanged)
+          .attr({
+            type: 'search',
+            value: this.state.searchString,
+            placeholder: this.props.placeholder
+          })
+          .on('input', this._onSearchStringChanged)
           .ref('searchString')
       )
     )
@@ -30,7 +34,7 @@ export default class EntitySelector extends Component {
       el.append(
         this._renderCreate($$)
       )
-    } else {
+    } else if (this.state.searchString !== '') {
       el.append(
         this._renderNotFound($$)
       )
@@ -43,22 +47,35 @@ export default class EntitySelector extends Component {
     let el = $$('div').addClass('se-options')
     let db = this.context.db
 
-    this.state.results.forEach(entityId => {
-      let entity = db.get(entityId)
+    this.state.results.forEach(entity => {
+      // let entity = db.get(entityId)
       el.append(
         $$('div').addClass('se-option').append(
           entityRenderers[entity.type]($$, entity.id, db)
-        )
+        ).on('click', this._selectOption.bind(this, entity.id))
       )
     })
     return el
   }
 
+  _selectOption(entityId) {
+    this.props.onSelected(entityId)
+  }
+
   _renderCreate($$) {
-    let el = $$('div').addClass('se-create').append(
-      'TODO: implenent create dialog'
-    )
+    let el = $$('div').addClass('se-create')
+    // Render create buttons for each allowed target type
+    this.props.targetTypes.forEach(targetType => {
+      el.append(
+        $$('button').append('Create '+targetType)
+          .on('click', this._triggerCreate.bind(this, targetType))
+      )
+    })
     return el
+  }
+
+  _triggerCreate(targetType) {
+    this.props.onCreate(targetType)
   }
 
   _renderNotFound($$) {
@@ -68,9 +85,9 @@ export default class EntitySelector extends Component {
     return el
   }
 
-  // TODO: For the current prorotype we show everything, but we should
-  // implement/sketch a full text search here
-  _findEntities() {
+  // TODO: For the current prorotype we use a naive regexp based filtering,
+  // but we should allow full text search here
+  _findEntities(searchString) {
     let db = this.context.db
     let availableEntities = []
     this.props.targetTypes.forEach(targetType => {
@@ -78,12 +95,24 @@ export default class EntitySelector extends Component {
         db.find({ type: targetType })
       )
     })
+    availableEntities = without(availableEntities, ...this.props.excludes)
+      .map(entityId => {
+        return db.get(entityId)
+      })
+      .filter(entity => {
+        // TODO: Change entity renderer interface to HTML to make this simpler
+        let el = DefaultDOMElement.parseSnippet('<div>', 'html')
+        el.append(
+          entityRenderers[entity.type](el.createElement, entity.id, db)
+        )
+        let htmlString = el.innerHTML
+        return htmlString.match(new RegExp(searchString, 'i'))
+      })
     return availableEntities
   }
 
   _onSearchStringChanged() {
     let searchString = this.refs.searchString.val()
-    console.info('Searching for: ', searchString)
     let results = []
     if (searchString) {
       results = this._findEntities(searchString)

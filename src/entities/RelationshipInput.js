@@ -35,6 +35,7 @@ export default class RelationshipInput extends Component {
           transparent: true
         }).append(
           $$(EditRelationship, {
+            propertyName: this.props.propertyName,
             entityIds: this.state.entityIds,
             targetTypes: this.props.targetTypes
           })

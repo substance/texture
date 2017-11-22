@@ -46,7 +46,9 @@ export default class RelationshipInput extends Component {
         entities.forEach((entityId, index) => {
           let entity = db.get(entityId)
           el.append(
-            entityRenderers[entity.type]($$, entity.id, db)
+            $$('span').html(
+              entityRenderers[entity.type](entity.id, db)
+            )
           )
           if (index < entities.length-1) {
             el.append(', ')

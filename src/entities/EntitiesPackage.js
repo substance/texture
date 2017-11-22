@@ -19,6 +19,7 @@ export default {
     config.addLabel('authors', 'Authors')
     config.addLabel('editors', 'Editors')
     config.addLabel('chapterTitle', 'Chapter Title')
+    config.addLabel('articleTitle', 'Article Title')
     config.addLabel('source', 'Source')
     config.addLabel('edition', 'Edition')
     config.addLabel('publisherLoc', 'Publisher Location')

@@ -56,8 +56,8 @@ export default class EditRelationship extends Component {
           let node = db.get(entityId)
           tableEl.append(
             $$('tr').addClass('se-entry').append(
-              $$('td').addClass('se-name').append(
-                entityRenderers[node.type]($$, node.id, db)
+              $$('td').addClass('se-name').html(
+                entityRenderers[node.type](node.id, db)
               ),
               $$('td').addClass('se-type').append(
                 node.type

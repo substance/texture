@@ -1,4 +1,4 @@
-import { Component, without, DefaultDOMElement } from 'substance'
+import { Component, without } from 'substance'
 import entityRenderers from './entityRenderers'
 
 export default class EntitySelector extends Component {
@@ -26,17 +26,9 @@ export default class EntitySelector extends Component {
       )
     )
 
-    if (this.state.results.length > 0) {
+    if (this.state.searchString !== '') {
       el.append(
         this._renderOptions($$)
-      )
-    } else if (this.state.searchString !== '' && this.state.results.length === 0) {
-      el.append(
-        this._renderCreate($$)
-      )
-    } else if (this.state.searchString !== '') {
-      el.append(
-        this._renderNotFound($$)
       )
     }
 
@@ -50,8 +42,8 @@ export default class EntitySelector extends Component {
     this.state.results.forEach(entity => {
       // let entity = db.get(entityId)
       el.append(
-        $$('div').addClass('se-option').append(
-          entityRenderers[entity.type]($$, entity.id, db)
+        $$('div').addClass('se-option').html(
+          entityRenderers[entity.type](entity.id, db)
         ).on('click', this._selectOption.bind(this, entity.id))
       )
     })
@@ -72,22 +64,8 @@ export default class EntitySelector extends Component {
     this.props.onSelected(entityId)
   }
 
-  _renderCreate($$) {
-    let el = $$('div').addClass('se-create')
-    // Render create buttons for each allowed target type
-
-    return el
-  }
-
   _triggerCreate(targetType) {
     this.props.onCreate(targetType)
-  }
-
-  _renderNotFound($$) {
-    let el = $$('div').addClass('se-not-found').append(
-      'No entries found'
-    )
-    return el
   }
 
   // TODO: For the current prorotype we use a naive regexp based filtering,
@@ -105,12 +83,7 @@ export default class EntitySelector extends Component {
         return db.get(entityId)
       })
       .filter(entity => {
-        // TODO: Change entity renderer interface to HTML to make this simpler
-        let el = DefaultDOMElement.parseSnippet('<div>', 'html')
-        el.append(
-          entityRenderers[entity.type](el.createElement, entity.id, db)
-        )
-        let htmlString = el.innerHTML
+        let htmlString = entityRenderers[entity.type](entity.id, db)
         return htmlString.match(new RegExp(searchString, 'i'))
       })
     return availableEntities

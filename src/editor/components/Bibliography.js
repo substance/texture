@@ -42,11 +42,10 @@ export default class Bibliography extends Component {
     )
 
     this.context.referenceManager.getBibliography().forEach((reference) => {
-      let fragments = entityRenderers[reference.type]($$, reference.id, db)
       el.append(
         $$('div').addClass('se-reference').append(
-          $$('div').addClass('se-text').append(
-            ...fragments
+          $$('div').addClass('se-text').html(
+            entityRenderers[reference.type](reference.id, db)
           ),
           $$('div').addClass('se-actions').append(
             $$('button').append('Edit').on('click', this._toggleEditor.bind(this, reference.id)),

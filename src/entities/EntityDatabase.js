@@ -61,7 +61,6 @@ Organisation.schema = {
   name: { type: 'string', optional: true },
 }
 
-
 export default class EntityDatabase extends Document {
   /*
     Simple API to find records in the entity database.

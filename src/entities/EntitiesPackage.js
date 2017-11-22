@@ -31,6 +31,7 @@ export default {
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('elocationId', 'E-Location ID')
     // person labels
+    config.addLabel('orcid', 'ORCID')
     config.addLabel('givenNames', 'Given names')
     config.addLabel('surname', 'Surname')
     config.addLabel('prefix', 'Prefix')

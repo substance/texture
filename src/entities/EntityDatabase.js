@@ -43,10 +43,11 @@ export class Person extends DocumentNode {}
 
 Person.schema = {
   type: 'person',
-  givenNames: { type: 'string', optional: true},
-  surname: { type: 'string', optional: true},
-  prefix: { type: 'string', optional: true},
-  suffix: { type: 'string', optional: true},
+  orcid: { type: 'string', optional: true },
+  givenNames: { type: 'string', optional: true },
+  surname: { type: 'string', optional: true },
+  prefix: { type: 'string', optional: true },
+  suffix: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
 }
 
@@ -65,6 +66,6 @@ export default class EntityDatabase extends Document {
   find(qry) {
     let nodesByType = this.getIndex('type')
     let nodeIds = Object.keys(nodesByType.get(qry.type))
-    return nodeIds.map((nodeId) => this.get(nodeId))
+    return nodeIds
   }
 }

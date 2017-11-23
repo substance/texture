@@ -156,7 +156,7 @@
           <page-range>214-216</page-range>
         </element-citation>
       </ref>
-      <ref id="r2">
+      <!-- <ref id="r2">
         <element-citation publication-type="preprint">
           <person-group person-group-type="author">
             <name>
@@ -234,7 +234,6 @@
               <given-names>John</given-names>
             </name>
           </person-group>
-          <!-- TODO: verify why string-date is proposed for periodical pub type -->
           <year>2010</year>
           <month>10</month>
           <day>5</day>
@@ -245,7 +244,7 @@
           <lpage>6448</lpage>
           <page-range>6436-6448</page-range>
         </element-citation>
-      </ref>
+      </ref> -->
       <ref id="r7">
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
@@ -272,7 +271,7 @@
           <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
-      <ref id="r8">
+      <!-- <ref id="r8">
         <element-citation publication-type="patent">
           <person-group person-group-type="inventor">
             <name>
@@ -280,10 +279,6 @@
               <given-names>John</given-names>
             </name>
           </person-group>
-          <!--
-            TODO: JATS spec suggests using something like this instead:
-            <collab collab-type="assignee">Hospira, Inc.</collab>
-          -->
           <person-group person-group-type="assignee">
             <name>
               <surname>Doe</surname>
@@ -370,7 +365,7 @@
           <publisher-loc>Website publisher location?</publisher-loc>
           <uri>http://example.com/example-page.html</uri>
         </element-citation>
-      </ref>
+      </ref> -->
     </ref-list>
   </back>
 </article>

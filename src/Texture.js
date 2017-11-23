@@ -5,7 +5,8 @@ import TextureConfigurator from './editor/util/TextureConfigurator'
 import JATSImporter from './converter/JATSImporter'
 import JATSImportDialog from './converter/JATSImportDialog'
 import JATSExporter from './converter/JATSExporter'
-import createEntityDb from './entities/createEntityDb'
+import createEntityDbSession from './entities/createEntityDbSession'
+import ReferenceManager from './editor/util/ReferenceManager'
 
 /*
   Texture Component
@@ -18,8 +19,13 @@ export default class Texture extends Component {
     this.configurator = new TextureConfigurator()
     this.configurator.import(EditorPackage)
 
-    // TODO: we need where the best place is for the entityDb
-    this.entityDb = createEntityDb()
+    // TODO: we need to see where the best place is for the entityDb
+    this.entityDbSession = createEntityDbSession()
+    this.entityDb = this.entityDbSession.getDocument()
+
+    // HACK: we assume that importer creates a journal-article entry with id 'main-article'
+    // that holds the bibliography (mainarticle.references)
+    this.referenceManager = new ReferenceManager(this.entityDbSession, 'main-article')
   }
 
   getInitialState() {
@@ -42,7 +48,12 @@ export default class Texture extends Component {
           return jatsExporter.export(dom, { entityDb })
         }
       },
-      entityDb: this.entityDb
+      entityDbSession: this.entityDbSession,
+      entityDb: this.entityDb,
+      // TODO: Update components to use entityDb, entityDbSession instead.
+      db: this.entityDb,
+      dbSession: this.entityDbSession,
+      referenceManager: this.referenceManager
     }
   }
 

@@ -1,7 +1,7 @@
 import { t2r } from './r2t'
 import { validateXMLSchema } from 'substance'
 import { JATS4R } from '../article'
-import { createEntityDb } from '../entities'
+import { createEntityDbSession } from '../entities'
 
 export default class JATSExporter {
   /*
@@ -9,7 +9,12 @@ export default class JATSExporter {
     following JATS4R guidelines.
   */
   export(dom, context = {}) {
-    let entityDb = context.entityDb || createEntityDb()
+    let entityDb = context.entityDb
+
+    if (!entityDb) {
+      entityDb = createEntityDbSession().getDocument()
+    }
+
     let state = {
       hasErrored: false,
       errors: [],

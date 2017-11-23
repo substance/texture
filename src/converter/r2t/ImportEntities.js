@@ -38,6 +38,9 @@ export default class ImportEntities {
     let refs = dom.findAll('ref')
 
     const entityDb = api.entityDb
+
+
+    let refEntityIds = [] // keep a list of entityIds, for each reference
     refs.forEach((refEl) => {
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
@@ -49,15 +52,35 @@ export default class ImportEntities {
           bibRefs.forEach(bibRef => {
             bibRef.attr('rid', entityId)
           })
+          refEntityIds.push(entityId)
         }
       }
-      // make the DOM element just a shallow pointer
-      // TODO: we might need to check if the id of the ref
-      // is actually unique w.r.t. the global entity-db
-      // and change the id if necessary including all refs.
-      // But for now we just continue with the id from JATS
-      refEl.empty()
     })
+
+    // We create a journal-article entity to hold meta-data of the
+    // actual article. This includes node.reference (=bibliography) and
+    // node.authors (person or organisation records) as well as publication
+    // history etc.
+    // NOTE: we call this main-article by convenstion for now. Once we connect
+    // to a global entity db we would need to generate a uuid for that record
+    // as well. But this should happen only and then stored in the XML for later
+    // reuse of that existing record.
+
+    // TODO: import other metadata, such as publication history, authors,
+    // affiliations etc.
+    entityDb.create({
+      id: 'main-article',
+      type: 'journal-article',
+      references: refEntityIds
+    })
+
+    // Now we delete all refList elements, as the data is stored in the
+    // main-article node.
+    let refLists = dom.findAll('ref-list')
+    refLists.forEach(refList => {
+      refList.remove()
+    })
+
   }
 
   export(dom, api) {
@@ -65,14 +88,18 @@ export default class ImportEntities {
     const entities = entityDb.getNodes()
     const entityIds = Object.keys(entities)
 
-    let refList = dom.find('ref-list')
-    refList.empty()
+    let back = dom.find('back')
+    let refList = dom.createElement('ref-list')
 
     entityIds.forEach(entityId => {
       const entity = entities[entityId].toJSON()
       const ref = _createRefElement({dom, entity, entityDb})
-      if(ref) refList.append(ref)
+      if (ref) refList.append(ref)
     })
+
+    back.append(
+      refList
+    )
   }
 }
 

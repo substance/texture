@@ -6,7 +6,6 @@ export default class CreateEntity extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-create-entity')
-
     el.append(
       $$('div').addClass('se-content').append(
         $$(FormTitle, {

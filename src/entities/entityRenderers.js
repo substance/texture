@@ -1,5 +1,40 @@
+import { DefaultDOMElement } from 'substance'
+
+// ${authors}. ${editors}. ${year}. ${article-title}. ${source} <strong>${vol}</strong>:${fpage}-${lpage}.
+function journalArticleRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.editors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.editors, entityDb)
+    )
+  }
+  // We render an annotated article title here:
+  fragments.push(
+    _renderHTML($$, entity.articleTitle)
+  )
+  fragments.push('. ', entity.source)
+  if (entity.volume) {
+    fragments.push(
+      ' ',
+      $$('strong').append(
+        entity.volume
+      )
+    )
+  }
+  if (entity.fpage && entity.lpage) {
+    fragments.push(':', entity.fpage, '-', entity.lpage)
+  }
+  return fragments
+}
+
 // ${source} (${edition}). ${authors}. [ ${editors}, editors.] (${year}) ${publisher-loc}: ${publisher}.
-function bookCitationRenderer($$, entityId, entityDb) {
+function bookRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -42,9 +77,10 @@ function organisationRenderer($$, entityId, entityDb) {
   Exports
 */
 export default {
-  'person': personRenderer,
-  'book-citation': bookCitationRenderer,
-  'organisation': organisationRenderer
+  'person': _delegate(personRenderer),
+  'book': _delegate(bookRenderer),
+  'journal-article': _delegate(journalArticleRenderer),
+  'organisation': _delegate(organisationRenderer)
 }
 
 /*
@@ -66,4 +102,18 @@ function _renderAuthors($$, entityIds, entityDb) {
 
 function _renderHTML($$, htmlString) {
   return $$('span').html(htmlString)
+}
+
+function _delegate(fn) {
+  return function(entityId, db) {
+    let el = _createElement()
+    let $$ = el.createElement.bind(el)
+    let fragments = fn($$, entityId, db)
+    el.append(fragments)
+    return el.innerHTML
+  }
+}
+
+function _createElement() {
+  return DefaultDOMElement.parseSnippet('<div>', 'html')
 }

@@ -1,3 +1,7 @@
 .sc-edit-entity {
   height: 100%;
 }
+
+.sc-edit-entity > .se-content {
+  padding: 20px;
+}

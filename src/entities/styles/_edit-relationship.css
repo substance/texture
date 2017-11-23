@@ -2,7 +2,39 @@
   height: 100%;
 }
 
-/* HACK: we should find a way to style this independently of sc-modal-layout */
-.sc-edit-relationship > .sc-modal-layout > .se-edit-relationship-content {
+.sc-edit-relationship table.se-entries {
+  width: 100%;
+}
+
+.sc-edit-relationship td {
+  padding: 5px 0px;
+}
+
+.sc-edit-relationship td.se-actions {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.sc-edit-relationship td.se-type {
+  white-space: nowrap;
+  text-align: right;
+  padding: 0 5px;
+}
+
+.sc-edit-relationship td.se-type span {
+  background: #ddd;
+  padding: 2px 4px;
+  color: #777;
+  font-weight: 600;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.sc-edit-relationship td button {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.sc-edit-relationship > .se-content {
   padding: 20px;
 }

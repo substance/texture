@@ -1,5 +1,6 @@
 import { Component } from 'substance'
-import EditEntity from '../../entities/EditEntity'
+// import EditEntity from '../../entities/EditEntity'
+import EditRelationship from '../../entities/EditRelationship'
 import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
 
@@ -8,59 +9,75 @@ export default class Bibliography extends Component {
     this.handleActions({
       'done': this._doneEditing,
       'cancel': this._doneEditing,
-      'closeModal': this._doneEditing
+      'closeModal': this._doneEditing,
+      'entitiesSelected': this._updateReferences
     })
   }
 
   getInitialState() {
     return {
-      entityId: undefined
+      edit: false
     }
   }
 
   render($$) {
     let el = $$('div').addClass('sc-bibliography')
     let db = this.context.db
+    let articleNode = this.context.referenceManager.node
 
-    if (this.state.entityId) {
+    if (this.state.edit) {
       var modal = $$(ModalDialog, {
-        width: 'medium',
+        width: 'large',
         textAlign: 'center'
       })
       modal.append(
-        $$(EditEntity, {
-          node: db.get(this.state.entityId)
+        $$(EditRelationship, {
+          propertyName: 'references',
+          entityIds: articleNode.references,
+          targetTypes: ['journal-article', 'book']
         })
       )
       el.append(modal)
     }
 
+    el.append(
+      $$('div').addClass('se-title').append(
+        'Bibliography'
+      )
+    )
+
     this.context.referenceManager.getBibliography().forEach((reference) => {
-      let fragments = entityRenderers[reference.type]($$, reference.id, db)
       el.append(
         $$('div').addClass('se-reference').append(
-          $$('div').addClass('se-text').append(
-            ...fragments
-          ),
-          $$('div').addClass('se-actions').append(
-            $$('button').append('Edit').on('click', this._toggleEditor.bind(this, reference.id)),
-            $$('button').append('Delete')
+          $$('div').addClass('se-text').html(
+            entityRenderers[reference.type](reference.id, db)
           )
         )
       )
     })
+
+    el.append(
+      $$('button').append('Edit').on('click', this._editBibliography)
+    )
     return el
   }
 
-  _toggleEditor(entityId) {
+  _editBibliography() {
     this.setState({
-      entityId
+      edit: true
     })
   }
 
   _doneEditing() {
     this.setState({
-      entityId: undefined
+      edit: false
+    })
+  }
+
+  _updateReferences(entityIds) {
+    this.context.referenceManager.updateReferences(entityIds)
+    this.setState({
+      edit: false
     })
   }
 }

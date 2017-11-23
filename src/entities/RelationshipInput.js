@@ -35,32 +35,35 @@ export default class RelationshipInput extends Component {
           transparent: true
         }).append(
           $$(EditRelationship, {
+            propertyName: this.props.propertyName,
             entityIds: this.state.entityIds,
             targetTypes: this.props.targetTypes
           })
         )
       )
-    } else {
-      if (entities.length > 0) {
-        entities.forEach((entityId, index) => {
-          let entity = db.get(entityId)
-          el.append(
-            entityRenderers[entity.type]($$, entity.id, db)
-          )
-          if (index < entities.length-1) {
-            el.append(', ')
-          }
-        })
-      } else {
+    }
+    if (entities.length > 0) {
+      entities.forEach((entityId, index) => {
+        let entity = db.get(entityId)
         el.append(
-          $$('div').addClass('se-empty').append('No Entries')
+          $$('span').html(
+            entityRenderers[entity.type](entity.id, db)
+          )
         )
-      }
-
+        if (index < entities.length-1) {
+          el.append(', ')
+        }
+      })
+    } else {
       el.append(
-        $$('button').append('Edit').on('click', this._openRelationshipEditor)
+        $$('div').addClass('se-empty').append('No Entries')
       )
     }
+
+    el.append(
+      $$('button').append('Edit').on('click', this._openRelationshipEditor)
+    )
+
     return el
   }
 

@@ -59,5 +59,10 @@ export default {
     config.addLabel('edit-authors', 'Edit Authors')
     config.addLabel('edit-editors', 'Edit Editors')
     config.addLabel('edit-references', 'Edit Bibliography')
+
+    config.addLabel('create-book', 'Create Book')
+    config.addLabel('create-journal-article', 'Create Journal Article')
+    config.addLabel('create-person', 'Create Person')
+    config.addLabel('create-organisation', 'Create Organisation')
   }
 }

@@ -35,7 +35,7 @@
         let db = configurator.createDocument()
 
         db.create({
-          id: 'test-article-1',
+          id: 'main-article',
           type: 'journal-article',
           authors: ['person-1', 'person-2'],
           editors: ['person-3'],
@@ -109,7 +109,7 @@
         })
 
         let labelProvider = configurator.getLabelProvider()
-        let referenceManager = new ReferenceManager(dbSession, 'test-article-1')
+        let referenceManager = new ReferenceManager(dbSession, 'main-article')
 
         class App extends Component {
           getChildContext() {

@@ -23,7 +23,7 @@ export default class Bibliography extends Component {
   render($$) {
     let el = $$('div').addClass('sc-bibliography')
     let db = this.context.db
-    let articleNode = this.context.referenceManager.node
+    let articleNode = this.context.referenceManager.getNode()
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {

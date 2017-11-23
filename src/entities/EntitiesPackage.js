@@ -58,6 +58,6 @@ export default {
 
     config.addLabel('edit-authors', 'Edit Authors')
     config.addLabel('edit-editors', 'Edit Editors')
-    config.addLabel('edit-references', 'Edit References')
+    config.addLabel('edit-references', 'Edit Bibliography')
   }
 }

@@ -13,23 +13,31 @@ export default class EntitySelector extends Component {
   render($$) {
     let el = $$('div').addClass('sc-entity-selector')
 
-    el.append(
-      $$('div').addClass('se-input-field').append(
-        $$('input')
-          .attr({
-            type: 'text',
-            value: this.state.searchString,
-            placeholder: this.props.placeholder
-          })
-          .on('input', this._onSearchStringChanged)
-          .ref('searchString')
-      )
+    let inputEl = $$('div').addClass('se-input-field').append(
+      $$('input')
+        .attr({
+          type: 'text',
+          value: this.state.searchString,
+          placeholder: this.props.placeholder
+        })
+        .on('input', this._onSearchStringChanged)
+        .ref('searchString')
     )
 
     if (this.state.searchString !== '') {
+      let createBtns = $$('div').addClass('se-create')
+      this.props.targetTypes.forEach(targetType => {
+        createBtns.append(
+          $$('button').append('Create '+targetType)
+            .on('click', this._triggerCreate.bind(this, targetType))
+        )
+      })
       el.append(
+        inputEl.append(createBtns),
         this._renderOptions($$)
       )
+    } else {
+      el.append(inputEl)
     }
 
     return el
@@ -48,15 +56,15 @@ export default class EntitySelector extends Component {
       )
     })
 
-    // Render options for creation
-    this.props.targetTypes.forEach(targetType => {
-      el.append(
-        $$('div').addClass('se-option').append(
-          $$('button').append('Create '+targetType)
-        )
-        .on('click', this._triggerCreate.bind(this, targetType))
-      )
-    })
+    // // Render options for creation
+    // this.props.targetTypes.forEach(targetType => {
+    //   el.append(
+    //     $$('div').addClass('se-option').append(
+    //       $$('button').append('Create '+targetType)
+    //     )
+    //     .on('click', this._triggerCreate.bind(this, targetType))
+    //   )
+    // })
     return el
   }
 

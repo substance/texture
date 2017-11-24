@@ -1,4 +1,5 @@
 .sc-entity-form {
+  padding: 0px 20px 20px;
 }
 
 .sc-entity-form > .sc-form-label {
@@ -6,5 +7,7 @@
 }
 
 .sc-entity-form button {
-  color: #0065DE;
+  display: inline-block;
+  float: right;
+  color: #4A90E2;
 }

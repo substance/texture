@@ -1,4 +1,31 @@
+.sc-entity-selector {
+  border-top: 1px solid #dadada;
+  padding: 15px 20px;
+}
+
+.sc-entity-selector .se-input-field {
+  position: relative;
+}
+
 .sc-entity-selector input {
   width: 100%;
   padding: 2px 5px;
+}
+
+.sc-entity-selector .se-create {
+  right: 10px;
+  position: absolute;
+  top: 7px;
+  font-size: 10px;
+}
+
+.sc-entity-selector .se-create button {
+  display: inline-block;
+  margin-left: 10px;
+  color: #4A90E2;
+}
+
+.sc-entity-selector .se-create .se-options {
+  border: 1px solid #DADADA;
+  padding: 10px;
 }

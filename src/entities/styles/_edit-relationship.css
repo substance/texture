@@ -16,6 +16,7 @@
 }
 
 .sc-edit-relationship td.se-actions {
+  width: 100px;
   white-space: nowrap;
   text-align: right;
 }

@@ -1,4 +1,6 @@
-.sc-relationship-input {}
+.sc-relationship-input {
+  min-height: 25px;
+}
 
 .sc-relationship-input > button {
   display: inline-block;

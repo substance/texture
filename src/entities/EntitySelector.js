@@ -21,6 +21,7 @@ export default class EntitySelector extends Component {
           placeholder: this.props.placeholder
         })
         .on('input', this._onSearchStringChanged)
+        .on('keydown', this._onKeydown)
         .ref('searchString')
     )
 
@@ -49,11 +50,16 @@ export default class EntitySelector extends Component {
 
     this.state.results.forEach(entity => {
       // let entity = db.get(entityId)
-      el.append(
-        $$('div').addClass('se-option').html(
-          entityRenderers[entity.type](entity.id, db)
-        ).on('click', this._selectOption.bind(this, entity.id))
-      )
+
+      let option = $$('div').addClass('se-option').html(
+        entityRenderers[entity.type](entity.id, db)
+      ).on('click', this._selectOption.bind(this, entity.id))
+
+      if(this.state.selected === entity.id) {
+        option.addClass('se-selected')
+      }
+
+      el.append(option)
     })
 
     // // Render options for creation
@@ -70,6 +76,52 @@ export default class EntitySelector extends Component {
 
   _selectOption(entityId) {
     this.props.onSelected(entityId)
+  }
+
+  _selectNext() {
+    const selection = this.state.selected
+    const results = this.state.results
+    if(results.length > 0) {
+      let selectedEntity
+      if(selection) {
+        const selectionIndex = results.findIndex(item => {
+          return item.id === selection
+        })
+
+        if(selectionIndex < results.length - 1) {
+          selectedEntity = results[selectionIndex + 1]
+        } else {
+          selectedEntity = results[0]
+        }
+      } else {
+        selectedEntity = results[0]
+      }
+
+      this.extendState({selected: selectedEntity.id})
+    }
+  }
+
+  _selectPrevious() {
+    const selection = this.state.selected
+    const results = this.state.results
+    if(results.length > 0) {
+      let selectedEntity
+      if(selection) {
+        const selectionIndex = results.findIndex(item => {
+          return item.id === selection
+        })
+
+        if(selectionIndex > 0) {
+          selectedEntity = results[selectionIndex - 1]
+        } else {
+          selectedEntity = results[results.length - 1]
+        }
+      } else {
+        selectedEntity = results[results.length - 1]
+      }
+
+      this.extendState({selected: selectedEntity.id})
+    }
   }
 
   _triggerCreate(targetType) {
@@ -108,5 +160,17 @@ export default class EntitySelector extends Component {
       searchString: searchString,
       results
     })
+  }
+
+  _onKeydown(e) {
+    if (e.keyCode === 38) {
+      e.preventDefault()
+      this._selectPrevious()
+    } else if (e.keyCode === 40) {
+      e.preventDefault()
+      this._selectNext()
+    } else if (e.keyCode === 13 && this.state.selected) {
+      this._selectOption(this.state.selected)
+    }
   }
 }

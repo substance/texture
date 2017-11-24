@@ -5,9 +5,3 @@
 .sc-entity-form > .sc-form-label {
   padding-top: 10px;
 }
-
-.sc-entity-form button {
-  display: inline-block;
-  float: right;
-  color: #4A90E2;
-}

@@ -40,5 +40,7 @@
   color: #4A90E2;
 }
 
-.sc-edit-relationship > .se-content {
+.sc-edit-relationship > .se-content .se-empty {
+  border-top: 1px solid #dadada;
+  padding: 10px 20px;
 }

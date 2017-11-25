@@ -1,1 +1,13 @@
-.sc-relationship-input {}
+.sc-relationship-input {
+  min-height: 25px;
+}
+
+.sc-relationship-input > button {
+  display: inline-block;
+  float: right;
+  color: #4A90E2;
+}
+
+.sc-relationship-input > .se-empty {
+  float: left;
+}

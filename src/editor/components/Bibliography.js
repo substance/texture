@@ -27,7 +27,7 @@ export default class Bibliography extends Component {
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {
-        width: 'large',
+        width: 'medium',
         textAlign: 'center'
       })
       modal.append(

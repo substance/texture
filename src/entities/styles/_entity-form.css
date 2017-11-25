@@ -1,10 +1,7 @@
 .sc-entity-form {
+  padding: 0px 20px 20px;
 }
 
 .sc-entity-form > .sc-form-label {
   padding-top: 10px;
-}
-
-.sc-entity-form button {
-  color: #0065DE;
 }

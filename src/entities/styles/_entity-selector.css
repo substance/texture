@@ -1,4 +1,47 @@
-.sc-entity-selector input {
+.sc-entity-selector {
+  border-top: 1px solid #dadada;
+  padding: 15px 20px;
+}
+
+.sc-entity-selector > .se-input-field {
+  position: relative;
+}
+
+.sc-entity-selector > .se-input-field > input {
   width: 100%;
-  padding: 2px 5px;
+  padding: 2px 10px;
+  border-radius: 0px;
+  background: none;
+  border: 1px solid #DADADA;
+}
+
+.sc-entity-selector > .se-input-field > .se-create {
+  right: 10px;
+  position: absolute;
+  top: 7px;
+  font-size: 10px;
+}
+
+.sc-entity-selector > .se-input-field > .se-create > button {
+  display: inline-block;
+  margin-left: 10px;
+  color: #4A90E2;
+}
+
+.sc-entity-selector > .se-options,
+.sc-entity-selector > .se-create > .se-options {
+  border: 1px solid #DADADA;
+  border-top: 0;
+  padding: 10px 0px;
+}
+
+.sc-entity-selector .se-options > .se-option {
+  padding: 5px 10px;
+}
+
+.sc-entity-selector .se-options > .se-option:hover,
+.sc-entity-selector .se-options > .se-option.se-selected {
+  background: #0065DE;
+  color: #fff;
+  cursor: pointer;
 }

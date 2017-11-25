@@ -6,11 +6,17 @@
   width: 100%;
 }
 
+.sc-edit-relationship tr.se-entry {
+  border-top: 1px solid #dadada;
+}
+
 .sc-edit-relationship td {
-  padding: 5px 0px;
+  padding: 10px 20px;
+  font-size: 15px;
 }
 
 .sc-edit-relationship td.se-actions {
+  width: 100px;
   white-space: nowrap;
   text-align: right;
 }
@@ -23,9 +29,8 @@
 
 .sc-edit-relationship td.se-type span {
   background: #ddd;
-  padding: 2px 4px;
+  padding: 3px 10px;
   color: #777;
-  font-weight: 600;
   border-radius: 3px;
   font-size: 12px;
 }
@@ -33,8 +38,10 @@
 .sc-edit-relationship td button {
   display: inline-block;
   margin-left: 10px;
+  color: #4A90E2;
 }
 
-.sc-edit-relationship > .se-content {
-  padding: 20px;
+.sc-edit-relationship > .se-content .se-empty {
+  border-top: 1px solid #dadada;
+  padding: 10px 20px;
 }

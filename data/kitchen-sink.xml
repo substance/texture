@@ -8,37 +8,41 @@
     <article-meta>
       <title-group>
         <article-title>Texture Kitchen Sink</article-title>
-        <trans-title-group xml:lang="de">
-          <trans-title>Texture Küchenspüle</trans-title>
-        </trans-title-group>
-        <trans-title-group xml:lang="cz">
-          <trans-title>Czech title translation</trans-title>
-        </trans-title-group>
       </title-group>
-      <contrib-group>
-        <contrib contrib-type="author" aff-ids="aff1 aff2">
+
+      <contrib-group content-type="authors">
+        <contrib contrib-type="author" id="person1">
           <name>
-            <surname>Doe</surname>
-            <given-names>John</given-names>
+            <surname>Doe</surname><given-names>Jane</given-names>
           </name>
-        </contrib>
-        <contrib contrib-type="author" aff-ids="aff2">
-          <name>
-            <surname>Doe</surname>
-            <given-names>Jane</given-names>
-          </name>
+          <xref ref-type="aff" rid="aff1"/>
         </contrib>
       </contrib-group>
+
+      <contrib-group content-type="editors">
+        <contrib contrib-type="editor" id="person2">
+          <name>
+            <surname>Jane</surname><given-names>Doe</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+        </contrib>
+      </contrib-group>
+
       <aff id="aff1">
-        <institution>Foo University</institution>
-        <city>London</city>
-        <country>UK</country>
+        <institution content-type="orgname">Settles-Young Research Corporation</institution>
+        <institution content-type="orgdiv1">Laboratory of Neural Systems</institution>
+        <addr-line content-type="address-street">283 Hawthorne Drive</addr-line>
+        <addr-line content-type="complements">Suite 310</addr-line>
+        <city>Lexington</city>
+        <state>KY</state>
+        <postal-code>40503</postal-code>
+        <country>USA</country>
+        <phone>(859) 273-8543</phone>
+        <fax>(859) 299-4683</fax>
+        <email>lsy@settles-young.com</email>
+        <uri>http://www.settles-young.com</uri>
       </aff>
-      <aff id="aff2">
-        <institution>Bar Ltd</institution>
-        <city>London</city>
-        <country>UK</country>
-      </aff>
+
       <!-- Publication date, as required by SciELO -->
       <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
           <day>29</day>

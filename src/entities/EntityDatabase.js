@@ -60,6 +60,20 @@ export class Organisation extends DocumentNode {}
 Organisation.schema = {
   type: 'organisation',
   name: { type: 'string', optional: true },
+  division1: { type: 'string', optional: true },
+  division2: { type: 'string', optional: true },
+  division3: { type: 'string', optional: true },
+  // Consider switching to address-line1,2,3
+  street: { type: 'string', optional: true },
+  addressComplements: { type: 'string', optional: true },
+  city: { type: 'string', optional: true },
+  state: { type: 'string', optional: true },
+  postalCode: { type: 'string', optional: true },
+  country: { type: 'string', optional: true },
+  phone: { type: 'string', optional: true },
+  fax: { type: 'string', optional: true },
+  email: { type: 'string', optional: true },
+  uri: { type: 'string', optional: true },
 }
 
 export default class EntityDatabase extends Document {

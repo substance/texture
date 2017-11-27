@@ -73,13 +73,15 @@ export default class ImportEntities {
 
     // TODO: import other metadata, such as publication history, authors,
     // affiliations etc.
-    entityDb.create({
+    let articleNode = {
       id: 'main-article',
       type: 'journal-article',
       references: refEntityIds,
       authors: authors,
       editors: editors
-    })
+    }
+    console.log('articleNode', articleNode)
+    entityDb.create(articleNode)
 
     // Now we delete all refList elements, as the data is stored in the
     // main-article node.
@@ -336,6 +338,7 @@ function _extractOrganisations(dom, entityDb) {
 function _extractAuthors(dom, entityDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
   let contribs = contribGroup.findAll('contrib')
+  let personIds = []
   contribs.forEach(contrib => {
     let orgIds = contrib.findAll('xref').map(xref => xref.rid)
     let node = {
@@ -348,7 +351,9 @@ function _extractAuthors(dom, entityDb, type) {
       affiliations: orgIds
     }
     entityDb.create(node)
+    personIds.push(node.id)
   })
+  return personIds
 }
 
 function _getTextFromDOM(rootEl, selector) {

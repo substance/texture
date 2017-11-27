@@ -71,8 +71,7 @@ export default class ImportEntities {
     let authors = _extractAuthors(dom, entityDb, 'authors')
     let editors = _extractAuthors(dom, entityDb, 'editors')
 
-    // TODO: import other metadata, such as publication history, authors,
-    // affiliations etc.
+    // TODO: import other metadata, such as publication history
     let articleNode = {
       id: 'main-article',
       type: 'journal-article',
@@ -80,7 +79,6 @@ export default class ImportEntities {
       authors: authors,
       editors: editors
     }
-    console.log('articleNode', articleNode)
     entityDb.create(articleNode)
 
     // Now we delete all refList elements, as the data is stored in the
@@ -337,6 +335,7 @@ function _extractOrganisations(dom, entityDb) {
 */
 function _extractAuthors(dom, entityDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
+  if (!contribGroup) return []
   let contribs = contribGroup.findAll('contrib')
   let personIds = []
   contribs.forEach(contrib => {

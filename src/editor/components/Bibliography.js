@@ -42,7 +42,7 @@ export default class Bibliography extends Component {
 
     el.append(
       $$('div').addClass('se-title').append(
-        'Bibliography'
+        'References'
       )
     )
 

@@ -66,12 +66,19 @@ export default class ImportEntities {
     // as well. But this should happen only and then stored in the XML for later
     // reuse of that existing record.
 
+    // This pulls out all aff elements and creates organisation entities from it.
+    _extractOrganisations(dom, entityDb)
+    let authors = _extractAuthors(dom, entityDb, 'authors')
+    let editors = _extractAuthors(dom, entityDb, 'editors')
+
     // TODO: import other metadata, such as publication history, authors,
     // affiliations etc.
     entityDb.create({
       id: 'main-article',
       type: 'journal-article',
-      references: refEntityIds
+      references: refEntityIds,
+      authors: authors,
+      editors: editors
     })
 
     // Now we delete all refList elements, as the data is stored in the
@@ -241,12 +248,12 @@ function _createNameElement(el, person) {
     el.createElement('surname').append(person.surname),
     el.createElement('given-names').append(person.givenNames)
   )
-  if(person.prefix) {
+  if (person.prefix) {
     nameEl.append(
       el.createElement('prefix').append(person.prefix)
     )
   }
-  if(person.suffix) {
+  if (person.suffix) {
     nameEl.append(
       el.createElement('suffix').append(person.suffix)
     )
@@ -271,6 +278,84 @@ function _getElementCitationProperty(prop, elementCitation) {
     const propEl = elementCitation.find(xmlProp)
     if(propEl) result = propEl.text()
   }
-
   return result
+}
+
+
+/*
+<aff id="aff1">
+  <institution content-type="orgname">Settles-Young Research Corporation</institution>
+  <institution content-type="orgdiv1">Laboratory of Neural Systems</institution>
+  <addr-line content-type="address-street">283 Hawthorne Drive</addr-line>
+  <addr-line content-type="complements">Suite 310</addr-line>
+  <city>Lexington</city>
+  <state>KY</state>
+  <postal-code>40503</postal-code>
+  <country>USA</country>
+  <phone>(859) 273-8543</phone>
+  <fax>(859) 299-4683</fax>
+  <email>lsy@settles-young.com</email>
+  <uri>http://www.settles-young.com</uri>
+</aff>
+*/
+function _extractOrganisations(dom, entityDb) {
+  let affs = dom.findAll('article-meta > aff')
+
+  affs.forEach(aff => {
+    let node = {
+      id: aff.id,
+      type: 'organisation',
+      name: _getTextFromDOM(aff, 'institution[content-type=orgname]'),
+      division1: _getTextFromDOM(aff, 'institution[content-type=orgdiv1]'),
+      division2: _getTextFromDOM(aff, 'institution[content-type=orgdiv2]'),
+      division3: _getTextFromDOM(aff, 'institution[content-type=orgdiv3]'),
+      street: _getTextFromDOM(aff, 'addr-line[content-type=address-street]'),
+      addressComplements: _getTextFromDOM(aff, 'addr-line[content-type=complements]'),
+      city: _getTextFromDOM(aff, 'city'),
+      state: _getTextFromDOM(aff, 'state'),
+      postalCode: _getTextFromDOM(aff, 'postal-code'),
+      country: _getTextFromDOM(aff, 'country'),
+      phone: _getTextFromDOM(aff, 'phone'),
+      fax: _getTextFromDOM(aff, 'fax'),
+    }
+    entityDb.create(node)
+  })
+
+}
+
+/*
+<contrib-group content-type="authors">
+  <contrib contrib-type="author">
+    <name>
+      <surname>Doe</surname><given-names>Jane</given-names>
+    </name>
+    <xref ref-type="aff" rid="aff1"/>
+  </contrib>
+</contrib-group>
+*/
+function _extractAuthors(dom, entityDb, type) {
+  let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
+  let contribs = contribGroup.findAll('contrib')
+  contribs.forEach(contrib => {
+    let orgIds = contrib.findAll('xref').map(xref => xref.rid)
+    let node = {
+      id: contrib.id,
+      type: 'person',
+      surname: _getTextFromDOM(contrib, 'surname'),
+      givenNames: _getTextFromDOM(contrib, 'given-names'),
+      prefix: _getTextFromDOM(contrib, 'prefix'),
+      suffix: _getTextFromDOM(contrib, 'suffix'),
+      affiliations: orgIds
+    }
+    entityDb.create(node)
+  })
+}
+
+function _getTextFromDOM(rootEl, selector) {
+  let match = rootEl.find(selector)
+  if (match) {
+    return match.textContent
+  } else {
+    return ''
+  }
 }

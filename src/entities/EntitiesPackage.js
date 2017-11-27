@@ -1,5 +1,5 @@
 import EntityDatabase from './EntityDatabase'
-import { JournalArticle, Book, Person, Organisation } from './EntityDatabase'
+import { BibliographicEntry, JournalArticle, Book, Person, Organisation } from './EntityDatabase'
 
 export default {
   name: 'entities',
@@ -10,6 +10,7 @@ export default {
       DocumentClass: EntityDatabase,
       defaultTextType: 'paragraph'
     })
+    config.addNode(BibliographicEntry)
     config.addNode(JournalArticle)
     config.addNode(Book)
     config.addNode(Person)

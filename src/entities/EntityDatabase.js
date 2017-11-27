@@ -1,6 +1,14 @@
-import { DocumentNode, Document } from 'substance'
+import { DocumentNode, Document, without } from 'substance'
 
-export class Book extends DocumentNode {}
+// Using an 'abstract base class' to be
+// able to identify sub-types via isInstanceOf
+export class BibliographicEntry extends DocumentNode {}
+BibliographicEntry.schema = {
+  type: 'bibr'
+}
+BibliographicEntry.abstract = true
+
+export class Book extends BibliographicEntry {}
 
 Book.schema = {
   type: 'book',
@@ -23,7 +31,7 @@ Book.schema = {
   pmid: { type: 'string', optional: true}
 }
 
-export class JournalArticle extends DocumentNode {}
+export class JournalArticle extends BibliographicEntry {}
 
 JournalArticle.schema = {
   type: 'journal-article',
@@ -80,8 +88,29 @@ export default class EntityDatabase extends Document {
     Simple API to find records in the entity database.
   */
   find(qry) {
+    return this.findByType(qry.type)
+  }
+
+  findByType(type) {
+    let NodeClass = this.schema.getNodeClass(type)
+    if (!NodeClass) return []
     let nodesByType = this.getIndex('type')
-    let nodeIds = Object.keys(nodesByType.get(qry.type))
+    let nodeIds = []
+    if (NodeClass.abstract) {
+      // TODO: would be nice to get sub-types from the schema
+      const schema = this.schema
+      schema.nodeRegistry.names.forEach((subType) => {
+        if (schema.isInstanceOf(subType, type)) {
+          nodeIds = nodeIds.concat(Object.keys(nodesByType.get(subType)))
+        }
+      })
+    } else {
+      nodeIds = Object.keys(nodesByType.get(type))
+    }
+    // HACK: we do not want to have one of these in the result
+    // how could we generalise this?
+    nodeIds = without(nodeIds, 'main-article')
     return nodeIds
   }
+
 }

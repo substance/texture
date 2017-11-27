@@ -1,5 +1,6 @@
 import { Tool, clone, find, without } from 'substance'
 import { getAvailableXrefTargets, getXrefTargets } from '../util'
+import EntityPreviewComponent from './EntityPreviewComponent'
 
 /*
   Editing of XRefTargets
@@ -16,7 +17,7 @@ export default class EditXRefTool extends Tool {
 
   _computeState(nodeId) {
     return {
-      targets: getAvailableXrefTargets(this._getNode(nodeId), this.context.labelGenerator)
+      targets: getAvailableXrefTargets(this._getNode(nodeId), this.context.entityDb)
     }
   }
 
@@ -31,16 +32,27 @@ export default class EditXRefTool extends Tool {
 
   render($$) {
     let el = $$('div').addClass('sc-edit-xref-tool')
-    this.state.targets.forEach(function(target) {
-      let TargetComponent = this.getComponent(target.node.type+'-preview')
-      let props = clone(target)
-      // Disable editing in TargetComponent
-      props.disabled = true
-      el.append(
-        $$(TargetComponent, props)
-          .on('click', this._toggleTarget.bind(this, target.node))
-      )
-    }.bind(this))
+    this.state.targets.forEach((target) => {
+      // TODO: we now gonna have two paths at any place where
+      // entities or document nodes can occur at the same time
+      // Maybe we should introduce a EntityRenderPackage that
+      // registers components using a specific notation, or just by type.
+      let targetPreviewEl
+      if (target.isEntity) {
+        targetPreviewEl = $$(EntityPreviewComponent, {
+          node: target.node,
+          selected: target.selected
+        })
+      } else {
+        let TargetComponent = this.getComponent(target.node.type+'-preview')
+        let props = clone(target)
+        // Disable editing in TargetComponent
+        props.disabled = true
+        targetPreviewEl = $$(TargetComponent, props)
+      }
+      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.node))
+      el.append(targetPreviewEl)
+    })
     return el
   }
 

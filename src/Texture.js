@@ -125,12 +125,6 @@ export default class Texture extends Component {
       const importer = configurator.createImporter('texture-jats')
       const doc = importer.importDocument(dom)
 
-      // HACK: Import main-article from entityDb into texture documen
-      // We now have a mixture of an XML document and regular
-      // Substance nodes.
-      let mainArticle = this.entityDb.get('main-article')
-      doc.create(mainArticle)
-
       window.doc = doc
       // create editor session
       const editorSession = new EditorSession(doc, {

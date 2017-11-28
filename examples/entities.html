@@ -34,14 +34,6 @@
         configurator.import(EntitiesPackage)
         let db = configurator.createDocument()
 
-        db.create({
-          id: 'main-article',
-          type: 'journal-article',
-          authors: ['person-1', 'person-2'],
-          editors: ['person-3'],
-          articleTitle: 'Test article',
-          references: ['journal-article-1', 'book-1']
-        })
 
         // Journal Article
         db.create({

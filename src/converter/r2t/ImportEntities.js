@@ -39,8 +39,6 @@ export default class ImportEntities {
 
     const entityDb = api.entityDb
 
-
-    let refEntityIds = [] // keep a list of entityIds, for each reference
     refs.forEach((refEl) => {
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
@@ -52,7 +50,7 @@ export default class ImportEntities {
           bibRefs.forEach(bibRef => {
             bibRef.attr('rid', entityId)
           })
-          refEntityIds.push(entityId)
+          refEl.empty()
         }
       }
     })
@@ -68,26 +66,8 @@ export default class ImportEntities {
 
     // This pulls out all aff elements and creates organisation entities from it.
     _extractOrganisations(dom, entityDb)
-    let authors = _extractAuthors(dom, entityDb, 'authors')
-    let editors = _extractAuthors(dom, entityDb, 'editors')
-
-    // TODO: import other metadata, such as publication history
-    let articleNode = {
-      id: 'main-article',
-      type: 'journal-article',
-      references: refEntityIds,
-      authors: authors,
-      editors: editors
-    }
-    entityDb.create(articleNode)
-
-    // Now we delete all refList elements, as the data is stored in the
-    // main-article node.
-    let refLists = dom.findAll('ref-list')
-    refLists.forEach(refList => {
-      refList.remove()
-    })
-
+    _extractAuthors(dom, entityDb, 'authors')
+    _extractAuthors(dom, entityDb, 'editors')
   }
 
   export(dom, api) {
@@ -321,6 +301,11 @@ function _extractOrganisations(dom, entityDb) {
     entityDb.create(node)
   })
 
+  // Remove affs from the DOM
+  affs.forEach(aff => {
+    aff.remove()
+  })
+
 }
 
 /*
@@ -337,7 +322,6 @@ function _extractAuthors(dom, entityDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
   if (!contribGroup) return []
   let contribs = contribGroup.findAll('contrib')
-  let personIds = []
   contribs.forEach(contrib => {
     let orgIds = contrib.findAll('xref').map(xref => xref.rid)
     let node = {
@@ -350,9 +334,13 @@ function _extractAuthors(dom, entityDb, type) {
       affiliations: orgIds
     }
     entityDb.create(node)
-    personIds.push(node.id)
+    // Assign id if not present
+    if (!contrib.id) {
+      contrib.setAttribute('id', node.id)
+    }
+    contrib.empty()
   })
-  return personIds
+
 }
 
 function _getTextFromDOM(rootEl, selector) {

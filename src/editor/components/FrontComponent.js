@@ -15,8 +15,6 @@ export default class FrontComponent extends Component {
     // article-meta is mandatory
     const articleMeta = node.findChild('article-meta')
 
-    // Title
-
     // title-group is optional
     const titleGroup = articleMeta.findChild('title-group')
     let titleGroupEl
@@ -31,11 +29,15 @@ export default class FrontComponent extends Component {
     }
     el.append(titleGroupEl)
 
-    // Authors and affiliations
-    let authorsListEl = $$(this.getComponent('authors-list'), {
-      node: node
-    })
-    el.append(authorsListEl)
+    // contrib-group content-type="authors"
+    let authorsContribGroup = articleMeta.find('contrib-group[content-type=authors]')
+    if (authorsContribGroup) {
+      let authorsListEl = $$(this.getComponent('authors-list'), {
+        node: authorsContribGroup
+      })
+      el.append(authorsListEl)
+    }
+
 
     let affiliationsListEl = $$(this.getComponent('affiliations-list'), {
       node: node

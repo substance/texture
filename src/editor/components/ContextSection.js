@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import Navigator from './Navigator'
+// import Navigator from './Navigator'
 
 // HACK: we need this info to pass the right node to the component shown in the
 // context panel. By default we pass article-meta as the

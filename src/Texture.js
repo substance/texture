@@ -6,7 +6,6 @@ import JATSImporter from './converter/JATSImporter'
 import JATSImportDialog from './converter/JATSImportDialog'
 import JATSExporter from './converter/JATSExporter'
 import createEntityDbSession from './entities/createEntityDbSession'
-import ReferenceManager from './editor/util/ReferenceManager'
 
 /*
   Texture Component
@@ -23,9 +22,6 @@ export default class Texture extends Component {
     this.entityDbSession = createEntityDbSession()
     this.entityDb = this.entityDbSession.getDocument()
 
-    // HACK: we assume that importer creates a journal-article entry with id 'main-article'
-    // that holds the bibliography (mainarticle.references)
-    this.referenceManager = new ReferenceManager(this.entityDbSession, 'main-article')
   }
 
   getInitialState() {
@@ -52,8 +48,7 @@ export default class Texture extends Component {
       entityDb: this.entityDb,
       // TODO: Update components to use entityDb, entityDbSession instead.
       db: this.entityDb,
-      dbSession: this.entityDbSession,
-      referenceManager: this.referenceManager
+      dbSession: this.entityDbSession
     }
   }
 
@@ -130,13 +125,20 @@ export default class Texture extends Component {
       const importer = configurator.createImporter('texture-jats')
       const doc = importer.importDocument(dom)
 
+      // HACK: Import main-article from entityDb into texture documen
+      // We now have a mixture of an XML document and regular
+      // Substance nodes.
+      let mainArticle = this.entityDb.get('main-article')
+      doc.create(mainArticle)
+
       window.doc = doc
       // create editor session
       const editorSession = new EditorSession(doc, {
         configurator: configurator
       })
+
       this.setState({
-        editorSession: editorSession
+        editorSession: editorSession,
       })
     }.bind(this))
   }

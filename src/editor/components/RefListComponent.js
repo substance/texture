@@ -1,7 +1,7 @@
 import { NodeComponent } from 'substance'
 import EditRelationship from '../../entities/EditRelationship'
-import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
+import RefComponent from './RefComponent'
 
 export default class RefListComponent extends NodeComponent {
   didMount() {
@@ -22,7 +22,6 @@ export default class RefListComponent extends NodeComponent {
 
   render($$) {
     let el = $$('div').addClass('sc-bibliography')
-    let db = this.context.db
     let entityIds = this.context.referenceManager.getReferenceIds()
     let bibliography = this.context.referenceManager.getBibliography()
 
@@ -48,18 +47,7 @@ export default class RefListComponent extends NodeComponent {
     )
 
     bibliography.forEach((reference) => {
-      el.append(
-        $$('div').addClass('se-reference').append(
-          $$('span').addClass('se-label').append(
-            '[',
-            reference.label,
-            '] '
-          ),
-          $$('span').addClass('se-text').html(
-            entityRenderers[reference.type](reference.id, db)
-          )
-        )
-      )
+      el.append($$(RefComponent, { node: reference }))
     })
 
     el.append(

@@ -39,17 +39,21 @@ export default class ReferenceManager {
     Returns a list of formatted citations including labels
   */
   getBibliography() {
+    const doc = this.editorSession.getDocument()
     let entityDb = this.entityDbSession.getDocument()
-    let refs = this.getReferenceIds()
 
+    let refs = doc.findAll('ref-list > ref')
     // TODO: determine order and label based on citations in the document
-    return refs.map((refId, index) => {
-      let entity = entityDb.get(refId)
-      return {
-        id: refId,
-        label: index + 1,
-        type: entity.type
+    return refs.map((ref) => {
+      if (!ref.state) {
+        ref.state = {}
       }
+      if (!ref.state.entity) {
+        ref.state.entity = entityDb.get(ref.id)
+      }
+      return ref
+    }).sort((a,b) => {
+      return a.state.pos > b.state.pos
     })
   }
 
@@ -124,23 +128,26 @@ export default class ReferenceManager {
   _updateCitationLabels() {
     const editorSession = this.editorSession
     const doc = editorSession.getDocument()
+
     let citations = doc.findAll("xref[ref-type='bibr']")
     if (citations.length === 0) return
 
     let pos = 1
     let order = {}
-    let labels = {}
+    let refLabels = {}
+    let citationLabels = {}
     citations.forEach((cite) => {
       let label = []
       let rids = cite.getAttribute('rid').split(' ')
       rids.forEach((id) => {
         if (!order.hasOwnProperty(id)) {
           order[id] = pos++
+          refLabels[id] = `[${order[id]}]`
         }
         label.push(order[id])
       })
       label.sort()
-      labels[cite.id] = `[${label.join(',')}]` || '???'
+      citationLabels[cite.id] = `[${label.join(',')}]` || '???'
     })
 
     // Now update the node state of all affected xref[ref-type='bibr']
@@ -149,15 +156,24 @@ export default class ReferenceManager {
     let change = new DocumentChange([], {}, {})
     change._extractInformation()
     citations.forEach((cite) => {
-      const label = labels[cite.id]
+      const label = citationLabels[cite.id]
       if (!cite.state) {
         cite.state = {}
       }
       cite.state.label = label
       change.updated[cite.id] = true
     })
+    let refs = this.getBibliography()
+    refs.forEach((ref) => {
+      const label = refLabels[ref.id]
+      if (!ref.state) {
+        ref.state = {}
+      }
+      ref.state.label = label || ''
+      ref.state.pos = order[ref.id]
+      change.updated[ref.id] = true
+    })
     editorSession._setDirty('document')
-    editorSession._setDirty('commandStates')
     editorSession._change = change
     editorSession._info = {}
     editorSession.startFlow()

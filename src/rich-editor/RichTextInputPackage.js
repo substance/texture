@@ -1,28 +1,18 @@
 import {
-  Document, BasePackage, ParagraphPackage
+  Document
 } from 'substance'
 
-import RichTextInputHTMLImporter from './RichTextInputHTMLImporter'
-import RichTextInputHTMLExporter from './RichTextInputHTMLExporter'
+import HTMLContent from './HTMLContent'
 
 export default {
   name: 'rich-text-input',
   configure: function(config) {
     config.defineSchema({
       name: 'rich-text-input',
-      ArticleClass: Document,
-      version: '1.0.0',
-      defaultTextType: 'paragraph'
+      DocumentClass: Document,
+      version: '1.0.0'
     })
 
-    let defaultOptions = {
-      disableCollapsedCursor: true,
-      toolGroup: 'overlay'
-    }
-
-    config.import(BasePackage, defaultOptions)
-    config.import(ParagraphPackage, defaultOptions)
-    config.addImporter('html', RichTextInputHTMLImporter)
-    config.addExporter('html', RichTextInputHTMLExporter)
+    config.addNode(HTMLContent)
   }
 }

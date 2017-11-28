@@ -2,14 +2,14 @@ import {
   Component, Configurator, EditorSession, SubscriptPackage,
   SuperscriptPackage, EmphasisPackage, StrongPackage
 } from 'substance'
-import RichTextInputEditor from './RichTextInputEditor'
-import RichTextInputPackage from './RichTextInputPackage'
+import RichtextEditor from './RichtextEditor'
+import RichtextInputPackage from './RichtextInputPackage'
 
 
 class RichTextInput extends Component {
   constructor(...args) {
     super(...args)
-    this.cfg = new Configurator().import(RichTextInputPackage)
+    this.cfg = new Configurator().import(RichtextInputPackage)
     let defaultOptions = {
       disableCollapsedCursor: true,
       toolGroup: 'annotations'
@@ -22,47 +22,11 @@ class RichTextInput extends Component {
     this._initDoc(this.props)
   }
 
-  didMount() {
-    this.registerHandlers()
-  }
-
-  didUpdate() {
-    this.registerHandlers()
-  }
-
-  hideOverlays() {
-    this.refs.editor.hideOverlays()
-  }
-
-  registerHandlers() {
-    this.editorSession.onRender('selection', this._onSelectionChanged, this)
-  }
-
-  unregisterHandlers() {
-    this.editorSession.off(this)
-  }
-
-  dispose() {
-    this.unregisterHandlers()
-  }
-
-  getChildContext() {
-    return {
-      editorId: this.props.editorId,
-      scrollPane: this.props.scrollPane
-    }
-  }
-
-  willReceiveProps(props) {
-    this.dispose()
-    this.empty()
-    this._initDoc(props)
-  }
-
   _initDoc(props) {
-    this.importer = this.cfg.createImporter('html')
-    this.doc = this.importer.importDocument(props.content)
-
+    //this.importer = this.cfg.createImporter('html')
+    //this.doc = this.importer.importDocument(props.content)
+    this.doc = this.cfg.createDocument()
+    this.doc.create({id: 'html-content', type: 'html-content', content: 'bla<strong>blupp</strong>'})
     // Deregister handlers
     this.editorSession = new EditorSession(this.doc, {
       id: this.props.editorId,
@@ -73,7 +37,7 @@ class RichTextInput extends Component {
   render($$) {
     let el = $$('div').addClass('sc-rich-text-input')
     el.append(
-      $$(RichTextInputEditor, {
+      $$(RichtextEditor, {
         editorSession: this.editorSession,
         editorId: this.props.editorId
       }).ref('editor')

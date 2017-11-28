@@ -11,11 +11,11 @@ export default class BackComponent extends Component {
     let el = $$('div').addClass('sc-back')
       .attr('data-id', node.id)
 
-    // TODO: show all, or think about how to render the whole back matter
+    // NOTE: Bibliography depends on entityDb and referenceManager in the context.
     let refList = node.find('ref-list')
     if (refList) {
       el.append(
-        $$(this.getComponent('ref-list'), { node: refList })
+        $$(this.getComponent('ref-list'), { node })
       )
     }
 

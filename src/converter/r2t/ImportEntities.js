@@ -1,6 +1,6 @@
 const TYPES = {
-  'journal': 'journal-citation',
-  'book': 'book-citation'
+  'journal': 'journal-article',
+  'book': 'book'
 }
 
 const ELEMENT_CITATION_ENTITY_DB_MAP = {
@@ -38,6 +38,7 @@ export default class ImportEntities {
     let refs = dom.findAll('ref')
 
     const entityDb = api.entityDb
+
     refs.forEach((refEl) => {
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
@@ -49,15 +50,24 @@ export default class ImportEntities {
           bibRefs.forEach(bibRef => {
             bibRef.attr('rid', entityId)
           })
+          refEl.empty()
         }
       }
-      // make the DOM element just a shallow pointer
-      // TODO: we might need to check if the id of the ref
-      // is actually unique w.r.t. the global entity-db
-      // and change the id if necessary including all refs.
-      // But for now we just continue with the id from JATS
-      refEl.empty()
     })
+
+    // We create a journal-article entity to hold meta-data of the
+    // actual article. This includes node.reference (=bibliography) and
+    // node.authors (person or organisation records) as well as publication
+    // history etc.
+    // NOTE: we call this main-article by convenstion for now. Once we connect
+    // to a global entity db we would need to generate a uuid for that record
+    // as well. But this should happen only and then stored in the XML for later
+    // reuse of that existing record.
+
+    // This pulls out all aff elements and creates organisation entities from it.
+    _extractOrganisations(dom, entityDb)
+    _extractAuthors(dom, entityDb, 'authors')
+    _extractAuthors(dom, entityDb, 'editors')
   }
 
   export(dom, api) {
@@ -65,14 +75,18 @@ export default class ImportEntities {
     const entities = entityDb.getNodes()
     const entityIds = Object.keys(entities)
 
-    let refList = dom.find('ref-list')
-    refList.empty()
+    let back = dom.find('back')
+    let refList = dom.createElement('ref-list')
 
     entityIds.forEach(entityId => {
       const entity = entities[entityId].toJSON()
       const ref = _createRefElement({dom, entity, entityDb})
-      if(ref) refList.append(ref)
+      if (ref) refList.append(ref)
     })
+
+    back.append(
+      refList
+    )
   }
 }
 
@@ -214,12 +228,12 @@ function _createNameElement(el, person) {
     el.createElement('surname').append(person.surname),
     el.createElement('given-names').append(person.givenNames)
   )
-  if(person.prefix) {
+  if (person.prefix) {
     nameEl.append(
       el.createElement('prefix').append(person.prefix)
     )
   }
-  if(person.suffix) {
+  if (person.suffix) {
     nameEl.append(
       el.createElement('suffix').append(person.suffix)
     )
@@ -244,6 +258,96 @@ function _getElementCitationProperty(prop, elementCitation) {
     const propEl = elementCitation.find(xmlProp)
     if(propEl) result = propEl.text()
   }
-
   return result
+}
+
+
+/*
+<aff id="aff1">
+  <institution content-type="orgname">Settles-Young Research Corporation</institution>
+  <institution content-type="orgdiv1">Laboratory of Neural Systems</institution>
+  <addr-line content-type="address-street">283 Hawthorne Drive</addr-line>
+  <addr-line content-type="complements">Suite 310</addr-line>
+  <city>Lexington</city>
+  <state>KY</state>
+  <postal-code>40503</postal-code>
+  <country>USA</country>
+  <phone>(859) 273-8543</phone>
+  <fax>(859) 299-4683</fax>
+  <email>lsy@settles-young.com</email>
+  <uri>http://www.settles-young.com</uri>
+</aff>
+*/
+function _extractOrganisations(dom, entityDb) {
+  let affs = dom.findAll('article-meta > aff')
+
+  affs.forEach(aff => {
+    let node = {
+      id: aff.id,
+      type: 'organisation',
+      name: _getTextFromDOM(aff, 'institution[content-type=orgname]'),
+      division1: _getTextFromDOM(aff, 'institution[content-type=orgdiv1]'),
+      division2: _getTextFromDOM(aff, 'institution[content-type=orgdiv2]'),
+      division3: _getTextFromDOM(aff, 'institution[content-type=orgdiv3]'),
+      street: _getTextFromDOM(aff, 'addr-line[content-type=address-street]'),
+      addressComplements: _getTextFromDOM(aff, 'addr-line[content-type=complements]'),
+      city: _getTextFromDOM(aff, 'city'),
+      state: _getTextFromDOM(aff, 'state'),
+      postalCode: _getTextFromDOM(aff, 'postal-code'),
+      country: _getTextFromDOM(aff, 'country'),
+      phone: _getTextFromDOM(aff, 'phone'),
+      fax: _getTextFromDOM(aff, 'fax'),
+    }
+    entityDb.create(node)
+  })
+
+  // Remove affs from the DOM
+  affs.forEach(aff => {
+    aff.remove()
+  })
+
+}
+
+/*
+<contrib-group content-type="authors">
+  <contrib contrib-type="author">
+    <name>
+      <surname>Doe</surname><given-names>Jane</given-names>
+    </name>
+    <xref ref-type="aff" rid="aff1"/>
+  </contrib>
+</contrib-group>
+*/
+function _extractAuthors(dom, entityDb, type) {
+  let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
+  if (!contribGroup) return []
+  let contribs = contribGroup.findAll('contrib')
+  contribs.forEach(contrib => {
+    let orgIds = contrib.findAll('xref').map(xref => xref.rid)
+    let node = {
+      id: contrib.id,
+      type: 'person',
+      surname: _getTextFromDOM(contrib, 'surname'),
+      givenNames: _getTextFromDOM(contrib, 'given-names'),
+      prefix: _getTextFromDOM(contrib, 'prefix'),
+      suffix: _getTextFromDOM(contrib, 'suffix'),
+      affiliations: orgIds
+    }
+    entityDb.create(node)
+    // Assign id if not present
+    if (!contrib.id) {
+      contrib.setAttribute('id', node.id)
+    }
+    contrib.empty()
+  })
+
+}
+
+function _getTextFromDOM(rootEl, selector) {
+  let match = rootEl.find(selector)
+  if (match) {
+    return match.textContent
+  } else {
+    return ''
+  }
 }

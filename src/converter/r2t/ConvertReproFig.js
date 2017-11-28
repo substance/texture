@@ -31,23 +31,23 @@ export default class ConvertReproFig {
     })
   }
 
-  export(/*dom*/) {
-    throw new Error('Revise implementation')
-    // let reproFigs = dom.findAll('repro-fig')
+  export(dom) {
+    let reproFigs = dom.findAll('repro-fig')
     // let $$ = dom.createElement.bind(dom)
-    // reproFigs.forEach((reproFig) => {
-    //   let source = reproFig.find('source-code')
-    //   let output = reproFig.find('output')
-    //   reproFig.tagName = 'fig'
-    //   reproFig.empty()
-    //   reproFig.attr('fig-type', 'repro-fig')
-    //   reproFig.append(
-    //     $$('alternatives').append(
-    //       exportSourceCode(source),
-    //       exportOutput(output)
-    //     )
-    //   )
-    // })
+    reproFigs.forEach((/*reproFig*/) => {
+      throw new Error('Revise implementation')
+      // let source = reproFig.find('source-code')
+      // let output = reproFig.find('output')
+      // reproFig.tagName = 'fig'
+      // reproFig.empty()
+      // reproFig.attr('fig-type', 'repro-fig')
+      // reproFig.append(
+      //   $$('alternatives').append(
+      //     exportSourceCode(source),
+      //     exportOutput(output)
+      //   )
+      // )
+    })
   }
 
 }

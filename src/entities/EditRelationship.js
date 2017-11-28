@@ -1,8 +1,10 @@
-import { Component } from 'substance'
+import { Component, without } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
+import EditEntity from './EditEntity'
 import ModalDialog from '../shared/ModalDialog'
-import ModalLayout from '../shared/ModalLayout'
+import EntitySelector from './EntitySelector'
+import FormTitle from './FormTitle'
 
 /*
   Used to edit relationhips to other entities.
@@ -14,7 +16,8 @@ export default class EditRelationship extends Component {
   getInitialState() {
     // We want to keep state in a plain old JS object while editing
     return {
-      create: undefined,
+      mode: undefined,
+      modeProps: undefined,
       entityIds: this.props.entityIds || []
     }
   }
@@ -28,115 +31,115 @@ export default class EditRelationship extends Component {
   render($$) {
     let el = $$('div').addClass('sc-edit-relationship')
     let db = this.context.db
+    let mode = this.state.mode
 
-    if (this.state.create) {
+    if (mode) {
+      let ModeComponent
+      if (mode === 'edit') {
+        ModeComponent = EditEntity
+      } else {
+        ModeComponent = CreateEntity
+      }
+
       el.append(
         $$(ModalDialog, {
           transparent: true
         }).append(
-          $$(CreateEntity, {
-            type: this.state.create
-          })
+          $$(ModeComponent, this.state.modeProps)
         )
       )
     } else {
-      let contentEl = $$('div').addClass('se-edit-relationship-content')
+      let contentEl = $$('div').addClass('se-content')
+
+      contentEl.append(
+        $$(FormTitle, {
+          name: 'edit-'+this.props.propertyName
+        })
+      )
 
       if (this.state.entityIds.length > 0) {
-        let optionsEl = $$('div').addClass('se-options')
+        let tableEl = $$('table').addClass('se-entries')
         this.state.entityIds.forEach((entityId) => {
           let node = db.get(entityId)
-          optionsEl.append(
-            entityRenderers[node.type]($$, node.id, db)
+          tableEl.append(
+            $$('tr').addClass('se-entry').append(
+              $$('td').addClass('se-name').html(
+                entityRenderers[node.type](node.id, db)
+              ),
+              $$('td').addClass('se-type').append(
+                $$('span').append(this.context.labelProvider.getLabel(node.type))
+              ),
+              $$('td').addClass('se-actions').append(
+                $$('button').append('Edit').on('click', this._onEdit.bind(this, entityId)),
+                $$('button').append('Delete').on('click', this._onDelete.bind(this, entityId))
+              )
+            )
           )
         })
-        contentEl.append(optionsEl)
+        contentEl.append(tableEl)
       } else {
         contentEl.append(
           $$('div').addClass('se-empty').append('No Entries')
         )
       }
 
-      contentEl.append(this._renderSelector($$))
-
-      // Render create buttons for each allowed target type
-      this.props.targetTypes.forEach(targetType => {
-        contentEl.append(
-          $$('button').append('Create '+targetType)
-            .on('click', this._toggleCreate.bind(this, targetType))
-        )
-      })
+      contentEl.append(
+        $$(EntitySelector, {
+          placeholder: 'Type to add new ...',
+          targetTypes: this.props.targetTypes,
+          showCreateDialog: true,
+          excludes: this.state.entityIds,
+          limit: 50,
+          onSelected: this._onAddNew.bind(this),
+          onCreate: this._onCreate.bind(this),
+        })
+      )
 
       el.append(
-        $$(ModalLayout).append(
-          contentEl,
-          $$('div').addClass('sg-actions').append(
-            $$('button')
-              .addClass('sm-primary')
-              .append('Save')
-              .on('click', this._save),
-            $$('button')
-              .append('Cancel')
-              .on('click', this._cancel)
-          )
+        contentEl,
+        $$('div').addClass('sg-actions').append(
+          $$('button')
+            .addClass('sm-primary')
+            .append('Save')
+            .on('click', this._save),
+          $$('button')
+            .append('Cancel')
+            .on('click', this._cancel)
         )
       )
     }
-
     return el
   }
 
-  _toggleCreate(targetType) {
+  _onCreate(targetType) {
     this.extendState({
-      create: targetType
-    })
-  }
-
-  _getAvailableEntities(db) {
-    let availableEntities = []
-    this.props.targetTypes.forEach(targetType => {
-      availableEntities = availableEntities.concat(
-        db.find({ type: targetType })
-      )
-    })
-    return availableEntities
-  }
-
-  /*
-    TODO: we should provide auto complete functionality. Unfortunately we can't
-    use datalist element, unless the text strings are unambiguous.
-  */
-  _renderSelector($$) {
-    let db = this.context.db
-    let availableEntities = this._getAvailableEntities(db)
-    let el = $$('div').addClass('se-selector')
-    let selectEl = $$('select')
-      .ref('selector')
-    availableEntities.forEach((entity) => {
-      // Only show entities that are not already referenced
-      if (this.state.entityIds.indexOf(entity.id) < 0) {
-        selectEl.append(
-          $$('option').attr({ value: entity.id }).append(
-            entityRenderers[entity.type]($$, entity.id, db)
-          )
-        )
+      mode: 'create',
+      modeProps: {
+        type: targetType
       }
     })
-    el.append(
-      selectEl,
-      $$('button').append('Add selected').on('click', this._onEntitySelected)
-    )
-    return el
   }
 
-  /*
-    Add new entity target.
+  _onEdit(entityId) {
+    let db = this.context.db
+    let node = db.get(entityId)
+    this.extendState({
+      mode: 'edit',
+      modeProps: {
+        node
+      }
+    })
+  }
 
-    NOTE: Not saved until confirmed.
-  */
-  _onEntitySelected() {
-    let entityId = this.refs.selector.val()
+  _onAddNew(entityId) {
     let entityIds = this.state.entityIds.concat([ entityId ])
+    this.extendState({
+      entityIds: entityIds
+    })
+  }
+
+  _onDelete(entityId) {
+    let entityIds = without(this.state.entityIds, entityId)
     this.extendState({
       entityIds: entityIds
     })
@@ -152,7 +155,8 @@ export default class EditRelationship extends Component {
 
   _closeModal() {
     this.extendState({
-      create: undefined
+      mode: undefined,
+      modeProps: undefined
     })
   }
 }

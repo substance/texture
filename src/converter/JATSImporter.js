@@ -7,7 +7,7 @@ import { r2t } from './r2t'
 import { j2r } from './j2r'
 import custom from './custom'
 
-import { createEntityDb } from '../entities'
+import { createEntityDbSession } from '../entities'
 
 /*
   Goal:
@@ -18,7 +18,10 @@ import { createEntityDb } from '../entities'
 export default class JATSImporter extends EventEmitter {
 
   import(xml, context = {}) {
-    let entityDb = context.entityDb || createEntityDb()
+    let entityDb = context.entityDb
+    if (!entityDb) {
+      entityDb = createEntityDbSession().getDocument()
+    }
 
     let state = {
       dom: null,

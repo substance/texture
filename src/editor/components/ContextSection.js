@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import Navigator from './Navigator'
+// import Navigator from './Navigator'
 
 // HACK: we need this info to pass the right node to the component shown in the
 // context panel. By default we pass article-meta as the
@@ -40,18 +40,18 @@ export default class ContextSection extends Component {
     clicked brings up a dropdown to navigate.
   */
   render($$) {
-    const panelsSpec = this.props.panelsSpec
+    // const panelsSpec = this.props.panelsSpec
     let contextId = this.state.contextId
     let node = this._getNode()
     let el = $$('div').addClass('sc-context-section')
 
     let ComponentClass = this.getComponent(contextId)
-    el.append(
-      $$(Navigator, {
-        contextId: contextId,
-        panelsSpec: panelsSpec
-      }).ref('navigator')
-    )
+    // el.append(
+    //   $$(Navigator, {
+    //     contextId: contextId,
+    //     panelsSpec: panelsSpec
+    //   }).ref('navigator')
+    // )
     if (!node) {
       console.error('FIXME: could not find node for context section.')
     } else {

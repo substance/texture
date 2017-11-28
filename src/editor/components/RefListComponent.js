@@ -1,119 +1,89 @@
-import { NodeComponent, without } from 'substance'
-import Button from './Button'
-import createEmptyRef from '../../util/createEmptyRef'
+import { NodeComponent } from 'substance'
+import EditRelationship from '../../entities/EditRelationship'
+import entityRenderers from '../../entities/entityRenderers'
+import ModalDialog from '../../shared/ModalDialog'
 
-class RefListComponent extends NodeComponent {
-
+export default class RefListComponent extends NodeComponent {
   didMount() {
     super.didMount()
-    this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
-
     this.handleActions({
-      'removeRef': this._removeRef
+      'done': this._doneEditing,
+      'cancel': this._doneEditing,
+      'closeModal': this._doneEditing,
+      'entitiesSelected': this._updateReferences
     })
-
-    // FIXME!
-    // Ensure we re-render when
-    // this.context.editorSession.onRender('document', this.rerender, this, {
-    //   path: this.props.node.getPath()
-    // })
   }
 
-  dispose() {
-    super.dispose()
-    this.context.editorSession.off(this)
-    this.context.labelGenerator.off(this)
+  getInitialState() {
+    return {
+      edit: false
+    }
   }
 
   render($$) {
-    const labelGenerator = this.context.labelGenerator
-    const node = this.props.node
+    let el = $$('div').addClass('sc-bibliography')
+    let db = this.context.db
+    let entityIds = this.context.referenceManager.getReferenceIds()
+    let bibliography = this.context.referenceManager.getBibliography()
 
-    let el = $$('div').addClass('sc-ref-list')
-    // NOTE: We don't yet expose RefList.label to the editor
-    let title = node.find('title')
-    if (title) {
-      el.append(
-        $$('div').addClass('se-title').append(
-          $$(this.getComponent('text-property-editor'), {
-            path: title.getPath(),
-            disabled: this.props.disabled
-          })
-        )
+    if (this.state.edit) {
+      var modal = $$(ModalDialog, {
+        width: 'medium',
+        textAlign: 'center'
+      })
+      modal.append(
+        $$(EditRelationship, {
+          propertyName: 'references',
+          entityIds,
+          targetTypes: ['journal-article', 'book']
+        })
       )
+      el.append(modal)
     }
-    let refs = node.findAll('ref')
-    let entries = refs.map((ref) => {
-      return {
-        // NOTE: refs without a position, i.e. which are not referenced
-        // should end up at the end of the list
-        pos: labelGenerator.getPosition('bibr', ref.id) || Number.MAX_VALUE,
-        ref
-      }
-    })
-    entries.sort((a,b) => {
-      return a.pos - b.pos
-    })
-    entries.forEach((entry) => {
-      const ref = entry.ref
-      let RefComponent = this.getComponent('ref')
+
+    el.append(
+      $$('div').addClass('se-title').append(
+        'References'
+      )
+    )
+
+    bibliography.forEach((reference) => {
       el.append(
-        $$(RefComponent, { node: ref }).ref(ref.id)
+        $$('div').addClass('se-reference').append(
+          $$('span').addClass('se-label').append(
+            '[',
+            reference.label,
+            '] '
+          ),
+          $$('span').addClass('se-text').html(
+            entityRenderers[reference.type](reference.id, db)
+          )
+        )
       )
     })
 
     el.append(
-      $$(Button, {style: 'big', label: 'Add Reference'})
-        .on('click', this._addRef)
+      $$('button').append('Edit').on('click', this._editBibliography)
     )
-
     return el
   }
 
-  _onLabelsChanged(refType) {
-    if (refType === 'bibr') {
-      this.rerender()
-    }
-  }
-
-  /*
-    Insert new Reference
-
-    <ref>
-      <string-citation>Please enter publication name</string-citation>
-    </ref>
-  */
-  _addRef() {
-    const editorSession = this.context.editorSession
-    editorSession.transaction((doc) => {
-      let refList = doc.find('ref-list')
-      let ref = createEmptyRef(doc)
-      refList.append(ref)
-      doc.setSelection(null)
+  _editBibliography() {
+    this.setState({
+      edit: true
     })
-    this.rerender()
   }
 
-  _removeRef(refId) {
-    let editorSession = this.context.editorSession
-    editorSession.transaction(doc => {
-      let xrefIndex = doc.getIndex('xrefs')
-      let xrefs = xrefIndex.get(refId)
-      xrefs.forEach((xrefId) => {
-        let xref = doc.get(xrefId)
-        let idrefs = xref.attr('rid').split(' ')
-        idrefs = without(idrefs, refId)
-        xref.setAttribute('rid', idrefs.join(' '))
-      })
-      let fnGroup = doc.find('ref-list')
-      let ref = fnGroup.find(`ref#${refId}`)
-      fnGroup.removeChild(ref)
-      doc.setSelection(null)
+  _doneEditing() {
+    this.setState({
+      edit: false
     })
-    this.rerender()
   }
 
+  _updateReferences(entityIds) {
+    this.context.referenceManager.updateReferences(entityIds)
+    this.setState({
+      edit: false
+    })
+  }
 }
-
-
-export default RefListComponent

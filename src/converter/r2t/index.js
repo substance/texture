@@ -6,8 +6,6 @@ import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
 
 import UpdateDocType from './UpdateDocType'
-import TransformAff from './TransformAff'
-import TransformContrib from './TransformContrib'
 import FnGroupConverter from './FnGroupConverter'
 import ConvertCodeCell from './ConvertCodeCell'
 import ConvertReproFig from './ConvertReproFig'
@@ -35,8 +33,6 @@ const trafos = [
   ConvertFig,
   ConvertTableWrap,
   WrapAff,
-  TransformAff,
-  TransformContrib,
   WrapAbstractContent,
   WrapBodyContent,
   WrapDispQuoteContent,
@@ -72,8 +68,6 @@ export {
   ConvertFig,
   ConvertTableWrap,
   WrapAff,
-  TransformAff,
-  TransformContrib,
   WrapAbstractContent,
   WrapBodyContent,
   WrapDispQuoteContent,

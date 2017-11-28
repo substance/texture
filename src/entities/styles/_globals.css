@@ -4,14 +4,12 @@
 */
 
 .sg-actions {
-  background: #f1f1f1;
-  border-top: 1px solid #ddd;
-  text-align: center;
-  padding: 10px;
+  text-align: right;
+  padding: 20px;
 }
 
 .sg-actions > button {
-  background: #444;
+  background: #606060;
   color: #fff;
   display: inline-block;
   padding: 5px 10px;
@@ -19,5 +17,14 @@
 }
 
 .sg-actions > button.sm-primary {
-  background: #0065DE;
+  background: #4A90E2;
+}
+
+/* HACK: */
+.sc-modal-dialog input {
+  background: #EAEAEA;
+  border: none;
+  width: 100%;
+  padding: 3px 10px;
+  border-radius: 4px;
 }

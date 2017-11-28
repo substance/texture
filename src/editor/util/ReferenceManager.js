@@ -1,37 +1,52 @@
 import { without } from 'substance'
 
 export default class ReferenceManager {
-  constructor(entityDb) {
-    // Holds the bibliography in form of entity-ids
-    this._references = []
-    this.entityDb = entityDb
+  constructor(editorSession, entityDbSession) {
+    this.editorSession = editorSession
+    this.entityDbSession = entityDbSession
   }
 
-  addReference(entityId) {
-    if (this._references.indexOf(entityId) < 0) {
-      this._references.push(entityId)
-    } else {
-      throw new Error('Reference already exists in bibliography')
-    }
+  updateReferences(newRefs) {
+    let oldRefs = this.getReferenceIds()
+    let addedRefs = without(newRefs, ...oldRefs)
+    let removedRefs = without(oldRefs, ...newRefs)
+
+    this.editorSession.transaction(tx => {
+      let refList = tx.find('ref-list')
+      // Remove removedRefs
+      removedRefs.forEach(refId => {
+        let ref = tx.get(refId)
+        refList.removeChild(ref)
+      })
+      // Create addedRefs
+      addedRefs.forEach(refId => {
+        let ref = tx.get(refId)
+        if (!ref) {
+          ref = tx.createElement('ref', { id: refId })
+        }
+        refList.appendChild(ref)
+      })
+    })
   }
 
-  removeReference(entityId) {
-    if (this._references.indexOf(entityId) >= 0) {
-      this._references = without(this._references, entityId)
-    } else {
-      throw new Error('Reference does not exist in bibliography')
-    }
+  getReferenceIds() {
+    let doc = this.editorSession.getDocument()
+    let refs = doc.findAll('ref-list > ref')
+    return refs.map(ref => ref.id)
   }
 
   /*
     Returns a list of formatted citations including labels
   */
   getBibliography() {
+    let entityDb = this.entityDbSession.getDocument()
+    let refs = this.getReferenceIds()
+
     // TODO: determine order and label based on citations in the document
-    return this._references.map((entityId, index) => {
-      let entity = this.entityDb.get(entityId)
+    return refs.map((refId, index) => {
+      let entity = entityDb.get(refId)
       return {
-        id: entityId,
+        id: refId,
         label: index + 1,
         type: entity.type
       }

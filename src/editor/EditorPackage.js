@@ -142,7 +142,7 @@ export default {
     // Preview components for element-citation
     config.addComponent('journal-citation-preview', JournalCitationPreview)
     config.addComponent('book-citation-preview', BookCitationPreview)
-    
+
     // Commands
     config.addCommand('edit-xref', EditInlineNodeCommand, {
       nodeType: 'xref',
@@ -362,8 +362,8 @@ export default {
       { group: 'structure' },
       { panel: 'toc' },
       { group: 'article-info' },
-      { panel: 'contributors' },
-      { panel: 'affiliations' },
+      // { panel: 'contributors' },
+      // { panel: 'affiliations' },
       { panel: 'translations' },
       { group: 'pub-data' },
       { panel: 'article-record' }

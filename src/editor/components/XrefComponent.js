@@ -1,31 +1,16 @@
-import { Component } from 'substance'
-import { getXrefTargets } from '../util'
+import { NodeComponent } from 'substance'
+import { getXrefTargets, getXrefLabel } from '../util'
 
-export default class XrefComponent extends Component {
-
-  didMount() {
-    this.context.labelGenerator.on('labels:generated', this._onLabelsGenerated, this)
-  }
-
-  dispose() {
-    this.context.labelGenerator.off(this)
-  }
+export default class XrefComponent extends NodeComponent {
 
   render($$) {
     let node = this.props.node
     let refType = node.getAttribute('ref-type')
     let el = $$('span').addClass('sc-xref')
-    let labelGenerator = this.context.labelGenerator
-    let targets = getXrefTargets(node)
-    let generatedLabel = labelGenerator.getLabel(refType, targets)
-    el.append(generatedLabel)
+    let label = getXrefLabel(node)
+    el.append(label)
     el.addClass('sm-'+refType)
     return el
   }
 
-  _onLabelsGenerated(refType) {
-    if (refType === this.getAttribute('ref-type')) {
-      this.rerender()
-    }
-  }
 }

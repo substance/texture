@@ -10,6 +10,7 @@ export default class Editor extends AbstractWriter {
     // HACK: we assume that importer creates a journal-article entry with id 'main-article'
     // that holds the bibliography (mainarticle.references)
     super._initialize(props)
+
     this.referenceManager = new ReferenceManager(this.editorSession, this.context.entityDbSession, 'main-article')
   }
 
@@ -25,6 +26,12 @@ export default class Editor extends AbstractWriter {
     this.handleActions({
       'switchContext': this._switchContext
     })
+  }
+
+  dispose() {
+    super.dispose()
+
+    this.referenceManager.dispose()
   }
 
   /*

@@ -36,6 +36,16 @@ export function getXrefTargets(xref) {
   }
 }
 
+export function getXrefLabel(xref) {
+  // Note: we will store the label in the node state
+  // when we generate it
+  if (xref.state && xref.state.label) {
+    return xref.state.label
+  }
+  // otherwise we take the text content or an empty string
+  return xref.textContent || ' '
+}
+
 /*
   Computes available targets for a given xref node
 

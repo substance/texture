@@ -31,10 +31,6 @@ class AbstractWriter extends AbstractEditor {
         let positions = targets.map(t => t.position).sort(sortNumeric)
         return positions.join(',') || '???'
       },
-      'bibr': function(targets) {
-        let positions = targets.map(t => t.position).sort(sortNumeric)
-        return '[' + (positions.join(',') || '???') + ']'
-      },
       'fig': function(targets) {
         let positions = targets.map(t => t.position).sort(sortNumeric)
         return 'Figure ' + (positions.join(',') || '???')

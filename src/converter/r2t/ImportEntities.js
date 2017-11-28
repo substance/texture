@@ -323,7 +323,7 @@ function _extractAuthors(dom, entityDb, type) {
   if (!contribGroup) return []
   let contribs = contribGroup.findAll('contrib')
   contribs.forEach(contrib => {
-    let orgIds = contrib.findAll('xref').map(xref => xref.rid)
+    let orgIds = contrib.findAll('xref').map(xref => xref.getAttribute('rid'))
     let node = {
       id: contrib.id,
       type: 'person',

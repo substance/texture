@@ -1,36 +1,84 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
+import entityRenderers from '../../entities/entityRenderers'
+import ModalDialog from '../../shared/ModalDialog'
+import EditRelationship from '../../entities/EditRelationship'
 
-export default class AuthorsListComponent extends Component {
+export default class AuthorsListComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
-    this.context.editorSession.onRender('document', this._onDocumentChange, this)
+    this.handleActions({
+      'done': this._doneEditing,
+      'cancel': this._doneEditing,
+      'closeModal': this._doneEditing,
+      'entitiesSelected': this._updateAuthors
+    })
   }
 
-  dispose() {
-    super.dispose()
-    this.context.editorSession.off(this)
+  getInitialState() {
+    return {
+      edit: false
+    }
+  }
+
+  _getEntityIds() {
+    return this.props.node.findAll('contrib').map(contrib => contrib.id)
   }
 
   render($$) {
-    const articleMeta = this.props.node
-    const contribs = articleMeta.findAll('string-contrib')
-    const authors = contribs.map(contrib => { return contrib.getTextContent() })
-    
     let el = $$('div').addClass('sc-authors-list')
-      .append(authors.join(', '))
+    let contribs = this.props.node.findAll('contrib')
+    let db = this.context.entityDb
 
+    if (this.state.edit) {
+      var modal = $$(ModalDialog, {
+        width: 'medium',
+        textAlign: 'center'
+      })
+      modal.append(
+        $$(EditRelationship, {
+          propertyName: 'authors',
+          entityIds: this._getEntityIds(),
+          targetTypes: ['person', 'organisation']
+        })
+      )
+      el.append(modal)
+    }
+
+    let contentEl = $$('div').addClass('se-content')
+    contribs.forEach(contrib => {
+      let entity = db.get(contrib.id)
+      contentEl.append(
+        $$('div').addClass('se-author').html(
+          entityRenderers[entity.type](entity.id, db)
+        )
+      )
+    })
+
+    el.append(contentEl)
+    el.append(
+      $$('button').append('Edit Authors').on('click', this._editAuthors)
+    )
     return el
   }
 
-  _onDocumentChange(change) {
-    let updatedProps = Object.keys(change.updated)
-    let updatedPropsString = updatedProps.join('/')
-    // We will trigger rerendering if any string-contrib 
-    // or contrib-group was updated
-    if(updatedPropsString.indexOf('string-contrib') > -1 || updatedPropsString.indexOf('contrib-group') > -1) {
-      this.rerender()
-    } 
+  _editAuthors() {
+    this.setState({
+      edit: true
+    })
+  }
+
+  _doneEditing() {
+    this.setState({
+      edit: false
+    })
+  }
+
+  _updateAuthors(/*entityIds*/) {
+    console.warn('TODO: update authors')
+    // this.setState({
+    //   edit: false
+    // })
   }
 
 }

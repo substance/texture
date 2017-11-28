@@ -8,6 +8,7 @@ export default {
   name: 'TextureJATS',
   configure(config) {
     registerSchema(config, TextureJATS, TextureDocument)
+
     config.addImporter(TextureJATS.getName(), TextureJATSImporter)
     // enable rich-text support for clipboard
     TextureHTMLConverters.forEach((converter) => {

@@ -1,7 +1,5 @@
 import { Component } from 'substance'
 
-import Bibliography from './Bibliography'
-
 /*
   Simplistic back-matter displaying references and appendixes
 */
@@ -14,9 +12,12 @@ export default class BackComponent extends Component {
       .attr('data-id', node.id)
 
     // NOTE: Bibliography depends on entityDb and referenceManager in the context.
-    el.append(
-      $$(Bibliography)
-    )
+    let refList = node.find('ref-list')
+    if (refList) {
+      el.append(
+        $$(this.getComponent('ref-list'), { node })
+      )
+    }
 
     let fnGroup = node.find('fn-group')
     if (fnGroup) {

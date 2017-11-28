@@ -43,7 +43,9 @@ function bookRenderer($$, entityId, entityDb) {
     _renderHTML($$, entity.chapterTitle)
   )
   fragments.push('. ', entity.source)
-  fragments.push(' (', entity.edition, ').')
+  if (entity.edition) {
+    fragments.push(' (', entity.edition, ').')
+  }
   if (entity.authors.length > 0) {
     fragments = fragments.concat(
       _renderAuthors($$, entity.authors, entityDb)

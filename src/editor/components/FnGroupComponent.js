@@ -1,7 +1,7 @@
 import { NodeComponent, without } from 'substance'
 import Button from './Button'
 
-class FnGroupComponent extends NodeComponent {
+export default class FnGroupComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
@@ -19,30 +19,19 @@ class FnGroupComponent extends NodeComponent {
     )
 
     let fns = node.findAll('fn')
-    let entries = fns.map((fn) => {
-      // FIXME: introduce a FootnoteManager
-      return {
-        pos: -1,
-        fn
-      }
+    fns.sort((a,b) => {
+      return _getPos(a) - _getPos(b)
     })
-
-    entries.sort((a,b) => {
-      return a.pos - b.pos
-    })
-    entries.forEach((entry) => {
-      const fn = entry.fn
+    fns.forEach((fn) => {
       let FnComponent = this.getComponent('fn')
       el.append(
         $$(FnComponent, { node: fn }).ref(fn.id)
       )
     })
-
     el.append(
       $$(Button, {style: 'big', label: 'Add Footnote'})
         .on('click', this._addFn)
     )
-
     return el
   }
 
@@ -90,5 +79,8 @@ class FnGroupComponent extends NodeComponent {
   }
 }
 
-
-export default FnGroupComponent
+function _getPos(fn) {
+  if (fn && fn.state) {
+    return fn.state.pos
+  }
+}

@@ -24,4 +24,8 @@ export default class FootnoteManager extends AbstractCitationManager {
     return this.editorSession.getDocument().findAll('fn')
   }
 
+  _getBibliographyElement() {
+    return this.editorSession.getDocument().find('fn-group')
+  }
+
 }

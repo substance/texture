@@ -58,4 +58,9 @@ export default class ReferenceManager extends AbstractCitationManager {
       return ref
     })
   }
+
+  _getBibliographyElement() {
+    return this.editorSession.getDocument().find('ref-list')
+  }
+
 }

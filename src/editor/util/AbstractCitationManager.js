@@ -89,11 +89,10 @@ export default class AbstractCitationManager {
   */
   _updateLabels() {
     const editorSession = this.editorSession
-    const doc = editorSession.getDocument()
 
-    let refList = doc.find('ref-list')
-    let xrefs = doc.findAll(`xref[ref-type='${this.type}']`)
+    let xrefs = this._getXrefs()
     let refs = this._getReferences()
+    let bibEl = this._getBibliographyElement()
     let refsById = refs.reduce((m, ref) => {
       m[ref.id] = ref
       return m
@@ -151,14 +150,24 @@ export default class AbstractCitationManager {
       ref.state.pos = order[ref.id]
       change.updated[ref.id] = true
     })
-    // Note: also mimick a change to ref-list
-    // to trigger an update
-    change.updated[refList.id] = true
+
+    if (bibEl) {
+      // Note: also mimick a change to ref-list
+      // to trigger an update
+      change.updated[bibEl.id] = true
+    }
 
     editorSession._setDirty('document')
     editorSession._change = change
     editorSession._info = {}
     editorSession.startFlow()
+  }
+
+  _getXrefs() {
+    return this.editorSession.getDocument().findAll(`xref[ref-type='${this.type}']`)
+  }
+
+  _getBibliographyElement() {
   }
 
 }

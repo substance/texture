@@ -22,6 +22,7 @@ import AbstractComponent from './components/AbstractComponent'
 import AffiliationsComponent from './components/AffiliationsComponent'
 import AffiliationsListComponent from './components/AffiliationsListComponent'
 import AuthorsListComponent from './components/AuthorsListComponent'
+import EditorsListComponent from './components/EditorsListComponent'
 import ArticleRecordComponent from './components/ArticleRecordComponent'
 import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
@@ -97,6 +98,7 @@ export default {
     config.addComponent('affiliations', AffiliationsComponent)
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('authors-list', AuthorsListComponent)
+    config.addComponent('editors-list', EditorsListComponent)
     config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('translations', TranslationsComponent)
     config.addComponent('back', BackComponent)

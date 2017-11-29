@@ -41,6 +41,7 @@
         <optional><ref name="email"/></optional>
         <zeroOrMore><ref name="ext-link"/></zeroOrMore>
         <optional><ref name="uri"/></optional>
+        <optional><ref name="uri"/></optional>
         <zeroOrMore><ref name="x"/></zeroOrMore>
       </interleave>
     </element>

@@ -126,6 +126,7 @@ export default class Texture extends Component {
       const doc = importer.importDocument(dom)
 
       window.doc = doc
+      window.entityDb = this.entityDb
       // create editor session
       const editorSession = new EditorSession(doc, {
         configurator: configurator

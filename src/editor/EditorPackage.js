@@ -67,6 +67,8 @@ import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
 import ReferenceManager from './util/ReferenceManager'
+import FigureManager from './util/FigureManager'
+import TableManager from './util/TableManager'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -87,6 +89,23 @@ export default {
     config.setCommandManagerClass(SchemaDrivenCommandManager)
 
     config.addManager('references', ReferenceManager)
+    config.addManager('figures', FigureManager)
+    config.addManager('tables', TableManager)
+
+    // Experimental
+    config.setLabelGenerator('references', {
+      template: '[$]',
+      and: ',',
+      to: '-',
+    })
+    config.setLabelGenerator('figures', {
+      name: 'Figure',
+      plural: 'Figures'
+    })
+    config.setLabelGenerator('tables', {
+      name: 'Table',
+      plural: 'Tables'
+    })
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

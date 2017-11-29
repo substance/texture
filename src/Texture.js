@@ -44,6 +44,7 @@ export default class Texture extends Component {
           return jatsExporter.export(dom, { entityDb })
         }
       },
+      configurator: this.configurator,
       entityDb: this.entityDb,
       entityDbSession: this.entityDbSession,
       // TODO: Update components to use entityDb, entityDbSession instead.

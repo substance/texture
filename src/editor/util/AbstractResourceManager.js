@@ -1,0 +1,134 @@
+import { DocumentChange, array2table, isArrayEqual } from 'substance'
+import { XREF_TARGET_TYPES } from './xrefHelpers'
+
+/*
+  A base class for FigureManager and TableManager
+  where the labels depend on the order of the resources in the document.
+
+  TODO: find a better name
+*/
+export default class AbstractResourceManager {
+
+  constructor(editorSession, type, labelGenerator) {
+    this.editorSession = editorSession
+    if(!this.editorSession) {
+      throw new Error("'editorSession' is mandatory.")
+    }
+    this.type = type
+    this.labelGenerator = labelGenerator
+    this._targetTypes = array2table(XREF_TARGET_TYPES[type])
+    // TODO: should this be a parameter?
+    // also, is it ok to assume that all these resources must be placed in a container?
+    // ATTENTION: in TextureJATS there is an extra <body-content> wrapper
+    this._container = editorSession.getDocument().find('article > body > body-content')
+    this._containerPath = this._container.getContentPath()
+
+    editorSession.onUpdate('document', this._onDocumentChange, this)
+  }
+
+  dispose() {
+    this.editorSession.off(this)
+  }
+
+  getAvailableResources() {
+    return this._getResourcesFromDocument()
+  }
+
+  _onDocumentChange(change) {
+    const TARGET_TYPES = this._targetTypes
+    const doc = this.editorSession.getDocument()
+
+    // update labels whenever
+    // I.   a <target-type> node is inserted into the body
+    const ops = change.ops
+    let needsUpdate = false
+    for (var i = 0; i < ops.length; i++) {
+      let op = ops[i]
+      switch (op.type) {
+        // I. citation is created or deleted
+        case 'update': {
+          if (isArrayEqual(op.path, this._containerPath)) {
+            let id = op.diff.val
+            let node = doc.get(id)
+            if (node && TARGET_TYPES[node.type]) {
+              needsUpdate = true
+            }
+          }
+          break
+        }
+        default:
+          //
+      }
+      if (needsUpdate) break
+    }
+    if (needsUpdate) {
+      // we should not do this in a flow
+      // TODO: we need the ability to update the node state
+      // either triggering a new flow, but also during a running flow
+      setTimeout(() => {
+        this._updateLabels()
+      })
+    }
+  }
+
+  _getResourcesFromDocument() {
+    return this._container.findAll(XREF_TARGET_TYPES[this.type].join(','))
+  }
+
+  _updateLabels() {
+    const editorSession = this.editorSession
+    const doc = editorSession.getDocument()
+
+    let resources = this._getResourcesFromDocument()
+    let order = {}
+    let pos = 1
+    resources.forEach((res) => {
+      order[res.id] = pos
+      let label = this.labelGenerator.getLabel([pos])
+      if (!res.state) {
+        res.state = {}
+      }
+      res.state.label = label
+      res.state.pos = pos
+      pos++
+    })
+
+    let xrefs = doc.findAll(`xref[ref-type='${this.type}']`)
+    let xrefLabels = {}
+    xrefs.forEach((xref) => {
+      let numbers = []
+      let rids = xref.getAttribute('rid').split(' ')
+      for (let i = 0; i < rids.length; i++) {
+        const id = rids[i]
+        if (!order.hasOwnProperty(id)) {
+          xrefLabels[xref.id] = '???'
+          return
+        }
+        numbers.push(order[id])
+      }
+      xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
+    })
+
+    // Now update the node state of all affected xref[ref-type='bibr']
+    // TODO: we need a node state API
+    // provided via editor session
+    let change = new DocumentChange([], {}, {})
+    change._extractInformation()
+    xrefs.forEach((xref) => {
+      const label = xrefLabels[xref.id]
+      if (!xref.state) {
+        xref.state = {}
+      }
+      xref.state.label = label
+      change.updated[xref.id] = true
+    })
+    resources.forEach((res) => {
+      change.updated[res.id] = true
+    })
+    editorSession._setDirty('document')
+    editorSession._change = change
+    editorSession._info = {}
+    editorSession.startFlow()
+  }
+
+}

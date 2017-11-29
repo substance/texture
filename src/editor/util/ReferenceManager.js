@@ -1,4 +1,4 @@
-import { DocumentChange, without } from 'substance'
+import { DocumentChange } from 'substance'
 import updateEntityChildArray from '../../util/updateEntityChildArray'
 
 export default class ReferenceManager {
@@ -13,6 +13,8 @@ export default class ReferenceManager {
     if(!this.entityDbSession) {
       throw new Error("'entityDbSession' is mandatory.")
     }
+
+    this.labelGenerator = context.configurator.getLabelGenerator('references')
 
     // this will be determined by taking the
     // position by entity id
@@ -142,25 +144,24 @@ export default class ReferenceManager {
     const doc = editorSession.getDocument()
 
     let refList = doc.find('ref-list')
-    let citations = doc.findAll("xref[ref-type='bibr']")
-    if (citations.length === 0) return
+    let xrefs = doc.findAll("xref[ref-type='bibr']")
+    if (xrefs.length === 0) return
 
     let pos = 1
     let order = {}
     let refLabels = {}
-    let citationLabels = {}
-    citations.forEach((xref) => {
-      let label = []
+    let xrefLabels = {}
+    xrefs.forEach((xref) => {
+      let numbers = []
       let rids = xref.getAttribute('rid').split(' ')
       rids.forEach((id) => {
         if (!order.hasOwnProperty(id)) {
           order[id] = pos++
-          refLabels[id] = `[${order[id]}]`
+          refLabels[id] = this.labelGenerator.getLabel(order[id])
         }
-        label.push(order[id])
+        numbers.push(order[id])
       })
-      label.sort()
-      citationLabels[xref.id] = `[${label.join(',')}]` || '???'
+      xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
     })
 
     // Now update the node state of all affected xref[ref-type='bibr']
@@ -168,8 +169,8 @@ export default class ReferenceManager {
     // provided via editor session
     let change = new DocumentChange([], {}, {})
     change._extractInformation()
-    citations.forEach((xref) => {
-      const label = citationLabels[xref.id]
+    xrefs.forEach((xref) => {
+      const label = xrefLabels[xref.id]
       if (!xref.state) {
         xref.state = {}
       }

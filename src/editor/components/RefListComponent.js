@@ -4,8 +4,10 @@ import ModalDialog from '../../shared/ModalDialog'
 import RefComponent from './RefComponent'
 
 export default class RefListComponent extends NodeComponent {
+
   didMount() {
     super.didMount()
+
     this.handleActions({
       'done': this._doneEditing,
       'cancel': this._doneEditing,

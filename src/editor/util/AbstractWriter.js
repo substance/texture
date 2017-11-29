@@ -1,6 +1,5 @@
 import { Highlights, Toolbar, AbstractEditor } from 'substance'
 import SaveHandler from './SaveHandler'
-import NumberedLabelGenerator from './NumberedLabelGenerator'
 import { getXrefTargets } from './xrefHelpers'
 
 class AbstractWriter extends AbstractEditor {
@@ -24,27 +23,27 @@ class AbstractWriter extends AbstractEditor {
     this.saveHandler = this._getSaveHandler()
     this.contentHighlights = new Highlights(doc)
 
-    let sortNumeric = function(a, b){ return a-b }
-    // NOTE: Supported ref-types are hard-coded for now
-    this.labelGenerator = new NumberedLabelGenerator(editorSession, this.exporter, {
-      'fn': function(targets) {
-        let positions = targets.map(t => t.position).sort(sortNumeric)
-        return positions.join(',') || '???'
-      },
-      'fig': function(targets) {
-        let positions = targets.map(t => t.position).sort(sortNumeric)
-        return 'Figure ' + (positions.join(',') || '???')
-      },
-      'table': function(targets) {
-        let positions = targets.map(t => t.position).sort(sortNumeric)
-        return 'Table ' + (positions.join(',') || '???')
-      },
-      // E.g. eLife videos are referenced as other
-      'other': function(targets) {
-        let positions = targets.map(t => t.position).sort(sortNumeric)
-        return 'Other ' + (positions.join(',') || '???')
-      }
-    })
+    // let sortNumeric = function(a, b){ return a-b }
+    // // NOTE: Supported ref-types are hard-coded for now
+    // this.labelGenerator = new NmberedLabelGenerator(editorSession, this.exporter, {
+    //   'fn': function(targets) {
+    //     let positions = targets.map(t => t.position).sort(sortNumeric)
+    //     return positions.join(',') || '???'
+    //   },
+    //   'fig': function(targets) {
+    //     let positions = targets.map(t => t.position).sort(sortNumeric)
+    //     return 'Figure ' + (positions.join(',') || '???')
+    //   },
+    //   'table': function(targets) {
+    //     let positions = targets.map(t => t.position).sort(sortNumeric)
+    //     return 'Table ' + (positions.join(',') || '???')
+    //   },
+    //   // E.g. eLife videos are referenced as other
+    //   'other': function(targets) {
+    //     let positions = targets.map(t => t.position).sort(sortNumeric)
+    //     return 'Other ' + (positions.join(',') || '???')
+    //   }
+    // })
     editorSession.setSaveHandler(this.saveHandler)
   }
 

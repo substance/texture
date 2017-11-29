@@ -97,9 +97,11 @@ export default class AbstractResourceManager {
     const doc = editorSession.getDocument()
 
     let resources = this._getResourcesFromDocument()
+    let resourcesById = {}
     let order = {}
     let pos = 1
     resources.forEach((res) => {
+      resourcesById[res.id] = res
       order[res.id] = pos
       let label = this.labelGenerator.getLabel([pos])
       if (!res.state) {
@@ -113,16 +115,21 @@ export default class AbstractResourceManager {
     let xrefs = doc.findAll(`xref[ref-type='${this.type}']`)
     let xrefLabels = {}
     xrefs.forEach((xref) => {
+      let isInvalid = false
       let numbers = []
-      let rids = xref.getAttribute('rid').split(' ')
+      let rids = xref.getAttribute('rid') || ''
+      rids = rids.split(' ')
       for (let i = 0; i < rids.length; i++) {
         const id = rids[i]
-        if (!order.hasOwnProperty(id)) {
-          xrefLabels[xref.id] = '???'
-          return
+        if (!id) continue
+        if (!resourcesById[id]) {
+          isInvalid = true
+        } else {
+          numbers.push(order[id])
         }
-        numbers.push(order[id])
       }
+      // invalid labels shall be the same as empty ones
+      if (isInvalid) numbers = []
       xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
     })
 

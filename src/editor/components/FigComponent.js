@@ -10,7 +10,7 @@ export default class FigComponent extends NodeComponent {
       .addClass('sc-'+node.type)
       .attr('data-id', node.id)
 
-    let label = getLabel(node) || '???'
+    let label = getLabel(node)
     let labelEl = $$('div').addClass('se-label').text(label)
     el.append(labelEl)
 

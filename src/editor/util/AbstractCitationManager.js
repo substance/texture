@@ -93,21 +93,39 @@ export default class AbstractCitationManager {
 
     let refList = doc.find('ref-list')
     let xrefs = doc.findAll(`xref[ref-type='${this.type}']`)
+    let refs = this._getReferences()
+    let refsById = refs.reduce((m, ref) => {
+      m[ref.id] = ref
+      return m
+    }, {})
 
     let pos = 1
     let order = {}
     let refLabels = {}
     let xrefLabels = {}
     xrefs.forEach((xref) => {
+      let isInvalid = false
       let numbers = []
-      let rids = xref.getAttribute('rid').split(' ')
-      rids.forEach((id) => {
+      let rids = xref.getAttribute('rid') || ''
+      rids = rids.split(' ')
+      for (let i = 0; i < rids.length; i++) {
+        const id = rids[i]
+        // skip if id empty
+        if (!id) continue
+        // fail if there is an unknown id
+        if (!refsById[id]) {
+          isInvalid = true
+          continue
+        }
         if (!order.hasOwnProperty(id)) {
-          order[id] = pos++
-          refLabels[id] = this.labelGenerator.getLabel(order[id])
+          order[id] = pos
+          refLabels[id] = this.labelGenerator.getLabel(pos)
+          pos++
         }
         numbers.push(order[id])
-      })
+      }
+      // invalid labels shall be the same as empty ones
+      if (isInvalid) numbers = []
       xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
     })
 
@@ -124,7 +142,6 @@ export default class AbstractCitationManager {
       xref.state.label = label
       change.updated[xref.id] = true
     })
-    let refs = this._getReferences()
     refs.forEach((ref) => {
       const label = refLabels[ref.id]
       if (!ref.state) {

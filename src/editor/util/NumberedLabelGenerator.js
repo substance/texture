@@ -35,13 +35,16 @@ export default class NumberedLabelGenerator {
     // a string where '$' will be replaced
     // e.g "[$]" could be used to generate "[1-3],[4]"
     this.groupTemplate = config.groupTemplate
+    this.invalid = config.invalid || '???'
   }
 
   getLabel(numbers) {
-    if (!numbers) return ''
+    if (!numbers) return this.invalid
     if (!isArray(numbers)) numbers = [numbers]
-    numbers.sort()
+    if (numbers.length === 0) return this.invalid
+
     const L = numbers.length
+    numbers.sort()
 
     let frags = []
     if (this.name) {

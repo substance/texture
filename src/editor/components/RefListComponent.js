@@ -73,7 +73,7 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _updateReferences(entityIds) {
-    this.context.referenceManager.updateReferences(entityIds)
+    this.context.editorSession.getManager('references').updateReferences(entityIds)
     this.setState({
       edit: false
     })

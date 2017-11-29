@@ -42,7 +42,7 @@ export default class FigPreview extends NodeComponent {
   }
 
   _renderLabel($$) {
-    let label = getLabel(this.props.node) || '???'
+    let label = getLabel(this.props.node)
     return $$('div').addClass('se-label').append(label)
   }
 }

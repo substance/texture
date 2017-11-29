@@ -1,14 +1,24 @@
 import {
-  Document
+  Document,
+  AnnotationCommand,
+  BasePackage
 } from 'substance'
 
-import HTMLContent from './HTMLContent'
+import Body from './Body'
 import Emphasis from './Emphasis'
 import Strong from './Strong'
 import Subscript from './Subscript'
 import Superscript from './Superscript'
+import BodyHTMLConverter from './BodyHTMLConverter'
 
 import RichtextHTMLImporter from './RichtextHTMLImporter'
+
+import {
+  StrongComponent,
+  EmphasisComponent,
+  SuperscriptComponent,
+  SubscriptComponent
+} from './ui'
 
 export default {
   name: 'rich-text-input',
@@ -19,35 +29,81 @@ export default {
       version: '1.0.0'
     })
 
-    config.addNode(HTMLContent)
+    config.import(BasePackage)
 
-    let defaultOptions = {
-      disableCollapsedCursor: true,
-      toolGroup: 'annotations'
-    }
+    // Body
+    config.addNode(Body)
+    config.addConverter('html', BodyHTMLConverter)
 
-    config.addNode(Emphasis, defaultOptions)
-    config.addNode(Strong, defaultOptions)
-    config.addNode(Subscript, defaultOptions)
-    config.addNode(Superscript, defaultOptions)
-
+    // Emphasis
+    config.addNode(Emphasis)
     config.addConverter('html', {
       type: 'emphasis',
       tagName: 'em'
     })
+    config.addComponent('emphasis', EmphasisComponent)
+    config.addCommand('emphasis', AnnotationCommand, {
+      nodeType: 'emphasis',
+      commandGroup: 'annotations'
+    })
+    config.addIcon('emphasis', { 'fontawesome': 'fa-italic' })
+    config.addLabel('emphasis', 'Emphasis')
+
+    // Strong
+    config.addNode(Strong)
     config.addConverter('html', {
       type: 'strong',
       tagName: 'strong'
     })
+    config.addComponent('strong', StrongComponent)
+    config.addCommand('strong', AnnotationCommand, {
+      nodeType: 'strong',
+      commandGroup: 'annotations'
+    })
+    config.addIcon('strong', { 'fontawesome': 'fa-bold' })
+    config.addLabel('strong', 'Strong')
+
+    // Subscript
+    config.addNode(Subscript)
     config.addConverter('html', {
       type: 'subscript',
       tagName: 'sub'
     })
+    config.addComponent('subscript', SubscriptComponent)
+    config.addCommand('subscript', AnnotationCommand, {
+      nodeType: 'subscript',
+      commandGroup: 'annotations'
+    })
+    config.addIcon('subscript', { 'fontawesome': 'fa-subscript' })
+    config.addLabel('subscript', 'Subscript')
+
+    // Superscript
+    config.addNode(Superscript)
     config.addConverter('html', {
       type: 'superscript',
       tagName: 'sup'
     })
+    config.addComponent('superscript', SuperscriptComponent)
+    config.addCommand('superscript', AnnotationCommand, {
+      nodeType: 'superscript',
+      commandGroup: 'annotations'
+    })
+    config.addIcon('superscript', { 'fontawesome': 'fa-superscript' })
+    config.addLabel('superscript', 'Superscript')
+
+    // Keyboard shortcuts
+    config.addKeyboardShortcut('CommandOrControl+B', { command: 'strong' })
+    config.addKeyboardShortcut('CommandOrControl+I', { command: 'emphasis' })
 
     config.addImporter('html', RichtextHTMLImporter)
+
+    config.addToolPanel('main-overlay', [
+      {
+        name: 'annotations',
+        type: 'tool-group',
+        showDisabled: false,
+        commandGroups: ['annotations']
+      }
+    ])
   }
 }

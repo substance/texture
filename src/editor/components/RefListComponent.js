@@ -1,11 +1,13 @@
 import { NodeComponent } from 'substance'
 import EditRelationship from '../../entities/EditRelationship'
-import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
+import RefComponent from './RefComponent'
 
 export default class RefListComponent extends NodeComponent {
+
   didMount() {
     super.didMount()
+
     this.handleActions({
       'done': this._doneEditing,
       'cancel': this._doneEditing,
@@ -21,10 +23,11 @@ export default class RefListComponent extends NodeComponent {
   }
 
   render($$) {
+    const referenceManager = this.context.editorSession.getManager('references')
+
     let el = $$('div').addClass('sc-bibliography')
-    let db = this.context.db
-    let entityIds = this.context.referenceManager.getReferenceIds()
-    let bibliography = this.context.referenceManager.getBibliography()
+    let entityIds = referenceManager.getReferenceIds()
+    let bibliography = referenceManager.getBibliography()
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {
@@ -48,18 +51,7 @@ export default class RefListComponent extends NodeComponent {
     )
 
     bibliography.forEach((reference) => {
-      el.append(
-        $$('div').addClass('se-reference').append(
-          $$('span').addClass('se-label').append(
-            '[',
-            reference.label,
-            '] '
-          ),
-          $$('span').addClass('se-text').html(
-            entityRenderers[reference.type](reference.id, db)
-          )
-        )
-      )
+      el.append($$(RefComponent, { node: reference }))
     })
 
     el.append(
@@ -81,7 +73,7 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _updateReferences(entityIds) {
-    this.context.referenceManager.updateReferences(entityIds)
+    this.context.editorSession.getManager('references').updateReferences(entityIds)
     this.setState({
       edit: false
     })

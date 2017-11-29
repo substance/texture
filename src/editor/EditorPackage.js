@@ -66,6 +66,11 @@ import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
+import ReferenceManager from './util/ReferenceManager'
+import FigureManager from './util/FigureManager'
+import TableManager from './util/TableManager'
+import FootnoteManager from './util/FootnoteManager'
+
 substanceGlobals.DEBUG_RENDERING = true
 
 export default {
@@ -83,6 +88,35 @@ export default {
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
+
+    config.addManager('references', ReferenceManager)
+    config.addManager('figures', FigureManager)
+    config.addManager('tables', TableManager)
+    config.addManager('footnotes', FootnoteManager)
+
+    // Experimental
+    config.setLabelGenerator('references', {
+      template: '[$]',
+      and: ',',
+      to: '-',
+    })
+    config.setLabelGenerator('figures', {
+      name: 'Figure',
+      plural: 'Figures',
+      and: ',',
+      to: '-',
+    })
+    config.setLabelGenerator('tables', {
+      name: 'Table',
+      plural: 'Tables',
+      and: ',',
+      to: '-',
+    })
+    config.setLabelGenerator('footnotes', {
+      template: '($)',
+      and: ',',
+      to: '-',
+    })
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

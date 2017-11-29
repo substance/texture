@@ -1,14 +1,16 @@
 import { Component } from 'substance'
 import Button from './Button'
+import { getLabel } from '../util/nodeHelpers'
 
 export default class FnComponent extends Component {
+
   render($$) {
     const node = this.props.node
     let el = $$('div')
       .addClass('sc-fn-item')
       .attr('data-id', node.id)
 
-    let label = this.context.labelGenerator.getPosition('fn', node.id)
+    let label = getLabel(node) || ''
     let contentEl = $$(this.getComponent('container'), {
       placeholder: 'Enter Footnote',
       node: node,

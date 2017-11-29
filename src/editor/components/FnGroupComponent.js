@@ -5,20 +5,13 @@ class FnGroupComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
-    this.context.labelGenerator.on('labels:generated', this._onLabelsChanged, this)
 
     this.handleActions({
       'removeFn': this._removeFn
     })
   }
 
-  dispose() {
-    super.dispose()
-    this.context.labelGenerator.off(this)
-  }
-
   render($$) {
-    const labelGenerator = this.context.labelGenerator
     const node = this.props.node
 
     let el = $$('div').addClass('sc-fn-group').append(
@@ -27,8 +20,9 @@ class FnGroupComponent extends NodeComponent {
 
     let fns = node.findAll('fn')
     let entries = fns.map((fn) => {
+      // FIXME: introduce a FootnoteManager
       return {
-        pos: labelGenerator.getPosition('fn', fn.id) || Number.MAX_VALUE,
+        pos: -1,
         fn
       }
     })

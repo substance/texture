@@ -1,9 +1,10 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
+import { getLabel } from '../util/nodeHelpers'
 
 /*
   Renders a keyboard-selectable figure target item
 */
-export default class FigPreview extends Component {
+export default class FigPreview extends NodeComponent {
 
   render($$) {
     let node = this.props.node
@@ -41,10 +42,7 @@ export default class FigPreview extends Component {
   }
 
   _renderLabel($$) {
-    let labelGenerator = this.context.labelGenerator
-    let label = labelGenerator.getPosition('fig', this.props.node.id)
-    return $$('div').addClass('se-label').append(
-      'Figure ', label
-    )
+    let label = getLabel(this.props.node)
+    return $$('div').addClass('se-label').append(label)
   }
 }

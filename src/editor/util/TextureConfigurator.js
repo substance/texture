@@ -1,4 +1,5 @@
 import { Configurator, AnnotationCommand, SwitchTextTypeCommand } from 'substance'
+import NumberedLabelGenerator from './NumberedLabelGenerator'
 
 export default class TextureConfigurator extends Configurator {
 
@@ -33,6 +34,22 @@ export default class TextureConfigurator extends Configurator {
 
   getPanelsSpec() {
     return this.config.panelsSpec
+  }
+
+  // see NumberedLabelGenerator
+  setLabelGenerator(type, spec) {
+    if (!this.config.labelGenerator) {
+      this.config.labelGenerator = {}
+    }
+    this.config.labelGenerator[type] = spec
+  }
+
+  getLabelGenerator(type) {
+    let config
+    if (this.config.labelGenerator) {
+      config = this.config.labelGenerator[type] || {}
+    }
+    return new NumberedLabelGenerator(config)
   }
 
 }

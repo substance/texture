@@ -44,10 +44,14 @@ export default class Texture extends Component {
           return jatsExporter.export(dom, { entityDb })
         }
       },
-      entityDbSession: this.entityDbSession,
+      configurator: this.configurator,
       entityDb: this.entityDb,
+      entityDbSession: this.entityDbSession,
       // TODO: Update components to use entityDb, entityDbSession instead.
-      db: this.entityDb,
+      get db() {
+        console.warn('DEPRECATED: use context.entityDb instead')
+        return this.entityDb
+      },
       dbSession: this.entityDbSession
     }
   }
@@ -101,7 +105,7 @@ export default class Texture extends Component {
 
   _loadDocument() {
     const configurator = this.getConfigurator()
-    this.props.readXML(this.props.documentId, function(err, xmlStr) {
+    this.props.readXML(this.props.documentId, (err, xmlStr) => {
       let dom = DefaultDOMElement.parseXML(xmlStr)
       if (err) {
         console.error(err)
@@ -129,13 +133,14 @@ export default class Texture extends Component {
       window.entityDb = this.entityDb
       // create editor session
       const editorSession = new EditorSession(doc, {
-        configurator: configurator
+        configurator: configurator,
+        context: this.getChildContext()
       })
 
       this.setState({
-        editorSession: editorSession,
+        editorSession: editorSession
       })
-    }.bind(this))
+    })
   }
 
 }

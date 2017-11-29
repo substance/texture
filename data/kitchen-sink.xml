@@ -82,7 +82,7 @@
         </date>
       </history>
       <abstract>
-        <p><bold>Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r2"/></p>
+        <p><bold>Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r7"/></p>
       </abstract>
       <trans-abstract xml:lang="de">
         <p>Deutsche Übersetzung</p>
@@ -96,7 +96,7 @@
       <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor <ext-link ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
       <sec>
         <title>Orci varius natoque penatibus et magnis</title>
-        <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet <xref ref-type="bibr" rid="r1 r2"/>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
+        <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet <xref ref-type="bibr" rid="r1 r7"/>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
         <fig id="fig1">
           <caption>
             <title>Behavioural design and implantation details.</title>

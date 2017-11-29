@@ -1,16 +1,16 @@
 import ContribsListComponent from './ContribListComponent'
 
-export default class AuthorsListComponent extends ContribsListComponent {
+export default class EditorsListComponent extends ContribsListComponent {
   getClassNames() {
     return 'sc-authors-list'
   }
 
   getTargetTypes() {
-    return ['person', 'organisation']
+    return ['person']
   }
 
   getPropertyName() {
-    return 'authors'
+    return 'editors'
   }
 
 }

@@ -35,14 +35,22 @@ export default class FrontComponent extends Component {
       let authorsListEl = $$(this.getComponent('authors-list'), {
         node: authorsContribGroup
       })
+
+      // let affiliationsListEl = $$(this.getComponent('affiliations-list'), {
+      //   node: node
+      // })
+      // el.append(affiliationsListEl)
       el.append(authorsListEl)
     }
 
-
-    let affiliationsListEl = $$(this.getComponent('affiliations-list'), {
-      node: node
-    })
-    el.append(affiliationsListEl)
+    // contrib-group content-type="editors"
+    let editorsContribGroup = articleMeta.find('contrib-group[content-type=editors]')
+    if (editorsContribGroup) {
+      let editorsListEl = $$(this.getComponent('editors-list'), {
+        node: editorsContribGroup
+      })
+      el.append(editorsListEl)
+    }
 
     // Abstract
 

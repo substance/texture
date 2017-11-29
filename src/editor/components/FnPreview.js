@@ -1,13 +1,12 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
+import { getLabel } from '../util/nodeHelpers'
 
-/*
-  Renders a keyboard-selectable ref preview item
-*/
-export default class FnPreview extends Component {
+export default class FnPreview extends NodeComponent {
 
   render($$) {
-    let labelGenerator = this.context.labelGenerator
-    let TextNode = this.getComponent('text-node')
+    const node = this.props.node
+    const TextNode = this.getComponent('text-node')
+
     let el = $$('div')
       .addClass('sc-fn-preview')
       .attr({'data-id': this.props.node.id})
@@ -16,19 +15,16 @@ export default class FnPreview extends Component {
       el.addClass('sm-selected')
     }
 
+    let label = getLabel(node) || ''
     el.append(
-      $$('div').addClass('se-label').append(
-        String(labelGenerator.getPosition('fn', this.props.node.id) || '')
-      )
+      $$('div').addClass('se-label').append(label)
     )
 
-    let node = this.props.node
+    // only showing the first paragraph
     let firstP = node.find('p')
     if (firstP) {
       el.append(
-        $$(TextNode, {
-          node: firstP
-        })
+        $$(TextNode, { node: firstP })
       )
     }
 

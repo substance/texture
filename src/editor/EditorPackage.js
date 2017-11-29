@@ -69,6 +69,7 @@ import InsertXrefCommand from './commands/InsertXrefCommand'
 import ReferenceManager from './util/ReferenceManager'
 import FigureManager from './util/FigureManager'
 import TableManager from './util/TableManager'
+import FootnoteManager from './util/FootnoteManager'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -91,6 +92,7 @@ export default {
     config.addManager('references', ReferenceManager)
     config.addManager('figures', FigureManager)
     config.addManager('tables', TableManager)
+    config.addManager('footnotes', FootnoteManager)
 
     // Experimental
     config.setLabelGenerator('references', {
@@ -100,11 +102,20 @@ export default {
     })
     config.setLabelGenerator('figures', {
       name: 'Figure',
-      plural: 'Figures'
+      plural: 'Figures',
+      and: ',',
+      to: '-',
     })
     config.setLabelGenerator('tables', {
       name: 'Table',
-      plural: 'Tables'
+      plural: 'Tables',
+      and: ',',
+      to: '-',
+    })
+    config.setLabelGenerator('footnotes', {
+      template: '($)',
+      and: ',',
+      to: '-',
     })
 
     // Base functionality

@@ -10,7 +10,7 @@ export default class FnComponent extends Component {
       .addClass('sc-fn-item')
       .attr('data-id', node.id)
 
-    let label = getLabel(node) || '???'
+    let label = getLabel(node) || ''
     let contentEl = $$(this.getComponent('container'), {
       placeholder: 'Enter Footnote',
       node: node,

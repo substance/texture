@@ -16,7 +16,8 @@ export const REF_TYPES = {
 const RefTypeToManager = {
   'bibr': 'references',
   'fig': 'figures',
-  'table': 'tables'
+  'table': 'tables',
+  'fn': 'footnotes'
 }
 
 

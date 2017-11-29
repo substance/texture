@@ -1,10 +1,10 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
 import { getLabel } from '../util/nodeHelpers'
 
 /*
   Renders a keyboard-selectable figure target item
 */
-export default class FigPreview extends Component {
+export default class FigPreview extends NodeComponent {
 
   render($$) {
     let node = this.props.node

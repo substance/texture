@@ -52,11 +52,12 @@ export default class ReferenceManager {
     let refs = doc.findAll('ref-list > ref')
     // TODO: determine order and label based on citations in the document
     return refs.map((ref) => {
+      let refId = ref.getAttribute('rid')
       if (!ref.state) {
         ref.state = {}
       }
       if (!ref.state.entity) {
-        ref.state.entity = entityDb.get(ref.id)
+        ref.state.entity = entityDb.get(refId)
       }
       return ref
     }).sort((a,b) => {

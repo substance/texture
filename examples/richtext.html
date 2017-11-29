@@ -11,6 +11,10 @@
       @import './substance/dist/substance.css';
       @import './texture-pagestyle.css';
       @import './font-awesome/css/font-awesome.min.css';
+
+      .sc-rich-text-input {
+        padding: 50px;
+      }
     </style>
     <script type="text/javascript" src="./substance/dist/substance.js"></script>
     <script type="text/javascript" src="./texture.js"></script>
@@ -27,6 +31,10 @@
             $$(RichtextInput, {
               content: 'bla<strong>blupp</strong>',
               editorId: 'test'
+            }),
+            $$(RichtextInput, {
+              content: 'foo bar<strong>asdfasd</strong><sup>asdf</sup>',
+              editorId: 'foo'
             })
           )
           return el

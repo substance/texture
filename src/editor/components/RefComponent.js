@@ -1,22 +1,23 @@
 import { NodeComponent } from 'substance'
-import entityRenderers from '../../entities/entityRenderers'
-
+import { renderEntity } from '../../entities/entityHelpers'
 
 export default class RefComponent extends NodeComponent {
 
   render($$) {
     const db = this.context.db
-    const reference = this.props.node
-    const entityRenderer = entityRenderers[_getRefType(reference)]
+    const ref = this.props.node
+    let label = _getReferenceLabel(ref)
+    let entityHtml = renderEntity(_getEntity(ref, db))
+
+    // TODO: do we want to display something like this
+    // if so, use the label provider
+    entityHtml = entityHtml || '<i>Not available</i>'
+
     // TODO: change css class to sc-ref-component
     return $$('div').addClass('se-reference').append(
-      $$('span').addClass('se-label').append(
-        _getReferenceLabel(reference),
-        ' '
-      ),
-      $$('span').addClass('se-text').html(
-        entityRenderer ? entityRenderer(reference.id, db) : ''
-      )
+      $$('span').addClass('se-label').append( label),
+      ' ',
+      $$('span').addClass('se-text').html(entityHtml)
     )
   }
 }
@@ -28,13 +29,9 @@ function _getReferenceLabel(ref) {
   return ''
 }
 
-function _getRefType(ref, db) {
+function _getEntity(ref, db) {
   if (ref.state && ref.state.entity) {
-    return ref.state.entity.type
+    return ref.state.entity
   }
-  let entity = db.get(ref.id)
-  if (entity) {
-    return entity.type
-  }
-  return ''
+  return db.get(ref.id)
 }

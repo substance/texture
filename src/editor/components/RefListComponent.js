@@ -21,9 +21,11 @@ export default class RefListComponent extends NodeComponent {
   }
 
   render($$) {
+    const referenceManager = this.context.editorSession.getManager('references')
+
     let el = $$('div').addClass('sc-bibliography')
-    let entityIds = this.context.referenceManager.getReferenceIds()
-    let bibliography = this.context.referenceManager.getBibliography()
+    let entityIds = referenceManager.getReferenceIds()
+    let bibliography = referenceManager.getBibliography()
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {

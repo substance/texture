@@ -1,4 +1,4 @@
-import { map, orderBy } from 'substance'
+import { orderBy, includes } from 'substance'
 
 // left side: node type
 // right side: ref-type
@@ -12,6 +12,13 @@ export const REF_TYPES = {
   'table-wrap-group': 'table'
 }
 
+// TODO: how could this be configured?
+const RefTypeToManager = {
+  'bibr': 'references',
+  'fig': 'figures',
+  'table': 'tables'
+}
+
 
 // left side: ref-type
 // right side: [... node types]
@@ -21,11 +28,6 @@ export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {
   m[refType].push(type)
   return m
 }, {})
-
-// HACK: hard coded mapping from JATS ref-type to EntityDb types
-export const ENTITY_TYPES = {
-  'ref': 'bibr'
-}
 
 export function getXrefTargets(xref) {
   let idrefs = xref.getAttribute('rid')
@@ -46,10 +48,21 @@ export function getXrefLabel(xref) {
   return xref.textContent || ' '
 }
 
+function getXrefResourceManager(xref, editorSession) {
+  let managerName = RefTypeToManager[xref.getAttribute('ref-type')]
+  if (managerName) {
+    return editorSession.getManager(managerName)
+  }
+}
+
 /*
   Computes available targets for a given xref node
+  that the user can choose from.
 
-  Returns an array of entries with all info needed by XRefTargets to render
+  This implementation is very much tailored for the requirements
+  in the UI, being a selection dialog.
+
+  ```
   [
     {
       selected: true,
@@ -57,53 +70,24 @@ export function getXrefLabel(xref) {
     }
     ,...
   ]
+  ```
 */
-export function getAvailableXrefTargets(node, entityDb) {
-  let refType = node.getAttribute('ref-type')
-  // these ids are currently referenced by the <xref>
-  let selectedTargets = getXrefTargets(node)
-  // a specific ref-type can point to multiple node types
-  let targetTypes = XREF_TARGET_TYPES[refType]
+export function getAvailableXrefTargets(xref, editorSession) {
+  let manager = getXrefResourceManager(xref, editorSession)
+  if (!manager) return []
 
-  function _isSelected(nodeId) {
-    return selectedTargets.indexOf(nodeId) >= 0
-  }
-  // now we want to retrieve all possible nodes that this
+  let selectedTargets= getXrefTargets(xref)
+  // retrieve all possible nodes that this
   // xref could potentially point to,
   // so that we can let the user select from a list.
-  // Some of the nodes are stored in the document,
-  // but others are in the entityDb.
-  let targets = []
-  targetTypes.forEach((targetType) => {
-    let nodes
-    let isEntity = Boolean(ENTITY_TYPES[targetType])
-    if (isEntity) {
-      let entityType = ENTITY_TYPES[targetType]
-      let nodeIds = entityDb.find({
-        type: entityType
-      })
-      nodes = nodeIds.map(id => entityDb.get(id))
-    } else {
-      let nodesByType = node.getDocument().getIndex('type')
-      // TODO: why do we need that filter?
-      nodes = map(nodesByType.get(targetType)).filter((node) => {
-        return Boolean(node.parentNode)
-      })
+  let nodes = manager.getAvailableResources()
+  let targets = nodes.map((node) => {
+    // ATTENTION: targets are not just nodes
+    // but entries with some information (e.g. if)
+    return {
+      selected: includes(selectedTargets, node.id),
+      node: node
     }
-    nodes.forEach((node) => {
-      targets.push({
-        selected: _isSelected(node.id),
-        node: node,
-        // TODO: position depends on the type
-        // e.g. bibr's should probably be presented in the order
-        // they occur in the ref list,
-        // while figures should be in order as they occur in the document
-        // position: labelGenerator.getPosition('bibr', node.id)
-        // Let's see how far we get without position
-        position: -1,
-        isEntity
-      })
-    })
   })
   // Makes the selected targets go to top
   targets = orderBy(targets, ['selected'], ['desc'])

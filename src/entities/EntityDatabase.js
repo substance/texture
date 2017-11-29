@@ -114,3 +114,5 @@ export default class EntityDatabase extends Document {
   }
 
 }
+
+EntityDatabase.prototype._isEntityDatabase = true

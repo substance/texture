@@ -3,6 +3,9 @@ import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
 import EditRelationship from '../../entities/EditRelationship'
 
+import updateEntityChildArray from '../../util/updateEntityChildArray'
+
+
 export default class AuthorsListComponent extends NodeComponent {
 
   didMount() {
@@ -22,12 +25,12 @@ export default class AuthorsListComponent extends NodeComponent {
   }
 
   _getEntityIds() {
-    return this.props.node.findAll('contrib').map(contrib => contrib.id)
+    return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
   }
 
   render($$) {
     let el = $$('div').addClass('sc-authors-list')
-    let contribs = this.props.node.findAll('contrib')
+    let entityIds = this._getEntityIds()
     let db = this.context.entityDb
 
     if (this.state.edit) {
@@ -46,13 +49,16 @@ export default class AuthorsListComponent extends NodeComponent {
     }
 
     let contentEl = $$('div').addClass('se-content')
-    contribs.forEach(contrib => {
-      let entity = db.get(contrib.id)
+    entityIds.forEach((entityId, index) => {
+      let entity = db.get(entityId)
       contentEl.append(
-        $$('div').addClass('se-author').html(
+        $$('span').addClass('se-author').html(
           entityRenderers[entity.type](entity.id, db)
         )
       )
+      if (index < entityIds.length - 1) {
+        contentEl.append(', ')
+      }
     })
 
     el.append(contentEl)
@@ -74,11 +80,12 @@ export default class AuthorsListComponent extends NodeComponent {
     })
   }
 
-  _updateAuthors(/*entityIds*/) {
-    console.warn('TODO: update authors')
-    // this.setState({
-    //   edit: false
-    // })
+  _updateAuthors(entityIds) {
+    let oldEntityIds = this._getEntityIds()
+    updateEntityChildArray(this.context.editorSession, this.props.node.id, 'contrib', 'rid', oldEntityIds, entityIds)
+    this.setState({
+      edit: false
+    })
   }
 
 }

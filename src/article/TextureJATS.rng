@@ -404,9 +404,15 @@
   -->
   <define name="contrib">
     <element name="contrib">
-      <element name="string-contrib">
-        <text/>
-      </element>
+    </element>
+  </define>
+
+  <define name="contrib-group">
+    <element name="contrib-group">
+      <ref name="contrib-group-attlist"/>
+      <zeroOrMore>
+        <ref name="contrib"/>
+      </zeroOrMore>
     </element>
   </define>
 

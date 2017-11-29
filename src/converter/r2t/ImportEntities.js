@@ -175,8 +175,11 @@ function _extractPersons(elementCitation, entityDb) {
   personGroups.forEach(group => {
     const type = group.attr('person-group-type')
     const persons = group.findAll('name')
+    let entityId
     persons.forEach(person => {
+      entityId = person.getAttribute('rid')
       let record = {
+        id: entityId,
         type: 'person'
       }
       const surname = person.find('surname')
@@ -188,8 +191,12 @@ function _extractPersons(elementCitation, entityDb) {
       const prefix = person.find('prefix')
       if(prefix) record.prefix = prefix.text()
 
-      const entity = entityDb.create(record)
-      if(result[type]) result[type].push(entity.id)
+      if (!entityId || !entityDb.get(entityId)) {
+        let entity = entityDb.create(record)
+        // We may get a random entityId
+        entityId = entity.id
+      }
+      if(result[type]) result[type].push(entityId)
     })
   })
 
@@ -310,7 +317,7 @@ function _extractOrganisations(dom, entityDb) {
 
 /*
 <contrib-group content-type="authors">
-  <contrib contrib-type="author">
+  <contrib contrib-type="author" rid="person1">
     <name>
       <surname>Doe</surname><given-names>Jane</given-names>
     </name>
@@ -324,8 +331,9 @@ function _extractAuthors(dom, entityDb, type) {
   let contribs = contribGroup.findAll('contrib')
   contribs.forEach(contrib => {
     let orgIds = contrib.findAll('xref').map(xref => xref.getAttribute('rid'))
+    let contribId = contrib.getAttribute('rid')
     let node = {
-      id: contrib.id,
+      id: contribId,
       type: 'person',
       surname: _getTextFromDOM(contrib, 'surname'),
       givenNames: _getTextFromDOM(contrib, 'given-names'),
@@ -333,10 +341,12 @@ function _extractAuthors(dom, entityDb, type) {
       suffix: _getTextFromDOM(contrib, 'suffix'),
       affiliations: orgIds
     }
-    entityDb.create(node)
+    if (!contribId || !entityDb.get(contribId)) {
+      node = entityDb.create(node)
+    }
     // Assign id if not present
-    if (!contrib.id) {
-      contrib.setAttribute('id', node.id)
+    if (!contribId) {
+      contrib.setAttribute('rid', node.id)
     }
     contrib.empty()
   })

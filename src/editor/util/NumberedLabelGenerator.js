@@ -56,14 +56,18 @@ export default class NumberedLabelGenerator {
     // detect groups such as [1,2,3], [6], [8,9]
     let groups = []
     let group = null
-    const to = this.to
-    const _pushBlock = () => {
+    const _pushBlock = (g) => {
+      if (!isArray(g)) g = [g]
       let str
-      if (group.length === 1) {
-        str = String(group[0])
+      if (g.length === 1) {
+        str = String(g[0])
+      } else if (g.length === 2) {
+        _pushBlock(g[0])
+        _pushBlock(g[1])
+        return
       } else {
         // join with the 'to' operator, i.e. [1,2,3] => "1 to 3"
-        str = String(group[0])+to+String(last(group))
+        str = String(g[0])+this.to+String(last(g))
       }
       if (this.groupTemplate) {
         str = this.groupTemplate.slice(0).replace('$', str)
@@ -72,16 +76,16 @@ export default class NumberedLabelGenerator {
     }
     for (let i = 0; i < L; i++) {
       let n = numbers[i]
-      if (n === n[i-1]+1) {
+      if (n === numbers[i-1]+1) {
         group.push(n)
       } else {
         if (group) {
-          _pushBlock()
+          _pushBlock(group)
         }
         group = [n]
       }
     }
-    _pushBlock()
+    _pushBlock(group)
 
     // join all groups with the 'and' operator
     // such as ["1-3", "5"] => "1-3, 4"

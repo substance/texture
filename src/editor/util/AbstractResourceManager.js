@@ -49,11 +49,28 @@ export default class AbstractResourceManager {
         case 'update': {
           if (isArrayEqual(op.path, this._containerPath)) {
             let id = op.diff.val
-            let node = doc.get(id)
+            let node = doc.get(id) || change.deleted[id]
             if (node && TARGET_TYPES[node.type]) {
               needsUpdate = true
             }
           }
+          break
+        }
+        case 'set': {
+          if (op.path[1] === 'attributes') {
+            // II. a ref-type has been updated
+            if (op.path[2] === 'ref-type' && (op.val === this.type || op.original === this.type)) {
+              needsUpdate = true
+            }
+            // III. references have been updated
+            else if (op.path[2] === 'rid') {
+              let node = doc.get(op.path[0])
+              if (node && node.getAttribute('ref-type') === this.type) {
+                needsUpdate = true
+              }
+            }
+          }
+
           break
         }
         default:

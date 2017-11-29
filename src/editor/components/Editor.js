@@ -5,24 +5,11 @@ import ContextSection from './ContextSection'
 
 export default class Editor extends AbstractWriter {
 
-  getChildContext() {
-    let childContext = super.getChildContext()
-    return Object.assign({}, childContext, {
-      referenceManager: this.referenceManager
-    })
-  }
-
   didMount() {
     super.didMount()
     this.handleActions({
       'switchContext': this._switchContext
     })
-  }
-
-  dispose() {
-    super.dispose()
-
-    this.referenceManager.dispose()
   }
 
   /*

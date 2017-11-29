@@ -9,13 +9,13 @@ export default class ReferenceManager {
   updateReferences(newRefs) {
     let refList = this.editorSession.getDocument().find('ref-list')
     let oldRefs = this.getReferenceIds()
-    updateEntityChildArray(this.editorSession, refList.id, 'ref', 'id', oldRefs, newRefs)
+    updateEntityChildArray(this.editorSession, refList.id, 'ref', 'rid', oldRefs, newRefs)
   }
 
   getReferenceIds() {
     let doc = this.editorSession.getDocument()
     let refs = doc.findAll('ref-list > ref')
-    return refs.map(ref => ref.id)
+    return refs.map(ref => ref.getAttribute('rid'))
   }
 
   /*

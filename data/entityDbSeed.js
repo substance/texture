@@ -4,7 +4,7 @@ export default [
     "id": "person-1",
     "givenNames": "Smith",
     "surname": "Jane",
-    "affiliations": []
+    "affiliations": ['organisation-1']
   },
   {
     "type": "person",

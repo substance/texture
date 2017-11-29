@@ -46,10 +46,11 @@ export default class ImportEntities {
       } else {
         const entityId = _createBibliographicEntity(elementCitation, entityDb)
         if(entityId) {
-          const bibRefs = dom.findAll('xref[ref-type=bibr][rid=' + refEl.id + ']')
-          bibRefs.forEach(bibRef => {
-            bibRef.attr('rid', entityId)
-          })
+          // const bibRefs = dom.findAll('xref[ref-type=bibr][rid=' + refEl.id + ']')
+          // bibRefs.forEach(bibRef => {
+          //   bibRef.attr('rid', entityId)
+          // })
+          refEl.attr('rid', entityId)
           refEl.empty()
         }
       }
@@ -90,7 +91,7 @@ export default class ImportEntities {
   }
 }
 
-function _createBibliographicEntity(elementCitation, entityDb) {
+function _createBibliographicEntity(elementCitation/*, entityDb*/) {
   let pubType = elementCitation.attr('publication-type')
 
   if (!pubType) throw new Error('element-citation[publication-type] is mandatory')
@@ -101,26 +102,31 @@ function _createBibliographicEntity(elementCitation, entityDb) {
     console.error('TODO: implement entity importer for', pubType, 'entity type')
     return
   }
+
+  let entityId = _getTextFromDOM(elementCitation, 'pub-id[pub-id-type=entity]')
+
+  // HACK: we assume that the entity already exists in the db
+
   // Extract authors and editors from element-citation
-  const persons = _extractPersons(elementCitation, entityDb)
-  let record = {
-    id: elementCitation.getParent().id,
-    type,
-    authors: persons.author,
-    editors: persons.editor
-  }
+  // const persons = _extractPersons(elementCitation, entityDb)
+  // let record = {
+  //   id: elementCitation.getParent().id,
+  //   type,
+  //   authors: persons.author,
+  //   editors: persons.editor
+  // }
 
   // Extract all other attributes for a certain pub-type
   // and populate entity record
-  const nodes = _getEntityNodes(type, entityDb)
-  nodes.forEach(node => {
-    const prop = _getElementCitationProperty(node, elementCitation)
-    if(prop) record[node] = prop
-  })
-  // Create record
-  const entity = entityDb.create(record)
+  // const nodes = _getEntityNodes(type, entityDb)
+  // nodes.forEach(node => {
+  //   const prop = _getElementCitationProperty(node, elementCitation)
+  //   if(prop) record[node] = prop
+  // })
+  // // Create record
+  // const entity = entityDb.create(record)
 
-  return entity.id
+  return entityId
 }
 
 // Creating ref element from given entity record
@@ -165,43 +171,38 @@ function _createRefElement({dom, entity, entityDb}) {
 
 // Extract persons from element citation, create entites
 // and returns their ids grouped by person type
-function _extractPersons(elementCitation, entityDb) {
-  let result = {
-    author: [],
-    editor: []
-  }
-
-  const personGroups = elementCitation.findAll('person-group')
-  personGroups.forEach(group => {
-    const type = group.attr('person-group-type')
-    const persons = group.findAll('name')
-    let entityId
-    persons.forEach(person => {
-      entityId = person.getAttribute('rid')
-      let record = {
-        id: entityId,
-        type: 'person'
-      }
-      const surname = person.find('surname')
-      if(surname) record.surname = surname.text()
-      const givenNames = person.find('given-names')
-      if(givenNames) record.givenNames = givenNames.text()
-      const suffix = person.find('suffix')
-      if(suffix) record.suffix = suffix.text()
-      const prefix = person.find('prefix')
-      if(prefix) record.prefix = prefix.text()
-
-      if (!entityId || !entityDb.get(entityId)) {
-        let entity = entityDb.create(record)
-        // We may get a random entityId
-        entityId = entity.id
-      }
-      if(result[type]) result[type].push(entityId)
-    })
-  })
-
-  return result
-}
+// function _extractPersons(elementCitation, entityDb) {
+//   let result = {
+//     author: [],
+//     editor: []
+//   }
+//
+//   const personGroups = elementCitation.findAll('person-group')
+//   personGroups.forEach(group => {
+//     const type = group.attr('person-group-type')
+//     const persons = group.findAll('name')
+//     persons.forEach(person => {
+//       let record = {
+//         type: 'person'
+//       }
+//       const surname = person.find('surname')
+//       if(surname) record.surname = surname.text()
+//       const givenNames = person.find('given-names')
+//       if(givenNames) record.givenNames = givenNames.text()
+//       const suffix = person.find('suffix')
+//       if(suffix) record.suffix = suffix.text()
+//       const prefix = person.find('prefix')
+//       if(prefix) record.prefix = prefix.text()
+//
+//       // let entity = entityDb.create(record)
+//       // // We may get a random entityId
+//       // entityId = entity.id
+//       // if(result[type]) result[type].push(entityId)
+//     })
+//   })
+//
+//   return result
+// }
 
 // Injecting person-groups to element-citation
 // persons pulled out from entityDb
@@ -285,33 +286,34 @@ function _getElementCitationProperty(prop, elementCitation) {
   <uri>http://www.settles-young.com</uri>
 </aff>
 */
-function _extractOrganisations(dom, entityDb) {
+function _extractOrganisations(dom/*, entityDb*/) {
   let affs = dom.findAll('article-meta > aff')
 
   affs.forEach(aff => {
-    let node = {
-      id: aff.id,
-      type: 'organisation',
-      name: _getTextFromDOM(aff, 'institution[content-type=orgname]'),
-      division1: _getTextFromDOM(aff, 'institution[content-type=orgdiv1]'),
-      division2: _getTextFromDOM(aff, 'institution[content-type=orgdiv2]'),
-      division3: _getTextFromDOM(aff, 'institution[content-type=orgdiv3]'),
-      street: _getTextFromDOM(aff, 'addr-line[content-type=address-street]'),
-      addressComplements: _getTextFromDOM(aff, 'addr-line[content-type=complements]'),
-      city: _getTextFromDOM(aff, 'city'),
-      state: _getTextFromDOM(aff, 'state'),
-      postalCode: _getTextFromDOM(aff, 'postal-code'),
-      country: _getTextFromDOM(aff, 'country'),
-      phone: _getTextFromDOM(aff, 'phone'),
-      fax: _getTextFromDOM(aff, 'fax'),
-    }
-    entityDb.create(node)
+    let entityId = _getTextFromDOM(aff, 'uri[content-type=entity]')
+    // let node = {
+    //   id: entityId,
+    //   type: 'organisation',
+    //   name: _getTextFromDOM(aff, 'institution[content-type=orgname]'),
+    //   division1: _getTextFromDOM(aff, 'institution[content-type=orgdiv1]'),
+    //   division2: _getTextFromDOM(aff, 'institution[content-type=orgdiv2]'),
+    //   division3: _getTextFromDOM(aff, 'institution[content-type=orgdiv3]'),
+    //   street: _getTextFromDOM(aff, 'addr-line[content-type=address-street]'),
+    //   addressComplements: _getTextFromDOM(aff, 'addr-line[content-type=complements]'),
+    //   city: _getTextFromDOM(aff, 'city'),
+    //   state: _getTextFromDOM(aff, 'state'),
+    //   postalCode: _getTextFromDOM(aff, 'postal-code'),
+    //   country: _getTextFromDOM(aff, 'country'),
+    //   phone: _getTextFromDOM(aff, 'phone'),
+    //   fax: _getTextFromDOM(aff, 'fax'),
+    // }
+
+    // HACK: disable auto-creation for now
+    // entityDb.create(node)
+    aff.setAttribute('rid', entityId)
+    aff.empty()
   })
 
-  // Remove affs from the DOM
-  affs.forEach(aff => {
-    aff.remove()
-  })
 
 }
 
@@ -330,24 +332,30 @@ function _extractAuthors(dom, entityDb, type) {
   if (!contribGroup) return []
   let contribs = contribGroup.findAll('contrib')
   contribs.forEach(contrib => {
-    let orgIds = contrib.findAll('xref').map(xref => xref.getAttribute('rid'))
-    let contribId = contrib.getAttribute('rid')
-    let node = {
-      id: contribId,
-      type: 'person',
-      surname: _getTextFromDOM(contrib, 'surname'),
-      givenNames: _getTextFromDOM(contrib, 'given-names'),
-      prefix: _getTextFromDOM(contrib, 'prefix'),
-      suffix: _getTextFromDOM(contrib, 'suffix'),
-      affiliations: orgIds
+    // let orgIds = contrib.findAll('xref[ref-type=aff]').map(xref => {
+    //   let affId = xref.getAttribute('rid')
+    //   return dom.find(`aff#${affId}`).getAttribute('rid')
+    // })
+    // We now need to translate internal aff ids to global entity ids
+    // let orgIds = affIds.map()
+    let entityId = _getTextFromDOM(contrib, 'contrib-id[contrib-id-type=entity]')
+    if (!entityDb.get(entityId)) {
+      throw new Error(`Entity ${entityId} not found in db.`)
     }
-    if (!contribId || !entityDb.get(contribId)) {
-      node = entityDb.create(node)
-    }
+    // let node = {
+    //   id: entityId,
+    //   type: 'person',
+    //   surname: _getTextFromDOM(contrib, 'surname'),
+    //   givenNames: _getTextFromDOM(contrib, 'given-names'),
+    //   prefix: _getTextFromDOM(contrib, 'prefix'),
+    //   suffix: _getTextFromDOM(contrib, 'suffix'),
+    //   affiliations: orgIds
+    // }
+    // if (!entityId || !entityDb.get(entityId)) {
+    //   node = entityDb.create(node)
+    // }
     // Assign id if not present
-    if (!contribId) {
-      contrib.setAttribute('rid', node.id)
-    }
+    contrib.setAttribute('rid', entityId)
     contrib.empty()
   })
 

@@ -13,7 +13,7 @@
       </title-group>
 
       <contrib-group content-type="authors">
-        <contrib contrib-type="author" rid="person1">
+        <contrib contrib-type="author">
           <name>
             <surname>Doe</surname><given-names>Jane</given-names>
           </name>
@@ -23,7 +23,7 @@
       </contrib-group>
 
       <contrib-group content-type="editors">
-        <contrib contrib-type="editor" rid="person2">
+        <contrib contrib-type="editor">
           <name>
             <surname>Doe</surname><given-names>John</given-names>
           </name>
@@ -142,13 +142,13 @@
       <ref id="r1">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
-            <name rid="person2">
+            <name>
               <surname>John</surname>
               <given-names>Smith</given-names>
             </name>
           </person-group>
           <person-group person-group-type="editor">
-            <name rid="person1">
+            <name>
               <surname>Jane</surname>
               <given-names>Smith</given-names>
             </name>
@@ -258,13 +258,13 @@
       <ref id="r7">
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
-            <name rid="person2">
+            <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
           </person-group>
           <person-group person-group-type="editor">
-            <name rid="person1">
+            <name>
               <surname>Doe</surname>
               <given-names>Jane</given-names>
             </name>
@@ -279,7 +279,7 @@
           <lpage>6448</lpage>
           <page-range>6436-6448</page-range>
           <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
-          <uri content-type="entity">journal-article-1</uri>
+          <pub-id pub-id-type="entity">journal-article-1</pub-id>
         </element-citation>
       </ref>
       <!-- <ref id="r8">

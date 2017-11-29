@@ -3,9 +3,16 @@ import updateEntityChildArray from '../../util/updateEntityChildArray'
 
 export default class ReferenceManager {
 
-  constructor(editorSession, entityDbSession) {
-    this.editorSession = editorSession
-    this.entityDbSession = entityDbSession
+  constructor(context) {
+    this.editorSession = context.editorSession
+    this.entityDbSession = context.entityDbSession
+
+    if(!this.editorSession) {
+      throw new Error("'editorSession' is mandatory.")
+    }
+    if(!this.entityDbSession) {
+      throw new Error("'entityDbSession' is mandatory.")
+    }
 
     // this will be determined by taking the
     // position by entity id
@@ -55,6 +62,10 @@ export default class ReferenceManager {
     }).sort((a,b) => {
       return a.state.pos > b.state.pos
     })
+  }
+
+  getAvailableResources() {
+    return this.getBibliography()
   }
 
   _onDocumentChange(change) {

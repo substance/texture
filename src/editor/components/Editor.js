@@ -2,17 +2,8 @@ import { ScrollPane, Layout, WorkflowPane } from 'substance'
 import { AbstractWriter } from '../util'
 import TOCProvider from '../util/TOCProvider'
 import ContextSection from './ContextSection'
-import ReferenceManager from '../util/ReferenceManager'
 
 export default class Editor extends AbstractWriter {
-
-  _initialize(props) {
-    // HACK: we assume that importer creates a journal-article entry with id 'main-article'
-    // that holds the bibliography (mainarticle.references)
-    super._initialize(props)
-
-    this.referenceManager = new ReferenceManager(this.editorSession, this.context.entityDbSession, 'main-article')
-  }
 
   getChildContext() {
     let childContext = super.getChildContext()

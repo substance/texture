@@ -66,6 +66,8 @@ import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
+import ReferenceManager from './util/ReferenceManager'
+
 substanceGlobals.DEBUG_RENDERING = true
 
 export default {
@@ -83,6 +85,8 @@ export default {
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
+
+    config.addManager('references', ReferenceManager)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

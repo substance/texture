@@ -1,8 +1,6 @@
 import { Component } from 'substance'
+import { getLabel } from '../util/nodeHelpers'
 
-/*
-  Renders a keyboard-selectable figure target item
-*/
 export default class TableFigPreview extends Component {
 
   render($$) {
@@ -19,10 +17,7 @@ export default class TableFigPreview extends Component {
   }
 
   _renderLabel($$) {
-    let labelGenerator = this.context.labelGenerator
-    let pos = labelGenerator.getPosition('table', this.props.node.id)
-    return $$('div').addClass('se-label').append(
-      'Table ', pos
-    )
+    let label = getLabel(this.props.node)
+    return $$('div').addClass('se-label').append(label)
   }
 }

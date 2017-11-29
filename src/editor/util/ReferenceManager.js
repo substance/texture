@@ -141,6 +141,7 @@ export default class ReferenceManager {
     const editorSession = this.editorSession
     const doc = editorSession.getDocument()
 
+    let refList = doc.find('ref-list')
     let citations = doc.findAll("xref[ref-type='bibr']")
     if (citations.length === 0) return
 
@@ -148,9 +149,9 @@ export default class ReferenceManager {
     let order = {}
     let refLabels = {}
     let citationLabels = {}
-    citations.forEach((cite) => {
+    citations.forEach((xref) => {
       let label = []
-      let rids = cite.getAttribute('rid').split(' ')
+      let rids = xref.getAttribute('rid').split(' ')
       rids.forEach((id) => {
         if (!order.hasOwnProperty(id)) {
           order[id] = pos++
@@ -159,7 +160,7 @@ export default class ReferenceManager {
         label.push(order[id])
       })
       label.sort()
-      citationLabels[cite.id] = `[${label.join(',')}]` || '???'
+      citationLabels[xref.id] = `[${label.join(',')}]` || '???'
     })
 
     // Now update the node state of all affected xref[ref-type='bibr']
@@ -167,13 +168,13 @@ export default class ReferenceManager {
     // provided via editor session
     let change = new DocumentChange([], {}, {})
     change._extractInformation()
-    citations.forEach((cite) => {
-      const label = citationLabels[cite.id]
-      if (!cite.state) {
-        cite.state = {}
+    citations.forEach((xref) => {
+      const label = citationLabels[xref.id]
+      if (!xref.state) {
+        xref.state = {}
       }
-      cite.state.label = label
-      change.updated[cite.id] = true
+      xref.state.label = label
+      change.updated[xref.id] = true
     })
     let refs = this.getBibliography()
     refs.forEach((ref) => {
@@ -185,6 +186,10 @@ export default class ReferenceManager {
       ref.state.pos = order[ref.id]
       change.updated[ref.id] = true
     })
+    // Note: also mimick a change to ref-list
+    // to trigger an update
+    change.updated[refList.id] = true
+
     editorSession._setDirty('document')
     editorSession._change = change
     editorSession._info = {}

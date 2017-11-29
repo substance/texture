@@ -1,4 +1,4 @@
-import { without } from 'substance'
+import updateEntityChildArray from '../../util/updateEntityChildArray'
 
 export default class ReferenceManager {
   constructor(editorSession, entityDbSession) {
@@ -7,26 +7,9 @@ export default class ReferenceManager {
   }
 
   updateReferences(newRefs) {
+    let refList = this.editorSession.getDocument().find('ref-list')
     let oldRefs = this.getReferenceIds()
-    let addedRefs = without(newRefs, ...oldRefs)
-    let removedRefs = without(oldRefs, ...newRefs)
-
-    this.editorSession.transaction(tx => {
-      let refList = tx.find('ref-list')
-      // Remove removedRefs
-      removedRefs.forEach(refId => {
-        let ref = tx.get(refId)
-        refList.removeChild(ref)
-      })
-      // Create addedRefs
-      addedRefs.forEach(refId => {
-        let ref = tx.get(refId)
-        if (!ref) {
-          ref = tx.createElement('ref', { id: refId })
-        }
-        refList.appendChild(ref)
-      })
-    })
+    updateEntityChildArray(this.editorSession, refList.id, 'ref', 'id', oldRefs, newRefs)
   }
 
   getReferenceIds() {

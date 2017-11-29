@@ -39,8 +39,7 @@ JournalArticle.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true },
-  references: { type: ['journal-article', 'book'], default: [] },
+  doi: { type: 'string', optional: true }
 }
 
 export class Person extends DocumentNode {}

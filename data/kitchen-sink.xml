@@ -2,6 +2,8 @@
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
 <!--
   Kitchen XML for our texture editor.
+
+  NOTE: we use attribute rid for name and contrib elements, which are not defined in JATS
 -->
 <article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
@@ -11,7 +13,7 @@
       </title-group>
 
       <contrib-group content-type="authors">
-        <contrib contrib-type="author" id="person1">
+        <contrib contrib-type="author" rid="person1">
           <name>
             <surname>Doe</surname><given-names>Jane</given-names>
           </name>
@@ -20,9 +22,9 @@
       </contrib-group>
 
       <contrib-group content-type="editors">
-        <contrib contrib-type="editor" id="person2">
+        <contrib contrib-type="editor" rid="person2">
           <name>
-            <surname>Jane</surname><given-names>Doe</given-names>
+            <surname>Doe</surname><given-names>John</given-names>
           </name>
           <xref ref-type="aff" rid="aff1"/>
         </contrib>
@@ -137,13 +139,13 @@
       <ref id="r1">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
-            <name>
+            <name rid="person2">
               <surname>John</surname>
               <given-names>Smith</given-names>
             </name>
           </person-group>
           <person-group person-group-type="editor">
-            <name>
+            <name rid="person1">
               <surname>Jane</surname>
               <given-names>Smith</given-names>
             </name>
@@ -252,13 +254,13 @@
       <ref id="r7">
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
-            <name>
+            <name rid="person2">
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
           </person-group>
           <person-group person-group-type="editor">
-            <name>
+            <name rid="person1">
               <surname>Doe</surname>
               <given-names>Jane</given-names>
             </name>

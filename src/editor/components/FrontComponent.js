@@ -35,12 +35,11 @@ export default class FrontComponent extends Component {
       let authorsListEl = $$(this.getComponent('authors-list'), {
         node: authorsContribGroup
       })
-
-      // let affiliationsListEl = $$(this.getComponent('affiliations-list'), {
-      //   node: node
-      // })
-      // el.append(affiliationsListEl)
       el.append(authorsListEl)
+      let affiliationsListEl = $$(this.getComponent('affiliations-list'), {
+        node: authorsContribGroup
+      })
+      el.append(affiliationsListEl)
     }
 
     // contrib-group content-type="editors"

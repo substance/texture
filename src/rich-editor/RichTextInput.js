@@ -1,11 +1,15 @@
 import {
-  Component, Configurator, EditorSession
+  AnnotationComponent,
+  Component,
+  Configurator,
+  EditorSession,
+  AbstractEditor,
+  TextPropertyEditor
 } from 'substance'
-import RichtextEditor from './RichtextEditor'
+
 import RichtextInputPackage from './RichtextInputPackage'
 
-
-class RichTextInput extends Component {
+export default class RichTextInput extends Component {
   constructor(...args) {
     super(...args)
     this.cfg = new Configurator().import(RichtextInputPackage)
@@ -25,7 +29,7 @@ class RichTextInput extends Component {
   render($$) {
     let el = $$('div').addClass('sc-rich-text-input')
     el.append(
-      $$(RichtextEditor, {
+      $$(RichTextEditor, {
         editorSession: this.editorSession,
         editorId: this.props.editorId
       }).ref('editor')
@@ -39,4 +43,52 @@ class RichTextInput extends Component {
   }
 }
 
-export default RichTextInput
+
+class RichTextEditor extends AbstractEditor {
+  render($$) {
+    let el = $$('div').addClass('sc-richtext-editor')
+    let BodyScrollPane = this.getComponent('body-scroll-pane')
+    let Overlay = this.getComponent('overlay')
+    let configurator = this.getConfigurator()
+
+    // TODO: there must be a more elegant solution than wrapping every
+    // RichtTextEditor widget into a fake BodyScrollPane
+    el.append(
+      $$(BodyScrollPane).append(
+        $$(TextPropertyEditor, {
+          path: ['body', 'content']
+        }).ref('body'),
+        $$(Overlay, {
+          toolPanel: configurator.getToolPanel('main-overlay'),
+          theme: 'dark'
+        })
+      )
+    )
+    return el
+  }
+}
+
+
+export class StrongComponent extends AnnotationComponent {
+  getTagName() {
+    return 'strong'
+  }
+}
+
+export class EmphasisComponent extends AnnotationComponent {
+  getTagName() {
+    return 'em'
+  }
+}
+
+export class SuperscriptComponent extends AnnotationComponent {
+  getTagName() {
+    return 'sup'
+  }
+}
+
+export class SubscriptComponent extends AnnotationComponent {
+  getTagName() {
+    return 'sub'
+  }
+}

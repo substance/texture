@@ -4,21 +4,18 @@ import {
   BasePackage
 } from 'substance'
 
-import Body from './Body'
-import Emphasis from './Emphasis'
-import Strong from './Strong'
-import Subscript from './Subscript'
-import Superscript from './Superscript'
-import BodyHTMLConverter from './BodyHTMLConverter'
+import {
+  Body, Emphasis, Strong, Subscript, Superscript
+} from './RichTextInputModel'
 
-import RichtextHTMLImporter from './RichtextHTMLImporter'
+import RichtextInputImporter from './RichtextInputImporter'
 
 import {
   StrongComponent,
   EmphasisComponent,
   SuperscriptComponent,
   SubscriptComponent
-} from './ui'
+} from './RichTextInput'
 
 export default {
   name: 'rich-text-input',
@@ -33,7 +30,17 @@ export default {
 
     // Body
     config.addNode(Body)
-    config.addConverter('html', BodyHTMLConverter)
+    config.addConverter('html', {
+      type: 'body',
+      tagName: 'body',
+      import: function(el, node, converter) {
+        node.id = 'body'
+        node.content = converter.annotatedText(el, [node.id, 'content'])
+      },
+      export: function(node, el, converter) {
+        el.append(converter.annotatedText([node.id, 'content']))
+      }
+    })
 
     // Emphasis
     config.addNode(Emphasis)
@@ -95,7 +102,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+B', { command: 'strong' })
     config.addKeyboardShortcut('CommandOrControl+I', { command: 'emphasis' })
 
-    config.addImporter('html', RichtextHTMLImporter)
+    config.addImporter('html', RichtextInputImporter)
 
     config.addToolPanel('main-overlay', [
       {

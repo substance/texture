@@ -21,18 +21,18 @@
     <script type="text/javascript" src="./vfs.js"></script>
     <script type="text/javascript">
       const { Component } = window.substance
-      const { RichtextInput } = window.texture
+      const { RichTextInput } = window.texture
 
       class App extends Component {
 
         render($$) {
           let el = $$('div').addClass('sc-app')
           el.append(
-            $$(RichtextInput, {
+            $$(RichTextInput, {
               content: 'bla<strong>blupp</strong>',
               editorId: 'test'
             }),
-            $$(RichtextInput, {
+            $$(RichTextInput, {
               content: 'foo bar<strong>asdfasd</strong><sup>asdf</sup>',
               editorId: 'foo'
             })

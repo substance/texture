@@ -19,7 +19,6 @@ export default class RichTextInput extends Component {
   _initDoc(props) {
     this.importer = this.cfg.createImporter('html')
     this.doc = this.importer.importDocument(props.content)
-    // Deregister handlers
     this.editorSession = new EditorSession(this.doc, {
       id: this.props.editorId,
       configurator: this.cfg

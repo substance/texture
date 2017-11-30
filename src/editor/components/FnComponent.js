@@ -30,7 +30,7 @@ export default class FnComponent extends Component {
     el.append(
       fnContainer.append(
         contentEl,
-        $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-ref')
+        $$(Button, {icon: 'trash', tooltip: 'Remove'}).addClass('se-remove-ref')
           .on('click', this._removeFn.bind(this, node.id))
       )
     )

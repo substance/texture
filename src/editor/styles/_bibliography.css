@@ -3,12 +3,16 @@
 }
 
 .sc-bibliography > .se-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
-.sc-bibliography button {
-  padding-top: 0px;
-  color: #0065DE;
+.sc-bibliography > .se-reference {
+  margin-left: 5px;
+  margin-bottom: 15px;
+}
+
+.sc-bibliography > .sc-button {
+  margin-top: 25px;
 }

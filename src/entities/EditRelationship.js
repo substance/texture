@@ -24,7 +24,8 @@ export default class EditRelationship extends Component {
 
   didMount() {
     this.handleActions({
-      'closeModal': this._closeModal
+      'closeModal': this._closeModal,
+      'created': this._onAddNew
     })
   }
 
@@ -134,7 +135,9 @@ export default class EditRelationship extends Component {
   _onAddNew(entityId) {
     let entityIds = this.state.entityIds.concat([ entityId ])
     this.extendState({
-      entityIds: entityIds
+      entityIds: entityIds,
+      mode: undefined,
+      modeProps: undefined
     })
   }
 

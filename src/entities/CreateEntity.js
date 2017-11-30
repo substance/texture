@@ -35,10 +35,11 @@ export default class CreateEntity extends Component {
       type: this.props.type
     })
     let dbSession = this.context.dbSession
+    let node
     dbSession.transaction((tx) => {
-      tx.create(newNode)
+      node = tx.create(newNode)
     })
-    this.send('closeModal')
+    this.send('created', node.id)
   }
 
   _cancel() {

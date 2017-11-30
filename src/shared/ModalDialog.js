@@ -25,6 +25,7 @@ export default class ModalDialog extends Component {
     // TODO: don't think that this is good enough. Right the modal is closed by any unhandled click.
     // Need to be discussed.
     el.on('click', this._closeModal)
+    el.on('keydown', this._onKeydown)
 
     if (this.props.width) {
       el.addClass('sm-width-'+this.props.width)
@@ -40,6 +41,10 @@ export default class ModalDialog extends Component {
       )
     )
     return el
+  }
+
+  _onKeydown(e) {
+    e.stopPropagation()
   }
 
   _closeModal(e) {

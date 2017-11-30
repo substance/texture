@@ -35,7 +35,7 @@ export default class EditEntity extends Component {
     dbSession.transaction((tx) => {
       tx.updateNode(this.props.node.id, newProps)
     })
-    this.send('done')
+    this.send('closeModal')
   }
 
   _cancel() {

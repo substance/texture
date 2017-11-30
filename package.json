@@ -6,7 +6,7 @@
   "jsnext:main": "index.es.js",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-preview.13"
+    "substance": "1.0.0-preview.14"
   },
   "devDependencies": {
     "electron": "^1.7.9",

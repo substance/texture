@@ -62,7 +62,7 @@ export default class ContribsListComponent extends NodeComponent {
 
     el.append(contentEl)
     el.append(
-      $$('button').append('Edit ', this.getPropertyName()).on('click', this._editContribs)
+      $$('button').addClass('sc-button sm-style-big').append('Edit ', this.getPropertyName()).on('click', this._editContribs)
     )
     return el
   }

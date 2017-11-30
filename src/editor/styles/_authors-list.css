@@ -1,7 +1,12 @@
 .sc-authors-list > .se-content {
-  padding: 30px 0px 20px;
+  padding: 30px 0px 15px;
   text-align: center;
   font-family: 'Avenir Next', 'Lato', Helvetica;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
+  color: #000;
+}
+
+.sc-authors-list > .sc-button {
+  margin: 0px auto;
 }

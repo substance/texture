@@ -1,3 +1,7 @@
+.sc-abstract {
+  margin-top: 20px;
+}
+
 .sc-abstract .sc-abstract-content .container-node {
   border: 1px solid transparent;
   border-radius: 5px;

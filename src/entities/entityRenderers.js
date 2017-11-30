@@ -80,6 +80,11 @@ function organisationRenderer($$, entityId, entityDb) {
   ]
 }
 
+const INTERNAL_RENDERER_MAP = {
+  'organisation': organisationRenderer,
+  'person': personRenderer
+}
+
 /*
   Exports
 */
@@ -95,9 +100,9 @@ export default {
 */
 function _renderAuthors($$, entityIds, entityDb) {
   let fragments = [' ']
-  entityIds.forEach((personId, i) => {
+  entityIds.forEach((entityId, i) => {
     fragments = fragments.concat(
-      personRenderer($$, personId, entityDb)
+      _delegateEntityRenderer($$, entityId, entityDb)
     )
     if (i < entityIds.length - 1) {
       fragments.push(', ')
@@ -105,6 +110,11 @@ function _renderAuthors($$, entityIds, entityDb) {
   })
   fragments.push('.')
   return fragments
+}
+
+function _delegateEntityRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  return INTERNAL_RENDERER_MAP[entity.type]($$, entityId, entityDb)
 }
 
 function _renderHTML($$, htmlString) {
@@ -120,6 +130,7 @@ function _delegate(fn) {
     return el.innerHTML
   }
 }
+
 
 function _createElement() {
   return DefaultDOMElement.parseSnippet('<div>', 'html')

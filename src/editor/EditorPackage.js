@@ -10,6 +10,7 @@ import {
   PersistencePackage
 } from 'substance'
 
+import EntityLabelsPackage from '../entities/EntityLabelsPackage'
 import TextureJATSPackage from '../article/TextureJATSPackage'
 
 import Editor from './components/Editor'
@@ -76,6 +77,7 @@ substanceGlobals.DEBUG_RENDERING = true
 export default {
   name: 'author',
   configure(config) {
+    config.import(EntityLabelsPackage)
     config.import(SubstanceBasePackage)
     config.import(PersistencePackage)
     config.import(FindAndReplacePackage, {

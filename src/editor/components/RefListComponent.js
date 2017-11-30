@@ -55,7 +55,7 @@ export default class RefListComponent extends NodeComponent {
     })
 
     el.append(
-      $$('button').append('Edit').on('click', this._editBibliography)
+      $$('button').addClass('sc-button sm-style-big').append('Edit References').on('click', this._editBibliography)
     )
     return el
   }

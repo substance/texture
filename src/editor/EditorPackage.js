@@ -115,7 +115,7 @@ export default {
       to: '-',
     })
     config.setLabelGenerator('footnotes', {
-      template: '($)',
+      template: '$',
       and: ',',
       to: '-',
     })

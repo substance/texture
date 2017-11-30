@@ -252,22 +252,22 @@ function _createNameElement(el, person) {
 /* HELPERS */
 
 // Returns list of entity properties
-function _getEntityNodes(type, entityDb) {
-  const entityDbSchema = entityDb.getSchema()
-  const nodeClass = entityDbSchema.getNodeClass(type)
-  return Object.keys(nodeClass.schema)
-}
-
-// Get child property value of element-citation
-function _getElementCitationProperty(prop, elementCitation) {
-  let result
-  const xmlProp = ELEMENT_CITATION_ENTITY_DB_MAP[prop]
-  if(xmlProp) {
-    const propEl = elementCitation.find(xmlProp)
-    if(propEl) result = propEl.text()
-  }
-  return result
-}
+// function _getEntityNodes(type, entityDb) {
+//   const entityDbSchema = entityDb.getSchema()
+//   const nodeClass = entityDbSchema.getNodeClass(type)
+//   return Object.keys(nodeClass.schema)
+// }
+//
+// // Get child property value of element-citation
+// function _getElementCitationProperty(prop, elementCitation) {
+//   let result
+//   const xmlProp = ELEMENT_CITATION_ENTITY_DB_MAP[prop]
+//   if(xmlProp) {
+//     const propEl = elementCitation.find(xmlProp)
+//     if(propEl) result = propEl.text()
+//   }
+//   return result
+// }
 
 
 /*

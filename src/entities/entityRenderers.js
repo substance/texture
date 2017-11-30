@@ -60,12 +60,17 @@ function bookRenderer($$, entityId, entityDb) {
 }
 
 function personRenderer($$, entityId, entityDb) {
-  let { givenNames, surname } = entityDb.get(entityId)
-  return [
-    givenNames,
-    ' ',
-    surname
-  ]
+  let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
+  let result = []
+
+  if (prefix) {
+    result.push(prefix, ' ')
+  }
+  result.push(givenNames, ' ', surname)
+  if (suffix) {
+    result.push(' (', suffix, ')')
+  }
+  return result
 }
 
 function organisationRenderer($$, entityId, entityDb) {

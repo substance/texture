@@ -8,7 +8,8 @@ import {
   Body, Emphasis, Strong, Subscript, Superscript
 } from './RichTextInputModel'
 
-import RichtextInputImporter from './RichtextInputImporter'
+import RichTextInputImporter from './RichTextInputImporter'
+import RichTextInputExporter from './RichTextInputExporter'
 
 import {
   StrongComponent,
@@ -102,7 +103,8 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+B', { command: 'strong' })
     config.addKeyboardShortcut('CommandOrControl+I', { command: 'emphasis' })
 
-    config.addImporter('html', RichtextInputImporter)
+    config.addImporter('html', RichTextInputImporter)
+    config.addExporter('html', RichTextInputExporter)
 
     config.addToolPanel('main-overlay', [
       {

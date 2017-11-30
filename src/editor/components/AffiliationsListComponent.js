@@ -1,36 +1,52 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
+import entityRenderers from '../../entities/entityRenderers'
 
-export default class AffiliationsList extends Component {
+/*
+  TODO: find a way to detect updates.
 
-  didMount() {
-    super.didMount()
-    this.context.editorSession.onRender('document', this._onDocumentChange, this)
+  We need to update this list when a new author has been added or removed, which
+  can be auto-detected this.props.node. However it should also
+  updates if changes are made to the organisation entries in the entity db.
+*/
+export default class AffiliationsList extends NodeComponent {
+
+  _getAuthors() {
+    return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
   }
 
-  dispose() {
-    super.dispose()
-    this.context.editorSession.off(this)
+  _getOrgansiations() {
+    let organisations = []
+    let db = this.context.entityDb
+    let authors = this._getAuthors()
+    authors.forEach(authorId => {
+      let author = db.get(authorId)
+      // We only consider person records
+      if (author.type === 'person') {
+        organisations = organisations.concat(author.affiliations)
+      }
+    })
+    return organisations
   }
 
   render($$) {
-    const articleMeta = this.props.node
-    const affiliations = articleMeta.findAll('string-aff')
-    const affs = affiliations.map(aff => { return aff.getTextContent() })
-    
     let el = $$('div').addClass('sc-affiliations-list')
-      .append(affs.join('; '))
+    let db = this.context.entityDb
+    let entityIds = this._getOrgansiations()
 
+    let contentEl = $$('div').addClass('se-content')
+    entityIds.forEach((entityId, index) => {
+      let entity = db.get(entityId)
+      contentEl.append(
+        $$('span').addClass('se-affiliation').html(
+          entityRenderers[entity.type](entity.id, db)
+        )
+      )
+      if (index < entityIds.length - 1) {
+        contentEl.append(', ')
+      }
+    })
+    el.append(contentEl)
     return el
-  }
-
-  _onDocumentChange(change) {
-    let updatedProps = Object.keys(change.updated)
-    let updatedPropsString = updatedProps.join('/')
-    // We will trigger rerendering if any string-aff 
-    // or aff-group were updated
-    if(updatedPropsString.indexOf('string-aff') > -1 || updatedPropsString.indexOf('aff-group') > -1) {
-      this.rerender()
-    } 
   }
 
 }

@@ -1,14 +1,14 @@
-import { Component } from 'substance'
+import { NodeComponent } from 'substance'
 import entityRenderers from '../../entities/entityRenderers'
 
 /*
   TODO: find a way to detect updates.
 
   We need to update this list when a new author has been added or removed, which
-  can be detected on the authors <contrib-group> node. However it should also
+  can be auto-detected this.props.node. However it should also
   updates if changes are made to the organisation entries in the entity db.
 */
-export default class AffiliationsList extends Component {
+export default class AffiliationsList extends NodeComponent {
 
   _getAuthors() {
     return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))

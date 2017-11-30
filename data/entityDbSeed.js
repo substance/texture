@@ -4,14 +4,14 @@ export default [
     "id": "person-1",
     "givenNames": "Smith",
     "surname": "Jane",
-    "affiliations": ['organisation-1']
+    "affiliations": ["organisation-1"]
   },
   {
     "type": "person",
     "id": "person-2",
     "givenNames": "Smith",
     "surname": "John",
-    "affiliations": []
+    "affiliations": ["organisation-2"]
   },
   {
     "type": "organisation",
@@ -28,6 +28,19 @@ export default [
     "country": "USA",
     "phone": "(859) 273-8543",
     "fax": "(859) 299-4683"
+  },
+  {
+    "type": "organisation",
+    "id": "organisation-2",
+    "name": "Example organisation",
+    "division1": "Example division",
+    "division2": "",
+    "division3": "",
+    "street": "283 Example street",
+    "addressComplements": "Suite 310",
+    "city": "Vienna",
+    "postalCode": "1010",
+    "country": "Austria",
   },
   {
     "type": "book",

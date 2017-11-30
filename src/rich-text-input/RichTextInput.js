@@ -18,7 +18,7 @@ export default class RichTextInput extends Component {
 
   _initDoc(props) {
     this.importer = this.cfg.createImporter('html')
-    this.doc = this.importer.importDocument(props.content)
+    this.doc = this.importer.importDocument(props.value)
     this.editorSession = new EditorSession(this.doc, {
       id: this.props.editorId,
       configurator: this.cfg
@@ -36,9 +36,10 @@ export default class RichTextInput extends Component {
     return el
   }
 
-  getHTML() {
+  getValue() {
     let htmlExporter = this.cfg.createExporter('html')
-    return htmlExporter.exportDocument(this.doc)
+    let result = htmlExporter.exportDocument(this.doc)
+    return result
   }
 }
 

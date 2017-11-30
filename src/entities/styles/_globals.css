@@ -21,7 +21,8 @@
 }
 
 /* HACK: */
-.sc-modal-dialog input {
+.sc-modal-dialog input,
+.sc-modal-dialog .sc-rich-text-input {
   background: #EAEAEA;
   border: none;
   width: 100%;

@@ -3,7 +3,7 @@ import { Component, forEach, isArray } from 'substance'
 import FormLabel from './FormLabel'
 import RelationshipInput from './RelationshipInput'
 import StringInput from './StringInput'
-
+import RichTextInput from '../rich-text-input/RichTextInput'
 export default class EntityForm extends Component {
 
   render($$) {
@@ -15,13 +15,22 @@ export default class EntityForm extends Component {
       if (propertyName === 'id') {
         // id property is not editable and skipped
       } else if (property.type === 'string') {
+        let inputEl
+        if (property.definition._isText) {
+          inputEl = $$(RichTextInput, {
+            value: this.props.node[propertyName],
+            editorId: property.name
+          }).ref(property.name)
+        } else {
+          inputEl = $$(StringInput, {
+            value: this.props.node[propertyName]
+          }).ref(property.name)
+        }
         el.append(
           $$(FormLabel, {
             name: propertyName
           }),
-          $$(StringInput, {
-            value: this.props.node[propertyName]
-          }).ref(property.name)
+          inputEl
         )
       } else if (isArray(property.type) && property.type[0] === 'array') {
         el.append(

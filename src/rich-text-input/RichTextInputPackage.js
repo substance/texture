@@ -9,6 +9,7 @@ import {
 } from './RichTextInputModel'
 
 import RichtextInputImporter from './RichtextInputImporter'
+import RichtextInputExporter from './RichtextInputExporter'
 
 import {
   StrongComponent,
@@ -103,6 +104,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+I', { command: 'emphasis' })
 
     config.addImporter('html', RichtextInputImporter)
+    config.addExporter('html', RichtextInputExporter)
 
     config.addToolPanel('main-overlay', [
       {

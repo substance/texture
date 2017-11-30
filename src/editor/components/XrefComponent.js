@@ -1,5 +1,5 @@
 import { NodeComponent } from 'substance'
-import { getXrefTargets, getXrefLabel } from '../util/xrefHelpers'
+import { getXrefLabel } from '../util/xrefHelpers'
 
 export default class XrefComponent extends NodeComponent {
 

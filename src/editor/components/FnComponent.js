@@ -16,16 +16,25 @@ export default class FnComponent extends Component {
       node: node,
       disabled: this.props.disabled
     }).ref('editor')
-    el.append(
-      $$('div').addClass('se-fn-container').append(
+
+    let fnContainer = $$('div').addClass('se-fn-container')
+
+    if(label) {
+      fnContainer.append(
         $$('div').addClass('se-label').append(
           label
-        ),
+        )
+      )
+    }
+
+    el.append(
+      fnContainer.append(
         contentEl,
         $$(Button, {icon: 'trash', tooltip: 'remove'}).addClass('se-remove-ref')
           .on('click', this._removeFn.bind(this, node.id))
       )
     )
+
     return el
   }
 

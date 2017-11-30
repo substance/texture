@@ -14,6 +14,20 @@ export default [
     "affiliations": ["organisation-2"]
   },
   {
+    "type": "person",
+    "id": "person-3",
+    "givenNames": "Max",
+    "surname": "Mustermann",
+    "affiliations": []
+  },
+  {
+    "type": "person",
+    "id": "person-4",
+    "givenNames": "Alex",
+    "surname": "Meyer",
+    "affiliations": []
+  },
+  {
     "type": "organisation",
     "id": "organisation-1",
     "name": "Settles-Young Research Corporation",

@@ -1,5 +1,6 @@
 import { NodeComponent, without } from 'substance'
 import Button from './Button'
+import { getPos } from '../util/nodeHelpers'
 
 export default class FnGroupComponent extends NodeComponent {
 
@@ -20,7 +21,7 @@ export default class FnGroupComponent extends NodeComponent {
 
     let fns = node.findAll('fn')
     fns.sort((a,b) => {
-      return _getPos(a) - _getPos(b)
+      return getPos(a) - getPos(b)
     })
     fns.forEach((fn) => {
       let FnComponent = this.getComponent('fn')
@@ -76,11 +77,5 @@ export default class FnGroupComponent extends NodeComponent {
       fnGroup.removeChild(fn)
     })
     this.rerender()
-  }
-}
-
-function _getPos(fn) {
-  if (fn && fn.state) {
-    return fn.state.pos
   }
 }

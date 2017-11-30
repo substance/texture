@@ -1,4 +1,5 @@
 import AbstractCitationManager from './AbstractCitationManager'
+import { getPos } from './nodeHelpers'
 
 export default class FootnoteManager extends AbstractCitationManager {
 
@@ -11,7 +12,7 @@ export default class FootnoteManager extends AbstractCitationManager {
 
   getBibliography() {
     return this._getReferences().sort((a,b) => {
-      return a.state.pos > b.state.pos
+      return getPos(a) - getPos(b)
     })
   }
 

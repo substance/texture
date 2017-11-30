@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rich Text Editor</title>
+    <meta charset="UTF-8">
+    <style>
+      /* Texture Component styles */
+      @import './texture.css';
+      /* You may want to use your own reset and pagestyle */
+      @import './texture-reset.css';
+      @import './substance/dist/substance.css';
+      @import './texture-pagestyle.css';
+      @import './font-awesome/css/font-awesome.min.css';
+
+      .sc-rich-text-input {
+        padding: 50px;
+      }
+    </style>
+    <script type="text/javascript" src="./substance/dist/substance.js"></script>
+    <script type="text/javascript" src="./texture.js"></script>
+    <script type="text/javascript" src="./vfs.js"></script>
+    <script type="text/javascript">
+      const { Component } = window.substance
+      const { RichTextInput } = window.texture
+
+      class App extends Component {
+
+        render($$) {
+          let el = $$('div').addClass('sc-app')
+          el.append(
+            $$(RichTextInput, {
+              content: 'bla<strong>blupp</strong>',
+              editorId: 'test'
+            }),
+            $$(RichTextInput, {
+              content: 'foo bar<strong>asdfasd</strong><sup>asdf</sup>',
+              editorId: 'foo'
+            })
+          )
+          return el
+        }
+      }
+
+      window.onload = function() {
+        window.app = App.mount({}, document.body)
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

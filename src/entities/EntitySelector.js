@@ -1,4 +1,4 @@
-import { Component, without } from 'substance'
+import { Component, without, FontAwesomeIcon } from 'substance'
 import entityRenderers from './entityRenderers'
 
 export default class EntitySelector extends Component {
@@ -42,11 +42,13 @@ export default class EntitySelector extends Component {
   _renderOptions($$) {
     let el = $$('div').addClass('se-options').ref('options')
     let db = this.context.db
+    let labelProvider = this.context.labelProvider
     this.state.results.forEach((item, index) => {
       let option
       if (item._create) {
         option = $$('div').addClass('se-option').append(
-          `Create ${item._create}`
+          $$(FontAwesomeIcon, {icon: 'fa-plus'}),
+          ` Create ${labelProvider.getLabel(item._create)}`
         )
       } else {
         option = $$('div').addClass('se-option').html(
@@ -66,7 +68,7 @@ export default class EntitySelector extends Component {
   _confirmSelected(index) {
     let item = this.state.results[index]
     if (item._create) {
-      this.props.onCreate(item._create)
+      this.props.onCreate(item._create, this.state.searchString)
     } else {
       this.props.onSelected(item.id)
     }

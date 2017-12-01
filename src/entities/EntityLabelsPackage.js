@@ -24,6 +24,7 @@ export default {
     config.addLabel('isbn', 'ISBN')
     config.addLabel('pmid', 'PubMed ID')
     // person labels
+    config.addLabel('person', 'Person')
     config.addLabel('orcid', 'ORCID')
     config.addLabel('givenNames', 'Given names')
     config.addLabel('surname', 'Surname')
@@ -31,6 +32,7 @@ export default {
     config.addLabel('suffix', 'Suffix')
     config.addLabel('affiliations', 'Affiliations')
     // organisation labels
+    config.addLabel('organisation', 'Organisation')
     config.addLabel('name', 'Name')
     config.addLabel('division1', 'Division 1 (Department)')
     config.addLabel('division2', 'Division 2')

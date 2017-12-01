@@ -12,9 +12,7 @@ export default class CreateEntity extends Component {
           name: 'create-'+this.props.type
         }),
         $$(EntityForm, {
-          node: {
-            type: this.props.type
-          }
+          node: this.props.defaults
         }).ref('form')
       ),
       $$('div').addClass('sg-actions').append(

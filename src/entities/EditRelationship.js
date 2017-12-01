@@ -6,6 +6,25 @@ import ModalDialog from '../shared/ModalDialog'
 import EntitySelector from './EntitySelector'
 import FormTitle from './FormTitle'
 
+
+function prefillEntity(type, text) {
+  let defaults = {
+    type
+  }
+  if (type === 'person') {
+    let parts = text.split(' ')
+    defaults.surname = parts.pop()
+    defaults.givenNames = parts.join(' ')
+  } else if (type === 'organisation') {
+    defaults.name = text
+  } else if (type === 'book') {
+    defaults.source = text
+  } else if (type === 'journal-article') {
+    defaults.articleTitle = text
+  }
+  return defaults
+}
+
 /*
   Used to edit relationhips to other entities.
 
@@ -113,11 +132,16 @@ export default class EditRelationship extends Component {
     return el
   }
 
-  _onCreate(targetType) {
+  _onCreate(targetType, text) {
+    let defaults = {}
+    if (text) {
+      defaults = prefillEntity(targetType, text)
+    }
     this.extendState({
       mode: 'create',
       modeProps: {
-        type: targetType
+        type: targetType,
+        defaults: defaults
       }
     })
   }

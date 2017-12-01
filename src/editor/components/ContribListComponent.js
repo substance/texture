@@ -30,6 +30,7 @@ export default class ContribsListComponent extends NodeComponent {
   render($$) {
     let el = $$('div').addClass(this.getClassNames())
     let entityIds = this._getEntityIds()
+    let labelProvider = this.context.labelProvider
     let db = this.context.entityDb
 
     if (this.state.edit) {
@@ -62,7 +63,10 @@ export default class ContribsListComponent extends NodeComponent {
 
     el.append(contentEl)
     el.append(
-      $$('button').addClass('sc-button sm-style-big').append('Edit ', this.getPropertyName()).on('click', this._editContribs)
+      $$('button').addClass('sc-button sm-style-big').append(
+        'Edit ',
+        labelProvider.getLabel(this.getPropertyName())
+      ).on('click', this._editContribs)
     )
     return el
   }

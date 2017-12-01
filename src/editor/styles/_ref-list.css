@@ -1,62 +1,16 @@
-.sc-ref-list .se-title {
-  font-family: 'Avenir Next', 'Lato', Helvetica;
-  font-size: 26px;
-  font-weight: 600;
-  padding-bottom: 10px;
+.sc-ref-list { }
+
+.sc-ref-list > .se-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
-.sc-ref {
-  padding-bottom: 10px;
-  position: relative;
-}
-
-.sc-ref {
-  margin-left: -40px;
-  font-size: 14px;
-  position: relative;
-}
-
-.sc-ref .se-label {
-  font-family: 'Avenir Next', 'Lato', Helvetica;
-  position: absolute;
-  left: 5px;
-  top: 10px;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  text-align: center;
-  border-radius: 50px;
-  color: #fff;
-  background: var(--default-text-color);
-}
-
-.sc-ref .se-remove-ref {
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  margin-top: -10px;
-  font-size: 14px;
-  color: var(--link-color);
-  cursor: pointer;
-}
-
-.sc-ref .sm-element-citation-preview {
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-.sc-ref .sm-element-citation-preview .sm-placeholder {
-  color: #aaa;
-}
-
-.sc-ref .sc-element-citation:hover {
-  background: #eee;
-}
-
-.sc-ref .sc-element-citation {
-  cursor: pointer;
+.sc-ref-list > .se-reference {
+  margin-left: 5px;
+  margin-bottom: 15px;
 }
 
 .sc-ref-list > .sc-button {
-  margin-top: 20px;
+  margin-top: 25px;
 }

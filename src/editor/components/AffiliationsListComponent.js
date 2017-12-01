@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import { NodeComponent, uniq } from 'substance'
 import entityRenderers from '../../entities/entityRenderers'
 
 /*
@@ -25,7 +25,7 @@ export default class AffiliationsList extends NodeComponent {
         organisations = organisations.concat(author.affiliations)
       }
     })
-    return organisations
+    return uniq(organisations)
   }
 
   render($$) {
@@ -42,7 +42,7 @@ export default class AffiliationsList extends NodeComponent {
         )
       )
       if (index < entityIds.length - 1) {
-        contentEl.append(', ')
+        contentEl.append('; ')
       }
     })
     el.append(contentEl)

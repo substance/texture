@@ -25,7 +25,7 @@ export default class RefListComponent extends NodeComponent {
   render($$) {
     const referenceManager = this.context.editorSession.getManager('references')
 
-    let el = $$('div').addClass('sc-bibliography')
+    let el = $$('div').addClass('sc-ref-list')
     let entityIds = referenceManager.getReferenceIds()
     let bibliography = referenceManager.getBibliography()
 

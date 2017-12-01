@@ -2,26 +2,31 @@
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
 <!--
   Kitchen XML for our texture editor.
-
-  NOTE: we use attribute rid for name and contrib elements, which are not defined in JATS
 -->
 <article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
     <article-meta>
       <title-group>
-        <article-title>Texture Kitchen Sink</article-title>
+        <article-title>Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
       </title-group>
-
       <contrib-group content-type="authors">
         <contrib contrib-type="author">
           <name>
-            <surname>Doe</surname><given-names>Jane</given-names>
+            <surname>Schaffelhofer</surname><given-names>Stefan</given-names>
           </name>
           <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="aff" rid="aff2"/>
           <contrib-id contrib-id-type="entity">person-1</contrib-id>
         </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Scherberger</surname><given-names>Hansjörg</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="aff" rid="aff3"/>
+          <contrib-id contrib-id-type="entity">person-7</contrib-id>
+        </contrib>
       </contrib-group>
-
       <contrib-group content-type="editors">
         <contrib contrib-type="editor">
           <name>
@@ -31,23 +36,33 @@
           <contrib-id contrib-id-type="entity">person-2</contrib-id>
         </contrib>
       </contrib-group>
-
       <aff id="aff1">
-        <institution content-type="orgname">Settles-Young Research Corporation</institution>
-        <institution content-type="orgdiv1">Laboratory of Neural Systems</institution>
-        <addr-line content-type="address-street">283 Hawthorne Drive</addr-line>
-        <addr-line content-type="complements">Suite 310</addr-line>
-        <city>Lexington</city>
-        <state>KY</state>
-        <postal-code>40503</postal-code>
-        <country>USA</country>
-        <phone>(859) 273-8543</phone>
-        <fax>(859) 299-4683</fax>
-        <email>lsy@settles-young.com</email>
-        <uri contnet-type="url">http://www.settles-young.com</uri>
+        <institution content-type="orgname">German Primate Center GmbH</institution>
+        <institution content-type="orgdiv1">Neurobiology Laboratory</institution>
+        <city>Göttingen</city>
+        <country>Germany</country>
         <uri content-type="entity">organisation-1</uri>
       </aff>
-
+      <aff id="aff2">
+        <institution content-type="orgname">The Rockefeller University</institution>
+        <institution content-type="orgdiv1">Laboratory of Neural Systems</institution>
+        <city>New York</city>
+        <country>United States</country>
+        <uri content-type="entity">organisation-2</uri>
+      </aff>
+      <aff id="aff3">
+        <institution content-type="orgname">University of Göttingen</institution>
+        <institution content-type="orgdiv1">Department of Biology</institution>
+        <city>Göttingen</city>
+        <country>Germany</country>
+        <uri content-type="entity">organisation-3</uri>
+      </aff>
+      <aff id="aff4">
+        <institution content-type="orgname">Princeton University</institution>
+        <city>Princeton</city>
+        <country>United States</country>
+        <uri content-type="entity">organisation-4</uri>
+      </aff>
       <!-- Publication date, as required by SciELO -->
       <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
           <day>29</day>
@@ -142,27 +157,13 @@
       <ref id="r1">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
-            <name>
-              <surname>John</surname>
-              <given-names>Smith</given-names>
-            </name>
+            <collab>National Research Council</collab>
           </person-group>
-          <person-group person-group-type="editor">
-            <name>
-              <surname>Jane</surname>
-              <given-names>Smith</given-names>
-            </name>
-          </person-group>
-          <chapter-title>Tobacco use</chapter-title>
-          <source>Clinical methods: the history, physical, and laboratory examinations</source>
-          <publisher-loc>Stoneham (MA)</publisher-loc>
-          <publisher-name>Butterworth Publishers</publisher-name>
-          <year>1990</year>
-          <month>10</month>
-          <day>5</day>
-          <fpage>214</fpage>
-          <lpage>216</lpage>
-          <page-range>214-216</page-range>
+          <year iso-8601-date="2003">2003</year>
+          <source>Guidelines for the Care and Use of Mammals in Neuroscience and Behavioral Research</source>
+          <publisher-loc>Washington, D.C</publisher-loc>
+          <publisher-name>National Academies Press</publisher-name>
+          <pub-id pub-id-type="doi">10.17226/10732</pub-id>
           <pub-id pub-id-type="entity">book-1</pub-id>
         </element-citation>
       </ref>
@@ -259,14 +260,16 @@
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Baumann</surname>
+              <given-names>MA</given-names>
             </name>
-          </person-group>
-          <person-group person-group-type="editor">
             <name>
-              <surname>Doe</surname>
-              <given-names>Jane</given-names>
+              <surname>Fluet</surname>
+              <given-names>MC</given-names>
+            </name>
+            <name>
+              <surname>Scherberger</surname>
+              <given-names>H</given-names>
             </name>
           </person-group>
           <year>2009</year>

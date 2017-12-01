@@ -56,6 +56,14 @@ export default class RefListComponent extends NodeComponent {
       el.append($$(RefComponent, { node: reference }))
     })
 
+    if(bibliography.length === 0) {
+      el.append(
+        $$('div').addClass('se-empty-list').append(
+          this.getLabel('no-references')
+        )
+      )
+    }
+
     el.append(
       $$('button').addClass('sc-button sm-style-big').append('Edit References').on('click', this._editBibliography)
     )

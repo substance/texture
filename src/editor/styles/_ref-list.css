@@ -1,16 +1,31 @@
-.sc-ref-list { }
+.sc-ref-list {
+  margin: 60px 0px 40px;
+}
 
 .sc-ref-list > .se-title {
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 15px;
 }
 
+.sc-ref-list > .se-title > .se-empty-list {
+  color: #afafaf;
+  text-align: center;
+}
+
 .sc-ref-list > .se-reference {
-  margin-left: 5px;
+  display: flex;
   margin-bottom: 15px;
 }
 
+.sc-ref-list > .se-reference > .se-label {
+  min-width: 20px;
+  margin: 0px 20px;
+  font-weight: var(--strong-font-weight);
+  text-align: center;
+}
+
 .sc-ref-list > .sc-button {
-  margin-top: 25px;
+  margin: 30px auto;
 }

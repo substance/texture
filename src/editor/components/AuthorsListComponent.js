@@ -13,4 +13,8 @@ export default class AuthorsListComponent extends ContribsListComponent {
     return 'authors'
   }
 
+  getEmptyMessage() {
+    return this.getLabel('no-authors')
+  }
+
 }

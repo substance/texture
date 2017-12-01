@@ -29,6 +29,15 @@ export default class FnGroupComponent extends NodeComponent {
         $$(FnComponent, { node: fn }).ref(fn.id)
       )
     })
+
+    if(fns.length === 0) {
+      el.append(
+        $$('div').addClass('se-empty-list').append(
+          this.getLabel('no-footnotes')
+        )
+      )
+    }
+
     el.append(
       $$(Button, {style: 'big', label: 'Add Footnote'})
         .on('click', this._addFn)

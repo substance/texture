@@ -2,14 +2,20 @@
   margin-top: 30px;
 }
 
-.sc-fn-group .se-title {
+.sc-fn-group > .se-title {
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 22px;
   font-weight: 500;
-  padding-bottom: 15px;
+  margin-bottom: 15px;
 }
 
-.sc-fn-group .sc-button {
-  margin-top: 20px;
+.sc-fn-group > .se-empty-list {
+  color: #afafaf;
+  text-align: center;
+}
+
+.sc-fn-group > .sc-button {
+  margin: 20px auto;
 }
 
 .sc-fn-group .sc-button > .se-tooltip {
@@ -17,18 +23,17 @@
 }
 
 .sc-fn-item {
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 
 .sc-fn-item .se-fn-container {
   display: flex;
-  font-size: 14px;
 }
 
 .sc-fn-item .se-fn-container .container-node {
   border: 1px solid transparent;
   border-radius: 5px;
-  padding: 0px 16px;
+  padding: 0px 10px;
 }
 
 .sc-fn-item .se-fn-container .container-node:hover {
@@ -38,14 +43,17 @@
 .sc-fn-item .se-fn-container .container-node:focus {
   border: 1px solid var(--link-color);
   border-radius: 5px;
-  padding: 0px 16px;
+  padding: 0px 10px;
 }
 
 .sc-fn-item .se-fn-container .se-label {
   position: relative;
-  width: 10px;
-  left: 10px;
-  top: 5px;
+  top: 14px;
+  min-width: 20px;
+  margin: 0px 20px;
+  font-size: 12px;
+  font-weight: var(--strong-font-weight);
+  text-align: center;
 }
 
 .sc-fn-item .se-fn-container .se-remove-ref {
@@ -57,6 +65,6 @@
 
 .sc-fn-item .se-fn-container .sc-fn {
   margin-right: 30px;
-  margin-left: -5px;
+  margin-left: -10px;
   flex: 1 1 0;
 }

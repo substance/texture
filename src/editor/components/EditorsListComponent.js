@@ -13,4 +13,7 @@ export default class EditorsListComponent extends ContribsListComponent {
     return 'editors'
   }
 
+  getEmptyMessage() {
+    return this.getLabel('no-editors')
+  }
 }

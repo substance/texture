@@ -393,6 +393,10 @@ export default {
     config.addLabel('pub-data', 'Publication Data')
     config.addLabel('edit-ref', 'Edit Reference')
 
+    // Labels for empty contributors lists
+    config.addLabel('no-authors', 'No Authors')
+    config.addLabel('no-editors', 'No Editors')
+
     /*
       Define panel structure
     */

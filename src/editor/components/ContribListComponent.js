@@ -61,6 +61,14 @@ export default class ContribsListComponent extends NodeComponent {
       }
     })
 
+    if(entityIds.length === 0) {
+      contentEl.append(
+        $$('div').addClass('se-empty-list').append(
+          this.getEmptyMessage()
+        )
+      )
+    }
+
     el.append(contentEl)
     el.append(
       $$('button').addClass('sc-button sm-style-big').append(

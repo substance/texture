@@ -6,7 +6,8 @@ export default class EntitySelector extends Component {
   getInitialState() {
     return {
       searchString: '',
-      results: []
+      results: [],
+      selectedIndex: -1
     }
   }
 
@@ -27,12 +28,6 @@ export default class EntitySelector extends Component {
 
     if (this.state.searchString !== '') {
       let createBtns = $$('div').addClass('se-create')
-      this.props.targetTypes.forEach(targetType => {
-        createBtns.append(
-          $$('button').append('Create '+targetType)
-            .on('click', this._triggerCreate.bind(this, targetType))
-        )
-      })
       el.append(
         inputEl.append(createBtns),
         this._renderOptions($$)
@@ -45,87 +40,57 @@ export default class EntitySelector extends Component {
   }
 
   _renderOptions($$) {
-    let el = $$('div').addClass('se-options')
+    let el = $$('div').addClass('se-options').ref('options')
     let db = this.context.db
-
-    this.state.results.forEach(entity => {
-      // let entity = db.get(entityId)
-
-      let option = $$('div').addClass('se-option').html(
-        entityRenderers[entity.type](entity.id, db)
-      ).on('click', this._selectOption.bind(this, entity.id))
-
-      if(this.state.selected === entity.id) {
+    this.state.results.forEach((item, index) => {
+      let option
+      if (item._create) {
+        option = $$('div').addClass('se-option').append(
+          `Create ${item._create}`
+        )
+      } else {
+        option = $$('div').addClass('se-option').html(
+          entityRenderers[item.type](item.id, db)
+        )
+      }
+      option.on('click', this._confirmSelected.bind(this, index))
+      if (this.state.selectedIndex === index) {
         option.addClass('se-selected')
       }
-
       el.append(option)
+      index += 1
     })
-
-    // // Render options for creation
-    // this.props.targetTypes.forEach(targetType => {
-    //   el.append(
-    //     $$('div').addClass('se-option').append(
-    //       $$('button').append('Create '+targetType)
-    //     )
-    //     .on('click', this._triggerCreate.bind(this, targetType))
-    //   )
-    // })
     return el
   }
 
-  _selectOption(entityId) {
-    this.props.onSelected(entityId)
+  _confirmSelected(index) {
+    let item = this.state.results[index]
+    if (item._create) {
+      this.props.onCreate(item._create)
+    } else {
+      this.props.onSelected(item.id)
+    }
   }
 
   _selectNext() {
-    const selection = this.state.selected
-    const results = this.state.results
-    if(results.length > 0) {
-      let selectedEntity
-      if(selection) {
-        const selectionIndex = results.findIndex(item => {
-          return item.id === selection
-        })
-
-        if(selectionIndex < results.length - 1) {
-          selectedEntity = results[selectionIndex + 1]
-        } else {
-          selectedEntity = results[0]
-        }
-      } else {
-        selectedEntity = results[0]
-      }
-
-      this.extendState({selected: selectedEntity.id})
+    let selectedIndex = this.state.selectedIndex
+    let results = this.state.results
+    if (selectedIndex < results.length - 1) {
+      selectedIndex += 1
     }
+    this.extendState({
+      selectedIndex: selectedIndex
+    })
   }
 
   _selectPrevious() {
-    const selection = this.state.selected
-    const results = this.state.results
-    if(results.length > 0) {
-      let selectedEntity
-      if(selection) {
-        const selectionIndex = results.findIndex(item => {
-          return item.id === selection
-        })
-
-        if(selectionIndex > 0) {
-          selectedEntity = results[selectionIndex - 1]
-        } else {
-          selectedEntity = results[results.length - 1]
-        }
-      } else {
-        selectedEntity = results[results.length - 1]
-      }
-
-      this.extendState({selected: selectedEntity.id})
+    let selectedIndex = this.state.selectedIndex
+    if (selectedIndex >= 0) {
+      selectedIndex -= 1
     }
-  }
-
-  _triggerCreate(targetType) {
-    this.props.onCreate(targetType)
+    this.extendState({
+      selectedIndex: selectedIndex
+    })
   }
 
   // TODO: For the current prorotype we use a naive regexp based filtering,
@@ -156,7 +121,15 @@ export default class EntitySelector extends Component {
       results = this._findEntities(searchString)
     }
 
+    // Add creation entries to result
+    this.props.targetTypes.forEach(targetType => {
+      results.push({
+        _create: targetType
+      })
+    })
+
     this.setState({
+      selectedIndex: -1,
       searchString: searchString,
       results
     })
@@ -169,8 +142,8 @@ export default class EntitySelector extends Component {
     } else if (e.keyCode === 40) {
       e.preventDefault()
       this._selectNext()
-    } else if (e.keyCode === 13 && this.state.selected) {
-      this._selectOption(this.state.selected)
+    } else if (e.keyCode === 13 && this.state.selectedIndex >= 0) {
+      this._confirmSelected(this.state.selectedIndex)
     }
   }
 }

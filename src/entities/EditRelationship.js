@@ -21,6 +21,14 @@ function prefillEntity(type, text) {
     defaults.source = text
   } else if (type === 'journal-article') {
     defaults.articleTitle = text
+  } else if (type === 'conference-proceeding') {
+    defaults.articleTitle = text
+  } else if (type === 'clinical-report') {
+    defaults.articleTitle = text
+  } else if (type === 'preprint') {
+    defaults.articleTitle = text
+  } else if (type === 'report') {
+    defaults.source = text
   }
   return defaults
 }

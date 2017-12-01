@@ -50,6 +50,68 @@ JournalArticle.schema = {
   doi: { type: 'string', optional: true }
 }
 
+export class ConferenceProceeding extends BibliographicEntry {}
+
+ConferenceProceeding.schema = {
+  type: 'conference-proceeding',
+  authors: { type: ['person', 'organisation'], default: [] },
+  articleTitle: { type: 'text', optional: true },
+  confName: { type: 'string', optional: true },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  fpage: { type: 'string', optional: true },
+  lpage: { type: 'string', optional: true },
+  pageRange: { type: 'string', optional: true },
+  elocationId: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class ClinicalTrial extends BibliographicEntry {}
+
+ClinicalTrial.schema = {
+  type: 'clinical-trial',
+  sponsors: { type: ['person', 'organisation'], default: [] },
+  articleTitle: { type: 'text', optional: true },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Preprint extends BibliographicEntry {}
+
+Preprint.schema = {
+  type: 'preprint',
+  authors: { type: ['person', 'organisation'], default: [] },
+  articleTitle: { type: 'text', optional: true },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Report extends BibliographicEntry {
+  getGuid() {
+    return this.isbn
+  }
+}
+
+Report.schema = {
+  type: 'report',
+  authors: { type: ['person', 'organisation'], default: [] },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  publisherName: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  isbn: { type: 'string', optional: true }
+}
+
 export class Person extends DocumentNode {}
 
 Person.schema = {

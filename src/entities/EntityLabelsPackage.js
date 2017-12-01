@@ -23,6 +23,20 @@ export default {
     config.addLabel('doi', 'DOI')
     config.addLabel('isbn', 'ISBN')
     config.addLabel('pmid', 'PubMed ID')
+
+    config.addLabel('conference-proceeding', 'Conference Proceeding')
+    config.addLabel('create-conference-proceeding', 'Create Conference Proceeding')
+    config.addLabel('confName', 'Conference Name')
+
+    config.addLabel('clinical-trial', 'Clinical Trial')
+    config.addLabel('create-clinical-trial', 'Create Clinical Trial')
+
+    config.addLabel('preprint', 'Preprint')
+    config.addLabel('create-preprint', 'Create Preprint')
+
+    config.addLabel('report', 'Report')
+    config.addLabel('create-report', 'Create Report')
+
     // person labels
     config.addLabel('person', 'Person')
     config.addLabel('orcid', 'ORCID')

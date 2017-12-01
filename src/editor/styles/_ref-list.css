@@ -9,6 +9,11 @@
   margin-bottom: 15px;
 }
 
+.sc-ref-list > .se-title > .se-empty-list {
+  color: #afafaf;
+  text-align: center;
+}
+
 .sc-ref-list > .se-reference {
   display: flex;
   margin-bottom: 15px;

@@ -15,7 +15,7 @@ export default class RefComponent extends NodeComponent {
 
     // TODO: change css class to sc-ref-component
     return $$('div').addClass('se-reference').append(
-      $$('span').addClass('se-label').append( label),
+      $$('span').addClass('se-label').append(label),
       ' ',
       $$('span').addClass('se-text').html(entityHtml)
     )
@@ -26,7 +26,7 @@ function _getReferenceLabel(ref) {
   if (ref.state && ref.state.label) {
     return ref.state.label
   }
-  return ''
+  return '?'
 }
 
 function _getEntity(ref, db) {

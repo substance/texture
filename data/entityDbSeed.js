@@ -2,89 +2,127 @@ export default [
   {
     "type": "person",
     "id": "person-1",
-    "givenNames": "Smith",
-    "surname": "Jane",
-    "affiliations": ["organisation-1"]
+    "givenNames": "Stefan",
+    "surname": "Schaffelhofer",
+    "orcid": "0000-0002-1006-971X",
+    "affiliations": ["organisation-1", "organisation-2"]
   },
   {
     "type": "person",
     "id": "person-2",
-    "givenNames": "Smith",
-    "surname": "John",
-    "affiliations": ["organisation-2"]
+    "givenNames": "Sabine",
+    "surname": "Kastner",
+    "affiliations": []
   },
   {
     "type": "person",
     "id": "person-3",
-    "givenNames": "Max",
-    "surname": "Mustermann",
+    "givenNames": "Koen",
+    "surname": "Nelissen",
     "affiliations": []
   },
   {
     "type": "person",
     "id": "person-4",
-    "givenNames": "Alex",
-    "surname": "Meyer",
+    "givenNames": "Wim",
+    "surname": "Vanduffel",
     "affiliations": []
+  },
+  {
+    "type": "person",
+    "id": "person-5",
+    "givenNames": "Markus A.",
+    "surname": "Baumann",
+    "affiliations": []
+  },
+  {
+    "type": "person",
+    "id": "person-6",
+    "givenNames": "Marie-Christine",
+    "surname": "Fluet",
+    "affiliations": []
+  },
+  {
+    "type": "person",
+    "id": "person-7",
+    "givenNames": "Hansjörg",
+    "surname": "Scherberger",
+    "orcid": "0000-0001-6593-2800",
+    "affiliations": ["organisation-1", "organisation-3"]
   },
   {
     "type": "organisation",
     "id": "organisation-1",
-    "name": "Settles-Young Research Corporation",
-    "division1": "Laboratory of Neural Systems",
-    "division2": "",
-    "division3": "",
-    "street": "283 Hawthorne Drive",
-    "addressComplements": "Suite 310",
-    "city": "Lexington",
-    "state": "KY",
-    "postalCode": "40503",
-    "country": "USA",
-    "phone": "(859) 273-8543",
-    "fax": "(859) 299-4683"
+    "name": "German Primate Center GmbH",
+    "division1": "Neurobiology Laboratory",
+    "city": "Göttingen",
+    "country": "Germany"
   },
   {
     "type": "organisation",
     "id": "organisation-2",
-    "name": "Example organisation",
-    "division1": "Example division",
-    "division2": "",
-    "division3": "",
-    "street": "283 Example street",
-    "addressComplements": "Suite 310",
-    "city": "Vienna",
-    "postalCode": "1010",
-    "country": "Austria",
+    "name": "The Rockefeller University",
+    "division1": "Laboratory of Neural Systems",
+    "city": "New York",
+    "country": "United States"
+  },
+  {
+    "type": "organisation",
+    "id": "organisation-3",
+    "name": "University of Göttingen",
+    "division1": "Department of Biology",
+    "city": "Göttingen",
+    "country": "Germany"
+  },
+  {
+    "type": "organisation",
+    "id": "organisation-4",
+    "name": "Princeton University",
+    "city": "Princeton",
+    "country": "United States"
+  },
+  {
+    "type": "organisation",
+    "id": "organisation-5",
+    "name": "National Research Council"
   },
   {
     "type": "book",
     "id": "book-1",
     "authors": [
-      "person-2"
+      "organisation-5"
     ],
-    "editors": [
-      "person-1"
+    "source": "Guidelines for the Care and Use of Mammals in Neuroscience and Behavioral Research",
+    "publisherLoc": "Washington, D.C.",
+    "publisherName": "National Academies Press",
+    "year": "2003",
+    "doi": "10.17226/10732"
+  },
+  {
+    "type": "journal-article",
+    "id": "journal-article-2",
+    "authors": [
+      "person-3",
+      "person-4"
     ],
-    "chapterTitle": "Tobacco use",
-    "source": "Clinical methods: the history, physical, and laboratory examinations",
-    "publisherLoc": "Stoneham (MA)",
-    "publisherName": "Butterworth Publishers",
-    "year": "1990",
+    "articleTitle": "Grasping-related functional magnetic resonance imaging brain responses in the macaque monkey",
+    "source": "Journal of Neuroscience",
+    "volume": "31",
+    "year": "2011",
     "month": "10",
     "day": "5",
-    "fpage": "214",
-    "lpage": "216",
-    "pageRange": "214-216",
-    "doi": "book-1"
+    "fpage": "8220",
+    "lpage": "8229",
+    "pageRange": "8220-8229",
+    "doi": "10.1523/JNEUROSCI.0623-11.2011"
   },
   {
     "type": "journal-article",
     "id": "journal-article-1",
     "authors": [
-      "person-2"
-    ],
-    "editors": [
-      "person-1"
+      "person-5",
+      "person-6",
+      "person-7"
     ],
     "articleTitle": "Context-specific grasp movement representation in the macaque anterior intraparietal area",
     "source": "Journal of Neuroscience",

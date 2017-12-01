@@ -10,7 +10,7 @@ export default class FnComponent extends Component {
       .addClass('sc-fn-item')
       .attr('data-id', node.id)
 
-    let label = getLabel(node) || ''
+    let label = getLabel(node) || '?'
     let contentEl = $$(this.getComponent('container'), {
       placeholder: 'Enter Footnote',
       node: node,
@@ -19,16 +19,11 @@ export default class FnComponent extends Component {
 
     let fnContainer = $$('div').addClass('se-fn-container')
 
-    if(label) {
+    el.append(
       fnContainer.append(
         $$('div').addClass('se-label').append(
           label
-        )
-      )
-    }
-
-    el.append(
-      fnContainer.append(
+        ),
         contentEl,
         $$(Button, {icon: 'trash', tooltip: 'Remove'}).addClass('se-remove-ref')
           .on('click', this._removeFn.bind(this, node.id))

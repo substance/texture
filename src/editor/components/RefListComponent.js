@@ -26,9 +26,8 @@ export default class RefListComponent extends NodeComponent {
     const referenceManager = this.context.editorSession.getManager('references')
 
     let el = $$('div').addClass('sc-ref-list')
-    let entityIds = referenceManager.getReferenceIds()
     let bibliography = referenceManager.getBibliography()
-
+    let entityIds = bibliography.map(e => e.state.entity.id)
     if (this.state.edit) {
       var modal = $$(ModalDialog, {
         width: 'medium',
@@ -38,7 +37,10 @@ export default class RefListComponent extends NodeComponent {
         $$(EditRelationship, {
           propertyName: 'references',
           entityIds,
-          targetTypes: ['journal-article', 'book']
+          targetTypes: [
+            'journal-article', 'book', 'conference-proceeding',
+            'clinical-trial', 'preprint', 'report'
+          ]
         })
       )
       el.append(modal)

@@ -116,6 +116,164 @@ function bookRenderer($$, entityId, entityDb) {
   return fragments
 }
 
+// ${article-title}. ${sponsors}  (sponsors) (${year}). ${doi}
+function clinicalTrialRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  // We render an annotated chapter title here:
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+
+  if (entity.sponsors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.sponsors, entityDb),
+      ' (sponsors)'
+    )
+  }
+
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      $$('a').attr({
+        href: `http://dx.doi.org/${entity.doi}`
+      }).append(
+        ' doi ',
+        entity.doi
+      )
+    )
+  }
+  return fragments
+}
+
+// ${article-title}. ${authors} (${year}). ${source}. ${doi}
+function preprintRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  // We render an annotated chapter title here:
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+
+  if (entity.source) {
+    fragments.push(' ', entity.source, '.')
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      $$('a').attr({
+        href: `http://dx.doi.org/${entity.doi}`
+      }).append(
+        ' doi ',
+        entity.doi
+      )
+    )
+  }
+  return fragments
+}
+
+
+// person-group[person-group-type='author'], source, year, month?, day?, publisher-name, publisher-loc?, pub-id[pub-id-type='isbn']?
+// ${authors} (${year}). <emphasis>${source}<emphasis>
+function reportRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(
+        entity.source
+      ),
+      '.'
+    )
+  }
+  return fragments
+}
+
+// ${article-title}. ${authors} (${year}). ${conf-name}, ${source}, $(fpage?}-${lpage}. ${doi}
+function conferenceProceedingRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  // We render an annotated chapter title here:
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+
+  if (entity.confName) {
+    fragments.push(' ', entity.confName, ',')
+  }
+
+  if (entity.source) {
+    fragments.push(' ', entity.source, '.')
+  }
+
+  if (entity.fpage && entity.lpage) {
+    fragments.push(
+      ' pp. ',
+      entity.fpage,
+      '-',
+      entity.lpage,
+      '.'
+    )
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      $$('a').attr({
+        href: `http://dx.doi.org/${entity.doi}`
+      }).append(
+        ' doi ',
+        entity.doi
+      )
+    )
+  }
+  return fragments
+
+}
+
 function personRenderer($$, entityId, entityDb, options = {}) {
   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
   if (options.short) {
@@ -157,6 +315,10 @@ export default {
   'person': _delegate(personRenderer),
   'book': _delegate(bookRenderer),
   'journal-article': _delegate(journalArticleRenderer),
+  'conference-proceeding': _delegate(conferenceProceedingRenderer),
+  'clinical-trial': _delegate(clinicalTrialRenderer),
+  'preprint': _delegate(preprintRenderer),
+  'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer)
 }
 

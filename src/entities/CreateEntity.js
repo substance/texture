@@ -19,10 +19,11 @@ export default class CreateEntity extends Component {
       ),
       $$('div').addClass('sg-actions').append(
         $$('button')
-          .addClass('sm-primary')
-          .append('Save')
+          .addClass('sc-button sm-style-big')
+          .append('Create')
           .on('click', this._create),
         $$('button')
+          .addClass('sc-button sm-style-big sm-secondary')
           .append('Cancel')
           .on('click', this._cancel)
       )

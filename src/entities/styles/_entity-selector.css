@@ -32,6 +32,7 @@
 .sc-entity-selector > .se-create > .se-options {
   border: 1px solid #DADADA;
   border-top: 0;
+  font-size: 15px;
   padding: 10px 0px;
 }
 

@@ -100,10 +100,11 @@ export default class EditRelationship extends Component {
         contentEl,
         $$('div').addClass('sg-actions').append(
           $$('button')
-            .addClass('sm-primary')
+            .addClass('sc-button sm-style-big')
             .append('Save')
             .on('click', this._save),
           $$('button')
+            .addClass('sc-button sm-style-big sm-secondary')
             .append('Cancel')
             .on('click', this._cancel)
         )

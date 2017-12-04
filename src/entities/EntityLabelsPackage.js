@@ -61,6 +61,7 @@ export default {
     config.addLabel('fax', 'Fax')
     config.addLabel('email', 'Email')
     config.addLabel('uri', 'Website')
+    config.addLabel('members', 'Members')
 
     config.addLabel('edit-book', 'Edit Book')
     config.addLabel('add-book', 'Add Book')

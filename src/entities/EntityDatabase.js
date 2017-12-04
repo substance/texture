@@ -143,6 +143,7 @@ Organisation.schema = {
   fax: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   uri: { type: 'string', optional: true },
+  members: { type: ['person'], default: [] },
 }
 
 export default class EntityDatabase extends Document {

@@ -41,7 +41,8 @@ function journalArticleRenderer($$, entityId, entityDb) {
   if (entity.doi) {
     fragments.push(
       $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`
+        href: `http://dx.doi.org/${entity.doi}`,
+        target: '_blank'
       }).append(
         ' doi ',
         entity.doi
@@ -96,6 +97,7 @@ function bookRenderer($$, entityId, entityDb) {
   if (entity.doi) {
     fragments.push(
       $$('a').attr({
+        target: '_blank',
         href: `http://dx.doi.org/${entity.doi}`
       }).append(
         ' doi ',
@@ -143,7 +145,8 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
   if (entity.doi) {
     fragments.push(
       $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`
+        href: `http://dx.doi.org/${entity.doi}`,
+        target: '_blank'
       }).append(
         ' doi ',
         entity.doi
@@ -183,7 +186,8 @@ function preprintRenderer($$, entityId, entityDb) {
   if (entity.doi) {
     fragments.push(
       $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`
+        href: `http://dx.doi.org/${entity.doi}`,
+        target: '_blank'
       }).append(
         ' doi ',
         entity.doi

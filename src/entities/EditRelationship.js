@@ -35,6 +35,12 @@ function prefillEntity(type, text) {
     defaults.dataTitle = text
   } else if (type === 'patent') {
     defaults.articleTitle = text
+  } else if (type === 'webpage') {
+    defaults.title = text
+  } else if (type === 'thesis') {
+    defaults.articleTitle = text
+  } else if (type === 'software') {
+    defaults.title = text
   }
   return defaults
 }

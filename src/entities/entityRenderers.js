@@ -51,7 +51,6 @@ function bookRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.chapterTitle) {
     fragments.push(
       _renderHTML($$, entity.chapterTitle),
@@ -113,7 +112,6 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -145,7 +143,6 @@ function preprintRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -180,7 +177,6 @@ function preprintRenderer($$, entityId, entityDb) {
 function patentRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -210,7 +206,7 @@ function patentRenderer($$, entityId, entityDb) {
 function dataPublicationRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
-  // We render an annotated chapter title here:
+
   if (entity.dataTitle) {
     fragments.push(
       _renderHTML($$, entity.dataTitle),
@@ -237,11 +233,9 @@ function dataPublicationRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-// ${article-title}. ${author} (${string-date}). <emphasis> ${source}<emphasis>, p. $(first-page}-$(last-page}
 function periodicalRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -305,7 +299,6 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -348,8 +341,92 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
     )
   }
   return fragments
-
 }
+
+function softwareRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.title) {
+    fragments.push(
+      _renderHTML($$, entity.title)
+    )
+    if (entity.version) {
+      fragments.push(', ', entity.version)
+    }
+    fragments.push('.')
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      ' ',
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.publisherName) {
+    fragments.push(' ', entity.publisherName)
+  }
+  if (entity.publisherLoc) {
+    fragments.push(', ', entity.publisherLoc)
+  }
+  return fragments
+}
+
+function thesisRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.publisherName) {
+    fragments.push(' ', entity.publisherName)
+  }
+  if (entity.publisherLoc) {
+    fragments.push(', ', entity.publisherLoc)
+  }
+  return fragments
+}
+
+function webpageRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.title) {
+    fragments.push(
+      _renderHTML($$, entity.title),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year && entity.month && entity.day) {
+    fragments.push(' (', entity.year, '-', entity.month, '-', entity.day, ').')
+  }
+
+  if (entity.publisherLoc) {
+    fragments.push(' ', entity.publisherLoc)
+  }
+
+  if (entity.uri) {
+    fragments.push(' ', entity.uri)
+  }
+  return fragments
+}
+
 
 function personRenderer($$, entityId, entityDb, options = {}) {
   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
@@ -401,7 +478,10 @@ export default {
   'organisation': _delegate(organisationRenderer),
   'patent': _delegate(patentRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
-  'periodical': _delegate(periodicalRenderer)
+  'periodical': _delegate(periodicalRenderer),
+  'software': _delegate(softwareRenderer),
+  'thesis': _delegate(thesisRenderer),
+  'webpage': _delegate(webpageRenderer)
 }
 
 

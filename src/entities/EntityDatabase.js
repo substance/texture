@@ -160,6 +160,48 @@ Report.schema = {
   isbn: { type: 'string', optional: true }
 }
 
+export class Software extends BibliographicEntry {}
+
+Software.schema = {
+  type: 'software',
+  authors: { type: ['person', 'organisation'], default: [] },
+  title: { type: 'string', optional: true },
+  version: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  publisherName: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Thesis extends BibliographicEntry {}
+
+Thesis.schema = {
+  type: 'thesis',
+  authors: { type: ['person', 'organisation'], default: [] },
+  articleTitle: { type: 'text', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  publisherName: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Webpage extends BibliographicEntry {}
+
+Webpage.schema = {
+  type: 'webpage',
+  authors: { type: ['person', 'organisation'], default: [] },
+  title: { type: 'text', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  uri: { type: 'string', optional: true }
+}
+
 export class Person extends DocumentNode {}
 
 Person.schema = {
@@ -171,7 +213,6 @@ Person.schema = {
   suffix: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
 }
-
 
 export class Organisation extends DocumentNode {}
 

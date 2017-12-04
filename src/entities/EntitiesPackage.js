@@ -1,8 +1,8 @@
 import EntityDatabase from './EntityDatabase'
 import {
   BibliographicEntry, JournalArticle, Book, Person, Organisation,
-  ConferenceProceeding, ClinicalTrial, Preprint, Report,
-  DataPublication, Periodical, Patent
+  ConferenceProceeding, ClinicalTrial, Preprint, Report, DataPublication,
+  Periodical, Patent, Software, Thesis, Webpage
 } from './EntityDatabase'
 import EntityLabelsPackage from './EntityLabelsPackage'
 
@@ -23,6 +23,9 @@ export default {
     config.addNode(DataPublication)
     config.addNode(Periodical)
     config.addNode(Patent)
+    config.addNode(Software)
+    config.addNode(Thesis)
+    config.addNode(Webpage)
     config.addNode(Report)
     config.addNode(Book)
     config.addNode(Person)

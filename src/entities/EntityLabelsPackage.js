@@ -33,6 +33,24 @@ export default {
     config.addLabel('create-clinical-trial', 'Create Clinical Trial')
     config.addLabel('edit-clinical-trial', 'Edit Clinical Trial')
 
+    config.addLabel('webpage', 'Webpage')
+    config.addLabel('title', 'Title')
+    config.addLabel('create-webpage', 'Create Webpage')
+    config.addLabel('edit-webpage', 'Edit Webpage')
+
+    config.addLabel('thesis', 'Thesis')
+    config.addLabel('create-thesis', 'Create Thesis')
+    config.addLabel('edit-thesis', 'Edit Thesis')
+
+    config.addLabel('software', 'Software')
+    config.addLabel('create-software', 'Create Software')
+    config.addLabel('edit-software', 'Edit Software')
+    config.addLabel('version', 'Version')
+
+    config.addLabel('thesis', 'Thesis')
+    config.addLabel('create-thesis', 'Create Thesis')
+    config.addLabel('edit-thesis', 'Edit Thesis')
+
     config.addLabel('preprint', 'Preprint')
     config.addLabel('create-preprint', 'Create Preprint')
     config.addLabel('edit-preprint', 'Edit Preprint')

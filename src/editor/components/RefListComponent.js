@@ -24,7 +24,6 @@ export default class RefListComponent extends NodeComponent {
 
   render($$) {
     const referenceManager = this.context.editorSession.getManager('references')
-
     let el = $$('div').addClass('sc-ref-list')
     let bibliography = referenceManager.getBibliography()
     let entityIds = bibliography.map(e => e.state.entity.id)
@@ -40,7 +39,8 @@ export default class RefListComponent extends NodeComponent {
           targetTypes: [
             'journal-article', 'book', 'conference-proceeding',
             'clinical-trial', 'preprint', 'report',
-            'periodical', 'data-publication', 'patent'
+            'periodical', 'data-publication', 'patent',
+            'webpage', 'thesis', 'software'
           ]
         })
       )

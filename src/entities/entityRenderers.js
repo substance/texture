@@ -40,13 +40,8 @@ function journalArticleRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`,
-        target: '_blank'
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
@@ -96,13 +91,8 @@ function bookRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        target: '_blank',
-        href: `http://dx.doi.org/${entity.doi}`
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
 
@@ -144,13 +134,8 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`,
-        target: '_blank'
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
@@ -185,13 +170,8 @@ function preprintRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`,
-        target: '_blank'
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
@@ -266,12 +246,8 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
@@ -298,11 +274,13 @@ function personRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function organisationRenderer($$, entityId, entityDb) {
+function organisationRenderer($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)
   let result = [ name ]
-  if (country) {
-    result.push(', ', country)
+  if (!options.short) {
+    if (country) {
+      result.push(', ', country)
+    }
   }
   return result
 }
@@ -342,6 +320,16 @@ function _renderAuthors($$, entityIds, entityDb) {
   return fragments
 }
 
+function _renderDOI($$, doi) {
+  return $$('a').attr({
+    href: `http://dx.doi.org/${doi}`,
+    target: '_blank'
+  }).append(
+    'doi ',
+    doi
+  )
+}
+
 function _getInitials(givenNames) {
   return givenNames.split(' ').map(part => part[0].toUpperCase()).join('')
 }
@@ -356,10 +344,10 @@ function _renderHTML($$, htmlString) {
 }
 
 function _delegate(fn) {
-  return function(entityId, db) {
+  return function(entityId, db, options) {
     let el = _createElement()
     let $$ = el.createElement.bind(el)
-    let fragments = fn($$, entityId, db)
+    let fragments = fn($$, entityId, db, options)
     el.append(fragments)
     return el.innerHTML
   }

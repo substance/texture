@@ -71,3 +71,10 @@ h2.sc-heading {
 h3.sc-heading {
   font-size: 16px;
 }
+
+/* HACK: Overrides */
+.sc-editor a,
+.sc-editor .sc-ext-link {
+  color: inherit;
+  text-decoration: underline;
+}

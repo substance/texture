@@ -60,12 +60,13 @@ export default class FnGroupComponent extends NodeComponent {
   */
   _addFn() {
     const editorSession = this.context.editorSession
-    editorSession.transaction((doc) => {
-      let fnGroup = doc.find('fn-group')
-      let fn = doc.createElement('fn')
-      let fnPlaceholder = doc.createElement('p')
+    editorSession.transaction((tx) => {
+      let fnGroup = tx.find('fn-group')
+      let fn = tx.createElement('fn')
+      let fnPlaceholder = tx.createElement('p')
       fn.append(fnPlaceholder)
       fnGroup.append(fn)
+      tx.setSelection(null)
     })
     this.rerender()
   }

@@ -31,5 +31,6 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
       }
       node.appendChild(entityRefNode)
     })
+    tx.setSelection(null)
   })
 }

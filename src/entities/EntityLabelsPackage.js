@@ -26,16 +26,20 @@ export default {
 
     config.addLabel('conference-proceeding', 'Conference Proceeding')
     config.addLabel('create-conference-proceeding', 'Create Conference Proceeding')
+    config.addLabel('edit-conference-proceeding', 'Edit Conference Proceeding')
     config.addLabel('confName', 'Conference Name')
 
     config.addLabel('clinical-trial', 'Clinical Trial')
     config.addLabel('create-clinical-trial', 'Create Clinical Trial')
+    config.addLabel('edit-clinical-trial', 'Edit Clinical Trial')
 
     config.addLabel('preprint', 'Preprint')
     config.addLabel('create-preprint', 'Create Preprint')
+    config.addLabel('edit-preprint', 'Edit Preprint')
 
     config.addLabel('report', 'Report')
     config.addLabel('create-report', 'Create Report')
+    config.addLabel('edit-report', 'Edit Report')
 
     // person labels
     config.addLabel('person', 'Person')

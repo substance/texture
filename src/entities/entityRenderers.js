@@ -40,13 +40,8 @@ function journalArticleRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`,
-        target: '_blank'
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
@@ -56,7 +51,6 @@ function bookRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.chapterTitle) {
     fragments.push(
       _renderHTML($$, entity.chapterTitle),
@@ -96,13 +90,8 @@ function bookRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        target: '_blank',
-        href: `http://dx.doi.org/${entity.doi}`
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
 
@@ -123,7 +112,6 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -144,24 +132,17 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`,
-        target: '_blank'
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
 }
 
-// ${article-title}. ${authors} (${year}). ${source}. ${doi}
 function preprintRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -185,21 +166,112 @@ function preprintRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`,
-        target: '_blank'
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
 }
 
 
-// person-group[person-group-type='author'], source, year, month?, day?, publisher-name, publisher-loc?, pub-id[pub-id-type='isbn']?
-// ${authors} (${year}). <emphasis>${source}<emphasis>
+function patentRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+  if (entity.inventors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.inventors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.assignee) {
+    fragments.push(' ', entity.assignee, ',')
+  }
+  if (entity.patentNumber) {
+    fragments.push(' ', entity.patentNumber)
+  }
+  if (entity.patentCountry) {
+    fragments.push(' (', entity.patentCountry, ').')
+  }
+  return fragments
+}
+
+function dataPublicationRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.dataTitle) {
+    fragments.push(
+      _renderHTML($$, entity.dataTitle),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.source) {
+    fragments.push(' ', entity.assignee, ',')
+  }
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+  return fragments
+}
+
+function periodicalRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.assignee),
+      ','
+    )
+  }
+
+  if (entity.fpage && entity.lpage) {
+    fragments.push(
+      ' p. ',
+      entity.fpage,
+      '-',
+      entity.lpage,
+      '.'
+    )
+  }
+
+  return fragments
+}
+
+
 function reportRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
@@ -223,12 +295,10 @@ function reportRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-// ${article-title}. ${authors} (${year}). ${conf-name}, ${source}, $(fpage?}-${lpage}. ${doi}
 function conferenceProceedingRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  // We render an annotated chapter title here:
   if (entity.articleTitle) {
     fragments.push(
       _renderHTML($$, entity.articleTitle),
@@ -266,17 +336,97 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
 
   if (entity.doi) {
     fragments.push(
-      $$('a').attr({
-        href: `http://dx.doi.org/${entity.doi}`
-      }).append(
-        ' doi ',
-        entity.doi
-      )
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
   return fragments
-
 }
+
+function softwareRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.title) {
+    fragments.push(
+      _renderHTML($$, entity.title)
+    )
+    if (entity.version) {
+      fragments.push(', ', entity.version)
+    }
+    fragments.push('.')
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      ' ',
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.publisherName) {
+    fragments.push(' ', entity.publisherName)
+  }
+  if (entity.publisherLoc) {
+    fragments.push(', ', entity.publisherLoc)
+  }
+  return fragments
+}
+
+function thesisRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.publisherName) {
+    fragments.push(' ', entity.publisherName)
+  }
+  if (entity.publisherLoc) {
+    fragments.push(', ', entity.publisherLoc)
+  }
+  return fragments
+}
+
+function webpageRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.title) {
+    fragments.push(
+      _renderHTML($$, entity.title),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year && entity.month && entity.day) {
+    fragments.push(' (', entity.year, '-', entity.month, '-', entity.day, ').')
+  }
+
+  if (entity.publisherLoc) {
+    fragments.push(' ', entity.publisherLoc)
+  }
+
+  if (entity.uri) {
+    fragments.push(' ', entity.uri)
+  }
+  return fragments
+}
+
 
 function personRenderer($$, entityId, entityDb, options = {}) {
   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
@@ -298,11 +448,13 @@ function personRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function organisationRenderer($$, entityId, entityDb) {
+function organisationRenderer($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)
   let result = [ name ]
-  if (country) {
-    result.push(', ', country)
+  if (!options.short) {
+    if (country) {
+      result.push(', ', country)
+    }
   }
   return result
 }
@@ -323,8 +475,15 @@ export default {
   'clinical-trial': _delegate(clinicalTrialRenderer),
   'preprint': _delegate(preprintRenderer),
   'report': _delegate(reportRenderer),
-  'organisation': _delegate(organisationRenderer)
+  'organisation': _delegate(organisationRenderer),
+  'patent': _delegate(patentRenderer),
+  'data-publication': _delegate(dataPublicationRenderer),
+  'periodical': _delegate(periodicalRenderer),
+  'software': _delegate(softwareRenderer),
+  'thesis': _delegate(thesisRenderer),
+  'webpage': _delegate(webpageRenderer)
 }
+
 
 /*
   Helpers
@@ -342,6 +501,16 @@ function _renderAuthors($$, entityIds, entityDb) {
   return fragments
 }
 
+function _renderDOI($$, doi) {
+  return $$('a').attr({
+    href: `http://dx.doi.org/${doi}`,
+    target: '_blank'
+  }).append(
+    'doi ',
+    doi
+  )
+}
+
 function _getInitials(givenNames) {
   return givenNames.split(' ').map(part => part[0].toUpperCase()).join('')
 }
@@ -356,10 +525,10 @@ function _renderHTML($$, htmlString) {
 }
 
 function _delegate(fn) {
-  return function(entityId, db) {
+  return function(entityId, db, options) {
     let el = _createElement()
     let $$ = el.createElement.bind(el)
-    let fragments = fn($$, entityId, db)
+    let fragments = fn($$, entityId, db, options)
     el.append(fragments)
     return el.innerHTML
   }

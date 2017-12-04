@@ -29,6 +29,18 @@ function prefillEntity(type, text) {
     defaults.articleTitle = text
   } else if (type === 'report') {
     defaults.source = text
+  } else if (type === 'periodical') {
+    defaults.articleTitle = text
+  } else if (type === 'data-publication') {
+    defaults.dataTitle = text
+  } else if (type === 'patent') {
+    defaults.articleTitle = text
+  } else if (type === 'webpage') {
+    defaults.title = text
+  } else if (type === 'thesis') {
+    defaults.articleTitle = text
+  } else if (type === 'software') {
+    defaults.title = text
   }
   return defaults
 }
@@ -78,13 +90,11 @@ export default class EditRelationship extends Component {
       )
     } else {
       let contentEl = $$('div').addClass('se-content')
-
       contentEl.append(
         $$(FormTitle, {
           name: 'edit-'+this.props.propertyName
         })
       )
-
       if (this.state.entityIds.length > 0) {
         let tableEl = $$('table').addClass('se-entries')
         this.state.entityIds.forEach((entityId) => {
@@ -110,7 +120,6 @@ export default class EditRelationship extends Component {
           $$('div').addClass('se-empty').append('No Entries')
         )
       }
-
       contentEl.append(
         $$(EntitySelector, {
           placeholder: 'Type to add new ...',
@@ -122,7 +131,6 @@ export default class EditRelationship extends Component {
           onCreate: this._onCreate.bind(this),
         })
       )
-
       el.append(
         contentEl,
         $$('div').addClass('sg-actions').append(

@@ -24,7 +24,6 @@ export default class RefListComponent extends NodeComponent {
 
   render($$) {
     const referenceManager = this.context.editorSession.getManager('references')
-
     let el = $$('div').addClass('sc-ref-list')
     let bibliography = referenceManager.getBibliography()
     let entityIds = bibliography.map(e => e.state.entity.id)
@@ -39,23 +38,22 @@ export default class RefListComponent extends NodeComponent {
           entityIds,
           targetTypes: [
             'journal-article', 'book', 'conference-proceeding',
-            'clinical-trial', 'preprint', 'report'
+            'clinical-trial', 'preprint', 'report',
+            'periodical', 'data-publication', 'patent',
+            'webpage', 'thesis', 'software'
           ]
         })
       )
       el.append(modal)
     }
-
     el.append(
       $$('div').addClass('se-title').append(
         'References'
       )
     )
-
     bibliography.forEach((reference) => {
       el.append($$(RefComponent, { node: reference }))
     })
-
     if(bibliography.length === 0) {
       el.append(
         $$('div').addClass('se-empty-list').append(
@@ -63,7 +61,6 @@ export default class RefListComponent extends NodeComponent {
         )
       )
     }
-
     el.append(
       $$('button').addClass('sc-button sm-style-big').append('Edit References').on('click', this._editBibliography)
     )

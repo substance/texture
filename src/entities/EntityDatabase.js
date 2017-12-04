@@ -31,6 +31,54 @@ Book.schema = {
   pmid: { type: 'string', optional: true}
 }
 
+export class DataPublication extends BibliographicEntry {}
+
+DataPublication.schema = {
+  type: 'data-publication',
+  authors: { type: ['person', 'organisation'], default: [] },
+  dataTitle: { type: 'text', optional: true },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  accessionId: { type: 'string', optional: true },
+  arkId: { type: 'string', optional: true },
+  archiveId: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Periodical extends BibliographicEntry {}
+
+Periodical.schema = {
+  type: 'periodical',
+  authors: { type: ['person', 'organisation'], default: [] },
+  articleTitle: { type: 'text', optional: true },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  fpage: { type: 'string', optional: true },
+  lpage: { type: 'string', optional: true },
+  pageRange: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Patent extends BibliographicEntry {}
+
+Patent.schema = {
+  type: 'patent',
+  inventors: { type: ['person', 'organisation'], default: [] },
+  assignee: { type: 'string', optional: true },
+  articleTitle: { type: 'text', optional: true },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  patentNumber: { type: 'string', optional: true },
+  patentCountry: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
 export class JournalArticle extends BibliographicEntry {}
 
 JournalArticle.schema = {
@@ -110,6 +158,48 @@ Report.schema = {
   publisherName: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   isbn: { type: 'string', optional: true }
+}
+
+export class Software extends BibliographicEntry {}
+
+Software.schema = {
+  type: 'software',
+  authors: { type: ['person', 'organisation'], default: [] },
+  title: { type: 'string', optional: true },
+  version: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  publisherName: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Thesis extends BibliographicEntry {}
+
+Thesis.schema = {
+  type: 'thesis',
+  authors: { type: ['person', 'organisation'], default: [] },
+  articleTitle: { type: 'text', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  publisherName: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
+}
+
+export class Webpage extends BibliographicEntry {}
+
+Webpage.schema = {
+  type: 'webpage',
+  authors: { type: ['person', 'organisation'], default: [] },
+  title: { type: 'text', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  publisherLoc: { type: 'string', optional: true },
+  uri: { type: 'string', optional: true }
 }
 
 export class Person extends DocumentNode {}

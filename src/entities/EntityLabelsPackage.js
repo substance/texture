@@ -33,6 +33,24 @@ export default {
     config.addLabel('create-clinical-trial', 'Create Clinical Trial')
     config.addLabel('edit-clinical-trial', 'Edit Clinical Trial')
 
+    config.addLabel('webpage', 'Webpage')
+    config.addLabel('title', 'Title')
+    config.addLabel('create-webpage', 'Create Webpage')
+    config.addLabel('edit-webpage', 'Edit Webpage')
+
+    config.addLabel('thesis', 'Thesis')
+    config.addLabel('create-thesis', 'Create Thesis')
+    config.addLabel('edit-thesis', 'Edit Thesis')
+
+    config.addLabel('software', 'Software')
+    config.addLabel('create-software', 'Create Software')
+    config.addLabel('edit-software', 'Edit Software')
+    config.addLabel('version', 'Version')
+
+    config.addLabel('thesis', 'Thesis')
+    config.addLabel('create-thesis', 'Create Thesis')
+    config.addLabel('edit-thesis', 'Edit Thesis')
+
     config.addLabel('preprint', 'Preprint')
     config.addLabel('create-preprint', 'Create Preprint')
     config.addLabel('edit-preprint', 'Edit Preprint')
@@ -40,6 +58,25 @@ export default {
     config.addLabel('report', 'Report')
     config.addLabel('create-report', 'Create Report')
     config.addLabel('edit-report', 'Edit Report')
+
+    config.addLabel('data-publication', 'Data Publication')
+    config.addLabel('create-data-publication', 'Create Data Publication')
+    config.addLabel('edit-data-publication', 'Edit Data Publication')
+    config.addLabel('dataTitle', 'Title')
+    config.addLabel('accessionId', 'Accession ID')
+    config.addLabel('arkId', 'ARK ID')
+    config.addLabel('archiveId', 'Archive ID')
+
+    config.addLabel('periodical', 'Periodical')
+    config.addLabel('create-periodical', 'Create Periodical')
+    config.addLabel('edit-periodical', 'Edit Periodical')
+
+    config.addLabel('patent', 'Patent')
+    config.addLabel('create-patent', 'Create Patent')
+    config.addLabel('inventors', 'Inventors')
+    config.addLabel('assignee', 'Assignee')
+    config.addLabel('patentNumber', 'Patent Number')
+    config.addLabel('patentCountry', 'Patent Country')
 
     // person labels
     config.addLabel('person', 'Person')
@@ -66,6 +103,7 @@ export default {
     config.addLabel('email', 'Email')
     config.addLabel('uri', 'Website')
     config.addLabel('members', 'Members')
+    config.addLabel('edit-members', 'Edit Members')
 
     config.addLabel('edit-book', 'Edit Book')
     config.addLabel('add-book', 'Add Book')

@@ -51,9 +51,10 @@ export default class ContribsListComponent extends NodeComponent {
     let contentEl = $$('div').addClass('se-content')
     entityIds.forEach((entityId, index) => {
       let entity = db.get(entityId)
+      let short = entity.type === 'organisation'
       contentEl.append(
         $$('span').addClass('se-contrib').html(
-          entityRenderers[entity.type](entity.id, db)
+          entityRenderers[entity.type](entity.id, db, { short })
         )
       )
       if (index < entityIds.length - 1) {

@@ -141,7 +141,6 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-// ${article-title}. ${authors} (${year}). ${source}. ${doi}
 function preprintRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
@@ -178,8 +177,107 @@ function preprintRenderer($$, entityId, entityDb) {
 }
 
 
-// person-group[person-group-type='author'], source, year, month?, day?, publisher-name, publisher-loc?, pub-id[pub-id-type='isbn']?
-// ${authors} (${year}). <emphasis>${source}<emphasis>
+function patentRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  // We render an annotated chapter title here:
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+  if (entity.inventors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.inventors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.assignee) {
+    fragments.push(' ', entity.assignee, ',')
+  }
+  if (entity.patentNumber) {
+    fragments.push(' ', entity.patentNumber)
+  }
+  if (entity.patentCountry) {
+    fragments.push(' (', entity.patentCountry, ').')
+  }
+  return fragments
+}
+
+function dataPublicationRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  // We render an annotated chapter title here:
+  if (entity.dataTitle) {
+    fragments.push(
+      _renderHTML($$, entity.dataTitle),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.source) {
+    fragments.push(' ', entity.assignee, ',')
+  }
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+  return fragments
+}
+
+// ${article-title}. ${author} (${string-date}). <emphasis> ${source}<emphasis>, p. $(first-page}-$(last-page}
+function periodicalRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  // We render an annotated chapter title here:
+  if (entity.articleTitle) {
+    fragments.push(
+      _renderHTML($$, entity.articleTitle),
+      '. '
+    )
+  }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb)
+    )
+  }
+  if (entity.year) {
+    fragments.push(' (', entity.year, ').')
+  }
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.assignee),
+      ','
+    )
+  }
+
+  if (entity.fpage && entity.lpage) {
+    fragments.push(
+      ' p. ',
+      entity.fpage,
+      '-',
+      entity.lpage,
+      '.'
+    )
+  }
+
+  return fragments
+}
+
+
 function reportRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
@@ -203,7 +301,6 @@ function reportRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-// ${article-title}. ${authors} (${year}). ${conf-name}, ${source}, $(fpage?}-${lpage}. ${doi}
 function conferenceProceedingRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
@@ -301,8 +398,12 @@ export default {
   'clinical-trial': _delegate(clinicalTrialRenderer),
   'preprint': _delegate(preprintRenderer),
   'report': _delegate(reportRenderer),
-  'organisation': _delegate(organisationRenderer)
+  'organisation': _delegate(organisationRenderer),
+  'patent': _delegate(patentRenderer),
+  'data-publication': _delegate(dataPublicationRenderer),
+  'periodical': _delegate(periodicalRenderer)
 }
+
 
 /*
   Helpers

@@ -41,6 +41,25 @@ export default {
     config.addLabel('create-report', 'Create Report')
     config.addLabel('edit-report', 'Edit Report')
 
+    config.addLabel('data-publication', 'Data Publication')
+    config.addLabel('create-data-publication', 'Create Data Publication')
+    config.addLabel('edit-data-publication', 'Edit Data Publication')
+    config.addLabel('dataTitle', 'Title')
+    config.addLabel('accessionId', 'Accession ID')
+    config.addLabel('arkId', 'ARK ID')
+    config.addLabel('archiveId', 'Archive ID')
+
+    config.addLabel('periodical', 'Periodical')
+    config.addLabel('create-periodical', 'Create Periodical')
+    config.addLabel('edit-periodical', 'Edit Periodical')
+
+    config.addLabel('patent', 'Patent')
+    config.addLabel('create-patent', 'Create Patent')
+    config.addLabel('inventors', 'Inventors')
+    config.addLabel('assignee', 'Assignee')
+    config.addLabel('patentNumber', 'Patent Number')
+    config.addLabel('patentCountry', 'Patent Country')
+
     // person labels
     config.addLabel('person', 'Person')
     config.addLabel('orcid', 'ORCID')
@@ -66,6 +85,7 @@ export default {
     config.addLabel('email', 'Email')
     config.addLabel('uri', 'Website')
     config.addLabel('members', 'Members')
+    config.addLabel('edit-members', 'Edit Members')
 
     config.addLabel('edit-book', 'Edit Book')
     config.addLabel('add-book', 'Add Book')

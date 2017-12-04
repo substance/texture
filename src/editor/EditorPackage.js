@@ -384,10 +384,10 @@ export default {
     config.addLabel('structure', 'Structure')
     config.addLabel('article-info', 'Article Information')
 
+
     // Add labels for panels
     config.addLabel('toc', 'Table of Contents')
     config.addLabel('article-record', 'Article Record')
-    config.addLabel('affiliations', 'Manage Affiliations')
     config.addLabel('contributors', 'Authors & Contributors')
     config.addLabel('translations', 'Translations')
     config.addLabel('pub-data', 'Publication Data')

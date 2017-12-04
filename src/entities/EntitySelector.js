@@ -51,9 +51,13 @@ export default class EntitySelector extends Component {
           ` Create ${labelProvider.getLabel(item._create)}`
         )
       } else {
-        option = $$('div').addClass('se-option').html(
-          entityRenderers[item.type](item.id, db)
+        option = $$('div').addClass('se-option').append(
+          $$('span').html(
+            entityRenderers[item.type](item.id, db)
+          ),
+          ` (${this.getLabel(item.type)})`
         )
+
       }
       option.on('click', this._confirmSelected.bind(this, index))
       if (this.state.selectedIndex === index) {

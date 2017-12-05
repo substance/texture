@@ -88,6 +88,7 @@ JournalArticle.schema = {
   articleTitle: { type: 'text', optional: true },
   source: { type: 'string', optional: true },
   volume: { type: 'string', optional: true },
+  issue: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },

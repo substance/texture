@@ -86,8 +86,8 @@ Example for `<contrib-group>`:
 
 
 ```xml
-<contrib-group content-type="authors" equal-contrib="yes">
-  <contrib contrib-type="author">
+<contrib-group content-type="authors">
+  <contrib contrib-type="author" equal-contrib="yes">
     <name>
       <surname>Church</surname><given-names>Deanna M.</given-names>
     </name>
@@ -179,6 +179,48 @@ object-id[pub-id-type=doi]?, caption?, graphic
   <graphic xlink:href="images/fig1"/>
 </fig>
 ```
+
+
+## Reproducible Figure
+
+*NOTE: This is considered an extension to JATS for reproducible elements. It is not supported by Texture natively.*
+
+Spec for `fig[fig-type=repro-fig]`:
+
+```
+object-id[pub-id-type=doi]?, caption?, alternatives
+```
+
+Example for `fig[fig-type=repro-fig]`
+
+```xml
+<fig id="f1" fig-type="repro-fig">
+  <caption>
+    <title>Biodiversity on Mars</title>
+    <p>Lorem ipsum</p>
+  </caption>
+  <alternatives>
+    <code specific-use="source" language="mini"><![CDATA[plot([11,98])]]></code>
+    <code specific-use="output" language="json"><![CDATA[{"execution_time": 1, "value_type": "plot-ly", "value": {} }]]></code>
+  </alternatives>
+</fig>
+```
+
+
+Spec for `fig > alternatives`:
+
+```
+code[specific-use=source], code[specific-use=output]
+```
+
+Spec for `fig > alternatives > code`:
+
+```
+#PCDATA
+```
+
+
+
 
 ## Media
 

@@ -17,6 +17,7 @@ export default class FnGroupConverter {
   }
 
   export(dom) {
+    // Remove empty fn-groups
     dom.findAll('fn-group').forEach(fnGroup => {
       if(fnGroup.children.length === 0) {
         fnGroup.getParent().removeChild(fnGroup)

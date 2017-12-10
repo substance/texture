@@ -1,4 +1,4 @@
-import { Component, isNil, without } from 'substance'
+import { Component, isNil, without, FontAwesomeIcon as Icon } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
 import EditEntity from './EditEntity'
@@ -101,6 +101,10 @@ export default class EditRelationship extends Component {
           let node = db.get(entityId)
           tableEl.append(
             $$('tr').addClass('se-entry').append(
+              $$('td').addClass('se-handle').append(
+                $$(Icon, {icon: 'fa-reorder'}).addClass('se-icon')
+              )
+              .on('mousedown', this._activateRowDrag.bind(this, entityId)),
               $$('td').addClass('se-name').html(
                 entityRenderers[node.type](node.id, db)
               ),
@@ -111,7 +115,11 @@ export default class EditRelationship extends Component {
                 $$('button').append('Edit').on('click', this._onEdit.bind(this, entityId)),
                 $$('button').append('Delete').on('click', this._onDelete.bind(this, entityId))
               )
-            )
+            ).ref(entityId)
+            .on('dragend', this._onDragend.bind(this, entityId))
+            .on('dragover', this._onDragOver.bind(this, entityId))
+            .on('dragstart', this._onDrag)
+            .on('dragenter', this._onDrag)
           )
         })
         contentEl.append(tableEl)
@@ -173,6 +181,15 @@ export default class EditRelationship extends Component {
     })
   }
 
+  _onReorder(entityId, target) {
+    let entityIds = this.state.entityIds
+    const currentPos = entityIds.indexOf(entityId)
+    const targetPos = entityIds.indexOf(target)
+    entityIds[currentPos] = target
+    entityIds[targetPos] = entityId
+    this.extendState({entityIds: entityIds})
+  }
+
   _onAddNew(entityId) {
     let entityIds = this.state.entityIds.concat([ entityId ])
     this.extendState({
@@ -202,5 +219,29 @@ export default class EditRelationship extends Component {
       mode: undefined,
       modeProps: undefined
     })
+  }
+
+  _activateRowDrag(entityId) {
+    let rowEl = this.refs[entityId]
+    rowEl.attr('draggable', true)
+  }
+
+  _deactivateRowDrag(entityId) {
+    let rowEl = this.refs[entityId]
+    rowEl.attr('draggable', false)
+  }
+
+  _onDragend(entityId) {
+    this._deactivateRowDrag(entityId)
+    this._onReorder(entityId, this.currentTarget)
+    this.currentTarget = null
+  }
+
+  _onDragOver(entityId) {
+    this.currentTarget = entityId
+  }
+
+  _onDrag(e) {
+    e.stopPropagation()
   }
 }

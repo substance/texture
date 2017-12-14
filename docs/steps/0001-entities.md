@@ -21,7 +21,7 @@ In Texture Alpha 4 we are introducing entity editing. The overall goal is to ide
   - It should be possible to use explanatory interfaces with the mouse that don't need special knowledge, but we should allow for macro/power modes
   - In addition to explicit create button, we allow entering `+Michael Aufreiter;Oliver Buchtala` which then is interpreted as an insertion. Instead of the dropdown for selecting the UI would display insertion options `Insert 2 Persons: Michael Aufreiter and Oliver Buchtala`
   Insert 2 Organisations: Michael Aufreiter and Oliver Buchtala
-- To request prefilling of +<DOI>
+- To request prefilling of form fields (e.g. for references) you could type `+<DOI>` and then get presented a prefilled form
 
 
 ## Implementation

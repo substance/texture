@@ -1,11 +1,20 @@
 ## 2017-12-15
 
-Discuss Entity Editing prototype and feedback from first tests. Decide on next topic to work on. Define tasks to work on before next Texture meetup.
+Call with PKP, eLife, Erudit to discuss entity editing prototype after first round of tests. Decide on next topic to work on. Define tasks to work on before next Texture meetup.
 
 Notes:
 
-TODO: Add meeting notes, decisions
+- Focus on fast manual editing first, before we connect Crossref etc.
+- Work on regular testable milestones
+- No efforts to run entity databases at publishers, better invest into improving Crossref data
 
-Attendees:
+Next actions Substance:
 
-TODO: Add attendees
+- Finishing Alpha 4 iteration (entities, figures, lists)
+- Iterate on UI for entity editing (provide UI mockups)
+- Provide ideas (mockups) for QC mode
+
+Next actions Contributors:
+
+- Review latest [JATS4M spec](https://github.com/substance/texture/blob/master/docs/JATS4M.md)
+- Adjust Word-Converter to produce JATS4M output

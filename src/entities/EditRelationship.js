@@ -242,6 +242,8 @@ export default class EditRelationship extends Component {
   }
 
   _onDrag(e) {
+    // Stop event propagation for the dragstart and dragenter
+    // events, to avoid editor drag manager errors
     e.stopPropagation()
   }
 }

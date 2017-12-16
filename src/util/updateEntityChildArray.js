@@ -1,22 +1,21 @@
-import { without } from 'substance'
-
 export default function updateEntityChildArray(editorSession, nodeId, tagName, attribute, oldEntityIds, newEntityIds) {
 
   editorSession.transaction(tx => {
     let node = tx.get(nodeId)
 
-    let addedEntityIds = without(newEntityIds, ...oldEntityIds)
-    let removedEntityIds = without(oldEntityIds, ...newEntityIds)
+    // TODO: do we still want to calculate the difference here?
+    // if so we should keep in mind drag and drop resorting case
 
-    // Remove removedEntities
-    removedEntityIds.forEach(entityId => {
+    // Remove old entities
+    oldEntityIds.forEach(entityId => {
       let entityRefNode = node.find(`${tagName}[${attribute}=${entityId}]`)
       node.removeChild(entityRefNode)
       // Remove it completely
       tx.delete(entityRefNode.id)
     })
-    // Create addedEntities
-    addedEntityIds.forEach(entityId => {
+
+    // Create new entities
+    newEntityIds.forEach(entityId => {
       let entityRefNode = node.find(`${tagName}[${attribute}=${entityId}]`)
 
       if (!entityRefNode) {
@@ -31,6 +30,7 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
       }
       node.appendChild(entityRefNode)
     })
+
     tx.setSelection(null)
   })
 }

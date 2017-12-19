@@ -5,9 +5,8 @@ export default class TableManager extends AbstractResourceManager {
   constructor(context) {
     super(context.editorSession,
       'table',
-      context.configurator.getLabelGenerator('tables')
+      context.labelGenerator
     )
-
     this._updateLabels()
   }
 

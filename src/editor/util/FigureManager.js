@@ -5,9 +5,8 @@ export default class FigureManager extends AbstractResourceManager {
   constructor(context) {
     super(context.editorSession,
       'fig',
-      context.configurator.getLabelGenerator('figures')
+      context.labelGenerator
     )
-
     this._updateLabels()
   }
 

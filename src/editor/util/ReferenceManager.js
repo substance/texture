@@ -4,7 +4,7 @@ import AbstractCitationManager from './AbstractCitationManager'
 export default class ReferenceManager extends AbstractCitationManager {
 
   constructor(context) {
-    super(context.editorSession, 'bibr', context.configurator.getLabelGenerator('references'))
+    super(context.editorSession, 'bibr', context.labelGenerator)
 
     this.entityDbSession = context.entityDbSession
     if(!this.entityDbSession) {

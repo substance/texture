@@ -23,7 +23,7 @@ export default class RefListComponent extends NodeComponent {
   }
 
   render($$) {
-    const referenceManager = this.context.editorSession.getManager('references')
+    const referenceManager = this.context.referenceManager
     let el = $$('div').addClass('sc-ref-list')
     let bibliography = referenceManager.getBibliography()
     let entityIds = bibliography.map(e => e.state.entity.id)
@@ -80,7 +80,7 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _updateReferences(entityIds) {
-    this.context.editorSession.getManager('references').updateReferences(entityIds)
+    this.context.referenceManager.updateReferences(entityIds)
     this.setState({
       edit: false
     })

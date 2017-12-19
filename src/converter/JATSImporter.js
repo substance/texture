@@ -8,6 +8,7 @@ import { j2r } from './j2r'
 import custom from './custom'
 
 import { createEntityDbSession } from '../entities'
+import pubMetaDbSeed from '../../data/pubMetaDbSeed'
 
 /*
   Goal:
@@ -18,9 +19,9 @@ import { createEntityDbSession } from '../entities'
 export default class JATSImporter extends EventEmitter {
 
   import(xml, context = {}) {
-    let entityDb = context.entityDb
-    if (!entityDb) {
-      entityDb = createEntityDbSession().getDocument()
+    let pubMetaDb = context.pubMetaDb
+    if (!pubMetaDb) {
+      pubMetaDb = createEntityDbSession(pubMetaDbSeed).getDocument()
     }
 
     let state = {
@@ -35,7 +36,7 @@ export default class JATSImporter extends EventEmitter {
         'validate-texture-jats': [],
       },
       hasErrored: false,
-      entityDb
+      pubMetaDb
     }
 
     if (isString(xml)) {
@@ -104,7 +105,7 @@ export default class JATSImporter extends EventEmitter {
   _createAPI(state, channel) {
     const self = this
     let api = {
-      entityDb: state.entityDb,
+      pubMetaDb: state.pubMetaDb,
       error(data) {
         self._error(state, channel, data)
       }

@@ -70,7 +70,7 @@ export default class EditRelationship extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-edit-relationship')
-    let db = this.context.db
+    let db = this.context.pubMetaDbSession.getDocument()
     let mode = this.state.mode
 
     if (mode) {
@@ -163,7 +163,7 @@ export default class EditRelationship extends Component {
   }
 
   _onEdit(entityId) {
-    let db = this.context.db
+    let db = this.context.pubMetaDbSession.getDocument()
     let node = db.get(entityId)
     this.extendState({
       mode: 'edit',

@@ -4,7 +4,7 @@ import { renderEntity } from '../../entities/entityHelpers'
 export default class RefComponent extends NodeComponent {
 
   render($$) {
-    const db = this.context.db
+    const db = this.context.pubMetaDbSession.getDocument()
     const ref = this.props.node
     let label = _getReferenceLabel(ref)
     let entityHtml = renderEntity(_getEntity(ref, db))

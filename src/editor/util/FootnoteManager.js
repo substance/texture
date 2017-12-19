@@ -4,8 +4,7 @@ import { getPos } from './nodeHelpers'
 export default class FootnoteManager extends AbstractCitationManager {
 
   constructor(context) {
-    super(context.editorSession, 'fn', context.configurator.getLabelGenerator('footnotes'))
-
+    super(context.editorSession, 'fn', context.labelGenerator)
     // compute initial labels
     this._updateLabels()
   }

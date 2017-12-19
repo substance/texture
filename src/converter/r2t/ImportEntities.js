@@ -37,14 +37,14 @@ export default class ImportEntities {
   import(dom, api) {
     let refs = dom.findAll('ref')
 
-    const entityDb = api.entityDb
+    const pubMetaDb = api.pubMetaDb
 
     refs.forEach((refEl) => {
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error('Could not find <element-citation>')
       } else {
-        const entityId = _createBibliographicEntity(elementCitation, entityDb)
+        const entityId = _createBibliographicEntity(elementCitation, pubMetaDb)
         if(entityId) {
           // const bibRefs = dom.findAll('xref[ref-type=bibr][rid=' + refEl.id + ']')
           // bibRefs.forEach(bibRef => {
@@ -66,14 +66,14 @@ export default class ImportEntities {
     // reuse of that existing record.
 
     // This pulls out all aff elements and creates organisation entities from it.
-    _extractOrganisations(dom, entityDb)
-    _extractAuthors(dom, entityDb, 'authors')
-    _extractAuthors(dom, entityDb, 'editors')
+    _extractOrganisations(dom, pubMetaDb)
+    _extractAuthors(dom, pubMetaDb, 'authors')
+    _extractAuthors(dom, pubMetaDb, 'editors')
   }
 
   export(dom, api) {
-    const entityDb = api.entityDb
-    const entities = entityDb.getNodes()
+    const pubMetaDb = api.pubMetaDb
+    const entities = pubMetaDb.getNodes()
     const entityIds = Object.keys(entities)
 
     let back = dom.find('back')
@@ -81,7 +81,7 @@ export default class ImportEntities {
 
     entityIds.forEach(entityId => {
       const entity = entities[entityId].toJSON()
-      const ref = _createRefElement({dom, entity, entityDb})
+      const ref = _createRefElement({dom, entity, pubMetaDb})
       if (ref) refList.append(ref)
     })
 
@@ -91,7 +91,7 @@ export default class ImportEntities {
   }
 }
 
-function _createBibliographicEntity(elementCitation/*, entityDb*/) {
+function _createBibliographicEntity(elementCitation/*, pubMetaDb*/) {
   let pubType = elementCitation.attr('publication-type')
 
   if (!pubType) throw new Error('element-citation[publication-type] is mandatory')
@@ -108,7 +108,7 @@ function _createBibliographicEntity(elementCitation/*, entityDb*/) {
   // HACK: we assume that the entity already exists in the db
 
   // Extract authors and editors from element-citation
-  // const persons = _extractPersons(elementCitation, entityDb)
+  // const persons = _extractPersons(elementCitation, pubMetaDb)
   // let record = {
   //   id: elementCitation.getParent().id,
   //   type,
@@ -118,19 +118,19 @@ function _createBibliographicEntity(elementCitation/*, entityDb*/) {
 
   // Extract all other attributes for a certain pub-type
   // and populate entity record
-  // const nodes = _getEntityNodes(type, entityDb)
+  // const nodes = _getEntityNodes(type, pubMetaDb)
   // nodes.forEach(node => {
   //   const prop = _getElementCitationProperty(node, elementCitation)
   //   if(prop) record[node] = prop
   // })
   // // Create record
-  // const entity = entityDb.create(record)
+  // const entity = pubMetaDb.create(record)
 
   return entityId
 }
 
 // Creating ref element from given entity record
-function _createRefElement({dom, entity, entityDb}) {
+function _createRefElement({dom, entity, pubMetaDb}) {
   // We don't want to convert person entities to XML
   // we want to create name element for each person reference
   if(entity.type === 'person') return
@@ -163,7 +163,7 @@ function _createRefElement({dom, entity, entityDb}) {
     }
   })
 
-  _injectPersons({elementCitation, entity, entityDb})
+  _injectPersons({elementCitation, entity, pubMetaDb})
 
   ref.append(elementCitation)
   return ref
@@ -171,7 +171,7 @@ function _createRefElement({dom, entity, entityDb}) {
 
 // Extract persons from element citation, create entites
 // and returns their ids grouped by person type
-// function _extractPersons(elementCitation, entityDb) {
+// function _extractPersons(elementCitation, pubMetaDb) {
 //   let result = {
 //     author: [],
 //     editor: []
@@ -194,7 +194,7 @@ function _createRefElement({dom, entity, entityDb}) {
 //       const prefix = person.find('prefix')
 //       if(prefix) record.prefix = prefix.text()
 //
-//       // let entity = entityDb.create(record)
+//       // let entity = pubMetaDb.create(record)
 //       // // We may get a random entityId
 //       // entityId = entity.id
 //       // if(result[type]) result[type].push(entityId)
@@ -205,14 +205,14 @@ function _createRefElement({dom, entity, entityDb}) {
 // }
 
 // Injecting person-groups to element-citation
-// persons pulled out from entityDb
-function _injectPersons({elementCitation, entity, entityDb}) {
+// persons pulled out from pubMetaDb
+function _injectPersons({elementCitation, entity, pubMetaDb}) {
   const authors = entity.authors
   const authorsEl = elementCitation.createElement('person-group')
     .attr('person-group-type', 'author')
 
   authors.forEach(author => {
-    authorsEl.append(_createNameElement(authorsEl, entityDb.get(author).toJSON()))
+    authorsEl.append(_createNameElement(authorsEl, pubMetaDb.get(author).toJSON()))
   })
 
   const editors = entity.editors
@@ -220,7 +220,7 @@ function _injectPersons({elementCitation, entity, entityDb}) {
     .attr('person-group-type', 'editor')
 
   editors.forEach(editor => {
-    editorsEl.append(_createNameElement(editorsEl, entityDb.get(editor).toJSON()))
+    editorsEl.append(_createNameElement(editorsEl, pubMetaDb.get(editor).toJSON()))
   })
 
   elementCitation.append(
@@ -252,9 +252,9 @@ function _createNameElement(el, person) {
 /* HELPERS */
 
 // Returns list of entity properties
-// function _getEntityNodes(type, entityDb) {
-//   const entityDbSchema = entityDb.getSchema()
-//   const nodeClass = entityDbSchema.getNodeClass(type)
+// function _getEntityNodes(type, pubMetaDb) {
+//   const pubMetaDbSchema = pubMetaDb.getSchema()
+//   const nodeClass = pubMetaDbSchema.getNodeClass(type)
 //   return Object.keys(nodeClass.schema)
 // }
 //
@@ -286,7 +286,7 @@ function _createNameElement(el, person) {
   <uri>http://www.settles-young.com</uri>
 </aff>
 */
-function _extractOrganisations(dom/*, entityDb*/) {
+function _extractOrganisations(dom/*, pubMetaDb*/) {
   let affs = dom.findAll('article-meta > aff')
 
   affs.forEach(aff => {
@@ -309,7 +309,7 @@ function _extractOrganisations(dom/*, entityDb*/) {
     // }
 
     // HACK: disable auto-creation for now
-    // entityDb.create(node)
+    // pubMetaDb.create(node)
     aff.setAttribute('rid', entityId)
     aff.empty()
   })
@@ -327,7 +327,7 @@ function _extractOrganisations(dom/*, entityDb*/) {
   </contrib>
 </contrib-group>
 */
-function _extractAuthors(dom, entityDb, type) {
+function _extractAuthors(dom, pubMetaDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
   if (!contribGroup) return []
   let contribs = contribGroup.findAll('contrib')
@@ -339,7 +339,7 @@ function _extractAuthors(dom, entityDb, type) {
     // We now need to translate internal aff ids to global entity ids
     // let orgIds = affIds.map()
     let entityId = _getTextFromDOM(contrib, 'contrib-id[contrib-id-type=entity]')
-    if (!entityDb.get(entityId)) {
+    if (!pubMetaDb.get(entityId)) {
       throw new Error(`Entity ${entityId} not found in db.`)
     }
     // let node = {
@@ -351,8 +351,8 @@ function _extractAuthors(dom, entityDb, type) {
     //   suffix: _getTextFromDOM(contrib, 'suffix'),
     //   affiliations: orgIds
     // }
-    // if (!entityId || !entityDb.get(entityId)) {
-    //   node = entityDb.create(node)
+    // if (!entityId || !pubMetaDb.get(entityId)) {
+    //   node = pubMetaDb.create(node)
     // }
     // Assign id if not present
     contrib.setAttribute('rid', entityId)

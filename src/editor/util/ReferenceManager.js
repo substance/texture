@@ -4,11 +4,11 @@ import AbstractCitationManager from './AbstractCitationManager'
 export default class ReferenceManager extends AbstractCitationManager {
 
   constructor(context) {
-    super(context.editorSession, 'bibr', context.configurator.getLabelGenerator('references'))
+    super(context.editorSession, 'bibr', context.labelGenerator)
 
-    this.entityDbSession = context.entityDbSession
-    if(!this.entityDbSession) {
-      throw new Error("'entityDbSession' is mandatory.")
+    this.pubMetaDbSession = context.pubMetaDbSession
+    if(!this.pubMetaDbSession) {
+      throw new Error("'pubMetaDbSession' is mandatory.")
     }
 
     // compute initial labels
@@ -43,7 +43,7 @@ export default class ReferenceManager extends AbstractCitationManager {
 
   _getReferences() {
     const doc = this.editorSession.getDocument()
-    const entityDb = this.entityDbSession.getDocument()
+    const db = this.pubMetaDbSession.getDocument()
 
     let refs = doc.findAll('ref-list > ref')
     // TODO: determine order and label based on citations in the document
@@ -53,7 +53,7 @@ export default class ReferenceManager extends AbstractCitationManager {
         ref.state = {}
       }
       if (!ref.state.entity) {
-        ref.state.entity = entityDb.get(refId)
+        ref.state.entity = db.get(refId)
       }
       return ref
     })

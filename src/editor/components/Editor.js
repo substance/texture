@@ -2,13 +2,49 @@ import { ScrollPane, Layout, WorkflowPane } from 'substance'
 import { AbstractWriter } from '../util'
 import TOCProvider from '../util/TOCProvider'
 import ContextSection from './ContextSection'
+import ReferenceManager from '../util/ReferenceManager'
+import FigureManager from '../util/FigureManager'
+import TableManager from '../util/TableManager'
+import FootnoteManager from '../util/FootnoteManager'
 
 export default class Editor extends AbstractWriter {
+
+  constructor(...args) {
+    super(...args)
+    let editorSession = this.props.editorSession
+
+    this.referenceManager = new ReferenceManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('references'),
+      editorSession,
+      pubMetaDbSession: this.props.pubMetaDbSession
+    })
+    this.figureManager = new FigureManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('figures'),
+      editorSession
+    })
+    this.tableManager = new TableManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('tables'),
+      editorSession
+    })
+    this.footnoteManager = new FootnoteManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('footnotes'),
+      editorSession
+    })
+  }
 
   didMount() {
     super.didMount()
     this.handleActions({
       'switchContext': this._switchContext
+    })
+  }
+
+  getChildContext() {
+    return Object.assign({}, super.getChildContext(), {
+      referenceManager: this.referenceManager,
+      figureManager: this.figureManager,
+      tableManager: this.tableManager,
+      footnoteManager: this.footnoteManager
     })
   }
 

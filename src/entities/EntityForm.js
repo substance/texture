@@ -74,7 +74,7 @@ export default class EntityForm extends Component {
   }
 
   _getSchema() {
-    let schema = this.context.db.schema
+    let schema = this.context.pubMetaDbSession.getDocument().schema
     return schema.getNodeSchema(this.props.node.type)
   }
 }

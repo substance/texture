@@ -33,9 +33,9 @@ export default class CreateEntity extends Component {
     let newNode = Object.assign({}, this.refs.form.getData(), {
       type: this.props.type
     })
-    let dbSession = this.context.dbSession
+    let pubMetaDbSession = this.context.pubMetaDbSession
     let node
-    dbSession.transaction((tx) => {
+    pubMetaDbSession.transaction((tx) => {
       node = tx.create(newNode)
     })
     this.send('created', node.id)

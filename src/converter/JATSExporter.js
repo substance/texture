@@ -2,6 +2,7 @@ import { t2r } from './r2t'
 import { validateXMLSchema } from 'substance'
 import { JATS4R } from '../article'
 import { createEntityDbSession } from '../entities'
+import pubMetaDbSeed from '../../data/pubMetaDbSeed'
 
 export default class JATSExporter {
   /*
@@ -9,17 +10,17 @@ export default class JATSExporter {
     following JATS4R guidelines.
   */
   export(dom, context = {}) {
-    let entityDb = context.entityDb
+    let pubMetaDb = context.pubMetaDb
 
-    if (!entityDb) {
-      entityDb = createEntityDbSession().getDocument()
+    if (!pubMetaDb) {
+      pubMetaDb = createEntityDbSession(pubMetaDbSeed).getDocument()
     }
 
     let state = {
       hasErrored: false,
       errors: [],
       dom,
-      entityDb
+      pubMetaDb
     }
     const api = this._createAPI(state)
 
@@ -40,7 +41,7 @@ export default class JATSExporter {
       error(data) {
         self._error(state, data)
       },
-      entityDb: state.entityDb
+      pubMetaDb: state.pubMetaDb
     }
     return api
   }

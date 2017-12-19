@@ -6,6 +6,7 @@ import JATSImporter from './converter/JATSImporter'
 import JATSImportDialog from './converter/JATSImportDialog'
 import JATSExporter from './converter/JATSExporter'
 import createEntityDbSession from './entities/createEntityDbSession'
+import pubMetaDbSeed from '../data/pubMetaDbSeed'
 
 /*
   Texture Component
@@ -17,11 +18,7 @@ export default class Texture extends Component {
     super(parent, props)
     this.configurator = new TextureConfigurator()
     this.configurator.import(EditorPackage)
-
-    // TODO: we need to see where the best place is for the entityDb
-    this.entityDbSession = createEntityDbSession()
-    this.entityDb = this.entityDbSession.getDocument()
-
+    this.pubMetaDbSession = createEntityDbSession(pubMetaDbSeed)
   }
 
   getInitialState() {
@@ -39,20 +36,13 @@ export default class Texture extends Component {
       },
       exporter: {
         export(dom) {
-          const entityDb = this.entityDb
+          const pubMetaDb = this.pubMetaDbSession.getDocument()
           let jatsExporter = new JATSExporter()
-          return jatsExporter.export(dom, { entityDb })
+          return jatsExporter.export(dom, { pubMetaDb })
         }
       },
       configurator: this.configurator,
-      entityDb: this.entityDb,
-      entityDbSession: this.entityDbSession,
-      // TODO: Update components to use entityDb, entityDbSession instead.
-      get db() {
-        console.warn('DEPRECATED: use context.entityDb instead')
-        return this.entityDb
-      },
-      dbSession: this.entityDbSession
+      pubMetaDbSession: this.pubMetaDbSession,
     }
   }
 
@@ -88,7 +78,8 @@ export default class Texture extends Component {
       el.append(
         $$(EditorPackage.Editor, {
           documentId: this.props.documentId,
-          editorSession: this.state.editorSession
+          editorSession: this.state.editorSession,
+          pubMetaDbSession: this.pubMetaDbSession
         })
       )
     } else if (this.state.importerErrors) {
@@ -117,7 +108,7 @@ export default class Texture extends Component {
       const doctype = dom.getDoctype()
       if (doctype.publicId !== 'TextureJATS 1.1') {
         let jatsImporter = new JATSImporter()
-        let result = jatsImporter.import(dom, { entityDb: this.entityDb })
+        let result = jatsImporter.import(dom, { pubMetaDb: this.pubMetaDbSession.getDocument() })
         if (result.hasErrored) {
           console.error('Could not transform to TextureJATS')
           this.setState({
@@ -130,7 +121,7 @@ export default class Texture extends Component {
       const doc = importer.importDocument(dom)
 
       window.doc = doc
-      window.entityDb = this.entityDb
+      window.pubMetaDbSession = this.pubMetaDbSession
       // create editor session
       const editorSession = new EditorSession(doc, {
         configurator: configurator,

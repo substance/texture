@@ -31,9 +31,9 @@ export default class EditEntity extends Component {
   }
 
   _save() {
-    let dbSession = this.context.dbSession
+    let pubMetaDbSession = this.context.pubMetaDbSession
     let newProps = this.refs.form.getData()
-    dbSession.transaction((tx) => {
+    pubMetaDbSession.transaction((tx) => {
       tx.updateNode(this.props.node.id, newProps)
     })
     this.send('closeModal')

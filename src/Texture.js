@@ -78,7 +78,8 @@ export default class Texture extends Component {
       el.append(
         $$(EditorPackage.Editor, {
           documentId: this.props.documentId,
-          editorSession: this.state.editorSession
+          editorSession: this.state.editorSession,
+          pubMetaDbSession: this.pubMetaDbSession
         })
       )
     } else if (this.state.importerErrors) {

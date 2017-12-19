@@ -31,7 +31,7 @@ export default class ContribsListComponent extends NodeComponent {
     let el = $$('div').addClass(this.getClassNames())
     let entityIds = this._getEntityIds()
     let labelProvider = this.context.labelProvider
-    let db = this.context.entityDb
+    let db = this.context.pubMetaDbSession.getDocument()
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {

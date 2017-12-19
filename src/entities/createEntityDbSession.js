@@ -3,15 +3,14 @@ import {
   EditorSession
 } from 'substance'
 import EntitiesPackage from './EntitiesPackage'
-import entityDbSeed from '../../data/entityDbSeed'
 
-export default function createEntityDbSession() {
+export default function createEntityDbSession(seed) {
   let configurator = new Configurator()
   configurator.import(EntitiesPackage)
   let entityDb = configurator.createDocument()
 
   // Seed entityDb
-  entityDbSeed.forEach(node => {
+  seed.forEach(node => {
     entityDb.create(node)
   })
 

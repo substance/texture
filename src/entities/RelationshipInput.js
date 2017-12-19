@@ -27,7 +27,7 @@ export default class RelationshipInput extends Component {
   render($$) {
     let el = $$('div').addClass('sc-relationship-input')
     let entities = this.state.entityIds
-    let db = this.context.db
+    let db = this.context.pubMetaDbSession.getDocument()
 
     if (this.state.edit) {
       el.append(

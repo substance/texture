@@ -41,7 +41,7 @@ export default class EntitySelector extends Component {
 
   _renderOptions($$) {
     let el = $$('div').addClass('se-options').ref('options')
-    let db = this.context.db
+    let db = this.context.pubMetaDbSession.getDocument()
     let labelProvider = this.context.labelProvider
     this.state.results.forEach((item, index) => {
       let option
@@ -102,7 +102,7 @@ export default class EntitySelector extends Component {
   // TODO: For the current prorotype we use a naive regexp based filtering,
   // but we should allow full text search here
   _findEntities(searchString) {
-    let db = this.context.db
+    let db = this.context.pubMetaDbSession.getDocument()
     let availableEntities = []
     this.props.targetTypes.forEach(targetType => {
       availableEntities = availableEntities.concat(

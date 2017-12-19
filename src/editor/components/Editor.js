@@ -16,7 +16,7 @@ export default class Editor extends AbstractWriter {
     this.referenceManager = new ReferenceManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('references'),
       editorSession,
-      entityDbSession: this.props.entityDbSession
+      pubMetaDbSession: this.props.pubMetaDbSession
     })
     this.figureManager = new FigureManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('figures'),

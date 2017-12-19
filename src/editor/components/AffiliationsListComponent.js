@@ -16,7 +16,7 @@ export default class AffiliationsList extends NodeComponent {
 
   _getOrgansiations() {
     let organisations = []
-    let db = this.context.entityDb
+    let db = this.context.pubMetaDbSession.getDocument()
     let authors = this._getAuthors()
     authors.forEach(authorId => {
       let author = db.get(authorId)
@@ -30,7 +30,7 @@ export default class AffiliationsList extends NodeComponent {
 
   render($$) {
     let el = $$('div').addClass('sc-affiliations-list')
-    let db = this.context.entityDb
+    let db = this.context.pubMetaDbSession.getDocument()
     let entityIds = this._getOrgansiations()
 
     let contentEl = $$('div').addClass('se-content')

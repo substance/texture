@@ -1,7 +1,7 @@
 import { ScrollPane, Layout, WorkflowPane } from 'substance'
 import { AbstractWriter } from '../util'
 import TOCProvider from '../util/TOCProvider'
-import ContextSection from './ContextSection'
+import TOC from './TOC'
 import ReferenceManager from '../util/ReferenceManager'
 import FigureManager from '../util/FigureManager'
 import TableManager from '../util/TableManager'
@@ -59,16 +59,27 @@ export default class Editor extends AbstractWriter {
     let el = $$('div').addClass('sc-editor')
     el.append(
       this._renderMainSection($$),
-      this._renderContextSection($$)
+      this._renderContextPane($$)
     )
     return el
   }
 
-  _renderContextSection($$) {
-    const configurator = this.getConfigurator()
-    return $$(ContextSection, {
-      panelsSpec: configurator.getPanelsSpec()
-    }).ref('contextSection')
+  _renderContextPane($$) {
+    let el = $$('div').addClass('se-context-pane')
+    if (this.props.contextComponent) {
+      el.append(
+        $$('div').addClass('se-context-pane-content').append(
+          this.props.contextComponent
+        )
+      )
+    } else {
+      el.append(
+        $$('div').addClass('se-context-pane-content').append(
+          $$(TOC)
+        )
+      )
+    }
+    return el
   }
 
   _renderMainSection($$) {
@@ -170,6 +181,5 @@ export default class Editor extends AbstractWriter {
     let bodyContent = doc.article.find('body-content')
     return bodyContent.id
   }
-
 
 }

@@ -22,10 +22,20 @@
   height: 100%;
 }
 
-.sc-editor > .sc-context-section {
+.sc-editor > .se-context-pane {
   flex: 0 2 400px;
   background: #fafbfc;
   border-left: 1px solid #e1e4e8;
+  position: relative;
+}
+
+.sc-editor .se-context-pane > .se-context-pane-content {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow: auto;
 }
 
 .sc-editor > .se-main-section {

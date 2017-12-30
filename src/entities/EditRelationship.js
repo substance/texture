@@ -118,6 +118,7 @@ export default class EditRelationship extends Component {
             ).ref(entityId)
             .on('dragend', this._onDragend.bind(this, entityId))
             .on('dragover', this._onDragOver.bind(this, entityId))
+            .on('dragleave', this._onDragLeave.bind(this, entityId))
             .on('dragstart', this._onDrag)
             .on('dragenter', this._onDrag)
           )
@@ -235,10 +236,22 @@ export default class EditRelationship extends Component {
     this._deactivateRowDrag(entityId)
     this._onReorder(entityId, this.currentTarget)
     this.currentTarget = null
+    this.currentVisualTarget = null
   }
 
   _onDragOver(entityId) {
-    this.currentTarget = entityId
+    if(this.currentVisualTarget !== entityId) {
+      this.currentTarget = entityId
+      this.currentVisualTarget = entityId
+      let rowEl = this.refs[entityId]
+      rowEl.addClass('sm-drop')
+    }
+  }
+
+  _onDragLeave(entityId) {
+    this.currentVisualTarget = null
+    let rowEl = this.refs[entityId]
+    rowEl.removeClass('sm-drop')
   }
 
   _onDrag(e) {

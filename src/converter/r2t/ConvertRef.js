@@ -38,8 +38,8 @@ export default class ConvertRef {
     refs.forEach(refEl => {
       let entity = entityDb.get(refEl.attr('rid'))
       let elementCitation
-      switch(elementCitation.attr('publication-type')) {
-        case 'journal':
+      switch(entity.type) {
+        case 'journal-article':
           elementCitation = JournalArticleConverter.export($$, entity, entityDb)
           break;
         case 'book':

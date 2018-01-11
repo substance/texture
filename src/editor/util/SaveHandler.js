@@ -15,6 +15,7 @@ export default class SaveHandler {
         console.error(result.errors)
         throw new Error('Could not export JATS document')
       }
+      console.info(result.dom.getNativeElement())
       let xml = result.dom.serialize()
       // console.info('Exported XML', result.dom.getNativeElement())
       // console.info('Exported XML', xml)

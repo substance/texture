@@ -28,6 +28,8 @@ export default class Texture extends Component {
   }
 
   getChildContext() {
+    let pubMetaDbSession = this.pubMetaDbSession
+    let pubMetaDb = pubMetaDbSession.getDocument()
     return {
       xmlStore: {
         readXML: this.props.readXML,
@@ -35,7 +37,6 @@ export default class Texture extends Component {
       },
       exporter: {
         export(dom) {
-          const pubMetaDb = this.pubMetaDbSession.getDocument()
           let jatsExporter = new JATSExporter()
           return jatsExporter.export(dom, { pubMetaDb })
         }

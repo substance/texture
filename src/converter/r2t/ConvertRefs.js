@@ -31,7 +31,7 @@ export default class ConvertRef {
   }
 
   export(dom, api) {
-    let $$ = dom.createElement
+    let $$ = dom.createElement.bind(dom)
     let refs = dom.findAll('ref')
     const pubMetaDb = api.pubMetaDb
 

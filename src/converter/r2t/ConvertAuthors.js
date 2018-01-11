@@ -16,8 +16,14 @@ export default class ConvertAuthors {
   }
 
   export(dom, api) {
-    const $$ = dom.createElement
+    const $$ = dom.createElement.bind(dom)
     const pubMetaDb = api.pubMetaDb
+
+    // NOTE: We must export authors and editors first, as otherwise we'd be
+    // loosing the relationship of internal aff ids and global org ids.
+    _exportPersons($$, dom, pubMetaDb, 'author')
+    _exportPersons($$, dom, pubMetaDb, 'editor')
+
     const affs = dom.findAll('article-meta > aff')
     affs.forEach(aff => {
       let entity = pubMetaDb.get(aff.attr('rid'))
@@ -27,8 +33,7 @@ export default class ConvertAuthors {
       aff.innerHTML = newAffEl.innerHTML
       aff.removeAttr('rid')
     })
-    _exportPersons(dom, pubMetaDb, 'author')
-    _exportPersons(dom, pubMetaDb, 'editor')
+
   }
 }
 
@@ -47,8 +52,9 @@ function _exportPersons($$, dom, pubMetaDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
   let contribs = contribGroup.findAll('contrib')
   contribs.forEach(contrib => {
+    let node = pubMetaDb.get(contrib.attr('rid'))
     // TODO: detect group authors and use special GroupAuthorConverter
-    let newContribEl = PersonConverter.export($$, contrib, pubMetaDb)
+    let newContribEl = PersonConverter.export($$, node, pubMetaDb)
     contrib.innerHTML = newContribEl.innerHTML
     contrib.removeAttr('rid')
   })

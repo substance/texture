@@ -1,11 +1,13 @@
 import { forEach } from 'substance'
 
+/*
+  <aff> -> Organisation
+*/
 export const OrganisationConverter = {
 
   import(el, pubMetaDb) {
     // Use existing record when possible
     let entity = _findOrganisation(el, pubMetaDb)
-
     if (!entity) {
       let node = {
         type: 'organisation',
@@ -28,27 +30,35 @@ export const OrganisationConverter = {
     } else {
       console.warn(`Skipping duplicate: ${entity.name}, ${entity.division1} already exists.`)
     }
-
-    // TODO: import affiliations
     return entity.id
   },
 
-  export(/*$$, node*/) {
-    throw new Error('Not implemented yet')
+  export($$, node) {
+    let el = $$('aff')
+    el.append(_createTextElement($$, node.name, 'institution', { 'content-type': 'orgname'}))
+    el.append(_createTextElement($$, node.division1, 'institution', { 'content-type': 'orgdiv1'}))
+    el.append(_createTextElement($$, node.division2, 'institution', { 'content-type': 'orgdiv2'}))
+    el.append(_createTextElement($$, node.division3, 'institution', { 'content-type': 'orgdiv3'}))
+    el.append(_createTextElement($$, node.street, 'addr-line', { 'content-type': 'street-address'}))
+    el.append(_createTextElement($$, node.addressComplements, 'addr-line', { 'content-type': 'complements'}))
+    el.append(_createTextElement($$, node.city, 'city'))
+    el.append(_createTextElement($$, node.state, 'state'))
+    el.append(_createTextElement($$, node.postalCode, 'postal-code'))
+    el.append(_createTextElement($$, node.country, 'country'))
+    el.append(_createTextElement($$, node.phone, 'phone'))
+    el.append(_createTextElement($$, node.fax, 'fax'))
+    el.append(_createTextElement($$, node.email, 'email'))
+    el.append(_createTextElement($$, node.uri, 'uri', { 'content-type': 'link'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'uri', {'content-type': 'entity'}))
+    return el
   }
 }
 
 /*
-  Used for authors and editors, which may have affiliation etc. assigned
+  <contrib> -> Person
 
-  <contrib contrib-type="author">
-    <name>
-      <surname>Schaffelhofer</surname><given-names>Stefan</given-names>
-    </name>
-    <xref ref-type="aff" rid="aff1"/>
-    <xref ref-type="aff" rid="aff2"/>
-    <contrib-id contrib-id-type="entity">person-1</contrib-id>
-  </contrib>
+  Used for authors and editors, which may have affiliation etc. assigned
 */
 export const PersonConverter = {
 
@@ -61,29 +71,59 @@ export const PersonConverter = {
         givenNames: _getText(el, 'given-names'),
         surname: _getText(el, 'surname'),
         prefix: _getText(el, 'prefix'),
-        suffix: _getText(el, 'suffix')
+        suffix: _getText(el, 'suffix'),
+        affiliations: []
       }
+
+      let dom = el.ownerDocument
+      let xrefs = el.findAll('xref[ref-type=aff]')
+      xrefs.forEach(xref => {
+        // NOTE: we need to query the document for the internal aff id to
+        // access the global entityId for the organisation
+        let affEl = dom.find(`#${xref.attr('rid')}`)
+        if (affEl) {
+          node.affiliations.push(affEl.attr('rid'))
+        } else {
+          console.warn(`Could not find aff#${xref.attr('rid')} in document`)
+        }
+      })
+
       entity = pubMetaDb.create(node)
     } else {
       console.warn(`Skipping duplicate: ${entity.givenNames} ${entity.surname} already exists.`)
     }
-    // TODO: import affiliations
+
     return entity.id
   },
 
   export($$, node) {
     let el = $$('contrib')
     el.append(
-      _createTextElement($$, node.givenNames, 'given-names'),
-      _createTextElement($$, node.surname, 'surname'),
-      _createTextElement($$, node.prefix, 'prefix'),
-      _createTextElement($$, node.suffix, 'suffix')
+      $$('name').append(
+        _createTextElement($$, node.givenNames, 'given-names'),
+        _createTextElement($$, node.surname, 'surname'),
+        _createTextElement($$, node.prefix, 'prefix'),
+        _createTextElement($$, node.suffix, 'suffix')
+      )
     )
+    let dom = el.ownerDocument
+    node.affiliations.forEach(organisationId => {
+      // NOTE: we need to query the document for the internal aff record to
+      // map from the global entityId to the local affId
+      let affEl = dom.find(`aff[rid=${organisationId}]`)
+      el.append(
+        $$('xref').attr('ref-type', 'aff').attr('rid', affEl.id)
+      )
+    })
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'contrib-id', {'contrib-id-type': 'entity'}))
     return el
   }
 }
 
 /*
+  <name> -> Person
+
   Used within <ref>: <name> elements within <person-group>
 */
 export const RefPersonConverter = {
@@ -114,6 +154,9 @@ export const RefPersonConverter = {
   }
 }
 
+/*
+  <element-citation publication-type="journal"> -> JournalArticle
+*/
 export const JournalArticleConverter = {
 
   import(el, pubMetaDb) {
@@ -151,7 +194,7 @@ export const JournalArticleConverter = {
     let el = $$('element-citation').attr('publication-type', 'journal')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
-
+    // Regular properties
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -161,10 +204,16 @@ export const JournalArticleConverter = {
     el.append(_createTextElement($$, node.fpage, 'fpage'))
     el.append(_createTextElement($$, node.lpage, 'lpage'))
     el.append(_createTextElement($$, node.pageRange, 'page-range'))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
 
+/*
+  <element-citation publication-type="book"> -> Book
+*/
 export const BookConverter = {
 
   import(el, pubMetaDb) {
@@ -206,7 +255,7 @@ export const BookConverter = {
     let el = $$('element-citation').attr('publication-type', 'journal')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
-
+    // Regular properties
     el.append(_createHTMLElement($$, node.chapterTitle, 'chapter-title'))
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createTextElement($$, node.edition, 'edition'))
@@ -223,6 +272,8 @@ export const BookConverter = {
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     el.append(_createTextElement($$, node.isbn, 'pub-id', {'pub-id-type': 'isbn'}))
     el.append(_createTextElement($$, node.pmid, 'pub-id', {'pub-id-type': 'pmid'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }

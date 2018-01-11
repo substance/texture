@@ -143,7 +143,7 @@ institution[content-type=orgdiv1]?, institution[content-type=orgdiv2]?,
 institution[content-type=orgdiv3]?, addr-line[content-type=street-address]?,
 addr-line[content-type=complements]?,
 city?, state?, postal-code?, country?,
-phone?, fax?, email?, uri?
+phone?, fax?, email?, uri[content-type=link]?
 ```
 
 Example:

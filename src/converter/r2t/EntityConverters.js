@@ -296,26 +296,29 @@ function _findCitation(el, pubMetaDb) {
 }
 
 function _findPerson(el, pubMetaDb) {
-  let personIds = pubMetaDb.find({ type: 'person' })
-  let surname = _getText(el, 'surname')
-  let givenNames = _getText(el, 'givenNames')
-  let entityId = personIds.find(personId => {
-    let person = pubMetaDb.get(personId)
-    return person.surname === surname && person.givenNames === givenNames
-  })
-  return pubMetaDb.get(entityId)
+  let entity = pubMetaDb.get(_getText(el, 'contrib-id[contrib-id-type=entity]'))
+  if (!entity) {
+    let persons = pubMetaDb.find({ type: 'person' }).map(id => pubMetaDb.get(id))
+    let surname = _getText(el, 'surname')
+    let givenNames = _getText(el, 'givenNames')
+    entity = persons.find(p => {
+      return p.surname === surname && p.givenNames === givenNames
+    })
+  }
+  return entity
 }
 
 function _findOrganisation(el, pubMetaDb) {
-  let organisationIds = pubMetaDb.find({ type: 'organisation' })
-  let name = _getText(el, 'institution[content-type=orgname]')
-  let division1 = _getText(el, 'institution[content-type=orgdiv1]')
-
-  let entityId = organisationIds.find(orgId => {
-    let org = pubMetaDb.get(orgId)
-    return org.name === name && org.division1 === division1
-  })
-  return pubMetaDb.get(entityId)
+  let entity = pubMetaDb.get(_getText(el, 'uri[content-type=entity]'))
+  if (!entity) {
+    let organisations = pubMetaDb.find({ type: 'organisation' }).map(id => pubMetaDb.get(id))
+    let name = _getText(el, 'institution[content-type=orgname]')
+    let division1 = _getText(el, 'institution[content-type=orgdiv1]')
+    entity = organisations.find(o => {
+      return o.name === name && o.division1 === division1
+    })
+  }
+  return entity
 }
 
 function _getText(rootEl, selector) {

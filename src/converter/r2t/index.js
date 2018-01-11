@@ -4,12 +4,10 @@ import WrapAbstractContent from './WrapAbstractContent'
 import WrapBodyContent from './WrapBodyContent'
 import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
-
 import UpdateDocType from './UpdateDocType'
 import FnGroupConverter from './FnGroupConverter'
 import ConvertCodeCell from './ConvertCodeCell'
 import ConvertReproFig from './ConvertReproFig'
-import ImportEntities from './ImportEntities'
 import ConvertFig from './ConvertFig'
 import ConvertTableWrap from './ConvertTableWrap'
 import ConvertContentLoc from './ConvertContentLoc'
@@ -67,7 +65,6 @@ export {
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
-  ImportEntities,
   ConvertSigBlock,
   FnGroupConverter,
   ConvertReproFig,

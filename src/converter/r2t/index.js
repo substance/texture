@@ -17,6 +17,8 @@ import ConvertSigBlock from './ConvertSigBlock'
 import UnifyPublicationHistory from './UnifyPublicationHistory'
 import NormalizeHistoryDates from './NormalizeHistoryDates'
 import PruneEmptyElements from './PruneEmptyElements'
+import ConvertRef from './ConvertRef'
+import ConvertAuthors from './ConvertAuthors'
 
 // ATTENTION: the order of converters is critical,
 // as some of them need to do insert nodes in a way
@@ -26,7 +28,8 @@ const trafos = [
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
-  ImportEntities,
+  ConvertRef, // extracts publication entities
+  ConvertAuthors, // extracts org and person entities
   ConvertSigBlock,
   FnGroupConverter,
   ConvertReproFig,

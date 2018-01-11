@@ -1,8 +1,6 @@
 import { t2r } from './r2t'
 import { validateXMLSchema } from 'substance'
 import { JATS4R } from '../article'
-import { createEntityDbSession } from '../entities'
-import pubMetaDbSeed from '../../data/pubMetaDbSeed'
 
 export default class JATSExporter {
   /*
@@ -13,7 +11,7 @@ export default class JATSExporter {
     let pubMetaDb = context.pubMetaDb
 
     if (!pubMetaDb) {
-      pubMetaDb = createEntityDbSession(pubMetaDbSeed).getDocument()
+      throw new Error('context.pubMetaDb is missing')
     }
 
     let state = {

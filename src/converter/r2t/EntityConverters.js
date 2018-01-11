@@ -1,14 +1,97 @@
 import { forEach } from 'substance'
 
+export const OrganisationConverter = {
+
+  import(el, pubMetaDb) {
+    // Use existing record when possible
+    let entity = _findOrganisation(el, pubMetaDb)
+
+    if (!entity) {
+      let node = {
+        type: 'organisation',
+        name: _getText(el, 'institution[content-type=orgname]'),
+        division1: _getText(el, 'institution[content-type=orgdiv1]'),
+        division2: _getText(el, 'institution[content-type=orgdiv2]'),
+        division3: _getText(el, 'institution[content-type=orgdiv3]'),
+        street: _getText(el, 'addr-line[content-type=street-address]'),
+        addressComplements: _getText(el, 'addr-line[content-type=complements]'),
+        city: _getText(el, 'city'),
+        state: _getText(el, 'state'),
+        postalCode: _getText(el, 'postal-code'),
+        country: _getText(el, 'country'),
+        phone: _getText(el, 'phone'),
+        fax: _getText(el, 'fax'),
+        email: _getText(el, 'email'),
+        uri: _getText(el, 'uri[content-type=link]')
+      }
+      entity = pubMetaDb.create(node)
+    } else {
+      console.warn(`Skipping duplicate: ${entity.name}, ${entity.division1} already exists.`)
+    }
+
+    // TODO: import affiliations
+    return entity.id
+  },
+
+  export(/*$$, node*/) {
+    throw new Error('Not implemented yet')
+  }
+}
+
+/*
+  Used for authors and editors, which may have affiliation etc. assigned
+
+  <contrib contrib-type="author">
+    <name>
+      <surname>Schaffelhofer</surname><given-names>Stefan</given-names>
+    </name>
+    <xref ref-type="aff" rid="aff1"/>
+    <xref ref-type="aff" rid="aff2"/>
+    <contrib-id contrib-id-type="entity">person-1</contrib-id>
+  </contrib>
+*/
+export const PersonConverter = {
+
+  import(el, pubMetaDb) {
+    // Use existing record when possible
+    let entity = _findPerson(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'person',
+        givenNames: _getText(el, 'given-names'),
+        surname: _getText(el, 'surname'),
+        prefix: _getText(el, 'prefix'),
+        suffix: _getText(el, 'suffix')
+      }
+      entity = pubMetaDb.create(node)
+    } else {
+      console.warn(`Skipping duplicate: ${entity.givenNames} ${entity.surname} already exists.`)
+    }
+    // TODO: import affiliations
+    return entity.id
+  },
+
+  export($$, node) {
+    let el = $$('contrib')
+    el.append(
+      _createTextElement($$, node.givenNames, 'given-names'),
+      _createTextElement($$, node.surname, 'surname'),
+      _createTextElement($$, node.prefix, 'prefix'),
+      _createTextElement($$, node.suffix, 'suffix')
+    )
+    return el
+  }
+}
+
 /*
   Used within <ref>: <name> elements within <person-group>
 */
 export const RefPersonConverter = {
 
-  import(el, entityDb) {
+  import(el, pubMetaDb) {
     // Use existing record when possible
-    let entityId = _findPerson(el, entityDb)
-    if (!entityId) {
+    let entity = _findPerson(el, pubMetaDb)
+    if (!entity) {
       let node = {
         type: 'person',
         givenNames: _getText(el, 'given-names'),
@@ -16,9 +99,9 @@ export const RefPersonConverter = {
         prefix: _getText(el, 'prefix'),
         suffix: _getText(el, 'suffix'),
       }
-      entityId = entityDb.create(node).id
+      entity = pubMetaDb.create(node)
     }
-    return entityId
+    return entity.id
   },
 
   export($$, node) {
@@ -33,9 +116,9 @@ export const RefPersonConverter = {
 
 export const JournalArticleConverter = {
 
-  import(el, entityDb) {
-    let entityId = _findCitation(el)
-    if (!entityId) {
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
       let node = {
         type: 'journal-article',
         articleTitle: _getHTML(el, 'article-title'),
@@ -53,21 +136,21 @@ export const JournalArticleConverter = {
       }
       // Extract authors
       node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
-        return RefPersonConverter.import(el, entityDb)
+        return RefPersonConverter.import(el, pubMetaDb)
       })
       // Extract editors
       node.editors = el.findAll('person-group[person-group-type=editor] > name').map(el => {
-        return RefPersonConverter.import(el, entityDb)
+        return RefPersonConverter.import(el, pubMetaDb)
       })
-      entityId = entityDb.create(node).id
+      entity = pubMetaDb.create(node)
     }
-    return entityId
+    return entity.id
   },
 
-  export($$, node, entityDb) {
+  export($$, node, pubMetaDb) {
     let el = $$('element-citation').attr('publication-type', 'journal')
-    el.append(_exportPersonGroup($$, node.authors, 'author', entityDb))
-    el.append(_exportPersonGroup($$, node.editors, 'editor', entityDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
 
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
@@ -84,11 +167,11 @@ export const JournalArticleConverter = {
 
 export const BookConverter = {
 
-  import(el, entityDb) {
-    let entityId = _findCitation(el)
-    if (!entityId) {
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
       let node = {
-        type: 'journal-article',
+        type: 'book',
         chapterTitle: _getHTML(el, 'chapter-title'),
         source: _getText(el, 'source'),
         edition: _getText(el, 'edition'),
@@ -108,21 +191,21 @@ export const BookConverter = {
       }
       // Extract authors
       node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
-        return RefPersonConverter.import(el, entityDb)
+        return RefPersonConverter.import(el, pubMetaDb)
       })
       // Extract editors
       node.editors = el.findAll('person-group[person-group-type=editor] > name').map(el => {
-        return RefPersonConverter.import(el, entityDb)
+        return RefPersonConverter.import(el, pubMetaDb)
       })
-      entityId = entityDb.create(node).id
+      entity = pubMetaDb.create(node)
     }
-    return entityId
+    return entity.id
   },
 
-  export($$, node, entityDb) {
+  export($$, node, pubMetaDb) {
     let el = $$('element-citation').attr('publication-type', 'journal')
-    el.append(_exportPersonGroup($$, node.authors, 'author', entityDb))
-    el.append(_exportPersonGroup($$, node.editors, 'editor', entityDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
 
     el.append(_createHTMLElement($$, node.chapterTitle, 'chapter-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -144,11 +227,11 @@ export const BookConverter = {
   }
 }
 
-function _exportPersonGroup($$, persons, personGroupType, entityDb) {
+function _exportPersonGroup($$, persons, personGroupType, pubMetaDb) {
   if (persons > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
     persons.forEach(entityId => {
-      let person = entityDb.get(entityId)
+      let person = pubMetaDb.get(entityId)
       el.append(
         RefPersonConverter.export($$, person)
       )
@@ -156,19 +239,32 @@ function _exportPersonGroup($$, persons, personGroupType, entityDb) {
   }
 }
 
-function _findCitation(el) {
-  return _getText(el, 'pub-id[pub-id-type=entity]')
+function _findCitation(el, pubMetaDb) {
+  let entityId = _getText(el, 'pub-id[pub-id-type=entity]')
+  return pubMetaDb.get(entityId)
 }
 
-function _findPerson(el, entityDb) {
-  let personIds = entityDb.find({ type: 'person' })
+function _findPerson(el, pubMetaDb) {
+  let personIds = pubMetaDb.find({ type: 'person' })
   let surname = _getText(el, 'surname')
   let givenNames = _getText(el, 'givenNames')
   let entityId = personIds.find(personId => {
-    let person = entityDb.get(personId)
+    let person = pubMetaDb.get(personId)
     return person.surname === surname && person.givenNames === givenNames
   })
-  return entityId
+  return pubMetaDb.get(entityId)
+}
+
+function _findOrganisation(el, pubMetaDb) {
+  let organisationIds = pubMetaDb.find({ type: 'organisation' })
+  let name = _getText(el, 'institution[content-type=orgname]')
+  let division1 = _getText(el, 'institution[content-type=orgdiv1]')
+
+  let entityId = organisationIds.find(orgId => {
+    let org = pubMetaDb.get(orgId)
+    return org.name === name && org.division1 === division1
+  })
+  return pubMetaDb.get(entityId)
 }
 
 function _getText(rootEl, selector) {

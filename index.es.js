@@ -9,6 +9,3 @@ export { default as Texture } from './src/Texture'
 export { default as EditorPackage } from './src/editor/EditorPackage'
 export { default as RichTextInput } from './src/rich-text-input/RichTextInput'
 export { default as TextureConfigurator } from './src/editor/util/TextureConfigurator'
-
-// TODO: This is just a temporary tool, we should remove soon
-export { default as pubMetaDbSeed } from './data/pubMetaDbSeed'

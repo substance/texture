@@ -9,31 +9,28 @@
       <title-group>
         <article-title>Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
       </title-group>
-      <contrib-group content-type="authors">
-        <contrib contrib-type="author">
+      <contrib-group content-type="author">
+        <contrib contrib-type="person">
           <name>
             <surname>Schaffelhofer</surname><given-names>Stefan</given-names>
           </name>
           <xref ref-type="aff" rid="aff1"/>
           <xref ref-type="aff" rid="aff2"/>
-          <contrib-id contrib-id-type="entity">person-1</contrib-id>
         </contrib>
-        <contrib contrib-type="author">
+        <contrib contrib-type="person">
           <name>
             <surname>Scherberger</surname><given-names>Hansjörg</given-names>
           </name>
           <xref ref-type="aff" rid="aff1"/>
           <xref ref-type="aff" rid="aff3"/>
-          <contrib-id contrib-id-type="entity">person-7</contrib-id>
         </contrib>
       </contrib-group>
-      <contrib-group content-type="editors">
-        <contrib contrib-type="editor">
+      <contrib-group content-type="editor">
+        <contrib contrib-type="person">
           <name>
             <surname>Kastner</surname><given-names>Sabine</given-names>
           </name>
           <xref ref-type="aff" rid="aff1"/>
-          <contrib-id contrib-id-type="entity">person-2</contrib-id>
         </contrib>
       </contrib-group>
       <aff id="aff1">
@@ -41,27 +38,23 @@
         <institution content-type="orgdiv1">Neurobiology Laboratory</institution>
         <city>Göttingen</city>
         <country>Germany</country>
-        <uri content-type="entity">organisation-1</uri>
       </aff>
       <aff id="aff2">
         <institution content-type="orgname">The Rockefeller University</institution>
         <institution content-type="orgdiv1">Laboratory of Neural Systems</institution>
         <city>New York</city>
         <country>United States</country>
-        <uri content-type="entity">organisation-2</uri>
       </aff>
       <aff id="aff3">
         <institution content-type="orgname">University of Göttingen</institution>
         <institution content-type="orgdiv1">Department of Biology</institution>
         <city>Göttingen</city>
         <country>Germany</country>
-        <uri content-type="entity">organisation-3</uri>
       </aff>
       <aff id="aff4">
         <institution content-type="orgname">Princeton University</institution>
         <city>Princeton</city>
         <country>United States</country>
-        <uri content-type="entity">organisation-4</uri>
       </aff>
       <!-- Publication date, as required by SciELO -->
       <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
@@ -261,15 +254,15 @@
           <person-group person-group-type="author">
             <name>
               <surname>Baumann</surname>
-              <given-names>MA</given-names>
+              <given-names>Markus A.</given-names>
             </name>
             <name>
               <surname>Fluet</surname>
-              <given-names>MC</given-names>
+              <given-names>Marie-Christine</given-names>
             </name>
             <name>
               <surname>Scherberger</surname>
-              <given-names>H</given-names>
+              <given-names>Hansjörg</given-names>
             </name>
           </person-group>
           <year>2009</year>

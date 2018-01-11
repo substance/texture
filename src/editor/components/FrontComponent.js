@@ -30,7 +30,7 @@ export default class FrontComponent extends Component {
     el.append(titleGroupEl)
 
     // contrib-group content-type="authors"
-    let authorsContribGroup = articleMeta.find('contrib-group[content-type=authors]')
+    let authorsContribGroup = articleMeta.find('contrib-group[content-type=author]')
     if (authorsContribGroup) {
       let authorsListEl = $$(this.getComponent('authors-list'), {
         node: authorsContribGroup
@@ -43,7 +43,7 @@ export default class FrontComponent extends Component {
     }
 
     // contrib-group content-type="editors"
-    let editorsContribGroup = articleMeta.find('contrib-group[content-type=editors]')
+    let editorsContribGroup = articleMeta.find('contrib-group[content-type=editor]')
     if (editorsContribGroup) {
       let editorsListEl = $$(this.getComponent('editors-list'), {
         node: editorsContribGroup

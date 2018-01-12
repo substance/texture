@@ -1,6 +1,6 @@
 import { JournalArticleConverter, BookConverter,
   ClinicalTrialConverter, ConferenceProceedingConverter, DataPublicationConverter,
-  PatentConverter, PereodicalConverter, PreprintConverter, ReportConverter
+  PatentConverter, PereodicalConverter, PreprintConverter, ReportConverter, SoftwareConverter
 } from './EntityConverters'
 
 /*
@@ -44,6 +44,9 @@ export default class ConvertRef {
             break;
           case 'report':
             entityId = ReportConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'software':
+            entityId = SoftwareConverter.import(elementCitation, pubMetaDb)
             break;
           default:
             throw new Error('publication type not found.')
@@ -89,6 +92,9 @@ export default class ConvertRef {
           break;
         case 'report':
           elementCitation = ReportConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'software':
+          elementCitation = SoftwareConverter.export($$, entity, pubMetaDb)
           break;
         default:
           throw new Error('publication type not found.')

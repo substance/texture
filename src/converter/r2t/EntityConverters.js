@@ -603,6 +603,52 @@ export const ReportConverter = {
   }
 }
 
+/*
+  <element-citation publication-type="software"> -> Software
+*/
+export const SoftwareConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'software',
+        source: _getText(el, 'source'),
+        version: _getText(el, 'version'),
+        publisherLoc: _getText(el, 'publisher-loc'),
+        publisherName: _getText(el, 'publisher-name'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day'),
+        doi: _getText(el, 'pub-id[pub-id-type=doi]')
+      }
+      // Extract authors
+      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node, pubMetaDb) {
+    let el = $$('element-citation').attr('publication-type', 'software')
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    // Regular properties
+    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.version, 'version'))
+    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createTextElement($$, node.publisherName, 'publisher-name'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
+
 function _exportPersonGroup($$, persons, personGroupType, pubMetaDb) {
   if (persons > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)

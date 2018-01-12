@@ -355,7 +355,7 @@ export const ConferenceProceedingConverter = {
     let el = $$('element-citation').attr('publication-type', 'confproc')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
-    el.append(_createHTMLElement($$, node.chapterTitle, 'article-title'))
+    el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createTextElement($$, node.edition, 'conf-name'))
     el.append(_createTextElement($$, node.year, 'year'))
@@ -415,6 +415,56 @@ export const DataPublicationConverter = {
     el.append(_createTextElement($$, node.accessionId, 'pub-id', {'pub-id-type': 'accession'}))
     el.append(_createTextElement($$, node.arkId, 'pub-id', {'pub-id-type': 'ark'}))
     el.append(_createTextElement($$, node.archiveId, 'pub-id', {'pub-id-type': 'archive'}))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
+
+/*
+  <element-citation publication-type="perediocal"> -> Pereodical
+*/
+export const PereodicalConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'perediocal',
+        articleTitle: _getHTML(el, 'article-title'),
+        source: _getText(el, 'source'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day'),
+        fpage: _getText(el, 'fpage'),
+        lpage: _getText(el, 'lpage'),
+        pageRange: _getText(el, 'page-range'),
+        volume: _getText(el, 'volume'),
+        doi: _getText(el, 'pub-id[pub-id-type=doi]')
+      }
+      // Extract authors
+      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node, pubMetaDb) {
+    let el = $$('element-citation').attr('publication-type', 'perediocal')
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    // Regular properties
+    el.append(_createHTMLElement($$, node.articleTitle, 'artical-title'))
+    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    el.append(_createTextElement($$, node.fpage, 'fpage'))
+    el.append(_createTextElement($$, node.lpage, 'lpage'))
+    el.append(_createTextElement($$, node.pageRange, 'page-range'))
+    el.append(_createTextElement($$, node.volume, 'volume'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
     el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))

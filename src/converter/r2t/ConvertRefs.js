@@ -1,5 +1,6 @@
-import { JournalArticleConverter, BookConverter, PreprintConverter,
-  ClinicalTrialConverter, ConferenceProceedingConverter, DataPublicationConverter, ReportConverter
+import { JournalArticleConverter, BookConverter,
+  ClinicalTrialConverter, ConferenceProceedingConverter, DataPublicationConverter,
+  PereodicalConverter, PreprintConverter, ReportConverter
 } from './EntityConverters'
 
 /*
@@ -23,9 +24,6 @@ export default class ConvertRef {
           case 'book':
             entityId = BookConverter.import(elementCitation, pubMetaDb)
             break;
-          case 'preprint':
-            entityId = PreprintConverter.import(elementCitation, pubMetaDb)
-            break;
           case 'clinicaltrial':
             entityId = ClinicalTrialConverter.import(elementCitation, pubMetaDb)
             break;
@@ -34,6 +32,12 @@ export default class ConvertRef {
             break;
           case 'data':
             entityId = DataPublicationConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'perediocal':
+            entityId = PereodicalConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'preprint':
+            entityId = PreprintConverter.import(elementCitation, pubMetaDb)
             break;
           case 'report':
             entityId = ReportConverter.import(elementCitation, pubMetaDb)
@@ -62,9 +66,6 @@ export default class ConvertRef {
         case 'book':
           elementCitation = BookConverter.export($$, entity, pubMetaDb)
           break;
-        case 'preprint':
-          elementCitation = PreprintConverter.export($$, entity, pubMetaDb)
-          break;
         case 'clinical-trial':
           elementCitation = ClinicalTrialConverter.export($$, entity, pubMetaDb)
           break;
@@ -73,6 +74,12 @@ export default class ConvertRef {
           break;
         case 'data-publication':
           elementCitation = DataPublicationConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'perediocal':
+          elementCitation = PereodicalConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'preprint':
+          elementCitation = PreprintConverter.export($$, entity, pubMetaDb)
           break;
         case 'report':
           elementCitation = ReportConverter.export($$, entity, pubMetaDb)

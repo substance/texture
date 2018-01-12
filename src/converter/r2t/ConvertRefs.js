@@ -1,5 +1,5 @@
 import { JournalArticleConverter, BookConverter, PreprintConverter,
-  ClinicalTrialConverter, ConferenceProceedingConverter, ReportConverter
+  ClinicalTrialConverter, ConferenceProceedingConverter, DataPublicationConverter, ReportConverter
 } from './EntityConverters'
 
 /*
@@ -31,6 +31,9 @@ export default class ConvertRef {
             break;
           case 'confproc':
             entityId = ConferenceProceedingConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'data':
+            entityId = DataPublicationConverter.import(elementCitation, pubMetaDb)
             break;
           case 'report':
             entityId = ReportConverter.import(elementCitation, pubMetaDb)
@@ -67,6 +70,9 @@ export default class ConvertRef {
           break;
         case 'confproc':
           elementCitation = ConferenceProceedingConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'data':
+          elementCitation = DataPublicationConverter.export($$, entity, pubMetaDb)
           break;
         case 'report':
           elementCitation = ReportConverter.export($$, entity, pubMetaDb)

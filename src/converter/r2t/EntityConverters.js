@@ -321,6 +321,56 @@ export const ClinicalTrialConverter = {
 }
 
 /*
+  <element-citation publication-type="book"> -> Book
+*/
+export const DataPublicationConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'data-publication',
+        dataTitle: _getHTML(el, 'data-title'),
+        source: _getText(el, 'source'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day'),
+        accessionId: _getText(el, 'pub-id[pub-id-type=accession]'),
+        arkId: _getText(el, 'pub-id[pub-id-type=ark]'),
+        archiveId: _getText(el, 'pub-id[pub-id-type=archive]'),
+        doi: _getText(el, 'pub-id[pub-id-type=doi]')
+      }
+      // Extract authors
+      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node, pubMetaDb) {
+    let el = $$('element-citation').attr('publication-type', 'data')
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    // Regular properties
+    el.append(_createHTMLElement($$, node.dataTitle, 'data-title'))
+    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    el.append(_createTextElement($$, node.fpage, 'fpage'))
+    el.append(_createTextElement($$, node.lpage, 'lpage'))
+    el.append(_createTextElement($$, node.accessionId, 'pub-id', {'pub-id-type': 'accession'}))
+    el.append(_createTextElement($$, node.arkId, 'pub-id', {'pub-id-type': 'ark'}))
+    el.append(_createTextElement($$, node.archiveId, 'pub-id', {'pub-id-type': 'archive'}))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
+
+/*
   <element-citation publication-type="preprint"> -> Preprint
 */
 export const PreprintConverter = {

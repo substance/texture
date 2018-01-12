@@ -649,6 +649,94 @@ export const SoftwareConverter = {
   }
 }
 
+/*
+  <element-citation publication-type="thesis"> -> Thesis
+*/
+export const ThesisConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'thesis',
+        articleTitle: _getHTML(el, 'article-title'),
+        publisherLoc: _getText(el, 'publisher-loc'),
+        publisherName: _getText(el, 'publisher-name'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day'),
+        doi: _getText(el, 'pub-id[pub-id-type=doi]')
+      }
+      // Extract authors
+      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node, pubMetaDb) {
+    let el = $$('element-citation').attr('publication-type', 'thesis')
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    // Regular properties
+    el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
+    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createTextElement($$, node.publisherName, 'publisher-name'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
+
+/*
+  <element-citation publication-type="webpage"> -> Webpage
+*/
+export const WebpageConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'webpage',
+        articleTitle: _getHTML(el, 'article-title'),
+        source: _getText(el, 'source'),
+        publisherLoc: _getText(el, 'publisher-loc'),
+        uri: _getText(el, 'uri'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day')
+      }
+      // Extract authors
+      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node, pubMetaDb) {
+    let el = $$('element-citation').attr('publication-type', 'webpage')
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    // Regular properties
+    el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
+    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createTextElement($$, node.uri, 'uri'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
+
 function _exportPersonGroup($$, persons, personGroupType, pubMetaDb) {
   if (persons > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)

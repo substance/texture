@@ -252,7 +252,7 @@ export const BookConverter = {
   },
 
   export($$, node, pubMetaDb) {
-    let el = $$('element-citation').attr('publication-type', 'journal')
+    let el = $$('element-citation').attr('publication-type', 'book')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
     // Regular properties
@@ -281,13 +281,13 @@ export const BookConverter = {
 /*
   <element-citation publication-type="clinicaltrial"> -> Clinical Trial
 */
-export const ClinicaltrialConverter = {
+export const ClinicalTrialConverter = {
 
   import(el, pubMetaDb) {
     let entity = _findCitation(el, pubMetaDb)
     if (!entity) {
       let node = {
-        type: 'clinicaltrial',
+        type: 'clinical-trial',
         articleTitle: _getHTML(el, 'article-title'),
         source: _getText(el, 'source'),
         year: _getText(el, 'year'),

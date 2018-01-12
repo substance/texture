@@ -1,4 +1,4 @@
-import { JournalArticleConverter, BookConverter, PreprintConverter, ClinicaltrialConverter, ReportConverter } from './EntityConverters'
+import { JournalArticleConverter, BookConverter, PreprintConverter, ClinicalTrialConverter, ReportConverter } from './EntityConverters'
 
 /*
   We convert <ref> elements into entities and back
@@ -25,7 +25,7 @@ export default class ConvertRef {
             entityId = PreprintConverter.import(elementCitation, pubMetaDb)
             break;
           case 'clinicaltrial':
-            entityId = ClinicaltrialConverter.import(elementCitation, pubMetaDb)
+            entityId = ClinicalTrialConverter.import(elementCitation, pubMetaDb)
             break;
           case 'report':
             entityId = ReportConverter.import(elementCitation, pubMetaDb)

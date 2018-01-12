@@ -65,13 +65,13 @@ export default class ConvertRef {
         case 'preprint':
           elementCitation = PreprintConverter.export($$, entity, pubMetaDb)
           break;
-        case 'clinicaltrial':
+        case 'clinical-trial':
           elementCitation = ClinicalTrialConverter.export($$, entity, pubMetaDb)
           break;
-        case 'confproc':
+        case 'conference-proceeding':
           elementCitation = ConferenceProceedingConverter.export($$, entity, pubMetaDb)
           break;
-        case 'data':
+        case 'data-publication':
           elementCitation = DataPublicationConverter.export($$, entity, pubMetaDb)
           break;
         case 'report':

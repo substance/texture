@@ -1,4 +1,4 @@
-import { JournalArticleConverter, BookConverter, ReportConverter } from './EntityConverters'
+import { JournalArticleConverter, BookConverter, PreprintConverter, ReportConverter } from './EntityConverters'
 
 /*
   We convert <ref> elements into entities and back
@@ -20,6 +20,9 @@ export default class ConvertRef {
             break;
           case 'book':
             entityId = BookConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'preprint':
+            entityId = PreprintConverter.import(elementCitation, pubMetaDb)
             break;
           case 'report':
             entityId = ReportConverter.import(elementCitation, pubMetaDb)
@@ -47,6 +50,9 @@ export default class ConvertRef {
           break;
         case 'book':
           elementCitation = BookConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'preprint':
+          elementCitation = PreprintConverter.export($$, entity, pubMetaDb)
           break;
         case 'report':
           elementCitation = ReportConverter.export($$, entity, pubMetaDb)

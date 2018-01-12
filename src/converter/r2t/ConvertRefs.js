@@ -1,4 +1,4 @@
-import { JournalArticleConverter, BookConverter } from './EntityConverters'
+import { JournalArticleConverter, BookConverter, ReportConverter } from './EntityConverters'
 
 /*
   We convert <ref> elements into entities and back
@@ -20,6 +20,9 @@ export default class ConvertRef {
             break;
           case 'book':
             entityId = BookConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'report':
+            entityId = ReportConverter.import(elementCitation, pubMetaDb)
             break;
           default:
             throw new Error('publication type not found.')
@@ -44,6 +47,9 @@ export default class ConvertRef {
           break;
         case 'book':
           elementCitation = BookConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'report':
+          elementCitation = ReportConverter.export($$, entity, pubMetaDb)
           break;
         default:
           throw new Error('publication type not found.')

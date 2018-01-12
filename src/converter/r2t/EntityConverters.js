@@ -423,6 +423,51 @@ export const DataPublicationConverter = {
 }
 
 /*
+  <element-citation publication-type="patent"> -> Patent
+*/
+export const PatentConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'patent',
+        articleTitle: _getHTML(el, 'article-title'),
+        assignee: _getText(el, 'collab[type=assignee]'),
+        source: _getText(el, 'source'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day'),
+        patentNumber: _getText(el, 'patent'),
+        patentCountry: _getAttr(el, 'patent', 'country')
+      }
+      // Extract inventors
+      node.inventors = el.findAll('person-group[person-group-type=inventor] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node, pubMetaDb) {
+    let el = $$('element-citation').attr('publication-type', 'patent')
+    el.append(_exportPersonGroup($$, node.inventors, 'inventor', pubMetaDb))
+    // Regular properties
+    el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
+    el.append(_createTextElement($$, node.assignee, 'collab', {'type': 'assignee'}))
+    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    el.append(_createTextElement($$, node.patentNumber, 'patent', {'country': node.patentCountry}))
+    // Store entityId for explicit lookup on next import
+    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
+
+/*
   <element-citation publication-type="perediocal"> -> Pereodical
 */
 export const PereodicalConverter = {
@@ -614,6 +659,15 @@ function _getHTML(rootEl, selector) {
   let match = rootEl.find(selector)
   if (match) {
     return match.innerHTML
+  } else {
+    return ''
+  }
+}
+
+function _getAttr(rootEl, selector, attr) {
+  let match = rootEl.find(selector)
+  if (match) {
+    return match.attr(attr)
   } else {
     return ''
   }

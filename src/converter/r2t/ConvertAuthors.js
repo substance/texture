@@ -13,6 +13,7 @@ export default class ConvertAuthors {
     // Convert contrib elements to person entities
     _importPersons(dom, pubMetaDb, 'author')
     _importPersons(dom, pubMetaDb, 'editor')
+    _importPersons(dom, pubMetaDb, 'inventor')
     _importPersons(dom, pubMetaDb, 'sponsor')
   }
 
@@ -24,6 +25,7 @@ export default class ConvertAuthors {
     // loosing the relationship of internal aff ids and global org ids.
     _exportPersons($$, dom, pubMetaDb, 'author')
     _exportPersons($$, dom, pubMetaDb, 'editor')
+    _exportPersons($$, dom, pubMetaDb, 'inventor')
     _exportPersons($$, dom, pubMetaDb, 'sponsor')
 
     const affs = dom.findAll('article-meta > aff')

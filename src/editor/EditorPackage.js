@@ -65,6 +65,7 @@ import BookCitationPreview from './components/BookCitationPreview'
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
+import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
 
@@ -199,6 +200,11 @@ export default {
       commandGroup: 'insert-block-element'
     })
 
+    config.addCommand('insert-fig', InsertFigureCommand, {
+      nodeType: 'fig',
+      commandGroup: 'insert-figure'
+    })
+
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
     })
@@ -213,6 +219,7 @@ export default {
     config.addLabel('insert-xref-table', 'Table Reference')
     config.addLabel('insert-xref-fn', 'Footnote Reference')
     config.addLabel('insert-disp-quote', 'Blockquote')
+    config.addLabel('insert-fig', 'Figure')
 
     config.addLabel('manuscript-start', 'Manuscript starts here')
     config.addLabel('manuscript-end', 'Manuscript ends here')
@@ -350,7 +357,7 @@ export default {
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
-        commandGroups: ['insert-xref', 'insert-block-element']
+        commandGroups: ['insert-xref', 'insert-block-element', 'insert-figure']
       }
     ])
 

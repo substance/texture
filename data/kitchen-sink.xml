@@ -160,7 +160,7 @@
           <pub-id pub-id-type="entity">book-1</pub-id>
         </element-citation>
       </ref>
-      <!-- <ref id="r2">
+      <ref id="r2">
         <element-citation publication-type="preprint">
           <person-group person-group-type="author">
             <name>
@@ -248,7 +248,7 @@
           <lpage>6448</lpage>
           <page-range>6436-6448</page-range>
         </element-citation>
-      </ref> -->
+      </ref>
       <ref id="r7">
         <element-citation publication-type="journal">
           <person-group person-group-type="author">
@@ -278,7 +278,7 @@
           <pub-id pub-id-type="entity">journal-article-1</pub-id>
         </element-citation>
       </ref>
-      <!-- <ref id="r8">
+      <ref id="r8">
         <element-citation publication-type="patent">
           <person-group person-group-type="inventor">
             <name>
@@ -358,7 +358,7 @@
         </element-citation>
       </ref>
       <ref id="r12">
-        <element-citation publication-type="web">
+        <element-citation publication-type="webpage">
           <person-group person-group-type="author">
             <name>
               <surname>Doe</surname>
@@ -372,7 +372,7 @@
           <publisher-loc>Website publisher location?</publisher-loc>
           <uri>http://example.com/example-page.html</uri>
         </element-citation>
-      </ref> -->
+      </ref>
     </ref-list>
   </back>
 </article>

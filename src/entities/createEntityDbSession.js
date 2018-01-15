@@ -4,7 +4,7 @@ import {
 } from 'substance'
 import EntitiesPackage from './EntitiesPackage'
 
-export default function createEntityDbSession(seed) {
+export default function createEntityDbSession(seed = []) {
   let configurator = new Configurator()
   configurator.import(EntitiesPackage)
   let entityDb = configurator.createDocument()

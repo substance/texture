@@ -61,16 +61,16 @@ Related discussions: #238
 Spec for `<contrib-group>`:
 
 ```
-(contrib[contrib-type=author|group-author])*
+(contrib[contrib-type=person|group])*
 ```
 
-Spec for `<contrib contrib-type="author">`:
+Spec for `<contrib contrib-type="person">`:
 
 ```
 name, xref*
 ```
 
-Spec for `<contrib contrib-type="group-author">`:
+Spec for `<contrib contrib-type="group">`:
 
 ```
 collab
@@ -86,14 +86,14 @@ Example for `<contrib-group>`:
 
 
 ```xml
-<contrib-group content-type="authors">
-  <contrib contrib-type="author" equal-contrib="yes">
+<contrib-group content-type="author">
+  <contrib contrib-type="person" equal-contrib="yes">
     <name>
       <surname>Church</surname><given-names>Deanna M.</given-names>
     </name>
     <xref ref-type="aff" rid="aff1"/>
   </contrib>
-  <contrib contrib-type="group-author" equal-contrib="yes">
+  <contrib contrib-type="group" equal-contrib="yes">
     <collab>
       <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
       <uri content-type="entity">organisation-25</uri>
@@ -122,8 +122,8 @@ Related discussions: #277, #239
 Example:
 
 ```xml
-<contrib-group content-type="editors">
-  <contrib contrib-type="editor">
+<contrib-group content-type="editor">
+  <contrib contrib-type="person">
     <name>
       <surname>Kastner</surname><given-names>Sabine</given-names>
     </name>
@@ -143,7 +143,7 @@ institution[content-type=orgdiv1]?, institution[content-type=orgdiv2]?,
 institution[content-type=orgdiv3]?, addr-line[content-type=street-address]?,
 addr-line[content-type=complements]?,
 city?, state?, postal-code?, country?,
-phone?, fax?, email?, uri?
+phone?, fax?, email?, uri[content-type=link]?
 ```
 
 Example:

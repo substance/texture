@@ -8,7 +8,6 @@ import { j2r } from './j2r'
 import custom from './custom'
 
 import { createEntityDbSession } from '../entities'
-import pubMetaDbSeed from '../../data/pubMetaDbSeed'
 
 /*
   Goal:
@@ -21,7 +20,7 @@ export default class JATSImporter extends EventEmitter {
   import(xml, context = {}) {
     let pubMetaDb = context.pubMetaDb
     if (!pubMetaDb) {
-      pubMetaDb = createEntityDbSession(pubMetaDbSeed).getDocument()
+      pubMetaDb = createEntityDbSession().getDocument()
     }
 
     let state = {

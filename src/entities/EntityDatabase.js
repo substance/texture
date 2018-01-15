@@ -27,9 +27,9 @@ Book.schema = {
   pageRange: { type: 'string', optional: true },
   pageCount: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true},
-  isbn: { type: 'string', optional: true},
-  pmid: { type: 'string', optional: true}
+  doi: { type: 'string', optional: true },
+  isbn: { type: 'string', optional: true },
+  pmid: { type: 'string', optional: true }
 }
 
 export class DataPublication extends BibliographicEntry {}

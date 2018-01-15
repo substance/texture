@@ -6,7 +6,6 @@ import JATSImporter from './converter/JATSImporter'
 import JATSImportDialog from './converter/JATSImportDialog'
 import JATSExporter from './converter/JATSExporter'
 import createEntityDbSession from './entities/createEntityDbSession'
-import pubMetaDbSeed from '../data/pubMetaDbSeed'
 
 /*
   Texture Component
@@ -18,7 +17,7 @@ export default class Texture extends Component {
     super(parent, props)
     this.configurator = new TextureConfigurator()
     this.configurator.import(EditorPackage)
-    this.pubMetaDbSession = createEntityDbSession(pubMetaDbSeed)
+    this.pubMetaDbSession = createEntityDbSession()
   }
 
   getInitialState() {
@@ -29,6 +28,8 @@ export default class Texture extends Component {
   }
 
   getChildContext() {
+    let pubMetaDbSession = this.pubMetaDbSession
+    let pubMetaDb = pubMetaDbSession.getDocument()
     return {
       xmlStore: {
         readXML: this.props.readXML,
@@ -36,7 +37,6 @@ export default class Texture extends Component {
       },
       exporter: {
         export(dom) {
-          const pubMetaDb = this.pubMetaDbSession.getDocument()
           let jatsExporter = new JATSExporter()
           return jatsExporter.export(dom, { pubMetaDb })
         }

@@ -1,6 +1,6 @@
 import { JournalArticleConverter, BookConverter,
   ClinicalTrialConverter, ConferenceProceedingConverter, DataPublicationConverter,
-  PatentConverter, PereodicalConverter, PreprintConverter, ReportConverter,
+  PatentConverter, Periodical, PreprintConverter, ReportConverter,
   SoftwareConverter, ThesisConverter, WebpageConverter
 } from './EntityConverters'
 
@@ -37,8 +37,8 @@ export default class ConvertRef {
           case 'patent':
             entityId = PatentConverter.import(elementCitation, pubMetaDb)
             break;
-          case 'perediocal':
-            entityId = PereodicalConverter.import(elementCitation, pubMetaDb)
+          case 'periodical':
+            entityId = Periodical.import(elementCitation, pubMetaDb)
             break;
           case 'preprint':
             entityId = PreprintConverter.import(elementCitation, pubMetaDb)
@@ -91,8 +91,8 @@ export default class ConvertRef {
         case 'patent':
           elementCitation = PatentConverter.export($$, entity, pubMetaDb)
           break;
-        case 'perediocal':
-          elementCitation = PereodicalConverter.export($$, entity, pubMetaDb)
+        case 'periodical':
+          elementCitation = Periodical.export($$, entity, pubMetaDb)
           break;
         case 'preprint':
           elementCitation = PreprintConverter.export($$, entity, pubMetaDb)

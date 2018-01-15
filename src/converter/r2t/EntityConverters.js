@@ -468,15 +468,15 @@ export const PatentConverter = {
 }
 
 /*
-  <element-citation publication-type="perediocal"> -> Pereodical
+  <element-citation publication-type="periodical"> -> Periodical
 */
-export const PereodicalConverter = {
+export const Periodical = {
 
   import(el, pubMetaDb) {
     let entity = _findCitation(el, pubMetaDb)
     if (!entity) {
       let node = {
-        type: 'perediocal',
+        type: 'periodical',
         articleTitle: _getHTML(el, 'article-title'),
         source: _getText(el, 'source'),
         year: _getText(el, 'year'),

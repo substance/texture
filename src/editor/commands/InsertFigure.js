@@ -1,5 +1,6 @@
 export default function(tx, file) {
   let imageUrl = URL.createObjectURL(file)
+  let mimeData = file.type.split('/')
   let fig = tx.createElement('fig')
   fig.append(
    tx.createElement('object-id').text(fig.id),
@@ -8,8 +9,8 @@ export default function(tx, file) {
      tx.createElement('p').text('Figure caption')
    ),
    tx.createElement('graphic').attr({
-     'mime-subtype': 'jpeg',
-     'mimetype': 'image',
+     'mime-subtype': mimeData[1],
+     'mimetype': mimeData[0],
      'xlink:href': imageUrl
    })
   )

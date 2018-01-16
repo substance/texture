@@ -1,6 +1,7 @@
-import InsertNodeCommand from './InsertNodeCommand'
+import { InsertNodeCommand as SubstanceInsertNodeCommand } from 'substance'
+import InsertFigure from './InsertFigure'
 
-export default class InsertFigureCommand extends InsertNodeCommand {
+export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
 
   execute(params, context) {
     let state = params.commandState
@@ -15,23 +16,20 @@ export default class InsertFigureCommand extends InsertNodeCommand {
   createNodes(tx, params) {
     let lastNode = {}
     params.files.forEach((file) => {
-      let node = this.insertImage(tx, file)
+      let node = InsertFigure(tx, file)
       lastNode = tx.insertBlockNode(node)
     })
     return lastNode
   }
 
-  /*
-    Inserts file and image nodes
-  */
-  insertImage(tx, file) {
+  insertFigure(tx, file) {
     let imageUrl = URL.createObjectURL(file)
     let fig = tx.createElement('fig')
     fig.append(
      tx.createElement('object-id').text(fig.id),
-     tx.createElement('title').text(''),
+     tx.createElement('title').text('Figure title'),
      tx.createElement('caption').append(
-       tx.createElement('p').text('')
+       tx.createElement('p').text('Figure caption')
      ),
      tx.createElement('graphic').attr({
        'mime-subtype': 'jpeg',
@@ -41,38 +39,4 @@ export default class InsertFigureCommand extends InsertNodeCommand {
     )
     return fig
   }
-  // execute(params) {
-  //   let editorSession = params.editorSession
-  //
-  //   editorSession.transaction((tx) => {
-  //     params.files.forEach((file) => {
-  //       this.insertImage(tx, file)
-  //     })
-  //   })
-  // }
-  //
-  // insertImage(tx, file) {
-  //   // Create file node for the image
-  //   // let imageFile = tx.create({
-  //   //   type: 'file',
-  //   //   fileType: 'image',
-  //   //   mimeType: file.type,
-  //   //   sourceFile: file
-  //   // })
-  //
-  //   let fig = tx.createElement('fig')
-  //   fig.append(
-  //     tx.createElement('object-id').attr('pub-id-type', 'doi').text('test'),
-  //     tx.createElement('title').text(''),
-  //     tx.createElement('caption').append(
-  //       tx.createElement('p').text('')
-  //     ),
-  //     tx.createElement('graphic').attr({
-  //       'mime-subtype': 'jpeg',
-  //       'mimetype': 'image',
-  //       'xlink:href': './assets/fig1.jpg'
-  //     })
-  //   )
-  //   return fig
-  // }
 }

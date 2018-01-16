@@ -65,10 +65,11 @@ import BookCitationPreview from './components/BookCitationPreview'
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
-import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
+import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertFigureTool from './components/InsertFigureTool'
+import DropFigure from './commands/DropFigure'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -229,6 +230,7 @@ export default {
     // Tools
     config.addTool('edit-xref', EditXrefTool)
     config.addTool('insert-fig', InsertFigureTool)
+    config.addDropHandler(DropFigure)
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
 

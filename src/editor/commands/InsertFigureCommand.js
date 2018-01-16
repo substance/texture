@@ -1,5 +1,5 @@
 import { InsertNodeCommand as SubstanceInsertNodeCommand } from 'substance'
-import InsertFigure from './InsertFigure'
+import insertFigure from './insertFigure'
 
 export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
 
@@ -16,27 +16,9 @@ export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
   createNodes(tx, params) {
     let lastNode = {}
     params.files.forEach((file) => {
-      let node = InsertFigure(tx, file)
+      let node = insertFigure(tx, file)
       lastNode = tx.insertBlockNode(node)
     })
     return lastNode
-  }
-
-  insertFigure(tx, file) {
-    let imageUrl = URL.createObjectURL(file)
-    let fig = tx.createElement('fig')
-    fig.append(
-     tx.createElement('object-id').text(fig.id),
-     tx.createElement('title').text('Figure title'),
-     tx.createElement('caption').append(
-       tx.createElement('p').text('Figure caption')
-     ),
-     tx.createElement('graphic').attr({
-       'mime-subtype': 'jpeg',
-       'mimetype': 'image',
-       'xlink:href': imageUrl
-     })
-    )
-    return fig
   }
 }

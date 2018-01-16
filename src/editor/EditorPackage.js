@@ -68,6 +68,7 @@ import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
+import InsertFigureTool from './components/InsertFigureTool'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -199,11 +200,11 @@ export default {
       nodeType: 'disp-quote',
       commandGroup: 'insert-block-element'
     })
-
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
       commandGroup: 'insert-figure'
     })
+
 
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
@@ -219,7 +220,6 @@ export default {
     config.addLabel('insert-xref-table', 'Table Reference')
     config.addLabel('insert-xref-fn', 'Footnote Reference')
     config.addLabel('insert-disp-quote', 'Blockquote')
-    config.addLabel('insert-fig', 'Figure')
 
     config.addLabel('manuscript-start', 'Manuscript starts here')
     config.addLabel('manuscript-end', 'Manuscript ends here')
@@ -228,6 +228,10 @@ export default {
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
+    config.addTool('insert-fig', InsertFigureTool)
+    config.addLabel('insert-fig', 'Figure')
+    config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
     // Annotation tools
     config.addAnnotationTool({
       name: 'bold',
@@ -353,11 +357,18 @@ export default {
         commandGroups: ['formatting']
       },
       {
+        name: 'additinal-tools',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        commandGroups: ['insert-figure']
+      },
+      {
         name: 'insert',
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
-        commandGroups: ['insert-xref', 'insert-block-element', 'insert-figure']
+        commandGroups: ['insert-xref', 'insert-block-element']
       }
     ])
 

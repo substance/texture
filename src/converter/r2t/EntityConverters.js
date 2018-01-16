@@ -759,7 +759,7 @@ function _findPerson(el, pubMetaDb) {
   if (!entity) {
     let persons = pubMetaDb.find({ type: 'person' }).map(id => pubMetaDb.get(id))
     let surname = _getText(el, 'surname')
-    let givenNames = _getText(el, 'givenNames')
+    let givenNames = _getText(el, 'given-names')
     entity = persons.find(p => {
       return p.surname === surname && p.givenNames === givenNames
     })

@@ -20,9 +20,13 @@ export default class AffiliationsList extends NodeComponent {
     let authors = this._getAuthors()
     authors.forEach(authorId => {
       let author = db.get(authorId)
-      // We only consider person records
-      if (author.type === 'person') {
-        organisations = organisations.concat(author.affiliations)
+      if (!author) {
+        console.error('FIXME: no entity for author', authorId)
+      } else {
+        // We only consider person records
+        if (author.type === 'person') {
+          organisations = organisations.concat(author.affiliations)
+        }
       }
     })
     return uniq(organisations)

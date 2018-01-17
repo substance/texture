@@ -29,6 +29,7 @@ export default class RefListComponent extends NodeComponent {
     let entityIds = bibliography.map((e) => {
       if (!e.state.entity) {
         console.error('FIXME: no entity for bib item', e.id)
+        return undefined
       } else {
         return e.state.entity.id
       }

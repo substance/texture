@@ -1,4 +1,4 @@
-import { Component, without } from 'substance'
+import { Component, isNil, without } from 'substance'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
 import EditEntity from './EditEntity'
@@ -150,7 +150,7 @@ export default class EditRelationship extends Component {
 
   _onCreate(targetType, text) {
     let defaults = {}
-    if (text) {
+    if (!isNil(text)) {
       defaults = prefillEntity(targetType, text)
     }
     this.extendState({

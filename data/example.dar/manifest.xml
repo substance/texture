@@ -1,0 +1,6 @@
+<container>
+  <documents>
+    <document id="manuscript" type="article" path="manuscript.xml" />
+    <document id="pub-meta" type="pub-meta" path="pub-meta.json" />
+  </documents>
+</container>

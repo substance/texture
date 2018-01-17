@@ -13,6 +13,12 @@ class AbstractWriter extends AbstractEditor {
   }
 
   _initialize(...args) {
+    // TODO: re-factor AbstractEditor w.r.t. to how managers and such are maintained.
+    // ATM many of these are owned by the EditorSession, which we want to change.
+    // Instead EditorSession should really only be about document and selections, and changes.
+    // Other managers such as SurfaceManager could be independent.
+    // The main goal would be to pull state and flow onto application level.
+    // For legacy and maybe other reasons, EditorSession could be still used as a proxy for the application flow.
     super._initialize(...args)
 
     let editorSession = this.getEditorSession()
@@ -23,27 +29,6 @@ class AbstractWriter extends AbstractEditor {
     this.saveHandler = this._getSaveHandler()
     this.contentHighlights = new Highlights(doc)
 
-    // let sortNumeric = function(a, b){ return a-b }
-    // // NOTE: Supported ref-types are hard-coded for now
-    // this.labelGenerator = new NmberedLabelGenerator(editorSession, this.exporter, {
-    //   'fn': function(targets) {
-    //     let positions = targets.map(t => t.position).sort(sortNumeric)
-    //     return positions.join(',') || '???'
-    //   },
-    //   'fig': function(targets) {
-    //     let positions = targets.map(t => t.position).sort(sortNumeric)
-    //     return 'Figure ' + (positions.join(',') || '???')
-    //   },
-    //   'table': function(targets) {
-    //     let positions = targets.map(t => t.position).sort(sortNumeric)
-    //     return 'Table ' + (positions.join(',') || '???')
-    //   },
-    //   // E.g. eLife videos are referenced as other
-    //   'other': function(targets) {
-    //     let positions = targets.map(t => t.position).sort(sortNumeric)
-    //     return 'Other ' + (positions.join(',') || '???')
-    //   }
-    // })
     editorSession.setSaveHandler(this.saveHandler)
   }
 

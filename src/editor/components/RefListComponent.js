@@ -26,7 +26,14 @@ export default class RefListComponent extends NodeComponent {
     const referenceManager = this.context.referenceManager
     let el = $$('div').addClass('sc-ref-list')
     let bibliography = referenceManager.getBibliography()
-    let entityIds = bibliography.map(e => e.state.entity.id)
+    let entityIds = bibliography.map((e) => {
+      if (!e.state.entity) {
+        console.error('FIXME: no entity for bib item', e.id)
+        return undefined
+      } else {
+        return e.state.entity.id
+      }
+    })
     if (this.state.edit) {
       var modal = $$(ModalDialog, {
         width: 'medium',

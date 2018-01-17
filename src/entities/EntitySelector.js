@@ -36,8 +36,7 @@ export default class EntitySelector extends Component {
       this.props.targetTypes.forEach(targetType => {
         menu.append(
           $$('li').append(
-            $$(FontAwesomeIcon, {icon: 'fa-plus'}),
-            ` Create ${labelProvider.getLabel(targetType)}`
+            labelProvider.getLabel(targetType)
           ).on('click', this._createEntity.bind(this, targetType))
         )
       })

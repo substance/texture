@@ -4,15 +4,16 @@ import {
   expandCaption,
   expandTitle,
   expandObjectId,
-  removeLabel
+  removeChild,
+  addLabel
 } from './r2tHelpers'
 
 export default class ConvertElementCitation {
 
   import(dom) {
     let figs = dom.findAll('fig')
-    figs.forEach((fig) => {
-      removeLabel(fig)
+    figs.forEach(fig => {
+      removeChild(fig, 'label')
       expandObjectId(fig, 0)
       extractCaptionTitle(fig, 1)
       expandTitle(fig, 1)
@@ -20,11 +21,13 @@ export default class ConvertElementCitation {
     })
   }
 
-  export(dom) {
+  export(dom, {doc}) {
     let figs = dom.findAll('fig')
-    figs.forEach((fig) => {
+    figs.forEach(fig => {
+      let figNode = doc.get(fig.id)
+      let label = figNode.state.label
+      addLabel(fig, label, 1)
       wrapCaptionTitle(fig)
     })
-    console.warn('TODO: export label according to label generator')
   }
 }

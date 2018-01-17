@@ -17,6 +17,7 @@ import NormalizeHistoryDates from './NormalizeHistoryDates'
 import PruneEmptyElements from './PruneEmptyElements'
 import ConvertRefs from './ConvertRefs'
 import ConvertAuthors from './ConvertAuthors'
+import ConvertXref from './ConvertXref'
 
 // ATTENTION: the order of converters is critical,
 // as some of them need to do insert nodes in a way
@@ -33,6 +34,7 @@ const trafos = [
   ConvertRefs, // extracts publication entities
   ConvertSigBlock,
   FnGroupConverter,
+  ConvertCodeCell,
   ConvertReproFig,
   ConvertFig,
   ConvertTableWrap,
@@ -42,7 +44,7 @@ const trafos = [
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertContentLoc,
-  ConvertCodeCell,
+  ConvertXref,
   UpdateDocType,
   // TODO: is this really necessary again?
   // PruneText,

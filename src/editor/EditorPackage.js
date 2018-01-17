@@ -222,8 +222,8 @@ export default {
     config.addLabel('insert-xref-fn', 'Footnote Reference')
     config.addLabel('insert-disp-quote', 'Blockquote')
 
-    config.addLabel('manuscript-start', 'Manuscript starts here')
-    config.addLabel('manuscript-end', 'Manuscript ends here')
+    config.addLabel('manuscript-start', 'Article starts here')
+    config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
     config.addLabel('sig-block-end', 'Signature Block ends here')
 

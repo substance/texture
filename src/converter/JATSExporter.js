@@ -9,6 +9,7 @@ export default class JATSExporter {
   */
   export(dom, context = {}) {
     let pubMetaDb = context.pubMetaDb
+    let doc = context.doc
 
     if (!pubMetaDb) {
       throw new Error('context.pubMetaDb is missing')
@@ -18,6 +19,7 @@ export default class JATSExporter {
       hasErrored: false,
       errors: [],
       dom,
+      doc,
       pubMetaDb
     }
     const api = this._createAPI(state)
@@ -39,7 +41,8 @@ export default class JATSExporter {
       error(data) {
         self._error(state, data)
       },
-      pubMetaDb: state.pubMetaDb
+      pubMetaDb: state.pubMetaDb,
+      doc: state.doc
     }
     return api
   }

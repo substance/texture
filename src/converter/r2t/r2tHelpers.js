@@ -108,6 +108,11 @@ export function expandObjectId(el, insertPos) {
   }
 }
 
+export function addLabel(el, labelText, insertPos) {
+  let label = el.createElement('label').text(labelText)
+  el.insertAt(insertPos, label)
+}
+
 /*
   Adds caption to el if not yet existing
 */
@@ -132,8 +137,8 @@ export function expandTitle(el, insertPos) {
   }
 }
 
-export function removeLabel(el) {
-  let childEl = findChild(el, 'label')
+export function removeChild(el, cssSelector) {
+  let childEl = findChild(el, cssSelector)
   if (childEl) {
     el.removeChild(childEl)
   }

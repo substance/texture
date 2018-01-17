@@ -1,5 +1,8 @@
 import {
   importSourceCode, importOutput,
+  exportSourceCode, exportOutput,
+  removeChild, addLabel,
+  wrapCaptionTitle,
   extractCaptionTitle, expandCaption, expandTitle, expandObjectId
 } from './r2tHelpers'
 
@@ -21,32 +24,40 @@ export default class ConvertReproFig {
       )
       let alternatives = reproFig.find('alternatives')
       reproFig.removeChild(alternatives)
+      reproFig.removeAttr('fig-type')
+      removeChild(reproFig, 'label')
+      expandObjectId(reproFig, 0)
+      extractCaptionTitle(reproFig, 1)
+      expandTitle(reproFig, 1)
+      expandCaption(reproFig, 2)
       reproFig.append(
-        expandObjectId(reproFig, 0),
-        extractCaptionTitle(reproFig, 1),
-        expandTitle(reproFig, 1),
-        expandCaption(reproFig, 2),
         cellEl
       )
     })
   }
 
-  export(dom) {
+
+  export(dom, {doc}) {
     let reproFigs = dom.findAll('repro-fig')
-    // let $$ = dom.createElement.bind(dom)
-    reproFigs.forEach((/*reproFig*/) => {
-      throw new Error('Revise implementation')
-      // let source = reproFig.find('source-code')
-      // let output = reproFig.find('output')
-      // reproFig.tagName = 'fig'
-      // reproFig.empty()
-      // reproFig.attr('fig-type', 'repro-fig')
-      // reproFig.append(
-      //   $$('alternatives').append(
-      //     exportSourceCode(source),
-      //     exportOutput(output)
-      //   )
-      // )
+    let $$ = dom.createElement.bind(dom)
+    reproFigs.forEach((reproFig) => {
+      reproFig.tagName = 'fig'
+      reproFig.attr('fig-type', 'repro-fig')
+      wrapCaptionTitle(reproFig)
+      // Export generated label
+      let reproFigNode = doc.get(reproFig.id)
+      let label = reproFigNode.state.label
+      addLabel(reproFig, label, 1)
+      // Replace cell element with JATS-conform version
+      let source = reproFig.find('source-code')
+      let output = reproFig.find('output')
+      removeChild(reproFig, 'cell')
+      reproFig.append(
+        $$('alternatives').append(
+          exportSourceCode(source),
+          exportOutput(output)
+        )
+      )
     })
   }
 

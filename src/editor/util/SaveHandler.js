@@ -6,7 +6,7 @@ export default class SaveHandler {
   }
 
   saveDocument({editorSession}) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       let exporter = this.context.exporter
       let doc = editorSession.getDocument()
       let dom = doc.toXML()
@@ -18,14 +18,7 @@ export default class SaveHandler {
       console.info(result.dom.getNativeElement())
       // let xml = result.dom.serialize()
       console.info('Exported XML', result.dom.getNativeElement())
-      // console.info('Exported XML', xml)
-      // this.context.xmlStore.writeXML(this.context.documentId, xml, (err) => {
-      //   if (err) {
-      //     reject(err)
-      //   } else {
-      //     resolve()
-      //   }
-      // })
+      resolve()
     })
   }
 }

@@ -14,7 +14,7 @@ export default class EntitySelector extends Component {
   render($$) {
     let el = $$('div').addClass('sc-entity-selector')
 
-    let inputEl = $$('div').addClass('se-input-field').append(
+    let inputEl = $$('div').addClass('se-input-group').append(
       $$('input')
         .attr({
           type: 'text',
@@ -23,17 +23,29 @@ export default class EntitySelector extends Component {
         })
         .on('input', this._onSearchStringChanged)
         .on('keydown', this._onKeydown)
-        .ref('searchString')
+        .ref('searchString'),
+      $$('button').addClass('se-create-dropdown').append('New')
+        .on('click', this._toggleDropdown)
     )
 
+    el.append(inputEl)
+
+    if (this.state.dropdown) {
+      let labelProvider = this.context.labelProvider
+      let menu = $$('ul').addClass('se-dropdown')
+      this.props.targetTypes.forEach(targetType => {
+        menu.append(
+          $$('li').append(
+            $$(FontAwesomeIcon, {icon: 'fa-plus'}),
+            ` Create ${labelProvider.getLabel(targetType)}`
+          ).on('click', this._createEntity.bind(this, targetType))
+        )
+      })
+      el.append(menu)
+    }
+
     if (this.state.searchString !== '') {
-      let createBtns = $$('div').addClass('se-create')
-      el.append(
-        inputEl.append(createBtns),
-        this._renderOptions($$)
-      )
-    } else {
-      el.append(inputEl)
+      el.append(this._renderOptions($$))
     }
 
     return el
@@ -42,23 +54,13 @@ export default class EntitySelector extends Component {
   _renderOptions($$) {
     let el = $$('div').addClass('se-options').ref('options')
     let db = this.context.pubMetaDbSession.getDocument()
-    let labelProvider = this.context.labelProvider
     this.state.results.forEach((item, index) => {
-      let option
-      if (item._create) {
-        option = $$('div').addClass('se-option').append(
-          $$(FontAwesomeIcon, {icon: 'fa-plus'}),
-          ` Create ${labelProvider.getLabel(item._create)}`
-        )
-      } else {
-        option = $$('div').addClass('se-option').append(
-          $$('span').html(
-            entityRenderers[item.type](item.id, db)
-          ),
-          ` (${this.getLabel(item.type)})`
-        )
-
-      }
+      let option = $$('div').addClass('se-option').append(
+        $$('span').html(
+          entityRenderers[item.type](item.id, db)
+        ),
+        ` (${this.getLabel(item.type)})`
+      )
       option.on('click', this._confirmSelected.bind(this, index))
       if (this.state.selectedIndex === index) {
         option.addClass('se-selected')
@@ -71,11 +73,7 @@ export default class EntitySelector extends Component {
 
   _confirmSelected(index) {
     let item = this.state.results[index]
-    if (item._create) {
-      this.props.onCreate(item._create, this.state.searchString)
-    } else {
-      this.props.onSelected(item.id)
-    }
+    this.props.onSelected(item.id)
   }
 
   _selectNext() {
@@ -127,18 +125,25 @@ export default class EntitySelector extends Component {
       results = this._findEntities(searchString)
     }
 
-    // Add creation entries to result
-    this.props.targetTypes.forEach(targetType => {
-      results.push({
-        _create: targetType
-      })
-    })
-
     this.setState({
       selectedIndex: -1,
       searchString: searchString,
       results
     })
+  }
+
+  _createEntity(type) {
+    this.props.onCreate(type, this.state.searchString)
+  }
+
+  _toggleDropdown() {
+    const isSingleType = this.props.targetTypes.length === 1
+    if(isSingleType) {
+      this._createEntity(this.props.targetTypes[0])
+    } else {
+      const isOpen = this.state.dropdown
+      this.extendState({dropdown: !isOpen})
+    }
   }
 
   _onKeydown(e) {

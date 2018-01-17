@@ -1,36 +1,85 @@
 .sc-entity-selector {
+  position: relative;
   border-top: 1px solid #dadada;
   padding: 15px 20px;
 }
 
-.sc-entity-selector > .se-input-field {
+.sc-entity-selector > .se-input-group {
   position: relative;
+  display: flex;
 }
 
-.sc-entity-selector > .se-input-field > input {
-  width: 100%;
+.sc-entity-selector > .se-input-group > input {
+  flex: 1;
   padding: 2px 10px;
   border-radius: 0px;
   background: none;
-  border: 1px solid #DADADA;
+  border: 1px solid #dedede;
+}
+.sc-entity-selector > .se-input-group > input:not(:first-child) {
+  border-left: 0;
+}
+.sc-entity-selector > .se-input-group > input:not(:last-child) {
+  border-right: 0;
 }
 
-.sc-entity-selector > .se-input-field > .se-create {
-  right: 10px;
+.sc-entity-selector > .se-input-group > input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ababab;
+  font-size: 13px;
+}
+.sc-entity-selector > .se-input-group > input::-moz-placeholder { /* Firefox 19+ */
+  color: #ababab;
+  font-size: 13px;
+}
+.sc-entity-selector > .se-input-group > input:-ms-input-placeholder { /* IE 10+ */
+  color: #ababab;
+  font-size: 13px;
+}
+.sc-entity-selector > .se-input-group > input:-moz-placeholder { /* Firefox 18- */
+  color: #ababab;
+  font-size: 13px;
+}
+
+.sc-entity-selector > .se-input-group > button {
+  background-color: #f6f5f6;
+  color: #161616;
+  padding: 5px 15px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.sc-entity-selector > .se-input-group > input,
+.sc-entity-selector > .se-input-group > button {
+  border: 1px solid #dedede;
+}
+
+.sc-entity-selector > .se-dropdown {
   position: absolute;
-  top: 7px;
-  font-size: 10px;
+  right: 20px;
+  border: 1px solid #dedede;
+  font-size: 15px;
+  padding: 10px 0px;
+  margin: 2px 0 0 0;
+  box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  list-style-type: none;
+  z-index: 10;
 }
 
-.sc-entity-selector > .se-input-field > .se-create > button {
-  display: inline-block;
-  margin-left: 10px;
-  color: #4A90E2;
+.sc-entity-selector > .se-dropdown li {
+  padding: 5px 10px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-.sc-entity-selector > .se-options,
-.sc-entity-selector > .se-create > .se-options {
-  border: 1px solid #DADADA;
+.sc-entity-selector > .se-dropdown li:hover {
+  background: #0065DE;
+  color: #fff;
+  cursor: pointer;
+}
+
+.sc-entity-selector > .se-options {
+  border: 1px solid #dedede;
   border-top: 0;
   font-size: 15px;
   padding: 10px 0px;

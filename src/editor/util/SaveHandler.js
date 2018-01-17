@@ -17,7 +17,6 @@ export default class SaveHandler {
       }
       console.info(result.dom.getNativeElement())
       // let xml = result.dom.serialize()
-      console.info('Exported XML', result.dom.getNativeElement())
       resolve()
     })
   }

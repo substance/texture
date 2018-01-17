@@ -108,6 +108,11 @@ export function expandObjectId(el, insertPos) {
   }
 }
 
+export function addLabel(el, labelText, insertPos) {
+  let label = el.createElement('label').text(labelText)
+  el.insertAt(insertPos, label)
+}
+
 /*
   Adds caption to el if not yet existing
 */

@@ -4,7 +4,8 @@ import {
   expandCaption,
   expandTitle,
   expandObjectId,
-  removeLabel
+  removeLabel,
+  addLabel
 } from './r2tHelpers'
 
 export default class ConvertElementCitation {
@@ -20,11 +21,13 @@ export default class ConvertElementCitation {
     })
   }
 
-  export(dom) {
+  export(dom, {doc}) {
     let figs = dom.findAll('fig')
     figs.forEach((fig) => {
+      let figNode = doc.get(fig.id)
+      let label = figNode.state.label
+      addLabel(fig, label, 1)
       wrapCaptionTitle(fig)
     })
-    console.warn('TODO: export label according to label generator')
   }
 }

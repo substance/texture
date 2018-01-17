@@ -22,18 +22,26 @@ window.addEventListener('load', () => {
     }
     let loader = new VfsLoader(vfs, loaders)
     // TODO: we need to catch errors
-    loader.load(`data/${example}`).then(archive => {
+    loader.load(archiveId).then(archive => {
       Texture.mount({ archive }, window.document.body)
     })
   }
-  // Otherwise create a stub archive,
+  // TODO: this is kind of an ingestion example
+  // where only an XML is given which is turned into a DocumentArchive
   else {
     let exampleId = getQueryStringParam('file') || 'kitchen-sink.xml'
     let xml = vfs.readFileSync(exampleId)
+    // TODO: we need to figure out how to implement ingestion as opposed
+    // to a regular archive. For ingestion, the importer should create
+    // new pub-meta entities from the XML. In other cases it should not do this automatically.
+    let pubMetaSession = PubMetaLoader.load()
+    let manuscriptSession = ArticleLoader.load(xml, {
+      pubMetaDb: pubMetaSession.getDocument()
+    })
     let sessions = {
       'manifest': ManifestLoader.load(createStubArchiveXml(exampleId)),
-      'manuscript': ArticleLoader.load(xml),
-      'pub-meta': PubMetaLoader.load([])
+      'manuscript': manuscriptSession,
+      'pub-meta': pubMetaSession
     }
     let archive = new DocumentArchive(sessions)
     Texture.mount({ archive }, window.document.body)

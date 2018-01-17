@@ -67,6 +67,9 @@ import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 
+import InsertFigureCommand from './commands/InsertFigureCommand'
+import InsertFigureTool from './components/InsertFigureTool'
+import DropFigure from './commands/DropFigure'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -198,6 +201,11 @@ export default {
       nodeType: 'disp-quote',
       commandGroup: 'insert-block-element'
     })
+    config.addCommand('insert-fig', InsertFigureCommand, {
+      nodeType: 'fig',
+      commandGroup: 'insert-figure'
+    })
+
 
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
@@ -221,6 +229,11 @@ export default {
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
+    config.addTool('insert-fig', InsertFigureTool)
+    config.addDropHandler(DropFigure)
+    config.addLabel('insert-fig', 'Figure')
+    config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
     // Annotation tools
     config.addAnnotationTool({
       name: 'bold',
@@ -344,6 +357,13 @@ export default {
         showDisabled: true,
         style: 'minimal',
         commandGroups: ['formatting']
+      },
+      {
+        name: 'additinal-tools',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        commandGroups: ['insert-figure']
       },
       {
         name: 'insert',

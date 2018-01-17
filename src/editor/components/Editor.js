@@ -101,7 +101,7 @@ export default class Editor extends AbstractWriter {
     const ManuscriptComponent = this.getComponent('manuscript')
     const Overlay = this.getComponent('overlay')
     // const ContextMenu = this.getComponent('context-menu')
-    // const Dropzones = this.componentRegistry.get('dropzones', 'strict')
+    const Dropzones = this.componentRegistry.get('dropzones', 'strict')
 
     const article = doc.get('article')
 
@@ -128,9 +128,9 @@ export default class Editor extends AbstractWriter {
       $$(Overlay, {
         toolPanel: configurator.getToolPanel('main-overlay'),
         theme: 'dark'
-      })
+      }),
       // $$(ContextMenu),
-      // $$(Dropzones)
+      $$(Dropzones)
     )
     return contentPanel
   }

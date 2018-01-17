@@ -16,8 +16,9 @@ export default class EditXRefTool extends Tool {
   }
 
   _computeState(nodeId) {
+    let targets = getAvailableXrefTargets(this._getNode(nodeId), this.context)
     return {
-      targets: getAvailableXrefTargets(this._getNode(nodeId), this.context.editorSession)
+      targets
     }
   }
 

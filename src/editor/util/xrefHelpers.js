@@ -14,12 +14,11 @@ export const REF_TYPES = {
 
 // TODO: how could this be configured?
 const RefTypeToManager = {
-  'bibr': 'references',
-  'fig': 'figures',
-  'table': 'tables',
-  'fn': 'footnotes'
+  'bibr': 'referenceManager',
+  'fig': 'figureManager',
+  'table': 'tableManager',
+  'fn': 'footnoteManager'
 }
-
 
 // left side: ref-type
 // right side: [... node types]
@@ -49,10 +48,10 @@ export function getXrefLabel(xref) {
   return xref.textContent || ' '
 }
 
-function getXrefResourceManager(xref, editorSession) {
+function getXrefResourceManager(xref, context) {
   let managerName = RefTypeToManager[xref.getAttribute('ref-type')]
   if (managerName) {
-    return editorSession.getManager(managerName)
+    return context[managerName]
   }
 }
 
@@ -73,8 +72,8 @@ function getXrefResourceManager(xref, editorSession) {
   ]
   ```
 */
-export function getAvailableXrefTargets(xref, editorSession) {
-  let manager = getXrefResourceManager(xref, editorSession)
+export function getAvailableXrefTargets(xref, context) {
+  let manager = getXrefResourceManager(xref, context)
   if (!manager) return []
 
   let selectedTargets= getXrefTargets(xref)

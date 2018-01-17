@@ -132,6 +132,13 @@ export function expandTitle(el, insertPos) {
   }
 }
 
+export function removeLabel(el) {
+  let childEl = findChild(el, 'label')
+  if (childEl) {
+    el.removeChild(childEl)
+  }
+}
+
 export function importSourceCode(el) {
   return el.createElement('source-code')
     .attr('language', el.attr('language'))

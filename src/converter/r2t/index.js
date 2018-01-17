@@ -34,6 +34,7 @@ const trafos = [
   ConvertRefs, // extracts publication entities
   ConvertSigBlock,
   FnGroupConverter,
+  ConvertCodeCell,
   ConvertReproFig,
   ConvertFig,
   ConvertTableWrap,
@@ -43,7 +44,6 @@ const trafos = [
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertContentLoc,
-  ConvertCodeCell,
   ConvertXref,
   UpdateDocType,
   // TODO: is this really necessary again?

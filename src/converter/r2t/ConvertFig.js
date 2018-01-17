@@ -4,7 +4,7 @@ import {
   expandCaption,
   expandTitle,
   expandObjectId,
-  removeLabel,
+  removeChild,
   addLabel
 } from './r2tHelpers'
 
@@ -13,7 +13,7 @@ export default class ConvertElementCitation {
   import(dom) {
     let figs = dom.findAll('fig')
     figs.forEach(fig => {
-      removeLabel(fig)
+      removeChild(fig, 'label')
       expandObjectId(fig, 0)
       extractCaptionTitle(fig, 1)
       expandTitle(fig, 1)

@@ -137,8 +137,8 @@ export function expandTitle(el, insertPos) {
   }
 }
 
-export function removeLabel(el) {
-  let childEl = findChild(el, 'label')
+export function removeChild(el, cssSelector) {
+  let childEl = findChild(el, cssSelector)
   if (childEl) {
     el.removeChild(childEl)
   }

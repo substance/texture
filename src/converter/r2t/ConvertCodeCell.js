@@ -21,7 +21,6 @@ export default class ConvertCodeCell {
     })
   }
 
-
   export(dom) {
     let cells = dom.findAll('cell')
     let $$ = dom.createElement.bind(dom)

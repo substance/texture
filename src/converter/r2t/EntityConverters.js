@@ -100,8 +100,8 @@ export const PersonConverter = {
     let el = $$('contrib')
     el.append(
       $$('name').append(
-        _createTextElement($$, node.givenNames, 'given-names'),
         _createTextElement($$, node.surname, 'surname'),
+        _createTextElement($$, node.givenNames, 'given-names'),
         _createTextElement($$, node.prefix, 'prefix'),
         _createTextElement($$, node.suffix, 'suffix')
       )
@@ -146,8 +146,8 @@ export const RefPersonConverter = {
 
   export($$, node) {
     let el = $$('name')
-    el.append(_createTextElement($$, node.givenNames, 'given-names'))
     el.append(_createTextElement($$, node.surname, 'surname'))
+    el.append(_createTextElement($$, node.givenNames, 'given-names'))
     el.append(_createTextElement($$, node.prefix, 'prefix'))
     el.append(_createTextElement($$, node.suffix, 'suffix'))
     return el

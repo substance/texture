@@ -24,13 +24,7 @@ b.task('clean', function() {
 })
 
 b.task('assets', function() {
-  vfs(b, {
-    src: ['./data/**/*.xml', './src/article/*.rng', './src/article/*.json'],
-    dest: DIST+'/vfs.js',
-    format: 'umd', moduleName: 'vfs'
-  })
   b.copy('./assets', DIST+'assets')
-  b.copy('./examples', DIST)
   b.copy('./node_modules/font-awesome', DIST+'font-awesome')
   b.copy('./node_modules/substance/dist', DIST+'substance/dist')
 
@@ -132,8 +126,29 @@ b.task('test:node', ['build:nodejs', 'test:assets'], () => {
 })
 .describe('runs the test suite in nodejs')
 
+b.task('examples', () => {
+  vfs(b, {
+    src: ['./data/**/*'],
+    dest: DIST+'/vfs.js',
+    format: 'umd', moduleName: 'vfs'
+  })
+  b.copy('./examples/*.html', DIST)
+  b.js('./examples/editor.js', {
+    targets: [{
+      dest: DIST+'editor.js',
+      format: 'umd',
+      moduleName: 'textureEditor',
+      globals: {
+        'substance': 'window.substance',
+        'substance-texture': 'window.texture'
+      }
+    }],
+    external: ['substance', 'substance-texture']
+  })
+})
+
 // default build: creates a dist folder with a production bundle
-b.task('default', ['clean', 'assets', 'build:browser'])
+b.task('default', ['clean', 'assets', 'build:browser', 'examples'])
 
 b.task('dev', ['default'])
 
@@ -188,12 +203,12 @@ function _compileSchema(name, src, searchDirs, deps, options = {} ) {
     execute() {
       const { compileRNG, checkSchema } = require('substance')
       const xmlSchema = compileRNG(fs, searchDirs, entry)
-      b.writeSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
-      b.writeSync(SCHEMA, xmlSchema.toMD())
+      b.writeFileSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
+      b.writeFileSync(SCHEMA, xmlSchema.toMD())
       if (options.debug) {
         const issues = checkSchema(xmlSchema)
         const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
-        b.writeSync(ISSUES, issuesData)
+        b.writeFileSync(ISSUES, issuesData)
       }
     }
   })
@@ -242,11 +257,13 @@ function _singleJATSFile() {
           grammar.appendChild(el)
         })
         let xml = rng.serialize()
-        b.writeSync(DEST, xml)
+        b.writeFileSync(DEST, xml)
       }
     })
   })
 }
+
+/* Server */
 
 b.setServerPort(4000)
 b.serve({ static: true, route: '/', folder: './dist' })

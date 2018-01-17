@@ -501,7 +501,7 @@ export const Periodical = {
     let el = $$('element-citation').attr('publication-type', 'perediocal')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
-    el.append(_createHTMLElement($$, node.articleTitle, 'artical-title'))
+    el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))

@@ -326,9 +326,12 @@
       <!-- We allow only one object-id[pub-id-type=doi] -->
       <optional><ref name="object-id"/></optional>
       <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
         <ref name="caption"/>
       </optional>
-      <!-- used to carry source code for reproducible figures -->
+      <!-- Only used to carry source code for reproducible figures -->
       <optional>
         <ref name="alternatives"/>
       </optional>
@@ -445,11 +448,13 @@
   <define name="media">
     <element name="media">
       <ref name="media-attlist"/>
-      <interleave>
-        <zeroOrMore><ref name="id.class"/></zeroOrMore>
-        <optional><ref name="label.class"/></optional>
-        <optional><ref name="caption.class"/></optional>
-      </interleave>
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
     </element>
   </define>
 
@@ -930,6 +935,9 @@
       <ref name="table-wrap-attlist"/>
       <!-- We allow only one object-id[pub-id-type=doi] -->
       <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
       <optional>
         <ref name="caption"/>
       </optional>

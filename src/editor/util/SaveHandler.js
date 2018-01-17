@@ -16,16 +16,16 @@ export default class SaveHandler {
         throw new Error('Could not export JATS document')
       }
       console.info(result.dom.getNativeElement())
-      let xml = result.dom.serialize()
-      // console.info('Exported XML', result.dom.getNativeElement())
+      // let xml = result.dom.serialize()
+      console.info('Exported XML', result.dom.getNativeElement())
       // console.info('Exported XML', xml)
-      this.context.xmlStore.writeXML(this.context.documentId, xml, (err) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
+      // this.context.xmlStore.writeXML(this.context.documentId, xml, (err) => {
+      //   if (err) {
+      //     reject(err)
+      //   } else {
+      //     resolve()
+      //   }
+      // })
     })
   }
 }

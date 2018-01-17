@@ -1,4 +1,4 @@
-import { Component, without, FontAwesomeIcon } from 'substance'
+import { Component, without } from 'substance'
 import entityRenderers from './entityRenderers'
 
 export default class EntitySelector extends Component {

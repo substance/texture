@@ -1,4 +1,5 @@
 import InsertNodeCommand from './InsertNodeCommand'
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 export default class InsertTableCommand extends InsertNodeCommand {
 
@@ -19,6 +20,13 @@ export default class InsertTableCommand extends InsertNodeCommand {
   generateTable(tx, colNumber, rowNumber) {
     let table = tx.createElement('table')
     let tbody = tx.createElement('tbody')
+    let thead = tx.createElement('thead')
+    let headTr = tx.createElement('tr')
+    for (let j = 0; j < colNumber; j++) {
+      headTr.append(
+        tx.createElement('th').text(ALPHABET[j % ALPHABET.length])
+      )
+    }
     for (let i = 0; i < rowNumber; i++) {
       let tr = tx.createElement('tr')
       for (let j = 0; j < colNumber; j++) {
@@ -27,7 +35,10 @@ export default class InsertTableCommand extends InsertNodeCommand {
       }
       tbody.appendChild(tr)
     }
-    table.appendChild(tbody)
+    table.append(
+      thead.append(headTr),
+      tbody
+    )
     return table
   }
 }

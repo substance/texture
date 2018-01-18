@@ -3,8 +3,14 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
   editorSession.transaction(tx => {
     let node = tx.get(nodeId)
 
-    // TODO: do we still want to calculate the difference here?
-    // if so we should keep in mind drag and drop resorting case
+    // Originally we had this code to compute a delta and make the most minimal
+    // update.
+    //
+    // let addedEntityIds = without(newEntityIds, ...oldEntityIds)
+    // let removedEntityIds = without(oldEntityIds, ...newEntityIds)
+    //
+    // However with the need for resorting we had to disable this
+    // TODO: find a more efficient solution.
 
     // Remove old entities
     oldEntityIds.forEach(entityId => {
@@ -17,7 +23,6 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
     // Create new entities
     newEntityIds.forEach(entityId => {
       let entityRefNode = node.find(`${tagName}[${attribute}=${entityId}]`)
-
       if (!entityRefNode) {
         let opts = {}
         if (attribute === 'id') {
@@ -30,7 +35,6 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
       }
       node.appendChild(entityRefNode)
     })
-
     tx.setSelection(null)
   })
 }

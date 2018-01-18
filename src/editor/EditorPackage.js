@@ -71,6 +71,9 @@ import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertFigureTool from './components/InsertFigureTool'
 import DropFigure from './commands/DropFigure'
 
+import InsertTableCommand from './commands/InsertTableCommand'
+import InsertTableTool from './components/InsertTableTool'
+
 substanceGlobals.DEBUG_RENDERING = true
 
 export default {
@@ -205,6 +208,10 @@ export default {
       nodeType: 'fig',
       commandGroup: 'insert-figure'
     })
+    config.addCommand('insert-table', InsertTableCommand, {
+      nodeType: 'table-wrap',
+      commandGroup: 'insert-table'
+    })
 
 
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
@@ -229,10 +236,15 @@ export default {
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
+
     config.addTool('insert-fig', InsertFigureTool)
     config.addDropHandler(DropFigure)
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
+    config.addTool('insert-table', InsertTableTool)
+    config.addLabel('insert-table', 'Table')
+    config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
 
     // Annotation tools
     config.addAnnotationTool({
@@ -363,7 +375,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['insert-figure']
+        commandGroups: ['insert-figure', 'insert-table']
       },
       {
         name: 'insert',

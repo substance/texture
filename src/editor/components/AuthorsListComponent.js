@@ -6,7 +6,7 @@ export default class AuthorsListComponent extends ContribsListComponent {
   }
 
   getTargetTypes() {
-    return ['person', 'organisation']
+    return ['person']
   }
 
   getPropertyName() {

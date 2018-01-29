@@ -1,51 +1,84 @@
 import {
-  VfsLoader, getQueryStringParam, DocumentArchive, ManifestLoader,
+  getQueryStringParam, DocumentArchive, ManifestLoader,
 } from 'substance'
 import { ArticleLoader, PubMetaLoader, Texture } from 'substance-texture'
 
-function createStubArchiveXml(docId) {
-  return `<container>
-  <documents>
-    <document id="manuscript" type="article" path="${docId}" />
-  </documents>
-</container>`
+
+class DarLoader {
+
+  load(rawArchive) {
+    return new Promise(resolve => {
+      let sessions
+      if (rawArchive['pub-meta.json']) {
+        sessions = {
+          'manifest': ManifestLoader.load(rawArchive['manifest.xml'].data),
+          'manuscript': ArticleLoader.load(rawArchive['manuscript.xml'].data),
+          'pub-meta': PubMetaLoader(rawArchive['pub-meta.json']),
+        }
+      } else {
+        // Injestion: We need to extract pubMetaDb from the manuscript
+        let pubMetaSession = PubMetaLoader.load()
+        let manuscriptSession = ArticleLoader.load(rawArchive['manuscript.xml'].data, {
+          pubMetaDb: pubMetaSession.getDocument()
+        })
+        sessions = {
+          'manifest': ManifestLoader.load(rawArchive['manifest.xml'].data),
+          'manuscript': manuscriptSession,
+          'pub-meta': pubMetaSession
+        }
+      }
+      let archive = new DocumentArchive(sessions)
+      resolve(archive)
+    })
+  }
 }
 
 window.addEventListener('load', () => {
   const vfs = window.vfs
-  // If a document archive is given, load it from the vfs
-  let archiveId = getQueryStringParam('archive')
-  if (archiveId) {
-    const loaders = {
-      'article': ArticleLoader,
-      'pub-meta': PubMetaLoader
-    }
-    let loader = new VfsLoader(vfs, loaders)
-    // TODO: we need to catch errors
-    loader.load(archiveId).then(archive => {
+  let archivePath = getQueryStringParam('archive')
+
+  _readRawArchive(vfs, archivePath).then(rawArchive => {
+    const loader = new DarLoader()
+    loader.load(rawArchive).then(archive => {
       Texture.mount({ archive }, window.document.body)
     })
-  }
-  // TODO: this is kind of an ingestion example
-  // where only an XML is given which is turned into a DocumentArchive
-  else {
-    let exampleId = getQueryStringParam('file') || 'kitchen-sink.xml'
-    let xml = vfs.readFileSync(exampleId)
-    // TODO: we need to figure out how to implement ingestion as opposed
-    // to a regular archive. For ingestion, the importer should create
-    // new pub-meta entities from the XML. In other cases it should not do this automatically.
-    let pubMetaSession = PubMetaLoader.load()
-    let manuscriptSession = ArticleLoader.load(xml, {
-      pubMetaDb: pubMetaSession.getDocument()
-    })
-    let sessions = {
-      'manifest': ManifestLoader.load(createStubArchiveXml(exampleId)),
-      'manuscript': manuscriptSession,
-      'pub-meta': pubMetaSession
-    }
-    let archive = new DocumentArchive(sessions)
-    Texture.mount({ archive }, window.document.body)
-  }
-  // TODO: on the long run we want provide a version that can be used
-  // with an archive hosted on a server
+  })
 })
+
+
+function _readRawArchive(fs, darUrl) {
+  return new Promise(resolve => {
+
+    let manifestXML = fs.readFileSync(`${darUrl}/manifest.xml`)
+    let manifest = ManifestLoader.load(manifestXML)
+    let docs = manifest.manifest.findAll('documents > document')
+    let assets = manifest.manifest.findAll('assets > asset')
+
+    let rawArchive = {
+      'manifest.xml': {
+        type: 'application/manifest',
+        data: manifestXML
+      }
+    }
+
+    docs.forEach(entry => {
+      let path = entry.attr('path')
+      let type = entry.attr('type')
+      let content = fs.readFileSync(`${darUrl}/${entry.path}`)
+      rawArchive[path] = {
+        type: `application/${type}`,
+        data: content
+      }
+    })
+
+    assets.forEach(asset => {
+      let path = asset.attr('path')
+      rawArchive[path] = {
+        type: 'image/jpg',
+        url: path
+      }
+    })
+
+    resolve(rawArchive)
+  })
+}

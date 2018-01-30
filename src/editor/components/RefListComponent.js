@@ -1,6 +1,7 @@
-import { NodeComponent } from 'substance'
-import EditRelationship from '../../entities/EditRelationship'
+import { NodeComponent, without } from 'substance'
 import ModalDialog from '../../shared/ModalDialog'
+import CreateEntity from '../../entities/CreateEntity'
+import EditEntity from '../../entities/EditEntity'
 import RefComponent from './RefComponent'
 
 export default class RefListComponent extends NodeComponent {
@@ -12,13 +13,16 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
-      'entitiesSelected': this._updateReferences
+      'editReference': this._onEdit,
+      'removeReference': this._onRemove
     })
   }
 
   getInitialState() {
     return {
-      edit: false
+      //edit: false,
+      mode: undefined,
+      modeProps: undefined
     }
   }
 
@@ -26,33 +30,27 @@ export default class RefListComponent extends NodeComponent {
     const referenceManager = this.context.referenceManager
     let el = $$('div').addClass('sc-ref-list')
     let bibliography = referenceManager.getBibliography()
-    let entityIds = bibliography.map((e) => {
-      if (!e.state.entity) {
-        console.error('FIXME: no entity for bib item', e.id)
-        return undefined
+    let mode = this.state.mode
+
+    if (mode) {
+      let ModeComponent
+      if (mode === 'edit') {
+        ModeComponent = EditEntity
       } else {
-        return e.state.entity.id
+        ModeComponent = CreateEntity
       }
-    })
-    if (this.state.edit) {
-      var modal = $$(ModalDialog, {
-        width: 'medium',
-        textAlign: 'center'
-      })
-      modal.append(
-        $$(EditRelationship, {
-          propertyName: 'references',
-          entityIds,
-          targetTypes: [
-            'journal-article', 'book', 'conference-proceeding',
-            'clinical-trial', 'preprint', 'report',
-            'periodical', 'data-publication', 'patent',
-            'webpage', 'thesis', 'software'
-          ]
-        })
+
+      el.append(
+        $$(ModalDialog, {
+          width: 'medium',
+          textAlign: 'center',
+          transparent: true
+        }).append(
+          $$(ModeComponent, this.state.modeProps)
+        )
       )
-      el.append(modal)
     }
+
     el.append(
       $$('div').addClass('se-title').append(
         'References'
@@ -69,27 +67,56 @@ export default class RefListComponent extends NodeComponent {
       )
     }
     el.append(
-      $$('button').addClass('sc-button sm-style-big').append('Edit References').on('click', this._editBibliography)
+      $$('button').addClass('sc-button sm-style-big').append('Add Reference')
+        .on('click', this._toggleNewReferencePopup)
     )
     return el
   }
 
-  _editBibliography() {
-    this.setState({
-      edit: true
+  _renderNewReferencePopup() {
+    //      targetTypes: [
+    //         'journal-article', 'book', 'conference-proceeding',
+    //         'clinical-trial', 'preprint', 'report',
+    //         'periodical', 'data-publication', 'patent',
+    //         'webpage', 'thesis', 'software'
+    //       ]
+  }
+
+  _toggleNewReferencePopup() {
+    this.extendState({
+      mode: 'create'
     })
   }
 
   _doneEditing() {
-    this.setState({
-      edit: false
+    this.extendState({
+      mode: undefined
     })
   }
 
-  _updateReferences(entityIds) {
-    this.context.referenceManager.updateReferences(entityIds)
-    this.setState({
-      edit: false
+  _onEdit(entityId) {
+    let db = this.context.pubMetaDbSession.getDocument()
+    let node = db.get(entityId)
+    this.extendState({
+      mode: 'edit',
+      modeProps: {
+        node
+      }
     })
+  }
+
+  _onRemove(entityId) {
+    const referenceManager = this.context.referenceManager
+    let bibliography = referenceManager.getBibliography()
+    let entityIdsList = bibliography.map((e) => {
+      if (!e.state.entity) {
+        console.error('FIXME: no entity for bib item', e.id)
+        return undefined
+      } else {
+        return e.state.entity.id
+      }
+    })
+    let entityIds = without(entityIdsList, entityId)
+    referenceManager.updateReferences(entityIds)
   }
 }

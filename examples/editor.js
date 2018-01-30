@@ -35,7 +35,6 @@ window.addEventListener('load', () => {
   let archivePath = getQueryStringParam('archive')
   let rawArchive = _readRawArchive(vfs, archivePath)
   let loader = new DarLoader()
-
   let archive = loader.load(rawArchive)
   Texture.mount({ archive }, window.document.body)
 })

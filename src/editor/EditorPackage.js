@@ -32,7 +32,6 @@ import ContainerNodeComponent from './components/ContainerNodeComponent'
 import ContributorsComponent from './components/ContributorsComponent'
 import ElementNodeComponent from './components/ElementNodeComponent'
 import EditXrefTool from './components/EditXrefTool'
-import EditRef from './components/EditRef'
 import EditExtLinkTool from './components/EditExtLinkTool'
 import FigComponent from './components/FigComponent'
 import CaptionComponent from './components/CaptionComponent'
@@ -58,9 +57,6 @@ import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
 import TableFigPreview from './components/TableFigPreview'
-
-import JournalCitationPreview from './components/JournalCitationPreview'
-import BookCitationPreview from './components/BookCitationPreview'
 
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
@@ -166,17 +162,12 @@ export default {
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('contributors', ContributorsComponent)
-    config.addComponent('edit-ref', EditRef)
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)
     config.addComponent('fn-preview', FnPreview)
     config.addComponent('fig-preview', FigPreview)
     config.addComponent('table-wrap-preview', TableFigPreview)
-
-    // Preview components for element-citation
-    config.addComponent('journal-citation-preview', JournalCitationPreview)
-    config.addComponent('book-citation-preview', BookCitationPreview)
 
     // Commands
     config.addCommand('edit-xref', EditInlineNodeCommand, {
@@ -212,7 +203,6 @@ export default {
       nodeType: 'table-wrap',
       commandGroup: 'insert-table'
     })
-
 
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'

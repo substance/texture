@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
 <!--
-  Kitchen XML for our texture editor.
+  Kitchen XML for Texture
 -->
 <article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
@@ -106,19 +106,21 @@
         <title>Orci varius natoque penatibus et magnis</title>
         <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet <xref ref-type="bibr" rid="r1 r7"/>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
         <fig id="fig1">
+          <label>Figure 1</label>
           <caption>
             <title>Behavioural design and implantation details.</title>
             <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
           </caption>
-          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig1.jpg"/>
+          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./data/kitchen-sink/fig1.jpg"/>
         </fig>
         <p>Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui..</p>
         <fig id="fig2">
+          <label>Figure 2</label>
           <caption>
             <title>Visual object processing in area AIP.</title>
             <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
           </caption>
-          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./assets/fig2.jpg"/>
+          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./data/kitchen-sink/fig2.jpg"/>
         </fig>
         <disp-quote>
           <p>Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>
@@ -126,6 +128,7 @@
         </disp-quote>
         <p>Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref ref-type="table" rid="table1"/>. </p>
         <table-wrap id="table1">
+          <label>Table 1</label>
           <caption>
             <title>Patient Care at End of Follow Up</title>
             <p>Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds

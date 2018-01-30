@@ -24,7 +24,7 @@ b.task('clean', function() {
 })
 
 b.task('assets', function() {
-  b.copy('./assets', DIST+'assets')
+  b.copy('./data', DIST+'data')
   b.copy('./node_modules/font-awesome', DIST+'font-awesome')
   b.copy('./node_modules/substance/dist', DIST+'substance/dist')
 

@@ -1,11 +1,13 @@
 import { NodeComponent } from 'substance'
 import { renderEntity } from '../../entities/entityHelpers'
+import Button from './Button'
 
 export default class RefComponent extends NodeComponent {
 
   render($$) {
     const db = this.context.pubMetaDbSession.getDocument()
     const ref = this.props.node
+    const entityId = ref.getAttribute('rid')
     let label = _getReferenceLabel(ref)
     let entityHtml = renderEntity(_getEntity(ref, db))
 
@@ -15,10 +17,23 @@ export default class RefComponent extends NodeComponent {
 
     // TODO: change css class to sc-ref-component
     return $$('div').addClass('se-reference').append(
-      $$('span').addClass('se-label').append(label),
-      ' ',
-      $$('span').addClass('se-text').html(entityHtml)
+      $$('div').addClass('se-label').append(label),
+      $$('div').addClass('se-text').html(entityHtml),
+      $$('div').addClass('se-actions').append(
+        $$(Button, {icon: 'pencil', tooltip: 'Edit'})
+          .on('click', this._onEdit.bind(this, entityId)),
+        $$(Button, {icon: 'trash', tooltip: 'Remove'})
+          .on('click', this._onRemove.bind(this, entityId))
+      )
     )
+  }
+
+  _onEdit(entityId) {
+    this.send('editReference', entityId)
+  }
+
+  _onRemove(entityId) {
+    this.send('removeReference', entityId)
   }
 }
 

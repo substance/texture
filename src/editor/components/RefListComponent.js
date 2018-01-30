@@ -1,7 +1,46 @@
-import { NodeComponent } from 'substance'
-import EditRelationship from '../../entities/EditRelationship'
+import { NodeComponent, without } from 'substance'
 import ModalDialog from '../../shared/ModalDialog'
+import CreateEntity from '../../entities/CreateEntity'
+import EditEntity from '../../entities/EditEntity'
 import RefComponent from './RefComponent'
+
+function prefillEntity(type, text) {
+  let defaults = {
+    type
+  }
+  if (type === 'person') {
+    let parts = text.split(' ')
+    defaults.surname = parts.pop()
+    defaults.givenNames = parts.join(' ')
+  } else if (type === 'organisation') {
+    defaults.name = text
+  } else if (type === 'book') {
+    defaults.source = text
+  } else if (type === 'journal-article') {
+    defaults.articleTitle = text
+  } else if (type === 'conference-proceeding') {
+    defaults.articleTitle = text
+  } else if (type === 'clinical-report') {
+    defaults.articleTitle = text
+  } else if (type === 'preprint') {
+    defaults.articleTitle = text
+  } else if (type === 'report') {
+    defaults.source = text
+  } else if (type === 'periodical') {
+    defaults.articleTitle = text
+  } else if (type === 'data-publication') {
+    defaults.dataTitle = text
+  } else if (type === 'patent') {
+    defaults.articleTitle = text
+  } else if (type === 'webpage') {
+    defaults.title = text
+  } else if (type === 'thesis') {
+    defaults.articleTitle = text
+  } else if (type === 'software') {
+    defaults.title = text
+  }
+  return defaults
+}
 
 export default class RefListComponent extends NodeComponent {
 
@@ -12,13 +51,16 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
-      'entitiesSelected': this._updateReferences
+      'editReference': this._onEdit,
+      'removeReference': this._onRemove
     })
   }
 
   getInitialState() {
     return {
-      edit: false
+      //edit: false,
+      mode: undefined,
+      modeProps: undefined
     }
   }
 
@@ -26,33 +68,28 @@ export default class RefListComponent extends NodeComponent {
     const referenceManager = this.context.referenceManager
     let el = $$('div').addClass('sc-ref-list')
     let bibliography = referenceManager.getBibliography()
-    let entityIds = bibliography.map((e) => {
-      if (!e.state.entity) {
-        console.error('FIXME: no entity for bib item', e.id)
-        return undefined
+    let mode = this.state.mode
+    let popup = this.state.popup
+
+    if (mode) {
+      let ModeComponent
+      if (mode === 'edit') {
+        ModeComponent = EditEntity
       } else {
-        return e.state.entity.id
+        ModeComponent = CreateEntity
       }
-    })
-    if (this.state.edit) {
-      var modal = $$(ModalDialog, {
-        width: 'medium',
-        textAlign: 'center'
-      })
-      modal.append(
-        $$(EditRelationship, {
-          propertyName: 'references',
-          entityIds,
-          targetTypes: [
-            'journal-article', 'book', 'conference-proceeding',
-            'clinical-trial', 'preprint', 'report',
-            'periodical', 'data-publication', 'patent',
-            'webpage', 'thesis', 'software'
-          ]
-        })
+
+      el.append(
+        $$(ModalDialog, {
+          width: 'medium',
+          textAlign: 'center',
+          transparent: true
+        }).append(
+          $$(ModeComponent, this.state.modeProps)
+        )
       )
-      el.append(modal)
     }
+
     el.append(
       $$('div').addClass('se-title').append(
         'References'
@@ -68,28 +105,110 @@ export default class RefListComponent extends NodeComponent {
         )
       )
     }
-    el.append(
-      $$('button').addClass('sc-button sm-style-big').append('Edit References').on('click', this._editBibliography)
+
+    let options = $$('div').addClass('se-ref-list-options').append(
+      $$('button').addClass('sc-button sm-style-big').append('Add Reference')
+        .on('click', this._toggleNewReferencePopup)
     )
+
+    if(popup) {
+      options.append(
+        this._renderNewReferencePopup($$)
+      )
+    }
+
+    el.append(options)
+
     return el
   }
 
-  _editBibliography() {
-    this.setState({
-      edit: true
+  _renderNewReferencePopup($$) {
+    const targetTypes = [
+      'journal-article', 'book', 'conference-proceeding',
+      'clinical-trial', 'preprint', 'report',
+      'periodical', 'data-publication', 'patent',
+      'webpage', 'thesis', 'software'
+    ]
+    const labelProvider = this.context.labelProvider
+
+    let el = $$('ul').addClass('se-new-reference-menu')
+    targetTypes.forEach(item => {
+      el.append(
+        $$('li').addClass('se-type').append(
+          labelProvider.getLabel(item)
+        ).on('click', this._onCreate.bind(this, item))
+      )
+    })
+
+    return el
+  }
+
+  _toggleNewReferencePopup() {
+    const popup = this.state.popup
+    this.extendState({
+      popup: !popup
     })
   }
 
   _doneEditing() {
-    this.setState({
-      edit: false
+    this.extendState({
+      mode: undefined
     })
   }
 
-  _updateReferences(entityIds) {
-    this.context.referenceManager.updateReferences(entityIds)
-    this.setState({
-      edit: false
+  _onCreate(targetType) {
+    let defaults = {}
+    defaults = prefillEntity(targetType, '')
+    this.extendState({
+      mode: 'create',
+      modeProps: {
+        type: targetType,
+        defaults: defaults
+      }
     })
+  }
+
+  _onEdit(entityId) {
+    let db = this.context.pubMetaDbSession.getDocument()
+    let node = db.get(entityId)
+    this.extendState({
+      mode: 'edit',
+      modeProps: {
+        node
+      }
+    })
+  }
+
+  _getRefIdForEntityId(entityId) {
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
+    let refNode = doc.find(`ref-list > ref[rid=${entityId}]`)
+    if (refNode) return refNode.id
+  }
+
+  _onRemove(entityId) {
+    const referenceManager = this.context.referenceManager
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
+    let refId = this._getRefIdForEntityId(entityId)
+    let xrefIndex = doc.getIndex('xrefs')
+    let xrefs = xrefIndex.get(refId)
+    if (xrefs.length === 0 || window.confirm(`If you delete this reference, it will also be removed from ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
+      editorSession.transaction(tx => {
+        let refList = doc.find('ref-list')
+        let refNode = doc.get(refId)
+        refList.removeChild(refNode)
+        tx.delete(refNode.id)
+        // Now update xref targets
+        xrefs.forEach((xrefId) => {
+          let xref = doc.get(xrefId)
+          let idrefs = xref.attr('rid').split(' ')
+          idrefs = without(idrefs, refId)
+          xref.setAttribute('rid', idrefs.join(' '))
+        })
+      })
+    }
+    // Make sure labels are regenerated
+    referenceManager._updateLabels()
   }
 }

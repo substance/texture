@@ -1,19 +1,15 @@
+import { without } from 'substance'
+
 export default function updateEntityChildArray(editorSession, nodeId, tagName, attribute, oldEntityIds, newEntityIds) {
 
   editorSession.transaction(tx => {
     let node = tx.get(nodeId)
 
-    // Originally we had this code to compute a delta and make the most minimal
-    // update.
-    //
-    // let addedEntityIds = without(newEntityIds, ...oldEntityIds)
-    // let removedEntityIds = without(oldEntityIds, ...newEntityIds)
-    //
-    // However with the need for resorting we had to disable this
-    // TODO: find a more efficient solution.
+    let addedEntityIds = without(newEntityIds, ...oldEntityIds)
+    let removedEntityIds = without(oldEntityIds, ...newEntityIds)
 
     // Remove old entities
-    oldEntityIds.forEach(entityId => {
+    removedEntityIds.forEach(entityId => {
       let entityRefNode = node.find(`${tagName}[${attribute}=${entityId}]`)
       node.removeChild(entityRefNode)
       // Remove it completely
@@ -21,7 +17,7 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
     })
 
     // Create new entities
-    newEntityIds.forEach(entityId => {
+    addedEntityIds.forEach(entityId => {
       let entityRefNode = node.find(`${tagName}[${attribute}=${entityId}]`)
       if (!entityRefNode) {
         let opts = {}
@@ -35,6 +31,13 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
       }
       node.appendChild(entityRefNode)
     })
+
+    // TODO: Now, sort elements according to newEntityIds order
+    // 1) create mapping table for all ref-nodes entityId -> refNode
+    //     map = {'entity-12': <ref id="r1" rid="entity-12"/>}
+    // 2) node.empty()
+    // 3) iterate through newEntityIds and do node.append(map[entityId])
+    console.warn('TODO: implement sorting')
     tx.setSelection(null)
   })
 }

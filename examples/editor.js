@@ -1,7 +1,7 @@
 import {
   getQueryStringParam, DocumentArchive, ManifestLoader,
 } from 'substance'
-import { ArticleLoader, PubMetaLoader, Texture } from 'substance-texture'
+import { ArticleLoader, PubMetaLoader, Texture, JATSImportDialog } from 'substance-texture'
 
 
 class DarLoader {
@@ -34,9 +34,17 @@ window.addEventListener('load', () => {
   const vfs = window.vfs
   let archivePath = getQueryStringParam('archive')
   let rawArchive = _readRawArchive(vfs, archivePath)
-  let loader = new DarLoader()
-  let archive = loader.load(rawArchive)
-  Texture.mount({ archive }, window.document.body)
+
+  try {
+    let loader = new DarLoader()
+    let archive = loader.load(rawArchive)
+    Texture.mount({ archive }, window.document.body)
+  } catch(err) {
+    if (err.type === 'jats-import-error') {
+      //  Render
+      JATSImportDialog.mount({ errors: err.detail }, window.document.body)
+    }
+  }
 })
 
 

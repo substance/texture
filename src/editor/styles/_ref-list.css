@@ -44,6 +44,37 @@
   cursor: pointer;
 }
 
-.sc-ref-list > .sc-button {
+.sc-ref-list > .se-ref-list-options {
+  position: relative;
+}
+
+.sc-ref-list > .se-ref-list-options > .sc-button {
   margin: 30px auto;
+}
+
+.sc-ref-list .se-new-reference-menu {
+  position: absolute;
+  top: -10px;
+  left: calc(50% + 80px);
+  width: 200px;
+  margin-bottom: 10px;
+  padding: 10px;
+  list-style: none;
+  background: #fff;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;
+}
+
+.sc-ref-list .se-new-reference-menu .se-type {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.sc-ref-list .se-new-reference-menu .se-type:hover {
+  border-left: 1px solid #eee;
+  margin-left: -1px;
 }

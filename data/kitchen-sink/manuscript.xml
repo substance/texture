@@ -118,7 +118,7 @@
           <label>Figure 2</label>
           <caption>
             <title>Visual object processing in area AIP.</title>
-            <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+            <!-- NOTE: we are leaving out the empty p element for caption content, as this automatically expanded -->
           </caption>
           <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./data/kitchen-sink/fig2.jpg"/>
         </fig>

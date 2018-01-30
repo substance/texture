@@ -1,7 +1,7 @@
 import {
   getQueryStringParam, DocumentArchive, ManifestLoader,
 } from 'substance'
-import { ArticleLoader, PubMetaLoader, Texture } from 'substance-texture'
+import { ArticleLoader, PubMetaLoader, Texture, JATSImportDialog } from 'substance-texture'
 
 
 class DarLoader {
@@ -34,21 +34,31 @@ window.addEventListener('load', () => {
   const vfs = window.vfs
   let archivePath = getQueryStringParam('archive')
   let rawArchive = _readRawArchive(vfs, archivePath)
-  let loader = new DarLoader()
-  let archive = loader.load(rawArchive)
-  Texture.mount({ archive }, window.document.body)
+
+  try {
+    let loader = new DarLoader()
+    let archive = loader.load(rawArchive)
+    Texture.mount({ archive }, window.document.body)
+  } catch(err) {
+    console.error(err)
+    if (err.type === 'jats-import-error') {
+      JATSImportDialog.mount({ errors: err.detail }, window.document.body)
+    } else {
+      window.document.body.innerHTML = err.message
+    }
+  }
 })
 
 
 function _readRawArchive(fs, darUrl) {
   let manifestXML = fs.readFileSync(`${darUrl}/manifest.xml`)
-  let manifest = ManifestLoader.load(manifestXML)
-  let docs = manifest.manifest.findAll('documents > document')
-  let assets = manifest.manifest.findAll('assets > asset')
-
+  let manifestSession = ManifestLoader.load(manifestXML)
+  let manifest = manifestSession.getDocument()
+  let docs = manifest.findAll('documents > document')
+  let assets = manifest.findAll('assets > asset')
   let rawArchive = {
     'manifest.xml': {
-      type: 'application/manifest',
+      type: 'application/dar-manifest',
       data: manifestXML
     }
   }
@@ -58,7 +68,7 @@ function _readRawArchive(fs, darUrl) {
     let type = entry.attr('type')
     let content = fs.readFileSync(`${darUrl}/${entry.path}`)
     rawArchive[path] = {
-      type: `application/${type}`,
+      type: type,
       data: content
     }
   })

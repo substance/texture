@@ -1,10 +1,9 @@
-<!-- TODO: change start tag to <archive> -->
-<container type="rda">
+<archive type="rda">
   <documents>
-    <document name="Manuscript" type="article" path="manuscript.xml" />
+    <document name="Manuscript" type="application/jats4m" path="manuscript.xml" />
   </documents>
-  <!--<assets>
+  <assets>
     <asset mime-type="image/jpg" path="fig1.jpg"/>
     <asset mime-type="image/jpg" path="fig2.jpg"/>
-  </assets>-->
-</container>
+  </assets>
+</archive>

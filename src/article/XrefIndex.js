@@ -29,7 +29,9 @@ export default class XrefIndex extends DocumentIndex {
 
   // TODO: use object interface? so we can combine filters (path and type)
   get(targetId) {
-    return this.byTarget.get(targetId).slice() || []
+    let ids = this.byTarget.get(targetId)
+    // We need to return a clone, as the index may change while the result is used
+    return ids ? ids.slice() : []
   }
 
   create(xref) {

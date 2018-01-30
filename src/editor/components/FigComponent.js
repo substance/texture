@@ -5,7 +5,6 @@ export default class FigComponent extends NodeComponent {
 
   render($$) {
     const node = this.props.node
-
     let el = $$('div')
       .addClass('sc-'+node.type)
       .attr('data-id', node.id)
@@ -27,6 +26,7 @@ export default class FigComponent extends NodeComponent {
 
     const title = node.findChild('title')
     let titleEl = $$(this.getComponent('text-property-editor'), {
+      placeholder: 'Enter figure title',
       path: title.getPath(),
       disabled: this.props.disabled
     }).addClass('se-title').ref('title')
@@ -39,11 +39,8 @@ export default class FigComponent extends NodeComponent {
         node: caption,
         disabled: this.props.disabled
       })
-    } else {
-      // TODO: ability to add a caption
     }
     el.append(captionEl.ref('caption'))
-
     return el
   }
 

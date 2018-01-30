@@ -9,6 +9,7 @@ export default class CaptionComponent extends Component {
       .addClass('sc-caption')
       .attr('data-id', node.id)
     let contentEl = $$(this.getComponent('container'), {
+      placeholder: 'Enter Caption',
       node: node,
       disabled: this.props.disabled
     })

@@ -61,9 +61,9 @@
       <optional>
         <ref name="title"/>
       </optional>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="p"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
 

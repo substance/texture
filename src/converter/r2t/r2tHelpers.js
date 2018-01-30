@@ -123,6 +123,12 @@ export function expandCaption(el, insertPos) {
       el.createElement('p')
     )
     el.insertAt(insertPos, caption)
+  } else {
+    // Create an empty p element if not there
+    let p = caption.find('p')
+    if (!p) {
+      caption.append(el.createElement('p'))
+    }
   }
 }
 

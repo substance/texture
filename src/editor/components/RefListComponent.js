@@ -1,4 +1,4 @@
-import { NodeComponent, isNil, without } from 'substance'
+import { NodeComponent, without } from 'substance'
 import ModalDialog from '../../shared/ModalDialog'
 import CreateEntity from '../../entities/CreateEntity'
 import EditEntity from '../../entities/EditEntity'

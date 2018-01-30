@@ -179,18 +179,36 @@ export default class RefListComponent extends NodeComponent {
     })
   }
 
+  _getRefIdForEntityId(entityId) {
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
+    let refNode = doc.find(`ref-list > ref[rid=${entityId}]`)
+    if (refNode) return refNode.id
+  }
+
   _onRemove(entityId) {
     const referenceManager = this.context.referenceManager
-    let bibliography = referenceManager.getBibliography()
-    let entityIdsList = bibliography.map((e) => {
-      if (!e.state.entity) {
-        console.error('FIXME: no entity for bib item', e.id)
-        return undefined
-      } else {
-        return e.state.entity.id
-      }
-    })
-    let entityIds = without(entityIdsList, entityId)
-    referenceManager.updateReferences(entityIds)
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
+    let refId = this._getRefIdForEntityId(entityId)
+    let xrefIndex = doc.getIndex('xrefs')
+    let xrefs = xrefIndex.get(refId)
+    if (xrefs.length === 0 || window.confirm(`If you delete this reference, it will also be removed from ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
+      editorSession.transaction(tx => {
+        let refList = doc.find('ref-list')
+        let refNode = doc.get(refId)
+        refList.removeChild(refNode)
+        tx.delete(refNode.id)
+        // Now update xref targets
+        xrefs.forEach((xrefId) => {
+          let xref = doc.get(xrefId)
+          let idrefs = xref.attr('rid').split(' ')
+          idrefs = without(idrefs, refId)
+          xref.setAttribute('rid', idrefs.join(' '))
+        })
+      })
+    }
+    // Make sure labels are regenerated
+    referenceManager._updateLabels()
   }
 }

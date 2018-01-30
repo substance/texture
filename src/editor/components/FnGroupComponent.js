@@ -73,19 +73,23 @@ export default class FnGroupComponent extends NodeComponent {
 
   _removeFn(fnId) {
     let editorSession = this.context.editorSession
-    editorSession.transaction(doc => {
-      let xrefIndex = doc.getIndex('xrefs')
-      let xrefs = xrefIndex.get(fnId)
-      xrefs.forEach((xrefId) => {
-        let xref = doc.get(xrefId)
-        let idrefs = xref.attr('rid').split(' ')
-        idrefs = without(idrefs, fnId)
-        xref.setAttribute('rid', idrefs.join(' '))
+    let doc = editorSession.getDocument()
+    let xrefIndex = doc.getIndex('xrefs')
+    let xrefs = xrefIndex.get(fnId)
+
+    if (xrefs.length === 0 || window.confirm(`If you delete this footnote, it will also be removed from ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
+      editorSession.transaction(tx => {
+        xrefs.forEach((xrefId) => {
+          let xref = tx.get(xrefId)
+          let idrefs = xref.attr('rid').split(' ')
+          idrefs = without(idrefs, fnId)
+          xref.setAttribute('rid', idrefs.join(' '))
+        })
+        let fnGroup = tx.find('fn-group')
+        let fn = fnGroup.find(`fn#${fnId}`)
+        fnGroup.removeChild(fn)
       })
-      let fnGroup = doc.find('fn-group')
-      let fn = fnGroup.find(`fn#${fnId}`)
-      fnGroup.removeChild(fn)
-    })
-    this.rerender()
+      this.rerender()
+    }
   }
 }

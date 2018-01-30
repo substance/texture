@@ -10,7 +10,6 @@ export default class ReferenceManager extends AbstractCitationManager {
     if(!this.pubMetaDbSession) {
       throw new Error("'pubMetaDbSession' is mandatory.")
     }
-
     // compute initial labels
     this._updateLabels()
   }

@@ -29,7 +29,7 @@ export default class XrefIndex extends DocumentIndex {
 
   // TODO: use object interface? so we can combine filters (path and type)
   get(targetId) {
-    return this.byTarget.get(targetId) || []
+    return this.byTarget.get(targetId).slice() || []
   }
 
   create(xref) {

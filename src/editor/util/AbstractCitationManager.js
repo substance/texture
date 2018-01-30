@@ -124,7 +124,10 @@ export default class AbstractCitationManager {
         numbers.push(order[id])
       }
       // invalid labels shall be the same as empty ones
-      if (isInvalid) numbers = []
+      if (isInvalid) {
+        numbers = []
+        console.warn('invalid label detected for ', xref.toXML().getNativeElement())
+      }
       xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
     })
 

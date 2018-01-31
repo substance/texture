@@ -14,29 +14,32 @@
   text-align: center;
 }
 
-.sc-ref-list > .se-reference {
+.sc-ref-list > .se-ref-item {
   display: flex;
+}
+
+.sc-ref-list > .se-ref-item > .sc-ref-component {
+  display: flex;
+  flex: 1 1 0;
   margin-bottom: 15px;
 }
 
-.sc-ref-list > .se-reference > .se-label {
+.sc-ref-list > .se-ref-item > .sc-ref-component > .se-label {
   min-width: 20px;
   margin: 0px 20px;
   font-weight: var(--strong-font-weight);
   text-align: center;
 }
 
-.sc-ref-list > .se-reference > .se-text {
-  margin-right: 30px;
-  margin-left: 0px;
+.sc-ref-list > .se-ref-item > .sc-ref-component > .se-text {
+  margin-right: 10px;
   flex: 1 1 0;
 }
 
-.sc-ref-list > .se-reference > .se-actions {
-
+.sc-ref-list > .se-ref-item > .se-ref-actions {
 }
 
-.sc-ref-list > .se-reference > .se-actions > .sc-button {
+.sc-ref-list > .se-ref-item > .se-ref-actions > .sc-button {
   display: inline-block;
   margin-left: 10px;
   font-size: 16px;
@@ -58,7 +61,7 @@
   left: calc(50% + 80px);
   width: 200px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 10px 0px;
   list-style: none;
   background: #fff;
   -moz-border-radius: 5px;
@@ -70,11 +73,10 @@
 }
 
 .sc-ref-list .se-new-reference-menu .se-type {
-  padding: 5px;
+  padding: 5px 15px;
   cursor: pointer;
 }
 
 .sc-ref-list .se-new-reference-menu .se-type:hover {
-  border-left: 1px solid #eee;
-  margin-left: -1px;
+  background: #eee;
 }

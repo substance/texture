@@ -3,6 +3,7 @@ import ModalDialog from '../../shared/ModalDialog'
 import CreateEntity from '../../entities/CreateEntity'
 import EditEntity from '../../entities/EditEntity'
 import RefComponent from './RefComponent'
+import Button from './Button'
 
 function prefillEntity(type, text) {
   let defaults = {
@@ -51,14 +52,13 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
-      'editReference': this._onEdit,
-      'removeReference': this._onRemove
+      'created': this._onAddNew
     })
   }
 
   getInitialState() {
     return {
-      //edit: false,
+      popup: false,
       mode: undefined,
       modeProps: undefined
     }
@@ -96,7 +96,18 @@ export default class RefListComponent extends NodeComponent {
       )
     )
     bibliography.forEach((reference) => {
-      el.append($$(RefComponent, { node: reference }))
+      const entityId = reference.getAttribute('rid')
+      el.append(
+        $$('div').addClass('se-ref-item').append(
+          $$(RefComponent, { node: reference }),
+          $$('div').addClass('se-ref-actions').append(
+            $$(Button, {icon: 'pencil', tooltip: 'Edit'})
+              .on('click', this._onEdit.bind(this, entityId)),
+            $$(Button, {icon: 'trash', tooltip: 'Remove'})
+              .on('click', this._onRemove.bind(this, entityId))
+          )
+        )
+      )
     })
     if(bibliography.length === 0) {
       el.append(
@@ -151,8 +162,21 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _doneEditing() {
-    this.extendState({
+    this.setState({
       mode: undefined
+    })
+  }
+
+  _onAddNew(entityId) {
+    const editorSession = this.context.editorSession
+    editorSession.transaction(tx => {
+      let refList = tx.find('ref-list')
+      let entityRefNode = tx.createElement('ref')
+      entityRefNode.setAttribute('rid', entityId)
+      refList.appendChild(entityRefNode)
+    })
+    this.setState({
+      popup: false
     })
   }
 

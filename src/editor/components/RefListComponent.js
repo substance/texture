@@ -3,6 +3,7 @@ import ModalDialog from '../../shared/ModalDialog'
 import CreateEntity from '../../entities/CreateEntity'
 import EditEntity from '../../entities/EditEntity'
 import RefComponent from './RefComponent'
+import Button from './Button'
 
 function prefillEntity(type, text) {
   let defaults = {
@@ -51,9 +52,7 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
-      'created': this._onAddNew,
-      'editReference': this._onEdit,
-      'removeReference': this._onRemove
+      'created': this._onAddNew
     })
   }
 
@@ -97,7 +96,18 @@ export default class RefListComponent extends NodeComponent {
       )
     )
     bibliography.forEach((reference) => {
-      el.append($$(RefComponent, { node: reference, mode: 'back' }))
+      const entityId = reference.getAttribute('rid')
+      el.append(
+        $$('div').addClass('se-ref-item').append(
+          $$(RefComponent, { node: reference }),
+          $$('div').addClass('se-ref-actions').append(
+            $$(Button, {icon: 'pencil', tooltip: 'Edit'})
+              .on('click', this._onEdit.bind(this, entityId)),
+            $$(Button, {icon: 'trash', tooltip: 'Remove'})
+              .on('click', this._onRemove.bind(this, entityId))
+          )
+        )
+      )
     })
     if(bibliography.length === 0) {
       el.append(

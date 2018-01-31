@@ -7,7 +7,6 @@ export default class RefComponent extends NodeComponent {
   render($$) {
     const db = this.context.pubMetaDbSession.getDocument()
     const ref = this.props.node
-    const entityId = ref.getAttribute('rid')
     let label = _getReferenceLabel(ref)
     let entityHtml = renderEntity(_getEntity(ref, db))
 
@@ -15,31 +14,10 @@ export default class RefComponent extends NodeComponent {
     // if so, use the label provider
     entityHtml = entityHtml || '<i>Not available</i>'
 
-    let el = $$('div').addClass('sc-ref-component').append(
+    return $$('div').addClass('sc-ref-component').append(
       $$('div').addClass('se-label').append(label),
       $$('div').addClass('se-text').html(entityHtml)
     )
-
-    if(this.props.mode === 'back') {
-      el.append(
-        $$('div').addClass('se-actions').append(
-          $$(Button, {icon: 'pencil', tooltip: 'Edit'})
-            .on('click', this._onEdit.bind(this, entityId)),
-          $$(Button, {icon: 'trash', tooltip: 'Remove'})
-            .on('click', this._onRemove.bind(this, entityId))
-        )
-      )
-    }
-
-    return el
-  }
-
-  _onEdit(entityId) {
-    this.send('editReference', entityId)
-  }
-
-  _onRemove(entityId) {
-    this.send('removeReference', entityId)
   }
 }
 

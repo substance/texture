@@ -15,16 +15,23 @@ export default class RefComponent extends NodeComponent {
     // if so, use the label provider
     entityHtml = entityHtml || '<i>Not available</i>'
 
-    return $$('div').addClass('sc-ref-component').append(
+    let el = $$('div').addClass('sc-ref-component').append(
       $$('div').addClass('se-label').append(label),
-      $$('div').addClass('se-text').html(entityHtml),
-      $$('div').addClass('se-actions').append(
-        $$(Button, {icon: 'pencil', tooltip: 'Edit'})
-          .on('click', this._onEdit.bind(this, entityId)),
-        $$(Button, {icon: 'trash', tooltip: 'Remove'})
-          .on('click', this._onRemove.bind(this, entityId))
-      )
+      $$('div').addClass('se-text').html(entityHtml)
     )
+
+    if(this.props.mode === 'back') {
+      el.append(
+        $$('div').addClass('se-actions').append(
+          $$(Button, {icon: 'pencil', tooltip: 'Edit'})
+            .on('click', this._onEdit.bind(this, entityId)),
+          $$(Button, {icon: 'trash', tooltip: 'Remove'})
+            .on('click', this._onRemove.bind(this, entityId))
+        )
+      )
+    }
+
+    return el
   }
 
   _onEdit(entityId) {

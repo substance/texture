@@ -92,9 +92,6 @@
       <abstract>
         <p><bold>Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r7"/></p>
       </abstract>
-      <trans-abstract xml:lang="de">
-        <p>Deutsche Übersetzung</p>
-      </trans-abstract>
     </article-meta>
   </front>
   <body>

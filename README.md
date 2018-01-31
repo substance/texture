@@ -31,6 +31,7 @@ Group authors                           | Unscheduled
 **Supported Content**                   |
 Paragraph                               | ![prod](https://img.shields.io/badge/status-prod-green.svg)
 Heading                                 | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Math                                    | Unscheduled
 List                                    | Alpha 5
 Blockquote                              | ![prod](https://img.shields.io/badge/status-prod-green.svg)
 Figure                                  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)

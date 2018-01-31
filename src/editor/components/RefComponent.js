@@ -1,6 +1,5 @@
 import { NodeComponent } from 'substance'
 import { renderEntity } from '../../entities/entityHelpers'
-import Button from './Button'
 
 export default class RefComponent extends NodeComponent {
 

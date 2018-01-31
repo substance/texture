@@ -15,8 +15,7 @@ export default class RefComponent extends NodeComponent {
     // if so, use the label provider
     entityHtml = entityHtml || '<i>Not available</i>'
 
-    // TODO: change css class to sc-ref-component
-    return $$('div').addClass('se-reference').append(
+    return $$('div').addClass('sc-ref-component').append(
       $$('div').addClass('se-label').append(label),
       $$('div').addClass('se-text').html(entityHtml),
       $$('div').addClass('se-actions').append(

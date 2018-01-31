@@ -32,12 +32,19 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
       node.appendChild(entityRefNode)
     })
 
-    // TODO: Now, sort elements according to newEntityIds order
-    // 1) create mapping table for all ref-nodes entityId -> refNode
-    //     map = {'entity-12': <ref id="r1" rid="entity-12"/>}
-    // 2) node.empty()
-    // 3) iterate through newEntityIds and do node.append(map[entityId])
-    console.warn('TODO: implement sorting')
+    let map = {}
+    let refs = tx.findAll(`${tagName}`)
+    refs.forEach(ref => {
+      const rid = ref.getAttribute('rid')
+      map[rid] = ref
+    })
+    node.children.forEach(child => {
+      node.removeChild(child)
+    })
+    newEntityIds.forEach(entityId => {
+      node.appendChild(map[entityId])
+    })
+
     tx.setSelection(null)
   })
 }

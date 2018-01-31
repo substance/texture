@@ -2,6 +2,102 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="JATS-archiving.rng"/>
 
+  <define name="article-meta">
+    <element name="article-meta">
+      <ref name="article-meta-attlist"/>
+      <zeroOrMore>
+        <ref name="article-id"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="article-categories"/>
+      </optional>
+      <optional>
+        <ref name="title-group"/>
+      </optional>
+      <!-- we support 0..2 contrib groups, one for authors, one for editors -->
+      <optional>
+        <ref name="contrib-group"/>
+      </optional>
+      <optional>
+        <ref name="contrib-group"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="aff"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="author-notes"/>
+      </optional>
+      <!-- Should we limit this and be more explicit -->
+      <zeroOrMore>
+        <ref name="pub-date"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="volume"/>
+      </optional>
+      <optional>
+        <ref name="issue"/>
+      </optional>
+      <optional>
+        <ref name="isbn"/>
+      </optional>
+      <optional>
+        <choice>
+          <group>
+            <optional>
+              <ref name="fpage"/>
+              <optional>
+                <ref name="lpage"/>
+              </optional>
+            </optional>
+            <optional>
+              <ref name="page-range"/>
+            </optional>
+          </group>
+          <ref name="elocation-id"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="history"/>
+      </optional>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="self-uri"/>
+      </zeroOrMore>
+      <!-- Verify the use-cases for related article? Maybe this should not be
+           part of the source, and instead be included in a post-processing step
+           at journals, so database of related articles can be maintained separately
+      -->
+      <zeroOrMore>
+        <ref name="related-article"/>
+        <ref name="related-object"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="abstract"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="trans-abstract"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="kwd-group"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="funding-group"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="conference"/>
+      </zeroOrMore>
+      <!-- needs specification -->
+      <optional>
+        <ref name="counts"/>
+      </optional>
+      <optional>
+        <ref name="custom-meta-group"/>
+      </optional>
+    </element>
+  </define>
+
   <!--
     WIP: it should be clear how to use this.
       There is no example showing use of <def>.
@@ -238,7 +334,7 @@
   <define name="disp-quote">
     <element name="disp-quote">
       <ref name="disp-quote-attlist"/><!-- use original attributes -->
-      <zeroOrMore><ref name="para-level"/></zeroOrMore>
+      <oneOrMore><ref name="p"/></oneOrMore>
       <optional><ref name="attrib"/></optional>
     </element>
   </define>

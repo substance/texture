@@ -20,8 +20,6 @@ Example:
 
 ### `<contrib>`
 
-Attributes for `contrib`:
-
 ```
 @id
 @equal-contrib signifies equal contribution

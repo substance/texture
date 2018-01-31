@@ -51,6 +51,7 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
+      'created': this._onAddNew,
       'editReference': this._onEdit,
       'removeReference': this._onRemove
     })
@@ -58,7 +59,7 @@ export default class RefListComponent extends NodeComponent {
 
   getInitialState() {
     return {
-      //edit: false,
+      popup: false,
       mode: undefined,
       modeProps: undefined
     }
@@ -96,7 +97,7 @@ export default class RefListComponent extends NodeComponent {
       )
     )
     bibliography.forEach((reference) => {
-      el.append($$(RefComponent, { node: reference }))
+      el.append($$(RefComponent, { node: reference, mode: 'back' }))
     })
     if(bibliography.length === 0) {
       el.append(
@@ -151,8 +152,21 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _doneEditing() {
-    this.extendState({
+    this.setState({
       mode: undefined
+    })
+  }
+
+  _onAddNew(entityId) {
+    const editorSession = this.context.editorSession
+    editorSession.transaction(tx => {
+      let refList = tx.find('ref-list')
+      let entityRefNode = tx.createElement('ref')
+      entityRefNode.setAttribute('rid', entityId)
+      refList.appendChild(entityRefNode)
+    })
+    this.setState({
+      popup: false
     })
   }
 

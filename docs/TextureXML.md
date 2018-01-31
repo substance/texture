@@ -4,29 +4,31 @@ This is the XML structure, used internally by Texture. It's largely the same as 
 
 * NOTE: All data about contribs, references, affiliations live in a separate database outside of the XML. See `EntityDatabase.js` for the schema to be used*  
 
-## Ref
 
-Attributes for `ref`:
+### `<aff>`
 
-- Attribute `id` used as targets in `xref`
-- Attribute `rid` points to entityId in entity database
-
-Example for `ref`:
-
-```xml
-<ref id="r1" rid="journal-article-24"></ref>
+```
+@id
+@rid points to entityId in entity database
 ```
 
+Example:
 
-## Contrib
+```xml
+<aff id="aff1" rid="organisation-1"></aff>
+```
+
+### `<contrib>`
 
 Attributes for `contrib`:
 
-- `id`
-- `equal-contrib` signifies equal contribution
-- `rid` points to entityId in entity database
+```
+@id
+@equal-contrib signifies equal contribution
+@rid points to entityId in entity database
+```
 
-Example for `contrib-group[content-type="authors"]`:
+Example for authors group:
 
 ```xml
 <contrib-group content-type="authors" equal-contrib="yes">
@@ -35,29 +37,56 @@ Example for `contrib-group[content-type="authors"]`:
 </contrib-group>
 ```
 
-## Affiliation
+### `<list>`
 
-Attributes for `<aff>`:
+```
+@id
+@list-type bullet|order
 
-- `id`
-- Attribute `rid` points to entityId in entity database
+list-item
+```
+
+```xml
+<list list-type="bullet">
+  <list-item level="1">item 1</list-item>
+  <list-item level="2">item 1.1</list-item>
+  <list-item level="2">item 1.2</list-item>
+</list>
+```
+
+### `<list-item>`
+
+```
+@level
+
+#PCDATA
+```
+
+### `<ref>`:
+
+```
+@id used as targets in xref
+@rid points to entityId in entity database
+```
 
 Example:
 
 ```xml
-<aff id="aff1" rid="organisation-1"></aff>
+<ref id="r1" rid="journal-article-24"></ref>
 ```
 
-## Cell
 
+## Reproducible Extensions
 
-Content model for `cell`:
+*NOTE, this elements are not supported by Texture directly, but can be used with Stencila.*
+
+### `cell`
 
 ```
 source-code, output
 ```
 
-Example for `cell`:
+Example:
 
 ```xml
 <cell>
@@ -66,16 +95,14 @@ Example for `cell`:
 </cell>
 ```
 
-## ReproFig
 
-
-Content model for `repro-fig`:
+### `repro-fig`
 
 ```
 object-id[pub-id-type=doi], title, caption, cell
 ```
 
-Example for `repro-fig`:
+Example:
 
 ```xml
 <repro-fig>

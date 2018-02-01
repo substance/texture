@@ -1,84 +1,84 @@
 import {
-  getQueryStringParam, DocumentArchive, ManifestLoader,
+  getQueryStringParam, Component, DefaultDOMElement, parseKeyEvent
 } from 'substance'
-import { ArticleLoader, PubMetaLoader, Texture, JATSImportDialog } from 'substance-texture'
-
-
-class DarLoader {
-
-  load(rawArchive) {
-    let sessions
-    if (rawArchive['pub-meta.json']) {
-      sessions = {
-        'manifest': ManifestLoader.load(rawArchive['manifest.xml'].data),
-        'manuscript': ArticleLoader.load(rawArchive['manuscript.xml'].data),
-        'pub-meta': PubMetaLoader.load(rawArchive['pub-meta.json'].data),
-      }
-    } else {
-      // Injestion: We need to extract pubMetaDb from the manuscript
-      let pubMetaSession = PubMetaLoader.load()
-      let manuscriptSession = ArticleLoader.load(rawArchive['manuscript.xml'].data, {
-        pubMetaDb: pubMetaSession.getDocument()
-      })
-      sessions = {
-        'manifest': ManifestLoader.load(rawArchive['manifest.xml'].data),
-        'manuscript': manuscriptSession,
-        'pub-meta': pubMetaSession
-      }
-    }
-    return new DocumentArchive(sessions)
-  }
-}
+import { Texture, JATSImportDialog, TextureArchive, VfsClient } from 'substance-texture'
 
 window.addEventListener('load', () => {
-  const vfs = window.vfs
-  let archivePath = getQueryStringParam('archive')
-  let rawArchive = _readRawArchive(vfs, archivePath)
-
-  try {
-    let loader = new DarLoader()
-    let archive = loader.load(rawArchive)
-    Texture.mount({ archive }, window.document.body)
-  } catch(err) {
-    console.error(err)
-    if (err.type === 'jats-import-error') {
-      JATSImportDialog.mount({ errors: err.detail }, window.document.body)
-    } else {
-      window.document.body.innerHTML = err.message
-    }
-  }
+  MyTextureEditor.mount({}, window.document.body)
 })
 
+/* Sample integration of Texture */
+class MyTextureEditor extends Component {
 
-function _readRawArchive(fs, darUrl) {
-  let manifestXML = fs.readFileSync(`${darUrl}/manifest.xml`)
-  let manifestSession = ManifestLoader.load(manifestXML)
-  let manifest = manifestSession.getDocument()
-  let docs = manifest.findAll('documents > document')
-  let assets = manifest.findAll('assets > asset')
-  let rawArchive = {
-    'manifest.xml': {
-      type: 'application/dar-manifest',
-      data: manifestXML
+  didMount() {
+    this._init()
+    DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
+  }
+
+  dispose() {
+    DefaultDOMElement.getBrowserWindow().off(this)
+  }
+
+  getInitialState() {
+    return {
+      archive: undefined,
+      error: undefined
     }
   }
 
-  docs.forEach(entry => {
-    let path = entry.attr('path')
-    let type = entry.attr('type')
-    let content = fs.readFileSync(`${darUrl}/${entry.path}`)
-    rawArchive[path] = {
-      type: type,
-      data: content
-    }
-  })
+  render($$) {
+    let el = $$('div').addClass('sc-app')
+    let archive = this.state.archive
+    let err = this.state.error
 
-  assets.forEach(asset => {
-    let path = asset.attr('path')
-    rawArchive[path] = {
-      type: 'image/jpg',
-      url: path
+    if (archive) {
+      el.append(
+        $$(Texture, {archive})
+      )
+    } else if (err) {
+      if (err.type === 'jats-import-error') {
+        el.append(
+          $$(JATSImportDialog, { errors: err.detail })
+        )
+      } else {
+        el.append(
+          'ERROR:',
+          err.message
+        )
+      }
+    } else {
+      el.append('Loading...')
     }
-  })
-  return rawArchive
+    return el
+  }
+
+  _init() {
+    let archivePath = getQueryStringParam('archive')
+    let vfsClient = new VfsClient(window.vfs)
+    TextureArchive.load(archivePath, vfsClient).then(archive => {
+      this.setState({archive})
+    }).catch(err => {
+      this.setState({err})
+    })
+  }
+
+  /*
+    We may want an explicit save button, that can be configured on app level,
+    but passed down to editor toolbars.
+  */
+  _save() {
+    this.state.archive.save().then(() => {
+      console.info('successfully saved')
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  _keyDown(e) {
+    let key = parseKeyEvent(e)
+    if (key === 'META+83') {
+      this._save()
+      e.preventDefault()
+    }
+  }
 }

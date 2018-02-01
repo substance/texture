@@ -19,13 +19,9 @@ Retrieve a (raw) archive as a record containing something like this
 
 ```
 {
-  uuid: "1111-2222-3333-4444",
   version: "AE2F112D",
   resources: {
     "manifest.xml": {
-      type: "manifest",
-      uuid: ...,
-      schema: "<...Manifest-Schema-URL...>",
       contentType: "xml",
       data: "<archive>...</archive>",
       size: 1723,
@@ -33,18 +29,13 @@ Retrieve a (raw) archive as a record containing something like this
       updatedAt: 223213123,
     },
     "manuscript.xml": {
-      type: "article",
-      uuid: ...,
       contentType: "xml",
       data: "<article>...</article>",
-      schema: "<...JATS4M-Schema-URL...>",
       size: 3534,
       createdAt: 202399323,
       updatedAt: 223213123,
     },
     "fig1.png": {
-      type: "image",
-      uuid: ...,
       contentType: "url",
       url: "assets/0123344.png",
       size: 102032,
@@ -52,8 +43,6 @@ Retrieve a (raw) archive as a record containing something like this
       updatedAt: 223213123,
     },
     "vid1.mp4": {
-      type: "video",
-      uuid: ...,
       contentType: "url",
       url: "http://s3.amazonaws.com/219818/24234234.mp4",
       size: 23102032,
@@ -70,6 +59,11 @@ Notes:
 - DISCUSS: maybe an option to control whether all content should be included,
   or the opposite, and only URLs (e.g. for sync'ing )
 - TODO: probably we should add 'encoding' for text content
+- TODO: for the shared server environment we also need a way to create a new archive. I would prefer to let the client provide the blue-print (makes the server implementation easier). Maybe we can use the `POST` endpoint for that, too, but maybe with explicit flag provided to indicate 'that it should create if not exist'. 
+
+> DISCUSS: we want to use the implementation in a shared or stand-alone environment. E.g. a cli tool start a server instance just for a single folder. In this case the endpoint would just be 'GET /'.
+> On the other hand in a shared server, i.e. a server that serves multiple archives at the same time, there we need the ':id' routes.
+
 
 ```
 PUT /:id/ { version!, resources? }
@@ -114,10 +108,21 @@ Persisting 'diffs' here we could implement an offline collub model on top of a c
 
 ## Implementation
 
-- provide a classical nodejs implementation (express)
-- Persist files on the file-system
-- Use nodegit (libgit wrapper) for versioning
-- provide a client implementation for the browser
-- connect the client with the application
+### Classical express backend
 
-> There are two major tracks: client-server communication, and application integration.
+Implement the proposed endpoints in express. Consider that this implementation will be used in two environments: started by CLI serving only a single archive, and started as a shared server for multiple archives.
+Persist the files on the file-system using async `fs` API.
+
+### CLI version
+
+Run the same server via CLI as a single-archive backend, i.e., no routes for different archives.
+
+### Client 
+
+Implement a client to be run in the browser that connects to the server endpoint, loading the raw archive, turning it into a *Buffer* with EditorSessions. This Buffer will not be persisted in the browser based implementation, only in a future Electron integration. When saving, the Buffer should be transmitted to the server endpoint.
+
+### Future
+
+- Using nodegit to create a commit when updating an archive. Then we probably want to allow to pass a message with the update.
+- expost version history in the client
+- off-line collaboration: storing diffs together when uploading, and providing a way to merge pull-requests.

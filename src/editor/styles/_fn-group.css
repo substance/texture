@@ -58,8 +58,8 @@
 
 .sc-fn-item .se-fn-container .se-remove-ref {
   margin-top: -10px;
-  font-size: 14px;
-  color: var(--link-color);
+  font-size: 16px;
+  color: #9a9b9a;
   cursor: pointer;
 }
 

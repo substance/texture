@@ -12,14 +12,14 @@ With the Texture we are developing a first prototype implementation of this clie
 HTTP based server API:
 
 ```
-GET localhost:4000/api/read/:id
-PUT localhost:4000/api/write/:id
+GET localhost:5000/:id
+PUT localhost:5000/:id
 ```
 
 A proxy for exposing assets is handy in many cases, so we can implement:
 
 ```
-GET localhost:4000/api/assets
+GET localhost:5000/:id/assets/:file
 ```
 
 Retrieve a (raw) archive as a record containing something like this
@@ -117,9 +117,12 @@ Persist the files on the file-system using async `fs` API.
 
 Run the same server via CLI as a single-archive backend, i.e., no routes for different archives.
 
+This is how it should work:
+
 ```
-# this should open a valid dar folder on the file system
-npm start ~/Users/michael/my_dar
+node storageServer.js ~/Users/michael/my-documents # starts server like at localhost:5000 with file api
+npm start
+http://localhost:4000?dar=localhost:5000/example
 ```
 
 If no path is provided we read and write the `data/kitche_sink` that is in the repo.

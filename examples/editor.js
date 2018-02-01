@@ -62,6 +62,10 @@ class MyTextureEditor extends Component {
     })
   }
 
+  /*
+    We may want an explicit save button, that can be configured on app level,
+    but passed down to editor toolbars.
+  */
   _save() {
     this.state.archive.save().then(() => {
       console.info('successfully saved')

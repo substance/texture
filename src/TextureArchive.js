@@ -15,8 +15,10 @@ export default class TextureArchive extends DocumentArchive {
     let pubMetaDb = this.sessions['pub-meta'].getDocument()
     let dom = doc.toXML()
     let res = jatsExporter.export(dom, { pubMetaDb, doc })
-    // TODO: write to buffer, proper error handling
-    console.info('saving...', res)
+    // TODO: Export pubMetaDb, binary assets etc.
+    // TODO: Write everything to buffer
+    // TODO: Error handling
+    console.info('saving jats', res.dom.getNativeElement())
     return Promise.resolve()
   }
 }
@@ -34,7 +36,6 @@ TextureArchive.load = function(archiveId, client) {
     })
   })
 }
-
 
 function _loadArchive(rawArchive, client) {
   let sessions

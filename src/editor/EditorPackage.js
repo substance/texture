@@ -6,8 +6,7 @@ import {
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
-  substanceGlobals,
-  PersistencePackage
+  substanceGlobals
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
@@ -77,7 +76,6 @@ export default {
   configure(config) {
     config.import(EntityLabelsPackage)
     config.import(SubstanceBasePackage)
-    config.import(PersistencePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
@@ -348,13 +346,6 @@ export default {
         showDisabled: false,
         style: 'descriptive',
         commandGroups: ['text-types']
-      },
-      {
-        name: 'persistence',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'descriptive',
-        commandGroups: ['persistence']
       },
       {
         name: 'annotations',

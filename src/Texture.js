@@ -1,12 +1,10 @@
 import { Component } from 'substance'
 import EditorPackage from './editor/EditorPackage'
-import JATSExporter from './converter/JATSExporter'
 
 export default class Texture extends Component {
 
   constructor(...args) {
     super(...args)
-
     const archive = this.props.archive
     this.manuscriptSession = archive.getEditorSession('manuscript')
     this.pubMetaDbSession = archive.getEditorSession('pub-meta')
@@ -16,17 +14,9 @@ export default class Texture extends Component {
   getChildContext() {
     const configurator = this.configurator
     const pubMetaDbSession = this.pubMetaDbSession
-    const pubMetaDb = pubMetaDbSession.getDocument()
-    const doc = this.manuscriptSession.getDocument()
     return {
       configurator,
-      pubMetaDbSession,
-      exporter: {
-        export(dom) {
-          let jatsExporter = new JATSExporter()
-          return jatsExporter.export(dom, { pubMetaDb, doc })
-        }
-      },
+      pubMetaDbSession
     }
   }
 

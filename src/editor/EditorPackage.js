@@ -213,10 +213,11 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
-    config.addLabel('insert-xref-bibr', 'Citation')
-    config.addLabel('insert-xref-fig', 'Figure Reference')
-    config.addLabel('insert-xref-table', 'Table Reference')
-    config.addLabel('insert-xref-fn', 'Footnote Reference')
+    config.addLabel('cite', 'Cite')
+    config.addLabel('insert-xref-bibr', 'Reference')
+    config.addLabel('insert-xref-fig', 'Figure')
+    config.addLabel('insert-xref-table', 'Table')
+    config.addLabel('insert-xref-fn', 'Footnote')
     config.addLabel('insert-disp-quote', 'Blockquote')
 
     config.addLabel('manuscript-start', 'Article starts here')
@@ -235,6 +236,8 @@ export default {
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
     config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
+
+    config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
 
     // Annotation tools
     config.addAnnotationTool({
@@ -365,14 +368,14 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['insert-figure', 'insert-table']
+        commandGroups: ['insert-figure', 'insert-table', 'insert-block-element']
       },
       {
-        name: 'insert',
+        name: 'cite',
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
-        commandGroups: ['insert-xref', 'insert-block-element']
+        commandGroups: ['insert-xref']
       }
     ])
 

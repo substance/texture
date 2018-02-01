@@ -17,38 +17,31 @@ GET /:id/ { version? }
 
 Retrieve a (raw) archive as a record containing something like this
 
-```
+```js
 {
   version: "AE2F112D",
   resources: {
     "manifest.xml": {
-      contentType: "xml",
+      encoding: "utf8",
       data: "<archive>...</archive>",
       size: 1723,
       createdAt: 202399323,
       updatedAt: 223213123,
     },
     "manuscript.xml": {
-      contentType: "xml",
+      encoding: "utf8",
       data: "<article>...</article>",
       size: 3534,
       createdAt: 202399323,
       updatedAt: 223213123,
     },
     "fig1.png": {
-      contentType: "url",
-      url: "assets/0123344.png",
+      encoding: "url", // in the write case we have encoding: 'hex' and data has the payload
+      data: 'assets/0123344.png',
       size: 102032,
       createdAt: 202399323,
       updatedAt: 223213123,
-    },
-    "vid1.mp4": {
-      contentType: "url",
-      url: "http://s3.amazonaws.com/219818/24234234.mp4",
-      size: 23102032,
-      createdAt: 202399323,
-      updatedAt: 223213123,
-    },
+    }
   }
 }
 ```
@@ -75,7 +68,7 @@ Updates an archive of a specified version with the provided content.
 "version": "AE2F112D",
 "resources": {
   "manuscript.xml": {
-    contentType: "xml",
+    encoding: "utf8",
     data: "<article>...</article>",
   }
 }

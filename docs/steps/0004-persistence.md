@@ -12,7 +12,14 @@ With the Texture we are developing a first prototype implementation of this clie
 HTTP based server API:
 
 ```
-GET /:id/ { version? }
+GET localhost:4000/api/read/:id
+PUT localhost:4000/api/write/:id
+```
+
+A proxy for exposing assets is handy in many cases, so we can implement:
+
+```
+GET localhost:4000/api/assets
 ```
 
 Retrieve a (raw) archive as a record containing something like this
@@ -37,7 +44,7 @@ Retrieve a (raw) archive as a record containing something like this
     },
     "fig1.png": {
       encoding: "url", // in the write case we have encoding: 'hex' and data has the payload
-      data: 'assets/0123344.png',
+      data: 'http://localhost:4000/api/assets/kitchen_sink/fig1.png',
       size: 102032,
       createdAt: 202399323,
       updatedAt: 223213123,

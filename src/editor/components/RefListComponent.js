@@ -230,6 +230,7 @@ export default class RefListComponent extends NodeComponent {
           idrefs = without(idrefs, refId)
           xref.setAttribute('rid', idrefs.join(' '))
         })
+        tx.setSelection(null)
       })
     }
     // Make sure labels are regenerated

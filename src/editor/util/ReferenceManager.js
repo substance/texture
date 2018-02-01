@@ -30,9 +30,11 @@ export default class ReferenceManager extends AbstractCitationManager {
     Returns a list of formatted citations including labels
   */
   getBibliography() {
-    return this._getReferences().sort((a,b) => {
-      return a.state.pos > b.state.pos
+    let references = this._getReferences()
+    references.sort((a,b) => {
+      return a.state.pos - b.state.pos
     })
+    return references
   }
 
   // interface for EditXrefTool

@@ -117,6 +117,13 @@ Persist the files on the file-system using async `fs` API.
 
 Run the same server via CLI as a single-archive backend, i.e., no routes for different archives.
 
+```
+# this should open a valid dar folder on the file system
+npm start ~/Users/michael/my_dar
+```
+
+If no path is provided we read and write the `data/kitche_sink` that is in the repo.
+
 ### Client 
 
 Implement a client to be run in the browser that connects to the server endpoint, loading the raw archive, turning it into a *Buffer* with EditorSessions. This Buffer will not be persisted in the browser based implementation, only in a future Electron integration. When saving, the Buffer should be transmitted to the server endpoint.
@@ -124,5 +131,5 @@ Implement a client to be run in the browser that connects to the server endpoint
 ### Future
 
 - Using nodegit to create a commit when updating an archive. Then we probably want to allow to pass a message with the update.
-- expost version history in the client
+- expose version history in the client
 - off-line collaboration: storing diffs together when uploading, and providing a way to merge pull-requests.

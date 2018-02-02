@@ -15,10 +15,14 @@ export default class ConvertRef {
     refs.forEach(refEl => {
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
-        api.error('Could not find <element-citation> inside <ref>')
+        api.error({
+          msg: 'Could not find <element-citation> inside <ref>',
+          el: refEl
+        })
       } else {
         let entityId
-        switch(elementCitation.attr('publication-type')) {
+        let pubType = elementCitation.attr('publication-type')
+        switch(pubType) {
           case 'journal':
             entityId = JournalArticleConverter.import(elementCitation, pubMetaDb)
             break;
@@ -56,7 +60,10 @@ export default class ConvertRef {
             entityId = WebpageConverter.import(elementCitation, pubMetaDb)
             break;
           default:
-            throw new Error('publication type not found.')
+            api.error({
+              msg: `Publication type ${pubType} not found`,
+              el: elementCitation
+            })
         }
         refEl.attr('rid', entityId)
         refEl.empty()

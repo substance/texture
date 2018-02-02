@@ -19,7 +19,6 @@ import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeComponent'
 
 import AbstractComponent from './components/AbstractComponent'
-import AffiliationsComponent from './components/AffiliationsComponent'
 import AffiliationsListComponent from './components/AffiliationsListComponent'
 import AuthorsListComponent from './components/AuthorsListComponent'
 import EditorsListComponent from './components/EditorsListComponent'
@@ -28,7 +27,6 @@ import BackComponent from './components/BackComponent'
 import BodyComponent from './components/BodyComponent'
 import BreakComponent from './components/BreakComponent'
 import ContainerNodeComponent from './components/ContainerNodeComponent'
-import ContributorsComponent from './components/ContributorsComponent'
 import ElementNodeComponent from './components/ElementNodeComponent'
 import EditXrefTool from './components/EditXrefTool'
 import EditExtLinkTool from './components/EditExtLinkTool'
@@ -40,7 +38,6 @@ import DispQuoteComponent from './components/DispQuoteComponent'
 import TableCellComponent from './components/TableCellComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
-import PubHistoryComponent from './components/PubHistoryComponent'
 import TOC from './components/TOC'
 import TranslationsComponent from './components/TranslationsComponent'
 import FnGroupComponent from './components/FnGroupComponent'
@@ -122,7 +119,6 @@ export default {
 
     // Node components
     config.addComponent('abstract', AbstractComponent)
-    config.addComponent('affiliations', AffiliationsComponent)
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
@@ -140,7 +136,6 @@ export default {
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
-    config.addComponent('pub-history', PubHistoryComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
@@ -159,7 +154,6 @@ export default {
 
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)
-    config.addComponent('contributors', ContributorsComponent)
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)

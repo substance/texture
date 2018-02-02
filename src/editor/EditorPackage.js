@@ -387,12 +387,14 @@ export default {
       }
     ])
 
-    // Add labels for groups
+    // Labels for manuscript parts
+    config.addLabel('references', 'References')
+
+    // Labels for groups
     config.addLabel('structure', 'Structure')
     config.addLabel('article-info', 'Article Information')
 
-
-    // Add labels for panels
+    // Labels for panels
     config.addLabel('toc', 'Table of Contents')
     config.addLabel('article-record', 'Article Record')
     config.addLabel('contributors', 'Authors & Contributors')
@@ -405,6 +407,11 @@ export default {
     config.addLabel('no-editors', 'No Editors')
     config.addLabel('no-references', 'No References')
     config.addLabel('no-footnotes', 'No Footnotes')
+
+    // Labels for buttons
+    config.addLabel('add-ref', 'Add Reference')
+    config.addLabel('edit-ref', 'Edit')
+    config.addLabel('remove-ref', 'Remove')
 
     /*
       Define panel structure

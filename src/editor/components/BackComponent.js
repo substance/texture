@@ -22,7 +22,7 @@ export default class BackComponent extends Component {
     let fnGroup = node.find('fn-group')
     if (fnGroup) {
       el.append(
-        $$(this.getComponent('fn-group'), { node: fnGroup })
+        $$(this.getComponent('fn-group'), { node: fnGroup }).ref('fn-group')
       )
     }
     return el

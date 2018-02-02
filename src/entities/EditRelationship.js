@@ -1,11 +1,11 @@
 import { Component, isNil, without, FontAwesomeIcon as Icon } from 'substance'
+import { prefillEntity } from './prefillEntity'
 import entityRenderers from './entityRenderers'
 import CreateEntity from './CreateEntity'
 import EditEntity from './EditEntity'
 import ModalDialog from '../shared/ModalDialog'
 import EntitySelector from './EntitySelector'
 import FormTitle from './FormTitle'
-import prefillEntity from './prefillEntity'
 
 /*
   Used to edit relationhips to other entities.

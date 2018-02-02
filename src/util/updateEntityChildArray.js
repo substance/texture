@@ -32,6 +32,7 @@ export default function updateEntityChildArray(editorSession, nodeId, tagName, a
       node.appendChild(entityRefNode)
     })
 
+    // Sort entities in order of newEntityIds array
     let map = {}
     let refs = tx.findAll(`${tagName}`)
     refs.forEach(ref => {

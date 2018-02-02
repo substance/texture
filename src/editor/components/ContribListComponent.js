@@ -28,10 +28,11 @@ export default class ContribsListComponent extends NodeComponent {
   }
 
   render($$) {
-    let el = $$('div').addClass(this.getClassNames())
-    let entityIds = this._getEntityIds()
+    const entityIds = this._getEntityIds()
     let labelProvider = this.context.labelProvider
     let db = this.context.pubMetaDbSession.getDocument()
+
+    let el = $$('div').addClass(this.getClassNames())
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {
@@ -74,8 +75,8 @@ export default class ContribsListComponent extends NodeComponent {
       )
     }
 
-    el.append(contentEl)
     el.append(
+      contentEl,
       $$('button').addClass('sc-button sm-style-big').append(
         'Manage ',
         labelProvider.getLabel(this.getPropertyName())

@@ -19,6 +19,7 @@ export default class TextureArchive extends DocumentArchive {
     // TODO: Write everything to buffer
     // TODO: Error handling
     console.info('saving jats', res.dom.getNativeElement())
+    console.info(res.dom.serialize())
     return Promise.resolve()
   }
 }

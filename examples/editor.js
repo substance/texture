@@ -58,6 +58,7 @@ class MyTextureEditor extends Component {
     TextureArchive.load(archivePath, vfsClient).then(archive => {
       this.setState({archive})
     }).catch(error => {
+      console.error(error)
       this.setState({error})
     })
   }

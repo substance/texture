@@ -1,5 +1,4 @@
 import PruneText from './PruneText'
-import CollectAffs from './CollectAffs'
 import NormalizeFn from './NormalizeFn'
 import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
 import RefList from './RefList'
@@ -16,7 +15,6 @@ const trafos = [
   // ATTENTION: all converters which require schema sensitive insertion
   // need to go after PruneText, as otherwise the our validator
   // considers all TextNodes as a violation
-  CollectAffs,
 ].map(C => new C())
 
 export function j2r(dom, api) {
@@ -27,7 +25,6 @@ export function j2r(dom, api) {
 
 export {
   PruneText,
-  CollectAffs,
   NormalizeFn,
   UnwrapBlockLevelElements,
   RefList,

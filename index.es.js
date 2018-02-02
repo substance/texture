@@ -12,4 +12,5 @@ export { default as TextureConfigurator } from './src/editor/util/TextureConfigu
 export { default as ArticleLoader } from './src/ArticleLoader'
 export { default as PubMetaLoader } from './src/PubMetaLoader'
 export { default as VfsClient } from './src/VfsClient'
+export { default as HttpStorageClient } from './src/HttpStorageClient'
 export { default as TextureArchive } from './src/TextureArchive'

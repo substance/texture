@@ -1,9 +1,10 @@
-import { NodeComponent, without } from 'substance'
+import { NodeComponent } from 'substance'
 import ModalDialog from '../../shared/ModalDialog'
 import CreateEntity from '../../entities/CreateEntity'
 import EditEntity from '../../entities/EditEntity'
 import RefComponent from './RefComponent'
 import Button from './Button'
+import removeElementAndXrefs from '../../util/removeElementAndXrefs'
 
 function prefillEntity(type, text) {
   let defaults = {
@@ -212,28 +213,9 @@ export default class RefListComponent extends NodeComponent {
 
   _onRemove(entityId) {
     const referenceManager = this.context.referenceManager
-    const editorSession = this.context.editorSession
-    const doc = editorSession.getDocument()
+    let editorSession = this.context.editorSession
     let refId = this._getRefIdForEntityId(entityId)
-    let xrefIndex = doc.getIndex('xrefs')
-    let xrefs = xrefIndex.get(refId)
-    if (xrefs.length === 0 || window.confirm(`If you delete this reference, it will also be removed from ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
-      editorSession.transaction(tx => {
-        let refList = doc.find('ref-list')
-        let refNode = doc.get(refId)
-        refList.removeChild(refNode)
-        tx.delete(refNode.id)
-        // Now update xref targets
-        xrefs.forEach((xrefId) => {
-          let xref = doc.get(xrefId)
-          let idrefs = xref.attr('rid').split(' ')
-          idrefs = without(idrefs, refId)
-          xref.setAttribute('rid', idrefs.join(' '))
-        })
-        tx.setSelection(null)
-      })
-    }
-    // Make sure labels are regenerated
+    removeElementAndXrefs(editorSession, refId, 'ref-list')
     referenceManager._updateLabels()
   }
 }

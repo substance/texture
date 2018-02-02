@@ -175,10 +175,12 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _onRemove(entityId) {
-    const referenceManager = this.context.referenceManager
     let editorSession = this.context.editorSession
+    const referenceManager = this.context.referenceManager
+    const doc = editorSession.getDocument()
+    const parent = doc.find('ref-list')
     let refId = this._getRefIdForEntityId(entityId)
-    removeElementAndXrefs(editorSession, refId, 'ref-list')
+    removeElementAndXrefs(editorSession, refId, parent)
     referenceManager._updateLabels()
   }
 }

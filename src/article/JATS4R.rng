@@ -239,6 +239,14 @@
     </element>
   </define>
 
+
+  <define name="contrib-group">
+    <element name="contrib-group">
+      <ref name="contrib-group-attlist"/>
+      <ref name="contrib"/>
+    </element>
+  </define>
+
   <!--
     WIP: Requirements are not clear.
 

@@ -243,7 +243,9 @@
   <define name="contrib-group">
     <element name="contrib-group">
       <ref name="contrib-group-attlist"/>
-      <ref name="contrib"/>
+      <zeroOrMore>
+        <ref name="contrib"/>
+      </zeroOrMore>
     </element>
   </define>
 

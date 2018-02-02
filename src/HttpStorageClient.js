@@ -1,6 +1,6 @@
 import { sendRequest } from 'substance'
 
-export default class StorageClient {
+export default class HttpStorageClient {
 
   constructor(apiUrl) {
     this.apiUrl = apiUrl
@@ -17,6 +17,8 @@ export default class StorageClient {
     return sendRequest({
       method: 'GET',
       url
+    }).then(response => {
+      return JSON.parse(response)
     })
   }
 

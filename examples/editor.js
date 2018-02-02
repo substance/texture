@@ -57,8 +57,8 @@ class MyTextureEditor extends Component {
     let vfsClient = new VfsClient(window.vfs)
     TextureArchive.load(archivePath, vfsClient).then(archive => {
       this.setState({archive})
-    }).catch(err => {
-      this.setState({err})
+    }).catch(error => {
+      this.setState({error})
     })
   }
 

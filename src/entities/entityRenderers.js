@@ -512,7 +512,9 @@ function _renderDOI($$, doi) {
 }
 
 function _getInitials(givenNames) {
-  return givenNames.split(' ').map(part => part[0].toUpperCase()).join('')
+  return givenNames.split(' ').map(part => {
+    return part[0] ? part[0].toUpperCase() : ''
+  }).join('')
 }
 
 function _delegateEntityRenderer($$, entityId, entityDb, options) {

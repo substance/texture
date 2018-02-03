@@ -10,12 +10,13 @@ class UnsupportedContentComponent extends Component {
 
   render($$) {
     const node = this.props.node
-    let el = $$('div').addClass('sc-unsupported')
-      .attr('data-id', node.id)
-      .attr('contenteditable', false)
-    el.append(
+    let el = $$('div').addClass('sc-unsupported').append(
       $$('pre').text(node.toXML().serialize())
-    )
+    ).attr({
+      'data-id': node.id,
+      'contenteditable': false
+    })
+
     return el
   }
 

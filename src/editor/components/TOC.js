@@ -25,8 +25,7 @@ export default class TOC extends Component {
       let level = entry.level
 
       let tocEntryEl = $$('a')
-        .addClass('se-toc-entry')
-        .addClass('sm-level-'+level)
+        .addClass('se-toc-entry sm-level-'+level)
         .attr({
           href: "#",
           "data-id": entry.id,
@@ -57,8 +56,8 @@ export default class TOC extends Component {
   }
 
   handleClick(e) {
-    let nodeId = e.currentTarget.dataset.id
     e.preventDefault()
+    let nodeId = e.currentTarget.dataset.id
     this.send('tocEntrySelected', nodeId)
   }
 

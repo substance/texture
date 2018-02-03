@@ -1,6 +1,7 @@
-import { NodeComponent, without } from 'substance'
+import { NodeComponent } from 'substance'
 import Button from './Button'
 import { getPos } from '../util/nodeHelpers'
+import removeElementAndXrefs from '../../util/removeElementAndXrefs'
 
 export default class FnGroupComponent extends NodeComponent {
 
@@ -73,23 +74,9 @@ export default class FnGroupComponent extends NodeComponent {
 
   _removeFn(fnId) {
     let editorSession = this.context.editorSession
-    let doc = editorSession.getDocument()
-    let xrefIndex = doc.getIndex('xrefs')
-    let xrefs = xrefIndex.get(fnId)
-
-    if (xrefs.length === 0 || window.confirm(`If you delete this footnote, it will also be removed from ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
-      editorSession.transaction(tx => {
-        xrefs.forEach((xrefId) => {
-          let xref = tx.get(xrefId)
-          let idrefs = xref.attr('rid').split(' ')
-          idrefs = without(idrefs, fnId)
-          xref.setAttribute('rid', idrefs.join(' '))
-        })
-        let fnGroup = tx.find('fn-group')
-        let fn = fnGroup.find(`fn#${fnId}`)
-        fnGroup.removeChild(fn)
-      })
-      this.rerender()
-    }
+    const doc = editorSession.getDocument()
+    const parent = doc.find('fn-group')
+    removeElementAndXrefs(editorSession, fnId, parent)
+    this.rerender()
   }
 }

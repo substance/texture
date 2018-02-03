@@ -43,7 +43,7 @@ export default class TranslationsComponent extends NodeComponent {
     let el = $$('div').addClass('se-title-translations')
     if (transTitleGroups.length > 0) {
       el.append($$('div').addClass('se-translation-header').append('Title Translations'))
-      transTitleGroups.forEach((transTitleGroup) => {
+      transTitleGroups.forEach(transTitleGroup => {
         el.append(this._renderTitleEditor($$, transTitleGroup))
       })
     }

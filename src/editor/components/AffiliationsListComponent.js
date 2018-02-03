@@ -10,28 +10,6 @@ import entityRenderers from '../../entities/entityRenderers'
 */
 export default class AffiliationsList extends NodeComponent {
 
-  _getAuthors() {
-    return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
-  }
-
-  _getOrgansiations() {
-    let organisations = []
-    let db = this.context.pubMetaDbSession.getDocument()
-    let authors = this._getAuthors()
-    authors.forEach(authorId => {
-      let author = db.get(authorId)
-      if (!author) {
-        console.error('FIXME: no entity for author', authorId)
-      } else {
-        // We only consider person records
-        if (author.type === 'person') {
-          organisations = organisations.concat(author.affiliations)
-        }
-      }
-    })
-    return uniq(organisations)
-  }
-
   render($$) {
     let el = $$('div').addClass('sc-affiliations-list')
     let db = this.context.pubMetaDbSession.getDocument()
@@ -53,4 +31,25 @@ export default class AffiliationsList extends NodeComponent {
     return el
   }
 
+  _getAuthors() {
+    return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
+  }
+
+  _getOrgansiations() {
+    let organisations = []
+    let db = this.context.pubMetaDbSession.getDocument()
+    let authors = this._getAuthors()
+    authors.forEach(authorId => {
+      let author = db.get(authorId)
+      if (!author) {
+        console.error('FIXME: no entity for author', authorId)
+      } else {
+        // We only consider person records
+        if (author.type === 'person') {
+          organisations = organisations.concat(author.affiliations)
+        }
+      }
+    })
+    return uniq(organisations)
+  }
 }

@@ -1,47 +1,11 @@
-import { NodeComponent, without } from 'substance'
-import ModalDialog from '../../shared/ModalDialog'
+import { NodeComponent } from 'substance'
+import { prefillEntity } from '../../entities/prefillEntity'
 import CreateEntity from '../../entities/CreateEntity'
 import EditEntity from '../../entities/EditEntity'
+import ModalDialog from '../../shared/ModalDialog'
 import RefComponent from './RefComponent'
 import Button from './Button'
-
-function prefillEntity(type, text) {
-  let defaults = {
-    type
-  }
-  if (type === 'person') {
-    let parts = text.split(' ')
-    defaults.surname = parts.pop()
-    defaults.givenNames = parts.join(' ')
-  } else if (type === 'organisation') {
-    defaults.name = text
-  } else if (type === 'book') {
-    defaults.source = text
-  } else if (type === 'journal-article') {
-    defaults.articleTitle = text
-  } else if (type === 'conference-proceeding') {
-    defaults.articleTitle = text
-  } else if (type === 'clinical-report') {
-    defaults.articleTitle = text
-  } else if (type === 'preprint') {
-    defaults.articleTitle = text
-  } else if (type === 'report') {
-    defaults.source = text
-  } else if (type === 'periodical') {
-    defaults.articleTitle = text
-  } else if (type === 'data-publication') {
-    defaults.dataTitle = text
-  } else if (type === 'patent') {
-    defaults.articleTitle = text
-  } else if (type === 'webpage') {
-    defaults.title = text
-  } else if (type === 'thesis') {
-    defaults.articleTitle = text
-  } else if (type === 'software') {
-    defaults.title = text
-  }
-  return defaults
-}
+import removeElementAndXrefs from '../../util/removeElementAndXrefs'
 
 export default class RefListComponent extends NodeComponent {
 
@@ -66,10 +30,11 @@ export default class RefListComponent extends NodeComponent {
 
   render($$) {
     const referenceManager = this.context.referenceManager
+    const bibliography = referenceManager.getBibliography()
+    const mode = this.state.mode
+    const popup = this.state.popup
+
     let el = $$('div').addClass('sc-ref-list')
-    let bibliography = referenceManager.getBibliography()
-    let mode = this.state.mode
-    let popup = this.state.popup
 
     if (mode) {
       let ModeComponent
@@ -92,23 +57,25 @@ export default class RefListComponent extends NodeComponent {
 
     el.append(
       $$('div').addClass('se-title').append(
-        'References'
+        this.getLabel('references')
       )
     )
-    bibliography.forEach((reference) => {
+
+    bibliography.forEach(reference => {
       const entityId = reference.getAttribute('rid')
       el.append(
         $$('div').addClass('se-ref-item').append(
           $$(RefComponent, { node: reference }),
           $$('div').addClass('se-ref-actions').append(
-            $$(Button, {icon: 'pencil', tooltip: 'Edit'})
+            $$(Button, {icon: 'pencil', tooltip: this.getLabel('edit-ref')})
               .on('click', this._onEdit.bind(this, entityId)),
-            $$(Button, {icon: 'trash', tooltip: 'Remove'})
+            $$(Button, {icon: 'trash', tooltip: this.getLabel('remove-ref')})
               .on('click', this._onRemove.bind(this, entityId))
           )
         )
       )
     })
+
     if(bibliography.length === 0) {
       el.append(
         $$('div').addClass('se-empty-list').append(
@@ -118,10 +85,12 @@ export default class RefListComponent extends NodeComponent {
     }
 
     let options = $$('div').addClass('se-ref-list-options').append(
-      $$('button').addClass('sc-button sm-style-big').append('Add Reference')
-        .on('click', this._toggleNewReferencePopup)
+      $$('button').addClass('sc-button sm-style-big').append(
+        this.getLabel('add-ref')
+      ).on('click', this._toggleNewReferencePopup)
     )
 
+    // Render new reference popup
     if(popup) {
       options.append(
         this._renderNewReferencePopup($$)
@@ -154,19 +123,6 @@ export default class RefListComponent extends NodeComponent {
     return el
   }
 
-  _toggleNewReferencePopup() {
-    const popup = this.state.popup
-    this.extendState({
-      popup: !popup
-    })
-  }
-
-  _doneEditing() {
-    this.setState({
-      mode: undefined
-    })
-  }
-
   _onAddNew(entityId) {
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
@@ -178,6 +134,16 @@ export default class RefListComponent extends NodeComponent {
     this.setState({
       popup: false
     })
+  }
+
+  _onRemove(entityId) {
+    let editorSession = this.context.editorSession
+    const referenceManager = this.context.referenceManager
+    const doc = editorSession.getDocument()
+    const parent = doc.find('ref-list')
+    let refId = this._getRefIdForEntityId(entityId)
+    removeElementAndXrefs(editorSession, refId, parent)
+    referenceManager._updateLabels()
   }
 
   _onCreate(targetType) {
@@ -203,37 +169,23 @@ export default class RefListComponent extends NodeComponent {
     })
   }
 
+  _toggleNewReferencePopup() {
+    const popup = this.state.popup
+    this.extendState({
+      popup: !popup
+    })
+  }
+
+  _doneEditing() {
+    this.setState({
+      mode: undefined
+    })
+  }
+
   _getRefIdForEntityId(entityId) {
     const editorSession = this.context.editorSession
     const doc = editorSession.getDocument()
     let refNode = doc.find(`ref-list > ref[rid=${entityId}]`)
     if (refNode) return refNode.id
-  }
-
-  _onRemove(entityId) {
-    const referenceManager = this.context.referenceManager
-    const editorSession = this.context.editorSession
-    const doc = editorSession.getDocument()
-    let refId = this._getRefIdForEntityId(entityId)
-    let xrefIndex = doc.getIndex('xrefs')
-    let xrefs = xrefIndex.get(refId)
-    if (xrefs.length === 0 || window.confirm(`If you delete this reference, it will also be removed from ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
-      editorSession.transaction(tx => {
-        let refList = doc.find('ref-list')
-        let refNode = doc.get(refId)
-        refList.removeChild(refNode)
-        tx.delete(refNode.id)
-        // Now update xref targets
-        xrefs.forEach((xrefId) => {
-          let xref = doc.get(xrefId)
-          let idrefs = xref.attr('rid').split(' ')
-          idrefs = without(idrefs, refId)
-          xref.setAttribute('rid', idrefs.join(' '))
-        })
-        tx.setSelection(null)
-      })
-    }
-    // Make sure labels are regenerated
-    referenceManager._updateLabels()
   }
 }

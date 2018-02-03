@@ -145,13 +145,17 @@ export default class AbstractCitationManager {
       xref.state.label = label
       change.updated[xref.id] = true
     })
-    refs.forEach((ref) => {
+    refs.forEach((ref, index) => {
       const label = refLabels[ref.id]
       if (!ref.state) {
         ref.state = {}
       }
       ref.state.label = label || ''
-      ref.state.pos = order[ref.id]
+      if (order[ref.id]) {
+        ref.state.pos = order[ref.id]
+      } else {
+        ref.state.pos = pos + index
+      }
       change.updated[ref.id] = true
     })
 

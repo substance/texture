@@ -15,8 +15,11 @@ export default class FigPreview extends NodeComponent {
     if (this.props.selected) {
       el.addClass('sm-selected')
     }
-    el.append(this._renderThumbnail($$))
-    el.append(this._renderLabel($$))
+    
+    el.append(
+      this._renderThumbnail($$),
+      this._renderLabel($$)
+    )
     return el
   }
 

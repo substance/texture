@@ -1,4 +1,4 @@
-import { orderBy, includes } from 'substance'
+import { orderBy, includes, without } from 'substance'
 
 // left side: node type
 // right side: ref-type
@@ -75,20 +75,27 @@ function getXrefResourceManager(xref, context) {
 export function getAvailableXrefTargets(xref, context) {
   let manager = getXrefResourceManager(xref, context)
   if (!manager) return []
-
   let selectedTargets= getXrefTargets(xref)
   // retrieve all possible nodes that this
   // xref could potentially point to,
   // so that we can let the user select from a list.
   let nodes = manager.getAvailableResources()
+  // Determine broken targets (such that don't exist in the document)
+  let brokenTargets = without(selectedTargets, ...nodes.map(r => r.id))
   let targets = nodes.map((node) => {
     // ATTENTION: targets are not just nodes
-    // but entries with some information (e.g. if)
+    // but entries with some information
     return {
       selected: includes(selectedTargets, node.id),
-      node: node
+      node: node,
+      id: node.id
     }
   })
+
+  targets = brokenTargets.map(id => {
+    return { selected: true, node: undefined, id }
+  }).concat(targets)
+
   // Makes the selected targets go to top
   targets = orderBy(targets, ['selected'], ['desc'])
   return targets

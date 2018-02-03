@@ -30,8 +30,20 @@ export default class EditXRefTool extends Tool {
   render($$) {
     let el = $$('div').addClass('sc-edit-xref-tool')
     this.state.targets.forEach((target) => {
-      let targetPreviewEl = this._renderPreview($$, target)
-      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.node))
+      let targetPreviewEl
+      if (target.node) {
+        targetPreviewEl = this._renderPreview($$, target)
+      } else {
+        // HACK: We just manually replicate the markup of RefPreviewComponent
+        targetPreviewEl = $$('div').addClass('sc-ref-preview').append(
+          $$('div').addClass('se-label').append('[!]'),
+          $$('div').addClass('se-text').append(`No target found for "${target.id}"`)
+        )
+        if (target.selected) {
+          targetPreviewEl.addClass('sm-selected')
+        }
+      }
+      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id))
       el.append(targetPreviewEl)
     })
     return el
@@ -45,23 +57,23 @@ export default class EditXRefTool extends Tool {
     return $$(TargetComponent, props)
   }
 
-  _toggleTarget(targetNode) {
+  _toggleTarget(targetNodeId) {
     let node = this._getNode(this.props.commandState.nodeId)
     let editorSession = this.context.editorSession
     // console.log('XRefTargets: toggling target of ', node.id);
 
     // Update model
     let newTargets = getXrefTargets(node)
-    if (newTargets.indexOf(targetNode.id) >= 0) {
-      newTargets = without(newTargets, targetNode.id)
+    if (newTargets.indexOf(targetNodeId) >= 0) {
+      newTargets = without(newTargets, targetNodeId)
     } else {
-      newTargets.push(targetNode.id)
+      newTargets.push(targetNodeId)
     }
 
     // Compute visual feedback
     let targets = this.state.targets;
     let target = find(this.state.targets, function(t) {
-      return t.node === targetNode
+      return t.id === targetNodeId
     })
 
     // Flip the selected flag

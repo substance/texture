@@ -6,11 +6,7 @@ export default class XrefComponent extends NodeComponent {
   render($$) {
     let node = this.props.node
     let refType = node.getAttribute('ref-type')
-    let el = $$('span').addClass('sc-xref')
     let label = getXrefLabel(node)
-    el.append(label)
-    el.addClass('sm-'+refType)
-    return el
+    return $$('span').addClass('sc-xref sm-'+refType).append(label)
   }
-
 }

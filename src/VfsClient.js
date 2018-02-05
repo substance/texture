@@ -33,6 +33,7 @@ function _readRawArchive(fs, darUrl) {
     let type = entry.attr('type')
     let content = fs.readFileSync(`${darUrl}/${entry.path}`)
     rawArchive[path] = {
+      encoding: 'utf8',
       type: type,
       data: content
     }
@@ -40,8 +41,9 @@ function _readRawArchive(fs, darUrl) {
   assets.forEach(asset => {
     let path = asset.attr('path')
     rawArchive[path] = {
+      encoding: 'url',
       type: 'image/jpg',
-      url: path
+      data: './data/kitchen-sink/'+path
     }
   })
   return rawArchive

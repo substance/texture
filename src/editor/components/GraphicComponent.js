@@ -4,7 +4,11 @@ export default class GraphicComponent extends Component {
 
   render($$) {
     const node = this.props.node
-    const url = node.getAttribute('xlink:href')
+    let url = node.getAttribute('xlink:href')
+    let urlResolver = this.context.urlResolver
+    if (urlResolver) {
+      url = urlResolver.resolveUrl(url)
+    }
 
     let el = $$('div')
       .addClass('sc-graphic')

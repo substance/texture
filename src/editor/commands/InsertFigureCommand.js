@@ -13,10 +13,10 @@ export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
     })
   }
 
-  createNodes(tx, params) {
+  createNodes(tx, params, context) {
     let lastNode = {}
     params.files.forEach((file) => {
-      let node = insertFigure(tx, file)
+      let node = insertFigure(tx, file, context)
       lastNode = tx.insertBlockNode(node)
     })
     return lastNode

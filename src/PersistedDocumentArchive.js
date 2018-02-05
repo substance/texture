@@ -1,4 +1,4 @@
-import { forEach, ManifestLoader } from 'substance'
+import { forEach, ManifestLoader, last, uuid } from 'substance'
 
 /*
   A PersistedDocumentArchive is a 3-tier stack representing a document archive
@@ -26,6 +26,38 @@ export default class PersistedDocumentArchive {
     this._archiveId = null
     this._upstreamArchive = null
     this._sessions = null
+    this._pendingFiles = {}
+  }
+
+  createFile(file) {
+    let assetId
+    let fileExtension = last(file.name.split('.'))
+    let filePath = `${uuid()}.${fileExtension}`
+    this._sessions.manifest.transaction(tx => {
+      let assets = tx.find('assets')
+      let asset = tx.createElement('asset').attr({
+        path: filePath,
+        type: file.type
+      })
+      assetId = asset.id
+      assets.appendChild(asset)
+    })
+
+    this.buffer.addBlob(assetId, file)
+    this._pendingFiles[filePath] = URL.createObjectURL(file)
+    return filePath
+  }
+
+  resolveUrl(path) {
+    let blobUrl = this._pendingFiles[path]
+    if (blobUrl) {
+      return blobUrl
+    } else {
+      let fileRecord = this._upstreamArchive[path]
+      if (fileRecord && fileRecord.encoding === 'url') {
+        return fileRecord.data
+      }
+    }
   }
 
   load(archiveId) {

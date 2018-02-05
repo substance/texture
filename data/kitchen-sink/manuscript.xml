@@ -108,7 +108,7 @@
             <title>Behavioural design and implantation details.</title>
             <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
           </caption>
-          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./data/kitchen-sink/fig1.jpg"/>
+          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg"/>
         </fig>
         <p>Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui..</p>
         <fig id="fig2">
@@ -117,7 +117,7 @@
             <title>Visual object processing in area AIP.</title>
             <!-- NOTE: we are leaving out the empty p element for caption content, as this automatically expanded -->
           </caption>
-          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="./data/kitchen-sink/fig2.jpg"/>
+          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg"/>
         </fig>
         <disp-quote>
           <p>Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>

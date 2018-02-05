@@ -18,7 +18,8 @@ export default class TextureArchive extends PersistedDocumentArchive {
         // console.log(prettyPrintXML(dom))
         // debugger
         return ArticleLoader.load(record.data, {
-          pubMetaDb: pubMetaSession.getDocument()
+          pubMetaDb: pubMetaSession.getDocument(),
+          archive: this
         })
       }
       default:

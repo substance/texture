@@ -16,7 +16,8 @@ export default class Texture extends Component {
     const pubMetaDbSession = this.pubMetaDbSession
     return {
       configurator,
-      pubMetaDbSession
+      pubMetaDbSession,
+      urlResolver: this.props.archive
     }
   }
 

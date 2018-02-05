@@ -125,12 +125,14 @@ export default class RefListComponent extends NodeComponent {
 
   _onAddNew(entityId) {
     const editorSession = this.context.editorSession
+    const referenceManager = this.context.referenceManager
     editorSession.transaction(tx => {
       let refList = tx.find('ref-list')
       let entityRefNode = tx.createElement('ref')
       entityRefNode.setAttribute('rid', entityId)
       refList.appendChild(entityRefNode)
     })
+    referenceManager._updateLabels()
     this.setState({
       popup: false
     })

@@ -1,9 +1,9 @@
 <archive type="rda">
   <documents>
-    <document name="Manuscript" type="application/jats4m" path="manuscript.xml" />
+    <document id="manuscript" type="application/jats4m" path="manuscript.xml" />
   </documents>
   <assets>
-    <asset mime-type="image/jpg" path="fig1.jpg"/>
-    <asset mime-type="image/jpg" path="fig2.jpg"/>
+    <asset id="fig1" type="image/jpg" path="fig1.jpg"/>
+    <asset id="fig2" type="image/jpg" path="fig2.jpg"/>
   </assets>
 </archive>

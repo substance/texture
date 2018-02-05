@@ -498,7 +498,7 @@ export const Periodical = {
   },
 
   export($$, node, pubMetaDb) {
-    let el = $$('element-citation').attr('publication-type', 'perediocal')
+    let el = $$('element-citation').attr('publication-type', 'periodical')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))

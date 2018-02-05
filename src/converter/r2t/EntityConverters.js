@@ -704,7 +704,7 @@ export const WebpageConverter = {
       let node = {
         type: 'webpage',
         articleTitle: _getHTML(el, 'article-title'),
-        source: _getText(el, 'source'),
+        title: _getText(el, 'source'),
         publisherLoc: _getText(el, 'publisher-loc'),
         uri: _getText(el, 'uri'),
         year: _getText(el, 'year'),
@@ -725,7 +725,7 @@ export const WebpageConverter = {
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
-    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.title, 'source'))
     el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
     el.append(_createTextElement($$, node.uri, 'uri'))
     el.append(_createTextElement($$, node.year, 'year'))
@@ -733,12 +733,13 @@ export const WebpageConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     // Store entityId for explicit lookup on next import
     el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    console.log(el.getNativeElement())
     return el
   }
 }
 
 function _exportPersonGroup($$, persons, personGroupType, pubMetaDb) {
-  if (persons > 0) {
+  if (persons.length > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
     persons.forEach(entityId => {
       let person = pubMetaDb.get(entityId)
@@ -746,6 +747,7 @@ function _exportPersonGroup($$, persons, personGroupType, pubMetaDb) {
         RefPersonConverter.export($$, person)
       )
     })
+    return el
   }
 }
 

@@ -17,6 +17,7 @@ export default function removeElementAndXrefs(editorSession, elementId, parentEl
         idrefs = without(idrefs, elementId)
         xref.setAttribute('rid', idrefs.join(' '))
       })
+      tx.setSelection(null)
     })
   }
 }

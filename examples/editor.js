@@ -1,7 +1,10 @@
 import {
   getQueryStringParam, Component, DefaultDOMElement, parseKeyEvent
 } from 'substance'
-import { Texture, JATSImportDialog, TextureArchive, VfsClient } from 'substance-texture'
+import {
+  Texture, JATSImportDialog, TextureArchive,
+  VfsClient, HttpStorageClient, InMemoryBuffer
+} from 'substance-texture'
 
 window.addEventListener('load', () => {
   MyTextureEditor.mount({}, window.document.body)
@@ -53,9 +56,18 @@ class MyTextureEditor extends Component {
   }
 
   _init() {
-    let archivePath = getQueryStringParam('archive')
-    let vfsClient = new VfsClient(window.vfs)
-    TextureArchive.load(archivePath, vfsClient).then(archive => {
+    let storageUrl = getQueryStringParam('storage')
+    let archiveId = getQueryStringParam('archive')
+    let storage
+    if (storageUrl) {
+      storage = new HttpStorageClient(storageUrl)
+    } else {
+      storage = new VfsClient(window.vfs)
+    }
+    let buffer = new InMemoryBuffer()
+    let archive = new TextureArchive(storage, buffer)
+    archive.load(archiveId)
+    .then(() => {
       this.setState({archive})
     }).catch(error => {
       console.error(error)

@@ -5,13 +5,14 @@ export default class VfsClient {
     this.vfs = vfs
   }
 
-  read(path) {
-    let rawArchive = _readRawArchive(this.vfs, path)
+  read(archiveId) {
+    let rawArchive = _readRawArchive(this.vfs, archiveId)
     return Promise.resolve(rawArchive)
   }
 
-  write() {
-    console.error('writing not possible with virtual file system')
+  write(archiveId, data) { // eslint-disable-line
+    console.error('Can not write on virtual file system')
+    return Promise.resolve(false)
   }
 }
 
@@ -27,7 +28,6 @@ function _readRawArchive(fs, darUrl) {
       data: manifestXML
     }
   }
-
   docs.forEach(entry => {
     let path = entry.attr('path')
     let type = entry.attr('type')
@@ -37,7 +37,6 @@ function _readRawArchive(fs, darUrl) {
       data: content
     }
   })
-
   assets.forEach(asset => {
     let path = asset.attr('path')
     rawArchive[path] = {

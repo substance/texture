@@ -4,6 +4,7 @@ import {
   expandCaption,
   expandTitle,
   expandObjectId,
+  removeEmptyElements,
   removeChild,
   addLabel
 } from './r2tHelpers'
@@ -28,6 +29,8 @@ export default class ConvertElementCitation {
       let label = figNode.state.label
       addLabel(fig, label, 1)
       wrapCaptionTitle(fig)
+      removeEmptyElements(fig, 'object-id')
     })
+
   }
 }

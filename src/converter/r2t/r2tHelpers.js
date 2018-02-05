@@ -1,6 +1,6 @@
 import { TextureJATS } from '../../article'
 import { forEach } from 'substance'
-import { replaceWith, findChild } from '../util/domHelpers'
+import { replaceWith, findChild, findAllChilds } from '../util/domHelpers'
 import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
 
 /*
@@ -106,6 +106,15 @@ export function expandObjectId(el, insertPos) {
     objectId = el.createElement('object-id').attr('pub-id-type', 'doi')
     el.insertAt(insertPos, objectId)
   }
+}
+
+export function removeEmptyElements(el, tagName) {
+  let childs = findAllChilds(el, tagName)
+  childs.forEach(child => {
+    if (child.textContent === '') {
+      el.removeChild(child)
+    }
+  })
 }
 
 export function addLabel(el, labelText, insertPos) {

@@ -1,5 +1,5 @@
 import { last } from 'substance'
-import { replaceWith } from '../util/domHelpers'
+import { replaceWith, findChild } from '../util/domHelpers'
 
 export default class Sec2Heading {
 
@@ -44,7 +44,7 @@ function _flattenSec(sec, level) {
     h.attr('label', label.textContent)
     label.remove()
   }
-  let title = sec.find('title')
+  let title = findChild(sec, 'title')
   if (title) {
     h.append(title.childNodes)
     title.remove()

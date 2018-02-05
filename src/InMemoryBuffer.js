@@ -20,7 +20,7 @@ export default class InMemoryBuffer {
   addChange(docId, change) {
     // HACK: if there are no ops we skip
     if (change.ops.length === 0) return
-    console.log('RECORD CHANGE', docId, change)
+    // console.log('RECORD CHANGE', docId, change)
     this._isDirty[docId] = true
     this._changes.push({
       docId, change

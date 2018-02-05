@@ -211,7 +211,7 @@ export default class PersistedDocumentArchive {
       // TODO: if successful we should receive the new version as response
       // and then we can reset the buffer
       res = JSON.parse(res)
-      console.log('Saved. New version:', res.version)
+      // console.log('Saved. New version:', res.version)
       buffer.reset(res.version)
     }).catch(err => {
       console.error('Saving failed.', err)

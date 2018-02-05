@@ -2,12 +2,64 @@
 
 (Work in progress)
 
-This article is a proposal for a server API interface and possible technical solutions for persisting Document Archives.
+This is a proposal for an architecture for persisting DocumentArchives.
 The architecture should allow for simple backends as well for 'fancy' implementations, e.g. it should be possible to achieve something useful in a classical PHP stack, maybe with a certain degree of degradation, while some features such as real-time collaboration may require a more sophisticated implementation.
+With the Texture we are developing a first prototype implementation of this architecture.
 
-With the Texture we are developing a first prototype implementation of this client-server architecture.
+## Terminology
+
+### Raw Archive
+
+A JSON object containing a record for each file in the document archive,
+like a small virtual file-system. It contains some additional information about each file such as size and time of creation, for instance.
+
+Example:
+
+```js
+{
+  version: "AE2F112D",
+  resources: {
+    "manifest.xml": {
+      encoding: "utf8",
+      data: "<archive>...</archive>",
+      size: 1723,
+      createdAt: 202399323,
+      updatedAt: 223213123,
+    },
+    "manuscript.xml": {
+      encoding: "utf8",
+      data: "<article>...</article>",
+      size: 3534,
+      createdAt: 202399323,
+      updatedAt: 223213123,
+    },
+    "fig1.png": {
+      encoding: "hex",
+      data: "...",
+      size: 102032,
+      createdAt: 202399323,
+      updatedAt: 223213123,
+    }
+  }
+}
+```
+
+### Storage
+
+The storage is a service which serves and consumes raw archives.
+
+### Buffer
+
+The buffer is used to persist changes temporarily. This is the level where real-time collaboration is implemented. A persisted buffer allows to retain unsaved changes when the application is closed.
+
+### Editor
+
+The editor uses EditorSessions that contain an in-memory model of each resource.
+
 
 ## Proposal
+
+### Storage
 
 HTTP based server API:
 
@@ -59,7 +111,7 @@ Notes:
 - DISCUSS: maybe an option to control whether all content should be included,
   or the opposite, and only URLs (e.g. for sync'ing )
 - TODO: probably we should add 'encoding' for text content
-- TODO: for the shared server environment we also need a way to create a new archive. I would prefer to let the client provide the blue-print (makes the server implementation easier). Maybe we can use the `POST` endpoint for that, too, but maybe with explicit flag provided to indicate 'that it should create if not exist'. 
+- TODO: for the shared server environment we also need a way to create a new archive. I would prefer to let the client provide the blue-print (makes the server implementation easier). Maybe we can use the `POST` endpoint for that, too, but maybe with explicit flag provided to indicate 'that it should create if not exist'.
 
 > DISCUSS: we want to use the implementation in a shared or stand-alone environment. E.g. a cli tool start a server instance just for a single folder. In this case the endpoint would just be 'GET /'.
 > On the other hand in a shared server, i.e. a server that serves multiple archives at the same time, there we need the ':id' routes.
@@ -108,28 +160,18 @@ Persisting 'diffs' here we could implement an offline collub model on top of a c
 
 ## Implementation
 
-### Classical express backend
+### Iteration I - HTTP Storage
 
-Implement the proposed endpoints in express. Consider that this implementation will be used in two environments: started by CLI serving only a single archive, and started as a shared server for multiple archives.
+Implement the proposed endpoints in express.
 Persist the files on the file-system using async `fs` API.
 
-### CLI version
+**Status: Done**
 
-Run the same server via CLI as a single-archive backend, i.e., no routes for different archives.
 
-This is how it should work:
+### Iteration II - HTTP Client
 
-```
-node storageServer.js ~/Users/michael/my-documents # starts server like at localhost:5000 with file api
-npm start
-http://localhost:4000?dar=localhost:5000/example
-```
+Implement a client to be run in the browser that connects to the server endpoint, loading the raw archive, setting up EditorSessions and a buffer. When saved, the buffer should be transmitted to the server endpoint.
 
-If no path is provided we read and write the `data/kitche_sink` that is in the repo.
-
-### Client 
-
-Implement a client to be run in the browser that connects to the server endpoint, loading the raw archive, turning it into a *Buffer* with EditorSessions. This Buffer will not be persisted in the browser based implementation, only in a future Electron integration. When saving, the Buffer should be transmitted to the server endpoint.
 
 ### Future
 

@@ -733,7 +733,6 @@ export const WebpageConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     // Store entityId for explicit lookup on next import
     el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
-    console.log(el.getNativeElement())
     return el
   }
 }

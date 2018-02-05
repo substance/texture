@@ -196,7 +196,7 @@ export default class PersistedDocumentArchive {
     if (buffer.hasResourceChanged('manifest')) {
       data['manifest.xml'] = {
         id: 'manifest',
-        data: manifest.toXML(),
+        data: manifest.toXML().serialize(),
         encoding: 'utf8',
         updatedAt: Date.now()
       }

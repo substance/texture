@@ -78,15 +78,23 @@ function _createSections(container) {
   for (let i=0; i < children.length; i++) {
     let child = children[i]
     if (child.tagName === 'heading') {
+      let heading = child
       let level = child.attr('level') || 1
       while (stack.length >= level+1) {
         stack.pop()
       }
-      // TODO: transfer attributes
       let sec = doc.createElement('sec')
-      let attributes = child.getAttributes()
-      delete attributes['level']
+      // copy all attributes from the heading to the section element
+      let attributes = {}
+      child.getAttributes().forEach((val, key) => {
+        if (key !== 'level') {
+          attributes[key] = val
+        }
+      })
       sec.attr(attributes)
+      let title = doc.createElement('title')
+      title.innerHTML = heading.innerHTML
+      sec.appendChild(title)
       last(stack).el.appendChild(sec)
       stack.push({
         el: sec

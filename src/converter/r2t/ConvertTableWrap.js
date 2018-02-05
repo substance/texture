@@ -4,6 +4,7 @@ import {
   expandCaption,
   expandTitle,
   expandObjectId,
+  removeEmptyElements,
   removeChild,
   addLabel
 } from './r2tHelpers'
@@ -28,6 +29,7 @@ export default class ConvertElementCitation {
       let label = tableWrapNode.state.label
       addLabel(tableWrap, label, 1)
       wrapCaptionTitle(tableWrap)
+      removeEmptyElements(tableWrap, 'object-id')
     })
   }
 }

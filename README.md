@@ -12,7 +12,7 @@ Texture is still at an early alpha stage: there are likely to be missing feature
 - ![alpha](https://img.shields.io/badge/status-alpha-red.svg) = ready for alpha testing; use with caution
 - Planned for release (e.g. `Alpha 5`)
 
-We generally only plan one or two releases ahead. We aim to do quaterly releases, towards a 1.0 release in 2018. Please see our more detailed [ROADMAP.md](ROADMAP.md) document.
+We generally only plan one or two releases ahead, and aim ship regularly.
 
 Feature                                 | Ready
 :-------------------------------------- | :------------:
@@ -22,6 +22,7 @@ Find and Replace                        | ![alpha](https://img.shields.io/badge/
 Auto-numbered labels (`xref`, `fig`, etc. ) | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Reference editing (`element-citation`)  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Authors and Affiliations                | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
+[Dar](https://github.com/substance/dar) Storage | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Article Record (`issue`, `fpage`, etc.) | Alpha 5
 Translations                            | Unscheduled
 Track Changes                           | Unscheduled

@@ -19,7 +19,7 @@
   "scripts": {
     "prepublish": "node make publish",
     "bundle": "node make",
-    "start": "node make dev -s -w",
+    "start": "node make -s -w -d data",
     "app": "node make build:app && node ./app/cli.js",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"

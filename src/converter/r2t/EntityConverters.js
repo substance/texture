@@ -544,7 +544,7 @@ export const PreprintConverter = {
   },
 
   export($$, node, pubMetaDb) {
-    let el = $$('element-citation').attr('publication-type', 'journal')
+    let el = $$('element-citation').attr('publication-type', 'preprint')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))

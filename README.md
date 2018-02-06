@@ -64,7 +64,7 @@ $ npm install
 Start the dev server and expose documents from `./data` folder (or provide your own folder of documents).
 
 ```bash
-$ npm run start ./data
+$ npm start ./data
 ```
 
 And navigate to [http://localhost:4000](http://localhost:4000).

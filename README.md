@@ -72,6 +72,8 @@ And navigate to [http://localhost:4000](http://localhost:4000).
 
 You can save your document changes by pressing `CommandOrControl+S`.
 
+To test with your own JATS-documents, just replace the contents of `data/kitchen-sink/manuscript.xml`
+
 ## License
 
 Texture is open source, and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/).

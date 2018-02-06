@@ -50,7 +50,7 @@ class MyTextureEditor extends Component {
         )
       }
     } else {
-      el.append('Loading...')
+      // LOADING...
     }
     return el
   }
@@ -62,7 +62,7 @@ class MyTextureEditor extends Component {
     if (storageUrl) {
       storage = new HttpStorageClient(storageUrl)
     } else {
-      storage = new VfsClient(window.vfs)
+      storage = new VfsClient(window.vfs, './data/')
     }
     let buffer = new InMemoryBuffer()
     let archive = new TextureArchive(storage, buffer)

@@ -144,7 +144,10 @@
       <ref id="r1">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
-            <collab>National Research Council</collab>
+            <name>
+              <surname>Council</surname>
+              <given-names>National Research</given-names>
+            </name>
           </person-group>
           <year iso-8601-date="2003">2003</year>
           <source>Guidelines for the Care and Use of Mammals in Neuroscience and Behavioral Research</source>

@@ -357,7 +357,7 @@ export const ConferenceProceedingConverter = {
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
-    el.append(_createTextElement($$, node.edition, 'conf-name'))
+    el.append(_createTextElement($$, node.confName, 'conf-name'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -433,7 +433,7 @@ export const PatentConverter = {
       let node = {
         type: 'patent',
         articleTitle: _getHTML(el, 'article-title'),
-        assignee: _getText(el, 'collab[type=assignee]'),
+        assignee: _getText(el, 'collab[collab-type=assignee]'),
         source: _getText(el, 'source'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),

@@ -79,8 +79,8 @@ export default class EditXRefTool extends Tool {
     // Flip the selected flag
     target.selected = !target.selected
 
-    editorSession.transaction(function(doc) {
-      let xref = doc.get(node.id)
+    editorSession.transaction(tx => {
+      let xref = tx.get(node.id)
       xref.setAttribute('rid', newTargets.join(' '))
     })
 

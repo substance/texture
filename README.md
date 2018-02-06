@@ -62,17 +62,17 @@ Install via npm.
 $ npm install
 ```
 
-Start the dev server and expose documents from `./data` folder (or provide your own folder of documents).
+Start the dev server.
 
 ```bash
-$ npm start ./data
+$ npm start
 ```
 
 And navigate to [http://localhost:4000](http://localhost:4000).
 
 You can save your document changes by pressing `CommandOrControl+S`.
 
-To test with your own JATS-documents, just replace the contents of `data/kitchen-sink/manuscript.xml`
+To test with your own JATS-documents, just replace the contents of `data/kitchen-sink/manuscript.xml`.
 
 ## License
 

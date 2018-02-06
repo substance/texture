@@ -4,7 +4,6 @@ const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 // used to bundle example files for demo
 const vfs = require('substance-bundler/extensions/vfs')
-const darServer = require('dar-server')
 
 const DIST = 'dist/'
 const TMP = 'tmp/'
@@ -277,6 +276,7 @@ b.yargs.option('d', {
 })
 let argv = b.yargs.argv
 if (argv.d) {
+  const darServer = require('dar-server')
   const rootDir = argv.d
   const archiveDir =  path.resolve(path.join(__dirname, rootDir))
   darServer.serve(b.server, {

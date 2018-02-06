@@ -41,12 +41,7 @@ Ext-Link                                | ![prod](https://img.shields.io/badge/s
 Subscript & Superscript                 | ![prod](https://img.shields.io/badge/status-prod-green.svg)
 
 
-## Usage
-
-See our [examples](examples) for integration scenarios. The best way to start is downloading the zip file from the latest [release](https://github.com/substance/texture/releases).
-
-
-## Development
+## Install
 
 Clone the repository.
 
@@ -66,13 +61,15 @@ Install via npm.
 $ npm install
 ```
 
-Start the dev server.
+Start the dev server and expose documents from `./data` folder (or provide your own folder of documents).
 
 ```bash
-$ npm run start
+$ npm run start ./data
 ```
 
 And navigate to [http://localhost:4000](http://localhost:4000).
+
+You can save your document changes by pressing `CommandOrControl+S`.
 
 ## License
 

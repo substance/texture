@@ -8,7 +8,7 @@
 - Drag and drop images from the Desktop
 - Storage interface to store manuscript XML + assets
 - Generated labels are now exported. E.g. for `<xref>` elements
-- Update to Substance 1.0 Preview 21
+- Update to Substance 1.0 Preview 23
 
 ## Alpha 3
 

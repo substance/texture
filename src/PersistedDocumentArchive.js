@@ -1,4 +1,4 @@
-import { forEach, ManifestLoader, last, uuid } from 'substance'
+import { forEach, ManifestLoader, last, uuid, prettyPrintXML } from 'substance'
 
 /*
   A PersistedDocumentArchive is a 3-tier stack representing a document archive
@@ -30,20 +30,22 @@ export default class PersistedDocumentArchive {
   }
 
   createFile(file) {
-    let assetId
+    let assetId = uuid()
     let fileExtension = last(file.name.split('.'))
-    let filePath = `${uuid()}.${fileExtension}`
+    let filePath = `${assetId}.${fileExtension}`
     this._sessions.manifest.transaction(tx => {
       let assets = tx.find('assets')
-      let asset = tx.createElement('asset').attr({
+      let asset = tx.createElement('asset', { id: assetId }).attr({
         path: filePath,
         type: file.type
       })
-      assetId = asset.id
       assets.appendChild(asset)
     })
-
-    this.buffer.addBlob(assetId, file)
+    this.buffer.addBlob(assetId, {
+      id: assetId,
+      path: filePath,
+      blob: file
+    })
     this._pendingFiles[filePath] = URL.createObjectURL(file)
     return filePath
   }
@@ -194,9 +196,10 @@ export default class PersistedDocumentArchive {
     // Update the manifest if changed
     let manifest = sessions.manifest.getDocument()
     if (buffer.hasResourceChanged('manifest')) {
+      let manifestXmlStr = prettyPrintXML(manifest.toXML())
       data['manifest.xml'] = {
         id: 'manifest',
-        data: manifest.toXML().serialize(),
+        data: manifestXmlStr,
         encoding: 'utf8',
         updatedAt: Date.now()
       }
@@ -224,10 +227,10 @@ export default class PersistedDocumentArchive {
       let id = node.attr('id')
       if (!buffer.hasBlob(id)) return
       let path = node.attr('path') || id
-      let blob = buffer.getBlob(id)
+      let blobRecord = buffer.getBlob(id)
       data[path] = {
         id,
-        data: blob,
+        data: blobRecord.blob,
         encoding: 'blob',
         createdAt: Date.now(),
         updatedAt: Date.now()

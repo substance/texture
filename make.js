@@ -130,7 +130,8 @@ b.task('examples', () => {
   vfs(b, {
     src: ['./data/**/*'],
     dest: DIST+'/vfs.js',
-    format: 'umd', moduleName: 'vfs'
+    format: 'umd', moduleName: 'vfs',
+    rootDir: path.join(__dirname, 'data')
   })
   b.copy('./examples/*.html', DIST)
   b.js('./examples/editor.js', {
@@ -264,6 +265,25 @@ function _singleJATSFile() {
 }
 
 /* Server */
+// TODO: make this configurable
+const port = 4000
+b.setServerPort(port)
 
-b.setServerPort(4000)
+b.yargs.option('d', {
+  type: 'string',
+  alias: 'rootDir',
+  describe: 'Root directory of served archives'
+})
+let argv = b.yargs.argv
+if (argv.d) {
+  const darServer = require('dar-server')
+  const rootDir = argv.d
+  const archiveDir =  path.resolve(path.join(__dirname, rootDir))
+  darServer.serve(b.server, {
+    port,
+    serverUrl: 'http://localhost:'+port,
+    rootDir: archiveDir,
+    apiUrl: '/archives'
+  })
+}
 b.serve({ static: true, route: '/', folder: './dist' })

@@ -50,19 +50,20 @@ class MyTextureEditor extends Component {
         )
       }
     } else {
-      el.append('Loading...')
+      // LOADING...
     }
     return el
   }
 
   _init() {
-    let storageUrl = getQueryStringParam('storage')
     let archiveId = getQueryStringParam('archive')
+    let storageType = getQueryStringParam('storage')
+    let storageUrl = getQueryStringParam('storageUrl') || '/archives'
     let storage
-    if (storageUrl) {
-      storage = new HttpStorageClient(storageUrl)
-    } else {
+    if (storageType==='vfs') {
       storage = new VfsClient(window.vfs)
+    } else {
+      storage = new HttpStorageClient(storageUrl)
     }
     let buffer = new InMemoryBuffer()
     let archive = new TextureArchive(storage, buffer)

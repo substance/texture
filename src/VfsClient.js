@@ -1,12 +1,14 @@
 import { ManifestLoader } from 'substance'
 
 export default class VfsClient {
-  constructor(vfs) {
+  constructor(vfs, baseUrl) {
     this.vfs = vfs
+    // From where the assets are served
+    this.baseUrl = baseUrl
   }
 
   read(archiveId) {
-    let rawArchive = _readRawArchive(this.vfs, archiveId)
+    let rawArchive = _readRawArchive(this.vfs, archiveId, this.baseUrl)
     return Promise.resolve(rawArchive)
   }
 
@@ -16,8 +18,8 @@ export default class VfsClient {
   }
 }
 
-function _readRawArchive(fs, darUrl) {
-  let manifestXML = fs.readFileSync(`${darUrl}/manifest.xml`)
+function _readRawArchive(fs, archiveId, baseUrl) {
+  let manifestXML = fs.readFileSync(`${archiveId}/manifest.xml`)
   let manifestSession = ManifestLoader.load(manifestXML)
   let manifest = manifestSession.getDocument()
   let docs = manifest.findAll('documents > document')
@@ -31,8 +33,9 @@ function _readRawArchive(fs, darUrl) {
   docs.forEach(entry => {
     let path = entry.attr('path')
     let type = entry.attr('type')
-    let content = fs.readFileSync(`${darUrl}/${entry.path}`)
+    let content = fs.readFileSync(`${archiveId}/${entry.path}`)
     rawArchive[path] = {
+      encoding: 'utf8',
       type: type,
       data: content
     }
@@ -40,8 +43,9 @@ function _readRawArchive(fs, darUrl) {
   assets.forEach(asset => {
     let path = asset.attr('path')
     rawArchive[path] = {
+      encoding: 'url',
       type: 'image/jpg',
-      url: path
+      data: baseUrl+archiveId+'/'+path
     }
   })
   return rawArchive

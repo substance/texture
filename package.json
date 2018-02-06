@@ -11,14 +11,15 @@
   "devDependencies": {
     "electron": "^1.7.9",
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.20.7",
+    "substance-bundler": "0.20.8",
     "substance-test": "^0.9.4",
-    "eslint": "^3.17.1"
+    "eslint": "^3.17.1",
+    "dar-server": "0.1.0"
   },
   "scripts": {
     "prepublish": "node make publish",
     "bundle": "node make",
-    "start": "node make dev -s -w",
+    "start": "node make -s -w -d data",
     "app": "node make build:app && node ./app/cli.js",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"

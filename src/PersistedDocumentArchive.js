@@ -1,4 +1,4 @@
-import { forEach, ManifestLoader } from 'substance'
+import { forEach, ManifestLoader, last, uuid, prettyPrintXML } from 'substance'
 
 /*
   A PersistedDocumentArchive is a 3-tier stack representing a document archive
@@ -26,6 +26,40 @@ export default class PersistedDocumentArchive {
     this._archiveId = null
     this._upstreamArchive = null
     this._sessions = null
+    this._pendingFiles = {}
+  }
+
+  createFile(file) {
+    let assetId = uuid()
+    let fileExtension = last(file.name.split('.'))
+    let filePath = `${assetId}.${fileExtension}`
+    this._sessions.manifest.transaction(tx => {
+      let assets = tx.find('assets')
+      let asset = tx.createElement('asset', { id: assetId }).attr({
+        path: filePath,
+        type: file.type
+      })
+      assets.appendChild(asset)
+    })
+    this.buffer.addBlob(assetId, {
+      id: assetId,
+      path: filePath,
+      blob: file
+    })
+    this._pendingFiles[filePath] = URL.createObjectURL(file)
+    return filePath
+  }
+
+  resolveUrl(path) {
+    let blobUrl = this._pendingFiles[path]
+    if (blobUrl) {
+      return blobUrl
+    } else {
+      let fileRecord = this._upstreamArchive[path]
+      if (fileRecord && fileRecord.encoding === 'url') {
+        return fileRecord.data
+      }
+    }
   }
 
   load(archiveId) {
@@ -162,9 +196,10 @@ export default class PersistedDocumentArchive {
     // Update the manifest if changed
     let manifest = sessions.manifest.getDocument()
     if (buffer.hasResourceChanged('manifest')) {
+      let manifestXmlStr = prettyPrintXML(manifest.toXML())
       data['manifest.xml'] = {
         id: 'manifest',
-        data: manifest.toXML(),
+        data: manifestXmlStr,
         encoding: 'utf8',
         updatedAt: Date.now()
       }
@@ -192,10 +227,10 @@ export default class PersistedDocumentArchive {
       let id = node.attr('id')
       if (!buffer.hasBlob(id)) return
       let path = node.attr('path') || id
-      let blob = buffer.getBlob(id)
+      let blobRecord = buffer.getBlob(id)
       data[path] = {
         id,
-        data: blob,
+        data: blobRecord.blob,
         encoding: 'blob',
         createdAt: Date.now(),
         updatedAt: Date.now()

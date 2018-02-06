@@ -391,7 +391,7 @@
             </name>
           </person-group>
           <article-title>Patent title</article-title>
-          <collab type="assignee">Hospira, Inc.</collab>
+          <collab collab-type="assignee">Hospira, Inc.</collab>
           <source>United States patent</source>
           <year>2009</year>
           <month>10</month>

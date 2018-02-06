@@ -455,7 +455,7 @@ export const PatentConverter = {
     el.append(_exportPersonGroup($$, node.inventors, 'inventor', pubMetaDb))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
-    el.append(_createTextElement($$, node.assignee, 'collab', {'type': 'assignee'}))
+    el.append(_createTextElement($$, node.assignee, 'collab', {'collab-type': 'assignee'}))
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))

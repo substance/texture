@@ -363,6 +363,7 @@
         <optional><ref name="article-title"/></optional>
         <optional><ref name="chapter-title"/></optional>
         <optional><ref name="comment"/></optional>
+        <optional><ref name="collab"/></optional>
         <optional><ref name="edition"/></optional>
         <optional><ref name="elocation-id"/></optional>
         <optional><ref name="fpage"/></optional>

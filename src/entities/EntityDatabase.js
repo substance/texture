@@ -58,6 +58,7 @@ Periodical.schema = {
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
+  volume: { type: 'string', optional: true },
   fpage: { type: 'string', optional: true },
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
-<!--
-  Kitchen XML for Texture
--->
 <article xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
     <article-meta>
@@ -95,7 +92,6 @@
     </article-meta>
   </front>
   <body>
-    <!-- We use HTML-style headings instead of sections in the Texture format -->
     <sec>
       <title>Quisque malesuada</title>
       <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor <ext-link ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
@@ -115,13 +111,11 @@
           <label>Figure 2</label>
           <caption>
             <title>Visual object processing in area AIP.</title>
-            <!-- NOTE: we are leaving out the empty p element for caption content, as this automatically expanded -->
           </caption>
           <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg"/>
         </fig>
         <disp-quote>
           <p>Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>
-          <!-- <attrib> element is optional. An empty <attrib> element for editing will be created automatically -->
         </disp-quote>
         <p>Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref ref-type="table" rid="table1"/>. </p>
         <table-wrap id="table1">
@@ -150,14 +144,16 @@
       <ref id="r1">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
-            <collab>National Research Council</collab>
+            <name>
+              <surname>Council</surname>
+              <given-names>National Research</given-names>
+            </name>
           </person-group>
           <year iso-8601-date="2003">2003</year>
           <source>Guidelines for the Care and Use of Mammals in Neuroscience and Behavioral Research</source>
           <publisher-loc>Washington, D.C</publisher-loc>
           <publisher-name>National Academies Press</publisher-name>
           <pub-id pub-id-type="doi">10.17226/10732</pub-id>
-          <pub-id pub-id-type="entity">book-1</pub-id>
         </element-citation>
       </ref>
       <ref id="r2">
@@ -178,7 +174,7 @@
       </ref>
       <ref id="r3">
         <element-citation publication-type="clinicaltrial">
-          <person-group person-group-type="author">
+          <person-group person-group-type="sponsor">
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
@@ -275,7 +271,6 @@
           <lpage>6448</lpage>
           <page-range>6436-6448</page-range>
           <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
-          <pub-id pub-id-type="entity">journal-article-1</pub-id>
         </element-citation>
       </ref>
       <ref id="r8">
@@ -317,12 +312,6 @@
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
-            </name>
-          </person-group>
-          <person-group person-group-type="curator">
-            <name>
-              <surname>Doe</surname>
-              <given-names>Jane</given-names>
             </name>
           </person-group>
           <year>2009</year>

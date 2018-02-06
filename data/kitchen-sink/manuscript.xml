@@ -286,12 +286,7 @@
               <given-names>John</given-names>
             </name>
           </person-group>
-          <person-group person-group-type="assignee">
-            <name>
-              <surname>Doe</surname>
-              <given-names>Jane</given-names>
-            </name>
-          </person-group>
+          <collab collab-type="assignee">Hospira, Inc.</collab>
           <article-title>Patent title</article-title>
           <year>2009</year>
           <month>10</month>

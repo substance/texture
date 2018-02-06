@@ -613,7 +613,7 @@ export const SoftwareConverter = {
     if (!entity) {
       let node = {
         type: 'software',
-        source: _getText(el, 'source'),
+        title: _getText(el, 'source'),
         version: _getText(el, 'version'),
         publisherLoc: _getText(el, 'publisher-loc'),
         publisherName: _getText(el, 'publisher-name'),
@@ -635,7 +635,7 @@ export const SoftwareConverter = {
     let el = $$('element-citation').attr('publication-type', 'software')
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
-    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.title, 'source'))
     el.append(_createTextElement($$, node.version, 'version'))
     el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
     el.append(_createTextElement($$, node.publisherName, 'publisher-name'))

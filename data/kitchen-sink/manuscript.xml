@@ -154,7 +154,6 @@
           <publisher-loc>Washington, D.C</publisher-loc>
           <publisher-name>National Academies Press</publisher-name>
           <pub-id pub-id-type="doi">10.17226/10732</pub-id>
-          <pub-id pub-id-type="entity">book-1</pub-id>
         </element-citation>
       </ref>
       <ref id="r2">
@@ -272,7 +271,6 @@
           <lpage>6448</lpage>
           <page-range>6436-6448</page-range>
           <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
-          <pub-id pub-id-type="entity">journal-article-1</pub-id>
         </element-citation>
       </ref>
       <ref id="r8">

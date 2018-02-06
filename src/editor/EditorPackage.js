@@ -333,6 +333,13 @@ export default {
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [
       {
+        name: 'undo-redo',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        commandGroups: ['undo-redo']
+      },
+      {
         name: 'text-types',
         type: 'tool-dropdown',
         showDisabled: false,

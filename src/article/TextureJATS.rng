@@ -100,6 +100,14 @@
   <s:elementType name="access-date" s:type="external"/>
   <s:elementType name="time-stamp" s:type="external"/>
 
+
+  <define name="abstract">
+    <element name="abstract">
+      <ref name="abstract-attlist"/>
+      <ref name="abstract-content"/>
+    </element>
+  </define>
+
   <!-- Stub out some of the content for that we do not provide
        a UI  -->
   <define name="chem-struct">
@@ -173,8 +181,7 @@
     <element name="abstract-content">
       <zeroOrMore>
         <choice>
-          <ref name="heading"/>
-          <ref name="para-level"/>
+          <ref name="p"/>
         </choice>
       </zeroOrMore>
     </element>

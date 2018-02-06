@@ -2,6 +2,15 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="JATS-archiving.rng"/>
 
+  <define name="abstract">
+    <element name="abstract">
+      <ref name="abstract-attlist"/>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <define name="article-meta">
     <element name="article-meta">
       <ref name="article-meta-attlist"/>

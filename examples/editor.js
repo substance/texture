@@ -61,7 +61,7 @@ class MyTextureEditor extends Component {
     let storageUrl = getQueryStringParam('storageUrl') || '/archives'
     let storage
     if (storageType==='vfs') {
-      storage = new VfsClient(window.vfs)
+      storage = new VfsClient(window.vfs, '/data/')
     } else {
       storage = new HttpStorageClient(storageUrl)
     }

@@ -14,11 +14,12 @@ export default class VfsClient {
 
   write(archiveId, data) { // eslint-disable-line
     console.error('Can not write on virtual file system')
+    console.info('This would have been written:', data)
     return Promise.resolve(false)
   }
 }
 
-function _readRawArchive(fs, archiveId, baseUrl) {
+function _readRawArchive(fs, archiveId, baseUrl = '') {
   let manifestXML = fs.readFileSync(`${archiveId}/manifest.xml`)
   let manifestSession = ManifestLoader.load(manifestXML)
   let manifest = manifestSession.getDocument()

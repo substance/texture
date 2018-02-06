@@ -79,7 +79,7 @@ function _createSections(container) {
     let child = children[i]
     if (child.tagName === 'heading') {
       let heading = child
-      let level = child.attr('level') || 1
+      let level = parseInt(child.attr('level') || "1")
       while (stack.length >= level+1) {
         stack.pop()
       }

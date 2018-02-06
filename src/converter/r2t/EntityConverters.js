@@ -50,7 +50,7 @@ export const OrganisationConverter = {
     el.append(_createTextElement($$, node.email, 'email'))
     el.append(_createTextElement($$, node.uri, 'uri', { 'content-type': 'link'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'uri', {'content-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'uri', {'content-type': 'entity'}))
     return el
   }
 }
@@ -116,7 +116,7 @@ export const PersonConverter = {
       )
     })
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'contrib-id', {'contrib-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'contrib-id', {'contrib-id-type': 'entity'}))
     return el
   }
 }
@@ -206,7 +206,7 @@ export const JournalArticleConverter = {
     el.append(_createTextElement($$, node.pageRange, 'page-range'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -273,7 +273,7 @@ export const BookConverter = {
     el.append(_createTextElement($$, node.isbn, 'pub-id', {'pub-id-type': 'isbn'}))
     el.append(_createTextElement($$, node.pmid, 'pub-id', {'pub-id-type': 'pmid'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -315,7 +315,7 @@ export const ClinicalTrialConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -367,7 +367,7 @@ export const ConferenceProceedingConverter = {
     el.append(_createTextElement($$, node.elocationId, 'elocation-id'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -417,7 +417,7 @@ export const DataPublicationConverter = {
     el.append(_createTextElement($$, node.archiveId, 'pub-id', {'pub-id-type': 'archive'}))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -462,7 +462,7 @@ export const PatentConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.patentNumber, 'patent', {'country': node.patentCountry}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -512,7 +512,7 @@ export const Periodical = {
     el.append(_createTextElement($$, node.volume, 'volume'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -554,7 +554,7 @@ export const PreprintConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -598,7 +598,7 @@ export const ReportConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.isbn, 'pub-id', {'pub-id-type': 'isbn'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -644,7 +644,7 @@ export const SoftwareConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -688,7 +688,7 @@ export const ThesisConverter = {
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }
@@ -732,7 +732,7 @@ export const WebpageConverter = {
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
     // Store entityId for explicit lookup on next import
-    el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el
   }
 }

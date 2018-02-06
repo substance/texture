@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1d3 20150301//EN"  "JATS-archivearticle1.dtd">
-<article xmlns:xlink="http://www.w3.org/1999/xlink">
-  <front>
-    <article-meta>
-      <title-group>
-        <article-title>Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
+<!DOCTYPE article PUBLIC "JATS4R 1.1" "http://texture.substance.io/JATS4R-1.1.dtd">
+<article id="article" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front id="front-1">
+    <article-meta id="article-meta-1">
+      <title-group id="title-group-1">
+        <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
       </title-group>
-      <contrib-group content-type="author">
-        <contrib contrib-type="person">
+      <contrib-group id="contrib-group-1" content-type="author">
+        <contrib id="contrib-1" contrib-type="person">
           <name>
-            <surname>Schaffelhofer</surname><given-names>Stefan</given-names>
+            <surname>Schaffelhofer</surname>
+            <given-names>Stefan</given-names>
           </name>
-          <xref ref-type="aff" rid="aff1"/>
-          <xref ref-type="aff" rid="aff2"/>
+          <xref ref-type="aff" rid="aff1" />
+          <xref ref-type="aff" rid="aff2" />
         </contrib>
-        <contrib contrib-type="person">
+        <contrib id="contrib-2" contrib-type="person">
           <name>
-            <surname>Scherberger</surname><given-names>Hansjörg</given-names>
+            <surname>Scherberger</surname>
+            <given-names>Hansjörg</given-names>
           </name>
-          <xref ref-type="aff" rid="aff1"/>
-          <xref ref-type="aff" rid="aff3"/>
+          <xref ref-type="aff" rid="aff1" />
+          <xref ref-type="aff" rid="aff3" />
         </contrib>
       </contrib-group>
-      <contrib-group content-type="editor">
-        <contrib contrib-type="person">
+      <contrib-group id="contrib-group-2" content-type="editor">
+        <contrib id="contrib-3" contrib-type="person">
           <name>
-            <surname>Kastner</surname><given-names>Sabine</given-names>
+            <surname>Kastner</surname>
+            <given-names>Sabine</given-names>
           </name>
-          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="aff" rid="aff1" />
         </contrib>
       </contrib-group>
       <aff id="aff1">
@@ -53,94 +56,200 @@
         <city>Princeton</city>
         <country>United States</country>
       </aff>
-      <!-- Publication date, as required by SciELO -->
-      <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
-          <day>29</day>
-          <month>01</month>
-          <year>1999</year>
+      <pub-date id="date-5" publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
+        <day id="day-5">29</day>
+        <month id="month-5">01</month>
+        <year id="year-5">1999</year>
       </pub-date>
-      <!-- Pages elements, as required by SciELO -->
-      <volume>318</volume>
-      <issue>7187</issue>
-      <fpage>837</fpage>
-      <lpage>841</lpage>
-      <history>
-        <date date-type="received" iso-8601-date="1998-01-05">
-          <day>05</day>
-          <month>01</month>
-          <year>1998</year>
+      <volume id="volume-1">318</volume>
+      <issue id="issue-1">7187</issue>
+      <fpage id="fpage-1">837</fpage>
+      <lpage id="lpage-1">841</lpage>
+      <history id="history-1">
+        <date id="date-1" date-type="received" iso-8601-date="1998-01-05">
+          <day id="day-1">05</day>
+          <month id="month-1">01</month>
+          <year id="year-1">1998</year>
         </date>
-        <date date-type="rev-request" iso-8601-date="1998-03-14">
-          <day>14</day>
-          <month>03</month>
-          <year>1998</year>
+        <date id="date-2" date-type="rev-request" iso-8601-date="1998-03-14">
+          <day id="day-2">14</day>
+          <month id="month-2">03</month>
+          <year id="year-2">1998</year>
         </date>
-        <date date-type="rev-received" iso-8601-date="1998-05-24">
-          <day>24</day>
-          <month>05</month>
-          <year>1998</year>
+        <date id="date-3" date-type="rev-received" iso-8601-date="1998-05-24">
+          <day id="day-3">24</day>
+          <month id="month-3">05</month>
+          <year id="year-3">1998</year>
         </date>
-        <date date-type="accepted" iso-8601-date="1998-06-06">
-          <day>06</day>
-          <month>06</month>
-          <year>1998</year>
+        <date id="date-4" date-type="accepted" iso-8601-date="1998-06-06">
+          <day id="day-4">06</day>
+          <month id="month-4">06</month>
+          <year id="year-4">1998</year>
         </date>
       </history>
-      <abstract>
-        <p><bold>Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref ref-type="bibr" rid="r7"/></p>
+      <abstract id="abstract-1">
+        <p id="p-1"><bold id="bold-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref></p>
       </abstract>
     </article-meta>
   </front>
-  <body>
-    <sec>
+  <body id="body-1">
+    <sec id="heading-1">
       <title>Quisque malesuada</title>
-      <p>Lorem ipsum <xref ref-type="bibr" rid="r1"/> dolor <ext-link ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
-      <sec>
+      <p id="p-2">Lorem ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
+      <sec id="heading-2">
         <title>Orci varius natoque penatibus et magnis</title>
-        <p>Lorem <xref ref-type="fig" rid="fig1"/> ipsum dolor<xref ref-type="fn" rid="fn1"/> sit amet <xref ref-type="bibr" rid="r1 r7"/>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
+        <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
         <fig id="fig1">
           <label>Figure 1</label>
-          <caption>
-            <title>Behavioural design and implantation details.</title>
-            <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+          <caption id="caption-1">
+            <title id="title-1">Behavioural design and implantation details.</title>
+            <p id="p-4">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
           </caption>
-          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg"/>
+          <graphic id="graphic-1" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
         </fig>
-        <p>Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui..</p>
+        <p id="p-5">Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui..</p>
         <fig id="fig2">
           <label>Figure 2</label>
-          <caption>
-            <title>Visual object processing in area AIP.</title>
+          <caption id="caption-2">
+            <title id="title-2">Visual object processing in area AIP.</title>
+            <p id="p-6" />
           </caption>
-          <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg"/>
+          <graphic id="graphic-2" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
         </fig>
-        <disp-quote>
-          <p>Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>
+        <disp-quote id="disp-quote-1">
+          <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>
         </disp-quote>
-        <p>Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref ref-type="table" rid="table1"/>. </p>
+        <p id="p-8">Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
         <table-wrap id="table1">
           <label>Table 1</label>
-          <caption>
-            <title>Patient Care at End of Follow Up</title>
-            <p>Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds
-            among those allocated to day hospital or alternative services</p>
+          <caption id="caption-3">
+            <title id="title-3">Patient Care at End of Follow Up</title>
+            <p id="p-9">Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds among those allocated to day hospital or alternative services</p>
           </caption>
-          <table frame="hsides" rules="groups"><thead><tr><th valign="top"><bold>Mutant</bold></th><th valign="top"><bold>Lipid composition</bold></th><th valign="top"><bold>Depth parameter (Φ)</bold></th><th valign="top"><bold>Approx. distance to phosphate plane (Å)*</bold></th></tr></thead><tbody><tr><td valign="top">M173R1</td><td valign="top">20% PtdSer</td><td valign="bottom">+1.20 ± 0.10</td><td valign="bottom">+8.8</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.01 ± 0.20</td><td valign="bottom">+5.5</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">+0.66 ± 0.10</td><td valign="bottom">+7.4</td></tr><tr><td valign="top">F234R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−0.10 ± 0.10</td><td valign="bottom">+5.2</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−1.50 ± 0.03</td><td valign="bottom">–0.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom"> +0.00 ± 0.10</td><td valign="bottom">+5.5</td></tr><tr><td valign="top">V304R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−0.39 ± 0.20</td><td valign="bottom">+4.3</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−1.30 ± 0.10</td><td valign="bottom">+0.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.23 ± 0.10</td><td valign="bottom">+4.8</td></tr><tr><td valign="top">T329R1</td><td valign="top">20% PtdSer</td><td valign="bottom">−2.00 ± 0.14</td><td valign="bottom">–5.4</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.80 ± 0.14</td><td valign="bottom">+2.8</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−2.10 ± 0.12</td><td valign="bottom">–7.3</td></tr><tr><td valign="top">G368R1</td><td valign="top">20% PtdSer</td><td valign="bottom">+0.60 ± 0.10</td><td valign="bottom">+7.2</td></tr><tr><td valign="top"/><td valign="top">5% PtdIns(4,5)P<sub>2</sub></td><td valign="bottom">−0.64 ± 0.05</td><td valign="bottom">+3.6</td></tr><tr><td valign="top"/><td valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub>2</sub></td><td valign="top">+0.18 ± 0.10</td><td valign="top">+6.0</td></tr></tbody></table>
+          <table id="table-1" frame="hsides" rules="groups">
+            <thead id="thead-1">
+              <tr id="tr-1">
+                <th id="th-1" valign="top">
+                  <bold id="bold-2">Mutant</bold>
+                </th>
+                <th id="th-2" valign="top">
+                  <bold id="bold-3">Lipid composition</bold>
+                </th>
+                <th id="th-3" valign="top">
+                  <bold id="bold-4">Depth parameter (Φ)</bold>
+                </th>
+                <th id="th-4" valign="top">
+                  <bold id="bold-5">Approx. distance to phosphate plane (Å)*</bold>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="tbody-1">
+              <tr id="tr-2">
+                <td id="td-1" valign="top">M173R1</td>
+                <td id="td-2" valign="top">20% PtdSer</td>
+                <td id="td-3" valign="bottom">+1.20 ± 0.10</td>
+                <td id="td-4" valign="bottom">+8.8</td>
+              </tr>
+              <tr id="tr-3">
+                <td id="td-5" valign="top" />
+                <td id="td-6" valign="top">5% PtdIns(4,5)P<sub id="sub-1">2</sub></td>
+                <td id="td-7" valign="bottom">−0.01 ± 0.20</td>
+                <td id="td-8" valign="bottom">+5.5</td>
+              </tr>
+              <tr id="tr-4">
+                <td id="td-9" valign="top" />
+                <td id="td-10" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-2">2</sub></td>
+                <td id="td-11" valign="bottom">+0.66 ± 0.10</td>
+                <td id="td-12" valign="bottom">+7.4</td>
+              </tr>
+              <tr id="tr-5">
+                <td id="td-13" valign="top">F234R1</td>
+                <td id="td-14" valign="top">20% PtdSer</td>
+                <td id="td-15" valign="bottom">−0.10 ± 0.10</td>
+                <td id="td-16" valign="bottom">+5.2</td>
+              </tr>
+              <tr id="tr-6">
+                <td id="td-17" valign="top" />
+                <td id="td-18" valign="top">5% PtdIns(4,5)P<sub id="sub-3">2</sub></td>
+                <td id="td-19" valign="bottom">−1.50 ± 0.03</td>
+                <td id="td-20" valign="bottom">–0.6</td>
+              </tr>
+              <tr id="tr-7">
+                <td id="td-21" valign="top" />
+                <td id="td-22" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-4">2</sub></td>
+                <td id="td-23" valign="bottom">+0.00 ± 0.10</td>
+                <td id="td-24" valign="bottom">+5.5</td>
+              </tr>
+              <tr id="tr-8">
+                <td id="td-25" valign="top">V304R1</td>
+                <td id="td-26" valign="top">20% PtdSer</td>
+                <td id="td-27" valign="bottom">−0.39 ± 0.20</td>
+                <td id="td-28" valign="bottom">+4.3</td>
+              </tr>
+              <tr id="tr-9">
+                <td id="td-29" valign="top" />
+                <td id="td-30" valign="top">5% PtdIns(4,5)P<sub id="sub-5">2</sub></td>
+                <td id="td-31" valign="bottom">−1.30 ± 0.10</td>
+                <td id="td-32" valign="bottom">+0.6</td>
+              </tr>
+              <tr id="tr-10">
+                <td id="td-33" valign="top" />
+                <td id="td-34" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-6">2</sub></td>
+                <td id="td-35" valign="bottom">−0.23 ± 0.10</td>
+                <td id="td-36" valign="bottom">+4.8</td>
+              </tr>
+              <tr id="tr-11">
+                <td id="td-37" valign="top">T329R1</td>
+                <td id="td-38" valign="top">20% PtdSer</td>
+                <td id="td-39" valign="bottom">−2.00 ± 0.14</td>
+                <td id="td-40" valign="bottom">–5.4</td>
+              </tr>
+              <tr id="tr-12">
+                <td id="td-41" valign="top" />
+                <td id="td-42" valign="top">5% PtdIns(4,5)P<sub id="sub-7">2</sub></td>
+                <td id="td-43" valign="bottom">−0.80 ± 0.14</td>
+                <td id="td-44" valign="bottom">+2.8</td>
+              </tr>
+              <tr id="tr-13">
+                <td id="td-45" valign="top" />
+                <td id="td-46" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-8">2</sub></td>
+                <td id="td-47" valign="bottom">−2.10 ± 0.12</td>
+                <td id="td-48" valign="bottom">–7.3</td>
+              </tr>
+              <tr id="tr-14">
+                <td id="td-49" valign="top">G368R1</td>
+                <td id="td-50" valign="top">20% PtdSer</td>
+                <td id="td-51" valign="bottom">+0.60 ± 0.10</td>
+                <td id="td-52" valign="bottom">+7.2</td>
+              </tr>
+              <tr id="tr-15">
+                <td id="td-53" valign="top" />
+                <td id="td-54" valign="top">5% PtdIns(4,5)P<sub id="sub-9">2</sub></td>
+                <td id="td-55" valign="bottom">−0.64 ± 0.05</td>
+                <td id="td-56" valign="bottom">+3.6</td>
+              </tr>
+              <tr id="tr-16">
+                <td id="td-57" valign="top" />
+                <td id="td-58" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-10">2</sub></td>
+                <td id="td-59" valign="top">+0.18 ± 0.10</td>
+                <td id="td-60" valign="top">+6.0</td>
+              </tr>
+            </tbody>
+          </table>
         </table-wrap>
       </sec>
     </sec>
   </body>
-  <back>
-    <fn-group>
+  <back id="back-1">
+    <fn-group id="fn-group-1">
       <fn id="fn1">
-        <p>Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
+        <p id="p-10">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
       </fn>
       <fn id="fn2">
-        <p>Phasellus ex nulla, interdum condimentum pretium ac, auctor et tellus. Maecenas eu est a neque vestibulum laoreet. Mauris libero nulla, pretium eu iaculis id, mollis ac erat. Suspendisse rutrum gravida malesuada</p>
+        <p id="p-11">Phasellus ex nulla, interdum condimentum pretium ac, auctor et tellus. Maecenas eu est a neque vestibulum laoreet. Mauris libero nulla, pretium eu iaculis id, mollis ac erat. Suspendisse rutrum gravida malesuada</p>
       </fn>
     </fn-group>
-    <ref-list>
-      <title>References</title>
+    <ref-list id="ref-list-1">
       <ref id="r1">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
@@ -149,10 +258,10 @@
               <given-names>National Research</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="2003">2003</year>
           <source>Guidelines for the Care and Use of Mammals in Neuroscience and Behavioral Research</source>
           <publisher-loc>Washington, D.C</publisher-loc>
           <publisher-name>National Academies Press</publisher-name>
+          <year>2003</year>
           <pub-id pub-id-type="doi">10.17226/10732</pub-id>
         </element-citation>
       </ref>
@@ -164,11 +273,11 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <article-title>Preprint title</article-title>
+          <source>Pre-print journal</source>
           <year>2010</year>
           <month>10</month>
           <day>5</day>
-          <article-title>Preprint title</article-title>
-          <source>Pre-print journal</source>
           <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
@@ -180,11 +289,11 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <article-title>Clinical trial title</article-title>
+          <source>Pre-print journal</source>
           <year>2010</year>
           <month>10</month>
           <day>5</day>
-          <article-title>Clinical trial title</article-title>
-          <source>Pre-print journal</source>
         </element-citation>
       </ref>
       <ref id="r4">
@@ -195,12 +304,12 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <article-title>Conf proc title</article-title>
+          <source>Confproc source</source>
+          <conf-name>Conf name</conf-name>
           <year>2010</year>
           <month>10</month>
           <day>5</day>
-          <article-title>Conf proc title</article-title>
-          <conf-name>Conf name</conf-name>
-          <source>Confproc source</source>
           <fpage>214</fpage>
           <lpage>216</lpage>
           <page-range>214-216</page-range>
@@ -215,15 +324,15 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <data-title>Data set title</data-title>
+          <source>World Bank</source>
           <year>2010</year>
           <month>10</month>
           <day>5</day>
-          <data-title>Data set title</data-title>
-          <source>World Bank</source>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
           <pub-id pub-id-type="accession">ACCESSION_ID</pub-id>
           <pub-id pub-id-type="ark">ARK_ID</pub-id>
           <pub-id pub-id-type="archive">ARCHIVE_ID</pub-id>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
       <ref id="r6">
@@ -234,15 +343,15 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <article-title>Periodical title</article-title>
+          <source>Periodical source</source>
           <year>2010</year>
           <month>10</month>
           <day>5</day>
-          <article-title>Periodical title</article-title>
-          <source>Periodical source</source>
-          <volume>29</volume>
           <fpage>6436</fpage>
           <lpage>6448</lpage>
           <page-range>6436-6448</page-range>
+          <volume>29</volume>
         </element-citation>
       </ref>
       <ref id="r7">
@@ -281,12 +390,12 @@
               <given-names>John</given-names>
             </name>
           </person-group>
-          <collab collab-type="assignee">Hospira, Inc.</collab>
           <article-title>Patent title</article-title>
+          <collab type="assignee">Hospira, Inc.</collab>
+          <source>United States patent</source>
           <year>2009</year>
           <month>10</month>
           <day>5</day>
-          <source>United States patent</source>
           <patent country="US">US 6,980,855</patent>
         </element-citation>
       </ref>
@@ -298,11 +407,11 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <publisher-loc>Publisher location</publisher-loc>
+          <publisher-name>Publisher name</publisher-name>
           <year>2009</year>
           <month>10</month>
           <day>5</day>
-          <publisher-name>Publisher name</publisher-name>
-          <publisher-loc>Publisher location</publisher-loc>
           <pub-id pub-id-type="isbn">ISBN_NUMBER</pub-id>
         </element-citation>
       </ref>
@@ -314,13 +423,13 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <source>Software Project</source>
+          <version>1.0.0-preview.7</version>
+          <publisher-loc>Software publisher location</publisher-loc>
+          <publisher-name>Software publisher name</publisher-name>
           <year>2009</year>
           <month>10</month>
           <day>5</day>
-          <source>Software Project</source>
-          <version>1.0.0-preview.7</version>
-          <publisher-name>Software publisher name</publisher-name>
-          <publisher-loc>Software publisher location</publisher-loc>
           <pub-id pub-id-type="doi">SOFTWARE_DOI</pub-id>
         </element-citation>
       </ref>
@@ -332,12 +441,12 @@
               <given-names>John</given-names>
             </name>
           </person-group>
+          <article-title>Thesis title</article-title>
+          <publisher-loc>Software publisher location</publisher-loc>
+          <publisher-name>Software publisher name</publisher-name>
           <year>2009</year>
           <month>10</month>
           <day>5</day>
-          <article-title>Thesis title</article-title>
-          <publisher-name>Software publisher name</publisher-name>
-          <publisher-loc>Software publisher location</publisher-loc>
           <pub-id pub-id-type="doi">THESIS_DOI</pub-id>
         </element-citation>
       </ref>
@@ -349,12 +458,12 @@
               <given-names>John</given-names>
             </name>
           </person-group>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
           <source>Website title</source>
           <publisher-loc>Website publisher location?</publisher-loc>
           <uri>http://example.com/example-page.html</uri>
+          <year>2009</year>
+          <month>10</month>
+          <day>5</day>
         </element-citation>
       </ref>
     </ref-list>

@@ -143,21 +143,21 @@ export default class TranslationsComponent extends NodeComponent {
 
   _addTitleTranslation() {
     const editorSession = this.context.editorSession
-    editorSession.transaction((doc) => {
-      let titleGroup = doc.find('article-meta > title-group')
-      let transTitleGroup = doc.createElement('trans-title-group')
-      transTitleGroup.append(doc.createElement('trans-title'))
+    editorSession.transaction(tx => {
+      let titleGroup = tx.find('article-meta > title-group')
+      let transTitleGroup = tx.createElement('trans-title-group')
+      transTitleGroup.append(tx.createElement('trans-title'))
       titleGroup.append(transTitleGroup)
     })
   }
 
   _addAbstractTranslation() {
     const editorSession = this.context.editorSession
-    editorSession.transaction((doc) => {
-      let articleMeta = doc.get(this.props.node.id)
-      let transAbstract = doc.createElement('trans-abstract')
-      let content = doc.createElement('abstract-content')
-      let placeholder = doc.createElement('p')
+    editorSession.transaction(tx => {
+      let articleMeta = tx.get(this.props.node.id)
+      let transAbstract = tx.createElement('trans-abstract')
+      let content = tx.createElement('abstract-content')
+      let placeholder = tx.createElement('p')
       content.append(placeholder)
       transAbstract.append(content)
       articleMeta.append(transAbstract)
@@ -166,16 +166,16 @@ export default class TranslationsComponent extends NodeComponent {
 
   _removeTitleTranslation(nodeId) {
     const editorSession = this.context.editorSession
-    editorSession.transaction((doc) => {
-      let title = doc.get(nodeId)
+    editorSession.transaction(tx => {
+      let title = tx.get(nodeId)
       title.parentNode.removeChild(title)
     })
   }
 
   _removeAbstractTranslation(nodeId) {
     const editorSession = this.context.editorSession
-    editorSession.transaction((doc) => {
-      let transAbstract = doc.get(nodeId)
+    editorSession.transaction(tx => {
+      let transAbstract = tx.get(nodeId)
       transAbstract.parentNode.removeChild(transAbstract)
     })
   }

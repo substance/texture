@@ -56,12 +56,12 @@ class MyTextureEditor extends Component {
   }
 
   _init() {
-    let archiveId = getQueryStringParam('archive')
-    let storageType = getQueryStringParam('storage')
+    let archiveId = getQueryStringParam('archive') || 'kitchen-sink'
+    let storageType = getQueryStringParam('storage') || 'vfs'
     let storageUrl = getQueryStringParam('storageUrl') || '/archives'
     let storage
     if (storageType==='vfs') {
-      storage = new VfsClient(window.vfs, '/data/')
+      storage = new VfsClient(window.vfs, './data/')
     } else {
       storage = new HttpStorageClient(storageUrl)
     }

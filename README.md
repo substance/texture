@@ -44,6 +44,8 @@ Subscript & Superscript                 | ![prod](https://img.shields.io/badge/s
 
 ## Install
 
+*You need Node 8.x installed on your system.*
+
 Clone the repository.
 
 ```bash

@@ -70,7 +70,7 @@ Start the dev server.
 $ npm start
 ```
 
-And navigate to [http://localhost:4000](http://localhost:4000).
+And navigate to [http://localhost:4000](http://localhost:4000/?archive=kitchen-sink&storage=fs).
 
 You can save your document changes by pressing `CommandOrControl+S`.
 

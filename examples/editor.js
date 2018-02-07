@@ -69,7 +69,10 @@ class MyTextureEditor extends Component {
     let archive = new TextureArchive(storage, buffer)
     archive.load(archiveId)
     .then(() => {
-      this.setState({archive})
+      setTimeout(() => {
+        this.setState({archive})
+      }, 0)
+
     }).catch(error => {
       console.error(error)
       this.setState({error})

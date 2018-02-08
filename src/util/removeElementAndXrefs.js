@@ -5,7 +5,7 @@ export default function removeElementAndXrefs(editorSession, elementId, parentEl
   let xrefIndex = doc.getIndex('xrefs')
   let xrefs = xrefIndex.get(elementId)
 
-  if (xrefs.length === 0 || window.confirm(`Deleting this will affect ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
+  if (xrefs.length === 0 || window.confirm(`Deleting this will affect ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
     editorSession.transaction(tx => {
       let node = tx.get(elementId)
       // ATTENTION: it is important to nodes from the transaction tx!

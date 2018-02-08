@@ -180,11 +180,17 @@ export function importOutput(el) {
     .text(el.text())
 }
 
-export function exportOutput(el) {
+export function exportOutput(el, newValue) {
+  // NOTE: If no new value is provided we use the old cached value
+  if (newValue) {
+    newValue = JSON.stringify(newValue)
+  } else {
+    newValue = el.textContent
+  }
   return el.createElement('code')
     .attr('specific-use', 'output')
     .attr('language', el.attr('language'))
     .append(
-      el.createCDATASection(el.textContent)
+      el.createCDATASection(newValue)
     )
 }

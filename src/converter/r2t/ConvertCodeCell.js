@@ -21,12 +21,14 @@ export default class ConvertCodeCell {
     })
   }
 
-  export(dom) {
+  export(dom, {doc}) {
     let cells = dom.findAll('cell')
     let $$ = dom.createElement.bind(dom)
     cells.forEach((cell) => {
       let source = cell.find('source-code')
       let output = cell.find('output')
+      let cellNode = doc.get(cell.id)
+      let cellValue = cellNode.state.value
       cell.tagName = 'code'
       cell.empty()
       cell.attr('specific-use', 'cell')
@@ -34,7 +36,7 @@ export default class ConvertCodeCell {
         $$('named-content').append(
           $$('alternatives').append(
             exportSourceCode(source),
-            exportOutput(output)
+            exportOutput(output, cellValue)
           )
         )
       )

@@ -37,27 +37,31 @@ export default class ConvertReproFig {
     })
   }
 
-
   export(dom, {doc}) {
     let reproFigs = dom.findAll('repro-fig')
     let $$ = dom.createElement.bind(dom)
     reproFigs.forEach((reproFig) => {
       reproFig.tagName = 'fig'
-      reproFig.attr('fig-type', 'repro-fig')
-      wrapCaptionTitle(reproFig)
-      removeEmptyElements(reproFig, 'object-id')
+      let cellId = reproFig.find('cell').id
+      let cell = doc.get(cellId)
+      let cellValue = cell.state.value
       // Export generated label
+      reproFig.attr('fig-type', 'repro-fig')
       let reproFigNode = doc.get(reproFig.id)
       let label = reproFigNode.state.label
       addLabel(reproFig, label, 1)
+      wrapCaptionTitle(reproFig)
+      removeEmptyElements(reproFig, 'object-id')
+
       // Replace cell element with JATS-conform version
       let source = reproFig.find('source-code')
       let output = reproFig.find('output')
       removeChild(reproFig, 'cell')
+
       reproFig.append(
         $$('alternatives').append(
           exportSourceCode(source),
-          exportOutput(output)
+          exportOutput(output, cellValue)
         )
       )
     })

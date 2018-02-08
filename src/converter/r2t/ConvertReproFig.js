@@ -3,7 +3,8 @@ import {
   exportSourceCode, exportOutput,
   removeChild, addLabel,
   wrapCaptionTitle,
-  extractCaptionTitle, expandCaption, expandTitle, expandObjectId
+  extractCaptionTitle, expandCaption, expandTitle, expandObjectId,
+  removeEmptyElements
 } from './r2tHelpers'
 
 export default class ConvertReproFig {
@@ -44,6 +45,7 @@ export default class ConvertReproFig {
       reproFig.tagName = 'fig'
       reproFig.attr('fig-type', 'repro-fig')
       wrapCaptionTitle(reproFig)
+      removeEmptyElements(reproFig, 'object-id')
       // Export generated label
       let reproFigNode = doc.get(reproFig.id)
       let label = reproFigNode.state.label

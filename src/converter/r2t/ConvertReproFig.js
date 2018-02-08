@@ -42,9 +42,13 @@ export default class ConvertReproFig {
     let $$ = dom.createElement.bind(dom)
     reproFigs.forEach((reproFig) => {
       reproFig.tagName = 'fig'
-      let cellId = reproFig.find('cell').id
-      let cell = doc.get(cellId)
-      let cellValue = cell.state.value
+      let cellValue
+      if (doc) {
+        let cellId = reproFig.find('cell').id
+        let cell = doc.get(cellId)
+        cellValue = cell.state.value
+      }
+
       // Export generated label
       reproFig.attr('fig-type', 'repro-fig')
       let reproFigNode = doc.get(reproFig.id)

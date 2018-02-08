@@ -27,8 +27,11 @@ export default class ConvertCodeCell {
     cells.forEach((cell) => {
       let source = cell.find('source-code')
       let output = cell.find('output')
-      let cellNode = doc.get(cell.id)
-      let cellValue = cellNode.state.value
+      let cellValue
+      if (doc) {
+        let cellNode = doc.get(cell.id)
+        cellValue = cellNode.state.value
+      }
       cell.tagName = 'code'
       cell.empty()
       cell.attr('specific-use', 'cell')

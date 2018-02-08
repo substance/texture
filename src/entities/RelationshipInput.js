@@ -51,7 +51,7 @@ export default class RelationshipInput extends Component {
           )
         )
         if (index < entities.length-1) {
-          el.append(', ')
+          el.append('; ')
         }
       })
     } else {

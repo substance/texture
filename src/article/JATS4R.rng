@@ -562,7 +562,11 @@
       <choice>
         <zeroOrMore>
           <choice>
-            <text/>
+            <!--
+              HACK: Disable text in named-content, otherwise prettyPrintXML will mess up
+              code cells (code > named-content > code), where named-content must not contain any text.
+            -->
+            <!-- <text/> -->
             <ref name="emphasis.class"/>
             <ref name="inline-display-noalt.class"/>
             <ref name="inline-math.class"/>

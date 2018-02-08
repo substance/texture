@@ -27,7 +27,7 @@ test("Export code cell", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertCodeCell()
   converter.import(dom)
-  converter.export(dom)
+  converter.export(dom, {})
   let cell = dom.find('#cell1')
   t.equal(cell.tagName, 'code')
   let sourceCode = cell.find('named-content > alternatives > code[specific-use=source]')

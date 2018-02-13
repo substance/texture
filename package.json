@@ -11,7 +11,7 @@
   "devDependencies": {
     "electron": "^1.7.9",
     "font-awesome": "4.5.0",
-    "substance-bundler": "0.20.8",
+    "substance-bundler": "^0.20.10",
     "substance-test": "^0.9.4",
     "eslint": "^3.17.1",
     "dar-server": "0.2.0"

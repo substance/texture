@@ -20,6 +20,10 @@
   font-size: smaller;
 }
 
+.sc-monospace {
+  font-family: monospace;
+}
+
 .sc-underline {
   text-decoration: underline;
 }

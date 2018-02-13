@@ -23,7 +23,7 @@
 }
 
 .sc-editor > .se-context-pane {
-  flex: 0 2 400px;
+  flex: 0 2 300px;
   background: #fafbfc;
   border-left: 1px solid #e1e4e8;
   position: relative;

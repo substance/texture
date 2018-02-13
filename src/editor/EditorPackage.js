@@ -265,6 +265,14 @@ export default {
     })
 
     config.addAnnotationTool({
+      name: 'monospace',
+      nodeType: 'monospace',
+      commandGroup: 'formatting',
+      icon: 'fa-code',
+      label: 'Monospace'
+    })
+
+    config.addAnnotationTool({
       name: 'ext-link',
       nodeType: 'ext-link',
       commandGroup: 'formatting',

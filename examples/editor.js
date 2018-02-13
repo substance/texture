@@ -90,12 +90,22 @@ class MyTextureEditor extends Component {
     })
   }
 
-  _keyDown(e) {
-    let key = parseKeyEvent(e)
-    // CommandOrControl+S
-    if (key === 'META+83' || key === 'CTRL+83') {
-      this._save()
-      e.preventDefault()
+  _keyDown(event) {
+    console.log('keydown yo')
+    if ( event.key === 'Dead' ) return
+    // Handle custom keyboard shortcuts globally
+    let archive = this.state.archive
+    if (archive) {
+      let manuscriptSession = archive.getEditorSession('manuscript')
+      let handled = manuscriptSession.keyboardManager.onKeydown(event)
+      if (!handled) {
+        let key = parseKeyEvent(event)
+        // CommandOrControl+S
+        if (key === 'META+83' || key === 'CTRL+83') {
+          this._save()
+          event.preventDefault()
+        }
+      }
     }
   }
 }

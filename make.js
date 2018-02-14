@@ -133,7 +133,7 @@ b.task('examples', () => {
     format: 'umd', moduleName: 'vfs',
     rootDir: path.join(__dirname, 'data')
   })
-  b.copy('./examples/*.html', DIST)
+  b.copy('./examples/*.html', DIST, { root: './examples/' })
   b.js('./examples/editor.js', {
     targets: [{
       dest: DIST+'editor.js',

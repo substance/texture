@@ -72,10 +72,23 @@ class TOCProvider extends EventEmitter {
   }
 
   computeEntries() {
-    let doc = this.getDocument()
-    let config = this.config
+    const doc = this.getDocument()
+    const config = this.config
     let entries = []
-    let contentNodes = doc.get(config.containerId).getChildren()
+
+    // Note: For abstract and footnotes we need to find first
+    // text node inside container to set selection inside container
+    const abstract = doc.find('abstract p')
+    if(abstract) {
+      entries.push({
+        id: abstract.id,
+        name: 'Abstract',
+        level: 1,
+        node: abstract
+      })
+    }
+
+    const contentNodes = doc.get(config.containerId).getChildren()
     forEach(contentNodes, function(node) {
       if (node.type === 'heading') {
         entries.push({
@@ -86,6 +99,27 @@ class TOCProvider extends EventEmitter {
         })
       }
     })
+
+    const ref = doc.find('ref')
+    if(ref) {
+      entries.push({
+        id: ref.id,
+        name: 'References',
+        level: 1,
+        node: ref
+      })
+    }
+
+    const fn = doc.find('fn p')
+    if(fn) {
+      entries.push({
+        id: fn.id,
+        name: 'Footnotes',
+        level: 1,
+        node: fn
+      })
+    }
+
     return entries
   }
 

@@ -151,13 +151,16 @@ export default class Editor extends AbstractWriter {
     if (nodeComponent) {
       // TODO: it needs to be easier to retrieve the surface
       let surface = nodeComponent.context.surface
-      editorSession.setSelection({
-        type: 'property',
-        path: node.getPath(),
-        startOffset: 0,
-        surfaceId: surface.id,
-        containerId: surface.getContainerId()
-      })
+      // There are cases when we can't set selection, e.g. for references
+      if(surface) {
+        editorSession.setSelection({
+          type: 'property',
+          path: node.getPath(),
+          startOffset: 0,
+          surfaceId: surface.id,
+          containerId: surface.getContainerId()
+        })
+      }
       return this._scrollTo(nodeId)
     }
   }

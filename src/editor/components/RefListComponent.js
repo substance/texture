@@ -35,6 +35,7 @@ export default class RefListComponent extends NodeComponent {
     const popup = this.state.popup
 
     let el = $$('div').addClass('sc-ref-list')
+      .attr('data-id', 'ref-list')
 
     if (mode) {
       let ModeComponent

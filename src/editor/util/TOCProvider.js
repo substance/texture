@@ -76,8 +76,8 @@ class TOCProvider extends EventEmitter {
     const config = this.config
     let entries = []
 
-    // Note: For abstract and footnotes we need to find first
-    // text node inside container to set selection inside container
+    // Note: For abstract we need to find first text node
+    // inside container to set selection there
     const abstract = doc.find('abstract p')
     if(abstract) {
       entries.push({
@@ -103,20 +103,18 @@ class TOCProvider extends EventEmitter {
     const ref = doc.find('ref')
     if(ref) {
       entries.push({
-        id: ref.id,
+        id: 'ref-list',
         name: 'References',
-        level: 1,
-        node: ref
+        level: 1
       })
     }
 
-    const fn = doc.find('fn p')
+    const fn = doc.find('fn')
     if(fn) {
       entries.push({
-        id: fn.id,
+        id: 'fn-group',
         name: 'Footnotes',
-        level: 1,
-        node: fn
+        level: 1
       })
     }
 

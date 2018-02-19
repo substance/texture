@@ -16,9 +16,11 @@ export default class FnGroupComponent extends NodeComponent {
   render($$) {
     const node = this.props.node
 
-    let el = $$('div').addClass('sc-fn-group').append(
-      $$('div').addClass('se-title').append('Footnotes')
-    )
+    let el = $$('div').addClass('sc-fn-group')
+      .attr('data-id', 'fn-group')
+      .append(
+        $$('div').addClass('se-title').append('Footnotes')
+      )
 
     let fns = node.findAll('fn')
     fns.sort((a,b) => {

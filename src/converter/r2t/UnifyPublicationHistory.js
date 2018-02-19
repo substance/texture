@@ -1,8 +1,11 @@
 import { JATS4R } from '../../article'
+import { insertChildAtFirstValidPos } from './r2tHelpers'
 
 /*
   For sake of simplicity we want to use only <history>
   for all dates describing the life-cycle of a publication
+
+  TODO: Consider having insertChildAtFirstValidPos for JATS4M schema too.
 */
 export default class UnifyPublicationHistory {
 
@@ -15,8 +18,8 @@ export default class UnifyPublicationHistory {
     let history = dom.find('article-meta > history')
     if (!history) {
       history = dom.createElement('history')
-      let pos = JATS4R.getElementSchema('article-meta').findFirstValidPos(articleMeta, 'history')
-      articleMeta.insertAt(pos, history)
+      // This must be inserted according to the TextureJATS
+      insertChildAtFirstValidPos(articleMeta, history)
     }
     pubDates.forEach((pubDate) => {
       pubDate.tagName = 'date'

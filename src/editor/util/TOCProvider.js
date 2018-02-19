@@ -166,6 +166,6 @@ class TOCProvider extends EventEmitter {
   }
 }
 
-TOCProvider.tocTypes = ['heading']
+TOCProvider.tocTypes = ['heading', 'ref', 'fn']
 
 export default TOCProvider

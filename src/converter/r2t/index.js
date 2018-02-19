@@ -27,6 +27,9 @@ const trafos = [
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
+  // NOTE: ConvertContentLoc must go before ConvertAuthors otherwise we end up in
+  // invalid schema.
+  ConvertContentLoc,
   // NOTE: It is important that ConvertAuthors goes before ConvertRefs, as
   // as person records with affiliations (contrib) should have priority over
   // person records in
@@ -43,7 +46,6 @@ const trafos = [
   WrapBodyContent,
   WrapDispQuoteContent,
   Sec2Heading,
-  ConvertContentLoc,
   ConvertXref,
   UpdateDocType,
   // TODO: is this really necessary again?

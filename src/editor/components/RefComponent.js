@@ -16,7 +16,7 @@ export default class RefComponent extends NodeComponent {
     return $$('div').addClass('sc-ref-component').append(
       $$('div').addClass('se-label').append(label),
       $$('div').addClass('se-text').html(entityHtml)
-    )
+    ).attr('data-id', ref.id)
   }
 }
 

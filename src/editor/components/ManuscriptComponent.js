@@ -20,16 +20,16 @@ export default class ManuscriptComponent extends Component {
     // and create an empty body on import
     const body = article.findChild('body')
     if (body) {
-      el.append($$(this.getComponent('separator'), {
-        label: 'manuscript-start'
-      }))
+      // el.append($$(this.getComponent('separator'), {
+      //   label: 'manuscript-start'
+      // }))
       const BodyComponent = this.getComponent('body')
       el.append($$(BodyComponent, {
         node: body
       }).ref('body'))
-      el.append($$(this.getComponent('separator'), {
-        label: 'manuscript-end'
-      }))
+      // el.append($$(this.getComponent('separator'), {
+      //   label: 'manuscript-end'
+      // }))
     }
 
     const back = article.findChild('back')

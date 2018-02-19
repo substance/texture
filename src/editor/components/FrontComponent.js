@@ -43,17 +43,17 @@ export default class FrontComponent extends Component {
     }
 
     // contrib-group content-type="editors"
-    let editorsContribGroup = articleMeta.find('contrib-group[content-type=editor]')
-    if (editorsContribGroup) {
-      let editorsListEl = $$(this.getComponent('editors-list'), {
-        node: editorsContribGroup
-      })
-      el.append(editorsListEl)
-    }
+    // let editorsContribGroup = articleMeta.find('contrib-group[content-type=editor]')
+    // if (editorsContribGroup) {
+    //   let editorsListEl = $$(this.getComponent('editors-list'), {
+    //     node: editorsContribGroup
+    //   })
+    //   el.append(editorsListEl)
+    // }
 
     // Abstract
 
-    // There can be multiple abstracts. We just take the first
+    // There can be multiple abstracts. We just take the first one.
     const abstract = articleMeta.findChild('abstract')
     let abstractEl
     if (abstract) {

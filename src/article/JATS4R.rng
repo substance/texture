@@ -249,13 +249,12 @@
     </element>
   </define>
 
-
   <define name="contrib-group">
     <element name="contrib-group">
       <ref name="contrib-group-attlist"/>
-      <zeroOrMore>
+      <oneOrMore>
         <ref name="contrib"/>
-      </zeroOrMore>
+      </oneOrMore>
     </element>
   </define>
 

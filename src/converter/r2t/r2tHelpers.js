@@ -25,9 +25,7 @@ export function importContentLoc(el) {
 
   // we need to do this so it works when strict order is enforced. For interleave
   // models we could do simply el.append(contentLoc)
-  let schema = TextureJATS.getElementSchema(el.tagName)
-  let pos = schema.findFirstValidPos(el, 'content-loc')
-  el.insertAt(pos, contentLoc)
+  insertChildAtFirstValidPos(el, contentLoc)
 }
 
 export function exportContentLoc(el) {
@@ -193,4 +191,39 @@ export function exportOutput(el, newValue) {
     .append(
       el.createCDATASection(newValue)
     )
+}
+
+/*
+  Expands contribGroup if it does not exist
+*/
+export function expandContribGroup(dom, type) {
+  let articleMeta = dom.find('article-meta')
+  let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
+  if (!contribGroup) {
+    contribGroup = dom.createElement('contrib-group').attr('content-type', type)
+    insertChildAtFirstValidPos(articleMeta, contribGroup)
+  }
+}
+
+/*
+  Takes a selector and delets all matching elements if they have no children
+*/
+export function removeEmptyElementsIfNoChildren(dom, selector) {
+  let elements = dom.findAll(selector)
+  elements.forEach(el => {
+    if (el.children.length === 0) {
+      let parent = el.getParent()
+      parent.removeChild(el)
+    }
+  })
+}
+
+export function insertChildAtFirstValidPos(parent, child) {
+  let schema = TextureJATS.getElementSchema(parent.tagName)
+  let insertPos = schema.findFirstValidPos(parent, child.tagName)
+  if (insertPos >= 0) {
+    parent.insertAt(insertPos, child)
+  } else {
+    throw new Error(`No valid insert position found for ${child.tagName} in ${parent.tagName}`)
+  }
 }

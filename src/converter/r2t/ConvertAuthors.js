@@ -1,8 +1,13 @@
 import { OrganisationConverter, PersonConverter } from './EntityConverters'
+import { expandContribGroup, removeEmptyElementsIfNoChildren } from './r2tHelpers'
 
 export default class ConvertAuthors {
   import(dom, api) {
     const pubMetaDb = api.pubMetaDb
+
+    expandContribGroup(dom, 'author')
+    expandContribGroup(dom, 'editor')
+
     const affs = dom.findAll('article-meta > aff')
     // Convert <aff> elements to organisation entities
     affs.forEach(aff => {
@@ -38,8 +43,11 @@ export default class ConvertAuthors {
       aff.removeAttr('rid')
     })
 
+    // Remove all empty contrib-groups as they are not valid JATS
+    removeEmptyElementsIfNoChildren(dom, 'contrib-group')
   }
 }
+
 
 function _importPersons(dom, pubMetaDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)

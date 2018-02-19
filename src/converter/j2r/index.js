@@ -1,5 +1,6 @@
 import PruneText from './PruneText'
 import NormalizeFn from './NormalizeFn'
+import NormalizeContribGroup from './NormalizeContribGroup'
 import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
 import RefList from './RefList'
 // import HomogenizeSigBlocks from './HomogenizeSigBlocks'
@@ -8,6 +9,7 @@ import WrapSig from './WrapSig'
 const trafos = [
   // HomogenizeSigBlocks,
   WrapSig,
+  NormalizeContribGroup,
   NormalizeFn,
   RefList,
   UnwrapBlockLevelElements,

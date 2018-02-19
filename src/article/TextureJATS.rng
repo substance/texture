@@ -409,10 +409,6 @@
 
     TODO: support structured <contrib>, like we did with <element-citation>
   -->
-  <define name="contrib">
-    <element name="contrib">
-    </element>
-  </define>
 
   <define name="contrib-group">
     <element name="contrib-group">
@@ -422,66 +418,6 @@
       </zeroOrMore>
     </element>
   </define>
-
-  <define name="string-contrib">
-  </define>
-
-  <define name="contrib">
-    <element name="contrib">
-      <ref name="contrib-attlist"/>
-      <!-- TODO: we should use <interleave> here -->
-      <interleave>
-        <optional>
-          <ref name="string-contrib"/>
-        </optional>
-        <optional>
-          <ref name="element-contrib"/>
-        </optional>
-      </interleave>
-    </element>
-  </define>
-
-  <define name="string-contrib">
-    <element name="string-contrib">
-      <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="element-contrib">
-    <element name="element-contrib">
-      <interleave>
-        <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
-        <optional><ref name="anonymous"/></optional>
-        <optional><ref name="collab"/></optional>
-        <optional><ref name="collab-alternatives"/></optional>
-        <optional><ref name="name"/></optional>
-        <optional><ref name="name-alternatives"/></optional>
-        <optional><ref name="string-name"/></optional>
-        <optional><ref name="degrees"/></optional>
-        <!-- <optional><ref name="address"/></optional> -->
-        <!-- <optional><ref name="aff"/></optional> -->
-        <!-- <optional><ref name="aff-alternatives"/></optional> -->
-        <optional><ref name="author-comment"/></optional>
-        <optional><ref name="bio"/></optional>
-        <optional><ref name="email"/></optional>
-        <optional><ref name="etal"/></optional>
-        <optional><ref name="ext-link"/></optional>
-        <!-- <optional><ref name="fn"/></optional> -->
-        <optional><ref name="on-behalf-of"/></optional>
-        <optional><ref name="role"/></optional>
-        <optional><ref name="uri"/></optional>
-        <zeroOrMore><ref name="xref"/></zeroOrMore>
-        <optional><ref name="x"/></optional>
-      </interleave>
-    </element>
-  </define>
-
-
 
   <!--
     Using <body-content> internally so that we have a pure container.

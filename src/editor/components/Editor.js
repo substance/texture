@@ -11,12 +11,24 @@ export default class Editor extends AbstractWriter {
 
   constructor(...args) {
     super(...args)
-    let editorSession = this.props.editorSession
+    this._initialize(this.props)
+  }
+
+  didMount() {
+    super.didMount()
+    this.handleActions({
+      'switchContext': this._switchContext
+    })
+  }
+
+  _initialize(props) {
+    super._initialize(props)
+    let editorSession = props.editorSession
 
     this.referenceManager = new ReferenceManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('references'),
       editorSession,
-      pubMetaDbSession: this.props.pubMetaDbSession
+      pubMetaDbSession: props.pubMetaDbSession
     })
     this.figureManager = new FigureManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('figures'),
@@ -29,13 +41,6 @@ export default class Editor extends AbstractWriter {
     this.footnoteManager = new FootnoteManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('footnotes'),
       editorSession
-    })
-  }
-
-  didMount() {
-    super.didMount()
-    this.handleActions({
-      'switchContext': this._switchContext
     })
   }
 

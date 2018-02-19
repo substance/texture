@@ -1,6 +1,6 @@
 {
   "name": "substance-texture",
-  "version": "1.0.0-alpha.4-preview.15",
+  "version": "1.0.0-alpha.4-preview.16",
   "description": "A scientific word processor.",
   "main": "dist/texture.cjs.js",
   "jsnext:main": "index.es.js",
@@ -36,5 +36,8 @@
     "*.md",
     "package.json",
     "*.css"
-  ]
+  ],
+  "publishConfig": {
+    "tag": "next"
+  }
 }

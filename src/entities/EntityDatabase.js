@@ -211,6 +211,7 @@ Person.schema = {
   type: 'person',
   orcid: { type: 'string', optional: true },
   givenNames: { type: 'string', optional: true },
+  email: { type: 'string', optional: true },
   surname: { type: 'string', optional: true },
   prefix: { type: 'string', optional: true },
   suffix: { type: 'string', optional: true },

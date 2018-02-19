@@ -242,6 +242,7 @@
         <!-- TODO: contrib-id[contrib-id-type=orcid]?, contrib-id[contrib-id-type=entity]? -->
         <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
         <optional><ref name="name"/></optional>
+        <optional><ref name="email"/></optional>
         <optional><ref name="collab"/></optional>
         <zeroOrMore><ref name="xref"/></zeroOrMore>
       </interleave>

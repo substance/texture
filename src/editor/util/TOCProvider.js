@@ -72,10 +72,23 @@ class TOCProvider extends EventEmitter {
   }
 
   computeEntries() {
-    let doc = this.getDocument()
-    let config = this.config
+    const doc = this.getDocument()
+    const config = this.config
     let entries = []
-    let contentNodes = doc.get(config.containerId).getChildren()
+
+    // Note: For abstract we need to find first text node
+    // inside container to set selection there
+    const abstract = doc.find('abstract p')
+    if(abstract) {
+      entries.push({
+        id: abstract.id,
+        name: 'Abstract',
+        level: 1,
+        node: abstract
+      })
+    }
+
+    const contentNodes = doc.get(config.containerId).getChildren()
     forEach(contentNodes, function(node) {
       if (node.type === 'heading') {
         entries.push({
@@ -86,6 +99,25 @@ class TOCProvider extends EventEmitter {
         })
       }
     })
+
+    const ref = doc.find('ref')
+    if(ref) {
+      entries.push({
+        id: 'ref-list',
+        name: 'References',
+        level: 1
+      })
+    }
+
+    const fn = doc.find('fn')
+    if(fn) {
+      entries.push({
+        id: 'fn-group',
+        name: 'Footnotes',
+        level: 1
+      })
+    }
+
     return entries
   }
 
@@ -134,6 +166,6 @@ class TOCProvider extends EventEmitter {
   }
 }
 
-TOCProvider.tocTypes = ['heading']
+TOCProvider.tocTypes = ['heading', 'ref', 'fn']
 
 export default TOCProvider

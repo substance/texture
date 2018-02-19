@@ -7,7 +7,6 @@ export default class FnGroupComponent extends NodeComponent {
 
   didMount() {
     super.didMount()
-
     this.handleActions({
       'removeFn': this._removeFn
     })
@@ -15,14 +14,10 @@ export default class FnGroupComponent extends NodeComponent {
 
   render($$) {
     const node = this.props.node
-
     let el = $$('div').addClass('sc-fn-group')
       .attr('data-id', 'fn-group')
-      .append(
-        $$('div').addClass('se-title').append('Footnotes')
-      )
-
     let fns = node.findAll('fn')
+
     fns.sort((a,b) => {
       return getPos(a) - getPos(b)
     })
@@ -33,11 +28,9 @@ export default class FnGroupComponent extends NodeComponent {
       )
     })
 
-    if(fns.length === 0) {
+    if( fns.length > 0) {
       el.append(
-        $$('div').addClass('se-empty-list').append(
-          this.getLabel('no-footnotes')
-        )
+        $$('div').addClass('se-title').append('Footnotes')
       )
     }
 

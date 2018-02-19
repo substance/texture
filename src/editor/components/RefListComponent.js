@@ -56,11 +56,14 @@ export default class RefListComponent extends NodeComponent {
       )
     }
 
-    el.append(
-      $$('div').addClass('se-title').append(
-        this.getLabel('references')
+    if (bibliography.length > 0) {
+      el.append(
+        $$('div').addClass('se-title').append(
+          this.getLabel('references')
+        )
       )
-    )
+    }
+
 
     bibliography.forEach(reference => {
       const entityId = reference.getAttribute('rid')
@@ -76,14 +79,6 @@ export default class RefListComponent extends NodeComponent {
         )
       )
     })
-
-    if(bibliography.length === 0) {
-      el.append(
-        $$('div').addClass('se-empty-list').append(
-          this.getLabel('no-references')
-        )
-      )
-    }
 
     let options = $$('div').addClass('se-ref-list-options').append(
       $$('button').addClass('sc-button sm-style-big').append(

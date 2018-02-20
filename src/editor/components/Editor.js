@@ -9,11 +9,6 @@ import FootnoteManager from '../util/FootnoteManager'
 
 export default class Editor extends AbstractWriter {
 
-  constructor(...args) {
-    super(...args)
-    this._initialize(this.props)
-  }
-
   didMount() {
     super.didMount()
     this.handleActions({

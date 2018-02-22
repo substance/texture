@@ -40,11 +40,23 @@ class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCommand {
     editorSession.transaction((tx) => {
       let node = this.createNode(tx, params)
       tx.insertInlineNode(node)
+      this.setSelection(tx, node)
     })
   }
 
   createNode(tx) { // eslint-disable-line
     throw new Error('This method is abstract')
+  }
+
+  setSelection(tx, node) {
+    if(node.isPropertyAnnotation()) {
+      tx.selection = {
+        type: 'property',
+        path: node.getPath(),
+        startOffset: node.startOffset,
+        endOffset: node.endOffset
+      }
+    }
   }
 
 }

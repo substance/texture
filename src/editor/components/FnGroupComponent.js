@@ -16,7 +16,14 @@ export default class FnGroupComponent extends NodeComponent {
     const node = this.props.node
     let el = $$('div').addClass('sc-fn-group')
       .attr('data-id', 'fn-group')
+
     let fns = node.findAll('fn')
+
+    if( fns.length > 0) {
+      el.append(
+        $$('div').addClass('se-title').append('Footnotes')
+      )
+    }
 
     fns.sort((a,b) => {
       return getPos(a) - getPos(b)
@@ -27,12 +34,6 @@ export default class FnGroupComponent extends NodeComponent {
         $$(FnComponent, { node: fn }).ref(fn.id)
       )
     })
-
-    if( fns.length > 0) {
-      el.append(
-        $$('div').addClass('se-title').append('Footnotes')
-      )
-    }
 
     el.append(
       $$(Button, {style: 'big', label: 'Add Footnote'})

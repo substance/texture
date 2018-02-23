@@ -442,8 +442,10 @@
             </name>
           </person-group>
           <article-title>Thesis title</article-title>
-          <publisher-loc>Software publisher location</publisher-loc>
-          <publisher-name>Software publisher name</publisher-name>
+          <publisher-loc>First software publisher location</publisher-loc>
+          <publisher-name>First software publisher name</publisher-name>
+          <publisher-loc>Second software publisher location</publisher-loc>
+          <publisher-name>Second software publisher name</publisher-name>
           <year>2009</year>
           <month>10</month>
           <day>5</day>

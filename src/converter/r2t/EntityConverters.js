@@ -228,8 +228,8 @@ export const BookConverter = {
         chapterTitle: _getHTML(el, 'chapter-title'),
         source: _getText(el, 'source'),
         edition: _getText(el, 'edition'),
-        publisherLoc: _getText(el, 'publisher-loc'),
-        publisherName: _getText(el, 'publisher-name'),
+        publisherLoc: _getSeparatedText(el, 'publisher-loc'),
+        publisherName: _getSeparatedText(el, 'publisher-name'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
         day: _getText(el, 'day'),
@@ -263,8 +263,8 @@ export const BookConverter = {
     el.append(_createHTMLElement($$, node.chapterTitle, 'chapter-title'))
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createTextElement($$, node.edition, 'edition'))
-    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
-    el.append(_createTextElement($$, node.publisherName, 'publisher-name'))
+    el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -574,8 +574,8 @@ export const ReportConverter = {
       let node = {
         type: 'report',
         source: _getText(el, 'source'),
-        publisherLoc: _getText(el, 'publisher-loc'),
-        publisherName: _getText(el, 'publisher-name'),
+        publisherLoc: _getSeparatedText(el, 'publisher-loc'),
+        publisherName: _getSeparatedText(el, 'publisher-name'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
         day: _getText(el, 'day'),
@@ -595,8 +595,8 @@ export const ReportConverter = {
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
     el.append(_createTextElement($$, node.source, 'source'))
-    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
-    el.append(_createTextElement($$, node.publisherName, 'publisher-name'))
+    el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -619,8 +619,8 @@ export const SoftwareConverter = {
         type: 'software',
         title: _getText(el, 'source'),
         version: _getText(el, 'version'),
-        publisherLoc: _getText(el, 'publisher-loc'),
-        publisherName: _getText(el, 'publisher-name'),
+        publisherLoc: _getSeparatedText(el, 'publisher-loc'),
+        publisherName: _getSeparatedText(el, 'publisher-name'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
         day: _getText(el, 'day'),
@@ -641,8 +641,8 @@ export const SoftwareConverter = {
     // Regular properties
     el.append(_createTextElement($$, node.title, 'source'))
     el.append(_createTextElement($$, node.version, 'version'))
-    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
-    el.append(_createTextElement($$, node.publisherName, 'publisher-name'))
+    el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -664,8 +664,8 @@ export const ThesisConverter = {
       let node = {
         type: 'thesis',
         articleTitle: _getHTML(el, 'article-title'),
-        publisherLoc: _getText(el, 'publisher-loc'),
-        publisherName: _getText(el, 'publisher-name'),
+        publisherLoc: _getSeparatedText(el, 'publisher-loc'),
+        publisherName: _getSeparatedText(el, 'publisher-name'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
         day: _getText(el, 'day'),
@@ -685,8 +685,8 @@ export const ThesisConverter = {
     el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
-    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
-    el.append(_createTextElement($$, node.publisherName, 'publisher-name'))
+    el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -709,7 +709,7 @@ export const WebpageConverter = {
         type: 'webpage',
         articleTitle: _getHTML(el, 'article-title'),
         title: _getText(el, 'source'),
-        publisherLoc: _getText(el, 'publisher-loc'),
+        publisherLoc: _getSeparatedText(el, 'publisher-loc'),
         uri: _getText(el, 'uri'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
@@ -730,7 +730,7 @@ export const WebpageConverter = {
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.title, 'source'))
-    el.append(_createTextElement($$, node.publisherLoc, 'publisher-loc'))
+    el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
     el.append(_createTextElement($$, node.uri, 'uri'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
@@ -794,6 +794,15 @@ function _getText(rootEl, selector) {
   }
 }
 
+function _getSeparatedText(rootEl, selector) {
+  let match = rootEl.findAll(selector)
+  if (match) {
+    return match.map(m => { return m.textContent }).join('; ')
+  } else {
+    return ''
+  }
+}
+
 function _getHTML(rootEl, selector) {
   let match = rootEl.find(selector)
   if (match) {
@@ -819,6 +828,21 @@ function _createTextElement($$, text, tagName, attrs) {
       el.attr(key, value)
     })
     return el
+  }
+}
+
+function _createMultipleTextElements($$, text, tagName, attrs) {
+  if (text) {
+    const textItems = text.split('; ')
+    let elements = []
+    textItems.forEach(textItem => {
+      const el = $$(tagName).append(textItem)
+      forEach(attrs, (value, key) => {
+        el.attr(key, value)
+      })
+      elements.push(el)
+    })
+    return elements
   }
 }
 

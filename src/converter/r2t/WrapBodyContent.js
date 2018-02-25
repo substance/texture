@@ -7,6 +7,10 @@ export default class WrapBodyContent {
     bodies.forEach((body) => {
       const sigBlock = body.find('sig-block')
       const children = body.children
+      // Ensure there is at least one p element inside body
+      if (children.length ===0) {
+        children.push(dom.createElement('p'))
+      }
       body.empty()
       body.append(
         dom.createElement('body-content').append(children)

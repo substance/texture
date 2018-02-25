@@ -13,6 +13,7 @@ export default class BodyComponent extends Component {
     let contentEl
     if (content) {
       contentEl = $$(this.getComponent('container'), {
+        placeholder: 'Enter Text',
         name: 'bodyEditor',
         node: content,
         disabled: this.props.disabled

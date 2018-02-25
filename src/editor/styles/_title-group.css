@@ -15,7 +15,7 @@
   padding: 10px;
 }
 
-.sc-title-group .se-article-title:hover {
+/* .sc-title-group .se-article-title:hover {
   position: relative;
   border: 1px solid #e1e4e8;
   border-radius: 5px;
@@ -58,4 +58,4 @@
   color: var(--link-color);
   font-size: 16px;
   font-weight: 500;
-}
+} */

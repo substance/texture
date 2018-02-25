@@ -24,6 +24,12 @@ export default class WrapAbstractContent {
       })
       abstract.empty()
       abstract.append(meta)
+
+      // Make sure that there is at least one paragraph inside the abstract
+      if (content.length === 0) {
+        content.push(dom.createElement('p'))
+      }
+
       abstract.append(dom.createElement('abstract-content').append(content))
       abstract.append(back)
     })

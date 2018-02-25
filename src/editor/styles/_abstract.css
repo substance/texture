@@ -9,12 +9,12 @@
   margin: 0 -10px;
 }
 
-.sc-abstract .sc-abstract-content .container-node:hover {
+/* .sc-abstract .sc-abstract-content .container-node:hover {
   position: relative;
   border: 1px solid #e1e4e8;
-}
+} */
 
-.sc-abstract .sc-abstract-content .container-node:hover::before {
+/* .sc-abstract .sc-abstract-content .container-node:hover::before {
   content: "Abstract";
   position: absolute;
   display: block;
@@ -25,9 +25,9 @@
   margin-left: -50px;
   background: #fff;
   text-align: center;
-}
+} */
 
-.sc-abstract .sc-abstract-content .container-node:focus {
+/* .sc-abstract .sc-abstract-content .container-node:focus {
   position: relative;
   border: 1px solid var(--link-color);
   border-radius: 5px;
@@ -46,4 +46,4 @@
   background: #fff;
   text-align: center;
   color: var(--link-color);
-}
+} */

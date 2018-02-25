@@ -91,7 +91,6 @@ class MyTextureEditor extends Component {
   }
 
   _keyDown(event) {
-    console.log('keydown yo')
     if ( event.key === 'Dead' ) return
     // Handle custom keyboard shortcuts globally
     let archive = this.state.archive

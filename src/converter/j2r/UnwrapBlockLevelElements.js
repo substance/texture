@@ -7,7 +7,7 @@
 export default class UnwrapBlockLevelElements {
 
   import(dom) {
-    dom.findAll('p').forEach(_pBlock)
+    dom.findAll('body p').forEach(_pBlock)
   }
 
   export() {

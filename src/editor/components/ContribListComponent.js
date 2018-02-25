@@ -31,7 +31,6 @@ export default class ContribsListComponent extends NodeComponent {
     const entityIds = this._getEntityIds()
     let labelProvider = this.context.labelProvider
     let db = this.context.pubMetaDbSession.getDocument()
-
     let el = $$('div').addClass(this.getClassNames())
 
     if (this.state.edit) {
@@ -49,36 +48,30 @@ export default class ContribsListComponent extends NodeComponent {
       el.append(modal)
     }
 
-    let contentEl = $$('div').addClass('se-content')
-    entityIds.forEach((entityId, index) => {
-      let entity = db.get(entityId)
-      if (!entity) {
-        console.error('FIXME: no entity for contrib', entityId)
-      } else {
-        let short = entity.type === 'organisation'
-        contentEl.append(
-          $$('span').addClass('se-contrib').html(
-            entityRenderers[entity.type](entity.id, db, { short })
+    if (entityIds.length > 0) {
+      let contentEl = $$('div').addClass('se-content')
+      entityIds.forEach((entityId, index) => {
+        let entity = db.get(entityId)
+        if (!entity) {
+          console.error('FIXME: no entity for contrib', entityId)
+        } else {
+          let short = entity.type === 'organisation'
+          contentEl.append(
+            $$('span').addClass('se-contrib').html(
+              entityRenderers[entity.type](entity.id, db, { short })
+            )
           )
-        )
-        if (index < entityIds.length - 1) {
-          contentEl.append(', ')
+          if (index < entityIds.length - 1) {
+            contentEl.append(', ')
+          }
         }
-      }
-    })
-
-    if(entityIds.length === 0) {
-      contentEl.append(
-        $$('div').addClass('se-empty-list').append(
-          this.getEmptyMessage()
-        )
-      )
+      })
+      el.append(contentEl)
     }
 
     el.append(
-      contentEl,
       $$('button').addClass('sc-button sm-style-big').append(
-        'Manage ',
+        'Edit ',
         labelProvider.getLabel(this.getPropertyName())
       ).on('click', this._editContribs)
     )

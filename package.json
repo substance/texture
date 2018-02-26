@@ -9,7 +9,7 @@
     "substance": "1.0.0-preview.31"
   },
   "devDependencies": {
-    "dar-server": "^0.4.0",
+    "dar-server": "^0.4.1",
     "electron": "^1.7.9",
     "eslint": "^3.17.1",
     "font-awesome": "4.5.0",

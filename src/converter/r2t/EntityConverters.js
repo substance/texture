@@ -834,16 +834,12 @@ function _createTextElement($$, text, tagName, attrs) {
 function _createMultipleTextElements($$, text, tagName, attrs) {
   if (text) {
     const textItems = text.split(';')
-    let elements = []
-    textItems.forEach(textItem => {
-      // Removing a white space at the start of text
-      // in case of separation with semicolon and space
-      const text = textItem.replace(/^\s+/g, "")
-      const el = $$(tagName).append(text)
+    const elements = textItems.map(ti => {
+      const el = $$(tagName).append(ti.trim())
       forEach(attrs, (value, key) => {
         el.attr(key, value)
       })
-      elements.push(el)
+      return el
     })
     return elements
   }

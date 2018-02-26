@@ -391,8 +391,12 @@
         <zeroOrMore>
           <ref name="pub-id"/>
         </zeroOrMore>
-        <optional><ref name="publisher-loc"/></optional>
-        <optional><ref name="publisher-name"/></optional>
+        <zeroOrMore>
+          <ref name="publisher-loc"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="publisher-name"/>
+        </zeroOrMore>
         <optional><ref name="source"/></optional>
         <optional><ref name="volume"/></optional>
         <optional><ref name="year"/></optional>

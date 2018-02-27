@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "DarArticle 1.1" "http://texture.substance.io/DarArticle-1.1.dtd">
+<!DOCTYPE article PUBLIC "DarArticle 0.1.0" "http://darformat.org/DarArticle-0.1.0.dtd">
 <article id="article" xmlns:xlink="http://www.w3.org/1999/xlink">
   <front id="front-1">
     <article-meta id="article-meta-1">

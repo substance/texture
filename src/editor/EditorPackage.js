@@ -10,7 +10,7 @@ import {
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
-import TextureJATSPackage from '../article/TextureJATSPackage'
+import TextureArticlePackage from '../article/TextureArticlePackage'
 
 import Editor from './components/Editor'
 import TextNodeComponent from './components/TextNodeComponent'
@@ -76,7 +76,7 @@ export default {
       rootElement: '.sc-article'
     })
     config.import(MultiSelectPackage)
-    config.import(TextureJATSPackage)
+    config.import(TextureArticlePackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands

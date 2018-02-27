@@ -15,7 +15,7 @@ const RNG_FILES = [
   'src/article/JATS-publishing.rng',
   'src/article/JATS-archiving.rng',
   'src/article/DarArticle.rng',
-  'src/article/TextureJATS.rng'
+  'src/article/TextureArticle.rng'
 ]
 
 b.task('clean', function() {
@@ -44,18 +44,18 @@ b.task('compile:dar-article', () => {
   _compileSchema('DarArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3))
 })
 
-b.task('compile:texture-jats', () => {
-  _compileSchema('TextureJATS', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4))
+b.task('compile:texture-article', () => {
+  _compileSchema('TextureArticle', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4))
 })
 
 b.task('compile:debug', () => {
   _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
   _compileSchema('JATS-archiving', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(1,2), { debug: true })
   _compileSchema('DarArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3), { debug: true })
-  _compileSchema('TextureJATS', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4), { debug: true })
+  _compileSchema('TextureArticle', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4), { debug: true })
 })
 
-b.task('compile:schema', ['compile:jats', 'compile:dar-article', 'compile:texture-jats'])
+b.task('compile:schema', ['compile:jats', 'compile:dar-article', 'compile:texture-article'])
 
 b.task('build:browser', ['compile:schema'], () => {
   _buildLib(DIST, 'browser')

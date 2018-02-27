@@ -9,7 +9,7 @@ export const PUB_ID_TYPE_LABELS = {
   'isbn': 'ISBN',
 }
 
-// Elements that must be auto-expanded in TextureJATS <element-citation>
+// Elements that must be auto-expanded in TextureArticle <element-citation>
 // NOTE: content-loc must be extracted and prefilled manually (see ConvertElementCitation)
 export const REQUIRED_ELEMENT_CITATION_ELEMENTS = [
   ['person-group', 'person-group-type', 'author'],

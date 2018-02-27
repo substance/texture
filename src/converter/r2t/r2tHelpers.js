@@ -1,4 +1,4 @@
-import { TextureJATS } from '../../article'
+import { TextureArticle } from '../../article'
 import { forEach } from 'substance'
 import { replaceWith, findChild, findAllChilds } from '../util/domHelpers'
 import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
@@ -219,7 +219,7 @@ export function removeEmptyElementsIfNoChildren(dom, selector) {
 }
 
 export function insertChildAtFirstValidPos(parent, child) {
-  let schema = TextureJATS.getElementSchema(parent.tagName)
+  let schema = TextureArticle.getElementSchema(parent.tagName)
   let insertPos = schema.findFirstValidPos(parent, child.tagName)
   if (insertPos >= 0) {
     parent.insertAt(insertPos, child)

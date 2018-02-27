@@ -56,9 +56,9 @@ const TITLES = {
   'parse': 'Parse XML',
   'validate-jats': 'Validate JATS',
   'validate-dar-article': 'Validate DarArticle',
-  'validate-texture-jats': 'Validate TextureJATS',
+  'validate-texture-article': 'Validate TextureArticle',
   'j2r': 'Transform JATS -> DarArticle',
-  'r2t': 'Transform DarArticle -> TextureJATS'
+  'r2t': 'Transform DarArticle -> TextureArticle'
 }
 
 function _getTitle(stage) {

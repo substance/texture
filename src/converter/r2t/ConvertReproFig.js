@@ -11,7 +11,7 @@ export default class ConvertReproFig {
 
   /*
     Collect <fig specific-use="repro-fig"> and turn it into repro-fig elements in
-    TextureJATS
+    TextureArticle
   */
   import(dom) {
     let reproFigs = dom.findAll('fig[fig-type=repro-fig]')

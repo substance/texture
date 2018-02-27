@@ -1,15 +1,15 @@
 import { registerSchema } from 'substance'
 import TextureDocument from './TextureDocument'
-import TextureJATS from './TextureJATS'
-import TextureJATSImporter from './TextureJATSImporter'
+import TextureArticle from './TextureArticle'
+import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
 
 export default {
-  name: 'TextureJATS',
+  name: 'TextureArticle',
   configure(config) {
-    registerSchema(config, TextureJATS, TextureDocument)
+    registerSchema(config, TextureArticle, TextureDocument)
 
-    config.addImporter(TextureJATS.getName(), TextureJATSImporter)
+    config.addImporter(TextureArticle.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard
     TextureHTMLConverters.forEach((converter) => {
       config.addConverter('html', converter)

@@ -363,7 +363,7 @@
     edited through the user interface so far. This is why many elements are
     commented out.
 
-    NOTE: This must be kept in sync with TextureJATS.rng
+    NOTE: This must be kept in sync with TextureArticle.rng
   -->
   <define name="element-citation">
     <element name="element-citation">

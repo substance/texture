@@ -1,10 +1,10 @@
-import { TextureJATS, DarArticle } from '../../article'
+import { TextureArticle, DarArticle } from '../../article'
 
 export default class UpdateDocType {
 
   import(dom) {
     dom.setDocType(
-      ...TextureJATS.getDocTypeParams()
+      ...TextureArticle.getDocTypeParams()
     )
   }
 

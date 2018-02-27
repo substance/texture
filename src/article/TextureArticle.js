@@ -9,7 +9,7 @@ TextureArticle.getName = function() {
 }
 
 TextureArticle.getVersion = function() {
-  return '1.1'
+  return '0.1.0'
 }
 
 TextureArticle.getDefaultTextType = function() {
@@ -17,11 +17,10 @@ TextureArticle.getDefaultTextType = function() {
 }
 
 TextureArticle.getDocTypeParams = function() {
-  return ['article', 'TextureArticle 1.1', 'http://texture.substance.io/TextureArticle-1.1.dtd']
+  return ['article', 'TextureArticle 0.1.0', 'http://substance.io/TextureArticle-0.1.0.dtd']
 }
 
-
-TextureArticle.uri = "http://texture.substance.io/jats/1.1/TextureArticle.dtd"
+TextureArticle.uri = "http://substance.io/TextureArticle-0.1.0.dtd"
 
 
 export default TextureArticle

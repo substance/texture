@@ -10,11 +10,11 @@ DarArticle.getName = function() {
 }
 
 DarArticle.getVersion = function() {
-  return '1.1'
+  return '0.1.0'
 }
 
 DarArticle.getDocTypeParams = function() {
-  return ['article', 'DarArticle 1.1', 'http://texture.substance.io/DarArticle-1.1.dtd']
+  return ['article', 'DarArticle 0.1.0', 'http://darformat.org/DarArticle-0.1.0.dtd']
 }
 
 export default DarArticle

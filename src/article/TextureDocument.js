@@ -13,7 +13,7 @@ export default class TextureDocument extends XMLDocument {
   }
 
   getDocTypeParams() {
-    return [ 'article', 'TextureArticle 1.1', 'http://texture.substance.io/TextureArticle-1.1.dtd' ]
+    return TextureArticle.getDocTypeParams()
   }
 
   getXMLSchema() {

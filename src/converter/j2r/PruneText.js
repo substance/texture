@@ -1,5 +1,5 @@
 import pruneText from '../util/pruneText'
-import { JATS4R } from '../../article'
+import { DarArticle } from '../../article'
 
 /*
   Removes all native TextNodes from elements which we specified to be
@@ -8,11 +8,10 @@ import { JATS4R } from '../../article'
 export default class PruneText {
 
   import(dom) {
-    pruneText(dom.find('article'), JATS4R)
+    pruneText(dom.find('article'), DarArticle)
   }
 
   export() {
     // nothing
   }
 }
-

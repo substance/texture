@@ -1,5 +1,5 @@
 import { XMLDocument } from 'substance'
-import TextureJATS from './TextureJATS'
+import TextureArticle from './TextureArticle'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 import TextureEditingInterface from './TextureEditingInterface'
@@ -13,11 +13,11 @@ export default class TextureDocument extends XMLDocument {
   }
 
   getDocTypeParams() {
-    return [ 'article', 'TextureJATS 1.1', 'http://texture.substance.io/TextureJATS-1.1.dtd' ]
+    return TextureArticle.getDocTypeParams()
   }
 
   getXMLSchema() {
-    return TextureJATS
+    return TextureArticle
   }
 
   getRootNode() {

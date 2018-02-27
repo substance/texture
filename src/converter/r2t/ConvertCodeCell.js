@@ -4,7 +4,7 @@ export default class ConvertCodeCell {
 
   /*
     Collect <code specific-use="cell"> and turn it into cell elements in
-    TextureJATS
+    TextureArticle
   */
   import(dom) {
     let cells = dom.findAll('code[specific-use=cell]')

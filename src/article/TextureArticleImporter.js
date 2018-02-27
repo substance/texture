@@ -3,10 +3,10 @@ import {
   ValidatingChildNodeIterator
 } from 'substance'
 
-import TextureJATS from './TextureJATS'
+import TextureArticle from './TextureArticle'
 
 export default
-class TextureJATSImporter extends DOMImporter {
+class TextureArticleImporter extends DOMImporter {
 
   constructor(config, context) {
     super({
@@ -16,7 +16,7 @@ class TextureJATSImporter extends DOMImporter {
       converters: config.converters
     }, context)
 
-    this.xmlSchema = TextureJATS
+    this.xmlSchema = TextureArticle
   }
 
   importDocument(dom) {

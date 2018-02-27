@@ -11,7 +11,7 @@ but we support only a set of reasonable and commonly agreed versions.
 The importer will give more detailed information if a JATS file does not fulfill
 the requirements.
 
-On the top of restrictedJATS, Texture applies a set of loss-free conversions into TextureJATS,
+On the top of restrictedJATS, Texture applies a set of loss-free conversions into TextureArticle,
 which includes some more deviations from original JATS
 
 # JATS improvements
@@ -65,4 +65,3 @@ For example, if a text node has non primitive meta data, define it as element,
 and use an extra tag just for the text content.
 
 ### Examples:
-

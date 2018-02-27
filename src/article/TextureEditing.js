@@ -1,5 +1,5 @@
 import { Editing, validateXMLSchema, isString, paste } from 'substance'
-import TextureJATS from './TextureJATS'
+import TextureArticle from './TextureArticle'
 
 /*
   Proposal for Substance 2.0 XMLEditing implementation
@@ -26,7 +26,7 @@ export default class TextureEditing extends Editing {
       throw new Error('Illegal content for paste.')
     }
 
-    let res = validateXMLSchema(TextureJATS, tx.getDocument().toXML())
+    let res = validateXMLSchema(TextureArticle, tx.getDocument().toXML())
     if (!res.ok) {
       res.errors.forEach((err) => {
         console.error(err.msg, err.el)

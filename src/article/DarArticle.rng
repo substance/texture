@@ -152,7 +152,7 @@
     </element>
   </define>
 
-  <!-- in JATS4R we want to have simpler phrase content -->
+  <!-- in DarArticle we want to have simpler phrase content -->
   <define name="all-phrase">
     <choice>
       <ref name="simple-phrase"/>
@@ -304,7 +304,7 @@
       </zeroOrMore>
     </define>
 
-    With JATS4R we will try to introduce a restrictive yet expressive
+    With DarArticle we will try to introduce a restrictive yet expressive
     schema.
 
     TODO: add transformation
@@ -363,7 +363,7 @@
     edited through the user interface so far. This is why many elements are
     commented out.
 
-    NOTE: This must be kept in sync with TextureJATS.rng
+    NOTE: This must be kept in sync with TextureArticle.rng
   -->
   <define name="element-citation">
     <element name="element-citation">

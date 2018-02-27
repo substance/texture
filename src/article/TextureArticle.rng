@@ -6,7 +6,7 @@
   datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 
   <!-- Stubs -->
-  <include href="JATS4R.rng"/>
+  <include href="DarArticle.rng"/>
 
   <!--
     Element-Type Overrides: These are necessary to generate
@@ -591,7 +591,7 @@
   <!-- WIP
     Refactored def-list, def, term et. al
 
-    TODO: check if this is really workable, and add this to JATS4R if good
+    TODO: check if this is really workable, and add this to DarArticle if good
   -->
   <define name="def-list-model">
     <optional>

@@ -1,4 +1,4 @@
-import { TextureJATS, JATS4R } from '../../article'
+import { TextureJATS, DarArticle } from '../../article'
 
 export default class UpdateDocType {
 
@@ -10,7 +10,7 @@ export default class UpdateDocType {
 
   export(dom) {
     dom.setDocType(
-      ...JATS4R.getDocTypeParams()
+      ...DarArticle.getDocTypeParams()
     )
   }
 }

@@ -1,4 +1,4 @@
-import { JATS4R } from '../../article'
+import { DarArticle } from '../../article'
 
 /*
   For sake of simplicity we want to use only <history>
@@ -15,7 +15,7 @@ export default class UnifyPublicationHistory {
     let history = dom.find('article-meta > history')
     if (!history) {
       history = dom.createElement('history')
-      let pos = JATS4R.getElementSchema('article-meta').findFirstValidPos(articleMeta, 'history')
+      let pos = DarArticle.getElementSchema('article-meta').findFirstValidPos(articleMeta, 'history')
       articleMeta.insertAt(pos, history)
     }
     pubDates.forEach((pubDate) => {
@@ -30,7 +30,7 @@ export default class UnifyPublicationHistory {
     let articleMeta = dom.find('article-meta')
     let history = dom.find('article-meta > history')
     let dates = history.findAll('date')
-    let schema = JATS4R.getElementSchema('article-meta')
+    let schema = DarArticle.getElementSchema('article-meta')
     let pos = schema.findFirstValidPos(articleMeta, 'pub-date')
     for (let i = dates.length - 1; i >= 0; i--) {
       let date = dates[i]

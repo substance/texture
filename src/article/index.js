@@ -1,7 +1,7 @@
 export { default as JATS } from './JATS'
 export { default as JATSArchiving } from './JATSArchiving'
 export { default as JATSPublishing } from './JATSPublishing'
-export { default as JATS4R } from './JATS4R'
+export { default as DarArticle } from './DarArticle'
 export { default as TextureJATS } from './TextureJATS'
 export { default as TextureDocument } from './TextureDocument'
 export { default as TextureHTMLConverters } from './TextureHTMLConverters'

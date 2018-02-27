@@ -1,11 +1,11 @@
 import { t2r } from './r2t'
 import { validateXMLSchema } from 'substance'
-import { JATS4R } from '../article'
+import { DarArticle } from '../article'
 
 export default class JATSExporter {
   /*
     Takes a TextureJATS document as a DOM and transforms it into a JATS document,
-    following JATS4R guidelines.
+    following DarArticle guidelines.
   */
   export(dom, context = {}) {
     let pubMetaDb = context.pubMetaDb
@@ -25,7 +25,7 @@ export default class JATSExporter {
     const api = this._createAPI(state)
 
     t2r(dom, api)
-    let res = validateXMLSchema(JATS4R, dom)
+    let res = validateXMLSchema(DarArticle, dom)
     if (!res.ok) {
       res.errors.forEach((err) => {
         console.error(err.msg, err.el)

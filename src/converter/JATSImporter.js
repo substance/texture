@@ -2,7 +2,7 @@ import {
   EventEmitter, DefaultDOMElement,
   validateXMLSchema, isString
 } from 'substance'
-import { JATS, JATS4R, TextureJATS } from '../article'
+import { JATS, DarArticle, TextureJATS } from '../article'
 import { r2t } from './r2t'
 import { j2r } from './j2r'
 import custom from './custom'
@@ -30,7 +30,7 @@ export default class JATSImporter extends EventEmitter {
         'validate-jats': [],
         'custom': [],
         'j2r': [],
-        'validate-jats4r': [],
+        'validate-dar-article': [],
         'r2t': [],
         'validate-texture-jats': [],
       },
@@ -59,7 +59,7 @@ export default class JATSImporter extends EventEmitter {
     // JATS -> restricted JATS
     if (!this._transform('j2r', state)) return state
 
-    if (!this._validate(JATS4R, state)) return state
+    if (!this._validate(DarArticle, state)) return state
 
     // restrictedJATS -> TextureJATS
     if (!this._transform('r2t', state)) return state

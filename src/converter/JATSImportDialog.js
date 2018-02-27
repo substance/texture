@@ -55,10 +55,10 @@ class ImportStage extends Component {
 const TITLES = {
   'parse': 'Parse XML',
   'validate-jats': 'Validate JATS',
-  'validate-jats4r': 'Validate JATS4R',
+  'validate-dar-article': 'Validate DarArticle',
   'validate-texture-jats': 'Validate TextureJATS',
-  'j2r': 'Transform JATS -> JATS4R',
-  'r2t': 'Transform JATS4R -> TextureJATS'
+  'j2r': 'Transform JATS -> DarArticle',
+  'r2t': 'Transform DarArticle -> TextureJATS'
 }
 
 function _getTitle(stage) {

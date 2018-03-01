@@ -8,6 +8,12 @@ export default class AbstractComponent extends Component {
       .addClass('sc-abstract')
       .attr('data-id', node.id)
 
+
+    el.append(
+      $$('h1').addClass('sc-heading').append('Abstract')
+    )
+
+
     // There can be multiple abstracts. We just take the first
     const content = node.findChild('abstract-content')
     let contentEl

@@ -64,22 +64,26 @@ export default class Editor extends AbstractWriter {
     return el
   }
 
+  _renderTOCPane($$) {
+    let el = $$('div').addClass('se-toc-pane')
+    el.append(
+      $$('div').addClass('se-context-pane-content').append(
+        $$(TOC)
+      )
+    )
+    return el
+  }
+
   _renderContextPane($$) {
-    let el = $$('div').addClass('se-context-pane')
     if (this.props.contextComponent) {
+      let el = $$('div').addClass('se-context-pane')
       el.append(
         $$('div').addClass('se-context-pane-content').append(
           this.props.contextComponent
         )
       )
-    } else {
-      el.append(
-        $$('div').addClass('se-context-pane-content').append(
-          $$(TOC)
-        )
-      )
+      return el
     }
-    return el
   }
 
   _renderMainSection($$) {
@@ -87,7 +91,10 @@ export default class Editor extends AbstractWriter {
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
-      this._renderContentPanel($$),
+      $$('div').addClass('se-editor-section').append(
+        this._renderTOCPane($$),
+        this._renderContentPanel($$)
+      ),
       $$(WorkflowPane, {
         toolPanel: configurator.getToolPanel('workflow')
       })
@@ -107,8 +114,8 @@ export default class Editor extends AbstractWriter {
 
     let contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
-      scrollbarType: 'substance',
-      scrollbarPosition: 'left',
+      // scrollbarType: 'substance',
+      scrollbarPosition: 'right',
       highlights: this.contentHighlights,
     }).ref('contentPanel')
 

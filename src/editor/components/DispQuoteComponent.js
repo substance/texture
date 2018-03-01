@@ -12,7 +12,8 @@ export default class DispQuote extends Component {
 
     let quoteContentEl = $$(this.getComponent('container'), {
       node: quoteContent,
-      disabled: this.props.disabled
+      disabled: this.props.disabled,
+      placeholder: 'Blockquote'
     }).ref('editor')
 
     let attribContentEl = $$(TextPropertyEditor, {

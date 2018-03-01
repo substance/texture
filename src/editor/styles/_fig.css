@@ -1,10 +1,12 @@
 .sc-fig {
-  border: 1px solid #ddd;
+  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
   padding: 20px;
 }
 
 .sc-fig > .se-label {
-  font-style: italic;
+  font-weight: 600;
+  font-size: 18px;
+  padding-bottom: 10px;
 }
 
 .sc-fig .se-title {

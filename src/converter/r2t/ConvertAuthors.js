@@ -70,6 +70,7 @@ function _exportPersons($$, dom, pubMetaDb, type) {
     // TODO: detect group authors and use special GroupAuthorConverter
     let newContribEl = PersonConverter.export($$, node, pubMetaDb)
     contrib.innerHTML = newContribEl.innerHTML
+    contrib.setAttribute('contrib-type', 'person')
     contrib.removeAttr('rid')
   })
 }

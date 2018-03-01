@@ -103,10 +103,10 @@ export const PersonConverter = {
       $$('name').append(
         _createTextElement($$, node.surname, 'surname'),
         _createTextElement($$, node.givenNames, 'given-names'),
-        _createTextElement($$, node.email, 'email'),
         _createTextElement($$, node.prefix, 'prefix'),
         _createTextElement($$, node.suffix, 'suffix')
-      )
+      ),
+      _createTextElement($$, node.email, 'email')
     )
     let dom = el.ownerDocument
     node.affiliations.forEach(organisationId => {
@@ -138,7 +138,6 @@ export const RefPersonConverter = {
         type: 'person',
         givenNames: _getText(el, 'given-names'),
         surname: _getText(el, 'surname'),
-        email: _getText(el, 'email'),
         prefix: _getText(el, 'prefix'),
         suffix: _getText(el, 'suffix'),
       }
@@ -151,7 +150,6 @@ export const RefPersonConverter = {
     let el = $$('name')
     el.append(_createTextElement($$, node.surname, 'surname'))
     el.append(_createTextElement($$, node.givenNames, 'given-names'))
-    el.append(_createTextElement($$, node.email, 'email'))
     el.append(_createTextElement($$, node.prefix, 'prefix'))
     el.append(_createTextElement($$, node.suffix, 'suffix'))
     return el

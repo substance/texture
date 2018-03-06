@@ -15,6 +15,8 @@ export default class Editor extends AbstractWriter {
       'switchContext': this._switchContext
     })
 
+    // HACK: we need to re-evaluate command states, now that the UI has mounted
+    this.editorSession.commandManager._updateCommandStates(this.editorSession)
     this.tocProvider.on('toc:updated', this._onTOCUpdated, this)
   }
 

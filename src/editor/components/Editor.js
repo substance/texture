@@ -14,6 +14,8 @@ export default class Editor extends AbstractWriter {
     this.handleActions({
       'switchContext': this._switchContext
     })
+
+    this.tocProvider.on('toc:updated', this._onTOCUpdated, this)
   }
 
   _initialize(props) {
@@ -65,12 +67,16 @@ export default class Editor extends AbstractWriter {
   }
 
   _renderTOCPane($$) {
-    let el = $$('div').addClass('se-toc-pane')
+    let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     el.append(
       $$('div').addClass('se-context-pane-content').append(
         $$(TOC)
       )
     )
+
+    if (!this._isTOCVisible()) {
+      el.addClass('sm-hidden')
+    }
     return el
   }
 
@@ -169,6 +175,19 @@ export default class Editor extends AbstractWriter {
 
   getConfigurator() {
     return this.props.editorSession.configurator
+  }
+
+  _onTOCUpdated() {
+    if (this._isTOCVisible()) {
+      this.refs.tocPane.removeClass('sm-hidden')
+    } else {
+      this.refs.tocPane.addClass('sm-hidden')
+    }
+  }
+
+  _isTOCVisible() {
+    let entries = this.tocProvider.getEntries()
+    return entries.length >= 2
   }
 
   /*

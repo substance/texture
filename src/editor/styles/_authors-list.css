@@ -1,3 +1,11 @@
+.sc-authors-list.sm-hidden {
+  display: none;
+}
+
+.sc-authors-list .se-contrib.sm-empty {
+  color: #999;
+}
+
 .sc-authors-list > .se-content {
   padding: 30px 0px 15px;
   font-family: 'Avenir Next', 'Lato', Helvetica;
@@ -10,6 +18,6 @@
   color: #afafaf;
 }
 
-.sc-authors-list > .sc-button {
-  margin: 0px auto;
+.sc-authors-list button {
+  display: inline;
 }

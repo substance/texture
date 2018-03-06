@@ -2,6 +2,10 @@
   margin-top: 30px;
 }
 
+.sc-fn-group.sm-hidden {
+  display: none;
+}
+
 .sc-fn-group > .se-title {
   font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 22px;

@@ -66,6 +66,10 @@
   overflow: auto;
 }
 
+.sc-editor > .se-main-section > .se-editor-section > .se-toc-pane.sm-hidden {
+  display: none;
+}
+
 .sc-editor > .se-main-section > .se-editor-section > .sc-scroll-pane {
   flex: 1 1 600px;
 }

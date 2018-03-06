@@ -84,7 +84,6 @@ class MyTextureEditor extends Component {
       })
     }
 
-
   }
 
   /*

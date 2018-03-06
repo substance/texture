@@ -57,7 +57,7 @@ import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
-
+import ToggleContentSection from './commands/ToggleContentSection'
 import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertFigureTool from './components/InsertFigureTool'
 import DropFigure from './commands/DropFigure'
@@ -160,6 +160,27 @@ export default {
     config.addComponent('table-wrap-preview', TableFigPreview)
 
     // Commands
+
+    config.addCommand('toggle-abstract', ToggleContentSection, {
+      selector: '.sc-abstract',
+      commandGroup: 'toggle-content-section'
+    })
+
+    config.addCommand('toggle-authors', ToggleContentSection, {
+      selector: '.sc-authors-list',
+      commandGroup: 'toggle-content-section'
+    })
+
+    config.addCommand('toggle-references', ToggleContentSection, {
+      selector: '.sc-ref-list',
+      commandGroup: 'toggle-content-section'
+    })
+
+    config.addCommand('toggle-footnotes', ToggleContentSection, {
+      selector: '.sc-fn-group',
+      commandGroup: 'toggle-content-section'
+    })
+
     config.addCommand('edit-xref', EditInlineNodeCommand, {
       nodeType: 'xref',
       commandGroup: 'prompt'
@@ -214,6 +235,14 @@ export default {
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
     config.addLabel('sig-block-end', 'Signature Block ends here')
+
+
+    config.addLabel('view', 'View')
+    config.addLabel('toggle-abstract', '${showOrHide} Abstract')
+    config.addLabel('toggle-authors', '${showOrHide} Authors')
+    config.addLabel('toggle-references', '${showOrHide} References')
+    config.addLabel('toggle-footnotes', '${showOrHide} Footnotes')
+
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
@@ -374,6 +403,13 @@ export default {
         showDisabled: true,
         style: 'descriptive',
         commandGroups: ['insert-xref']
+      },
+      {
+        name: 'view',
+        type: 'tool-dropdown',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['toggle-content-section', 'view']
       }
     ])
 

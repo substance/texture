@@ -21,21 +21,32 @@ export default class RefListComponent extends NodeComponent {
   }
 
   getInitialState() {
-    return {
+    let bibliography = this._getBibliography()
+
+    let state = {
       popup: false,
       mode: undefined,
       modeProps: undefined
     }
+
+    if (bibliography.length === 0) {
+      state.hidden = true
+    }
+    return state
   }
 
   render($$) {
-    const referenceManager = this.context.referenceManager
-    const bibliography = referenceManager.getBibliography()
+    const bibliography = this._getBibliography()
     const mode = this.state.mode
     const popup = this.state.popup
 
     let el = $$('div').addClass('sc-ref-list')
       .attr('data-id', 'ref-list')
+
+    if (this.state.hidden) {
+      el.addClass('sm-hidden')
+      return el
+    }
 
     if (mode) {
       let ModeComponent
@@ -185,5 +196,10 @@ export default class RefListComponent extends NodeComponent {
     const doc = editorSession.getDocument()
     let refNode = doc.find(`ref-list > ref[rid=${entityId}]`)
     if (refNode) return refNode.id
+  }
+
+  _getBibliography() {
+    const referenceManager = this.context.referenceManager
+    return referenceManager.getBibliography()
   }
 }

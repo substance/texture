@@ -5,6 +5,14 @@ import removeElementAndXrefs from '../../util/removeElementAndXrefs'
 
 export default class FnGroupComponent extends NodeComponent {
 
+  getInitialState() {
+    const node = this.props.node
+    let fns = node.findAll('fn')
+    return {
+      hidden: fns.length === 0
+    }
+  }
+
   didMount() {
     super.didMount()
     this.handleActions({
@@ -17,9 +25,14 @@ export default class FnGroupComponent extends NodeComponent {
     let el = $$('div').addClass('sc-fn-group')
       .attr('data-id', 'fn-group')
 
+    if (this.state.hidden) {
+      el.addClass('sm-hidden')
+      return el
+    }
+
     let fns = node.findAll('fn')
 
-    if( fns.length > 0) {
+    if (fns.length > 0) {
       el.append(
         $$('div').addClass('se-title').append('Footnotes')
       )

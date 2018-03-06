@@ -2,6 +2,10 @@
   margin-top: 30px;
 }
 
+.sc-fn-group.sm-hidden {
+  display: none;
+}
+
 .sc-fn-group > .se-title {
   font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 22px;
@@ -59,7 +63,6 @@
 .sc-fn-item .se-fn-container .se-remove-ref {
   margin-top: -10px;
   font-size: 16px;
-  color: #9a9b9a;
   cursor: pointer;
 }
 

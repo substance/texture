@@ -14,6 +14,10 @@ export default class Editor extends AbstractWriter {
     this.handleActions({
       'switchContext': this._switchContext
     })
+
+    // HACK: we need to re-evaluate command states, now that the UI has mounted
+    this.editorSession.commandManager._updateCommandStates(this.editorSession)
+    this.tocProvider.on('toc:updated', this._onTOCUpdated, this)
   }
 
   _initialize(props) {
@@ -64,22 +68,30 @@ export default class Editor extends AbstractWriter {
     return el
   }
 
+  _renderTOCPane($$) {
+    let el = $$('div').addClass('se-toc-pane').ref('tocPane')
+    el.append(
+      $$('div').addClass('se-context-pane-content').append(
+        $$(TOC)
+      )
+    )
+
+    if (!this._isTOCVisible()) {
+      el.addClass('sm-hidden')
+    }
+    return el
+  }
+
   _renderContextPane($$) {
-    let el = $$('div').addClass('se-context-pane')
     if (this.props.contextComponent) {
+      let el = $$('div').addClass('se-context-pane')
       el.append(
         $$('div').addClass('se-context-pane-content').append(
           this.props.contextComponent
         )
       )
-    } else {
-      el.append(
-        $$('div').addClass('se-context-pane-content').append(
-          $$(TOC)
-        )
-      )
+      return el
     }
-    return el
   }
 
   _renderMainSection($$) {
@@ -87,7 +99,10 @@ export default class Editor extends AbstractWriter {
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
-      this._renderContentPanel($$),
+      $$('div').addClass('se-editor-section').append(
+        this._renderTOCPane($$),
+        this._renderContentPanel($$)
+      ),
       $$(WorkflowPane, {
         toolPanel: configurator.getToolPanel('workflow')
       })
@@ -107,8 +122,8 @@ export default class Editor extends AbstractWriter {
 
     let contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
-      scrollbarType: 'substance',
-      scrollbarPosition: 'left',
+      // scrollbarType: 'substance',
+      scrollbarPosition: 'right',
       highlights: this.contentHighlights,
     }).ref('contentPanel')
 
@@ -162,6 +177,19 @@ export default class Editor extends AbstractWriter {
 
   getConfigurator() {
     return this.props.editorSession.configurator
+  }
+
+  _onTOCUpdated() {
+    if (this._isTOCVisible()) {
+      this.refs.tocPane.removeClass('sm-hidden')
+    } else {
+      this.refs.tocPane.addClass('sm-hidden')
+    }
+  }
+
+  _isTOCVisible() {
+    let entries = this.tocProvider.getEntries()
+    return entries.length >= 2
   }
 
   /*

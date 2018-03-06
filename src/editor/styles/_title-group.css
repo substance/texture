@@ -1,18 +1,16 @@
 .sc-title-group .se-article-title {
-  padding-bottom: var(--default-padding);
+  /* padding-bottom: var(--default-padding); */
   font-weight: var(--strong-font-weight);
   letter-spacing: var(--heading-letterspacing);
   font-size: var(--title-font-size);
-
   font-family: 'Avenir Next', 'Lato', Helvetica;
   font-weight: 600;
-  text-align: center;
 }
 
 .sc-title-group .se-article-title {
-  border: 1px solid transparent;
-  border-radius: 5px;
-  padding: 10px;
+  /* border: 1px solid transparent;
+  border-radius: 5px; */
+  /* padding: 10px; */
 }
 
 /* .sc-title-group .se-article-title:hover {

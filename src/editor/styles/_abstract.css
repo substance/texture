@@ -1,12 +1,17 @@
 .sc-abstract {
-  margin-top: 40px;
+  margin-top: 30px;
+  /* font-size: 20px; */
+}
+
+.sc-abstract.sm-hidden {
+  display: none;
 }
 
 .sc-abstract .sc-abstract-content .container-node {
   border: 1px solid transparent;
   border-radius: 5px;
-  padding: 10px;
-  margin: 0 -10px;
+  /* padding: 10px;
+  margin: 0 -10px; */
 }
 
 /* .sc-abstract .sc-abstract-content .container-node:hover {

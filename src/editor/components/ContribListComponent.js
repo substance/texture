@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import { NodeComponent, FontAwesomeIcon } from 'substance'
 import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
 import EditRelationship from '../../entities/EditRelationship'
@@ -18,7 +18,9 @@ export default class ContribsListComponent extends NodeComponent {
   }
 
   getInitialState() {
+    let entityIds = this._getEntityIds()
     return {
+      hidden: entityIds.length === 0,
       edit: false
     }
   }
@@ -29,9 +31,13 @@ export default class ContribsListComponent extends NodeComponent {
 
   render($$) {
     const entityIds = this._getEntityIds()
-    let labelProvider = this.context.labelProvider
     let db = this.context.pubMetaDbSession.getDocument()
     let el = $$('div').addClass(this.getClassNames())
+
+    if (this.state.hidden) {
+      el.addClass('sm-hidden')
+      return el
+    }
 
     if (this.state.edit) {
       var modal = $$(ModalDialog, {
@@ -48,8 +54,8 @@ export default class ContribsListComponent extends NodeComponent {
       el.append(modal)
     }
 
+    let contentEl = $$('div').addClass('se-content')
     if (entityIds.length > 0) {
-      let contentEl = $$('div').addClass('se-content')
       entityIds.forEach((entityId, index) => {
         let entity = db.get(entityId)
         if (!entity) {
@@ -66,15 +72,20 @@ export default class ContribsListComponent extends NodeComponent {
           }
         }
       })
-      el.append(contentEl)
+    } else {
+      contentEl.append(
+        $$('span').addClass('se-contrib sm-empty').append('No Authors')
+      )
     }
 
-    el.append(
-      $$('button').addClass('sc-button sm-style-big').append(
-        'Edit ',
-        labelProvider.getLabel(this.getPropertyName())
+    contentEl.append(
+      ' ',
+      $$('button').append(
+        $$(FontAwesomeIcon, { icon: 'fa-pencil' })
       ).on('click', this._editContribs)
     )
+
+    el.append(contentEl)
     return el
   }
 

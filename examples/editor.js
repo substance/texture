@@ -1,12 +1,14 @@
 import {
   getQueryStringParam, Component, DefaultDOMElement, parseKeyEvent,
-  HttpStorageClient, VfsStorageClient, InMemoryDarBuffer
+  HttpStorageClient, VfsStorageClient, InMemoryDarBuffer, substanceGlobals,
+  platform
 } from 'substance'
 import {
   Texture, JATSImportDialog, TextureArchive
 } from 'substance-texture'
 
 window.addEventListener('load', () => {
+  substanceGlobals.DEBUG_RENDERING = platform.devtools
   MyTextureEditor.mount({}, window.document.body)
 })
 
@@ -67,15 +69,21 @@ class MyTextureEditor extends Component {
     }
     let buffer = new InMemoryDarBuffer()
     let archive = new TextureArchive(storage, buffer)
-    archive.load(archiveId)
+
+    let promise = archive.load(archiveId)
     .then(() => {
       setTimeout(() => {
         this.setState({archive})
       }, 0)
-    }).catch(error => {
-      console.error(error)
-      this.setState({error})
     })
+
+    if (!platform.devtools) {
+      promise.catch(error => {
+        console.error(error)
+        this.setState({error})
+      })
+    }
+
   }
 
   /*

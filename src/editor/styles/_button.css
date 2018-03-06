@@ -28,7 +28,7 @@
 */
 .sc-button.sm-style-big {
   font-size: 12px;
-  background: #1895cd;
+  background: #2A8CFF;
   font-family: 'Avenir Next', 'Lato', Helvetica;
   font-weight: 500;
   padding: 5px 20px;
@@ -37,5 +37,5 @@
 }
 
 .sc-button.sm-style-big:focus {
-  background: #017CAC;
+  background: #277ce0;
 }

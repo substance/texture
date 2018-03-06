@@ -1,19 +1,25 @@
+.sc-editor {
+  font-size: 16px;
+  font-family: Avenir;
+  font-weight: 500;
+}
 
 .sc-editor .se-toolbar-wrapper {
   z-index: 1000;
-  border-bottom: 1px solid #e1e4e8;
+  /* border-bottom: 1px solid #e1e4e8; */
   padding: 3px;
   padding-bottom: 4px;
+  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
 }
 
 .sc-editor .sc-body-content > .sc-container-editor {
-  padding:  20px 0;
+  padding: 0;
   margin: 0 auto;
 }
 
 /* Add padding to each child except last one */
 .sc-editor .sc-container-editor > * {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .sc-editor {
@@ -49,8 +55,23 @@
   flex: 0 0 40px;
 }
 
-.sc-editor > .se-main-section > .sc-scroll-pane {
+.sc-editor > .se-main-section > .se-editor-section {
   flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.sc-editor > .se-main-section > .se-editor-section > .se-toc-pane {
+  flex: 0 1 200px;
+  overflow: auto;
+}
+
+.sc-editor > .se-main-section > .se-editor-section > .se-toc-pane.sm-hidden {
+  display: none;
+}
+
+.sc-editor > .se-main-section > .se-editor-section > .sc-scroll-pane {
+  flex: 1 1 600px;
 }
 
 .sc-editor > .se-main-section > .sc-workflow-pane {
@@ -62,12 +83,13 @@
 }
 
 .sc-front {
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 
 /* General editor styles */
 .sc-heading {
   font-family: 'Avenir Next', 'Lato', Helvetica;
+  padding-top: 10px;
 }
 
 h1.sc-heading {

@@ -79,7 +79,7 @@ class TOCProvider extends EventEmitter {
     // Note: For abstract we need to find first text node
     // inside container to set selection there
     const abstract = doc.find('abstract p')
-    if(abstract) {
+    if (abstract && abstract.textContent !== '') {
       entries.push({
         id: abstract.id,
         name: 'Abstract',
@@ -166,6 +166,6 @@ class TOCProvider extends EventEmitter {
   }
 }
 
-TOCProvider.tocTypes = ['heading', 'ref', 'fn']
+TOCProvider.tocTypes = ['heading', 'ref', 'fn', 'p']
 
 export default TOCProvider

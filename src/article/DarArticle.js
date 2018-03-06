@@ -6,7 +6,7 @@ const DarArticle = XMLSchema.fromJSON(DarArticleData)
 
 // TODO: this should come from compilation
 DarArticle.getName = function() {
-  return 'DarArticle'
+  return 'dar-article'
 }
 
 DarArticle.getVersion = function() {

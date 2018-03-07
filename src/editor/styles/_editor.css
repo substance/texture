@@ -9,8 +9,19 @@
   /* border-bottom: 1px solid #e1e4e8; */
   padding: 3px;
   padding-bottom: 4px;
+  padding-left: 270px;
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
 }
+
+.sc-editor.sm-compact .se-toolbar-wrapper {
+  padding-left: 20px;
+}
+
+.sc-editor.sm-compact .se-toolbar-wrapper .sc-toolbar {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 
 .sc-editor .sc-body-content > .sc-container-editor {
   padding: 0;
@@ -33,6 +44,15 @@
   background: #fafbfc;
   border-left: 1px solid #e1e4e8;
   position: relative;
+}
+
+.sc-article {
+  max-width: 960px;
+  padding: 30px;
+}
+
+.sc-editor.sm-compact .sc-article {
+  margin: 0 auto;
 }
 
 .sc-editor .se-context-pane > .se-context-pane-content {
@@ -62,8 +82,13 @@
 }
 
 .sc-editor > .se-main-section > .se-editor-section > .se-toc-pane {
-  flex: 0 1 200px;
+  flex: 0 0 250px;
   overflow: auto;
+}
+
+/* Do not display in compact mode to make more space for the rest */
+.sc-editor.sm-compact > .se-main-section > .se-editor-section > .se-toc-pane {
+  display: none;
 }
 
 .sc-editor > .se-main-section > .se-editor-section > .se-toc-pane.sm-hidden {

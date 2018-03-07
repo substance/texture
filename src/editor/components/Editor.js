@@ -1,4 +1,4 @@
-import { ScrollPane, Layout, WorkflowPane } from 'substance'
+import { ScrollPane, WorkflowPane, DefaultDOMElement } from 'substance'
 import { AbstractWriter } from '../util'
 import TOCProvider from '../util/TOCProvider'
 import TOC from './TOC'
@@ -17,7 +17,16 @@ export default class Editor extends AbstractWriter {
 
     // HACK: we need to re-evaluate command states, now that the UI has mounted
     this.editorSession.commandManager._updateCommandStates(this.editorSession)
-    this.tocProvider.on('toc:updated', this._onTOCUpdated, this)
+
+    DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+    this.tocProvider.on('toc:updated', this._showHideTOC, this)
+    this._showHideTOC()
+  }
+
+  _dispose() {
+    super._dispose()
+    DefaultDOMElement.getBrowserWindow().off(this)
+    this.tocProvider.off(this)
   }
 
   _initialize(props) {
@@ -75,10 +84,6 @@ export default class Editor extends AbstractWriter {
         $$(TOC)
       )
     )
-
-    if (!this._isTOCVisible()) {
-      el.addClass('sm-hidden')
-    }
     return el
   }
 
@@ -102,7 +107,7 @@ export default class Editor extends AbstractWriter {
       $$('div').addClass('se-editor-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
-      ),
+      ).ref('editorSection'),
       $$(WorkflowPane, {
         toolPanel: configurator.getToolPanel('workflow')
       })
@@ -127,19 +132,11 @@ export default class Editor extends AbstractWriter {
       highlights: this.contentHighlights,
     }).ref('contentPanel')
 
-    let layout = $$(Layout, {
-      width: 'large'
-    })
-
-    layout.append(
+    contentPanel.append(
       $$(ManuscriptComponent, {
         node: article,
         disabled: this.props.disabled
-      })
-    )
-
-    contentPanel.append(
-      layout,
+      }).ref('article'),
       $$(Overlay, {
         toolPanel: configurator.getToolPanel('main-overlay'),
         theme: 'dark'
@@ -179,11 +176,12 @@ export default class Editor extends AbstractWriter {
     return this.props.editorSession.configurator
   }
 
-  _onTOCUpdated() {
-    if (this._isTOCVisible()) {
-      this.refs.tocPane.removeClass('sm-hidden')
+  _showHideTOC() {
+    let editorSectionWidth = this.refs.editorSection.el.width
+    if (!this._isTOCVisible() || editorSectionWidth < 960) {
+      this.el.addClass('sm-compact')
     } else {
-      this.refs.tocPane.addClass('sm-hidden')
+      this.el.removeClass('sm-compact')
     }
   }
 

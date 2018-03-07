@@ -18,10 +18,9 @@
 }
 
 .sc-editor.sm-compact .se-toolbar-wrapper .sc-toolbar {
-  max-width: 960px;
+  max-width: 930px; /* 960 - 30 for padding */
   margin: 0 auto;
 }
-
 
 .sc-editor .sc-body-content > .sc-container-editor {
   padding: 0;

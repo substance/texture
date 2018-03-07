@@ -23,6 +23,11 @@ export default class Editor extends AbstractWriter {
     this._showHideTOC()
   }
 
+  didUpdate() {
+    super.didUpdate()
+    this._showHideTOC()
+  }
+
   _dispose() {
     super._dispose()
     DefaultDOMElement.getBrowserWindow().off(this)

@@ -103,6 +103,19 @@ export default class TextureArchive extends PersistedDocumentArchive {
         throw new Error('Unsupported document type')
     }
   }
+
+  getTitle() {
+    let editorSession = this.getEditorSession('manuscript')
+    let title = 'Untitled'
+    if (editorSession) {
+      let doc = editorSession.getDocument()
+      let articleTitle = doc.find('article-title').textContent
+      if (articleTitle) {
+        title = articleTitle
+      }
+    }
+    return title
+  }
 }
 
 /*

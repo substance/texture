@@ -31,6 +31,9 @@ b.task('assets', function() {
   b.css('texture.css', DIST+'texture.css')
   b.css('./node_modules/substance/substance-pagestyle.css', DIST+'texture-pagestyle.css')
   b.css('./node_modules/substance/substance-reset.css', DIST+'texture-reset.css')
+
+  // Electron app-related
+  b.copy('./app/*', DIST, { root: './app' })
 })
 
 b.task('single-jats-file', _singleJATSFile)
@@ -69,24 +72,6 @@ b.task('build:lib', ['compile:schema'], () => {
   _buildLib(DIST, 'all')
 })
 
-b.task('build:app', ['build:browser'], () => {
-  b.copy('app/index.html', 'dist/app/')
-  b.copy('app/main.js', 'dist/app/')
-  b.copy('app/package.json.in', 'dist/app/package.json')
-  b.css('app/editor.css', 'dist/app/editor.css', { variables: true })
-  b.js('app/editor.js', {
-    target: {
-      dest: 'dist/app/editor.js',
-      format: 'umd',
-      moduleName: 'editor'
-    },
-    external: ['substance', 'texture'],
-    globals: {
-      'substance': 'window.substance',
-      'texture': 'window.texture'
-    }
-  })
-})
 
 b.task('test:assets', () => {
   vfs(b, {
@@ -133,8 +118,7 @@ b.task('examples', () => {
     format: 'umd', moduleName: 'vfs',
     rootDir: path.join(__dirname, 'data')
   })
-  b.copy('./examples/*.html', DIST, { root: './examples/' })
-  b.js('./examples/editor.js', {
+  b.js('./app/editor.js', {
     targets: [{
       dest: DIST+'editor.js',
       format: 'umd',
@@ -159,7 +143,7 @@ b.task('publish', ['clean', 'assets', 'compile:schema'], () => {
 
 b.task('test', ['test:node'])
 
-b.task('app', ['build:app'])
+
 
 /* HELPERS */
 

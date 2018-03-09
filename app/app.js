@@ -1,7 +1,7 @@
 const {
   getQueryStringParam, Component,
   InMemoryDarBuffer, substanceGlobals,
-  platform
+  platform, DefaultDOMElement
 } = window.substance
 
 const { JATSImportDialog, TextureArchive, Texture } = window.texture
@@ -28,9 +28,11 @@ class App extends Component {
     ipc.on('document:save-as', (event, newArchiveDir) => {
       this._saveAs(newArchiveDir)
     })
+    DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
   }
 
   dispose() {
+    DefaultDOMElement.getBrowserWindow().off(this)
     // TODO: is it necessary to do ipc.off?
     // (App component is never unmounted, only the full window is killed)
   }
@@ -135,5 +137,15 @@ class App extends Component {
       newTitle += " *"
     }
     document.title = newTitle
+  }
+
+  _keyDown(event) {
+    if ( event.key === 'Dead' ) return
+    // Handle custom keyboard shortcuts globally
+    let archive = this.state.archive
+    if (archive) {
+      let manuscriptSession = archive.getEditorSession('manuscript')
+      manuscriptSession.keyboardManager.onKeydown(event)
+    }
   }
 }

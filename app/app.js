@@ -79,15 +79,18 @@ class App extends Component {
     let buffer = new InMemoryDarBuffer()
     let archive = new TextureArchive(storage, buffer)
     this._archive = archive
-    archive.load(archiveDir)
+    let promise = archive.load(archiveDir)
       .then(() => {
         this._updateTitle()
         this.setState({archive})
       })
-      .catch(error => {
+
+    if (!platform.devtools) {
+      promise.catch(error => {
         console.error(error)
         this.setState({error})
       })
+    }
   }
 
   /*

@@ -1,6 +1,6 @@
 .sc-editor {
   font-size: 16px;
-  font-family: Avenir;
+  font-family: Avenir, Helvetica;
   font-weight: 500;
 }
 
@@ -32,6 +32,10 @@
   margin: 15px 0;
 }
 
+.sc-editor .sc-container-editor .sc-isolated-node {
+  margin: 30px 0;
+}
+
 .sc-editor {
   display: flex;
   flex-direction: row;
@@ -46,7 +50,7 @@
 }
 
 .sc-article {
-  max-width: 960px;
+  max-width: 760px;
   padding: 30px;
 }
 

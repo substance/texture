@@ -1,5 +1,6 @@
 .sc-italic {
-  font-style: italic;
+  font-style: oblique;
+  background: #eee;
 }
 
 .sc-bold {

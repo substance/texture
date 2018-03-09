@@ -8,9 +8,7 @@ class InsertTableTool extends ToggleTool {
 
   onClick() {
     const rows = 3
-    // eslint-disable-next-line
-    let columns = window.prompt('How many columns should your table have?', 3)
-
+    const columns = 5
     this.executeCommand({
       rows: rows,
       columns: columns

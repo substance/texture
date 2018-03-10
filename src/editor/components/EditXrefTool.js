@@ -43,7 +43,7 @@ export default class EditXRefTool extends Tool {
           targetPreviewEl.addClass('sm-selected')
         }
       }
-      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id))
+      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
       el.append(targetPreviewEl)
     })
     return el
@@ -57,7 +57,10 @@ export default class EditXRefTool extends Tool {
     return $$(TargetComponent, props)
   }
 
-  _toggleTarget(targetNodeId) {
+  _toggleTarget(targetNodeId, e) {
+    // Make sure we don't follow external links
+    e.preventDefault()
+
     let node = this._getNode(this.props.commandState.nodeId)
     let editorSession = this.context.editorSession
     // console.log('XRefTargets: toggling target of ', node.id);

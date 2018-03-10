@@ -3,7 +3,7 @@ import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
 import EditRelationship from '../../entities/EditRelationship'
 import updateEntityChildArray from '../../util/updateEntityChildArray'
-
+import AffiliationsListComponent from './AffiliationsListComponent'
 
 export default class ContribsListComponent extends NodeComponent {
 
@@ -86,6 +86,12 @@ export default class ContribsListComponent extends NodeComponent {
     )
 
     el.append(contentEl)
+
+    el.append(
+      $$(AffiliationsListComponent, {
+        node: this.props.node
+      })
+    )
     return el
   }
 

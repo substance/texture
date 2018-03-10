@@ -19,6 +19,54 @@
       <title-group id="title-group-1">
         <article-title id="article-title-1">Simultaneous two-photon imaging and two-photon optogenetics of cortical circuits in three dimensions</article-title>
       </title-group>
+      <contrib-group id="contrib-group-2" content-type="author">
+        <contrib id="contrib-60a1b7e4c0b0eae9ce6a2e4516917d49" contrib-type="person">
+          <name>
+            <surname>Yang</surname>
+            <given-names>Weijian</given-names>
+          </name>
+          <email>wejyang@ucdavis.edu</email>
+          <xref ref-type="aff" rid="aff-1015956928b24725f3e1914ad1b2a912" />
+        </contrib>
+        <contrib id="contrib-6e7305fb1023eb1eb19f3861445a5590" contrib-type="person">
+          <name>
+            <surname>Carrillo-Reid</surname>
+            <given-names>Luis</given-names>
+          </name>
+          <email>carrillo.reid@comunidad.unam.mx</email>
+          <xref ref-type="aff" rid="aff-1015956928b24725f3e1914ad1b2a912" />
+        </contrib>
+        <contrib id="contrib-205bcefe2d01e8883af0329008a2eb12" contrib-type="person">
+          <name>
+            <surname>Bando</surname>
+            <given-names>Yuki</given-names>
+          </name>
+          <email>yb2344@columbia.edu</email>
+          <xref ref-type="aff" rid="aff-1015956928b24725f3e1914ad1b2a912" />
+        </contrib>
+        <contrib id="contrib-ad4ac38b887e30d1b3e5117254440ad5" contrib-type="person">
+          <name>
+            <surname>Peterka</surname>
+            <given-names>Darcy S</given-names>
+          </name>
+          <email>dp2403@columbia.edu</email>
+          <xref ref-type="aff" rid="aff-1015956928b24725f3e1914ad1b2a912" />
+        </contrib>
+        <contrib id="contrib-2a57525dece6220ef1cca52cb8fabc0c" contrib-type="person">
+          <name>
+            <surname>Yuste</surname>
+            <given-names>Rafael</given-names>
+          </name>
+          <email>rmy5@columbia.edu</email>
+          <xref ref-type="aff" rid="aff-1015956928b24725f3e1914ad1b2a912" />
+        </contrib>
+      </contrib-group>
+      <aff id="aff-1015956928b24725f3e1914ad1b2a912">
+        <institution content-type="orgname">Columbia University</institution>
+        <institution content-type="orgdiv1">NeuroTechnology Center, Department of Biological Sciences</institution>
+        <city>New York</city>
+        <country>United States</country>
+      </aff>
       <pub-date id="date-3" date-type="pub" publication-format="electronic">
         <day id="day-3">07</day>
         <month id="month-3">02</month>

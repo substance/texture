@@ -17,7 +17,9 @@ export default class ReferenceManager extends AbstractCitationManager {
   updateReferences(newRefs) {
     let refList = this.editorSession.getDocument().find('ref-list')
     let oldRefs = this.getReferenceIds()
-    updateEntityChildArray(this.editorSession, refList.id, 'ref', 'rid', oldRefs, newRefs)
+    this.editorSession.transaction(tx => {
+      updateEntityChildArray(tx, refList.id, 'ref', 'rid', oldRefs, newRefs)
+    })
   }
 
   getReferenceIds() {

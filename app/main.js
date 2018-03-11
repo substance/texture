@@ -265,5 +265,9 @@ ipcMain.on('document:save-as:successful', (/*event*/) => {
 
 ipcMain.on('document:unsaved', () => {
   let focusedWindow = BrowserWindow.getFocusedWindow()
-  focusedWindow.isSaved = false
+  if (focusedWindow) {
+    focusedWindow.isSaved = false
+  } else {
+    console.error('ERROR: Could not get focused window while receiving document:unsaved.')
+  }
 })

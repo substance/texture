@@ -1,6 +1,6 @@
 # Texture [![Build Status](https://travis-ci.org/substance/texture.svg?branch=master)](https://travis-ci.org/substance/texture)
 
-Texture is a toolset for the production of scientific content. It has first-class support for JATS, the de facto standard for archiving and interchange of scientific open-access contents with XML.
+Texture is a toolset for the production of scientific content. It uses the [Dar Format](https://github.com/substance/dar), which is a stricter form of JATS, the de facto standard for archiving and interchange of scientific open-access contents with XML.
 ![Texture User Interface](texture.png)
 
 ## Roadmap

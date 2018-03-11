@@ -5,7 +5,7 @@ Texture is a toolset for the production of scientific content. It uses the [Dar 
 
 ## Roadmap
 
-Texture is still at an early alpha stage: there are likely to be missing features, bugs and API changes. But we would :heart: to get your suggestions and :bug: reports.
+Texture is still in a beta stage: there are likely to be missing features, bugs and API changes. But we would :heart: to get your suggestions and :bug: reports.
 
 - ![prod](https://img.shields.io/badge/status-prod-green.svg) = ready for production use
 - ![beta](https://img.shields.io/badge/status-beta-yellow.svg) = ready for beta user testing

@@ -33,7 +33,7 @@ Heading                                 | ✓
 Math                                    | September 2018
 List                                    | September 2018
 Blockquote                              | ✓
-Figure                                  | Beta
+Figure                                  | ✓
 Table                                   | Beta
 Bold & Italic                           | ✓
 Ext-Link                                | ✓

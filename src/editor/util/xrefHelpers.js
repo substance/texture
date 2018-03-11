@@ -55,6 +55,17 @@ function getXrefResourceManager(xref, context) {
   }
 }
 
+export function hasAvailableXrefTargets(refType, context) {
+  let managerName = RefTypeToManager[refType]
+  if (managerName) {
+    const manager = context[managerName]
+    const nodes = manager.getAvailableResources()
+    return nodes.length > 0
+  }
+
+  return false
+}
+
 /*
   Computes available targets for a given xref node
   that the user can choose from.

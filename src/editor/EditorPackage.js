@@ -400,7 +400,7 @@ export default {
       {
         name: 'cite',
         type: 'tool-dropdown',
-        showDisabled: true,
+        showDisabled: false,
         style: 'descriptive',
         commandGroups: ['insert-xref']
       },

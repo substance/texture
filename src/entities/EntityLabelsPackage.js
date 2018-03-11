@@ -11,6 +11,8 @@ export default {
     config.addLabel('articleTitle', 'Article Title')
     config.addLabel('source', 'Source')
     config.addLabel('edition', 'Edition')
+    config.addLabel('issue', 'Issue')
+    config.addLabel('volume', 'Volume')
     config.addLabel('publisherLoc', 'Publisher Location')
     config.addLabel('publisherName', 'Publisher Name')
     config.addLabel('year', 'Year')
@@ -46,10 +48,6 @@ export default {
     config.addLabel('create-software', 'Create Software')
     config.addLabel('edit-software', 'Edit Software')
     config.addLabel('version', 'Version')
-
-    config.addLabel('thesis', 'Thesis')
-    config.addLabel('create-thesis', 'Create Thesis')
-    config.addLabel('edit-thesis', 'Edit Thesis')
 
     config.addLabel('preprint', 'Preprint')
     config.addLabel('create-preprint', 'Create Preprint')

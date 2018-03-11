@@ -5,16 +5,15 @@
 .sc-toc .se-toc-entries { padding: 30px; }
 .sc-toc .se-toc-entries .se-toc-entry {
   text-decoration: none;
-  color: #666;
+  color: #888;
   font-weight: 500;
-  /* letter-spacing: var(--heading-letterspacing); */
-  font-family: 'Avenir Next', 'Lato', Helvetica;
+  font-family: 'Avenir Next', Helvetica;
   display: block;
   padding: 2px 0px;
   line-height: 30px;
   position: relative;
 }
-.sc-toc .se-toc-entries .se-toc-entry.sm-active { color: #111; text-decoration: underline; }
+.sc-toc .se-toc-entries .se-toc-entry.sm-active { color: #111; /*text-decoration: underline;*/ }
 .sc-toc .se-toc-entries .se-toc-entry.sm-active i.fa { visibility: visible; }
 .sc-toc .se-toc-entries .se-toc-entry:hover { color: #222; }
 .sc-toc .se-toc-entries .se-toc-entry.sm-level-1 { font-size: 14px; margin-left: 0px; }

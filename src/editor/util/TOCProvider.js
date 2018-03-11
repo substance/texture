@@ -100,20 +100,20 @@ class TOCProvider extends EventEmitter {
       }
     })
 
-    const ref = doc.find('ref')
-    if(ref) {
-      entries.push({
-        id: 'ref-list',
-        name: 'References',
-        level: 1
-      })
-    }
-
     const fn = doc.find('fn')
     if(fn) {
       entries.push({
         id: 'fn-group',
         name: 'Footnotes',
+        level: 1
+      })
+    }
+
+    const ref = doc.find('ref')
+    if(ref) {
+      entries.push({
+        id: 'ref-list',
+        name: 'References',
         level: 1
       })
     }
@@ -136,7 +136,7 @@ class TOCProvider extends EventEmitter {
     let scrollPos = scrollPane.getScrollPosition()
 
     let scrollBottom = scrollPos + scrollPaneHeight
-    let regularScanline = scrollPos
+    let regularScanline = scrollPos + 10
     let smartScanline = 2 * scrollBottom - contentHeight
     let scanline = Math.max(regularScanline, smartScanline)
 

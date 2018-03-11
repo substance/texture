@@ -11,6 +11,13 @@ export default class BackComponent extends Component {
     let el = $$('div').addClass('sc-back')
       .attr('data-id', node.id)
 
+    let fnGroup = node.find('fn-group')
+    if (fnGroup) {
+      el.append(
+        $$(this.getComponent('fn-group'), { node: fnGroup }).ref('fn-group')
+      )
+    }
+
     // NOTE: Bibliography depends on entityDb and referenceManager in the context.
     let refList = node.find('ref-list')
     if (refList) {
@@ -19,12 +26,6 @@ export default class BackComponent extends Component {
       )
     }
 
-    let fnGroup = node.find('fn-group')
-    if (fnGroup) {
-      el.append(
-        $$(this.getComponent('fn-group'), { node: fnGroup }).ref('fn-group')
-      )
-    }
     return el
   }
 

@@ -1,7 +1,8 @@
 .sc-title-group .se-article-title {
   /* padding-bottom: var(--default-padding); */
-  font-weight: var(--strong-font-weight);
-  letter-spacing: var(--heading-letterspacing);
+  /* font-weight: var(--strong-font-weight); */
+  /* letter-spacing: var(--heading-letterspacing); */
+  line-height: 1.3em;
   font-size: var(--title-font-size);
   font-family: 'Avenir Next', 'Lato', Helvetica;
   font-weight: 600;

@@ -4,7 +4,9 @@
 }
 
 .sc-table-wrap > .se-label {
-    font-style: italic;
+  font-weight: 600;
+  font-size: 18px;
+  padding-bottom: 10px;
 }
 
 .sc-table-wrap .se-title {

@@ -1,0 +1,12 @@
+<dar>
+  <documents>
+    <document id="manuscript" type="article" path="manuscript.xml" />
+  </documents>
+  <assets>
+    <asset id="fig1" type="image/jpg" path="fig1.jpg"/>
+    <asset id="fig2" type="image/jpg" path="fig2.jpg"/>
+    <asset id="fig3" type="image/jpg" path="fig3.jpg"/>
+    <asset id="fig4" type="image/jpg" path="fig4.jpg"/>
+    <asset id="fig5" type="image/jpg" path="fig5.jpg"/>
+  </assets>
+</dar>

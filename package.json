@@ -1,7 +1,7 @@
 {
   "name": "substance-texture",
   "productName": "Texture",
-  "version": "1.0.0-alpha.4-preview.24",
+  "version": "1.0.0-preview.1",
   "description": "A scientific word processor.",
   "main": "./dist/main.js",
   "jsnext:main": "index.es.js",

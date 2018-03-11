@@ -1,4 +1,4 @@
-## Alpha 4
+## Preview 1
 
 - Support for managing reusable entities (persons, organisations, citations)
 - Structured author and affiliation editing
@@ -8,7 +8,7 @@
 - Drag and drop images from the Desktop
 - Storage interface to store manuscript XML + assets
 - Generated labels are now exported. E.g. for `<xref>` elements
-- Update to Substance 1.0 Preview 23
+- Update to Substance 1.0 Preview 32
 
 ## Alpha 3
 

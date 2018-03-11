@@ -1,12 +1,13 @@
 .sc-editor {
-  font-size: 16px;
+  font-size: 17px;
   font-family: Avenir, Helvetica;
   font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1.7em;
 }
 
 .sc-editor .se-toolbar-wrapper {
   z-index: 1000;
-  /* border-bottom: 1px solid #e1e4e8; */
   padding: 3px;
   padding-bottom: 4px;
   padding-left: 270px;
@@ -30,6 +31,10 @@
 /* Add padding to each child except last one */
 .sc-editor .sc-container-editor > * {
   margin: 15px 0;
+}
+
+.sc-editor .sc-container-editor > .sc-p {
+  font-family: Georgia;
 }
 
 .sc-editor .sc-container-editor .sc-isolated-node {
@@ -110,10 +115,6 @@
   position: relative;
 }
 
-.sc-front {
-  /* padding-top: 30px; */
-}
-
 /* General editor styles */
 .sc-heading {
   font-family: 'Avenir Next', 'Lato', Helvetica;
@@ -137,4 +138,22 @@ h3.sc-heading {
 .sc-editor .sc-ext-link {
   color: inherit;
   text-decoration: underline;
+}
+
+.sc-caption {
+  font-size: 14px;
+  line-height: 1.8em;
+}
+
+.sc-ref-list, .sc-fig, .sc-table-wrap, .sc-edit-xref-tool, .sc-editor .sc-caption .sc-p {
+  font-family: Avenir, Helvetica, Arial;
+  font-weight: 500;
+}
+
+.sc-editor .sc-caption .sc-p .sc-italic {
+  font-weight: 600;
+}
+
+.sc-ref-list {
+  font-size: 15px;
 }

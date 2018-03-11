@@ -7,20 +7,20 @@ Texture is a toolset for the production of scientific content. It uses the [Dar 
 
 Texture is still in a beta stage: there are likely to be missing features, bugs and API changes. But we would :heart: to get your suggestions and :bug: reports.
 
-- ![prod](https://img.shields.io/badge/status-prod-green.svg) = ready for production use
-- ![beta](https://img.shields.io/badge/status-beta-yellow.svg) = ready for beta user testing
+- ✓ = ready for production use
+- Beta = ready for beta user testing
 
 We generally only plan one or two releases ahead, and aim ship regularly.
 
 Feature                                 | Ready
 :-------------------------------------- | :------------:
-General editing                         | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Copy & Paste (from Word, etc.)          | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Find and Replace                        | ![alpha](https://img.shields.io/badge/status-beta-yellow.svg)
-Auto-numbered labels (`xref`, `fig`, etc. ) | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Reference editing (`element-citation`)  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Authors and Affiliations                | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-[Dar](https://github.com/substance/dar) Storage | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
+General editing                         | Beta
+Copy & Paste (from Word, etc.)          | Beta
+Find and Replace                        | Beta
+Auto-numbered labels (`xref`, `fig`, etc. ) | Beta
+Reference editing (`element-citation`)  | Beta
+Authors and Affiliations                | Beta
+[Dar](https://github.com/substance/dar) Storage | Beta
 Article Record (`issue`, `fpage`, etc.) | September 2018
 Translations                            | September 2018
 Track Changes                           | September 2018
@@ -28,16 +28,16 @@ PubMed and CrossRef verification of references                       
 Fundref verification                    | September 2018
 Group authors                           | September 2018
 **Supported Content**                   |
-Paragraph                               | ![prod](https://img.shields.io/badge/status-prod-green.svg)
-Heading                                 | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Paragraph                               | ✓
+Heading                                 | ✓
 Math                                    | September 2018
 List                                    | September 2018
-Blockquote                              | ![prod](https://img.shields.io/badge/status-prod-green.svg)
-Figure                                  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Table                                   | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Bold & Italic                           | ![prod](https://img.shields.io/badge/status-prod-green.svg)
-Ext-Link                                | ![prod](https://img.shields.io/badge/status-prod-green.svg)
-Subscript & Superscript                 | ![prod](https://img.shields.io/badge/status-prod-green.svg)
+Blockquote                              | ✓
+Figure                                  | Beta
+Table                                   | Beta
+Bold & Italic                           | ✓
+Ext-Link                                | ✓
+Subscript & Superscript                 | ✓
 
 
 ## Install

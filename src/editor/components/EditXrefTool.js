@@ -60,6 +60,7 @@ export default class EditXRefTool extends Tool {
   _toggleTarget(targetNodeId, e) {
     // Make sure we don't follow external links
     e.preventDefault()
+    e.stopPropagation()
 
     let node = this._getNode(this.props.commandState.nodeId)
     let editorSession = this.context.editorSession

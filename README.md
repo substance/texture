@@ -9,7 +9,6 @@ Texture is still in a beta stage: there are likely to be missing features, bugs 
 
 - ![prod](https://img.shields.io/badge/status-prod-green.svg) = ready for production use
 - ![beta](https://img.shields.io/badge/status-beta-yellow.svg) = ready for beta user testing
-- ![alpha](https://img.shields.io/badge/status-alpha-red.svg) = ready for alpha testing; use with caution
 
 We generally only plan one or two releases ahead, and aim ship regularly.
 
@@ -17,7 +16,7 @@ Feature                                 | Ready
 :-------------------------------------- | :------------:
 General editing                         | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Copy & Paste (from Word, etc.)          | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Find and Replace                        | ![alpha](https://img.shields.io/badge/status-alpha-red.svg)
+Find and Replace                        | ![alpha](https://img.shields.io/badge/status-beta-yellow.svg)
 Auto-numbered labels (`xref`, `fig`, etc. ) | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Reference editing (`element-citation`)  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Authors and Affiliations                | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)

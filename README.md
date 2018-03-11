@@ -10,7 +10,6 @@ Texture is still at an early alpha stage: there are likely to be missing feature
 - ![prod](https://img.shields.io/badge/status-prod-green.svg) = ready for production use
 - ![beta](https://img.shields.io/badge/status-beta-yellow.svg) = ready for beta user testing
 - ![alpha](https://img.shields.io/badge/status-alpha-red.svg) = ready for alpha testing; use with caution
-- Planned for release (e.g. `Beta 1`)
 
 We generally only plan one or two releases ahead, and aim ship regularly.
 
@@ -23,17 +22,17 @@ Auto-numbered labels (`xref`, `fig`, etc. ) | ![beta](https://img.shields.io/bad
 Reference editing (`element-citation`)  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Authors and Affiliations                | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 [Dar](https://github.com/substance/dar) Storage | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
-Article Record (`issue`, `fpage`, etc.) | Beta 1
-Translations                            | Unscheduled
-Track Changes                           | Unscheduled
-PubMed and CrossRef verification of references                           | Unscheduled
-Fundref verification                    | Unscheduled
-Group authors                           | Unscheduled
+Article Record (`issue`, `fpage`, etc.) | September 2018
+Translations                            | September 2018
+Track Changes                           | September 2018
+PubMed and CrossRef verification of references                           | September 2018
+Fundref verification                    | September 2018
+Group authors                           | September 2018
 **Supported Content**                   |
 Paragraph                               | ![prod](https://img.shields.io/badge/status-prod-green.svg)
 Heading                                 | ![prod](https://img.shields.io/badge/status-prod-green.svg)
-Math                                    | Unscheduled
-List                                    | Beta 1
+Math                                    | September 2018
+List                                    | September 2018
 Blockquote                              | ![prod](https://img.shields.io/badge/status-prod-green.svg)
 Figure                                  | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)
 Table                                   | ![beta](https://img.shields.io/badge/status-beta-yellow.svg)

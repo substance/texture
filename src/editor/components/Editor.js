@@ -19,6 +19,8 @@ export default class Editor extends AbstractWriter {
     this.editorSession.commandManager._updateCommandStates(this.editorSession)
 
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+    DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
+    DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
     this.tocProvider.on('toc:updated', this._showHideTOC, this)
     this._showHideTOC()
   }
@@ -216,4 +218,10 @@ export default class Editor extends AbstractWriter {
     return bodyContent.id
   }
 
+  /*
+    Prevent app and browser from loading a dnd file
+  */
+  _supressDnD(e) {
+    e.preventDefault()
+  }
 }

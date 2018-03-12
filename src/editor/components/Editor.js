@@ -215,5 +215,4 @@ export default class Editor extends AbstractWriter {
     let bodyContent = doc.article.find('body-content')
     return bodyContent.id
   }
-
 }

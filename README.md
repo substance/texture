@@ -82,6 +82,12 @@ We also offer Texture wrapped in an Electron application.
 $ npm run app
 ```
 
+To package the application for distribution do the following:
+
+```bash
+$ npm run release
+```
+
 ## License
 
 Texture is open source, and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/).

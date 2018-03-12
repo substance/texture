@@ -18,6 +18,8 @@ class MyTextureEditor extends Component {
   didMount() {
     this._init()
     DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
+    DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
+    DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
   }
 
   dispose() {
@@ -114,5 +116,12 @@ class MyTextureEditor extends Component {
         }
       }
     }
+  }
+
+  /*
+    Prevent app and browser from loading a dnd file
+  */
+  _supressDnD(event) {
+    event.preventDefault()
   }
 }

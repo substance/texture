@@ -40,6 +40,8 @@ class App extends Component {
     })
     DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
+    DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
+    DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
   }
 
   dispose() {
@@ -168,5 +170,12 @@ class App extends Component {
       event.preventDefault();
       shell.openExternal(event.target.href)
     }
+  }
+
+  /*
+    Prevent app and browser from loading a dnd file
+  */
+  _supressDnD(event) {
+    event.preventDefault()
   }
 }

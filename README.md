@@ -91,7 +91,7 @@ $ npm run release
 
 ## License
 
-Texture is open source, and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/).
+Texture is open source (MIT license), and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/).
 
 ## Credits
 

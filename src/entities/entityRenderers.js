@@ -3,16 +3,10 @@ import { DefaultDOMElement } from 'substance'
 function journalArticleRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
+
   if (entity.authors.length > 0) {
     fragments = fragments.concat(
       _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.editors.length > 0) {
-    fragments = fragments.concat(
-      ' ',
-      _renderAuthors($$, entity.editors, entityDb),
       '.'
     )
   }
@@ -20,22 +14,39 @@ function journalArticleRenderer($$, entityId, entityDb) {
   if (entity.articleTitle) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle)
+      _renderHTML($$, entity.articleTitle),
+      '.'
     )
   }
 
-  fragments.push('. ', entity.source)
-  if (entity.volume) {
-    fragments.push(
+  if (entity.editors.length > 0) {
+    fragments = fragments.concat(
       ' ',
-      $$('strong').append(
-        entity.volume
-      )
+      _renderAuthors($$, entity.editors, entityDb),
+      '.'
+    )
+  }
+  if (entity.source) {
+    fragments.push(
+        ' ',
+        $$('em').append(entity.source),
+        '.'
     )
   }
 
-  if (entity.fpage && entity.lpage) {
-    fragments.push(':', entity.fpage, '-', entity.lpage)
+  if (entity.year) {
+    fragments.push(' ', entity.year, ';')
+  }
+  if (entity.volume) {
+    fragments.push(entity.volume)
+  }
+  if (entity.issue) {
+    fragments.push('(', entity.issue, ')')
+  }
+  if (entity.fpage) {
+    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+  } else {
+    fragments.push('.')
   }
 
   if (entity.doi) {
@@ -52,40 +63,91 @@ function bookRenderer($$, entityId, entityDb) {
   let fragments = []
 
   if (entity.chapterTitle) {
-    fragments.push(
-      _renderHTML($$, entity.chapterTitle),
-      '. '
-    )
+    // chapter
+    if (entity.authors.length > 0) {
+      fragments = fragments.concat(
+        _renderAuthors($$, entity.authors, entityDb),
+        '.'
+      )
+    }
+    if (entity.chapterTitle) {
+      fragments.push(
+        ' ',
+        _renderHTML($$, entity.chapterTitle),
+        '. '
+      )
+    }
+
+    fragments = fragments.concat('In: ')
+    if (entity.editors.length > 0) {
+      let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+      fragments = fragments.concat(
+        ' ',
+        _renderAuthors($$, entity.editors, entityDb),
+        ', ',
+        editorLabel,
+        '.'
+      )
+    }
+    if (entity.source) {
+      fragments.push(
+        ' ',
+        $$('em').append(
+          entity.source
+        ),
+        '.'
+      )
+    }
+    if (entity.edition) {
+      fragments.push(' ', entity.edition, '.')
+    }
+  } else {
+    // book
+    if (entity.authors.length > 0) {
+      fragments = fragments.concat(
+        _renderAuthors($$, entity.authors, entityDb),
+        '.'
+      )
+    } else if (entity.editors.length > 0) {
+      let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+      fragments = fragments.concat(
+        _renderAuthors($$, entity.editors, entityDb),
+        ', ',
+        editorLabel,
+        '.'
+      )
+    }
+    if (entity.source) {
+      fragments.push(
+        ' ',
+        $$('em').append(entity.source),
+        '.'
+      )
+    }
+    if (entity.edition) {
+      fragments.push(' ', entity.edition, '.')
+    }
+    if (entity.editors.length > 0 && entity.authors.length > 0) {
+      let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+      fragments = fragments.concat(
+        ' (',
+        _renderAuthors($$, entity.editors, entityDb),
+        ', ',
+        editorLabel,
+        ').'
+      )
+    }
   }
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.editors.length > 0) {
-    fragments = fragments.concat(
-      ' ',
-      _renderAuthors($$, entity.editors, entityDb),
-      '.'
-    )
-  }
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
   if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+    fragments.push(' ', entity.year)
   }
-
-  if (entity.source) {
-    fragments.push(' ', entity.source)
-    if (entity.edition) {
-      fragments.push(' (', entity.edition, ')')
-    }
+  if (entity.fpage) {
+    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+  } else {
     fragments.push('.')
-  }
-
-  if (entity.publisherLoc && entity.publisherName) {
-    fragments.push(' ', entity.publisherLoc, ': ', entity.publisherName, '.')
   }
 
   if (entity.doi) {
@@ -95,39 +157,30 @@ function bookRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.fpage && entity.lpage) {
-    fragments.push(
-      ' pp. ',
-      entity.fpage,
-      '-',
-      entity.lpage,
-      '.'
-    )
-  }
   return fragments
 }
 
-// ${article-title}. ${sponsors}  (sponsors) (${year}). ${doi}
 function clinicalTrialRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.sponsors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.sponsors, entityDb),
+      ', sponsors.'
+    )
+  }
+
   if (entity.articleTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.articleTitle),
       '. '
     )
   }
 
-  if (entity.sponsors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.sponsors, entityDb),
-      ' (sponsors)'
-    )
-  }
-
   if (entity.year) {
-    fragments.push(' (', entity.year, ').')
+    fragments.push(' ', entity.year, '.')
   }
 
   if (entity.doi) {
@@ -143,25 +196,30 @@ function preprintRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.articleTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.articleTitle),
       '. '
     )
   }
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.source),
+      '.'
     )
   }
 
   if (entity.year) {
-    fragments.push(' (', entity.year, ').')
-  }
-
-  if (entity.source) {
-    fragments.push(' ', entity.source, '.')
+    fragments.push(' ', entity.year, '.')
   }
 
   if (entity.doi) {
@@ -177,22 +235,26 @@ function preprintRenderer($$, entityId, entityDb) {
 function patentRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
+
+  if (entity.inventors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.inventors, entityDb),
+      '.'
+    )
+  }
   if (entity.articleTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.articleTitle),
       '. '
     )
   }
-  if (entity.inventors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.inventors, entityDb)
-    )
-  }
-  if (entity.year) {
-    fragments.push(' (', entity.year, ').')
-  }
+
   if (entity.assignee) {
     fragments.push(' ', entity.assignee, ',')
+  }
+  if (entity.year) {
+    fragments.push(' ', entity.year, '.')
   }
   if (entity.patentNumber) {
     fragments.push(' ', entity.patentNumber)
@@ -207,22 +269,29 @@ function dataPublicationRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.dataTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.dataTitle),
       '. '
     )
   }
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
+
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.source),
+      '.'
     )
   }
   if (entity.year) {
-    fragments.push(' (', entity.year, ').')
-  }
-  if (entity.source) {
-    fragments.push(' ', entity.assignee, ',')
+    fragments.push(' ', entity.year, '.')
   }
   if (entity.doi) {
     fragments.push(
@@ -236,35 +305,42 @@ function dataPublicationRenderer($$, entityId, entityDb) {
 function periodicalRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.articleTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.articleTitle),
       '. '
     )
   }
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
-    )
-  }
-  if (entity.year) {
-    fragments.push(' (', entity.year, ').')
-  }
+
   if (entity.source) {
     fragments.push(
       ' ',
-      $$('em').append(entity.assignee),
+      $$('em').append(entity.source),
       ','
     )
   }
 
-  if (entity.fpage && entity.lpage) {
+  if (entity.year) {
+    fragments.push(' ', entity.year)
+  }
+  if (entity.fpage) {
+    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+  } else {
+    fragments.push('.')
+  }
+
+  if (entity.doi) {
     fragments.push(
-      ' p. ',
-      entity.fpage,
-      '-',
-      entity.lpage,
-      '.'
+      ' ',
+      _renderDOI($$, entity.doi)
     )
   }
 
@@ -277,21 +353,25 @@ function reportRenderer($$, entityId, entityDb) {
   let fragments = []
   if (entity.authors.length > 0) {
     fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
-    )
-  }
-  if (entity.year) {
-    fragments.push(' (', entity.year, ').')
-  }
-  if (entity.source) {
-    fragments.push(
-      ' ',
-      $$('em').append(
-        entity.source
-      ),
+      _renderAuthors($$, entity.authors, entityDb),
       '.'
     )
   }
+
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.source),
+      '.'
+    )
+  }
+
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.year) {
+    fragments.push(' ', entity.year, '.')
+  }
+
   return fragments
 }
 
@@ -299,39 +379,34 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.articleTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.articleTitle),
       '. '
     )
   }
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
-    )
-  }
-
-  if (entity.year) {
-    fragments.push(' (', entity.year, ').')
-  }
-
   if (entity.confName) {
     fragments.push(' ', entity.confName, ',')
   }
-
   if (entity.source) {
-    fragments.push(' ', entity.source, '.')
+    fragments.push(' ', $$('em').append(entity.source), '.')
   }
 
-  if (entity.fpage && entity.lpage) {
-    fragments.push(
-      ' pp. ',
-      entity.fpage,
-      '-',
-      entity.lpage,
-      '.'
-    )
+  if (entity.year) {
+    fragments.push(' ', entity.year)
+  }
+  if (entity.fpage) {
+    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+  } else {
+    fragments.push('.')
   }
 
   if (entity.doi) {
@@ -347,8 +422,16 @@ function softwareRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      ' ',
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.title) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.title)
     )
     if (entity.version) {
@@ -356,18 +439,20 @@ function softwareRenderer($$, entityId, entityDb) {
     }
     fragments.push('.')
   }
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
+
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.year) {
+    fragments.push(' ', entity.year, '.')
+  }
+
+  if (entity.doi) {
+    fragments.push(
       ' ',
-      _renderAuthors($$, entity.authors, entityDb)
+      _renderDOI($$, entity.doi)
     )
   }
-  if (entity.publisherName) {
-    fragments.push(' ', entity.publisherName)
-  }
-  if (entity.publisherLoc) {
-    fragments.push(', ', entity.publisherLoc)
-  }
+
   return fragments
 }
 
@@ -375,26 +460,26 @@ function thesisRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.articleTitle) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.articleTitle),
       '. '
     )
   }
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
-    )
-  }
+
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
   if (entity.year) {
-    fragments.push(' (', entity.year, ').')
+    fragments.push(' ', entity.year, '.')
   }
-  if (entity.publisherName) {
-    fragments.push(' ', entity.publisherName)
-  }
-  if (entity.publisherLoc) {
-    fragments.push(', ', entity.publisherLoc)
-  }
+
   return fragments
 }
 
@@ -402,19 +487,18 @@ function webpageRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
   if (entity.title) {
     fragments.push(
+      ' ',
       _renderHTML($$, entity.title),
       '. '
     )
-  }
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb)
-    )
-  }
-  if (entity.year && entity.month && entity.day) {
-    fragments.push(' (', entity.year, '-', entity.month, '-', entity.day, ').')
   }
 
   if (entity.publisherLoc) {
@@ -424,6 +508,13 @@ function webpageRenderer($$, entityId, entityDb) {
   if (entity.uri) {
     fragments.push(' ', entity.uri)
   }
+
+  if (entity.year && entity.month && entity.day) {
+    let monthNames = [null, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    let monthFormatted = monthNames[entity.month] || entity.month
+    fragments.push('. Accessed ', monthFormatted, ' ', entity.year, ', ', entity.day, '.')
+  }
+
   return fragments
 }
 
@@ -438,9 +529,9 @@ function personRenderer($$, entityId, entityDb, options = {}) {
     result.push(prefix, ' ')
   }
   result.push(
-    givenNames,
+    surname,
     ' ',
-    surname
+    givenNames
   )
   if (suffix) {
     result.push(' (', suffix, ')')
@@ -503,12 +594,34 @@ function _renderAuthors($$, entityIds, entityDb) {
 
 function _renderDOI($$, doi) {
   return $$('a').attr({
-    href: `http://dx.doi.org/${doi}`,
+    href: `https://doi.org/${doi}`,
     target: '_blank'
   }).append(
-    'doi ',
+    'https://doi.org/',
     doi
   )
+}
+
+function _renderPageRange($$, first, last) {
+  if (first) {
+    if (last) {
+      return first + '-' + last
+    } else {
+      return first
+    }
+  }
+}
+
+function _renderPublisherPlace($$, place, publisher) {
+  if (place && publisher) {
+    return ' ' + place + ': ' + publisher + '; '
+  } else if (place) {
+    return ' ' + place + '; '
+  } else if (publisher) {
+    return ' ' + publisher + '; '
+  } else {
+    return ''
+  }
 }
 
 function _getInitials(givenNames) {

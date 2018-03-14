@@ -35,6 +35,7 @@
     "publish": null
   },
   "scripts": {
+    "postinstall": "node make",
     "prepublish": "node make publish",
     "build": "node make",
     "watch": "node make -w",

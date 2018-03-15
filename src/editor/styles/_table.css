@@ -14,6 +14,10 @@
   font-weight: 600;
 }
 
+.sc-table-wrap .se-title .sc-bold {
+  font-weight: 900;
+}
+
 .sc-table {
   border-collapse: collapse;
   margin: 25px 0px;

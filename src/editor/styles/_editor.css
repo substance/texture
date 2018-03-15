@@ -150,8 +150,12 @@ h3.sc-heading {
   font-weight: 500;
 }
 
-.sc-editor .sc-caption .sc-p .sc-italic {
+.sc-editor .sc-caption .sc-p .sc-italic, .sc-editor em {
   font-weight: 600;
+}
+
+.sc-fig .se-title .sc-italic {
+  font-weight: 700;
 }
 
 .sc-ref-list {

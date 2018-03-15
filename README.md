@@ -1,6 +1,6 @@
 # Texture [![Build Status](https://travis-ci.org/substance/texture.svg?branch=master)](https://travis-ci.org/substance/texture)
 
-Texture is a toolset for the production of scientific content. It uses the [Dar Format](http://github.com/substance/dar), which defines a stricter form of the [JATS Archiving and Interchange Tag Set ("green" v. 1.1)](https://jats.nlm.nih.gov/archiving/1.1/) XML standard.
+Texture is a toolset designed for the production of scientific content. It uses the [Dar Format](http://github.com/substance/dar), which defines a stricter form of the [JATS Archiving and Interchange Tag Set ("green" v. 1.1)](https://jats.nlm.nih.gov/archiving/1.1/) XML standard.
 
 ![Texture User Interface](texture.png)
 

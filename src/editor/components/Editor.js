@@ -134,7 +134,7 @@ export default class Editor extends AbstractWriter {
     const configurator = this.getConfigurator()
     const ManuscriptComponent = this.getComponent('manuscript')
     const Overlay = this.getComponent('overlay')
-    // const ContextMenu = this.getComponent('context-menu')
+    const ContextMenu = this.getComponent('context-menu')
     const Dropzones = this.componentRegistry.get('dropzones', 'strict')
 
     const article = doc.get('article')
@@ -142,6 +142,7 @@ export default class Editor extends AbstractWriter {
     let contentPanel = $$(ScrollPane, {
       tocProvider: this.tocProvider,
       // scrollbarType: 'substance',
+      contextMenu: 'custom',
       scrollbarPosition: 'right',
       highlights: this.contentHighlights,
     }).ref('contentPanel')
@@ -155,7 +156,10 @@ export default class Editor extends AbstractWriter {
         toolPanel: configurator.getToolPanel('main-overlay'),
         theme: 'dark'
       }),
-      // $$(ContextMenu),
+      $$(ContextMenu, {
+        toolPanel: configurator.getToolPanel('context-menu'),
+        theme: 'dark'
+      }),
       $$(Dropzones)
     )
     return contentPanel

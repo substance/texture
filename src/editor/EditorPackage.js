@@ -262,7 +262,7 @@ export default {
     config.addAnnotationTool({
       name: 'bold',
       nodeType: 'bold',
-      commandGroup: 'formatting',
+      commandGroup: 'formatting-primary',
       icon: 'fa-bold',
       label: 'Strong',
       accelerator: 'CommandOrControl+B'
@@ -271,7 +271,7 @@ export default {
     config.addAnnotationTool({
       name: 'italic',
       nodeType: 'italic',
-      commandGroup: 'formatting',
+      commandGroup: 'formatting-primary',
       icon: 'fa-italic',
       label: 'Emphasize',
       accelerator: 'CommandOrControl+I'
@@ -388,7 +388,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['formatting']
+        commandGroups: ['formatting-primary', 'formatting']
       },
       {
         name: 'additinal-tools',
@@ -419,6 +419,16 @@ export default {
         type: 'tool-prompt',
         showDisabled: false,
         commandGroups: ['prompt']
+      }
+    ])
+
+    config.addToolPanel('context-menu', [
+      {
+        name: 'context-menu',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'descriptive',
+        commandGroups: ['formatting-primary']
       }
     ])
 

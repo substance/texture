@@ -65,6 +65,11 @@ import DropFigure from './commands/DropFigure'
 import InsertTableCommand from './commands/InsertTableCommand'
 import InsertTableTool from './components/InsertTableTool'
 
+import InsertColumnCommand from './commands/InsertColumnCommand'
+import InsertRowCommand from './commands/InsertRowCommand'
+import RemoveColumnCommand from './commands/RemoveColumnCommand'
+import RemoveRowCommand from './commands/RemoveRowCommand'
+
 substanceGlobals.DEBUG_RENDERING = true
 
 export default {
@@ -223,6 +228,19 @@ export default {
     })
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
+
+    config.addCommand('insert-column', InsertColumnCommand, {
+      commandGroup: 'table-modifiers'
+    })
+    config.addCommand('insert-row', InsertRowCommand, {
+      commandGroup: 'table-modifiers'
+    })
+    config.addCommand('remove-column', RemoveColumnCommand, {
+      commandGroup: 'table-modifiers'
+    })
+    config.addCommand('remove-row', RemoveRowCommand, {
+      commandGroup: 'table-modifiers'
+    })
 
     config.addLabel('cite', 'Cite')
     config.addLabel('insert-xref-bibr', 'Reference')
@@ -428,7 +446,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'descriptive',
-        commandGroups: ['formatting-primary']
+        commandGroups: ['formatting-primary', 'table-modifiers']
       }
     ])
 

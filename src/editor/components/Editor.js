@@ -29,20 +29,29 @@ export default class Editor extends AbstractWriter {
   }
 
   _dispose() {
+    let doc = this.editorSession.getDocument()
     super._dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
     this.tocProvider.off(this)
+    delete doc.referenceManager
   }
 
   _initialize(props) {
     super._initialize(props)
     let editorSession = props.editorSession
+    let doc = editorSession.getDocument()
 
     this.referenceManager = new ReferenceManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('references'),
       editorSession,
       pubMetaDbSession: props.pubMetaDbSession
     })
+
+    // HACK: we need to expose referenceManager somehow, so it can be used in
+    // the JATSExporter. We may want to consider including referenceManager in
+    // TextureDocument instead.
+    doc.referenceManager = this.referenceManager
+
     this.figureManager = new FigureManager({
       labelGenerator: editorSession.getConfigurator().getLabelGenerator('figures'),
       editorSession

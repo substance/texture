@@ -10,7 +10,7 @@ export function importContentLoc(el) {
   let dom = el.getOwnerDocument()
   let tagNames = ['fpage', 'lpage', 'page-range', 'elocation-id']
   let els = {}
-  tagNames.forEach((tagName) => {
+  tagNames.forEach(tagName => {
     els[tagName] = el.find(tagName)
   })
   let type = els.elocationId ? 'electronic' : 'print'

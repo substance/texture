@@ -73,11 +73,18 @@ export default class ConvertRef {
 
   export(dom, api) {
     let $$ = dom.createElement.bind(dom)
-    let refs = dom.findAll('ref')
+    let refList = dom.find('back > ref-list')
     const pubMetaDb = api.pubMetaDb
+    const doc = api.doc
+    const referenceManager = doc.referenceManager
+    let bibliography = referenceManager.getBibliography()
 
-    refs.forEach(refEl => {
-      let entity = pubMetaDb.get(refEl.attr('rid'))
+    // Empty ref-list
+    refList.empty()
+
+    // Re-export refs according to computed order
+    bibliography.forEach(refNode => {
+      let entity = pubMetaDb.get(refNode.attr('rid'))
       let elementCitation
       switch(entity.type) {
         case 'journal-article':
@@ -119,10 +126,12 @@ export default class ConvertRef {
         default:
           throw new Error('publication type not found.')
       }
-      refEl.append(
-        elementCitation
+
+      refList.append(
+        dom.createElement('ref').attr('id', refNode.id).append(
+          elementCitation
+        )
       )
-      refEl.removeAttr('rid')
     })
 
   }

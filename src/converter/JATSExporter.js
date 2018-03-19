@@ -10,6 +10,7 @@ export default class JATSExporter {
   export(dom, context = {}) {
     let pubMetaDb = context.pubMetaDb
     let doc = context.doc
+    let referenceManager = context.referenceManager
 
     if (!pubMetaDb) {
       throw new Error('context.pubMetaDb is missing')
@@ -20,6 +21,7 @@ export default class JATSExporter {
       errors: [],
       dom,
       doc,
+      referenceManager,
       pubMetaDb
     }
     const api = this._createAPI(state)

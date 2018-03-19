@@ -301,9 +301,7 @@
     </element>
   </define>
 
-  <!--
-    Introduced some wrappers, such as <aff-group>
-  -->
+  <!-- Introduce some new elements aff-group, content-loc -->
   <define name="article-meta">
     <element name="article-meta">
       <ref name="article-meta-attlist"/>
@@ -313,81 +311,76 @@
       <optional>
         <ref name="article-categories"/>
       </optional>
+      <!-- TODO: we should make contrib-group, aff-group, title-group non-optional -->
       <optional>
         <ref name="title-group"/>
       </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="contrib-group.class"/>
-          <ref name="aff-group"/>
-          <ref name="aff-alternatives.class"/>
-        </choice>
-      </zeroOrMore>
+      <!-- contrib-group[content-type=author], contrib-group[content-type=editor] -->
+      <optional>
+        <ref name="contrib-group"/>
+      </optional>
+      <optional>
+        <ref name="contrib-group"/>
+      </optional>
+      <!-- TODO: this must go away, we only have it there to ensure wa always have
+      a valid schema during r2t transform
+      -->
+      <optional>
+        <ref name="aff"/>
+      </optional>
+      <!-- We wrap affs in a custom aff-group element -->
+      <optional>
+        <ref name="aff-group"/>
+      </optional>
+
       <optional>
         <ref name="author-notes"/>
       </optional>
+      <!-- Should we limit this and be more explicit -->
       <zeroOrMore>
         <ref name="pub-date"/>
       </zeroOrMore>
-      <zeroOrMore>
+      <optional>
         <ref name="volume"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="volume-id"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="volume-series"/>
       </optional>
-      <zeroOrMore>
+      <optional>
         <ref name="issue"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="issue-id"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="issue-title"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="issue-sponsor"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="issue-part"/>
       </optional>
-      <zeroOrMore>
-        <ref name="volume-issue-group"/>
-      </zeroOrMore>
-      <zeroOrMore>
+      <optional>
         <ref name="isbn"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="supplement"/>
       </optional>
-      <ref name="content-loc"/>
-      <zeroOrMore>
-        <choice>
-          <ref name="address-link.class"/>
-          <ref name="product"/>
-          <ref name="supplementary-material"/>
-        </choice>
-      </zeroOrMore>
-      <ref name="history"/>
+      <optional>
+        <ref name="content-loc"/>
+      </optional>
+      <optional>
+        <ref name="history"/>
+      </optional>
       <optional>
         <ref name="permissions"/>
       </optional>
       <zeroOrMore>
         <ref name="self-uri"/>
       </zeroOrMore>
+      <!-- Verify the use-cases for related article? Maybe this should not be
+           part of the source, and instead be included in a post-processing step
+           at journals, so database of related articles can be maintained separately
+      -->
       <zeroOrMore>
-        <ref name="related-article.class"/>
+        <ref name="related-article"/>
+        <ref name="related-object"/>
       </zeroOrMore>
-      <zeroOrMore>
-        <ref name="abstract.class"/>
-      </zeroOrMore>
+      <!-- TODO: we should make abstract non-optional! we can't do currently
+           because there is no way to find a valid insert pos if the schema
+           is invalid
+      -->
+      <optional>
+        <ref name="abstract"/>
+      </optional>
       <zeroOrMore>
         <ref name="trans-abstract"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="kwd-group.class"/>
+        <ref name="kwd-group"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="funding-group"/>
@@ -395,6 +388,7 @@
       <zeroOrMore>
         <ref name="conference"/>
       </zeroOrMore>
+      <!-- needs specification -->
       <optional>
         <ref name="counts"/>
       </optional>
@@ -403,6 +397,7 @@
       </optional>
     </element>
   </define>
+
 
   <!--
     We only support plain text contrib elements for now

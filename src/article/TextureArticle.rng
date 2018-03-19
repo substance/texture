@@ -325,9 +325,9 @@
       <!-- TODO: this must go away, we only have it there to ensure wa always have
       a valid schema during r2t transform
       -->
-      <optional>
+      <zeroOrMore>
         <ref name="aff"/>
-      </optional>
+      </zeroOrMore>
       <!-- We wrap affs in a custom aff-group element -->
       <optional>
         <ref name="aff-group"/>

@@ -205,6 +205,15 @@ export function expandContribGroup(dom, type) {
   }
 }
 
+export function expandAbstract(dom) {
+  let articleMeta = dom.find('article-meta')
+  let abstract = articleMeta.find('abstract')
+  if (!abstract) {
+    abstract = dom.createElement('abstract')
+    insertChildAtFirstValidPos(articleMeta, abstract)
+  }
+}
+
 /*
   Takes a selector and delets all matching elements if they have no children
 */

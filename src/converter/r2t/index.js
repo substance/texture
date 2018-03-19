@@ -17,6 +17,7 @@ import NormalizeHistoryDates from './NormalizeHistoryDates'
 import PruneEmptyElements from './PruneEmptyElements'
 import ConvertRefs from './ConvertRefs'
 import ConvertAuthors from './ConvertAuthors'
+import ConvertArticleMeta from './ConvertArticleMeta'
 import ConvertXref from './ConvertXref'
 
 // ATTENTION: the order of converters is critical,
@@ -24,6 +25,7 @@ import ConvertXref from './ConvertXref'
 // that adheres to the schema
 // ATM
 const trafos = [
+
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,
@@ -33,6 +35,7 @@ const trafos = [
   // NOTE: It is important that ConvertAuthors goes before ConvertRefs, as
   // as person records with affiliations (contrib) should have priority over
   // person records in
+  ConvertArticleMeta,
   ConvertAuthors, // extracts org and person entities
   ConvertRefs, // extracts publication entities
   ConvertSigBlock,
@@ -47,7 +50,7 @@ const trafos = [
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertXref,
-  UpdateDocType,
+  UpdateDocType
   // TODO: is this really necessary again?
   // PruneText,
 ].map(C => new C())

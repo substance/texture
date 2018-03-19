@@ -19,7 +19,7 @@ export default class EditEntity extends Component {
       $$('div').addClass('sg-actions').append(
         $$('button')
           .addClass('sc-button sm-style-big')
-          .append('Save')
+          .append('Update')
           .on('click', this._save),
         $$('button')
           .addClass('sc-button sm-style-big sm-secondary')

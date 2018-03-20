@@ -2,7 +2,7 @@
 
 This is the XML structure, used internally by Texture. It's largely the same as JATS4M, but we optimised the layout to be easier to manipulate. For instance in TextureXML, we use flat headings instead of nested sections, which allows for Word-like editing behaviour.
 
-* NOTE: All data about contribs, references, affiliations live in a separate database outside of the XML. See `EntityDatabase.js` for the schema to be used*  
+*NOTE: All data about contribs, references, affiliations live in a separate database outside of the XML. See `EntityDatabase.js` for the schema to be used*  
 
 
 ### `<aff>`

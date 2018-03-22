@@ -177,7 +177,8 @@ export const JournalArticleConverter = {
         lpage: _getText(el, 'lpage'),
         pageRange: _getText(el, 'page-range'),
         elocationId: _getText(el, 'elocation-id'),
-        doi: _getText(el, 'pub-id[pub-id-type=doi]')
+        doi: _getText(el, 'pub-id[pub-id-type=doi]'),
+        pmid: _getText(el, 'pub-id[pub-id-type=pmid]')
       }
       // Extract authors
       node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
@@ -203,10 +204,12 @@ export const JournalArticleConverter = {
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createTextElement($$, node.volume, 'volume'))
+    el.append(_createTextElement($$, node.issue, 'issue'))
     el.append(_createTextElement($$, node.fpage, 'fpage'))
     el.append(_createTextElement($$, node.lpage, 'lpage'))
     el.append(_createTextElement($$, node.pageRange, 'page-range'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    el.append(_createTextElement($$, node.pmid, 'pub-id', {'pub-id-type': 'pmid'}))
     // Store entityId for explicit lookup on next import
     // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el

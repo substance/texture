@@ -208,6 +208,7 @@ export const JournalArticleConverter = {
     el.append(_createTextElement($$, node.fpage, 'fpage'))
     el.append(_createTextElement($$, node.lpage, 'lpage'))
     el.append(_createTextElement($$, node.pageRange, 'page-range'))
+    el.append(_createTextElement($$, node.elocationId, 'elocation-id'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     el.append(_createTextElement($$, node.pmid, 'pub-id', {'pub-id-type': 'pmid'}))
     // Store entityId for explicit lookup on next import

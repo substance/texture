@@ -98,7 +98,8 @@ JournalArticle.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true }
+  doi: { type: 'string', optional: true },
+  pmid: { type: 'string', optional: true }
 }
 
 export class ConferenceProceeding extends BibliographicEntry {}

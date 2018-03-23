@@ -132,13 +132,13 @@ b.task('build:all', () => {
 
 b.task('build:app', () => {
   b.copy('app/index.html', APPDIST)
+  b.copy('app/build-resources', APPDIST)
   b.copy('data', APPDIST)
   // FIXME: this command leads to an extra run when a  file is updated
+  // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
   b.copy('dist/font-awesome', APPDIST+'lib/')
   b.copy('dist/substance', APPDIST+'lib/')
-  b.copy('app/build-resources', APPDIST)
-  // .. instead copying the files explicitly for now
   ;[
     'texture.js',
     'texture.css',

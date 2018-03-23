@@ -131,9 +131,23 @@ b.task('build:all', () => {
 })
 
 b.task('build:app', () => {
-  b.copy('dist', APPDIST+'lib')
   b.copy('app/index.html', APPDIST)
   b.copy('data', APPDIST)
+  // FIXME: this command leads to an extra run when a  file is updated
+  // b.copy('dist', APPDIST+'lib/')
+  b.copy('dist/font-awesome', APPDIST+'lib/')
+  b.copy('dist/substance', APPDIST+'lib/')
+  // .. instead copying the files explicitly for now
+  ;[
+    'texture.js',
+    'texture.css',
+    'texture-pagestyle.css',
+    'texture-reset.css'
+  ].forEach(f => {
+    b.copy(`dist/${f}`, APPDIST+'lib/')
+    b.copy(`dist/${f}.map`, APPDIST+'lib/')
+  })
+
   // TODO: maybe we could come up with an extension
   // that expands a source file using a given dict.
   b.custom('Creating application package.json...', {

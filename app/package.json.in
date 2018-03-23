@@ -1,0 +1,31 @@
+{
+  "name": "Texture",
+  "version": "${version}",
+  "description": "A scientific word processor.",
+  "main": "main.js",
+  "dependencies": {
+    "dar-server": "^0.4.1"
+  },
+  "build": {
+    "appId": "com.texture.texture-desktop",
+    "files": [
+      "data",
+      "lib",
+      "node_modules",
+      "*.html",
+      "*.js",
+      "package.json"
+    ],
+    "asar": "false",
+    "directories": {
+      "output": "build",
+      "buildResources": "build-resources"
+    },
+    "publish": null
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/substance/texture.git"
+  },
+  "license": "MIT"
+}

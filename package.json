@@ -40,8 +40,8 @@
     "watch": "node make -w",
     "start": "node make -s -w -d data",
     "release": "node make && build",
-    "electron": "electron .",
-    "app": "node make && electron .",
+    "electron": "electron ./dist",
+    "app": "node make && electron ./dist",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

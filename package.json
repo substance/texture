@@ -9,6 +9,7 @@
     "substance": "1.0.0-preview.32"
   },
   "devDependencies": {
+    "dar-server": "^0.4.1",
     "electron": "2.0.0-beta.2",
     "electron-builder": "20.4.0",
     "eslint": "^3.17.1",

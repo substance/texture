@@ -52,13 +52,13 @@ b.task('clean', function() {
   b.rm(APPDIST)
 }).describe('removes all generated files and folders.')
 
-b.task('lib', ['clean', 'build:schema', 'build:assets', 'build:all'])
+b.task('lib', ['clean', 'build:schema', 'build:assets', 'build:lib'])
 .describe('builds the library bundle.')
 
 b.task('browser', ['clean', 'build:schema', 'build:assets', 'build:browser'])
 .describe('builds the browser bundle.')
 
-b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:all', 'build:web'])
+b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:lib', 'build:web'])
 .describe('builds the release bundle (library + web).')
 
 b.task('web', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:web'])
@@ -70,19 +70,19 @@ b.task('app', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:
 b.task('test-nodejs', ['clean', 'build:schema', 'build:nodejs', 'build:test-assets', 'build:test-nodejs'], () => {
   fork(b, require.resolve('substance-test/bin/test'), './tmp/tests.cjs.js', { verbose: true, await: true })
 })
-.describe('runs the test-suite in nodejs')
+.describe('builds and runs the test-suite in nodejs.')
 
 b.task('test-browser', ['clean', 'build:schema', 'build:browser', 'build:test-assets', 'build:test-browser'])
-.describe('builds the test-suite for the browser (open /tests/index.html)')
+.describe('builds the test-suite for the browser.')
 
 b.task('default', ['publish'])
-.describe('default: node make publish')
+.describe('default: publish')
 
 // a task that spawns electron after build is ready
 b.task('run-app', ['app'], () => {
   fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: APPDIST, await: false })
 })
-.describe('runs the application in electron')
+.describe('runs the application in electron.')
 
 // low-level make targets
 
@@ -126,7 +126,7 @@ b.task('build:nodejs', () => {
   _buildLib(DIST, 'nodejs')
 })
 
-b.task('build:all', () => {
+b.task('build:lib', () => {
   _buildLib(DIST, 'all')
 })
 
@@ -229,7 +229,6 @@ b.task('build:test-browser', () => {
     }
   })
 })
-.describe('builds the test-suite for the browser (open test/index.html)')
 
 b.task('build:test-nodejs', () => {
   b.js('test/**/*.test.js', {

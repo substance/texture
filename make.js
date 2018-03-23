@@ -72,6 +72,9 @@ b.task('build:lib', ['compile:schema'], () => {
   _buildLib(DIST, 'all')
 })
 
+b.task('build:all', ['compile:schema'], () => {
+  _buildLib(DIST, 'all')
+})
 
 b.task('test:assets', () => {
   vfs(b, {

@@ -1,16 +1,14 @@
 const electron = require('electron')
-
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
-const { app, ipcMain, Menu } = electron // eslint-disable-line no-unused-vars
-const { dialog } = require('electron')
 
+const {
+  app, ipcMain, dialog, shell,
+  BrowserWindow, Menu
+} = electron
 const DAR_FOLDER = process.env.DAR_FOLDER
 const DEBUG = process.env.DEBUG
 const BLANK_DOCUMENT_FOLDER = path.join(__dirname, 'data/blank')
-
 
 // Keep a global reference of all the open windows
 let windows = []
@@ -34,7 +32,7 @@ function createEditorWindow(darFolder, isNew) {
   }
   // and load the index.html of the app.
   let mainUrl = url.format({
-    pathname: path.join(__dirname, 'app.html'),
+    pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     query,
     slashes: true
@@ -189,7 +187,10 @@ function createMenu() {
       submenu: [
         {
           label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://electronjs.org') }
+          click () {
+            // TODO: why not use the globally required electron?
+            shell.openExternal('https://electronjs.org')
+          }
         }
       ]
     }

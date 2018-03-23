@@ -11,38 +11,20 @@
     "dar-server": "^0.4.1"
   },
   "devDependencies": {
-    "npm-run-all": "^3.1.0",
     "electron": "2.0.0-beta.2",
     "electron-builder": "20.4.0",
-    "source-map-support": "0.5.3",
     "eslint": "^3.17.1",
     "font-awesome": "4.5.0",
-    "substance-bundler": "^0.20.10",
+    "npm-run-all": "^3.1.0",
+    "source-map-support": "0.5.3",
+    "substance-bundler": "0.21.2",
     "substance-test": "^0.9.4"
   },
-  "build": {
-    "appId": "com.texture.texture-desktop",
-    "files": [
-      "dist/**/*",
-      "node_modules/**/*",
-      "package.json"
-    ],
-    "asar": "false",
-    "directories": {
-      "output": "app-dist",
-      "app": "."
-    },
-    "publish": null
-  },
   "scripts": {
-    "prepublish": "node make publish",
-    "postinstall": "node make",
-    "build": "node make",
-    "watch": "node make dev -w",
-    "start": "node make dev -s -w -d data",
-    "release": "node make && build",
-    "electron": "electron ./dist",
-    "app": "node make browser && electron ./dist",
+    "prepare": "node make publish",
+    "start": "node make web -s -w -d data",
+    "app": "node make run-app",
+    "release": "node make app && build --project app-dist",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

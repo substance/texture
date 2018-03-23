@@ -1,0 +1,30 @@
+{
+  "name": "substance-texture-app",
+  "version": "${version}",
+  "description": "A scientific word processor.",
+  "main": "main.js",
+  "dependencies": {
+    "lodash": "^4.14.1",
+    "substance": "1.0.0-preview.32"
+  },
+  "build": {
+    "appId": "com.texture.texture-desktop",
+    "files": [
+      "lib/**/*",
+      "node_modules/**/*",
+      "*.js",
+      "package.json"
+    ],
+    "asar": "false",
+    "directories": {
+      "output": "dist",
+      "app": "."
+    },
+    "publish": null
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/substance/texture.git"
+  },
+  "license": "MIT"
+}

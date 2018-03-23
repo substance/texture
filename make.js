@@ -136,13 +136,13 @@ b.task('examples', () => {
 })
 
 // default build: creates a dist folder with a production bundle
-b.task('default', ['clean', 'assets', 'build:browser', 'examples'])
+b.task('default', ['clean', 'assets', 'build:all', 'examples'])
 
-b.task('dev', ['default'])
+b.task('browser', ['clean', 'assets', 'build:browser', 'examples'])
 
-b.task('publish', ['clean', 'assets', 'compile:schema'], () => {
-  _buildLib(DIST, 'all')
-})
+b.task('dev', ['browser'])
+
+b.task('publish', ['default'])
 
 b.task('test', ['test:node'])
 

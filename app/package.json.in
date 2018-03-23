@@ -18,7 +18,8 @@
     ],
     "asar": "false",
     "directories": {
-      "output": "build"
+      "output": "build",
+      "buildResources": "build-resources"
     },
     "publish": null
   },

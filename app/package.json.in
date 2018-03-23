@@ -1,24 +1,24 @@
 {
-  "name": "substance-texture-app",
+  "name": "Texture",
   "version": "${version}",
   "description": "A scientific word processor.",
   "main": "main.js",
   "dependencies": {
-    "lodash": "^4.14.1",
-    "substance": "1.0.0-preview.32"
+    "dar-server": "^0.4.1"
   },
   "build": {
     "appId": "com.texture.texture-desktop",
     "files": [
-      "lib/**/*",
-      "node_modules/**/*",
+      "data",
+      "lib",
+      "node_modules",
+      "*.html",
       "*.js",
       "package.json"
     ],
     "asar": "false",
     "directories": {
-      "output": "dist",
-      "app": "."
+      "output": "build"
     },
     "publish": null
   },

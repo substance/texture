@@ -2,7 +2,6 @@ const b = require('substance-bundler')
 const fs = require('fs')
 const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
-// used to bundle example files for demo
 const vfs = require('substance-bundler/extensions/vfs')
 
 const DIST = 'dist/'
@@ -19,12 +18,10 @@ const RNG_FILES = [
   'src/article/TextureArticle.rng'
 ]
 
-/* Server */
+// Server configuration
 
-// TODO: make this configurable
-const port = 4000
+const port = 4000 // TODO: make this configurable
 b.setServerPort(port)
-
 b.yargs.option('d', {
   type: 'string',
   alias: 'rootDir',
@@ -78,8 +75,9 @@ b.task('test-browser', ['clean', 'build:schema', 'build:browser', 'build:test-as
 b.task('default', ['publish'])
 .describe('default: publish')
 
-// a task that spawns electron after build is ready
+// spawns electron after build is ready
 b.task('run-app', ['app'], () => {
+  // Note: `await=false` is important, as otherwise bundler would await this to finish
   fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: APPDIST, await: false })
 })
 .describe('runs the application in electron.')

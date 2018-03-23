@@ -163,7 +163,7 @@ b.task('build:app', () => {
         'substance-texture': 'window.texture'
       }
     },
-    external: ['substance', 'substance-texture']
+    external: [ 'substance', 'substance-texture' ]
   })
   // execute 'install-app-deps'
   fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })

@@ -1,19 +1,19 @@
-const {
-  getQueryStringParam, Component,
-  InMemoryDarBuffer, substanceGlobals,
-  platform, DefaultDOMElement
-} = window.substance
 
-const { JATSImportDialog, TextureArchive, Texture } = window.texture
+import {
+  getQueryStringParam, platform, substanceGlobals,
+  Component, InMemoryDarBuffer, DefaultDOMElement
+} from 'substance'
+import { JATSImportDialog, TextureArchive, Texture } from 'substance-texture'
 
-const ipc = require('electron').ipcRenderer
-const darServer = require('dar-server')
-const { FSStorageClient } = darServer
+// Note: this file is going to bundled for the browser
+// these modules are required from nodejs, and are not considered for bundling
+const { ipcRenderer, remote} = require('electron')
 const url = require('url')
 const path = require('path')
-const remote = require('electron').remote
-const { shell } = remote
+const { FSStorageClient } = require('dar-server')
 
+const shell = remote.shell
+const ipc = ipcRenderer
 
 // HACK: we should find a better solution to intercept window.open calls
 // (e.g. as done by LinkComponent)
@@ -25,7 +25,6 @@ window.addEventListener('load', () => {
   substanceGlobals.DEBUG_RENDERING = platform.devtools
   App.mount({}, window.document.body)
 })
-
 
 class App extends Component {
 

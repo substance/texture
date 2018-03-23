@@ -36,6 +36,7 @@
   },
   "scripts": {
     "prepublish": "node make publish",
+    "postinstall": "node make",
     "build": "node make",
     "watch": "node make dev -w",
     "start": "node make dev -s -w -d data",

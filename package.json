@@ -37,11 +37,11 @@
   "scripts": {
     "prepublish": "node make publish",
     "build": "node make",
-    "watch": "node make -w",
-    "start": "node make -s -w -d data",
+    "watch": "node make dev -w",
+    "start": "node make dev -s -w -d data",
     "release": "node make && build",
     "electron": "electron ./dist",
-    "app": "node make && electron ./dist",
+    "app": "node make browser && electron ./dist",
     "test": "npm run lint && node make test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

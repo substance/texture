@@ -25,7 +25,7 @@
     "start": "node make web -s -w -d data",
     "app": "node make run-app",
     "release": "node make app && build --project app-dist",
-    "test": "npm run lint && node make test",
+    "test": "npm run lint && node make test-nodejs",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },
   "repository": {

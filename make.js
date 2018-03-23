@@ -131,7 +131,6 @@ b.task('build:all', () => {
 })
 
 b.task('build:app', () => {
-  b.rm(APPDIST)
   b.copy('dist', APPDIST+'lib')
   b.copy('app/index.html', APPDIST)
   b.copy('data', APPDIST)

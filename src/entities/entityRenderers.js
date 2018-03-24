@@ -34,17 +34,21 @@ function journalArticleRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.year) {
-    fragments.push(' ', entity.year, ';')
+  let date = _renderDate($$, entity.year, entity.month, entity.day, "short")
+  if (date) {
+    fragments.push(' ', date, ';')
   }
+
   if (entity.volume) {
     fragments.push(entity.volume)
   }
   if (entity.issue) {
     fragments.push('(', entity.issue, ')')
   }
-  if (entity.fpage) {
-    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(':', contentLocation, '.')
   } else {
     fragments.push('.')
   }
@@ -54,6 +58,10 @@ function journalArticleRenderer($$, entityId, entityDb) {
       ' ',
       _renderDOI($$, entity.doi)
     )
+  }
+
+  if (entity.pmid) {
+    fragments.push(' PMID ', entity.pmid)
   }
   return fragments
 }
@@ -143,9 +151,13 @@ function bookRenderer($$, entityId, entityDb) {
 
   if (entity.year) {
     fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
   }
-  if (entity.fpage) {
-    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(':', contentLocation, '.')
   } else {
     fragments.push('.')
   }
@@ -180,7 +192,11 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
   }
 
   if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+    fragments.push('.')
   }
 
   if (entity.doi) {
@@ -219,7 +235,11 @@ function preprintRenderer($$, entityId, entityDb) {
   }
 
   if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+    fragments.push('.')
   }
 
   if (entity.doi) {
@@ -253,8 +273,9 @@ function patentRenderer($$, entityId, entityDb) {
   if (entity.assignee) {
     fragments.push(' ', entity.assignee, ',')
   }
-  if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+  let date = _renderDate($$, entity.year, entity.month, entity.day, "short")
+  if (date) {
+    fragments.push(' ', date, ';')
   }
   if (entity.patentNumber) {
     fragments.push(' ', entity.patentNumber)
@@ -291,7 +312,11 @@ function dataPublicationRenderer($$, entityId, entityDb) {
     )
   }
   if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+    fragments.push('.')
   }
   if (entity.doi) {
     fragments.push(
@@ -330,9 +355,14 @@ function periodicalRenderer($$, entityId, entityDb) {
 
   if (entity.year) {
     fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
   }
-  if (entity.fpage) {
-    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(':', contentLocation, '.')
   } else {
     fragments.push('.')
   }
@@ -369,7 +399,11 @@ function reportRenderer($$, entityId, entityDb) {
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
   if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+    fragments.push('.')
   }
 
   return fragments
@@ -402,9 +436,14 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
 
   if (entity.year) {
     fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
   }
-  if (entity.fpage) {
-    fragments.push(':', _renderPageRange($$, entity.fpage, entity.lpage), '.')
+
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(':', contentLocation, '.')
   } else {
     fragments.push('.')
   }
@@ -442,8 +481,9 @@ function softwareRenderer($$, entityId, entityDb) {
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
-  if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+  let date = _renderDate($$, entity.year, entity.month, entity.day, "short")
+  if (date) {
+    fragments.push(' ', date, ';')
   }
 
   if (entity.doi) {
@@ -477,7 +517,11 @@ function thesisRenderer($$, entityId, entityDb) {
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
   if (entity.year) {
-    fragments.push(' ', entity.year, '.')
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+    fragments.push('.')
   }
 
   return fragments
@@ -509,10 +553,9 @@ function webpageRenderer($$, entityId, entityDb) {
     fragments.push(' ', entity.uri)
   }
 
-  if (entity.year && entity.month && entity.day) {
-    let monthNames = [null, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    let monthFormatted = monthNames[entity.month] || entity.month
-    fragments.push('. Accessed ', monthFormatted, ' ', entity.year, ', ', entity.day, '.')
+  if (entity.year) {
+    let dateFormatted = _renderDate($$, entity.year, entity.month, entity.day, "long")
+    fragments.push('. Accessed ', dateFormatted, '.')
   }
 
   return fragments
@@ -592,6 +635,33 @@ function _renderAuthors($$, entityIds, entityDb) {
   return fragments
 }
 
+function _renderDate($$, year, month, day, format) {
+  if (year) {
+    if (month) {
+      if (day) {
+        return year + ' ' + _renderMonth(month, format) + ' ' + day
+      } else {
+        return year + ' ' + _renderMonth(month, format)
+      }
+    } else {
+      return year
+    }
+  }
+
+}
+
+function _renderMonth(month, format) {
+  let monthNames
+  if (format==="long") {
+    monthNames = [null, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  } else {
+    monthNames = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  }
+  if (month) {
+    return monthNames[month] || month
+  }
+}
+
 function _renderDOI($$, doi) {
   return $$('a').attr({
     href: `https://doi.org/${doi}`,
@@ -602,13 +672,33 @@ function _renderDOI($$, doi) {
   )
 }
 
-function _renderPageRange($$, first, last) {
-  if (first) {
-    if (last) {
-      return first + '-' + last
+function _renderLocation($$, fpage, lpage, pageRange, elocationId) {
+  if (pageRange) {
+    // Give up to three page ranges, then use passim for more, see
+    // https://www.ncbi.nlm.nih.gov/books/NBK7282/box/A33679/?report=objectonly
+    let parts = pageRange.split(',')
+    if (parts.length>3) {
+      return parts.slice(0, 3).join(',') + " passim"
     } else {
-      return first
+      return pageRange
     }
+  } else if (fpage) {
+    if (lpage) {
+      // Do not repeat page numbers unless they are followed by a letter
+      // e.g. 211-218 => 211-8 but 211A-218A stays
+      if (fpage.length===lpage.length && /^\d+$/.test(fpage) && /^\d+$/.test(lpage)) {
+        let i
+        for (i=0; i<fpage.length; i++) {
+          if (fpage[i]!==lpage[i]) break
+        }
+        return fpage + '-' + lpage.substring(i)
+      }
+      return fpage + '-' + lpage
+    } else {
+      return fpage
+    }
+  } else if (elocationId) {
+    return elocationId
   }
 }
 

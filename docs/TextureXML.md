@@ -81,16 +81,28 @@ Example:
 ### `cell`
 
 ```
+@paused (yes|no)
 source-code, output
 ```
 
 Example:
 
 ```xml
-<cell>
+<cell paused="yes">
   <source-code language="mini"><![CDATA[6 * 7]]></source-code>
   <output language="json"><![CDATA[{}]]></output>
 </cell>
+```
+
+## Inline Cell
+
+*Can be used within text. Must not produce variables.*
+
+```xml
+<inline-cell>
+  <source-code language="mini"><![CDATA[6 * 7]]></source-code>
+  <output language="json"><![CDATA[{}]]></output>
+</inline-cell>
 ```
 
 
@@ -109,7 +121,9 @@ Example:
   <caption>
     <p>Some caption</p>
   </caption>
-  <source-code language="mini"><![CDATA[5 * 5]]></source-code>
-  <output language="json"><![CDATA[{ "value": 25 }]]></output>
+  <cell>
+    <source-code language="mini"><![CDATA[6 * 7]]></source-code>
+    <output language="json"><![CDATA[{}]]></output>
+  </cell>
 </repro-fig>
 ```

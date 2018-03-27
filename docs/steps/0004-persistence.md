@@ -21,7 +21,7 @@ Example:
   resources: {
     "manifest.xml": {
       encoding: "utf8",
-      data: "<archive>...</archive>",
+      data: "<dar>...</dar>",
       size: 1723,
       createdAt: 202399323,
       updatedAt: 223213123,

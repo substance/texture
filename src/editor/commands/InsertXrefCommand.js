@@ -19,6 +19,7 @@ export default class InsertXrefCommand extends InsertInlineNodeCommand {
     const sel = params.selection
     const selectionState = params.editorSession.getSelectionState()
     const editor = params.editorSession.getEditor()
+    if (!editor) return true
     const context = editor.getChildContext()
     const refType = this.config.refType
     const hasTargets = hasAvailableXrefTargets(refType, context)

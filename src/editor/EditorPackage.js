@@ -261,6 +261,10 @@ export default {
     config.addLabel('toggle-references', '${showOrHide} References')
     config.addLabel('toggle-footnotes', '${showOrHide} Footnotes')
 
+    config.addLabel('insert-column', 'Insert column')
+    config.addLabel('insert-row', 'Insert row')
+    config.addLabel('remove-column', 'Remove column')
+    config.addLabel('remove-row', 'Remove row')
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
@@ -444,9 +448,9 @@ export default {
       {
         name: 'context-menu',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['formatting-primary', 'table-modifiers']
+        commandGroups: ['table-modifiers']
       }
     ])
 

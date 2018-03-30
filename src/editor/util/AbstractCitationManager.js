@@ -40,6 +40,9 @@ export default class AbstractCitationManager {
           if (op.val.type === 'ref' && op.val.attributes) {
             needsUpdate = true
           }
+          if (op.val.type === 'fn') {
+            needsUpdate = true
+          }
           break
         }
         case 'set': {

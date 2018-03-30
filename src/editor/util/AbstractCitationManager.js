@@ -37,6 +37,9 @@ export default class AbstractCitationManager {
           if (op.val.type === 'xref' && op.val.attributes && op.val.attributes['ref-type'] === this.type) {
             needsUpdate = true
           }
+          if (op.val.type === 'ref' && op.val.attributes) {
+            needsUpdate = true
+          }
           break
         }
         case 'set': {

@@ -132,14 +132,12 @@ export default class RefListComponent extends NodeComponent {
 
   _onAddNew(entityId) {
     const editorSession = this.context.editorSession
-    const referenceManager = this.context.referenceManager
     editorSession.transaction(tx => {
       let refList = tx.find('ref-list')
       let entityRefNode = tx.createElement('ref')
       entityRefNode.setAttribute('rid', entityId)
       refList.appendChild(entityRefNode)
     })
-    referenceManager._updateLabels()
     this.setState({
       popup: false
     })
@@ -147,12 +145,10 @@ export default class RefListComponent extends NodeComponent {
 
   _onRemove(entityId) {
     let editorSession = this.context.editorSession
-    const referenceManager = this.context.referenceManager
     const doc = editorSession.getDocument()
     const parent = doc.find('ref-list')
     let refId = this._getRefIdForEntityId(entityId)
     removeElementAndXrefs(editorSession, refId, parent)
-    referenceManager._updateLabels()
   }
 
   _onCreate(targetType) {

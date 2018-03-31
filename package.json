@@ -6,7 +6,8 @@
   "jsnext:main": "index.es.js",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-preview.32"
+    "substance": "1.0.0-preview.33",
+    "dar-server": "^0.4.1"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",

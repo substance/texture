@@ -65,6 +65,11 @@ import DropFigure from './commands/DropFigure'
 import InsertTableCommand from './commands/InsertTableCommand'
 import InsertTableTool from './components/InsertTableTool'
 
+import InsertColumnCommand from './commands/InsertColumnCommand'
+import InsertRowCommand from './commands/InsertRowCommand'
+import RemoveColumnCommand from './commands/RemoveColumnCommand'
+import RemoveRowCommand from './commands/RemoveRowCommand'
+
 substanceGlobals.DEBUG_RENDERING = true
 
 export default {
@@ -224,6 +229,19 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
+    config.addCommand('insert-column', InsertColumnCommand, {
+      commandGroup: 'table-modifiers'
+    })
+    config.addCommand('insert-row', InsertRowCommand, {
+      commandGroup: 'table-modifiers'
+    })
+    config.addCommand('remove-column', RemoveColumnCommand, {
+      commandGroup: 'table-modifiers'
+    })
+    config.addCommand('remove-row', RemoveRowCommand, {
+      commandGroup: 'table-modifiers'
+    })
+
     config.addLabel('cite', 'Cite')
     config.addLabel('insert-xref-bibr', 'Reference')
     config.addLabel('insert-xref-fig', 'Figure')
@@ -243,6 +261,10 @@ export default {
     config.addLabel('toggle-references', '${showOrHide} References')
     config.addLabel('toggle-footnotes', '${showOrHide} Footnotes')
 
+    config.addLabel('insert-column', 'Insert column')
+    config.addLabel('insert-row', 'Insert row')
+    config.addLabel('remove-column', 'Remove column')
+    config.addLabel('remove-row', 'Remove row')
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
@@ -262,7 +284,7 @@ export default {
     config.addAnnotationTool({
       name: 'bold',
       nodeType: 'bold',
-      commandGroup: 'formatting',
+      commandGroup: 'formatting-primary',
       icon: 'fa-bold',
       label: 'Strong',
       accelerator: 'CommandOrControl+B'
@@ -271,7 +293,7 @@ export default {
     config.addAnnotationTool({
       name: 'italic',
       nodeType: 'italic',
-      commandGroup: 'formatting',
+      commandGroup: 'formatting-primary',
       icon: 'fa-italic',
       label: 'Emphasize',
       accelerator: 'CommandOrControl+I'
@@ -388,7 +410,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['formatting']
+        commandGroups: ['formatting-primary', 'formatting']
       },
       {
         name: 'additinal-tools',
@@ -419,6 +441,16 @@ export default {
         type: 'tool-prompt',
         showDisabled: false,
         commandGroups: ['prompt']
+      }
+    ])
+
+    config.addToolPanel('context-menu', [
+      {
+        name: 'context-menu',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table-modifiers']
       }
     ])
 

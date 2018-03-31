@@ -582,6 +582,27 @@ function personRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
+
+function refPersonRenderer($$, entry, options = {}) {
+  let { prefix, suffix, givenNames, surname } = entry
+  if (options.short) {
+    givenNames = _getInitials(givenNames)
+  }
+  let result = []
+  if (prefix) {
+    result.push(prefix, ' ')
+  }
+  result.push(
+    surname,
+    ' ',
+    givenNames
+  )
+  if (suffix) {
+    result.push(' (', suffix, ')')
+  }
+  return result
+}
+
 function organisationRenderer($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)
   let result = [ name ]
@@ -593,10 +614,10 @@ function organisationRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-const INTERNAL_RENDERER_MAP = {
-  'organisation': organisationRenderer,
-  'person': personRenderer
-}
+// const INTERNAL_RENDERER_MAP = {
+//   'organisation': organisationRenderer,
+//   'person': personRenderer
+// }
 
 /*
   Exports
@@ -622,13 +643,14 @@ export default {
 /*
   Helpers
 */
-function _renderAuthors($$, entityIds, entityDb) {
+
+function _renderAuthors($$, authors) {
   let fragments = []
-  entityIds.forEach((entityId, i) => {
+  authors.forEach((author, i) => {
     fragments = fragments.concat(
-      _delegateEntityRenderer($$, entityId, entityDb, {short: true})
+      refPersonRenderer($$, author, { short: true })
     )
-    if (i < entityIds.length - 1) {
+    if (i < authors.length - 1) {
       fragments.push(', ')
     }
   })
@@ -720,10 +742,10 @@ function _getInitials(givenNames) {
   }).join('')
 }
 
-function _delegateEntityRenderer($$, entityId, entityDb, options) {
-  let entity = entityDb.get(entityId)
-  return INTERNAL_RENDERER_MAP[entity.type]($$, entityId, entityDb, options)
-}
+// function _delegateEntityRenderer($$, entityId, entityDb, options) {
+//   let entity = entityDb.get(entityId)
+//   return INTERNAL_RENDERER_MAP[entity.type]($$, entityId, entityDb, options)
+// }
 
 function _renderHTML($$, htmlString) {
   return $$('span').html(htmlString)

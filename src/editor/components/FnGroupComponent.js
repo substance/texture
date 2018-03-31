@@ -70,7 +70,6 @@ export default class FnGroupComponent extends NodeComponent {
   */
   _addFn() {
     const editorSession = this.context.editorSession
-    const footnoteManager = this.context.footnoteManager
     editorSession.transaction((tx) => {
       let fnGroup = tx.find('fn-group')
       let fn = tx.createElement('fn')
@@ -79,17 +78,14 @@ export default class FnGroupComponent extends NodeComponent {
       fnGroup.append(fn)
       tx.setSelection(null)
     })
-    footnoteManager._updateLabels()
     this.rerender()
   }
 
   _removeFn(fnId) {
     let editorSession = this.context.editorSession
-    const footnoteManager = this.context.footnoteManager
     const doc = editorSession.getDocument()
     const parent = doc.find('fn-group')
     removeElementAndXrefs(editorSession, fnId, parent)
-    footnoteManager._updateLabels()
     this.rerender()
   }
 }

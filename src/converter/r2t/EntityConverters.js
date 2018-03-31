@@ -130,28 +130,22 @@ export const PersonConverter = {
 */
 export const RefPersonConverter = {
 
-  import(el, pubMetaDb) {
-    // Use existing record when possible
-    let entity = _findPerson(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'person',
-        givenNames: _getText(el, 'given-names'),
-        surname: _getText(el, 'surname'),
-        prefix: _getText(el, 'prefix'),
-        suffix: _getText(el, 'suffix'),
-      }
-      entity = pubMetaDb.create(node)
+  import(el) {
+    let entry = {
+      givenNames: _getText(el, 'given-names'),
+      surname: _getText(el, 'surname'),
+      prefix: _getText(el, 'prefix'),
+      suffix: _getText(el, 'suffix'),
     }
-    return entity.id
+    return entry
   },
 
-  export($$, node) {
+  export($$, record) {
     let el = $$('name')
-    el.append(_createTextElement($$, node.surname, 'surname'))
-    el.append(_createTextElement($$, node.givenNames, 'given-names'))
-    el.append(_createTextElement($$, node.prefix, 'prefix'))
-    el.append(_createTextElement($$, node.suffix, 'suffix'))
+    el.append(_createTextElement($$, record.surname, 'surname'))
+    el.append(_createTextElement($$, record.givenNames, 'given-names'))
+    el.append(_createTextElement($$, record.prefix, 'prefix'))
+    el.append(_createTextElement($$, record.suffix, 'suffix'))
     return el
   }
 }
@@ -190,13 +184,14 @@ export const JournalArticleConverter = {
       })
       entity = pubMetaDb.create(node)
     }
+
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'journal')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
-    el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
+    el.append(_exportPersonGroup($$, node.editors, 'editor'))
     // Regular properties
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
@@ -257,10 +252,10 @@ export const BookConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'book')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
-    el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
+    el.append(_exportPersonGroup($$, node.editors, 'editor'))
     // Regular properties
     el.append(_createHTMLElement($$, node.chapterTitle, 'chapter-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -310,9 +305,9 @@ export const ClinicalTrialConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'clinicaltrial')
-    el.append(_exportPersonGroup($$, node.sponsors, 'sponsor', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.sponsors, 'sponsor'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -357,9 +352,9 @@ export const ConferenceProceedingConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'confproc')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -407,9 +402,9 @@ export const DataPublicationConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'data')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.dataTitle, 'data-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -456,9 +451,9 @@ export const PatentConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'patent')
-    el.append(_exportPersonGroup($$, node.inventors, 'inventor', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.inventors, 'inventor'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.assignee, 'collab', {'collab-type': 'assignee'}))
@@ -503,9 +498,9 @@ export const Periodical = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'periodical')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -549,9 +544,9 @@ export const PreprintConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'preprint')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.source, 'source'))
@@ -592,9 +587,9 @@ export const ReportConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'report')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createTextElement($$, node.source, 'source'))
     el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
@@ -637,9 +632,9 @@ export const SoftwareConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'software')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createTextElement($$, node.title, 'source'))
     el.append(_createTextElement($$, node.version, 'version'))
@@ -682,9 +677,9 @@ export const ThesisConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'thesis')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
@@ -726,9 +721,9 @@ export const WebpageConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export($$, node) {
     let el = $$('element-citation').attr('publication-type', 'webpage')
-    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.articleTitle, 'article-title'))
     el.append(_createTextElement($$, node.title, 'source'))
@@ -743,13 +738,12 @@ export const WebpageConverter = {
   }
 }
 
-function _exportPersonGroup($$, persons, personGroupType, pubMetaDb) {
+function _exportPersonGroup($$, persons, personGroupType) {
   if (persons.length > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
-    persons.forEach(entityId => {
-      let person = pubMetaDb.get(entityId)
+    persons.forEach(entry => {
       el.append(
-        RefPersonConverter.export($$, person)
+        RefPersonConverter.export($$, entry)
       )
     })
     return el

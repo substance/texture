@@ -12,9 +12,9 @@ export class Book extends BibliographicEntry {}
 
 Book.schema = {
   type: 'book',
-  authors: { type: ['person'], default: [] },
-  editors: { type: ['person'], default: [] },
   chapterTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
+  editors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
@@ -36,8 +36,8 @@ export class DataPublication extends BibliographicEntry {}
 
 DataPublication.schema = {
   type: 'data-publication',
-  authors: { type: ['person'], default: [] },
   dataTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -52,8 +52,8 @@ export class Periodical extends BibliographicEntry {}
 
 Periodical.schema = {
   type: 'periodical',
-  authors: { type: ['person'], default: [] },
   articleTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -69,7 +69,7 @@ export class Patent extends BibliographicEntry {}
 
 Patent.schema = {
   type: 'patent',
-  inventors: { type: ['person'], default: [] },
+  inventors: { type: ['object'], default: [] },
   assignee: { type: 'string', optional: true },
   articleTitle: { type: 'string', optional: true },
   source: { type: 'string', optional: true },
@@ -85,9 +85,9 @@ export class JournalArticle extends BibliographicEntry {}
 
 JournalArticle.schema = {
   type: 'journal-article',
-  authors: { type: ['person'], default: [] },
-  editors: { type: ['person'], default: [] },
   articleTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
+  editors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   volume: { type: 'string', optional: true },
   issue: { type: 'string', optional: true },
@@ -106,8 +106,8 @@ export class ConferenceProceeding extends BibliographicEntry {}
 
 ConferenceProceeding.schema = {
   type: 'conference-proceeding',
-  authors: { type: ['person'], default: [] },
   articleTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   confName: { type: 'string', optional: true },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
@@ -124,8 +124,8 @@ export class ClinicalTrial extends BibliographicEntry {}
 
 ClinicalTrial.schema = {
   type: 'clinical-trial',
-  sponsors: { type: ['person'], default: [] },
   articleTitle: { type: 'string', optional: true },
+  sponsors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -137,8 +137,8 @@ export class Preprint extends BibliographicEntry {}
 
 Preprint.schema = {
   type: 'preprint',
-  authors: { type: ['person'], default: [] },
   articleTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -154,7 +154,7 @@ export class Report extends BibliographicEntry {
 
 Report.schema = {
   type: 'report',
-  authors: { type: ['person'], default: [] },
+  authors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -168,8 +168,8 @@ export class Software extends BibliographicEntry {}
 
 Software.schema = {
   type: 'software',
-  authors: { type: ['person'], default: [] },
   title: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   version: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -183,8 +183,8 @@ export class Thesis extends BibliographicEntry {}
 
 Thesis.schema = {
   type: 'thesis',
-  authors: { type: ['person'], default: [] },
   articleTitle: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -197,8 +197,8 @@ export class Webpage extends BibliographicEntry {}
 
 Webpage.schema = {
   type: 'webpage',
-  authors: { type: ['person'], default: [] },
   title: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },

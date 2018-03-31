@@ -4,6 +4,8 @@ import FormLabel from './FormLabel'
 import RelationshipInput from './RelationshipInput'
 import StringInput from './StringInput'
 import RichTextInput from '../rich-text-input/RichTextInput'
+import PersonGroupInput from './PersonGroupInput'
+
 export default class EntityForm extends Component {
 
   render($$) {
@@ -32,7 +34,7 @@ export default class EntityForm extends Component {
           }),
           inputEl
         )
-      } else if (isArray(property.type) && property.type[0] === 'array') {
+      } else if (isArray(property.type) && property.type[0] === 'array' && property.definition.targetTypes[0] !== 'object') {
         el.append(
           $$(FormLabel, {
             name: propertyName
@@ -43,7 +45,19 @@ export default class EntityForm extends Component {
             targetTypes: property.definition.targetTypes,
           }).ref(property.name)
         )
-      } else {
+      } else if (isArray(property.type) && property.definition.targetTypes[0] === 'object') {
+        // HACK: we render a special Author Editor if the targetType is object
+        el.append(
+          $$(FormLabel, {
+            name: propertyName
+          }),
+          $$(PersonGroupInput, {
+            entries: this.props.node[propertyName]
+          }).ref(property.name)
+        )
+      }
+
+      else {
         console.warn('type ', property.type, 'not yet supported')
       }
     })
@@ -63,7 +77,6 @@ export default class EntityForm extends Component {
         result[propertyName] = input.getValue()
       }
     })
-
     return result
   }
 

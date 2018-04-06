@@ -1,0 +1,144 @@
+.se-add-reference {
+
+}
+
+.se-add-reference > .se-title {
+  font-size: 20px;
+  padding: 20px;
+}
+
+.se-add-reference > * > .se-section-title {
+  font-size: 18px;
+  color: #8d8d8d;
+  padding: 10px 20px;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group {
+  position: relative;
+  padding: 0px 20px;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group > .se-input {
+  background: #f1f1f1;
+  padding: 7px 80px 7px 10px;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group > .se-action {
+  position: absolute;
+  top: 4px;
+  right: 24px;
+  height: 30px;
+  padding: 0px 10px;
+  color: #fff;
+  font-weight: 400;
+  background: #5a5a5a;
+  border-radius: 4px;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group > .se-input-sign {
+  position: absolute;
+  top: 6px;
+  right: 30px;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group > .se-input-sign.sm-error {
+  color: #d95859;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group > .se-error-popup {
+  position: absolute;
+  top: 32px;
+  right: 25px;
+  width: 300px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.8);
+  font-size: 12px;
+  text-align: center;
+  color: #d95859;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group > .se-error-popup > ul {
+  list-style: none;
+  margin: 0 0 0 10px;
+  padding: 0;
+  text-align: left;
+  line-height: 20px;
+}
+
+.se-add-reference > .se-doi-input > .se-input-group> input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #acacac;
+  font-size: 13px;
+  font-weight: 400;
+}
+.se-add-reference > .se-doi-input > .se-input-group > input::-moz-placeholder { /* Firefox 19+ */
+  color: #acacac;
+  font-size: 13px;
+  font-weight: 400;
+}
+.se-add-reference > .se-doi-input > .se-input-group > input:-ms-input-placeholder { /* IE 10+ */
+  color: #acacac;
+  font-size: 13px;
+  font-weight: 400;
+}
+.se-add-reference > .se-doi-input > .se-input-group > input:-moz-placeholder { /* Firefox 18- */
+  color: #ababab;
+  font-size: 13px;
+}
+
+.se-add-reference > .se-import {
+  position: relative;
+  margin: 20px 0px 10px;
+}
+
+.se-add-reference > .se-import > .se-description {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #ababab;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.se-add-reference > .se-import > .se-drop-import {
+  margin: 0px 20px;
+  border: 1px dotted #8d8d8d;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  color: #8d8d8d;
+}
+
+.se-add-reference > .se-import > .se-drop-import > .se-select-trigger {
+  color: var(--link-color);
+  cursor: pointer;
+}
+
+.se-add-reference > .se-manual-add {
+  padding: 20px 0px;
+}
+
+.se-add-reference > .se-manual-add > .se-reftypes-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0px 15px;
+}
+
+.se-add-reference > .se-manual-add > .se-reftypes-list > .se-type {
+  flex-grow: 1;
+  width: 30%;
+  height: 50px;
+  margin: 5px;
+  padding: 10px 0px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.se-add-reference > .se-manual-add > .se-reftypes-list > .se-type:hover {
+  background: #f7f7f7;
+}

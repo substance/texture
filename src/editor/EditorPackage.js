@@ -266,6 +266,14 @@ export default {
     config.addLabel('remove-column', 'Remove column')
     config.addLabel('remove-row', 'Remove row')
 
+    config.addLabel('add-reference-title', 'Add Reference(s)')
+    config.addLabel('add-ref-manually', 'Or create manually')
+    config.addLabel('fetch-datacite', 'Fetch from DataCite')
+    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
+    config.addLabel('doi-fetch-action', 'Add')
+    config.addLabel('import-refs', 'Import')
+    config.addLabel('supported-ref-formats', 'Supported formats')
+
     // Tools
     config.addTool('edit-xref', EditXrefTool)
 

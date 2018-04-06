@@ -3,7 +3,8 @@ import DesktopAppChrome from './DesktopAppChrome'
 import TextureArchive from './TextureArchive'
 
 import {
-  _renderTextureApp
+  _renderTextureApp,
+  _handleKeyDown
 } from './textureAppHelpers'
 
 export default class TextureDesktopApp extends DesktopAppChrome {
@@ -22,6 +23,10 @@ export default class TextureDesktopApp extends DesktopAppChrome {
     // NOTE: _archiveChanged is implemented by DesktopAppChrome
     archive.on('archive:changed', this._archiveChanged, this)
     return archive.load(archiveId)
+  }
+
+  _handleKeyDown(event) {
+    return _handleKeyDown(event, this)
   }
 
 }

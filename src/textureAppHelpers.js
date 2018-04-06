@@ -27,3 +27,12 @@ export function _renderTextureApp($$, app) {
   }
   return el
 }
+
+export function _handleKeyDown(event, app) {
+  // Handle custom keyboard shortcuts globally
+  let archive = app.state.archive
+  if (archive) {
+    let manuscriptSession = archive.getEditorSession('manuscript')
+    return manuscriptSession.keyboardManager.onKeydown(event)
+  }
+}

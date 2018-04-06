@@ -3,6 +3,7 @@ import { prefillEntity } from '../../entities/prefillEntity'
 import CreateEntity from '../../entities/CreateEntity'
 import EditEntity from '../../entities/EditEntity'
 import ModalDialog from '../../shared/ModalDialog'
+import AddReferenceComponent from './AddReferenceComponent'
 import RefComponent from './RefComponent'
 import Button from './Button'
 import removeElementAndXrefs from '../../util/removeElementAndXrefs'
@@ -16,7 +17,9 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
-      'created': this._onAddNew
+      'add': this._onCreate,
+      'created': this._onAddNew,
+      'importBib': this._onImport
     })
   }
 
@@ -24,7 +27,6 @@ export default class RefListComponent extends NodeComponent {
     let bibliography = this._getBibliography()
 
     let state = {
-      popup: false,
       mode: undefined,
       modeProps: undefined
     }
@@ -38,7 +40,6 @@ export default class RefListComponent extends NodeComponent {
   render($$) {
     const bibliography = this._getBibliography()
     const mode = this.state.mode
-    const popup = this.state.popup
 
     let el = $$('div').addClass('sc-ref-list')
       .attr('data-id', 'ref-list')
@@ -50,7 +51,9 @@ export default class RefListComponent extends NodeComponent {
 
     if (mode) {
       let ModeComponent
-      if (mode === 'edit') {
+      if(mode === 'add') {
+        ModeComponent = AddReferenceComponent
+      } else if (mode === 'edit') {
         ModeComponent = EditEntity
       } else {
         ModeComponent = CreateEntity
@@ -94,38 +97,10 @@ export default class RefListComponent extends NodeComponent {
     let options = $$('div').addClass('se-ref-list-options').append(
       $$('button').addClass('sc-button sm-style-big').append(
         this.getLabel('add-ref')
-      ).on('click', this._toggleNewReferencePopup)
+      ).on('click', this._toggleNewReferenceModal)
     )
 
-    // Render new reference popup
-    if(popup) {
-      options.append(
-        this._renderNewReferencePopup($$)
-      )
-    }
-
     el.append(options)
-
-    return el
-  }
-
-  _renderNewReferencePopup($$) {
-    const targetTypes = [
-      'journal-article', 'book', 'conference-proceeding',
-      'clinical-trial', 'preprint', 'report',
-      'periodical', 'data-publication', 'patent',
-      'webpage', 'thesis', 'software'
-    ]
-    const labelProvider = this.context.labelProvider
-
-    let el = $$('ul').addClass('se-new-reference-menu')
-    targetTypes.forEach(item => {
-      el.append(
-        $$('li').addClass('se-type').append(
-          labelProvider.getLabel(item)
-        ).on('click', this._onCreate.bind(this, item))
-      )
-    })
 
     return el
   }
@@ -138,9 +113,8 @@ export default class RefListComponent extends NodeComponent {
       entityRefNode.setAttribute('rid', entityId)
       refList.appendChild(entityRefNode)
     })
-    this.setState({
-      popup: false
-    })
+
+    this.setState({})
   }
 
   _onRemove(entityId) {
@@ -174,10 +148,26 @@ export default class RefListComponent extends NodeComponent {
     })
   }
 
-  _toggleNewReferencePopup() {
-    const popup = this.state.popup
+  _onImport(items) {
+    let db = this.context.pubMetaDbSession.getDocument()
+    const editorSession = this.context.editorSession
+    editorSession.transaction(tx => {
+      items.forEach(item => {
+        let node = db.create(item)
+        let entityId = node.id
+        let refList = tx.find('ref-list')
+        let entityRefNode = tx.createElement('ref')
+        entityRefNode.setAttribute('rid', entityId)
+        refList.appendChild(entityRefNode)
+      })
+    })
+    this.setState({})
+  }
+
+  _toggleNewReferenceModal() {
     this.extendState({
-      popup: !popup
+      mode: 'add',
+      modeProps: {}
     })
   }
 

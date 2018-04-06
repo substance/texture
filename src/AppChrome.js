@@ -55,7 +55,7 @@ export default class AppChrome extends Component {
   }
 
   _setupChildContext() {
-    throw new Error('_setupChildContext not implemented')
+    return this.context
   }
 
   _initContext(context) {
@@ -66,8 +66,8 @@ export default class AppChrome extends Component {
     throw new Error('_loadArchive not implemented')
   }
 
-  _initArchive() {
-    throw new Error('_initArchive not implemented')
+  _initArchive(archive) {
+    return Promise.resolve(archive)
   }
 
   /*

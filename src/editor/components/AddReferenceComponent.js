@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import DOIInputComponent from './DOIInputComponent'
-//import ReferenceUploadComponent from './ReferenceUploadComponent'
+import ReferenceUploadComponent from './ReferenceUploadComponent'
 
 const targetTypes = [
   'journal-article', 'book', 'conference-proceeding',
@@ -38,7 +38,7 @@ export default class AddReferenceComponent extends Component {
     el.append(
       title,
       $$(DOIInputComponent),
-      //$$(ReferenceUploadComponent),
+      $$(ReferenceUploadComponent),
       manualAddEl
     )
 

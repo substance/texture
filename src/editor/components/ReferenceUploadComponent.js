@@ -18,8 +18,12 @@ export default class ReferenceUploadComponent extends Component {
       'Drag and drop or ',
       $$('span').addClass('se-select-trigger')
         .append('select')
-        .on('click', this._selectFile),
-      ' file'
+        .on('click', this._onClick),
+      ' file',
+      $$('input').attr('type','file')
+        .on('click', this._supressClickPropagation)
+        .on('change', this._selectFile)
+        .ref('input')
     ).on('drop', this._handleDrop)
 
     el.append(dropZone)
@@ -27,11 +31,25 @@ export default class ReferenceUploadComponent extends Component {
     return el
   }
 
-  _selectFile() {
-    
+  _onClick() {
+    this.refs.input.click()
   }
 
-  _handleDrop() {
+  _supressClickPropagation(e) {
+    e.stopPropagation()
+  }
 
+  _selectFile() {
+
+  }
+
+  _handleDrop(e) {
+    const files = e.dataTransfer.files
+    files.forEach(file => {
+      const isJSON = file.type.indexOf('application/json') === 0
+      if(isJSON) {
+
+      }
+    })
   }
 }

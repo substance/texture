@@ -1,4 +1,5 @@
 import { Component } from 'substance'
+import { convertCSLJSON } from '../../converter/bib/BibConversion'
 
 const supportedFormats = ['CSL-JSON', 'BibTex']
 
@@ -25,6 +26,8 @@ export default class ReferenceUploadComponent extends Component {
         .on('change', this._selectFile)
         .ref('input')
     ).on('drop', this._handleDrop)
+    .on('dragstart', this._onDrag)
+    .on('dragenter', this._onDrag)
 
     el.append(dropZone)
 
@@ -39,17 +42,50 @@ export default class ReferenceUploadComponent extends Component {
     e.stopPropagation()
   }
 
-  _selectFile() {
-
+  _selectFile(e) {
+    const files = e.currentTarget.files
+    this._handleUploadedFiles(files)
   }
 
   _handleDrop(e) {
     const files = e.dataTransfer.files
-    files.forEach(file => {
+    this._handleUploadedFiles(files)
+  }
+
+  _handleUploadedFiles(files) {
+    Object.values(files).forEach(file => {
       const isJSON = file.type.indexOf('application/json') === 0
       if(isJSON) {
-
+        const reader = new FileReader()
+        reader.onload = this._onFileLoad.bind(this)
+        reader.readAsText(file)
       }
     })
+  }
+
+  _onFileLoad(e) {
+    const res = e.target.result
+    if(res) {
+      let conversionErrors = []
+      let convertedEntries = []
+      const entries = JSON.parse(res)
+      entries.forEach(entry => {
+        try {
+          convertedEntries.push(
+            convertCSLJSON(entry)
+          )
+        } catch(error) {
+          conversionErrors.push(entry.DOI)
+        }
+      })
+
+      this.send('importBib', convertedEntries)
+    }
+  }
+
+  _onDrag(e) {
+    // Stop event propagation for the dragstart and dragenter
+    // events, to avoid editor drag manager errors
+    e.stopPropagation()
   }
 }

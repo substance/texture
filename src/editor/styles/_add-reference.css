@@ -109,6 +109,10 @@
   color: #8d8d8d;
 }
 
+.se-add-reference > .se-import > .se-drop-import > input {
+  display: none;
+}
+
 .se-add-reference > .se-import > .se-drop-import > .se-select-trigger {
   color: var(--link-color);
   cursor: pointer;

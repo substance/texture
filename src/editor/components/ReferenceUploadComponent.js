@@ -1,7 +1,7 @@
 import { Component } from 'substance'
 import { convertCSLJSON } from '../../converter/bib/BibConversion'
 
-const supportedFormats = ['CSL-JSON', 'BibTex']
+const supportedFormats = ['CSL-JSON']
 
 export default class ReferenceUploadComponent extends Component {
   render($$) {

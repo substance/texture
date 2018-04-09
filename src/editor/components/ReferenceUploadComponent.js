@@ -28,8 +28,23 @@ export default class ReferenceUploadComponent extends Component {
     ).on('drop', this._handleDrop)
     .on('dragstart', this._onDrag)
     .on('dragenter', this._onDrag)
+    .on('dragend', this._onDrag)
 
     el.append(dropZone)
+
+    if (this.state.error) {
+      const dois = this.state.error.dois
+      const errorsList = $$('ul').addClass('se-error-list')
+      errorsList.append(
+        $$('li').append(this.state.error.message)
+      )
+      if(dois) {
+        errorsList.append(dois.map(d => $$('li').append('- '+d)))
+      }
+      el.append(
+        $$('div').addClass('se-error-popup').append(errorsList)
+      )
+    }
 
     return el
   }
@@ -75,11 +90,17 @@ export default class ReferenceUploadComponent extends Component {
             convertCSLJSON(entry)
           )
         } catch(error) {
-          conversionErrors.push(entry.DOI)
+          conversionErrors.push(entry.DOI || error)
         }
       })
 
-      this.send('importBib', convertedEntries)
+      if (conversionErrors.length > 0) {
+        let error = new Error('Conversion error')
+        error.dois = conversionErrors
+        this.extendState({error})
+      } else {
+        this.send('importBib', convertedEntries)
+      }
     }
   }
 

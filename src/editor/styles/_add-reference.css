@@ -45,7 +45,7 @@
   color: #d95859;
 }
 
-.se-add-reference > .se-doi-input > .se-input-group > .se-error-popup {
+.se-add-reference .se-error-popup {
   position: absolute;
   top: 32px;
   right: 25px;
@@ -59,7 +59,7 @@
   z-index: 10;
 }
 
-.se-add-reference > .se-doi-input > .se-input-group > .se-error-popup > ul {
+.se-add-reference .se-error-popup > ul {
   list-style: none;
   margin: 0 0 0 10px;
   padding: 0;
@@ -90,6 +90,10 @@
 .se-add-reference > .se-import {
   position: relative;
   margin: 20px 0px 10px;
+}
+
+.se-add-reference > .se-import > .se-error-popup {
+  top: 90px;
 }
 
 .se-add-reference > .se-import > .se-description {

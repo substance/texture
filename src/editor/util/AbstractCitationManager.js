@@ -30,6 +30,7 @@ export default class AbstractCitationManager {
     let needsUpdate = false
     for (var i = 0; i < ops.length; i++) {
       let op = ops[i]
+
       switch (op.type) {
         // I. citation is created or deleted
         case 'delete':
@@ -37,7 +38,7 @@ export default class AbstractCitationManager {
           if (op.val.type === 'xref' && op.val.attributes && op.val.attributes['ref-type'] === this.type) {
             needsUpdate = true
           }
-          if (op.val.type === 'ref' && op.val.attributes) {
+          if (op.val.type === 'ref') {
             needsUpdate = true
           }
           if (op.val.type === 'fn') {

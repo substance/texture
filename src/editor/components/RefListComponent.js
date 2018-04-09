@@ -153,12 +153,15 @@ export default class RefListComponent extends NodeComponent {
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
       items.forEach(item => {
-        let node = db.create(item)
-        let entityId = node.id
-        let refList = tx.find('ref-list')
-        let entityRefNode = tx.createElement('ref')
-        entityRefNode.setAttribute('rid', entityId)
-        refList.appendChild(entityRefNode)
+        const existedRef = this._getRefIdForDOI(item.doi)
+        if(!existedRef) {
+          let node = db.create(item)
+          let entityId = node.id
+          let refList = tx.find('ref-list')
+          let entityRefNode = tx.createElement('ref')
+          entityRefNode.setAttribute('rid', entityId)
+          refList.appendChild(entityRefNode)
+        }
       })
     })
     this.setState({})
@@ -182,6 +185,16 @@ export default class RefListComponent extends NodeComponent {
     const doc = editorSession.getDocument()
     let refNode = doc.find(`ref-list > ref[rid=${entityId}]`)
     if (refNode) return refNode.id
+  }
+
+  _getRefIdForDOI(doi) {
+    const bibliography = this._getBibliography()
+    const node = bibliography.find(bib => {
+      const entity = bib.state.entity
+      if(!entity || !entity.doi) return false
+      return entity.doi.toLowerCase() === doi.toLocaleLowerCase()
+    })
+    return node ? node.id : false
   }
 
   _getBibliography() {

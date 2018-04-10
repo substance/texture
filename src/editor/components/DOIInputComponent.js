@@ -75,7 +75,7 @@ export default class DOIInputComponent extends Component {
 /*
   Helpers
 */
-const ENDPOINT = 'https://data.datacite.org/application/vnd.citationstyles.csl+json/'
+const ENDPOINT = 'https://doi.org/'
 
 function _getBibEntries(dois) {
   return _fetchCSLJSONEntries(dois).then(entries => {
@@ -129,5 +129,5 @@ function _fetchCSLJSONEntries(dois) {
 */
 function _fetchDOI(doi) {
   const url = ENDPOINT + doi
-  return sendRequest({url: url, method: 'GET'})
+  return sendRequest({url: url, method: 'GET', header: {'accept': 'application/vnd.citationstyles.csl+json'}})
 }

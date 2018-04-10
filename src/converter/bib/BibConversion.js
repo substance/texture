@@ -39,6 +39,10 @@ function _convertJournalArticleFromCSLJSON(source) {
     }
   })
 
+  if(!data.doi) {
+    throw new Error(`Citation must have DOI.`)
+  }
+
   return data
 }
 

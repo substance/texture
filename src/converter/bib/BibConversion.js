@@ -7,30 +7,121 @@ export function convertCSLJSON(source) {
   let bibType = source.type
   let result
 
-  if (bibType === 'article-journal') {
-    result = _convertJournalArticleFromCSLJSON(source)
+  // CSL types: http://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types
+  let typeMapping = {
+    "article": "journal-article",
+    "article-magazine": "journal-article",
+    "article-newspaper": "journal-article",
+    "article-journal": "journal-article",
+    //"bill"
+    "book": "book",
+    //"broadcast"
+    "chapter": "book",
+    "dataset": "data-publication",
+    //"entry"
+    "entry-dictionary": "book",
+    "entry-encyclopedia": "book",
+    //"figure"
+    //"graphic"
+    //"interview"
+    //"legislation"
+    //"legal_case"
+    //"manuscript"
+    //"map"
+    //"motion_picture"
+    //"musical_score"
+    //"pamphlet"
+    "paper-conference": "conference-proceeding",
+    "patent": "patent",
+    //"post"
+    //"post-weblog"
+    //"personal_communication"
+    "report": "report",
+    //"review"
+    //"review-book"
+    //"song"
+    //"speech"
+    "thesis": "thesis",
+    //"treaty"
+    "webpage": "webpage"
+    //NA : "periodical"
+    //NA : "clinical-trial"
+    //NA : "preprint"
+    //NA : "software"
+  }
+
+  if (typeMapping[bibType]) {
+    result = _convertFromCSLJSON(source, typeMapping[bibType])
   } else {
     throw new Error(`Bib type ${bibType} not yet supported`)
   }
   return result
 }
 
-function _convertJournalArticleFromCSLJSON(source) {
+function _convertFromCSLJSON(source, type) {
   const date = _extractDateFromCSLJSON(source)
 
   let data = {
-    type: 'journal-article',
-    authors: source.author.map(a => {return {surname: a.family, givenNames: a.given}}),
-    articleTitle: source.title,
-    source: source['container-title'],
+    type: type,
+
     volume: source.volume,
     issue: source.issue,
     pageRange: source.page,
     doi: source.DOI,
+    pmid: source.PMID,
+
+    edition: source.edition,
+    publisherLoc: source['publisher-place'],
+    publisherName: source.publisher,
+    pageCount: source['number-of-pages'],
+    isbn: source.ISBN,
+
     year: date.year,
     month: date.month,
-    day: date.day
+    day: date.day,
+
+    uri: source.URL,
+    version: source.version
+
+    /* Examples with no corresponding field:
+        - abstract
+        - accessed
+        - collection-title
+        - composer
+        - director
+        - ISSN
+        - language
+        - number-of-volumes
+        - PMCID
+        - title-short
+        - translator
+    */
   }
+
+  // Mapping of title depends on item type
+  if (source.type==='book' || source.type==='report') {
+    data.source = source.title
+  } else if (source.type==='webpage') {
+    data.title = source.title
+  } else {
+    data.source = source['container-title']
+    if (source.type==='chapter') {
+      data.chapterTitle = source.title
+    } else if (source.type==='dataset') {
+      data.dataTitle = source.title
+    } else {
+      data.articleTitle = source.title
+    }
+  }
+
+  // Authors and editors
+  if (source.author) {
+    data.authors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+  }
+  if (source.editor) {
+    data.editors = source.editor.map(a => {return {surname: a.family, givenNames: a.given}})
+  }
+
 
   // Cleanup output to avoid any undefined values
   Object.keys(data).forEach(key => {
@@ -40,6 +131,8 @@ function _convertJournalArticleFromCSLJSON(source) {
   })
 
   if(!data.doi) {
+    // TODO: We should not rely that the imported item has a DOI, because it can also be imported from a generic CSL JSON file.
+    //  However, there are some problems in the further processing withouth a DOI at the moment...
     throw new Error(`Citation must have DOI.`)
   }
 

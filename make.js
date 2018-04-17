@@ -108,6 +108,7 @@ b.task('schema:debug', () => {
 
 b.task('build:assets', function() {
   b.copy('./node_modules/font-awesome', DIST+'font-awesome')
+  b.copy('./node_modules/katex/dist', DIST+'katex')
   b.copy('./node_modules/substance/dist', DIST+'substance/dist')
   b.css('texture.css', DIST+'texture.css')
   b.css('./node_modules/substance/substance-pagestyle.css', DIST+'texture-pagestyle.css')
@@ -136,6 +137,7 @@ b.task('build:app', () => {
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
   b.copy('dist/font-awesome', APPDIST+'lib/')
+  b.copy('dist/katex', APPDIST+'lib/')
   b.copy('dist/substance', APPDIST+'lib/')
   ;[
     'texture.js',
@@ -173,10 +175,11 @@ b.task('build:app', () => {
       moduleName: 'textureApp',
       globals: {
         'substance': 'window.substance',
-        'substance-texture': 'window.texture'
+        'substance-texture': 'window.texture',
+        'katex': 'window.katex'
       }
     },
-    external: [ 'substance', 'substance-texture' ]
+    external: [ 'substance', 'substance-texture', 'katex' ]
   })
   // execute 'install-app-deps'
   fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
@@ -191,10 +194,11 @@ b.task('build:web', () => {
       moduleName: 'textureEditor',
       globals: {
         'substance': 'window.substance',
-        'substance-texture': 'window.texture'
+        'substance-texture': 'window.texture',
+        'katex': 'window.katex'
       }
     }],
-    external: ['substance', 'substance-texture']
+    external: ['substance', 'substance-texture', 'katex']
   })
   b.copy('./data', DIST+'data')
   vfs(b, {
@@ -223,7 +227,8 @@ b.task('build:test-browser', () => {
     external: {
       'substance': 'window.substance',
       'substance-test': 'window.substanceTest',
-      'substance-texture': 'window.texture'
+      'substance-texture': 'window.texture',
+      'katex': 'window.katex'
     }
   })
 })
@@ -264,9 +269,10 @@ function _buildLib(DEST, platform) {
   }
   b.js('./index.es.js', {
     targets,
-    external: ['substance'],
+    external: ['substance', 'katex'],
     globals: {
       'substance': 'substance',
+      'katex': 'katex'
     }
   })
 }

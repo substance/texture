@@ -5,8 +5,9 @@
   "main": "./dist/texture.cjs.js",
   "jsnext:main": "index.es.js",
   "dependencies": {
-    "lodash": "^4.14.1",
-    "dar-server": "^0.4.1"
+    "dar-server": "^0.4.1",
+    "katex": "^0.9.0",
+    "lodash": "^4.14.1"
   },
   "peerDependency": {
     "substance": ">=1.0.0-preview.37"

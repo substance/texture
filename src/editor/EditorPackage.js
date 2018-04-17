@@ -310,15 +310,6 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'inline-math',
-      nodeType: 'inline-math',
-      commandGroup: 'formatting-primary',
-      icon: 'fa-math',
-      label: 'Inline Math',
-      accelerator: 'CommandOrControl+M'
-    })
-
-    config.addAnnotationTool({
       name: 'sub',
       nodeType: 'sub',
       commandGroup: 'formatting',

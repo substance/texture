@@ -19,6 +19,7 @@ import ConvertRefs from './ConvertRefs'
 import ConvertAuthors from './ConvertAuthors'
 import ConvertArticleMeta from './ConvertArticleMeta'
 import ConvertXref from './ConvertXref'
+import ConvertMath from './ConvertMath'
 
 // ATTENTION: the order of converters is critical,
 // as some of them need to do insert nodes in a way
@@ -44,6 +45,7 @@ const trafos = [
   ConvertReproFig,
   ConvertFig,
   ConvertTableWrap,
+  ConvertMath,
   WrapAff,
   WrapAbstractContent,
   WrapBodyContent,
@@ -76,6 +78,7 @@ export {
   FnGroupConverter,
   ConvertReproFig,
   ConvertFig,
+  ConvertMath,
   ConvertTableWrap,
   WrapAff,
   WrapAbstractContent,

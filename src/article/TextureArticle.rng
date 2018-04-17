@@ -43,6 +43,7 @@
   <s:elementType name="inline-alternatives" s:type="inline-element"/>
   <s:elementType name="inline-formula" s:type="inline-element"/>
   <s:elementType name="inline-graphic" s:type="inline-element"/>
+  <s:elementType name="inline-math" s:type="inline-element"/>
   <s:elementType name="inline-supplementary-material" s:type="inline-element"/>
   <s:elementType name="private-char" s:type="inline-element"/>
   <s:elementType name="ruby" s:type="inline-element"/>
@@ -820,6 +821,7 @@
     <choice>
       <!-- <ref name="address-link.class"/> -->
       <ref name="ext-link"/>
+      <ref name="inline-math"/>
       <!-- <ref name="article-link.class"/> -->
       <ref name="inline-supplementary-material"/>
       <!--<ref name="block-display.class"/>-->
@@ -1109,6 +1111,12 @@
       <ref name="title"/>
       <ref name="caption"/>
       <ref name="cell"/>
+    </element>
+  </define>
+
+  <define name="inline-math">
+    <element name="inline-math">
+      <text/>
     </element>
   </define>
 </grammar>

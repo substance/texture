@@ -509,8 +509,8 @@
         <!-- <ref name="emphasis.class"/> -->
         <!-- <ref name="phrase-content.class"/> -->
         <!-- <ref name="subsup.class"/> -->
-        <ref name="chem-struct"/>
-        <ref name="styled-content"/>
+        <!-- <ref name="chem-struct"/> -->
+        <!-- <ref name="styled-content"/> -->
       </choice>
     </element>
   </define>
@@ -1090,6 +1090,4 @@
       <optional><text/></optional>
     </element>
   </define>
-
-
 </grammar>

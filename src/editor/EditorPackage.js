@@ -34,6 +34,7 @@ import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import DispQuoteComponent from './components/DispQuoteComponent'
+import InlineMathComponent from './components/InlineMathComponent'
 import TableCellComponent from './components/TableCellComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
@@ -139,6 +140,7 @@ export default {
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
+    config.addComponent('inline-math', InlineMathComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
@@ -305,6 +307,15 @@ export default {
       icon: 'fa-italic',
       label: 'Emphasize',
       accelerator: 'CommandOrControl+I'
+    })
+
+    config.addAnnotationTool({
+      name: 'inline-math',
+      nodeType: 'inline-math',
+      commandGroup: 'formatting-primary',
+      icon: 'fa-math',
+      label: 'Inline Math',
+      accelerator: 'CommandOrControl+M'
     })
 
     config.addAnnotationTool({

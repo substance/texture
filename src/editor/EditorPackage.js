@@ -34,7 +34,7 @@ import CaptionComponent from './components/CaptionComponent'
 import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import DispQuoteComponent from './components/DispQuoteComponent'
-import InlineMathComponent from './components/InlineMathComponent'
+import InlineFormulaComponent from './components/InlineFormulaComponent'
 import TableCellComponent from './components/TableCellComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
@@ -140,7 +140,7 @@ export default {
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
-    config.addComponent('inline-math', InlineMathComponent)
+    config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)

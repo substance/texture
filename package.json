@@ -9,7 +9,7 @@
     "dar-server": "^0.4.1"
   },
   "peerDependency": {
-    "substance": ">=1.0.0-preview.36"
+    "substance": ">=1.0.0-preview.37"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",

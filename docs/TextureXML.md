@@ -38,7 +38,7 @@ Example for authors group:
 ### `<inline-math>`
 
 ```xml
-<inline-math>f\in {\mathcal C}^0([0,+\infty )).</inline-math>
+<inline-math><![CDATA[f\in {\mathcal C}^0([0,+\infty )).]]></inline-math>
 ```
 
 ### `<list>`

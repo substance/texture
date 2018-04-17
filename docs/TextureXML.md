@@ -35,6 +35,12 @@ Example for authors group:
 </contrib-group>
 ```
 
+### `<inline-math>`
+
+```xml
+<inline-math>f\in {\mathcal C}^0([0,+\infty )).</inline-math>
+```
+
 ### `<list>`
 
 ```

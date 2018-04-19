@@ -64,6 +64,7 @@ function _convertFromCSLJSON(source, type) {
   let data = {
     type: type,
 
+    title: source.title,
     volume: source.volume,
     issue: source.issue,
     pageRange: source.page,
@@ -96,22 +97,6 @@ function _convertFromCSLJSON(source, type) {
         - title-short
         - translator
     */
-  }
-
-  // Mapping of title depends on item type
-  if (source.type==='book' || source.type==='report') {
-    data.source = source.title
-  } else if (source.type==='webpage') {
-    data.title = source.title
-  } else {
-    data.source = source['container-title']
-    if (source.type==='chapter') {
-      data.chapterTitle = source.title
-    } else if (source.type==='dataset') {
-      data.dataTitle = source.title
-    } else {
-      data.articleTitle = source.title
-    }
   }
 
   // Authors and editors

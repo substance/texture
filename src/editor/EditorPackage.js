@@ -62,6 +62,8 @@ import ToggleContentSection from './commands/ToggleContentSection'
 import InsertFigureCommand from './commands/InsertFigureCommand'
 import InsertFigureTool from './components/InsertFigureTool'
 import DropFigure from './commands/DropFigure'
+import InsertInlineFormulaCommand from './commands/InsertInlineFormulaCommand'
+import EditInlineFormulaTool from './components/EditInlineFormulaTool'
 
 import InsertTableCommand from './commands/InsertTableCommand'
 import InsertTableTool from './components/InsertTableTool'
@@ -221,6 +223,13 @@ export default {
       nodeType: 'table-wrap',
       commandGroup: 'insert-table'
     })
+    config.addCommand('insert-formula', InsertInlineFormulaCommand, {
+      commandGroup: 'insert-formula'
+    })
+    config.addCommand('edit-formula', EditInlineNodeCommand, {
+      nodeType: 'inline-formula',
+      commandGroup: 'prompt'
+    })
 
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
@@ -287,6 +296,10 @@ export default {
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
     config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
+
+    config.addTool('edit-formula', EditInlineFormulaTool)
+    config.addLabel('insert-formula', 'Formula')
+    config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
 
     config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
 
@@ -427,7 +440,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['insert-figure', 'insert-table', 'insert-block-element']
+        commandGroups: ['insert-figure', 'insert-table', 'insert-formula', 'insert-block-element']
       },
       {
         name: 'cite',

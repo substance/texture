@@ -6,7 +6,10 @@ import { Tool } from 'substance'
 class EditInlineFormulaTool extends Tool {
 
   getSourcePath() {
-    return [ this.props.commandState.nodeId ].concat('source')
+    const nodeId = this.props.commandState.nodeId
+    const inlineFormula = this.context.editorSession.getDocument().get(nodeId)
+    const texMath = inlineFormula._childNodes[0]
+    return [ texMath ].concat('textContent')
   }
 
   render($$) {

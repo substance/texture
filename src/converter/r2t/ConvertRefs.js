@@ -27,7 +27,11 @@ export default class ConvertRef {
             entityId = JournalArticleConverter.import(elementCitation, pubMetaDb)
             break;
           case 'book':
-            entityId = BookConverter.import(elementCitation, pubMetaDb)
+            if (elementCitation.find('chapter-title')) {
+              entityId = ChapterConverter.import(elementCitation, pubMetaDb)
+            } else {
+              entityId = BookConverter.import(elementCitation, pubMetaDb)
+            }
             break;
           case 'chapter':
             entityId = ChapterConverter.import(elementCitation, pubMetaDb)
@@ -96,6 +100,9 @@ export default class ConvertRef {
           break;
         case 'book':
           elementCitation = BookConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'chapter':
+          elementCitation = ChapterConverter.export($$, entity, pubMetaDb)
           break;
         case 'clinical-trial':
           elementCitation = ClinicalTrialConverter.export($$, entity, pubMetaDb)

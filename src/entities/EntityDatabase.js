@@ -173,7 +173,7 @@ export class Report extends BibliographicEntry {
 Report.schema = {
   type: 'report',
   authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  title: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },

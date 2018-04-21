@@ -628,7 +628,7 @@ export const ReportConverter = {
     if (!entity) {
       let node = {
         type: 'report',
-        source: _getText(el, 'source'),
+        title: _getText(el, 'source'),
         publisherLoc: _getSeparatedText(el, 'publisher-loc'),
         publisherName: _getSeparatedText(el, 'publisher-name'),
         year: _getText(el, 'year'),
@@ -649,7 +649,7 @@ export const ReportConverter = {
     let el = $$('element-citation').attr('publication-type', 'report')
     el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
-    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.title, 'source'))
     el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
     el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.year, 'year'))

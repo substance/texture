@@ -413,10 +413,10 @@ function reportRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.title),
       '.'
     )
   }

@@ -65,6 +65,7 @@ function _convertFromCSLJSON(source, type) {
     type: type,
 
     title: source.title,
+    containerTitle: source['container-title'],
     volume: source.volume,
     issue: source.issue,
     pageRange: source.page,

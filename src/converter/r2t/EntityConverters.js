@@ -222,19 +222,15 @@ export const BookConverter = {
     if (!entity) {
       let node = {
         type: 'book',
-        chapterTitle: _getHTML(el, 'chapter-title'),
-        source: _getText(el, 'source'),
+        title: _getText(el, 'source'),
         edition: _getText(el, 'edition'),
         publisherLoc: _getSeparatedText(el, 'publisher-loc'),
         publisherName: _getSeparatedText(el, 'publisher-name'),
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
         day: _getText(el, 'day'),
-        fpage: _getText(el, 'fpage'),
-        lpage: _getText(el, 'lpage'),
-        pageRange: _getText(el, 'page-range'),
         pageCount: _getText(el, 'page-count'),
-        elocationId: _getText(el, 'elocation-id'),
+
         doi: _getText(el, 'pub-id[pub-id-type=doi]'),
         pmid: _getText(el, 'pub-id[pub-id-type=pmid]'),
         isbn: _getText(el, 'pub-id[pub-id-type=isbn]')
@@ -257,19 +253,14 @@ export const BookConverter = {
     el.append(_exportPersonGroup($$, node.authors, 'author'))
     el.append(_exportPersonGroup($$, node.editors, 'editor'))
     // Regular properties
-    el.append(_createHTMLElement($$, node.chapterTitle, 'chapter-title'))
-    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.title, 'source'))
     el.append(_createTextElement($$, node.edition, 'edition'))
     el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
     el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.year, 'year'))
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
-    el.append(_createTextElement($$, node.fpage, 'fpage'))
-    el.append(_createTextElement($$, node.lpage, 'lpage'))
-    el.append(_createTextElement($$, node.pageRange, 'page-range'))
     el.append(_createTextElement($$, node.pageCount, 'page-count'))
-    el.append(_createTextElement($$, node.elocationId, 'elocation-id'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     el.append(_createTextElement($$, node.isbn, 'pub-id', {'pub-id-type': 'isbn'}))
     el.append(_createTextElement($$, node.pmid, 'pub-id', {'pub-id-type': 'pmid'}))
@@ -301,7 +292,6 @@ export const ChapterConverter = {
         fpage: _getText(el, 'fpage'),
         lpage: _getText(el, 'lpage'),
         pageRange: _getText(el, 'page-range'),
-        pageCount: _getText(el, 'page-count'),
         elocationId: _getText(el, 'elocation-id'),
         doi: _getText(el, 'pub-id[pub-id-type=doi]'),
         pmid: _getText(el, 'pub-id[pub-id-type=pmid]'),
@@ -336,7 +326,6 @@ export const ChapterConverter = {
     el.append(_createTextElement($$, node.fpage, 'fpage'))
     el.append(_createTextElement($$, node.lpage, 'lpage'))
     el.append(_createTextElement($$, node.pageRange, 'page-range'))
-    el.append(_createTextElement($$, node.pageCount, 'page-count'))
     el.append(_createTextElement($$, node.elocationId, 'elocation-id'))
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     el.append(_createTextElement($$, node.isbn, 'pub-id', {'pub-id-type': 'isbn'}))

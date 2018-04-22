@@ -6,8 +6,10 @@
   "jsnext:main": "index.es.js",
   "dependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-preview.33",
     "dar-server": "^0.4.1"
+  },
+  "peerDependency": {
+    "substance": ">=1.0.0-preview.36"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",
@@ -17,7 +19,8 @@
     "font-awesome": "4.5.0",
     "source-map-support": "0.5.3",
     "substance-bundler": "0.21.2",
-    "substance-test": "^0.9.4"
+    "substance-test": "^0.9.4",
+    "substance": "1.0.0-preview.36"
   },
   "scripts": {
     "prepare": "node make publish",

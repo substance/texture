@@ -10,7 +10,6 @@ export default class InlineFormulaComponent extends NodeComponent {
     // TODO: Use KaTeX
 
     const el = $$('span').addClass('sc-math')
-      //.on('click', this.onClick)
 
     if (this.props.isolatedNodeState) {
       el.addClass('sm-'+this.props.isolatedNodeState)
@@ -29,10 +28,5 @@ export default class InlineFormulaComponent extends NodeComponent {
     }
 
     return el
-  }
-
-  onClick() {
-    debugger
-    // this.selectNode()
   }
 }

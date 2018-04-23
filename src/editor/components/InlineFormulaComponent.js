@@ -10,16 +10,29 @@ export default class InlineFormulaComponent extends NodeComponent {
     // TODO: Use KaTeX
 
     const el = $$('span').addClass('sc-math')
+      //.on('click', this.onClick)
+
+    if (this.props.isolatedNodeState) {
+      el.addClass('sm-'+this.props.isolatedNodeState)
+    }
 
     try {
-      el.html(
-        katex.renderToString(texMath)
+      el.append(
+        $$('span').html(katex.renderToString(texMath))
+
       )
+      let blockerEl = $$('div').addClass('se-blocker')
+      el.append(blockerEl)
     } catch (error) {
       el.addClass('sm-error')
         .text(error.message)
     }
 
     return el
+  }
+
+  onClick() {
+    debugger
+    // this.selectNode()
   }
 }

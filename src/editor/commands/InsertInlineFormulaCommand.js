@@ -1,17 +1,47 @@
-import InsertInlineNodeCommand from './InsertInlineNodeCommand'
+import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand } from 'substance'
 
-export default class InsertInlineFormulaCommand extends InsertInlineNodeCommand {
+export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNodeCommand {
   getType() {
     return 'inline-formula'
   }
 
   createNode(tx) {
-    const math = tx.createElement('tex-math').text('f(x)')
     const inlineFormula = tx.createElement('inline-formula')
       .attr('content-type', 'math/tex')
+      .appendChild(
+        tx.createElement('tex-math').text('f(x)')
+      )
 
-    //inlineFormula._childNodes.push(math.id)
     return inlineFormula
+  }
+
+  /**
+    Insert new inline node at the current selection
+  */
+  execute(params) {
+    let state = this.getCommandState(params)
+    if (state.disabled) return
+    let editorSession = this._getEditorSession(params)
+    editorSession.transaction((tx) => {
+      const node = tx.createElement('inline-formula')
+        .attr('content-type', 'math/tex')
+      const inlineFormula = tx.insertInlineNode(node)
+      inlineFormula.appendChild(
+        tx.createElement('tex-math').text('f(x)')
+      )
+      this.setSelection(tx, node)
+    })
+  }
+
+  setSelection(tx, node) {
+    if(node.isPropertyAnnotation()) {
+      tx.selection = {
+        type: 'property',
+        path: node.getPath(),
+        startOffset: node.startOffset,
+        endOffset: node.endOffset
+      }
+    }
   }
 
   isDisabled(params) {

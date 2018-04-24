@@ -1,7 +1,7 @@
 import { JournalArticleConverter, BookConverter,
   ClinicalTrialConverter, ConferenceProceedingConverter, DataPublicationConverter,
   PatentConverter, Periodical, PreprintConverter, ReportConverter,
-  SoftwareConverter, ThesisConverter, WebpageConverter
+  SoftwareConverter, ThesisConverter, WebpageConverter, ChapterConverter
 } from './EntityConverters'
 
 /*
@@ -27,7 +27,14 @@ export default class ConvertRef {
             entityId = JournalArticleConverter.import(elementCitation, pubMetaDb)
             break;
           case 'book':
-            entityId = BookConverter.import(elementCitation, pubMetaDb)
+            if (elementCitation.find('chapter-title')) {
+              entityId = ChapterConverter.import(elementCitation, pubMetaDb)
+            } else {
+              entityId = BookConverter.import(elementCitation, pubMetaDb)
+            }
+            break;
+          case 'chapter':
+            entityId = ChapterConverter.import(elementCitation, pubMetaDb)
             break;
           case 'clinicaltrial':
             entityId = ClinicalTrialConverter.import(elementCitation, pubMetaDb)
@@ -60,6 +67,7 @@ export default class ConvertRef {
             entityId = WebpageConverter.import(elementCitation, pubMetaDb)
             break;
           default:
+            console.error(`Publication type ${pubType} not found`)
             api.error({
               msg: `Publication type ${pubType} not found`,
               el: elementCitation
@@ -92,6 +100,9 @@ export default class ConvertRef {
           break;
         case 'book':
           elementCitation = BookConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'chapter':
+          elementCitation = ChapterConverter.export($$, entity, pubMetaDb)
           break;
         case 'clinical-trial':
           elementCitation = ClinicalTrialConverter.export($$, entity, pubMetaDb)

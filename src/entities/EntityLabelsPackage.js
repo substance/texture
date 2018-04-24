@@ -1,42 +1,35 @@
 export default {
   name: 'entity-labels',
   configure(config) {
-    config.addLabel('book', 'Book')
-    config.addLabel('journal-article', 'Journal Article')
+    // general
+    config.addLabel('edit-references', 'Edit References')
+    config.addLabel('edit-affiliations', 'Edit Affiliations')
 
-    // book labels
-    config.addLabel('authors', 'Authors')
-    config.addLabel('editors', 'Editors')
-    config.addLabel('chapterTitle', 'Chapter Title')
-    config.addLabel('articleTitle', 'Article Title')
-    config.addLabel('source', 'Source')
-    config.addLabel('edition', 'Edition')
-    config.addLabel('issue', 'Issue')
-    config.addLabel('volume', 'Volume')
-    config.addLabel('publisherLoc', 'Publisher Location')
-    config.addLabel('publisherName', 'Publisher Name')
-    config.addLabel('year', 'Year')
-    config.addLabel('month', 'Month')
-    config.addLabel('day', 'Day')
-    config.addLabel('fpage', 'First Page')
-    config.addLabel('lpage', 'Last Page')
-    config.addLabel('pageRange', 'Page Range')
-    config.addLabel('elocationId', 'E-Location ID')
-    config.addLabel('doi', 'DOI')
-    config.addLabel('isbn', 'ISBN')
-    config.addLabel('pmid', 'PubMed ID')
+    // item types
+    config.addLabel('journal-article', 'Journal Article')
+    config.addLabel('edit-journal-article', 'Edit Journal Article')
+    config.addLabel('add-journal-article', 'Add Journal Article')
+    config.addLabel('create-journal-article', 'Create Journal Article')
+
+    config.addLabel('book', 'Book')
+    config.addLabel('edit-book', 'Edit Book')
+    config.addLabel('add-book', 'Add Book')
+    config.addLabel('create-book', 'Create Book')
+
+    config.addLabel('chapter', 'Chapter')
+    config.addLabel('edit-chapter', 'Edit Chapter')
+    config.addLabel('add-chapter', 'Add Chapter')
+    config.addLabel('create-chapter', 'Create Chapter')
 
     config.addLabel('conference-proceeding', 'Conference Proceeding')
     config.addLabel('create-conference-proceeding', 'Create Conference Proceeding')
     config.addLabel('edit-conference-proceeding', 'Edit Conference Proceeding')
-    config.addLabel('confName', 'Conference Name')
 
     config.addLabel('clinical-trial', 'Clinical Trial')
     config.addLabel('create-clinical-trial', 'Create Clinical Trial')
     config.addLabel('edit-clinical-trial', 'Edit Clinical Trial')
 
     config.addLabel('webpage', 'Webpage')
-    config.addLabel('title', 'Title')
     config.addLabel('create-webpage', 'Create Webpage')
     config.addLabel('edit-webpage', 'Edit Webpage')
 
@@ -47,7 +40,6 @@ export default {
     config.addLabel('software', 'Software')
     config.addLabel('create-software', 'Create Software')
     config.addLabel('edit-software', 'Edit Software')
-    config.addLabel('version', 'Version')
 
     config.addLabel('preprint', 'Preprint')
     config.addLabel('create-preprint', 'Create Preprint')
@@ -60,10 +52,6 @@ export default {
     config.addLabel('data-publication', 'Data Publication')
     config.addLabel('create-data-publication', 'Create Data Publication')
     config.addLabel('edit-data-publication', 'Edit Data Publication')
-    config.addLabel('dataTitle', 'Title')
-    config.addLabel('accessionId', 'Accession ID')
-    config.addLabel('arkId', 'ARK ID')
-    config.addLabel('archiveId', 'Archive ID')
 
     config.addLabel('periodical', 'Periodical')
     config.addLabel('create-periodical', 'Create Periodical')
@@ -71,21 +59,58 @@ export default {
 
     config.addLabel('patent', 'Patent')
     config.addLabel('create-patent', 'Create Patent')
-    config.addLabel('inventors', 'Inventors')
+
+    // fields labels
+    config.addLabel('authors', 'Authors')
+    config.addLabel('edit-authors', 'Edit Authors')
+
+    config.addLabel('editors', 'Editors')
+    config.addLabel('edit-editors', 'Edit Editors')
+
+    config.addLabel('accessionId', 'Accession ID')
+    config.addLabel('archiveId', 'Archive ID')
+    config.addLabel('arkId', 'ARK ID')
     config.addLabel('assignee', 'Assignee')
-    config.addLabel('patentNumber', 'Patent Number')
+    config.addLabel('confName', 'Conference Name')
+    config.addLabel('day', 'Day')
+    config.addLabel('doi', 'DOI')
+    config.addLabel('edition', 'Edition')
+    config.addLabel('elocationId', 'E-Location ID')
+    config.addLabel('fpage', 'First Page')
+    config.addLabel('inventors', 'Inventors')
+    config.addLabel('isbn', 'ISBN')
+    config.addLabel('issue', 'Issue')
+    config.addLabel('lpage', 'Last Page')
+    config.addLabel('month', 'Month')
+    config.addLabel('pageRange', 'Page Range')
     config.addLabel('patentCountry', 'Patent Country')
+    config.addLabel('patentNumber', 'Patent Number')
+    config.addLabel('pmid', 'PubMed ID')
+    config.addLabel('publisherLoc', 'Publisher Location')
+    config.addLabel('publisherName', 'Publisher Name')
+    config.addLabel('source', 'Source')
+    config.addLabel('title', 'Title')
+    config.addLabel('version', 'Version')
+    config.addLabel('volume', 'Volume')
+    config.addLabel('year', 'Year')
 
     // person labels
     config.addLabel('person', 'Person')
+    config.addLabel('add-person', 'Add Person')
+    config.addLabel('edit-person', 'Edit Person')
+    config.addLabel('create-person', 'Create Person')
     config.addLabel('orcid', 'ORCID')
     config.addLabel('givenNames', 'Given names')
     config.addLabel('surname', 'Surname')
     config.addLabel('prefix', 'Prefix')
     config.addLabel('suffix', 'Suffix')
     config.addLabel('affiliations', 'Affiliations')
+
     // organisation labels
     config.addLabel('organisation', 'Organisation')
+    config.addLabel('add-organisation', 'Add Organisation')
+    config.addLabel('edit-organisation', 'Edit Organisation')
+    config.addLabel('create-organisation', 'Create Organisation')
     config.addLabel('name', 'Name')
     config.addLabel('division1', 'Division 1 (Department)')
     config.addLabel('division2', 'Division 2')
@@ -103,23 +128,5 @@ export default {
     config.addLabel('members', 'Members')
     config.addLabel('edit-members', 'Edit Members')
 
-    config.addLabel('edit-book', 'Edit Book')
-    config.addLabel('add-book', 'Add Book')
-    config.addLabel('edit-journal-article', 'Edit Journal Article')
-    config.addLabel('add-journal-article', 'Add Journal Article')
-    config.addLabel('add-person', 'Add Person')
-    config.addLabel('edit-person', 'Edit Person')
-    config.addLabel('add-organisation', 'Add Organisation')
-    config.addLabel('edit-organisation', 'Edit Organisation')
-
-    config.addLabel('edit-authors', 'Edit Authors')
-    config.addLabel('edit-editors', 'Edit Editors')
-    config.addLabel('edit-references', 'Edit References')
-    config.addLabel('edit-affiliations', 'Edit Affiliations')
-
-    config.addLabel('create-book', 'Create Book')
-    config.addLabel('create-journal-article', 'Create Journal Article')
-    config.addLabel('create-person', 'Create Person')
-    config.addLabel('create-organisation', 'Create Organisation')
   }
 }

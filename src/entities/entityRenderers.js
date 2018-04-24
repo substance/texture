@@ -11,10 +11,10 @@ function journalArticleRenderer($$, entityId, entityDb) {
     )
   }
   // We render an annotated article title here:
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '.'
     )
   }
@@ -70,81 +70,106 @@ function bookRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
-  if (entity.chapterTitle) {
-    // chapter
-    if (entity.authors.length > 0) {
-      fragments = fragments.concat(
-        _renderAuthors($$, entity.authors, entityDb),
-        '.'
-      )
-    }
-    if (entity.chapterTitle) {
-      fragments.push(
-        ' ',
-        _renderHTML($$, entity.chapterTitle),
-        '. '
-      )
-    }
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  } else if (entity.editors.length > 0) {
+    let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.editors, entityDb),
+      ', ',
+      editorLabel,
+      '.'
+    )
+  }
+  if (entity.title) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.title),
+      '.'
+    )
+  }
+  if (entity.edition) {
+    fragments.push(' ', entity.edition, '.')
+  }
+  if (entity.editors.length > 0 && entity.authors.length > 0) {
+    let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+    fragments = fragments.concat(
+      ' (',
+      _renderAuthors($$, entity.editors, entityDb),
+      ', ',
+      editorLabel,
+      ').'
+    )
+  }
 
-    fragments = fragments.concat('In: ')
-    if (entity.editors.length > 0) {
-      let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
-      fragments = fragments.concat(
-        ' ',
-        _renderAuthors($$, entity.editors, entityDb),
-        ', ',
-        editorLabel,
-        '.'
-      )
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.year) {
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
     }
-    if (entity.source) {
-      fragments.push(
-        ' ',
-        $$('em').append(
-          entity.source
-        ),
-        '.'
-      )
-    }
-    if (entity.edition) {
-      fragments.push(' ', entity.edition, '.')
-    }
+  }
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(':', contentLocation, '.')
   } else {
-    // book
-    if (entity.authors.length > 0) {
-      fragments = fragments.concat(
-        _renderAuthors($$, entity.authors, entityDb),
-        '.'
-      )
-    } else if (entity.editors.length > 0) {
-      let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
-      fragments = fragments.concat(
-        _renderAuthors($$, entity.editors, entityDb),
-        ', ',
-        editorLabel,
-        '.'
-      )
-    }
-    if (entity.source) {
-      fragments.push(
-        ' ',
-        $$('em').append(entity.source),
-        '.'
-      )
-    }
-    if (entity.edition) {
-      fragments.push(' ', entity.edition, '.')
-    }
-    if (entity.editors.length > 0 && entity.authors.length > 0) {
-      let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
-      fragments = fragments.concat(
-        ' (',
-        _renderAuthors($$, entity.editors, entityDb),
-        ', ',
-        editorLabel,
-        ').'
-      )
-    }
+    fragments.push('.')
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+
+  return fragments
+}
+
+function chapterRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
+  if (entity.title) {
+    fragments.push(
+      ' ',
+      _renderHTML($$, entity.title),
+      '. '
+    )
+  }
+
+  fragments = fragments.concat('In: ')
+  if (entity.editors.length > 0) {
+    let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+    fragments = fragments.concat(
+      ' ',
+      _renderAuthors($$, entity.editors, entityDb),
+      ', ',
+      editorLabel,
+      '.'
+    )
+  }
+  if (entity.containerTitle) {
+    fragments.push(
+      ' ',
+      $$('em').append(
+        entity.containerTitle
+      ),
+      '.'
+    )
+  }
+  if (entity.edition) {
+    fragments.push(' ', entity.edition, '.')
   }
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
@@ -183,10 +208,10 @@ function clinicalTrialRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -218,10 +243,10 @@ function preprintRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -262,10 +287,10 @@ function patentRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -296,10 +321,10 @@ function dataPublicationRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.dataTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.dataTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -337,10 +362,10 @@ function periodicalRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -388,10 +413,10 @@ function reportRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.title),
       '.'
     )
   }
@@ -419,10 +444,10 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -506,10 +531,10 @@ function thesisRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.articleTitle) {
+  if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.articleTitle),
+      _renderHTML($$, entity.title),
       '. '
     )
   }
@@ -625,6 +650,7 @@ function organisationRenderer($$, entityId, entityDb, options = {}) {
 export default {
   'person': _delegate(personRenderer),
   'book': _delegate(bookRenderer),
+  'chapter': _delegate(chapterRenderer),
   'journal-article': _delegate(journalArticleRenderer),
   'conference-proceeding': _delegate(conferenceProceedingRenderer),
   'clinical-trial': _delegate(clinicalTrialRenderer),

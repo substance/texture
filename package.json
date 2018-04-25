@@ -21,7 +21,7 @@
     "source-map-support": "0.5.3",
     "substance-bundler": "0.21.2",
     "substance-test": "^0.9.4",
-    "substance": "1.0.0-preview.36"
+    "substance": "1.0.0-preview.37"
   },
   "scripts": {
     "prepare": "node make publish",

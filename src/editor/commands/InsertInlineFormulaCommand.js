@@ -1,4 +1,4 @@
-import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand } from 'substance'
+import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand, documentHelpers } from 'substance'
 
 export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNodeCommand {
   getType() {
@@ -19,15 +19,18 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
     Insert new inline node at the current selection
   */
   execute(params) {
-    let state = this.getCommandState(params)
+    const state = this.getCommandState(params)
     if (state.disabled) return
-    let editorSession = this._getEditorSession(params)
+    const editorSession = this._getEditorSession(params)
+    const sel = params.selection
     editorSession.transaction((tx) => {
+      const doc = tx.getDocument()
+      const text = documentHelpers.getTextForSelection(doc, sel)
       const node = tx.createElement('inline-formula')
         .attr('content-type', 'math/tex')
       const inlineFormula = tx.insertInlineNode(node)
       inlineFormula.appendChild(
-        tx.createElement('tex-math').text('f(x)')
+        tx.createElement('tex-math').text(text || 'f(x)')
       )
       this.setSelection(tx, node)
     })

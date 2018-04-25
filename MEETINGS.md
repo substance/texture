@@ -1,3 +1,50 @@
+## 2018-04-13
+
+Consortium Meetup in Cambridge Day 2.
+
+Notes:
+
+- Texture Introduction for Cambridge University Press (Katie Silvester, Alex Wotherspoon)
+- Demo by Nick Stiffler: InSilico/Database Hyperlinking
+- Demo of Archivist (another application that uses tagging of concepts in prose)
+- Requirements
+  - Permissions
+    - We need to evaluate and implement support for permissions/attributions
+    - Article level, figures,
+    - Follow [JATS4R recommendation](https://jats4r.org/permissions)
+    - Discussed license references
+      - Idea is to have a unique identifier for a license, and be able to query for articles of a license later
+    - Can get complicated for figures (multiple permissions on one object)
+      - We need to support this in the Dar specification, but we should not complicate the UI for those edge cases
+  - Support figure groups
+    - Primarily used for supplementary figures (e.g. at eLife)
+    - Discussed if we can have structured / multi-panel figures
+      - Interesting, but not a priority atm
+    - Ability drop an additional image on an existing figure
+      - Creates a stack (see eLife UI)
+      - Ability to modify the stack (cycle through images, delete individual images etc.)
+- Discussion: Generate printable version from Dar
+  - Provide simple one-column layout in good quality
+  - Options:
+    - Use CSS Paged media properties
+    - Use a traditional Java stack for PDF generation (Tamir Hassan has a prototype)
+    - Use LaTeX for PDF generation
+  - Decision: Evaluation of CSS Paged media capabilities as it would be the most lightweight solution
+- New Initiative started for semantic extraction of content from Word
+  - Led by eLife (Paul Shannon)
+  - An R&D effort to improve the situation on Word/PDF to JATS/Dar conversion
+  - Daniel Ecer of eLife will apply computer vision strategies (from [ScienceBeam project](https://elifesciences.org/labs/5b56aff6/sciencebeam-using-computer-vision-to-extract-pdf-data))
+  - PKP will provide evaluation framework (set of source files + manually curated high quality XML version to match against)
+  - Alex Garnett will provide expertise on available tools (as used by Open Typesetting Stack)
+- Discussion about Consortium Memberships
+  - We will continue as now with individual SOW's
+  - Once Texture is used in production, we may switch to membership model (yearly subscription)
+  - Roadmap
+    - 3 milestones (Early June, Early August, Late September 1.0 release)
+    - After each milestone, testing by consortium members
+- Decision: Juan Pablo Alperin will create a proposal for Force 2018 in Montreal
+
+
 ## 2018-04-12
 
 Consortium Meetup in Cambridge Day 1.

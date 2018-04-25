@@ -32,9 +32,9 @@ export class Chapter extends BibliographicEntry {}
 Chapter.schema = {
   type: 'chapter',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
+  containerTitle: { type: 'string', optional: true }, // <source>
+  authors: { type: ['object'], default: [] }, // <person-group person-group-type="author">
   editors: { type: ['object'], default: [] },
-  containerTitle: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -45,9 +45,9 @@ Chapter.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true },
-  isbn: { type: 'string', optional: true },
-  pmid: { type: 'string', optional: true }
+  doi: { type: 'string', optional: true }, // <pub-id pub-id-type="doi">
+  isbn: { type: 'string', optional: true }, // <pub-id pub-id-type="isbn">
+  pmid: { type: 'string', optional: true } // <pub-id pub-id-type="pmid">
 }
 
 export class DataPublication extends BibliographicEntry {}

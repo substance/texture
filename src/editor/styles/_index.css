@@ -15,6 +15,8 @@
 @import './_element-citation.css';
 @import './_edit-ref.css';
 @import './_edit-xref-tool.css';
+@import './_edit-math-tool.css';
+@import './_math.css';
 @import './_fn-group.css';
 @import './_ref-list.css';
 @import './_add-reference.css';

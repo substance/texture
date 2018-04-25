@@ -502,16 +502,7 @@
       <!-- attributes -->
       <ref name="inline-formula-attlist"/>
       <!-- elements -->
-      <choice>
-        <!-- <ref name="inline-display.class"/> -->
-        <!-- <ref name="inline-math.class"/> -->
-        <ref name="math.class"/>
-        <!-- <ref name="emphasis.class"/> -->
-        <!-- <ref name="phrase-content.class"/> -->
-        <!-- <ref name="subsup.class"/> -->
-        <ref name="chem-struct"/>
-        <ref name="styled-content"/>
-      </choice>
+      <ref name="tex-math"/>
     </element>
   </define>
 
@@ -1090,6 +1081,4 @@
       <optional><text/></optional>
     </element>
   </define>
-
-
 </grammar>

@@ -25,7 +25,6 @@ import ConvertXref from './ConvertXref'
 // that adheres to the schema
 // ATM
 const trafos = [
-
   PruneEmptyElements,
   UnifyPublicationHistory,
   NormalizeHistoryDates,

@@ -272,7 +272,8 @@ function dataPublicationRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function periodicalRenderer($$, entityId, entityDb) {
+
+function magazineArticleRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -311,6 +312,66 @@ function periodicalRenderer($$, entityId, entityDb) {
   } else {
     fragments.push('.')
   }
+
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+
+  return fragments
+}
+
+
+function newspaperArticleRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
+  if (entity.title) {
+    fragments.push(
+      ' ',
+      _renderHTML($$, entity.title),
+      '. '
+    )
+  }
+
+  if (entity.source) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.source),
+      ','
+    )
+    if (entity.edition) {
+      fragments.push(
+        ' ',
+        $$('em').append(entity.edition),
+        ','
+      )
+    }
+  }
+
+  if (entity.year) {
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+  }
+
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(':', contentLocation)
+  }
+  if (entity.partTitle) {
+    fragments.push(' (', entity.partTitle, ')')
+  }
+  fragments.push('.')
 
   if (entity.doi) {
     fragments.push(
@@ -590,7 +651,8 @@ export default {
   'organisation': _delegate(organisationRenderer),
   'patent': _delegate(patentRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
-  'periodical': _delegate(periodicalRenderer),
+  'magazine-aricle': _delegate(magazineArticleRenderer),
+  'newspaper-article': _delegate(newspaperArticleRenderer),
   'software': _delegate(softwareRenderer),
   'thesis': _delegate(thesisRenderer),
   'webpage': _delegate(webpageRenderer)

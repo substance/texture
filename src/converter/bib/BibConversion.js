@@ -10,8 +10,8 @@ export function convertCSLJSON(source) {
   // CSL types: http://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types
   let typeMapping = {
     "article": "journal-article",
-    "article-magazine": "journal-article",
-    "article-newspaper": "journal-article",
+    "article-magazine": "magazine-article",
+    "article-newspaper": "newspaper-article",
     "article-journal": "journal-article",
     //"bill"
     "book": "book",
@@ -44,7 +44,6 @@ export function convertCSLJSON(source) {
     "thesis": "thesis",
     //"treaty"
     "webpage": "webpage"
-    //NA : "periodical"
     //NA : "software"
   }
 
@@ -74,6 +73,7 @@ function _convertFromCSLJSON(source, type) {
     publisherLoc: source['publisher-place'],
     publisherName: source.publisher,
     pageCount: source['number-of-pages'],
+    partTitle: source.section,
     isbn: source.ISBN,
 
     year: date.year,

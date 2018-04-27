@@ -1,6 +1,6 @@
 import { JournalArticleConverter, BookConverter,
   ConferenceProceedingConverter, DataPublicationConverter,
-  PatentConverter, Periodical, ReportConverter,
+  PatentConverter, MagazineArticleConverter, NewspaperArticleConverter, ReportConverter,
   SoftwareConverter, ThesisConverter, WebpageConverter, ChapterConverter
 } from './EntityConverters'
 
@@ -46,7 +46,11 @@ export default class ConvertRef {
             entityId = PatentConverter.import(elementCitation, pubMetaDb)
             break;
           case 'periodical':
-            entityId = Periodical.import(elementCitation, pubMetaDb)
+          case 'newspaper':
+            entityId = NewspaperArticleConverter.import(elementCitation, pubMetaDb)
+            break;
+          case 'magazine':
+            entityId = MagazineArticleConverter.import(elementCitation, pubMetaDb)
             break;
           case 'clinicaltrial':
           case 'preprint':
@@ -109,8 +113,11 @@ export default class ConvertRef {
         case 'patent':
           elementCitation = PatentConverter.export($$, entity, pubMetaDb)
           break;
-        case 'periodical':
-          elementCitation = Periodical.export($$, entity, pubMetaDb)
+        case 'magazine-article':
+          elementCitation = MagazineArticleConverter.export($$, entity, pubMetaDb)
+          break;
+        case 'newspaper-article':
+          elementCitation = NewspaperArticleConverter.export($$, entity, pubMetaDb)
           break;
         case 'report':
           elementCitation = ReportConverter.export($$, entity, pubMetaDb)

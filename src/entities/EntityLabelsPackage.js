@@ -45,9 +45,13 @@ export default {
     config.addLabel('create-data-publication', 'Create Data Publication')
     config.addLabel('edit-data-publication', 'Edit Data Publication')
 
-    config.addLabel('periodical', 'Periodical')
-    config.addLabel('create-periodical', 'Create Periodical')
-    config.addLabel('edit-periodical', 'Edit Periodical')
+    config.addLabel('magazine-article', 'Magazine Article')
+    config.addLabel('create-magazine-article', 'Create Magazine Article')
+    config.addLabel('edit-magazine-article', 'Edit Magazine Article')
+
+    config.addLabel('newspaper-article', 'Newspaper Article')
+    config.addLabel('create-newspaper-article', 'Create Newspaper Article')
+    config.addLabel('edit-newspaper-article', 'Edit Newspaper Article')
 
     config.addLabel('patent', 'Patent')
     config.addLabel('create-patent', 'Create Patent')

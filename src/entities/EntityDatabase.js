@@ -66,10 +66,10 @@ DataPublication.schema = {
   doi: { type: 'string', optional: true }
 }
 
-export class Periodical extends BibliographicEntry {}
+export class MagazineArticle extends BibliographicEntry {}
 
-Periodical.schema = {
-  type: 'periodical',
+MagazineArticle.schema = {
+  type: 'magazine-article',
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
   source: { type: 'string', optional: true },
@@ -81,6 +81,25 @@ Periodical.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   doi: { type: 'string', optional: true }
+}
+
+export class NewspaperArticle extends BibliographicEntry {}
+
+NewspaperArticle.schema = {
+  type: 'newspaper-article',
+  title: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
+  source: { type: 'string', optional: true },
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  volume: { type: 'string', optional: true },
+  fpage: { type: 'string', optional: true },
+  lpage: { type: 'string', optional: true },
+  pageRange: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true },
+  edition: { type: 'string', optional: true },
+  partTitle: { type: 'string', optional: true }
 }
 
 export class Patent extends BibliographicEntry {}

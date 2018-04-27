@@ -10,7 +10,7 @@ export function prefillEntity(type, text) {
     defaults.name = text
   } else if (type === 'book') {
     defaults.source = text
-  } else if (type === 'journal-article' || type === 'conference-proceeding' || type === 'periodical' || type === 'data-publication' || type === 'patent' || type === 'webpage' || type === 'thesis' || type === 'software') {
+  } else if (type === 'journal-article' || type === 'conference-proceeding' || type === 'magazine-article' || type === 'newspaper-article' || type === 'data-publication' || type === 'patent' || type === 'webpage' || type === 'thesis' || type === 'software') {
     defaults.title = text
   }
   return defaults

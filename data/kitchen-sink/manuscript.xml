@@ -484,22 +484,21 @@
         </element-citation>
       </ref>
       <ref id="r6">
-        <element-citation publication-type="periodical">
+        <element-citation publication-type="newspaper">
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Rose</surname>
+              <given-names>Steve</given-names>
             </name>
           </person-group>
-          <article-title>Periodical title</article-title>
-          <source>Periodical source</source>
-          <year>2010</year>
-          <month>10</month>
-          <day>5</day>
-          <fpage>6436</fpage>
-          <lpage>6448</lpage>
-          <page-range>6436-6448</page-range>
-          <volume>29</volume>
+          <article-title>What if superheroes aren’t really the good guys?</article-title>
+          <source>The Guardian</source>
+          <edition>International Edition</edition>
+          <year>2018</year>
+          <month>4</month>
+          <day>27</day>
+          <part-title>Film</part-title>
+          <page-range>21</page-range>
         </element-citation>
       </ref>
       <ref id="r7">

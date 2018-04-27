@@ -485,15 +485,15 @@ export const PatentConverter = {
 }
 
 /*
-  <element-citation publication-type="periodical"> -> Periodical
+  <element-citation publication-type="magazine"> -> MagazineArticle
 */
-export const Periodical = {
+export const MagazineArticleConverter = {
 
   import(el, pubMetaDb) {
     let entity = _findCitation(el, pubMetaDb)
     if (!entity) {
       let node = {
-        type: 'periodical',
+        type: 'magazine-article',
         title: _getHTML(el, 'article-title'),
         source: _getText(el, 'source'),
         year: _getText(el, 'year'),
@@ -515,7 +515,7 @@ export const Periodical = {
   },
 
   export($$, node) {
-    let el = $$('element-citation').attr('publication-type', 'periodical')
+    let el = $$('element-citation').attr('publication-type', 'magazine')
     el.append(_exportPersonGroup($$, node.authors, 'author'))
     // Regular properties
     el.append(_createHTMLElement($$, node.title, 'article-title'))
@@ -534,6 +534,59 @@ export const Periodical = {
   }
 }
 
+/*
+  <element-citation publication-type="newspaper"> -> NewspaperArticle
+*/
+export const NewspaperArticleConverter = {
+
+  import(el, pubMetaDb) {
+    let entity = _findCitation(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'newspaper-article',
+        title: _getHTML(el, 'article-title'),
+        source: _getText(el, 'source'),
+        year: _getText(el, 'year'),
+        month: _getText(el, 'month'),
+        day: _getText(el, 'day'),
+        fpage: _getText(el, 'fpage'),
+        lpage: _getText(el, 'lpage'),
+        pageRange: _getText(el, 'page-range'),
+        volume: _getText(el, 'volume'),
+        edition: _getText(el, 'edition'),
+        partTitle: _getText(el, 'part-title'),
+        doi: _getText(el, 'pub-id[pub-id-type=doi]')
+      }
+      // Extract authors
+      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      entity = pubMetaDb.create(node)
+    }
+    return entity.id
+  },
+
+  export($$, node) {
+    let el = $$('element-citation').attr('publication-type', 'newspaper')
+    el.append(_exportPersonGroup($$, node.authors, 'author'))
+    // Regular properties
+    el.append(_createHTMLElement($$, node.title, 'article-title'))
+    el.append(_createTextElement($$, node.source, 'source'))
+    el.append(_createTextElement($$, node.year, 'year'))
+    el.append(_createTextElement($$, node.month, 'month'))
+    el.append(_createTextElement($$, node.day, 'day'))
+    el.append(_createTextElement($$, node.fpage, 'fpage'))
+    el.append(_createTextElement($$, node.lpage, 'lpage'))
+    el.append(_createTextElement($$, node.pageRange, 'page-range'))
+    el.append(_createTextElement($$, node.volume, 'volume'))
+    el.append(_createTextElement($$, node.edition, 'edition'))
+    el.append(_createTextElement($$, node.partTitle, 'part-title'))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
+    // Store entityId for explicit lookup on next import
+    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
+    return el
+  }
+}
 
 /*
   <element-citation publication-type="report"> -> Report

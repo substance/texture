@@ -4,8 +4,8 @@ import ReferenceUploadComponent from './ReferenceUploadComponent'
 
 const targetTypes = [
   'journal-article', 'book', 'chapter', 'conference-proceeding',
-  'report', 'periodical', 'data-publication', 'patent',
-  'webpage', 'thesis', 'software'
+  'report', 'newspaper-article', 'magazine-article', 'data-publication',
+  'patent', 'webpage', 'thesis', 'software'
 ]
 
 export default class AddReferenceComponent extends Component {

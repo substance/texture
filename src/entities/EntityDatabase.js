@@ -138,32 +138,6 @@ ConferenceProceeding.schema = {
   doi: { type: 'string', optional: true }
 }
 
-export class ClinicalTrial extends BibliographicEntry {}
-
-ClinicalTrial.schema = {
-  type: 'clinical-trial',
-  title: { type: 'string', optional: true },
-  sponsors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
-  year: { type: 'string', optional: true },
-  month: { type: 'string', optional: true },
-  day: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true }
-}
-
-export class Preprint extends BibliographicEntry {}
-
-Preprint.schema = {
-  type: 'preprint',
-  title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
-  year: { type: 'string', optional: true },
-  month: { type: 'string', optional: true },
-  day: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true }
-}
-
 export class Report extends BibliographicEntry {
   getGuid() {
     return this.isbn
@@ -173,13 +147,15 @@ export class Report extends BibliographicEntry {
 Report.schema = {
   type: 'report',
   authors: { type: ['object'], default: [] },
+  sponsors: { type: ['object'], default: [] },
   title: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
-  isbn: { type: 'string', optional: true }
+  isbn: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
 }
 
 export class Software extends BibliographicEntry {}

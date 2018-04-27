@@ -414,7 +414,7 @@
         </element-citation>
       </ref>
       <ref id="r2">
-        <element-citation publication-type="preprint">
+        <element-citation publication-type="report">
           <person-group person-group-type="author">
             <name>
               <surname>Doe</surname>
@@ -430,7 +430,7 @@
         </element-citation>
       </ref>
       <ref id="r3">
-        <element-citation publication-type="clinicaltrial">
+        <element-citation publication-type="report">
           <person-group person-group-type="sponsor">
             <name>
               <surname>Doe</surname>

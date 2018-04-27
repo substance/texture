@@ -338,48 +338,6 @@ export const ChapterConverter = {
 
 
 /*
-  <element-citation publication-type="clinicaltrial"> -> ClinicalTrial
-*/
-export const ClinicalTrialConverter = {
-
-  import(el, pubMetaDb) {
-    let entity = _findCitation(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'clinical-trial',
-        title: _getHTML(el, 'article-title'),
-        source: _getText(el, 'source'),
-        year: _getText(el, 'year'),
-        month: _getText(el, 'month'),
-        day: _getText(el, 'day'),
-        doi: _getText(el, 'pub-id[pub-id-type=doi]')
-      }
-      // Extract sponsors
-      node.sponsors = el.findAll('person-group[person-group-type=sponsor] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
-      entity = pubMetaDb.create(node)
-    }
-    return entity.id
-  },
-
-  export($$, node) {
-    let el = $$('element-citation').attr('publication-type', 'clinicaltrial')
-    el.append(_exportPersonGroup($$, node.sponsors, 'sponsor'))
-    // Regular properties
-    el.append(_createHTMLElement($$, node.title, 'article-title'))
-    el.append(_createTextElement($$, node.source, 'source'))
-    el.append(_createTextElement($$, node.year, 'year'))
-    el.append(_createTextElement($$, node.month, 'month'))
-    el.append(_createTextElement($$, node.day, 'day'))
-    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
-    // Store entityId for explicit lookup on next import
-    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
-    return el
-  }
-}
-
-/*
   <element-citation publication-type="confproc"> -> ConferenceProceeding
 */
 export const ConferenceProceedingConverter = {
@@ -576,47 +534,6 @@ export const Periodical = {
   }
 }
 
-/*
-  <element-citation publication-type="preprint"> -> Preprint
-*/
-export const PreprintConverter = {
-
-  import(el, pubMetaDb) {
-    let entity = _findCitation(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'preprint',
-        title: _getHTML(el, 'article-title'),
-        source: _getText(el, 'source'),
-        year: _getText(el, 'year'),
-        month: _getText(el, 'month'),
-        day: _getText(el, 'day'),
-        doi: _getText(el, 'pub-id[pub-id-type=doi]')
-      }
-      // Extract authors
-      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
-      entity = pubMetaDb.create(node)
-    }
-    return entity.id
-  },
-
-  export($$, node) {
-    let el = $$('element-citation').attr('publication-type', 'preprint')
-    el.append(_exportPersonGroup($$, node.authors, 'author'))
-    // Regular properties
-    el.append(_createHTMLElement($$, node.title, 'article-title'))
-    el.append(_createTextElement($$, node.source, 'source'))
-    el.append(_createTextElement($$, node.year, 'year'))
-    el.append(_createTextElement($$, node.month, 'month'))
-    el.append(_createTextElement($$, node.day, 'day'))
-    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
-    // Store entityId for explicit lookup on next import
-    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
-    return el
-  }
-}
 
 /*
   <element-citation publication-type="report"> -> Report
@@ -634,10 +551,15 @@ export const ReportConverter = {
         year: _getText(el, 'year'),
         month: _getText(el, 'month'),
         day: _getText(el, 'day'),
-        isbn: _getText(el, 'pub-id[pub-id-type=isbn]')
+        isbn: _getText(el, 'pub-id[pub-id-type=isbn]'),
+        doi: _getText(el, 'pub-id[pub-id-type=doi]')
       }
       // Extract authors
       node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      // Extract sponsors
+      node.sponsors = el.findAll('person-group[person-group-type=sponsor] > name').map(el => {
         return RefPersonConverter.import(el, pubMetaDb)
       })
       entity = pubMetaDb.create(node)
@@ -656,6 +578,7 @@ export const ReportConverter = {
     el.append(_createTextElement($$, node.month, 'month'))
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.isbn, 'pub-id', {'pub-id-type': 'isbn'}))
+    el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     // Store entityId for explicit lookup on next import
     // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
     return el

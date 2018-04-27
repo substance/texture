@@ -45,8 +45,6 @@ export function convertCSLJSON(source) {
     //"treaty"
     "webpage": "webpage"
     //NA : "periodical"
-    //NA : "clinical-trial"
-    //NA : "preprint"
     //NA : "software"
   }
 

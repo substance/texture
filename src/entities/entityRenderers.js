@@ -197,86 +197,6 @@ function chapterRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function clinicalTrialRenderer($$, entityId, entityDb) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-
-  if (entity.sponsors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.sponsors, entityDb),
-      ', sponsors.'
-    )
-  }
-
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      _renderHTML($$, entity.title),
-      '. '
-    )
-  }
-
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
-    }
-    fragments.push('.')
-  }
-
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
-  }
-  return fragments
-}
-
-function preprintRenderer($$, entityId, entityDb) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      _renderHTML($$, entity.title),
-      '. '
-    )
-  }
-
-  if (entity.source) {
-    fragments.push(
-      ' ',
-      $$('em').append(entity.source),
-      '.'
-    )
-  }
-
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
-    }
-    fragments.push('.')
-  }
-
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
-  }
-  return fragments
-}
-
-
 function patentRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
@@ -409,13 +329,19 @@ function reportRenderer($$, entityId, entityDb) {
   if (entity.authors.length > 0) {
     fragments = fragments.concat(
       _renderAuthors($$, entity.authors, entityDb),
-      '.'
+      '. '
+    )
+  }
+
+  if (entity.sponsors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.sponsors, entityDb),
+      ', sponsors.'
     )
   }
 
   if (entity.title) {
     fragments.push(
-      ' ',
       $$('em').append(entity.title),
       '.'
     )
@@ -429,6 +355,13 @@ function reportRenderer($$, entityId, entityDb) {
       fragments.push(' ', _renderMonth(entity.month, "short"))
     }
     fragments.push('.')
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
   }
 
   return fragments
@@ -653,8 +586,6 @@ export default {
   'chapter': _delegate(chapterRenderer),
   'journal-article': _delegate(journalArticleRenderer),
   'conference-proceeding': _delegate(conferenceProceedingRenderer),
-  'clinical-trial': _delegate(clinicalTrialRenderer),
-  'preprint': _delegate(preprintRenderer),
   'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'patent': _delegate(patentRenderer),

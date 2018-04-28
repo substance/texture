@@ -81,6 +81,7 @@ export default {
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('patentCountry', 'Patent Country')
     config.addLabel('patentNumber', 'Patent Number')
+    config.addLabel('partTitle', 'Part Title')
     config.addLabel('pmid', 'PubMed ID')
     config.addLabel('publisherLoc', 'Publisher Location')
     config.addLabel('publisherName', 'Publisher Name')

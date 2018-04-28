@@ -223,15 +223,15 @@ export const ElementCitationConverter = {
       }
       if (type === 'book' || type === 'report' || type === 'software') {
         node.title = _getText(el, 'source')
-      } else if (type === 'chapter') {
-        node.title = _getHTML(el, 'chapter-title')
-        node.containerTitle = _getText(el, 'source')
-      } else if (type === 'data') {
-        node.title = _getHTML(el, 'data-title')
-        node.source = _getText(el, 'source')
       } else {
-        node.title = _getHTML(el, 'article-title')
-        node.source = _getText(el, 'source')
+        node.containerTitle = _getText(el, 'source')
+        if (type === 'chapter') {
+          node.title = _getHTML(el, 'chapter-title')
+        } else if (type === 'data') {
+          node.title = _getHTML(el, 'data-title')
+        } else {
+          node.title = _getHTML(el, 'article-title')
+        }
       }
       // Extract authors
       node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
@@ -300,18 +300,15 @@ export const ElementCitationConverter = {
 
     if (type === 'book' || type === 'report' || type === 'software') {
       el.append(_createTextElement($$, node.title, 'source'))
-    } else if (type === 'chapter') {
-      el.append(_createHTMLElement($$, node.title, 'chapter-title'))
-      el.append(_createTextElement($$, node.containerTitle, 'source'))
-    } else if (type === 'data') {
-      el.append(_createHTMLElement($$, node.title, 'data-title'))
-      el.append(_createTextElement($$, node.containerTitle, 'source'))
-    } else if (type === 'webpage') {
-      el.append(_createHTMLElement($$, node.title, 'article-title'))
-      el.append(_createTextElement($$, node.containerTitle, 'source'))
     } else {
-      el.append(_createHTMLElement($$, node.title, 'article-title'))
-      el.append(_createTextElement($$, node.source, 'source'))
+      el.append(_createTextElement($$, node.containerTitle, 'source'))
+      if (type === 'chapter') {
+        el.append(_createHTMLElement($$, node.title, 'chapter-title'))
+      } else if (type === 'data') {
+        el.append(_createHTMLElement($$, node.title, 'data-title'))
+      } else {
+        el.append(_createHTMLElement($$, node.title, 'article-title'))
+      }
     }
 
     return el

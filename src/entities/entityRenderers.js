@@ -26,10 +26,10 @@ function journalArticleRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
         ' ',
-        $$('em').append(entity.source),
+        $$('em').append(entity.containerTitle),
         '.'
     )
   }
@@ -285,10 +285,10 @@ function dataPublicationRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.containerTitle),
       '.'
     )
   }
@@ -327,10 +327,10 @@ function magazineArticleRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.containerTitle),
       ','
     )
   }
@@ -378,10 +378,10 @@ function newspaperArticleRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.containerTitle),
       ','
     )
     if (entity.edition) {
@@ -482,8 +482,8 @@ function conferencePaperRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
-    fragments.push(' ', $$('em').append(entity.source), '.')
+  if (entity.containerTitle) {
+    fragments.push(' ', $$('em').append(entity.containerTitle), '.')
   }
 
   if (entity.confName && entity.confLoc) {

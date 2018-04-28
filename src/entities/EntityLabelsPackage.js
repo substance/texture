@@ -72,6 +72,7 @@ export default {
     config.addLabel('assignee', 'Assignee')
     config.addLabel('confLoc', 'Conference Location')
     config.addLabel('confName', 'Conference Name')
+    config.addLabel('containerTitle', 'Container Title (e.g. journal name, book title)')
     config.addLabel('day', 'Day')
     config.addLabel('doi', 'DOI')
     config.addLabel('edition', 'Edition')

@@ -62,7 +62,7 @@ DataPublication.schema = {
   type: 'data-publication',
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -78,7 +78,7 @@ MagazineArticle.schema = {
   type: 'magazine-article',
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -95,7 +95,7 @@ NewspaperArticle.schema = {
   type: 'newspaper-article',
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -115,7 +115,7 @@ Patent.schema = {
   inventors: { type: ['object'], default: [] },
   assignee: { type: 'string', optional: true },
   title: { type: 'string', optional: true },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -131,7 +131,7 @@ JournalArticle.schema = {
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
   editors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
   issue: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
@@ -153,7 +153,7 @@ ConferencePaper.schema = {
   authors: { type: ['object'], default: [] },
   confName: { type: 'string', optional: true },
   confLoc: { type: 'string', optional: true },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -219,7 +219,7 @@ Webpage.schema = {
   type: 'webpage',
   title: { type: 'string', optional: true },
   // E.g. website name, where the page appeared
-  containerTitle: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   authors: { type: ['object'], default: [] },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },

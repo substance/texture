@@ -152,6 +152,7 @@ ConferenceProceeding.schema = {
   title: { type: 'string', optional: true }, // <article-title>
   authors: { type: ['object'], default: [] },
   confName: { type: 'string', optional: true },
+  confLoc: { type: 'string', optional: true },
   source: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },

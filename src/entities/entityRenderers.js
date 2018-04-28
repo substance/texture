@@ -433,7 +433,7 @@ function reportRenderer($$, entityId, entityDb) {
   if (entity.sponsors.length > 0) {
     fragments = fragments.concat(
       _renderAuthors($$, entity.sponsors, entityDb),
-      ', sponsors.'
+      ', sponsors. '
     )
   }
 
@@ -482,11 +482,16 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.confName) {
-    fragments.push(' ', entity.confName, ',')
-  }
   if (entity.source) {
     fragments.push(' ', $$('em').append(entity.source), '.')
+  }
+
+  if (entity.confName && entity.confLoc) {
+    fragments.push(' ', entity.confName, '; ', entity.confLoc, '.')
+  } else if (entity.confName) {
+    fragments.push(' ', entity.confName, '.')
+  } else if (entity.confLoc) {
+    fragments.push(' ', entity.confLoc, '.')
   }
 
   if (entity.year) {
@@ -498,7 +503,7 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
 
   let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
   if (contentLocation) {
-    fragments.push(':', contentLocation, '.')
+    fragments.push(', ', contentLocation, '.')
   } else {
     fragments.push('.')
   }

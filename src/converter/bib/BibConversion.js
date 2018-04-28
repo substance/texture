@@ -74,6 +74,8 @@ function _convertFromCSLJSON(source, type) {
     publisherName: source.publisher,
     pageCount: source['number-of-pages'],
     partTitle: source.section,
+    confName: source.event,
+    confLoc: source['event-place'],
     isbn: source.ISBN,
 
     year: date.year,

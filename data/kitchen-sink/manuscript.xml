@@ -448,20 +448,21 @@
         <element-citation publication-type="confproc">
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Prokopetc</surname>
+              <given-names>Kristina</given-names>
+            </name>
+            <name>
+              <surname>Bartoli</surname>
+              <given-names>Adrien</given-names>
             </name>
           </person-group>
-          <article-title>Conf proc title</article-title>
-          <source>Confproc source</source>
-          <conf-name>Conf name</conf-name>
-          <year>2010</year>
-          <month>10</month>
-          <day>5</day>
-          <fpage>214</fpage>
-          <lpage>216</lpage>
-          <page-range>214-216</page-range>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+          <article-title>Reducing Drift in Mosaicing Slit-Lamp Retinal Images</article-title>
+          <conf-name>2016 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) </conf-name>
+          <conf-loc>Las Vegas, NV, USA</conf-loc>
+          <year>2016</year>
+          <fpage>533</fpage>
+          <lpage>540</lpage>
+          <pub-id pub-id-type="doi">10.1109/CVPRW.2016.73</pub-id>
         </element-citation>
       </ref>
       <ref id="r5">

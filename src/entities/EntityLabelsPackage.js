@@ -70,6 +70,7 @@ export default {
     config.addLabel('archiveId', 'Archive ID')
     config.addLabel('arkId', 'ARK ID')
     config.addLabel('assignee', 'Assignee')
+    config.addLabel('confLoc', 'Conference Location')
     config.addLabel('confName', 'Conference Name')
     config.addLabel('day', 'Day')
     config.addLabel('doi', 'DOI')

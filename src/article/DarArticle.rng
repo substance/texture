@@ -404,6 +404,7 @@
         <optional><ref name="day"/></optional>
 
         <optional><ref name="conf-name"/></optional>
+        <optional><ref name="conf-loc"/></optional>
         <optional><ref name="data-title"/></optional>
         <optional><ref name="part-title"/></optional>
         <optional><ref name="patent"/></optional>

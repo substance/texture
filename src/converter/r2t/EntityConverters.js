@@ -193,6 +193,7 @@ export const ElementCitationConverter = {
         // normal fields
         assignee: _getText(el, 'collab[collab-type=assignee]'),
         confName: _getText(el, 'conf-name'),
+        confLoc: _getText(el, 'conf-loc'),
         day: _getText(el, 'day'),
         edition: _getText(el, 'edition'),
         elocationId: _getText(el, 'elocation-id'),
@@ -263,6 +264,7 @@ export const ElementCitationConverter = {
     // Regular properties
     el.append(_createTextElement($$, node.assignee, 'collab', {'collab-type': 'assignee'}))
     el.append(_createTextElement($$, node.confName, 'conf-name'))
+    el.append(_createTextElement($$, node.confLoc, 'conf-loc'))
     el.append(_createTextElement($$, node.day, 'day'))
     el.append(_createTextElement($$, node.edition, 'edition'))
     el.append(_createTextElement($$, node.elocationId, 'elocation-id'))

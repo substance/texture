@@ -63,6 +63,9 @@ export default {
     config.addLabel('editors', 'Editors')
     config.addLabel('edit-editors', 'Edit Editors')
 
+    config.addLabel('translators', 'Translators')
+    config.addLabel('edit-translators', 'Edit Translators')
+
     config.addLabel('accessionId', 'Accession ID')
     config.addLabel('archiveId', 'Archive ID')
     config.addLabel('arkId', 'ARK ID')
@@ -86,6 +89,7 @@ export default {
     config.addLabel('publisherLoc', 'Publisher Location')
     config.addLabel('publisherName', 'Publisher Name')
     config.addLabel('source', 'Source')
+    config.addLabel('series', 'Series')
     config.addLabel('title', 'Title')
     config.addLabel('version', 'Version')
     config.addLabel('volume', 'Volume')

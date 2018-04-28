@@ -207,6 +207,7 @@ export const ElementCitationConverter = {
         patentNumber: _getText(el, 'patent'),
         publisherLoc: _getSeparatedText(el, 'publisher-loc'),
         publisherName: _getSeparatedText(el, 'publisher-name'),
+        series: _getText(el, 'series'),
         uri: _getText(el, 'uri'),
         version: _getText(el, 'version'),
         volume: _getText(el, 'volume'),
@@ -245,6 +246,10 @@ export const ElementCitationConverter = {
       })
       // Extract sponsors
       node.sponsors = el.findAll('person-group[person-group-type=sponsor] > name').map(el => {
+        return RefPersonConverter.import(el, pubMetaDb)
+      })
+      // Extract translators
+      node.translators = el.findAll('person-group[person-group-type=translator] > name').map(el => {
         return RefPersonConverter.import(el, pubMetaDb)
       })
       entity = pubMetaDb.create(node)

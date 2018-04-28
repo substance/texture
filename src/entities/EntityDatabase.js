@@ -14,7 +14,9 @@ Book.schema = {
   type: 'book',
   authors: { type: ['object'], default: [] },
   editors: { type: ['object'], default: [] },
+  translators: { type: ['object'], default: [] },
   title: { type: 'string', optional: true },
+  volume: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -22,6 +24,7 @@ Book.schema = {
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
   pageCount: { type: 'string', optional: true },
+  series: { type: 'string', optional: true },
   doi: { type: 'string', optional: true },
   isbn: { type: 'string', optional: true },
   pmid: { type: 'string', optional: true }
@@ -33,8 +36,10 @@ Chapter.schema = {
   type: 'chapter',
   title: { type: 'string', optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
+  volume: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] }, // <person-group person-group-type="author">
   editors: { type: ['object'], default: [] },
+  translators: { type: ['object'], default: [] },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -45,6 +50,7 @@ Chapter.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
+  series: { type: 'string', optional: true },
   doi: { type: 'string', optional: true }, // <pub-id pub-id-type="doi">
   isbn: { type: 'string', optional: true }, // <pub-id pub-id-type="isbn">
   pmid: { type: 'string', optional: true } // <pub-id pub-id-type="pmid">

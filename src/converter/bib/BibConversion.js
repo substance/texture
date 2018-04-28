@@ -86,7 +86,6 @@ function _convertFromCSLJSON(source, type) {
     /* Examples with no corresponding field:
         - abstract
         - accessed
-        - collection-title
         - composer
         - director
         - ISSN
@@ -98,12 +97,23 @@ function _convertFromCSLJSON(source, type) {
     */
   }
 
-  // Authors and editors
+  // series
+  if (source['collection-title']) {
+    data.series = source['collection-title']
+    if (source['collection-number']) {
+      data.series += '; ' + source['collection-number']
+    }
+  }
+
+  // Authors, editors, translators
   if (source.author) {
     data.authors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
   }
   if (source.editor) {
     data.editors = source.editor.map(a => {return {surname: a.family, givenNames: a.given}})
+  }
+  if (source.translator) {
+    data.translators = source.translator.map(a => {return {surname: a.family, givenNames: a.given}})
   }
 
 

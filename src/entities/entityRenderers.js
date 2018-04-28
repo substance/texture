@@ -84,12 +84,26 @@ function bookRenderer($$, entityId, entityDb) {
       '.'
     )
   }
+  if (entity.translators.length) {
+    fragments = fragments.concat(
+      ' (',
+      _renderAuthors($$, entity.translators, entityDb),
+      ', trans).'
+    )
+  }
   if (entity.title) {
     fragments.push(
       ' ',
       $$('em').append(entity.title),
       '.'
     )
+  }
+  if (entity.volume) {
+    if (/^\d+$/.test(entity.volume)) {
+      fragments.push(' Vol ', entity.volume, '.')
+    } else {
+      fragments.push(' ', entity.volume, '.')
+    }
   }
   if (entity.edition) {
     fragments.push(' ', entity.edition, '.')
@@ -106,6 +120,10 @@ function bookRenderer($$, entityId, entityDb) {
   }
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.series) {
+    fragments.push(' (', entity.series, ')')
+  }
 
   if (entity.year) {
     fragments.push(' ', entity.year)
@@ -140,6 +158,13 @@ function chapterRenderer($$, entityId, entityDb) {
       '.'
     )
   }
+  if (entity.translators.length) {
+    fragments = fragments.concat(
+      ' (',
+      _renderAuthors($$, entity.translators, entityDb),
+      ', trans).'
+    )
+  }
   if (entity.title) {
     fragments.push(
       ' ',
@@ -168,11 +193,22 @@ function chapterRenderer($$, entityId, entityDb) {
       '.'
     )
   }
+  if (entity.volume) {
+    if (/^\d+$/.test(entity.volume)) {
+      fragments.push(' ', entity.volume, '.')
+    } else {
+      fragments.push(' Vol ', entity.volume, '.')
+    }
+  }
   if (entity.edition) {
     fragments.push(' ', entity.edition, '.')
   }
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.series) {
+    fragments.push(' (', entity.series, ')')
+  }
 
   if (entity.year) {
     fragments.push(' ', entity.year)

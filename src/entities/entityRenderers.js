@@ -464,7 +464,7 @@ function reportRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function conferenceProceedingRenderer($$, entityId, entityDb) {
+function conferencePaperRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -687,7 +687,7 @@ export default {
   'book': _delegate(bookRenderer),
   'chapter': _delegate(chapterRenderer),
   'journal-article': _delegate(journalArticleRenderer),
-  'conference-proceeding': _delegate(conferenceProceedingRenderer),
+  'conference-paper': _delegate(conferencePaperRenderer),
   'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'patent': _delegate(patentRenderer),

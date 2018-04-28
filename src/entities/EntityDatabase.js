@@ -145,10 +145,10 @@ JournalArticle.schema = {
   pmid: { type: 'string', optional: true }
 }
 
-export class ConferenceProceeding extends BibliographicEntry {}
+export class ConferencePaper extends BibliographicEntry {}
 
-ConferenceProceeding.schema = {
-  type: 'conference-proceeding',
+ConferencePaper.schema = {
+  type: 'conference-paper',
   title: { type: 'string', optional: true }, // <article-title>
   authors: { type: ['object'], default: [] },
   confName: { type: 'string', optional: true },

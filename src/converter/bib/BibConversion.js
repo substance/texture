@@ -31,7 +31,7 @@ export function convertCSLJSON(source) {
     //"motion_picture"
     //"musical_score"
     //"pamphlet"
-    "paper-conference": "conference-proceeding",
+    "paper-conference": "conference-paper",
     "patent": "patent",
     //"post"
     //"post-weblog"

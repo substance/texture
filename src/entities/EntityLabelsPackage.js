@@ -21,9 +21,9 @@ export default {
     config.addLabel('add-chapter', 'Add Chapter')
     config.addLabel('create-chapter', 'Create Chapter')
 
-    config.addLabel('conference-proceeding', 'Conference Proceeding')
-    config.addLabel('create-conference-proceeding', 'Create Conference Proceeding')
-    config.addLabel('edit-conference-proceeding', 'Edit Conference Proceeding')
+    config.addLabel('conference-paper', 'Conference Paper')
+    config.addLabel('create-conference-paper', 'Create Conference Paper')
+    config.addLabel('edit-conference-paper', 'Edit Conference Paper')
 
     config.addLabel('webpage', 'Webpage')
     config.addLabel('create-webpage', 'Create Webpage')

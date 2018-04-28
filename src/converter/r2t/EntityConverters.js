@@ -156,7 +156,7 @@ let mappingItemTypes = {
   'journal': 'journal-article',
   'book': 'book',
   'chapter': 'chapter',
-  'confproc': 'conference-proceeding',
+  'confproc': 'conference-paper',
   'data': 'data-publication',
   'patent': 'patent',
   'magazine': 'magazine-article',

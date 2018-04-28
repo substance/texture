@@ -3,7 +3,7 @@ import DOIInputComponent from './DOIInputComponent'
 import ReferenceUploadComponent from './ReferenceUploadComponent'
 
 const targetTypes = [
-  'journal-article', 'book', 'chapter', 'conference-proceeding',
+  'journal-article', 'book', 'chapter', 'conference-paper',
   'report', 'newspaper-article', 'magazine-article', 'data-publication',
   'patent', 'webpage', 'thesis', 'software'
 ]

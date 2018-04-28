@@ -105,9 +105,13 @@ function _convertFromCSLJSON(source, type) {
     }
   }
 
-  // Authors, editors, translators
+  // Authors, editors, translators, inventors
   if (source.author) {
-    data.authors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+    if (type === 'patent') {
+      data.inventors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+    } else {
+      data.authors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+    }
   }
   if (source.editor) {
     data.editors = source.editor.map(a => {return {surname: a.family, givenNames: a.given}})

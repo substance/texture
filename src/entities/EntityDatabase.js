@@ -34,7 +34,7 @@ export class Chapter extends BibliographicEntry {}
 
 Chapter.schema = {
   type: 'chapter',
-  title: { type: 'string', optional: true },
+  title: { type: 'string', optional: true }, // <chapter-title>
   containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] }, // <person-group person-group-type="author">
@@ -149,7 +149,7 @@ export class ConferenceProceeding extends BibliographicEntry {}
 
 ConferenceProceeding.schema = {
   type: 'conference-proceeding',
-  title: { type: 'string', optional: true },
+  title: { type: 'string', optional: true }, // <article-title>
   authors: { type: ['object'], default: [] },
   confName: { type: 'string', optional: true },
   source: { type: 'string', optional: true },

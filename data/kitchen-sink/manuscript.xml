@@ -417,16 +417,16 @@
         <element-citation publication-type="report">
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>de Grey</surname>
+              <given-names>Aubrey D. N. J.</given-names>
             </name>
           </person-group>
-          <article-title>Preprint title</article-title>
-          <source>Pre-print journal</source>
-          <year>2010</year>
-          <month>10</month>
-          <day>5</day>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+          <article-title>The chromatic number of the plane is at least 5</article-title>
+          <series>arXiv:1804.02385</series>
+          <year>2018</year>
+          <month>4</month>
+          <day>7</day>
+          <pub-id pub-id-type="doi">https://arxiv.org/abs/1804.02385</pub-id>
         </element-citation>
       </ref>
       <ref id="r3">
@@ -567,18 +567,21 @@
         <element-citation publication-type="software">
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Willner</surname>
+              <given-names>Sven</given-names>
+            </name>
+            <name>
+              <surname>Gieseke</surname>
+              <given-names>Robert</given-names>
             </name>
           </person-group>
-          <source>Software Project</source>
-          <version>1.0.0-preview.7</version>
-          <publisher-loc>Software publisher location</publisher-loc>
-          <publisher-name>Software publisher name</publisher-name>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
-          <pub-id pub-id-type="doi">SOFTWARE_DOI</pub-id>
+          <source>pyhector</source>
+          <version>2.0.1</version>
+          <publisher-name>Zenodo</publisher-name>
+          <year>2018</year>
+          <month>3</month>
+          <day>19</day>
+          <pub-id pub-id-type="doi">10.5281/zenodo.1203712</pub-id>
         </element-citation>
       </ref>
       <ref id="r11">

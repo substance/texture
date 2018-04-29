@@ -446,6 +446,10 @@ function reportRenderer($$, entityId, entityDb) {
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
+  if (entity.series) {
+    fragments.push(' (', entity.series, ')')
+  }
+
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
@@ -531,13 +535,14 @@ function softwareRenderer($$, entityId, entityDb) {
   if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.title)
+      _renderHTML($$, entity.title),
+      '.'
     )
-    if (entity.version) {
-      fragments.push(', ', entity.version)
-    }
-    fragments.push('.')
   }
+  if (entity.version) {
+    fragments.push(' Version ', entity.version)
+  }
+  fragments.push('.')
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 

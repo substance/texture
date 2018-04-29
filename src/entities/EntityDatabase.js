@@ -180,6 +180,7 @@ Report.schema = {
   day: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
+  series: { type: 'string', optional: true },
   isbn: { type: 'string', optional: true },
   doi: { type: 'string', optional: true }
 }

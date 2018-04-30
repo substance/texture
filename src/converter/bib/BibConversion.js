@@ -10,8 +10,8 @@ export function convertCSLJSON(source) {
   // CSL types: http://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types
   let typeMapping = {
     "article": "journal-article",
-    "article-magazine": "journal-article",
-    "article-newspaper": "journal-article",
+    "article-magazine": "magazine-article",
+    "article-newspaper": "newspaper-article",
     "article-journal": "journal-article",
     //"bill"
     "book": "book",
@@ -31,7 +31,7 @@ export function convertCSLJSON(source) {
     //"motion_picture"
     //"musical_score"
     //"pamphlet"
-    "paper-conference": "conference-proceeding",
+    "paper-conference": "conference-paper",
     "patent": "patent",
     //"post"
     //"post-weblog"
@@ -44,9 +44,6 @@ export function convertCSLJSON(source) {
     "thesis": "thesis",
     //"treaty"
     "webpage": "webpage"
-    //NA : "periodical"
-    //NA : "clinical-trial"
-    //NA : "preprint"
     //NA : "software"
   }
 
@@ -76,6 +73,9 @@ function _convertFromCSLJSON(source, type) {
     publisherLoc: source['publisher-place'],
     publisherName: source.publisher,
     pageCount: source['number-of-pages'],
+    partTitle: source.section,
+    confName: source.event,
+    confLoc: source['event-place'],
     isbn: source.ISBN,
 
     year: date.year,
@@ -88,7 +88,6 @@ function _convertFromCSLJSON(source, type) {
     /* Examples with no corresponding field:
         - abstract
         - accessed
-        - collection-title
         - composer
         - director
         - ISSN
@@ -100,12 +99,27 @@ function _convertFromCSLJSON(source, type) {
     */
   }
 
-  // Authors and editors
+  // series
+  if (source['collection-title']) {
+    data.series = source['collection-title']
+    if (source['collection-number']) {
+      data.series += '; ' + source['collection-number']
+    }
+  }
+
+  // Authors, editors, translators, inventors
   if (source.author) {
-    data.authors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+    if (type === 'patent') {
+      data.inventors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+    } else {
+      data.authors = source.author.map(a => {return {surname: a.family, givenNames: a.given}})
+    }
   }
   if (source.editor) {
     data.editors = source.editor.map(a => {return {surname: a.family, givenNames: a.given}})
+  }
+  if (source.translator) {
+    data.translators = source.translator.map(a => {return {surname: a.family, givenNames: a.given}})
   }
 
 

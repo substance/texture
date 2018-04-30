@@ -14,7 +14,9 @@ Book.schema = {
   type: 'book',
   authors: { type: ['object'], default: [] },
   editors: { type: ['object'], default: [] },
+  translators: { type: ['object'], default: [] },
   title: { type: 'string', optional: true },
+  volume: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -22,6 +24,7 @@ Book.schema = {
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
   pageCount: { type: 'string', optional: true },
+  series: { type: 'string', optional: true },
   doi: { type: 'string', optional: true },
   isbn: { type: 'string', optional: true },
   pmid: { type: 'string', optional: true }
@@ -31,10 +34,12 @@ export class Chapter extends BibliographicEntry {}
 
 Chapter.schema = {
   type: 'chapter',
-  title: { type: 'string', optional: true },
+  title: { type: 'string', optional: true }, // <chapter-title>
   containerTitle: { type: 'string', optional: true }, // <source>
+  volume: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] }, // <person-group person-group-type="author">
   editors: { type: ['object'], default: [] },
+  translators: { type: ['object'], default: [] },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -45,6 +50,7 @@ Chapter.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
+  series: { type: 'string', optional: true },
   doi: { type: 'string', optional: true }, // <pub-id pub-id-type="doi">
   isbn: { type: 'string', optional: true }, // <pub-id pub-id-type="isbn">
   pmid: { type: 'string', optional: true } // <pub-id pub-id-type="pmid">
@@ -56,7 +62,7 @@ DataPublication.schema = {
   type: 'data-publication',
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -66,13 +72,13 @@ DataPublication.schema = {
   doi: { type: 'string', optional: true }
 }
 
-export class Periodical extends BibliographicEntry {}
+export class MagazineArticle extends BibliographicEntry {}
 
-Periodical.schema = {
-  type: 'periodical',
+MagazineArticle.schema = {
+  type: 'magazine-article',
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -83,6 +89,25 @@ Periodical.schema = {
   doi: { type: 'string', optional: true }
 }
 
+export class NewspaperArticle extends BibliographicEntry {}
+
+NewspaperArticle.schema = {
+  type: 'newspaper-article',
+  title: { type: 'string', optional: true },
+  authors: { type: ['object'], default: [] },
+  containerTitle: { type: 'string', optional: true }, // <source>
+  year: { type: 'string', optional: true },
+  month: { type: 'string', optional: true },
+  day: { type: 'string', optional: true },
+  volume: { type: 'string', optional: true },
+  fpage: { type: 'string', optional: true },
+  lpage: { type: 'string', optional: true },
+  pageRange: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true },
+  edition: { type: 'string', optional: true },
+  partTitle: { type: 'string', optional: true }
+}
+
 export class Patent extends BibliographicEntry {}
 
 Patent.schema = {
@@ -90,7 +115,7 @@ Patent.schema = {
   inventors: { type: ['object'], default: [] },
   assignee: { type: 'string', optional: true },
   title: { type: 'string', optional: true },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -106,7 +131,7 @@ JournalArticle.schema = {
   title: { type: 'string', optional: true },
   authors: { type: ['object'], default: [] },
   editors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
   issue: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
@@ -120,14 +145,15 @@ JournalArticle.schema = {
   pmid: { type: 'string', optional: true }
 }
 
-export class ConferenceProceeding extends BibliographicEntry {}
+export class ConferencePaper extends BibliographicEntry {}
 
-ConferenceProceeding.schema = {
-  type: 'conference-proceeding',
-  title: { type: 'string', optional: true },
+ConferencePaper.schema = {
+  type: 'conference-paper',
+  title: { type: 'string', optional: true }, // <article-title>
   authors: { type: ['object'], default: [] },
   confName: { type: 'string', optional: true },
-  source: { type: 'string', optional: true },
+  confLoc: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -135,32 +161,6 @@ ConferenceProceeding.schema = {
   lpage: { type: 'string', optional: true },
   pageRange: { type: 'string', optional: true },
   elocationId: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true }
-}
-
-export class ClinicalTrial extends BibliographicEntry {}
-
-ClinicalTrial.schema = {
-  type: 'clinical-trial',
-  title: { type: 'string', optional: true },
-  sponsors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
-  year: { type: 'string', optional: true },
-  month: { type: 'string', optional: true },
-  day: { type: 'string', optional: true },
-  doi: { type: 'string', optional: true }
-}
-
-export class Preprint extends BibliographicEntry {}
-
-Preprint.schema = {
-  type: 'preprint',
-  title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
-  source: { type: 'string', optional: true },
-  year: { type: 'string', optional: true },
-  month: { type: 'string', optional: true },
-  day: { type: 'string', optional: true },
   doi: { type: 'string', optional: true }
 }
 
@@ -173,13 +173,16 @@ export class Report extends BibliographicEntry {
 Report.schema = {
   type: 'report',
   authors: { type: ['object'], default: [] },
+  sponsors: { type: ['object'], default: [] },
   title: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
-  isbn: { type: 'string', optional: true }
+  series: { type: 'string', optional: true },
+  isbn: { type: 'string', optional: true },
+  doi: { type: 'string', optional: true }
 }
 
 export class Software extends BibliographicEntry {}
@@ -217,7 +220,7 @@ Webpage.schema = {
   type: 'webpage',
   title: { type: 'string', optional: true },
   // E.g. website name, where the page appeared
-  containerTitle: { type: 'string', optional: true },
+  containerTitle: { type: 'string', optional: true }, // <source>
   authors: { type: ['object'], default: [] },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },

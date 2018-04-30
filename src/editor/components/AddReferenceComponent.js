@@ -3,10 +3,9 @@ import DOIInputComponent from './DOIInputComponent'
 import ReferenceUploadComponent from './ReferenceUploadComponent'
 
 const targetTypes = [
-  'journal-article', 'book', 'chapter', 'conference-proceeding',
-  'clinical-trial', 'preprint', 'report',
-  'periodical', 'data-publication', 'patent',
-  'webpage', 'thesis', 'software'
+  'journal-article', 'book', 'chapter', 'conference-paper',
+  'report', 'newspaper-article', 'magazine-article', 'data-publication',
+  'patent', 'webpage', 'thesis', 'software'
 ]
 
 export default class AddReferenceComponent extends Component {

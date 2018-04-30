@@ -26,10 +26,10 @@ function journalArticleRenderer($$, entityId, entityDb) {
       '.'
     )
   }
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
         ' ',
-        $$('em').append(entity.source),
+        $$('em').append(entity.containerTitle),
         '.'
     )
   }
@@ -84,12 +84,26 @@ function bookRenderer($$, entityId, entityDb) {
       '.'
     )
   }
+  if (entity.translators.length) {
+    fragments = fragments.concat(
+      ' (',
+      _renderAuthors($$, entity.translators, entityDb),
+      ', trans).'
+    )
+  }
   if (entity.title) {
     fragments.push(
       ' ',
       $$('em').append(entity.title),
       '.'
     )
+  }
+  if (entity.volume) {
+    if (/^\d+$/.test(entity.volume)) {
+      fragments.push(' Vol ', entity.volume, '.')
+    } else {
+      fragments.push(' ', entity.volume, '.')
+    }
   }
   if (entity.edition) {
     fragments.push(' ', entity.edition, '.')
@@ -106,6 +120,10 @@ function bookRenderer($$, entityId, entityDb) {
   }
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.series) {
+    fragments.push(' (', entity.series, ')')
+  }
 
   if (entity.year) {
     fragments.push(' ', entity.year)
@@ -140,6 +158,13 @@ function chapterRenderer($$, entityId, entityDb) {
       '.'
     )
   }
+  if (entity.translators.length) {
+    fragments = fragments.concat(
+      ' (',
+      _renderAuthors($$, entity.translators, entityDb),
+      ', trans).'
+    )
+  }
   if (entity.title) {
     fragments.push(
       ' ',
@@ -168,11 +193,22 @@ function chapterRenderer($$, entityId, entityDb) {
       '.'
     )
   }
+  if (entity.volume) {
+    if (/^\d+$/.test(entity.volume)) {
+      fragments.push(' ', entity.volume, '.')
+    } else {
+      fragments.push(' Vol ', entity.volume, '.')
+    }
+  }
   if (entity.edition) {
     fragments.push(' ', entity.edition, '.')
   }
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.series) {
+    fragments.push(' (', entity.series, ')')
+  }
 
   if (entity.year) {
     fragments.push(' ', entity.year)
@@ -196,86 +232,6 @@ function chapterRenderer($$, entityId, entityDb) {
 
   return fragments
 }
-
-function clinicalTrialRenderer($$, entityId, entityDb) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-
-  if (entity.sponsors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.sponsors, entityDb),
-      ', sponsors.'
-    )
-  }
-
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      _renderHTML($$, entity.title),
-      '. '
-    )
-  }
-
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
-    }
-    fragments.push('.')
-  }
-
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
-  }
-  return fragments
-}
-
-function preprintRenderer($$, entityId, entityDb) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      _renderHTML($$, entity.title),
-      '. '
-    )
-  }
-
-  if (entity.source) {
-    fragments.push(
-      ' ',
-      $$('em').append(entity.source),
-      '.'
-    )
-  }
-
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
-    }
-    fragments.push('.')
-  }
-
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
-  }
-  return fragments
-}
-
 
 function patentRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
@@ -329,10 +285,10 @@ function dataPublicationRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.containerTitle),
       '.'
     )
   }
@@ -352,7 +308,8 @@ function dataPublicationRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function periodicalRenderer($$, entityId, entityDb) {
+
+function magazineArticleRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -370,10 +327,10 @@ function periodicalRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.source) {
+  if (entity.containerTitle) {
     fragments.push(
       ' ',
-      $$('em').append(entity.source),
+      $$('em').append(entity.containerTitle),
       ','
     )
   }
@@ -403,38 +360,7 @@ function periodicalRenderer($$, entityId, entityDb) {
 }
 
 
-function reportRenderer($$, entityId, entityDb) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      $$('em').append(entity.title),
-      '.'
-    )
-  }
-
-  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
-
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
-    }
-    fragments.push('.')
-  }
-
-  return fragments
-}
-
-function conferenceProceedingRenderer($$, entityId, entityDb) {
+function newspaperArticleRenderer($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -452,11 +378,19 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
     )
   }
 
-  if (entity.confName) {
-    fragments.push(' ', entity.confName, ',')
-  }
-  if (entity.source) {
-    fragments.push(' ', $$('em').append(entity.source), '.')
+  if (entity.containerTitle) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.containerTitle),
+      ','
+    )
+    if (entity.edition) {
+      fragments.push(
+        ' ',
+        $$('em').append(entity.edition),
+        ','
+      )
+    }
   }
 
   if (entity.year) {
@@ -468,7 +402,112 @@ function conferenceProceedingRenderer($$, entityId, entityDb) {
 
   let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
   if (contentLocation) {
-    fragments.push(':', contentLocation, '.')
+    fragments.push(':', contentLocation)
+  }
+  if (entity.partTitle) {
+    fragments.push(' (', entity.partTitle, ')')
+  }
+  fragments.push('.')
+
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+
+  return fragments
+}
+
+
+function reportRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '. '
+    )
+  }
+
+  if (entity.sponsors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.sponsors, entityDb),
+      ', sponsors. '
+    )
+  }
+
+  if (entity.title) {
+    fragments.push(
+      $$('em').append(entity.title),
+      '.'
+    )
+  }
+
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  if (entity.series) {
+    fragments.push(' (', entity.series, ')')
+  }
+
+  if (entity.year) {
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+    fragments.push('.')
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+
+  return fragments
+}
+
+function conferencePaperRenderer($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
+  if (entity.title) {
+    fragments.push(
+      ' ',
+      _renderHTML($$, entity.title),
+      '. '
+    )
+  }
+
+  if (entity.containerTitle) {
+    fragments.push(' ', $$('em').append(entity.containerTitle), '.')
+  }
+
+  if (entity.confName && entity.confLoc) {
+    fragments.push(' ', entity.confName, '; ', entity.confLoc, '.')
+  } else if (entity.confName) {
+    fragments.push(' ', entity.confName, '.')
+  } else if (entity.confLoc) {
+    fragments.push(' ', entity.confLoc, '.')
+  }
+
+  if (entity.year) {
+    fragments.push(' ', entity.year)
+    if (entity.month) {
+      fragments.push(' ', _renderMonth(entity.month, "short"))
+    }
+  }
+
+  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
+  if (contentLocation) {
+    fragments.push(', ', contentLocation, '.')
   } else {
     fragments.push('.')
   }
@@ -496,13 +535,14 @@ function softwareRenderer($$, entityId, entityDb) {
   if (entity.title) {
     fragments.push(
       ' ',
-      _renderHTML($$, entity.title)
+      _renderHTML($$, entity.title),
+      '.'
     )
-    if (entity.version) {
-      fragments.push(', ', entity.version)
-    }
-    fragments.push('.')
   }
+  if (entity.version) {
+    fragments.push(' Version ', entity.version)
+  }
+  fragments.push('.')
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
@@ -652,14 +692,13 @@ export default {
   'book': _delegate(bookRenderer),
   'chapter': _delegate(chapterRenderer),
   'journal-article': _delegate(journalArticleRenderer),
-  'conference-proceeding': _delegate(conferenceProceedingRenderer),
-  'clinical-trial': _delegate(clinicalTrialRenderer),
-  'preprint': _delegate(preprintRenderer),
+  'conference-paper': _delegate(conferencePaperRenderer),
   'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'patent': _delegate(patentRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
-  'periodical': _delegate(periodicalRenderer),
+  'magazine-aricle': _delegate(magazineArticleRenderer),
+  'newspaper-article': _delegate(newspaperArticleRenderer),
   'software': _delegate(softwareRenderer),
   'thesis': _delegate(thesisRenderer),
   'webpage': _delegate(webpageRenderer)

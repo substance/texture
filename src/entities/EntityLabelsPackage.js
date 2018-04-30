@@ -21,13 +21,9 @@ export default {
     config.addLabel('add-chapter', 'Add Chapter')
     config.addLabel('create-chapter', 'Create Chapter')
 
-    config.addLabel('conference-proceeding', 'Conference Proceeding')
-    config.addLabel('create-conference-proceeding', 'Create Conference Proceeding')
-    config.addLabel('edit-conference-proceeding', 'Edit Conference Proceeding')
-
-    config.addLabel('clinical-trial', 'Clinical Trial')
-    config.addLabel('create-clinical-trial', 'Create Clinical Trial')
-    config.addLabel('edit-clinical-trial', 'Edit Clinical Trial')
+    config.addLabel('conference-paper', 'Conference Paper')
+    config.addLabel('create-conference-paper', 'Create Conference Paper')
+    config.addLabel('edit-conference-paper', 'Edit Conference Paper')
 
     config.addLabel('webpage', 'Webpage')
     config.addLabel('create-webpage', 'Create Webpage')
@@ -41,10 +37,6 @@ export default {
     config.addLabel('create-software', 'Create Software')
     config.addLabel('edit-software', 'Edit Software')
 
-    config.addLabel('preprint', 'Preprint')
-    config.addLabel('create-preprint', 'Create Preprint')
-    config.addLabel('edit-preprint', 'Edit Preprint')
-
     config.addLabel('report', 'Report')
     config.addLabel('create-report', 'Create Report')
     config.addLabel('edit-report', 'Edit Report')
@@ -53,9 +45,13 @@ export default {
     config.addLabel('create-data-publication', 'Create Data Publication')
     config.addLabel('edit-data-publication', 'Edit Data Publication')
 
-    config.addLabel('periodical', 'Periodical')
-    config.addLabel('create-periodical', 'Create Periodical')
-    config.addLabel('edit-periodical', 'Edit Periodical')
+    config.addLabel('magazine-article', 'Magazine Article')
+    config.addLabel('create-magazine-article', 'Create Magazine Article')
+    config.addLabel('edit-magazine-article', 'Edit Magazine Article')
+
+    config.addLabel('newspaper-article', 'Newspaper Article')
+    config.addLabel('create-newspaper-article', 'Create Newspaper Article')
+    config.addLabel('edit-newspaper-article', 'Edit Newspaper Article')
 
     config.addLabel('patent', 'Patent')
     config.addLabel('create-patent', 'Create Patent')
@@ -67,11 +63,16 @@ export default {
     config.addLabel('editors', 'Editors')
     config.addLabel('edit-editors', 'Edit Editors')
 
+    config.addLabel('translators', 'Translators')
+    config.addLabel('edit-translators', 'Edit Translators')
+
     config.addLabel('accessionId', 'Accession ID')
     config.addLabel('archiveId', 'Archive ID')
     config.addLabel('arkId', 'ARK ID')
     config.addLabel('assignee', 'Assignee')
+    config.addLabel('confLoc', 'Conference Location')
     config.addLabel('confName', 'Conference Name')
+    config.addLabel('containerTitle', 'Container Title (e.g. journal name, book title)')
     config.addLabel('day', 'Day')
     config.addLabel('doi', 'DOI')
     config.addLabel('edition', 'Edition')
@@ -85,10 +86,12 @@ export default {
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('patentCountry', 'Patent Country')
     config.addLabel('patentNumber', 'Patent Number')
+    config.addLabel('partTitle', 'Part Title')
     config.addLabel('pmid', 'PubMed ID')
     config.addLabel('publisherLoc', 'Publisher Location')
     config.addLabel('publisherName', 'Publisher Name')
     config.addLabel('source', 'Source')
+    config.addLabel('series', 'Series')
     config.addLabel('title', 'Title')
     config.addLabel('version', 'Version')
     config.addLabel('volume', 'Volume')

@@ -28,7 +28,6 @@ class TexMathComponent extends NodeComponent {
     try {
       el.append(
         $$('span').html(katex.renderToString(texMath))
-
       )
       let blockerEl = $$('div').addClass('se-blocker')
       el.append(blockerEl)

@@ -615,7 +615,13 @@ function webpageRenderer($$, entityId, entityDb) {
   }
 
   if (entity.uri) {
-    fragments.push(' ', entity.uri)
+    fragments.push(' ',
+    $$('a').attr({
+      href: entity.uri,
+      target: '_blank'
+    }).append(
+      entity.uri
+    ))
   }
 
   if (entity.year) {

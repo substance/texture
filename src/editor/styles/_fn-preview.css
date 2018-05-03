@@ -1,12 +1,12 @@
 .sc-fn-preview {
-  font-size: 11px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 5px var(--default-padding);
-  color: #A5A5A5;
+  font-size: 12px;
+  border-bottom: 1px solid var(--separator-color);
+  padding: 5px 10px;
   padding-left: 30px;
-  font-weight: 600;
   cursor: pointer;
   position: relative;
+  line-height: 1.5em;
+  border-left: 3px solid transparent;
 }
 
 .sc-fn-preview .sc-p {
@@ -22,14 +22,20 @@
 
 .sc-fn-preview .se-label {
   position: absolute;
-  top: 5px;
+  top: 3px;
   left: 10px;
   width: 20px;
-  font-weight: normal;
+  vertical-align: super;
+  font-size: 10px;
   overflow: visible;
 }
 
 .sc-fn-preview.sm-selected {
-  color: #fff;
-  font-weight: 600;
+  border-left: 3px solid var(--border-action-color);
+  color: var(--default-text-color);
+  background: var(--active-light-bg-color);
+}
+
+.sc-fn-preview a {
+  text-decoration: none;
 }

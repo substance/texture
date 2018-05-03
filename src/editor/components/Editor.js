@@ -180,11 +180,11 @@ export default class Editor extends AbstractWriter {
       }).ref('article'),
       $$(Overlay, {
         toolPanel: configurator.getToolPanel('main-overlay'),
-        theme: 'dark'
+        theme: 'light'
       }),
       $$(ContextMenu, {
         toolPanel: configurator.getToolPanel('context-menu'),
-        theme: 'dark'
+        theme: 'light'
       }),
       $$(Dropzones)
     )

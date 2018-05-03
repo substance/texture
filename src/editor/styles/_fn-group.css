@@ -45,7 +45,7 @@
 }
 
 .sc-fn-item .se-fn-container .container-node:focus {
-  border: 1px solid var(--link-color);
+  border: 1px solid var(--border-action-color);
   border-radius: 5px;
   padding: 0px 10px;
 }

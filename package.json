@@ -10,7 +10,7 @@
     "lodash": "^4.14.1"
   },
   "peerDependency": {
-    "substance": ">=1.0.0-preview.37"
+    "substance": ">=1.0.0-preview.42"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",
@@ -21,7 +21,7 @@
     "source-map-support": "0.5.3",
     "substance-bundler": "0.21.2",
     "substance-test": "^0.9.4",
-    "substance": "1.0.0-preview.37"
+    "substance": "1.0.0-preview.42"
   },
   "scripts": {
     "prepare": "node make publish",

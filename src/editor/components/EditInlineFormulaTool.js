@@ -39,7 +39,7 @@ class EditInlineFormulaTool extends Tool {
 
       $$(Button, {
         icon: 'delete',
-        theme: 'dark',
+        theme: 'light',
       }).attr('title', this.getLabel('delete-formula'))
         .on('click', this.onDelete)
     )

@@ -6,14 +6,13 @@ export default class InsertTableCommand extends InsertNodeCommand {
   createNode(tx, params) {
     let tableWrap = tx.createElement('table-wrap')
     tableWrap.append(
-     tx.createElement('object-id').text(tableWrap.id),
-     tx.createElement('title').text('Table title'),
-     tx.createElement('caption').append(
-       tx.createElement('p').text('Table caption')
-     ),
-     this.generateTable(tx, params.columns, params.rows)
+      tx.createElement('object-id').text(tableWrap.id),
+      tx.createElement('title').text('Table title'),
+      tx.createElement('caption').append(
+        tx.createElement('p').text('Table caption')
+      ),
+      this.generateTable(tx, params.columns, params.rows)
     )
-
     return tableWrap
   }
 

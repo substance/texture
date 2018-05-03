@@ -1,6 +1,7 @@
 import {
   Component, Configurator, EditorSession, AbstractEditor, TextPropertyEditor
 } from 'substance'
+import RichTextInputPackage from './RichTextInputPackage'
 
 export default class RichTextInput extends Component {
   constructor(...args) {

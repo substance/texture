@@ -10,5 +10,5 @@ export default {
     config.addComponent('create-entity', CreateEntity)
     config.addComponent('form-title', FormTitle)
     config.addComponent('entity-form', EntityForm)
- }
+  }
 }

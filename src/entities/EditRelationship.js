@@ -1,11 +1,8 @@
 import { Component, isNil, without, FontAwesomeIcon as Icon } from 'substance'
 import { prefillEntity } from './prefillEntity'
 import entityRenderers from './entityRenderers'
-import CreateEntity from './CreateEntity'
-import EditEntity from './EditEntity'
 import ModalDialog from '../shared/ModalDialog'
 import EntitySelector from './EntitySelector'
-import FormTitle from './FormTitle'
 
 /*
   Used to edit relationhips to other entities.
@@ -38,9 +35,9 @@ export default class EditRelationship extends Component {
     if (mode) {
       let ModeComponent
       if (mode === 'edit') {
-        ModeComponent = EditEntity
+        ModeComponent = this.getComponent('edit-entity')
       } else {
-        ModeComponent = CreateEntity
+        ModeComponent = this.getComponent('create-entity')
       }
 
       el.append(
@@ -53,7 +50,7 @@ export default class EditRelationship extends Component {
     } else {
       let contentEl = $$('div').addClass('se-content')
       contentEl.append(
-        $$(FormTitle, {
+        $$(this.getComponent('form-title'), {
           name: 'edit-'+this.props.propertyName
         })
       )

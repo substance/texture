@@ -1,6 +1,4 @@
 import { Component } from 'substance'
-import EntityForm from './EntityForm'
-import FormTitle from './FormTitle'
 
 export default class EditEntity extends Component {
 
@@ -9,10 +7,10 @@ export default class EditEntity extends Component {
 
     el.append(
       $$('div').addClass('se-content').append(
-        $$(FormTitle, {
+        $$(this.getComponent('form-title'), {
           name: 'edit-'+this.props.node.type
         }),
-        $$(EntityForm, {
+        $$(this.getComponent('entity-form'), {
           node: this.props.node
         }).ref('form')
       ),

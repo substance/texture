@@ -1,9 +1,30 @@
+.sc-math {
+  position: relative;
+  display: inline-block;
+}
+
 .sc-math > .se-blocker {
   position: absolute;
   left: 0px;
   right: 0px;
   top: 0px;
   bottom: 0px;
+}
+
+.sc-math ::-moz-selection { background: none; }
+.sc-math ::selection { background: none; }
+
+.sc-math .katex {
+  display: inline-block;
+}
+
+.sc-math .katex-mathml {
+  display: none;
+}
+
+.sc-inline-formula.sm-selected .sc-math .katex,
+.sc-inline-formula.sm-co-selected .sc-math .katex  {
+  background: rgba(163,205,253, 0.6);
 }
 
 .sc-math .sm-error {

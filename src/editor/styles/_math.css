@@ -13,9 +13,6 @@
 
 .sc-math ::-moz-selection { background: none; }
 .sc-math ::selection { background: none; }
-.sc-math .se-rendered-math {
-  display: inline-block;
-}
 
 .sc-math .katex {
   display: inline-block;

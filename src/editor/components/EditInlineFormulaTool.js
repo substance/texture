@@ -18,7 +18,6 @@ class EditInlineFormulaTool extends Tool {
 
   render($$) {
     let Input = this.getComponent('input')
-    let Button = this.getComponent('button')
     let commandState = this.props.commandState
     let el = $$('div').addClass('sc-edit-math-tool')
 
@@ -35,13 +34,7 @@ class EditInlineFormulaTool extends Tool {
         type: 'text',
         path: sourcePath,
         placeholder: 'Enter TeX'
-      }),
-
-      $$(Button, {
-        icon: 'delete',
-        theme: 'light',
-      }).attr('title', this.getLabel('delete-formula'))
-        .on('click', this.onDelete)
+      })
     )
     return el
   }

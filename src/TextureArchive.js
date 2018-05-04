@@ -22,6 +22,9 @@ export default class TextureArchive extends PersistedDocumentArchive {
 
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
+      // Note: this happens when a resource is referenced in the manifest
+      // but is not there actually
+      // we skip loading here and will fix the manuscript later on
       if (!record) {
         return
       }

@@ -21,6 +21,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     sessions['pub-meta'] = pubMetaSession
 
     entries.forEach(entry => {
+      let record = rawArchive.resources[entry.path]
       // Load any document except pub-meta (which we prepared manually)
       if (entry.type !== 'pub-meta') {
         // Passing down 'sessions' so that we can add to the pub-meta session

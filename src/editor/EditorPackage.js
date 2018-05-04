@@ -323,13 +323,15 @@ export default {
       accelerator: 'CommandOrControl+I'
     })
 
-    config.addCommand('ext-link', InsertExtLinkCommand, {
+    config.addAnnotationTool({
+      name: 'ext-link',
       nodeType: 'ext-link',
       commandGroup: 'formatting',
+      command: InsertExtLinkCommand,
+      icon: 'fa-link',
+      label: 'Link',
+      accelerator: 'CommandOrControl+K'
     })
-    config.addIcon('ext-link', { 'fontawesome': 'fa-link' })
-    config.addLabel('ext-link', 'Link')
-    config.addKeyboardShortcut('CommandOrControl+K', { command: 'ext-link' })
 
     config.addAnnotationTool({
       name: 'sub',

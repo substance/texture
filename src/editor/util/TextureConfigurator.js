@@ -4,7 +4,8 @@ import NumberedLabelGenerator from './NumberedLabelGenerator'
 export default class TextureConfigurator extends Configurator {
 
   addAnnotationTool(spec) {
-    this.addCommand(spec.name, AnnotationCommand, {
+    let Command = spec.command || AnnotationCommand
+    this.addCommand(spec.name, Command, {
       nodeType: spec.nodeType,
       commandGroup: spec.commandGroup,
     })
@@ -25,7 +26,6 @@ export default class TextureConfigurator extends Configurator {
     if (spec.accelerator) {
       this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
     }
-
   }
 
   setPanelsSpec(panelsSpec) {

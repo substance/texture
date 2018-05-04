@@ -11,7 +11,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
   */
   _ingest(rawArchive) {
     let sessions = {}
-    let manifestXML = _importManifest(rawArchive.resources['manifest.xml'].data)
+    let manifestXML = _importManifest(rawArchive)
     let manifestSession = this._loadManifest({ data: manifestXML })
     sessions['manifest'] = manifestSession
     let entries = manifestSession.getDocument().getDocumentEntries()
@@ -21,11 +21,6 @@ export default class TextureArchive extends PersistedDocumentArchive {
     sessions['pub-meta'] = pubMetaSession
 
     entries.forEach(entry => {
-      let record = rawArchive.resources[entry.path]
-      if (!record) {
-        console.warn(`${entry.path} could not be found. Skipping...`)
-        return
-      }
       // Load any document except pub-meta (which we prepared manually)
       if (entry.type !== 'pub-meta') {
         // Passing down 'sessions' so that we can add to the pub-meta session
@@ -126,10 +121,21 @@ export default class TextureArchive extends PersistedDocumentArchive {
   Create an explicit entry for pub-meta.json, which does not
   exist in the serialisation format
 */
-function _importManifest(manifestXML) {
+function _importManifest(rawArchive) {
+  let manifestXML = rawArchive.resources['manifest.xml'].data
   let dom = DefaultDOMElement.parseXML(manifestXML)
-  let documents = dom.find('documents')
-  documents.append(
+  let documentsEl = dom.find('documents')
+  let documents = dom.findAll('documents > document')
+  // Remove entries from manifest that can not be found in the archive as files
+  documents.forEach(doc => {
+    let path = doc.attr('path')
+    let record = rawArchive.resources[path]
+    if (!record) {
+      documentsEl.removeChild(doc)
+      console.warn(`${path} could not be found in archive. Skipping...`)
+    }
+  })
+  documentsEl.append(
     dom.createElement('document').attr({
       id: 'pub-meta',
       type: 'pub-meta',

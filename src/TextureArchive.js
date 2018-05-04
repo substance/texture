@@ -11,7 +11,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
   */
   _ingest(rawArchive) {
     let sessions = {}
-    let manifestXML = _importManifest(rawArchive.resources['manifest.xml'].data)
+    let manifestXML = _importManifest(rawArchive)
     let manifestSession = this._loadManifest({ data: manifestXML })
     sessions['manifest'] = manifestSession
     let entries = manifestSession.getDocument().getDocumentEntries()
@@ -22,6 +22,12 @@ export default class TextureArchive extends PersistedDocumentArchive {
 
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
+      // Note: this happens when a resource is referenced in the manifest
+      // but is not there actually
+      // we skip loading here and will fix the manuscript later on
+      if (!record) {
+        return
+      }
       // Load any document except pub-meta (which we prepared manually)
       if (entry.type !== 'pub-meta') {
         // Passing down 'sessions' so that we can add to the pub-meta session
@@ -30,6 +36,29 @@ export default class TextureArchive extends PersistedDocumentArchive {
       }
     })
     return sessions
+  }
+
+  _repair() {
+    let manifestSession = this.getEditorSession('manifest')
+    let entries = manifestSession.getDocument().getDocumentEntries()
+    let missingEntries = []
+
+    entries.forEach(entry => {
+      let session = this.getEditorSession(entry.id)
+      if (!session) {
+        missingEntries.push(entry.id)
+        console.warn(`${entry.path} could not be found in archive and will be deleted...`)
+      }
+    })
+
+    // Cleanup missing entries
+    manifestSession.transaction(tx => {
+      let documentsEl = tx.find('documents')
+      missingEntries.forEach(missingEntry => {
+        let entryEl = tx.get(missingEntry)
+        documentsEl.removeChild(entryEl)
+      })
+    })
   }
 
   _exportManifest(sessions, buffer, rawArchive) {
@@ -122,10 +151,11 @@ export default class TextureArchive extends PersistedDocumentArchive {
   Create an explicit entry for pub-meta.json, which does not
   exist in the serialisation format
 */
-function _importManifest(manifestXML) {
+function _importManifest(rawArchive) {
+  let manifestXML = rawArchive.resources['manifest.xml'].data
   let dom = DefaultDOMElement.parseXML(manifestXML)
-  let documents = dom.find('documents')
-  documents.append(
+  let documentsEl = dom.find('documents')
+  documentsEl.append(
     dom.createElement('document').attr({
       id: 'pub-meta',
       type: 'pub-meta',

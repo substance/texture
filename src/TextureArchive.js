@@ -22,6 +22,9 @@ export default class TextureArchive extends PersistedDocumentArchive {
 
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
+      if (!record) {
+        return
+      }
       // Load any document except pub-meta (which we prepared manually)
       if (entry.type !== 'pub-meta') {
         // Passing down 'sessions' so that we can add to the pub-meta session
@@ -30,6 +33,29 @@ export default class TextureArchive extends PersistedDocumentArchive {
       }
     })
     return sessions
+  }
+
+  _repair() {
+    let manifestSession = this.getEditorSession('manifest')
+    let entries = manifestSession.getDocument().getDocumentEntries()
+    let missingEntries = []
+
+    entries.forEach(entry => {
+      let session = this.getEditorSession(entry.id)
+      if (!session) {
+        missingEntries.push(entry.id)
+        console.warn(`${entry.path} could not be found in archive and will be deleted...`)
+      }
+    })
+
+    // Cleanup missing entries
+    manifestSession.transaction(tx => {
+      let documentsEl = tx.find('documents')
+      missingEntries.forEach(missingEntry => {
+        let entryEl = tx.get(missingEntry)
+        documentsEl.removeChild(entryEl)
+      })
+    })
   }
 
   _exportManifest(sessions, buffer, rawArchive) {
@@ -126,16 +152,6 @@ function _importManifest(rawArchive) {
   let manifestXML = rawArchive.resources['manifest.xml'].data
   let dom = DefaultDOMElement.parseXML(manifestXML)
   let documentsEl = dom.find('documents')
-  let documents = dom.findAll('documents > document')
-  // Remove entries from manifest that can not be found in the archive as files
-  documents.forEach(doc => {
-    let path = doc.attr('path')
-    let record = rawArchive.resources[path]
-    if (!record) {
-      documentsEl.removeChild(doc)
-      console.warn(`${path} could not be found in archive. Skipping...`)
-    }
-  })
   documentsEl.append(
     dom.createElement('document').attr({
       id: 'pub-meta',

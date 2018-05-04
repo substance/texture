@@ -22,6 +22,10 @@ export default class TextureArchive extends PersistedDocumentArchive {
 
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
+      if (!record) {
+        console.warn(`${entry.path} could not be found. Skipping...`)
+        return
+      }
       // Load any document except pub-meta (which we prepared manually)
       if (entry.type !== 'pub-meta') {
         // Passing down 'sessions' so that we can add to the pub-meta session

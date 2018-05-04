@@ -213,18 +213,18 @@ export default {
 
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
       nodeType: 'disp-quote',
-      commandGroup: 'insert-block-element'
+      commandGroup: 'insert'
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
-      commandGroup: 'insert-figure'
+      commandGroup: 'insert'
     })
     config.addCommand('insert-table', InsertTableCommand, {
       nodeType: 'table-wrap',
-      commandGroup: 'insert-table'
+      commandGroup: 'insert'
     })
     config.addCommand('insert-formula', InsertInlineFormulaCommand, {
-      commandGroup: 'insert-formula'
+      commandGroup: 'insert'
     })
     config.addCommand('edit-formula', EditInlineNodeCommand, {
       nodeType: 'inline-formula',
@@ -440,7 +440,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['insert-figure', 'insert-table', 'insert-formula', 'insert-block-element']
+        commandGroups: ['insert']
       },
       {
         name: 'cite',

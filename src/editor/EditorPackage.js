@@ -56,6 +56,7 @@ import TableFigPreview from './components/TableFigPreview'
 
 import DecreaseHeadingLevelCommand from './commands/DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './commands/IncreaseHeadingLevelCommand'
+import InsertExtLinkCommand from './commands/InsertExtLinkCommand'
 import InsertDispQuoteCommand from './commands/InsertDispQuoteCommand'
 import InsertXrefCommand from './commands/InsertXrefCommand'
 import ToggleContentSection from './commands/ToggleContentSection'
@@ -323,6 +324,16 @@ export default {
     })
 
     config.addAnnotationTool({
+      name: 'ext-link',
+      nodeType: 'ext-link',
+      commandGroup: 'formatting',
+      command: InsertExtLinkCommand,
+      icon: 'fa-link',
+      label: 'Link',
+      accelerator: 'CommandOrControl+K'
+    })
+
+    config.addAnnotationTool({
       name: 'sub',
       nodeType: 'sub',
       commandGroup: 'formatting',
@@ -344,15 +355,6 @@ export default {
       commandGroup: 'formatting',
       icon: 'fa-code',
       label: 'Monospace'
-    })
-
-    config.addAnnotationTool({
-      name: 'ext-link',
-      nodeType: 'ext-link',
-      commandGroup: 'formatting',
-      icon: 'fa-link',
-      label: 'Link',
-      accelerator: 'CommandOrControl+K'
     })
 
     config.addTextTypeTool({

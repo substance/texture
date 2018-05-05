@@ -20,7 +20,7 @@
     "font-awesome": "4.5.0",
     "source-map-support": "0.5.3",
     "substance": "1.0.0-preview.44",
-    "substance-bundler": "0.22.1",
+    "substance-bundler": "0.23.3",
     "substance-test": "^0.9.4"
   },
   "scripts": {

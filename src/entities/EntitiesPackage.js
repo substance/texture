@@ -5,6 +5,7 @@ import {
   MagazineArticle, NewspaperArticle, Patent, Software, Thesis, Webpage
 } from './EntityDatabase'
 import EntityLabelsPackage from './EntityLabelsPackage'
+import EntityComponentsPackage from './EntityComponentsPackage'
 
 export default {
   name: 'entities',
@@ -31,5 +32,6 @@ export default {
     config.addNode(Person)
     config.addNode(Organisation)
     config.import(EntityLabelsPackage)
+    config.import(EntityComponentsPackage)
   }
 }

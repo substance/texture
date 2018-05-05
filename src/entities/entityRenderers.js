@@ -28,9 +28,9 @@ function journalArticleRenderer($$, entityId, entityDb) {
   }
   if (entity.containerTitle) {
     fragments.push(
-        ' ',
-        $$('em').append(entity.containerTitle),
-        '.'
+      ' ',
+      $$('em').append(entity.containerTitle),
+      '.'
     )
   }
 
@@ -615,13 +615,15 @@ function webpageRenderer($$, entityId, entityDb) {
   }
 
   if (entity.uri) {
-    fragments.push(' ',
-    $$('a').attr({
-      href: entity.uri,
-      target: '_blank'
-    }).append(
-      entity.uri
-    ))
+    fragments.push(
+      ' ',
+      $$('a').attr({
+        href: entity.uri,
+        target: '_blank'
+      }).append(
+        entity.uri
+      )
+    )
   }
 
   if (entity.year) {

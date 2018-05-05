@@ -249,31 +249,34 @@ b.task('build:test-nodejs', () => {
 
 function _buildLib(DEST, platform) {
   let targets = []
+  const globals = {
+    'substance': 'substance',
+    'katex': 'katex'
+  }
   if (platform === 'browser' || platform === 'all') {
     targets.push({
       dest: DEST+'texture.js',
-      format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture'
+      format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture',
+      globals
     })
   }
   if (platform === 'nodejs' || platform === 'all') {
     targets.push({
       dest: DEST+'texture.cjs.js',
-      format: 'cjs'
+      format: 'cjs',
+      globals
     })
   }
   if (platform === 'es' || platform === 'all') {
     targets.push({
       dest: DEST+'texture.es.js',
-      format: 'es'
+      format: 'es',
+      globals
     })
   }
   b.js('./index.es.js', {
     targets,
     external: ['substance', 'katex'],
-    globals: {
-      'substance': 'substance',
-      'katex': 'katex'
-    }
   })
 }
 

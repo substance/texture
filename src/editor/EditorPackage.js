@@ -10,6 +10,7 @@ import {
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
+import EntityComponentsPackage from '../entities/EntityComponentsPackage'
 import TextureArticlePackage from '../article/TextureArticlePackage'
 
 import Editor from './components/Editor'
@@ -79,12 +80,13 @@ substanceGlobals.DEBUG_RENDERING = true
 export default {
   name: 'author',
   configure(config) {
-    config.import(EntityLabelsPackage)
     config.import(SubstanceBasePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
     config.import(MultiSelectPackage)
+    config.import(EntityLabelsPackage)
+    config.import(EntityComponentsPackage)
     config.import(TextureArticlePackage)
 
     // EXPERIMENTAL:

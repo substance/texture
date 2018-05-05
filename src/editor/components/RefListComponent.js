@@ -1,7 +1,5 @@
 import { NodeComponent } from 'substance'
 import { prefillEntity } from '../../entities/prefillEntity'
-import CreateEntity from '../../entities/CreateEntity'
-import EditEntity from '../../entities/EditEntity'
 import ModalDialog from '../../shared/ModalDialog'
 import AddReferenceComponent from './AddReferenceComponent'
 import RefComponent from './RefComponent'
@@ -54,9 +52,9 @@ export default class RefListComponent extends NodeComponent {
       if(mode === 'add') {
         ModeComponent = AddReferenceComponent
       } else if (mode === 'edit') {
-        ModeComponent = EditEntity
+        ModeComponent = this.getComponent('edit-entity')
       } else {
-        ModeComponent = CreateEntity
+        ModeComponent = this.getComponent('create-entity')
       }
 
       el.append(

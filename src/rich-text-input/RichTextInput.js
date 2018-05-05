@@ -1,12 +1,6 @@
 import {
-  AnnotationComponent,
-  Component,
-  Configurator,
-  EditorSession,
-  AbstractEditor,
-  TextPropertyEditor
+  Component, Configurator, EditorSession, AbstractEditor, TextPropertyEditor
 } from 'substance'
-
 import RichTextInputPackage from './RichTextInputPackage'
 
 export default class RichTextInput extends Component {
@@ -65,30 +59,5 @@ class RichTextEditor extends AbstractEditor {
       )
     )
     return el
-  }
-}
-
-
-export class StrongComponent extends AnnotationComponent {
-  getTagName() {
-    return 'strong'
-  }
-}
-
-export class EmphasisComponent extends AnnotationComponent {
-  getTagName() {
-    return 'em'
-  }
-}
-
-export class SuperscriptComponent extends AnnotationComponent {
-  getTagName() {
-    return 'sup'
-  }
-}
-
-export class SubscriptComponent extends AnnotationComponent {
-  getTagName() {
-    return 'sub'
   }
 }

@@ -16,7 +16,7 @@ import {
   EmphasisComponent,
   SuperscriptComponent,
   SubscriptComponent
-} from './RichTextInput'
+} from './RichTextComponents'
 
 export default {
   name: 'rich-text-input',

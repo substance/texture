@@ -793,9 +793,9 @@
     <element name="list">
       <!-- type is a comma separated list of 'unordered'| 'ordered' -->
       <attribute name="type"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="list-item"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
 

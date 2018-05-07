@@ -2,7 +2,9 @@ import {
   BasePackage as SubstanceBasePackage,
   MultiSelectPackage,
   FindAndReplacePackage,
+  ListPackage,
   TextPropertyEditor,
+  TextPropertyComponent,
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
@@ -146,6 +148,8 @@ export default {
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
+    config.addComponent('list', ListPackage.ListComponent)
+    config.addComponent('list-item', TextPropertyComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
@@ -415,6 +419,28 @@ export default {
     config.addTool('edit-ext-link', EditExtLinkTool)
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
     config.addLabel('open-link', 'Open Link')
+
+    // Lists
+    config.addCommand('insert-unordered-list', ListPackage.InsertListCommand, {
+      spec: { type: 'list', ordered: false },
+      commandGroup: 'text-types'
+    })
+    config.addLabel('insert-unordered-list', {
+      en: 'Unordered list',
+      de: 'Aufzählung'
+    })
+    config.addIcon('insert-unordered-list', { 'fontawesome': 'fa-list-ul' })
+
+    config.addCommand('insert-ordered-list', ListPackage.InsertListCommand, {
+      spec: { type: 'list', ordered: true },
+      commandGroup: 'text-types'
+    })
+    config.addLabel('insert-ordered-list', {
+      en: 'Ordered list',
+      de: 'Nummerierte Liste'
+    })
+    config.addIcon('insert-ordered-list', { 'fontawesome': 'fa-list-ol' })
+
 
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [

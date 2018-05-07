@@ -9,7 +9,6 @@ export default class ConvertList {
       // TODO this needs more exp
       // for now we just turn list-item > p into list-item
       // but we will need support for nested lists as well
-      debugger
       list.children.forEach(c => {
         if (c.tagName === 'list-item') {
           let el = c.children[0]

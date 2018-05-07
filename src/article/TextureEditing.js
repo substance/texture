@@ -1,5 +1,5 @@
 import { Editing, validateXMLSchema, isString, paste } from 'substance'
-import TextureArticle from './TextureArticle'
+import TextureArticleSchema from './TextureArticle'
 
 /*
   Proposal for Substance 2.0 XMLEditing implementation
@@ -26,7 +26,7 @@ export default class TextureEditing extends Editing {
       throw new Error('Illegal content for paste.')
     }
 
-    let res = validateXMLSchema(TextureArticle, tx.getDocument().toXML())
+    let res = validateXMLSchema(TextureArticleSchema, tx.getDocument().toXML())
     if (!res.ok) {
       res.errors.forEach((err) => {
         console.error(err.msg, err.el)
@@ -53,5 +53,30 @@ export default class TextureEditing extends Editing {
     return node
   }
 
+  createTextNode(tx, container, text) {
+    let parentType = container.type
+    let schema = TextureArticleSchema.getElementSchema(parentType)
+    if (schema.isAllowed('p')) {
+      return tx.create({ type: 'p', content: text })
+    } else {
+      throw new Error(`FIXME: which default element should be used in <${parentType}>`)
+    }
+  }
+
+  createListNode(tx, container, params) {
+    let parentType = container.type
+    let schema = TextureArticleSchema.getElementSchema(parentType)
+    if (schema.isAllowed('list')) {
+      let el = tx.create({ type: 'list' })
+      if (params.ordered) {
+        el.attr('type', 'ordered')
+      } else {
+        el.attr('type', 'unordered')
+      }
+      return el
+    } else {
+      throw new Error(`<list> is not allowed in <${parentType}>`)
+    }
+  }
 
 }

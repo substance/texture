@@ -8,7 +8,7 @@ class XMLListItemNode extends XMLTextElement {
   }
 
   getLevel() {
-    return parseInt(this.attributes.level)
+    return parseInt(this.attributes.level, 10)
   }
 
   setLevel(newLevel) {

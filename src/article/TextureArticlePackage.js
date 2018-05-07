@@ -5,6 +5,7 @@ import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNode from './XMLListNode'
 import XMLListItemNode from './XMLListItemNode'
+import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 
 export default {
   name: 'TextureArticle',
@@ -20,7 +21,7 @@ export default {
     TextureHTMLConverters.forEach((converter) => {
       config.addConverter('html', converter)
     })
-    config.addConverter('html', ListPackage.ListHTMLConverter)
+    config.addConverter('html', XMLListNodeHTMLConverter)
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
 
   }

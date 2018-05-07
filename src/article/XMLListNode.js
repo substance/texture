@@ -44,20 +44,11 @@ class XMLListNode extends ListMixin(XMLElementNode) {
   }
 
   getLevelSpecs() {
-    let typeSpec = this.attr('type')
-    if (typeSpec) {
-      let specs = typeSpec.split(',')
-      return specs.map(s => {
-        s = s.trim()
-        if (s === 'ordered') {
-          return { type: 'ordered' }
-        } else {
-          return { type: 'unordered'}
-        }
-      })
-    } else {
-      return []
-    }
+    return super._getLevelSpecs(this.attr('type'))
+  }
+
+  _setLevelSpecs(config) {
+    this.attr('type', config)
   }
 
 }

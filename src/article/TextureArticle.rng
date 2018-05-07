@@ -789,6 +789,28 @@
     </choice>
   </define>
 
+  <define name="list">
+    <element name="list">
+      <!-- type is a comma separated list of 'unordered'| 'ordered' -->
+      <attribute name="type"/>
+      <oneOrMore>
+        <ref name="list-item"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="list-item">
+    <element name="list-item">
+      <attribute name="level"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="p-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <define name="media">
     <element name="media">
       <ref name="media-attlist"/>

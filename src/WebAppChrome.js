@@ -1,7 +1,28 @@
-import { parseKeyEvent } from 'substance'
+import {
+  parseKeyEvent, VfsStorageClient, HttpStorageClient, InMemoryDarBuffer
+} from 'substance'
 import AppChrome from './AppChrome'
 
 export default class WebAppChrome extends AppChrome {
+
+  _loadArchive(archiveId, context) {
+    let storage = this._getStorage(this.props.storageType)
+    let buffer = new InMemoryDarBuffer()
+    let ArchiveClass = this._getArchiveClass()
+    let archive = new ArchiveClass(storage, buffer, context)
+    return archive.load(archiveId)
+  }
+
+  _getArchiveClass() { throw new Error('This is abstract') }
+
+  _getStorage(storageType) {
+    if (storageType==='vfs') {
+      return new VfsStorageClient(window.vfs, './examples/')
+    } else {
+      return new HttpStorageClient(this.props.storageUrl)
+    }
+  }
+
   _handleKeyDown(event) {
     let key = parseKeyEvent(event)
     // CommandOrControl+S
@@ -10,4 +31,5 @@ export default class WebAppChrome extends AppChrome {
       event.preventDefault()
     }
   }
+
 }

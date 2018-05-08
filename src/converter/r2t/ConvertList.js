@@ -35,7 +35,7 @@ export default class ConvertList {
       newList.id = list.id
       newList.append(items)
       config = config.map(s => s || 'bullet')
-      newList.attr('type', config.join(','))
+      newList.attr('list-type', config.join(','))
       list.parentNode.replaceChild(list, newList)
     })
   }

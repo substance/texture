@@ -13,11 +13,13 @@ export default class WebAppChrome extends AppChrome {
     return archive.load(archiveId)
   }
 
-  _getArchiveClass() { throw new Error('This is abstract') }
+  _getArchiveClass() { throw new Error('This method is abstract') }
+
+  _getDefaultDataFolder() { throw new Error('This method  is abstract') }
 
   _getStorage(storageType) {
     if (storageType==='vfs') {
-      return new VfsStorageClient(window.vfs, './examples/')
+      return new VfsStorageClient(window.vfs, this._getDefaultDataFolder())
     } else {
       return new HttpStorageClient(this.props.storageUrl)
     }

@@ -17,6 +17,10 @@ export default class TextureWebApp extends WebAppChrome {
     return TextureArchive
   }
 
+  _getDefaultDataFolder() {
+    return './data/'
+  }
+
   _handleKeyDown(event) {
     let handled = _handleKeyDown(event, this)
     if (!handled) {

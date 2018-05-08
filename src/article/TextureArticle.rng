@@ -791,8 +791,8 @@
 
   <define name="list">
     <element name="list">
-      <!-- type is a comma separated list of 'unordered'| 'ordered' -->
-      <attribute name="type"/>
+      <!-- a comma separated list of 'bullet'| 'order' -->
+      <attribute name="list-type"/>
       <zeroOrMore>
         <ref name="list-item"/>
       </zeroOrMore>

@@ -1,5 +1,6 @@
 import {
-  getQueryStringParam, substanceGlobals, platform, VfsStorageClient, HttpStorageClient, InMemoryDarBuffer
+  getQueryStringParam, substanceGlobals, platform,
+  VfsStorageClient, HttpStorageClient, InMemoryDarBuffer
 } from 'substance'
 import { TextureWebApp, TextureArchive } from 'substance-texture'
 
@@ -28,13 +29,12 @@ class DevTextureWebApp extends TextureWebApp {
       // monkey patch VfsStorageClient so that we can check if the stored data
       // can be loaded
       storage.write = (archiveId, rawArchive) => {
-        console.log(rawArchive)
+        console.log('Writing archive:', rawArchive) // eslint-disable-line
         return storage.read(archiveId)
         .then((originalRawArchive) => {
-          Object.assign(rawArchive.resources, originalRawArchive.resources)
+          rawArchive.resources = Object.assign({}, originalRawArchive.resources, rawArchive.resources)
           let testArchive = new TextureArchive()
           try {
-            debugger
             testArchive._ingest(rawArchive)
           } catch (error) {
             window.alert('Exported TextureArchive is corrupt') //eslint-disable-line no-alert

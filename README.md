@@ -115,5 +115,6 @@ The following people make Texture possible (in random order):
 - Davin Baragiotta (concept, dev)
 - David Cormier (dev)
 - Sophy Ouch (design)
+- Philipp Zumstein (dev)
 - Fabio Batalha Cunha dos Santos (leadership, concept)
 - Oliver Buchtala (dev)

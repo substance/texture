@@ -43,14 +43,13 @@ class XMLListNode extends ListMixin(XMLElementNode) {
     return this.getChildCount()
   }
 
-  getLevelTypes() {
-    return super._getLevelTypes(this.attr('list-type'))
+  getListTypeString() {
+    return this.attr('list-type')
   }
 
-  _setLevelTypes(listTypeStr) {
+  setListTypeString(listTypeStr) {
     this.attr('list-type', listTypeStr)
   }
-
 }
 
 XMLListNode.type = 'list'

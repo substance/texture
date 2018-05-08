@@ -422,17 +422,17 @@ export default {
 
     // Lists
     config.addCommand('insert-unordered-list', ListPackage.InsertListCommand, {
-      spec: { type: 'list', ordered: false },
+      spec: { type: 'list', listType: 'bullet' },
       commandGroup: 'text-types'
     })
     config.addLabel('insert-unordered-list', {
       en: 'Unordered list',
-      de: 'Aufzählung'
+      de: 'Liste'
     })
     config.addIcon('insert-unordered-list', { 'fontawesome': 'fa-list-ul' })
 
     config.addCommand('insert-ordered-list', ListPackage.InsertListCommand, {
-      spec: { type: 'list', ordered: true },
+      spec: { type: 'list', listType: 'order' },
       commandGroup: 'text-types'
     })
     config.addLabel('insert-ordered-list', {
@@ -441,6 +441,25 @@ export default {
     })
     config.addIcon('insert-ordered-list', { 'fontawesome': 'fa-list-ol' })
 
+    config.addCommand('toggle-unordered-list', ListPackage.ToggleListCommand, {
+      spec: { listType: 'bullet' },
+      commandGroup: 'list'
+    })
+    config.addLabel('toggle-unordered-list', {
+      en: 'Toggle list',
+      de: 'Liste entfernen'
+    })
+    config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
+
+    config.addCommand('toggle-ordered-list', ListPackage.ToggleListCommand, {
+      spec: { listType: 'order' },
+      commandGroup: 'list'
+    })
+    config.addLabel('toggle-ordered-list', {
+      en: 'Toggle list',
+      de: 'Aufzählung entfernen'
+    })
+    config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
 
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [
@@ -457,6 +476,13 @@ export default {
         showDisabled: false,
         style: 'descriptive',
         commandGroups: ['text-types']
+      },
+      {
+        name: 'list',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        commandGroups: ['list']
       },
       {
         name: 'annotations',

@@ -68,10 +68,8 @@ export default class TextureEditing extends Editing {
     let schema = TextureArticleSchema.getElementSchema(parentType)
     if (schema.isAllowed('list')) {
       let el = tx.create({ type: 'list' })
-      if (params.ordered) {
-        el.attr('type', 'ordered')
-      } else {
-        el.attr('type', 'unordered')
+      if (params.listType) {
+        el.attr('list-type', params.listType)
       }
       return el
     } else {

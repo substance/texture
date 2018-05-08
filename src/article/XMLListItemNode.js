@@ -3,6 +3,10 @@ import { XMLTextElement } from 'substance'
 export default
 class XMLListItemNode extends XMLTextElement {
 
+  isListItem() {
+    return true
+  }
+
   get level() {
     return this.getLevel()
   }

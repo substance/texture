@@ -27,7 +27,8 @@ Translations                            | September 2018
 Track Changes                           | September 2018
 PubMed and CrossRef verification of references                           | September 2018
 Fundref verification                    | September 2018
-Group authors                           | September 2018
+Group authors                           | September 2018
+Realtime Collaborative Editing          |
 **Supported Content**                   |
 Paragraph                               | ✓
 Heading                                 | ✓

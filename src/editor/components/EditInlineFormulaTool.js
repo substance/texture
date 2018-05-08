@@ -10,10 +10,12 @@ export default class EditInlineFormulaTool extends Tool {
   }
 
   getSourcePath() {
-    const nodeId = this.props.commandState.nodeId
-    const inlineFormula = this.context.editorSession.getDocument().get(nodeId)
-    const texMath = inlineFormula._childNodes[0]
-    return [ texMath ].concat('textContent')
+    const commandState = this.props.commandState
+    const doc = this.context.editorSession.getDocument()
+    const nodeId = commandState.nodeId
+    const inlineFormula = doc.get(nodeId)
+    const texMathId = inlineFormula._childNodes[0]
+    return [ texMathId, 'content' ]
   }
 
   render($$) {
@@ -26,9 +28,7 @@ export default class EditInlineFormulaTool extends Tool {
       console.warn('Tried to render EditMathTool while disabled.')
       return el
     }
-
     let sourcePath = this.getSourcePath()
-
     el.append(
       $$(Input, {
         type: 'text',

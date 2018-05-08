@@ -1,9 +1,9 @@
-import { Tool } from 'substance'
+import { Tool, domHelpers } from 'substance'
 
 /*
   Tool to edit math markup.
 */
-class EditInlineFormulaTool extends Tool {
+export default class EditInlineFormulaTool extends Tool {
 
   getNodeId() {
     return this.props.commandState.nodeId
@@ -35,6 +35,11 @@ class EditInlineFormulaTool extends Tool {
         path: sourcePath,
         placeholder: 'Enter TeX'
       })
+      // ATTNETION have a ref on it, otherwise the input will get rerendered on every change
+      .ref('input')
+      // stopping keydown events so that the input field is not distracted by other editor keyboard handler
+      // TODO: maybe let 'Save' through...
+      .on('keydown', domHelpers.stop)
     )
     return el
   }
@@ -55,5 +60,3 @@ class EditInlineFormulaTool extends Tool {
     })
   }
 }
-
-export default EditInlineFormulaTool

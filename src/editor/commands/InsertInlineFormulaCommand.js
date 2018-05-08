@@ -9,9 +9,8 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
     const inlineFormula = tx.createElement('inline-formula')
       .attr('content-type', 'math/tex')
       .appendChild(
-        tx.createElement('tex-math').text('f(x)')
+        tx.createElement('tex-math')
       )
-
     return inlineFormula
   }
 
@@ -30,7 +29,7 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
         .attr('content-type', 'math/tex')
       const inlineFormula = tx.insertInlineNode(node)
       inlineFormula.appendChild(
-        tx.createElement('tex-math').text(text || 'f(x)')
+        tx.createElement('tex-math').text(text)
       )
       this.setSelection(tx, node)
     })
@@ -41,8 +40,8 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
       tx.selection = {
         type: 'property',
         path: node.getPath(),
-        startOffset: node.startOffset,
-        endOffset: node.endOffset
+        startOffset: node.start.offset,
+        endOffset: node.end.offset
       }
     }
   }

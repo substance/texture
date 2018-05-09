@@ -56,7 +56,7 @@ class TOCProvider extends EventEmitter {
           needsUpdate = true
           break
         }
-      } else {
+      } else if (op.path) {
         let id = op.path[0]
         let node = doc.get(id)
         if (node && includes(tocTypes, node.type)) {

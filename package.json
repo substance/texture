@@ -18,6 +18,7 @@
     "electron-builder": "20.4.0",
     "eslint": "^4.19.1",
     "font-awesome": "4.5.0",
+    "istanbul": "^0.4.5",
     "source-map-support": "0.5.3",
     "substance": "1.0.0-preview.49",
     "substance-bundler": "0.23.3",
@@ -30,6 +31,7 @@
     "release": "node make app && build --project app-dist",
     "pretest": "npm run lint",
     "test": "node make test-nodejs",
+    "cover": "node make cover",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },
   "repository": {

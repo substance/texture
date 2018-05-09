@@ -82,6 +82,11 @@ b.task('run-app', ['app'], () => {
 })
 .describe('runs the application in electron.')
 
+b.task('cover', ['build:instrumented-tests'], () => {
+  b.rm('coverage')
+  fork(b, 'node_modules/substance-test/bin/coverage', 'tmp/tests.cov.js', { await: true })
+})
+
 // low-level make targets
 
 b.task('schema:single-jats-file', _singleJATSFile)
@@ -127,6 +132,10 @@ b.task('build:nodejs', () => {
 
 b.task('build:lib', () => {
   _buildLib(DIST, 'all')
+})
+
+b.task('build:lib', () => {
+  _buildLib(DIST, 'cover')
 })
 
 b.task('build:app', () => {
@@ -239,13 +248,16 @@ b.task('build:test-browser', ['build:vfs', 'build:assets', 'build:test-assets'],
   })
 })
 
-b.task('build:test-nodejs', ['build:test-assets'], () => {
+b.task('build:vfs-es', () => {
   vfs(b, {
     src: ['./data/**/*'],
     dest: TMP+'/vfs.es.js',
     format: 'es',
     rootDir: path.join(__dirname, 'data')
   })
+})
+
+b.task('build:test-nodejs', ['build:test-assets', 'build:vfs-es'], () => {
   b.js([
     'test/testGlobals.js',
     'test/**/*.test.js'
@@ -264,6 +276,26 @@ b.task('build:test-nodejs', ['build:test-assets'], () => {
   })
 })
 
+b.task('build:instrumented-tests', ['build:test-assets', 'build:vfs-es'], () => {
+  _buildLib(TMP, 'cover')
+  b.js([
+    'test/testGlobals.js',
+    'test/**/*.test.js'
+  ], {
+    dest: 'tmp/tests.cov.js',
+    format: 'cjs',
+    external: [
+      'substance-test',
+      'substance',
+      'substance-texture'
+    ],
+    // do not require substance-texture from 'node_modules' but from the dist folder
+    paths: {
+      'substance-texture': '../tmp/texture.cov.js'
+    }
+  })
+})
+
 /* HELPERS */
 
 function _buildLib(DEST, platform) {
@@ -273,6 +305,7 @@ function _buildLib(DEST, platform) {
     'katex': 'katex',
     'vfs': 'window.vfs'
   }
+  let istanbul
   if (platform === 'browser' || platform === 'all') {
     targets.push({
       dest: DEST+'texture.js',
@@ -294,9 +327,20 @@ function _buildLib(DEST, platform) {
       globals
     })
   }
+  if (platform === 'cover') {
+    targets.push({
+      dest: DEST+'texture.cov.js',
+      format: 'cjs',
+      globals,
+    })
+    istanbul = {
+      include: ['src/**/*.js']
+    }
+  }
   b.js('./index.es.js', {
     targets,
     external: ['substance', 'katex', 'vfs'],
+    istanbul
   })
 }
 

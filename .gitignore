@@ -9,3 +9,4 @@ node_modules
 .npm
 .DS_Store
 /tmp
+/coverage

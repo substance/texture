@@ -255,11 +255,11 @@ export const ElementCitationConverter = {
       })
       entity = pubMetaDb.create(node)
     }
+
     return entity.id
   },
 
-  export($$, node) {
-    let type = node.type
+  export($$, node, type) {
     let el = $$('element-citation').attr('publication-type', reverseMapping(mappingItemTypes)[type])
     // Regular properties
     el.append(_createTextElement($$, node.assignee, 'collab', {'collab-type': 'assignee'}))

@@ -9,6 +9,7 @@ export default function vfsSaveHook(storage, ArchiveClass) {
       let testArchive = new ArchiveClass()
       try {
         testArchive._ingest(rawArchive)
+        return Promise.resolve(true)
       } catch (error) {
         window.alert('Exported archive is corrupt!') //eslint-disable-line no-alert
         console.error(error.detail)

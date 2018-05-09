@@ -9,10 +9,19 @@ module.exports = {
     "ecmaVersion": 6
   },
   "extends": "eslint:recommended",
-  "globals": {
-    "Promise": true,
-    "Map": true
-  },
+  "globals": [
+    // browser
+    "window", "document", "URL", "XMLHttpRequest",
+    // browser / nodejs
+    "console", "setTimeout", "setInterval", "clearInterval",
+    // nodejs
+    "global",
+    // EcmaScript 6
+    "Promise", "Map", "Set", "WeakMap",
+    // commonjs
+    "require", "module", "exports"
+    //
+  ].reduce((m, key)=>{m[key]=true;return m}, {}),
   "rules": {
     // 0 - off, 1 - warning, 2 - error
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],

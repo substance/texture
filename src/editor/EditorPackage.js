@@ -2,7 +2,9 @@ import {
   BasePackage as SubstanceBasePackage,
   MultiSelectPackage,
   FindAndReplacePackage,
+  ListPackage,
   TextPropertyEditor,
+  TextPropertyComponent,
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
@@ -74,6 +76,7 @@ import InsertColumnCommand from './commands/InsertColumnCommand'
 import InsertRowCommand from './commands/InsertRowCommand'
 import RemoveColumnCommand from './commands/RemoveColumnCommand'
 import RemoveRowCommand from './commands/RemoveRowCommand'
+import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -146,6 +149,8 @@ export default {
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
+    config.addComponent('list', ListPackage.ListComponent)
+    config.addComponent('list-item', TextPropertyComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
@@ -416,6 +421,48 @@ export default {
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
     config.addLabel('open-link', 'Open Link')
 
+    // Lists
+    config.addCommand('toggle-unordered-list', SchemaAwareToggleListCommand, {
+      spec: { listType: 'bullet' },
+      commandGroup: 'list'
+    })
+    config.addLabel('toggle-unordered-list', {
+      en: 'Toggle list',
+      de: 'Liste entfernen'
+    })
+    config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
+
+    config.addCommand('toggle-ordered-list', SchemaAwareToggleListCommand, {
+      spec: { listType: 'order' },
+      commandGroup: 'list'
+    })
+    config.addLabel('toggle-ordered-list', {
+      en: 'Toggle list',
+      de: 'Aufzählung entfernen'
+    })
+    config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
+
+    config.addCommand('indent-list', ListPackage.IndentListCommand, {
+      spec: { action: 'indent' },
+      commandGroup: 'list'
+    })
+    config.addLabel('indent-list', {
+      en: 'Increase indentation',
+      de: 'Einrückung vergrößern'
+    })
+    config.addIcon('indent-list', { 'fontawesome': 'fa-indent' })
+
+    config.addCommand('dedent-list', ListPackage.IndentListCommand, {
+      spec: { action: 'dedent' },
+      commandGroup: 'list'
+    })
+    config.addLabel('dedent-list', {
+      en: 'Decrease indentation',
+      de: 'Einrückung verringern'
+    })
+    config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
+
+
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [
       {
@@ -431,6 +478,13 @@ export default {
         showDisabled: false,
         style: 'descriptive',
         commandGroups: ['text-types']
+      },
+      {
+        name: 'list',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        commandGroups: ['list']
       },
       {
         name: 'annotations',

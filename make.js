@@ -134,8 +134,8 @@ b.task('build:lib', () => {
   _buildLib(DIST, 'all')
 })
 
-b.task('build:lib', () => {
-  _buildLib(DIST, 'cover')
+b.task('build:cover', () => {
+  _buildLib(TMP, 'cover')
 })
 
 b.task('build:app', () => {
@@ -276,8 +276,7 @@ b.task('build:test-nodejs', ['build:test-assets', 'build:vfs-es'], () => {
   })
 })
 
-b.task('build:instrumented-tests', ['build:test-assets', 'build:vfs-es'], () => {
-  _buildLib(TMP, 'cover')
+b.task('build:instrumented-tests', ['build:test-assets', 'build:vfs-es', 'build:cover'], () => {
   b.js([
     'test/testGlobals.js',
     'test/**/*.test.js'

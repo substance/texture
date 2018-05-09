@@ -32,8 +32,9 @@ Realtime Collaborative Editing          |
 **Supported Content**                   |
 Paragraph                               | ✓
 Heading                                 | ✓
-Math                                    | September 2018
-List                                    | September 2018
+Inline Formula                          | ✓
+Display Formula                         | September 2018
+List                                    | ✓
 Blockquote                              | ✓
 Figure                                  | ✓
 Table                                   | Beta

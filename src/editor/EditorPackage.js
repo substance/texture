@@ -76,6 +76,7 @@ import InsertColumnCommand from './commands/InsertColumnCommand'
 import InsertRowCommand from './commands/InsertRowCommand'
 import RemoveColumnCommand from './commands/RemoveColumnCommand'
 import RemoveRowCommand from './commands/RemoveRowCommand'
+import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -421,27 +422,7 @@ export default {
     config.addLabel('open-link', 'Open Link')
 
     // Lists
-    config.addCommand('insert-unordered-list', ListPackage.InsertListCommand, {
-      spec: { type: 'list', listType: 'bullet' },
-      commandGroup: 'text-types'
-    })
-    config.addLabel('insert-unordered-list', {
-      en: 'Unordered list',
-      de: 'Liste'
-    })
-    config.addIcon('insert-unordered-list', { 'fontawesome': 'fa-list-ul' })
-
-    config.addCommand('insert-ordered-list', ListPackage.InsertListCommand, {
-      spec: { type: 'list', listType: 'order' },
-      commandGroup: 'text-types'
-    })
-    config.addLabel('insert-ordered-list', {
-      en: 'Ordered list',
-      de: 'Nummerierte Liste'
-    })
-    config.addIcon('insert-ordered-list', { 'fontawesome': 'fa-list-ol' })
-
-    config.addCommand('toggle-unordered-list', ListPackage.ToggleListCommand, {
+    config.addCommand('toggle-unordered-list', SchemaAwareToggleListCommand, {
       spec: { listType: 'bullet' },
       commandGroup: 'list'
     })
@@ -451,7 +432,7 @@ export default {
     })
     config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
 
-    config.addCommand('toggle-ordered-list', ListPackage.ToggleListCommand, {
+    config.addCommand('toggle-ordered-list', SchemaAwareToggleListCommand, {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
@@ -460,6 +441,27 @@ export default {
       de: 'Aufzählung entfernen'
     })
     config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
+
+    config.addCommand('indent-list', ListPackage.IndentListCommand, {
+      spec: { action: 'indent' },
+      commandGroup: 'list'
+    })
+    config.addLabel('indent-list', {
+      en: 'Increase indentation',
+      de: 'Einrückung vergrößern'
+    })
+    config.addIcon('indent-list', { 'fontawesome': 'fa-indent' })
+
+    config.addCommand('dedent-list', ListPackage.IndentListCommand, {
+      spec: { action: 'dedent' },
+      commandGroup: 'list'
+    })
+    config.addLabel('dedent-list', {
+      en: 'Decrease indentation',
+      de: 'Einrückung verringern'
+    })
+    config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
+
 
     // Declarative spec for tool display
     config.addToolPanel('toolbar', [

@@ -14,8 +14,8 @@ export default class EditInlineFormulaTool extends Tool {
     const doc = this.context.editorSession.getDocument()
     const nodeId = commandState.nodeId
     const inlineFormula = doc.get(nodeId)
-    const texMathId = inlineFormula._childNodes[0]
-    return [ texMathId, 'content' ]
+    const texMath = inlineFormula.find('tex-math')
+    return texMath.getPath()
   }
 
   render($$) {

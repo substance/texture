@@ -1,3 +1,4 @@
+/* global vfs */
 import {
   parseKeyEvent, VfsStorageClient, HttpStorageClient, InMemoryDarBuffer
 } from 'substance'
@@ -19,7 +20,7 @@ export default class WebAppChrome extends AppChrome {
 
   _getStorage(storageType) {
     if (storageType==='vfs') {
-      return new VfsStorageClient(window.vfs, this._getDefaultDataFolder())
+      return new VfsStorageClient(vfs, this._getDefaultDataFolder())
     } else {
       return new HttpStorageClient(this.props.storageUrl)
     }

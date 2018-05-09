@@ -22,3 +22,7 @@ export function insertText(editorSession, text) {
 export function applyNOP(editorSession) {
   editorSession._commit(new DocumentChange([new ObjectOperation({ type: "NOP" })], {}, {}), {})
 }
+
+export function toUnix(str) {
+  return str.replace(/\r?\n/g, '\n')
+}

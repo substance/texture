@@ -1,8 +1,8 @@
 import { test } from 'substance-test'
-import { DefaultDOMElement as DOM } from 'substance'
+import { DefaultDOMElement as DOM, platform } from 'substance'
 import { TextureWebApp, TextureArchive, checkArchive } from 'substance-texture'
 import { spy, getMountPoint } from '../testHelpers'
-import { applyNOP } from './integrationTestHelpers'
+import { applyNOP, toUnix } from './integrationTestHelpers'
 
 test("Persistence: loading and saving the kitchen-sink article", (t) => {
   t.plan(2)
@@ -33,7 +33,8 @@ test("Persistence: loading and saving the kitchen-sink article", (t) => {
     // just pick the body and see if this is the same
     let oldBodyXML = DOM.parseXML(originalManuscriptXML).find('body').getInnerXML()
     let newBodyXML = DOM.parseXML(newManuscriptXML).find('body').getInnerXML()
-    t.equal(newBodyXML, oldBodyXML)
+    // Note: we must make sure to compare strings with comparable line-endings
+    t.equal(toUnix(newBodyXML), toUnix(oldBodyXML))
   })
 })
 

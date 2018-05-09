@@ -75,7 +75,7 @@ export default class AppChrome extends Component {
     but passed down to editor toolbars.
   */
   _save() {
-    this.state.archive.save().then(() => {
+    return this.state.archive.save().then(() => {
       this._updateTitle(false)
     }).catch(err => {
       console.error(err)

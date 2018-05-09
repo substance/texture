@@ -1,3 +1,6 @@
+import { platform } from 'substance'
+import checkArchive from './checkArchive'
+
 export default function vfsSaveHook(storage, ArchiveClass) {
   // monkey patch VfsStorageClient so that we can check if the stored data
   // can be loaded
@@ -6,14 +9,15 @@ export default function vfsSaveHook(storage, ArchiveClass) {
     return storage.read(archiveId)
     .then((originalRawArchive) => {
       rawArchive.resources = Object.assign({}, originalRawArchive.resources, rawArchive.resources)
-      let testArchive = new ArchiveClass()
-      try {
-        testArchive._ingest(rawArchive)
-        return Promise.resolve(true)
-      } catch (error) {
-        window.alert('Exported archive is corrupt!') //eslint-disable-line no-alert
-        console.error(error.detail)
+      let err = checkArchive(ArchiveClass, rawArchive)
+      if (err) {
+        if (platform.inBrowser) {
+          window.alert('Exported archive is corrupt!') //eslint-disable-line no-alert
+        }
+        console.error(err.detail)
         return Promise.reject()
+      } else {
+        return Promise.resolve(true)
       }
     })
   }

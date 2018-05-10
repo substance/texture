@@ -238,6 +238,41 @@
             </tbody>
           </table>
         </table-wrap>
+        <list list-type="bullet" id="list-a2ab342b221036d8a7f15f065ef3e319">
+          <list-item>
+            <p>asd</p>
+            <list list-type="order">
+              <list-item>
+                <p>asd</p>
+              </list-item>
+              <list-item>
+                <p>asd</p>
+              </list-item>
+            </list>
+          </list-item>
+          <list-item>
+            <p>asd</p>
+            <list list-type="order">
+              <list-item>
+                <p>asd</p>
+              </list-item>
+              <list-item>
+                <p>asd</p>
+                <list list-type="bullet">
+                  <list-item>
+                    <p>asd</p>
+                  </list-item>
+                  <list-item>
+                    <p>asd</p>
+                  </list-item>
+                </list>
+              </list-item>
+            </list>
+          </list-item>
+          <list-item>
+            <p>asd</p>
+          </list-item>
+        </list>
       </sec>
     </sec>
   </body>
@@ -251,9 +286,39 @@
       </fn>
     </fn-group>
     <ref-list id="ref-list-1">
-      <!-- Book reference: Editors, no chapter details -->
+      <ref id="r7">
+        <element-citation publication-type="journal">
+          <day>5</day>
+          <fpage>6436</fpage>
+          <lpage>6448</lpage>
+          <month>10</month>
+          <page-range>6436-6448</page-range>
+          <volume>29</volume>
+          <year>2009</year>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Baumann</surname>
+              <given-names>Markus A.</given-names>
+            </name>
+            <name>
+              <surname>Fluet</surname>
+              <given-names>Marie-Christine</given-names>
+            </name>
+            <name>
+              <surname>Scherberger</surname>
+              <given-names>Hansjörg</given-names>
+            </name>
+          </person-group>
+          <source>Journal of Neuroscience</source>
+          <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
+        </element-citation>
+      </ref>
       <ref id="book1">
         <element-citation publication-type="book">
+          <publisher-loc>Cambridge</publisher-loc>
+          <publisher-name>Cambridge University Press</publisher-name>
+          <year>2004</year>
           <person-group person-group-type="editor">
             <name>
               <surname>Cardé</surname>
@@ -264,30 +329,28 @@
               <given-names>JG</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="2004">2004</year>
           <source>Advances in insect chemical ecology</source>
-          <publisher-name>Cambridge University Press</publisher-name>
-          <publisher-loc>Cambridge</publisher-loc>
         </element-citation>
       </ref>
-      <!-- Book reference: Has edition, editor is author -->
       <ref id="book2">
         <element-citation publication-type="book">
-            <person-group person-group-type="editor">
-              <name>
-                <surname>Chmeil</surname>
-                <given-names>N</given-names>
-              </name>
-            </person-group>
-            <year iso-8601-date="2008">2008</year>
-            <edition>2</edition>
-            <source>An Introduction to Work and Organizational Psychology: A European Perspective</source>
-            <publisher-name>Wiley-Blackwell</publisher-name>
+          <edition>2</edition>
+          <publisher-name>Wiley-Blackwell</publisher-name>
+          <year>2008</year>
+          <person-group person-group-type="editor">
+            <name>
+              <surname>Chmeil</surname>
+              <given-names>N</given-names>
+            </name>
+          </person-group>
+          <source>An Introduction to Work and Organizational Psychology: A European Perspective</source>
         </element-citation>
       </ref>
-      <!-- Book reference: publisher location - US: city followed by state code -->
       <ref id="book3">
         <element-citation publication-type="book">
+          <publisher-loc>Sunderland, MA</publisher-loc>
+          <publisher-name>Sinauer Associates</publisher-name>
+          <year>1989</year>
           <person-group person-group-type="author">
             <name>
               <surname>Coyne</surname>
@@ -308,18 +371,15 @@
               <given-names>JA</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="1989">1989</year>
-          <chapter-title>Two rules of speciation</chapter-title>
           <source>Speciation and its consequences</source>
-          <fpage>1</fpage>
-          <lpage>2</lpage>
-          <publisher-loc>Sunderland, MA</publisher-loc>
-          <publisher-name>Sinauer Associates</publisher-name>
         </element-citation>
       </ref>
-      <!-- Book reference: simple book reference, with ISBN -->
       <ref id="book4">
         <element-citation publication-type="book">
+          <publisher-loc>Victoria</publisher-loc>
+          <publisher-name>Landlinks Press</publisher-name>
+          <year>2008</year>
+          <pub-id pub-id-type="isbn">9780643092570</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Horne</surname>
@@ -330,64 +390,30 @@
               <given-names>J</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="2008">2008</year>
           <source>Integrated pest management for crops and pastures</source>
-          <publisher-name>Landlinks Press</publisher-name>
-          <publisher-loc>Victoria</publisher-loc>
-          <pub-id pub-id-type="isbn">9780643092570</pub-id>
         </element-citation>
       </ref>
-      <!-- Book reference: Has volume, no publisher location -->
       <ref id="book5">
         <element-citation publication-type="book">
+          <publisher-name>Mcgraw-Hill Book Company</publisher-name>
+          <volume>3: Formulations of the Person and the Social Context</volume>
+          <year>1959</year>
           <person-group person-group-type="author">
             <name>
               <surname>Koch</surname>
               <given-names>S</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="1959">1959</year>
-          <volume>3: Formulations of the Person and the Social Context</volume>
           <source>Psychology A Study Of A Science</source>
-          <publisher-name>Mcgraw-Hill Book Company</publisher-name>
         </element-citation>
       </ref>
-      <!-- Book Chapter reference: chapter in book with editors -->
       <ref id="chapter1">
         <element-citation publication-type="chapter">
-          <person-group person-group-type="author">
-            <name>
-              <surname>Turlings</surname>
-              <given-names>TCJ</given-names>
-            </name>
-            <name>
-              <surname>Wäckers</surname>
-              <given-names>FL</given-names>
-            </name>
-          </person-group>
-          <person-group person-group-type="editor">
-            <name>
-              <surname>Cardé</surname>
-              <given-names>RT</given-names>
-            </name>
-            <name>
-              <surname>Millar</surname>
-              <given-names>JG</given-names>
-            </name>
-          </person-group>
-          <year iso-8601-date="2004">2004a</year>
-          <source>Advances in insect chemical ecology</source>
-          <chapter-title>Recruitment of predators and parasitoids by herbivore-injured
-              plants</chapter-title>
-          <publisher-name>Cambridge University Press</publisher-name>
-          <publisher-loc>Cambridge</publisher-loc>
           <fpage>21</fpage>
           <lpage>75</lpage>
-        </element-citation>
-      </ref>
-      <!-- Book reference: book with editors and authors, no chapter, and example of  -->
-      <ref id="book7">
-        <element-citation publication-type="book">
+          <publisher-loc>Cambridge</publisher-loc>
+          <publisher-name>Cambridge University Press</publisher-name>
+          <year>2004a</year>
           <person-group person-group-type="author">
             <name>
               <surname>Turlings</surname>
@@ -408,44 +434,73 @@
               <given-names>JG</given-names>
             </name>
           </person-group>
-          <year iso-8601-date="2004">2004b</year>
           <source>Advances in insect chemical ecology</source>
+          <chapter-title>Recruitment of predators and parasitoids by herbivore-injured plants</chapter-title>
+        </element-citation>
+      </ref>
+      <ref id="book7">
+        <element-citation publication-type="book">
           <publisher-name>Cambridge University Press</publisher-name>
+          <year>2004b</year>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Turlings</surname>
+              <given-names>TCJ</given-names>
+            </name>
+            <name>
+              <surname>Wäckers</surname>
+              <given-names>FL</given-names>
+            </name>
+          </person-group>
+          <person-group person-group-type="editor">
+            <name>
+              <surname>Cardé</surname>
+              <given-names>RT</given-names>
+            </name>
+            <name>
+              <surname>Millar</surname>
+              <given-names>JG</given-names>
+            </name>
+          </person-group>
+          <source>Advances in insect chemical ecology</source>
         </element-citation>
       </ref>
       <ref id="r2">
         <element-citation publication-type="report">
+          <day>7</day>
+          <month>4</month>
+          <year>2018</year>
+          <pub-id pub-id-type="doi">https://arxiv.org/abs/1804.02385</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>de Grey</surname>
               <given-names>Aubrey D. N. J.</given-names>
             </name>
           </person-group>
-          <article-title>The chromatic number of the plane is at least 5</article-title>
-          <series>arXiv:1804.02385</series>
-          <year>2018</year>
-          <month>4</month>
-          <day>7</day>
-          <pub-id pub-id-type="doi">https://arxiv.org/abs/1804.02385</pub-id>
         </element-citation>
       </ref>
       <ref id="r3">
         <element-citation publication-type="report">
+          <day>5</day>
+          <month>10</month>
+          <year>2010</year>
           <person-group person-group-type="sponsor">
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
           </person-group>
-          <article-title>Clinical trial title</article-title>
           <source>Pre-print journal</source>
-          <year>2010</year>
-          <month>10</month>
-          <day>5</day>
         </element-citation>
       </ref>
       <ref id="r4">
         <element-citation publication-type="confproc">
+          <conf-name>2016 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)</conf-name>
+          <conf-loc>Las Vegas, NV, USA</conf-loc>
+          <fpage>533</fpage>
+          <lpage>540</lpage>
+          <year>2016</year>
+          <pub-id pub-id-type="doi">10.1109/CVPRW.2016.73</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Prokopetc</surname>
@@ -457,114 +512,85 @@
             </name>
           </person-group>
           <article-title>Reducing Drift in Mosaicing Slit-Lamp Retinal Images</article-title>
-          <conf-name>2016 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) </conf-name>
-          <conf-loc>Las Vegas, NV, USA</conf-loc>
-          <year>2016</year>
-          <fpage>533</fpage>
-          <lpage>540</lpage>
-          <pub-id pub-id-type="doi">10.1109/CVPRW.2016.73</pub-id>
         </element-citation>
       </ref>
       <ref id="r5">
         <element-citation publication-type="data">
+          <day>5</day>
+          <month>10</month>
+          <year>2010</year>
+          <pub-id pub-id-type="accession">ACCESSION_ID</pub-id>
+          <pub-id pub-id-type="ark">ARK_ID</pub-id>
+          <pub-id pub-id-type="archive">ARCHIVE_ID</pub-id>
+          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
           </person-group>
-          <data-title>Data set title</data-title>
           <source>World Bank</source>
-          <year>2010</year>
-          <month>10</month>
-          <day>5</day>
-          <pub-id pub-id-type="accession">ACCESSION_ID</pub-id>
-          <pub-id pub-id-type="ark">ARK_ID</pub-id>
-          <pub-id pub-id-type="archive">ARCHIVE_ID</pub-id>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
         </element-citation>
       </ref>
       <ref id="r6">
         <element-citation publication-type="newspaper">
+          <day>27</day>
+          <edition>International Edition</edition>
+          <month>4</month>
+          <page-range>21</page-range>
+          <part-title>Film</part-title>
+          <year>2018</year>
           <person-group person-group-type="author">
             <name>
               <surname>Rose</surname>
               <given-names>Steve</given-names>
             </name>
           </person-group>
-          <article-title>What if superheroes aren’t really the good guys?</article-title>
           <source>The Guardian</source>
-          <edition>International Edition</edition>
-          <year>2018</year>
-          <month>4</month>
-          <day>27</day>
-          <part-title>Film</part-title>
-          <page-range>21</page-range>
-        </element-citation>
-      </ref>
-      <ref id="r7">
-        <element-citation publication-type="journal">
-          <person-group person-group-type="author">
-            <name>
-              <surname>Baumann</surname>
-              <given-names>Markus A.</given-names>
-            </name>
-            <name>
-              <surname>Fluet</surname>
-              <given-names>Marie-Christine</given-names>
-            </name>
-            <name>
-              <surname>Scherberger</surname>
-              <given-names>Hansjörg</given-names>
-            </name>
-          </person-group>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
-          <article-title>Context-specific grasp movement representation in the macaque anterior intraparietal area</article-title>
-          <source>Journal of Neuroscience</source>
-          <volume>29</volume>
-          <fpage>6436</fpage>
-          <lpage>6448</lpage>
-          <page-range>6436-6448</page-range>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+          <article-title>What if superheroes aren’t really the good guys?</article-title>
         </element-citation>
       </ref>
       <ref id="r8">
         <element-citation publication-type="patent">
+          <collab collab-type="assignee">Hospira, Inc.</collab>
+          <day>5</day>
+          <month>10</month>
+          <patent country="US">US 6,980,855</patent>
+          <year>2009</year>
           <person-group person-group-type="inventor">
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
           </person-group>
-          <article-title>Patent title</article-title>
-          <collab collab-type="assignee">Hospira, Inc.</collab>
           <source>United States patent</source>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
-          <patent country="US">US 6,980,855</patent>
+          <article-title>Patent title</article-title>
         </element-citation>
       </ref>
       <ref id="r9">
         <element-citation publication-type="report">
+          <day>5</day>
+          <month>10</month>
+          <publisher-loc>Publisher location</publisher-loc>
+          <publisher-name>Publisher name</publisher-name>
+          <year>2009</year>
+          <pub-id pub-id-type="isbn">ISBN_NUMBER</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>
             </name>
           </person-group>
-          <publisher-loc>Publisher location</publisher-loc>
-          <publisher-name>Publisher name</publisher-name>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
-          <pub-id pub-id-type="isbn">ISBN_NUMBER</pub-id>
         </element-citation>
       </ref>
       <ref id="r10">
         <element-citation publication-type="software">
+          <day>19</day>
+          <month>3</month>
+          <publisher-name>Zenodo</publisher-name>
+          <version>2.0.1</version>
+          <year>2018</year>
+          <pub-id pub-id-type="doi">10.5281/zenodo.1203712</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Willner</surname>
@@ -576,16 +602,18 @@
             </name>
           </person-group>
           <source>pyhector</source>
-          <version>2.0.1</version>
-          <publisher-name>Zenodo</publisher-name>
-          <year>2018</year>
-          <month>3</month>
-          <day>19</day>
-          <pub-id pub-id-type="doi">10.5281/zenodo.1203712</pub-id>
         </element-citation>
       </ref>
       <ref id="r11">
         <element-citation publication-type="thesis">
+          <day>5</day>
+          <month>10</month>
+          <publisher-loc>First software publisher location</publisher-loc>
+          <publisher-loc>Second software publisher location</publisher-loc>
+          <publisher-name>First software publisher name</publisher-name>
+          <publisher-name>Second software publisher name</publisher-name>
+          <year>2009</year>
+          <pub-id pub-id-type="doi">THESIS_DOI</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Doe</surname>
@@ -593,18 +621,15 @@
             </name>
           </person-group>
           <article-title>Thesis title</article-title>
-          <publisher-loc>First software publisher location</publisher-loc>
-          <publisher-name>First software publisher name</publisher-name>
-          <publisher-loc>Second software publisher location</publisher-loc>
-          <publisher-name>Second software publisher name</publisher-name>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
-          <pub-id pub-id-type="doi">THESIS_DOI</pub-id>
         </element-citation>
       </ref>
       <ref id="r12">
         <element-citation publication-type="webpage">
+          <day>5</day>
+          <month>10</month>
+          <publisher-loc>Website publisher location?</publisher-loc>
+          <uri>http://example.com/example-page.html</uri>
+          <year>2009</year>
           <person-group person-group-type="author">
             <name>
               <surname>Doe</surname>
@@ -612,11 +637,6 @@
             </name>
           </person-group>
           <article-title>Webpage title</article-title>
-          <publisher-loc>Website publisher location?</publisher-loc>
-          <uri>http://example.com/example-page.html</uri>
-          <year>2009</year>
-          <month>10</month>
-          <day>5</day>
         </element-citation>
       </ref>
     </ref-list>

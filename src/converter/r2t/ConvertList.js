@@ -8,46 +8,39 @@ export default class ConvertList {
     let lists = dom.findAll('list')
     let visited = new Set()
     lists.forEach(list => {
-      // skip nested lists which have been traversed already
       if (visited.has(list)) return
-      visited.add(list)
       let config = []
       let items = []
-      this._walkList(list, (el, level) => {
-        if (el.is('list') && !config[level]) {
-          let listType = el.attr('list-type') || 'bullet'
-          config[level] = listType
-          visited.add(el)
-        } else if (el.is('list-item')) {
-          let firstChild = el.firstChild
-          if (firstChild.is('p')) {
-            let li = $$('list-item')
-            li.id = el.id
-            li.attr('level', 1)
-            li.append(firstChild.getChildNodes())
-            items.push(li)
-          } else {
-            throw new Error(`list-item > ${firstChild.tagName} is not supported`)
-          }
+      this._extractItems(list, config, items, 0, visited)
+      items = items.map(item => {
+        let { el, level } = item
+        let li = $$('list-item')
+        li.id = el.id
+        li.attr('level', level)
+        let p = el.find('p')
+        if (p) {
+          li.append(p.getChildNodes())
+          return li
         }
-      })
-      let newList = dom.createElement('list')
-      newList.id = list.id
-      newList.append(items)
-      config = config.map(s => s || 'bullet')
-      newList.attr('list-type', config.join(','))
+        return false
+      }).filter(Boolean)
+      let newList = $$('list')
+        .attr('id', list.id)
+        .attr('list-type', config.join(','))
+        .append(items)
       list.parentNode.replaceChild(list, newList)
     })
   }
 
-  _walkList(el, cb, level = 0) {
-    cb(el, level)
-    if (el.is('list')) {
-      let children = el.getChildren()
-      children.forEach(c => {
-        this._walkList(c, cb, level+1)
-      })
+  _extractItems(el, config, items, level, visited) {
+    if(el.is('list-item')) items.push({ el, level })
+    if(el.is('list')) {
+      let listType = el.attr('list-type') || 'bullet'
+      if (!config[level]) config[level] = listType
+      level++
+      visited.add(el)
     }
+    el.getChildren().forEach(c => this._extractItems(c,config,items,level,visited))
   }
 
   // ATTENTION: this is pretty rudimentary still
@@ -62,10 +55,11 @@ export default class ConvertList {
           return $$('list').attr('list-type', 'order')
         } else if (arg === 'ul') {
           return $$('list').attr('list-type', 'bullet')
+        } else if (arg === 'li') {
+          return $$('list-item')
         } else {
-          let listItem = arg
-          return $$('list-item', {id: listItem.id }).append(
-            $$('p').setInnerXML(listItem.getInnerXML())
+          return $$('list-item', {id: arg.id }).append(
+            $$('p').setInnerXML(arg.getInnerXML())
           )
         }
       })

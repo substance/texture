@@ -95,6 +95,14 @@
   <body id="body-1">
     <sec id="heading-1">
       <title>Quisque malesuada</title>
+      <table-wrap>
+        <table>
+          <tr><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+          <tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+          <tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+          <tr><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+        </table>
+      </table-wrap>
       <p id="p-2">Lorem ipsum <xref id="xref-2" ref-type="bibr" rid="book1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
       <sec id="heading-2">
         <title>Orci varius natoque penatibus et magnis</title>

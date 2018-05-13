@@ -1,5 +1,5 @@
 import {
-  TextPropertyEditor, CustomSurface, platform,
+  CustomSurface, platform,
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
@@ -9,6 +9,7 @@ import {
   getSelectedRange, getSelDataForRowCol
 } from '../../article/tableHelpers'
 import TableClipboard from '../util/TableClipboard'
+import TableCellEditor from './TableCellEditor'
 
 export default class TableComponent extends CustomSurface {
 
@@ -82,14 +83,13 @@ export default class TableComponent extends CustomSurface {
         }
         cellEl.attr(attributes)
         cellEl.append(
-          $$(TextPropertyEditor, {
+          $$(TableCellEditor, {
             path: cell.getPath(),
-            disabled: true,
-            handleEnter: false,
-            handleTab: false
+            disabled: true
           }).ref(cell.id)
           .on('enter', this._onCellEnter)
           .on('tab', this._onCellTab)
+          .on('escape', this._onCellEscape)
         )
         _clearSpanned(matrix, i, j, rowspan, colspan)
         tr.append(cellEl)
@@ -97,6 +97,7 @@ export default class TableComponent extends CustomSurface {
       table.append(tr)
     }
     table.on('mousemove', this._onMousemove)
+      .on('dblclick', this._onDblclick)
     return table
   }
 
@@ -143,7 +144,7 @@ export default class TableComponent extends CustomSurface {
         _disableActiveCell()
         let newCellEditor = this.refs[nodeId]
         if (newCellEditor) {
-          console.log('ENABLING CELL EDITOR', nodeId)
+          // console.log('ENABLING CELL EDITOR', nodeId)
           newCellEditor.extendProps({ disabled: false })
           this._activeCell = nodeId
         }
@@ -174,7 +175,7 @@ export default class TableComponent extends CustomSurface {
       if(activeCellId) {
         let cellEditor = self.refs[activeCellId]
         if (cellEditor) {
-          console.log('DISABLING CELL EDITOR', activeCellId)
+          // console.log('DISABLING CELL EDITOR', activeCellId)
           cellEditor.extendProps({ disabled: true })
         }
         self._activeCell = null
@@ -191,9 +192,9 @@ export default class TableComponent extends CustomSurface {
         once: true
       })
     }
-    console.log('_onMousedown', e)
+    // console.log('_onMousedown', e)
     let target = this._getClickTargetForEvent(e)
-    console.log('target', target)
+    // console.log('target', target)
     let isRightButton = domHelpers.isRightButton(e)
     if (isRightButton) {
       console.log('TODO: handle right button')
@@ -233,6 +234,12 @@ export default class TableComponent extends CustomSurface {
         }
       }
     }
+  }
+
+  _onDblclick(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this._requestEditCell()
   }
 
   _onKeydown(e) {
@@ -316,6 +323,14 @@ export default class TableComponent extends CustomSurface {
     this._nav(0, 1, false, getSelDataForRowCol(rowIdx, colIdx))
   }
 
+  _onCellEscape(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    let cellEl = DOM.wrap(e.target).getParent()
+    let [rowIdx, colIdx] = this._getRowCol(cellEl)
+    this._requestSelectionChange(createTableSelection(getSelDataForRowCol(rowIdx, colIdx)))
+  }
+
   _onCopy(e) {
     this._clipboard.onCopy(e)
   }
@@ -347,7 +362,7 @@ export default class TableComponent extends CustomSurface {
 
   _requestSelectionChange(newSel) {
     console.log('requesting selection change', newSel)
-    if (newSel) newSel.surfaceId = this._surfaceId
+    if (newSel) newSel.surfaceId = this.getId()
     this.context.editorSession.setSelection(newSel)
   }
 

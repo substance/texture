@@ -69,7 +69,10 @@ import DropFigure from './commands/DropFigure'
 import InsertInlineFormulaCommand from './commands/InsertInlineFormulaCommand'
 import EditInlineFormulaTool from './components/EditInlineFormulaTool'
 
-import { InsertTableCommand, InsertCellsCommand, DeleteCellsCommand } from './commands/TableCommands'
+import {
+  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  TableSelectAllCommand
+} from './commands/TableCommands'
 import InsertTableTool from './components/InsertTableTool'
 
 import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
@@ -263,6 +266,8 @@ export default {
       spec: { dim: 'row' },
       commandGroup: 'table-structure'
     })
+    config.addCommand('table:select-all', TableSelectAllCommand)
+    config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
 
     config.addLabel('cite', 'Cite')
     config.addLabel('insert-xref-bibr', 'Reference')

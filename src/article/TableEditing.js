@@ -144,6 +144,18 @@ export default class TableEditing {
     return sel
   }
 
+  selectAll() {
+    let table = this.getTable()
+    let [N, M] = table.getDimensions()
+    this.editorSession.setSelection(this.createTableSelection({
+      type: 'range',
+      anchorRow: 0,
+      anchorCol: 0,
+      focusRow: N-1,
+      focusCol: M-1
+    }))
+  }
+
   _setValues(table, startRow, startCol, vals) {
     for (let i = 0; i < vals.length; i++) {
       let row = vals[i]

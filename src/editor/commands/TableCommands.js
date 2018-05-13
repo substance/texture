@@ -41,7 +41,7 @@ export class InsertTableCommand extends InsertNodeCommand {
   }
 }
 
-export class InsertCellsCommand extends Command {
+export class BasicTableCommand extends Command {
 
   getCommandState(params) {
     const sel = params.selection
@@ -74,6 +74,10 @@ export class InsertCellsCommand extends Command {
     let editing = new TableEditing(editorSession, tableId, surfaceId)
     return this.__execute(editing, commandState)
   }
+}
+
+
+export class InsertCellsCommand extends BasicTableCommand {
 
   __execute(editing, { startRow, startCol, endRow, endCol, ncols, nrows }) {
     let insertPos = this.config.spec.pos
@@ -90,7 +94,7 @@ export class InsertCellsCommand extends Command {
 
 }
 
-export class DeleteCellsCommand extends InsertCellsCommand {
+export class DeleteCellsCommand extends BasicTableCommand {
 
   __execute(editing, { startRow, startCol, nrows, ncols }) {
     let dim = this.config.spec.dim
@@ -101,4 +105,14 @@ export class DeleteCellsCommand extends InsertCellsCommand {
     }
     return true
   }
+}
+
+
+export class TableSelectAllCommand extends BasicTableCommand {
+
+  __execute(editing) {
+    editing.selectAll()
+    return true
+  }
+
 }

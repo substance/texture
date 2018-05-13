@@ -1,4 +1,4 @@
-import { xmlNodeHelpers } from 'substance'
+import { xmlNodeHelpers, isNumber } from 'substance'
 
 export function createTableSelection(data) {
   if (!data.type) data.type = 'range'
@@ -94,4 +94,21 @@ export function computeSelectionRectangle(ulRect, lrRect) {
 
 export function getSelDataForRowCol(rowIdx, colIdx) {
   return { type: 'range', anchorRow: rowIdx, anchorCol: colIdx, focusRow: rowIdx, focusCol: colIdx }
+}
+
+export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+export function getColumnLabel(colIdx) {
+  if (!isNumber(colIdx)) {
+    throw new Error('Illegal argument.')
+  }
+  var label = ""
+  while(true) { // eslint-disable-line
+    var mod = colIdx % ALPHABET.length
+    colIdx = Math.floor(colIdx/ALPHABET.length)
+    label = ALPHABET[mod] + label
+    if (colIdx > 0) colIdx--
+    else if (colIdx === 0) break
+  }
+  return label
 }

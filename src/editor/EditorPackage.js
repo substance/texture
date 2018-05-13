@@ -69,13 +69,9 @@ import DropFigure from './commands/DropFigure'
 import InsertInlineFormulaCommand from './commands/InsertInlineFormulaCommand'
 import EditInlineFormulaTool from './components/EditInlineFormulaTool'
 
-import InsertTableCommand from './commands/InsertTableCommand'
+import { InsertTableCommand, InsertCellsCommand, DeleteCellsCommand } from './commands/TableCommands'
 import InsertTableTool from './components/InsertTableTool'
 
-import InsertColumnCommand from './commands/InsertColumnCommand'
-import InsertRowCommand from './commands/InsertRowCommand'
-import RemoveColumnCommand from './commands/RemoveColumnCommand'
-import RemoveRowCommand from './commands/RemoveRowCommand'
 import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
 
 substanceGlobals.DEBUG_RENDERING = true
@@ -243,17 +239,29 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
-    config.addCommand('insert-column', InsertColumnCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('insert-columns-left', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'left' },
+      commandGroup: 'table-structure'
     })
-    config.addCommand('insert-row', InsertRowCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('insert-columns-right', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'right' },
+      commandGroup: 'table-structure'
     })
-    config.addCommand('remove-column', RemoveColumnCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('insert-rows-above', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'above' },
+      commandGroup: 'table-structure'
     })
-    config.addCommand('remove-row', RemoveRowCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('insert-rows-below', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'below' },
+      commandGroup: 'table-structure'
+    })
+    config.addCommand('delete-columns', DeleteCellsCommand, {
+      spec: { dim: 'col' },
+      commandGroup: 'table-structure'
+    })
+    config.addCommand('delete-rows', DeleteCellsCommand, {
+      spec: { dim: 'row' },
+      commandGroup: 'table-structure'
     })
 
     config.addLabel('cite', 'Cite')
@@ -275,8 +283,19 @@ export default {
     config.addLabel('toggle-references', '${showOrHide} References')
     config.addLabel('toggle-footnotes', '${showOrHide} Footnotes')
 
-    config.addLabel('insert-column', 'Insert column')
-    config.addLabel('insert-row', 'Insert row')
+    config.addLabel('insert-rows-above', {
+      en: 'Insert ${nrows} rows above'
+    })
+    config.addLabel('insert-rows-below', {
+      en: 'Insert ${nrows} rows below'
+    })
+    config.addLabel('insert-columns-left', {
+      en: 'Insert ${ncols} columns left'
+    })
+    config.addLabel('insert-columns-right', {
+      en: 'Insert ${ncols} columns right'
+    })
+
     config.addLabel('remove-column', 'Remove column')
     config.addLabel('remove-row', 'Remove row')
 
@@ -496,6 +515,13 @@ export default {
         commandGroups: ['insert']
       },
       {
+        name: 'table',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        commandGroups: ['table']
+      },
+      {
         name: 'cite',
         type: 'tool-dropdown',
         showDisabled: false,
@@ -526,7 +552,17 @@ export default {
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table-modifiers']
+        commandGroups: ['table-structure']
+      }
+    ])
+
+    config.addToolPanel('table-context-menu', [
+      {
+        name: 'context-menu',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table-structure']
       }
     ])
 

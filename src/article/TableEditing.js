@@ -1,4 +1,4 @@
-import { isString } from 'substance'
+import { isString, documentHelpers } from 'substance'
 import { createTableSelection, getSelectionData, getSelectedRange } from './tableHelpers'
 
 export default class TableEditing {
@@ -36,12 +36,14 @@ export default class TableEditing {
   deleteRows(pos, count) {
     this.editorSession.transaction((tx) => {
       this._deleteRows(this._getTable(tx), pos, pos+count-1)
+      tx.selection = null
     }, { action: 'deleteRows', pos, count })
   }
 
   deleteCols(pos, count) {
     this.editorSession.transaction((tx) => {
       this._deleteCols(this._getTable(tx), pos, pos+count-1)
+      tx.selection = null
     }, { action: 'deleteCols', pos, count })
   }
 
@@ -51,14 +53,13 @@ export default class TableEditing {
       let cell = table.getCell(row, col)
       if (cell) {
         cell.textContent = val
-        let sel = this._createTableSelection({
+        let sel = this.createTableSelection({
           type: 'range',
           anchorRow: row,
           anchorCol: col,
           focusRow: row,
           focusCol: col
         })
-        sel.surfaceId = this.surfaceId
         tx.setSelection(sel)
       }
     }, { action: 'setCell' })
@@ -97,14 +98,13 @@ export default class TableEditing {
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
       this._setValues(table, startRow, startCol, vals)
-      let sel = this._createTableSelection({
+      let sel = this.createTableSelection({
         type: 'range',
         anchorRow: startRow,
         anchorCol: startCol,
         focusRow: startRow+n-1,
         focusCol: startCol+m-1
       })
-      sel.surfaceId = this.surfaceId
       tx.setSelection(sel)
     }, { action: 'setValues' })
   }
@@ -137,8 +137,11 @@ export default class TableEditing {
     return tx.get(this.tableId)
   }
 
-  _createTableSelection(data) {
-    return createTableSelection(data)
+  createTableSelection(data) {
+    let sel = createTableSelection(data)
+    sel.data.nodeId = this.tableId
+    sel.surfaceId = this.surfaceId
+    return sel
   }
 
   _setValues(table, startRow, startCol, vals) {
@@ -192,30 +195,21 @@ export default class TableEditing {
   }
 
   _deleteRows(table, startRow, endRow) {
-    let data = table._getData()
     for (let rowIdx = endRow; rowIdx >= startRow; rowIdx--) {
-      let row = data.getChildAt(rowIdx)
-      // TODO: add a helper to delete recursively
-      row._childNodes.forEach((id) => {
-        table.delete(id)
-      })
-      data.removeChild(row)
+      let row = table.getChildAt(rowIdx)
+      documentHelpers.deleteNode(table.getDocument(), row)
+      table.removeChild(row)
     }
   }
 
   _deleteCols(table, startCol, endCol) {
-    let data = table._getData()
     let N = table.getRowCount()
-    let columns = table._getColumns()
-    for (let colIdx = endCol; colIdx >= startCol; colIdx--) {
-      columns.removeAt(colIdx)
-    }
     for (let rowIdx = N-1; rowIdx >= 0; rowIdx--) {
-      let row = data.getChildAt(rowIdx)
+      let row = table.getChildAt(rowIdx)
       for (let colIdx = endCol; colIdx >= startCol; colIdx--) {
-        const cellId = row.getChildAt(colIdx).id
+        let cell = row.getChildAt(colIdx)
         row.removeAt(colIdx)
-        table.delete(cellId)
+        documentHelpers.deleteNode(table.getDocument(), cell)
       }
     }
   }

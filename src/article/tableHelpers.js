@@ -91,3 +91,7 @@ export function computeSelectionRectangle(ulRect, lrRect) {
   selRect.height = lrRect.top + lrRect.height - selRect.top
   return selRect
 }
+
+export function getSelDataForRowCol(rowIdx, colIdx) {
+  return { type: 'range', anchorRow: rowIdx, anchorCol: colIdx, focusRow: rowIdx, focusCol: colIdx }
+}

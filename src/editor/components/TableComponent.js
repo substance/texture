@@ -5,7 +5,8 @@ import {
 } from 'substance'
 import TableEditing from '../../article/TableEditing'
 import {
-  createTableSelection, computeSelectionRectangle, shifted, getSelectedRange
+  createTableSelection, computeSelectionRectangle, shifted,
+  getSelectedRange, getSelDataForRowCol
 } from '../../article/tableHelpers'
 import TableClipboard from '../util/TableClipboard'
 
@@ -83,8 +84,12 @@ export default class TableComponent extends CustomSurface {
         cellEl.append(
           $$(TextPropertyEditor, {
             path: cell.getPath(),
-            disabled: true
+            disabled: true,
+            handleEnter: false,
+            handleTab: false
           }).ref(cell.id)
+          .on('enter', this._onCellEnter)
+          .on('tab', this._onCellTab)
         )
         _clearSpanned(matrix, i, j, rowspan, colspan)
         tr.append(cellEl)
@@ -254,6 +259,11 @@ export default class TableComponent extends CustomSurface {
         handled = true
         break
       }
+      case keys.TAB: {
+        this._nav(0, 1)
+        handled = true
+        break
+      }
       case keys.DELETE:
       case keys.BACKSPACE: {
         this._clearSelection()
@@ -284,6 +294,26 @@ export default class TableComponent extends CustomSurface {
     this._requestEditCell(value)
     // Clear keytrap after sending an action
     this.refs.keytrap.val('')
+  }
+
+  _onCellEnter(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    let cellEl = DOM.wrap(e.target).getParent()
+    if (e.detail.shiftKey) {
+      console.log('TODO: insert break')
+    } else {
+      let [rowIdx, colIdx] = this._getRowCol(cellEl)
+      this._nav(1, 0, false, getSelDataForRowCol(rowIdx, colIdx))
+    }
+  }
+
+  _onCellTab(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    let cellEl = DOM.wrap(e.target).getParent()
+    let [rowIdx, colIdx] = this._getRowCol(cellEl)
+    this._nav(0, 1, false, getSelDataForRowCol(rowIdx, colIdx))
   }
 
   _onCopy(e) {
@@ -349,8 +379,9 @@ export default class TableComponent extends CustomSurface {
     return [-1,-1]
   }
 
-  _nav(dr, dc, shift) {
-    let newSelData = shifted(this.props.node, this._getSelectionData(), dr, dc, shift)
+  _nav(dr, dc, shift, selData) {
+    selData = selData || this._getSelectionData()
+    let newSelData = shifted(this.props.node, selData, dr, dc, shift)
     this._requestSelectionChange(createTableSelection(newSelData))
   }
 

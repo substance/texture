@@ -172,19 +172,22 @@ export default class TableEditing {
     }
   }
 
+  _getCreateElement(table) {
+    const doc = table.getDocument()
+    return doc.createElement.bind(doc)
+  }
+
   _createRowsAt(table, rowIdx, n) {
-    let $$ = table.createElement.bind(table)
+    let $$ = this._getCreateElement(table)
     const M = table.getColumnCount()
-    let data = table._getData()
-    let rowAfter = data.getChildAt(rowIdx)
+    let rowAfter = table.getChildAt(rowIdx)
     for (let i = 0; i < n; i++) {
-      let row = $$('row')
+      let row = $$('table-row')
       for (let j = 0; j < M; j++) {
-        let cell = $$('cell')
-        // TODO: maybe insert default value?
+        let cell = $$('table-cell')
         row.append(cell)
       }
-      data.insertBefore(row, rowAfter)
+      table.insertBefore(row, rowAfter)
     }
   }
 
@@ -218,22 +221,13 @@ export default class TableEditing {
   }
 
   _createColumnsAt(table, colIdx, n) {
-    // TODO: we need to add columns' meta, too
-    // for each existing row insert new cells
-    let $$ = table.createElement.bind(table)
-    let data = table._getData()
-    let it = data.getChildNodeIterator()
-    let columns = table._getColumns()
-    let colAfter = columns.getChildAt(colIdx)
-    for (let j = 0; j < n; j++) {
-      let col = $$('col').attr('type', 'any')
-      columns.insertBefore(col, colAfter)
-    }
-    while(it.hasNext()) {
-      let row = it.next()
+    let $$ = this._getCreateElement(table)
+    let rowIt = table.getChildNodeIterator()
+    while(rowIt.hasNext()) {
+      let row = rowIt.next()
       let cellAfter = row.getChildAt(colIdx)
       for (let j = 0; j < n; j++) {
-        let cell = $$('cell')
+        let cell = $$('table-cell')
         row.insertBefore(cell, cellAfter)
       }
     }

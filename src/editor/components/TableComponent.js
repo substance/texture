@@ -38,9 +38,18 @@ export default class TableComponent extends CustomSurface {
   didMount() {
     super.didMount()
 
+    this._tableSha = this.props.node._getSha()
+
+    this.context.editorSession.onRender('document', this._onDocumentChange, this)
     this.context.editorSession.onRender('selection', this._onSelectionChange, this)
 
     this._positionSelection(this._getSelectionData())
+  }
+
+  dispose() {
+    super.dispose()
+
+    this.context.editorSession.off(this)
   }
 
   render($$) {
@@ -127,10 +136,21 @@ export default class TableComponent extends CustomSurface {
     el.append(
       $$('div').addClass('se-selection-anchor').ref('selAnchor').css('visibility', 'hidden'),
       $$('div').addClass('se-selection-range').ref('selRange').css('visibility', 'hidden')
-      // $$('div').addClass('se-selection-columns').ref('selColumns').css('visibility', 'hidden'),
-      // $$('div').addClass('se-selection-rows').ref('selRows').css('visibility', 'hidden')
     )
     return el
+  }
+
+  _onDocumentChange(change) {
+    const table = this.props.node
+    // Note: using a simplified way to detect when a table
+    // has changed structurally
+    // TableElementNode is detecting such changes and
+    // updates an internal 'sha' that we can compare against
+    if (table._hasShaChanged(this._tableSha)) {
+      console.log('TABLE HAS CHANGED')
+      this.rerender()
+      this._tableSha = table._getSha()
+    }
   }
 
   _onSelectionChange(sel) {
@@ -361,7 +381,7 @@ export default class TableComponent extends CustomSurface {
   }
 
   _requestSelectionChange(newSel) {
-    console.log('requesting selection change', newSel)
+    // console.log('requesting selection change', newSel)
     if (newSel) newSel.surfaceId = this.getId()
     this.context.editorSession.setSelection(newSel)
   }

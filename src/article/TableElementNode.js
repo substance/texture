@@ -5,8 +5,9 @@ export default class TableElementNode extends XMLElementNode {
   constructor(...args) {
     super(...args)
 
-    this._rowIds = new Set(...this._childNodes)
     this._matrix = null
+    this._rowIds = new Set(this._childNodes)
+    this._sha = Math.random()
     this._enableCaching()
   }
 
@@ -57,16 +58,32 @@ export default class TableElementNode extends XMLElementNode {
   _onOperationApplied(op) {
     if (!op.path) return
     let nodeId = op.path[0]
+    let hasChanged = false
     if (nodeId === this.id && op.path[1] === '_childNodes') {
-      if (op.isDelete()) {
-        this._rowIds.delete(op.getValue())
-      } else if (op.isInsert()) {
-        this._rowIds.add(op.getValue())
+      let update = op.getValueOp()
+      if (update.isDelete()) {
+        this._rowIds.delete(update.getValue())
+      } else if (update.isInsert()) {
+        this._rowIds.add(update.getValue())
       }
-      this._matrix = null
+      hasChanged = true
     } else if (this._rowIds.has(nodeId) && op.path[1] === '_childNodes') {
-      this._matrix = null
+      hasChanged = true
     }
+    if (hasChanged) {
+      this._matrix = null
+      // HACK: using a quasi-sha to indicate that this table has been
+      // changed structurally
+      this._sha = Math.random()
+    }
+  }
+
+  _hasShaChanged(sha) {
+    return (this._sha !== sha)
+  }
+
+  _getSha() {
+     return this._sha
   }
 
 }

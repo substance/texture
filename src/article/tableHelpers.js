@@ -91,12 +91,3 @@ export function computeSelectionRectangle(ulRect, lrRect) {
   selRect.height = lrRect.top + lrRect.height - selRect.top
   return selRect
 }
-
-
-export function isXInside(x, rect) {
-  return x >= rect.left && x <= rect.left+rect.width
-}
-
-export function isYInside(y, rect) {
-  return y >= rect.top && y <= rect.top+rect.height
-}

@@ -91,6 +91,7 @@ export default class TableComponent extends CustomSurface {
       }
       table.append(tr)
     }
+    table.on('mousemove', this._onMousemove)
     return table
   }
 
@@ -216,40 +217,17 @@ export default class TableComponent extends CustomSurface {
   }
 
   _onMousemove(e) {
-    // if (this._isSelecting) {
-    //   const sheetView = this.refs.sheetView
-    //   const sel = this._selectionData
-    //   switch (sel.type) {
-    //     case 'range': {
-    //       let rowIdx = this._mapClientYToRow(e.clientY)
-    //       let colIdx = this._mapClientXToColumn(e.clientX)
-    //       if (rowIdx !== sel.focusRow || colIdx !== sel.focusCol) {
-    //         sel.focusRow = rowIdx > 0 ? rowIdx : 0
-    //         sel.focusCol = colIdx > 0 ? colIdx : 0
-    //         this._requestSelectionChange()
-    //       }
-    //       break
-    //     }
-    //     case 'columns': {
-    //       let colIdx = this._mapClientXToColumn(e.clientX)
-    //       if (colIdx !== sel.focusCol) {
-    //         sel.focusCol = colIdx
-    //         this._requestSelectionChange()
-    //       }
-    //       break
-    //     }
-    //     case 'rows': {
-    //       let rowIdx = this._mapClientYToRow(e.clientY)
-    //       if (rowIdx !== sel.focusRow) {
-    //         sel.focusRow = rowIdx
-    //         this._requestSelectionChange()
-    //       }
-    //       break
-    //     }
-    //     default:
-    //       // should not happen
-    //   }
-    // }
+    if (this._isSelecting) {
+      const selData = this._selectionData
+      let [rowIdx, colIdx] = this._mapClientXYToRowCol(e.clientX, e.clientY)
+      if (rowIdx !== selData.focusRow || colIdx !== selData.focusCol) {
+        if (rowIdx >= 0 && colIdx >= 0) {
+          selData.focusRow = rowIdx
+          selData.focusCol = colIdx
+          this._requestSelectionChange(createTableSelection(selData))
+        }
+      }
+    }
   }
 
   _onKeydown(e) {
@@ -347,37 +325,28 @@ export default class TableComponent extends CustomSurface {
     let target = DOM.wrap(e.target)
     let cellEl = domHelpers.findParent(target, 'td,th')
     if (cellEl) {
-      let rowIdx = parseInt(cellEl.getAttribute('data-row-idx'), 10)
-      let colIdx = parseInt(cellEl.getAttribute('data-col-idx'), 10)
+      let [rowIdx, colIdx] = this._getRowCol(cellEl)
       return { type: 'cell', rowIdx, colIdx }
     }
   }
 
-  _mapClientXToColumn(x) {
-    // const children = headEl.children
-    // for (let i = 0; i < children.length; i++) {
-    //   let child = children[i]
-    //   if (_isXInside(x, getBoundingRect(child))) {
-    //     return i-1
-    //   }
-    // }
-    return undefined
+  _getRowCol(cellEl) {
+    let rowIdx = parseInt(cellEl.getAttribute('data-row-idx'), 10)
+    let colIdx = parseInt(cellEl.getAttribute('data-col-idx'), 10)
+    return [rowIdx, colIdx]
   }
 
-  _mapClientYToRow(y) {
-    // const headEl = this.refs.head.el
-    // if (_isYInside(y, getBoundingRect(headEl))) {
-    //   return -1
-    // }
-    // const bodyEl = this.refs.body.el
-    // const children = bodyEl.children
-    // for (let i = 0; i < children.length; i++) {
-    //   let child = children[i]
-    //   if (_isYInside(y, getBoundingRect(child))) {
-    //     return parseInt(child.getAttribute('data-row'), 10)
-    //   }
-    // }
-    return undefined
+  _mapClientXYToRowCol(x, y) {
+    // TODO: this could be optimized using bisect search
+    let cellEls = this.refs.table.findAll('th,td')
+    for (let i = 0; i < cellEls.length; i++) {
+      let cellEl = cellEls[i]
+      let rect = domHelpers.getBoundingRect(cellEl)
+      if (domHelpers.isXInside(x, rect) && domHelpers.isYInside(y, rect)) {
+        return this._getRowCol(cellEl)
+      }
+    }
+    return [-1,-1]
   }
 
   _nav(dr, dc, shift) {

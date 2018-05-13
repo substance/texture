@@ -301,7 +301,7 @@ export default class TableComponent extends CustomSurface {
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
     if (e.detail.shiftKey) {
-      console.log('TODO: insert break')
+      this._tableEditing.insertSoftBreak()
     } else {
       let [rowIdx, colIdx] = this._getRowCol(cellEl)
       this._nav(1, 0, false, getSelDataForRowCol(rowIdx, colIdx))

@@ -127,6 +127,12 @@ export default class TableEditing {
     }
   }
 
+  insertSoftBreak() {
+    this.editorSession.transaction(tx => {
+      tx.insertText('\n')
+    }, 'insertSoftBreak')
+  }
+
   _getTable(tx) {
     return tx.get(this.tableId)
   }

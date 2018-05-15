@@ -164,8 +164,6 @@ function createMenu() {
     {
       label: 'View',
       submenu: [
-        {role: 'reload'},
-        {role: 'forcereload'},
         {role: 'toggledevtools'},
         {type: 'separator'},
         {role: 'resetzoom'},
@@ -189,7 +187,7 @@ function createMenu() {
           label: 'Learn More',
           click () {
             // TODO: why not use the globally required electron?
-            shell.openExternal('https://electronjs.org')
+            shell.openExternal('http://substance.io/texture')
           }
         }
       ]

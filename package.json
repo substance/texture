@@ -1,6 +1,6 @@
 {
   "name": "substance-texture",
-  "version": "1.0.0-preview.1.11",
+  "version": "1.0.0-preview.1.12",
   "description": "A scientific word processor.",
   "main": "./dist/texture.cjs.js",
   "jsnext:main": "index.es.js",
@@ -10,17 +10,17 @@
     "lodash": "^4.14.1"
   },
   "peerDependency": {
-    "substance": "^1.0.0-preview.55"
+    "substance": "^1.0.0-preview.57"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",
-    "electron": "2.0.0-beta.2",
-    "electron-builder": "20.4.0",
+    "electron": "2.0.0",
+    "electron-builder": "20.13.3",
     "eslint": "^4.19.1",
     "font-awesome": "4.5.0",
     "istanbul": "^0.4.5",
     "source-map-support": "0.5.3",
-    "substance": "1.0.0-preview.55",
+    "substance": "1.0.0-preview.57",
     "substance-bundler": "0.23.3",
     "substance-test": "^0.9.5"
   },

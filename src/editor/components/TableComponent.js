@@ -255,7 +255,7 @@ export default class TableComponent extends CustomSurface {
       const selData = this._selectionData
       let cellId = this._mapClientXYToCellId(e.clientX, e.clientY)
       if (cellId !== selData.focusCellId) {
-        selData.focusCellId = selData.focusCellId
+        selData.focusCellId = cellId
         this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
       }
     }
@@ -417,7 +417,7 @@ export default class TableComponent extends CustomSurface {
 
   _mapClientXYToCellId(x, y) {
     // TODO: this could be optimized using bisect search
-    let cellEls = this.refs.table.findAll('th,td')
+    let cellEls = this.refs.table.el.findAll('th,td')
     for (let i = 0; i < cellEls.length; i++) {
       let cellEl = cellEls[i]
       let rect = domHelpers.getBoundingRect(cellEl)
@@ -442,8 +442,7 @@ export default class TableComponent extends CustomSurface {
   _clearSelection() {
     let selData = this._getSelectionData()
     if (selData) {
-      let { startRow, startCol, endRow, endCol } = getCellRange(this.props.node, selData.anchorCellId, selData.focusCellId)
-      this._tableEditing.clearValues(startRow, startCol, endRow, endCol)
+      this._tableEditing.clearValues(selData.anchorCellId, selData.focusCellId)
     }
   }
 

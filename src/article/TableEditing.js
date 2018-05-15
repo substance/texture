@@ -93,25 +93,29 @@ export default class TableEditing {
     }
   }
 
-  setValues(anchorCellId, focusCellId, vals) {
+  setValues(anchorCellId, vals) {
     let n = vals.length
     let m = vals[0].length
     let table = this.getTable()
-    let { startRow, startCol } = getCellRange(table, anchorCellId, focusCellId)
+    let { startRow, startCol } = getCellRange(table, anchorCellId, anchorCellId)
     this.ensureSize(startRow+n, startCol+m)
+    let lastCell = table.getCell(startRow+n-1, startCol+m-1)
+    if (lastCell.shadowed) lastCell = lastCell.masterCell
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
       this._setValues(table, startRow, startCol, vals)
       let sel = this.createTableSelection({
         type: 'range',
         anchorCellId,
-        focusCellId
+        focusCellId: lastCell.id
       })
       tx.setSelection(sel)
     }, { action: 'setValues' })
   }
 
-  clearValues(startRow, startCol, endRow, endCol) {
+  clearValues(anchorCellId, focusCellId) {
+    let table = this.getTable()
+    let { startRow, endRow, startCol, endCol } = getCellRange(table, anchorCellId, focusCellId)
     this.editorSession.transaction(tx => {
       // Note: the selection remains the same
       this._clearValues(this._getTable(tx), startRow, startCol, endRow, endCol)

@@ -64,8 +64,10 @@ export default class TableClipboard {
   _pasteHtml(html, plainText) {
     let vals = this._htmlToVals(html)
     if (vals && vals.length > 0) {
-      let { startRow, startCol } = this._getRange()
-      this._setValues(startRow, startCol, vals)
+      let selData = this.tableEditing.getSelectionData()
+      if (selData) {
+        this._setValues(selData.anchorCellId, vals)
+      }
     } else {
       this._pastePlainText(plainText)
     }
@@ -97,7 +99,7 @@ export default class TableClipboard {
   _cut() {
     const range = this._getRange()
     if (!range) return
-    this._clearValues(range.startRow, range.startCol, range.endRow, range.endCol)
+    this._clearValues()
   }
 
   _valsToHTML(vals) {
@@ -130,12 +132,12 @@ export default class TableClipboard {
     }
   }
 
-  _setValues(startRow, startCol, vals) {
-    this.tableEditing.setValues(startRow, startCol, vals)
+  _setValues(anchorCellId, vals) {
+    this.tableEditing.setValues(anchorCellId, vals)
   }
 
-  _clearValues(startRow, startCol, endRow, endCol) {
-    this.tableEditing.clearValues(startRow, startCol, endRow, endCol)
+  _clearValues() {
+    this.tableEditing.clearValues()
   }
 
   _getRange() {

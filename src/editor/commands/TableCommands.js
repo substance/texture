@@ -32,7 +32,7 @@ export class InsertTableCommand extends InsertNodeCommand {
     table.append(headRow)
     for (let i = 0; i < nrows; i++) {
       let row = $$('table-row')
-      for (let j = 0; j < nrows; j++) {
+      for (let j = 0; j < ncols; j++) {
         row.append($$('table-cell').text(''))
       }
       table.append(row)

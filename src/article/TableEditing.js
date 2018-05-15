@@ -296,8 +296,8 @@ export default class TableEditing {
   _deleteRows(table, startRow, endRow) {
     for (let rowIdx = endRow; rowIdx >= startRow; rowIdx--) {
       let row = table.getChildAt(rowIdx)
-      documentHelpers.deleteNode(table.getDocument(), row)
       table.removeChild(row)
+      documentHelpers.deleteNode(table.getDocument(), row)
     }
   }
 

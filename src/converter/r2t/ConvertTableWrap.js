@@ -9,7 +9,7 @@ import {
   addLabel
 } from './r2tHelpers'
 
-export default class ConvertElementCitation {
+export default class ConvertTableWrap {
 
   import(dom) {
     let tableWrap = dom.findAll('table-wrap')

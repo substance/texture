@@ -71,7 +71,7 @@ import EditInlineFormulaTool from './components/EditInlineFormulaTool'
 
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
-  TableSelectAllCommand
+  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from './commands/TableCommands'
 import InsertTableTool from './components/InsertTableTool'
 
@@ -242,32 +242,40 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
+    config.addCommand('table:select-all', TableSelectAllCommand)
+    config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
+
+    config.addCommand('toggle-cell-heading', ToggleCellHeadingCommand, {
+      commandGroup: 'table'
+    })
+    config.addCommand('toggle-cell-merge', ToggleCellMergeCommand, {
+      commandGroup: 'table'
+    })
+
     config.addCommand('insert-columns-left', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'left' },
-      commandGroup: 'table-structure'
+      commandGroup: 'table-insert'
     })
     config.addCommand('insert-columns-right', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'right' },
-      commandGroup: 'table-structure'
+      commandGroup: 'table-insert'
     })
     config.addCommand('insert-rows-above', InsertCellsCommand, {
       spec: { dim: 'row', pos: 'above' },
-      commandGroup: 'table-structure'
+      commandGroup: 'table-insert'
     })
     config.addCommand('insert-rows-below', InsertCellsCommand, {
       spec: { dim: 'row', pos: 'below' },
-      commandGroup: 'table-structure'
+      commandGroup: 'table-insert'
     })
     config.addCommand('delete-columns', DeleteCellsCommand, {
       spec: { dim: 'col' },
-      commandGroup: 'table-structure'
+      commandGroup: 'table-delete'
     })
     config.addCommand('delete-rows', DeleteCellsCommand, {
       spec: { dim: 'row' },
-      commandGroup: 'table-structure'
+      commandGroup: 'table-delete'
     })
-    config.addCommand('table:select-all', TableSelectAllCommand)
-    config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
 
     config.addLabel('cite', 'Cite')
     config.addLabel('insert-xref-bibr', 'Reference')
@@ -300,9 +308,16 @@ export default {
     config.addLabel('insert-columns-right', {
       en: 'Insert ${ncols} columns right'
     })
+    config.addLabel('delete-rows', {
+      en: 'Delete ${nrows} rows'
+    })
+    config.addLabel('delete-columns', {
+      en: 'Delete ${ncols} columns'
+    })
 
-    config.addLabel('remove-column', 'Remove column')
-    config.addLabel('remove-row', 'Remove row')
+    config.addLabel('toggle-cell-heading', {
+      en: 'Toggle cell heading'
+    })
 
     config.addLabel('add-reference-title', 'Add Reference(s)')
     config.addLabel('add-ref-manually', 'Or create manually')
@@ -329,6 +344,11 @@ export default {
     config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
 
     config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
+
+    config.addIcon('toggle-cell-merge', {
+      'fontawesome': 'fa-arrows-h'
+    })
+    config.addIcon('toggle-cell-heading', { 'fontawesome': 'fa-th-large' })
 
     // Annotation tools
     config.addAnnotationTool({
@@ -499,13 +519,6 @@ export default {
         commandGroups: ['text-types']
       },
       {
-        name: 'list',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        commandGroups: ['list']
-      },
-      {
         name: 'annotations',
         type: 'tool-group',
         showDisabled: true,
@@ -518,6 +531,13 @@ export default {
         showDisabled: true,
         style: 'minimal',
         commandGroups: ['insert']
+      },
+      {
+        name: 'list',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        commandGroups: ['list']
       },
       {
         name: 'table',
@@ -563,12 +583,28 @@ export default {
 
     config.addToolPanel('table-context-menu', [
       {
-        name: 'context-menu',
+        name: 'table-tools',
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table-structure']
-      }
+        commandGroups: ['table']
+      },
+      { type: 'tool-separator' },
+      {
+        name: 'table-insert',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table-insert']
+      },
+      { type: 'tool-separator' },
+      {
+        name: 'table-delete',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table-delete']
+      },
     ])
 
     config.addToolPanel('workflow', [

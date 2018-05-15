@@ -165,3 +165,9 @@ h3.sc-heading {
 .sc-ref-list {
   font-size: 15px;
 }
+
+.sc-context-menu .sc-tool-separator {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}

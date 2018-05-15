@@ -1,5 +1,8 @@
 import { isString, documentHelpers } from 'substance'
-import { createTableSelection, getSelectionData, getSelectedRange } from './tableHelpers'
+import {
+  createTableSelection, getSelectionData, getSelectedRange,
+  getCellRange
+} from './tableHelpers'
 
 export default class TableEditing {
 
@@ -47,18 +50,17 @@ export default class TableEditing {
     }, { action: 'deleteCols', pos, count })
   }
 
-  setCell(row, col, val) {
+  setCell(cellId, val) {
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
-      let cell = table.getCell(row, col)
+      let cell = table.get(cellId)
       if (cell) {
+        if (cell.shadowed) throw new Error('Can not change a shadowed cell')
         cell.textContent = val
         let sel = this.createTableSelection({
           type: 'range',
-          anchorRow: row,
-          anchorCol: col,
-          focusRow: row,
-          focusCol: col
+          anchorCellId: cell.id,
+          focusCellId: cell.id
         })
         tx.setSelection(sel)
       }
@@ -91,19 +93,19 @@ export default class TableEditing {
     }
   }
 
-  setValues(startRow, startCol, vals) {
+  setValues(anchorCellId, focusCellId, vals) {
     let n = vals.length
     let m = vals[0].length
+    let table = this.getTable()
+    let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
     this.ensureSize(startRow+n, startCol+m)
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
       this._setValues(table, startRow, startCol, vals)
       let sel = this.createTableSelection({
         type: 'range',
-        anchorRow: startRow,
-        anchorCol: startCol,
-        focusRow: startRow+n-1,
-        focusCol: startCol+m-1
+        anchorCellId,
+        focusCellId
       })
       tx.setSelection(sel)
     }, { action: 'setValues' })
@@ -133,6 +135,61 @@ export default class TableEditing {
     }, 'insertSoftBreak')
   }
 
+  setHeading(cellIds, heading) {
+    let doc = this.editorSession.getDocument()
+    cellIds = cellIds.filter(id => {
+      let cell = doc.get(id)
+      let val = cell.getAttribute('heading')
+      return Boolean(val) !== heading
+    })
+    if (cellIds.length === 0) return
+    this.editorSession.transaction(tx => {
+      cellIds.forEach(id => {
+        let cell = tx.get(id)
+        if (heading) {
+          cell.setAttribute('heading', true)
+        } else {
+          cell.removeAttribute('heading')
+        }
+      })
+    }, { action: 'setHeading' })
+  }
+
+  merge() {
+    let table = this.getTable()
+    let { startRow, endRow, startCol, endCol } = this.getSelectedRange()
+    let bigOne = table.getCell(startRow, startCol)
+    // compute the span by walking all non-shadowed cells
+    for (let i = startRow; i <= endRow; i++) {
+      for (let j = startCol; j <= endCol; j++) {
+        let cell = table.getCell(i, j)
+        if (cell.shadowed) continue
+        let rowspan = cell.rowspan
+        let colspan = cell.colspan
+        if (rowspan) {
+          endRow = Math.max(endRow, i+rowspan-1)
+        }
+        if (colspan) {
+          endCol = Math.max(endCol, j+colspan-1)
+        }
+      }
+    }
+    // Note: spans should be >= 1, i.e. rowspan=1 means no spanning
+    let rowspan = endRow - startRow + 1
+    let colspan = endCol - startCol + 1
+    if (bigOne.rowspan !== rowspan || bigOne.colspan !== colspan) {
+      this.editorSession.transaction(tx => {
+        let cell = tx.get(bigOne.id)
+        cell.setAttribute('rowspan', rowspan)
+        cell.setAttribute('colspan', colspan)
+      }, { action: 'mergeCells' })
+    }
+  }
+
+  unmerge() {
+
+  }
+
   _getTable(tx) {
     return tx.get(this.tableId)
   }
@@ -147,12 +204,16 @@ export default class TableEditing {
   selectAll() {
     let table = this.getTable()
     let [N, M] = table.getDimensions()
+    if (N === 0 || M === 0) return
+    let anchorCell = table.getCell(0,0)
+    let focusCell = table.getCell(N-1, M-1)
+    if (focusCell.shadowed) {
+      focusCell = focusCell.masterCell
+    }
     this.editorSession.setSelection(this.createTableSelection({
       type: 'range',
-      anchorRow: 0,
-      anchorCol: 0,
-      focusRow: N-1,
-      focusCol: M-1
+      anchorCellId: anchorCell.id,
+      focusCellId: focusCell.id
     }))
   }
 

@@ -72,15 +72,12 @@ export default class TableClipboard {
   }
 
   _pastePlainText(plainText) {
-    let sel = this._getSelection()
-    if (!sel) return
-    const rowIdx = sel.anchorRow
-    const colIdx = sel.anchorCol
+    let selData = this.tableEditing.getSelectionData()
+    const { anchorCellId } = selData
     // TODO: we could try to detect csv/tsv in the plain text
     // and do a structured paste
-    this.tableEditing.setValue(rowIdx, colIdx, plainText)
+    this.tableEditing.setCell(anchorCellId, plainText)
   }
-
 
   _copy() {
     const table = this.tableEditing.getTable()
@@ -139,10 +136,6 @@ export default class TableClipboard {
 
   _clearValues(startRow, startCol, endRow, endCol) {
     this.tableEditing.clearValues(startRow, startCol, endRow, endCol)
-  }
-
-  _getSelection() {
-    this.tableEditing.getSelectionData()
   }
 
   _getRange() {

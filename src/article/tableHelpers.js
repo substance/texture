@@ -1,50 +1,12 @@
 import { xmlNodeHelpers, isNumber } from 'substance'
 
 export function createTableSelection(data) {
-  if (!data.type) data.type = 'range'
-  // integrity check:
-  switch (data.type) {
-    case 'range': {
-      if (!isFinite(data.anchorRow) || !isFinite(data.anchorCol) ||
-        !isFinite(data.focusRow) || !isFinite(data.focusCol)) {
-        throw new Error('Invalid arguments')
-      }
-      break
-    }
-    default:
-      throw new Error('Invalid type for table selection')
-  }
-
+  if (!data.anchorCellId || !data.focusCellId) throw new Error('Invalid selection data')
   return {
     type: 'custom',
     customType: 'table',
     data: data
   }
-}
-
-export function shifted(table, selData, dr, dc, shift) {
-  let newSelData = Object.assign({}, selData)
-  // TODO: move viewport if necessary
-  let newFocusRow, newFocusCol
-  if (!shift) {
-    [newFocusRow, newFocusCol] = clamped(table, selData.anchorRow+dr, selData.anchorCol+dc)
-    newSelData.anchorRow = newSelData.focusRow = newFocusRow
-    newSelData.anchorCol = newSelData.focusCol = newFocusCol
-  } else {
-    [newFocusRow, newFocusCol] = clamped(table, selData.focusRow+dr, selData.focusCol+dc)
-    newSelData.focusRow = newFocusRow
-    newSelData.focusCol = newFocusCol
-  }
-  return newSelData
-}
-
-export function clamped(table, rowIdx, colIdx) {
-  const N = table.getRowCount()
-  const M = table.getColumnCount()
-  return [
-    Math.max(0, Math.min(N-1, rowIdx)),
-    Math.max(0, Math.min(M-1, colIdx)),
-  ]
 }
 
 export function getSelectionData(sel) {
@@ -55,18 +17,7 @@ export function getSelectionData(sel) {
 }
 
 export function getSelectedRange(table, selData) {
-  let startRow = Math.min(selData.anchorRow, selData.focusRow)
-  let endRow = Math.max(selData.anchorRow, selData.focusRow)
-  let startCol = Math.min(selData.anchorCol, selData.focusCol)
-  let endCol = Math.max(selData.anchorCol, selData.focusCol)
-  if (selData.type === 'columns') {
-    startRow = 0
-    endRow = table.getRowCount() - 1
-  } else if (selData.type === 'rows') {
-    startCol = 0
-    endCol = table.getColumnCount() - 1
-  }
-  return { startRow, endRow, startCol, endCol }
+  return getCellRange(table, selData.anchorCellId, selData.focusCellId)
 }
 
 export function getRowCol(cell) {
@@ -92,10 +43,6 @@ export function computeSelectionRectangle(ulRect, lrRect) {
   return selRect
 }
 
-export function getSelDataForRowCol(rowIdx, colIdx) {
-  return { type: 'range', anchorRow: rowIdx, anchorCol: colIdx, focusRow: rowIdx, focusCol: colIdx }
-}
-
 export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 export function getColumnLabel(colIdx) {
@@ -111,4 +58,51 @@ export function getColumnLabel(colIdx) {
     else if (colIdx === 0) break
   }
   return label
+}
+
+export function getCellRange(table, anchorCellId, focusCellId) {
+  let anchorCell = table.get(anchorCellId)
+  let focusCell = table.get(focusCellId)
+  let startRow = Math.min(anchorCell.rowIdx, focusCell.rowIdx)
+  let startCol = Math.min(anchorCell.colIdx, focusCell.colIdx)
+  let endRow = Math.max(anchorCell.rowIdx+anchorCell.rowspan-1,focusCell.rowIdx+focusCell.rowspan-1)
+  let endCol = Math.max(anchorCell.colIdx+anchorCell.colspan-1,focusCell.colIdx+focusCell.colspan-1)
+  return { startRow, startCol, endRow, endCol }
+}
+
+export function computeUpdatedSelection(table, selData, dr, dc, expand) {
+  let focusCellId = selData.focusCellId
+  let focusCell = table.get(focusCellId)
+  let rowIdx = focusCell.rowIdx
+  let colIdx = focusCell.colIdx
+  let rowspan = focusCell.rowspan
+  let colspan = focusCell.colspan
+  let newFocusCell
+  if (dr) {
+    if (dr < 0) {
+      newFocusCell = table.getCell(rowIdx+dr, colIdx)
+    } else if (dr > 0) {
+      newFocusCell = table.getCell(rowIdx+rowspan-1+dr, colIdx)
+    }
+  } else if (dc) {
+    if (dc < 0) {
+      newFocusCell = table.getCell(rowIdx, colIdx+dc)
+    } else if (dc > 0) {
+      newFocusCell = table.getCell(rowIdx, colIdx+colspan-1+dc)
+    }
+  }
+  if (newFocusCell) {
+    if (newFocusCell.shadowed) newFocusCell = newFocusCell.masterCell
+    let newFocusCellId = newFocusCell.id
+    let newAnchorCellId = selData.anchorCellId
+    if (!expand) {
+      newAnchorCellId = newFocusCellId
+    }
+    return {
+      anchorCellId: newAnchorCellId,
+      focusCellId: newFocusCellId
+    }
+  } else {
+    return selData
+  }
 }

@@ -6,22 +6,38 @@ export default class TableElementNode extends XMLElementNode {
     super(...args)
 
     this._matrix = null
-    this._rowIds = new Set(this._childNodes)
+    this._rowIds = new Set()
+    this._cellIds = new Set()
     this._sha = Math.random()
+
     this._enableCaching()
+  }
+
+  get(cellId) {
+    if (!this._cellIds.has(cellId)) throw new Error('Cell is not part of this table.')
+    return this.document.get(cellId)
   }
 
   getCellMatrix() {
     if (!this._matrix) {
-      this._matrix = this.getChildren().map((row, rowIdx) => {
+      let spanningCells = []
+      let matrix = this.getChildren().map((row, rowIdx) => {
         let cells = row.getChildren()
         for (let colIdx = 0; colIdx < cells.length; colIdx++) {
           let c = cells[colIdx]
           c.rowIdx = rowIdx
           c.colIdx = colIdx
+          c.shadowed = false
+          if(c.colspan || c.rowspan) {
+            spanningCells.push(c)
+          }
         }
         return cells
       })
+      spanningCells.forEach(c => {
+        _shadowSpanned(matrix, c.rowIdx, c.colIdx, c.rowspan, c.colspan, c)
+      })
+      this._matrix = matrix
     }
     return this._matrix
   }
@@ -51,6 +67,11 @@ export default class TableElementNode extends XMLElementNode {
   _enableCaching() {
     // this hook is used to invalidate cached positions
     if (this.document) {
+      this._rowIds = new Set(this._childNodes)
+      let cellIds = this.getChildren().reduce((arr, row) => {
+        return arr.concat(row._childNodes)
+      }, [])
+      this._cellIds = new Set(cellIds)
       this.document.data.on('operation:applied', this._onOperationApplied, this)
     }
   }
@@ -68,6 +89,14 @@ export default class TableElementNode extends XMLElementNode {
       }
       hasChanged = true
     } else if (this._rowIds.has(nodeId) && op.path[1] === '_childNodes') {
+      let update = op.getValueOp()
+      if (update.isDelete()) {
+        this._cellIds.delete(update.getValue())
+      } else if (update.isInsert()) {
+        this.cellIds.add(update.getValue())
+      }
+      hasChanged = true
+    } else if (this._cellIds.has(nodeId) && (op.path[2] === 'rowspan' || op.path[2] === 'colspan')) {
       hasChanged = true
     }
     if (hasChanged) {
@@ -83,9 +112,21 @@ export default class TableElementNode extends XMLElementNode {
   }
 
   _getSha() {
-     return this._sha
+    return this._sha
   }
 
 }
 
 TableElementNode.type = 'table'
+
+function _shadowSpanned(matrix, row, col, rowspan, colspan, masterCell) {
+  if (!rowspan && !colspan) return
+  for (let i = row; i <= row + rowspan-1; i++) {
+    for (let j = col; j <= col + colspan-1; j++) {
+      if (i === row && j === col) continue
+      let cell = matrix[i][j]
+      cell.shadowed = true
+      cell.masterCell = masterCell
+    }
+  }
+}

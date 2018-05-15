@@ -5,11 +5,10 @@ import {
 } from 'substance'
 import TableEditing from '../../article/TableEditing'
 import {
-  computeSelectionRectangle, shifted,
-  getSelectedRange, getSelDataForRowCol
+  getCellRange, computeUpdatedSelection
 } from '../../article/tableHelpers'
 import TableClipboard from '../util/TableClipboard'
-import TableCellEditor from './TableCellEditor'
+import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
 
 export default class TableComponent extends CustomSurface {
@@ -73,37 +72,15 @@ export default class TableComponent extends CustomSurface {
       let cells = matrix[i]
       let tr = $$('tr')
       for (let j = 0; j < cells.length; j++) {
-        while (!cells[j]) j++
-        if (j >= cells.length) break
+        if (cells[j].shadowed) continue
         let cell = cells[j]
-        let cellEl = $$(cell.attr('heading') ? 'th' : 'td')
-        let attributes = {
-          id: cell.id,
-          "data-row-idx": cell.rowIdx,
-          "data-col-idx": cell.colIdx
-        }
-        let rowspan = cell.attr('rowspan') || 0
-        if (rowspan) {
-          rowspan = parseInt(rowspan, 10)
-          attributes.rowspan = rowspan
-        }
-        let colspan = cell.attr('colspan') || 0
-        if (colspan) {
-          colspan = parseInt(colspan, 10)
-          attributes.colspan = colspan
-        }
-        cellEl.attr(attributes)
-        cellEl.append(
-          $$(TableCellEditor, {
-            path: cell.getPath(),
-            disabled: true
-          }).ref(cell.id)
-          .on('enter', this._onCellEnter)
-          .on('tab', this._onCellTab)
-          .on('escape', this._onCellEscape)
+        tr.append(
+          $$(TableCellComponent, { node: cell, disabled: true })
+            .ref(cell.id)
+            .on('enter', this._onCellEnter)
+            .on('tab', this._onCellTab)
+            .on('escape', this._onCellEscape)
         )
-        _clearSpanned(matrix, i, j, rowspan, colspan)
-        tr.append(cellEl)
       }
       table.append(tr)
     }
@@ -161,7 +138,6 @@ export default class TableComponent extends CustomSurface {
     // TableElementNode is detecting such changes and
     // updates an internal 'sha' that we can compare against
     if (table._hasShaChanged(this._tableSha)) {
-      console.log('TABLE HAS CHANGED')
       this.rerender()
       this._tableSha = table._getSha()
     }
@@ -189,10 +165,8 @@ export default class TableComponent extends CustomSurface {
         let cell = doc.get(this._activeCell)
         this._positionSelection({
           type: 'range',
-          anchorRow: cell.rowIdx,
-          anchorCol: cell.colIdx,
-          focusRow: cell.rowIdx,
-          focusCol: cell.colIdx
+          anchorCellId: cell.id,
+          focusCellId: cell.id,
         }, true)
       } else {
         this._hideSelection()
@@ -229,22 +203,20 @@ export default class TableComponent extends CustomSurface {
     }
     console.log('_onMousedown', e)
     let selData = this._selectionData
+    if (!selData) selData = this._selectionData = {}
     let target = this._getClickTargetForEvent(e)
     console.log('target', target)
     if (!target) return
 
     let isRightButton = domHelpers.isRightButton(e)
     if (isRightButton) {
-      console.log('IS RIGHT BUTTON')
+      // console.log('IS RIGHT BUTTON')
       // this will be handled by onContextMenu
       if (target.type === 'cell') {
         let _needSetSelection = true
-        let sel = this._getSelectionData()
-        if (sel.type === 'range') {
-          let startRow = Math.min(selData.anchorRow, selData.focusRow)
-          let endRow = Math.max(selData.anchorRow, selData.focusRow)
-          let startCol = Math.min(selData.anchorCol, selData.focusCol)
-          let endCol = Math.max(selData.anchorCol, selData.focusCol)
+        let _selData = this._getSelectionData()
+        if (_selData) {
+          let { startRow, startCol, endRow, endCol } = getCellRange(this.props.node, _selData.anchorCellId, _selData.focusCellId)
           _needSetSelection = (
             target.colIdx < startCol || target.colIdx > endCol ||
             target.rowIdx < startRow || target.rowIdx > endRow
@@ -252,23 +224,18 @@ export default class TableComponent extends CustomSurface {
         }
         if (_needSetSelection) {
           this._isSelecting = true
-          selData.anchorRow = target.rowIdx
-          selData.focusRow = target.rowIdx
-          selData.anchorCol = target.colIdx
-          selData.focusCol = target.colIdx
+          selData.anchorCellId = target.id
+          selData.focusCellId = target.id
           this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
         }
       }
       return
     }
-
     if (target.type === 'cell') {
       this._isSelecting = true
-      selData.focusRow = target.rowIdx
-      selData.focusCol = target.colIdx
-      if (!e.shiftKey || !selData.hasOwnProperty('anchorRow')) {
-        selData.anchorRow = selData.focusRow
-        selData.anchorCol = selData.focusCol
+      selData.focusCellId = target.id
+      if (!e.shiftKey) {
+        selData.anchorCellId = target.id
       }
       e.preventDefault()
       this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
@@ -286,13 +253,10 @@ export default class TableComponent extends CustomSurface {
   _onMousemove(e) {
     if (this._isSelecting) {
       const selData = this._selectionData
-      let [rowIdx, colIdx] = this._mapClientXYToRowCol(e.clientX, e.clientY)
-      if (rowIdx !== selData.focusRow || colIdx !== selData.focusCol) {
-        if (rowIdx >= 0 && colIdx >= 0) {
-          selData.focusRow = rowIdx
-          selData.focusCol = colIdx
-          this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
-        }
+      let cellId = this._mapClientXYToCellId(e.clientX, e.clientY)
+      if (cellId !== selData.focusCellId) {
+        selData.focusCellId = focusCellId
+        this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
       }
     }
   }
@@ -371,8 +335,7 @@ export default class TableComponent extends CustomSurface {
     if (e.detail.shiftKey) {
       this._tableEditing.insertSoftBreak()
     } else {
-      let [rowIdx, colIdx] = this._getRowCol(cellEl)
-      this._nav(1, 0, false, getSelDataForRowCol(rowIdx, colIdx))
+      this._nav(1, 0, false, { anchorCellId: cellEl.id, focusCellId: cellEl.id })
     }
   }
 
@@ -380,16 +343,14 @@ export default class TableComponent extends CustomSurface {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
-    let [rowIdx, colIdx] = this._getRowCol(cellEl)
-    this._nav(0, 1, false, getSelDataForRowCol(rowIdx, colIdx))
+    this._nav(0, 1, false, { anchorCellId: cellEl.id, focusCellId: cellEl.id })
   }
 
   _onCellEscape(e) {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
-    let [rowIdx, colIdx] = this._getRowCol(cellEl)
-    this._requestSelectionChange(this._tableEditing.createTableSelection(getSelDataForRowCol(rowIdx, colIdx)))
+    this._requestSelectionChange(this._tableEditing.createTableSelection({ anchorCellId: cellEl.id, focusCellId: cellEl.id }))
   }
 
   _onCopy(e) {
@@ -423,22 +384,19 @@ export default class TableComponent extends CustomSurface {
   _getSelectionData() {
     let sel = this._getSelection()
     if (sel && sel.surfaceId === this.getId()) {
-      return sel.data || {}
+      return sel.data
     }
-    return {}
   }
 
   _requestEditCell(initialValue) {
     let selData = this._getSelectionData()
-    if (selData.hasOwnProperty('anchorRow')) {
-      let table = this._tableEditing.getTable()
-      let cell = table.getCell(selData.anchorRow, selData.anchorCol)
-      this._tableEditing.editCell(cell.id, initialValue)
+    if (selData) {
+      this._tableEditing.editCell(selData.anchorCellId, initialValue)
     }
   }
 
   _requestSelectionChange(newSel) {
-    console.log('requesting selection change', newSel)
+    // console.log('requesting selection change', newSel)
     if (newSel) newSel.surfaceId = this.getId()
     this.context.editorSession.setSelection(newSel)
   }
@@ -447,8 +405,7 @@ export default class TableComponent extends CustomSurface {
     let target = DOM.wrap(e.target)
     let cellEl = domHelpers.findParent(target, 'td,th')
     if (cellEl) {
-      let [rowIdx, colIdx] = this._getRowCol(cellEl)
-      return { type: 'cell', rowIdx, colIdx }
+      return { type: 'cell', id: cellEl.id }
     }
   }
 
@@ -458,23 +415,24 @@ export default class TableComponent extends CustomSurface {
     return [rowIdx, colIdx]
   }
 
-  _mapClientXYToRowCol(x, y) {
+  _mapClientXYToCellId(x, y) {
     // TODO: this could be optimized using bisect search
     let cellEls = this.refs.table.findAll('th,td')
     for (let i = 0; i < cellEls.length; i++) {
       let cellEl = cellEls[i]
       let rect = domHelpers.getBoundingRect(cellEl)
       if (domHelpers.isXInside(x, rect) && domHelpers.isYInside(y, rect)) {
-        return this._getRowCol(cellEl)
+        return cellEl.id
       }
     }
-    return [-1,-1]
   }
 
-  _nav(dr, dc, shift, selData) {
+  _nav(dr, dc, expand, selData) {
     selData = selData || this._getSelectionData()
-    let newSelData = shifted(this.props.node, selData, dr, dc, shift)
-    this._requestSelectionChange(this._tableEditing.createTableSelection(newSelData))
+    if (selData) {
+      let newSelData = computeUpdatedSelection(this.props.node, selData, dr, dc, expand)
+      this._requestSelectionChange(this._tableEditing.createTableSelection(newSelData))
+    }
   }
 
   _getCustomResourceId() {
@@ -482,8 +440,11 @@ export default class TableComponent extends CustomSurface {
   }
 
   _clearSelection() {
-    let { startRow, startCol, endRow, endCol } = getSelectedRange(this.props.node, this._getSelectionData())
-    this._tableEditing.clearValues(startRow, startCol, endRow, endCol)
+    let selData = this._getSelectionData()
+    if (selData) {
+      let { startRow, startCol, endRow, endCol } = getCellRange(this.props.node, selData.anchorCellId, selData.focusCellId)
+      this._tableEditing.clearValues(startRow, startCol, endRow, endCol)
+    }
   }
 
   rerenderDOMSelection() {
@@ -495,18 +456,22 @@ export default class TableComponent extends CustomSurface {
   }
 
   _positionSelection(selData, focused) {
-    if (selData.type) {
-      let rects = this._computeSelectionRects(selData, selData.type)
-      let styles = this._computeSelectionStyles(selData, rects)
-      this.refs.selAnchor.css(styles.anchor)
-      if (focused) {
-        this.refs.selRange.css('visibility', 'hidden')
-      } else {
-        this.refs.selRange.css(styles.range)
-      }
-    } else {
+    // TODO: find a better criteria for integrity checking
+    if (!selData) {
       this._hideSelection()
+      return
     }
+    let { anchorCellId, focusCellId } = selData
+    let table = this._tableEditing.getTable()
+    let anchorCell = table.get(anchorCellId)
+    // TODO: not sure yet here. In first place the selection
+    // should not address shadowed cells directly
+    // On the other hand this implementation should be robust
+    if (anchorCell.shadowed) anchorCell = anchorCell.masterCell
+    let cellComp = this.refs[anchorCellId]
+    let anchorRect = getRelativeBoundingRect(cellComp.el, this.el)
+
+    this.refs.selAnchor.css(this._getStylesForRectangle(anchorRect))
   }
 
   _hideSelection() {
@@ -529,114 +494,16 @@ export default class TableComponent extends CustomSurface {
     contextMenu.removeClass('sm-hidden')
   }
 
-
-  _getBoundingRect(rowIdx, colIdx) {
-    let rowEl = this.refs.table.el.getChildAt(rowIdx)
-    let cellEl = rowEl.getChildAt(colIdx)
-    return getRelativeBoundingRect(cellEl, this.el)
-  }
-
-  _computeSelectionRects(data, type) {
-    let { anchor, range } = this._getAnchorAndRange(data, type)
-    let { ul, lr } = range
-    // TODO: We need to improve rendering for range selections
-    // that are outside of the viewport
-    let anchorRect = this._getBoundingRect(anchor.row, anchor.col)
-    let ulRect = this._getBoundingRect(ul.row, ul.col)
-    let lrRect = this._getBoundingRect(lr.row, lr.col)
-    let selRect
-    if (ulRect && lrRect) {
-      selRect = computeSelectionRectangle(ulRect, lrRect)
-    }
-    return { anchorRect, selRect, ulRect, lrRect}
-  }
-
-  _getAnchorAndRange(data, type) {
-    let anchorRow, anchorCol
-    let ulRow, ulCol, lrRow, lrCol
-    switch(type) {
-      case 'range': {
-        anchorRow = data.anchorRow
-        anchorCol = data.anchorCol
-        let focusRow = data.focusRow
-        let focusCol = data.focusCol
-        let startRow = anchorRow
-        let startCol = anchorCol
-        let endRow = focusRow
-        let endCol = focusCol
-        if (startRow > endRow) {
-          [startRow, endRow] = [endRow, startRow]
-        }
-        if (startCol > endCol) {
-          [startCol, endCol] = [endCol, startCol]
-        }
-        [ulRow, ulCol] = [startRow, startCol]
-        ;[lrRow, lrCol] = [endRow, endCol]
-        break
-      }
-      default:
-        //
-    }
-    let anchor = { row: anchorRow, col: anchorCol }
-    let range = { ul: { row: ulRow, col: ulCol }, lr: { row: lrRow, col: lrCol } }
-    return { anchor, range }
-  }
-
-  _computeSelectionStyles(data, { anchorRect, ulRect, lrRect }) {
-    let styles = {
-      range: { visibility: 'hidden' },
-      anchor: { visibility: 'hidden' }
-    }
-    if (anchorRect && anchorRect.width && anchorRect.height) {
-      Object.assign(styles, this._computeAnchorStyles(anchorRect))
-    }
-    if (ulRect && lrRect) {
-      Object.assign(
-        styles,
-        this._computeRangeStyles(ulRect, lrRect, data.type)
-      )
-    }
-    return styles
-  }
-
-  _computeAnchorStyles(anchorRect) {
-    let styles = {
-      anchor: { visibility: 'hidden' }
-    }
-    if (anchorRect) {
-      Object.assign(styles.anchor, anchorRect)
-      if (
-        isFinite(anchorRect.top) &&
-        isFinite(anchorRect.left) &&
-        isFinite(anchorRect.width) &&
-        isFinite(anchorRect.height)
-      ) {
-        styles.anchor.visibility = 'visible'
+  _getStylesForRectangle(rect) {
+    let styles = { visibility: 'hidden' }
+    if (rect) {
+      Object.assign(styles, rect)
+      if (isFinite(rect.top) && isFinite(rect.left) &&
+        isFinite(rect.width) && isFinite(rect.height)) {
+        styles.visibility = 'visible'
       }
     }
     return styles
   }
 
-  _computeRangeStyles(ulRect, lrRect) {
-    let styles = {
-      range: { visibility: 'hidden' },
-    }
-    styles.range.top = ulRect.top
-    styles.range.left = ulRect.left
-    styles.range.width = lrRect.left + lrRect.width - styles.range.left
-    styles.range.height = lrRect.top + lrRect.height - styles.range.top
-    styles.range.visibility = 'visible'
-    return styles
-  }
-
-}
-
-function _clearSpanned(matrix, row, col, rowspan, colspan) {
-  if (!rowspan && !colspan) return
-  for (let i = row; i <= row + rowspan; i++) {
-    for (let j = col; j <= col + colspan; j++) {
-      if (i === row && j === col) continue
-      matrix[i][j] = false
-    }
-  }
 }

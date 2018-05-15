@@ -85,12 +85,12 @@ export default class ConvertTable {
           let cell = cells[j]
           let el = $$(cell.attr('heading') ? 'th' : 'td')
           let attributes = { id: cell.id }
-          let rowspan = cell.attr('rowspan') || 0
+          let rowspan = cell.attr('rowspan')
           if (rowspan) {
             rowspan = parseInt(rowspan, 10)
             attributes.rowspan = rowspan
           }
-          let colspan = cell.attr('colspan') || 0
+          let colspan = cell.attr('colspan')
           if (colspan) {
             colspan = parseInt(colspan, 10)
             attributes.colspan = colspan

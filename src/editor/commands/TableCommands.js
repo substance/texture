@@ -1,5 +1,5 @@
-import { Command } from 'substance'
-import { getColumnLabel } from '../../article/tableHelpers'
+import { Command, getRangeFromMatrix, flatten } from 'substance'
+import { getColumnLabel, getCellRange } from '../../article/tableHelpers'
 import TableEditing from '../../article/TableEditing'
 import InsertNodeCommand from './InsertNodeCommand'
 
@@ -13,26 +13,26 @@ export class InsertTableCommand extends InsertNodeCommand {
       tx.createElement('caption').append(
         tx.createElement('p').text('Table caption')
       ),
-      this.generateTable(tx, params.columns, params.rows)
+      this.generateTable(tx, params.rows, params.columns)
     )
     return tableWrap
   }
 
-  generateTable(tx, colNumber, rowNumber) {
+  generateTable(tx, nrows, ncols) {
     let $$ = tx.createElement.bind(tx)
     let table = $$('table')
     let headRow = $$('table-row')
-    for (let j = 0; j < colNumber; j++) {
+    for (let j = 0; j < ncols; j++) {
       headRow.append(
         $$('table-cell')
           .attr('heading', true)
-          .text(getColumnLabel(colNumber))
+          .text(getColumnLabel(j))
       )
     }
     table.append(headRow)
-    for (let i = 0; i < rowNumber; i++) {
+    for (let i = 0; i < nrows; i++) {
       let row = $$('table-row')
-      for (let j = 0; j < colNumber; j++) {
+      for (let j = 0; j < nrows; j++) {
         row.append($$('table-cell').text(''))
       }
       table.append(row)
@@ -41,18 +41,21 @@ export class InsertTableCommand extends InsertNodeCommand {
   }
 }
 
-export class BasicTableCommand extends Command {
+class BasicTableCommand extends Command {
 
-  getCommandState(params) {
+  getCommandState(params, context) {
     const sel = params.selection
     if (sel && sel.customType === 'table') {
-      let selData = sel.data
-      let startRow = Math.min(selData.anchorRow, selData.focusRow)
-      let endRow = Math.max(selData.anchorRow, selData.focusRow)
-      let startCol = Math.min(selData.anchorCol, selData.focusCol)
-      let endCol = Math.max(selData.anchorCol, selData.focusCol)
+      let { nodeId, anchorCellId, focusCellId } = sel.data
+      let editorSession = this._getEditorSession(params, context)
+      let doc = editorSession.getDocument()
+      let table = doc.get(nodeId)
+      let anchorCell = doc.get(anchorCellId)
+      let focusCell = doc.get(focusCellId)
+      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
       return {
         disabled: false,
+        anchorCell, focusCell,
         startRow, endRow, startCol, endCol,
         nrows: endRow-startRow+1,
         ncols: endCol-startCol+1
@@ -69,9 +72,9 @@ export class BasicTableCommand extends Command {
     if (commandState.disabled) return
     let editorSession = this._getEditorSession(params, context)
     let sel = params.selection
-    let tableId = sel.data.nodeId
+    let nodeId = sel.data.nodeId
     let surfaceId = sel.surfaceId
-    let editing = new TableEditing(editorSession, tableId, surfaceId)
+    let editing = new TableEditing(editorSession, nodeId, surfaceId)
     return this.__execute(editing, commandState)
   }
 }
@@ -112,6 +115,91 @@ export class TableSelectAllCommand extends BasicTableCommand {
 
   __execute(editing) {
     editing.selectAll()
+    return true
+  }
+
+}
+
+export class ToggleCellHeadingCommand extends BasicTableCommand {
+
+  getCommandState(params, context) {
+    const sel = params.selection
+    if (sel && sel.customType === 'table') {
+      let { nodeId, anchorCellId, focusCellId } = sel.data
+      let editorSession = this._getEditorSession(params, context)
+      let doc = editorSession.getDocument()
+      let table = doc.get(nodeId)
+      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
+      let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
+      cells = flatten(cells).filter(c => !c.shadowed)
+      let onlyHeadings = true
+      for (let i = 0; i < cells.length; i++) {
+        if (!cells[i].getAttribute('heading')) {
+          onlyHeadings = false
+          break
+        }
+      }
+      return {
+        disabled: false,
+        active: onlyHeadings,
+        heading: !onlyHeadings,
+        cellIds: cells.map(c => c.id)
+      }
+    }
+    // otherwise
+    return {
+      disabled: true
+    }
+  }
+
+  __execute(editing, { cellIds, heading }) {
+    editing.setHeading(cellIds, heading)
+    return true
+  }
+
+}
+
+export class ToggleCellMergeCommand extends BasicTableCommand {
+
+  getCommandState(params, context) {
+    const sel = params.selection
+    if (sel && sel.customType === 'table') {
+      let { nodeId, anchorCellId, focusCellId } = sel.data
+      let editorSession = this._getEditorSession(params, context)
+      let doc = editorSession.getDocument()
+      let table = doc.get(nodeId)
+      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
+      let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
+      cells = flatten(cells).filter(c => !c.shadowed)
+      let onlyMerged = true
+      for (let i = 0; i < cells.length; i++) {
+        let cell = cells[i]
+        let rowspan = cell.getAttribute('rowspan')
+        let colspan = cell.getAttribute('colspan')
+        if (!rowspan && !colspan) {
+          onlyMerged = false
+          break
+        }
+      }
+      return {
+        disabled: false,
+        active: onlyMerged,
+        merge: !onlyMerged,
+        cellIds: cells.map(c => c.id)
+      }
+    }
+    // otherwise
+    return {
+      disabled: true
+    }
+  }
+
+  __execute(editing, { cellIds, merge }) {
+    if (merge) {
+      editing.merge(cellIds)
+    } else {
+      editing.unmerge(cellIds)
+    }
     return true
   }
 

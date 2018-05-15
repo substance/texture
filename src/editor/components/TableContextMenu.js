@@ -3,10 +3,10 @@ import { ToolPanel } from 'substance'
 export default class TableContextMenu extends ToolPanel {
 
   getEntryTypeComponents() {
-    return {
+    return Object.assign({}, super.getEntryTypeComponents(), {
       'tool-group': this.getComponent('menu-group'),
       'tool-dropdown': this.getComponent('menu-group')
-    }
+    })
   }
 
   render($$) {

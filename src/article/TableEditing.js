@@ -248,9 +248,10 @@ export default class TableEditing {
       for (let j = 0; j < row.length; j++) {
         let val = row[j]
         let cell = table.getCell(startRow+i, startCol+j)
-        if (cell) {
-          cell.textContent = val
-        }
+        cell.textContent = val
+        // HACK: for now we remove merge
+        cell.removeAttribute('rowspan')
+        cell.removeAttribute('colspan')
       }
     }
   }

@@ -462,16 +462,31 @@ export default class TableComponent extends CustomSurface {
       return
     }
     let { anchorCellId, focusCellId } = selData
-    let table = this._tableEditing.getTable()
-    let anchorCell = table.get(anchorCellId)
-    // TODO: not sure yet here. In first place the selection
-    // should not address shadowed cells directly
-    // On the other hand this implementation should be robust
-    if (anchorCell.shadowed) anchorCell = anchorCell.masterCell
-    let cellComp = this.refs[anchorCellId]
-    let anchorRect = getRelativeBoundingRect(cellComp.el, this.el)
 
+    let anchorCellComp = this._getActualCellComp(anchorCellId)
+    let anchorRect = getRelativeBoundingRect(anchorCellComp.el, this.el)
     this.refs.selAnchor.css(this._getStylesForRectangle(anchorRect))
+
+    if (!focused) {
+      let rangeRect
+      if (focusCellId === anchorCellId) {
+        rangeRect = anchorRect
+      } else {
+        let focusCellComp = this._getActualCellComp(focusCellId)
+        let focusRect = getRelativeBoundingRect(focusCellComp.el, this.el)
+        rangeRect = domHelpers.getBoundingRectForRects(anchorRect, focusRect)
+      }
+      this.refs.selRange.css(this._getStylesForRectangle(rangeRect))
+    } else {
+      this.refs.selRange.css('visibility', 'hidden')
+    }
+  }
+
+  _getActualCellComp(cellId) {
+    let table = this._tableEditing.getTable()
+    let cell = table.get(cellId)
+    if (cell.shadowed) cell = cell.masterCell
+    return this.refs[cell.id]
   }
 
   _hideSelection() {

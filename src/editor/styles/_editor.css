@@ -41,7 +41,8 @@
   margin: 30px 0;
 }
 
-.sc-editor .sc-container-editor .sc-isolated-node.sm-focused {
+.sc-editor .sc-container-editor .sc-isolated-node.sm-focused,
+.sc-editor .sc-container-editor .sc-isolated-node.sm-co-focused {
   outline: 1px solid var(--local-selection-color);
 }
 

@@ -97,7 +97,7 @@ export default class TableEditing {
     let n = vals.length
     let m = vals[0].length
     let table = this.getTable()
-    let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
+    let { startRow, startCol } = getCellRange(table, anchorCellId, focusCellId)
     this.ensureSize(startRow+n, startCol+m)
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
@@ -166,10 +166,10 @@ export default class TableEditing {
         if (cell.shadowed) continue
         let rowspan = cell.rowspan
         let colspan = cell.colspan
-        if (rowspan) {
+        if (rowspan > 1) {
           endRow = Math.max(endRow, i+rowspan-1)
         }
-        if (colspan) {
+        if (colspan > 1) {
           endCol = Math.max(endCol, j+colspan-1)
         }
       }
@@ -187,7 +187,28 @@ export default class TableEditing {
   }
 
   unmerge() {
-
+    let table = this.getTable()
+    let { startRow, endRow, startCol, endCol } = this.getSelectedRange()
+    let cellIds = []
+    for (let i = startRow; i <= endRow; i++) {
+      for (let j = startCol; j <= endCol; j++) {
+        let cell = table.getCell(i, j)
+        let rowspan = cell.rowspan
+        let colspan = cell.colspan
+        if (rowspan > 1 || colspan > 1) {
+          cellIds.push(cell.id)
+        }
+      }
+    }
+    if (cellIds.length > 0) {
+      this.editorSession.transaction(tx => {
+        cellIds.forEach(id => {
+          let cell = tx.get(id)
+          cell.removeAttribute('rowspan')
+          cell.removeAttribute('colspan')
+        })
+      }, { action: 'unmergeCells' })
+    }
   }
 
   _getTable(tx) {

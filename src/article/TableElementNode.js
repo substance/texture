@@ -85,7 +85,12 @@ export default class TableElementNode extends XMLElementNode {
       if (update.isDelete()) {
         this._rowIds.delete(update.getValue())
       } else if (update.isInsert()) {
-        this._rowIds.add(update.getValue())
+        let rowId = update.getValue()
+        let row = this.document.get(rowId)
+        row._childNodes.forEach(cellId => {
+          this._cellIds.add(cellId)
+        })
+        this._rowIds.add(rowId)
       }
       hasChanged = true
     } else if (this._rowIds.has(nodeId) && op.path[1] === '_childNodes') {
@@ -93,7 +98,7 @@ export default class TableElementNode extends XMLElementNode {
       if (update.isDelete()) {
         this._cellIds.delete(update.getValue())
       } else if (update.isInsert()) {
-        this.cellIds.add(update.getValue())
+        this._cellIds.add(update.getValue())
       }
       hasChanged = true
     } else if (this._cellIds.has(nodeId) && (op.path[2] === 'rowspan' || op.path[2] === 'colspan')) {

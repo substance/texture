@@ -97,7 +97,7 @@ export default class ConvertTable {
           }
           el.attr(attributes)
           _clearSpanned(i, j, rowspan, colspan)
-          el.innerXML = cell.innerXML
+          el.setInnerXML(cell.getInnerXML())
           tr.append(el)
         }
         tbody.append(tr)

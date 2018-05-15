@@ -201,11 +201,11 @@ export default class TableComponent extends CustomSurface {
         once: true
       })
     }
-    console.log('_onMousedown', e)
+    // console.log('_onMousedown', e)
     let selData = this._selectionData
     if (!selData) selData = this._selectionData = {}
     let target = this._getClickTargetForEvent(e)
-    console.log('target', target)
+    // console.log('target', target)
     if (!target) return
 
     let isRightButton = domHelpers.isRightButton(e)
@@ -255,7 +255,7 @@ export default class TableComponent extends CustomSurface {
       const selData = this._selectionData
       let cellId = this._mapClientXYToCellId(e.clientX, e.clientY)
       if (cellId !== selData.focusCellId) {
-        selData.focusCellId = focusCellId
+        selData.focusCellId = selData.focusCellId
         this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
       }
     }

@@ -9,6 +9,7 @@ import FnGroupConverter from './FnGroupConverter'
 import ConvertCodeCell from './ConvertCodeCell'
 import ConvertReproFig from './ConvertReproFig'
 import ConvertFig from './ConvertFig'
+import ConvertTable from './ConvertTable'
 import ConvertTableWrap from './ConvertTableWrap'
 import ConvertContentLoc from './ConvertContentLoc'
 import ConvertSigBlock from './ConvertSigBlock'
@@ -43,6 +44,7 @@ const trafos = [
   ConvertCodeCell,
   ConvertReproFig,
   ConvertFig,
+  ConvertTable,
   ConvertTableWrap,
   ConvertList,
   WrapAff,

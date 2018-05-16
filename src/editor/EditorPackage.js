@@ -38,7 +38,7 @@ import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import DispQuoteComponent from './components/DispQuoteComponent'
 import InlineFormulaComponent from './components/InlineFormulaComponent'
-import TableCellComponent from './components/TableCellComponent'
+import TableComponent from './components/TableComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import TOC from './components/TOC'
@@ -155,13 +155,8 @@ export default {
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
-    config.addComponent('table', ElementNodeComponent)
     config.addComponent('table-wrap', FigComponent)
-    config.addComponent('tbody', ElementNodeComponent)
-    config.addComponent('td', TableCellComponent)
-    config.addComponent('tfoot', ElementNodeComponent)
-    config.addComponent('th', TableCellComponent)
-    config.addComponent('thead', ElementNodeComponent)
+    config.addComponent('table', TableComponent)
     config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)

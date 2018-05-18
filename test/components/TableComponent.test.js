@@ -14,7 +14,7 @@ testAsync('TableComponent: mounting a table component', async (t) => {
   t.end()
 })
 
-testAsync('TableComponent: setting a table selection', async (t) => {
+testAsync('TableComponent: setting table selections', async (t) => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -22,13 +22,30 @@ testAsync('TableComponent: setting a table selection', async (t) => {
   let matrix = table.getCellMatrix()
   let firstCell = matrix[0][0]
   let tableEditing = new TableEditing(editorSession, table.id, comp.getSurfaceId())
+  // setting the selection on the first cell
   let sel = tableEditing.createTableSelection({
     anchorCellId: firstCell.id,
     focusCellId: firstCell.id
   })
   editorSession.setSelection(sel)
-  // TODO: what should be the assert?
-  t.equal(comp.refs.selAnchor.el.css('visibility'), 'visible', 'the selection overlay for the anchor cell should be visible')
+  t.equal(comp.refs.selAnchor.el.css('visibility'), 'visible', 'the selection overlay for the selection anchor should be visible')
+  t.equal(comp.refs.selRange.el.css('visibility'), 'visible', 'the selection overlay for the selection range should be visible')
+
+  // setting the selection inside the first cell
+  editorSession.setSelection({
+    type: 'property',
+    path: firstCell.getPath(),
+    startOffset: 0,
+    endOffset: 0
+  })
+  t.equal(comp.refs.selAnchor.el.css('visibility'), 'visible', 'the selection overlay for the selection anchor should be visible')
+  t.equal(comp.refs.selRange.el.css('visibility'), 'hidden', 'the selection overlay for the selection range should be hidden')
+
+  // nulling the selection
+  editorSession.setSelection(null)
+  t.equal(comp.refs.selAnchor.el.css('visibility'), 'hidden', 'the selection overlay for the selection anchor should be hidden')
+  t.equal(comp.refs.selRange.el.css('visibility'), 'hidden', 'the selection overlay for the selection range should be hidden')
+
   t.end()
 })
 

@@ -1,4 +1,4 @@
-import { EditorSession } from 'substance'
+import { EditorSession, MemoryDOMElement } from 'substance'
 import {
   TableComponent, TextureDocument, TextureConfigurator, tableHelpers,
   EditorPackage, TableEditing
@@ -79,4 +79,13 @@ function _createEmptyTextureArticle (configurator) {
     $$('back')
   )
   return doc
+}
+
+// FIXME: add compatibility stub implementations
+MemoryDOMElement.prototype.getBoundingClientRect = function () {
+  return { top: 0, left: 0, height: 0, width: 0 }
+}
+
+MemoryDOMElement.prototype.getClientRects = function () {
+  return [{ top: 0, left: 0, height: 0, width: 0 }]
 }

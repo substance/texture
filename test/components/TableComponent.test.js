@@ -172,15 +172,6 @@ function _createEmptyTextureArticle (configurator) {
   return doc
 }
 
-// FIXME: add compatibility stub implementations
-MemoryDOMElement.prototype.getBoundingClientRect = function () {
-  return { top: 0, left: 0, height: 0, width: 0 }
-}
-
-MemoryDOMElement.prototype.getClientRects = function () {
-  return [{ top: 0, left: 0, height: 0, width: 0 }]
-}
-
 class DOMEvent {
   constructor (props) {
     Object.assign(this, props)

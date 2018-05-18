@@ -57,13 +57,21 @@ testAsync('TableComponent: mouse interactions', async (t) => {
   let matrix = table.getCellMatrix()
   let firstCell = matrix[0][0]
   let firstCellComp = comp.refs[firstCell.id]
+  let secondCell = matrix[0][1]
+  let secondCellComp = comp.refs[secondCell.id]
 
-  comp._onMousedown(new MouseEvent(firstCellComp.el))
-
+  // simulate a mouse down on the first cell
+  comp._onMousedown(new MouseEvent({ target: firstCellComp.el }))
   let sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'The table should be selection,')
   t.equal(sel.data.anchorCellId, firstCell.id, '.. with anchor on first cell,')
   t.equal(sel.data.focusCellId, firstCell.id, '.. and focus on first cell,')
+
+  // simulate a right mouse down on the second cell
+  comp._onMousedown(new MouseEvent({ target: secondCellComp.el, which: 3 }))
+  t.equal(sel.customType, 'table', 'The table should be selection,')
+  t.equal(sel.data.anchorCellId, secondCell.id, '.. with anchor on second cell,')
+  t.equal(sel.data.focusCellId, secondCell.id, '.. and focus on second cell,')
 
   t.end()
 })
@@ -127,8 +135,8 @@ MemoryDOMElement.prototype.getClientRects = function () {
 }
 
 class MouseEvent {
-  constructor (target) {
-    this.target = target
+  constructor (props) {
+    Object.assign(this, props)
   }
   stopPropagation () {}
   preventDefault () {}

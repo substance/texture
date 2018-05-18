@@ -54,12 +54,15 @@ export function getMountPoint (t) {
 
 export function testAsync (name, func) {
   test(name, async assert => {
+    let success = false
     try {
       await func(assert)
-    } catch (error) {
-      assert.fail(error.message)
-      console.error(error.stack)
-      assert.end()
+      success = true
+    } finally {
+      if (!success) {
+        assert.fail('Test failed with an uncaught exception.')
+        assert.end()
+      }
     }
   })
 }

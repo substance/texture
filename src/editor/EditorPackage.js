@@ -315,10 +315,10 @@ export default {
       en: 'Delete ${ncols} columns'
     })
     config.addLabel('toggle-cell-heading', {
-      en: 'Toggle cell heading'
+      en: 'Cell heading'
     })
     config.addLabel('toggle-cell-merge', {
-      en: 'Toggle cell merge'
+      en: 'Merge cell'
     })
 
     config.addLabel('add-reference-title', 'Add Reference(s)')

@@ -5,8 +5,7 @@ export default class InlineFormulaComponent extends NodeComponent {
 
   render($$) {
     const node = this.props.node
-    // TODO: Find out why node.find('tex-math') returns null here
-    const texMath = node.findChild('tex-math')
+    const texMath = node.find('tex-math')
     const el = $$('span').addClass('sc-inline-formula')
     el.append(
       $$(TexMathComponent, {

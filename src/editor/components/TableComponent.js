@@ -213,13 +213,14 @@ export default class TableComponent extends CustomSurface {
       // console.log('IS RIGHT BUTTON')
       // this will be handled by onContextMenu
       if (target.type === 'cell') {
+        let targetCell = this.props.node.get(target.id)
         let _needSetSelection = true
         let _selData = this._getSelectionData()
-        if (_selData) {
+        if (_selData && targetCell) {
           let { startRow, startCol, endRow, endCol } = getCellRange(this.props.node, _selData.anchorCellId, _selData.focusCellId)
           _needSetSelection = (
-            target.colIdx < startCol || target.colIdx > endCol ||
-            target.rowIdx < startRow || target.rowIdx > endRow
+            targetCell.colIdx < startCol || targetCell.colIdx > endCol ||
+            targetCell.rowIdx < startRow || targetCell.rowIdx > endRow
           )
         }
         if (_needSetSelection) {

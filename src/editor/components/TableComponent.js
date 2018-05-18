@@ -93,7 +93,7 @@ export default class TableComponent extends CustomSurface {
 
   _renderKeyTrap($$) {
     return $$('textarea').addClass('se-keytrap').ref('keytrap')
-      .css({ position: 'absolute', width: 0, height: 0 })
+      .css({ position: 'absolute', width: 0, height: 0, opacity: 0 })
       .on('keydown', this._onKeydown)
       .on('input', this._onInput)
       .on('copy', this._onCopy)

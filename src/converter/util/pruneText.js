@@ -61,7 +61,7 @@ function _pruneWhiteSpace(el, xmlSchema) {
       child.textContent = text
     } else if (child.isElementNode()) {
       let schema = xmlSchema.getElementSchema(child.tagName)
-      if (schema.type === 'annotation') {
+      if (schema.type === '@annotation') {
         _pruneWhiteSpace(child, xmlSchema)
       }
     }

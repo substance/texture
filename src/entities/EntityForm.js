@@ -13,54 +13,48 @@ export default class EntityForm extends Component {
     let schema = this._getSchema()
     let node = this.props.node
 
-    forEach(schema, (property, propertyName) => {
-      if (propertyName === 'id') {
+    for (let property of schema) {
+      let name = property.name
+      let type = property.type
+      let targetTypes = property.targetTypes
+      let value = node[name]
+      if (name === 'id') {
         // id property is not editable and skipped
-      } else if (property.type === 'string') {
+      } else if (type === 'string') {
         let inputEl
         if (property.definition._isText) {
           inputEl = $$(RichTextInput, {
-            value: this.props.node[propertyName],
-            editorId: property.name
-          }).ref(property.name)
+            value,
+            editorId: name
+          }).ref(name)
         } else {
-          inputEl = $$(StringInput, {
-            value: this.props.node[propertyName]
-          }).ref(property.name)
+          inputEl = $$(StringInput, { value }).ref(name)
         }
         el.append(
-          $$(FormLabel, {
-            name: propertyName
-          }),
+          $$(FormLabel, { name }),
           inputEl
         )
-      } else if (isArray(property.type) && property.type[0] === 'array' && property.definition.targetTypes[0] !== 'object') {
+      } else if (isArray(type) && type[0] === 'array' && targetTypes[0] !== 'object') {
         el.append(
-          $$(FormLabel, {
-            name: propertyName
-          }),
+          $$(FormLabel, { name }),
           $$(RelationshipInput, {
-            propertyName,
-            entityIds: node[propertyName] || [],
-            targetTypes: property.definition.targetTypes,
-          }).ref(property.name)
+            propertyName: name,
+            entityIds: value || [],
+            targetTypes
+          }).ref(name)
         )
-      } else if (isArray(property.type) && property.definition.targetTypes[0] === 'object') {
+      } else if (isArray(type) && targetTypes === 'object') {
         // HACK: we render a special Author Editor if the targetType is object
         el.append(
-          $$(FormLabel, {
-            name: propertyName
-          }),
+          $$(FormLabel, { name }),
           $$(PersonGroupInput, {
-            entries: this.props.node[propertyName]
-          }).ref(property.name)
+            entries: value
+          }).ref(name)
         )
+      } else {
+        console.warn(`type ${type} not yet supported`)
       }
-
-      else {
-        console.warn('type ', property.type, 'not yet supported')
-      }
-    })
+    }
     return el
   }
 

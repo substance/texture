@@ -1,5 +1,5 @@
 import { Command, getRangeFromMatrix, flatten } from 'substance'
-import { getColumnLabel, getCellRange } from '../../article/tableHelpers'
+import { getCellRange, generateTable } from '../../article/tableHelpers'
 import TableEditing from '../../article/TableEditing'
 import InsertNodeCommand from './InsertNodeCommand'
 
@@ -19,25 +19,7 @@ export class InsertTableCommand extends InsertNodeCommand {
   }
 
   generateTable(tx, nrows, ncols) {
-    let $$ = tx.createElement.bind(tx)
-    let table = $$('table')
-    let headRow = $$('table-row')
-    for (let j = 0; j < ncols; j++) {
-      headRow.append(
-        $$('table-cell')
-          .attr('heading', true)
-          .text(getColumnLabel(j))
-      )
-    }
-    table.append(headRow)
-    for (let i = 0; i < nrows; i++) {
-      let row = $$('table-row')
-      for (let j = 0; j < ncols; j++) {
-        row.append($$('table-cell').text(''))
-      }
-      table.append(row)
-    }
-    return table
+    return generateTable(tx, nrows, ncols)
   }
 }
 

@@ -106,3 +106,25 @@ export function computeUpdatedSelection(table, selData, dr, dc, expand) {
     return selData
   }
 }
+
+export function generateTable (doc, nrows, ncols) {
+  let $$ = doc.createElement.bind(doc)
+  let table = $$('table')
+  let headRow = $$('table-row')
+  for (let j = 0; j < ncols; j++) {
+    headRow.append(
+      $$('table-cell')
+        .attr('heading', true)
+        .text(getColumnLabel(j))
+    )
+  }
+  table.append(headRow)
+  for (let i = 0; i < nrows; i++) {
+    let row = $$('table-row')
+    for (let j = 0; j < ncols; j++) {
+      row.append($$('table-cell').text(''))
+    }
+    table.append(row)
+  }
+  return table
+}

@@ -1,3 +1,13 @@
+## Preview 2
+
+- List support (ordered and unordered as well as mixed)
+- Math support
+- Improved table editing (heading cells, merge cells, add/remove rows/columns)
+- Improved handling of references / citations
+- Improved data model and conversion for references
+- Standardise rendering of references according to AMA style
+- Update to Substance v1.0.0-preview.63
+
 ## Preview 1
 
 - Electron Desktop Application

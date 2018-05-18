@@ -49,6 +49,25 @@ testAsync('TableComponent: setting table selections', async (t) => {
   t.end()
 })
 
+testAsync('TableComponent: mouse interactions', async (t) => {
+  let { editorSession, table, context } = _setup(t)
+  let el = getMountPoint(t)
+  let comp = new TableComponent(null, { node: table }, { context })
+  comp.mount(el)
+  let matrix = table.getCellMatrix()
+  let firstCell = matrix[0][0]
+  let firstCellComp = comp.refs[firstCell.id]
+
+  comp._onMousedown(new MouseEvent(firstCellComp.el))
+
+  let sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'The table should be selection,')
+  t.equal(sel.data.anchorCellId, firstCell.id, '.. with anchor on first cell,')
+  t.equal(sel.data.focusCellId, firstCell.id, '.. and focus on first cell,')
+
+  t.end()
+})
+
 function _setup (t) {
   let configurator = new TextureConfigurator()
   configurator.import(EditorPackage)
@@ -105,4 +124,12 @@ MemoryDOMElement.prototype.getBoundingClientRect = function () {
 
 MemoryDOMElement.prototype.getClientRects = function () {
   return [{ top: 0, left: 0, height: 0, width: 0 }]
+}
+
+class MouseEvent {
+  constructor (target) {
+    this.target = target
+  }
+  stopPropagation () {}
+  preventDefault () {}
 }

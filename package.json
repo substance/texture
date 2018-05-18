@@ -10,7 +10,7 @@
     "lodash": "^4.14.1"
   },
   "peerDependency": {
-    "substance": "^1.0.0-preview.58"
+    "substance": "^1.0.0-preview.59"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",
@@ -20,7 +20,7 @@
     "font-awesome": "4.5.0",
     "istanbul": "^0.4.5",
     "source-map-support": "0.5.3",
-    "substance": "1.0.0-preview.58",
+    "substance": "^1.0.0-preview.59",
     "substance-bundler": "0.23.3",
     "substance-test": "^0.9.5"
   },

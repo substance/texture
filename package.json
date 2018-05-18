@@ -15,7 +15,7 @@
   "devDependencies": {
     "dar-server": "^0.4.1",
     "electron": "2.0.0",
-    "electron-builder": "20.13.3",
+    "electron-builder": "20.13.4",
     "eslint": "^4.19.1",
     "font-awesome": "4.5.0",
     "istanbul": "^0.4.5",

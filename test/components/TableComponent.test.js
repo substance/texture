@@ -1,4 +1,4 @@
-import { EditorSession, MemoryDOMElement } from 'substance'
+import { EditorSession, MemoryDOMElement, keys } from 'substance'
 import {
   TableComponent, TextureDocument, TextureConfigurator, tableHelpers,
   EditorPackage, TableEditing
@@ -61,17 +61,64 @@ testAsync('TableComponent: mouse interactions', async (t) => {
   let secondCellComp = comp.refs[secondCell.id]
 
   // simulate a mouse down on the first cell
-  comp._onMousedown(new MouseEvent({ target: firstCellComp.el }))
+  comp._onMousedown(new DOMEvent({ target: firstCellComp.el }))
   let sel = editorSession.getSelection()
-  t.equal(sel.customType, 'table', 'The table should be selection,')
+  t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, firstCell.id, '.. with anchor on first cell,')
   t.equal(sel.data.focusCellId, firstCell.id, '.. and focus on first cell,')
 
   // simulate a right mouse down on the second cell
-  comp._onMousedown(new MouseEvent({ target: secondCellComp.el, which: 3 }))
-  t.equal(sel.customType, 'table', 'The table should be selection,')
+  comp._onMousedown(new DOMEvent({ target: secondCellComp.el, which: 3 }))
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, secondCell.id, '.. with anchor on second cell,')
   t.equal(sel.data.focusCellId, secondCell.id, '.. and focus on second cell,')
+
+  t.end()
+})
+
+testAsync('TableComponent: keyboard interactions', async (t) => {
+  let { editorSession, table, context } = _setup(t)
+  let el = getMountPoint(t)
+  let comp = new TableComponent(null, { node: table }, { context })
+  comp.mount(el)
+  let matrix = table.getCellMatrix()
+  let cellB1 = matrix[0][1]
+  let cellA2 = matrix[1][0]
+  let cellB2 = matrix[1][1]
+  let cellB2Comp = comp.refs[cellB2.id]
+  let sel
+
+  // simulate a mouse down on the first cell
+  comp._onMousedown(new DOMEvent({ target: cellB2Comp.el }))
+
+  // simulate LEFT key
+  comp._onKeydown(new DOMEvent({ keyCode: keys.LEFT }))
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'The table should be selected,')
+  t.equal(sel.data.anchorCellId, cellA2.id, '.. with anchor on A2,')
+  t.equal(sel.data.focusCellId, cellA2.id, '.. and focus on A2,')
+
+  // simulate RIGHT key
+  comp._onKeydown(new DOMEvent({ keyCode: keys.RIGHT }))
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'The table should be selected,')
+  t.equal(sel.data.anchorCellId, cellB2.id, '.. with anchor on B2,')
+  t.equal(sel.data.focusCellId, cellB2.id, '.. and focus on B2,')
+
+  // simulate UP key
+  comp._onKeydown(new DOMEvent({ keyCode: keys.UP }))
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'The table should be selected,')
+  t.equal(sel.data.anchorCellId, cellB1.id, '.. with anchor on B1,')
+  t.equal(sel.data.focusCellId, cellB1.id, '.. and focus on B1,')
+
+  // simulate DOWN key
+  comp._onKeydown(new DOMEvent({ keyCode: keys.DOWN }))
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'The table should be selected,')
+  t.equal(sel.data.anchorCellId, cellB2.id, '.. with anchor on B2,')
+  t.equal(sel.data.focusCellId, cellB2.id, '.. and focus on B2,')
 
   t.end()
 })
@@ -134,7 +181,7 @@ MemoryDOMElement.prototype.getClientRects = function () {
   return [{ top: 0, left: 0, height: 0, width: 0 }]
 }
 
-class MouseEvent {
+class DOMEvent {
   constructor (props) {
     Object.assign(this, props)
   }

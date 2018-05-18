@@ -1,7 +1,7 @@
 import { EditorSession } from 'substance'
 import {
   TableComponent, TextureDocument, TextureConfigurator, tableHelpers,
-  EditorPackage
+  EditorPackage, TableEditing
 } from 'substance-texture'
 import { testAsync, getMountPoint } from '../testHelpers'
 
@@ -11,6 +11,24 @@ testAsync('TableComponent: mounting a table component', async (t) => {
   let comp = new TableComponent(null, { node: table }, { context })
   comp.mount(el)
   t.notNil(el.find('.sc-table'), 'there should be a rendered table element')
+  t.end()
+})
+
+testAsync('TableComponent: setting a table selection', async (t) => {
+  let { editorSession, table, context } = _setup(t)
+  let el = getMountPoint(t)
+  let comp = new TableComponent(null, { node: table }, { context })
+  comp.mount(el)
+  let matrix = table.getCellMatrix()
+  let firstCell = matrix[0][0]
+  let tableEditing = new TableEditing(editorSession, table.id, comp.getSurfaceId())
+  let sel = tableEditing.createTableSelection({
+    anchorCellId: firstCell.id,
+    focusCellId: firstCell.id
+  })
+  editorSession.setSelection(sel)
+  // TODO: what should be the assert?
+  t.equal(comp.refs.selAnchor.el.css('visibility'), 'visible', 'the selection overlay for the anchor cell should be visible')
   t.end()
 })
 
@@ -25,8 +43,21 @@ function _setup (t) {
   let editorSession = new EditorSession(doc, { configurator })
   let componentRegistry = configurator.getComponentRegistry()
   let commandGroups = configurator.getCommandGroups()
-  let context = { editorSession, configurator, componentRegistry, commandGroups }
-  return { context, doc, table }
+  let iconProvider = configurator.getIconProvider()
+  let labelProvider = configurator.getLabelProvider()
+  let keyboardShortcuts = configurator.getKeyboardShortcuts()
+  let tools = configurator.getTools()
+  let context = {
+    editorSession,
+    configurator,
+    componentRegistry,
+    commandGroups,
+    tools,
+    iconProvider,
+    labelProvider,
+    keyboardShortcuts
+  }
+  return { context, editorSession, doc, table }
 }
 
 function _createEmptyTextureArticle (configurator) {

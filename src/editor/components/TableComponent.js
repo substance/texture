@@ -519,5 +519,4 @@ export default class TableComponent extends CustomSurface {
     }
     return styles
   }
-
 }

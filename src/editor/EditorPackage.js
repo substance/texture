@@ -467,9 +467,10 @@ export default {
       spec: { listType: 'bullet' },
       commandGroup: 'list'
     })
+    config.addKeyboardShortcut('CommandOrControl+Shift+8', { command: 'toggle-unordered-list' })
     config.addLabel('toggle-unordered-list', {
-      en: 'Toggle list',
-      de: 'Liste entfernen'
+      en: 'Bulleted list',
+      de: 'Liste'
     })
     config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
 
@@ -477,9 +478,10 @@ export default {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
+    config.addKeyboardShortcut('CommandOrControl+Shift+7', { command: 'toggle-ordered-list' })
     config.addLabel('toggle-ordered-list', {
-      en: 'Toggle list',
-      de: 'Aufzählung entfernen'
+      en: 'Numbered list',
+      de: 'Aufzählung'
     })
     config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
 

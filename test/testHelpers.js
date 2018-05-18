@@ -1,17 +1,16 @@
-import { isFunction, DefaultDOMElement, MemoryDOMElement, platform } from 'substance'
+import { test } from 'substance-test'
+import { isFunction, MemoryDOMElement, platform } from 'substance'
 
-export function spy(self, name) {
+export function spy (self, name) {
   var f
   if (arguments.length === 0) {
-    f = function() {}
-  }
-  else if (arguments.length === 1 && isFunction(arguments[0])) {
+    f = () => {}
+  } else if (arguments.length === 1 && isFunction(arguments[0])) {
     f = arguments[0]
-  }
-  else {
+  } else {
     f = self[name]
   }
-  function spyFunction() {
+  function spyFunction () {
     var res = f.apply(self, arguments)
     spyFunction.callCount++
     spyFunction.args = arguments
@@ -19,12 +18,12 @@ export function spy(self, name) {
   }
   spyFunction.callCount = 0
   spyFunction.args = null
-  spyFunction.restore = function() {
+  spyFunction.restore = () => {
     if (self) {
       self[name] = f
     }
   }
-  spyFunction.reset = function() {
+  spyFunction.reset = () => {
     spyFunction.callCount = 0
     spyFunction.args = null
   }
@@ -34,7 +33,7 @@ export function spy(self, name) {
   return spyFunction
 }
 
-export function wait(ms) {
+export function wait (ms) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve()
@@ -42,7 +41,7 @@ export function wait(ms) {
   })
 }
 
-export function getMountPoint(t) {
+export function getMountPoint (t) {
   let mountPoint
   if (platform.inBrowser) {
     mountPoint = t.sandbox
@@ -51,4 +50,19 @@ export function getMountPoint(t) {
     mountPoint = htmlDoc.find('body')
   }
   return mountPoint
+}
+
+export function testAsync (name, func) {
+  test(name, async assert => {
+    let success = false
+    try {
+      await func(assert)
+      success = true
+    } finally {
+      if (!success) {
+        assert.fail('Test failed with an uncaught exception.')
+        assert.end()
+      }
+    }
+  })
 }

@@ -34,4 +34,31 @@ export default class TextureDocument extends XMLDocument {
     return new TextureEditingInterface(this, { editing: new TextureEditing() })
   }
 
+  invert(change) {
+    let inverted = change.invert()
+    let info = inverted.info || {}
+    switch(change.info.action) {
+      case 'insertRows': {
+        info.action = 'deleteRows'
+        break
+      }
+      case 'deleteRows': {
+        info.action = 'insertRows'
+        break
+      }
+      case 'insertCols': {
+        info.action = 'deleteCols'
+        break
+      }
+      case 'deleteCols': {
+        info.action = 'insertCols'
+        break
+      }
+      default:
+        //
+    }
+    inverted.info = info
+    return inverted
+  }
+
 }

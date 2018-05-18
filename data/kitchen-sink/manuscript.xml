@@ -95,6 +95,41 @@
   <body id="body-1">
     <sec id="heading-1">
       <title>Quisque malesuada</title>
+      <table-wrap id="table1">
+        <label>Table 1</label>
+        <caption id="t1_caption">
+          <title id="t1_caption_title">Example Table</title>
+          <p id="t1_caption_content">This is a table example.</p>
+        </caption>
+        <table id="t1">
+          <tbody>
+            <tr id="t1_1">
+              <th id="t1_1_1">A</th>
+              <th id="t1_1_2">B</th>
+              <th id="t1_1_3">C</th>
+              <th id="t1_1_4">D</th>
+            </tr>
+            <tr id="t1_2">
+              <td id="t1_2_1">1</td>
+              <td id="t1_2_2">2</td>
+              <td id="t1_2_3">3</td>
+              <td id="t1_2_4">4</td>
+            </tr>
+            <tr id="t1_3">
+              <td id="t1_3_1">5</td>
+              <td id="t1_3_2">6</td>
+              <td id="t1_3_3">7</td>
+              <td id="t1_3_4">8</td>
+            </tr>
+            <tr id="t1_4">
+              <td id="t1_4_1">9</td>
+              <td id="t1_4_2">10</td>
+              <td id="t1_4_3">11</td>
+              <td id="t1_4_4">12</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
       <p id="p-2">Lorem ipsum <xref id="xref-2" ref-type="bibr" rid="book1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
       <sec id="heading-2">
         <title>Orci varius natoque penatibus et magnis</title>
@@ -121,123 +156,6 @@
         </disp-quote>
         <p id="p-8">Morbi malesuada urna nibh, a blandit felis tempus id. Suspendisse libero risus, sagittis sit amet faucibus quis, eleifend eu orci. Etiam ac suscipit ante. In ut odio est. Morbi nisl ex, tincidunt sit amet lorem eget, gravida mattis nunc. Fusce sed quam et felis rhoncus convallis at nec urna. Vestibulum ultricies volutpat odio. Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
         <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math id="tex-math-1">\sqrt(13)</tex-math></inline-formula>.</p>
-        <table-wrap id="table1">
-          <label>Table 1</label>
-          <caption id="caption-3">
-            <title id="title-3">Patient Care at End of Follow Up</title>
-            <p id="p-9">Numbers of patients receiving institutional care at the end of scheduled follow up and use of hospital beds among those allocated to day hospital or alternative services</p>
-          </caption>
-          <table id="table-1" frame="hsides" rules="groups">
-            <thead id="thead-1">
-              <tr id="tr-1">
-                <th id="th-1" valign="top">
-                  <bold id="bold-2">Mutant</bold>
-                </th>
-                <th id="th-2" valign="top">
-                  <bold id="bold-3">Lipid composition</bold>
-                </th>
-                <th id="th-3" valign="top">
-                  <bold id="bold-4">Depth parameter (Φ)</bold>
-                </th>
-                <th id="th-4" valign="top">
-                  <bold id="bold-5">Approx. distance to phosphate plane (Å)*</bold>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="tbody-1">
-              <tr id="tr-2">
-                <td id="td-1" valign="top">M173R1</td>
-                <td id="td-2" valign="top">20% PtdSer</td>
-                <td id="td-3" valign="bottom">+1.20 ± 0.10</td>
-                <td id="td-4" valign="bottom">+8.8</td>
-              </tr>
-              <tr id="tr-3">
-                <td id="td-5" valign="top" />
-                <td id="td-6" valign="top">5% PtdIns(4,5)P<sub id="sub-1">2</sub></td>
-                <td id="td-7" valign="bottom">−0.01 ± 0.20</td>
-                <td id="td-8" valign="bottom">+5.5</td>
-              </tr>
-              <tr id="tr-4">
-                <td id="td-9" valign="top" />
-                <td id="td-10" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-2">2</sub></td>
-                <td id="td-11" valign="bottom">+0.66 ± 0.10</td>
-                <td id="td-12" valign="bottom">+7.4</td>
-              </tr>
-              <tr id="tr-5">
-                <td id="td-13" valign="top">F234R1</td>
-                <td id="td-14" valign="top">20% PtdSer</td>
-                <td id="td-15" valign="bottom">−0.10 ± 0.10</td>
-                <td id="td-16" valign="bottom">+5.2</td>
-              </tr>
-              <tr id="tr-6">
-                <td id="td-17" valign="top" />
-                <td id="td-18" valign="top">5% PtdIns(4,5)P<sub id="sub-3">2</sub></td>
-                <td id="td-19" valign="bottom">−1.50 ± 0.03</td>
-                <td id="td-20" valign="bottom">–0.6</td>
-              </tr>
-              <tr id="tr-7">
-                <td id="td-21" valign="top" />
-                <td id="td-22" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-4">2</sub></td>
-                <td id="td-23" valign="bottom">+0.00 ± 0.10</td>
-                <td id="td-24" valign="bottom">+5.5</td>
-              </tr>
-              <tr id="tr-8">
-                <td id="td-25" valign="top">V304R1</td>
-                <td id="td-26" valign="top">20% PtdSer</td>
-                <td id="td-27" valign="bottom">−0.39 ± 0.20</td>
-                <td id="td-28" valign="bottom">+4.3</td>
-              </tr>
-              <tr id="tr-9">
-                <td id="td-29" valign="top" />
-                <td id="td-30" valign="top">5% PtdIns(4,5)P<sub id="sub-5">2</sub></td>
-                <td id="td-31" valign="bottom">−1.30 ± 0.10</td>
-                <td id="td-32" valign="bottom">+0.6</td>
-              </tr>
-              <tr id="tr-10">
-                <td id="td-33" valign="top" />
-                <td id="td-34" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-6">2</sub></td>
-                <td id="td-35" valign="bottom">−0.23 ± 0.10</td>
-                <td id="td-36" valign="bottom">+4.8</td>
-              </tr>
-              <tr id="tr-11">
-                <td id="td-37" valign="top">T329R1</td>
-                <td id="td-38" valign="top">20% PtdSer</td>
-                <td id="td-39" valign="bottom">−2.00 ± 0.14</td>
-                <td id="td-40" valign="bottom">–5.4</td>
-              </tr>
-              <tr id="tr-12">
-                <td id="td-41" valign="top" />
-                <td id="td-42" valign="top">5% PtdIns(4,5)P<sub id="sub-7">2</sub></td>
-                <td id="td-43" valign="bottom">−0.80 ± 0.14</td>
-                <td id="td-44" valign="bottom">+2.8</td>
-              </tr>
-              <tr id="tr-13">
-                <td id="td-45" valign="top" />
-                <td id="td-46" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-8">2</sub></td>
-                <td id="td-47" valign="bottom">−2.10 ± 0.12</td>
-                <td id="td-48" valign="bottom">–7.3</td>
-              </tr>
-              <tr id="tr-14">
-                <td id="td-49" valign="top">G368R1</td>
-                <td id="td-50" valign="top">20% PtdSer</td>
-                <td id="td-51" valign="bottom">+0.60 ± 0.10</td>
-                <td id="td-52" valign="bottom">+7.2</td>
-              </tr>
-              <tr id="tr-15">
-                <td id="td-53" valign="top" />
-                <td id="td-54" valign="top">5% PtdIns(4,5)P<sub id="sub-9">2</sub></td>
-                <td id="td-55" valign="bottom">−0.64 ± 0.05</td>
-                <td id="td-56" valign="bottom">+3.6</td>
-              </tr>
-              <tr id="tr-16">
-                <td id="td-57" valign="top" />
-                <td id="td-58" valign="top">10% PtdSer + 2.5% PtdIns(4,5)P<sub id="sub-10">2</sub></td>
-                <td id="td-59" valign="top">+0.18 ± 0.10</td>
-                <td id="td-60" valign="top">+6.0</td>
-              </tr>
-            </tbody>
-          </table>
-        </table-wrap>
         <list list-type="bullet" id="list-a2ab342b221036d8a7f15f065ef3e319">
           <list-item>
             <p>asd</p>

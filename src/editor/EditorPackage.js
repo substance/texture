@@ -38,7 +38,7 @@ import FrontComponent from './components/FrontComponent'
 import GraphicComponent from './components/GraphicComponent'
 import DispQuoteComponent from './components/DispQuoteComponent'
 import InlineFormulaComponent from './components/InlineFormulaComponent'
-import TableCellComponent from './components/TableCellComponent'
+import TableComponent from './components/TableComponent'
 import HeadingComponent from './components/HeadingComponent'
 import ManuscriptComponent from './components/ManuscriptComponent'
 import TOC from './components/TOC'
@@ -69,13 +69,12 @@ import DropFigure from './commands/DropFigure'
 import InsertInlineFormulaCommand from './commands/InsertInlineFormulaCommand'
 import EditInlineFormulaTool from './components/EditInlineFormulaTool'
 
-import InsertTableCommand from './commands/InsertTableCommand'
+import {
+  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
+} from './commands/TableCommands'
 import InsertTableTool from './components/InsertTableTool'
 
-import InsertColumnCommand from './commands/InsertColumnCommand'
-import InsertRowCommand from './commands/InsertRowCommand'
-import RemoveColumnCommand from './commands/RemoveColumnCommand'
-import RemoveRowCommand from './commands/RemoveRowCommand'
 import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
 
 substanceGlobals.DEBUG_RENDERING = true
@@ -155,13 +154,8 @@ export default {
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
-    config.addComponent('table', ElementNodeComponent)
     config.addComponent('table-wrap', FigComponent)
-    config.addComponent('tbody', ElementNodeComponent)
-    config.addComponent('td', TableCellComponent)
-    config.addComponent('tfoot', ElementNodeComponent)
-    config.addComponent('th', TableCellComponent)
-    config.addComponent('thead', ElementNodeComponent)
+    config.addComponent('table', TableComponent)
     config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
@@ -248,17 +242,39 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
-    config.addCommand('insert-column', InsertColumnCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('table:select-all', TableSelectAllCommand)
+    config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
+
+    config.addCommand('toggle-cell-heading', ToggleCellHeadingCommand, {
+      commandGroup: 'table'
     })
-    config.addCommand('insert-row', InsertRowCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('toggle-cell-merge', ToggleCellMergeCommand, {
+      commandGroup: 'table'
     })
-    config.addCommand('remove-column', RemoveColumnCommand, {
-      commandGroup: 'table-modifiers'
+
+    config.addCommand('insert-columns-left', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'left' },
+      commandGroup: 'table-insert'
     })
-    config.addCommand('remove-row', RemoveRowCommand, {
-      commandGroup: 'table-modifiers'
+    config.addCommand('insert-columns-right', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'right' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-rows-above', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'above' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-rows-below', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'below' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('delete-columns', DeleteCellsCommand, {
+      spec: { dim: 'col' },
+      commandGroup: 'table-delete'
+    })
+    config.addCommand('delete-rows', DeleteCellsCommand, {
+      spec: { dim: 'row' },
+      commandGroup: 'table-delete'
     })
 
     config.addLabel('cite', 'Cite')
@@ -280,10 +296,30 @@ export default {
     config.addLabel('toggle-references', '${showOrHide} References')
     config.addLabel('toggle-footnotes', '${showOrHide} Footnotes')
 
-    config.addLabel('insert-column', 'Insert column')
-    config.addLabel('insert-row', 'Insert row')
-    config.addLabel('remove-column', 'Remove column')
-    config.addLabel('remove-row', 'Remove row')
+    config.addLabel('insert-rows-above', {
+      en: 'Insert ${nrows} rows above'
+    })
+    config.addLabel('insert-rows-below', {
+      en: 'Insert ${nrows} rows below'
+    })
+    config.addLabel('insert-columns-left', {
+      en: 'Insert ${ncols} columns left'
+    })
+    config.addLabel('insert-columns-right', {
+      en: 'Insert ${ncols} columns right'
+    })
+    config.addLabel('delete-rows', {
+      en: 'Delete ${nrows} rows'
+    })
+    config.addLabel('delete-columns', {
+      en: 'Delete ${ncols} columns'
+    })
+    config.addLabel('toggle-cell-heading', {
+      en: 'Toggle cell heading'
+    })
+    config.addLabel('toggle-cell-merge', {
+      en: 'Toggle cell merge'
+    })
 
     config.addLabel('add-reference-title', 'Add Reference(s)')
     config.addLabel('add-ref-manually', 'Or create manually')
@@ -310,6 +346,11 @@ export default {
     config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
 
     config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
+
+    config.addIcon('toggle-cell-merge', {
+      'fontawesome': 'fa-arrows-h'
+    })
+    config.addIcon('toggle-cell-heading', { 'fontawesome': 'fa-th-large' })
 
     // Annotation tools
     config.addAnnotationTool({
@@ -480,13 +521,6 @@ export default {
         commandGroups: ['text-types']
       },
       {
-        name: 'list',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        commandGroups: ['list']
-      },
-      {
         name: 'annotations',
         type: 'tool-group',
         showDisabled: true,
@@ -499,6 +533,20 @@ export default {
         showDisabled: true,
         style: 'minimal',
         commandGroups: ['insert']
+      },
+      {
+        name: 'list',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        commandGroups: ['list']
+      },
+      {
+        name: 'table',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        commandGroups: ['table']
       },
       {
         name: 'cite',
@@ -531,8 +579,34 @@ export default {
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table-modifiers']
+        commandGroups: ['table-structure']
       }
+    ])
+
+    config.addToolPanel('table-context-menu', [
+      {
+        name: 'table-tools',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table']
+      },
+      { type: 'tool-separator' },
+      {
+        name: 'table-insert',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table-insert']
+      },
+      { type: 'tool-separator' },
+      {
+        name: 'table-delete',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'descriptive',
+        commandGroups: ['table-delete']
+      },
     ])
 
     config.addToolPanel('workflow', [

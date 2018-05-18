@@ -1,20 +1,25 @@
-import { NodeComponent, TextPropertyEditor } from 'substance'
+import { NodeComponent } from 'substance'
+import TableCellEditor from './TableCellEditor'
 
 export default class TableCellComponent extends NodeComponent {
 
   render($$) {
-    let node = this.props.node
-    let el = $$(node.type)
-    el.attr({
-      align: node.attr('align'),
-      colspan: node.attr('colspan'),
-      rowspan: node.attr('rowspan')
-    })
+    const cell = this.props.node
+    let el = $$(cell.attr('heading') ? 'th' : 'td')
+    el.addClass('sc-table-cell')
+    let attributes = {
+      id: cell.id,
+      "data-row-idx": cell.rowIdx,
+      "data-col-idx": cell.colIdx,
+      rowspan: cell.rowspan,
+      colspan: cell.colspan,
+    }
+    el.attr(attributes)
     el.append(
-      $$(TextPropertyEditor, {
-        path: node.getPath(),
+      $$(TableCellEditor, {
+        path: cell.getPath(),
         disabled: this.props.disabled
-      }).ref('editor')
+      }).ref(cell.id)
     )
     return el
   }

@@ -41,6 +41,11 @@
   margin: 30px 0;
 }
 
+.sc-editor .sc-container-editor .sc-isolated-node.sm-focused,
+.sc-editor .sc-container-editor .sc-isolated-node.sm-co-focused {
+  outline: 1px solid var(--local-selection-color);
+}
+
 .sc-editor {
   display: flex;
   flex-direction: row;
@@ -160,4 +165,10 @@ h3.sc-heading {
 
 .sc-ref-list {
   font-size: 15px;
+}
+
+.sc-context-menu .sc-tool-separator {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
 }

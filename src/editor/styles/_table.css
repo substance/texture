@@ -19,12 +19,30 @@
 }
 
 .sc-table {
+  position: relative;
+}
+
+.sc-table > .se-unclickable-overlays {
+  height: 0px;
+  overflow:visible;
+  pointer-events:none;
+  background:none !important;
+}
+
+.sc-table > .se-clickable-overlays {
+  height: 0px;
+  overflow:visible;
+  background:none !important;
+}
+
+.sc-table > table {
+  table-layout: fixed;
   border-collapse: collapse;
   margin: 25px 0px;
   width: 100%;
 }
 
-.sc-table th {
+.sc-table > table th {
   background-color: #f7f7f7;
   border: 1px solid #e0e0e0;
   font-family: 'Avenir Next', 'Lato', Helvetica;
@@ -33,10 +51,24 @@
   padding: 6px;
 }
 
-.sc-table td {
+.sc-table > table td {
   border: 1px solid #e0e0e0;
   font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 13px;
   font-weight: 500;
   padding: 6px;
+}
+
+.sc-table .se-selection-overlay > .se-selection-anchor {
+  position: absolute;
+  border: solid 2px #2684FC;
+}
+
+.sc-table .se-selection-overlay > .se-selection-range {
+  position: absolute;
+  border: solid 1px #2684FC;
+  background: rgba(38, 132, 252, 0.1)
+}
+
+.sc-table .sc-table-context-menu {
 }

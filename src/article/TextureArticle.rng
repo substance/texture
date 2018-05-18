@@ -1024,20 +1024,45 @@
     </element>
   </define>
 
-  <!-- WIP
-    For now we only allow textual content.
-
-    TODO: we want to have dual mode; either textual or container but not mixed
-    TODO: editor needs to be capable of detecting mode
+  <!--
+    A custom table model, which is easier for the editor
+    It differs from HTML tables in:
+    - always full, i.e. spanning cells do not have an
+      effect on the structure, only that other cells
+      get shadowed
+    - no thead,tbody,tfoot: we think that with header cells
+      and merged cells there are enough means to create scientific
+      tables
+    -
   -->
-  <define name="td.content">
-    <zeroOrMore>
-      <choice>
-        <text/>
-        <ref name="simple-phrase"/>
-        <ref name="break"/>
-      </choice>
-    </zeroOrMore>
+  <define name="table">
+    <element name="table">
+      <zeroOrMore>
+        <ref name="table-row"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="table-row">
+    <element name="table-row">
+      <zeroOrMore>
+        <ref name="table-cell"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="table-cell">
+    <element name="table-cell">
+      <attribute name="heading"/>
+      <attribute name="colspan"/>
+      <attribute name="rowspan"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
   </define>
 
   <!-- WIP
@@ -1062,22 +1087,6 @@
         </choice>
       </choice>
     </element>
-  </define>
-
-  <!-- WIP
-    For now we only allow textual content.
-
-    TODO: we want to have dual mode; either textual or container but not mixed
-    TODO: editor needs to be capable of detecting mode
-  -->
-  <define name="th.content">
-    <zeroOrMore>
-      <choice>
-        <text/>
-        <ref name="simple-phrase"/>
-        <ref name="break"/>
-      </choice>
-    </zeroOrMore>
   </define>
 
   <!--

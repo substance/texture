@@ -6,6 +6,8 @@ import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNode from './XMLListNode'
 import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
+import TableElementNode from './TableElementNode'
+import TableCellElementNode from './TableCellElementNode'
 
 export default {
   name: 'TextureArticle',
@@ -15,6 +17,8 @@ export default {
     // override the registered nodes
     config.addNode(XMLListNode, true)
     config.addNode(XMLListItemNode, true)
+    config.addNode(TableElementNode, true)
+    config.addNode(TableCellElementNode, true)
 
     config.addImporter(TextureArticle.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard

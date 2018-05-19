@@ -171,23 +171,23 @@ b.task('build:app', () => {
     }
   })
   b.js('app/main.js', {
-    target: {
-      dest: APPDIST+'main.js',
-      format: 'cjs',
-    },
+    output: [{
+      file: APPDIST+'main.js',
+      format: 'cjs'
+    }],
     external: ['electron', 'path', 'url']
   })
   b.js('app/app.js', {
-    target: {
-      dest: APPDIST+'app.js',
+    output: [{
+      file: APPDIST+'app.js',
       format: 'umd',
-      moduleName: 'textureApp',
+      name: 'textureApp',
       globals: {
         'substance': 'window.substance',
         'substance-texture': 'window.texture',
         'katex': 'window.katex'
       }
-    },
+    }],
     external: [ 'substance', 'substance-texture', 'katex' ]
   })
   // execute 'install-app-deps'
@@ -206,10 +206,10 @@ b.task('build:vfs', () => {
 b.task('build:web', ['build:vfs'], () => {
   b.copy('web/index.html', DIST)
   b.js('./web/editor.js', {
-    targets: [{
-      dest: DIST+'editor.js',
+    output: [{
+      file: DIST+'editor.js',
       format: 'umd',
-      moduleName: 'textureEditor',
+      name: 'textureEditor',
       globals: {
         'substance': 'window.substance',
         'substance-texture': 'window.texture',
@@ -235,15 +235,18 @@ b.task('build:test-browser', ['build:vfs', 'build:assets', 'build:test-assets'],
   b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
   b.js('test/**/*.test.js', {
-    dest: 'dist/test/tests.js',
-    format: 'umd', moduleName: 'tests',
-    globals: {
-      'substance': 'window.substance',
-      'substance-test': 'window.substanceTest',
-      'substance-texture': 'window.texture',
-      'katex': 'window.katex',
-      'vfs': 'window.vfs'
-    },
+    output: [{
+      file: 'dist/test/tests.js',
+      format: 'umd',
+      name: 'tests',
+      globals: {
+        'substance': 'window.substance',
+        'substance-test': 'window.substanceTest',
+        'substance-texture': 'window.texture',
+        'katex': 'window.katex',
+        'vfs': 'window.vfs'
+      }
+    }],
     external: ['substance', 'substance-test', 'substance-texture', 'katex', 'vfs']
   })
 })
@@ -283,17 +286,19 @@ b.task('build:instrumented-tests', ['build:test-assets', 'build:vfs-es', 'build:
     'test/testGlobals.js',
     'test/**/*.test.js'
   ], {
-    dest: 'tmp/tests.cov.js',
-    format: 'cjs',
+    output: [{
+      dest: 'tmp/tests.cov.js',
+      format: 'cjs',
+      // do not require substance-texture from 'node_modules' but from the dist folder
+      paths: {
+        'substance-texture': '../tmp/texture.cov.js'
+      }
+    }],
     external: [
       'substance-test',
       'substance',
       'substance-texture'
-    ],
-    // do not require substance-texture from 'node_modules' but from the dist folder
-    paths: {
-      'substance-texture': '../tmp/texture.cov.js'
-    }
+    ]
   })
 })
 

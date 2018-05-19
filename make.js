@@ -244,7 +244,7 @@ b.task('build:test-browser', ['build:vfs', 'build:assets', 'build:test-assets'],
       'katex': 'window.katex',
       'vfs': 'window.vfs'
     },
-    external: [ 'substance', 'substance-test', 'substance-texture', 'katex', 'vfs']
+    external: ['substance', 'substance-test', 'substance-texture', 'katex', 'vfs']
   })
 })
 
@@ -257,22 +257,24 @@ b.task('build:vfs-es', () => {
   })
 })
 
-b.task('build:test-nodejs', ['build:test-assets', 'build:vfs-es'], () => {
+b.task('build:test-nodejs', ['build:nodejs', 'build:test-assets', 'build:vfs-es'], () => {
   b.js([
     'test/testGlobals.js',
     'test/**/*.test.js'
   ], {
-    dest: 'tmp/tests.cjs.js',
-    format: 'cjs',
+    output: [{
+      file: 'tmp/tests.cjs.js',
+      format: 'cjs',
+      // do not require substance-texture from 'node_modules' but from the dist folder
+      paths: {
+        'substance-texture': '../dist/texture.cjs.js'
+      }
+    }],
     external: [
       'substance-test',
       'substance',
       'substance-texture'
-    ],
-    // do not require substance-texture from 'node_modules' but from the dist folder
-    paths: {
-      'substance-texture': '../dist/texture.cjs.js'
-    }
+    ]
   })
 })
 

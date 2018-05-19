@@ -287,7 +287,7 @@ b.task('build:instrumented-tests', ['build:test-assets', 'build:vfs-es', 'build:
     'test/**/*.test.js'
   ], {
     output: [{
-      dest: 'tmp/tests.cov.js',
+      file: 'tmp/tests.cov.js',
       format: 'cjs',
       // do not require substance-texture from 'node_modules' but from the dist folder
       paths: {
@@ -314,28 +314,31 @@ function _buildLib(DEST, platform) {
   let istanbul
   if (platform === 'browser' || platform === 'all') {
     targets.push({
-      dest: DEST+'texture.js',
-      format: 'umd', moduleName: 'texture', sourceMapRoot: __dirname, sourceMapPrefix: 'texture',
+      file: DEST+'texture.js',
+      format: 'umd',
+      name: 'texture',
+      sourcemapRoot: __dirname,
+      sourcemapPrefix: 'texture',
       globals
     })
   }
   if (platform === 'nodejs' || platform === 'all') {
     targets.push({
-      dest: DEST+'texture.cjs.js',
+      file: DEST+'texture.cjs.js',
       format: 'cjs',
       globals
     })
   }
   if (platform === 'es' || platform === 'all') {
     targets.push({
-      dest: DEST+'texture.es.js',
+      file: DEST+'texture.es.js',
       format: 'es',
       globals
     })
   }
   if (platform === 'cover') {
     targets.push({
-      dest: DEST+'texture.cov.js',
+      file: DEST+'texture.cov.js',
       format: 'cjs',
       globals,
     })
@@ -344,12 +347,11 @@ function _buildLib(DEST, platform) {
     }
   }
   b.js('./index.es.js', {
-    targets,
+    output: targets,
     external: ['substance', 'katex', 'vfs'],
     istanbul
   })
 }
-
 
 function _compileSchema(name, src, searchDirs, deps, options = {} ) {
   const DEST = `tmp/${name}.data.js`

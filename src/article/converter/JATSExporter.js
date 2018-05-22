@@ -1,6 +1,6 @@
 import { t2r } from './r2t'
 import { validateXMLSchema } from 'substance'
-import { TextureArticle } from '../article'
+import TextureArticle from '../TextureArticle'
 
 export default class JATSExporter {
   /*

@@ -1,4 +1,4 @@
-import { TextureArticle } from '../../article'
+import TextureArticle from '../../TextureArticle'
 
 /*
   For sake of simplicity we want to use only <history>

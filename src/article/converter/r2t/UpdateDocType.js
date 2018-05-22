@@ -1,4 +1,5 @@
-import { InternalArticle, TextureArticle } from '../../article'
+import InternalArticle from '../../InternalArticle'
+import TextureArticle from '../../TextureArticle'
 
 export default class UpdateDocType {
 

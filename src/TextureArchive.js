@@ -1,7 +1,7 @@
 import { prettyPrintXML, PersistedDocumentArchive, DefaultDOMElement } from 'substance'
 import ArticleLoader from './ArticleLoader'
 import PubMetaLoader from './PubMetaLoader'
-import JATSExporter from './converter/JATSExporter'
+import { JATSExporter } from './article'
 
 export default class TextureArchive extends PersistedDocumentArchive {
 

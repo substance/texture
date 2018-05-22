@@ -2,12 +2,16 @@ import {
   EventEmitter, DefaultDOMElement,
   validateXMLSchema, isString
 } from 'substance'
-import { JATS, TextureArticle, InternalArticle } from '../article'
+
+import JATS from '../JATS'
+import TextureArticle from '../TextureArticle'
+import InternalArticle from '../InternalArticle'
+
 import { r2t } from './r2t'
 import { j2r } from './j2r'
 import custom from './custom'
 
-import { createEntityDbSession } from '../entities'
+import { createEntityDbSession } from '../../entities'
 
 /*
   Goal:

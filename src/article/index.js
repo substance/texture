@@ -1,4 +1,5 @@
 import * as tableHelpers from './tableHelpers'
+export * from './converter/index'
 
 export { default as JATS } from './JATS'
 export { default as JATSArchiving } from './JATSArchiving'

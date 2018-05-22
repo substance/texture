@@ -1,4 +1,5 @@
-import { prettyPrintXML, PersistedDocumentArchive, DefaultDOMElement } from 'substance'
+import { prettyPrintXML, DefaultDOMElement } from 'substance'
+import { PersistedDocumentArchive } from './dar'
 import ArticleLoader from './ArticleLoader'
 import PubMetaLoader from './PubMetaLoader'
 import { JATSExporter } from './article'

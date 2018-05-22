@@ -100,6 +100,10 @@ b.task('schema:dar-article', () => {
   _compileSchema('TextureArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3))
 })
 
+b.task('schema:dar-manifest', () => {
+  _compileSchema('Manifest', 'src/dar/Manifest.rng', [path.join(__dirname, 'src', 'dar')], [])
+})
+
 b.task('schema:texture-article', () => {
   _compileSchema('InternalArticle', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4))
 })
@@ -120,7 +124,7 @@ b.task('build:assets', function() {
   b.css('./node_modules/substance/substance-reset.css', DIST+'texture-reset.css')
 })
 
-b.task('build:schema', ['schema:jats', 'schema:dar-article', 'schema:texture-article'])
+b.task('build:schema', ['schema:jats', 'schema:dar-article', 'schema:texture-article', 'schema:dar-manifest'])
 
 b.task('build:browser', () => {
   _buildLib(DIST, 'browser')
@@ -359,7 +363,7 @@ function _compileSchema(name, src, searchDirs, deps, options = {} ) {
   const SCHEMA = `tmp/${name}.schema.md`
   const entry = path.basename(src)
   b.custom(`Compiling schema '${name}'...`, {
-    src: deps,
+    src: [src].concat(deps),
     dest: DEST,
     execute() {
       const { compileRNG, checkSchema } = require('substance')

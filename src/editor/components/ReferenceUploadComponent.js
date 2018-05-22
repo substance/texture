@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { convertCSLJSON } from '../../converter/bib/BibConversion'
+import { convertCSLJSON } from '../../article/converter/bib/BibConversion'
 
 const supportedFormats = ['CSL-JSON']
 

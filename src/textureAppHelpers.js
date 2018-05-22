@@ -1,5 +1,5 @@
 import Texture from './Texture'
-import JATSImportDialog from './converter/JATSImportDialog'
+import { JATSImportDialog } from './article'
 
 export function _renderTextureApp($$, app) {
   let el = $$('div').addClass('sc-app')

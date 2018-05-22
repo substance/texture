@@ -1,5 +1,5 @@
 import { Component, FontAwesomeIcon as Icon, sendRequest } from 'substance'
-import { convertCSLJSON } from '../../converter/bib/BibConversion'
+import { convertCSLJSON } from '../../article/converter/bib/BibConversion'
 
 export default class DOIInputComponent extends Component {
   render($$) {

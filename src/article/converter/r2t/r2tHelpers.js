@@ -1,7 +1,7 @@
-import { TextureArticle } from '../../article'
+import InternalArticle from '../../InternalArticle'
 import { forEach } from 'substance'
 import { replaceWith, findChild, findAllChilds } from '../util/domHelpers'
-import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
+import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../../constants'
 
 /*
   el being <article-meta> or <element-citation>
@@ -228,7 +228,7 @@ export function removeEmptyElementsIfNoChildren(dom, selector) {
 }
 
 export function insertChildAtFirstValidPos(parent, child) {
-  let schema = TextureArticle.getElementSchema(parent.tagName)
+  let schema = InternalArticle.getElementSchema(parent.tagName)
   let insertPos = schema.findFirstValidPos(parent, child.tagName)
   if (insertPos >= 0) {
     parent.insertAt(insertPos, child)

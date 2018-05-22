@@ -1,307 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<grammar
-  xmlns="http://relaxng.org/ns/structure/1.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:s="http://substance.io/relaxng/nodetype/1.0"
-  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-
-  <!-- Stubs -->
-  <include href="DarArticle.rng"/>
-
-  <!--
-    Element-Type Overrides: These are necessary to generate
-    an editor document model correctly.
-   -->
-  <!-- Annotations -->
-  <s:elementType name="bold" s:type="annotation"/>
-  <s:elementType name="ext-link" s:type="annotation"/>
-  <s:elementType name="fixed-case" s:type="annotation"/>
-  <s:elementType name="italic" s:type="annotation"/>
-  <s:elementType name="monospace" s:type="annotation"/>
-  <s:elementType name="named-content" s:type="annotation"/>
-  <s:elementType name="overline" s:type="annotation"/>
-  <s:elementType name="roman" s:type="annotation"/>
-  <s:elementType name="sans-serif" s:type="annotation"/>
-  <s:elementType name="sc" s:type="annotation"/>
-  <s:elementType name="strike" s:type="annotation"/>
-  <s:elementType name="sub" s:type="annotation"/>
-  <s:elementType name="sup" s:type="annotation"/>
-  <s:elementType name="target" s:type="annotation"/>
-  <s:elementType name="underline" s:type="annotation"/>
-  <!-- Anchors -->
-  <s:elementType name="milestone-start" s:type="anchor"/>
-  <s:elementType name="milestone-end" s:type="anchor"/>
-  <s:elementType name="overline-start" s:type="anchor"/>
-  <s:elementType name="overline-end" s:type="anchor"/>
-  <s:elementType name="underline-start" s:type="anchor"/>
-  <s:elementType name="underline-end" s:type="anchor"/>
-  <!-- Inline-Elements -->
-  <s:elementType name="abbrev" s:type="inline-element"/>
-  <s:elementType name="break" s:type="inline-element"/>
-  <s:elementType name="chem-struct" s:type="inline-element"/>
-  <s:elementType name="hr" s:type="inline-element"/>
-  <s:elementType name="inline-alternatives" s:type="inline-element"/>
-  <s:elementType name="inline-formula" s:type="inline-element"/>
-  <s:elementType name="inline-graphic" s:type="inline-element"/>
-  <s:elementType name="inline-supplementary-material" s:type="inline-element"/>
-  <s:elementType name="private-char" s:type="inline-element"/>
-  <s:elementType name="ruby" s:type="inline-element"/>
-  <s:elementType name="std-organization" s:type="inline-element"/>
-  <s:elementType name="styled-content" s:type="inline-element"/>
-  <s:elementType name="ruby" s:type="inline-element"/>
-  <s:elementType name="x" s:type="inline-element"/>
-  <s:elementType name="xref" s:type="inline-element"/>
-  <!-- Containers -->
-  <s:elementType name="abstract-content" s:type="container"/>
-  <s:elementType name="body-content" s:type="container"/>
-  <s:elementType name="caption" s:type="container"/>
-  <s:elementType name="disp-quote-content" s:type="container"/>
-  <s:elementType name="fn" s:type="container"/>
-  <s:elementType name="sig" s:type="container"/>
-  <!-- External = not editable in Texture -->
-  <!-- TODO: we just don't know yet how to 'fix' the spec for <chem-struct> -->
-  <s:elementType name="chem-struct" s:type="external"/>
-  <!-- mml -->
-  <s:elementType name="mml:math" s:type="external"/>
-  <s:elementType name="mml:maction" s:type="external"/>
-  <s:elementType name="mml:malignmark" s:type="external"/>
-  <s:elementType name="mml:menclose" s:type="external"/>
-  <s:elementType name="mml:merror" s:type="external"/>
-  <s:elementType name="mml:mfenced" s:type="external"/>
-  <s:elementType name="mml:mfrac" s:type="external"/>
-  <s:elementType name="mml:mglyph" s:type="external"/>
-  <s:elementType name="mml:mi" s:type="external"/>
-  <s:elementType name="mml:mlongdiv" s:type="external"/>
-  <s:elementType name="mml:mmultiscripts" s:type="external"/>
-  <s:elementType name="mml:mn" s:type="external"/>
-  <s:elementType name="mml:mo" s:type="external"/>
-  <s:elementType name="mml:mover" s:type="external"/>
-  <s:elementType name="mml:mpadded" s:type="external"/>
-  <s:elementType name="mml:mphantom" s:type="external"/>
-  <s:elementType name="mml:mroot" s:type="external"/>
-  <s:elementType name="mml:mrow" s:type="external"/>
-  <s:elementType name="mml:ms" s:type="external"/>
-  <s:elementType name="mml:msqrt" s:type="external"/>
-  <s:elementType name="mml:mstack" s:type="external"/>
-  <s:elementType name="mml:mstyle" s:type="external"/>
-  <s:elementType name="mml:msub" s:type="external"/>
-  <s:elementType name="mml:msubsup" s:type="external"/>
-  <s:elementType name="mml:msup" s:type="external"/>
-  <s:elementType name="mml:mtable" s:type="external"/>
-  <s:elementType name="mml:mtext" s:type="external"/>
-  <s:elementType name="mml:munder" s:type="external"/>
-  <s:elementType name="mml:munderover" s:type="external"/>
-  <s:elementType name="mml:sep" s:type="external"/>
-  <!-- oasis -->
-  <s:elementType name="oasis:table" s:type="external"/>
-  <s:elementType name="oasis:tbody" s:type="external"/>
-  <s:elementType name="oasis:entry" s:type="external"/>
-  <!-- deprecated elements -->
-  <s:elementType name="access-date" s:type="external"/>
-  <s:elementType name="time-stamp" s:type="external"/>
-
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="JATS-archiving.rng"/>
 
   <define name="abstract">
     <element name="abstract">
       <ref name="abstract-attlist"/>
-      <ref name="abstract-content"/>
-    </element>
-  </define>
-
-  <!-- Stub out some of the content for that we do not provide
-       a UI  -->
-  <define name="chem-struct">
-    <element name="chem-struct">
-    </element>
-  </define>
-
-  <define name="oasis.table">
-    <element name="oasis:table">
-    </element>
-  </define>
-  <define name="oasis.tbody">
-    <element name="oasis:tbody">
-    </element>
-  </define>
-  <define name="oasis.entry">
-    <element name="oasis:entry">
-    </element>
-  </define>
-  <define name="mml.ci">
-    <element name="mml:ci">
-    </element>
-  </define>
-  <define name="mml.cn">
-    <element name="mml:cn">
-    </element>
-  </define>
-  <define name="mml.csymbol">
-    <element name="mml:csymbol">
-    </element>
-  </define>
-
-  <define name="XLINK.xmlns.attrib">
-    <empty/>
-  </define>
-  <!-- stub out deprecated elements -->
-  <define name="access-date">
-    <element name="access-date">
-    </element>
-  </define>
-  <define name="time-stamp">
-    <element name="time-stamp">
-    </element>
-  </define>
-
-  <!--
-    Using <abstract-content> to have a pure Container
-  -->
-  <define name="abstract-model">
-    <zeroOrMore>
-      <ref name="id.class"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="sec-meta"/>
-    </optional>
-    <optional>
-      <ref name="label"/>
-    </optional>
-    <optional>
-      <ref name="title"/>
-    </optional>
-    <optional>
-      <ref name="abstract-content"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="sec-back-matter-mix"/>
-    </zeroOrMore>
-  </define>
-
-  <define name="abstract-content">
-    <element name="abstract-content">
       <zeroOrMore>
-        <choice>
-          <ref name="p"/>
-        </choice>
+        <ref name="p"/>
       </zeroOrMore>
     </element>
   </define>
 
-  <!--
-    Introducing <element-aff> and <string-aff> corresponding
-    to citations: every aff can either be given in a
-    structured or in a formatted way.
-
-    TODO: define a transformation from real JATS
-    Looking at Scielo's tagging style, we find support for
-    this approach, where <institution content-type="original"> for the textual form, and the other parts are probably tagged manually, to infer
-    finer grained details.
-    ...
-    <aff id="aff01">
-      <label>1</label>
-      <institution content-type="orgname">Fundação Oswaldo Cruz</institution>
-      <institution content-type="orgdiv1">Escola Nacional de Saúde Pública Sérgio Arouca</institution>
-      <institution content-type="orgdiv2">Centro de Estudos da Saúde do Trabalhador e Ecologia Humana</institution>
-      <addr-line>
-        <named-content content-type="city">Manguinhos</named-content>
-        <named-content content-type="state">RJ</named-content>
-      </addr-line>
-      <country country="BR">Brasil</country>
-      <email>maurosilva@foo.com</email>
-      <institution content-type="original">Prof. da Fundação Oswaldo Cruz; da Escola Nacional de Saúde Pública Sérgio Arouca, do Centro de Estudos da Saúde do Trabalhador e Ecologia Humana. RJ - Manguinhos / Brasil. maurosilva@foo.com</institution>
-    </aff>
-    ...
-
-    TODO: our current implementation is using custom elements.
-    We should try to find a way for doing this in pure JATS.
-  -->
-  <define name="aff">
-    <element name="aff">
-      <ref name="aff-attlist"/>
-      <!-- TODO: we should use <interleave> here -->
-      <interleave>
-        <optional>
-          <ref name="string-aff"/>
-        </optional>
-        <optional>
-          <ref name="element-aff"/>
-        </optional>
-      </interleave>
-    </element>
-  </define>
-
-  <define name="string-aff">
-    <element name="string-aff">
-      <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="element-aff">
-    <element name="element-aff">
-      <interleave>
-        <zeroOrMore><ref name="addr-line"/></zeroOrMore>
-        <optional><ref name="label"/></optional>
-        <optional><ref name="city"/></optional>
-        <optional><ref name="country"/></optional>
-        <optional><ref name="fax"/></optional>
-        <zeroOrMore><ref name="institution"/></zeroOrMore>
-        <zeroOrMore><ref name="institution-wrap"/></zeroOrMore>
-        <optional><ref name="phone"/></optional>
-        <optional><ref name="postal-code"/></optional>
-        <optional><ref name="state"/></optional>
-        <optional><ref name="email"/></optional>
-        <zeroOrMore><ref name="ext-link"/></zeroOrMore>
-        <optional><ref name="uri"/></optional>
-        <zeroOrMore><ref name="x"/></zeroOrMore>
-      </interleave>
-    </element>
-  </define>
-
-  <!--
-    Separated inline- from block-level alternatives
-  -->
-  <define name="alternatives">
-    <element name="alternatives">
-      <ref name="alternatives-attlist"/>
-      <oneOrMore>
-        <choice>
-          <ref name="array"/>
-          <ref name="chem-struct"/>
-          <ref name="code"/>
-          <ref name="graphic"/>
-          <ref name="media"/>
-          <ref name="preformat"/>
-          <!-- <ref name="private-char"/> -->
-          <ref name="supplementary-material"/>
-          <ref name="table"/>
-          <ref name="oasis.table"/>
-          <ref name="textual-form"/>
-        </choice>
-      </oneOrMore>
-    </element>
-  </define>
-
-  <!--
-    Introduced a new element so that we can group all affiliations.
-
-    Transformation:
-      pick all <aff> elements from article-meta and wrap them
-      in an <aff-group>
-  -->
-  <define name="aff-group">
-    <element name="aff-group">
-      <zeroOrMore>
-        <ref name="aff"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- Introduce some new elements aff-group, content-loc -->
   <define name="article-meta">
     <element name="article-meta">
       <ref name="article-meta-attlist"/>
@@ -311,28 +20,19 @@
       <optional>
         <ref name="article-categories"/>
       </optional>
-      <!-- TODO: we should make contrib-group, aff-group, title-group non-optional -->
       <optional>
         <ref name="title-group"/>
       </optional>
-      <!-- contrib-group[content-type=author], contrib-group[content-type=editor] -->
+      <!-- we support 0..2 contrib groups, one for authors, one for editors -->
       <optional>
         <ref name="contrib-group"/>
       </optional>
       <optional>
         <ref name="contrib-group"/>
       </optional>
-      <!-- TODO: this must go away, we only have it there to ensure wa always have
-      a valid schema during r2t transform
-      -->
       <zeroOrMore>
         <ref name="aff"/>
       </zeroOrMore>
-      <!-- We wrap affs in a custom aff-group element -->
-      <optional>
-        <ref name="aff-group"/>
-      </optional>
-
       <optional>
         <ref name="author-notes"/>
       </optional>
@@ -350,7 +50,20 @@
         <ref name="isbn"/>
       </optional>
       <optional>
-        <ref name="content-loc"/>
+        <choice>
+          <group>
+            <optional>
+              <ref name="fpage"/>
+              <optional>
+                <ref name="lpage"/>
+              </optional>
+            </optional>
+            <optional>
+              <ref name="page-range"/>
+            </optional>
+          </group>
+          <ref name="elocation-id"/>
+        </choice>
       </optional>
       <optional>
         <ref name="history"/>
@@ -369,10 +82,6 @@
         <ref name="related-article"/>
         <ref name="related-object"/>
       </zeroOrMore>
-      <!-- TODO: we should make abstract non-optional! we can't do currently
-           because there is no way to find a valid insert pos if the schema
-           is invalid
-      -->
       <optional>
         <ref name="abstract"/>
       </optional>
@@ -398,305 +107,357 @@
     </element>
   </define>
 
-
   <!--
-    We only support plain text contrib elements for now
-
-    TODO: support structured <contrib>, like we did with <element-citation>
+    WIP: it should be clear how to use this.
+      There is no example showing use of <def>.
+      If required it should not be 'somewhere', but
+      following a convention.
+      For now we deactivated <def>
   -->
 
-  <define name="contrib-group">
-    <element name="contrib-group">
-      <ref name="contrib-group-attlist"/>
-      <zeroOrMore>
-        <ref name="contrib"/>
-      </zeroOrMore>
-    </element>
+  <define name="abbrev-elements">
+    <empty />
+  </define>
+
+  <define name="addr-line-elements">
+    <choice>
+      <ref name="simple-text"/>
+      <!-- <ref name="address-line.class"/> -->
+    </choice>
   </define>
 
   <!--
-    Using <body-content> internally so that we have a pure container.
-
-    TODO: we should think about
+    WIP: we want this be used as a structured element only
   -->
-  <define name="body">
-    <element name="body">
-      <ref name="body-attlist"/>
-      <optional>
-        <ref name="body-content"/>
-      </optional>
-      <optional>
-        <ref name="sig-block"/>
-      </optional>
+  <define name="aff">
+    <element name="aff">
+      <ref name="aff-attlist"/>
+      <interleave>
+        <zeroOrMore><ref name="addr-line"/></zeroOrMore>
+        <optional><ref name="label"/></optional>
+        <optional><ref name="city"/></optional>
+        <optional><ref name="country"/></optional>
+        <optional><ref name="fax"/></optional>
+        <zeroOrMore><ref name="institution"/></zeroOrMore>
+        <zeroOrMore><ref name="institution-wrap"/></zeroOrMore>
+        <optional><ref name="phone"/></optional>
+        <optional><ref name="postal-code"/></optional>
+        <optional><ref name="state"/></optional>
+        <optional><ref name="email"/></optional>
+        <zeroOrMore><ref name="ext-link"/></zeroOrMore>
+        <optional><ref name="uri"/></optional>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="x"/></zeroOrMore>
+      </interleave>
     </element>
   </define>
 
-  <!-- pure container for body content -->
-  <define name="body-content">
-    <element name="body-content">
-      <zeroOrMore>
-        <choice>
-          <ref name="sec.class"/>
-          <ref name="para-level"/>
-          <ref name="cell"/>
-          <ref name="repro-fig"/>
-        </choice>
-      </zeroOrMore>
-    </element>
+  <!-- in TextureArticle we want to have simpler phrase content -->
+  <define name="all-phrase">
+    <choice>
+      <ref name="simple-phrase"/>
+      <ref name="x.class"/>
+    </choice>
   </define>
-
-  <!--
-    Pulled <title> out of <caption>
-  -->
 
   <define name="caption">
     <element name="caption">
       <ref name="caption-attlist"/>
-      <oneOrMore>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <zeroOrMore>
         <ref name="p"/>
-      </oneOrMore>
-    </element>
-  </define>
-
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="conf-sponsor">
-    <element name="conf-sponsor">
-      <ref name="conf-sponsor-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-        </choice>
       </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- A custom element that we use to wrap fpage, lpage, page-range, and elocation-id -->
-  <define name="content-loc">
-    <element name="content-loc">
-      <attribute name="type">
-        <choice>
-          <value>print</value>
-          <value>electronic</value>
-        </choice>
-      </attribute>
-      <interleave>
-        <ref name="fpage"/>
-        <ref name="lpage"/>
-        <ref name="page-range"/>
-        <ref name="elocation-id"/>
-      </interleave>
-    </element>
-  </define>
-
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="copyright-holder">
-    <element name="copyright-holder">
-      <ref name="copyright-holder-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="copyright-statement">
-    <element name="copyright-statement">
-      <ref name="copyright-statement-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="corresp">
-    <element name="corresp">
-      <ref name="copyright-holder-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="data-title">
-    <element name="data-title">
-      <ref name="data-title-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- we use an interleaved model for sake of simplicity -->
-  <define name="date">
-    <element name="date">
-      <ref name="date-attlist"/>
-      <attribute name="format">
-        <choice>
-          <value>standard</value>
-          <value>seasonal</value>
-          <value>custom</value>
-        </choice>
-      </attribute>
-      <interleave>
-        <ref name="day"/>
-        <ref name="month"/>
-        <ref name="season"/>
-        <ref name="year"/>
-        <ref name="era"/>
-        <ref name="string-date"/>
-      </interleave>
-    </element>
-  </define>
-
-  <!-- WIP
-    Refactored def-list, def, term et. al
-
-    TODO: check if this is really workable, and add this to DarArticle if good
-  -->
-  <define name="def-list-model">
-    <optional>
-      <ref name="label"/>
-    </optional>
-    <optional>
-      <ref name="title"/>
-    </optional>
-    <optional>
-      <ref name="term-head"/>
-    </optional>
-    <optional>
-      <ref name="def-head"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="def-item.class"/>
-    </zeroOrMore>
-  </define>
-
-  <define name="def-item-model">
-    <optional>
-      <ref name="label"/>
-    </optional>
-    <ref name="term"/>
-    <ref name="def.class"/>
-  </define>
-
-  <define name="def-model">
-    <oneOrMore>
-      <ref name="just-para.class"/>
-    </oneOrMore>
-  </define>
-
-  <!--
-    Wraps content in explicit <disp-quote-content> container
-  -->
-  <define name="disp-quote">
-    <element name="disp-quote">
-      <ref name="disp-quote-attlist"/>
-      <ref name="disp-quote-content"/>
-      <ref name="attrib"/>
-    </element>
-  </define>
-
-  <define name="disp-quote-content">
-    <element name="disp-quote-content">
-      <oneOrMore>
-        <ref name="para-level"/>
-      </oneOrMore>
     </element>
   </define>
 
   <!--
-    Removed <email>, <uri>, and direct usage of math
-
-    TODO: transform; use <named-content> instead
+    WIP: is it possible to avoid <email> and <uri>?
   -->
-  <define name="emphasized-text">
+
+  <define name="code-elements">
     <choice>
-      <!-- <ref name="address-link.class"/> -->
       <ref name="ext-link"/>
-      <!-- <ref name="article-link.class"/> -->
-      <ref name="inline-supplementary-material"/>
       <ref name="emphasis.class"/>
-      <ref name="inline-display.class"/>
-      <ref name="inline-math.class"/>
-      <!-- <ref name="math.class"/> -->
       <ref name="phrase.class"/>
       <ref name="simple-link.class"/>
       <ref name="subsup.class"/>
     </choice>
   </define>
 
-  <define name="fig">
-    <element name="fig">
-      <ref name="fig-attlist"/>
-      <!-- We allow only one object-id[pub-id-type=doi] -->
-      <ref name="object-id"/>
-      <ref name="title"/>
-      <ref name="caption"/>
-      <ref name="graphic"/>
+  <!--
+    WIP Requirements are not clear yet.
+
+    Looking at Scielo's guideline, this is a text field used
+    within <contrib>
+
+    TODO: provide transformation
+  -->
+  <define name="collab">
+    <element name="collab">
+      <ref name="collab-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-text"/>
+          <!-- <ref name="address.class"/> -->
+          <!-- <ref name="contrib-group.class"/> -->
+          <!-- <ref name="contrib-info.class"/> -->
+          <!-- <ref name="fn-link.class"/> -->
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
 
   <!--
-    Allow empty <fn-group>
+    WIP We need a guideline to be clear if the content
+    should be textual or structured.
+
+    Looking at Scielo guideline this seems to be textual.
+    We want to go into a direction, where this not used mixed.
+
+    TODO: specify requirements
   -->
-  <define name="fn-group-model">
-    <zeroOrMore>
+  <define name="conf-loc">
+    <element name="conf-loc">
+      <ref name="conf-loc-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <!-- for now we only allow plain text -->
+          <!-- <ref name="address.class"/> -->
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Restricting to the minimum, see JATS4M spec
+  -->
+  <define name="contrib">
+    <element name="contrib">
+      <ref name="contrib-attlist"/>
+      <interleave>
+        <!-- TODO: contrib-id[contrib-id-type=orcid]?, contrib-id[contrib-id-type=entity]? -->
+        <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
+        <optional><ref name="name"/></optional>
+        <optional><ref name="email"/></optional>
+        <optional><ref name="collab"/></optional>
+        <zeroOrMore><ref name="xref"/></zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="contrib-group">
+    <element name="contrib-group">
+      <ref name="contrib-group-attlist"/>
+      <oneOrMore>
+        <ref name="contrib"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <!--
+    WIP: Requirements are not clear.
+
+    SciELO's guideline has an example with text, optional label, and <email>.
+
+    TODO: support for label
+    TODO: refine requirements
+  -->
+  <define name="corresp">
+    <element name="corresp">
+      <ref name="corresp-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text />
+          <ref name="all-phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Use this only as structured element
+  -->
+  <define name="date-in-citation">
+    <element name="date-in-citation">
+      <ref name="date-in-citation-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="date-parts.class"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    In JATS disp-formula is lacking of a defined structure.
+
+    <define name="disp-formula-model">
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="disp-formula-elements"/>
+        </choice>
+      </zeroOrMore>
+    </define>
+
+    With TextureArticle we will try to introduce a restrictive yet expressive
+    schema.
+
+    TODO: add transformation
+  -->
+  <define name="disp-formula">
+    <element name="disp-formula">
+      <!-- attributes -->
+      <ref name="disp-formula-attlist"/>
+      <!-- elements -->
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="abstract"/>
+      </optional>
+      <optional>
+        <ref name="abstract"/>
+      </optional>
+      <!-- TODO: quantity? -->
+      <zeroOrMore>
+        <ref name="access.class"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="kwd-group"/>
+      </optional>
+      <optional>
+        <ref name="attrib"/>
+      </optional>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
       <choice>
-        <ref name="fn"/>
+        <ref name="alternatives"/>
+        <ref name="code"/>
+        <ref name="math.class"/>
+        <ref name="graphic"/>
+        <ref name="preformat"/>
       </choice>
-    </zeroOrMore>
+    </element>
   </define>
 
-  <define name="front-model">
-    <optional>
-      <ref name="journal-meta"/>
-    </optional>
-    <ref name="article-meta"/>
-    <optional>
-      <ref name="front-back.class"/>
-    </optional>
-  </define>
-
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
+  <!--
+    Changes:
+      - Only allow para-level elements followed by an optional <attrib> element
   -->
+  <define name="disp-quote">
+    <element name="disp-quote">
+      <ref name="disp-quote-attlist"/><!-- use original attributes -->
+      <oneOrMore><ref name="p"/></oneOrMore>
+      <optional><ref name="attrib"/></optional>
+    </element>
+  </define>
+
+  <!--
+    We develop the element citation incrementally, we only enable tags that can be
+    edited through the user interface so far. This is why many elements are
+    commented out.
+
+    NOTE: This must be kept in sync with InternalArticle.rng
+  -->
+  <define name="element-citation">
+    <element name="element-citation">
+      <ref name="element-citation-attlist"/>
+      <interleave>
+        <optional><ref name="article-title"/></optional>
+        <optional><ref name="chapter-title"/></optional>
+        <optional><ref name="comment"/></optional>
+        <optional><ref name="collab"/></optional>
+        <optional><ref name="edition"/></optional>
+        <optional><ref name="elocation-id"/></optional>
+        <optional><ref name="fpage"/></optional>
+        <optional><ref name="issue"/></optional>
+        <optional><ref name="lpage"/></optional>
+        <optional><ref name="page-range"/></optional>
+        <!--
+          TODO: specify different available person-groups per publication type
+        -->
+        <zeroOrMore>
+          <ref name="person-group"/>
+        </zeroOrMore>
+        <!--
+          TODO: specify different available pub-id-types per publication type
+        -->
+        <zeroOrMore>
+          <ref name="pub-id"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="publisher-loc"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="publisher-name"/>
+        </zeroOrMore>
+        <optional><ref name="source"/></optional>
+        <optional><ref name="volume"/></optional>
+        <optional><ref name="year"/></optional>
+        <optional><ref name="month"/></optional>
+        <optional><ref name="day"/></optional>
+
+        <optional><ref name="conf-name"/></optional>
+        <optional><ref name="conf-loc"/></optional>
+        <optional><ref name="data-title"/></optional>
+        <optional><ref name="part-title"/></optional>
+        <optional><ref name="patent"/></optional>
+        <optional><ref name="series"/></optional>
+        <optional><ref name="version"/></optional>
+        <optional><ref name="uri"/></optional>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="elocation-id">
+    <element name="elocation-id">
+      <ref name="elocation-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="fig">
+    <element name="fig">
+      <ref name="fig-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
+      <!-- Only used to carry source code for reproducible figures -->
+      <optional>
+        <ref name="alternatives"/>
+      </optional>
+      <!-- Only optional to allow repro figs without graphic element -->
+      <optional>
+        <ref name="graphic"/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="fn">
+    <element name="fn">
+      <oneOrMore>
+        <ref name="p"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="fpage">
+    <element name="fpage">
+      <optional><text/></optional>
+    </element>
+  </define>
+
   <define name="funding-source">
     <element name="funding-source">
       <ref name="funding-source-attlist"/>
@@ -709,32 +470,52 @@
     </element>
   </define>
 
-  <!-- WIP
-    TODO: refine requirements; see if the structured elements
-          are really necessary, or simple phrase content is enough.
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="funding-statement">
-    <element name="funding-statement">
-      <ref name="funding-statement-attlist"/>
+  <define name="graphic">
+    <element name="graphic">
+      <ref name="graphic-attlist"/>
+    </element>
+  </define>
+
+  <define name="history">
+    <element name="history">
+      <ref name="history-attlist"/>
       <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="simple-phrase"/>
-        </choice>
+        <ref name="date"/>
       </zeroOrMore>
     </element>
   </define>
 
   <!--
-    Introducing <heading> as a replacement for <sec>
-   -->
-  <define name="heading">
-    <element name="heading">
-      <ref name="sec-attlist"/>
-      <optional>
-        <attribute name="level"/>
-      </optional>
+    WIP: We should make it crystal clear how to tag content
+    for different use-cases.
+
+    Proposal:
+      - allow only one content element
+      - use alternatives if there are alternative representations,
+        e.g., an image and MathML
+      - use <styled-content> as wrapper for formatted content
+    TODO: Note, that the is inconsistent because it requires to use
+    <inline-graphic> if used singular, and <graphic> if used as alternative.
+
+    TODO: collect requirements
+    TODO: transformation
+  -->
+  <define name="inline-formula">
+    <element name="inline-formula">
+      <!-- attributes -->
+      <ref name="inline-formula-attlist"/>
+      <!-- elements -->
+      <ref name="tex-math"/>
+    </element>
+  </define>
+
+  <!--
+    We want to get rid of this, as it is already possible to use
+    <supplementary-material> and link to with <xref>.
+  -->
+  <define name="inline-supplementary-material">
+    <element name="inline-supplementary-material">
+      <ref name="inline-supplementary-material-attlist"/>
       <zeroOrMore>
         <choice>
           <text/>
@@ -744,111 +525,92 @@
     </element>
   </define>
 
-  <!--
-    Introduced this with the same purpose as <alternatives> but dedicated
-    for inline usage.
-  -->
-  <define name="inline-alternatives">
-    <element name="inline-alternatives">
-      <ref name="alternatives-attlist"/>
-      <oneOrMore>
-        <choice>
-          <ref name="chem-struct"/>
-          <ref name="code"/>
-          <ref name="graphic"/>
-          <ref name="media"/>
-          <ref name="preformat"/>
-          <ref name="private-char"/>
-          <ref name="supplementary-material"/>
-          <ref name="textual-form"/>
-        </choice>
-      </oneOrMore>
+  <define name="issue">
+    <element name="issue">
+      <ref name="issue-attlist"/>
+      <optional><text/></optional>
     </element>
   </define>
 
-  <!--
-    Replace <alternatives> used inline with <inline-alternatives>
-  -->
-  <define name="inline-display.class">
-    <choice>
-      <!-- <ref name="alternatives"/> -->
-      <ref name="inline-alternatives"/>
-      <ref name="inline-graphic"/>
-      <ref name="private-char"/>
-    </choice>
-  </define>
-
-  <!-- WIP
-    Removed <price>
-
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="license-p-elements">
-    <choice>
-      <ref name="p-elements"/>
-    </choice>
-  </define>
-
-  <define name="list">
-    <element name="list">
-      <!-- a comma separated list of 'bullet'| 'order' -->
-      <attribute name="list-type"/>
-      <zeroOrMore>
-        <ref name="list-item"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="list-item">
-    <element name="list-item">
-      <attribute name="level"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="p-elements"/>
-        </choice>
-      </zeroOrMore>
+  <define name="lpage">
+    <element name="lpage">
+      <optional><text/></optional>
     </element>
   </define>
 
   <define name="media">
     <element name="media">
       <ref name="media-attlist"/>
-      <interleave>
-        <zeroOrMore><ref name="id.class"/></zeroOrMore>
-        <optional><ref name="label.class"/></optional>
-        <optional><ref name="caption.class"/></optional>
-        <optional><ref name="title"/></optional>
-      </interleave>
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
     </element>
   </define>
 
-  <!-- WIP
-    Allowing only phrasing content
-
-    TODO: transform; use <named-content> instead.
+  <!--
+    WIP: either inline or structured
   -->
-  <define name="on-behalf-of-elements">
-    <choice>
-      <ref name="rendition-plus"/>
-    </choice>
+  <define name="named-content">
+    <element name="named-content">
+      <ref name="named-content-attlist"/>
+      <choice>
+        <zeroOrMore>
+          <choice>
+            <!--
+              HACK: Disable text in named-content, otherwise prettyPrintXML will mess up
+              code cells (code > named-content > code), where named-content must not contain any text.
+            -->
+            <!-- <text/> -->
+            <ref name="emphasis.class"/>
+            <ref name="inline-display-noalt.class"/>
+            <ref name="inline-math.class"/>
+            <ref name="phrase.class"/>
+            <ref name="simple-link.class"/>
+            <ref name="subsup.class"/>
+            <ref name="inline-supplementary-material"/>
+          </choice>
+        </zeroOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="address-link.class"/>
+            <!-- <ref name="article-link.class"/> -->
+            <ref name="block-display.class"/>
+            <ref name="block-math.class"/>
+            <ref name="list.class"/>
+            <ref name="rest-of-para.class"/>
+          </choice>
+        </zeroOrMore>
+      </choice>
+    </element>
   </define>
 
   <!--
-    - replaced address-link.class with ext-link, removing <email> and <uri>
-    - removed funding.class
+    Changes:
+      - Removed all block level elements
+      - Removed citations
+      - Removed direct usage of math
+      - Removed <related-object>, <related-article> to be defined inline
+
+    Transformation:
+      - pull block-level elements one level higher
+
+    TODO:
+      - transformation: put citations into ref-list
   -->
   <define name="p-elements">
     <choice>
-      <!-- <ref name="address-link.class"/> -->
-      <ref name="ext-link"/>
+      <ref name="address-link.class"/>
       <!-- <ref name="article-link.class"/> -->
       <ref name="inline-supplementary-material"/>
       <!--<ref name="block-display.class"/>-->
       <!--<ref name="block-math.class"/>-->
       <!--<ref name="citation.class"/>-->
       <ref name="emphasis.class"/>
-      <!-- <ref name="funding.class"/> -->
+      <ref name="funding.class"/>
       <ref name="inline-math.class"/>
       <ref name="inline-display-noalt.class"/>
       <!--<ref name="list.class"/>-->
@@ -861,77 +623,290 @@
   </define>
 
   <!--
-    Allowing only structured content.
+    Changes:
+      - removed math.class
+      - removed related-article
 
-    TODO: transform
+    TODO: provide transformation
   -->
-  <define name="principal-award-recipient">
-    <element name="principal-award-recipient">
-      <ref name="principal-award-recipient-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <ref name="principal-award-recipient-elements"/>
-        </choice>
-      </zeroOrMore>
+  <define name="para-level">
+    <choice>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="list.class"/>
+      <!--<ref name="math.class"/>-->
+      <ref name="nothing-but-para.class"/>
+      <!-- <ref name="related-article.class"/> -->
+      <ref name="rest-of-para.class"/>
+    </choice>
+  </define>
+
+  <define name="page-range">
+    <element name="page-range">
+      <optional><text/></optional>
     </element>
   </define>
 
   <!--
-    Allowing only structured content.
-
-    TODO: transform
+    WIP: can we use this purely structured ?
   -->
-  <define name="principal-investigator">
-    <element name="principal-investigator">
-      <ref name="principal-investigator-attlist"/>
+  <define name="person-group-model">
+    <zeroOrMore>
+      <choice>
+        <!-- <text/> -->
+        <ref name="person-group-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <!--
+    WIP: Needs requirements
+      For now we will allow just formatted content
+  -->
+
+  <define name="preformat-elements">
+    <choice>
+      <!-- <ref name="access.class"/> -->
+      <!-- <ref name="address-link.class"/> -->
+      <!-- <ref name="display-back-matter.class"/> -->
+      <ref name="emphasis.class"/>
+      <ref name="phrase.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
+  <!--
+    WIP: use this structured only
+  -->
+  <define name="product">
+    <element name="product">
+      <ref name="product-attlist"/>
       <zeroOrMore>
-        <choice>
-          <ref name="principal-investigator-elements"/>
-        </choice>
+        <ref name="product-elements"/>
       </zeroOrMore>
     </element>
   </define>
 
-  <!-- WIP
-    Allowing only phrasing content
-
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="publisher-name-elements">
+  <define name="product-elements">
     <choice>
-      <ref name="just-rendition"/>
+      <!-- <ref name="article-link.class"/> -->
+      <!-- <ref name="break.class"/> -->
+      <!-- <ref name="emphasis.class"/> -->
+      <!-- <ref name="inline-display.class"/> -->
+      <!-- <ref name="inline-math.class"/> -->
+      <!-- <ref name="phrase.class"/> -->
+      <ref name="price.class"/>
+      <ref name="references.class"/>
+      <!-- <ref name="simple-link.class"/> -->
+      <ref name="xref"/>
+      <!-- <ref name="subsup.class"/> -->
     </choice>
+  </define>
+
+  <define name="publisher-loc">
+    <element name="publisher-loc">
+      <ref name="publisher-loc-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="publisher-name">
+    <element name="publisher-name">
+      <ref name="publisher-name-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="pub-id">
+    <element name="pub-id">
+      <ref name="pub-id-attlist"/>
+      <optional><text/></optional>
+    </element>
   </define>
 
   <define name="ref">
     <element name="ref">
       <ref name="ref-attlist"/>
+      <oneOrMore>
+        <ref name="element-citation"/>
+      </oneOrMore>
     </element>
   </define>
 
-  <!--
-    Overriding sec.class to use <heading>
-  -->
-  <define name="sec.class">
-    <ref name="heading"/>
-  </define>
-
-  <!-- For now implemented <sig> as a container with <p>s -->
-  <define name="sig">
-    <element name="sig">
-      <ref name="sig-attlist"/>
+  <define name="ref-list">
+    <element name="ref-list">
+      <ref name="ref-list-attlist"/>
       <zeroOrMore>
-        <ref name="p"/>
+        <ref name="ref"/>
       </zeroOrMore>
     </element>
   </define>
 
   <!--
-    - Disallow elements to occur inline.
-    - Disallow direct use of math
+    Change:
+      - removed <ext-link> as it is an annotation
 
-    TODO transform; use <named-content> instead
-    TODO transform; wrap math into <inline-formula> or <chem-struct>
+    TODO: add transformation; use <email> or <uri> instead
+  -->
+  <define name="references.class">
+    <choice>
+      <ref name="annotation"/>
+      <ref name="article-title"/>
+      <ref name="chapter-title"/>
+      <ref name="collab"/>
+      <ref name="collab-alternatives"/>
+      <ref name="comment"/>
+      <ref name="conf-acronym"/>
+      <ref name="conf-date"/>
+      <ref name="conf-loc"/>
+      <ref name="conf-name"/>
+      <ref name="conf-sponsor"/>
+      <ref name="data-title"/>
+      <ref name="date"/>
+      <ref name="date-in-citation"/>
+      <ref name="day"/>
+      <ref name="edition"/>
+      <ref name="email"/>
+      <ref name="elocation-id"/>
+      <ref name="etal"/>
+      <ref name="ext-link"/>
+      <ref name="fpage"/>
+      <ref name="gov"/>
+      <ref name="institution"/>
+      <ref name="institution-wrap"/>
+      <ref name="isbn"/>
+      <ref name="issn"/>
+      <ref name="issn-l"/>
+      <ref name="issue"/>
+      <ref name="issue-id"/>
+      <ref name="issue-part"/>
+      <ref name="issue-title"/>
+      <ref name="lpage"/>
+      <ref name="month"/>
+      <ref name="name"/>
+      <ref name="name-alternatives"/>
+      <ref name="object-id"/>
+      <ref name="page-range"/>
+      <ref name="part-title"/>
+      <ref name="patent"/>
+      <ref name="person-group"/>
+      <ref name="pub-id"/>
+      <ref name="publisher-loc"/>
+      <ref name="publisher-name"/>
+      <ref name="role"/>
+      <ref name="season"/>
+      <ref name="series"/>
+      <ref name="size"/>
+      <ref name="source"/>
+      <ref name="std"/>
+      <ref name="string-name"/>
+      <ref name="supplement"/>
+      <ref name="trans-source"/>
+      <ref name="trans-title"/>
+      <ref name="uri"/>
+      <ref name="version"/>
+      <ref name="volume"/>
+      <ref name="volume-id"/>
+      <ref name="volume-series"/>
+      <ref name="year"/>
+    </choice>
+  </define>
+
+  <!-- WIP
+    TODO: requirements needed
+
+    Scielo uses this only in <article-meta> <front-stub>
+  -->
+  <define name="related-article">
+    <element name="related-article">
+      <ref name="related-article-attlist"/>
+      <zeroOrMore>
+        <ref name="related-article-elements"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="related-article-elements">
+    <choice>
+      <ref name="journal-id.class"/>
+      <ref name="references.class"/>
+    </choice>
+  </define>
+
+  <define name="related-object">
+    <element name="related-object">
+      <ref name="related-object-attlist"/>
+      <zeroOrMore>
+        <ref name="related-object-elements"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="related-object-elements">
+    <choice>
+      <ref name="citation-additions.class"/>
+      <ref name="label.class"/>
+      <ref name="references.class"/>
+    </choice>
+  </define>
+
+
+
+  <!--
+    This simplification is inspired by SciELO's guideline
+
+    - it contains one or more <sig> elements
+    - within <sig>, text, <bold>, and <italic> can be used,
+      and <break> to separate lines. Extra whitespace is not considered.
+    - persons, and contributors must be defined in <front>
+
+    <sig-block>
+     <sig>
+       <bold>Harry Weasley</bold>
+       <break/>
+       <italic>Editor Chefe</italic>
+       <break/>
+       Profeta Diário
+       <break/>
+     </sig>
+    </sig-block>
+  -->
+  <define name="sig-block">
+    <element name="sig-block">
+      <ref name="sig-block-attlist"/>
+      <oneOrMore>
+        <ref name="sig"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="sig">
+    <element name="sig">
+      <ref name="sig-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-phrase"/>
+          <ref name="break"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    We don't want <fn> be defined inline. Instead they should be defined in a <fn-group>
+
+    TODO: we would even prefer to have only one <fn-group> for the whole document, but maybe this goes to far.
+  -->
+  <define name="simple-link.class">
+    <choice>
+      <!-- <ref name="fn"/> -->
+      <ref name="target"/>
+      <ref name="xref"/>
+    </choice>
+  </define>
+
+  <!--
+    - Don't use math directly. Use inline-formula or chem-struct instead
+    - Don't define related-article or related-object inline; define them in front
+      and use <xref> to link to them
   -->
   <define name="simple-phrase">
     <choice>
@@ -949,198 +924,164 @@
     </choice>
   </define>
 
-  <!-- WIP
-    Removed <email> and <uri>
-
-    TODO: transform; use <named-content> instead.
+  <!--
+    WIP: for now we only allow plain text
   -->
-  <define name="source-elements">
+  <define name="source">
+    <element name="source">
+      <ref name="source-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="object-id">
+    <element name="object-id">
+      <ref name="object-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <!--
+    Just use plain text. If you want to add information about the person add a <contrib> to the front matter.
+
+    Note: <speech> is probably not used in scientific publications.
+  -->
+  <define name="speaker-elements">
     <choice>
-      <!-- <ref name="address-link.class"/> -->
-      <ref name="ext-link"/>
-      <ref name="emphasis.class"/>
-      <ref name="phrase-content.class"/>
-      <ref name="subsup.class"/>
+      <ref name="simple-phrase"/>
     </choice>
   </define>
 
-  <!--
-    Only allow pure <std>
-
-    TODO: if necessary, we should convert elements such as <std-organization> into <named-content>
-  -->
-  <define name="std">
-    <element name="std">
-      <ref name="std-attlist"/>
+  <define name="string-conf">
+    <element name="string-conf">
+      <ref name="string-conf-attlist"/>
       <zeroOrMore>
         <choice>
           <text/>
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="std-organization">
-    <element name="std-organization">
-      <ref name="std-organization-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <!-- WIP
-    Allowing only phrasing content
-
-    TODO: transform; use <named-content> instead.
-  -->
-  <define name="supplement">
-    <element name="supplement">
-      <ref name="supplement-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
+          <!-- <ref name="string-conf-elements"/> -->
         </choice>
       </zeroOrMore>
     </element>
   </define>
 
   <!--
-    NOTE: Pulled out <title> from <caption>
+    Should really contain only string.
+    This tag should only used for cases, where the date can not be expressed
+    in a structured way.
   -->
+  <define name="string-date">
+    <element name="string-date">
+      <ref name="string-date-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <!-- <ref name="string-date-elements"/> -->
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="string-name">
+    <element name="string-name">
+      <ref name="string-name-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <!-- <ref name="string-name-elements"/> -->
+          <ref name="simple-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <!--
+    Do not mix block-level content and text.
+  -->
+  <define name="styled-content">
+    <element name="styled-content">
+      <ref name="styled-content-attlist"/>
+      <choice>
+        <zeroOrMore>
+          <choice>
+            <text/>
+            <ref name="emphasis.class"/>
+            <ref name="inline-display-noalt.class"/>
+            <ref name="inline-math.class"/>
+            <ref name="phrase.class"/>
+            <ref name="simple-link.class"/>
+            <ref name="subsup.class"/>
+            <ref name="inline-supplementary-material"/>
+          </choice>
+        </zeroOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="address-link.class"/>
+            <!-- <ref name="article-link.class"/> -->
+            <ref name="block-display.class"/>
+            <ref name="block-math.class"/>
+            <ref name="list.class"/>
+            <ref name="rest-of-para.class"/>
+          </choice>
+        </zeroOrMore>
+      </choice>
+    </element>
+  </define>
+
   <define name="table-wrap">
     <element name="table-wrap">
       <ref name="table-wrap-attlist"/>
       <!-- We allow only one object-id[pub-id-type=doi] -->
-      <ref name="object-id"/>
-      <ref name="title"/>
-      <ref name="caption"/>
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
       <ref name="table"/>
     </element>
   </define>
 
   <!--
-    A custom table model, which is easier for the editor
-    It differs from HTML tables in:
-    - always full, i.e. spanning cells do not have an
-      effect on the structure, only that other cells
-      get shadowed
-    - no thead,tbody,tfoot: we think that with header cells
-      and merged cells there are enough means to create scientific
-      tables
-    -
+    WIP: disabled direct use of math as opposed to
+    <inline-formula> and <chem-struct>, etc.
   -->
-  <define name="table">
-    <element name="table">
-      <zeroOrMore>
-        <ref name="table-row"/>
-      </zeroOrMore>
-    </element>
+  <define name="textual-form-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <!-- <ref name="math.class"/> -->
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
   </define>
 
-  <define name="table-row">
-    <element name="table-row">
-      <zeroOrMore>
-        <ref name="table-cell"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="table-cell">
-    <element name="table-cell">
-      <attribute name="heading"/>
-      <attribute name="colspan"/>
-      <attribute name="rowspan"/>
+  <define name="title">
+    <element name="title">
+      <ref name="title-attlist"/>
       <zeroOrMore>
         <choice>
           <text/>
-          <ref name="simple-phrase"/>
+          <choice>
+            <ref name="simple-phrase"/>
+            <ref name="break.class"/>
+            <!-- <ref name="citation.class"/> -->
+          </choice>
         </choice>
       </zeroOrMore>
     </element>
   </define>
 
-  <!-- WIP
-    Defined this with dual mode.
-
-    TODO: editor needs to be capable of detecting mode
-  -->
-  <define name="term">
-    <element name="term">
-      <ref name="term-attlist"/>
-      <choice>
-        <oneOrMore>
-          <choice>
-            <text/>
-            <ref name="simple-phrase"/>
-          </choice>
-        </oneOrMore>
-        <choice>
-          <ref name="block-math.class"/>
-          <ref name="chem-struct-wrap.class"/>
-          <ref name="simple-display-noalt.class"/>
-        </choice>
-      </choice>
-    </element>
-  </define>
-
-  <!--
-    Wrapping content into <abstract-content>
-
-    TODO: transform
-  -->
-  <define name="trans-abstract">
-    <element name="trans-abstract">
-      <ref name="trans-abstract-attlist"/>
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <ref name="abstract-content"/>
-    </element>
-  </define>
-
-
-  <!--
-    Reproducible Elements
-    ======================================================================
-   -->
-
-  <define name="cell">
-    <element name="cell">
-      <ref name="source-code"/>
-      <ref name="output"/>
-    </element>
-  </define>
-
-  <define name="source-code">
-    <element name="source-code">
+  <define name="volume">
+    <element name="volume">
+      <ref name="volume-attlist"/>
       <optional><text/></optional>
     </element>
   </define>
 
-  <define name="output">
-    <element name="output">
+  <define name="year">
+    <element name="year">
       <optional><text/></optional>
     </element>
   </define>
-
-  <define name="repro-fig">
-    <element name="repro-fig">
-      <ref name="fig-attlist"/>
-      <!-- We allow only one object-id[pub-id-type=doi] -->
-      <ref name="object-id"/>
-      <ref name="title"/>
-      <ref name="caption"/>
-      <ref name="cell"/>
-    </element>
-  </define>
-
 </grammar>

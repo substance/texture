@@ -2,12 +2,16 @@ import {
   EventEmitter, DefaultDOMElement,
   validateXMLSchema, isString
 } from 'substance'
-import { JATS, DarArticle, TextureArticle } from '../article'
+
+import JATS from '../JATS'
+import TextureArticle from '../TextureArticle'
+import InternalArticle from '../InternalArticle'
+
 import { r2t } from './r2t'
 import { j2r } from './j2r'
 import custom from './custom'
 
-import { createEntityDbSession } from '../entities'
+import { createEntityDbSession } from '../../entities'
 
 /*
   Goal:
@@ -59,12 +63,12 @@ export default class JATSImporter extends EventEmitter {
     // JATS -> restricted JATS
     if (!this._transform('j2r', state)) return state
 
-    if (!this._validate(DarArticle, state)) return state
+    if (!this._validate(TextureArticle, state)) return state
 
-    // restrictedJATS -> TextureArticle
+    // restrictedJATS -> InternalArticle
     if (!this._transform('r2t', state)) return state
 
-    if (!this._validate(TextureArticle, state)) return state
+    if (!this._validate(InternalArticle, state)) return state
 
     return state
   }

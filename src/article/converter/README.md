@@ -11,7 +11,7 @@ but we support only a set of reasonable and commonly agreed versions.
 The importer will give more detailed information if a JATS file does not fulfill
 the requirements.
 
-On the top of restrictedJATS, Texture applies a set of loss-free conversions into TextureArticle,
+On the top of restrictedJATS, Texture applies a set of loss-free conversions into InternalArticle,
 which includes some more deviations from original JATS
 
 # JATS improvements

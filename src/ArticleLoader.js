@@ -1,7 +1,7 @@
 import { EditorSession } from 'substance'
 import TextureConfigurator from './editor/util/TextureConfigurator'
 import EditorPackage from './editor/EditorPackage'
-import JATSImporter from './converter/JATSImporter'
+import { JATSImporter } from './article'
 
 export default {
   load(xml, context) {

@@ -4,7 +4,7 @@ import { DarArticle } from '../article'
 
 export default class JATSExporter {
   /*
-    Takes a TextureArticle document as a DOM and transforms it into a JATS document,
+    Takes a InternalArticle document as a DOM and transforms it into a JATS document,
     following DarArticle guidelines.
   */
   export(dom, context = {}) {

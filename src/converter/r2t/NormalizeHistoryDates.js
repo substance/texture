@@ -24,7 +24,7 @@ function _importDate(date) {
     dateFormat = 'custom'
   }
   date.attr('format', dateFormat)
-  // in TextureArticle we use a super-record, capable of containing all
+  // in InternalArticle we use a super-record, capable of containing all
   // variants
   let els = ['day', 'month', 'season', 'year', 'era', 'string-date'].map((name) => {
     return findChild(date, name) || dom.createElement(name).append("")

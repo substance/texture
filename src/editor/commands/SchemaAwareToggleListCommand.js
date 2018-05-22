@@ -1,5 +1,5 @@
 import { ListPackage } from 'substance'
-import TextureArticleSchema from '../../article/TextureArticle'
+import InternalArticle from '../../article/InternalArticle'
 
 const ToggleListCommand = ListPackage.ToggleListCommand
 
@@ -18,7 +18,7 @@ export default class SchemaAwareToggleListCommand extends ToggleListCommand {
       let node = doc.get(path[0])
       let parentNode = node.parentNode
       if (parentNode) {
-        let elementSchema = TextureArticleSchema.getElementSchema(parentNode.type)
+        let elementSchema = InternalArticle.getElementSchema(parentNode.type)
         if (elementSchema.isAllowed('list')) {
           return commandState
         }

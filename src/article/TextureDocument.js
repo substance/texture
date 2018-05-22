@@ -1,5 +1,5 @@
 import { XMLDocument } from 'substance'
-import TextureArticle from './TextureArticle'
+import InternalArticle from './InternalArticle'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 import TextureEditingInterface from './TextureEditingInterface'
@@ -13,11 +13,11 @@ export default class TextureDocument extends XMLDocument {
   }
 
   getDocTypeParams() {
-    return TextureArticle.getDocTypeParams()
+    return InternalArticle.getDocTypeParams()
   }
 
   getXMLSchema() {
-    return TextureArticle
+    return InternalArticle
   }
 
   getRootNode() {

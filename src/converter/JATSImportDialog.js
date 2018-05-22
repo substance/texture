@@ -58,7 +58,7 @@ const TITLES = {
   'validate-dar-article': 'Validate Dar Article',
   'validate-texture-article': 'Validate Texture Article',
   'j2r': 'Transform JATS -> DarArticle',
-  'r2t': 'Transform DarArticle -> TextureArticle'
+  'r2t': 'Transform DarArticle -> InternalArticle'
 }
 
 function _getTitle(stage) {

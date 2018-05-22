@@ -16,7 +16,7 @@ export default class ManuscriptComponent extends Component {
     }).ref('front'))
 
     // body is optional
-    // TODO: do we really want this? Otherwise we need to change TextureArticle
+    // TODO: do we really want this? Otherwise we need to change InternalArticle
     // and create an empty body on import
     const body = article.findChild('body')
     if (body) {

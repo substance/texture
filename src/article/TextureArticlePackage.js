@@ -1,6 +1,6 @@
 import { registerSchema, ListPackage } from 'substance'
 import TextureDocument from './TextureDocument'
-import TextureArticle from './TextureArticle'
+import InternalArticle from './InternalArticle'
 import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNode from './XMLListNode'
@@ -12,7 +12,7 @@ import TableCellElementNode from './TableCellElementNode'
 export default {
   name: 'TextureArticle',
   configure(config) {
-    registerSchema(config, TextureArticle, TextureDocument)
+    registerSchema(config, InternalArticle, TextureDocument)
 
     // override the registered nodes
     config.addNode(XMLListNode, true)
@@ -20,7 +20,7 @@ export default {
     config.addNode(TableElementNode, true)
     config.addNode(TableCellElementNode, true)
 
-    config.addImporter(TextureArticle.getName(), TextureArticleImporter)
+    config.addImporter(InternalArticle.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard
     TextureHTMLConverters.forEach((converter) => {
       config.addConverter('html', converter)

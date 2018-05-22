@@ -14,7 +14,7 @@ const RNG_SEARCH_DIRS = [
 const RNG_FILES = [
   'src/article/JATS-publishing.rng',
   'src/article/JATS-archiving.rng',
-  'src/article/DarArticle.rng',
+  'src/article/TextureArticle.rng',
   'src/article/InternalArticle.rng'
 ]
 
@@ -97,7 +97,7 @@ b.task('schema:jats', () => {
 })
 
 b.task('schema:dar-article', () => {
-  _compileSchema('DarArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3))
+  _compileSchema('TextureArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3))
 })
 
 b.task('schema:texture-article', () => {
@@ -107,7 +107,7 @@ b.task('schema:texture-article', () => {
 b.task('schema:debug', () => {
   _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
   _compileSchema('JATS-archiving', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(1,2), { debug: true })
-  _compileSchema('DarArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3), { debug: true })
+  _compileSchema('TextureArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3), { debug: true })
   _compileSchema('InternalArticle', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4), { debug: true })
 })
 

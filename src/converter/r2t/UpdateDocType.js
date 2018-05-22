@@ -1,4 +1,4 @@
-import { InternalArticle, DarArticle } from '../../article'
+import { InternalArticle, TextureArticle } from '../../article'
 
 export default class UpdateDocType {
 
@@ -10,7 +10,7 @@ export default class UpdateDocType {
 
   export(dom) {
     dom.setDoctype(
-      ...DarArticle.getDocTypeParams()
+      ...TextureArticle.getDocTypeParams()
     )
   }
 }

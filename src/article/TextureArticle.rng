@@ -152,7 +152,7 @@
     </element>
   </define>
 
-  <!-- in DarArticle we want to have simpler phrase content -->
+  <!-- in TextureArticle we want to have simpler phrase content -->
   <define name="all-phrase">
     <choice>
       <ref name="simple-phrase"/>
@@ -304,7 +304,7 @@
       </zeroOrMore>
     </define>
 
-    With DarArticle we will try to introduce a restrictive yet expressive
+    With TextureArticle we will try to introduce a restrictive yet expressive
     schema.
 
     TODO: add transformation

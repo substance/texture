@@ -1,4 +1,4 @@
-// in DarArticle we propose sig-block := sig+
+// in TextureArticle we propose sig-block := sig+
 // ATM, we are not good in editing a container like element
 // that uses something else than paragraphs
 // TODO: we should allow to customize the Editing behavior just for

@@ -6,7 +6,7 @@
   datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 
   <!-- Stubs -->
-  <include href="DarArticle.rng"/>
+  <include href="TextureArticle.rng"/>
 
   <!--
     Element-Type Overrides: These are necessary to generate
@@ -586,7 +586,7 @@
   <!-- WIP
     Refactored def-list, def, term et. al
 
-    TODO: check if this is really workable, and add this to DarArticle if good
+    TODO: check if this is really workable, and add this to TextureArticle if good
   -->
   <define name="def-list-model">
     <optional>

@@ -39,6 +39,7 @@ export default class DesktopAppChrome extends AppChrome {
   }
 
   _archiveChanged() {
+    if (!this.state.archive) return
     const hasPendingChanges = this.state.archive.hasPendingChanges()
     if (hasPendingChanges) {
       this.props.ipc.send('document:unsaved')

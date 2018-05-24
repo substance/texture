@@ -1,4 +1,4 @@
-import { Component, forEach, isArray } from 'substance'
+import { Component, isArray } from 'substance'
 
 import FormLabel from './FormLabel'
 import RelationshipInput from './RelationshipInput'

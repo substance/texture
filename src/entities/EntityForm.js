@@ -1,4 +1,4 @@
-import { Component, forEach, isArray } from 'substance'
+import { Component, isArray } from 'substance'
 
 import FormLabel from './FormLabel'
 import RelationshipInput from './RelationshipInput'
@@ -43,7 +43,7 @@ export default class EntityForm extends Component {
             targetTypes
           }).ref(name)
         )
-      } else if (isArray(type) && targetTypes === 'object') {
+      } else if (isArray(type) && targetTypes[0] === 'object') {
         // HACK: we render a special Author Editor if the targetType is object
         el.append(
           $$(FormLabel, { name }),
@@ -65,12 +65,13 @@ export default class EntityForm extends Component {
     let result = {}
     let schema = this._getSchema()
 
-    forEach(schema, (property, propertyName) => {
-      let input = this.refs[propertyName]
+    for (let property of schema) {
+      const name = property.name
+      let input = this.refs[name]
       if (input) {
-        result[propertyName] = input.getValue()
+        result[name] = input.getValue()
       }
-    })
+    }
     return result
   }
 

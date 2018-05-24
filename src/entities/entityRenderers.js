@@ -634,7 +634,7 @@ function webpageRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-
+/* This is used for authors and editors */
 function personRenderer($$, entityId, entityDb, options = {}) {
   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
   if (options.short) {
@@ -645,9 +645,9 @@ function personRenderer($$, entityId, entityDb, options = {}) {
     result.push(prefix, ' ')
   }
   result.push(
-    surname,
+    givenNames,
     ' ',
-    givenNames
+    surname
   )
   if (suffix) {
     result.push(' (', suffix, ')')
@@ -656,6 +656,7 @@ function personRenderer($$, entityId, entityDb, options = {}) {
 }
 
 
+/* This is used within references */
 function refPersonRenderer($$, entry, options = {}) {
   let { prefix, suffix, givenNames, surname } = entry
   if (options.short) {

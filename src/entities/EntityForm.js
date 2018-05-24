@@ -65,10 +65,11 @@ export default class EntityForm extends Component {
     let result = {}
     let schema = this._getSchema()
 
-    forEach(schema.properties, (property, propertyName) => {
-      let input = this.refs[propertyName]
+    forEach(schema.properties, (property) => {
+      const name = property.name
+      let input = this.refs[name]
       if (input) {
-        result[propertyName] = input.getValue()
+        result[name] = input.getValue()
       }
     })
     return result

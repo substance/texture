@@ -1,6 +1,7 @@
 // TODO: add index files for the other folders as well
 export * from './src/article/index'
 export * from './src/editor/index'
+export * from './src/reader/index'
 export * from './src/entities/index'
 
 export { default as Texture } from './src/Texture'

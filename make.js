@@ -218,6 +218,19 @@ b.task('build:web', ['build:vfs'], () => {
     }],
     external: ['substance', 'substance-texture', 'katex']
   })
+  b.js('./web/reader.js', {
+    output: [{
+      file: DIST+'reader.js',
+      format: 'umd',
+      name: 'textureReader',
+      globals: {
+        'substance': 'window.substance',
+        'substance-texture': 'window.texture',
+        'katex': 'window.katex'
+      }
+    }],
+    external: ['substance', 'substance-texture', 'katex']
+  })
   b.copy('./data', DIST+'data')
 })
 

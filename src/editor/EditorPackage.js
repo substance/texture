@@ -339,16 +339,16 @@ export default {
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
-    config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
+    config.addIcon('insert-table', { 'fontawesome': 'fa-columns' })
 
     config.addTool('edit-formula', EditInlineFormulaTool)
     config.addLabel('insert-formula', 'Formula')
-    config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
+    config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar-sign' })
 
     config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
 
     config.addIcon('toggle-cell-merge', {
-      'fontawesome': 'fa-arrows-h'
+      'fontawesome': 'fa-arrows-alt-v'
     })
     config.addIcon('toggle-cell-heading', { 'fontawesome': 'fa-th-large' })
 

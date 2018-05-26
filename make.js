@@ -112,7 +112,7 @@ b.task('schema:debug', () => {
 })
 
 b.task('build:assets', function() {
-  b.copy('./node_modules/font-awesome', DIST+'font-awesome')
+  b.copy('./node_modules/@fortawesome/fontawesome-free-webfonts', DIST+'fontawesome')
   b.copy('./node_modules/katex/dist', DIST+'katex')
   b.copy('./node_modules/substance/dist', DIST+'substance/dist')
   b.css('texture.css', DIST+'texture.css')
@@ -145,7 +145,7 @@ b.task('build:app', () => {
   // FIXME: this command leads to an extra run when a  file is updated
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
-  b.copy('dist/font-awesome', APPDIST+'lib/')
+  b.copy('dist/fontawesome', APPDIST+'lib/')
   b.copy('dist/katex', APPDIST+'lib/')
   b.copy('dist/substance', APPDIST+'lib/')
   ;[

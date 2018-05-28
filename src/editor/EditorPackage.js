@@ -83,13 +83,13 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
+    config.import(TextureArticlePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(EntityComponentsPackage)
-    config.import(TextureArticlePackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands

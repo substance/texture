@@ -19,7 +19,7 @@ import ManifestLoader from './ManifestLoader'
 */
 export default class PersistedDocumentArchive extends EventEmitter {
 
-  constructor(storage, buffer) {
+  constructor(storage, buffer, context, config) {
     super()
     this.storage = storage
     this.buffer = buffer
@@ -28,6 +28,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._upstreamArchive = null
     this._sessions = null
     this._pendingFiles = {}
+    this._config = config
   }
 
   hasPendingChanges() {

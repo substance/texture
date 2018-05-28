@@ -205,6 +205,7 @@ b.task('build:vfs', () => {
 
 b.task('build:web', ['build:vfs'], () => {
   b.copy('web/index.html', DIST)
+  b.copy('web/reader.html', DIST)
   b.js('./web/editor.js', {
     output: [{
       file: DIST+'editor.js',

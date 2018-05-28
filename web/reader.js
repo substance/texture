@@ -1,7 +1,7 @@
 import {
   getQueryStringParam, substanceGlobals, platform
 } from 'substance'
-import { WebAppChrome, TextureReader, TextureArchive } from 'substance-texture'
+import { WebAppChrome, TextureReader, TextureArchive, ReaderPackage } from 'substance-texture'
 
 window.addEventListener('load', () => {
   substanceGlobals.DEBUG_RENDERING = platform.devtools
@@ -43,6 +43,10 @@ export default class TextureReaderApp extends WebAppChrome {
 
   _getArchiveClass() {
     return TextureArchive
+  }
+
+  _getArticleConfig() {
+    return ReaderPackage
   }
 
   _getDefaultDataFolder() {

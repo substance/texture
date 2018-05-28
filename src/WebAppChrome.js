@@ -10,7 +10,9 @@ export default class WebAppChrome extends AppChrome {
     let storage = this._getStorage(this.props.storageType)
     let buffer = new InMemoryDarBuffer()
     let ArchiveClass = this._getArchiveClass()
-    let archive = new ArchiveClass(storage, buffer, context)
+    let archive = new ArchiveClass(storage, buffer, context, {
+      ArticleConfig: this._getArticleConfig()
+    })
     return archive.load(archiveId)
   }
 
@@ -30,6 +32,8 @@ export default class WebAppChrome extends AppChrome {
       event.preventDefault()
     }
   }
+
+  _getArticleConfig() { throw new Error('This method is abstract') }
 
   _getArchiveClass() { throw new Error('This method is abstract') }
 

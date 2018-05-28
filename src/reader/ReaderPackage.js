@@ -3,22 +3,15 @@ import {
   ListPackage,
   TextPropertyEditor,
   TextPropertyComponent,
-  EditAnnotationCommand,
   SchemaDrivenCommandManager,
   substanceGlobals
 } from 'substance'
 
-import TextureArticlePackage from '../article/TextureArticlePackage'
 import TextNodeComponent from '../editor/components/TextNodeComponent'
 import PlainTextComponent from '../editor/components/PlainTextComponent'
 import UnsupportedNodeComponent from '../editor/components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from '../editor/components/UnsupportedInlineNodeComponent'
-import AbstractComponent from '../editor/components/AbstractComponent'
-import AffiliationsListComponent from '../editor/components/AffiliationsListComponent'
-import AuthorsListComponent from '../editor/components/AuthorsListComponent'
-import EditorsListComponent from '../editor/components/EditorsListComponent'
-import BackComponent from '../editor/components/BackComponent'
-import BodyComponent from '../editor/components/BodyComponent'
+
 import BreakComponent from '../editor/components/BreakComponent'
 import ContainerNodeComponent from '../editor/components/ContainerNodeComponent'
 import ElementNodeComponent from '../editor/components/ElementNodeComponent'
@@ -30,17 +23,22 @@ import DispQuoteComponent from '../editor/components/DispQuoteComponent'
 import InlineFormulaComponent from '../editor/components/InlineFormulaComponent'
 import TableComponent from '../editor/components/TableComponent'
 import HeadingComponent from '../editor/components/HeadingComponent'
-import ManuscriptComponent from '../editor/components/ManuscriptComponent'
 import TOC from '../editor/components/TOC'
-import TranslationsComponent from '../editor/components/TranslationsComponent'
 import FnGroupComponent from '../editor/components/FnGroupComponent'
 import FnComponent from '../editor/components/FnComponent'
-import RefListComponent from '../editor/components/RefListComponent'
 import RefComponent from '../editor/components/RefComponent'
 import SeparatorComponent from '../editor/components/SeparatorComponent'
 import SigBlockComponent from '../editor/components/SigBlockComponent'
-import TitleGroupComponent from '../editor/components/TitleGroupComponent'
 import XrefComponent from '../editor/components/XrefComponent'
+
+import TextureArticlePackage from '../article/TextureArticlePackage'
+
+import ArticleAbstractComponent from '../shared/components/ArticleAbstractComponent'
+import ArticleBodyComponent from '../shared/components/ArticleBodyComponent'
+import ArticleHeaderComponent from '../shared/components/ArticleHeaderComponent'
+import ArticleReferencesComponent from '../shared/components/ArticleReferencesComponent'
+import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
+
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -88,14 +86,6 @@ export default {
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
-    // Node components
-    config.addComponent('abstract', AbstractComponent)
-    config.addComponent('affiliations-list', AffiliationsListComponent)
-    config.addComponent('authors-list', AuthorsListComponent)
-    config.addComponent('editors-list', EditorsListComponent)
-    config.addComponent('translations', TranslationsComponent)
-    config.addComponent('back', BackComponent)
-    config.addComponent('body', BodyComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('col', ElementNodeComponent)
@@ -110,22 +100,20 @@ export default {
     config.addComponent('list', ListPackage.ListComponent)
     config.addComponent('list-item', TextPropertyComponent)
     config.addComponent('ref', RefComponent)
-    config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
     config.addComponent('table-wrap', FigComponent)
     config.addComponent('table', TableComponent)
-    config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
 
-    // Panels and other displays
-    config.addComponent('manuscript', ManuscriptComponent)
-    config.addCommand('edit-ext-link', EditAnnotationCommand, {
-      nodeType: 'ext-link',
-      commandGroup: 'prompt'
-    })
+    // New Shared Components
+    config.addComponent('article-abstract', ArticleAbstractComponent)
+    config.addComponent('article-body', ArticleBodyComponent)
+    config.addComponent('article-header', ArticleHeaderComponent)
+    config.addComponent('article-references', ArticleReferencesComponent)
+    config.addComponent('article-title', ArticleTitleComponent)
 
   }
 }

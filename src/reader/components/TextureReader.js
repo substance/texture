@@ -22,7 +22,7 @@ export default class Texture extends Component {
   }
 
   render($$) {
-    let el = $$('div').addClass('sc-texture')
+    let el = $$('div').addClass('sc-texture-reader')
     el.append(
       $$(ArticleReader, {
         editorSession: this.manuscriptSession,

@@ -1,5 +1,6 @@
 @import './src/shared/styles/_index.css';
 @import './src/editor/styles/_index.css';
+@import './src/reader/styles/_index.css';
 @import './src/entities/styles/_index.css';
 
 /* TODO: Move this into a proper place */

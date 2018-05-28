@@ -109,8 +109,8 @@ export default class TextureArchive extends PersistedDocumentArchive {
       case 'article': {
         return ArticleLoader.load(record.data, {
           pubMetaDb: sessions['pub-meta'].getDocument(),
-          archive: this
-        })
+          archive: this,
+        }, this._config)
       }
       default:
         throw new Error('Unsupported document type')

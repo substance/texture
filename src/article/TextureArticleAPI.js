@@ -1,6 +1,10 @@
+import entityRenderers from '../entities/entityRenderers'
+
 export default class TextureArticleAPI {
-  constructor(editorSession) {
+  constructor(editorSession, pubMetaDbSession) {
     this.editorSession = editorSession
+    this.pubMetaDbSession = pubMetaDbSession
+    this.pubMetaDb = pubMetaDbSession.getDocument()
     this.doc = editorSession.getDocument()
   }
 
@@ -21,7 +25,7 @@ export default class TextureArticleAPI {
 
   getContribs() {
     let articleMeta = this.doc.find('article-meta')
-    return new ContribsModel(articleMeta)
+    return new ContribsModel(articleMeta, this.pubMetaDb)
   }
 
   getReferences() {
@@ -30,17 +34,32 @@ export default class TextureArticleAPI {
   }
 }
 
-
 class ReferencesModel {
   constructor(refList) {
     this._refList = refList
   }
-
 }
 
+/*
+  A model for holding authors and editors information.
+*/
 class ContribsModel {
-  constructor(node) {
+  constructor(node, pubMetaDb) {
     this._articleMeta = node
+    this._pubMetaDb = pubMetaDb
+  }
+
+  getAuthors() {
+    let authorsContribGroup = this._articleMeta.find('contrib-group[content-type=author]')
+    let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
+    return contribIds.map(contribId => this._pubMetaDb.get(contribId))
+  }
+
+  /*
+    Utility method to render a contrib object
+  */
+  renderContrib(contrib) {
+    return entityRenderers[contrib.type](contrib.id, this._pubMetaDb)
   }
 }
 

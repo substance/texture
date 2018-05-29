@@ -38,6 +38,7 @@ import ArticleBodyComponent from '../shared/components/ArticleBodyComponent'
 import ArticleHeaderComponent from '../shared/components/ArticleHeaderComponent'
 import ArticleReferencesComponent from '../shared/components/ArticleReferencesComponent'
 import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
+import ArticleContribsComponent from '../shared/components/ArticleContribsComponent'
 
 
 substanceGlobals.DEBUG_RENDERING = true
@@ -111,6 +112,7 @@ export default {
     // New Shared Components
     config.addComponent('article-abstract', ArticleAbstractComponent)
     config.addComponent('article-body', ArticleBodyComponent)
+    config.addComponent('article-contribs', ArticleContribsComponent)
     config.addComponent('article-header', ArticleHeaderComponent)
     config.addComponent('article-references', ArticleReferencesComponent)
     config.addComponent('article-title', ArticleTitleComponent)

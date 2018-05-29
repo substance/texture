@@ -25,15 +25,19 @@ export default class ArticleReader extends AbstractWriter {
 
   render($$) {
     const el = $$('div').addClass('sc-article-reader')
-    const api = new TextureArticleAPI(this.editorSession)
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    const api = new TextureArticleAPI(this.editorSession, pubMetaDbSession)
 
     el.append(
       $$(ArticleHeaderComponent, {
-        model: api.getArticleTitle()
+        title: api.getArticleTitle(),
+        contribs: api.getContribs(),
+        disabled: true
       }).ref('articleHeader'),
       $$('div').addClass('main-content').append(
         $$(ArticleAbstractComponent, {
-          model: api.getArticleAbstract()
+          model: api.getArticleAbstract(),
+          disabled: true
         }).ref('articleAbstract'),
         $$(ArticleBodyComponent, {
           model: api.getArticleBody(),

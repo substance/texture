@@ -5,7 +5,6 @@ import FigureManager from '../../editor/util/FigureManager'
 import TableManager from '../../editor/util/TableManager'
 import FootnoteManager from '../../editor/util/FootnoteManager'
 
-import TextureArticleAPI from '../../article/TextureArticleAPI'
 import ArticleHeaderComponent from '../../shared/components/ArticleHeaderComponent'
 import ArticleAbstractComponent from '../../shared/components/ArticleAbstractComponent'
 import ArticleBodyComponent from '../../shared/components/ArticleBodyComponent'
@@ -23,15 +22,8 @@ export default class ArticleReader extends AbstractWriter {
   }
 
   render($$) {
-    const configurator = this.getConfigurator()
     const el = $$('div').addClass('sc-article-reader')
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    
-    const api = new TextureArticleAPI(
-      this.editorSession,
-      pubMetaDbSession,
-      configurator.getModelRegistry()
-    )
+    const api = this.context.api
 
     el.append(
       $$(ArticleHeaderComponent, {

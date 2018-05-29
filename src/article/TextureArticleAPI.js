@@ -44,8 +44,9 @@ export default class TextureArticleAPI {
     let ModelClass = this.modelRegistry[node.type]
     if (!ModelClass) {
       console.warn(`No model found for ${node.type}`)
+    } else {
+      return new ModelClass(this.editorSession, node)
     }
-    return new ModelClass(this.editorSession, node)
   }
 
   _getContext() {

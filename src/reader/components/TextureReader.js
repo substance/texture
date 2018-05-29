@@ -1,5 +1,6 @@
 import { Component } from 'substance'
 import ArticleReader from './ArticleReader'
+import TextureArticleAPI from '../../article/TextureArticleAPI'
 
 export default class Texture extends Component {
 
@@ -9,6 +10,11 @@ export default class Texture extends Component {
     this.manuscriptSession = archive.getEditorSession('manuscript')
     this.pubMetaDbSession = archive.getEditorSession('pub-meta')
     this.configurator = this.manuscriptSession.getConfigurator()
+    this.api = new TextureArticleAPI(
+      this.manuscriptSession,
+      this.pubMetaDbSession,
+      this.configurator.getModelRegistry()
+    )
   }
 
   getChildContext() {
@@ -17,6 +23,7 @@ export default class Texture extends Component {
     return {
       configurator,
       pubMetaDbSession,
+      api: this.api,
       urlResolver: this.props.archive
     }
   }

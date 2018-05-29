@@ -1,7 +1,11 @@
-import entityRenderers from '../entities/entityRenderers'
+import AnnotatedTextModel from './models/AnnotatedTextModel'
+import ContainerModel from './models/ContainerModel'
+import ContribsModel from './models/ContribsModel'
+import ReferencesModel from './models/ReferencesModel'
 
 export default class TextureArticleAPI {
-  constructor(editorSession, pubMetaDbSession) {
+  constructor(editorSession, pubMetaDbSession, modelRegistry) {
+    this.modelRegistry = modelRegistry
     this.editorSession = editorSession
     this.pubMetaDbSession = pubMetaDbSession
     this.pubMetaDb = pubMetaDbSession.getDocument()
@@ -10,96 +14,48 @@ export default class TextureArticleAPI {
 
   getArticleTitle() {
     let articleTitle = this.doc.find('article-title')
-    return new AnnotatedTextModel(articleTitle)
+    return new AnnotatedTextModel(articleTitle, this._getContext())
   }
 
   getArticleAbstract() {
     let abstract = this.doc.find('abstract')
-    return new ContainerModel(abstract, 'abstract-content')
+    return new ContainerModel(abstract, 'abstract-content', this._getContext())
   }
 
   getArticleBody() {
     let body = this.doc.find('body')
-    return new ContainerModel(body, 'body-content')
+    return new ContainerModel(body, 'body-content', this._getContext())
   }
 
   getContribs() {
     let articleMeta = this.doc.find('article-meta')
-    return new ContribsModel(articleMeta, this.pubMetaDb)
+    return new ContribsModel(articleMeta, this._getContext())
   }
 
   getReferences() {
     let refList = this.doc.find('ref-list')
-    return new ReferencesModel(refList)
-  }
-}
-
-class ReferencesModel {
-  constructor(refList) {
-    this._refList = refList
-  }
-}
-
-/*
-  A model for holding authors and editors information.
-*/
-class ContribsModel {
-  constructor(node, pubMetaDb) {
-    this._articleMeta = node
-    this._pubMetaDb = pubMetaDb
-  }
-
-  getAuthors() {
-    let authorsContribGroup = this._articleMeta.find('contrib-group[content-type=author]')
-    let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
-    return contribIds.map(contribId => this._pubMetaDb.get(contribId))
+    return new ReferencesModel(refList, this._getContext())
   }
 
   /*
-    Utility method to render a contrib object
+    Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
   */
-  renderContrib(contrib) {
-    return entityRenderers[contrib.type](contrib.id, this._pubMetaDb)
-  }
-}
-
-/*
-  A model for annotated text (e.g. <article-title>)
-*/
-class AnnotatedTextModel {
-  constructor(node) {
-    this._node = node
+  getModel(node) {
+    let ModelClass = this.modelRegistry[node.type]
+    if (!ModelClass) {
+      console.warn(`No model found for ${node.type}`)
+    }
+    return new ModelClass(this.editorSession, node)
   }
 
-  getTextNode() {
-    return this._node
-  }
-
-  getTextPath() {
-    return this._node.getPath()
-  }
-
-  get id() {
-    return this._node.id
+  _getContext() {
+    return {
+      editorSession: this.editorSession,
+      doc: this.doc,
+      pubMetaDbSession: this.pubMetaDbSession,
+      pubMetaDb: this.pubMetaDb
+    }
   }
 }
 
 
-/*
-  A model for container like content (e.g. <body> or <abstract>)
-*/
-class ContainerModel {
-  constructor(node, contentNodeSelector) {
-    this._node = node
-    this._contentNodeSelector = contentNodeSelector
-  }
-
-  getContainerNode() {
-    let contentNode = this._node.find(this._contentNodeSelector)
-    return contentNode
-  }
-
-  get id() {
-    return this._node.id
-  }
-}

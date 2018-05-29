@@ -13,7 +13,6 @@ import ArticleReferencesComponent from '../../shared/components/ArticleReference
 
 export default class ArticleReader extends AbstractWriter {
 
-
   getChildContext() {
     return Object.assign({}, super.getChildContext(), {
       referenceManager: this.referenceManager,
@@ -24,9 +23,15 @@ export default class ArticleReader extends AbstractWriter {
   }
 
   render($$) {
+    const configurator = this.getConfigurator()
     const el = $$('div').addClass('sc-article-reader')
     const pubMetaDbSession = this.context.pubMetaDbSession
-    const api = new TextureArticleAPI(this.editorSession, pubMetaDbSession)
+    
+    const api = new TextureArticleAPI(
+      this.editorSession,
+      pubMetaDbSession,
+      configurator.getModelRegistry()
+    )
 
     el.append(
       $$(ArticleHeaderComponent, {
@@ -95,6 +100,5 @@ export default class ArticleReader extends AbstractWriter {
     // AbstractWriter requires this
     // TODO: get rid of AbstractWriter
   }
-
 
 }

@@ -8,6 +8,7 @@ import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
+import FigureModel from './models/FigureModel'
 
 export default {
   name: 'TextureArticle',
@@ -27,6 +28,10 @@ export default {
     })
     config.addConverter('html', XMLListNodeHTMLConverter)
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
+
+    // Models: Provide API's on top of raw nodes
+    config.addModel('fig', FigureModel)
+    config.addModel('table-wrap', FigureModel)
 
   }
 }

@@ -39,6 +39,9 @@ import ArticleHeaderComponent from '../shared/components/ArticleHeaderComponent'
 import ArticleReferencesComponent from '../shared/components/ArticleReferencesComponent'
 import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
 import ArticleContribsComponent from '../shared/components/ArticleContribsComponent'
+import FigureComponent from '../shared/components/FigureComponent'
+
+
 
 
 substanceGlobals.DEBUG_RENDERING = true
@@ -108,6 +111,7 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
+    config.addComponent('figure', FigureComponent)
 
     // New Shared Components
     config.addComponent('article-abstract', ArticleAbstractComponent)
@@ -115,7 +119,7 @@ export default {
     config.addComponent('article-contribs', ArticleContribsComponent)
     config.addComponent('article-header', ArticleHeaderComponent)
     config.addComponent('article-references', ArticleReferencesComponent)
-    config.addComponent('article-title', ArticleTitleComponent)
+    config.addComponent('article-title', ArticleTitleComponent)    
 
   }
 }

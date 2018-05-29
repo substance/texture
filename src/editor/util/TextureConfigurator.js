@@ -2,6 +2,10 @@ import { Configurator, AnnotationCommand, SwitchTextTypeCommand } from 'substanc
 import NumberedLabelGenerator from './NumberedLabelGenerator'
 
 export default class TextureConfigurator extends Configurator {
+  constructor(...args) {
+    super(...args)
+    this.config.models = {}
+  }
 
   addAnnotationTool(spec) {
     let Command = spec.command || AnnotationCommand
@@ -50,6 +54,20 @@ export default class TextureConfigurator extends Configurator {
       config = this.config.labelGenerator[type] || {}
     }
     return new NumberedLabelGenerator(config)
+  }
+
+  /*
+    Map an XML node type to a model
+  */
+  addModel(nodeType, ModelClass) {
+    if (this.config.models[nodeType]) {
+      throw new Error(`nodeType ${nodeType} already registered.`)
+    }
+    this.config.models[nodeType] = ModelClass
+  }
+
+  getModelRegistry() {
+    return this.config.models
   }
 
 }

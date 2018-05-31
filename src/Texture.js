@@ -12,11 +12,11 @@ export default class Texture extends Component {
   }
 
   getChildContext() {
-    const configurator = this.configurator
-    const pubMetaDbSession = this.pubMetaDbSession
+    // ATTENTION: in Stencila we had regressions, because TextureEditorPackage.Editor
+    // is creating a different childContext which raises the chance for integration issues.
+    // So try to keep this as minimal as possible and rather change
+    // Editor.getChildContet() instead
     return {
-      configurator,
-      pubMetaDbSession,
       urlResolver: this.props.archive
     }
   }

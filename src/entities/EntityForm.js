@@ -10,14 +10,15 @@ export default class EntityForm extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-entity-form')
-    let schema = this._getSchema()
-    let node = this.props.node
+    // FIXME: in some cases this is not a node. Use a different name.
+    let data = this.props.node
+    let schema = this._getNodeSchema()
 
     for (let property of schema) {
       let name = property.name
       let type = property.type
       let targetTypes = property.targetTypes
-      let value = node[name]
+      let value = data[name]
       if (name === 'id') {
         // id property is not editable and skipped
       } else if (type === 'string') {
@@ -63,8 +64,7 @@ export default class EntityForm extends Component {
   */
   getData() {
     let result = {}
-    let schema = this._getSchema()
-
+    let schema = this._getNodeSchema()
     for (let property of schema) {
       const name = property.name
       let input = this.refs[name]
@@ -75,14 +75,13 @@ export default class EntityForm extends Component {
     return result
   }
 
+  _getNodeSchema() {
+    return this.context.pubMetaDbSession.getDocument().getSchema().getNodeSchema(this.props.node.type)
+  }
+
   _closeDialog() {
     this.extendState({
       dialogProps: undefined
     })
-  }
-
-  _getSchema() {
-    let schema = this.context.pubMetaDbSession.getDocument().schema
-    return schema.getNodeSchema(this.props.node.type)
   }
 }

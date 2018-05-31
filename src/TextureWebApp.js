@@ -1,28 +1,23 @@
 import { parseKeyEvent } from 'substance'
 import WebAppChrome from './WebAppChrome'
-import TextureArchive from './TextureArchive'
+import TextureAppMixin from './TextureAppMixin'
 
-import {
-  _renderTextureApp,
-  _handleKeyDown
-} from './textureAppHelpers'
-
-export default class TextureWebApp extends WebAppChrome {
-
-  render($$) {
-    return _renderTextureApp($$, this)
-  }
-
-  _getArchiveClass() {
-    return TextureArchive
-  }
-
-  _getDefaultDataFolder() {
+export default class TextureWebApp extends TextureAppMixin(WebAppChrome) {
+  _getDefaultDataFolder () {
     return './data/'
   }
 
-  _handleKeyDown(event) {
-    let handled = _handleKeyDown(event, this)
+  // TODO: document why we need a different keydown behavior here
+  // otherwise, if it should be the same, move the common implementation
+  // into TextureAppMixin
+  _handleKeyDown (event) {
+    // Handle custom keyboard shortcuts globally
+    let archive = this.state.archive
+    let handled = false
+    if (archive) {
+      let manuscriptSession = archive.getEditorSession('manuscript')
+      handled = manuscriptSession.keyboardManager.onKeydown(event)
+    }
     if (!handled) {
       let key = parseKeyEvent(event)
       // CommandOrControl+S

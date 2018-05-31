@@ -1,32 +1,14 @@
-import { InMemoryDarBuffer } from 'substance'
 import DesktopAppChrome from './DesktopAppChrome'
-import TextureArchive from './TextureArchive'
+import TextureAppMixin from './TextureAppMixin'
 
-import {
-  _renderTextureApp,
-  _handleKeyDown
-} from './textureAppHelpers'
-
-export default class TextureDesktopApp extends DesktopAppChrome {
-
-  render($$) {
-    return _renderTextureApp($$, this)
+export default class TextureDesktopApp extends TextureAppMixin(DesktopAppChrome) {
+  // TODO: document why we need a different handleKeydown than in WebApp
+  _handleKeyDown (event) {
+    // Handle custom keyboard shortcuts globally
+    let archive = this.state.archive
+    if (archive) {
+      let manuscriptSession = archive.getEditorSession('manuscript')
+      return manuscriptSession.keyboardManager.onKeydown(event)
+    }
   }
-
-  _loadArchive(archiveId, context) {
-    let storage = new this.props.FSStorageClient()
-    let buffer = new InMemoryDarBuffer()
-    let archive = new TextureArchive(storage, buffer, context)
-    // HACK: this should be done earlier in the lifecycle (after first didMount)
-    // and later disposed properly. However we can accept this for now as
-    // the app lives as a singleton atm.
-    // NOTE: _archiveChanged is implemented by DesktopAppChrome
-    archive.on('archive:changed', this._archiveChanged, this)
-    return archive.load(archiveId)
-  }
-
-  _handleKeyDown(event) {
-    return _handleKeyDown(event, this)
-  }
-
 }

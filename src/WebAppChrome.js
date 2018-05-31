@@ -14,10 +14,6 @@ export default class WebAppChrome extends AppChrome {
     return archive.load(archiveId)
   }
 
-  _getArchiveClass() { throw new Error('This method is abstract') }
-
-  _getDefaultDataFolder() { throw new Error('This method  is abstract') }
-
   _getStorage(storageType) {
     if (storageType==='vfs') {
       return new VfsStorageClient(vfs, this._getDefaultDataFolder())
@@ -34,5 +30,9 @@ export default class WebAppChrome extends AppChrome {
       event.preventDefault()
     }
   }
+
+  _getArchiveClass() { throw new Error('This method is abstract') }
+
+  _getDefaultDataFolder() { throw new Error('This method  is abstract') }
 
 }

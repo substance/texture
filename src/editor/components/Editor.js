@@ -94,6 +94,8 @@ export default class Editor extends AbstractWriter {
 
   getChildContext() {
     return Object.assign({}, super.getChildContext(), {
+      configurator: this.editorSession.getConfigurator(),
+      pubMetaDbSession: this.props.pubMetaDbSession,
       referenceManager: this.referenceManager,
       figureManager: this.figureManager,
       tableManager: this.tableManager,

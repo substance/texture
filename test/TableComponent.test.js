@@ -3,7 +3,7 @@ import {
   TableComponent, TextureDocument, TextureConfigurator, tableHelpers,
   EditorPackage, TableEditing
 } from 'substance-texture'
-import { testAsync, getMountPoint } from '../testHelpers'
+import { testAsync, getMountPoint } from './testHelpers'
 
 testAsync('TableComponent: mounting a table component', async (t) => {
   let { table, context } = _setup(t)

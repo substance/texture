@@ -1,6 +1,6 @@
 import { DefaultDOMElement as DOM } from 'substance'
 import { TextureArchive, checkArchive } from 'substance-texture'
-import { spy, getMountPoint, testAsync } from '../testHelpers'
+import { spy, getMountPoint, testAsync } from './testHelpers'
 import { applyNOP, toUnix, createTestApp } from './integrationTestHelpers'
 
 testAsync('Persistence: loading and saving the kitchen-sink article', async (t) => {

@@ -6,7 +6,7 @@ import AppChrome from './AppChrome'
 
 export default class WebAppChrome extends AppChrome {
 
-  _loadArchive(archiveId, context) {
+  async _loadArchive(archiveId, context) {
     let storage = this._getStorage(this.props.storageType)
     let buffer = new InMemoryDarBuffer()
     let ArchiveClass = this._getArchiveClass()
@@ -34,5 +34,4 @@ export default class WebAppChrome extends AppChrome {
   _getArchiveClass() { throw new Error('This method is abstract') }
 
   _getDefaultDataFolder() { throw new Error('This method  is abstract') }
-
 }

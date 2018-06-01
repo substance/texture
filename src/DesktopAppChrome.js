@@ -14,7 +14,7 @@ export default class DesktopAppChrome extends AppChrome {
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
-  _loadArchive(archiveId, context) {
+  async _loadArchive(archiveId, context) {
     const ArchiveClass = this._getArchiveClass()
     let storage = new this.props.FSStorageClient()
     let buffer = new InMemoryDarBuffer()

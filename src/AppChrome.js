@@ -1,13 +1,22 @@
-import {
-  Component, DefaultDOMElement,
-  platform,
-} from 'substance'
-
+import { Component, DefaultDOMElement, platform } from 'substance'
 
 export default class AppChrome extends Component {
+  didMount () {
+    // when the developer console is not open, display when there is an error
+    if (!platform.devtools) {
+      try {
+        this._init().catch(error => {
+          console.error(error)
+          this.setState({error})
+        })
+      } catch (error) {
+        console.error(error)
+        this.setState({error})
+      }
+    } else {
+      this._init()
+    }
 
-  didMount() {
-    this._init()
     DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
     DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
     DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
@@ -31,44 +40,39 @@ export default class AppChrome extends Component {
   /*
     4 initialisation stages
 
-    - _setupChildContext (sync)
-    - _initContext (async)
-    - _loadArchive (async)
-    - _initArchive (async)
+    - _setupChildContext
+    - _initContext
+    - _loadArchive
+    - _initArchive
   */
-  _init() {
-    this._childContext = this._setupChildContext()
-
-    let promise = this._initContext(this._childContext)
-    .then(() => this._loadArchive(this.props.archiveId, this._childContext))
-    .then(archive => this._initArchive(archive, this._childContext))
-    .then(archive => {
-      this.setState({archive})
-    })
-
-    if (!platform.devtools) {
-      promise.catch(error => {
-        console.error(error)
-        this.setState({error})
-      })
-    }
+  async _init() {
+    // TODO: do we really need to separated the first two steps?
+    let childContext = await this._setupChildContext()
+    await this._initContext(childContext)
+    let archive = await this._loadArchive(this.props.archiveId, childContext)
+    archive = await this._initArchive(archive, childContext)
+    this._childContext = childContext
+    this._afterInit()
+    this.setState({archive})
   }
 
-  _setupChildContext() {
-    return this.context
+  async _setupChildContext() {
+    return {}
   }
 
-  _initContext(context) {
-    return Promise.resolve(context)
+  async _initContext(context) {
+    return context
   }
 
-  _loadArchive() {
+  async _loadArchive() {
     throw new Error('_loadArchive not implemented')
   }
 
-  _initArchive(archive) {
-    return Promise.resolve(archive)
+  async _initArchive(archive) {
+    return archive
   }
+
+  _afterInit() {}
 
   /*
     We may want an explicit save button, that can be configured on app level,
@@ -96,5 +100,4 @@ export default class AppChrome extends Component {
   _supressDnD(event) {
     event.preventDefault()
   }
-
 }

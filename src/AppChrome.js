@@ -45,7 +45,7 @@ export default class AppChrome extends Component {
     - _loadArchive
     - _initArchive
   */
-  async _init() {
+  async _init () {
     // TODO: do we really need to separated the first two steps?
     let childContext = await this._setupChildContext()
     await this._initContext(childContext)
@@ -56,11 +56,11 @@ export default class AppChrome extends Component {
     this.setState({archive})
   }
 
-  async _setupChildContext() {
+  async _setupChildContext () {
     return {}
   }
 
-  async _initContext(context) {
+  async _initContext (context) {
     return context
   }
 

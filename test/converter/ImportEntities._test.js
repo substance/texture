@@ -1,15 +1,11 @@
-import { module } from 'substance-test'
-import {
- DefaultDOMElement, Configurator
-} from 'substance'
+import { test } from 'substance-test'
+import { DefaultDOMElement, Configurator } from 'substance'
 import { EntitiesPackage, ImportEntities } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('element-citation.xml')
 
-const test = module('ImportEntities')
-
-test("Import journal citation", function(t) {
+test("ImportEntities: Import journal citation", function(t) {
   let { entityDb } = _setupImportTest()
 
   // TODO: how can we turn the original id into a uuid, what to do
@@ -31,7 +27,7 @@ test("Import journal citation", function(t) {
   t.end()
 })
 
-test("Import book citation", function(t) {
+test("ImportEntities: Import book citation", function(t) {
   let { entityDb } = _setupImportTest()
   let r2 = entityDb.get('r2')
 
@@ -52,7 +48,7 @@ test("Import book citation", function(t) {
   t.end()
 })
 
-test("Extract persons from element citation", function(t) {
+test("ImportEntities: Extract persons from element citation", function(t) {
   let { entityDb } = _setupImportTest()
   const r1 = entityDb.get('r1')
   const authors = r1.authors
@@ -73,7 +69,7 @@ test("Extract persons from element citation", function(t) {
   t.end()
 })
 
-test("Export journal citation", function(t) {
+test("ImportEntities: Export journal citation", function(t) {
   let { dom } = _setupExportTest()
 
   let r1 = dom.find('#r1')
@@ -98,7 +94,7 @@ test("Export journal citation", function(t) {
   t.end()
 })
 
-test("Export book citation", function(t) {
+test("ImportEntities: Export book citation", function(t) {
   let { dom } = _setupExportTest()
 
   let r2 = dom.find('#r2')
@@ -124,7 +120,7 @@ test("Export book citation", function(t) {
   t.end()
 })
 
-test("Export person entities to element citations", function(t) {
+test("ImportEntities: Export person entities to element citations", function(t) {
   let { dom } = _setupExportTest()
 
   const r1 = dom.find('#r1')

@@ -72,6 +72,9 @@ b.task('test-nodejs', ['clean', 'build:schema', 'build:nodejs', 'build:test-asse
 b.task('test-browser', ['clean', 'build:schema', 'build:browser', 'build:test-assets', 'build:test-browser'])
 .describe('builds the test-suite for the browser.')
 
+// an alias because in all our other projects it is named this way
+b.task('test:browser', ['test-browser'])
+
 b.task('default', ['publish'])
 .describe('default: publish')
 

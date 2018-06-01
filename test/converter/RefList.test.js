@@ -1,4 +1,4 @@
-import { module } from 'substance-test'
+import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import { RefList } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
@@ -6,9 +6,7 @@ import readFixture from '../fixture/readFixture'
 const fixture = readFixture('ref-list.xml')
 const emptyBackFixture = readFixture('empty-back.xml')
 
-const test = module('RefList')
-
-test("Import document without ref-list", function(t) {
+test("RefList: Import document without ref-list", function(t) {
   let dom = DefaultDOMElement.parseXML(emptyBackFixture)
   let converter = new RefList()
   converter.import(dom)
@@ -20,7 +18,7 @@ test("Import document without ref-list", function(t) {
   t.end()
 })
 
-test("Cleaning up existing ref-list", function(t) {
+test("RefList: Cleaning up existing ref-list", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new RefList()
   converter.import(dom)

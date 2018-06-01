@@ -1,8 +1,6 @@
-import { module } from 'substance-test'
+import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import { Sec2Heading } from 'substance-texture'
-
-const test = module('Sec2Heading')
 
 const two_sections = `
 <body>
@@ -16,7 +14,7 @@ const two_sections = `
   </sec>
 </body>
 `
-test("Sections to headings (two sections)", function(t) {
+test("Sec2Heading: Sections to headings (two sections)", function(t) {
   let els = DefaultDOMElement.parseSnippet(two_sections, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
@@ -34,7 +32,7 @@ test("Sections to headings (two sections)", function(t) {
   t.end()
 })
 
-test("Headings to sections (two sections)", function(t) {
+test("Sec2Heading: Headings to sections (two sections)", function(t) {
   let els = DefaultDOMElement.parseSnippet(two_sections, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
@@ -73,7 +71,7 @@ const nested_sections = `
   </sec>
 </body>
 `
-test("Sections to headings (nested sections)", function(t) {
+test("Sec2Heading: Sections to headings (nested sections)", function(t) {
   let els = DefaultDOMElement.parseSnippet(nested_sections, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
@@ -95,7 +93,7 @@ test("Sections to headings (nested sections)", function(t) {
   t.end()
 })
 
-test("Headings to sections (nested sections)", function(t) {
+test("Sec2Heading: Headings to sections (nested sections)", function(t) {
   let els = DefaultDOMElement.parseSnippet(nested_sections, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()

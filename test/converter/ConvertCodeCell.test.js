@@ -1,13 +1,11 @@
-import { module } from 'substance-test'
+import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import { ConvertCodeCell } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('reproducible-jats.xml')
 
-const test = module('ConvertCodeCell')
-
-test("Import code cell", function(t) {
+test("ConvertCodeCell: Import code cell", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertCodeCell()
   converter.import(dom)
@@ -23,7 +21,7 @@ test("Import code cell", function(t) {
   t.end()
 })
 
-test("Export code cell", function(t) {
+test("ConvertCodeCell: Export code cell", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertCodeCell()
   converter.import(dom)

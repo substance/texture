@@ -1,13 +1,11 @@
-import { module } from 'substance-test'
+import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import { NormalizeFn } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('fn-group.xml')
 
-const test = module('NormalizeFn')
-
-test("Unwrap fn > p > disp-quote > p", function(t) {
+test("NormalizeFn: Unwrap fn > p > disp-quote > p", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new NormalizeFn()
   converter.import(dom)
@@ -16,7 +14,7 @@ test("Unwrap fn > p > disp-quote > p", function(t) {
   t.end()
 })
 
-test("Removing all elements except inner p's", function(t) {
+test("NormalizeFn: Removing all elements except inner p's", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new NormalizeFn()
   converter.import(dom)

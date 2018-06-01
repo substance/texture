@@ -1,13 +1,11 @@
-import { module } from 'substance-test'
+import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import { ConvertTableWrap } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('table.xml')
 
-const test = module('ConvertTableWrap')
-
-test("table-wrap without caption", function(t) {
+test("ConvertTableWrap: table-wrap without caption", function(t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertTableWrap()
   converter.import(dom)

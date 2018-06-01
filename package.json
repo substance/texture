@@ -22,7 +22,7 @@
     "source-map-support": "0.5.3",
     "substance": "1.0.0-preview.65",
     "substance-bundler": "0.25.2",
-    "substance-test": "0.12.1"
+    "substance-test": "0.12.2"
   },
   "scripts": {
     "prepack": "npm install && node make publish",

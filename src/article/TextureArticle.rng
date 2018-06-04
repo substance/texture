@@ -11,6 +11,21 @@
     </element>
   </define>
 
+
+  <define name="body">
+    <element name="body">
+      <ref name="body-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="sec.class"/>
+          <ref name="para-level"/>
+          <ref name="cell"/>
+          <ref name="repro-fig"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>  
+
   <define name="article-meta">
     <element name="article-meta">
       <ref name="article-meta-attlist"/>

@@ -8,7 +8,7 @@ export default class AbstractComponent extends Component {
     TODO: we should make this configurable
   */
   getInitialState() {
-    const node = this.props.node.find('abstract-content')
+    const node = this.props.node
     let isEmpty = node.children.length === 1 && node.children[0].textContent === ''
     return {
       hidden: isEmpty
@@ -25,24 +25,17 @@ export default class AbstractComponent extends Component {
       el.append(
         $$('h1').addClass('sc-heading').append('Abstract')
       )
-      // There can be multiple abstracts. We just take the first
-      const content = node.findChild('abstract-content')
-      let contentEl
-      if (content) {
-        contentEl = $$(this.getComponent('container'), {
+      el.append(
+        $$(this.getComponent('container'), {
           placeholder: 'Enter Abstract',
           name: 'abstractEditor',
-          node: content,
+          node: node,
           disabled: this.props.disabled
         })
-      } else {
-        // TODO: ability to add an abstract
-      }
-      el.append(contentEl)
+      )
     } else {
       el.addClass('sm-hidden')
     }
-
     return el
   }
 

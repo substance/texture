@@ -12,13 +12,16 @@ export default class TextureContainerEditor extends ContainerEditor {
 
     let props = { node }
     let type = node.type
-    let model = api.getModel(node)
+    let model
+    if (api) {
+      model = api.getModel(node)
+    }
     
     // NOTE: It would be better to change the `node` property to `model` so we see the different semantics.
     // However this may break too many things at once and requires two different implementations of ContainerEditor
     // which is why we push this for a bit.
     if (model) {
-      props = { node: model }
+      props = { node: model, model }
       type = model.type
     } else {
       console.warn(`No model available for ${type}, using node directly...`)

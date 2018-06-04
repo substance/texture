@@ -1,7 +1,5 @@
 // import PruneText from './PruneText'
 import WrapAff from './WrapAff'
-import WrapAbstractContent from './WrapAbstractContent'
-import WrapBodyContent from './WrapBodyContent'
 import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
 import UpdateDocType from './UpdateDocType'
@@ -48,8 +46,6 @@ const trafos = [
   ConvertTableWrap,
   ConvertList,
   WrapAff,
-  WrapAbstractContent,
-  WrapBodyContent,
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertXref,
@@ -82,8 +78,6 @@ export {
   ConvertTableWrap,
   ConvertList,
   WrapAff,
-  WrapAbstractContent,
-  WrapBodyContent,
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertContentLoc,

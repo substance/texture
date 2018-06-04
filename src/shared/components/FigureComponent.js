@@ -1,10 +1,12 @@
 import { NodeComponent } from 'substance'
-// import { getLabel } from '../util/nodeHelpers'
 
 export default class FigComponent extends NodeComponent {
 
   render($$) {
+    let model = this.props.model
     let el = $$('div').addClass('sc-figure').append('TODO_FIGURE_COMP')
+    // let label = model.getLabel()
+
     return el
   }
 

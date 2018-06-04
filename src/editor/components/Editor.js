@@ -244,16 +244,16 @@ export default class Editor extends AbstractWriter {
   }
 
   _getTOCProvider() {
-    let containerId = this._getBodyContentContainerId()
+    let containerId = this._getBodyContainerId()
     let doc = this.editorSession.getDocument()
     return new TOCProvider(doc, {
       containerId: containerId
     })
   }
 
-  _getBodyContentContainerId() {
+  _getBodyContainerId() {
     const doc = this.editorSession.getDocument()
-    let bodyContent = doc.article.find('body-content')
-    return bodyContent.id
+    let body = doc.find('body')
+    return body.id
   }
 }

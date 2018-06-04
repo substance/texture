@@ -19,8 +19,7 @@ export default class AbstractResourceManager {
     this._targetTypes = array2table(XREF_TARGET_TYPES[type])
     // TODO: should this be a parameter?
     // also, is it ok to assume that all these resources must be placed in a container?
-    // ATTENTION: in InternalArticle there is an extra <body-content> wrapper
-    this._container = editorSession.getDocument().find('article > body > body-content')
+    this._container = editorSession.getDocument().find('article > body')
     this._containerPath = this._container.getContentPath()
 
     editorSession.onUpdate('document', this._onDocumentChange, this)

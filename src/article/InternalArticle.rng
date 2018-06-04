@@ -52,8 +52,8 @@
   <s:elementType name="x" s:type="inline-element"/>
   <s:elementType name="xref" s:type="inline-element"/>
   <!-- Containers -->
-  <s:elementType name="abstract-content" s:type="container"/>
-  <s:elementType name="body-content" s:type="container"/>
+  <s:elementType name="abstract" s:type="container"/>
+  <s:elementType name="body" s:type="container"/>
   <s:elementType name="caption" s:type="container"/>
   <s:elementType name="disp-quote-content" s:type="container"/>
   <s:elementType name="fn" s:type="container"/>
@@ -101,12 +101,7 @@
   <s:elementType name="time-stamp" s:type="external"/>
 
 
-  <define name="abstract">
-    <element name="abstract">
-      <ref name="abstract-attlist"/>
-      <ref name="abstract-content"/>
-    </element>
-  </define>
+
 
   <!-- Stub out some of the content for that we do not provide
        a UI  -->
@@ -153,39 +148,7 @@
     </element>
   </define>
 
-  <!--
-    Using <abstract-content> to have a pure Container
-  -->
-  <define name="abstract-model">
-    <zeroOrMore>
-      <ref name="id.class"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="sec-meta"/>
-    </optional>
-    <optional>
-      <ref name="label"/>
-    </optional>
-    <optional>
-      <ref name="title"/>
-    </optional>
-    <optional>
-      <ref name="abstract-content"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="sec-back-matter-mix"/>
-    </zeroOrMore>
-  </define>
 
-  <define name="abstract-content">
-    <element name="abstract-content">
-      <zeroOrMore>
-        <choice>
-          <ref name="p"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
 
   <!--
     Introducing <element-aff> and <string-aff> corresponding
@@ -414,36 +377,7 @@
     </element>
   </define>
 
-  <!--
-    Using <body-content> internally so that we have a pure container.
 
-    TODO: we should think about
-  -->
-  <define name="body">
-    <element name="body">
-      <ref name="body-attlist"/>
-      <optional>
-        <ref name="body-content"/>
-      </optional>
-      <optional>
-        <ref name="sig-block"/>
-      </optional>
-    </element>
-  </define>
-
-  <!-- pure container for body content -->
-  <define name="body-content">
-    <element name="body-content">
-      <zeroOrMore>
-        <choice>
-          <ref name="sec.class"/>
-          <ref name="para-level"/>
-          <ref name="cell"/>
-          <ref name="repro-fig"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
 
   <!--
     Pulled <title> out of <caption>
@@ -1088,25 +1022,6 @@
       </choice>
     </element>
   </define>
-
-  <!--
-    Wrapping content into <abstract-content>
-
-    TODO: transform
-  -->
-  <define name="trans-abstract">
-    <element name="trans-abstract">
-      <ref name="trans-abstract-attlist"/>
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="title"/>
-      </optional>
-      <ref name="abstract-content"/>
-    </element>
-  </define>
-
 
   <!--
     Reproducible Elements

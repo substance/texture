@@ -15,13 +15,15 @@ export default class TextureContainerEditor extends ContainerEditor {
     let model
     if (api) {
       model = api.getModel(node)
+    } else {
+      console.warn('this.context.api not found.')
     }
     
     // NOTE: It would be better to change the `node` property to `model` so we see the different semantics.
     // However this may break too many things at once and requires two different implementations of ContainerEditor
     // which is why we push this for a bit.
     if (model) {
-      props = { node: model, model }
+      props = { node: model.getNode(), model }
       type = model.type
     } else {
       console.warn(`No model available for ${type}, using node directly...`)
@@ -38,7 +40,9 @@ export default class TextureContainerEditor extends ContainerEditor {
       }
     } else {
       if (ComponentClass) {
-        if (ComponentClass.prototype._isCustomNodeComponent || ComponentClass.prototype._isIsolatedNodeComponent) {
+        // HACK: if model is present we use the component directly, as IsolatedNodeComponent is not yet prepared to
+        // forward the model property
+        if (ComponentClass.prototype._isCustomNodeComponent || ComponentClass.prototype._isIsolatedNodeComponent || model) {
           el = $$(ComponentClass, props)
         } else {
           el = $$(IsolatedNodeComponent, props)

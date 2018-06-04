@@ -19,12 +19,12 @@ export default class TextureArticleAPI {
 
   getArticleAbstract() {
     let abstract = this.doc.find('abstract')
-    return new ContainerModel(abstract, 'abstract-content', this._getContext())
+    return new ContainerModel(abstract, this._getContext())
   }
 
   getArticleBody() {
     let body = this.doc.find('body')
-    return new ContainerModel(body, 'body-content', this._getContext())
+    return new ContainerModel(body, this._getContext())
   }
 
   getContribs() {
@@ -42,10 +42,8 @@ export default class TextureArticleAPI {
   */
   getModel(node) {
     let ModelClass = this.modelRegistry[node.type]
-    if (!ModelClass) {
-      console.warn(`No model found for ${node.type}`)
-    } else {
-      return new ModelClass(this.editorSession, node)
+    if (ModelClass) {
+      return new ModelClass(node, this._getContext())
     }
   }
 

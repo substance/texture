@@ -1,62 +1,48 @@
 import { NodeComponent } from 'substance'
 
-export default class FigComponent extends NodeComponent {
+export default class FigureComponent extends NodeComponent {
 
+  // TODO: In the reader, if title or caption is empty, should we drop those elements from the view?
   render($$) {
     let model = this.props.model
-    let el = $$('div').addClass('sc-figure').append('TODO_FIGURE_COMP')
-    // let label = model.getLabel()
+    let title = model.getTitle()
+    let caption = model.getCaption()
+    let contentType = model.getContentType()
+    let content = model.getContent()
+    let label = model.getLabel()
 
+    // TODO: switch to .sc-figure, once transition to a shared FigureComponent is complete
+    let el = $$('div').addClass('sc-fig')
+      .attr('data-id', model.id)
+
+    let labelEl = $$('div').addClass('se-label').text(label)
+    el.append(labelEl)
+    
+    if (content) {
+      // TODO: switch to using model: content
+      let contentEl = $$(this.getComponent(contentType), {
+        node: content,
+        disabled: this.props.disabled
+      })
+      el.append(contentEl.ref('content'))
+    }
+
+    let titleEl = $$(this.getComponent('text-property-editor'), {
+      placeholder: 'Enter Title',
+      path: title.getTextPath(),
+      disabled: this.props.disabled
+    }).addClass('se-title').ref('title')
+    el.append(titleEl)
+    
+    let captionEl
+    if (caption) {
+      captionEl = $$(this.getComponent('caption'), {
+        // TODO: Use a component that works on the ContainerModel rather than ContainerNode
+        node: caption.getContainerNode(),
+        disabled: this.props.disabled
+      })
+    }
+    el.append(captionEl.ref('caption'))
     return el
   }
-
-//   render($$) {
-//     const node = this.props.node
-//     let el = $$('div')
-//       .addClass('sc-'+node.type)
-//       .attr('data-id', node.id)
-
-//     let label = getLabel(node)
-//     let labelEl = $$('div').addClass('se-label').text(label)
-//     el.append(labelEl)
-
-//     const figType = this._getContentType()
-//     const content = node.findChild(figType)
-//     let contentEl
-//     if (content) {
-//       contentEl = $$(this.getComponent(figType), {
-//         node: content,
-//         disabled: this.props.disabled
-//       })
-//       el.append(contentEl.ref('content'))
-//     }
-
-//     const title = node.findChild('title')
-//     let titleEl = $$(this.getComponent('text-property-editor'), {
-//       placeholder: 'Enter Title',
-//       path: title.getPath(),
-//       disabled: this.props.disabled
-//     }).addClass('se-title').ref('title')
-//     el.append(titleEl)
-
-//     const caption = node.findChild('caption')
-//     let captionEl
-//     if (caption) {
-//       captionEl = $$(this.getComponent('caption'), {
-//         node: caption,
-//         disabled: this.props.disabled
-//       })
-//     }
-//     el.append(captionEl.ref('caption'))
-//     return el
-//   }
-
-//   _getContentType() {
-//     switch(this.props.node.type) {
-//       case 'table-wrap': {
-//         return 'table'
-//       }
-//       default: return 'graphic'
-//     }
-//   }
 }

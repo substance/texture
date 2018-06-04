@@ -14,4 +14,8 @@ export default class DefaultModel {
   get type() {
     return this._node.type
   }
+
+  getNode() {
+    return this._node
+  }
 }

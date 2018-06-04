@@ -10,8 +10,8 @@ export default class ContainerModel extends DefaultModel{
   }
   
   getContainerNode() {
-    let contentNode = this._node.find(this._contentNodeSelector)
-    return contentNode
+    console.warn(' TODO: In the future ContainerEditor should work with ContainerModel, instead of low-level ContainerNode.')
+    return this._node
   }
   
 }

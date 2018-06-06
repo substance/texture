@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { RefList } from 'substance-texture'
+import { RefList } from '../../index'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('ref-list.xml')

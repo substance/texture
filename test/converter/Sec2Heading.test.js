@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { Sec2Heading } from 'substance-texture'
+import { Sec2Heading } from '../../index'
 
 const two_sections = `
 <body>

@@ -1,5 +1,5 @@
 import { isString, ObjectOperation, DocumentChange } from 'substance'
-import { TextureWebApp } from 'substance-texture'
+import { TextureWebApp } from '../index'
 
 export function setCursor (editorSession, path, pos) {
   if (isString(path)) path = path.split('.')

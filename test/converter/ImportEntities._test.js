@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement, Configurator } from 'substance'
-import { EntitiesPackage, ImportEntities } from 'substance-texture'
+import { EntitiesPackage, ImportEntities } from '../../index'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('element-citation.xml')

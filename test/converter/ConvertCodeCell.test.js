@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { ConvertCodeCell } from 'substance-texture'
+import { ConvertCodeCell } from '../../index'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('reproducible-jats.xml')

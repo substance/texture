@@ -64,10 +64,8 @@ b.task('web', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:
 b.task('app', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:app'])
 .describe('builds the app bundle (electron app).')
 
-b.task('test-nodejs', ['clean', 'build:schema', 'build:nodejs', 'build:test-assets', 'build:test-nodejs'], () => {
-  fork(b, require.resolve('substance-test/bin/test'), './tmp/tests.cjs.js', { verbose: true, await: true })
-})
-.describe('builds and runs the test-suite in nodejs.')
+b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets'])
+.describe('prepares everything necessary to run tests in node.')
 
 b.task('test-browser', ['clean', 'build:schema', 'build:browser', 'build:test-assets', 'build:test-browser'])
 .describe('builds the test-suite for the browser.')
@@ -84,11 +82,6 @@ b.task('run-app', ['app'], () => {
   fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: APPDIST, await: false })
 })
 .describe('runs the application in electron.')
-
-b.task('cover', ['build:instrumented-tests'], () => {
-  b.rm('coverage')
-  fork(b, 'node_modules/substance-test/bin/coverage', 'tmp/tests.cov.js', { await: true })
-})
 
 // low-level make targets
 
@@ -228,7 +221,7 @@ b.task('build:web', ['build:vfs'], () => {
   b.copy('./data', DIST+'data')
 })
 
-b.task('build:test-assets', () => {
+b.task('build:test-assets', ['build:vfs-es'], () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],
     dest: './tmp/test-vfs.js',
@@ -236,25 +229,31 @@ b.task('build:test-assets', () => {
   })
 })
 
-
 b.task('build:test-browser', ['build:vfs', 'build:assets', 'build:test-assets'], () => {
   b.copy('test/index.html', 'dist/test/index.html')
   b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
+
+  const INDEX_JS = path.join(__dirname, 'index.js')
+  let globals = {
+    'substance': 'substance',
+    'substance-test': 'substanceTest',
+    'katex': 'katex',
+    'vfs': 'vfs'
+  }
+  globals[INDEX_JS] = 'texture'
+
   b.js('test/**/*.test.js', {
     output: [{
       file: 'dist/test/tests.js',
       format: 'umd',
       name: 'tests',
-      globals: {
-        'substance': 'window.substance',
-        'substance-test': 'window.substanceTest',
-        'substance-texture': 'window.texture',
-        'katex': 'window.katex',
-        'vfs': 'window.vfs'
-      }
+      globals
     }],
-    external: ['substance', 'substance-test', 'substance-texture', 'katex', 'vfs']
+    external: [
+      'substance', 'substance-test', INDEX_JS,
+      'katex', 'vfs'
+    ]
   })
 })
 
@@ -264,48 +263,6 @@ b.task('build:vfs-es', () => {
     dest: TMP+'/vfs.es.js',
     format: 'es',
     rootDir: path.join(__dirname, 'data')
-  })
-})
-
-b.task('build:test-nodejs', ['build:nodejs', 'build:test-assets', 'build:vfs-es'], () => {
-  b.js([
-    'test/testGlobals.js',
-    'test/**/*.test.js'
-  ], {
-    output: [{
-      file: 'tmp/tests.cjs.js',
-      format: 'cjs',
-      // do not require substance-texture from 'node_modules' but from the dist folder
-      paths: {
-        'substance-texture': '../dist/texture.cjs.js'
-      }
-    }],
-    external: [
-      'substance-test',
-      'substance',
-      'substance-texture'
-    ]
-  })
-})
-
-b.task('build:instrumented-tests', ['build:test-assets', 'build:vfs-es', 'build:cover'], () => {
-  b.js([
-    'test/testGlobals.js',
-    'test/**/*.test.js'
-  ], {
-    output: [{
-      file: 'tmp/tests.cov.js',
-      format: 'cjs',
-      // do not require substance-texture from 'node_modules' but from the dist folder
-      paths: {
-        'substance-texture': '../tmp/texture.cov.js'
-      }
-    }],
-    external: [
-      'substance-test',
-      'substance',
-      'substance-texture'
-    ]
   })
 })
 
@@ -343,17 +300,7 @@ function _buildLib(DEST, platform) {
       globals
     })
   }
-  if (platform === 'cover') {
-    targets.push({
-      file: DEST+'texture.cov.js',
-      format: 'cjs',
-      globals,
-    })
-    istanbul = {
-      include: ['src/**/*.js']
-    }
-  }
-  b.js('./index.es.js', {
+  b.js('./index.js', {
     output: targets,
     external: ['substance', 'katex', 'vfs'],
     istanbul

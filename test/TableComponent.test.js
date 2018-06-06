@@ -1,8 +1,8 @@
-import { EditorSession, MemoryDOMElement, keys } from 'substance'
+import { EditorSession, keys } from 'substance'
 import {
   TableComponent, TextureDocument, TextureConfigurator, tableHelpers,
   EditorPackage, TableEditing
-} from 'substance-texture'
+} from '../index'
 import { testAsync, getMountPoint } from './testHelpers'
 
 testAsync('TableComponent: mounting a table component', async (t) => {

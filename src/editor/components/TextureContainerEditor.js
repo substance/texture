@@ -8,9 +8,10 @@ export default class TextureContainerEditor extends ContainerEditor {
 
   _renderNode($$, node) {
     let api = this.context.api
+    let disabled = this.props.disabled
     if (!node) throw new Error("'node' is mandatory")
 
-    let props = { node }
+    let props = { node, disabled }
     let type = node.type
     let model
     if (api) {
@@ -23,7 +24,7 @@ export default class TextureContainerEditor extends ContainerEditor {
     // However this may break too many things at once and requires two different implementations of ContainerEditor
     // which is why we push this for a bit.
     if (model) {
-      props = { node: model.getNode(), model }
+      props = { node: model.getNode(), model, disabled }
       type = model.type
     } else {
       console.warn(`No model available for ${type}, using node directly...`)

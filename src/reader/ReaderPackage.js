@@ -4,7 +4,8 @@ import {
   TextPropertyEditor,
   TextPropertyComponent,
   SchemaDrivenCommandManager,
-  substanceGlobals
+  substanceGlobals,
+  AnnotationComponent
 } from 'substance'
 
 import TextNodeComponent from '../editor/components/TextNodeComponent'
@@ -30,9 +31,12 @@ import RefComponent from '../editor/components/RefComponent'
 import SeparatorComponent from '../editor/components/SeparatorComponent'
 import SigBlockComponent from '../editor/components/SigBlockComponent'
 import XrefComponent from '../editor/components/XrefComponent'
+import BoldComponent from '../editor/components/XrefComponent'
 
 import TextureArticlePackage from '../article/TextureArticlePackage'
 
+import TextureIsolatedNodeComponent from '../shared/components/TextureIsolatedNodeComponent'
+import TextureIsolatedInlineNodeComponent from '../shared/components/TextureIsolatedInlineNodeComponent'
 import ArticleAbstractComponent from '../shared/components/ArticleAbstractComponent'
 import ArticleBodyComponent from '../shared/components/ArticleBodyComponent'
 import ArticleHeaderComponent from '../shared/components/ArticleHeaderComponent'
@@ -40,8 +44,6 @@ import ArticleReferencesComponent from '../shared/components/ArticleReferencesCo
 import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
 import ArticleContribsComponent from '../shared/components/ArticleContribsComponent'
 import FigureComponent from '../shared/components/FigureComponent'
-
-
 
 
 substanceGlobals.DEBUG_RENDERING = true
@@ -52,7 +54,6 @@ export default {
     config.import(SubstanceBasePackage)
     config.import(TextureArticlePackage)
 
-    // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
@@ -82,10 +83,13 @@ export default {
     })
 
     // Base functionality
-    config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('text-property-editor', TextPropertyEditor)
-    config.addComponent('plain-text-property', PlainTextComponent)
-    config.addComponent('container', ContainerNodeComponent)
+    config.addComponent('isolated-node', TextureIsolatedNodeComponent, 'force')
+    config.addComponent('inline-node', TextureIsolatedInlineNodeComponent, 'force')
+    config.addComponent('text-node', TextNodeComponent, 'force')
+    config.addComponent('text-property-editor', TextPropertyEditor, 'force')
+    config.addComponent('plain-text-property', PlainTextComponent, 'force')
+    config.addComponent('container', ContainerNodeComponent, 'force')
+
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
@@ -113,13 +117,20 @@ export default {
     config.addComponent('xref', XrefComponent)
     config.addComponent('figure', FigureComponent)
 
+    // ATTENTION: I have changed the behavior so that
+    // unregistered annotations or inline-nodes are
+    // rendered using the UnsupportedInlineNodeComponent
+    // instead of rendering all by default with AnnotationComponent
+    config.addComponent('bold', AnnotationComponent)
+    // ext-link should render an `<a>` element in HTML
+    config.addComponent('ext-link', AnnotationComponent)
+
     // New Shared Components
     config.addComponent('article-abstract', ArticleAbstractComponent)
     config.addComponent('article-body', ArticleBodyComponent)
     config.addComponent('article-contribs', ArticleContribsComponent)
     config.addComponent('article-header', ArticleHeaderComponent)
     config.addComponent('article-references', ArticleReferencesComponent)
-    config.addComponent('article-title', ArticleTitleComponent)    
-
+    config.addComponent('article-title', ArticleTitleComponent)
   }
 }

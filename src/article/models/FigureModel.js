@@ -4,12 +4,11 @@ import ContainerModel from './ContainerModel'
 import { getLabel, getPos } from '../../editor/util/nodeHelpers'
 
 export default class FigureModel extends DefaultModel {
-  
   // Type is different to JATS node types (fig, table-wrap)
   get type() {
     return 'figure'
   }
-  
+
   // TODO: we probably want to store the label on the model, not the node?
   getLabel() {
     return getLabel(this._node)

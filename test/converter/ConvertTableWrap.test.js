@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { ConvertTableWrap } from 'substance-texture'
+import { ConvertTableWrap } from '../../index'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('table.xml')

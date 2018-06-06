@@ -1,5 +1,5 @@
 import { DefaultDOMElement as DOM } from 'substance'
-import { TextureArchive, checkArchive } from 'substance-texture'
+import { TextureArchive, checkArchive } from '../index'
 import { spy, getMountPoint, testAsync } from './testHelpers'
 import { applyNOP, toUnix, createTestApp } from './integrationTestHelpers'
 

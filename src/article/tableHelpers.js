@@ -1,4 +1,4 @@
-import { xmlNodeHelpers, isNumber } from 'substance'
+import { tableHelpers } from 'substance'
 
 export function createTableSelection(data) {
   if (!data.anchorCellId || !data.focusCellId) throw new Error('Invalid selection data')
@@ -20,20 +20,6 @@ export function getSelectedRange(table, selData) {
   return getCellRange(table, selData.anchorCellId, selData.focusCellId)
 }
 
-export function getRowCol(cell) {
-  let rowIdx, colIdx
-  if (cell.hasOwnProperty('rowIdx') && cell.hasOwnProperty('colIdx')) {
-    rowIdx = cell.rowIdx
-    colIdx = cell.colIdx
-  } else {
-    let row = cell.getParent()
-    let table = row.getParent()
-    rowIdx = xmlNodeHelpers.getChildPos(table, row)
-    colIdx = xmlNodeHelpers.getChildPos(row, cell)
-  }
-  return [rowIdx, colIdx]
-}
-
 export function computeSelectionRectangle(ulRect, lrRect) {
   let selRect = {}
   selRect.top = ulRect.top
@@ -41,23 +27,6 @@ export function computeSelectionRectangle(ulRect, lrRect) {
   selRect.width = lrRect.left + lrRect.width - selRect.left
   selRect.height = lrRect.top + lrRect.height - selRect.top
   return selRect
-}
-
-export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-export function getColumnLabel(colIdx) {
-  if (!isNumber(colIdx)) {
-    throw new Error('Illegal argument.')
-  }
-  var label = ""
-  while(true) { // eslint-disable-line
-    var mod = colIdx % ALPHABET.length
-    colIdx = Math.floor(colIdx/ALPHABET.length)
-    label = ALPHABET[mod] + label
-    if (colIdx > 0) colIdx--
-    else if (colIdx === 0) break
-  }
-  return label
 }
 
 export function getCellRange(table, anchorCellId, focusCellId) {
@@ -115,7 +84,7 @@ export function generateTable (doc, nrows, ncols) {
     headRow.append(
       $$('table-cell')
         .attr('heading', true)
-        .text(getColumnLabel(j))
+        .text(tableHelpers.getColumnLabel(j))
     )
   }
   table.append(headRow)

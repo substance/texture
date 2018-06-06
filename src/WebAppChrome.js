@@ -33,6 +33,8 @@ export default class WebAppChrome extends AppChrome {
     }
   }
 
+  // EXPERIMENTAL: trying to allow for different configurations
+  // for ingestion in editor vs reader
   _getArticleConfig() { throw new Error('This method is abstract') }
 
   _getArchiveClass() { throw new Error('This method is abstract') }

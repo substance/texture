@@ -1,6 +1,10 @@
 import { Component } from 'substance'
 import EditorPackage from './editor/EditorPackage'
+import TextureArticleAPI from './article/TextureArticleAPI'
 
+// TODO: needs to be refactored to achieve a consistent structure.
+// Currently TextureReader is a modified version of this implementation
+// while editor/Editor.js is an AbstractWriter implementation.
 export default class Texture extends Component {
 
   constructor(...args) {
@@ -9,6 +13,11 @@ export default class Texture extends Component {
     this.manuscriptSession = archive.getEditorSession('manuscript')
     this.pubMetaDbSession = archive.getEditorSession('pub-meta')
     this.configurator = this.manuscriptSession.getConfigurator()
+    this.api = new TextureArticleAPI(
+      this.manuscriptSession,
+      this.pubMetaDbSession,
+      this.configurator.getModelRegistry()
+    )
   }
 
   getChildContext() {

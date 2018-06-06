@@ -1,7 +1,7 @@
 import {
   getQueryStringParam, substanceGlobals, platform
 } from 'substance'
-import { WebAppChrome, TextureReader, TextureArchive, ReaderPackage } from 'substance-texture'
+import { TextureWebApp, TextureReader, ReaderPackage } from 'substance-texture'
 
 window.addEventListener('load', () => {
   substanceGlobals.DEBUG_RENDERING = platform.devtools
@@ -18,39 +18,12 @@ window.addEventListener('load', () => {
   }, 500)
 })
 
-export default class TextureReaderApp extends WebAppChrome {
-
-  render($$) {
-    let el = $$('div').addClass('sc-app')
-    let { archive, error } = this.state
-
-    if (archive) {
-      el.append(
-        $$(TextureReader, {
-          archive,
-        })
-      )
-    } else if (error) {
-      el.append(
-        'ERROR:',
-        error.message
-      )
-    } else {
-      // LOADING...
-    }
-    return el
+export default class TextureReaderApp extends TextureWebApp {
+  _getAppClass () {
+    return TextureReader
   }
 
-  _getArchiveClass() {
-    return TextureArchive
-  }
-
-  _getArticleConfig() {
+  _getArticleConfig () {
     return ReaderPackage
   }
-
-  _getDefaultDataFolder() {
-    return './data/'
-  }
-
 }

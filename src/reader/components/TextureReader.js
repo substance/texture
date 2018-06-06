@@ -2,7 +2,7 @@ import { Component } from 'substance'
 import ArticleReader from './ArticleReader'
 import TextureArticleAPI from '../../article/TextureArticleAPI'
 
-export default class Texture extends Component {
+export default class TextureReader extends Component {
 
   constructor(...args) {
     super(...args)

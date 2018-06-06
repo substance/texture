@@ -36,6 +36,11 @@
     "cover": "nyc --require esm --reporter=lcov --reporter=text node test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/substance/texture.git"

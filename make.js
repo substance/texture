@@ -353,7 +353,7 @@ function _buildLib(DEST, platform) {
       include: ['src/**/*.js']
     }
   }
-  b.js('./index.es.js', {
+  b.js('./index.js', {
     output: targets,
     external: ['substance', 'katex', 'vfs'],
     istanbul

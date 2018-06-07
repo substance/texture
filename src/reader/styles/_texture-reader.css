@@ -43,6 +43,6 @@ h3.sc-heading {
 }
 
 .sc-caption .sc-p {
-  font-family: Avenir, Helvetica, Arial;
+  font-family: Avenir, Helvetica, Arial !important;
   font-weight: 500;
 }

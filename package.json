@@ -21,8 +21,8 @@
     "font-awesome": "4.5.0",
     "nyc": "11.8.0",
     "source-map-support": "0.5.3",
-    "substance": "1.0.0-preview.66",
-    "substance-bundler": "0.25.2",
+    "substance": "1.0.0-preview.67",
+    "substance-bundler": "0.25.4",
     "substance-test": "0.12.2",
     "tap-spec": "^4.1.1"
   },

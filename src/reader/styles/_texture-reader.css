@@ -1,4 +1,48 @@
 .sc-texture-reader {
   width: 800px;
-  margin: 0 auto;
+  margin: 30px auto;
+  line-height: 1.7em;
+}
+
+/* Add padding to each child except last one */
+.sc-texture-reader .sc-container-editor > * {
+  margin: 15px 0;
+}
+
+.sc-texture-reader .sc-container-editor > .sc-p {
+  font-family: Georgia;
+}
+
+.sc-texture-reader .sc-container-editor .sc-isolated-node {
+  margin: 30px 0;
+}
+
+
+/* General editor styles */
+.sc-heading {
+  font-family: 'Avenir Next', 'Lato', Helvetica;
+  padding-top: 10px;
+}
+
+h1.sc-heading {
+  font-size: 20px;
+}
+
+h2.sc-heading {
+  font-size: 18px;
+}
+
+h3.sc-heading {
+  font-size: 16px;
+}
+
+
+.sc-caption {
+  font-size: 14px;
+  line-height: 1.8em;
+}
+
+.sc-caption .sc-p {
+  font-family: Avenir, Helvetica, Arial;
+  font-weight: 500;
 }

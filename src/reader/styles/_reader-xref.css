@@ -4,7 +4,9 @@
 }
 
 .sc-reader-xref .se-preview {
+  font-family: 'Avenir Next', 'Lato', Helvetica;
   display: none;
+  line-height: 17px;
   color: #444;
   padding: 10px;
   padding-bottom: 0px;
@@ -17,7 +19,7 @@
   background: #fff;
   box-shadow: var(--default-box-shadow);
   z-index: 400;
-  font-size: 12px;
+  font-size: 11px;
   overflow: auto;
 }
 
@@ -27,7 +29,7 @@
 }
 
 .sc-reader-xref .se-preview .se-text {
-  padding-left: 30px;
+  padding-left: 40px;
 }
 
 .sc-reader-xref .se-preview .se-label {

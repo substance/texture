@@ -42,9 +42,11 @@ import ArticleReferencesComponent from '../shared/components/ArticleReferencesCo
 import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
 import ArticleContribsComponent from '../shared/components/ArticleContribsComponent'
 import FigureComponent from '../shared/components/FigureComponent'
+import ExtLinkComponent from '../shared/components/ExtLinkComponent'
 
 // Reader-specific components
 import ReaderXrefComponent from '../reader/components/ReaderXrefComponent'
+
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -126,8 +128,7 @@ export default {
     config.addComponent('sub', AnnotationComponent)
     config.addComponent('sup', AnnotationComponent)
     config.addComponent('monospace', AnnotationComponent)
-    // ext-link should render an `<a>` element in HTML
-    config.addComponent('ext-link', AnnotationComponent)
+    config.addComponent('ext-link', ExtLinkComponent)
 
     // New Shared Components
     config.addComponent('article-abstract', ArticleAbstractComponent)

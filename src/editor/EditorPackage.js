@@ -52,6 +52,8 @@ import SeparatorComponent from './components/SeparatorComponent'
 import SigBlockComponent from './components/SigBlockComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
+import ExtLinkComponent from '../shared/components/ExtLinkComponent'
+
 
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
@@ -172,8 +174,7 @@ export default {
     config.addComponent('sub', AnnotationComponent)
     config.addComponent('sup', AnnotationComponent)
     config.addComponent('monospace', AnnotationComponent)
-    // ext-link should render an `<a>` element in HTML
-    config.addComponent('ext-link', AnnotationComponent)
+    config.addComponent('ext-link', ExtLinkComponent)
 
 
     // Panels and other displays

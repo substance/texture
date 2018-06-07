@@ -122,6 +122,10 @@ export default {
     // rendered using the UnsupportedInlineNodeComponent
     // instead of rendering all by default with AnnotationComponent
     config.addComponent('bold', AnnotationComponent)
+    config.addComponent('italic', AnnotationComponent)
+    config.addComponent('sub', AnnotationComponent)
+    config.addComponent('sup', AnnotationComponent)
+    config.addComponent('monospace', AnnotationComponent)
     // ext-link should render an `<a>` element in HTML
     config.addComponent('ext-link', AnnotationComponent)
 

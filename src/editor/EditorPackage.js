@@ -8,7 +8,8 @@ import {
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
-  substanceGlobals
+  substanceGlobals,
+  AnnotationComponent
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
@@ -160,6 +161,20 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
+
+
+    // ATTENTION: I have changed the behavior so that
+    // unregistered annotations or inline-nodes are
+    // rendered using the UnsupportedInlineNodeComponent
+    // instead of rendering all by default with AnnotationComponent
+    config.addComponent('bold', AnnotationComponent)
+    config.addComponent('italic', AnnotationComponent)
+    config.addComponent('sub', AnnotationComponent)
+    config.addComponent('sup', AnnotationComponent)
+    config.addComponent('monospace', AnnotationComponent)
+    // ext-link should render an `<a>` element in HTML
+    config.addComponent('ext-link', AnnotationComponent)
+
 
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)

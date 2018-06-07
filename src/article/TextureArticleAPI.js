@@ -1,3 +1,5 @@
+import { forEach } from 'substance'
+
 import AnnotatedTextModel from './models/AnnotatedTextModel'
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
@@ -9,31 +11,55 @@ import TableManager from '../editor/util/TableManager'
 import FootnoteManager from '../editor/util/FootnoteManager'
 
 export default class TextureArticleAPI {
-  constructor(editorSession, pubMetaDbSession, modelRegistry) {
+  constructor (editorSession, pubMetaDbSession, modelRegistry) {
     this.modelRegistry = modelRegistry
     this.editorSession = editorSession
     this.pubMetaDbSession = pubMetaDbSession
     this.pubMetaDb = pubMetaDbSession.getDocument()
     this.doc = editorSession.getDocument()
 
+    const configurator = this._getConfigurator()
     // Create managers
     this.referenceManager = new ReferenceManager({
-      labelGenerator: editorSession.getConfigurator().getLabelGenerator('references'),
+      labelGenerator: configurator.getLabelGenerator('references'),
       editorSession,
       pubMetaDbSession
     })
     this.figureManager = new FigureManager({
-      labelGenerator: editorSession.getConfigurator().getLabelGenerator('figures'),
+      labelGenerator: configurator.getLabelGenerator('figures'),
       editorSession
     })
     this.tableManager = new TableManager({
-      labelGenerator: editorSession.getConfigurator().getLabelGenerator('tables'),
+      labelGenerator: configurator.getLabelGenerator('tables'),
       editorSession
     })
     this.footnoteManager = new FootnoteManager({
-      labelGenerator: editorSession.getConfigurator().getLabelGenerator('footnotes'),
+      labelGenerator: configurator.getLabelGenerator('footnotes'),
       editorSession
     })
+
+    // this will be passed to other managers etc.
+    this._context = {
+      api: this,
+      // TODO: try to get rid of this by switching to the 'api'
+      editorSession,
+      pubMetaDbSession,
+      referenceManager: this.referenceManager,
+      figureManager: this.figureManager,
+      tableManager: this.tableManager,
+      footnoteManager: this.footnoteManager,
+      get pubMetaDb () { return pubMetaDbSession.getDocument() },
+      get doc () { return editorSession.getDocument() },
+      get surfaceManager () { return editorSession.surfaceManager }
+    }
+
+    // workaround for an ownership problem, because EditorSession
+    // is constructing a lot of managers,
+    // and the context for these are passed while loading the archive
+    // While being a bit hacky, this is the easiest way to solve the problem,
+    // on an appropriate level.
+    // On the long run, the managers should not be owned by the EditorSession
+    this._monkeyPatchEditorSession(this._context)
   }
 
   getArticleTitle() {
@@ -71,17 +97,8 @@ export default class TextureArticleAPI {
     }
   }
 
-  _getContext() {
-    return {
-      editorSession: this.editorSession,
-      doc: this.doc,
-      pubMetaDbSession: this.pubMetaDbSession,
-      pubMetaDb: this.pubMetaDb,
-      referenceManager: this.referenceManager,
-      figureManager: this.figureManager,
-      tableManager: this.tableManager,
-      footnoteManager: this.footnoteManager
-    }
+  _getContext () {
+    return this._context
   }
 
   /*
@@ -103,6 +120,54 @@ export default class TextureArticleAPI {
   getReferenceManager() {
     return this.footnoteManager
   }
+
+  _getConfigurator () {
+    return this.editorSession.getConfigurator()
+  }
+
+  _monkeyPatchEditorSession (context) {
+    const editorSession = this.editorSession
+    const configurator = editorSession.getConfigurator()
+
+    // exchange the context that EditorSession is propagating
+    editorSession._context = context
+
+    // these managers receive a context so need to be replaced
+    const CommandManager = configurator.getCommandManagerClass()
+    editorSession.commandManager.dispose()
+    editorSession.commandManager = new CommandManager(context, configurator.getCommands())
+
+    const FileManager = configurator.getFileManagerClass()
+    editorSession.fileManager.dispose()
+    editorSession.fileManager = new FileManager(editorSession, configurator.getFileAdapters(), context)
+
+    const DragManager = configurator.getDragManagerClass()
+    editorSession.dragManager.dispose()
+    editorSession.dragManager = new DragManager(configurator.getDropHandlers(), Object.assign({}, context, {
+      commandManager: editorSession.commandManager
+    }))
+
+    const MacroManager = configurator.getMacroManagerClass()
+    editorSession.macroManager.dispose()
+    editorSession.macroManager = new MacroManager(context, configurator.getMacros())
+
+    const KeyboardManager = configurator.getKeyboardManagerClass()
+    // Note: keyboardManager does not have a dispose()
+    // TODO: maybe it should, just for consistency, even if it is empty
+    // editorSession.keyboardManager.dispose()
+    editorSession.keyboardManager = new KeyboardManager(editorSession, configurator.getKeyboardShortcuts(), {
+      context
+    })
+
+    forEach(editorSession._managers, (manager) => {
+      if (manager.dispose) {
+        manager.dispose()
+      }
+    })
+    let customManagers = {}
+    forEach(configurator.getManagers(), (ManagerClass, name) => {
+      customManagers[name] = new ManagerClass(context)
+    })
+    editorSession._managers = customManagers
+  }
 }
-
-

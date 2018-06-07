@@ -3,6 +3,11 @@ import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import ReferencesModel from './models/ReferencesModel'
 
+import ReferenceManager from '../editor/util/ReferenceManager'
+import FigureManager from '../editor/util/FigureManager'
+import TableManager from '../editor/util/TableManager'
+import FootnoteManager from '../editor/util/FootnoteManager'
+
 export default class TextureArticleAPI {
   constructor(editorSession, pubMetaDbSession, modelRegistry) {
     this.modelRegistry = modelRegistry
@@ -10,6 +15,25 @@ export default class TextureArticleAPI {
     this.pubMetaDbSession = pubMetaDbSession
     this.pubMetaDb = pubMetaDbSession.getDocument()
     this.doc = editorSession.getDocument()
+
+    // Create managers
+    this.referenceManager = new ReferenceManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('references'),
+      editorSession,
+      pubMetaDbSession
+    })
+    this.figureManager = new FigureManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('figures'),
+      editorSession
+    })
+    this.tableManager = new TableManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('tables'),
+      editorSession
+    })
+    this.footnoteManager = new FootnoteManager({
+      labelGenerator: editorSession.getConfigurator().getLabelGenerator('footnotes'),
+      editorSession
+    })
   }
 
   getArticleTitle() {
@@ -52,8 +76,32 @@ export default class TextureArticleAPI {
       editorSession: this.editorSession,
       doc: this.doc,
       pubMetaDbSession: this.pubMetaDbSession,
-      pubMetaDb: this.pubMetaDb
+      pubMetaDb: this.pubMetaDb,
+      referenceManager: this.referenceManager,
+      figureManager: this.figureManager,
+      tableManager: this.tableManager,
+      footnoteManager: this.footnoteManager
     }
+  }
+
+  /*
+    TODO: In the future it should be necessary to expose those managers, instead
+    API's should be used to access information.
+  */
+  getFigureManager() {
+    return this.figureManager
+  }
+
+  getTableManager() {
+    return this.tableManager
+  }
+
+  getFootnoteManager() {
+    return this.footnoteManager
+  }
+
+  getReferenceManager() {
+    return this.footnoteManager
   }
 }
 

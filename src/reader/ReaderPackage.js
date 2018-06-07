@@ -30,8 +30,6 @@ import FnComponent from '../editor/components/FnComponent'
 import RefComponent from '../editor/components/RefComponent'
 import SeparatorComponent from '../editor/components/SeparatorComponent'
 import SigBlockComponent from '../editor/components/SigBlockComponent'
-import XrefComponent from '../editor/components/XrefComponent'
-import BoldComponent from '../editor/components/XrefComponent'
 
 import TextureArticlePackage from '../article/TextureArticlePackage'
 
@@ -45,6 +43,8 @@ import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
 import ArticleContribsComponent from '../shared/components/ArticleContribsComponent'
 import FigureComponent from '../shared/components/FigureComponent'
 
+// Reader-specific components
+import ReaderXrefComponent from '../reader/components/ReaderXrefComponent'
 
 substanceGlobals.DEBUG_RENDERING = true
 
@@ -114,7 +114,7 @@ export default {
     config.addComponent('table', TableComponent)
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
-    config.addComponent('xref', XrefComponent)
+    config.addComponent('xref', ReaderXrefComponent)
     config.addComponent('figure', FigureComponent)
 
     // ATTENTION: I have changed the behavior so that

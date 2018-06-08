@@ -118,7 +118,7 @@ export default class TextureArticleAPI {
   }
 
   getReferenceManager() {
-    return this.footnoteManager
+    return this.referenceManager
   }
 
   _getConfigurator () {

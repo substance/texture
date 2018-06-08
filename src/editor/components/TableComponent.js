@@ -31,8 +31,8 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  shouldRerender() {
-    return false
+  shouldRerender(newProps) {
+    return (newProps.node !== this.props.node || newProps.disabled !== this.props.disabled)
   }
 
   didMount() {

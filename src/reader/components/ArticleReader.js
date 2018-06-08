@@ -4,7 +4,7 @@ import { AbstractWriter } from '../../editor/util'
 import ArticleHeaderComponent from '../../shared/components/ArticleHeaderComponent'
 import ArticleAbstractComponent from '../../shared/components/ArticleAbstractComponent'
 import ArticleBodyComponent from '../../shared/components/ArticleBodyComponent'
-import ArticleReferencesComponent from '../../shared/components/ArticleReferencesComponent'
+import BibliographyComponent from '../../shared/components/BibliographyComponent'
 
 export default class ArticleReader extends AbstractWriter {
 
@@ -27,9 +27,10 @@ export default class ArticleReader extends AbstractWriter {
           model: api.getArticleBody(),
           disabled: true
         }).ref('articleBody'),
-        $$(ArticleReferencesComponent, {
-          model: api.getReferences()
-        }).ref('articleReferences')
+        // TODO: bibliography should become a managed app state
+        $$(BibliographyComponent, {
+          bibliography: api.getReferences().getBibliography()
+        }).ref('bibliography')
       )
     )
     return el

@@ -37,9 +37,28 @@ export default class ReferencesModel extends DefaultModel {
     return getXrefLabel(ref)
   }
 
+  /*
+    Render reference as HTML
+  */
   renderReference(id) {
     let entity = this._getEntityForRef(id)
     return renderEntity(entity)
+  }
+
+  /*
+    Get a complete bibliography object, ready for display
+  */
+  getBibliography() {
+    let refNodes = this.context.referenceManager.getBibliography()
+    let result = []
+    refNodes.forEach(refNode => {
+      result.push({
+        id: refNode.id,
+        label: refNode.state.label,
+        html: this.renderReference(refNode.id)
+      })
+    })
+    return result
   }
 
   _getEntityForRef(id) {

@@ -128,7 +128,7 @@ function _setup (t) {
   configurator.import(EditorPackage)
   let doc = _createEmptyTextureArticle(configurator)
   let table = tableHelpers.generateTable(doc, 10, 5)
-  doc.find('body > body-content').append(table)
+  doc.find('body').append(table)
   // TODO: look closely here: this is the footprint of how context
   // is used by TableComponent and children
   let editorSession = new EditorSession(doc, { configurator })
@@ -164,9 +164,7 @@ function _createEmptyTextureArticle (configurator) {
         $$('abstract')
       )
     ),
-    $$('body').append(
-      $$('body-content')
-    ),
+    $$('body'),
     $$('back')
   )
   return doc

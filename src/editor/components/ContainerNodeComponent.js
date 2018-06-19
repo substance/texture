@@ -1,11 +1,11 @@
 import { Component } from 'substance'
-import ContainerEditor from './TextureContainerEditor'
+import ContainerEditor from '../../shared/components/TextureContainerEditor'
 
 export default class ContainerNodeComponent extends Component {
 
   render($$) {
     const node = this.props.node
-    
+
     let el = $$('div').addClass('sc-'+node.type)
       .attr('data-id', node.id)
     el.append($$(ContainerEditor, {

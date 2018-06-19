@@ -28,28 +28,27 @@ import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand } from 'sub
   ```
 */
 
-class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCommand {
-
+export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCommand {
   /**
     Insert new inline node at the current selection
   */
-  execute(params) {
-    let state = this.getCommandState(params)
+  execute (params, context) {
+    let state = this.getCommandState(params, context)
     if (state.disabled) return
     let editorSession = this._getEditorSession(params)
     editorSession.transaction((tx) => {
-      let node = this.createNode(tx, params)
+      let node = this.createNode(tx, params, context)
       tx.insertInlineNode(node)
       this.setSelection(tx, node)
     })
   }
 
-  createNode(tx) { // eslint-disable-line
+  createNode (tx, context) { // eslint-disable-line no-unused-vars
     throw new Error('This method is abstract')
   }
 
-  setSelection(tx, node) {
-    if(node.isPropertyAnnotation()) {
+  setSelection (tx, node) {
+    if (node.isPropertyAnnotation()) {
       tx.selection = {
         type: 'property',
         path: node.getPath(),
@@ -58,7 +57,4 @@ class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCommand {
       }
     }
   }
-
 }
-
-export default InsertInlineNodeCommand

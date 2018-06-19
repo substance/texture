@@ -1,0 +1,44 @@
+.sc-reader-xref {
+  position: relative;
+  color: var(--text-action-color);
+}
+
+.sc-reader-xref .se-preview {
+  font-family: 'Avenir Next', 'Lato', Helvetica;
+  display: none;
+  line-height: 17px;
+  color: #444;
+  padding: 10px;
+  padding-bottom: 0px;
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  margin-left: -200px;
+  width: 400px;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: var(--default-box-shadow);
+  z-index: 400;
+  font-size: 11px;
+  overflow: auto;
+}
+
+.sc-reader-xref .se-preview .se-ref {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.sc-reader-xref .se-preview .se-text {
+  padding-left: 40px;
+}
+
+.sc-reader-xref .se-preview .se-label {
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+.sc-reader-xref:hover .se-preview {
+  display: block;
+}
+

@@ -59,10 +59,11 @@ export function hasAvailableXrefTargets(refType, context) {
   let managerName = RefTypeToManager[refType]
   if (managerName) {
     const manager = context[managerName]
-    const nodes = manager.getAvailableResources()
-    return nodes.length > 0
+    if (manager) {
+      const nodes = manager.getAvailableResources()
+      return nodes.length > 0
+    }
   }
-
   return false
 }
 

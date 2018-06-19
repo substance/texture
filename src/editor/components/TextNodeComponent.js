@@ -1,4 +1,5 @@
-import { NodeComponent, TextPropertyComponent } from 'substance'
+import { NodeComponent } from 'substance'
+import TextPropertyComponent from '../../shared/components/TextureTextPropertyComponent'
 
 export default class TextNodeComponent extends NodeComponent {
 
@@ -20,5 +21,4 @@ export default class TextNodeComponent extends NodeComponent {
   getTagName() {
     return 'div'
   }
-
 }

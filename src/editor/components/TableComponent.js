@@ -31,8 +31,8 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  shouldRerender() {
-    return false
+  shouldRerender(newProps) {
+    return (newProps.node !== this.props.node || newProps.disabled !== this.props.disabled)
   }
 
   didMount() {
@@ -40,27 +40,35 @@ export default class TableComponent extends CustomSurface {
 
     this._tableSha = this.props.node._getSha()
 
-    this.context.editorSession.onRender('document', this._onDocumentChange, this)
-    this.context.editorSession.onRender('selection', this._onSelectionChange, this)
+    // Disable reactive behaviour in read only mode
+    // TODO: we may want to bring it back so the reader receives realtime updates
+    if (!this.props.disabled) {
+      this.context.editorSession.onRender('document', this._onDocumentChange, this)
+      this.context.editorSession.onRender('selection', this._onSelectionChange, this)
+      this._positionSelection(this._getSelectionData())
+    }
 
-    this._positionSelection(this._getSelectionData())
   }
 
   dispose() {
     super.dispose()
-
     this.context.editorSession.off(this)
   }
 
   render($$) {
     let el = $$('div').addClass('sc-table')
-    el.on('mousedown', this._onMousedown)
+    if (!this.props.disabled) {
+      el.on('mousedown', this._onMousedown)
       .on('mouseup', this._onMouseup)
+    }
+
     el.append(this._renderTable($$))
-    el.append(this._renderKeyTrap($$))
-    el.append(this._renderUnclickableOverlays($$))
     // el.append(this._renderClickableOverlays($$))
-    el.append(this._renderContextMenu($$))
+    if (!this.props.disabled) {
+      el.append(this._renderKeyTrap($$))
+      el.append(this._renderUnclickableOverlays($$))
+      el.append(this._renderContextMenu($$))
+    }
     return el
   }
 

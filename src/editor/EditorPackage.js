@@ -8,7 +8,8 @@ import {
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
-  substanceGlobals
+  substanceGlobals,
+  AnnotationComponent
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
@@ -51,6 +52,8 @@ import SeparatorComponent from './components/SeparatorComponent'
 import SigBlockComponent from './components/SigBlockComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
+import ExtLinkComponent from '../shared/components/ExtLinkComponent'
+
 
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
@@ -83,13 +86,13 @@ export default {
   name: 'author',
   configure(config) {
     config.import(SubstanceBasePackage)
+    config.import(TextureArticlePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(EntityComponentsPackage)
-    config.import(TextureArticlePackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands
@@ -160,6 +163,19 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
+
+
+    // ATTENTION: I have changed the behavior so that
+    // unregistered annotations or inline-nodes are
+    // rendered using the UnsupportedInlineNodeComponent
+    // instead of rendering all by default with AnnotationComponent
+    config.addComponent('bold', AnnotationComponent)
+    config.addComponent('italic', AnnotationComponent)
+    config.addComponent('sub', AnnotationComponent)
+    config.addComponent('sup', AnnotationComponent)
+    config.addComponent('monospace', AnnotationComponent)
+    config.addComponent('ext-link', ExtLinkComponent)
+
 
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)

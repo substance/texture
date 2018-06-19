@@ -1,14 +1,13 @@
 import { EditorSession } from 'substance'
 import TextureConfigurator from './editor/util/TextureConfigurator'
-import EditorPackage from './editor/EditorPackage'
 import { JATSImporter } from './article'
 
 export default {
-  load(xml, context) {
+  load(xml, context, config) {
     let configurator = new TextureConfigurator()
-    // TODO: it would make more sense to use a more generic configuration here (TextureArticlePackage)
-    // But ATM EditorSession is owning all the managers. So we have to use the EditorPackage.
-    configurator.import(EditorPackage)
+    // TODO: we should not mix config for app and model, so this should work differently
+    // See https://github.com/substance/texture/issues/544
+    configurator.import(config.ArticleConfig)
     let jatsImporter = new JATSImporter()
     let jats = jatsImporter.import(xml, context)
 

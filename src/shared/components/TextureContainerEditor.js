@@ -11,7 +11,7 @@ export default class TextureContainerEditor extends ContainerEditor {
     let ComponentClass = this.getComponent(node.type, 'not-strict')
     if (ComponentClass) {
       // text components are used directly
-      if (node.isText()) {
+      if (node.isText() || this.props.disabled) {
         return ComponentClass
       // other components are wrapped into an IsolatedNodeComponent
       // except the component is itself a customized IsolatedNodeComponent

@@ -3,6 +3,12 @@
   color: var(--text-action-color);
 }
 
+
+.sc-reader-xref.sm-fn {
+  vertical-align: super;
+  font-size: smaller;
+}
+
 .sc-reader-xref .se-preview {
   font-family: 'Avenir Next', 'Lato', Helvetica;
   display: none;

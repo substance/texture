@@ -13,6 +13,10 @@ export default class ReaderXrefComponent extends NodeComponent {
       el.append(
         this._renderPreview($$)
       )
+    } else if (refType === 'fn') {
+      el.append(
+        this._renderFnPreview($$)
+      )
     }
     return el
   }
@@ -37,5 +41,22 @@ export default class ReaderXrefComponent extends NodeComponent {
     })
     return el
 
+  }
+
+  _renderFnPreview($$) {
+    let footnotes = this.context.api.getFootnotes()
+    let el = $$('div').addClass('se-preview')
+    let xrefTargets = getXrefTargets(this.props.node)
+    xrefTargets.forEach(fnId => {
+      let label = footnotes.getLabel(fnId)
+      let html = footnotes.renderFootnote(fnId)
+      el.append(
+        $$('div').addClass('se-ref').append(
+          $$('div').addClass('se-label').append(label),
+          $$('div').addClass('se-text').html(html)
+        ).attr('data-id', fnId)
+      )
+    })
+    return el
   }
 }

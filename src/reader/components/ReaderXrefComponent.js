@@ -21,6 +21,10 @@ export default class ReaderXrefComponent extends NodeComponent {
       el.append(
         this._renderFigPreview($$)
       )
+    } else if (refType === 'table') {
+      el.append(
+        this._renderTablePreview($$)
+      )
     }
     return el
   }
@@ -92,6 +96,47 @@ export default class ReaderXrefComponent extends NodeComponent {
             $$('img').attr({src: url})
           )
         ).attr('data-id', figId)
+      )
+    })
+    return el
+  }
+
+  /*
+    Render preview for tables.
+  */
+  _renderTablePreview($$) {
+    const doc = this.context.doc
+    const api = this.context.api
+    let el = $$('div').addClass('se-preview')
+    let xrefTargets = getXrefTargets(this.props.node)
+    xrefTargets.forEach(tableId => {
+      const node = doc.get(tableId)
+      const table = api.getModel(node)
+      const label = table.getLabel()
+      const content = table.getContent()
+      const matrix = content.getCellMatrix()
+      const tableEl = $$('table')
+      for (let i = 0; i < matrix.length; i++) {
+        let cells = matrix[i]
+        let tr = $$('tr')
+        for (let j = 0; j < cells.length; j++) {
+          if (cells[j].shadowed) continue
+          let cell = cells[j]
+          let cellType = cell.attr('heading') ? 'th' : 'td'
+          tr.append(
+            $$(cellType).append(cell.getText())
+          )
+        }
+        tableEl.append(tr)
+      }
+
+      el.append(
+        $$('div').addClass('se-ref').append(
+          $$('div').addClass('se-label').append(label),
+          $$('div').addClass('se-figure').append(
+            tableEl
+          )
+        ).attr('data-id', tableId)
       )
     })
     return el

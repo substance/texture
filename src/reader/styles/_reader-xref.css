@@ -52,6 +52,20 @@
   max-width: 100%;
 }
 
+.sc-reader-xref .se-preview .se-figure table {
+  width: 100%;
+}
+
+.sc-reader-xref .se-preview .se-figure table tr > * {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.sc-reader-xref .se-preview .se-figure table tr th {
+  background-color: #f7f7f7;
+  font-weight: 700;
+}
+
 .sc-reader-xref:hover .se-preview {
   display: block;
 }

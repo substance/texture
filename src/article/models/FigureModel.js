@@ -50,4 +50,5 @@ export default class FigureModel extends DefaultModel {
     const content = this._node.findChild(contentType)
     return content
   }
+
 }

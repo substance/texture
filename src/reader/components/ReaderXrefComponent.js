@@ -11,11 +11,15 @@ export default class ReaderXrefComponent extends NodeComponent {
     // Add a preview if refType is bibr
     if (refType === 'bibr') {
       el.append(
-        this._renderPreview($$)
+        this._renderBibrPreview($$)
       )
     } else if (refType === 'fn') {
       el.append(
         this._renderFnPreview($$)
+      )
+    } else if (refType === 'fig') {
+      el.append(
+        this._renderFigPreview($$)
       )
     }
     return el
@@ -24,7 +28,7 @@ export default class ReaderXrefComponent extends NodeComponent {
   /*
     Render preview only for references.
   */
-  _renderPreview($$) {
+  _renderBibrPreview($$) {
     let references = this.context.api.getReferences()
 
     let el = $$('div').addClass('se-preview')
@@ -43,6 +47,9 @@ export default class ReaderXrefComponent extends NodeComponent {
 
   }
 
+  /*
+    Render preview for footnotes.
+  */
   _renderFnPreview($$) {
     let footnotes = this.context.api.getFootnotes()
     let el = $$('div').addClass('se-preview')
@@ -55,6 +62,36 @@ export default class ReaderXrefComponent extends NodeComponent {
           $$('div').addClass('se-label').append(label),
           $$('div').addClass('se-text').html(html)
         ).attr('data-id', fnId)
+      )
+    })
+    return el
+  }
+
+  /*
+    Render preview for figures.
+  */
+  _renderFigPreview($$) {
+    const doc = this.context.doc
+    const api = this.context.api
+    const urlResolver = this.context.urlResolver
+    let el = $$('div').addClass('se-preview')
+    let xrefTargets = getXrefTargets(this.props.node)
+    xrefTargets.forEach(figId => {
+      const node = doc.get(figId)
+      const figure = api.getModel(node)
+      const label = figure.getLabel()
+      const content = figure.getContent()
+      let url = content.getAttribute('xlink:href')
+      if (urlResolver) {
+        url = urlResolver.resolveUrl(url)
+      }
+      el.append(
+        $$('div').addClass('se-ref').append(
+          $$('div').addClass('se-label').append(label),
+          $$('div').addClass('se-figure').append(
+            $$('img').attr({src: url})
+          )
+        ).attr('data-id', figId)
       )
     })
     return el

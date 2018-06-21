@@ -44,7 +44,14 @@
   left: 5px;
 }
 
+.sc-reader-xref .se-preview .se-figure {
+  padding-left: 50px;
+}
+
+.sc-reader-xref .se-preview .se-figure img {
+  max-width: 100%;
+}
+
 .sc-reader-xref:hover .se-preview {
   display: block;
 }
-

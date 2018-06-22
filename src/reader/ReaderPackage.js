@@ -16,7 +16,6 @@ import UnsupportedInlineNodeComponent from '../editor/components/UnsupportedInli
 import BreakComponent from '../editor/components/BreakComponent'
 import ContainerNodeComponent from '../editor/components/ContainerNodeComponent'
 import ElementNodeComponent from '../editor/components/ElementNodeComponent'
-import FigComponent from '../editor/components/FigComponent'
 import CaptionComponent from '../editor/components/CaptionComponent'
 import FrontComponent from '../editor/components/FrontComponent'
 import GraphicComponent from '../editor/components/GraphicComponent'
@@ -27,7 +26,6 @@ import HeadingComponent from '../editor/components/HeadingComponent'
 import TOC from '../editor/components/TOC'
 import FnGroupComponent from '../editor/components/FnGroupComponent'
 import FnComponent from '../editor/components/FnComponent'
-import RefComponent from '../editor/components/RefComponent'
 import SeparatorComponent from '../editor/components/SeparatorComponent'
 import SigBlockComponent from '../editor/components/SigBlockComponent'
 
@@ -41,6 +39,7 @@ import ArticleHeaderComponent from '../shared/components/ArticleHeaderComponent'
 import ArticleReferencesComponent from '../shared/components/ArticleReferencesComponent'
 import ArticleTitleComponent from '../shared/components/ArticleTitleComponent'
 import ArticleContribsComponent from '../shared/components/ArticleContribsComponent'
+import BibliographyComponent from '../shared/components/BibliographyComponent'
 import FigureComponent from '../shared/components/FigureComponent'
 import ExtLinkComponent from '../shared/components/ExtLinkComponent'
 
@@ -102,17 +101,17 @@ export default {
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
     config.addComponent('front', FrontComponent)
-    config.addComponent('fig', FigComponent)
+    config.addComponent('fig', FigureComponent)
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('list', ListPackage.ListComponent)
     config.addComponent('list-item', TextPropertyComponent)
-    config.addComponent('ref', RefComponent)
+    config.addComponent('ref', BibliographyComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
-    config.addComponent('table-wrap', FigComponent)
+    config.addComponent('table-wrap', FigureComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)

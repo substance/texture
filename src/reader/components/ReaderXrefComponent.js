@@ -6,8 +6,8 @@ export default class ReaderXrefComponent extends NodeComponent {
   render($$) {
     let node = this.props.node
     let refType = node.getAttribute('ref-type')
-    let label = getXrefLabel(node)
-    let el = $$('span').addClass('sc-reader-xref sm-'+refType).append(label)
+    let el = this._renderLabel($$, node)
+
     // Add a preview if refType is bibr
     if (refType === 'bibr') {
       el.append(
@@ -29,6 +29,16 @@ export default class ReaderXrefComponent extends NodeComponent {
     return el
   }
 
+  _renderLabel($$, node) {
+    const refType = node.getAttribute('ref-type')
+    const label = getXrefLabel(node)
+    const xrefTargets = getXrefTargets(node)
+    // For now we will use a link to the first reference
+    const refLink = xrefTargets[0]
+    return $$('a').addClass('sc-reader-xref sm-'+refType)
+      .attr('href','#' + refLink)
+      .append(label)
+  }
   /*
     Render preview only for references.
   */

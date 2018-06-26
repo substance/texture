@@ -1,0 +1,11 @@
+.sc-form-row {
+  --input-font-size: 13px;
+  --input-line-height: 20px;
+  --input-height: 30px;
+  --border-color: #999;
+  --error-color: #cc0033;
+  --error-bg-color: #fce4e4;
+  --width-small: 100px;
+  --width-medium: 200px;
+  --width-large: 400px;
+}

@@ -1,0 +1,42 @@
+.sc-form-input {
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+}
+
+.sc-form-input label {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.sc-form-input .se-input {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  height: var(--input-height);
+}
+
+.sc-form-input .se-error-msg {
+  font-size: 12px;
+  line-height: 15px;
+  margin: 5px 0 0;
+}
+
+.sc-form-input.sm-error {
+  color: var(--error-color);
+}
+
+.sc-form-input.sm-error .se-input {
+  border: 1px solid var(--error-color);
+  background-color: var(--error-bg-color);
+}
+
+.sc-form-input.sm-size-small {
+  width: var(--width-small);
+}
+
+.sc-form-input.sm-size-medium {
+  width: var(--width-medium);
+}
+
+.sc-form-input.sm-size-large {
+  width: var(--width-large);
+}

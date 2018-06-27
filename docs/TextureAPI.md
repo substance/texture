@@ -32,7 +32,7 @@ contribs.addAffiliation({
   name: 'German Primate Center GmbH',
   division1: 'Neurobiology Laboratory',
   city: 'Göttingen',
-  country: 'Germany
+  country: 'Germany'
 })
 ```
 
@@ -50,7 +50,7 @@ contribs.deleteAffiliation({
   name: 'German Primate Center GmbH',
   division1: 'Neurobiology Laboratory',
   city: 'Göttingen',
-  country: 'Germany
+  country: 'Germany'
 })
 ```
 

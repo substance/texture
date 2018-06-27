@@ -66,6 +66,6 @@
   font-weight: 700;
 }
 
-.sc-reader-xref:hover .se-preview {
+.sc-reader-xref .se-preview.sm-active {
   display: block;
 }

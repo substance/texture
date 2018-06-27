@@ -1,6 +1,6 @@
 # Texture API
 
-A Javascript API to modify content in a Texture article. This is particularly useful for collecting metadata, such as authors, affiliations, references, keywords etc.
+A Javascript API to modify content in a Texture article. This is particularly useful for collecting metadata, such as authors, affiliations, references, keywords etc. This is a format-agnostic abstraction. So it means the data can be serialised in different ways, so Texture is not tightly bound to JATS. We could also use HTML + JSON to represent an article and its metadata.
 
 * [Affiliations](#affiliations)
 * [Authors](#authors)
@@ -324,4 +324,24 @@ meta.getSubjects('research-subject')
 
 ```js
 ['Computational and Systems Biology', 'Epidemiology and Global Health']
+```
+
+### Publication Dates
+
+Set or overwrite publication date (month and day are optional)
+
+```js
+meta.setPubDate(2016, 3, 1)
+```
+
+Add publication history record:
+
+```js
+meta.addPubHistoryRecord('received', 2016, 3, 1)
+```
+
+Remove publication history record:
+
+```js
+meta.clearPubHistoryRecord('received')
 ```

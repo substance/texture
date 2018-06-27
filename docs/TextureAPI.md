@@ -1,4 +1,4 @@
-# TextureAPI
+# Texture API
 
 A Javascript API to modify content in a Texture article. This is particularly useful for collecting metadata, such as authors, affiliations, references, keywords etc.
 
@@ -7,6 +7,8 @@ A Javascript API to modify content in a Texture article. This is particularly us
 * [Editors](#editors)
 * [Awards](#awards)
 * [References](#references)
+* [Keywords](#keywords)
+* [Subjects](#subjects)
 
 ## Contribs
 
@@ -22,6 +24,10 @@ Print affiliations, depending on the order of authors. If you haven't assigned a
 
 ```js
 contribs.getAffiliations() 
+```
+
+```js
+[{ id: 'aff1', ... }, ...]
 ```
 
 Add new affiliation:
@@ -56,11 +62,12 @@ contribs.deleteAffiliation({
 
 ### Authors
 
+Get all authors in order:
+
 ```js
 contribs.getAuthors()
 ```
 
-Result:
 
 ```js
 [
@@ -248,3 +255,73 @@ Result:
 ]
 ```
 
+
+## Metadata
+
+```js
+let meta = api.getMeta()
+```
+
+### Keywords
+
+Add a keyword:
+
+```js
+meta.addKeyword('optogenetics', 'author-keyword')
+meta.addKeyword('two-photon', 'author-keyword')
+meta.addKeyword('Mouse', 'research-organism')
+```
+
+List all available keyword categories:
+
+```js
+meta.getKeywordCategories()
+```
+
+Result:
+
+```js
+['author-keyword', 'research-organism']
+```
+
+List keywords for a given category:
+
+```js
+meta.getKeywords('author-keyword)
+```
+
+```js
+['optogenetics', 'two-photon']
+```
+
+### Subjects
+
+Add a subject:
+
+```js
+meta.addSubject('Research Article', 'article-type')
+meta.addSubject('Computational and Systems Biology', 'research-subject')
+meta.addSubject('Epidemiology and Global Health', 'research-subject')
+```
+
+List all available keyword categories:
+
+```js
+meta.getSubjectCategories()
+```
+
+Result:
+
+```js
+['article-type', 'research-subject']
+```
+
+List keywords for a given category:
+
+```js
+meta.getSubjects('research-subject')
+```
+
+```js
+['Computational and Systems Biology', 'Epidemiology and Global Health']
+```

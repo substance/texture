@@ -1,7 +1,13 @@
-import { NodeComponent } from 'substance'
+import { DefaultDOMElement, NodeComponent } from 'substance'
 import { getXrefLabel, getXrefTargets } from '../../editor/util/xrefHelpers'
 
 export default class ReaderXrefComponent extends NodeComponent {
+
+  didMount() {
+    super.didMount()
+    DefaultDOMElement.getBrowserWindow().on('click', this._showHidePopup, this)
+  }
+
   getInitialState() {
     return {
       popup: false
@@ -12,7 +18,7 @@ export default class ReaderXrefComponent extends NodeComponent {
     let node = this.props.node
     let refType = node.getAttribute('ref-type')
     let label = getXrefLabel(node)
-    let el = $$('span').addClass('sc-reader-xref sm-'+refType)
+    let el = $$('a').addClass('sc-reader-xref sm-'+refType)
       .append(label)
       .on('click', this._togglePopup)
 
@@ -50,12 +56,12 @@ export default class ReaderXrefComponent extends NodeComponent {
       let label = references.getLabel(refId)
       let html = references.renderReference(refId)
       el.append(
-        $$('div').addClass('se-ref').append(
-          $$('a').addClass('se-label')
-            .attr({href: '#'+refId})
-            .append(label),
-          $$('div').addClass('se-text').html(html)
-        ).attr('data-id', refId)
+        $$('a').addClass('se-ref')
+          .attr({href: '#'+refId})
+          .append(
+            $$('div').addClass('se-label').append(label),
+            $$('div').addClass('se-text').html(html)
+          ).attr('data-id', refId)
       )
     })
     return el
@@ -73,12 +79,12 @@ export default class ReaderXrefComponent extends NodeComponent {
       let label = footnotes.getLabel(fnId)
       let html = footnotes.renderFootnote(fnId)
       el.append(
-        $$('div').addClass('se-ref').append(
-          $$('a').addClass('se-label')
-            .attr({href: '#'+fnId})
-            .append(label),
-          $$('div').addClass('se-text').html(html)
-        ).attr('data-id', fnId)
+        $$('a').addClass('se-ref')
+          .attr({href: '#'+fnId})
+          .append(
+            $$('div').addClass('se-label').append(label),
+            $$('div').addClass('se-text').html(html)
+          ).attr('data-id', fnId)
       )
     })
     return el
@@ -104,14 +110,14 @@ export default class ReaderXrefComponent extends NodeComponent {
         url = urlResolver.resolveUrl(url)
       }
       el.append(
-        $$('div').addClass('se-ref').append(
-          $$('a').addClass('se-label')
-            .attr({href: '#'+figId})
-            .append(label),
-          $$('div').addClass('se-figure').append(
-            $$('img').attr({src: url})
-          )
-        ).attr('data-id', figId)
+        $$('a').addClass('se-ref')
+          .attr({href: '#'+figId})
+          .append(
+            $$('div').addClass('se-label').append(label),
+            $$('div').addClass('se-figure').append(
+              $$('img').attr({src: url})
+            )
+          ).attr('data-id', figId)
       )
     })
     return el
@@ -148,14 +154,12 @@ export default class ReaderXrefComponent extends NodeComponent {
       }
 
       el.append(
-        $$('div').addClass('se-ref').append(
-          $$('a').addClass('se-label')
-            .attr({href: '#'+tableId})
-            .append(label),
-          $$('div').addClass('se-figure').append(
-            tableEl
-          )
-        ).attr('data-id', tableId)
+        $$('a').addClass('se-ref')
+          .attr({href: '#'+tableId})
+          .append(
+            $$('div').addClass('se-label').append(label),
+            $$('div').addClass('se-figure').append(tableEl)
+          ).attr('data-id', tableId)
       )
     })
     return el
@@ -163,6 +167,13 @@ export default class ReaderXrefComponent extends NodeComponent {
 
   _togglePopup() {
     const popup = this.state.popup
-    this.extendState({popup: !popup})
+    setTimeout(() => {
+      this.extendState({popup: !popup})
+    },0)
+  }
+
+  _showHidePopup() {
+    const popupOpened = this.state.popup
+    if(popupOpened) this._togglePopup()
   }
 }

@@ -2,12 +2,20 @@ import { NodeComponent } from 'substance'
 import { getXrefLabel, getXrefTargets } from '../../editor/util/xrefHelpers'
 
 export default class ReaderXrefComponent extends NodeComponent {
+  getInitialState() {
+    return {
+      popup: false
+    }
+  }
 
   render($$) {
     let node = this.props.node
     let refType = node.getAttribute('ref-type')
     let label = getXrefLabel(node)
-    let el = $$('span').addClass('sc-reader-xref sm-'+refType).append(label)
+    let el = $$('span').addClass('sc-reader-xref sm-'+refType)
+      .append(label)
+      .on('click', this._togglePopup)
+
     // Add a preview if refType is bibr
     if (refType === 'bibr') {
       el.append(
@@ -36,19 +44,21 @@ export default class ReaderXrefComponent extends NodeComponent {
     let references = this.context.api.getReferences()
 
     let el = $$('div').addClass('se-preview')
+    if(this.state.popup) el.addClass('sm-active')
     let xrefTargets = getXrefTargets(this.props.node)
     xrefTargets.forEach(refId => {
       let label = references.getLabel(refId)
       let html = references.renderReference(refId)
       el.append(
         $$('div').addClass('se-ref').append(
-          $$('div').addClass('se-label').append(label),
+          $$('a').addClass('se-label')
+            .attr({href: '#'+refId})
+            .append(label),
           $$('div').addClass('se-text').html(html)
         ).attr('data-id', refId)
       )
     })
     return el
-
   }
 
   /*
@@ -57,13 +67,16 @@ export default class ReaderXrefComponent extends NodeComponent {
   _renderFnPreview($$) {
     let footnotes = this.context.api.getFootnotes()
     let el = $$('div').addClass('se-preview')
+    if(this.state.popup) el.addClass('sm-active')
     let xrefTargets = getXrefTargets(this.props.node)
     xrefTargets.forEach(fnId => {
       let label = footnotes.getLabel(fnId)
       let html = footnotes.renderFootnote(fnId)
       el.append(
         $$('div').addClass('se-ref').append(
-          $$('div').addClass('se-label').append(label),
+          $$('a').addClass('se-label')
+            .attr({href: '#'+fnId})
+            .append(label),
           $$('div').addClass('se-text').html(html)
         ).attr('data-id', fnId)
       )
@@ -79,6 +92,7 @@ export default class ReaderXrefComponent extends NodeComponent {
     const api = this.context.api
     const urlResolver = this.context.urlResolver
     let el = $$('div').addClass('se-preview')
+    if(this.state.popup) el.addClass('sm-active')
     let xrefTargets = getXrefTargets(this.props.node)
     xrefTargets.forEach(figId => {
       const node = doc.get(figId)
@@ -91,7 +105,9 @@ export default class ReaderXrefComponent extends NodeComponent {
       }
       el.append(
         $$('div').addClass('se-ref').append(
-          $$('div').addClass('se-label').append(label),
+          $$('a').addClass('se-label')
+            .attr({href: '#'+figId})
+            .append(label),
           $$('div').addClass('se-figure').append(
             $$('img').attr({src: url})
           )
@@ -108,6 +124,7 @@ export default class ReaderXrefComponent extends NodeComponent {
     const doc = this.context.doc
     const api = this.context.api
     let el = $$('div').addClass('se-preview')
+    if(this.state.popup) el.addClass('sm-active')
     let xrefTargets = getXrefTargets(this.props.node)
     xrefTargets.forEach(tableId => {
       const node = doc.get(tableId)
@@ -132,7 +149,9 @@ export default class ReaderXrefComponent extends NodeComponent {
 
       el.append(
         $$('div').addClass('se-ref').append(
-          $$('div').addClass('se-label').append(label),
+          $$('a').addClass('se-label')
+            .attr({href: '#'+tableId})
+            .append(label),
           $$('div').addClass('se-figure').append(
             tableEl
           )
@@ -140,5 +159,10 @@ export default class ReaderXrefComponent extends NodeComponent {
       )
     })
     return el
+  }
+
+  _togglePopup() {
+    const popup = this.state.popup
+    this.extendState({popup: !popup})
   }
 }

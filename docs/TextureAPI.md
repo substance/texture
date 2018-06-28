@@ -51,13 +51,7 @@ contribs.updateAffiliation('aff1', {...})
 Remove an affiliation:
 
 ```js
-contribs.deleteAffiliation({
-  id: 'aff1',
-  name: 'German Primate Center GmbH',
-  division1: 'Neurobiology Laboratory',
-  city: 'Göttingen',
-  country: 'Germany'
-})
+contribs.deleteAffiliation('aff1')
 ```
 
 ### Authors

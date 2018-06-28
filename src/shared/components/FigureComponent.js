@@ -13,11 +13,12 @@ export default class FigureComponent extends NodeComponent {
 
     // TODO: switch to .sc-figure, once transition to a shared FigureComponent is complete
     let el = $$('div').addClass('sc-fig')
+      .attr('id', model.id)
       .attr('data-id', model.id)
 
     let labelEl = $$('div').addClass('se-label').text(label)
     el.append(labelEl)
-    
+
     if (content) {
       // TODO: switch to using model: content
       let contentEl = $$(this.getComponent(contentType), {
@@ -33,7 +34,7 @@ export default class FigureComponent extends NodeComponent {
       disabled: this.props.disabled
     }).addClass('se-title').ref('title')
     el.append(titleEl)
-    
+
     let captionEl
     if (caption) {
       captionEl = $$(this.getComponent('caption'), {

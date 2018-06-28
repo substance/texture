@@ -14,8 +14,6 @@
   display: none;
   line-height: 17px;
   color: #444;
-  padding: 10px;
-  padding-bottom: 0px;
   position: absolute;
   top: 20px;
   left: 0px;
@@ -30,8 +28,14 @@
 }
 
 .sc-reader-xref .se-preview .se-ref {
+  display: block;
   position: relative;
-  margin-bottom: 10px;
+  padding: 10px 10px 5px 10px;
+  color: inherit;
+}
+
+.sc-reader-xref .se-preview .se-ref:hover {
+  background: var(--active-light-bg-color);
 }
 
 .sc-reader-xref .se-preview .se-text {
@@ -40,11 +44,31 @@
 
 .sc-reader-xref .se-preview .se-label {
   position: absolute;
-  top: 0px;
-  left: 5px;
+  left: 15px;
 }
 
-.sc-reader-xref:hover .se-preview {
+.sc-reader-xref .se-preview .se-figure {
+  padding-left: 50px;
+}
+
+.sc-reader-xref .se-preview .se-figure img {
+  max-width: 100%;
+}
+
+.sc-reader-xref .se-preview .se-figure table {
+  width: 100%;
+}
+
+.sc-reader-xref .se-preview .se-figure table tr > * {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.sc-reader-xref .se-preview .se-figure table tr th {
+  background-color: #f7f7f7;
+  font-weight: 700;
+}
+
+.sc-reader-xref .se-preview.sm-active {
   display: block;
 }
-

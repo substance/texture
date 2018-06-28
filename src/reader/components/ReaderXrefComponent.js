@@ -8,6 +8,11 @@ export default class ReaderXrefComponent extends NodeComponent {
     DefaultDOMElement.getBrowserWindow().on('click', this._showHidePopup, this)
   }
 
+  dispose() {
+    super.dispose()
+    DefaultDOMElement.getBrowserWindow().off(this)
+  }
+
   getInitialState() {
     return {
       popup: false

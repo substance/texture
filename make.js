@@ -280,7 +280,10 @@ b.task('build:vfs:rewrite-dar-loading-code', () => {
 
 b.task('build:web:rewrite-dar-loading-code', ['build:vfs:rewrite-dar-loading-code'], () => {
   b.copy('web-rewrite-dar-loading-code/index.html', DIST_REWRITE_DAR_LOADING_CODE)
+  b.copy('web-rewrite-dar-loading-code/loader.html', DIST_REWRITE_DAR_LOADING_CODE)
   b.copy('web-rewrite-dar-loading-code/reader.html', DIST_REWRITE_DAR_LOADING_CODE)
+  b.copy('./data', DIST_REWRITE_DAR_LOADING_CODE+'data')
+
   b.js('./web-rewrite-dar-loading-code/editor.js', {
     output: [{
       file: DIST_REWRITE_DAR_LOADING_CODE+'editor.js',
@@ -294,6 +297,21 @@ b.task('build:web:rewrite-dar-loading-code', ['build:vfs:rewrite-dar-loading-cod
     }],
     external: ['substance', 'substance-texture', 'katex']
   })
+
+  b.js('./web-rewrite-dar-loading-code/loader.js', {
+    output: [{
+      file: DIST_REWRITE_DAR_LOADING_CODE+'loader.js',
+      format: 'umd',
+      name: 'textureArchiveLoder',
+      globals: {
+        'substance': 'window.substance',
+        'substance-texture': 'window.texture',
+        'katex': 'window.katex'
+      }
+    }],
+    external: ['substance', 'substance-texture', 'katex']
+  })
+
   b.js('./web-rewrite-dar-loading-code/reader.js', {
     output: [{
       file: DIST_REWRITE_DAR_LOADING_CODE+'reader.js',
@@ -307,7 +325,6 @@ b.task('build:web:rewrite-dar-loading-code', ['build:vfs:rewrite-dar-loading-cod
     }],
     external: ['substance', 'substance-texture', 'katex']
   })
-  b.copy('./data', DIST_REWRITE_DAR_LOADING_CODE+'data')
 })
 
 b.task('build:test-assets', ['build:vfs-es'], () => {

@@ -1,4 +1,5 @@
 import { FormRowComponent } from 'substance-texture'
+import { FormMultiSelectComponent } from 'substance-texture'
 import { Component } from 'substance'
 
 const rows = [
@@ -117,6 +118,17 @@ class Grid extends Component {
         $$(FormRowComponent, {fields: row.fields})
       )
     })
+    el.append(
+      $$(FormMultiSelectComponent, {
+        selectedOptions: ['aff1', 'aff2'],
+        availableOptions: [
+          {id: 'aff1', text: 'Linz University, Austria'},
+          {id: 'aff2', text: 'Vienna University, Austria'},
+          {id: 'aff3', text: 'Graz University, Austria'}
+        ],
+        selectorLabel: 'Add Affiliation'
+      })
+    )
     return el
   }
 }

@@ -1,7 +1,3 @@
-// Requirements:
-// different sizes: 'small', 'medium', 'large'
-// error messages: 'error message' (if there use red border)
-// inputs should not have any margins
 import { Component } from 'substance'
 
 export default class FormInputComponent extends Component {

@@ -1,7 +1,3 @@
-// Requirements:
-// checkbox and label
-// different sizes: 'small', 'medium', 'large'
-// error messages: 'error message' (if there use red border)
 import { Component } from 'substance'
 
 export default class FormCheckboxComponent extends Component {

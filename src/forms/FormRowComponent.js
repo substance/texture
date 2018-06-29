@@ -1,10 +1,3 @@
-// Requirements:
-// container for inputs
-// should use flexbos for horizontal alignment of form fields
-// for all form elements we should have small, medium, large
-// should work as a grid like thing
-// .sc-form-row should define some spaces
-
 import { Component } from 'substance'
 import FormInputComponent from './FormInputComponent'
 import FormCheckboxComponent from './FormCheckboxComponent'

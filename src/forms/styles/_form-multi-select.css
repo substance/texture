@@ -1,0 +1,59 @@
+.sc-form-multi-select {
+
+}
+
+.sc-form-multi-select .se-multi-select-item {
+  display: table-row;
+}
+
+.sc-form-multi-select .se-multi-select-item > * {
+  display: table-cell;
+}
+
+.sc-form-multi-select .se-multi-select-item .se-remove {
+  color: #4b91e2;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.sc-form-multi-select .se-add-option {
+  display: flex;
+}
+
+.sc-form-multi-select .se-dropdown {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 10px;
+  overflow: hidden;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.sc-form-multi-select .se-dropdown .se-select {
+  padding: 5px 8px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+}
+
+.sc-form-multi-select .se-dropdown .se-select:focus {
+  outline: none;
+}
+
+.sc-form-multi-select .se-add-item,
+.sc-form-multi-select .se-add-option button {
+  background: #979797;
+  color: #fff;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+.sc-form-multi-select .se-add-item i,
+.sc-form-multi-select .se-add-option button i {
+  font-size: 10px;
+  margin-right: 5px;
+}

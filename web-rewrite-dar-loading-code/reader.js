@@ -1,7 +1,7 @@
-import { TextureReaderAppWeb } from "substance-texture"
+import { TextureReaderWebApp } from "substance-texture"
 
 window.addEventListener('load', () => {
-    let app = TextureReaderAppWeb.start()
+    let app = TextureReaderWebApp.start()
     
     // put the archive and some more things into global scope, for debugging
     setTimeout(() => {

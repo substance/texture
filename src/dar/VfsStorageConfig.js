@@ -3,12 +3,16 @@ import StorageTypes from "./StorageTypes"
 
 export default class VfsStorageConfig extends StorageConfig {
     
-    constructor(dataFolder) {
+    constructor() {
         super(StorageTypes.VFS)
-        this.dataFolder = dataFolder || './data'
+        this.dataFolder = null
     }
 
     getDataFolder() {
         return this.dataFolder
+    }
+
+    setDataFolder(dataFolder) {
+        this.dataFolder = dataFolder
     }
 }

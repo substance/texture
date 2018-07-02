@@ -1,43 +1,27 @@
 /* global vfs */
-import {
-  parseKeyEvent, VfsStorageClient, HttpStorageClient, InMemoryDarBuffer
-} from 'substance'
+import { parseKeyEvent, InMemoryDarBuffer } from 'substance'
+import StorageClientFactory from './dar/StorageClientFactory'
 import AppChrome from './AppChrome'
 
 export default class WebAppChrome extends AppChrome {
 
   async _loadArchive(archiveId, context) {
-    let storage = this._getStorage(this.props.storageType)
     let buffer = new InMemoryDarBuffer()
-    let ArchiveClass = this._getArchiveClass()
+    let storage = StorageClientFactory.getStorageClient(this.props.storageConfig)
+    let ArchiveClass = this.props.archiveClass
     let archive = new ArchiveClass(storage, buffer, context, {
-      ArticleConfig: this._getArticleConfig()
+      ArticleConfig: this.props.articleConfig
     })
     return archive.load(archiveId)
-  }
-
-  _getStorage(storageType) {
-    if (storageType==='vfs') {
-      return new VfsStorageClient(vfs, this._getDefaultDataFolder())
-    } else {
-      return new HttpStorageClient(this.props.storageUrl)
-    }
   }
 
   _handleKeyDown(event) {
     let key = parseKeyEvent(event)
     // CommandOrControl+S
     if (key === 'META+83' || key === 'CTRL+83') {
+      console.log("Handling keydown event")
       this._save()
       event.preventDefault()
     }
   }
-
-  // EXPERIMENTAL: trying to allow for different configurations
-  // for ingestion in editor vs reader
-  _getArticleConfig() { throw new Error('This method is abstract') }
-
-  _getArchiveClass() { throw new Error('This method is abstract') }
-
-  _getDefaultDataFolder() { throw new Error('This method  is abstract') }
 }

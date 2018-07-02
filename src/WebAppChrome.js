@@ -1,13 +1,16 @@
 /* global vfs */
 import { parseKeyEvent, InMemoryDarBuffer } from 'substance'
 import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
-import StorageClientFactory from './dar/StorageClientFactory'
 import AppChrome from './AppChrome'
 
 export default class WebAppChrome extends AppChrome {
 
-  async _loadArchive(archiveId) {
-    let archive = DocumentArchiveFactory.getDocumentArchive(this.props.documentArchiveConfig)
+  async _loadArchive(archiveId, context) {
+    let documentArchiveConfig = this.props.documentArchiveConfig
+    documentArchiveConfig.setContext(context)
+    documentArchiveConfig.setArticleConfig(this.props.articleConfig)
+
+    let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
     return archive.load(archiveId)
   }
 

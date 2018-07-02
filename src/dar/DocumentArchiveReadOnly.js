@@ -18,14 +18,14 @@ import ManifestLoader from "./ManifestLoaderNew"
  */
 export default class DocumentArchiveReadOnly extends EventEmitter {
 
-    constructor(storage) {
+    constructor(documentArchiveConfig) {
         super()
         this._archiveId = null,
         this._documents = null,
         this._manifest = null,
         this._manifestLoader = null,
         this._rawArchive = null,
-        this._storage = storage
+        this._storage = documentArchiveConfig.getStorageClient()
     }
 
     /**

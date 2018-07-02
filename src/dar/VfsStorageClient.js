@@ -2,11 +2,10 @@ import ManifestLoader from './ManifestLoader'
 
 export default class VfsStorageClient {
 
-  constructor(vfs, baseUrl) {
+  constructor(vfs, storageConfig) {
     this.vfs = vfs
-
     // an url rom where the assets are served statically
-    this.baseUrl = baseUrl
+    this.baseUrl = storageConfig.getDataFolder()
   }
 
   read(archiveId) {

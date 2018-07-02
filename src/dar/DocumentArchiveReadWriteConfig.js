@@ -1,7 +1,7 @@
 import DocumentArchiveTypes from "./DocumentArchiveTypes"
-import DocumentArchiveReadOnlyConfig from "./DocumentArchiveReadOnlyConfig";
+import DocumentArchiveConfig from "./DocumentArchiveConfig";
 
-export default class DocumentArchiveReadWriteConfig extends DocumentArchiveReadOnlyConfig {
+export default class DocumentArchiveReadWriteConfig extends DocumentArchiveConfig {
     constructor() {
         super(DocumentArchiveTypes.READ_WRITE)
         this.buffer = null

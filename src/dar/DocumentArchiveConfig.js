@@ -7,6 +7,7 @@ export default class DocumentArchiveConfig {
         this._articleConfig = null
         this._context = null
         this._storageClient = null
+        this._storageConfig = null
     }
 
     getId() {
@@ -35,5 +36,13 @@ export default class DocumentArchiveConfig {
 
     setStorageClient(storageClient) {
         this._storageClient = storageClient
+    }
+
+    getStorageConfig() {
+        return this._storageConfig
+    }
+
+    setStorageConfig(storageConfig) {
+        this._storageConfig = storageConfig
     }
 }

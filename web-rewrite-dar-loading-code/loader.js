@@ -1,6 +1,9 @@
-import { 
-    DocumentArchiveReadOnly,
-    StorageClientFactory, 
+import {
+    ReaderPackage,
+    DocumentArchiveConfig,
+    DocumentArchiveFactory,
+    DocumentArchiveReadOnlyConfig,
+    StorageClientFactory,
     VfsStorageConfig 
 } from "substance-texture"
 
@@ -9,15 +12,19 @@ window.addEventListener('load', function() {
     let vfsStorageConfig = new VfsStorageConfig()
     vfsStorageConfig.setDataFolder("./data")
 
-    let storage = new StorageClientFactory.getStorageClient(storageConfig)
-    let documentArchiveReadOnly = new DocumentArchiveReadOnly(storage)
+    let storageClient = StorageClientFactory.getStorageClient(vfsStorageConfig)
+
+    let documentArchiveConfig = new DocumentArchiveReadOnlyConfig()
+    documentArchiveConfig.setArticleConfig(ReaderPackage)
+    documentArchiveConfig.setStorageClient(storageClient)
     
-    documentArchiveReadOnly.load("kitchen-sink")
+    let archiveReadOnly = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
+    
+    archiveReadOnly.load("elife-32671")
         .then(function(documentArchive) {
-            window.documentArchive = documentArchive
             console.log(documentArchive)
         })
         .catch(function(errors) {
             console.log(errors);
-        });
+        })
 })

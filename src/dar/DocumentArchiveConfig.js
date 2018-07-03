@@ -1,37 +1,39 @@
+import DocumentArchiveTypes from "./DocumentArchiveTypes"
+
 export default class DocumentArchiveConfig {
     constructor(id) {
-        this.id = id
+        this._id = id || DocumentArchiveTypes.DEFAULT
 
-        this.articleConfig = null
-        this.context = null
-        this.storageClient = null
+        this._articleConfig = null
+        this._context = null
+        this._storageClient = null
     }
 
     getId() {
-        return this.id
+        return this._id
     }
 
     getArticleConfig() {
-        return this.articleConfig
+        return this._articleConfig
     }
 
     setArticleConfig(articleConfig) {
-        this.articleConfig = articleConfig
+        this._articleConfig = articleConfig
     }
 
     getContext() {
-        return this.context
+        return this._context
     }
 
     setContext(context) {
-        this.context = context
+        this._context = context
     }
 
     getStorageClient() {
-        return this.storageClient
+        return this._storageClient
     }
 
     setStorageClient(storageClient) {
-        this.storageClient = storageClient
+        this._storageClient = storageClient
     }
 }

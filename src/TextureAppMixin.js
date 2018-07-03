@@ -3,8 +3,6 @@ import { JATSImportDialog } from './article/index'
 export default function TextureAppMixin (ParentAppChrome) {
   return class TextureApp extends ParentAppChrome {
     render ($$) {
-      console.log("TextureApp.render()")
-      console.log(this);
       let el = $$('div').addClass('sc-app')
       let { archive, error } = this.state
       if (archive) {

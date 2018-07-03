@@ -1,7 +1,7 @@
 import { EventEmitter, forEach } from "substance"
 
-import DocumentLoader from "./DocumentLoader"
-import ManifestLoader from "./ManifestLoaderNew"
+import EditorSessionsGenerator from "../editor/util/EditorSessionsGenerator"
+import EditorSessionsValidator from "../editor/util/EditorSessionsValidator"
 
 /** 
  * @module dar/DocumentArchiveReadOnly
@@ -20,12 +20,16 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
     constructor(documentArchiveConfig) {
         super()
+
         this._archiveId = null,
-        this._documents = null,
-        this._manifest = null,
-        this._manifestLoader = null,
-        this._rawArchive = null,
+        this._config = {
+            ArticleConfig: documentArchiveConfig.getArticleConfig()
+        }
+        this._context = documentArchiveConfig.getContext() // TODO is this necessary here?
+        this._pendingFiles = {}
+        this._sessions = {}
         this._storage = documentArchiveConfig.getStorageClient()
+        this._upstreamArchive = null
     }
 
     /**
@@ -39,25 +43,47 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
         return new Promise(function(resolve, reject) {
             self._storage.read(archiveId)
-                .then(function(rawArchive) {
-                    self.setArchiveId(archiveId)
-                    self.setRawArchive(rawArchive)
-                    self._manifestLoader = new ManifestLoader()
-                    return self._manifestLoader.load( rawArchive.resources['manifest.xml'] )
+                .then(function(upstreamArchive) {
+                    self._archiveId = archiveId
+                    self._upstreamArchive = upstreamArchive
+                    return Promise.all([
+                        EditorSessionsGenerator.generateManifestSession(self),
+                        EditorSessionsGenerator.generatePubMetaSession(self)
+                    ])
                 })
-                .then(function(manifest) {
-                    self.setManifest(manifest)
-                    let documentLoader = new DocumentLoader()
-                    return documentLoader.load( self.getRawDocuments() )
+                .then(function(sessions) {
+                    self._sessions["manifest"] = sessions[0]
+                    self._sessions["pub-meta"] = sessions[1]    
+                    return EditorSessionsGenerator.generateDocumentsSession(self)
                 })
-                .then(function(documents) {
-                   self.setDocuments(documents)
-                   resolve(self)
+                .then(function(documentsSession) {
+                    self._sessions = Object.assign(self._sessions, documentsSession)
+                    let editorSessionsValidator = new EditorSessionsValidator()
+                    return editorSessionsValidator.areSessionsValid(self._sessions)
+                })
+                .then(function(validationResult) {
+                    if (!validationResult.ok) {
+                        reject(validationResult.errors)
+                    }
+                    
+                    resolve(self)
                 })
                 .catch(function(errors) {
                     reject(errors);
                 });
         });
+    }
+
+    resolveUrl(path) {
+        let blobUrl = this._pendingFiles[path]
+        if (blobUrl) {
+            return blobUrl
+        } else {
+            let fileRecord = this._upstreamArchive.resources[path]
+            if (fileRecord && fileRecord.encoding === 'url') {
+                return fileRecord.data
+            }
+        }
     }
 
     /**
@@ -69,31 +95,36 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         return this._archiveId
     }
 
-    /**
-     * Sets the id this read-only DAR
-     * 
-     * @param {string} archiveId The id of this read-only DAR
-     */
-    setArchiveId(archiveId) {
-        this._archiveId = archiveId
+    getConfig() {
+        return this._config
     }
 
     /**
-     * Gets all documents of this read-only DAR as instances of the TextureArchive class
+     * Gets the all document entries contained in the manifest of this read-only DAR 
      * 
-     * @returns {Object} All documents of this read-only DAR as instances of the TextureArchive class
+     * @returns {Object} All document entries contained in the manifest of this read-only DAR 
      */
-    getDocuments() {
-        return this._documents;
+    getDocumentEntries() {
+        return this.getManifest().getDocumentEntries()
     }
 
     /**
-     * Sets the documents of this read-only DAR
+     * Gets a single document entry contained in the manifest of this read-only DAR 
      * 
-     * @param {Object} documents All documents of this read-only DAR as instances of the TextureArchive class
+     * @param {string} id The id of a document entry contained in the manifest of this read-only DAR
+     * @returns {Object} A single document entry contained in the manifest of this read-only DAR 
      */
-    setDocuments(documents) {
-        this._documents = documents
+    getDocumentEntry(id) {
+        return this.getManifest().getDocumentEntry(id)
+    }
+
+    /**
+     * Gets the manifest of this read-only DAR 
+     * 
+     * @returns {ManifestDocument} The manifest of this read-only DAR
+     */
+    getManifest() {
+        return this._sessions["manifest"].getDocument()
     }
 
     /**
@@ -104,10 +135,10 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
     getRawDocuments() {
         let documents = {},
             documentEntries = this.getDocumentEntries(),
-            rawArchive = this.getRawArchive()
+            upstreamArchive = this.getUpstreamArchive()
         
         forEach(documentEntries, function(documentEntry, key) {
-            let document = rawArchive.resources[documentEntry.path]
+            let document = upstreamArchive.resources[documentEntry.path]
 
             if (!document) {
                 return false
@@ -121,49 +152,12 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
     }
 
     /**
-     * Gets the all document entries contained in the manifest of this read-only DAR 
+     * Gets the version of the this read-only DAR
      * 
-     * @returns {Object} All document entries contained in the manifest of this read-only DAR 
+     * @returns {string} The version of this ready-only DAR
      */
-    getDocumentEntries() {
-        return this._manifest.getDocumentEntries()
-    }
-
-    /**
-     * Gets a single document entry contained in the manifest of this read-only DAR 
-     * 
-     * @param {string} id The id of a document entry contained in the manifest of this read-only DAR
-     * @returns {Object} A single document entry contained in the manifest of this read-only DAR 
-     */
-    getDocumentEntry(id) {
-        return this._manifest.getDocumentEntry(id)
-    }
-
-    /**
-     * Gets the manifest of this read-only DAR 
-     * 
-     * @returns {ManifestDocument} The manifest of this read-only DAR
-     */
-    getManifest() {
-        return this._manifest
-    }
-
-    /**
-     * Sets the manifest of this read-only DAR 
-     * 
-     * @param {ManifestDocument} manifest The manifest of this read-only DAR
-     */
-    setManifest(manifest) {
-        this._manifest = manifest
-    }
-
-    /**
-     * Gets the manifest loader of this read-only DAR 
-     * 
-     * @returns {Object} The manifest loader of this read-only DAR
-     */
-    getManifestLoader() {
-        return this._manifestLoader
+    getVersion() {
+        return this._upstreamArchive.version
     }
 
     /**
@@ -171,25 +165,15 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
      * 
      * @returns {Object} The raw version of this read-only DAR
      */
-    getRawArchive() {
-        return this._rawArchive
+    getUpstreamArchive() {
+        return this._upstreamArchive
     }
 
-    /**
-     * Sets the raw version (as loaded from the server) of this read-only DAR
-     * 
-     * @param {Object} rawArchive The raw version of this read-only DAR 
-     */
-    setRawArchive(rawArchive) {
-        this._rawArchive = rawArchive
+    getEditorSession(sessionId) {
+        return this._sessions[sessionId]
     }
 
-    /**
-     * Gets the version of the this read-only DAR
-     * 
-     * @returns {string} The version of this ready-only DAR
-     */
-    getVersion() {
-        return this._getRawArchive().version
+    getEditorSessions() {
+        return this._sessions
     }
 }

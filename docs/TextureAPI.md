@@ -281,7 +281,7 @@ Result:
 List keywords for a given category:
 
 ```js
-meta.getKeywords('author-keyword)
+meta.getKeywords('author-keyword')
 ```
 
 ```js

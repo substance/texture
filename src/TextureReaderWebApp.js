@@ -34,19 +34,19 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
     }
 
     static _getDefaultMountConfig() {
-        let defaultStorageConfig = new VfsStorageConfig()
-        defaultStorageConfig.setDataFolder("./data/")
+        let storageConfig = new VfsStorageConfig()
+        storageConfig.setDataFolder("./data/")
 
-        let storageClient = StorageClientFactory.getStorageClient(defaultStorageConfig)
+        let storageClient = StorageClientFactory.getStorageClient(storageConfig)
 
-        let documentArchiveDefaultConfig = new DocumentArchiveReadOnlyConfig()
-        documentArchiveDefaultConfig.setArticleConfig(ReaderPackage)
-        documentArchiveDefaultConfig.setStorageClient(storageClient)
+        let documentArchiveConfig = new DocumentArchiveReadOnlyConfig()
+        documentArchiveConfig.setArticleConfig(ReaderPackage)
+        documentArchiveConfig.setStorageClient(storageClient)
 
         return {
             appClass: TextureReader,
             archiveId: getQueryStringParam('archive') || 'kitchen-sink',
-            documentArchiveConfig: documentArchiveDefaultConfig
+            documentArchiveConfig: documentArchiveConfig
         }
     }
 }

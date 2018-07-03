@@ -18,10 +18,12 @@ export default class DocumentLoader {
    * Loads all raw document of a DAR and converts them to instances of the TextureArchive class
    * 
    * @param {Object} rawDocuments The raw documents of a DAR
+   * @param {Object} context
+   * @param {Object} config
    * @returns {Promise} A promise that will be resolved with the documents of a DAR as instances of the TextureArchive class or 
    * rejected with errors that occured during the loading process 
    */
-  load(rawDocuments) {
+  load(rawDocuments, context, config) {
     if (!rawDocuments) {
       rawDocuments = {}
     }
@@ -36,7 +38,11 @@ export default class DocumentLoader {
         self = this
 
     forEach(rawDocuments, function(rawDocument, rawDocumentId) {
-      singleDocumentLoads.push( self.loadSingleDocument(rawDocumentId, rawDocument) ) 
+      if (!rawDocument || !rawDocument.type === "pub-meta") {
+        return false
+      }
+
+      singleDocumentLoads.push( self.loadSingleDocument(rawDocumentId, rawDocument, context, config) ) 
     })
     
     return new Promise(function(resolve, reject) {
@@ -61,10 +67,12 @@ export default class DocumentLoader {
    * 
    * @param {string} rawDocumentId The id of the raw document of a DAR
    * @param {Object} rawDocuments The raw document of a DAR
+   * @param {Object} context
+   * @param {Object} config
    * @returns {Promise} A promise that will be resolved with the document of a DAR as instance of the TextureArchive class or 
    * rejected with errors that occured during the loading process 
    */
-  loadSingleDocument(rawDocumentId, rawDocument) {
+  loadSingleDocument(rawDocumentId, rawDocument, context, config) {
     return new Promise(function(resolve, reject) {
       if (!rawDocument || !rawDocument.data) {
         reject("rawDocument to load is missing")
@@ -74,7 +82,7 @@ export default class DocumentLoader {
       {
         // TODO this could be done dynamically based upon the type of rawDocument
         let documentImporter = new JATSImporter(), 
-            documentImporterResult = documentImporter.import(rawDocument.data)
+            documentImporterResult = documentImporter.import(rawDocument.data, context)
 
         if (documentImporterResult.hasErrored) {
           reject(documentImporterResult.errors)

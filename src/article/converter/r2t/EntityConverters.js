@@ -56,7 +56,6 @@ export const OrganisationConverter = {
 }
 
 
-
 /*
   <contrib contrib-type='group'> -> Group
 
@@ -92,7 +91,6 @@ export const OrganisationConverter = {
   -->
 */
 
-
 export const GroupConverter = {
 
   import(el, pubMetaDb) {
@@ -115,31 +113,21 @@ export const GroupConverter = {
 
   export($$, node) {
     let el = $$('contrib').attr('contrib-type', 'group')
+    let collab = $$('collab')
+    collab.append(
+      $$('named-content').attr('content-type', 'name').append(node.name),
+      $$('email').append(node.email)
+    )
+    // Adds affiliations to group
+    _addAffiliations(collab, $$, node)
+    _addGroupMembers(collab, $$, node)
+    el.append(collab)
     return el
-    // let el = $$('contrib')
-    // el.append(
-    //   $$('name').append(
-    //     _createTextElement($$, node.surname, 'surname'),
-    //     _createTextElement($$, node.givenNames, 'given-names'),
-    //     _createTextElement($$, node.prefix, 'prefix'),
-    //     _createTextElement($$, node.suffix, 'suffix')
-    //   ),
-    //   _createTextElement($$, node.email, 'email')
-    // )
-    // let dom = el.ownerDocument
-    // node.affiliations.forEach(organisationId => {
-    //   // NOTE: we need to query the document for the internal aff record to
-    //   // map from the global entityId to the local affId
-    //   let affEl = dom.find(`aff[rid=${organisationId}]`)
-    //   el.append(
-    //     $$('xref').attr('ref-type', 'aff').attr('rid', affEl.id)
-    //   )
-    // })
-    // // Store entityId for explicit lookup on next import
-    // // el.append(_createTextElement($$, node.id, 'contrib-id', {'contrib-id-type': 'entity'}))
-    // return el
   }
+
 }
+
+
 
 
 /*
@@ -153,7 +141,6 @@ export const PersonConverter = {
     // Use existing record when possible
     let entity = _findPerson(el, pubMetaDb)
     if (!entity) {
-
       entity = pubMetaDb.create(
         _extractPerson(el)
       )
@@ -165,29 +152,38 @@ export const PersonConverter = {
   },
 
   export($$, node) {
-    let el = $$('contrib')
-    el.append(
-      $$('name').append(
-        _createTextElement($$, node.surname, 'surname'),
-        _createTextElement($$, node.givenNames, 'given-names'),
-        _createTextElement($$, node.prefix, 'prefix'),
-        _createTextElement($$, node.suffix, 'suffix')
-      ),
-      _createTextElement($$, node.email, 'email')
-    )
-    let dom = el.ownerDocument
-    node.affiliations.forEach(organisationId => {
-      // NOTE: we need to query the document for the internal aff record to
-      // map from the global entityId to the local affId
-      let affEl = dom.find(`aff[rid=${organisationId}]`)
-      el.append(
-        $$('xref').attr('ref-type', 'aff').attr('rid', affEl.id)
-      )
-    })
-    // Store entityId for explicit lookup on next import
-    // el.append(_createTextElement($$, node.id, 'contrib-id', {'contrib-id-type': 'entity'}))
+    let el = _exportPerson($$, node)
+    // Adds affiliations to el
+    _addAffiliations(el, $$, node)
     return el
   }
+}
+
+
+function _exportPerson($$, node) {
+  let el = $$('contrib').attr('contrib-type', 'person')
+  el.append(
+    $$('name').append(
+      _createTextElement($$, node.surname, 'surname'),
+      _createTextElement($$, node.givenNames, 'given-names'),
+      _createTextElement($$, node.prefix, 'prefix'),
+      _createTextElement($$, node.suffix, 'suffix')
+    ),
+    _createTextElement($$, node.email, 'email')
+  )
+  return el
+}
+
+function _addAffiliations(el, $$, node) {
+  let dom = el.ownerDocument
+  node.affiliations.forEach(organisationId => {
+    // NOTE: we need to query the document for the internal aff record to
+    // map from the global entityId to the local affId
+    let affEl = dom.find(`aff[rid=${organisationId}]`)
+    el.append(
+      $$('xref').attr('ref-type', 'aff').attr('rid', affEl.id)
+    )
+  })
 }
 
 /*
@@ -258,7 +254,7 @@ export const ElementCitationConverter = {
       let node = {
         type: mappingItemTypes[type],
         // normal fields
-        assignee: _getText(el, 'collab[collab-type=assignee]'),
+        assignee: _getText(el, 'collab[collab-type=assignee] > named-content'),
         confName: _getText(el, 'conf-name'),
         confLoc: _getText(el, 'conf-loc'),
         day: _getText(el, 'day'),
@@ -328,8 +324,16 @@ export const ElementCitationConverter = {
   export($$, node) {
     let type = node.type
     let el = $$('element-citation').attr('publication-type', reverseMapping(mappingItemTypes)[type])
+
     // Regular properties
-    el.append(_createTextElement($$, node.assignee, 'collab', {'collab-type': 'assignee'}))
+    if (node.assignee) {
+      el.append(
+        $$('collab').append(
+          _createTextElement($$, node.assignee, 'named-content', {'content-type': 'name'})
+        )
+      )
+    }
+
     el.append(_createTextElement($$, node.confName, 'conf-name'))
     el.append(_createTextElement($$, node.confLoc, 'conf-loc'))
     el.append(_createTextElement($$, node.day, 'day'))
@@ -361,9 +365,6 @@ export const ElementCitationConverter = {
     el.append(_exportPersonGroup($$, node.editors, 'editor'))
     el.append(_exportPersonGroup($$, node.inventors, 'inventor'))
     el.append(_exportPersonGroup($$, node.sponsors, 'sponsor'))
-
-    // Store entityId for explicit lookup on next import
-    // el.append(_createTextElement($$, node.id, 'pub-id', {'pub-id-type': 'entity'}))
 
     if (type === 'book' || type === 'report' || type === 'software') {
       el.append(_createTextElement($$, node.title, 'source'))
@@ -415,6 +416,16 @@ function _extractGroupMembers(el) {
   })
 }
 
+function _addGroupMembers(el, $$, node) {
+  let contribGroup = $$('contrib-group').attr('contrib-type', 'group-member')
+  node.members.forEach(member => {
+    contribGroup.append(
+      _exportPerson($$, member)
+    )
+  })
+  el.append(contribGroup)
+}
+
 function _extractAffiliations(el) {
   let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=aff]')
@@ -431,6 +442,8 @@ function _extractAffiliations(el) {
   })
   return affs
 }
+
+
 
 function _findCitation(el, pubMetaDb) {
   let entityId = _getText(el, 'pub-id[pub-id-type=entity]')

@@ -73,12 +73,14 @@ function _exportPersons($$, dom, pubMetaDb, type) {
   let contribs = contribGroup.findAll('contrib')
   contribs.forEach(contrib => {
     let node = pubMetaDb.get(contrib.attr('rid'))
-    // TODO: detect group authors and use special GroupAuthorConverter
-    let newContribEl = PersonConverter.export($$, node, pubMetaDb)
+    let newContribEl
+    if (node.type === 'group') {
+      newContribEl = GroupConverter.export($$, node, pubMetaDb)
+    } else {
+      newContribEl = PersonConverter.export($$, node, pubMetaDb)
+    }
+    
     contrib.innerHTML = newContribEl.innerHTML
-    // HACK: we can set contrib-type explicitly to person for now,
-    // until we introduce support for group authors
-    contrib.setAttribute('contrib-type', 'person')
     contrib.removeAttr('rid')
   })
 }

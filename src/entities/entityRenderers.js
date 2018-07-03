@@ -655,7 +655,7 @@ function personRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function groupRenderer($$, entityId, entityDb, options = {}) {
+function groupRenderer($$, entityId, entityDb) {
   let { name } = entityDb.get(entityId)
   return [ name ]
 }

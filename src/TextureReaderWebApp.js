@@ -12,37 +12,40 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
     static start(customMountConfig, customMountPoint) {
         substanceGlobals.DEBUG_RENDERING = platform.devtools
 
-        let finalMountConfig = TextureReaderAppWeb._getFinalMountConfig(customMountPoint)
-        let finalMountPoint = TextureReaderAppWeb._getFinalMountPoint(customMountConfig)
+        let finalMountConfig = TextureReaderAppWeb._getFinalMountConfig(customMountConfig)
+        let finalMountPoint = TextureReaderAppWeb._getFinalMountPoint(customMountPoint)
         
-        console.log("TextureReaderApp.mount() with the following final mount config")
-        console.log(finalMountConfig)
+        console.group("TextureReaderApp.mount()")
+            console.group("mount config")
+                console.log(finalMountConfig)
+            console.groupEnd()
+        console.groupEnd()
 
         return TextureReaderAppWeb.mount(finalMountConfig, finalMountPoint)
     }
 
-    static _getFinalMountConfig(userProvidedMountConfig) {
+    static _getFinalMountConfig(customMountConfig) {
         let defaultMountConfig = TextureReaderAppWeb._getDefaultMountConfig() 
-        return Object.assign(defaultMountConfig, userProvidedMountConfig)
+        return Object.assign(defaultMountConfig, customMountConfig)
     }
 
-    static _getFinalMountPoint(userProvidedMountPoint) {
-        return userProvidedMountPoint || window.document.body
+    static _getFinalMountPoint(customMountPoint) {
+        return customMountPoint || window.document.body
     }
 
     static _getDefaultMountConfig() {
         let defaultStorageConfig = new VfsStorageConfig()
         defaultStorageConfig.setDataFolder("./data")
 
-        let storageClient = StorageClientFactory.getStorageClient(defaultStorageClient)
+        let storageClient = StorageClientFactory.getStorageClient(defaultStorageConfig)
 
         let documentArchiveDefaultConfig = new DocumentArchiveReadOnlyConfig()
+        documentArchiveDefaultConfig.setArticleConfig(ReaderPackage)
         documentArchiveDefaultConfig.setStorageClient(storageClient)
 
         return {
             appClass: TextureReader,
             archiveId: getQueryStringParam('archive') || 'kitchen-sink',
-            articleConfig: ReaderPackage,
             documentArchiveConfig: documentArchiveDefaultConfig
         }
     }

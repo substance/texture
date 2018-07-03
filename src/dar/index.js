@@ -1,5 +1,7 @@
 export { default as DocumentArchive } from './DocumentArchive'
+export { default as DocumentArchiveFactory } from './DocumentArchiveFactory'
 export { default as DocumentArchiveReadOnly } from './DocumentArchiveReadOnly'
+export { default as DocumentArchiveReadOnlyConfig } from './DocumentArchiveReadOnlyConfig'
 
 export { default as HttpStorageClient } from './HttpStorageClient'
 export { default as HttpStorageConfig } from './HttpStorageConfig'

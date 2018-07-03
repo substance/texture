@@ -1,6 +1,5 @@
 import {
     ReaderPackage,
-    DocumentArchiveConfig,
     DocumentArchiveFactory,
     DocumentArchiveReadOnlyConfig,
     StorageClientFactory,

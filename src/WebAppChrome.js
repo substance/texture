@@ -8,8 +8,6 @@ export default class WebAppChrome extends AppChrome {
   async _loadArchive(archiveId, context) {
     let documentArchiveConfig = this.props.documentArchiveConfig
     documentArchiveConfig.setContext(context)
-    documentArchiveConfig.setArticleConfig(this.props.articleConfig)
-
     let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
     return archive.load(archiveId)
   }

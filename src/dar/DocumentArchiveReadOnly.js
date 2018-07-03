@@ -34,6 +34,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         this._pendingFiles = {}
         this._sessions = {}
         this._storage = documentArchiveConfig.getStorageClient()
+        this._storageConfig = documentArchiveConfig.getStorageConfig()
         this._upstreamArchive = null
     }
 

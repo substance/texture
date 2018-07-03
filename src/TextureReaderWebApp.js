@@ -35,7 +35,7 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
 
     static _getDefaultMountConfig() {
         let defaultStorageConfig = new VfsStorageConfig()
-        defaultStorageConfig.setDataFolder("./data")
+        defaultStorageConfig.setDataFolder("./data/")
 
         let storageClient = StorageClientFactory.getStorageClient(defaultStorageConfig)
 

@@ -1,4 +1,4 @@
-import { getQueryStringParam, substanceGlobals, platform } from 'substance'
+import { getQueryStringParam, substanceGlobals, parseKeyEvent, platform } from 'substance'
 
 import EditorPackage from './editor/EditorPackage'
 import { TextureReader } from './reader'
@@ -12,6 +12,27 @@ import InMemoryDarBuffer from './dar/InMemoryDarBuffer';
 
 export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
     
+    // TODO: document why we need a different keydown behavior here
+    // otherwise, if it should be the same, move the common implementation
+    // into TextureAppMixin
+    _handleKeyDown(event) {
+        // Handle custom keyboard shortcuts globally
+        let archive = this.state.archive
+        let handled = false
+        if (archive) {
+            let manuscriptSession = archive.getEditorSession('manuscript')
+            handled = manuscriptSession.keyboardManager.onKeydown(event)
+        }
+        if (!handled) {
+            let key = parseKeyEvent(event)
+            // CommandOrControl+S
+            if (key === 'META+83' || key === 'CTRL+83') {
+                this._save()
+                event.preventDefault()
+            }
+        }
+    }
+
     static start(customMountConfig, customMountPoint) {
         substanceGlobals.DEBUG_RENDERING = platform.devtools
 

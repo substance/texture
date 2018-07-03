@@ -655,6 +655,11 @@ function personRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
+function groupRenderer($$, entityId, entityDb, options = {}) {
+  let { name } = entityDb.get(entityId)
+  return [ name ]
+}
+
 
 /* This is used within references */
 function refPersonRenderer($$, entry, options = {}) {
@@ -698,6 +703,7 @@ function organisationRenderer($$, entityId, entityDb, options = {}) {
 */
 export default {
   'person': _delegate(personRenderer),
+  'group': _delegate(groupRenderer),
   'book': _delegate(bookRenderer),
   'chapter': _delegate(chapterRenderer),
   'journal-article': _delegate(journalArticleRenderer),

@@ -1,4 +1,4 @@
-import { OrganisationConverter, PersonConverter } from './EntityConverters'
+import { OrganisationConverter, PersonConverter, GroupConverter } from './EntityConverters'
 import { expandContribGroup, removeEmptyElementsIfNoChildren } from './r2tHelpers'
 
 export default class ConvertAuthors {
@@ -15,6 +15,7 @@ export default class ConvertAuthors {
       aff.setAttribute('rid', entityId)
       aff.empty()
     })
+
     // Convert contrib elements to person entities
     _importPersons(dom, pubMetaDb, 'author')
     _importPersons(dom, pubMetaDb, 'editor')
@@ -54,8 +55,13 @@ function _importPersons(dom, pubMetaDb, type) {
   if(contribGroup === null) return
   let contribs = contribGroup.findAll('contrib')
   contribs.forEach(contrib => {
-    // TODO: detect group authors and use special GroupAuthorConverter
-    let entityId = PersonConverter.import(contrib, pubMetaDb)
+    let entityId
+
+    if (contrib.attr('contrib-type') === 'group') {
+      entityId = GroupConverter.import(contrib, pubMetaDb)
+    } else {
+      entityId = PersonConverter.import(contrib, pubMetaDb)
+    }
     contrib.setAttribute('rid', entityId)
     contrib.empty()
   })

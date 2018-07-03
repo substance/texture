@@ -202,28 +202,47 @@
   </define>
 
   <!--
-    WIP Requirements are not clear yet.
+    Used for modelling group authors:
 
-    Looking at Scielo's guideline, this is a text field used
-    within <contrib>
-
-    TODO: provide transformation
+  <contrib contrib-type="group" equal-contrib="yes" corresp="no" deceased="no">
+    <collab>
+      <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
+      <xref ref-type="aff" rid="aff2"/>
+      <xref ref-type="award" rid="fund1" />
+      <contrib-group contrib-type="group-member">
+        <contrib contrib-type="person">
+          <name>
+            <surname>Kelly</surname><given-names>Laura A.</given-names>
+          </name>
+          <role>Writing Group</role>
+          <xref ref-type="aff" rid="aff2"/>
+        </contrib>
+        <contrib contrib-type="person">
+          <name>
+            <surname>Randall</surname><given-names>Daniel Lee</given-names>
+            <suffix>Jr.</suffix>
+          </name>
+          <role>Lab Group</role>
+          <xref ref-type="aff" rid="aff3"/>
+        </contrib>
+      </contrib-group>
+    </collab>
+  </contrib>
   -->
   <define name="collab">
     <element name="collab">
       <ref name="collab-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-text"/>
-          <!-- <ref name="address.class"/> -->
-          <!-- <ref name="contrib-group.class"/> -->
-          <!-- <ref name="contrib-info.class"/> -->
-          <!-- <ref name="fn-link.class"/> -->
-        </choice>
-      </zeroOrMore>
+      <interleave>
+        <optional><ref name="email"/></optional>
+        <ref name="named-content"/>
+        <optional><ref name="contrib-group"/></optional>
+        <zeroOrMore><ref name="xref"/></zeroOrMore>
+      </interleave>
     </element>
   </define>
+
+
+
 
   <!--
     WIP We need a guideline to be clear if the content
@@ -259,6 +278,7 @@
         <optional><ref name="name"/></optional>
         <optional><ref name="email"/></optional>
         <optional><ref name="collab"/></optional>
+        <optional><ref name="role"/></optional>
         <zeroOrMore><ref name="xref"/></zeroOrMore>
       </interleave>
     </element>
@@ -575,11 +595,13 @@
       <choice>
         <zeroOrMore>
           <choice>
-            <!--
-              HACK: Disable text in named-content, otherwise prettyPrintXML will mess up
-              code cells (code > named-content > code), where named-content must not contain any text.
+            <!-- 
+              NOTE: enabling this breaks prettyPrintXML: code cells (code > named-content > code),
+              where named-content must not contain any text.
+
+              TODO: remove all usage of named-content for code cells
             -->
-            <!-- <text/> -->
+            <text/>
             <ref name="emphasis.class"/>
             <ref name="inline-display-noalt.class"/>
             <ref name="inline-math.class"/>

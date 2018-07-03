@@ -242,6 +242,17 @@ Person.schema = {
   affiliations: { type: ['organisation'], default: [] },
 }
 
+
+export class Group extends DocumentNode {}
+
+Group.schema = {
+  type: 'group',
+  name: { type: 'string', optional: true },
+  email: { type: 'string', optional: true },
+  affiliations: { type: ['organisation'], default: [] },
+  members: { type: ['object'], default: [] },
+}
+
 export class Organisation extends DocumentNode {}
 
 Organisation.schema = {

@@ -42,6 +42,12 @@ contribs.addAffiliation({
 })
 ```
 
+Get affiliation:
+
+```js
+contribs.getAffiliation('aff1')
+```
+
 Update an affiliation:
 
 ```js

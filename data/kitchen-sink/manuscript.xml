@@ -7,7 +7,7 @@
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
       </title-group>
       <contrib-group id="contrib-group-1" content-type="author">
-        <contrib id="contrib-1" contrib-type="person">
+        <contrib id="contrib-1" contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
           <name>
             <surname>Schaffelhofer</surname>
             <given-names>Stefan</given-names>
@@ -22,6 +22,34 @@
           </name>
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
+        </contrib>
+        <!-- group author with members -->
+        <contrib contrib-type="group" equal-contrib="yes" corresp="no" deceased="no">
+          <collab>
+            <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
+            <email>mouse-project@example.com</email>
+            <xref ref-type="aff" rid="aff2"/>
+            <!-- <xref ref-type="award" rid="fund1" /> -->
+            <contrib-group contrib-type="group-member">
+              <contrib contrib-type="person">
+                <name>
+                  <surname>Kelly</surname><given-names>Laura A.</given-names>
+                </name>
+                <!-- role can be used to group members into subgroups, note that role element
+                is used on contrib level not contrib-group level. -->
+                <role>Writing Group</role>
+                <xref ref-type="aff" rid="aff2"/>
+              </contrib>
+              <contrib contrib-type="person">
+                <name>
+                  <surname>Randall</surname><given-names>Daniel Lee</given-names>
+                  <suffix>Jr.</suffix>
+                </name>
+                <role>Lab Group</role>
+                <xref ref-type="aff" rid="aff3"/>
+              </contrib>
+            </contrib-group>
+          </collab>
         </contrib>
       </contrib-group>
       <contrib-group id="contrib-group-2" content-type="editor">
@@ -470,7 +498,7 @@
       </ref>
       <ref id="r8">
         <element-citation publication-type="patent">
-          <collab collab-type="assignee">Hospira, Inc.</collab>
+          <collab collab-type="assignee"><named-content content-type="name">Hospira, Inc.</named-content></collab>
           <day>5</day>
           <month>10</month>
           <patent country="US">US 6,980,855</patent>

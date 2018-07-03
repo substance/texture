@@ -22,9 +22,14 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         super()
 
         this._archiveId = null,
+
+        /**
+         * TODO can we do this._articleConfig = documentArchiveConfig.getArticleConfig()
+         */
         this._config = {
             ArticleConfig: documentArchiveConfig.getArticleConfig()
         }
+
         this._context = documentArchiveConfig.getContext() // TODO is this necessary here?
         this._pendingFiles = {}
         this._sessions = {}
@@ -74,6 +79,11 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         });
     }
 
+    /**
+     * TODO what is this function doing?
+     * 
+     * @param {string} path 
+     */
     resolveUrl(path) {
         let blobUrl = this._pendingFiles[path]
         if (blobUrl) {
@@ -95,6 +105,12 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         return this._archiveId
     }
 
+    /**
+     * TODO can we rename this to getArticleConfig()?
+     * 
+     * Returns the configuration of this DAR 
+     * @return {Object} The configuration of this DAR
+     */
     getConfig() {
         return this._config
     }
@@ -169,10 +185,25 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         return this._upstreamArchive
     }
 
+    /**
+     * TODO can this be renamed to getSession()?
+     * 
+     * Returns a single session of this DAR
+     * 
+     * @param {string} sessionId The id of the session
+     * @returns {Object} A single session of this DAR
+     */
     getEditorSession(sessionId) {
         return this._sessions[sessionId]
     }
 
+    /**
+     * TODO can this be renamed to getSessions()?
+     * 
+     * Returns all session of this DAR
+     * 
+     * @returns {Object} All sessions of this DAR
+     */
     getEditorSessions() {
         return this._sessions
     }

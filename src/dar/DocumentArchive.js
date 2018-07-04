@@ -1,3 +1,7 @@
+/**
+ * TODO Find out if this is used somewhere or if 
+ * this can be deleted? 
+ */
 export default class DocumentArchive {
 
   constructor(sessions, buffer) {

@@ -19,11 +19,14 @@ export default function checkLoadArchive(ArchiveClass, documentArchiveConfig, ra
       .then(function(documentSessions) {
         let existingSessions = testArchive.getSessions()
         let finalSessions = Object.assign(existingSessions, documentSessions)
-        let editorSessionsValidator = new EditorSessionsValidator()
-        return editorSessionsValidator.areSessionsValid(finalSessions)
+        return EditorSessionsValidator.areSessionsValid(finalSessions)
       })
-      .then(function(validatedSessions) {
-        resolve(validatedSessions)
+      .then(function(validationResult) {
+        if ( !validationResult.isOk() ) {
+          reject( validationResult.getErrors() )
+        }
+        
+        resolve(validationResult)
       })
       .catch(function(errors) {
         reject(errors)

@@ -4,7 +4,7 @@ import { TextureReader, ReaderPackage } from './reader'
 import DocumentArchiveReadOnlyConfig from './dar/DocumentArchiveReadOnlyConfig'
 import StorageClientFactory from './dar/StorageClientFactory'
 import TextureAppMixin from './TextureAppMixin'
-import VfsStorageConfig from './dar/VfsStorageConfig'
+import VfsStorageClientConfig from './dar/VfsStorageClientConfig'
 import WebAppChrome from './WebAppChrome'
 
 export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
@@ -40,10 +40,10 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
     }
 
     static _getDefaultMountConfig() {
-        let storageConfig = new VfsStorageConfig()
-        storageConfig.setDataFolder("./data/")
+        let storageClientConfig = new VfsStorageClientConfig()
+        storageClientConfig.setDataFolder("./data/")
 
-        let storageClient = StorageClientFactory.getStorageClient(storageConfig)
+        let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
 
         let documentArchiveConfig = new DocumentArchiveReadOnlyConfig()
         documentArchiveConfig.setArticleConfig(ReaderPackage)

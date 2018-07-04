@@ -5,11 +5,22 @@ import ManifestLoaderNew from "../../dar/ManifestLoaderNew"
 import PubMetaLoader from "../../PubMetaLoader"
 import TextureConfigurator from "./TextureConfigurator"
 
-/**
- * Maybe this could be moved to substance/ui
+/** 
+ * @module editor/util/EditorSessionsGenerator
+ * 
+ * @description
+ * A service class that provived various method to 
+ * create editor (better document archive - DAR) sessions
  */
 export default class EditorSessionsGenerator {
 
+    /**
+     * Creates a session for the manifest of a document archive DAR 
+     * 
+     * @param {Object} archive The document archive DAR 
+     * @returns {Promise} A promise that will be resolved with the manifest session 
+     * or rejected with errors that occured during the session generation process 
+     */
     static generateSessionForManifest(archive) {
         return new Promise(function(resolve, reject) {
             let manifestLoaderNew = new ManifestLoaderNew(),
@@ -30,6 +41,14 @@ export default class EditorSessionsGenerator {
         })
     }
 
+    /**
+     * Creates a session for the publication metadata resource of a DAR 
+     * 
+     * @param {Object} archive The document archive DAR 
+     * @returns {Promise} A promise that will be resolved with the session for the
+     * publication metadata resource or rejected with errors that occured during 
+     * the session generation process 
+     */
     static generateSessionForPubMeta(archive) {
         return new Promise(function(resolve, reject) {
             try 
@@ -43,6 +62,14 @@ export default class EditorSessionsGenerator {
         })
     }
 
+    /**
+     * Creates sessions for the existing document contained within a DAR 
+     * 
+     * @param {Object} archive The document archive DAR 
+     * @returns {Promise} A promise that will be resolved with the sessions for the
+     * documents or rejected with errors that occured during the generation process
+     * of the sessions 
+     */
     static generateSessionsForExistingDocuments(archive) {
         return new Promise(function(resolve, reject) {
             let archiveConfig = archive.getConfig(),
@@ -74,6 +101,14 @@ export default class EditorSessionsGenerator {
         })
     }
 
+    /**
+     * Creates a session for a document that has been newly added to a DAR 
+     * 
+     * @param {Object} archive The document archive DAR 
+     * @param {Object} rawDocument The document added newly to the DAR 
+     * @returns {Promise} A promise that will be resolved with the sessions for the
+     * new document or rejected with errors that occured during the session generation process
+     */
     static generateSessionForNewDocument(archive, rawDocument) {
         return new Promise(function(resolve, reject) {
             let archiveConfig = archive.getConfig(),
@@ -94,6 +129,14 @@ export default class EditorSessionsGenerator {
         })
     }
 
+    /**
+     * A helper function that creates the actual document session
+     * 
+     * @param {Object} document The document for which to create a session 
+     * @param {Object} archiveConfig
+     * @param {Object} existingSessions Already existing sessions (the context) of the DAR 
+     * @returns {Object} The document session
+     */
     static _createSession(document, archiveConfig, existingSessions) {
         let configurator = new TextureConfigurator()
         configurator.import(archiveConfig.ArticleConfig)

@@ -1,28 +1,42 @@
 import DocumentArchiveReadOnlyExporter from "./DocumentArchiveReadOnlyExporter";
 
+/** 
+ * @module dar/DocumentArchiveReadWriteExporter
+ * 
+ * @description
+ * A service class which offers various methods to export a read-write document 
+ * archive (read-write DAR) to various formats/representations
+ */
 export default class DocumentArchiveReadWriteExporter extends DocumentArchiveReadOnlyExporter {
-    /*
-     * Uses the current state of the buffer to generate a rawArchive object
-     * containing all changed documents
+    
+    /**
+     * Exports a read-write DAR to a raw version
+     * 
+     * @param {Object} archive The DAR to export
+     * @returns {Promise} A promise that will be resolved with the exported version 
+     * of the DAR or rejected with errors that occured during the export process
      */
     static export(archive) {
         return new Promise(function(resolve, reject) {
             try 
             {
+                /*
+                 * Uses the current state of the buffer to generate a rawArchive object
+                 * containing all changed documents
+                 */
                 let buffer = archive.getBuffer()
-
-                let rawArchive = {
-                    version: buffer.getVersion(),
-                    diff: buffer.getChanges(),
-                    resources: {}
-                }
 
                 let archiveSessions = archive.getSessions()
 
-                rawArchive = DocumentArchiveReadWriteExporter._exportAssets(archiveSessions, buffer, rawArchive)
-                rawArchive = DocumentArchiveReadWriteExporter._exportManifest(archiveSessions, buffer, rawArchive)
-                rawArchive = DocumentArchiveReadWriteExporter._exportDocuments(archiveSessions, buffer, rawArchive)
-                resolve(rawArchive)
+                let rawAssets = DocumentArchiveReadWriteExporter._exportAssets(archiveSessions, buffer)
+                let rawManifest = DocumentArchiveReadWriteExporter._exportManifest(archiveSessions, buffer)
+                let rawDocuments = DocumentArchiveReadWriteExporter._exportDocuments(archiveSessions, buffer)
+                
+                resolve({
+                    diff: buffer.getChanges(),
+                    resources: Object.assign({}, rawAssets, rawManifest, rawDocuments), 
+                    version: buffer.getVersion()
+                })
             }
             catch(errors)
             {

@@ -1,5 +1,10 @@
-import DocumentArchiveTypes from "./DocumentArchiveTypes"
-
+/** 
+ * @module dar/DocumentArchiveConfig
+ * 
+ * @description
+ * The base class for all document archive configuration classes. 
+ * It should not be initialized directly.
+ */
 export default class DocumentArchiveConfig {
     constructor() {
         this._articleConfig = null

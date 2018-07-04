@@ -1,15 +1,41 @@
 import { forEach, last, uuid } from "substance"
+
 import DocumentArchiveBufferSynchronizer from "./DocumentArchiveBufferSynchronizer"
 import DocumentArchiveReadWriteExporter from "./DocumentArchiveReadWriteExporter"
 import DocumentArchiveReadOnly from "./DocumentArchiveReadOnly";
 import EditorSessionGenerator from "../editor/util/EditorSessionsGenerator"
 
+/** 
+ * @module dar/DocumentArchiveReadWrite
+ * 
+ * @description
+ * A read-write DAR which contains the write-related functionality 
+ * of the PersistedDocumentArchive. The necessary read-related functionality
+ * is inherited from the DocumentArchiveReadOnly base class. 
+ * 
+ * It is intended to be used for the usage within application 
+ * which have to modify DARs (usually an editor).
+ * 
+ * Together with the functionality of the DocumentArchiveReadOnly base class
+ * this is a 3-tier stack representing a document archive at different application levels:
+ * 
+ * 1. Editor: an application such as Texture works on an in-memory data model,
+ *    managed by EditorSessions. There may be multiple sessions for different parts of the
+ *    document archive, e.g. the manuscript and an entity db.
+ * 2. Buffer: a short-term storage for pending changes. Until the document archive
+ *    is saved permanently, changes are recorded and can be persisted, e.g. to
+ *    avoid loosing changes when the browser is closed inadvertently.
+ * 3. Storage: a long-term storage where the document archive is persisted and versioned.
+ * 
+ * The DAR - with the help of external service classes - manages the communication 
+ * between the three layers, e.g. when the user changes a document, it records the change 
+ * and stores it into the buffer, and eventually saving a new version of the archive.
+*/
 export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
 
     constructor(documentArchiveConfig) {
         super(documentArchiveConfig)
         this.buffer = documentArchiveConfig.getBuffer()
-        this._bufferSynchronizer = null
     }
 
     async addDocument(type, name, rawDocument) {
@@ -63,7 +89,9 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
     }
 
     /**
-     * Exports this read-only DAR
+     * Exports this DAR
+     * 
+     * @returns {Object} The exported DAR in different format/representation
      */
     export() {
         return DocumentArchiveReadWriteExporter.export(this)
@@ -73,6 +101,12 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
         return this.buffer.hasPendingChanges()
     }
 
+    /**
+     * Loads a DAR
+     * 
+     * @param {string} archiveId The id of the  DAR to load
+     * @returns {Promise} A promise that will be resolved with the DAR or rejected with errors that occured during the loading process 
+     */
     load(archiveId) {
         let self = this,
             readOnlyArchiveLoad = super.load(archiveId)
@@ -83,14 +117,14 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
                     return self.buffer.load()
                 })
                 .then(function() {
-                    // TODO can I apply the buffer snychronization after the loading and sessions creation?
-                    self._bufferSynchronizer = new DocumentArchiveBufferSynchronizer()
-                    return self._bufferSynchronizer.synchronize(self.buffer, self._upstreamArchive)
+                    // TODO can I apply the buffer snychronization after the 
+                    // loading and sessions creation?
+                    return DocumentArchiveBufferSynchronizer.synchronize(self)
                 })
                 .then(function(synchronizedBuffer) {
-                    // TODO what is the applyPendingChanges method doing - is it necessary?
+                    // TODO find out what is the applyPendingChanges method doing - is it necessary?
                     self.buffer = synchronizedBuffer 
-                    return self._bufferSynchronizer.applyPendingChanges(self.buffer, self._upstreamArchive)
+                    return DocumentArchiveBufferSynchronizer.applyPendingChanges(self)
                 })
                 .then(function(synchronizedBuffer) {
                     self.buffer = synchronizedBuffer
@@ -126,6 +160,17 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
         })
     }
 
+    /**
+     * Saves a raw representation of this DAR 
+     * 
+     * @description
+     * The raw representation of thie DAR is saved via this DAR's associated
+     * storage client 
+     * 
+     * @param {string} archiveId The id of the archive to save
+     * @returns {Promise} A promise that will be resolved with the JSONified raw version of the 
+     * saved DAR or rejected with errors that occured during the saving process
+     */
     save() {
         if (!this.buffer.hasPendingChanges()) {
             console.info('Save: no pending changes.')
@@ -148,6 +193,13 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
         })
     }
 
+    /**
+     * Saves a raw representation of this DAR under a new id
+     * 
+     * @param {string} newArchiveId The new id under which the DAR should be saved
+     * @returns {Promise} A promise that will be resolved with the JSONified raw version of the 
+     * saved DAR or rejected with errors that occured during the saving process
+     */
     saveAs(newArchiveId) {
         let readOnlyArchiveSaveAs = super.saveAs(newArchiveId), 
             self = this

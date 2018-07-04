@@ -6,7 +6,7 @@ import StorageClientFactory from './dar/StorageClientFactory'
 import Texture from './Texture'
 import TextureAppMixin from './TextureAppMixin'
 import TextureArchiveConfig from './TextureArchiveConfig'
-import VfsStorageConfig from './dar/VfsStorageConfig'
+import VfsStorageClientConfig from './dar/VfsStorageClientConfig'
 import WebAppChrome from './WebAppChrome'
 
 export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
@@ -63,10 +63,10 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
     }
 
     static _getDefaultMountConfig() {
-        let storageConfig = new VfsStorageConfig()
-        storageConfig.setDataFolder("./data/")
+        let storageClientConfig = new VfsStorageClientConfig()
+        storageClientConfig.setDataFolder("./data/")
 
-        let storageClient = StorageClientFactory.getStorageClient(storageConfig)
+        let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
 
         let documentArchiveConfig = new TextureArchiveConfig()
         documentArchiveConfig.setArticleConfig(EditorPackage)

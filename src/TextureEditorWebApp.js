@@ -1,15 +1,13 @@
 import { getQueryStringParam, substanceGlobals, parseKeyEvent, platform } from 'substance'
 
 import EditorPackage from './editor/EditorPackage'
-import { TextureReader } from './reader'
-
-import TextureArchive from './TextureArchive'
-import TextureArchiveConfig from './TextureArchiveConfig'
+import InMemoryDarBuffer from './dar/InMemoryDarBuffer';
 import StorageClientFactory from './dar/StorageClientFactory'
+import Texture from './Texture'
 import TextureAppMixin from './TextureAppMixin'
+import TextureArchiveConfig from './TextureArchiveConfig'
 import VfsStorageConfig from './dar/VfsStorageConfig'
 import WebAppChrome from './WebAppChrome'
-import InMemoryDarBuffer from './dar/InMemoryDarBuffer';
 
 export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
     
@@ -72,7 +70,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
         
 
         return {
-            appClass: TextureReader,
+            appClass: Texture,
             archiveId: getQueryStringParam('archive') || 'kitchen-sink',
             documentArchiveConfig: documentArchiveConfig
         }

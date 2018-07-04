@@ -53,17 +53,17 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
                     self._archiveId = archiveId
                     self._upstreamArchive = upstreamArchive
                     return Promise.all([
-                        EditorSessionsGenerator.generateManifestSession(self),
-                        EditorSessionsGenerator.generatePubMetaSession(self)
+                        EditorSessionsGenerator.generateSessionForManifest(self),
+                        EditorSessionsGenerator.generateSessionForPubMeta(self)
                     ])
                 })
                 .then(function(sessions) {
                     self._sessions["manifest"] = sessions[0]
                     self._sessions["pub-meta"] = sessions[1]    
-                    return EditorSessionsGenerator.generateDocumentsSession(self)
+                    return EditorSessionsGenerator.generateSessionsForExistingDocuments(self)
                 })
-                .then(function(documentsSession) {
-                    self._sessions = Object.assign(self._sessions, documentsSession)
+                .then(function(documentSessions) {
+                    self._sessions = Object.assign(self._sessions, documentSessions)
                     let editorSessionsValidator = new EditorSessionsValidator()
                     return editorSessionsValidator.areSessionsValid(self._sessions)
                 })
@@ -136,12 +136,21 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
     }
 
     /**
-     * Gets the manifest of this read-only DAR 
+     * Gets the manifest of this read-only DAR
      * 
      * @returns {ManifestDocument} The manifest of this read-only DAR
      */
     getManifest() {
-        return this._sessions["manifest"].getDocument()
+        return this.getManifestSession().getDocument()
+    }
+
+    /**
+     * Gets the manifest session of this read-only DAR
+     * 
+     * @returns {ManifestDocument} The manifest session of this read-only DAR
+     */
+    getManifestSession() {
+        return this._sessions["manifest"]
     }
 
     /**

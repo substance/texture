@@ -118,6 +118,12 @@
       <abstract id="abstract-1">
         <p id="p-1"><bold id="bold-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref></p>
       </abstract>
+      <kwd-group>
+        <kwd content-type="author-keyword">optogenetics</kwd>
+        <kwd content-type="author-keyword">two-photon</kwd>
+        <kwd content-type="author-keyword">calcium imaging</kwd>
+        <kwd content-type="research-organism">Mouse</kwd>
+      </kwd-group>
       <funding-group>
         <award-group id="fund1">
           <funding-source>

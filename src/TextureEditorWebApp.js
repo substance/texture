@@ -3,7 +3,8 @@ import { getQueryStringParam, substanceGlobals, parseKeyEvent, platform } from '
 import EditorPackage from './editor/EditorPackage'
 import { TextureReader } from './reader'
 
-import DocumentArchiveReadWriteConfig from './dar/DocumentArchiveReadWriteConfig'
+import TextureArchive from './TextureArchive'
+import TextureArchiveConfig from './TextureArchiveConfig'
 import StorageClientFactory from './dar/StorageClientFactory'
 import TextureAppMixin from './TextureAppMixin'
 import VfsStorageConfig from './dar/VfsStorageConfig'
@@ -63,7 +64,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
 
         let storageClient = StorageClientFactory.getStorageClient(storageConfig)
 
-        let documentArchiveConfig = new DocumentArchiveReadWriteConfig()
+        let documentArchiveConfig = new TextureArchiveConfig()
         documentArchiveConfig.setArticleConfig(EditorPackage)
         documentArchiveConfig.setBuffer( new InMemoryDarBuffer() )
         documentArchiveConfig.setStorageConfig(storageConfig)

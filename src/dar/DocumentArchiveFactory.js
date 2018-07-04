@@ -1,7 +1,6 @@
 import DocumentArchiveReadOnly from "./DocumentArchiveReadOnly"
 import DocumentArchiveReadWrite from "./DocumentArchiveReadWrite"
 import DocumentArchiveTypes from "./DocumentArchiveTypes"
-import InMemoryDarBuffer  from "./InMemoryDarBuffer"
 
 export default class DocumentArchiveFactory {
     static getDocumentArchive(documentArchiveConfig) {

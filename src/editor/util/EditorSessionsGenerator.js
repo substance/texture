@@ -63,15 +63,7 @@ export default class EditorSessionsGenerator {
                     let sessions = {}
                     
                     forEach(documents, function(document, documentId) {
-                        let configurator = new TextureConfigurator()
-                        configurator.import(archiveConfig.ArticleConfig)
-        
-                        let options = {
-                            configurator: configurator,
-                            context: existingSessions
-                        }
-        
-                        sessions[documentId] = new EditorSession(document, options)
+                        sessions[documentId] = EditorSessionsGenerator._createSession(document, archiveConfig, existingSessions)
                     })
 
                     resolve(sessions)
@@ -82,19 +74,19 @@ export default class EditorSessionsGenerator {
         })
     }
 
-    static generateSessionForNewDocument(archive, rawDocumentId, rawDocument) {
+    static generateSessionForNewDocument(archive, rawDocument) {
         return new Promise(function(resolve, reject) {
             let archiveConfig = archive.getConfig(),
                 existingSessions = archive.getEditorSessions()
             
             let documentLoader = new DocumentLoader()
 
-            documentLoader.load(rawDocuments, {
+            documentLoader.load(rawDocument, {
                 archive: archive,
                 pubMetaDb: existingSessions["pub-meta"].getDocument()
             }, archiveConfig)
                 .then(function(document) {
-                    resolve( EditorSessionsGenerator._createSession(document, archive, existingSessions) )
+                    resolve( EditorSessionsGenerator._createSession(document, archiveConfig, existingSessions) )
                 })
                 .catch(function(errors) {
                     reject(errors)

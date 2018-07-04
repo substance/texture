@@ -1,43 +1,36 @@
-import { prettyPrintXML, DefaultDOMElement } from 'substance'
-import PersistedDocumentArchive from './dar/PersistedDocumentArchive'
-import ArticleLoader from './ArticleLoader'
-import PubMetaLoader from './PubMetaLoader'
+import { prettyPrintXML } from 'substance'
 import { JATSExporter } from './article'
+import DocumentArchiveReadWrite from './dar/DocumentArchiveReadWrite'
+import StorageTypes from "./dar/StorageTypes"
+import vfsSaveHook from "./util/vfsSaveHook"
 
-export default class TextureArchive extends PersistedDocumentArchive {
+export default class TextureArchive extends DocumentArchiveReadWrite {
 
-  /*
-    Creates EditorSessions from a raw archive.
-    This might involve some consolidation and ingestion.
-  */
-  _ingest(rawArchive) {
-    let sessions = {}
-    let manifestXML = _importManifest(rawArchive)
-    let manifestSession = this._loadManifest({ data: manifestXML })
-    sessions['manifest'] = manifestSession
-    let entries = manifestSession.getDocument().getDocumentEntries()
-
-    // Setup empty pubMetaSession for holding the entity database
-    let pubMetaSession = PubMetaLoader.load()
-    sessions['pub-meta'] = pubMetaSession
-
-    entries.forEach(entry => {
-      let record = rawArchive.resources[entry.path]
-      // Note: this happens when a resource is referenced in the manifest
-      // but is not there actually
-      // we skip loading here and will fix the manuscript later on
-      if (!record) {
-        return
-      }
-      // Load any document except pub-meta (which we prepared manually)
-      if (entry.type !== 'pub-meta') {
-        // Passing down 'sessions' so that we can add to the pub-meta session
-        let session = this._loadDocument(entry.type, record, sessions)
-        sessions[entry.id] = session
-      }
-    })
-    return sessions
+  constructor(documentArchiveConfig) {
+    super(documentArchiveConfig)
+    this._checkStorage()
   }
+
+  load(archiveId) {
+    let self = this,
+        readWriteArchiveLoad = super.load(archiveId)
+
+    return new Promise(function (resolve, reject) {
+      readWriteArchiveLoad
+        .then(function(archive) {
+          self = archive
+          console.log(self)
+          //self._repair()
+          resolve(self)
+        })
+    })
+  }
+
+  _checkStorage() {
+    if (this._storageConfig.getId() === StorageTypes.VFS ) {
+        vfsSaveHook(this._storage, TextureArchive)
+    }
+  } 
 
   _repair() {
     let manifestSession = this.getEditorSession('manifest')
@@ -104,19 +97,6 @@ export default class TextureArchive extends PersistedDocumentArchive {
     })
   }
 
-  _loadDocument(type, record, sessions) {
-    switch (type) {
-      case 'article': {
-        return ArticleLoader.load(record.data, {
-          pubMetaDb: sessions['pub-meta'].getDocument(),
-          archive: this,
-        }, this._config)
-      }
-      default:
-        throw new Error('Unsupported document type')
-    }
-  }
-
   _exportDocument(type, session, sessions) {
     switch (type) {
       case 'article': {
@@ -146,24 +126,6 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
     return title
   }
-}
-
-/*
-  Create an explicit entry for pub-meta.json, which does not
-  exist in the serialisation format
-*/
-function _importManifest(rawArchive) {
-  let manifestXML = rawArchive.resources['manifest.xml'].data
-  let dom = DefaultDOMElement.parseXML(manifestXML)
-  let documentsEl = dom.find('documents')
-  documentsEl.append(
-    dom.createElement('document').attr({
-      id: 'pub-meta',
-      type: 'pub-meta',
-      path: 'pub-meta.json'
-    })
-  )
-  return dom.serialize()
 }
 
 /*

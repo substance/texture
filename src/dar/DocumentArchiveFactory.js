@@ -2,7 +2,6 @@ import DocumentArchiveReadOnly from "./DocumentArchiveReadOnly"
 import DocumentArchiveReadWrite from "./DocumentArchiveReadWrite"
 import DocumentArchiveTypes from "./DocumentArchiveTypes"
 import InMemoryDarBuffer  from "./InMemoryDarBuffer"
-import TextureArchive from "../TextureArchive"
 
 export default class DocumentArchiveFactory {
     static getDocumentArchive(documentArchiveConfig) {
@@ -19,14 +18,7 @@ export default class DocumentArchiveFactory {
                 break;
             
             default:
-                let storage = documentArchiveConfig.getStorageClient(),
-                    buffer = new InMemoryDarBuffer(),
-                    context = documentArchiveConfig.getContext(),
-                    config = {
-                        ArticleConfig: documentArchiveConfig.getArticleConfig()
-                    }
-
-                documentArchive = new TextureArchive(storage, buffer, context, config);
+                documentArchive = null
         }
 
         return documentArchive

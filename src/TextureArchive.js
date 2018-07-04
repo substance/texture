@@ -8,7 +8,7 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
 
   constructor(documentArchiveConfig) {
     super(documentArchiveConfig)
-    this._checkStorage()
+    this._checkStorage(documentArchiveConfig)
   }
 
   load(archiveId) {
@@ -19,16 +19,15 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
       readWriteArchiveLoad
         .then(function(archive) {
           self = archive
-          console.log(self)
           //self._repair()
           resolve(self)
         })
     })
   }
 
-  _checkStorage() {
+  _checkStorage(documentArchiveConfig) {
     if (this._storageConfig.getId() === StorageTypes.VFS ) {
-        vfsSaveHook(this._storage, TextureArchive)
+        vfsSaveHook(this._storage, TextureArchive, documentArchiveConfig)
     }
   } 
 

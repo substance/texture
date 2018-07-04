@@ -10,7 +10,7 @@ import TextureConfigurator from "./TextureConfigurator"
  */
 export default class EditorSessionsGenerator {
 
-    static generateManifestSession(archive) {
+    static generateSessionForManifest(archive) {
         return new Promise(function(resolve, reject) {
             let manifestLoaderNew = new ManifestLoaderNew(),
                 upstreamArchive = archive.getUpstreamArchive(),
@@ -30,7 +30,7 @@ export default class EditorSessionsGenerator {
         })
     }
 
-    static generatePubMetaSession(archive) {
+    static generateSessionForPubMeta(archive) {
         return new Promise(function(resolve, reject) {
             try 
             {
@@ -43,10 +43,10 @@ export default class EditorSessionsGenerator {
         })
     }
 
-    static generateDocumentsSession(archive) {
+    static generateSessionsForExistingDocuments(archive) {
         return new Promise(function(resolve, reject) {
             let archiveConfig = archive.getConfig(),
-                editorSessions = archive.getEditorSessions(),
+                existingSessions = archive.getEditorSessions(),
                 rawDocuments = archive.getRawDocuments()
                 
             if (!rawDocuments) {
@@ -57,7 +57,7 @@ export default class EditorSessionsGenerator {
             
             documentLoader.load(rawDocuments, {
                 archive: archive,
-                pubMetaDb: editorSessions["pub-meta"].getDocument()
+                pubMetaDb: existingSessions["pub-meta"].getDocument()
             }, archiveConfig)
                 .then(function(documents) {
                     let sessions = {}
@@ -68,7 +68,7 @@ export default class EditorSessionsGenerator {
         
                         let options = {
                             configurator: configurator,
-                            context: editorSessions
+                            context: existingSessions
                         }
         
                         sessions[documentId] = new EditorSession(document, options)
@@ -80,5 +80,37 @@ export default class EditorSessionsGenerator {
                     reject(errors)
                 })
         })
+    }
+
+    static generateSessionForNewDocument(archive, rawDocumentId, rawDocument) {
+        return new Promise(function(resolve, reject) {
+            let archiveConfig = archive.getConfig(),
+                existingSessions = archive.getEditorSessions()
+            
+            let documentLoader = new DocumentLoader()
+
+            documentLoader.load(rawDocuments, {
+                archive: archive,
+                pubMetaDb: existingSessions["pub-meta"].getDocument()
+            }, archiveConfig)
+                .then(function(document) {
+                    resolve( EditorSessionsGenerator._createSession(document, archive, existingSessions) )
+                })
+                .catch(function(errors) {
+                    reject(errors)
+                })
+        })
+    }
+
+    static _createSession(document, archiveConfig, existingSessions) {
+        let configurator = new TextureConfigurator()
+        configurator.import(archiveConfig.ArticleConfig)
+        
+        let options = {
+            configurator: configurator,
+            context: existingSessions
+        }
+        
+        return new EditorSession(document, options)
     }
 }

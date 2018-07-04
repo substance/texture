@@ -12,7 +12,7 @@ export default class ContribsModel extends DefaultModel{
   getAuthors() {
     let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
     let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
-    return contribIds.map(contribId => this.context.pubMetaDb.get(contribId))
+    return contribIds.map(contribId => this.context.pubMetaDb.get(contribId).toJSON())
   }
 
   /*
@@ -22,4 +22,3 @@ export default class ContribsModel extends DefaultModel{
     return entityRenderers[contrib.type](contrib.id, this.context.pubMetaDb)
   }
 }
-

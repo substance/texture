@@ -3,6 +3,7 @@ import DocumentArchiveConfig from "./DocumentArchiveConfig";
 
 export default class DocumentArchiveReadOnlyConfig extends DocumentArchiveConfig {
     constructor() {
-        super(DocumentArchiveTypes.READ_ONLY)
+        super()
+        this.setId(DocumentArchiveTypes.READ_ONLY)
     }
 }

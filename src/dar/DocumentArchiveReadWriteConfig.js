@@ -3,7 +3,8 @@ import DocumentArchiveConfig from "./DocumentArchiveConfig";
 
 export default class DocumentArchiveReadWriteConfig extends DocumentArchiveConfig {
     constructor() {
-        super(DocumentArchiveTypes.READ_WRITE)
+        super()
+        this.setId(DocumentArchiveTypes.READ_WRITE)
         this.buffer = null
     }
 

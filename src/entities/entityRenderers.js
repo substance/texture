@@ -660,6 +660,13 @@ function groupRenderer($$, entityId, entityDb) {
   return [ name ]
 }
 
+function refContribRenderer($$, entry, options = {}) {
+  if (entry.type === 'person') {
+    return refPersonRenderer($$, entry, options)
+  } else {
+    return refGroupRenderer($$, entry, options)
+  }
+}
 
 /* This is used within references */
 function refPersonRenderer($$, entry, options = {}) {
@@ -681,6 +688,14 @@ function refPersonRenderer($$, entry, options = {}) {
   }
   return result
 }
+
+/* Render a group author */
+function refGroupRenderer($$, entry, options = {}) {
+  let { name } = entry
+  return [ name ]
+}
+
+
 
 function organisationRenderer($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)
@@ -728,7 +743,7 @@ function _renderAuthors($$, authors) {
   let fragments = []
   authors.forEach((author, i) => {
     fragments = fragments.concat(
-      refPersonRenderer($$, author, { short: true })
+      refContribRenderer($$, author, { short: true })
     )
     if (i < authors.length - 1) {
       fragments.push(', ')

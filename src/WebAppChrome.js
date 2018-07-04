@@ -2,13 +2,21 @@
 import { parseKeyEvent, InMemoryDarBuffer } from 'substance'
 import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
 import AppChrome from './AppChrome'
+import TextureArchive from './TextureArchive'
 
 export default class WebAppChrome extends AppChrome {
 
   async _loadArchive(archiveId, context) {
     let documentArchiveConfig = this.props.documentArchiveConfig
     documentArchiveConfig.setContext(context)
+    
     let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
+    
+    if (!archive)
+    {
+      archive = new TextureArchive(documentArchiveConfig)
+    }
+
     return archive.load(archiveId)
   }
 

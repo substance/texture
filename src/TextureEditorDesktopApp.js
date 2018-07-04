@@ -1,7 +1,7 @@
 import DesktopAppChrome from './DesktopAppChrome'
 import TextureAppMixin from './TextureAppMixin'
 
-export default class TextureDesktopApp extends TextureAppMixin(DesktopAppChrome) {
+export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppChrome) {
   // TODO: document why we need a different handleKeydown than in WebApp
   _handleKeyDown (event) {
     // Handle custom keyboard shortcuts globally

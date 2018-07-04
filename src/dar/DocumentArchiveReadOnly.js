@@ -20,7 +20,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
     constructor(documentArchiveConfig) {
         super()
-
+        
         this._archiveId = null,
 
         /**

@@ -25,7 +25,13 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
     }
 
     static _getFinalMountConfig(customMountConfig) {
-        let defaultMountConfig = TextureReaderAppWeb._getDefaultMountConfig() 
+        let defaultMountConfig = TextureReaderAppWeb._getDefaultMountConfig(),
+            archiveIdQueryParam = getQueryStringParam('archive')
+
+        if (archiveIdQueryParam) {
+            customMountConfig.archiveId = archiveIdQueryParam
+        }
+        
         return Object.assign(defaultMountConfig, customMountConfig)
     }
 

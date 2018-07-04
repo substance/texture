@@ -48,7 +48,13 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
     }
 
     static _getFinalMountConfig(customMountConfig) {
-        let defaultMountConfig = TextureEditorWebApp._getDefaultMountConfig() 
+        let defaultMountConfig = TextureEditorWebApp._getDefaultMountConfig(),
+            archiveIdQueryParam = getQueryStringParam('archive')
+
+        if (archiveIdQueryParam) {
+            customMountConfig.archiveId = archiveIdQueryParam
+        }
+        
         return Object.assign(defaultMountConfig, customMountConfig)
     }
 
@@ -71,7 +77,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
 
         return {
             appClass: Texture,
-            archiveId: getQueryStringParam('archive') || 'kitchen-sink',
+            archiveId: 'kitchen-sink',
             documentArchiveConfig: documentArchiveConfig
         }
     }

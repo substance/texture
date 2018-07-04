@@ -1,12 +1,68 @@
-import {forEach} from "substance"
+import { forEach, last, uuid } from "substance"
 import DocumentArchiveBufferSynchronizer from "./DocumentArchiveBufferSynchronizer"
 import DocumentArchiveReadOnly from "./DocumentArchiveReadOnly";
+import EditorSessionGenerator from "../editor/util/EditorSessionsGenerator"
 
 export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
+    
     constructor(documentArchiveConfig) {
         super(documentArchiveConfig)
         this.buffer = documentArchiveConfig.getBuffer()
         this._bufferSynchronizer = null
+    }
+
+    async addDocument(type, name, rawDocument) {
+        let documentId = uuid()
+
+        let session = await EditorSessionGenerator.generateSessionForNewDocument(this, rawDocument)
+        this._sessions[documentId] = session
+        
+        this._registerForSessionChanges(session, documentId)
+        
+        this._sessions["manifest"].transaction(tx => {
+            let documents = tx.find('documents')
+            let docEntry = tx.createElement('document', {
+                id: documentId
+            }).attr({
+                name: name,
+                path: documentId + '.xml',
+                type: type
+            })
+            documents.appendChild(docEntry)
+        })
+
+        return documentId
+    }
+
+    createFile(file) {
+        let assetId = uuid()
+        let fileExtension = last(file.name.split('.'))
+        let filePath = `${assetId}.${fileExtension}`
+        
+        this._sessions["manifest"].transaction(tx => {
+            let assets = tx.find('assets')
+            let asset = tx.createElement('asset', {
+                id: assetId
+            }).attr({
+                path: filePath,
+                type: file.type
+            })
+            assets.appendChild(asset)
+        })
+
+        this.buffer.addBlob(assetId, {
+            id: assetId,
+            path: filePath,
+            blob: file
+        })
+
+        this._pendingFiles[filePath] = URL.createObjectURL(file)
+
+        return filePath
+    }
+
+    hasPendingChanges() {
+        return this.buffer.hasPendingChanges()
     }
 
     load(archiveId) {
@@ -19,6 +75,7 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
                     return self.buffer.load()
                 })
                 .then(function() {
+                    // TODO can I apply the buffer snychronization after the loading and sessions creation?
                     self._bufferSynchronizer = new DocumentArchiveBufferSynchronizer()
                     return self._bufferSynchronizer.synchronize(self.buffer, self._upstreamArchive)
                 })
@@ -54,5 +111,9 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
             // Apps can subscribe to this (e.g. to show there's pending changes)
             this.emit("archive:changed")
         }, this)
+    }
+
+    _unregisterFromSession(session) {
+        session.off(this)
     }
 }

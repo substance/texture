@@ -3,7 +3,7 @@ import TextureAppMixin from './TextureAppMixin'
 
 export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppChrome) {
   // TODO: document why we need a different handleKeydown than in WebApp
-  _handleKeyDown (event) {
+  _handleKeyDown(event) {
     // Handle custom keyboard shortcuts globally
     let archive = this.state.archive
     if (archive) {

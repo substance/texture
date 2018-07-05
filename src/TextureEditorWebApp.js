@@ -70,12 +70,12 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
         let storageClientConfigHttp = new HttpStorageClientConfig()
         storageClientConfigHttp.setStorageUrl("http://localhost:4100")
 
-        let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
+        let storageClient = StorageClientFactory.getStorageClient(storageClientConfigHttp)
 
         let documentArchiveConfig = new TextureArchiveConfig()
         documentArchiveConfig.setArticleConfig(EditorPackage)
         documentArchiveConfig.setBuffer( new InMemoryDarBuffer() )
-        documentArchiveConfig.setStorageConfig(storageClientConfig)
+        documentArchiveConfig.setStorageConfig(storageClientConfigHttp)
         documentArchiveConfig.setStorageClient(storageClient)
         
 

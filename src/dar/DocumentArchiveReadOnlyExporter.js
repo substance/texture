@@ -103,16 +103,20 @@ export default class DocumentArchiveReadOnlyExporter {
 
         let manifest = archiveSessions["manifest"].getDocument()
 
+        // TODO check why this is necessary
         if ( !buffer.hasResourceChanged('manifest') ) {
             return manifestExported
-        } 
+        }
 
         //The serialised manifest should have no pub-meta document entry, so we
         //remove it here.
         let manifestDom = manifest.toXML(),
             documents = manifestDom.find('documents'),
             pubMetaEl = documents.find('document#pub-meta')
-        documents.removeChild(pubMetaEl)
+
+        if (pubMetaEl) {
+            documents.removeChild(pubMetaEl)
+        }
         
         manifestExported["manifest.xml"] = {
             id: 'manifest',

@@ -27,6 +27,15 @@ export default class ContribsModel extends DefaultModel{
     return contribIds.map(contribId => this.context.pubMetaDb.get(contribId).toJSON())
   }
 
+  updateAuthor(authorId, data) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.updateNode(authorId, data)
+    })
+    return node.toJSON()
+  }
+
   getAffiliations() {
     const authors = this.getAuthors()
     const affIds = authors.reduce((affs, author) => {

@@ -18,5 +18,4 @@ export { default as TextureEditorDesktopApp } from  './src/TextureEditorDesktopA
 export { default as TextureEditorWebApp } from './src/TextureEditorWebApp'
 export { default as TextureReaderDesktopApp } from  './src/TextureReaderDesktopApp'
 export { default as TextureReaderWebApp } from './src/TextureReaderWebApp'
-export { default as checkArchive } from './src/util/checkArchive'
 export { default as vfsSaveHook } from './src/util/vfsSaveHook'

@@ -134,14 +134,8 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
                     // a slower persisted buffer
                     return self._storage.write((archiveId || self._archiveId), rawArchive)
                 })
-                .then(function(result) {
-                    // TODO: if successful we should receive the new version as response
-                    // and then we can reset the buffer
-                    result = JSON.parse(result)
-                    // console.log('Saved. New version:', res.version)
-                    // After successful save the archiveId may have changed (save as use case)
-                    self._archiveId = archiveId
-                    resolve(result) 
+                .then(function(rawArchiveSaved) {
+                    resolve(rawArchiveSaved) 
                 }).catch(function(errors) {
                     console.error('Saving failed.', errors)
                     reject(errors)
@@ -163,9 +157,21 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
      * saved DAR or rejected with errors that occured during the saving process
      */
     saveAs(newArchiveId) {
-        return this._storage.clone(this._archiveId, newArchiveId).then(function() {
-            return this.save(newArchiveId)
-        })
+        let self = this
+
+        return new Promise(function(resolve, reject) {
+            self._storage.clone(this._archiveId, newArchiveId)
+                .then(function() {
+                    return self.save(newArchiveId)
+                })
+                .then(function(rawArchiveSaved) {
+                    self._archiveId = archiveId
+                    resolve(rawArchiveSaved)
+                })
+                .catch(function(errors) {
+                    reject(errors)
+                })
+        }) 
     }
 
     /**
@@ -305,6 +311,10 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
      */
     setSession(sessionId, session) {
         this._sessions[sessionId] = session
+    }
+
+    setSessions(sessions) {
+        this._sessions = sessions
     }
 
     /**

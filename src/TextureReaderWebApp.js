@@ -47,7 +47,7 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
         let storageClientConfigHttp = new HttpStorageClientConfig()
         storageClientConfigHttp.setStorageUrl("http://localhost:4100")
 
-        let storageClient = StorageClientFactory.getStorageClient(storageClientConfigHttp)
+        let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
 
         let documentArchiveConfig = new DocumentArchiveReadOnlyConfig()
         documentArchiveConfig.setArticleConfig(ReaderPackage)

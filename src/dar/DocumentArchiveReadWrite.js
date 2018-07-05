@@ -1,6 +1,5 @@
 import { forEach, last, uuid } from "substance"
 
-import DocumentArchiveBufferSynchronizer from "./DocumentArchiveBufferSynchronizer"
 import DocumentArchiveReadWriteExporter from "./DocumentArchiveReadWriteExporter"
 import DocumentArchiveReadOnly from "./DocumentArchiveReadOnly";
 import EditorSessionGenerator from "../sessions/EditorSessionsGenerator"
@@ -111,27 +110,39 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
         let self = this,
             readOnlyArchiveLoad = super.load(archiveId)
 
+        const buffer = this.buffer
+
         return new Promise(function (resolve, reject) {
             readOnlyArchiveLoad
-                .then(function() {
-                    return self.buffer.load()
+                .then(function(archive) {
+                    return buffer.load()
                 })
                 .then(function() {
-                    // TODO can I apply the buffer snychronization after the 
-                    // loading and sessions creation?
-                    return DocumentArchiveBufferSynchronizer.synchronize(self)
-                })
-                .then(function(synchronizedBuffer) {
-                    // TODO find out what is the applyPendingChanges method doing - is it necessary?
-                    self.buffer = synchronizedBuffer 
-                    return DocumentArchiveBufferSynchronizer.applyPendingChanges(self)
-                })
-                .then(function(synchronizedBuffer) {
-                    self.buffer = synchronizedBuffer
-                    return self._repair()
+                    if (!buffer.hasPendingChanges()) {
+                        let localVersion = buffer.getVersion()
+                        let upstreamVersion = self._upstreamArchive.version
+                        if (localVersion && upstreamVersion && localVersion !== upstreamVersion) {
+                            // If the local version is out-of-date, it would be necessary to 'rebase' the
+                            // local changes.
+                            console.error('Upstream document has changed. Discarding local changes')
+                            self.buffer.reset(upstreamVersion)
+                        } else {
+                            buffer.reset(upstreamVersion)
+                        }
+                    }
+                    return null
                 })
                 .then(function() {
+                    if (!buffer.hasPendingChanges()) {
+                        // TODO: when we have a persisted buffer we need to apply all pending
+                        // changes.
+                        // For now, we always start with a fresh buffer
+                    } else {
+                        buffer.reset(upstreamArchive.version)
+                    }
+
                     self._registerForAllChanges(self._sessions)
+                    self._repair()
                     resolve(self)
                 })
                 .catch(function (errors) {
@@ -182,9 +193,9 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
 
         return new Promise(function(resolve, reject) {
             readOnlyArchiveSave
-                .then(function(result) {
-                    self.buffer.reset(result.version)
-                    resolve(result)
+                .then(function(rawArchiveSaved) {
+                    self.buffer.reset(rawArchiveSaved.version)
+                    resolve(rawArchiveSaved)
                 })
                 .catch(function(errors) {
                     console.error('Saving failed.', errors)
@@ -206,9 +217,9 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
 
         return new Promise(function(resolve, reject) {
             readOnlyArchiveSaveAs
-                .then(function(result) {
-                    self.buffer.reset(result.version)
-                    resolve(result)
+                .then(function(rawArchiveSaved) {
+                    self.buffer.reset(rawArchiveSaved.version)
+                    resolve(rawArchiveSaved)
                 })
                 .catch(function(errors) {
                     console.error('Saving failed.', errors)

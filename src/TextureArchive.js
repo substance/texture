@@ -19,6 +19,8 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
       readWriteArchiveLoad
         .then(function(archive) {
           self = archive
+          console.log(archive)
+          window.archive = archive
           //self._repair()
           resolve(self)
         })

@@ -223,7 +223,7 @@ export const RefCollabConverter = {
       el.append(_createTextElement($$, record.givenNames, 'given-names'))
       el.append(_createTextElement($$, record.prefix, 'prefix'))
       el.append(_createTextElement($$, record.suffix, 'suffix'))
-    } else if  (record.type === 'collab') {
+    } else if (record.type === 'collab') {
       el = $$('collab')
       el.append(_createTextElement($$, record.name, 'named-content', { 'content-type': 'name' }))
     }

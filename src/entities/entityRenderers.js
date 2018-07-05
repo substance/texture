@@ -690,12 +690,10 @@ function refPersonRenderer($$, entry, options = {}) {
 }
 
 /* Render a group author */
-function refGroupRenderer($$, entry, options = {}) {
+function refGroupRenderer($$, entry) {
   let { name } = entry
   return [ name ]
 }
-
-
 
 function organisationRenderer($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)

@@ -7,7 +7,7 @@
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
       </title-group>
       <contrib-group id="contrib-group-1" content-type="author">
-        <contrib id="contrib-1" contrib-type="person">
+        <contrib id="contrib-1" contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
           <name>
             <surname>Schaffelhofer</surname>
             <given-names>Stefan</given-names>
@@ -22,6 +22,34 @@
           </name>
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
+        </contrib>
+        <!-- group author with members -->
+        <contrib contrib-type="group" equal-contrib="yes" corresp="no" deceased="no">
+          <collab>
+            <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
+            <email>mouse-project@example.com</email>
+            <xref ref-type="aff" rid="aff2"/>
+            <xref ref-type="award" rid="fund1" />
+            <contrib-group contrib-type="group-member">
+              <contrib contrib-type="person">
+                <name>
+                  <surname>Kelly</surname><given-names>Laura A.</given-names>
+                </name>
+                <!-- role can be used to group members into subgroups, note that role element
+                is used on contrib level not contrib-group level. -->
+                <role>Writing Group</role>
+                <xref ref-type="aff" rid="aff2"/>
+              </contrib>
+              <contrib contrib-type="person">
+                <name>
+                  <surname>Randall</surname><given-names>Daniel Lee</given-names>
+                  <suffix>Jr.</suffix>
+                </name>
+                <role>Lab Group</role>
+                <xref ref-type="aff" rid="aff3"/>
+              </contrib>
+            </contrib-group>
+          </collab>
         </contrib>
       </contrib-group>
       <contrib-group id="contrib-group-2" content-type="editor">
@@ -90,6 +118,23 @@
       <abstract id="abstract-1">
         <p id="p-1"><bold id="bold-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref></p>
       </abstract>
+      <kwd-group>
+        <kwd content-type="author-keyword">optogenetics</kwd>
+        <kwd content-type="author-keyword">two-photon</kwd>
+        <kwd content-type="author-keyword">calcium imaging</kwd>
+        <kwd content-type="research-organism">Mouse</kwd>
+      </kwd-group>
+      <funding-group>
+        <award-group id="fund1">
+          <funding-source>
+            <institution-wrap>
+              <institution-id institution-id-type="FundRef">https://dx.doi.org/10.13039/100000011</institution-id>
+              <institution>Howard Hughes Medical Institute</institution>
+            </institution-wrap>
+          </funding-source>
+          <award-id>F32 GM089018</award-id>
+        </award-group>
+      </funding-group>
     </article-meta>
   </front>
   <body id="body-1">
@@ -470,12 +515,13 @@
       </ref>
       <ref id="r8">
         <element-citation publication-type="patent">
-          <collab collab-type="assignee">Hospira, Inc.</collab>
+          <collab collab-type="assignee"><named-content content-type="name">Hospira, Inc.</named-content></collab>
           <day>5</day>
           <month>10</month>
           <patent country="US">US 6,980,855</patent>
           <year>2009</year>
           <person-group person-group-type="inventor">
+            <collab><named-content content-type="name">National Research Council</named-content></collab>
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>

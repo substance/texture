@@ -2,6 +2,7 @@ import { getQueryStringParam, substanceGlobals, platform } from 'substance'
 import { TextureReader, ReaderPackage } from './reader'
 
 import DocumentArchiveReadOnlyConfig from './dar/DocumentArchiveReadOnlyConfig'
+import HttpStorageClientConfig from './dar/HttpStorageClientConfig'
 import StorageClientFactory from './dar/StorageClientFactory'
 import TextureAppMixin from './TextureAppMixin'
 import VfsStorageClientConfig from './dar/VfsStorageClientConfig'
@@ -43,7 +44,10 @@ export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
         let storageClientConfig = new VfsStorageClientConfig()
         storageClientConfig.setDataFolder("./data/")
 
-        let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
+        let storageClientConfigHttp = new HttpStorageClientConfig()
+        storageClientConfigHttp.setStorageUrl("http://localhost:4100")
+
+        let storageClient = StorageClientFactory.getStorageClient(storageClientConfigHttp)
 
         let documentArchiveConfig = new DocumentArchiveReadOnlyConfig()
         documentArchiveConfig.setArticleConfig(ReaderPackage)

@@ -9,6 +9,18 @@ export default class ContribsModel extends DefaultModel{
     super(node, context)
   }
 
+  addAuthor(author) {
+    const newNode = Object.assign({}, author, {
+      type: 'person'
+    })
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.create(newNode)
+    })
+    return node.id
+  }
+
   getAuthors() {
     let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
     let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))

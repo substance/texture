@@ -18,7 +18,7 @@ export default class EditorSessionsValidator {
      */
     static areSessionsValid(sessions) {
         return new Promise(function(resolve, reject) {
-            let validationResult = new EditorSessionsValidationResult(),
+            let validationResult = new EditorSessionsValidationResult()
 
             if (!sessions["manifest"]) {
                 validationResult.setOk(false)

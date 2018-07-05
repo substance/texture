@@ -1,5 +1,5 @@
 import HttpStorageClient from "./HttpStorageClient"
-import StorageTypes from "./StorageTypes"
+import StorageClientTypes from "./StorageClientTypes"
 import VfsStorageClient from "./VfsStorageClient"
 
 /** 
@@ -22,10 +22,10 @@ export default class StorageClientFactory {
         let storageClient
 
         switch( storageConfig.getId() ) {
-            case StorageTypes.VFS:
+            case StorageClientTypes.VFS:
                 storageClient = new VfsStorageClient(vfs, storageConfig)
                 break;
-            case StorageTypes.HTTP:
+            case StorageClientTypes.HTTP:
                 storageClient = new HttpStorageClient(storageConfig)
                 break;
             default:

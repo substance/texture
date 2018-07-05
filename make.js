@@ -5,7 +5,6 @@ const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
 
 const DIST = 'dist/'
-const DIST_REWRITE_DAR_LOADING_CODE = 'dist-rewrite-dar-loading-code/'
 const APPDIST = 'app-dist/'
 const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
@@ -22,17 +21,13 @@ const RNG_FILES = [
 // Server configuration
 
 const port = 4000 // TODO: make this configurable
-
 b.setServerPort(port)
-
 b.yargs.option('d', {
   type: 'string',
   alias: 'rootDir',
   describe: 'Root directory of served archives'
 })
-
 let argv = b.yargs.argv
-
 if (argv.d) {
   const darServer = require('dar-server')
   const rootDir = argv.d
@@ -44,20 +39,12 @@ if (argv.d) {
     apiUrl: '/archives'
   })
 }
-
-let folder = (argv.f) ? argv.f : './dist'
-
-b.serve({ 
-  static: true,
-  route: '/',
-  folder: folder
-})
+b.serve({ static: true, route: '/', folder: './dist' })
 
 // Make Targets
 
 b.task('clean', function() {
   b.rm(DIST)
-  b.rm(DIST_REWRITE_DAR_LOADING_CODE)
   b.rm(TMP)
   b.rm(APPDIST)
 }).describe('removes all generated files and folders.')
@@ -73,14 +60,6 @@ b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:lib', 'build:
 
 b.task('web', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:web'])
 .describe('builds the web bundle (browser + web).')
-
-b.task('web:rewrite-dar-loading-code', [
-  'clean', 
-  'build:schema', 
-  'build:assets:rewrite-dar-loading-code', 
-  'build:browser:rewrite-dar-loading-code',
-  'build:web:rewrite-dar-loading-code'
-]).describe('builds the web bundle (browser + web) for the rewrite-dar-loading-code branch')
 
 b.task('app', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:app'])
 .describe('builds the app bundle (electron app).')
@@ -141,23 +120,10 @@ b.task('build:assets', function() {
   b.css('./node_modules/substance/substance-reset.css', DIST+'texture-reset.css')
 })
 
-b.task('build:assets:rewrite-dar-loading-code', function() {
-  b.copy('./node_modules/font-awesome', DIST_REWRITE_DAR_LOADING_CODE+'font-awesome')
-  b.copy('./node_modules/katex/dist', DIST_REWRITE_DAR_LOADING_CODE+'katex')
-  b.copy('./node_modules/substance/dist', DIST_REWRITE_DAR_LOADING_CODE+'substance/dist')
-  b.css('texture.css', DIST_REWRITE_DAR_LOADING_CODE+'texture.css')
-  b.css('./node_modules/substance/substance-pagestyle.css', DIST_REWRITE_DAR_LOADING_CODE+'texture-pagestyle.css')
-  b.css('./node_modules/substance/substance-reset.css', DIST_REWRITE_DAR_LOADING_CODE+'texture-reset.css')
-})
-
 b.task('build:schema', ['schema:jats', 'schema:dar-article', 'schema:texture-article', 'schema:dar-manifest'])
 
 b.task('build:browser', () => {
   _buildLib(DIST, 'browser')
-})
-
-b.task('build:browser:rewrite-dar-loading-code', () => {
-  _buildLib(DIST_REWRITE_DAR_LOADING_CODE, 'browser')
 })
 
 b.task('build:nodejs', () => {
@@ -267,64 +233,6 @@ b.task('build:web', ['build:vfs'], () => {
     external: ['substance', 'substance-texture', 'katex']
   })
   b.copy('./data', DIST+'data')
-})
-
-b.task('build:vfs:rewrite-dar-loading-code', () => {
-  vfs(b, {
-    src: ['./data/**/*'],
-    dest: DIST_REWRITE_DAR_LOADING_CODE+'/vfs.js',
-    format: 'umd', moduleName: 'vfs',
-    rootDir: path.join(__dirname, 'data')
-  })
-})
-
-b.task('build:web:rewrite-dar-loading-code', ['build:vfs:rewrite-dar-loading-code'], () => {
-  b.copy('web-rewrite-dar-loading-code/index.html', DIST_REWRITE_DAR_LOADING_CODE)
-  b.copy('web-rewrite-dar-loading-code/loader.html', DIST_REWRITE_DAR_LOADING_CODE)
-  b.copy('web-rewrite-dar-loading-code/reader.html', DIST_REWRITE_DAR_LOADING_CODE)
-  b.copy('./data', DIST_REWRITE_DAR_LOADING_CODE+'data')
-
-  b.js('./web-rewrite-dar-loading-code/editor.js', {
-    output: [{
-      file: DIST_REWRITE_DAR_LOADING_CODE+'editor.js',
-      format: 'umd',
-      name: 'textureEditor',
-      globals: {
-        'substance': 'window.substance',
-        'substance-texture': 'window.texture',
-        'katex': 'window.katex'
-      }
-    }],
-    external: ['substance', 'substance-texture', 'katex']
-  })
-
-  b.js('./web-rewrite-dar-loading-code/loader.js', {
-    output: [{
-      file: DIST_REWRITE_DAR_LOADING_CODE+'loader.js',
-      format: 'umd',
-      name: 'textureArchiveLoder',
-      globals: {
-        'substance': 'window.substance',
-        'substance-texture': 'window.texture',
-        'katex': 'window.katex'
-      }
-    }],
-    external: ['substance', 'substance-texture', 'katex']
-  })
-
-  b.js('./web-rewrite-dar-loading-code/reader.js', {
-    output: [{
-      file: DIST_REWRITE_DAR_LOADING_CODE+'reader.js',
-      format: 'umd',
-      name: 'textureReader',
-      globals: {
-        'substance': 'window.substance',
-        'substance-texture': 'window.texture',
-        'katex': 'window.katex'
-      }
-    }],
-    external: ['substance', 'substance-texture', 'katex']
-  })
 })
 
 b.task('build:test-assets', ['build:vfs-es'], () => {

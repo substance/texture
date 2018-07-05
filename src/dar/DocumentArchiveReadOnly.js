@@ -137,7 +137,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
                 .then(function(result) {
                     // TODO: if successful we should receive the new version as response
                     // and then we can reset the buffer
-                    res = JSON.parse(result)
+                    result = JSON.parse(result)
                     // console.log('Saved. New version:', res.version)
                     // After successful save the archiveId may have changed (save as use case)
                     self._archiveId = archiveId

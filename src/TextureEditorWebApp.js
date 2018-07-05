@@ -71,7 +71,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
         let documentArchiveConfig = new TextureArchiveConfig()
         documentArchiveConfig.setArticleConfig(EditorPackage)
         documentArchiveConfig.setBuffer( new InMemoryDarBuffer() )
-        documentArchiveConfig.setStorageConfig(storageConfig)
+        documentArchiveConfig.setStorageConfig(storageClientConfig)
         documentArchiveConfig.setStorageClient(storageClient)
         
 

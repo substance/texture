@@ -13,7 +13,7 @@ export { default as ManifestLoader } from './ManifestLoader'
 export { default as PersistedDocumentArchive } from './PersistedDocumentArchive'
 
 export { default as StorageClientFactory } from './StorageClientFactory'
-export { default as StorageTypes } from './StorageTypes'
+export { default as StorageClientTypes } from './StorageClientTypes'
 
 export { default as VfsLoader } from './VfsLoader'
 export { default as VfsStorageClient } from './VfsStorageClient'

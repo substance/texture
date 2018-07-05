@@ -1,7 +1,7 @@
 import { prettyPrintXML } from 'substance'
 import { JATSExporter } from './article'
 import DocumentArchiveReadWrite from './dar/DocumentArchiveReadWrite'
-import StorageTypes from "./dar/StorageTypes"
+import StorageClientTypes from "./dar/StorageClientTypes"
 import vfsSaveHook from "./util/vfsSaveHook"
 
 export default class TextureArchive extends DocumentArchiveReadWrite {
@@ -26,7 +26,7 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
   }
 
   _checkStorage(documentArchiveConfig) {
-    if (this._storageConfig.getId() === StorageTypes.VFS ) {
+    if (this._storageConfig.getId() === StorageClientTypes.VFS ) {
         vfsSaveHook(this._storage, TextureArchive, documentArchiveConfig)
     }
   } 

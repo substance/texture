@@ -29,7 +29,6 @@
   "scripts": {
     "prepack": "npm install && node make publish",
     "start": "node make web -s -w -d data -f ./dist",
-    "start:rewrite-dar-loading-code": "node make web:rewrite-dar-loading-code -s -w -d data -f ./dist-rewrite-dar-loading-code",
     "app": "node make run-app -w",
     "release": "node make app && build --project app-dist",
     "pretest": "npm run lint",

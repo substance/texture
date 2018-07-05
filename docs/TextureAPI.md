@@ -42,6 +42,12 @@ contribs.addAffiliation({
 })
 ```
 
+Get affiliation:
+
+```js
+contribs.getAffiliation('aff1')
+```
+
 Update an affiliation:
 
 ```js
@@ -281,7 +287,7 @@ Result:
 List keywords for a given category:
 
 ```js
-meta.getKeywords('author-keyword)
+meta.getKeywords('author-keyword')
 ```
 
 ```js

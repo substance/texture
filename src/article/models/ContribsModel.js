@@ -36,6 +36,15 @@ export default class ContribsModel extends DefaultModel{
     return node.toJSON()
   }
 
+  deleteAuthor(authorId) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.delete(authorId)
+    })
+    return node.id
+  }
+
   getAffiliations() {
     const authors = this.getAuthors()
     const affIds = authors.reduce((affs, author) => {

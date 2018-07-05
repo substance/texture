@@ -7,7 +7,7 @@ import DocumentArchiveReadOnlyExporter from "./DocumentArchiveReadOnlyExporter";
  * A service class which offers various methods to export a read-write document 
  * archive (read-write DAR) to various formats/representations
  */
-export default class DocumentArchiveReadWriteExporter extends DocumentArchiveReadOnlyExporter {
+export default class DocumentArchiveReadWriteExporter {
     
     /**
      * Exports a read-write DAR to a raw version
@@ -28,9 +28,9 @@ export default class DocumentArchiveReadWriteExporter extends DocumentArchiveRea
 
                 let archiveSessions = archive.getSessions()
 
-                let rawAssets = DocumentArchiveReadWriteExporter._exportAssets(archiveSessions, buffer)
-                let rawManifest = DocumentArchiveReadWriteExporter._exportManifest(archiveSessions, buffer)
-                let rawDocuments = DocumentArchiveReadWriteExporter._exportDocuments(archiveSessions, buffer)
+                let rawAssets = DocumentArchiveReadOnlyExporter._exportAssets(archiveSessions, buffer)
+                let rawManifest = DocumentArchiveReadOnlyExporter._exportManifest(archiveSessions, buffer)
+                let rawDocuments = DocumentArchiveReadOnlyExporter._exportDocuments(archiveSessions, buffer)
                 
                 resolve({
                     diff: buffer.getChanges(),

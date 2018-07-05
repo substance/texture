@@ -1,6 +1,4 @@
 export { default as AbstractWriter } from './AbstractWriter'
-export { default as EditorSessionsGenerator } from './EditorSessionsGenerator'
-export { default as EditorSessionsValidator } from './EditorSessionsValidator'
 export { default as NumberedLabelGenerator } from './NumberedLabelGenerator'
 export * from './nodeHelpers'
 export { default as ReferenceManager } from './ReferenceManager'

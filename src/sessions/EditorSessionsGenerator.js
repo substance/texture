@@ -1,9 +1,9 @@
 import { EditorSession, forEach } from "substance"
 
-import DocumentLoader from "../../dar/DocumentLoader"
-import ManifestLoaderNew from "../../dar/ManifestLoaderNew"
-import PubMetaLoader from "../../PubMetaLoader"
-import TextureConfigurator from "./TextureConfigurator"
+import DocumentLoader from "../dar/DocumentLoader"
+import ManifestLoaderNew from "../dar/ManifestLoaderNew"
+import PubMetaLoader from "../PubMetaLoader"
+import TextureConfigurator from "../editor/util/TextureConfigurator"
 
 /** 
  * @module editor/util/EditorSessionsGenerator

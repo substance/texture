@@ -1,5 +1,5 @@
-import EditorSessionsGenerator from "../editor/util/EditorSessionsGenerator"
-import EditorSessionsValidator from "../editor/util/EditorSessionsValidator"
+import EditorSessionsGenerator from "../sessions/EditorSessionsGenerator"
+import EditorSessionsValidator from "../sessions/EditorSessionsValidator"
 
 export default function checkLoadArchive(ArchiveClass, documentArchiveConfig, rawArchive) {
   

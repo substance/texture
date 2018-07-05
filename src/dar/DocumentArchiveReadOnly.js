@@ -1,8 +1,8 @@
 import { EventEmitter, forEach } from "substance"
 
 import DocumentArchiveReadOnlyExporter from "./DocumentArchiveReadOnlyExporter"
-import EditorSessionsGenerator from "../editor/util/EditorSessionsGenerator"
-import EditorSessionsValidator from "../editor/util/EditorSessionsValidator"
+import EditorSessionsGenerator from "../sessions/EditorSessionsGenerator"
+import EditorSessionsValidator from "../sessions/EditorSessionsValidator"
 
 /** 
  * @module dar/DocumentArchiveReadOnly

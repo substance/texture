@@ -3,7 +3,7 @@ import { forEach, last, uuid } from "substance"
 import DocumentArchiveBufferSynchronizer from "./DocumentArchiveBufferSynchronizer"
 import DocumentArchiveReadWriteExporter from "./DocumentArchiveReadWriteExporter"
 import DocumentArchiveReadOnly from "./DocumentArchiveReadOnly";
-import EditorSessionGenerator from "../editor/util/EditorSessionsGenerator"
+import EditorSessionGenerator from "../sessions/EditorSessionsGenerator"
 
 /** 
  * @module dar/DocumentArchiveReadWrite

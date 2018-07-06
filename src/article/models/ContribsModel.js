@@ -4,21 +4,13 @@ import DefaultModel from './DefaultModel'
 /*
   A model for holding authors and editors information.
 */
-export default class ContribsModel extends DefaultModel{
+export default class ContribsModel extends DefaultModel {
   constructor(node, context) {
     super(node, context)
   }
 
   addAuthor(author) {
-    const newNode = Object.assign({}, author, {
-      type: 'person'
-    })
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    let node
-    pubMetaDbSession.transaction((tx) => {
-      node = tx.create(newNode)
-    })
-    return node.id
+    return this._addNode(author, 'person')
   }
 
   getAuthors() {
@@ -28,21 +20,15 @@ export default class ContribsModel extends DefaultModel{
   }
 
   updateAuthor(authorId, data) {
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    let node
-    pubMetaDbSession.transaction((tx) => {
-      node = tx.updateNode(authorId, data)
-    })
-    return node.toJSON()
+    return this._updateNode(authorId, data)
   }
 
   deleteAuthor(authorId) {
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    let node
-    pubMetaDbSession.transaction((tx) => {
-      node = tx.delete(authorId)
-    })
-    return node.id
+    return this._deleteNode(authorId)
+  }
+
+  addAffiliation(affiliation) {
+    return this._addNode(affiliation, 'organisation')
   }
 
   getAffiliations() {
@@ -71,5 +57,44 @@ export default class ContribsModel extends DefaultModel{
   */
   renderContrib(contrib) {
     return entityRenderers[contrib.type](contrib.id, this.context.pubMetaDb)
+  }
+
+  /*
+    Internal method for adding a node of certain type
+  */
+  _addNode(data, type) {
+    const newNode = Object.assign({}, data, {
+      type: type
+    })
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.create(newNode)
+    })
+    return node.id
+  }
+
+  /*
+    Internal method for updating a certain node
+  */
+  _updateNode(nodeId, data) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.updateNode(nodeId, data)
+    })
+    return node.toJSON()
+  }
+
+  /*
+    Internal method for removing a certain node
+  */
+  _deleteNode(nodeId) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.delete(nodeId)
+    })
+    return node.id
   }
 }

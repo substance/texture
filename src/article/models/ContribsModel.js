@@ -52,6 +52,14 @@ export default class ContribsModel extends DefaultModel {
     return affIds.map(affId => this.context.pubMetaDb.get(affId).toJSON())
   }
 
+  updateAffiliation(affId, data) {
+    return this._updateNode(affId, data)
+  }
+
+  deleteAffiliation(affId) {
+    return this._deleteNode(affId)
+  }
+
   /*
     Utility method to render a contrib object
   */

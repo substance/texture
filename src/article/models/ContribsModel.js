@@ -10,7 +10,15 @@ export default class ContribsModel extends DefaultModel {
   }
 
   addAuthor(author) {
-    return this._addNode(author, 'person')
+    const editorSession = this.context.editorSession
+    const authorId = this._addEntity(author, 'person')
+    editorSession.transaction((tx, args) => {
+      const contribEl = tx.createElement('contrib').attr('rid', authorId)
+      const authorsContribGroup = tx.find('contrib-group[content-type=author]')
+      authorsContribGroup.append(contribEl)
+      return args
+    })
+    return authorId
   }
 
   getAuthors() {
@@ -20,15 +28,36 @@ export default class ContribsModel extends DefaultModel {
   }
 
   updateAuthor(authorId, data) {
-    return this._updateNode(authorId, data)
+    return this._updateEntity(authorId, data)
   }
 
   deleteAuthor(authorId) {
-    return this._deleteNode(authorId)
+    const editorSession = this.context.editorSession
+    const node = this._deleteEntity(authorId)
+    editorSession.transaction((tx, args) => {
+      const authorsContribGroup = this._node.find('contrib-group[content-type=author]')
+      const contrib = authorsContribGroup.find(`contrib[rid=${authorId}]`)
+      contrib.parentNode.removeChild(contrib)
+      tx.delete(contrib.id)
+      return args
+    })
+    return node
   }
 
   addAffiliation(affiliation) {
-    return this._addNode(affiliation, 'organisation')
+    const editorSession = this.context.editorSession
+    const affId = this._addEntity(affiliation, 'organisation')
+    editorSession.transaction((tx, args) => {
+      const affEl = tx.createElement('aff').attr('rid', affId)
+      const affGroup = tx.find('aff-group')
+      affGroup.append(affEl)
+      return args
+    })
+    return affId
+  }
+
+  getAffiliation(affId) {
+    return this._getEntity(affId)
   }
 
   getAffiliations() {
@@ -53,11 +82,20 @@ export default class ContribsModel extends DefaultModel {
   }
 
   updateAffiliation(affId, data) {
-    return this._updateNode(affId, data)
+    return this._updateEntity(affId, data)
   }
 
   deleteAffiliation(affId) {
-    return this._deleteNode(affId)
+    const editorSession = this.context.editorSession
+    const node = this._deleteEntity(affId)
+    editorSession.transaction((tx, args) => {
+      const affGroup = tx.find('aff-group')
+      const affEl = affGroup.find(`aff[rid=${affId}]`)
+      affEl.parentNode.removeChild(affEl)
+      tx.delete(affEl.id)
+      return args
+    })
+    return node
   }
 
   /*
@@ -68,9 +106,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   /*
-    Internal method for adding a node of certain type
+    Internal method for adding an entity of certain type
   */
-  _addNode(data, type) {
+  _addEntity(data, type) {
     const newNode = Object.assign({}, data, {
       type: type
     })
@@ -83,26 +121,33 @@ export default class ContribsModel extends DefaultModel {
   }
 
   /*
-    Internal method for updating a certain node
+    Internal method for adding an entity of certain type
   */
-  _updateNode(nodeId, data) {
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    let node
-    pubMetaDbSession.transaction((tx) => {
-      node = tx.updateNode(nodeId, data)
-    })
-    return node.toJSON()
+  _getEntity(nodeId) {
+    const pubMetaDb = this.context.pubMetaDb
+    return pubMetaDb.get(nodeId).toJSON()
   }
 
   /*
-    Internal method for removing a certain node
+    Internal method for updating a certain entity
   */
-  _deleteNode(nodeId) {
+  _updateEntity(nodeId, data) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    pubMetaDbSession.transaction((tx) => {
+      tx.updateNode(nodeId, data)
+    })
+    return this._getEntity(nodeId)
+  }
+
+  /*
+    Internal method for removing a certain entity
+  */
+  _deleteEntity(nodeId) {
     const pubMetaDbSession = this.context.pubMetaDbSession
     let node
     pubMetaDbSession.transaction((tx) => {
       node = tx.delete(nodeId)
     })
-    return node.id
+    return node
   }
 }

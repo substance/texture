@@ -28,7 +28,7 @@ export default class ContribsModel extends DefaultModel {
   getAuthors() {
     let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
     let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
-    return contribIds.map(contribId => this.context.pubMetaDb.get(contribId).toJSON())
+    return contribIds.map(contribId => this._getEntity(contribId))
   }
 
   updateAuthor(authorId, data) {
@@ -82,7 +82,11 @@ export default class ContribsModel extends DefaultModel {
       })
       return affs
     }, [])
-    return affIds.map(affId => this.context.pubMetaDb.get(affId).toJSON())
+    return affIds.reduce((acc, affId) => {
+      const entity = this._getEntity(affId)
+      if(entity) acc.push(entity)
+      return acc
+    }, [])
   }
 
   updateAffiliation(affId, data) {
@@ -133,7 +137,11 @@ export default class ContribsModel extends DefaultModel {
       })
       return awards
     }, [])
-    return awardIds.map(awardId => this.context.pubMetaDb.get(awardId).toJSON())
+    return awardIds.reduce((acc, awardId) => {
+      const entity = this._getEntity(awardId)
+      if(entity) acc.push(entity)
+      return acc
+    }, [])
   }
 
   updateAward(awardId, data) {
@@ -180,7 +188,12 @@ export default class ContribsModel extends DefaultModel {
   */
   _getEntity(nodeId) {
     const pubMetaDb = this.context.pubMetaDb
-    return pubMetaDb.get(nodeId).toJSON()
+    const node = pubMetaDb.get(nodeId)
+    if(!node) {
+      console.error(`Entity with id ${nodeId} not found`)
+      return
+    }
+    return node.toJSON()
   }
 
   /*

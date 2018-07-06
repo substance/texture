@@ -336,4 +336,25 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
     getSessions() {
         return this._sessions
     }
+
+    /**
+     * Returns the title of this DAR
+     * 
+     * @return {string} The title of this DAR or 'Untitled' if no title is present
+     */
+    getTitle() {
+        let manuscriptSession = this._session['manuscript']
+
+        if (!manuscriptSession) {
+            return 'Untitled'
+        }
+
+        let title = manuscriptSession.getDocument().find('article-title').textContent
+
+        if (!title) {
+            return 'Untitled'
+        }
+        
+        return title
+    }
 }

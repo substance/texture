@@ -21,6 +21,10 @@ export default class ContribsModel extends DefaultModel {
     return authorId
   }
 
+  getAuthor(authorId) {
+    return this._getEntity(authorId)
+  }
+
   getAuthors() {
     let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
     let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
@@ -93,6 +97,57 @@ export default class ContribsModel extends DefaultModel {
       const affEl = affGroup.find(`aff[rid=${affId}]`)
       affEl.parentNode.removeChild(affEl)
       tx.delete(affEl.id)
+      return args
+    })
+    return node
+  }
+
+  addAward(award) {
+    const editorSession = this.context.editorSession
+    const awardId = this._addEntity(award, 'award')
+    editorSession.transaction((tx, args) => {
+      const awardGroupEl = tx.createElement('award-group').attr('rid', awardId)
+      const fundingGroupEl = tx.find('funding-group')
+      fundingGroupEl.append(awardGroupEl)
+      return args
+    })
+    return awardId
+  }
+
+  getAward(awardId) {
+    return this._getEntity(awardId)
+  }
+
+  getAwards() {
+    const authors = this.getAuthors()
+    const awardIds = authors.reduce((awards, author) => {
+      const members = author.members || []
+      const memberAwards = members.reduce((a,m) => {
+        return a.concat(m.awards)
+      }, [])
+      let awardsList = new Array().concat(author.awards, memberAwards)
+      awardsList.forEach(a => {
+        if(awards.indexOf(a) < 0) {
+          awards.push(a)
+        }
+      })
+      return awards
+    }, [])
+    return awardIds.map(awardId => this.context.pubMetaDb.get(awardId).toJSON())
+  }
+
+  updateAward(awardId, data) {
+    return this._updateEntity(awardId, data)
+  }
+
+  deleteAward(awardId) {
+    const editorSession = this.context.editorSession
+    const node = this._deleteEntity(awardId)
+    editorSession.transaction((tx, args) => {
+      const fundingGroup = tx.find('funding-group')
+      const awardGroupEl = fundingGroup.find(`award-group[rid=${awardId}]`)
+      awardGroupEl.parentNode.removeChild(awardGroupEl)
+      tx.delete(awardGroupEl.id)
       return args
     })
     return node

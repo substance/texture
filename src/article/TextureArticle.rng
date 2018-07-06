@@ -496,12 +496,7 @@
   <define name="funding-source">
     <element name="funding-source">
       <ref name="funding-source-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
+      <ref name="institution-wrap"/>
     </element>
   </define>
 

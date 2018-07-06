@@ -118,6 +118,11 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
                     return buffer.load()
                 })
                 .then(function() {
+                    /**
+                     * TODO Completely understand this synch logic and check if the execution 
+                     * of this logic can happen after the archive has been completely loaded (e.g. after 
+                     * the sessions have been created)
+                     */
                     if (!buffer.hasPendingChanges()) {
                         let localVersion = buffer.getVersion()
                         let upstreamVersion = self._upstreamArchive.version
@@ -133,17 +138,24 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
                     return null
                 })
                 .then(function() {
+                    /**
+                     * TODO Completely understand this synch logic and check if the execution 
+                     * of this logic can happen after the archive has been completely loaded (e.g. after 
+                     * the sessions have been created)
+                     */
                     if (!buffer.hasPendingChanges()) {
                         // TODO: when we have a persisted buffer we need to apply all pending
                         // changes.
                         // For now, we always start with a fresh buffer
                     } else {
-                        buffer.reset(upstreamArchive.version)
+                        buffer.reset(self._upstreamArchive.version)
                     }
 
                     self._registerForAllChanges(self._sessions)
-                    self._repair()
-                    resolve(self)
+                    return self._repair()
+                })
+                .then(function(repairedSelf) {
+                    resolve(repairedSelf)
                 })
                 .catch(function (errors) {
                     reject(errors)
@@ -228,6 +240,11 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
         })
     }
 
+    /**
+     * Returns the buffer of this DAR
+     * 
+     * @returns {string} The buffer of this DAR
+     */
     getBuffer() {
         return this.buffer
     }
@@ -245,6 +262,48 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
             // Apps can subscribe to this (e.g. to show there's pending changes)
             this.emit("archive:changed")
         }, this)
+    }
+
+    /**
+     * Repairs the DAR 
+     * 
+     * @description
+     * Runs a series of repair steps such as removing missing files from archive
+     */
+    _repair() {
+        let self = this
+
+        return new Promise(function(resolve, reject) {
+            try 
+            {
+                let manifestSession = self._sessions["manifest"]
+                let entries = manifestSession.getDocument().getDocumentEntries()
+                let missingEntries = []
+
+                entries.forEach(entry => {
+                    let session = self._sessions[entry.id]
+                    if (!session) {
+                        missingEntries.push(entry.id)
+                        console.warn(`${entry.path} could not be found in archive and will be deleted...`)
+                    }
+                })
+
+                // Cleanup missing entries
+                manifestSession.transaction(tx => {
+                    let documentsEl = tx.find('documents')
+                    missingEntries.forEach(missingEntry => {
+                        let entryEl = tx.get(missingEntry)
+                        documentsEl.removeChild(entryEl)
+                    })
+                })
+
+                resolve(self)
+            }
+            catch(errors) 
+            {
+                reject(errors)
+            }
+        })
     }
 
     _unregisterFromSession(session) {

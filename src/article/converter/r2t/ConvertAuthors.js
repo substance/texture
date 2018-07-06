@@ -1,4 +1,4 @@
-import { OrganisationConverter, PersonConverter, GroupConverter } from './EntityConverters'
+import { OrganisationConverter, AwardConverter, PersonConverter, GroupConverter } from './EntityConverters'
 import { expandContribGroup, removeEmptyElementsIfNoChildren } from './r2tHelpers'
 
 export default class ConvertAuthors {
@@ -14,6 +14,14 @@ export default class ConvertAuthors {
       let entityId = OrganisationConverter.import(aff, pubMetaDb)
       aff.setAttribute('rid', entityId)
       aff.empty()
+    })
+
+    const awards = dom.findAll('article-meta > funding-group > award-group')
+    // Convert <award-group> elements to award entities
+    awards.forEach(award => {
+      let entityId = AwardConverter.import(award, pubMetaDb)
+      award.setAttribute('rid', entityId)
+      award.empty()
     })
 
     // Convert contrib elements to person entities
@@ -42,6 +50,16 @@ export default class ConvertAuthors {
       // the element's content.
       aff.innerHTML = newAffEl.innerHTML
       aff.removeAttr('rid')
+    })
+
+    const awards = dom.findAll('article-meta > funding-group > award-group')
+    awards.forEach(award => {
+      let entity = pubMetaDb.get(award.attr('rid'))
+      let AwardGroupEl = AwardConverter.export($$, entity, pubMetaDb)
+      // We want to keep the original document-specific id, and just assign
+      // the element's content.
+      award.innerHTML = AwardGroupEl.innerHTML
+      award.removeAttr('rid')
     })
 
     // Remove all empty contrib-groups as they are not valid JATS

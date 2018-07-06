@@ -27,14 +27,14 @@ export default class ManifestLoaderNew {
         var self = this
         
         return new Promise(function(resolve, reject) {
-            if (!rawManifest || !rawManifest.data) {
+            if (!rawManifest) {
                 reject('manifest.xml is missing')
             }
 
             try 
             {
                 let manifestImporter = self._configurator.createImporter( ManifestSchema.getName() )
-                resolve( manifestImporter.importDocument(rawManifest.data) )
+                resolve( manifestImporter.importDocument(rawManifest) )
             } 
             catch(errors) 
             {

@@ -1,4 +1,4 @@
-import ManifestLoader from './ManifestLoader'
+import EditorSessionsGenerator from "../sessions/EditorSessionsGenerator"
 
 export default class VfsStorageClient {
 
@@ -20,9 +20,9 @@ export default class VfsStorageClient {
   }
 }
 
-function _readRawArchive(fs, archiveId, baseUrl = '') {
+async function _readRawArchive(fs, archiveId, baseUrl = '') {
   let manifestXML = fs.readFileSync(`${archiveId}/manifest.xml`)
-  let manifestSession = ManifestLoader.load(manifestXML)
+  let manifestSession = await EditorSessionsGenerator.generateSessionForManifestFromRawManifest(manifestXML)
   let manifest = manifestSession.getDocument()
   let docs = manifest.findAll('documents > document')
   let assets = manifest.findAll('assets > asset')

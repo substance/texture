@@ -24,8 +24,8 @@ export default class EditorSessionsGenerator {
     static generateSessionForManifest(archive) {
         return new Promise(function(resolve, reject) {
             let upstreamArchive = archive.getUpstreamArchive(),
-                rawManifest = upstreamArchive.resources['manifest.xml']
-            
+                rawManifest = upstreamArchive.resources['manifest.xml'].data
+
             EditorSessionsGenerator.generateSessionForManifestFromRawManifest(rawManifest)
                 .then(function(manifestSession) {
                     resolve(manifestSession)
@@ -39,13 +39,13 @@ export default class EditorSessionsGenerator {
     static generateSessionForManifestFromRawManifest(rawManifest) {
         return new Promise(function(resolve, reject) {
             let manifestLoaderNew = new ManifestLoaderNew()
-            
+
             manifestLoaderNew.load(rawManifest)
                 .then(function(manifest) {
                     let options = {
                         configurator: manifestLoaderNew.getConfigurator()
                     }
-        
+
                     resolve( new EditorSession(manifest, options) )
                 })
                 .catch(function(errors) {

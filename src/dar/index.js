@@ -15,7 +15,6 @@ export { default as PersistedDocumentArchive } from './PersistedDocumentArchive'
 export { default as StorageClientFactory } from './StorageClientFactory'
 export { default as StorageClientTypes } from './StorageClientTypes'
 
-export { default as VfsLoader } from './VfsLoader'
 export { default as VfsStorageClient } from './VfsStorageClient'
 export { default as VfsStorageClientConfig } from './VfsStorageClientConfig'
 

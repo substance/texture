@@ -8,14 +8,8 @@ export { default as HttpStorageClientConfig } from './HttpStorageClientConfig'
 
 export { default as InMemoryDarBuffer } from './InMemoryDarBuffer'
 
-export { default as ManifestLoader } from './ManifestLoader'
-
-export { default as PersistedDocumentArchive } from './PersistedDocumentArchive'
-
 export { default as StorageClientFactory } from './StorageClientFactory'
 export { default as StorageClientTypes } from './StorageClientTypes'
 
 export { default as VfsStorageClient } from './VfsStorageClient'
 export { default as VfsStorageClientConfig } from './VfsStorageClientConfig'
-
-

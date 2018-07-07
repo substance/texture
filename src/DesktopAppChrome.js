@@ -1,5 +1,7 @@
-import { DefaultDOMElement, InMemoryDarBuffer } from 'substance'
+import { DefaultDOMElement } from 'substance'
 import AppChrome from './AppChrome'
+import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
+import TextureArchive from './TextureArchive'
 
 export default class DesktopAppChrome extends AppChrome {
 
@@ -15,15 +17,22 @@ export default class DesktopAppChrome extends AppChrome {
   }
 
   async _loadArchive(archiveId, context) {
-    const ArchiveClass = this._getArchiveClass()
-    let storage = new this.props.FSStorageClient()
-    let buffer = new InMemoryDarBuffer()
-    let archive = new ArchiveClass(storage, buffer, context)
+    let documentArchiveConfig = this.props.documentArchiveConfig
+    documentArchiveConfig.setContext(context)
+    
+    let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
+    
+    if (!archive)
+    {
+      archive = new TextureArchive(documentArchiveConfig)
+    }
+
     // HACK: this should be done earlier in the lifecycle (after first didMount)
     // and later disposed properly. However we can accept this for now as
     // the app lives as a singleton atm.
     // NOTE: _archiveChanged is implemented by DesktopAppChrome
     archive.on('archive:changed', this._archiveChanged, this)
+    
     return archive.load(archiveId)
   }
 

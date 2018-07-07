@@ -17,9 +17,10 @@ export default class CollectionEditor extends Component {
         $$(EntityEditor, {
           model: item,
           schema: schema
-        }) 
+        })
       )
     })
+    return el
   }
   
   _getItems() {

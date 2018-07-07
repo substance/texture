@@ -65,7 +65,7 @@ export default class EntityEditor extends Component {
     Used to populate MultiSelectInput fields
   */
   _getAvailableOptions(collection) {
-    let items = this.context.api.getCollection(collection)
+    let items = this.context.api.getCollectionForType(collection)
     return items.map(item => {
       return {
         id: item.id,

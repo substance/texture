@@ -91,9 +91,6 @@ export default class ArticleAPI {
       case 'authors':
         items = this.getContribs().getAuthors()
         break
-      case 'affiliations':
-        items = this.getContribs().getAffiliations()
-        break
       case 'awards':
         items = this.getContribs().getAwards()
         break
@@ -109,11 +106,18 @@ export default class ArticleAPI {
       default:
         console.error('There is no collection', colName)
     }
-
     return items
   }
 
-  getArticleTitle () {
+  getCollectionForType(type) {
+    return this.getCollection(type+'s')
+  }
+
+  getSchema(type) {
+    return this.pubMetaDbSession.getDocument().getSchema().getNodeSchema(type)
+  }
+
+  getArticleTitle() {
     let articleTitle = this.doc.find('article-title')
     return new AnnotatedTextModel(articleTitle, this._getContext())
   }

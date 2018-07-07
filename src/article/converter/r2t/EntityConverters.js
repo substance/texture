@@ -124,13 +124,7 @@ export const KeywordConverter = {
   },
 
   export($$, node) {
-    const el = $$('kwd-group')
-
-    el.append(
-      _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
-    )
-    
-    return el
+    return _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
   }
 }
 
@@ -151,13 +145,7 @@ export const SubjectConverter = {
   },
 
   export($$, node) {
-    const el = $$('subj-group')
-
-    el.append(
-      _createTextElement($$, node.name, 'subject', {'content-type': node.category})
-    )
-    
-    return el
+    return _createTextElement($$, node.name, 'subject', {'content-type': node.category})
   }
 }
 

@@ -1,62 +1,30 @@
 import { Component } from 'substance'
-import EditorPackage from './editor/EditorPackage'
-import TextureArticleAPI from './article/TextureArticleAPI'
+import ArticlePanel from './article/ArticlePanel'
 
-// TODO: needs to be refactored to achieve a consistent structure.
-// Currently TextureReader is a modified version of this implementation
-// while editor/Editor.js is an AbstractWriter implementation.
+// TODO: this should incoporate the 'Project' stuff that we have in Stencila
 export default class Texture extends Component {
-
-  constructor(...args) {
-    super(...args)
-    const archive = this.props.archive
-    
-    this.manuscriptSession = archive.getEditorSession('manuscript')
-    const doc = this.manuscriptSession.getDocument()
-    this.pubMetaDbSession = archive.getEditorSession('pub-meta')
-    this.configurator = this.manuscriptSession.getConfigurator()
-    this.api = new TextureArticleAPI(
-      this.manuscriptSession,
-      this.pubMetaDbSession,
-      this.configurator.getModelRegistry()
-    )
-
-    // HACK: we need to expose referenceManager somehow, so it can be used in
-    // the JATSExporter. We may want to consider including referenceManager in
-    // TODO: Exporters should use the API instead
-    doc.referenceManager = this.api.getReferenceManager()
-  }
-
-  getChildContext() {
-    // ATTENTION: in Stencila we had regressions, because TextureEditorPackage.Editor
-    // is creating a different childContext which raises the chance for integration issues.
-    // So try to keep this as minimal as possible and rather change
-    // Editor.getChildContet() instead
-    return {
-      urlResolver: this.props.archive,
-      api: this.api,
-      configurator: this.getConfigurator(),
-      pubMetaDbSession: this.pubMetaDbSession,
-      referenceManager: this.api.getReferenceManager(),
-      footnoteManager: this.api.getFootnoteManager(),
-      figureManager: this.api.getFigureManager(),
-      tableManager: this.api.getTableManager()
-    }
-  }
-
-  render($$) {
+  render ($$) {
     let el = $$('div').addClass('sc-texture')
+    // TODO: use configurator (-> plugin framework)
+    let ResourceComponent = ArticlePanel
+    let props = this._getResourceProps()
     el.append(
-      $$(EditorPackage.Editor, {
-        editorSession: this.manuscriptSession,
-        pubMetaDbSession: this.pubMetaDbSession
-      })
+      $$(ResourceComponent, props)
     )
     return el
   }
 
-  getConfigurator() {
-    return this.configurator
+  _getResourceProps () {
+    // TODO: derive props from archive and app-state, and use
+    // a configurator (-> plugin framework)
+    const archive = this.props.archive
+    const articleSession = archive.getEditorSession('manuscript')
+    const pubMetaDbSession = archive.getEditorSession('pub-meta')
+    const config = articleSession.getConfigurator()
+    return {
+      articleSession,
+      pubMetaDbSession,
+      config
+    }
   }
-
 }

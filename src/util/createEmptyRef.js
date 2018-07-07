@@ -1,4 +1,4 @@
-import { expandElementCitation } from '../converter/r2t/r2tHelpers'
+import { expandElementCitation } from '../article/converter/r2t/r2tHelpers'
 
 // TODO: we need to find a way to make sure the element-citation element is valid InternalArticle after creation
 // Currently we would fail late somewhere in the UI if we made a mistake here

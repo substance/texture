@@ -1,6 +1,7 @@
 import * as tableHelpers from './tableHelpers'
 export * from './converter/index'
 
+export { default as ArticleLoader } from './ArticleLoader'
 export { default as JATS } from './JATS'
 export { default as JATSArchiving } from './JATSArchiving'
 export { default as JATSPublishing } from './JATSPublishing'

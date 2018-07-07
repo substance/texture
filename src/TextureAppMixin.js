@@ -1,7 +1,6 @@
-import { JATSImportDialog } from './article/index'
-import TextureArchive from './TextureArchive'
 import Texture from './Texture'
-import EditorPackage from './editor/EditorPackage'
+import TextureArchive from './TextureArchive'
+import { JATSImportDialog } from './article/index'
 
 export default function TextureAppMixin (ParentAppChrome) {
   return class TextureApp extends ParentAppChrome {

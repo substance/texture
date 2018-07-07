@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import {
   BasePackage as SubstanceBasePackage,
   MultiSelectPackage,
@@ -9,14 +10,16 @@ import {
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
   substanceGlobals,
-  AnnotationComponent
+  AnnotationComponent,
+  ToggleTool
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
 import EntityComponentsPackage from '../entities/EntityComponentsPackage'
 import TextureArticlePackage from '../article/TextureArticlePackage'
 
-import Editor from './components/Editor'
+import ManuscriptEditor from './components/Editor'
+import MetaDataEditor from '../article/meta-data/MetaDataEditor'
 import TextNodeComponent from './components/TextNodeComponent'
 import PlainTextComponent from './components/PlainTextComponent'
 import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
@@ -54,7 +57,6 @@ import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
 import ExtLinkComponent from '../shared/components/ExtLinkComponent'
 
-
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
@@ -79,12 +81,13 @@ import {
 import InsertTableTool from './components/InsertTableTool'
 
 import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
+import SwitchViewCommand from './commands/SwitchViewCommand'
 
 substanceGlobals.DEBUG_RENDERING = true
 
 export default {
   name: 'author',
-  configure(config) {
+  configure (config) {
     config.import(SubstanceBasePackage)
     config.import(TextureArticlePackage)
     config.import(FindAndReplacePackage, {
@@ -103,25 +106,28 @@ export default {
     config.setLabelGenerator('references', {
       template: '[$]',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('figures', {
       name: 'Figure',
       plural: 'Figures',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('tables', {
       name: 'Table',
       plural: 'Tables',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('footnotes', {
       template: '$',
       and: ',',
-      to: '-',
+      to: '-'
     })
+
+    config.addComponent('manuscript-editor', ManuscriptEditor)
+    config.addComponent('meta-data-editor', MetaDataEditor)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
@@ -164,7 +170,6 @@ export default {
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
 
-
     // ATTENTION: I have changed the behavior so that
     // unregistered annotations or inline-nodes are
     // rendered using the UnsupportedInlineNodeComponent
@@ -176,7 +181,6 @@ export default {
     config.addComponent('monospace', AnnotationComponent)
     config.addComponent('ext-link', ExtLinkComponent)
 
-
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)
 
@@ -187,6 +191,16 @@ export default {
     config.addComponent('table-wrap-preview', TableFigPreview)
 
     // Commands
+
+    config.addCommand('open-manuscript', SwitchViewCommand, {
+      view: 'manuscript',
+      commandGroup: 'switch-view'
+    })
+
+    config.addCommand('open-meta-data', SwitchViewCommand, {
+      view: 'meta-data',
+      commandGroup: 'switch-view'
+    })
 
     config.addCommand('toggle-abstract', ToggleContentSection, {
       selector: '.sc-abstract',
@@ -293,6 +307,14 @@ export default {
       commandGroup: 'table-delete'
     })
 
+    config.addTool('open-manuscript', ToggleTool)
+    config.addLabel('open-manuscript', 'Open Manuscript')
+    config.addIcon('open-manuscript', { 'fontawesome': 'fa-align-left' })
+
+    config.addTool('open-meta-data', ToggleTool)
+    config.addLabel('open-meta-data', 'Open Meta-Data')
+    config.addIcon('open-meta-data', { 'fontawesome': 'fa-th-list' })
+
     config.addLabel('cite', 'Cite')
     config.addLabel('insert-xref-bibr', 'Reference')
     config.addLabel('insert-xref-fig', 'Figure')
@@ -304,7 +326,6 @@ export default {
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
     config.addLabel('sig-block-end', 'Signature Block ends here')
-
 
     config.addLabel('view', 'View')
     config.addLabel('toggle-abstract', '${showOrHide} Abstract')
@@ -521,8 +542,16 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
+    config.addToolPanel('nav-bar', [
+      {
+        name: 'view',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        commandGroups: ['switch-view']
+      }
+    ])
 
-    // Declarative spec for tool display
     config.addToolPanel('toolbar', [
       {
         name: 'undo-redo',
@@ -624,7 +653,7 @@ export default {
         showDisabled: false,
         style: 'descriptive',
         commandGroups: ['table-delete']
-      },
+      }
     ])
 
     config.addToolPanel('workflow', [
@@ -675,5 +704,8 @@ export default {
       { panel: 'article-record' }
     ])
   },
-  Editor
+  ManuscriptEditor,
+  MetaDataEditor,
+  // legacy
+  Editor: ManuscriptEditor
 }

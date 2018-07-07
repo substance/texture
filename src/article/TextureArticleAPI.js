@@ -70,9 +70,6 @@ export default class TextureArticleAPI {
       case 'authors':
         items = this.getContribs().getAuthors()
         break
-      case 'affiliations':
-        items = this.getContribs().getAffiliations()
-        break
       case 'awards':
         items = this.getContribs().getAwards()
         break
@@ -88,8 +85,15 @@ export default class TextureArticleAPI {
       default:
         console.error('There is no collection', colName)
     }
-
     return items
+  }
+
+  getCollectionForType(type) {
+    return this.getCollection(type+'s')
+  }
+
+  getSchema(type) {
+    return this.pubMetaDbSession.getDocument().getSchema().getNodeSchema(type)
   }
 
   getArticleTitle() {

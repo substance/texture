@@ -107,6 +107,47 @@ export const AwardConverter = {
   }
 }
 
+/*
+  <kwd> -> Keyword
+*/
+export const KeywordConverter = {
+
+  import(el, pubMetaDb) {
+    const node = {
+      type: 'keyword',
+      name: el.textContent,
+      category: el.getAttribute('content-type')
+    }
+    const entity = pubMetaDb.create(node)
+
+    return entity.id
+  },
+
+  export($$, node) {
+    return _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
+  }
+}
+
+/*
+  <subject> -> Subject
+*/
+export const SubjectConverter = {
+
+  import(el, pubMetaDb) {
+    const node = {
+      type: 'subject',
+      name: el.textContent,
+      category: el.getAttribute('content-type')
+    }
+    const entity = pubMetaDb.create(node)
+
+    return entity.id
+  },
+
+  export($$, node) {
+    return _createTextElement($$, node.name, 'subject', {'content-type': node.category})
+  }
+}
 
 /*
   <contrib contrib-type='group'> -> Group

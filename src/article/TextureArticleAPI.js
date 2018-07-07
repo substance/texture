@@ -64,6 +64,34 @@ export default class TextureArticleAPI {
     this._monkeyPatchEditorSession(this._context)
   }
 
+  getCollection(colName) {
+    let items = []
+    switch(colName) {
+      case 'authors':
+        items = this.getContribs().getAuthors()
+        break
+      case 'affiliations':
+        items = this.getContribs().getAffiliations()
+        break
+      case 'awards':
+        items = this.getContribs().getAwards()
+        break
+      case 'keywords':
+        items = this.getMeta().getKeywords()
+        break
+      case 'subjects':
+        items = this.getMeta().getSubjects()
+        break
+      case 'references':
+        items = this.getReferences().getBibliography()
+        break
+      default:
+        console.error('There is no collection', colName)
+    }
+
+    return items
+  }
+
   getArticleTitle() {
     let articleTitle = this.doc.find('article-title')
     return new AnnotatedTextModel(articleTitle, this._getContext())

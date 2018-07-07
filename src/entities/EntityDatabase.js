@@ -245,7 +245,6 @@ Person.schema = {
   affiliations: { type: ['organisation'], default: [] }
 }
 
-
 export class Group extends DocumentNode {}
 
 Group.schema = {
@@ -254,6 +253,8 @@ Group.schema = {
   email: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
   members: { type: ['object'], default: [] },
+  equalContrib: { type: 'boolean', optional: true },
+  corresp: { type: 'boolean', optional: true }
 }
 
 export class Organisation extends DocumentNode {}

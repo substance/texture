@@ -113,23 +113,18 @@ export const AwardConverter = {
 export const KeywordConverter = {
 
   import(el, pubMetaDb) {
-    // Use existing record when possible
-    let entity = _findKeyword(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'keyword',
-        name: el.textContent,
-        category: el.getAttribute('content-type')
-      }
-      entity = pubMetaDb.create(node)
-    } else {
-      console.warn(`Skipping duplicate: ${entity.name} already exists.`)
+    const node = {
+      type: 'keyword',
+      name: el.textContent,
+      category: el.getAttribute('content-type')
     }
+    const entity = pubMetaDb.create(node)
+
     return entity.id
   },
 
   export($$, node) {
-    let el = $$('kwd-group')
+    const el = $$('kwd-group')
 
     el.append(
       _createTextElement($$, node.name, 'kwd', {'content-type': node.category})

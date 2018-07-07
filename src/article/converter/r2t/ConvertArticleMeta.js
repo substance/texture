@@ -11,7 +11,7 @@ export default class ConvertArticleMeta {
     expandAbstract(dom)
 
     const pubMetaDb = api.pubMetaDb
-    const keywords = dom.findAll('article-meta > kwd-group')
+    const keywords = dom.findAll('article-meta > kwd-group > kwd')
     // Convert <kwd> elements to keywords entities
     keywords.forEach(kwd => {
       let entityId = KeywordConverter.import(kwd, pubMetaDb)
@@ -23,7 +23,7 @@ export default class ConvertArticleMeta {
   export(dom, api) {
     const $$ = dom.createElement.bind(dom)
     const pubMetaDb = api.pubMetaDb
-    const keywords = dom.findAll('article-meta > kwd-group')
+    const keywords = dom.findAll('article-meta > kwd-group > kwd')
     keywords.forEach(kwd => {
       let entity = pubMetaDb.get(kwd.attr('rid'))
       let newKwdEl = KeywordConverter.export($$, entity, pubMetaDb)

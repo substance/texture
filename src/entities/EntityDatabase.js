@@ -240,8 +240,10 @@ Person.schema = {
   email: { type: 'string', optional: true },
   orcid: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
+  equalContrib: { type: 'boolean', optional: true },
+  corresp: { type: 'boolean', optional: true },
+  deceased: { type: 'boolean', optional: true }
 }
-
 
 export class Group extends DocumentNode {}
 
@@ -251,6 +253,8 @@ Group.schema = {
   email: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
   members: { type: ['object'], default: [] },
+  equalContrib: { type: 'boolean', optional: true },
+  corresp: { type: 'boolean', optional: true }
 }
 
 export class Organisation extends DocumentNode {}

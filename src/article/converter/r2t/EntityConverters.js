@@ -102,7 +102,9 @@ export const GroupConverter = {
         name: _getText(el, 'named-content[content-type=name]'),
         email: _getText(el, 'email'),
         affiliations: _extractAffiliations(el),
-        members: _extractGroupMembers(el)
+        members: _extractGroupMembers(el),
+        equalContrib: el.getAttribute('equal-contrib') === 'yes',
+        corresp: el.getAttribute('corresp') === 'yes'
       }
       entity = pubMetaDb.create(node)
     } else {
@@ -112,7 +114,11 @@ export const GroupConverter = {
   },
 
   export($$, node) {
-    let el = $$('contrib').attr('contrib-type', 'group')
+    let el = $$('contrib').attr({
+      'contrib-type': 'group',
+      'equal-contrib': node.equalContrib ? 'yes' : 'no',
+      'corresp': node.corresp ? 'yes' : 'no'
+    })
     let collab = $$('collab')
     collab.append(
       $$('named-content').attr('content-type', 'name').append(node.name),
@@ -161,7 +167,13 @@ export const PersonConverter = {
 
 
 function _exportPerson($$, node) {
-  let el = $$('contrib').attr('contrib-type', 'person')
+  let el = $$('contrib').attr({
+    'contrib-type': 'person',
+    'equal-contrib': node.equalContrib ? 'yes' : 'no',
+    'corresp': node.corresp ? 'yes' : 'no',
+    'deceased': node.deceased ? 'yes' : 'no'
+  })
+  
   el.append(
     $$('name').append(
       _createTextElement($$, node.surname, 'surname'),
@@ -171,6 +183,7 @@ function _exportPerson($$, node) {
     ),
     _createTextElement($$, node.email, 'email')
   )
+
   return el
 }
 
@@ -405,7 +418,10 @@ function _extractPerson(el) {
     email: _getText(el, 'email'),
     prefix: _getText(el, 'prefix'),
     suffix: _getText(el, 'suffix'),
-    affiliations: _extractAffiliations(el)
+    affiliations: _extractAffiliations(el),
+    equalContrib: el.getAttribute('equal-contrib') === 'yes',
+    corresp: el.getAttribute('corresp') === 'yes',
+    deceased: el.getAttribute('deceased') === 'yes'
   }
 }
 

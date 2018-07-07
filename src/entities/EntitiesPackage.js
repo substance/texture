@@ -5,7 +5,6 @@ import {
   Software, Thesis, Webpage, Keyword, Subject
 } from './EntityDatabase'
 import EntityLabelsPackage from './EntityLabelsPackage'
-import EntityComponentsPackage from './EntityComponentsPackage'
 
 export default {
   name: 'entities',
@@ -36,6 +35,5 @@ export default {
     config.addNode(Keyword)
     config.addNode(Subject)
     config.import(EntityLabelsPackage)
-    config.import(EntityComponentsPackage)
   }
 }

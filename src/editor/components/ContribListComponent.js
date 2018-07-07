@@ -1,7 +1,7 @@
 import { NodeComponent, FontAwesomeIcon, uniq, without, uuid } from 'substance'
 import entityRenderers from '../../entities/entityRenderers'
 import ModalDialog from '../../shared/ModalDialog'
-import EditRelationship from '../../entities/EditRelationship'
+// import EditRelationship from '../../entities/EditRelationship'
 import updateEntityChildArray from '../../util/updateEntityChildArray'
 import AffiliationsListComponent from './AffiliationsListComponent'
 
@@ -44,13 +44,13 @@ export default class ContribsListComponent extends NodeComponent {
         width: 'medium',
         textAlign: 'center'
       })
-      modal.append(
-        $$(EditRelationship, {
-          propertyName: this.getPropertyName(),
-          entityIds: this._getEntityIds(),
-          targetTypes: this.getTargetTypes()
-        })
-      )
+      // modal.append(
+      //   $$(EditRelationship, {
+      //     propertyName: this.getPropertyName(),
+      //     entityIds: this._getEntityIds(),
+      //     targetTypes: this.getTargetTypes()
+      //   })
+      // )
       el.append(modal)
     }
 

@@ -1,5 +1,4 @@
 import { NodeComponent } from 'substance'
-import { prefillEntity } from '../../entities/prefillEntity'
 import ModalDialog from '../../shared/ModalDialog'
 import AddReferenceComponent from './AddReferenceComponent'
 import RefComponent from './RefComponent'
@@ -15,7 +14,7 @@ export default class RefListComponent extends NodeComponent {
       'done': this._doneEditing,
       'cancel': this._doneEditing,
       'closeModal': this._doneEditing,
-      'add': this._onCreate,
+      // 'add': this._onCreate,
       'created': this._onAddNew,
       'importBib': this._onImport
     })
@@ -123,17 +122,17 @@ export default class RefListComponent extends NodeComponent {
     removeElementAndXrefs(editorSession, refId, parent)
   }
 
-  _onCreate(targetType) {
-    let defaults = {}
-    defaults = prefillEntity(targetType, '')
-    this.extendState({
-      mode: 'create',
-      modeProps: {
-        type: targetType,
-        defaults: defaults
-      }
-    })
-  }
+  // _onCreate(targetType) {
+  //   let defaults = {}
+  //   defaults = prefillEntity(targetType, '')
+  //   this.extendState({
+  //     mode: 'create',
+  //     modeProps: {
+  //       type: targetType,
+  //       defaults: defaults
+  //     }
+  //   })
+  // }
 
   _onEdit(entityId) {
     let db = this.context.pubMetaDbSession.getDocument()

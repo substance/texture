@@ -13,7 +13,6 @@ import {
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
-import EntityComponentsPackage from '../entities/EntityComponentsPackage'
 import TextureArticlePackage from '../article/TextureArticlePackage'
 
 import Editor from './components/Editor'
@@ -92,7 +91,6 @@ export default {
     })
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
-    config.import(EntityComponentsPackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands

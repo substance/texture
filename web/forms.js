@@ -1,5 +1,4 @@
-import { FormRowComponent } from 'substance-texture'
-import { FormMultiSelectComponent } from 'substance-texture'
+import { FormInputComponent, FormMultiSelectComponent, FormRowComponent, PersonEditor } from 'substance-texture'
 import { Component } from 'substance'
 
 const rows = [
@@ -113,21 +112,63 @@ class Grid extends Component {
   render($$) {
     const rows = this.props.rows
     const el = $$('div').addClass('sc-grid')
-    rows.forEach(row => {
-      el.append(
-        $$(FormRowComponent, {fields: row.fields})
-      )
-    })
+    // rows.forEach(row => {
+    //   el.append(
+    //     $$(FormRowComponent, {fields: row.fields})
+    //   )
+    // })
     el.append(
-      $$(FormMultiSelectComponent, {
-        selectedOptions: ['aff1', 'aff2'],
-        availableOptions: [
-          {id: 'aff1', text: 'Linz University, Austria'},
-          {id: 'aff2', text: 'Vienna University, Austria'},
-          {id: 'aff3', text: 'Graz University, Austria'}
-        ],
-        selectorLabel: 'Add Affiliation'
-      })
+      $$(PersonEditor, {name: 'Jane Ann Doe'}).append(
+        $$(FormInputComponent, {
+          id: 'given-names',
+          label: 'Given Names',
+          type: 'text',
+          value: 'Jane',
+          placeholder: 'Enter given names',
+          size: 'medium'
+        }),
+        $$(FormInputComponent, {
+          id: 'surname',
+          label: 'Surname',
+          type: 'text',
+          value: '',
+          size: 'medium',
+          error: 'must be filled'
+        }),
+        $$(FormInputComponent, {
+          id: 'email',
+          label: 'Email',
+          type: 'email',
+          value: 'jane@doe.com',
+          placeholder: 'Enter person email',
+          size: 'medium'
+        }),
+        $$(FormInputComponent, {
+          id: 'role',
+          label: 'Role',
+          type: 'text',
+          value: 'Main contributor',
+          size: 'medium'
+        }),
+        $$(FormMultiSelectComponent, {
+          selectedOptions: ['aff1', 'aff2'],
+          availableOptions: [
+            {id: 'aff1', text: 'Linz University, Austria'},
+            {id: 'aff2', text: 'Vienna University, Austria'},
+            {id: 'aff3', text: 'Graz University, Austria'}
+          ],
+          label: 'Affiliations'
+        }),
+        $$(FormMultiSelectComponent, {
+          selectedOptions: ['g1'],
+          availableOptions: [
+            {id: 'g1', text: 'Substance University research group'},
+            {id: 'g2', text: 'Vienna University, Austria'},
+            {id: 'g3', text: 'Graz University, Austria'}
+          ],
+          label: 'Groups'
+        })
+      )
     )
     return el
   }

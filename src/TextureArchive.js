@@ -23,7 +23,7 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
   }
 
   _checkStorage(documentArchiveConfig) {
-    if (this._storageConfig.getId() === StorageClientTypes.VFS ) {
+    if (this._storageConfig && this._storageConfig.getId() === StorageClientTypes.VFS ) {
         vfsSaveHook(this._storage, TextureArchive, documentArchiveConfig)
     }
   }

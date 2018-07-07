@@ -3,6 +3,7 @@ import { forEach } from 'substance'
 import AnnotatedTextModel from './models/AnnotatedTextModel'
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
+import MetaModel from './models/MetaModel'
 import FootnotesModel from './models/FootnotesModel'
 import ReferencesModel from './models/ReferencesModel'
 
@@ -81,6 +82,11 @@ export default class TextureArticleAPI {
   getContribs() {
     let articleMeta = this.doc.find('article-meta')
     return new ContribsModel(articleMeta, this._getContext())
+  }
+
+  getMeta() {
+    let articleMeta = this.doc.find('article-meta')
+    return new MetaModel(articleMeta, this._getContext())
   }
 
   getFootnotes() {

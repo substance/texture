@@ -294,8 +294,8 @@ export class Keyword extends DocumentNode {}
 
 Keyword.schema = {
   type: 'keyword',
-  name: { type: 'string' },
-  category: { type: 'string', optional: true }
+  name: { type: 'string', optional: false, default: '' },
+  category: { type: 'string', optional: false, default: '' }
 }
 
 export default class EntityDatabase extends Document {

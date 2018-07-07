@@ -290,6 +290,14 @@ Award.schema = {
   awardId: { type: 'string', optional: true }
 }
 
+export class Keyword extends DocumentNode {}
+
+Keyword.schema = {
+  type: 'keyword',
+  name: { type: 'string' },
+  category: { type: 'string', optional: true }
+}
+
 export default class EntityDatabase extends Document {
   /*
     Simple API to find records in the entity database.

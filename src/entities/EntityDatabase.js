@@ -242,7 +242,8 @@ Person.schema = {
   suffix: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   orcid: { type: 'string', optional: true },
-  affiliations: { type: ['organisation'], default: [] }
+  affiliations: { type: ['organisation'], default: [] },
+  awards: { type: ['award'], default: [] }
 }
 
 export class Group extends DocumentNode {}
@@ -252,6 +253,7 @@ Group.schema = {
   name: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
+  awards: { type: ['award'], default: [] },
   members: { type: ['object'], default: [] },
   equalContrib: { type: 'boolean', optional: true },
   corresp: { type: 'boolean', optional: true }
@@ -277,6 +279,15 @@ Organisation.schema = {
   email: { type: 'string', optional: true },
   uri: { type: 'string', optional: true },
   members: { type: ['person'], default: [] },
+}
+
+export class Award extends DocumentNode {}
+
+Award.schema = {
+  type: 'award',
+  institution: { type: 'string', optional: true },
+  fundRefId: { type: 'string', optional: true },
+  awardId: { type: 'string', optional: true }
 }
 
 export default class EntityDatabase extends Document {

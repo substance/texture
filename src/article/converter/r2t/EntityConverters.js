@@ -134,6 +134,32 @@ export const KeywordConverter = {
   }
 }
 
+/*
+  <subject> -> Subject
+*/
+export const SubjectConverter = {
+
+  import(el, pubMetaDb) {
+    const node = {
+      type: 'subject',
+      name: el.textContent,
+      category: el.getAttribute('content-type')
+    }
+    const entity = pubMetaDb.create(node)
+
+    return entity.id
+  },
+
+  export($$, node) {
+    const el = $$('subj-group')
+
+    el.append(
+      _createTextElement($$, node.name, 'subject', {'content-type': node.category})
+    )
+    
+    return el
+  }
+}
 
 /*
   <contrib contrib-type='group'> -> Group

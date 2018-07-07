@@ -1,4 +1,4 @@
-import { KeywordConverter } from './EntityConverters'
+import { KeywordConverter, SubjectConverter } from './EntityConverters'
 import { expandAbstract } from './r2tHelpers'
 
 /*
@@ -18,6 +18,14 @@ export default class ConvertArticleMeta {
       kwd.setAttribute('rid', entityId)
       kwd.empty()
     })
+
+    const subjects = dom.findAll('article-meta subj-group > subject')
+    // Convert <subject> elements to subject entities
+    subjects.forEach(subject => {
+      let entityId = SubjectConverter.import(subject, pubMetaDb)
+      subject.setAttribute('rid', entityId)
+      subject.empty()
+    })
   }
 
   export(dom, api) {
@@ -31,6 +39,16 @@ export default class ConvertArticleMeta {
       // the element's content.
       kwd.innerHTML = newKwdEl.innerHTML
       kwd.removeAttr('rid')
+    })
+
+    const subjects = dom.findAll('article-meta subj-group > subject')
+    subjects.forEach(subject => {
+      let entity = pubMetaDb.get(subject.attr('rid'))
+      let newSubjectEl = SubjectConverter.export($$, entity, pubMetaDb)
+      // We want to keep the original document-specific id, and just assign
+      // the element's content.
+      subject.innerHTML = newSubjectEl.innerHTML
+      subject.removeAttr('rid')
     })
   }
 }

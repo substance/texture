@@ -54,4 +54,51 @@ export default class MetaModel extends DefaultModel {
     })
     return node
   }
+
+  addSubject(subject) {
+    const editorSession = this.context.editorSession
+    const subjectId = this._addEntity(subject, 'subject')
+    editorSession.transaction((tx, args) => {
+      const subjectEl = tx.createElement('subject').attr('rid', subjectId)
+      const subjGroupEl = tx.find('subj-group')
+      subjGroupEl.append(subjectEl)
+      return args
+    })
+    return subjectId
+  }
+
+  getSubject(subjectId) {
+    return this._getEntity(subjectId)
+  }
+
+  getSubjects(category) {
+    const subjGroup = this._node.find('subj-group')
+    const subjectIds = subjGroup.findAll('subject').map(subject => subject.getAttribute('rid'))
+    const subjects = subjectIds.map(subjectId => this._getEntity(subjectId))
+    if(!category) return subjects
+    return subjects.filter(subject => subject.category === category)
+  }
+
+  getSubjectCategories() {
+    const subjects = this.getSubjects()
+    const categories = subjects.map(subject => subject.category)
+    return categories.filter((cat, i, a) => a.indexOf(cat) === i)
+  }
+
+  updateSubject(subjectId, data) {
+    return this._updateEntity(subjectId, data)
+  }
+
+  deleteSubject(subjectId) {
+    const editorSession = this.context.editorSession
+    const node = this._deleteEntity(subjectId)
+    editorSession.transaction((tx, args) => {
+      const subjGroup = tx.find('subj-group')
+      const subjectEl = subjGroup.find(`subject[rid=${subjectId}]`)
+      subjectEl.parentNode.removeChild(subjectEl)
+      tx.delete(subjectEl.id)
+      return args
+    })
+    return node
+  }
 }

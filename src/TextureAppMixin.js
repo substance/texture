@@ -33,9 +33,5 @@ export default function TextureAppMixin (ParentAppChrome) {
     _getArchiveClass () {
       return TextureArchive
     }
-
-    _getArticleConfig () {
-      return EditorPackage
-    }
   }
 }

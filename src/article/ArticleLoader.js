@@ -1,14 +1,12 @@
 import { EditorSession } from 'substance'
-// TODO: incorporate 'editor' into 'article' folder as 'manuscript-editor'
-import TextureConfigurator from '../editor/util/TextureConfigurator'
 import JATSImporter from './converter/JATSImporter'
+import TextureArticlePackage from './TextureArticlePackage'
+import ArticleConfigurator from './ArticleConfigurator'
 
 export default {
   load (xml, context, config) {
-    let configurator = new TextureConfigurator()
-    // TODO: we should not mix config for app and model, so this should work differently
-    // See https://github.com/substance/texture/issues/544
-    configurator.import(config.ArticleConfig)
+    let configurator = new ArticleConfigurator()
+    configurator.import(TextureArticlePackage)
     let jatsImporter = new JATSImporter()
     let jats = jatsImporter.import(xml, context)
     if (jats.hasErrored) {

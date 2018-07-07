@@ -9,17 +9,13 @@ import {
   EditInlineNodeCommand,
   EditAnnotationCommand,
   SchemaDrivenCommandManager,
-  substanceGlobals,
-  AnnotationComponent,
-  ToggleTool
+  AnnotationComponent
 } from 'substance'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
 import EntityComponentsPackage from '../entities/EntityComponentsPackage'
-import TextureArticlePackage from '../article/TextureArticlePackage'
 
-import ManuscriptEditor from './components/Editor'
-import MetaDataEditor from '../article/meta-data/MetaDataEditor'
+import ManuscriptEditor from './components/ManuscriptEditor'
 import TextNodeComponent from './components/TextNodeComponent'
 import PlainTextComponent from './components/PlainTextComponent'
 import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
@@ -81,15 +77,11 @@ import {
 import InsertTableTool from './components/InsertTableTool'
 
 import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
-import SwitchViewCommand from './commands/SwitchViewCommand'
-
-substanceGlobals.DEBUG_RENDERING = true
 
 export default {
-  name: 'author',
+  name: 'ManscruptEditor',
   configure (config) {
     config.import(SubstanceBasePackage)
-    config.import(TextureArticlePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
@@ -125,9 +117,6 @@ export default {
       and: ',',
       to: '-'
     })
-
-    config.addComponent('manuscript-editor', ManuscriptEditor)
-    config.addComponent('meta-data-editor', MetaDataEditor)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
@@ -191,16 +180,6 @@ export default {
     config.addComponent('table-wrap-preview', TableFigPreview)
 
     // Commands
-
-    config.addCommand('open-manuscript', SwitchViewCommand, {
-      view: 'manuscript',
-      commandGroup: 'switch-view'
-    })
-
-    config.addCommand('open-meta-data', SwitchViewCommand, {
-      view: 'meta-data',
-      commandGroup: 'switch-view'
-    })
 
     config.addCommand('toggle-abstract', ToggleContentSection, {
       selector: '.sc-abstract',
@@ -306,14 +285,6 @@ export default {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
     })
-
-    config.addTool('open-manuscript', ToggleTool)
-    config.addLabel('open-manuscript', 'Open Manuscript')
-    config.addIcon('open-manuscript', { 'fontawesome': 'fa-align-left' })
-
-    config.addTool('open-meta-data', ToggleTool)
-    config.addLabel('open-meta-data', 'Open Meta-Data')
-    config.addIcon('open-meta-data', { 'fontawesome': 'fa-th-list' })
 
     config.addLabel('cite', 'Cite')
     config.addLabel('insert-xref-bibr', 'Reference')
@@ -542,16 +513,6 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
-    config.addToolPanel('nav-bar', [
-      {
-        name: 'view',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        commandGroups: ['switch-view']
-      }
-    ])
-
     config.addToolPanel('toolbar', [
       {
         name: 'undo-redo',
@@ -705,7 +666,6 @@ export default {
     ])
   },
   ManuscriptEditor,
-  MetaDataEditor,
   // legacy
   Editor: ManuscriptEditor
 }

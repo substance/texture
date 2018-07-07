@@ -1,5 +1,4 @@
 import { Component, Toolbar, isEqual } from 'substance'
-import TextureArticleAPI from './TextureArticleAPI'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
@@ -13,21 +12,7 @@ export default class ArticlePanel extends Component {
   }
 
   _initialize (props) {
-    const articleSession = props.articleSession
-    const pubMetaDbSession = props.pubMetaDbSession
     const config = props.config
-    const doc = articleSession.getDocument()
-    const api = new TextureArticleAPI(
-      articleSession,
-      pubMetaDbSession,
-      config.getModelRegistry()
-    )
-    // HACK: we need to expose referenceManager somehow, so it can be used in
-    // the JATSExporter. We may want to consider including referenceManager in
-    // TODO: Exporters should use the API instead
-    doc.referenceManager = api.getReferenceManager()
-    this.config = config
-    this.api = api
     this.context = Object.assign({}, super._getContext(), {
       componentRegistry: config.getComponentRegistry()
     })
@@ -47,24 +32,17 @@ export default class ArticlePanel extends Component {
 
   getChildContext () {
     const archive = this.props.archive
-    const api = this.api
-    const config = this.config
+    const config = this._getViewConfig()
     const articleSession = this.props.articleSession
     const pubMetaDbSession = this.props.pubMetaDbSession
     return {
-      api,
       configurator: config,
       articleSession,
       pubMetaDbSession,
       urlResolver: archive,
-      // TODO: these should go into 'ManuscriptEditor'
-      referenceManager: api.getReferenceManager(),
-      footnoteManager: api.getFootnoteManager(),
-      figureManager: api.getFigureManager(),
-      tableManager: api.getTableManager(),
       // legacy
       editorSession: articleSession,
-      // TODO: make the context footprint smaller
+      // TODO: we need this because CommandManager, Toolgroups etc make use of this
       commandGroups: config.getCommandGroups(),
       tools: config.getTools(),
       labelProvider: config.getLabelProvider(),
@@ -94,7 +72,7 @@ export default class ArticlePanel extends Component {
   }
 
   _renderNavbar ($$) {
-    const config = this.config
+    const config = this.props.config
     let el = $$('div').addClass('se-nav-bar')
     el.append(
       $$(Toolbar, {
@@ -107,6 +85,7 @@ export default class ArticlePanel extends Component {
   _renderContent ($$) {
     const articleSession = this.props.articleSession
     const pubMetaDbSession = this.props.pubMetaDbSession
+    const config = this._getViewConfig()
     let ContentComponent
     if (this.state.view === 'manuscript') {
       ContentComponent = this.getComponent('manuscript-editor')
@@ -116,15 +95,30 @@ export default class ArticlePanel extends Component {
     return $$(ContentComponent, {
       articleSession,
       pubMetaDbSession,
+      config,
       // legacy
       editorSession: articleSession
     })
   }
 
+  _getViewConfig () {
+    const view = this.state.view
+    switch (view) {
+      case 'manuscript':
+      case 'meta-data':
+      case 'preview': {
+        return this.props.config.getConfiguration(view)
+      }
+      default:
+        throw new Error('Invalid state')
+    }
+  }
+
   _openView (name) {
     switch (name) {
       case 'manuscript':
-      case 'meta-data': {
+      case 'meta-data':
+      case 'preview': {
         this.extendState({ view: name })
         break
       }

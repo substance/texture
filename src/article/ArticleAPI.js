@@ -94,6 +94,9 @@ export default class ArticleAPI {
       case 'awards':
         items = this.getContribs().getAwards()
         break
+      case 'organisations':
+        items = this.getContribs().getOrganisations()
+        break
       case 'keywords':
         items = this.getMeta().getKeywords()
         break

@@ -89,6 +89,12 @@ export default class ContribsModel extends DefaultModel {
     }, [])
   }
 
+  getOrganisations() {
+    let affGroup = this._node.find('aff-group')
+    let affIds = affGroup.findAll('aff').map(aff => aff.getAttribute('rid'))
+    return affIds.map(affId => this._getEntity(affId))
+  }
+
   updateAffiliation(affId, data) {
     return this._updateEntity(affId, data)
   }
@@ -123,25 +129,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   getAwards() {
-    const authors = this.getAuthors()
-    const awardIds = authors.reduce((awards, author) => {
-      const members = author.members || []
-      const memberAwards = members.reduce((a,m) => {
-        return a.concat(m.awards)
-      }, [])
-      let awardsList = new Array().concat(author.awards, memberAwards)
-      awardsList.forEach(a => {
-        if(awards.indexOf(a) < 0) {
-          awards.push(a)
-        }
-      })
-      return awards
-    }, [])
-    return awardIds.reduce((acc, awardId) => {
-      const entity = this._getEntity(awardId)
-      if(entity) acc.push(entity)
-      return acc
-    }, [])
+    let fundingGroup = this._node.find('funding-group')
+    let awardIds = fundingGroup.findAll('award-group').map(awardGroup => awardGroup.getAttribute('rid'))
+    return awardIds.map(awardId => this._getEntity(awardId))
   }
 
   updateAward(awardId, data) {

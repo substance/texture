@@ -3,6 +3,13 @@
 <article id="article" xmlns:xlink="http://www.w3.org/1999/xlink">
   <front id="front-1">
     <article-meta id="article-meta-1">
+      <article-categories>
+        <subj-group>
+          <subject content-type="display-channel">Research Article</subject>
+          <subject content-type="heading">Computational and Systems Biology</subject>
+          <subject content-type="heading">Epidemiology and Global Health</subject>
+        </subj-group>
+      </article-categories>
       <title-group id="title-group-1">
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
       </title-group>
@@ -124,13 +131,6 @@
         <kwd content-type="author-keyword">calcium imaging</kwd>
         <kwd content-type="research-organism">Mouse</kwd>
       </kwd-group>
-      <article-categories>
-        <subject-group>
-          <subject content-type="display-channel">Research Article</subject>
-          <subject content-type="heading">Computational and Systems Biology</subject>
-          <subject content-type="heading">Epidemiology and Global Health</subject>
-        </subject-group>
-      </article-categories>
       <funding-group>
         <award-group id="fund1">
           <funding-source>

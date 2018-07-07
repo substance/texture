@@ -489,13 +489,10 @@ function _extractPerson(el) {
     prefix: _getText(el, 'prefix'),
     suffix: _getText(el, 'suffix'),
     affiliations: _extractAffiliations(el),
-<<<<<<< HEAD
+    awards: _extractAwards(el),
     equalContrib: el.getAttribute('equal-contrib') === 'yes',
     corresp: el.getAttribute('corresp') === 'yes',
     deceased: el.getAttribute('deceased') === 'yes'
-=======
-    awards: _extractAwards(el)
->>>>>>> Award converters.
   }
 }
 

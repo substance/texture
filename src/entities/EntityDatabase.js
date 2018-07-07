@@ -242,10 +242,7 @@ Person.schema = {
   suffix: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   orcid: { type: 'string', optional: true },
-  affiliations: { type: ['organisation'], default: [] },
-  equalContrib: { type: 'boolean', optional: true },
-  corresp: { type: 'boolean', optional: true },
-  deceased: { type: 'boolean', optional: true }
+  affiliations: { type: ['organisation'], default: [] }
 }
 
 export class Group extends DocumentNode {}

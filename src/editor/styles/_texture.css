@@ -1,3 +1,29 @@
 .sc-texture {
   height: 100%;
 }
+
+.sc-article-panel {
+  display: flex;
+  flex-flow: row nowrap;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+}
+
+.sc-article-panel .se-nav-bar {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 100%;
+  border-right: 1px solid #b5b5b5;
+  z-index: 99;
+}
+
+.sc-article-panel .se-nav-bar > .sc-toolbar > .se-active-tools .sc-tool-group {
+  display: block;
+}
+
+.sc-article-panel .sc-editor {
+  flex-grow: 1;
+}

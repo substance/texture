@@ -200,32 +200,49 @@ function _addAffiliations(el, $$, node) {
 }
 
 /*
-  <name> -> Person
+  <name> -> { type: 'person', ... }
+  <collab>  -> { type: 'group' } 
 
-  Used within <ref>: <name> elements within <person-group>
+  Used within <ref>
 */
-export const RefPersonConverter = {
+export const RefCollabConverter = {
 
   import(el) {
-    let entry = {
-      givenNames: _getText(el, 'given-names'),
-      surname: _getText(el, 'surname'),
-      prefix: _getText(el, 'prefix'),
-      suffix: _getText(el, 'suffix'),
+    let entry
+    if (el.tagName === 'name') {
+      entry = {
+        type: 'person',
+        givenNames: _getText(el, 'given-names'),
+        surname: _getText(el, 'surname'),
+        prefix: _getText(el, 'prefix'),
+        suffix: _getText(el, 'suffix'),
+      }
+    } else if (el.tagName === 'collab') {
+      entry = {
+        type: 'group',
+        name: _getText(el, 'named-content[content-type=name]')
+      }
+    } else {
+      console.warn(`${el.tagName} not supported inside <person-group>`)
     }
     return entry
   },
 
   export($$, record) {
-    let el = $$('name')
-    el.append(_createTextElement($$, record.surname, 'surname'))
-    el.append(_createTextElement($$, record.givenNames, 'given-names'))
-    el.append(_createTextElement($$, record.prefix, 'prefix'))
-    el.append(_createTextElement($$, record.suffix, 'suffix'))
+    let el
+    if (record.type === 'person') {
+      el = $$('name')
+      el.append(_createTextElement($$, record.surname, 'surname'))
+      el.append(_createTextElement($$, record.givenNames, 'given-names'))
+      el.append(_createTextElement($$, record.prefix, 'prefix'))
+      el.append(_createTextElement($$, record.suffix, 'suffix'))
+    } else if (record.type === 'collab') {
+      el = $$('collab')
+      el.append(_createTextElement($$, record.name, 'named-content', { 'content-type': 'name' }))
+    }
     return el
   }
 }
-
 
 
 let mappingItemTypes = {
@@ -309,26 +326,12 @@ export const ElementCitationConverter = {
           node.title = _getHTML(el, 'article-title')
         }
       }
-      // Extract authors
-      node.authors = el.findAll('person-group[person-group-type=author] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
-      // Extract editors
-      node.editors = el.findAll('person-group[person-group-type=editor] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
-      // Extract inventors
-      node.inventors = el.findAll('person-group[person-group-type=inventor] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
-      // Extract sponsors
-      node.sponsors = el.findAll('person-group[person-group-type=sponsor] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
-      // Extract translators
-      node.translators = el.findAll('person-group[person-group-type=translator] > name').map(el => {
-        return RefPersonConverter.import(el, pubMetaDb)
-      })
+
+      node.authors = _getRefCollabs(el, pubMetaDb, 'author')
+      node.editors = _getRefCollabs(el, pubMetaDb, 'editor')
+      node.inventors = _getRefCollabs(el, pubMetaDb, 'inventor')
+      node.sponsors = _getRefCollabs(el, pubMetaDb, 'sponsor')
+      node.translators = _getRefCollabs(el, pubMetaDb, 'translator')
       entity = pubMetaDb.create(node)
     }
     return entity.id
@@ -359,7 +362,7 @@ export const ElementCitationConverter = {
     el.append(_createTextElement($$, node.pageCount, 'page-count'))
     el.append(_createTextElement($$, node.pageRange, 'page-range'))
     el.append(_createTextElement($$, node.partTitle, 'part-title'))
-    el.append(_createTextElement($$, node.patentNumber, 'patent', {'country': node.patentCountry}))
+    el.append(_createTextElement($$, node.patentNumber, 'patent', { 'country': node.patentCountry }))
     el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
     el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
     el.append(_createTextElement($$, node.uri, 'uri'))
@@ -391,7 +394,6 @@ export const ElementCitationConverter = {
         el.append(_createHTMLElement($$, node.title, 'article-title'))
       }
     }
-
     return el
   }
 }
@@ -402,13 +404,12 @@ function _exportPersonGroup($$, persons, personGroupType) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
     persons.forEach(entry => {
       el.append(
-        RefPersonConverter.export($$, entry)
+        RefCollabConverter.export($$, entry)
       )
     })
     return el
   }
 }
-
 
 function _extractPerson(el) {
   return {
@@ -422,6 +423,17 @@ function _extractPerson(el) {
     equalContrib: el.getAttribute('equal-contrib') === 'yes',
     corresp: el.getAttribute('corresp') === 'yes',
     deceased: el.getAttribute('deceased') === 'yes'
+  }
+}
+
+function _getRefCollabs(el, pubMetaDb, type) {
+  let personGroup = el.find(`person-group[person-group-type=${type}]`)
+  if (personGroup) {
+    return personGroup.childNodes.map(el => {
+      return RefCollabConverter.import(el, pubMetaDb)
+    })
+  } else {
+    return []
   }
 }
 

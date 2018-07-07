@@ -586,42 +586,15 @@
     </element>
   </define>
 
+
   <!--
-    WIP: either inline or structured
+    We try to only allow text in named-content, as this would be the purest form. Let's see if we need
+    to allow more.
   -->
   <define name="named-content">
     <element name="named-content">
       <ref name="named-content-attlist"/>
-      <choice>
-        <zeroOrMore>
-          <choice>
-            <!-- 
-              NOTE: enabling this breaks prettyPrintXML: code cells (code > named-content > code),
-              where named-content must not contain any text.
-
-              TODO: remove all usage of named-content for code cells
-            -->
-            <text/>
-            <ref name="emphasis.class"/>
-            <ref name="inline-display-noalt.class"/>
-            <ref name="inline-math.class"/>
-            <ref name="phrase.class"/>
-            <ref name="simple-link.class"/>
-            <ref name="subsup.class"/>
-            <ref name="inline-supplementary-material"/>
-          </choice>
-        </zeroOrMore>
-        <zeroOrMore>
-          <choice>
-            <ref name="address-link.class"/>
-            <!-- <ref name="article-link.class"/> -->
-            <ref name="block-display.class"/>
-            <ref name="block-math.class"/>
-            <ref name="list.class"/>
-            <ref name="rest-of-para.class"/>
-          </choice>
-        </zeroOrMore>
-      </choice>
+      <text/>
     </element>
   </define>
 

@@ -233,6 +233,9 @@ export class Person extends DocumentNode {}
 
 Person.schema = {
   type: 'person',
+  equalContrib: { type: 'boolean', optional: true },
+  corresp: { type: 'boolean', optional: true },
+  deceased: { type: 'boolean', optional: true },
   givenNames: { type: 'string', optional: true },
   surname: { type: 'string', optional: true },
   prefix: { type: 'string', optional: true },

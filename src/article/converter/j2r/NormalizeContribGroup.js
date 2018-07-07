@@ -4,7 +4,7 @@
 export default class NormalizeContribGroup {
 
   import(dom) {
-    let contribGroups = dom.findAll('contrib-group')
+    let contribGroups = dom.findAll('article-meta > contrib-group')
     if (contribGroups[0]) {
       _normalizeContribGroup(contribGroups[0], 'author')
     }

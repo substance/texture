@@ -4,8 +4,6 @@ import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
 import UpdateDocType from './UpdateDocType'
 import FnGroupConverter from './FnGroupConverter'
-import ConvertCodeCell from './ConvertCodeCell'
-import ConvertReproFig from './ConvertReproFig'
 import ConvertFig from './ConvertFig'
 import ConvertTable from './ConvertTable'
 import ConvertTableWrap from './ConvertTableWrap'
@@ -39,8 +37,6 @@ const trafos = [
   ConvertRefs, // extracts publication entities
   ConvertSigBlock,
   FnGroupConverter,
-  ConvertCodeCell,
-  ConvertReproFig,
   ConvertFig,
   ConvertTable,
   ConvertTableWrap,
@@ -73,7 +69,6 @@ export {
   NormalizeHistoryDates,
   ConvertSigBlock,
   FnGroupConverter,
-  ConvertReproFig,
   ConvertFig,
   ConvertTableWrap,
   ConvertList,
@@ -81,6 +76,5 @@ export {
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertContentLoc,
-  ConvertCodeCell,
   UpdateDocType
 }

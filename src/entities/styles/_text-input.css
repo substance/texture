@@ -1,0 +1,42 @@
+.sc-text-input {
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+}
+
+.sc-text-input label {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.sc-text-input .se-input {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  height: var(--input-height);
+}
+
+.sc-text-input .se-error-msg {
+  font-size: 12px;
+  line-height: 15px;
+  margin: 5px 0 0;
+}
+
+.sc-text-input.sm-error {
+  color: var(--error-color);
+}
+
+.sc-text-input.sm-error .se-input {
+  border: 1px solid var(--error-color);
+  background-color: var(--error-bg-color);
+}
+
+.sc-text-input.sm-size-small {
+  width: var(--width-small);
+}
+
+.sc-text-input.sm-size-medium {
+  width: var(--width-medium);
+}
+
+.sc-text-input.sm-size-large {
+  width: var(--width-large);
+}

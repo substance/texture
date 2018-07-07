@@ -16,6 +16,7 @@ import EditorBasePackage from '../shared/EditorBasePackage'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
 import EntityComponentsPackage from '../entities/EntityComponentsPackage'
+import TextureArticlePackage from '../article/TextureArticlePackage'
 
 import ManuscriptEditor from './components/ManuscriptEditor'
 import TextNodeComponent from './components/TextNodeComponent'
@@ -90,7 +91,6 @@ export default {
     })
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
-    config.import(EntityComponentsPackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands

@@ -1,0 +1,81 @@
+.sc-entity-editor {
+    max-width: 800px;
+    border: 2px solid #b9b9b9;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px;
+    --label-font-size: 14px;
+    --label-font-weight: 400;
+    --label-line-height: 28px;
+    --label-color: #9e9e9e;
+    --error-color: #cc0033;
+  }
+  
+  .sc-entity-editor > * {
+    margin-bottom: 20px;
+  }
+  
+  .sc-entity-editor .se-header {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .sc-entity-editor .sc-text-input {
+    position: relative;
+    display: flex;
+    font-size: var(--input-font-size);
+    line-height: var(--input-line-height);
+    height: 30px;
+  }
+  
+  .sc-entity-editor .sc-text-input.sm-error {
+    color: var(--error-color);
+  }
+  
+  .sc-entity-editor .sc-text-input .se-error-msg {
+    font-size: 10px;
+    line-height: 15px;
+    margin: 5px 0 0;
+    position: absolute;
+    top: 10px;
+  }
+  
+  .sc-entity-editor .sc-text-input label,
+  .sc-entity-editor .sc-multi-select-input .se-label {
+    display: block;
+    flex: 1 0 200px;
+    margin-bottom: 0px;
+    color: var(--label-color);
+    font-size: var(--label-font-size);
+    font-weight: var(--label-font-weight);
+    line-height: var(--label-line-height);
+  }
+
+  .sc-entity-editor .sc-text-input label {
+    flex: 1 0 196px;
+  }
+  
+  .sc-entity-editor .sc-text-input label::after,
+  .sc-entity-editor .sc-multi-select-input .se-label::after {
+    content: ':'
+  }
+  
+  .sc-entity-editor .sc-text-input .se-input {
+    width: 100%;
+    border: 1px solid transparent;
+    height: var(--input-height);
+    padding-left: 4px;
+  }
+  
+  .sc-entity-editor  .sc-text-input .se-input:focus {
+    border: 1px solid var(--border-color);
+  }
+  
+  .sc-entity-editor .sc-text-input.sm-error .se-input {
+    border-color: var(--error-color);
+  }
+  
+  .sc-entity-editor .sc-text-input.sm-error label {
+    color: var(--error-color);
+    line-height: 20px;
+  }

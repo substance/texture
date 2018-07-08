@@ -24,9 +24,7 @@ import TextureArchiveConfig from '../src/TextureArchiveConfig'
 
 
 window.addEventListener("load", function() {
-  let app = TextureEditorDesktopApp.start({
-    archiveId: "elife-32671"
-  })
+  let app = TextureEditorDesktopApp.start()
 })
 
 export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppChrome) {
@@ -53,13 +51,7 @@ export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppC
   }
 
   static _getFinalMountConfig(customMountConfig) {
-    let defaultMountConfig = TextureEditorDesktopApp._getDefaultMountConfig(),
-        archiveIdQueryParam = getQueryStringParam('archive')
-
-    if (archiveIdQueryParam) {
-      customMountConfig.archiveId = archiveIdQueryParam
-    }
-
+    let defaultMountConfig = TextureEditorDesktopApp._getDefaultMountConfig()
     return Object.assign(defaultMountConfig, customMountConfig)
   }
 
@@ -74,7 +66,7 @@ export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppC
         documentArchiveConfig.setStorageClient( new FSStorageClient() )
 
     return {
-      archiveId: getQueryStringParam('archive') || 'kitchen-sink',
+      archiveId: getQueryStringParam('archiveDir') ,
       documentArchiveConfig: documentArchiveConfig,
       ipc,
       url,

@@ -242,9 +242,9 @@ Person.schema = {
   suffix: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   orcid: { type: 'string', optional: true },
-  affiliations: { type: ['organisation'], default: [] }
+  affiliations: { type: ['organisation'], default: [] },
+  awards: { type: ['award'], default: [] }
 }
-
 
 export class Group extends DocumentNode {}
 
@@ -253,7 +253,10 @@ Group.schema = {
   name: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
+  awards: { type: ['award'], default: [] },
   members: { type: ['object'], default: [] },
+  equalContrib: { type: 'boolean', optional: true },
+  corresp: { type: 'boolean', optional: true }
 }
 
 export class Organisation extends DocumentNode {}
@@ -276,6 +279,31 @@ Organisation.schema = {
   email: { type: 'string', optional: true },
   uri: { type: 'string', optional: true },
   members: { type: ['person'], default: [] },
+}
+
+export class Award extends DocumentNode {}
+
+Award.schema = {
+  type: 'award',
+  institution: { type: 'string', optional: true },
+  fundRefId: { type: 'string', optional: true },
+  awardId: { type: 'string', optional: true }
+}
+
+export class Keyword extends DocumentNode {}
+
+Keyword.schema = {
+  type: 'keyword',
+  name: { type: 'string', optional: false, default: '' },
+  category: { type: 'string', optional: false, default: '' }
+}
+
+export class Subject extends DocumentNode {}
+
+Subject.schema = {
+  type: 'subject',
+  name: { type: 'string', optional: false, default: '' },
+  category: { type: 'string', optional: false, default: '' }
 }
 
 export default class EntityDatabase extends Document {

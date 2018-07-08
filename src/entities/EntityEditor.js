@@ -6,6 +6,8 @@ export default class EntityEditor extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-entity-editor')
+    // TODO: make a state property out of this to switch between full mode and small form
+    let fullMode = false
     // FIXME: in some cases this is not a node. Use a different name.
     let model = this.props.model
     let schema = this.props.schema
@@ -14,7 +16,9 @@ export default class EntityEditor extends Component {
       let name = property.name
       let type = property.type
       let targetTypes = property.targetTypes
+      let isOptional = property.isOptional()
       let value = model[name]
+      if(!fullMode && value === '' && isOptional) continue 
       if (name === 'id') {
         // id property is not editable and skipped
       } else if (type === 'string') {

@@ -77,11 +77,12 @@ function _importPersons(dom, pubMetaDb, type) {
 
     if (contrib.attr('contrib-type') === 'group') {
       entityId = GroupConverter.import(contrib, pubMetaDb)
+      contrib.parentNode.removeChild(contrib)
     } else {
       entityId = PersonConverter.import(contrib, pubMetaDb)
+      contrib.setAttribute('rid', entityId)
+      contrib.empty()
     }
-    contrib.setAttribute('rid', entityId)
-    contrib.empty()
   })
 }
 
@@ -89,7 +90,22 @@ function _exportPersons($$, dom, pubMetaDb, type) {
   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
   if(contribGroup === null) return
   let contribs = contribGroup.findAll('contrib')
+  let groupMembers = []
   contribs.forEach(contrib => {
+    const groupId = contrib.attr('gid')
+    if(groupId) {
+      groupMembers.push(contrib)
+      // contrib.removeAttr('rid')
+      // contrib.removeAttr('gid')
+      contrib.empty()
+
+      const groupEl = dom.find(`contrib#${groupId}`)
+      if(!groupEl) {
+        this._exportGroup($$, dom, pubMetaDb, groupId)
+      }
+
+      return
+    }
     let node = pubMetaDb.get(contrib.attr('rid'))
     let newContribEl
     if (node.type === 'group') {
@@ -101,4 +117,21 @@ function _exportPersons($$, dom, pubMetaDb, type) {
     contrib.innerHTML = newContribEl.innerHTML
     contrib.removeAttr('rid')
   })
+
+  groupMembers.forEach(contrib => {
+    let node = pubMetaDb.get(contrib.attr('rid'))
+    let contribEl = dom.find(`contrib#${node.id}`)
+    let contribGroupEl = contribEl.find('contrib-group')
+    if(!contribGroupEl) {
+      contribGroupEl = contribEl.append(
+        $$('contrib-group').attr({'contrib-type': 'group-member'})
+      )
+    }
+    let newContribEl = PersonConverter.export($$, node, pubMetaDb)
+    contribEl.append(newContribEl)
+  })
+}
+
+_exportGroup($$, dom, pubMetaDb, type) {
+
 }

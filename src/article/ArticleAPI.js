@@ -91,6 +91,9 @@ export default class ArticleAPI {
       case 'authors':
         items = this.getContribs().getAuthors()
         break
+      case 'groups':
+        items = this.getContribs().getGroups()
+        break
       case 'awards':
         items = this.getContribs().getAwards()
         break

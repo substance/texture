@@ -1,6 +1,6 @@
 import { Component, FontAwesomeIcon, isArray } from 'substance'
 import TextInput from './TextInput'
-import MultiSelectInput from './MultiselectInput'
+import MultiSelectInput from './MultiSelectInput'
 import entityRenderers from './entityRenderers'
 
 export default class EntityEditor extends Component {
@@ -53,13 +53,13 @@ export default class EntityEditor extends Component {
 
     if(!fullMode) {
       controlEl.append(
-        $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }),
-        'More fields'
+        $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon'),
+        this.getLabel('show-more-fields')
       )
     } else {
       controlEl.append(
-        $$(FontAwesomeIcon, { icon: 'fa-chevron-up' }),
-        'Less fields'
+        $$(FontAwesomeIcon, { icon: 'fa-chevron-up' }).addClass('se-icon'),
+        this.getLabel('show-less-fields')
       )
     }
 

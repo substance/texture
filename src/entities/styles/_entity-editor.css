@@ -79,3 +79,13 @@
     color: var(--error-color);
     line-height: 20px;
   }
+
+  .sc-entity-editor .se-control {
+    font-size: 14px;
+    color: #499aff;
+    cursor: pointer;
+  }
+
+  .sc-entity-editor .se-control .se-icon {
+    margin-right: 10px;
+  }

@@ -5,12 +5,12 @@ export default class CollectionEditor extends Component {
   render($$) {
     let el = $$('div').addClass('sc-collection-editor')
     let label = this.getLabel(this.props.collection)
-    
+    let items = this._getItems()
+
     el.append(
-      $$('div').addClass('se-header').append(label)
+      $$('div').addClass('se-header').append(items.length + ' ' + label)
     )
 
-    let items = this._getItems()
     items.forEach(item => {
       let schema = this._getSchema(item.type)
       el.append(

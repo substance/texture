@@ -1,4 +1,5 @@
 @import './_text-input.css';
 @import './_multi-select-input.css';
 @import './_boolean-input.css';
+@import '/_collection-editor.css';
 @import '/_entity-editor.css';

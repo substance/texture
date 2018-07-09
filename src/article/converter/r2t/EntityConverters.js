@@ -358,15 +358,17 @@ export const RefContribConverter = {
 
   export($$, node) {
     let el
-
     if (node.givenNames) {
       el = $$('name')
       el.append(_createTextElement($$, node.name, 'surname'))
       el.append(_createTextElement($$, node.givenNames, 'given-names'))
       // el.append(_createTextElement($$, record.prefix, 'prefix'))
       // el.append(_createTextElement($$, record.suffix, 'suffix'))
-    } else {
+    } else if (node.name) {
+      el = $$('collab')
       el.append(_createTextElement($$, node.name, 'named-content', { 'content-type': 'name' }))
+    } else {
+      console.warn('No content found for refContrib node')
     }
     return el
   }
@@ -465,7 +467,7 @@ export const ElementCitationConverter = {
     return entity.id
   },
 
-  export($$, node) {
+  export($$, node, pubMetaDb) {
     let type = node.type
     let el = $$('element-citation').attr('publication-type', reverseMapping(mappingItemTypes)[type])
 
@@ -505,10 +507,10 @@ export const ElementCitationConverter = {
     el.append(_createTextElement($$, node.doi, 'pub-id', {'pub-id-type': 'doi'}))
     el.append(_createTextElement($$, node.pmid, 'pub-id', {'pub-id-type': 'pmid'}))
     // creators
-    el.append(_exportPersonGroup($$, node.authors, 'author'))
-    el.append(_exportPersonGroup($$, node.editors, 'editor'))
-    el.append(_exportPersonGroup($$, node.inventors, 'inventor'))
-    el.append(_exportPersonGroup($$, node.sponsors, 'sponsor'))
+    el.append(_exportPersonGroup($$, node.authors, 'author', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.editors, 'editor', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.inventors, 'inventor', pubMetaDb))
+    el.append(_exportPersonGroup($$, node.sponsors, 'sponsor', pubMetaDb))
 
     if (type === 'book' || type === 'report' || type === 'software') {
       el.append(_createTextElement($$, node.title, 'source'))
@@ -527,12 +529,13 @@ export const ElementCitationConverter = {
 }
 
 
-function _exportPersonGroup($$, persons, personGroupType) {
-  if (persons && persons.length > 0) {
+function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
+  if (contribs && contribs.length > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
-    persons.forEach(entry => {
+    contribs.forEach(refContribId => {
+      let refContribNode = pubMetaDb.get(refContribId)
       el.append(
-        RefContribConverter.export($$, entry)
+        RefContribConverter.export($$, refContribNode)
       )
     })
     return el

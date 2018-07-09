@@ -1,6 +1,7 @@
 import { Component, isArray } from 'substance'
 import TextInput from './TextInput'
 import MultiSelectInput from './MultiselectInput'
+import entityRenderers from './entityRenderers'
 
 export default class EntityEditor extends Component {
 
@@ -73,10 +74,16 @@ export default class EntityEditor extends Component {
     return items.map(item => {
       return {
         id: item.id,
-        text: item.id // TODO: render HTML here
+        text: this._renderEntity(item)
       }
     })
   }
 
-
+  /*
+    Utility method to render an entity
+  */
+  _renderEntity(entity) {
+    // TODO: we should use pubMetaDb directly when it'll be available
+    return entityRenderers[entity.type](entity.id, this.context.pubMetaDbSession.getDocument())
+  }
 }

@@ -1,0 +1,4 @@
+.sc-form-row {
+  display: flex;
+  flex-wrap: wrap;
+}

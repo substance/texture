@@ -1,0 +1,78 @@
+.sc-person-editor {
+  max-width: 800px;
+  border: 2px solid #b9b9b9;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 20px;
+  --label-font-size: 12px;
+  --label-color: #9e9e9e;
+  --error-color: #cc0033;
+}
+
+.sc-person-editor > * {
+  margin-bottom: 20px;
+}
+
+.sc-person-editor .se-header {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.sc-person-editor .sc-form-input {
+  position: relative;
+  display: flex;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+  height: 30px;
+}
+
+.sc-person-editor .sc-form-input.sm-error {
+  color: var(--error-color);
+}
+
+.sc-person-editor .sc-form-input .se-error-msg {
+  font-size: 10px;
+  line-height: 15px;
+  margin: 5px 0 0;
+  position: absolute;
+  top: 10px;
+}
+
+.sc-person-editor .sc-form-input label {
+  display: block;
+  flex: 1 0 200px;
+  margin-bottom: 0px;
+  color: var(--label-color);
+  font-size: var(--label-font-size);
+  line-height: 28px;
+}
+
+.sc-person-editor .sc-form-input label::after,
+.sc-person-editor .sc-form-multi-select .se-label::after {
+  content: ':'
+}
+
+.sc-person-editor .sc-form-input .se-input {
+  width: 100%;
+  border: 1px solid transparent;
+  height: var(--input-height);
+}
+
+.sc-person-editor  .sc-form-input .se-input:focus {
+  border: 1px solid var(--border-color);
+}
+
+.sc-person-editor .sc-form-input.sm-error .se-input {
+  border-color: var(--error-color);
+}
+
+.sc-person-editor .sc-form-multi-select .se-label {
+  color: var(--label-color);
+  font-size: var(--label-font-size);
+  line-height: 28px;
+}
+
+.sc-person-editor .sc-form-input.sm-error label {
+  color: var(--error-color);
+  line-height: 20px;
+}

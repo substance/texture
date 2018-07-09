@@ -3,6 +3,7 @@ export * from './src/article/index'
 export * from './src/editor/index'
 export * from './src/reader/index'
 export * from './src/entities/index'
+export * from './src/forms/index'
 
 export { default as Texture } from './src/Texture'
 export { default as RichTextInput } from './src/rich-text-input/RichTextInput'

@@ -206,6 +206,7 @@ b.task('build:vfs', () => {
 b.task('build:web', ['build:vfs'], () => {
   b.copy('web/index.html', DIST)
   b.copy('web/reader.html', DIST)
+  b.copy('web/forms.html', DIST)
   b.js('./web/editor.js', {
     output: [{
       file: DIST+'editor.js',
@@ -231,6 +232,18 @@ b.task('build:web', ['build:vfs'], () => {
       }
     }],
     external: ['substance', 'substance-texture', 'katex']
+  })
+  b.js('./web/forms.js', {
+    output: [{
+      file: DIST+'forms.js',
+      format: 'umd',
+      name: 'textureForms',
+      globals: {
+        'substance': 'window.substance',
+        'substance-texture': 'window.texture'
+      }
+    }],
+    external: ['substance', 'substance-texture']
   })
   b.copy('./data', DIST+'data')
 })

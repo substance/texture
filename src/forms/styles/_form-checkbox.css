@@ -1,0 +1,15 @@
+.sc-form-checkbox {
+  cursor: pointer;
+}
+
+.sc-form-checkbox.sm-size-small {
+  width: var(--width-small);
+}
+
+.sc-form-checkbox.sm-size-medium {
+  width: var(--width-medium);
+}
+
+.sc-form-checkbox.sm-size-large {
+  width: var(--width-large);
+}

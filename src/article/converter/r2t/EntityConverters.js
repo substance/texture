@@ -324,45 +324,49 @@ function _addAwards(el, $$, node) {
 }
 
 /*
-  <name> -> { type: 'person', ... }
-  <collab>  -> { type: 'group' } 
+  <name> -> { type: 'ref-contrib', name: 'Doe', givenNames: 'John }
+  <collab>  -> { type: 'ref-contrib' name: 'International Business Machines' } 
 
   Used within <ref>
 */
-export const RefCollabConverter = {
+export const RefContribConverter = {
 
-  import(el) {
-    let entry
+  import(el, pubMetaDb) {
+    let node
     if (el.tagName === 'name') {
-      entry = {
-        type: 'person',
+      node = {
+        type: 'ref-contrib',
         givenNames: _getText(el, 'given-names'),
-        surname: _getText(el, 'surname'),
-        prefix: _getText(el, 'prefix'),
-        suffix: _getText(el, 'suffix'),
+        name: _getText(el, 'surname')// ,
+        // TODO: We may want to consider prefix postfix, and mix it into givenNames, or name properties
+        // We don't want separate fields because this gets complex/annoying during editing
+        // prefix: _getText(el, 'prefix'),
+        // suffix: _getText(el, 'suffix'),
       }
     } else if (el.tagName === 'collab') {
-      entry = {
-        type: 'group',
+      node = {
+        type: 'ref-contrib',
         name: _getText(el, 'named-content[content-type=name]')
       }
     } else {
       console.warn(`${el.tagName} not supported inside <person-group>`)
     }
-    return entry
+
+    let entity = pubMetaDb.create(node)
+    return entity.id
   },
 
-  export($$, record) {
+  export($$, node) {
     let el
-    if (record.type === 'person') {
+
+    if (node.givenNames) {
       el = $$('name')
-      el.append(_createTextElement($$, record.surname, 'surname'))
-      el.append(_createTextElement($$, record.givenNames, 'given-names'))
-      el.append(_createTextElement($$, record.prefix, 'prefix'))
-      el.append(_createTextElement($$, record.suffix, 'suffix'))
-    } else if (record.type === 'collab') {
-      el = $$('collab')
-      el.append(_createTextElement($$, record.name, 'named-content', { 'content-type': 'name' }))
+      el.append(_createTextElement($$, node.name, 'surname'))
+      el.append(_createTextElement($$, node.givenNames, 'given-names'))
+      // el.append(_createTextElement($$, record.prefix, 'prefix'))
+      // el.append(_createTextElement($$, record.suffix, 'suffix'))
+    } else {
+      el.append(_createTextElement($$, node.name, 'named-content', { 'content-type': 'name' }))
     }
     return el
   }
@@ -528,7 +532,7 @@ function _exportPersonGroup($$, persons, personGroupType) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
     persons.forEach(entry => {
       el.append(
-        RefCollabConverter.export($$, entry)
+        RefContribConverter.export($$, entry)
       )
     })
     return el
@@ -556,7 +560,7 @@ function _getRefCollabs(el, pubMetaDb, type) {
   let personGroup = el.find(`person-group[person-group-type=${type}]`)
   if (personGroup) {
     return personGroup.childNodes.map(el => {
-      return RefCollabConverter.import(el, pubMetaDb)
+      return RefContribConverter.import(el, pubMetaDb)
     })
   } else {
     return []

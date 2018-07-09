@@ -3,3 +3,9 @@
 @import './_boolean-input.css';
 @import '/_collection-editor.css';
 @import '/_entity-editor.css';
+
+/* HACK: make metadata editor scrollable */
+
+.sc-editor {
+  overflow: auto;
+}

@@ -70,7 +70,8 @@ export default class Editor extends AbstractWriter {
     el.append(
       $$(MetadataEditor, {
         sections: [
-          { label: 'Authors', collection: 'authors' }
+          { label: 'Authors', collection: 'authors' },
+          // { label: 'References', collection: 'references' }
         ]
       })
     )

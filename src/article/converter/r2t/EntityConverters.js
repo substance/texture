@@ -570,16 +570,6 @@ function _extractGroupMembers(el, group) {
   })
 }
 
-function _addGroupMembers(el, $$, node) {
-  let contribGroup = $$('contrib-group').attr('contrib-type', 'group-member')
-  node.members.forEach(member => {
-    contribGroup.append(
-      _exportPerson($$, member)
-    )
-  })
-  el.append(contribGroup)
-}
-
 function _extractAffiliations(el, isGroup) {
   let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=aff]')

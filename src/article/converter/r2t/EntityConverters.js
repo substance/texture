@@ -195,12 +195,25 @@ export const GroupConverter = {
         name: _getText(el, 'named-content[content-type=name]'),
         email: _getText(el, 'email'),
         affiliations: _extractAffiliations(el),
-        members: _extractGroupMembers(el),
         equalContrib: el.getAttribute('equal-contrib') === 'yes',
         corresp: el.getAttribute('corresp') === 'yes',
         awards: _extractAwards(el)
       }
       entity = pubMetaDb.create(node)
+      
+      let dom = el.ownerDocument
+      let persons = _extractGroupMembers(el, entity.id)
+      persons.forEach(person => {
+        const personNode = pubMetaDb.create(person)
+        const contribEl = dom.createElement('contrib').attr({
+          'rid': personNode.id,
+          'gid': node.id,
+          'contrib-type': 'person'
+        })
+        const authorsContribGroup = dom.find('contrib-group[content-type=author]')
+        authorsContribGroup.append(contribEl)
+      })
+      
     } else {
       console.warn(`Skipping duplicate: ${entity.name} already exists.`)
     }
@@ -222,7 +235,7 @@ export const GroupConverter = {
     _addAffiliations(collab, $$, node)
     // Add awards to group
     _addAwards(collab, $$, node)
-    _addGroupMembers(collab, $$, node)
+    //_addGroupMembers(collab, $$, node)
     el.append(collab)
     return el
   }
@@ -521,7 +534,7 @@ function _exportPersonGroup($$, persons, personGroupType) {
   }
 }
 
-function _extractPerson(el) {
+function _extractPerson(el, group) {
   return {
     type: 'person',
     givenNames: _getText(el, 'given-names'),
@@ -529,6 +542,7 @@ function _extractPerson(el) {
     email: _getText(el, 'email'),
     prefix: _getText(el, 'prefix'),
     suffix: _getText(el, 'suffix'),
+    group: group,
     affiliations: _extractAffiliations(el),
     awards: _extractAwards(el),
     equalContrib: el.getAttribute('equal-contrib') === 'yes',
@@ -548,10 +562,10 @@ function _getRefCollabs(el, pubMetaDb, type) {
   }
 }
 
-function _extractGroupMembers(el) {
+function _extractGroupMembers(el, group) {
   let members = el.findAll('contrib')
   return members.map(el => {
-    return _extractPerson(el)
+    return _extractPerson(el, group)
   })
 }
 

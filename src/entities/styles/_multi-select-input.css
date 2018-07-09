@@ -10,6 +10,11 @@
 
 .sc-multi-select-input .se-value {
   width: 100%;
+  cursor: pointer;
+}
+
+.sc-multi-select-input .se-value.sm-empty {
+  color: #767575;
 }
 
 .sc-multi-select-input .se-select-editor {
@@ -45,7 +50,7 @@
   margin-left: 10px;
 }
 
-.se-arrow {
+.sc-multi-select-input .se-select-editor .se-arrow {
   width: 60px;
   height: 16px;
   overflow: hidden;
@@ -54,7 +59,8 @@
   margin-left: -30px;
   top: -16px;
 }
-.se-arrow:after {
+
+.sc-multi-select-input .se-select-editor .se-arrow:after {
   content: "";
   position: absolute;
   left: 20px;

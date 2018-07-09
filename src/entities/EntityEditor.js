@@ -1,4 +1,4 @@
-import { Component, isArray } from 'substance'
+import { Component, FontAwesomeIcon, isArray } from 'substance'
 import TextInput from './TextInput'
 import MultiSelectInput from './MultiselectInput'
 import entityRenderers from './entityRenderers'
@@ -8,7 +8,7 @@ export default class EntityEditor extends Component {
   render($$) {
     let el = $$('div').addClass('sc-entity-editor')
     // TODO: make a state property out of this to switch between full mode and small form
-    let fullMode = false
+    const fullMode = this.state.fullMode
     // FIXME: in some cases this is not a node. Use a different name.
     let model = this.props.model
     let schema = this.props.schema
@@ -47,6 +47,24 @@ export default class EntityEditor extends Component {
         console.warn(`type ${type} not yet supported`)
       }
     }
+
+    const controlEl = $$('div').addClass('se-control')
+      .on('click', this._toggleMode)
+
+    if(!fullMode) {
+      controlEl.append(
+        $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }),
+        'More fields'
+      )
+    } else {
+      controlEl.append(
+        $$(FontAwesomeIcon, { icon: 'fa-chevron-up' }),
+        'Less fields'
+      )
+    }
+
+    el.append(controlEl)
+
     return el
   }
 
@@ -64,6 +82,14 @@ export default class EntityEditor extends Component {
       }
     }
     return result
+  }
+
+  /*
+    Toogle form, by default we are showing only filled and required filds
+  */
+  _toggleMode() {
+    const fullMode = this.state.fullMode
+    this.extendState({fullMode: !fullMode})
   }
 
   /*

@@ -12,9 +12,9 @@ export class Book extends BibliographicEntry {}
 
 Book.schema = {
   type: 'book',
-  authors: { type: ['object'], default: [] },
-  editors: { type: ['object'], default: [] },
-  translators: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
+  editors: { type: ['ref-person'], default: [] },
+  translators: { type: ['ref-person'], default: [] },
   title: { type: 'string', optional: true },
   volume: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
@@ -37,9 +37,9 @@ Chapter.schema = {
   title: { type: 'string', optional: true }, // <chapter-title>
   containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] }, // <person-group person-group-type="author">
-  editors: { type: ['object'], default: [] },
-  translators: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] }, // <person-group person-group-type="author">
+  editors: { type: ['ref-person'], default: [] },
+  translators: { type: ['ref-person'], default: [] },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -61,7 +61,7 @@ export class DataPublication extends BibliographicEntry {}
 DataPublication.schema = {
   type: 'data-publication',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -77,7 +77,7 @@ export class MagazineArticle extends BibliographicEntry {}
 MagazineArticle.schema = {
   type: 'magazine-article',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -94,7 +94,7 @@ export class NewspaperArticle extends BibliographicEntry {}
 NewspaperArticle.schema = {
   type: 'newspaper-article',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -112,7 +112,7 @@ export class Patent extends BibliographicEntry {}
 
 Patent.schema = {
   type: 'patent',
-  inventors: { type: ['object'], default: [] },
+  inventors: { type: ['ref-person'], default: [] },
   assignee: { type: 'string', optional: true },
   title: { type: 'string', optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
@@ -129,8 +129,8 @@ export class JournalArticle extends BibliographicEntry {}
 JournalArticle.schema = {
   type: 'journal-article',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
-  editors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
+  editors: { type: ['ref-person'], default: [] },
   containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
   issue: { type: 'string', optional: true },
@@ -150,7 +150,7 @@ export class ConferencePaper extends BibliographicEntry {}
 ConferencePaper.schema = {
   type: 'conference-paper',
   title: { type: 'string', optional: true }, // <article-title>
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   confName: { type: 'string', optional: true },
   confLoc: { type: 'string', optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
@@ -172,8 +172,8 @@ export class Report extends BibliographicEntry {
 
 Report.schema = {
   type: 'report',
-  authors: { type: ['object'], default: [] },
-  sponsors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
+  sponsors: { type: ['ref-person'], default: [] },
   title: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -190,7 +190,7 @@ export class Software extends BibliographicEntry {}
 Software.schema = {
   type: 'software',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   version: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -205,7 +205,7 @@ export class Thesis extends BibliographicEntry {}
 Thesis.schema = {
   type: 'thesis',
   title: { type: 'string', optional: true },
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -221,7 +221,7 @@ Webpage.schema = {
   title: { type: 'string', optional: true },
   // E.g. website name, where the page appeared
   containerTitle: { type: 'string', optional: true }, // <source>
-  authors: { type: ['object'], default: [] },
+  authors: { type: ['ref-person'], default: [] },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -245,6 +245,15 @@ Person.schema = {
   group: { type: 'group', optional: true },
   affiliations: { type: ['organisation'], default: [] },
   awards: { type: ['award'], default: [] }
+}
+
+/* Holds data for persons and instituions/groups in references */
+export class RefContrib extends DocumentNode {}
+
+RefContrib.schema = {
+  type: 'ref-contrib',
+  name: { type: 'string', optional: true }, // either family name or institution name
+  givenNames: { type: 'string', optional: true },
 }
 
 export class Group extends DocumentNode {}

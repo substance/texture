@@ -61,6 +61,20 @@ export default class ReferencesModel extends DefaultModel {
     return result
   }
 
+  /*
+    Return references collection. This is used for editing (e.g. in the MetadataEditor)
+  */
+  getReferences() {
+    let refNodes = this.context.referenceManager.getBibliography()
+    let result = []
+    refNodes.forEach(refNode => {
+      result.push(
+        this.getReference(refNode.id)
+      )
+    })
+    return result
+  }
+
   _getEntityForRef(id) {
     let doc = this.context.doc
     let ref = doc.get(id)

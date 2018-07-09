@@ -107,7 +107,7 @@ export default class ArticleAPI {
         items = this.getMeta().getSubjects()
         break
       case 'references':
-        items = this.getReferences().getBibliography()
+        items = this.getReferences().getReferences()
         break
       default:
         console.error('There is no collection', colName)
@@ -115,6 +115,9 @@ export default class ArticleAPI {
     return items
   }
 
+  /*
+    NOTE: This only works for collection that contain a single item type. We may need to rethink this
+  */
   getCollectionForType(type) {
     return this.getCollection(type+'s')
   }

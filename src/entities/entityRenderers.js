@@ -660,40 +660,28 @@ function groupRenderer($$, entityId, entityDb) {
   return [ name ]
 }
 
-function refContribRenderer($$, entry, options = {}) {
-  if (entry.type === 'person') {
-    return refPersonRenderer($$, entry, options)
-  } else {
-    return refGroupRenderer($$, entry, options)
-  }
-}
+// function personRenderer($$, entityId, entityDb, options = {}) {
+//   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
+function refContribRenderer($$, entityId, entityDb, options = {}) {
+  let { givenNames, name } = entityDb.get(entityId)
 
-/* This is used within references */
-function refPersonRenderer($$, entry, options = {}) {
-  let { prefix, suffix, givenNames, surname } = entry
-  if (options.short) {
-    givenNames = _getInitials(givenNames)
-  }
-  let result = []
-  if (prefix) {
-    result.push(prefix, ' ')
-  }
-  result.push(
-    surname,
-    ' ',
-    givenNames
-  )
-  if (suffix) {
-    result.push(' (', suffix, ')')
+  let result = [
+    name
+  ]
+
+  if (givenNames) {
+    if (options.short) {
+      givenNames = _getInitials(givenNames)
+    }
+
+    result.push(
+      ' ',
+      givenNames
+    )
   }
   return result
 }
 
-/* Render a group author */
-function refGroupRenderer($$, entry) {
-  let { name } = entry
-  return [ name ]
-}
 
 function organisationRenderer($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)
@@ -748,12 +736,11 @@ export default {
 /*
   Helpers
 */
-
-function _renderAuthors($$, authors) {
+function _renderAuthors($$, authors, entityDb) {
   let fragments = []
-  authors.forEach((author, i) => {
+  authors.forEach((refContribId, i) => {
     fragments = fragments.concat(
-      refContribRenderer($$, author, { short: true })
+      refContribRenderer($$, refContribId, entityDb, { short: true })
     )
     if (i < authors.length - 1) {
       fragments.push(', ')

@@ -12,7 +12,7 @@ export default class EntityEditor extends Component {
     let schema = this.props.schema
 
     let el = $$('div').addClass('sc-entity-editor').append(
-      $$('div').addClass('se-entity-header').append(
+      $$('div').addClass('se-entity-header').html(
         this._renderEntity(model)
       )
     )

@@ -6,20 +6,20 @@ import MetadataEditor from '../../entities/MetadataEditor'
 
 export default class Editor extends AbstractWriter {
 
-  didMount() {
-    super.didMount()
-    this.handleActions({
-      'switchContext': this._switchContext
-    })
+  // didMount() {
+  //   super.didMount()
+  //   this.handleActions({
+  //     'switchContext': this._switchContext
+  //   })
 
-    // HACK: we need to re-evaluate command states, now that the UI has mounted
-    this.editorSession.commandManager._updateCommandStates(this.editorSession)
+  //   // HACK: we need to re-evaluate command states, now that the UI has mounted
+  //   this.editorSession.commandManager._updateCommandStates(this.editorSession)
 
-    DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
-    this.tocProvider.on('toc:updated', this._showHideTOC, this)
-    this._showHideTOC()
-    this._restoreViewport()
-  }
+  //   DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+  //   this.tocProvider.on('toc:updated', this._showHideTOC, this)
+  //   this._showHideTOC()
+  //   this._restoreViewport()
+  // }
 
   didUpdate() {
     super.didUpdate()
@@ -67,18 +67,18 @@ export default class Editor extends AbstractWriter {
   render($$) {
     let el = $$('div').addClass('sc-editor')
 
-    // el.append(
-    //   $$(MetadataEditor, {
-    //     sections: [
-    //       { label: 'Authors', collection: 'authors' },
-    //       // { label: 'References', collection: 'references' }
-    //     ]
-    //   })
-    // )
     el.append(
-      this._renderMainSection($$),
-      this._renderContextPane($$)
+      $$(MetadataEditor, {
+        sections: [
+          { label: 'Authors', collection: 'authors' },
+          { label: 'References', collection: 'references' }
+        ]
+      })
     )
+    // el.append(
+    //   this._renderMainSection($$),
+    //   this._renderContextPane($$)
+    // )
     return el
   }
 

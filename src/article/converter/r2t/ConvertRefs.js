@@ -9,6 +9,7 @@ export default class ConvertRef {
     const pubMetaDb = api.pubMetaDb
 
     refs.forEach(refEl => {
+      
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error({
@@ -20,7 +21,7 @@ export default class ConvertRef {
         let pubType = elementCitation.attr('publication-type')
         let validTypes = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
         if (validTypes.includes(pubType)) {
-          entityId = ElementCitationConverter.import(elementCitation, pubMetaDb, pubType)
+          entityId = ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
         } else {
           console.error(`Publication type ${pubType} not found`)
           api.error({

@@ -407,11 +407,13 @@ let reverseMapping = function(mapping) {
 */
 export const ElementCitationConverter = {
 
-  import(el, pubMetaDb) {
+  import(el, pubMetaDb, id) {
     let entity = _findCitation(el, pubMetaDb)
     let type = el.attr('publication-type')
+    
     if (!entity) {
       let node = {
+        id: id,
         type: mappingItemTypes[type],
         // normal fields
         assignee: _getText(el, 'collab[collab-type=assignee] > named-content'),

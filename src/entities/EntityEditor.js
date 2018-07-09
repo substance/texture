@@ -4,6 +4,18 @@ import MultiSelectInput from './MultiSelectInput'
 import SelectInput from './SelectInput'
 import entityRenderers from './entityRenderers'
 
+
+// authors: { type: ['ref-contrib'], default: [], optional: true },
+// editors: { type: ['ref-contrib'], default: [], optional: true },
+
+const EDITOR_TYPES = {
+  'journal-article': {
+    'authors': 'in-place-editor',
+    'editors': 'in-place-editor'
+  }
+}
+
+
 export default class EntityEditor extends Component {
 
   render($$) {
@@ -25,8 +37,15 @@ export default class EntityEditor extends Component {
       let isOptional = property.isOptional()
       let value = model[name]
       if(!fullMode && value === '' && isOptional) continue 
+
+      let customEditor = _getCustomEditor(model.type, property)
+
       if (name === 'id') {
         // id property is not editable and skipped
+      } else if (customEditor) {
+        el.append(
+          $$(InPlaceEditor)
+        )
       } else if (type === 'string') {
         el.append(
           $$(TextInput, {
@@ -136,4 +155,21 @@ export default class EntityEditor extends Component {
     if(!isArray(property.type) && types.indexOf(property.type) === -1) return true
     return false
   }
+}
+
+
+class InPlaceEditor extends Component {
+  render($$) {
+    let el = $$('div').addClass('sc-in-place-editor')
+    el.append('TODO: inplace relationship editing')
+    return el
+  }
+}
+
+
+function _getCustomEditor(nodeType, property) {
+  if (!EDITOR_TYPES[nodeType]) {
+    return undefined
+  }
+  return EDITOR_TYPES[nodeType][property.name]
 }

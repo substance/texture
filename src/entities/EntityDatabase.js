@@ -12,9 +12,9 @@ export class Book extends BibliographicEntry {}
 
 Book.schema = {
   type: 'book',
-  authors: { type: ['ref-contrib'], default: [] },
-  editors: { type: ['ref-contrib'], default: [] },
-  translators: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
+  editors: { type: ['ref-contrib'], default: [], optional: true },
+  translators: { type: ['ref-contrib'], default: [], optional: true },
   title: { type: 'string', optional: true },
   volume: { type: 'string', optional: true },
   edition: { type: 'string', optional: true },
@@ -37,9 +37,9 @@ Chapter.schema = {
   title: { type: 'string', optional: true }, // <chapter-title>
   containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] }, // <person-group person-group-type="author">
-  editors: { type: ['ref-contrib'], default: [] },
-  translators: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true }, // <person-group person-group-type="author">
+  editors: { type: ['ref-contrib'], default: [], optional: true },
+  translators: { type: ['ref-contrib'], default: [], optional: true },
   edition: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -61,7 +61,7 @@ export class DataPublication extends BibliographicEntry {}
 DataPublication.schema = {
   type: 'data-publication',
   title: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -77,7 +77,7 @@ export class MagazineArticle extends BibliographicEntry {}
 MagazineArticle.schema = {
   type: 'magazine-article',
   title: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -94,7 +94,7 @@ export class NewspaperArticle extends BibliographicEntry {}
 NewspaperArticle.schema = {
   type: 'newspaper-article',
   title: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -112,7 +112,7 @@ export class Patent extends BibliographicEntry {}
 
 Patent.schema = {
   type: 'patent',
-  inventors: { type: ['ref-contrib'], default: [] },
+  inventors: { type: ['ref-contrib'], default: [], optional: true },
   assignee: { type: 'string', optional: true },
   title: { type: 'string', optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
@@ -129,8 +129,8 @@ export class JournalArticle extends BibliographicEntry {}
 JournalArticle.schema = {
   type: 'journal-article',
   title: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] },
-  editors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
+  editors: { type: ['ref-contrib'], default: [], optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
   volume: { type: 'string', optional: true },
   issue: { type: 'string', optional: true },
@@ -150,7 +150,7 @@ export class ConferencePaper extends BibliographicEntry {}
 ConferencePaper.schema = {
   type: 'conference-paper',
   title: { type: 'string', optional: true }, // <article-title>
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   confName: { type: 'string', optional: true },
   confLoc: { type: 'string', optional: true },
   containerTitle: { type: 'string', optional: true }, // <source>
@@ -172,8 +172,8 @@ export class Report extends BibliographicEntry {
 
 Report.schema = {
   type: 'report',
-  authors: { type: ['ref-contrib'], default: [] },
-  sponsors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
+  sponsors: { type: ['ref-contrib'], default: [], optional: true },
   title: { type: 'string', optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
@@ -190,7 +190,7 @@ export class Software extends BibliographicEntry {}
 Software.schema = {
   type: 'software',
   title: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   version: { type: 'string', optional: true },
   publisherLoc: { type: 'string', optional: true },
   publisherName: { type: 'string', optional: true },
@@ -205,7 +205,7 @@ export class Thesis extends BibliographicEntry {}
 Thesis.schema = {
   type: 'thesis',
   title: { type: 'string', optional: true },
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },
@@ -221,7 +221,7 @@ Webpage.schema = {
   title: { type: 'string', optional: true },
   // E.g. website name, where the page appeared
   containerTitle: { type: 'string', optional: true }, // <source>
-  authors: { type: ['ref-contrib'], default: [] },
+  authors: { type: ['ref-contrib'], default: [], optional: true },
   year: { type: 'string', optional: true },
   month: { type: 'string', optional: true },
   day: { type: 'string', optional: true },

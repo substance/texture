@@ -4,6 +4,9 @@ export default {
     // general
     config.addLabel('edit-references', 'Edit References')
     config.addLabel('edit-affiliations', 'Edit Affiliations')
+    config.addLabel('show-more-fields', 'More fields')
+    config.addLabel('show-less-fields', 'Less fields')
+    config.addLabel('multi-select-default-value', 'Click to select a value')
 
     // item types
     config.addLabel('journal-article', 'Journal Article')
@@ -108,6 +111,7 @@ export default {
     config.addLabel('prefix', 'Prefix')
     config.addLabel('suffix', 'Suffix')
     config.addLabel('affiliations', 'Affiliations')
+    config.addLabel('awards', 'Awards')
 
     // organisation labels
     config.addLabel('organisation', 'Organisation')

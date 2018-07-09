@@ -179,9 +179,17 @@ class Slot {
     // TODO: we want to drop this auto-arguments completely
     // after having switched to a pure AppState based implementation
     // i.e. without using observers via EditorSession
-    if (spec.deps.length === 1 && spec.deps[0] === 'document') {
-      let update = state.getUpdate('document') || {}
-      spec.handler(update.change, update.info)
+    if (spec.deps.length === 1) {
+      let name = spec.deps[0]
+      switch (name) {
+        case 'document': {
+          let update = state.getUpdate('document') || {}
+          spec.handler(update.change, update.info)
+          break
+        }
+        default:
+          spec.handler(state.get(name))
+      }
     } else {
       spec.handler()
     }

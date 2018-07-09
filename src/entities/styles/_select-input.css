@@ -1,0 +1,14 @@
+.sc-select-input {
+  position: relative;
+  display: flex;
+}
+
+.sc-select-input .se-label {
+  flex: 1 0 200px;
+  color: #9e9e9e;
+}
+
+.sc-select-input .se-select {
+  width: 100%;
+  cursor: pointer;
+}

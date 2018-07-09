@@ -95,15 +95,10 @@ function _exportPersons($$, dom, pubMetaDb, type) {
     const groupId = contrib.attr('gid')
     if(groupId) {
       groupMembers.push(contrib)
-      // contrib.removeAttr('rid')
-      // contrib.removeAttr('gid')
-      contrib.empty()
-
       const groupEl = dom.find(`contrib#${groupId}`)
       if(!groupEl) {
-        this._exportGroup($$, dom, pubMetaDb, groupId)
+        _exportGroup($$, contribGroup, pubMetaDb, groupId)
       }
-
       return
     }
     let node = pubMetaDb.get(contrib.attr('rid'))
@@ -120,18 +115,22 @@ function _exportPersons($$, dom, pubMetaDb, type) {
 
   groupMembers.forEach(contrib => {
     let node = pubMetaDb.get(contrib.attr('rid'))
-    let contribEl = dom.find(`contrib#${node.id}`)
+    let contribEl = dom.find(`contrib#${node.group} collab`)
     let contribGroupEl = contribEl.find('contrib-group')
     if(!contribGroupEl) {
-      contribGroupEl = contribEl.append(
+      contribEl.append(
         $$('contrib-group').attr({'contrib-type': 'group-member'})
       )
+      contribGroupEl = contribEl.find('contrib-group')
     }
     let newContribEl = PersonConverter.export($$, node, pubMetaDb)
-    contribEl.append(newContribEl)
+    contribGroupEl.append(newContribEl)
+    contrib.parentNode.removeChild(contrib)
   })
 }
 
-_exportGroup($$, dom, pubMetaDb, type) {
-
+function _exportGroup($$, contribGroup, pubMetaDb, groupId) {
+  let node = pubMetaDb.get(groupId)
+  let newContribEl = GroupConverter.export($$, node, pubMetaDb)
+  contribGroup.append(newContribEl)
 }

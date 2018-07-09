@@ -194,7 +194,7 @@ export const GroupConverter = {
         type: 'group',
         name: _getText(el, 'named-content[content-type=name]'),
         email: _getText(el, 'email'),
-        affiliations: _extractAffiliations(el),
+        affiliations: _extractAffiliations(el, true),
         equalContrib: el.getAttribute('equal-contrib') === 'yes',
         corresp: el.getAttribute('corresp') === 'yes',
         awards: _extractAwards(el)
@@ -222,6 +222,7 @@ export const GroupConverter = {
 
   export($$, node) {
     let el = $$('contrib').attr({
+      'id': node.id,
       'contrib-type': 'group',
       'equal-contrib': node.equalContrib ? 'yes' : 'no',
       'corresp': node.corresp ? 'yes' : 'no'
@@ -317,7 +318,7 @@ function _addAwards(el, $$, node) {
     // map from the global entityId to the local awardId
     let awardGroupEl = dom.find(`award-group[rid=${awardId}]`)
     el.append(
-      $$('xref').attr('ref-type', 'aff').attr('rid', awardGroupEl.id)
+      $$('xref').attr('ref-type', 'award').attr('rid', awardGroupEl.id)
     )
   })
 }
@@ -579,9 +580,13 @@ function _addGroupMembers(el, $$, node) {
   el.append(contribGroup)
 }
 
-function _extractAffiliations(el) {
+function _extractAffiliations(el, isGroup) {
   let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=aff]')
+  // NOTE: for groups we need to extract only affiliations of group, without members 
+  if(isGroup) {
+    xrefs = el.findAll('collab>xref[ref-type=aff]')
+  }
   let affs = []
   xrefs.forEach(xref => {
     // NOTE: we need to query the document for the internal aff id to

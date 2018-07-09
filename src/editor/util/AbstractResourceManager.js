@@ -148,10 +148,7 @@ export default class AbstractResourceManager {
     resources.forEach((res) => {
       change.updated[res.id] = true
     })
-    editorSession._setDirty('document')
-    editorSession._change = change
-    editorSession._info = {}
+    editorSession._setUpdate('document', {change, info: {}})
     editorSession.startFlow()
   }
-
 }

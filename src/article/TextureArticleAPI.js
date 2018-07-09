@@ -83,14 +83,6 @@ export default class TextureArticleAPI {
     forEach(configurator.getManagers(), (ManagerClass, name) => {
       this.customManagers[name] = new ManagerClass(this._context)
     })
-
-    // workaround for an ownership problem, because EditorSession
-    // is constructing a lot of managers,
-    // and the context for these are passed while loading the archive
-    // While being a bit hacky, this is the easiest way to solve the problem,
-    // on an appropriate level.
-    // On the long run, the managers should not be owned by the EditorSession
-    this._monkeyPatchEditorSession()
   }
 
   getCollection(colName) {
@@ -188,32 +180,5 @@ export default class TextureArticleAPI {
 
   getReferenceManager () {
     return this.referenceManager
-  }
-
-  _getConfigurator () {
-    return this.editorSession.getConfigurator()
-  }
-
-  _monkeyPatchEditorSession (context) {
-    const editorSession = this.articleSession
-    // exchange the context that EditorSession is propagating
-    editorSession._context = context
-    // these managers receive a context so need to be replaced
-    editorSession.commandManager.dispose()
-    editorSession.commandManager = this.commandManager
-    editorSession.fileManager.dispose()
-    editorSession.fileManager = this.fileManager
-    editorSession.dragManager.dispose()
-    editorSession.dragManager = this.dragManager
-    editorSession.macroManager.dispose()
-    editorSession.macroManager = this.macroManager
-    // Note: keyboardManager does not have a dispose()
-    // TODO: maybe it should, just for consistency, even if it is empty
-    // editorSession.keyboardManager.dispose()
-    editorSession.keyboardManager = this.keyboardManager
-    forEach(editorSession._managers, (manager) => {
-      if (manager.dispose) manager.dispose()
-    })
-    editorSession._managers = this.customManagers
   }
 }

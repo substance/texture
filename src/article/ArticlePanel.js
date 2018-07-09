@@ -4,15 +4,16 @@ export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
 
-    this._initialize(this.props)
-
     this.handleActions({
       'openView': this._openView
     })
+
+    this._initialize(this.props)
   }
 
   _initialize (props) {
     const config = props.config
+
     this.context = Object.assign({}, super._getContext(), {
       componentRegistry: config.getComponentRegistry()
     })
@@ -42,7 +43,6 @@ export default class ArticlePanel extends Component {
       urlResolver: archive,
       // legacy
       editorSession: articleSession,
-      // TODO: we need this because CommandManager, Toolgroups etc make use of this
       commandGroups: config.getCommandGroups(),
       tools: config.getTools(),
       labelProvider: config.getLabelProvider(),

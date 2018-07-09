@@ -227,8 +227,9 @@ export default class ManuscriptEditor extends Component {
   }
 
   _updateCommandStates () {
+    const api = this.api
     const articleSession = this._getArticleSession()
-    articleSession.commandManager._updateCommandStates(articleSession)
+    api.commandManager._updateCommandStates(articleSession)
   }
 
   _restoreViewport () {
@@ -254,14 +255,14 @@ export default class ManuscriptEditor extends Component {
 
   _tocEntrySelected (nodeId) {
     const node = this._getDocument().get(nodeId)
-    const editorSession = this._getArticleSession()
+    const articleSession = this._getArticleSession()
     const nodeComponent = this.refs.contentPanel.find(`[data-id="${nodeId}"]`)
     if (nodeComponent) {
       // TODO: it needs to be easier to retrieve the surface
       let surface = nodeComponent.context.surface
       // There are cases when we can't set selection, e.g. for references
       if (surface) {
-        editorSession.setSelection({
+        articleSession.setSelection({
           type: 'property',
           path: node.getPath(),
           startOffset: 0,
@@ -309,11 +310,11 @@ export default class ManuscriptEditor extends Component {
     return body.id
   }
 
-  _onSessionUpdate (editorSession) {
-    if (!editorSession.hasChanged('document') && !editorSession.hasChanged('selection')) return
-
-    let sel = editorSession.getSelection()
-    let selectionState = editorSession.getSelectionState()
+  _onSessionUpdate () {
+    const articleSession = this._getArticleSession()
+    if (!articleSession.hasChanged('document') && !articleSession.hasChanged('selection')) return
+    let sel = articleSession.getSelection()
+    let selectionState = articleSession.getSelectionState()
     let xrefs = selectionState.getAnnotationsForType('xref')
     let highlights = {
       'fig': [],

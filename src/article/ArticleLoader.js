@@ -1,4 +1,5 @@
-import { EditorSession } from 'substance'
+import EditorState from '../shared/EditorState'
+import TextureEditorSession from '../shared/TextureEditorSession'
 import JATSImporter from './converter/JATSImporter'
 import TextureArticlePackage from './TextureArticlePackage'
 import ArticleConfigurator from './ArticleConfigurator'
@@ -17,7 +18,8 @@ export default {
     }
     let importer = configurator.createImporter('texture-article')
     let doc = importer.importDocument(jats.dom)
-    let editorSession = new EditorSession(doc, { configurator, context })
+    let editorState = new EditorState(doc)
+    let editorSession = new TextureEditorSession(editorState, configurator)
     return editorSession
   }
 }

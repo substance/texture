@@ -194,13 +194,26 @@ export const GroupConverter = {
         type: 'group',
         name: _getText(el, 'named-content[content-type=name]'),
         email: _getText(el, 'email'),
-        affiliations: _extractAffiliations(el),
-        members: _extractGroupMembers(el),
+        affiliations: _extractAffiliations(el, true),
         equalContrib: el.getAttribute('equal-contrib') === 'yes',
         corresp: el.getAttribute('corresp') === 'yes',
         awards: _extractAwards(el)
       }
       entity = pubMetaDb.create(node)
+      
+      let dom = el.ownerDocument
+      let persons = _extractGroupMembers(el, entity.id)
+      persons.forEach(person => {
+        const personNode = pubMetaDb.create(person)
+        const contribEl = dom.createElement('contrib').attr({
+          'rid': personNode.id,
+          'gid': node.id,
+          'contrib-type': 'person'
+        })
+        const authorsContribGroup = dom.find('contrib-group[content-type=author]')
+        authorsContribGroup.append(contribEl)
+      })
+      
     } else {
       console.warn(`Skipping duplicate: ${entity.name} already exists.`)
     }
@@ -209,6 +222,7 @@ export const GroupConverter = {
 
   export($$, node) {
     let el = $$('contrib').attr({
+      'id': node.id,
       'contrib-type': 'group',
       'equal-contrib': node.equalContrib ? 'yes' : 'no',
       'corresp': node.corresp ? 'yes' : 'no'
@@ -222,7 +236,7 @@ export const GroupConverter = {
     _addAffiliations(collab, $$, node)
     // Add awards to group
     _addAwards(collab, $$, node)
-    _addGroupMembers(collab, $$, node)
+    //_addGroupMembers(collab, $$, node)
     el.append(collab)
     return el
   }
@@ -304,7 +318,7 @@ function _addAwards(el, $$, node) {
     // map from the global entityId to the local awardId
     let awardGroupEl = dom.find(`award-group[rid=${awardId}]`)
     el.append(
-      $$('xref').attr('ref-type', 'aff').attr('rid', awardGroupEl.id)
+      $$('xref').attr('ref-type', 'award').attr('rid', awardGroupEl.id)
     )
   })
 }
@@ -521,7 +535,7 @@ function _exportPersonGroup($$, persons, personGroupType) {
   }
 }
 
-function _extractPerson(el) {
+function _extractPerson(el, group) {
   return {
     type: 'person',
     givenNames: _getText(el, 'given-names'),
@@ -529,6 +543,7 @@ function _extractPerson(el) {
     email: _getText(el, 'email'),
     prefix: _getText(el, 'prefix'),
     suffix: _getText(el, 'suffix'),
+    group: group,
     affiliations: _extractAffiliations(el),
     awards: _extractAwards(el),
     equalContrib: el.getAttribute('equal-contrib') === 'yes',
@@ -548,26 +563,20 @@ function _getRefCollabs(el, pubMetaDb, type) {
   }
 }
 
-function _extractGroupMembers(el) {
+function _extractGroupMembers(el, group) {
   let members = el.findAll('contrib')
   return members.map(el => {
-    return _extractPerson(el)
+    return _extractPerson(el, group)
   })
 }
 
-function _addGroupMembers(el, $$, node) {
-  let contribGroup = $$('contrib-group').attr('contrib-type', 'group-member')
-  node.members.forEach(member => {
-    contribGroup.append(
-      _exportPerson($$, member)
-    )
-  })
-  el.append(contribGroup)
-}
-
-function _extractAffiliations(el) {
+function _extractAffiliations(el, isGroup) {
   let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=aff]')
+  // NOTE: for groups we need to extract only affiliations of group, without members 
+  if(isGroup) {
+    xrefs = el.findAll('collab>xref[ref-type=aff]')
+  }
   let affs = []
   xrefs.forEach(xref => {
     // NOTE: we need to query the document for the internal aff id to

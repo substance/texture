@@ -242,6 +242,7 @@ Person.schema = {
   suffix: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
   orcid: { type: 'string', optional: true },
+  group: { type: 'group', optional: true },
   affiliations: { type: ['organisation'], default: [] },
   awards: { type: ['award'], default: [] }
 }
@@ -254,7 +255,6 @@ Group.schema = {
   email: { type: 'string', optional: true },
   affiliations: { type: ['organisation'], default: [] },
   awards: { type: ['award'], default: [] },
-  members: { type: ['object'], default: [] },
   equalContrib: { type: 'boolean', optional: true },
   corresp: { type: 'boolean', optional: true }
 }

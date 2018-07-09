@@ -27,7 +27,7 @@ export default class ContribsModel extends DefaultModel {
 
   getAuthors() {
     let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
-    let contribIds = authorsContribGroup.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
+    let contribIds = authorsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
     return contribIds.map(contribId => this._getEntity(contribId))
   }
 
@@ -46,6 +46,12 @@ export default class ContribsModel extends DefaultModel {
       return args
     })
     return node
+  }
+
+  getGroups() {
+    let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
+    let contribIds = authorsContribGroup.findAll('contrib[contrib-type=group]').map(contrib => contrib.getAttribute('rid'))
+    return contribIds.map(contribId => this._getEntity(contribId))
   }
 
   addAffiliation(affiliation) {

@@ -106,7 +106,7 @@ export default {
     config.addLabel('edit-person', 'Edit Person')
     config.addLabel('create-person', 'Create Person')
     config.addLabel('orcid', 'ORCID')
-    config.addLabel('givenNames', 'Given names')
+    config.addLabel('givenNames', 'Given Names')
     config.addLabel('surname', 'Surname')
     config.addLabel('prefix', 'Prefix')
     config.addLabel('suffix', 'Suffix')

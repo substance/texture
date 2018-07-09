@@ -6,12 +6,16 @@ import entityRenderers from './entityRenderers'
 export default class EntityEditor extends Component {
 
   render($$) {
-    let el = $$('div').addClass('sc-entity-editor')
-    // TODO: make a state property out of this to switch between full mode and small form
     const fullMode = this.state.fullMode
     // FIXME: in some cases this is not a node. Use a different name.
     let model = this.props.model
     let schema = this.props.schema
+
+    let el = $$('div').addClass('sc-entity-editor').append(
+      $$('div').addClass('se-entity-header').append(
+        this._renderEntity(model)
+      )
+    )
 
     for (let property of schema) {
       let name = property.name

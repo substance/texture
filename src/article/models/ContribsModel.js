@@ -49,9 +49,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   getGroups() {
-    let authorsContribGroup = this._node.find('contrib-group[content-type=author]')
-    let contribIds = authorsContribGroup.findAll('contrib[contrib-type=group]').map(contrib => contrib.getAttribute('rid'))
-    return contribIds.map(contribId => this._getEntity(contribId))
+    const pubMetaDb = this.context.pubMetaDb
+    const groupIds = pubMetaDb.findByType('group')
+    return groupIds.map(groupId => this._getEntity(groupId)) 
   }
 
   addAffiliation(affiliation) {

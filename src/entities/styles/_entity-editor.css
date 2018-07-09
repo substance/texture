@@ -42,6 +42,7 @@
   }
   
   .sc-entity-editor .sc-text-input label,
+  .sc-entity-editor .sc-select-input .se-label,
   .sc-entity-editor .sc-multi-select-input .se-label {
     display: block;
     flex: 1 0 200px;
@@ -85,6 +86,10 @@
   .sc-entity-editor .sc-multi-select-input .se-value {
     font-size: var(--input-font-size);
     font-weight: 400;
+  }
+
+  .sc-entity-editor .sc-select-input .se-select {
+    margin: auto;
   }
 
   .sc-entity-editor .se-control {

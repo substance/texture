@@ -1,6 +1,7 @@
 import { Component, FontAwesomeIcon, isArray } from 'substance'
 import TextInput from './TextInput'
 import MultiSelectInput from './MultiSelectInput'
+import SelectInput from './SelectInput'
 import entityRenderers from './entityRenderers'
 
 export default class EntityEditor extends Component {
@@ -43,6 +44,16 @@ export default class EntityEditor extends Component {
         el.append(
           $$(MultiSelectInput, {
             selectedOptions: value,
+            availableOptions: this._getAvailableOptions(targetType),
+            label: this.getLabel(name)
+          }).ref(name)
+        )
+      } else if (this._isSingleReference(property)) {
+        let targetType = property.type
+        el.append(
+          $$(SelectInput, {
+            id: name,
+            value: value,
             availableOptions: this._getAvailableOptions(targetType),
             label: this.getLabel(name)
           }).ref(name)
@@ -115,5 +126,14 @@ export default class EntityEditor extends Component {
   _renderEntity(entity) {
     // TODO: we should use pubMetaDb directly when it'll be available
     return entityRenderers[entity.type](entity.id, this.context.pubMetaDbSession.getDocument())
+  }
+
+  /*
+    Check if property is single reference to other entity
+  */
+  _isSingleReference(property) {
+    const types = ['string','boolean','number','array','id','object']
+    if(!isArray(property.type) && types.indexOf(property.type) === -1) return true
+    return false
   }
 }

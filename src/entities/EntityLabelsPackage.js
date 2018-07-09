@@ -7,6 +7,7 @@ export default {
     config.addLabel('show-more-fields', 'More fields')
     config.addLabel('show-less-fields', 'Less fields')
     config.addLabel('multi-select-default-value', 'Click to select a value')
+    config.addLabel('select-default-value', 'No value selected')
 
     // item types
     config.addLabel('journal-article', 'Journal Article')
@@ -112,6 +113,7 @@ export default {
     config.addLabel('suffix', 'Suffix')
     config.addLabel('affiliations', 'Affiliations')
     config.addLabel('awards', 'Awards')
+    config.addLabel('group', 'Group')
 
     // organisation labels
     config.addLabel('organisation', 'Organisation')

@@ -32,7 +32,7 @@ export default class InPlaceEditor extends Component {
     inputEl.append(
       $$('button').addClass('se-add-value')
         .append(
-          $$(FontAwesomeIcon, {icon: 'fa-plus'}),
+          $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
           'Add new reference'
         )
         .on('click', this._addNewReference)

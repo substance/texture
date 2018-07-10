@@ -24,3 +24,7 @@
   border: 1px solid #dfdfdf;
   padding: 2px 8px;
 }
+
+.sc-in-place-editor .se-entity-input .se-icon {
+  margin-right: 6px;
+}

@@ -9,6 +9,8 @@ import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
 import FigureModel from './models/FigureModel'
+import ReferenceModel from './models/ReferenceModel'
+import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 
 export default {
   name: 'TextureArticle',
@@ -30,7 +32,22 @@ export default {
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
 
     // Models: Provide API's on top of raw nodes
+    config.addModel('references', ReferenceCollectionModel)
     config.addModel('fig', FigureModel)
     config.addModel('table-wrap', FigureModel)
+    // config.addModel('reference', ReferenceModel)
+    config.addModel('journal-article', ReferenceModel)
+    config.addModel('conference-paper', ReferenceModel)
+    config.addModel('data-publication', ReferenceModel)
+    config.addModel('magazine-article', ReferenceModel)
+    config.addModel('newspaper-article', ReferenceModel)
+    config.addModel('patent', ReferenceModel)
+    config.addModel('software', ReferenceModel)
+    config.addModel('thesis', ReferenceModel)
+    config.addModel('webpage', ReferenceModel)
+    config.addModel('report', ReferenceModel)
+    config.addModel('book', ReferenceModel)
+    config.addModel('chapter', ReferenceModel)
+
   }
 }

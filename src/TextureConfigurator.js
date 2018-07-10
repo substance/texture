@@ -45,11 +45,11 @@ export default class TextureConfigurator extends Configurator {
   /*
     Map an XML node type to a model
   */
-  addModel (nodeType, ModelClass) {
-    if (this.config.models[nodeType]) {
-      throw new Error(`nodeType ${nodeType} already registered.`)
+  addModel (modelType, ModelClass) {
+    if (this.config.models[modelType]) {
+      throw new Error(`model type ${modelType} already registered.`)
     }
-    this.config.models[nodeType] = ModelClass
+    this.config.models[modelType] = ModelClass
   }
 
   getModelRegistry () {

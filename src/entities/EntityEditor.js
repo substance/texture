@@ -12,18 +12,37 @@ import entityRenderers from './entityRenderers'
 const EDITOR_TYPES = {
   'journal-article': {
     'authors': 'in-place-editor',
-    'editors': 'in-place-editor'
+    'editors': 'in-place-editor',
+    'translators': 'in-place-editor',
   }
 }
 
 
 export default class EntityEditor extends Component {
+  constructor(...args) {
+    super(...args)
+    this.handleActions({
+      'set-value': this._setValue,
+      'add-contrib': this._addContrib,
+      'remove-contrib': this._removeContrib
+    })
+  }
+
+  didMount() {
+    this.props.model.onUpdate(this.rerender, this)
+  }
+
+  dispose() {
+    this.props.model.off(this)
+  }
 
   render($$) {
     const fullMode = this.state.fullMode
     // FIXME: in some cases this is not a node. Use a different name.
     let model = this.props.model
-    let schema = this.props.schema
+    let data = model.toJSON()
+    let schema = model.getSchema()
+    let pubMetaDb = this.context.api.pubMetaDb
 
     let el = $$('div').addClass('sc-entity-editor').append(
       $$('div').addClass('se-entity-header').html(
@@ -36,7 +55,8 @@ export default class EntityEditor extends Component {
       let type = property.type
       let targetTypes = property.targetTypes
       let isOptional = property.isOptional()
-      let value = model[name]
+      
+      let value = data[name]
       if(!fullMode && value === '' && isOptional) continue
 
       let customEditor = _getCustomEditor(model.type, property)
@@ -44,14 +64,13 @@ export default class EntityEditor extends Component {
       if (name === 'id') {
         // id property is not editable and skipped
       } else if (customEditor) {
+        let values = value.map(collabId => pubMetaDb.get(collabId))
         el.append(
           $$(InPlaceEditor, {
             id: model.id,
             label: this.getLabel(name),
             name: name,
-            values: value,
-            collection: model.type,
-            targetType: targetTypes[0]
+            values: values
           }).ref(name)
         )
       } else if (type === 'string') {
@@ -67,14 +86,14 @@ export default class EntityEditor extends Component {
         )
       } else if (isArray(type) && type[0] === 'array' && targetTypes[0] !== 'object') {
         // TODO: How can we handle multiple target types (not just one collection) here?
-        let targetType = targetTypes[0]
-        el.append(
-          $$(MultiSelectInput, {
-            selectedOptions: value,
-            availableOptions: this._getAvailableOptions(targetType),
-            label: this.getLabel(name)
-          }).ref(name)
-        )
+        // let targetType = targetTypes[0]
+        // el.append(
+        //   $$(MultiSelectInput, {
+        //     selectedOptions: value,
+        //     availableOptions: this._getAvailableOptions(targetType),
+        //     label: this.getLabel(name)
+        //   }).ref(name)
+        // )
       } else if (this._isSingleReference(property)) {
         let targetType = property.type
         el.append(
@@ -162,6 +181,21 @@ export default class EntityEditor extends Component {
     const types = ['string','boolean','number','array','id','object']
     if(!isArray(property.type) && types.indexOf(property.type) === -1) return true
     return false
+  }
+
+  _addContrib(propName) {
+    const model = this.props.model
+    model.addContrib(propName)
+  }
+
+  _removeContrib(propName, contribId) {
+    const model = this.props.model
+    model.removeContrib(propName, contribId)
+  }
+
+  _setValue(propName, value) {
+    const model = this.props.model
+    model.setValue(propName, value)
   }
 }
 

@@ -85,34 +85,24 @@ export default class ArticleAPI {
     })
   }
 
-  getCollection(colName) {
-    let items = []
-    switch(colName) {
-      case 'authors':
-        items = this.getContribs().getAuthors()
-        break
-      case 'groups':
-        items = this.getContribs().getGroups()
-        break
-      case 'awards':
-        items = this.getContribs().getAwards()
-        break
-      case 'organisations':
-        items = this.getContribs().getOrganisations()
-        break
-      case 'keywords':
-        items = this.getMeta().getKeywords()
-        break
-      case 'subjects':
-        items = this.getMeta().getSubjects()
-        break
-      case 'references':
-        items = this.getReferences().getReferences()
-        break
-      default:
-        console.error('There is no collection', colName)
+  /*
+    Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
+  */
+  getModel (type, node) {
+    let ModelClass = this.modelRegistry[type]
+    if (ModelClass) {
+      return new ModelClass(this, node)
+    } else {
+      throw new Error(`No model for ${type} found.`)
     }
-    return items
+  }
+
+  getArticle() {
+    return this.doc
+  }
+
+  getPubMetaDb() {
+    return this.pubMetaDb
   }
 
   /*
@@ -159,16 +149,6 @@ export default class ArticleAPI {
   getReferences () {
     let refList = this.doc.find('ref-list')
     return new ReferencesModel(refList, this._getContext())
-  }
-
-  /*
-    Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
-  */
-  getModel (node) {
-    let ModelClass = this.modelRegistry[node.type]
-    if (ModelClass) {
-      return new ModelClass(node, this._getContext())
-    }
   }
 
   _getContext () {

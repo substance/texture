@@ -1,16 +1,9 @@
 import { Component, FontAwesomeIcon } from 'substance'
 
 export default class InPlaceEditor extends Component {
-  getInitialState() {
-    const values = this.props.values
-    const items = values.map(contribId => this._getContrib(contribId))
-    return {
-      items: items
-    }
-  }
 
   render($$) {
-    const items = this.state.items
+    const items = this.props.values
     const label = this.props.label
 
     let el = $$('div').addClass('sc-in-place-editor')
@@ -60,21 +53,11 @@ export default class InPlaceEditor extends Component {
   }
 
   _addNewReference() {
-
+    this.send('add-contrib', this.props.name)
   }
 
   _removeReference(itemId) {
-    const id = this.props.id
-    const col = this.props.collection
-    const targetType = this.props.targetType
-    const name = this.props.name
-    let value = this._getValue()
-    const pos = value.indexOf(itemId)
-    value.splice(pos, 1)
-    let update = {}
-    update[name] = value
-    this.send('collection:update', targetType, id, update)
-    this.send('collection:remove', col, itemId)
+    this.send('remove-contrib', this.props.name, itemId)
   }
 
   _getContrib(id) {

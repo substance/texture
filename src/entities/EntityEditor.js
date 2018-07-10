@@ -47,6 +47,7 @@ export default class EntityEditor extends Component {
         el.append(
           $$(InPlaceEditor, {
             id: model.id,
+            label: this.getLabel(name),
             name: name,
             values: value,
             collection: model.type,

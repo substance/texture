@@ -21,23 +21,30 @@ export default class InPlaceEditor extends Component {
       )
     }
 
+    let inputEl = $$('div').addClass('se-entity-input')
+
     items.forEach(item => {
-      el.append(
-        this._renderEditor($$, item).ref(item.id)
+      inputEl.append(
+        this._renderEditor($$, item)
       )
     })
 
-    el.append(
+    inputEl.append(
       $$('button').addClass('se-add-value')
-        .append($$(FontAwesomeIcon, {icon: 'fa-plus'}))
+        .append(
+          $$(FontAwesomeIcon, {icon: 'fa-plus'}),
+          'Add new reference'
+        )
         .on('click', this._addNewReference)
     )
+
+    el.append(inputEl)
 
     return el
   }
 
   _renderEditor($$, item) {
-    let el = $$('div').addClass('se-entity-item')
+    let el = $$('div').addClass('se-entity-item').ref(item.id)
   
     el.append(
       $$('input').addClass('se-input')
@@ -48,6 +55,8 @@ export default class InPlaceEditor extends Component {
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))
         .on('click', this._removeReference.bind(this, item.id))  
     )
+
+    return el
   }
 
   _addNewReference() {
@@ -68,8 +77,9 @@ export default class InPlaceEditor extends Component {
     this.send('collection:remove', col, itemId)
   }
 
-  _getContrib() {
-
+  _getContrib(id) {
+    const pubMetaDb = this.context.api.pubMetaDb
+    return pubMetaDb.get(id)
   }
   
   _getValue() {

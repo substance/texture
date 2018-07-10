@@ -42,6 +42,7 @@
   }
   
   .sc-entity-editor .sc-text-input label,
+  .sc-entity-editor .sc-in-place-editor label,
   .sc-entity-editor .sc-select-input .se-label,
   .sc-entity-editor .sc-multi-select-input .se-label {
     display: block;
@@ -61,7 +62,7 @@
   .sc-entity-editor .sc-multi-select-input .se-label::after {
     content: ':'
   }
-  
+
   .sc-entity-editor .sc-text-input .se-input {
     width: 100%;
     border: 1px solid transparent;

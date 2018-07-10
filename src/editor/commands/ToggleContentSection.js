@@ -2,7 +2,7 @@ import { Command } from 'substance'
 
 class ToggleContentSection extends Command {
 
-  getCommandState(params, context) {
+  getCommandState(params) {
     let editor = params.editorSession.getEditor()
 
     let commandState = {

@@ -1,14 +1,14 @@
 import { Command } from 'substance'
 
 export default class SwitchViewCommand extends Command {
-  getCommandState (params, context) {
+  getCommandState () {
     let commandState = {
       disabled: false
     }
     return commandState
   }
 
-  execute (params, context) {
-    console.log('TODO: switch view to ', this.config.view)
+  execute () {
+    console.info('TODO: switch view to ', this.config.view)
   }
 }

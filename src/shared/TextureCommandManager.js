@@ -23,7 +23,7 @@ export default class CommandManager {
     return cmd
   }
 
-  executeCommand (commandName, params, context, cb) {
+  executeCommand (commandName, params, context) {
     const cmd = this.getCommand(commandName)
     if (!cmd) return
     const commandStates = this.appState.get('commandStates') || new Map()

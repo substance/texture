@@ -155,7 +155,7 @@ class ArticlePanelSession {
       editorSession: this
     }
     let commandStates = {}
-    commands.map(command => {
+    commands.forEach(command => {
       commandStates[command.name] = command.getCommandState(params)
     })
     this.commandStates = commandStates

@@ -5,7 +5,7 @@ import TextureArticlePackage from './TextureArticlePackage'
 import ArticleConfigurator from './ArticleConfigurator'
 
 export default {
-  load (xml, context, config) {
+  load (xml, context) {
     let configurator = new ArticleConfigurator()
     configurator.import(TextureArticlePackage)
     let jatsImporter = new JATSImporter()

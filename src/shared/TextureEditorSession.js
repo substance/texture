@@ -125,7 +125,7 @@ export default class TextureEditorSession {
   }
 
   // TODO: try to cut this down to what we really need
-  setSelection (sel, skipFlow) {
+  setSelection (sel) {
     // console.log('EditorSession.setSelection()', sel)
     if (sel && isPlainObject(sel)) {
       sel = this.getDocument().createSelection(sel)

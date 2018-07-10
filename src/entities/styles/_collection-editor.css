@@ -3,6 +3,7 @@
 }
 
 .sc-collection-editor .se-header {
+  max-width: 800px;
   padding: 2px 10px;
   margin: 10px 20px;
   background: #f4f4f4;

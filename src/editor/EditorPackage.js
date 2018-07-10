@@ -1,22 +1,23 @@
+/* eslint-disable no-template-curly-in-string */
 import {
-  BasePackage as SubstanceBasePackage,
-  MultiSelectPackage,
-  FindAndReplacePackage,
-  ListPackage,
-  TextPropertyEditor,
-  TextPropertyComponent,
+  AnnotationComponent,
   EditInlineNodeCommand,
   EditAnnotationCommand,
+  ListPackage,
   SchemaDrivenCommandManager,
-  substanceGlobals,
-  AnnotationComponent
+  TextPropertyEditor,
+  TextPropertyComponent,
+  FindAndReplacePackage,
+  MultiSelectPackage
 } from 'substance'
+
+import BasePackage from '../shared/BasePackage'
+import EditorBasePackage from '../shared/EditorBasePackage'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
 import EntityComponentsPackage from '../entities/EntityComponentsPackage'
-import TextureArticlePackage from '../article/TextureArticlePackage'
 
-import Editor from './components/Editor'
+import ManuscriptEditor from './components/ManuscriptEditor'
 import TextNodeComponent from './components/TextNodeComponent'
 import PlainTextComponent from './components/PlainTextComponent'
 import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
@@ -54,7 +55,6 @@ import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
 import ExtLinkComponent from '../shared/components/ExtLinkComponent'
 
-
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
 import FigPreview from './components/FigPreview'
@@ -80,13 +80,11 @@ import InsertTableTool from './components/InsertTableTool'
 
 import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListCommand'
 
-substanceGlobals.DEBUG_RENDERING = true
-
 export default {
-  name: 'author',
-  configure(config) {
-    config.import(SubstanceBasePackage)
-    config.import(TextureArticlePackage)
+  name: 'ManscruptEditor',
+  configure (config) {
+    config.import(BasePackage)
+    config.import(EditorBasePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })
@@ -103,24 +101,24 @@ export default {
     config.setLabelGenerator('references', {
       template: '[$]',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('figures', {
       name: 'Figure',
       plural: 'Figures',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('tables', {
       name: 'Table',
       plural: 'Tables',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('footnotes', {
       template: '$',
       and: ',',
-      to: '-',
+      to: '-'
     })
 
     // Base functionality
@@ -164,7 +162,6 @@ export default {
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
 
-
     // ATTENTION: I have changed the behavior so that
     // unregistered annotations or inline-nodes are
     // rendered using the UnsupportedInlineNodeComponent
@@ -175,7 +172,6 @@ export default {
     config.addComponent('sup', AnnotationComponent)
     config.addComponent('monospace', AnnotationComponent)
     config.addComponent('ext-link', ExtLinkComponent)
-
 
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)
@@ -304,7 +300,6 @@ export default {
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
     config.addLabel('sig-block-end', 'Signature Block ends here')
-
 
     config.addLabel('view', 'View')
     config.addLabel('toggle-abstract', '${showOrHide} Abstract')
@@ -521,8 +516,6 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
-
-    // Declarative spec for tool display
     config.addToolPanel('toolbar', [
       {
         name: 'undo-redo',
@@ -624,7 +617,7 @@ export default {
         showDisabled: false,
         style: 'descriptive',
         commandGroups: ['table-delete']
-      },
+      }
     ])
 
     config.addToolPanel('workflow', [
@@ -675,5 +668,7 @@ export default {
       { panel: 'article-record' }
     ])
   },
-  Editor
+  ManuscriptEditor,
+  // legacy
+  Editor: ManuscriptEditor
 }

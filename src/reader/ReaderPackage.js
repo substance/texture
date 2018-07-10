@@ -4,7 +4,6 @@ import {
   TextPropertyEditor,
   TextPropertyComponent,
   SchemaDrivenCommandManager,
-  substanceGlobals,
   AnnotationComponent
 } from 'substance'
 
@@ -12,7 +11,6 @@ import TextNodeComponent from '../editor/components/TextNodeComponent'
 import PlainTextComponent from '../editor/components/PlainTextComponent'
 import UnsupportedNodeComponent from '../editor/components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from '../editor/components/UnsupportedInlineNodeComponent'
-
 import BreakComponent from '../editor/components/BreakComponent'
 import ContainerNodeComponent from '../editor/components/ContainerNodeComponent'
 import ElementNodeComponent from '../editor/components/ElementNodeComponent'
@@ -29,8 +27,7 @@ import FnComponent from '../editor/components/FnComponent'
 import SeparatorComponent from '../editor/components/SeparatorComponent'
 import SigBlockComponent from '../editor/components/SigBlockComponent'
 
-import TextureArticlePackage from '../article/TextureArticlePackage'
-
+// TODO: will these really be shared?
 import TextureIsolatedNodeComponent from '../shared/components/TextureIsolatedNodeComponent'
 import TextureIsolatedInlineNodeComponent from '../shared/components/TextureIsolatedInlineNodeComponent'
 import ArticleAbstractComponent from '../shared/components/ArticleAbstractComponent'
@@ -44,16 +41,15 @@ import FigureComponent from '../shared/components/FigureComponent'
 import ExtLinkComponent from '../shared/components/ExtLinkComponent'
 
 // Reader-specific components
-import ReaderXrefComponent from '../reader/components/ReaderXrefComponent'
-
-
-substanceGlobals.DEBUG_RENDERING = true
+import ReaderXrefComponent from './components/ReaderXrefComponent'
 
 export default {
-  name: 'reader',
-  configure(config) {
+  name: 'Reader',
+  configure (config) {
+    // TODO: reduce redundancy with ManuscriptEditorPackage
+    // probably we want to use this package as a base for the editor package
+    // and add configurations related to editing
     config.import(SubstanceBasePackage)
-    config.import(TextureArticlePackage)
 
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
@@ -63,24 +59,24 @@ export default {
     config.setLabelGenerator('references', {
       template: '[$]',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('figures', {
       name: 'Figure',
       plural: 'Figures',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('tables', {
       name: 'Table',
       plural: 'Tables',
       and: ',',
-      to: '-',
+      to: '-'
     })
     config.setLabelGenerator('footnotes', {
       template: '$',
       and: ',',
-      to: '-',
+      to: '-'
     })
 
     // Base functionality

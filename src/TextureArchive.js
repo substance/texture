@@ -1,16 +1,14 @@
 import { prettyPrintXML, DefaultDOMElement } from 'substance'
-import { PersistedDocumentArchive } from './dar'
-import ArticleLoader from './ArticleLoader'
-import PubMetaLoader from './PubMetaLoader'
-import { JATSExporter } from './article'
+import { PersistedDocumentArchive } from './dar/index'
+import { ArticleLoader, JATSExporter } from './article/index'
+import { PubMetaLoader } from './entities/index'
 
 export default class TextureArchive extends PersistedDocumentArchive {
-
   /*
     Creates EditorSessions from a raw archive.
     This might involve some consolidation and ingestion.
   */
-  _ingest(rawArchive) {
+  _ingest (rawArchive) {
     let sessions = {}
     let manifestXML = _importManifest(rawArchive)
     let manifestSession = this._loadManifest({ data: manifestXML })
@@ -39,7 +37,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     return sessions
   }
 
-  _repair() {
+  _repair () {
     let manifestSession = this.getEditorSession('manifest')
     let entries = manifestSession.getDocument().getDocumentEntries()
     let missingEntries = []
@@ -62,7 +60,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     })
   }
 
-  _exportManifest(sessions, buffer, rawArchive) {
+  _exportManifest (sessions, buffer, rawArchive) {
     let manifest = sessions.manifest.getDocument()
     if (buffer.hasResourceChanged('manifest')) {
       let manifestDom = manifest.toXML()
@@ -76,7 +74,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _exportDocuments(sessions, buffer, rawArchive) {
+  _exportDocuments (sessions, buffer, rawArchive) {
     // Note: we are only adding resources that have changed
     // and only those which are registered in the manifest
     let entries = this.getDocumentEntries()
@@ -104,7 +102,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     })
   }
 
-  _loadDocument(type, record, sessions) {
+  _loadDocument (type, record, sessions) {
     switch (type) {
       case 'article': {
         return ArticleLoader.load(record.data, {
@@ -117,7 +115,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _exportDocument(type, session, sessions) {
+  _exportDocument (type, session, sessions) {
     switch (type) {
       case 'article': {
         let jatsExporter = new JATSExporter()
@@ -134,7 +132,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  getTitle() {
+  getTitle () {
     let editorSession = this.getEditorSession('manuscript')
     let title = 'Untitled'
     if (editorSession) {
@@ -152,7 +150,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
   Create an explicit entry for pub-meta.json, which does not
   exist in the serialisation format
 */
-function _importManifest(rawArchive) {
+function _importManifest (rawArchive) {
   let manifestXML = rawArchive.resources['manifest.xml'].data
   let dom = DefaultDOMElement.parseXML(manifestXML)
   let documentsEl = dom.find('documents')
@@ -170,7 +168,7 @@ function _importManifest(rawArchive) {
   The serialised manifest should have no pub-meta document entry, so we
   remove it here.
 */
-function _exportManifest(manifestDom) {
+function _exportManifest (manifestDom) {
   let documents = manifestDom.find('documents')
   let pubMetaEl = documents.find('document#pub-meta')
   documents.removeChild(pubMetaEl)

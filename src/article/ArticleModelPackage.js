@@ -12,10 +12,10 @@ import FigureModel from './models/FigureModel'
 
 export default {
   name: 'TextureArticle',
-  configure(config) {
+  configure (config) {
     registerSchema(config, InternalArticle, TextureDocument)
 
-    // override the registered nodes
+    // override registered nodes
     config.addNode(XMLListNode, true)
     config.addNode(XMLListItemNode, true)
     config.addNode(TableElementNode, true)
@@ -23,7 +23,7 @@ export default {
 
     config.addImporter(InternalArticle.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard
-    TextureHTMLConverters.forEach((converter) => {
+    TextureHTMLConverters.forEach(converter => {
       config.addConverter('html', converter)
     })
     config.addConverter('html', XMLListNodeHTMLConverter)
@@ -32,6 +32,5 @@ export default {
     // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)
     config.addModel('table-wrap', FigureModel)
-
   }
 }

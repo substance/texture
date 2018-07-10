@@ -172,9 +172,7 @@ export default class AbstractCitationManager {
       change.updated[bibEl.id] = true
     }
 
-    editorSession._setDirty('document')
-    editorSession._change = change
-    editorSession._info = {}
+    editorSession._setUpdate('document', { change, info: {} })
     editorSession.startFlow()
   }
 

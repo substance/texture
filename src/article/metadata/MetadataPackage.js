@@ -9,7 +9,6 @@ export default {
     config.import(EditorBasePackage)
     // TODO: register MetaDataEditor related UI stuff here
     // Note, that the model package is already loaded by ArticlePackage
-    debugger
     config.import(EntityLabelsPackage)
   }
 }

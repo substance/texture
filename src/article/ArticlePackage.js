@@ -1,4 +1,5 @@
-import { ToggleTool, BasePackage as SubstanceBasePackage } from 'substance'
+import { ToggleTool } from 'substance'
+import BasePackage from '../shared/BasePackage'
 import ModelPackage from './ArticleModelPackage'
 import EditorPackage from '../editor/EditorPackage'
 import MetaDataPackage from './meta-data/MetaDataPackage'
@@ -29,7 +30,7 @@ export default {
     let previewConfig = ArticleConfigurator.createFrom(modelConfig).import(PreviewPackage)
     config.setConfiguration('preview', previewConfig)
 
-    config.import(SubstanceBasePackage)
+    config.import(BasePackage)
     // UI stuff for the ArticlePanel
     config.addComponent('manuscript-editor', ManuscriptEditor)
     config.addComponent('meta-data-editor', MetaDataEditor)

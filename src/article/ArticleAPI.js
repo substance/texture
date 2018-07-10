@@ -12,7 +12,7 @@ import FigureManager from '../editor/util/FigureManager'
 import TableManager from '../editor/util/TableManager'
 import FootnoteManager from '../editor/util/FootnoteManager'
 
-export default class TextureArticleAPI {
+export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {
     this.configurator = configurator
     this.modelRegistry = configurator.getModelRegistry()

@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import ArticleReader from './ArticleReader'
-import TextureArticleAPI from '../../article/TextureArticleAPI'
+import ArticleAPI from '../../article/ArticleAPI'
 
 export default class TextureReader extends Component {
 
@@ -10,7 +10,7 @@ export default class TextureReader extends Component {
     this.manuscriptSession = archive.getEditorSession('manuscript')
     this.pubMetaDbSession = archive.getEditorSession('pub-meta')
     this.configurator = this.manuscriptSession.getConfigurator()
-    this.api = new TextureArticleAPI(
+    this.api = new ArticleAPI(
       this.manuscriptSession,
       this.pubMetaDbSession,
       this.configurator.getModelRegistry()

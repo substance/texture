@@ -5,7 +5,7 @@ import SaveHandler from '../util/SaveHandler'
 import TOCProvider from '../util/TOCProvider'
 import { getXrefTargets } from '../util/xrefHelpers'
 import TOC from './TOC'
-import TextureArticleAPI from '../../article/TextureArticleAPI'
+import ArticleAPI from '../../article/ArticleAPI'
 
 export default class ManuscriptEditor extends Component {
   constructor (...args) {
@@ -23,7 +23,7 @@ export default class ManuscriptEditor extends Component {
     const articleSession = props.articleSession
     const pubMetaDbSession = props.pubMetaDbSession
     const config = props.config
-    const api = new TextureArticleAPI(config, articleSession, pubMetaDbSession, this.context)
+    const api = new ArticleAPI(config, articleSession, pubMetaDbSession, this.context)
 
     this.api = api
     this.exporter = this._getExporter()

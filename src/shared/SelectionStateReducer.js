@@ -2,6 +2,8 @@ import {
   TreeIndex, documentHelpers, Selection, selectionHelpers
 } from 'substance'
 
+import globals from '../textureGlobals'
+
 export default class SelectionStateReducer {
   constructor (appState) {
     this.appState = appState
@@ -109,12 +111,12 @@ class SelectionState {
 
   // HACK: for legacy reasons
   getSelection () {
-    console.error("DEPRECATED: Use EditorState.get('selection') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: Use EditorState.get('selection') instead")
     return this.selection
   }
 
   getAnnotationsForType (type) {
-    console.error("DEPRECATED: Use EditorState.get('selectionState').annosByType instead")
+    if (globals.DEBUG) console.error("DEPRECATED: Use EditorState.get('selectionState').annosByType instead")
     const state = this
     if (state.annosByType) {
       return state.annosByType.get(type) || []
@@ -123,17 +125,17 @@ class SelectionState {
   }
 
   isInlineNodeSelection () {
-    console.error('FIXME: we want to get rid of selectionState.isInlineNodeSelection() and use the flat property instead')
+    if (globals.DEBUG) console.error('FIXME: we want to get rid of selectionState.isInlineNodeSelection() and use the flat property instead')
     return this._isInlineNodeSelection
   }
 
   isFirst () {
-    console.error('FIXME: we want to get rid of selectionState.isFirst() and use the flat property instead')
+    if (globals.DEBUG) console.error('FIXME: we want to get rid of selectionState.isFirst() and use the flat property instead')
     return Boolean(this._isFirst)
   }
 
   isLast () {
-    console.error('FIXME: we want to get rid of selectionState.isLast() and use the flat property instead')
+    if (globals.DEBUG) console.error('FIXME: we want to get rid of selectionState.isLast() and use the flat property instead')
     return Boolean(this._isLast)
   }
 

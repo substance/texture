@@ -1,16 +1,18 @@
 /* eslint-disable no-template-curly-in-string */
 import {
-  BasePackage as SubstanceBasePackage,
-  MultiSelectPackage,
-  FindAndReplacePackage,
-  ListPackage,
-  TextPropertyEditor,
-  TextPropertyComponent,
+  AnnotationComponent,
   EditInlineNodeCommand,
   EditAnnotationCommand,
+  ListPackage,
   SchemaDrivenCommandManager,
-  AnnotationComponent
+  TextPropertyEditor,
+  TextPropertyComponent,
+  FindAndReplacePackage,
+  MultiSelectPackage
 } from 'substance'
+
+import BasePackage from '../shared/BasePackage'
+import EditorBasePackage from '../shared/EditorBasePackage'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
 import EntityComponentsPackage from '../entities/EntityComponentsPackage'
@@ -81,7 +83,8 @@ import SchemaAwareToggleListCommand from './commands/SchemaAwareToggleListComman
 export default {
   name: 'ManscruptEditor',
   configure (config) {
-    config.import(SubstanceBasePackage)
+    config.import(BasePackage)
+    config.import(EditorBasePackage)
     config.import(FindAndReplacePackage, {
       rootElement: '.sc-article'
     })

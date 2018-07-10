@@ -6,6 +6,8 @@ import {
   operationHelpers, isString
 } from 'substance'
 
+import globals from '../textureGlobals'
+
 export default class TextureEditorSession {
   constructor (editorState, config) {
     this.editorState = editorState
@@ -57,13 +59,13 @@ export default class TextureEditorSession {
   }
 
   getChange () {
-    console.error("DEPRECATED: use editorState.getUpdate('document') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.getUpdate('document') instead")
     let update = this.editorState.getUpdate('document')
     if (update) return update.change
   }
 
   getChangeInfo () {
-    console.error("DEPRECATED: use editorState.getUpdate('document') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.getUpdate('document') instead")
     let update = this.editorState.getUpdate('document')
     if (update) return update.info
   }
@@ -77,30 +79,30 @@ export default class TextureEditorSession {
   }
 
   getManager () {
-    console.error('BROKEN: editorSession.getManager() has been removed')
+    if (globals.DEBUG) console.error('BROKEN: editorSession.getManager() has been removed')
   }
 
   getEditor () {
-    console.error('BROKEN: editorSession.getEditor() has been removed')
+    if (globals.DEBUG) console.error('BROKEN: editorSession.getEditor() has been removed')
   }
 
   getLanguage () {
-    console.error("DEPRECATED: use editorState.get('lang') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.get('lang') instead")
     return this.editorState.get('lang')
   }
 
   getTextDirection () {
-    console.error("DEPRECATED: use editorState.get('dir') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.get('dir') instead")
     return this.editorState.get('dir')
   }
 
   isBlurred () {
-    console.error("DEPRECATED: use editorState.get('blurred') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.get('blurred') instead")
     return Boolean(this.editorState.get('blurred'))
   }
 
   hasChanged (resource) {
-    console.error(`DEPRECATED: use editorState.isDirty('${resource}') instead`)
+    if (globals.DEBUG) console.error(`DEPRECATED: use editorState.isDirty('${resource}') instead`)
     return this.editorState.isDirty(resource)
   }
 
@@ -156,26 +158,26 @@ export default class TextureEditorSession {
   }
 
   setLanguage (lang) {
-    console.error("DEPRECATED: use editorState.set('lang') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.set('lang') instead")
     this.editorState.set('lang', lang)
     this.startFlow()
   }
 
   setTextDirection (dir) {
-    console.error("DEPRECATED: use editorState.set('dir') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.set('dir') instead")
     this.editorState.set('dir', dir)
     this.startFlow()
   }
 
   setCommandStates (commandStates) {
-    console.error("DEPRECATED: use editorState.set('commandStates') instead")
+    if (globals.DEBUG) console.error("DEPRECATED: use editorState.set('commandStates') instead")
     // HACK: there is a deficiency in SchemaDrivenCommandManager starting
     // a double reflow
     this.editorState.set('commandStates', commandStates)
   }
 
   setSaveHandler () {
-    console.error('BROKEN: editorSession.setSaveHandler() has been removed')
+    if (globals.DEBUG) console.error('BROKEN: editorSession.setSaveHandler() has been removed')
   }
 
   createSelection () {

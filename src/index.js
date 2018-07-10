@@ -14,3 +14,5 @@ export { default as TextureDesktopApp } from './TextureDesktopApp'
 export { default as TextureDesktopAppChrome } from './TextureDesktopAppChrome'
 export { default as TextureWebApp } from './TextureWebApp'
 export { default as TextureWebAppChrome } from './TextureWebAppChrome'
+
+export { default as textureGlobals } from './textureGlobals'

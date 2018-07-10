@@ -8,7 +8,9 @@ export default class ArticlePanel extends Component {
       'openView': this._openView
     })
 
-    // TODO: rethink
+    // TODO: ATM many things such as ToolPanels depend on an editorSession
+    // To be able to move away from that, we need to use customized components
+    // here, i.e. not those from Substance
     this._articlePanelSession = new ArticlePanelSession(this, this.props.config)
 
     this._initialize(this.props)

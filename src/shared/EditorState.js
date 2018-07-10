@@ -1,5 +1,5 @@
 import { uuid, Selection, isNil, isFunction } from 'substance'
-import AppState from './AppState'
+import AbstractAppState from './AbstractAppState'
 import SelectionStateReducer from './SelectionStateReducer'
 
 const UUID = uuid()
@@ -11,11 +11,7 @@ const STAGE_IDX = STAGES.reduce((m, s, idx) => {
   return m
 }, {})
 
-/*
-  WIP
-  Moving towards a new AppState API but using the old implementation underneath.
-*/
-export default class EditorState extends AppState {
+export default class EditorState extends AbstractAppState {
   constructor (doc) {
     super()
 

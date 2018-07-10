@@ -23,12 +23,14 @@ export default class TextureEditorSession {
     // e.g. to be able to have a common history across multiple documents
     this._history = new ChangeHistory()
 
+    // TODO: we should rethink which of these are ok to be managed on Editor level
+    // and which should maybe go into a different place
     const SurfaceManager = config.getSurfaceManagerClass()
     const GlobalEventHandler = config.getGlobalEventHandlerClass()
     const KeyboardManager = config.getKeyboardManagerClass()
-    // TODO: we should rethink which of these are ok to be managed on Editor level
-    // and which should maybe go into a different place
+    const MarkersManager = config.getMarkersManagerClass()
     this.surfaceManager = new SurfaceManager(this)
+    this.markersManager = new MarkersManager(this)
     this.globalEventHandler = new GlobalEventHandler(this, this.surfaceManager)
     // FIXME: we should change how context
     this.keyboardManager = new KeyboardManager(this, config.getKeyboardShortcuts(), {})
@@ -220,41 +222,42 @@ export default class TextureEditorSession {
   }
 
   onUpdate (...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver('update', args)
   }
 
   onPreRender (...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver('pre-render', args)
   }
 
   onRender (...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver('render', args)
   }
 
   onPostRender (...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver('post-render', args)
   }
 
   onPosition (...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver('position', args)
   }
 
   onFinalize (...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver('finalize', args)
   }
 
   on (stage, ...args) {
-    console.error('DEPRECATED: use EditorState API')
+    // console.error('DEPRECATED: use EditorState API')
     return this._registerObserver(stage, args)
   }
 
   off (observer) {
+    // console.error('DEPRECATED: use EditorState API')
     this.editorState.removeObserver(observer)
   }
 
@@ -412,11 +415,6 @@ function _addSurfaceId (sel, editorSession) {
     if (surface) {
       sel.surfaceId = surface.id
     }
-    // else {
-    // Note: disabling this warning, because not having a rendered surface is
-    // a valid use-case in headless scenarios
-    // console.warn('No focused surface. Selection will not be rendered.')
-    // }
   }
 }
 

@@ -74,6 +74,7 @@ export default class ManuscriptEditor extends Component {
     const dragManager = api.dragManager
     const referenceManager = api.getReferenceManager()
     const surfaceManager = articleSession.surfaceManager
+    const markersManager = articleSession.markersManager
     const commandGroups = config.getCommandGroups()
     const tools = config.getTools()
     const labelProvider = config.getLabelProvider()
@@ -95,6 +96,7 @@ export default class ManuscriptEditor extends Component {
       keyboardShortcuts,
       labelProvider,
       surfaceManager,
+      markersManager,
       tocProvider: this.tocProvider,
       tools
     }

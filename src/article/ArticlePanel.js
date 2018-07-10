@@ -8,14 +8,28 @@ export default class ArticlePanel extends Component {
       'openView': this._openView
     })
 
+    // TODO: rethink
+    this._articlePanelSession = new ArticlePanelSession(this, this.props.config)
+
     this._initialize(this.props)
   }
 
   _initialize (props) {
     const config = props.config
 
+    // WIP
+    this._articlePanelSession._updateCommandStates()
+
     this.context = Object.assign({}, super._getContext(), {
-      componentRegistry: config.getComponentRegistry()
+      // HACK
+      editorSession: this._articlePanelSession,
+      commandGroups: config.getCommandGroups(),
+      tools: {},
+      componentRegistry: config.getComponentRegistry(),
+      labelProvider: config.getLabelProvider(),
+      keyboardShortcuts: config.getKeyboardShortcuts(),
+      iconProvider: config.getIconProvider(),
+      commandManager: this._articlePanelSession
     })
   }
 
@@ -34,21 +48,9 @@ export default class ArticlePanel extends Component {
   getChildContext () {
     const archive = this.props.archive
     const config = this._getViewConfig()
-    const articleSession = this.props.articleSession
-    const pubMetaDbSession = this.props.pubMetaDbSession
     return {
       configurator: config,
-      articleSession,
-      pubMetaDbSession,
-      urlResolver: archive,
-      // legacy
-      editorSession: articleSession,
-      commandGroups: config.getCommandGroups(),
-      tools: config.getTools(),
-      labelProvider: config.getLabelProvider(),
-      keyboardShortcuts: config.getKeyboardShortcuts(),
-      iconProvider: config.getIconProvider(),
-      commandManager: articleSession.commandManager
+      urlResolver: archive
     }
   }
 
@@ -125,5 +127,51 @@ export default class ArticlePanel extends Component {
       default:
         console.error(`Unknown view: ${name}`)
     }
+  }
+}
+
+// HACK/WIP: ToolPanel is asking for editorSession
+class ArticlePanelSession {
+  constructor (articlePanel, config) {
+    this.articlePanel = articlePanel
+    this.config = config
+    this.commands = {}
+    this.commandStates = []
+
+    config.getCommands().forEach(cmd => {
+      this.commands[cmd.name] = cmd
+    })
+  }
+
+  getCommandStates () {
+    return this.commandStates
+  }
+
+  // HACK: don't know yet how to use AppState API here
+  _updateCommandStates () {
+    let config = this.config
+    let commands = config.getCommands()
+    let params = {
+      editorSession: this
+    }
+    let commandStates = {}
+    commands.map(command => {
+      commandStates[command.name] = command.getCommandState(params)
+    })
+    this.commandStates = commandStates
+  }
+
+  // HACK
+  canUndo () {}
+  canRedo () {}
+  isBlurred () {}
+  getFocusedSurface () {}
+  getSelection () {}
+  onRender () {}
+  off () {}
+  executeCommand (name, params, context) {
+    let commands = this.commands
+    let cmd = commands[name]
+    cmd.execute(params, context)
   }
 }

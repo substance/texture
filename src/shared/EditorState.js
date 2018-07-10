@@ -57,8 +57,6 @@ export default class EditorState extends AppState {
   }
 
   removeObserver (observer) {
-    super.removeObserver(observer)
-
     let entries = observer[UUID] || []
     entries.forEach(e => {
       e.slot.removeObserver(observer)

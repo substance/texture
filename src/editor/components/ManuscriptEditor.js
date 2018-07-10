@@ -56,7 +56,6 @@ export default class ManuscriptEditor extends Component {
     const articleSession = this.props.articleSession
     this.tocProvider.off(this)
     articleSession.off(this)
-    articleSession.detachEditor(this)
     DefaultDOMElement.getBrowserWindow().off(this)
 
     // Note: we need to clear everything, as the childContext

@@ -1,13 +1,9 @@
 import { Component, Toolbar, isEqual } from 'substance'
+import AppState from '../shared/AppState'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
-
-    this.handleActions({
-      'openView': this._openView
-    })
-
     // TODO: ATM many things such as ToolPanels depend on an editorSession
     // To be able to move away from that, we need to use customized components
     // here, i.e. not those from Substance
@@ -16,13 +12,21 @@ export default class ArticlePanel extends Component {
     this._initialize(this.props)
   }
 
+  getInitialState () {
+    let state = AppState.create({ view: 'manuscript' })
+    state.observe(['view'], this.rerender, this)
+    return state
+  }
+
   _initialize (props) {
     const config = props.config
+    const archive = this.props.archive
 
     // WIP
     this._articlePanelSession._updateCommandStates()
 
     this.context = Object.assign({}, super._getContext(), {
+      state: this.state,
       // HACK
       editorSession: this._articlePanelSession,
       commandGroups: config.getCommandGroups(),
@@ -31,19 +35,14 @@ export default class ArticlePanel extends Component {
       labelProvider: config.getLabelProvider(),
       keyboardShortcuts: config.getKeyboardShortcuts(),
       iconProvider: config.getIconProvider(),
-      commandManager: this._articlePanelSession
+      commandManager: this._articlePanelSession,
+      urlResolver: archive
     })
   }
 
   willReceiveProps (newProps) {
     if (!isEqual(newProps, this.props)) {
       this._initialize(newProps)
-    }
-  }
-
-  getInitialState () {
-    return {
-      view: 'manuscript'
     }
   }
 
@@ -117,28 +116,21 @@ export default class ArticlePanel extends Component {
         throw new Error('Invalid state')
     }
   }
-
-  _openView (name) {
-    switch (name) {
-      case 'manuscript':
-      case 'meta-data':
-      case 'preview': {
-        this.extendState({ view: name })
-        break
-      }
-      default:
-        console.error(`Unknown view: ${name}`)
-    }
-  }
 }
 
-// HACK/WIP: ToolPanel is asking for editorSession
+// HACK: a lot of things, such as tools and panels, depend on EditorSession
+// even if we do not have an Editor on this application level.
+// This is a dumbed down EditorSession just to get things working.
+// Instead we should generalize implementations so that we can use
+// them in a non-editor scenario, too
 class ArticlePanelSession {
   constructor (articlePanel, config) {
     this.articlePanel = articlePanel
     this.config = config
     this.commands = {}
     this.commandStates = []
+
+    this._context = { state: this.articlePanel.state }
 
     config.getCommands().forEach(cmd => {
       this.commands[cmd.name] = cmd
@@ -158,22 +150,19 @@ class ArticlePanelSession {
     }
     let commandStates = {}
     commands.forEach(command => {
-      commandStates[command.name] = command.getCommandState(params)
+      commandStates[command.name] = command.getCommandState(params, this._context)
     })
     this.commandStates = commandStates
   }
 
-  // HACK
-  canUndo () {}
-  canRedo () {}
   isBlurred () {}
   getFocusedSurface () {}
   getSelection () {}
   onRender () {}
   off () {}
-  executeCommand (name, params, context) {
+  executeCommand (name, params) {
     let commands = this.commands
     let cmd = commands[name]
-    cmd.execute(params, context)
+    cmd.execute(params, this._context)
   }
 }

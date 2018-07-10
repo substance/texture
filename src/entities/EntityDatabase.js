@@ -253,7 +253,7 @@ export class RefContrib extends DocumentNode {}
 RefContrib.schema = {
   type: 'ref-contrib',
   name: { type: 'string', optional: true }, // either family name or institution name
-  givenNames: { type: 'string', optional: true },
+  givenNames: { type: 'string', optional: true }
 }
 
 export class Group extends DocumentNode {}

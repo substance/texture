@@ -2,6 +2,7 @@ import { Component, FontAwesomeIcon, isArray } from 'substance'
 import TextInput from './TextInput'
 import MultiSelectInput from './MultiSelectInput'
 import SelectInput from './SelectInput'
+import InPlaceEditor from './InPlaceEditor'
 import entityRenderers from './entityRenderers'
 
 
@@ -44,7 +45,13 @@ export default class EntityEditor extends Component {
         // id property is not editable and skipped
       } else if (customEditor) {
         el.append(
-          $$(InPlaceEditor)
+          $$(InPlaceEditor, {
+            id: model.id,
+            name: name,
+            values: value,
+            collection: model.type,
+            targetType: targetTypes[0]
+          }).ref(name)
         )
       } else if (type === 'string') {
         el.append(
@@ -156,16 +163,6 @@ export default class EntityEditor extends Component {
     return false
   }
 }
-
-
-class InPlaceEditor extends Component {
-  render($$) {
-    let el = $$('div').addClass('sc-in-place-editor')
-    el.append('TODO: inplace relationship editing')
-    return el
-  }
-}
-
 
 function _getCustomEditor(nodeType, property) {
   if (!EDITOR_TYPES[nodeType]) {

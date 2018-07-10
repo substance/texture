@@ -40,35 +40,27 @@ export default class TableComponent extends CustomSurface {
 
     this._tableSha = this.props.node._getSha()
 
-    // Disable reactive behaviour in read only mode
-    // TODO: we may want to bring it back so the reader receives realtime updates
-    if (!this.props.disabled) {
-      this.context.editorSession.onRender('document', this._onDocumentChange, this)
-      this.context.editorSession.onRender('selection', this._onSelectionChange, this)
-      this._positionSelection(this._getSelectionData())
-    }
+    this.context.editorSession.onRender('document', this._onDocumentChange, this)
+    this.context.editorSession.onRender('selection', this._onSelectionChange, this)
 
+    this._positionSelection(this._getSelectionData())
   }
 
   dispose() {
     super.dispose()
+
     this.context.editorSession.off(this)
   }
 
   render($$) {
     let el = $$('div').addClass('sc-table')
-    if (!this.props.disabled) {
-      el.on('mousedown', this._onMousedown)
+    el.on('mousedown', this._onMousedown)
       .on('mouseup', this._onMouseup)
-    }
-
     el.append(this._renderTable($$))
+    el.append(this._renderKeyTrap($$))
+    el.append(this._renderUnclickableOverlays($$))
     // el.append(this._renderClickableOverlays($$))
-    if (!this.props.disabled) {
-      el.append(this._renderKeyTrap($$))
-      el.append(this._renderUnclickableOverlays($$))
-      el.append(this._renderContextMenu($$))
-    }
+    el.append(this._renderContextMenu($$))
     return el
   }
 
@@ -131,6 +123,10 @@ export default class TableComponent extends CustomSurface {
 
   _renderContextMenu($$) {
     const configurator = this.context.configurator
+    // HACK: Skip if toolpanel not defined (this happens when used from the reader)
+    const toolPanel = configurator.getToolPanel('table-context-menu')
+    if (!toolPanel) return
+
     let contextMenu = $$(TableContextMenu, {
       toolPanel: configurator.getToolPanel('table-context-menu')
     }).ref('contextMenu')

@@ -1,5 +1,6 @@
-import { Component, Toolbar, isEqual } from 'substance'
-import AppState from '../shared/AppState'
+import { Component, isEqual } from 'substance'
+import Managed from '../shared/Managed'
+import managedState from '../shared/managedState'
 
 const DEFAULT_VIEW = 'metadata'
 
@@ -15,9 +16,10 @@ export default class ArticlePanel extends Component {
   }
 
   getInitialState () {
-    let state = AppState.create({ view: DEFAULT_VIEW })
-    state.observe(['view'], this.rerender, this)
-    return state
+    return managedState(this, {
+      view: 'manuscript',
+      commandStates: {}
+    })
   }
 
   _initialize (props) {
@@ -78,10 +80,14 @@ export default class ArticlePanel extends Component {
 
   _renderNavbar ($$) {
     const config = this.props.config
+    const Toolbar = this.getComponent('toolbar')
     let el = $$('div').addClass('se-nav-bar')
     el.append(
-      $$(Toolbar, {
-        toolPanel: config.getToolPanel('nav-bar')
+      $$(Managed(Toolbar), {
+        toolPanel: config.getToolPanel('nav-bar'),
+        bindings: [
+          'commandStates'
+        ]
       }).ref('navBar')
     )
     return el
@@ -157,10 +163,10 @@ class ArticlePanelSession {
     this.commandStates = commandStates
   }
 
-  isBlurred () {}
-  getFocusedSurface () {}
-  getSelection () {}
-  onRender () {}
+  // isBlurred () {}
+  // getFocusedSurface () {}
+  // getSelection () {}
+  // onRender () {}
   off () {}
   executeCommand (name, params) {
     let commands = this.commands

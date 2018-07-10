@@ -1,10 +1,13 @@
 import {
-  UndoCommand, RedoCommand, SelectAllCommand
+  UndoCommand, RedoCommand, SelectAllCommand,
+  InputPackage
 } from 'substance'
 
 export default {
   name: 'editor-basics',
   configure: function (config) {
+    config.import(InputPackage)
+
     config.addCommand('undo', UndoCommand, { commandGroup: 'undo-redo' })
     config.addCommand('redo', RedoCommand, { commandGroup: 'undo-redo' })
     config.addCommand('select-all', SelectAllCommand, { commandGroup: 'selection' })

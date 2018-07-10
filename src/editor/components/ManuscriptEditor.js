@@ -1,11 +1,12 @@
-import { Component, DefaultDOMElement, ScrollPane, WorkflowPane,
-  Highlights, Toolbar
+import {
+  Component, DefaultDOMElement, Highlights
 } from 'substance'
 import SaveHandler from '../util/SaveHandler'
 import TOCProvider from '../util/TOCProvider'
 import { getXrefTargets } from '../util/xrefHelpers'
 import TOC from './TOC'
 import ArticleAPI from '../../article/ArticleAPI'
+import Managed from '../../shared/Managed'
 
 export default class ManuscriptEditor extends Component {
   constructor (...args) {
@@ -66,6 +67,7 @@ export default class ManuscriptEditor extends Component {
   getChildContext () {
     const api = this.api
     const articleSession = this.props.articleSession
+    const state = articleSession.editorState
     const pubMetaDbSession = this.props.pubMetaDbSession
     const config = this.props.config
     const componentRegistry = config.getComponentRegistry()
@@ -81,6 +83,7 @@ export default class ManuscriptEditor extends Component {
     const iconProvider = config.getIconProvider()
     return {
       api,
+      state,
       configurator: config,
       componentRegistry,
       referenceManager,
@@ -141,6 +144,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   _renderMainSection ($$) {
+    const WorkflowPane = this.getComponent('workflow-pane')
     const configurator = this._getConfigurator()
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
@@ -149,8 +153,9 @@ export default class ManuscriptEditor extends Component {
         this._renderTOCPane($$),
         this._renderContentPanel($$)
       ).ref('editorSection'),
-      $$(WorkflowPane, {
-        toolPanel: configurator.getToolPanel('workflow')
+      $$(Managed(WorkflowPane), {
+        toolPanel: configurator.getToolPanel('workflow'),
+        bindings: ['commandStates']
       })
     )
     return mainSection
@@ -161,6 +166,7 @@ export default class ManuscriptEditor extends Component {
     const configurator = this._getConfigurator()
     const article = doc.get('article')
 
+    const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
     const Overlay = this.getComponent('overlay')
     const ContextMenu = this.getComponent('context-menu')
@@ -179,13 +185,15 @@ export default class ManuscriptEditor extends Component {
         node: article,
         disabled: this.props.disabled
       }).ref('article'),
-      $$(Overlay, {
+      $$(Managed(Overlay), {
         toolPanel: configurator.getToolPanel('main-overlay'),
-        theme: 'light'
+        theme: 'light',
+        bindings: ['commandStates']
       }),
-      $$(ContextMenu, {
+      $$(Managed(ContextMenu), {
         toolPanel: configurator.getToolPanel('context-menu'),
-        theme: 'light'
+        theme: 'light',
+        bindings: ['commandStates']
       }),
       $$(Dropzones)
     )
@@ -193,10 +201,12 @@ export default class ManuscriptEditor extends Component {
   }
 
   _renderToolbar ($$) {
+    const Toolbar = this.getComponent('toolbar')
     let configurator = this._getConfigurator()
     return $$('div').addClass('se-toolbar-wrapper').append(
-      $$(Toolbar, {
-        toolPanel: configurator.getToolPanel('toolbar')
+      $$(Managed(Toolbar), {
+        toolPanel: configurator.getToolPanel('toolbar'),
+        bindings: ['commandStates']
       }).ref('toolbar')
     )
   }

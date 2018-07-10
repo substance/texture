@@ -1,7 +1,8 @@
-import { uuid, isNil, isFunction } from 'substance'
+import { uuid, isNil, isFunction, isString } from 'substance'
 import AbstractAppState from './AbstractAppState'
 
 const UUID = uuid()
+const ANY = '@any'
 
 // TODO: this is very redundant with EditorState
 // Try to refactor so that the implementation can be shared
@@ -14,26 +15,8 @@ export default class AppState extends AbstractAppState {
     this._isFlowing = false
   }
 
-  static create (initialState) {
-    let appState = new AppState()
-    let state = {
-      observe (...args) { appState.addObserver(...args) },
-      off (observer) { appState.removeObserver(observer) },
-      propagate () { appState.propagateUpdates() }
-    }
-    let names = Object.keys(initialState)
-    names.forEach(name => {
-      let val = initialState[name]
-      appState._set(name, val)
-      Object.defineProperty(state, name, {
-        get () { return appState.get(name) },
-        set (val) { return appState.set(name, val) }
-      })
-    })
-    return state
-  }
-
   addObserver (deps, handler, observer, options = {}) {
+    if (isString(deps)) deps = [deps]
     if (isNil(handler)) throw new Error('Provided handler function is nil')
     if (!isFunction(handler)) throw new Error('Provided handler is not a function')
     handler = handler.bind(observer)
@@ -50,6 +33,10 @@ export default class AppState extends AbstractAppState {
       handler,
       options
     })
+  }
+
+  observe (...args) {
+    return this.addObserver(...args)
   }
 
   removeObserver (observer) {
@@ -74,6 +61,10 @@ export default class AppState extends AbstractAppState {
     } finally {
       this._isFlowing = false
     }
+  }
+
+  propagate () {
+    return this.propagateUpdates()
   }
 
   _getSlotId (deps) {
@@ -122,6 +113,7 @@ class Slot {
   needsUpdate () {
     const state = this.appState
     for (let dep of this.deps) {
+      if (dep === ANY) return true
       if (state.isDirty(dep)) return true
     }
     return false

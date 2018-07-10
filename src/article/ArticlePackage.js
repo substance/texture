@@ -1,5 +1,5 @@
 import { ToggleTool, BasePackage as SubstanceBasePackage } from 'substance'
-import ModelPackage from './TextureArticlePackage'
+import ModelPackage from './ArticleModelPackage'
 import EditorPackage from '../editor/EditorPackage'
 import MetaDataPackage from './meta-data/MetaDataPackage'
 import PreviewPackage from '../reader/ReaderPackage'

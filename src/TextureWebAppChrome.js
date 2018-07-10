@@ -9,9 +9,7 @@ export default class TextureWebAppChrome extends TextureAppChrome {
     let storage = this._getStorage(this.props.storageType)
     let buffer = new InMemoryDarBuffer()
     let ArchiveClass = this._getArchiveClass()
-    let archive = new ArchiveClass(storage, buffer, context, {
-      ArticleConfig: this._getArticleConfig()
-    })
+    let archive = new ArchiveClass(storage, buffer, context)
     return archive.load(archiveId)
   }
 

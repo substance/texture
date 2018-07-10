@@ -1,13 +1,13 @@
 import EditorState from '../shared/EditorState'
 import TextureEditorSession from '../shared/TextureEditorSession'
 import JATSImporter from './converter/JATSImporter'
-import TextureArticlePackage from './TextureArticlePackage'
 import ArticleConfigurator from './ArticleConfigurator'
+import ArticleModelPackage from './ArticleModelPackage'
 
 export default {
   load (xml, context) {
     let configurator = new ArticleConfigurator()
-    configurator.import(TextureArticlePackage)
+    configurator.import(ArticleModelPackage)
     let jatsImporter = new JATSImporter()
     let jats = jatsImporter.import(xml, context)
     if (jats.hasErrored) {

@@ -37,7 +37,7 @@ export default class EntityEditor extends Component {
       let targetTypes = property.targetTypes
       let isOptional = property.isOptional()
       let value = model[name]
-      if(!fullMode && value === '' && isOptional) continue 
+      if(!fullMode && value === '' && isOptional) continue
 
       let customEditor = _getCustomEditor(model.type, property)
 
@@ -137,7 +137,7 @@ export default class EntityEditor extends Component {
   /*
     Used to populate MultiSelectInput fields
   */
-  _getAvailableOptions(collection) {
+  _getAvailableOptions (collection) {
     let items = this.context.api.getCollectionForType(collection)
     return items.map(item => {
       return {
@@ -152,7 +152,7 @@ export default class EntityEditor extends Component {
   */
   _renderEntity(entity) {
     // TODO: we should use pubMetaDb directly when it'll be available
-    return entityRenderers[entity.type](entity.id, this.context.pubMetaDbSession.getDocument())
+    return entityRenderers[entity.type](entity.id, this.context.api.pubMetaDb)
   }
 
   /*

@@ -8,11 +8,11 @@ We prefer to explicitly define unstructured (text-only) references.
 
 52. Introduce `<body-content>`
 
-We prefer to wrap content from meta-data.
+We prefer to wrap content from metadata.
 
 51. Introduce `<abstract-content>`
 
-We prefer to wrap content from meta-data.
+We prefer to wrap content from metadata.
 
 50. Restrict `<textual-form>`
 
@@ -157,7 +157,7 @@ denoting a speaking person such as in this example:
 <p>...</p>
 ```
 
-We think this can be purely textual. For tagging meta-data about
+We think this can be purely textual. For tagging metadata about
 the person `<contrib>` should be used.
 
 34. Restrict `<supplement>`

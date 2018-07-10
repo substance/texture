@@ -92,8 +92,8 @@ export default class ArticlePanel extends Component {
     let ContentComponent
     if (this.state.view === 'manuscript') {
       ContentComponent = this.getComponent('manuscript-editor')
-    } else if (this.state.view === 'meta-data') {
-      ContentComponent = this.getComponent('meta-data-editor')
+    } else if (this.state.view === 'metadata') {
+      ContentComponent = this.getComponent('metadata-editor')
     }
     return $$(ContentComponent, {
       articleSession,
@@ -108,7 +108,7 @@ export default class ArticlePanel extends Component {
     const view = this.state.view
     switch (view) {
       case 'manuscript':
-      case 'meta-data':
+      case 'metadata':
       case 'preview': {
         return this.props.config.getConfiguration(view)
       }

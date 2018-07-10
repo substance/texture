@@ -15,8 +15,6 @@ import BasePackage from '../shared/BasePackage'
 import EditorBasePackage from '../shared/EditorBasePackage'
 
 import EntityLabelsPackage from '../entities/EntityLabelsPackage'
-import EntityComponentsPackage from '../entities/EntityComponentsPackage'
-import TextureArticlePackage from '../article/TextureArticlePackage'
 
 import ManuscriptEditor from './components/ManuscriptEditor'
 import TextNodeComponent from './components/TextNodeComponent'

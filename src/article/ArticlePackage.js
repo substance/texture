@@ -2,12 +2,12 @@ import { ToggleTool } from 'substance'
 import BasePackage from '../shared/BasePackage'
 import ModelPackage from './ArticleModelPackage'
 import EditorPackage from '../editor/EditorPackage'
-import MetaDataPackage from './meta-data/MetaDataPackage'
+import MetadataPackage from './metadata/MetadataPackage'
 import PreviewPackage from '../reader/ReaderPackage'
 import ArticlePanel from './ArticlePanel'
 import ArticleConfigurator from './ArticleConfigurator'
 import ManuscriptEditor from '../editor/components/ManuscriptEditor'
-import MetaDataEditor from './meta-data/MetaDataEditor'
+import MetadataEditor from '../entities/MetadataEditor'
 import SwitchViewCommand from './SwitchViewCommand'
 
 export default {
@@ -23,9 +23,9 @@ export default {
     // used for the manuscript editor view
     let manuscriptEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(EditorPackage)
     config.setConfiguration('manuscript', manuscriptEditorConfig)
-    // used for the meta-data editor view
-    let metaDataEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(MetaDataPackage)
-    config.setConfiguration('meta-data', metaDataEditorConfig)
+    // used for the metadata editor view
+    let metadataEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(MetadataPackage)
+    config.setConfiguration('metadata', metadataEditorConfig)
     // used for preview
     let previewConfig = ArticleConfigurator.createFrom(modelConfig).import(PreviewPackage)
     config.setConfiguration('preview', previewConfig)
@@ -33,7 +33,7 @@ export default {
     config.import(BasePackage)
     // UI stuff for the ArticlePanel
     config.addComponent('manuscript-editor', ManuscriptEditor)
-    config.addComponent('meta-data-editor', MetaDataEditor)
+    config.addComponent('metadata-editor', MetadataEditor)
 
     config.addToolPanel('nav-bar', [
       {
@@ -49,8 +49,8 @@ export default {
       view: 'manuscript',
       commandGroup: 'switch-view'
     })
-    config.addCommand('open-meta-data', SwitchViewCommand, {
-      view: 'meta-data',
+    config.addCommand('open-metadata', SwitchViewCommand, {
+      view: 'metadata',
       commandGroup: 'switch-view'
     })
 
@@ -58,8 +58,8 @@ export default {
     config.addLabel('open-manuscript', 'Open Manuscript')
     config.addIcon('open-manuscript', { 'fontawesome': 'fa-align-left' })
 
-    config.addTool('open-meta-data', ToggleTool)
-    config.addLabel('open-meta-data', 'Open Meta-Data')
-    config.addIcon('open-meta-data', { 'fontawesome': 'fa-th-list' })
+    config.addTool('open-metadata', ToggleTool)
+    config.addLabel('open-metadata', 'Open Metadata')
+    config.addIcon('open-metadata', { 'fontawesome': 'fa-th-list' })
   }
 }

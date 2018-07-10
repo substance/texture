@@ -25,11 +25,11 @@ export default class AbstractAppState {
     return this._updates[name]
   }
 
-  addObserver (deps, handler, observer, options = {}) {
+  addObserver (deps, handler, observer, options = {}) { // eslint-disable-line no-unused-vars
     throw new Error('This method is abstract.')
   }
 
-  removeObserver (observer) {
+  removeObserver (observer) { // eslint-disable-line no-unused-vars
     throw new Error('This method is abstract.')
   }
 

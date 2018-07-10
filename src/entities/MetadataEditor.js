@@ -31,11 +31,27 @@ export default class MetadataEditor extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-metadata-editor')
+    
+    let tocEl = $$('div').addClass('se-toc')
+    let collectionsEl = $$('div').addClass('se-collections')
+
     this.props.sections.forEach(section => {
-      el.append(
+      tocEl.append(
+        $$('a').addClass('se-toc-item')
+          .attr({href: '#' + section.collection})
+          .append(section.label)
+      )
+      collectionsEl.append(
         $$(CollectionEditor, { collection: section.collection })
+          .attr({id: section.collection})
       )
     })
+
+    el.append(
+      tocEl,
+      collectionsEl
+    )
+
     return el
   }
 

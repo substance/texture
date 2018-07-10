@@ -1,0 +1,20 @@
+.sc-metadata-editor {
+  display: flex;
+}
+
+.sc-metadata-editor .se-toc {
+  position: fixed;
+  width: 150px;
+  padding: 10px;
+}
+
+.sc-metadata-editor .se-toc .se-toc-item {
+  display: block;
+  margin: 10px 0px;
+  color: inherit;
+}
+
+.sc-metadata-editor .se-collections {
+  padding-top: 10px;
+  margin-left: 150px;
+}

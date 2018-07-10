@@ -4,6 +4,7 @@
 @import './_boolean-input.css';
 @import '/_in-place-editor.css';
 @import '/_collection-editor.css';
+@import '/_metadata-editor.css';
 @import '/_entity-editor.css';
 
 /* HACK: make metadata editor scrollable */

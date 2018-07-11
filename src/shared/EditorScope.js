@@ -120,7 +120,7 @@ class AppStateSlot {
 }
 
 class DocumentSlot {
-  constructor (id) {
+  constructor () {
     this.index = new ArrayTree()
     this.observer2path = new Map()
   }

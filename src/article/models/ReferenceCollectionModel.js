@@ -14,11 +14,11 @@ export default class ReferenceCollectionModel {
     return result
   }
 
-  addItem(item) {
+  addItem(item) { // eslint-disable-line no-unused-vars
 
   }
 
-  removeItem(item) {
+  removeItem(item) { // eslint-disable-line no-unused-vars
 
   }
 

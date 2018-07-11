@@ -4,11 +4,11 @@ export default class AbstractCollectionModel {
     // return rich objects
   }
 
-  addItem(item) {
+  addItem(item) { // eslint-disable-line no-unused-vars
 
   }
 
-  removeItem(item) {
+  removeItem(item) { // eslint-disable-line no-unused-vars
     
   }
 

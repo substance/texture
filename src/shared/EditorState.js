@@ -1,26 +1,10 @@
-import { uuid, Selection, isNil, isFunction } from 'substance'
-import AbstractAppState from './AbstractAppState'
+import { Selection } from 'substance'
+import AppState from './AppState'
 import SelectionStateReducer from './SelectionStateReducer'
 
-const UUID = uuid()
 const ANY = '@any'
-const STAGES = ['update', 'pre-render', 'render', 'post-render', 'position', 'finalize']
-const DEFAULT_STAGE = 'update'
-const STAGE_IDX = STAGES.reduce((m, s, idx) => {
-  m[s] = idx
-  return m
-}, {})
 
-export default class EditorState extends AbstractAppState {
-  constructor (doc) {
-    super()
-
-    this._slots = new Map()
-    this._schedule = null
-
-    this._initialize(doc)
-  }
-
+export default class EditorState extends AppState {
   _initialize (doc) {
     this._set('document', doc)
     this._set('selection', Selection.nullSelection)
@@ -28,57 +12,6 @@ export default class EditorState extends AbstractAppState {
 
     let selectionStateReducer = new SelectionStateReducer(this)
     selectionStateReducer.update()
-  }
-
-  addObserver (deps, handler, observer, options = {}) {
-    if (isNil(handler)) throw new Error('Provided handler function is nil')
-    if (!isFunction(handler)) throw new Error('Provided handler is not a function')
-    handler = handler.bind(observer)
-
-    if (!options.stage) options.stage = DEFAULT_STAGE
-    const stage = options.stage
-    const slotId = this._getSlotId(stage, deps.slice())
-    let slot = this._slots.get(slotId)
-    if (!slot) {
-      slot = this._createSlot(slotId, stage, deps)
-      this._slots.set(slotId, slot)
-    }
-    if (!observer[UUID]) observer[UUID] = new Map()
-    slot.addObserver(observer, {
-      stage,
-      deps,
-      handler,
-      options
-    })
-  }
-
-  removeObserver (observer) {
-    let entries = observer[UUID] || []
-    entries.forEach(e => {
-      e.slot.removeObserver(observer)
-    })
-    delete observer[UUID]
-  }
-
-  propagateUpdates () {
-    if (this._isFlowing) throw new Error('Already updating.')
-    this._isFlowing = true
-    try {
-      const schedule = this._getSchedule()
-      for (let slot of schedule) {
-        if (slot.needsUpdate()) {
-          slot.notifyObservers()
-        }
-      }
-      this._reset()
-    } finally {
-      this._isFlowing = false
-    }
-  }
-
-  _getSlotId (stage, deps) {
-    deps.sort()
-    return `@${stage}:${deps.join(',')}`
   }
 
   _createSlot (id, stage, deps) {
@@ -89,27 +22,11 @@ export default class EditorState extends AbstractAppState {
       return new Slot(this, id, stage, deps)
     }
   }
-
-  // order slots by stage
-  _getSchedule () {
-    let schedule = this._schedule
-    if (!schedule) {
-      schedule = []
-      this._slots.forEach(s => schedule.push(s))
-      schedule.sort((a, b) => STAGE_IDX[a.stage] - STAGE_IDX[b.stage])
-      this._schedule = schedule
-    }
-    return schedule
-  }
-
-  _reset () {
-    super._reset()
-    this._setDirty(ANY)
-  }
 }
 
 class Slot {
   constructor (editorState, id, stage, deps) {
+    this._id = editorState._id
     this.id = id
     this.editorState = editorState
     this.stage = stage
@@ -119,7 +36,7 @@ class Slot {
   }
 
   addObserver (observer, spec) {
-    observer[UUID].set(this.id, {
+    observer[this._id].set(this.id, {
       slot: this,
       spec
     })
@@ -154,11 +71,11 @@ class Slot {
   }
 
   _getEntryForObserver (observer) {
-    return observer[UUID].get(this.id)
+    return observer[this._id].get(this.id)
   }
 
   _deleteEntry (observer) {
-    delete observer[UUID].get(this.id)
+    delete observer[this._id].get(this.id)
   }
 
   _getDocumentChange () {
@@ -215,7 +132,7 @@ class DocumentSlot extends Slot {
   }
 
   removeObserver (observer) {
-    const entry = observer[UUID].get(this.id)
+    const entry = observer[this._id].get(this.id)
     const index = this.byPath
 
     super.removeObserver(observer)

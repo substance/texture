@@ -514,62 +514,92 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
+    config.addToolPanel('nav-bar', [
+      {
+        name: 'views',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'switch-view' }
+        ]
+      }
+    ])
+
     config.addToolPanel('toolbar', [
       {
         name: 'undo-redo',
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['undo-redo']
+        items: [
+          { type: 'command-group', name: 'undo-redo' }
+        ]
       },
       {
         name: 'text-types',
         type: 'tool-dropdown',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['text-types']
+        items: [
+          { type: 'command-group', name: 'text-types' }
+        ]
       },
       {
         name: 'annotations',
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['formatting']
+        items: [
+          { type: 'command-group', name: 'formatting' }
+        ]
       },
       {
         name: 'additinal-tools',
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['insert']
+        items: [
+          { type: 'command-group', name: 'insert' }
+        ]
       },
       {
         name: 'list',
         type: 'tool-group',
         showDisabled: false,
         style: 'minimal',
-        commandGroups: ['list']
+        items: [
+          { type: 'command-group', name: 'list' }
+        ]
       },
       {
         name: 'table',
         type: 'tool-group',
         showDisabled: false,
         style: 'minimal',
-        commandGroups: ['table']
+        items: [
+          { type: 'command-group', name: 'table' }
+        ]
       },
       {
         name: 'cite',
         type: 'tool-dropdown',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['insert-xref']
+        items: [
+          { type: 'command-group', name: 'insert-xref' }
+        ]
       },
       {
         name: 'view',
         type: 'tool-dropdown',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['toggle-content-section', 'view']
+        commandGroups: ['toggle-content-section', 'view'],
+        items: [
+          { type: 'command-group', name: 'toggle-content-section' },
+          { type: 'command-group', name: 'view' }
+        ]
       }
     ])
 
@@ -578,7 +608,9 @@ export default {
         name: 'prompt',
         type: 'tool-prompt',
         showDisabled: false,
-        commandGroups: ['prompt']
+        items: [
+          { type: 'command-group', name: 'prompt' }
+        ]
       }
     ])
 
@@ -588,7 +620,9 @@ export default {
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table-structure']
+        items: [
+          { type: 'command-group', name: 'table-structure' }
+        ]
       }
     ])
 
@@ -598,7 +632,9 @@ export default {
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table']
+        items: [
+          { type: 'command-group', name: 'table' }
+        ]
       },
       { type: 'tool-separator' },
       {
@@ -606,7 +642,9 @@ export default {
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table-insert']
+        items: [
+          { type: 'command-group', name: 'table-insert' }
+        ]
       },
       { type: 'tool-separator' },
       {
@@ -614,7 +652,9 @@ export default {
         type: 'tool-group',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['table-delete']
+        items: [
+          { type: 'command-group', name: 'table-delete' }
+        ]
       }
     ])
 
@@ -622,7 +662,9 @@ export default {
       {
         name: 'workflow',
         type: 'tool-group',
-        commandGroups: ['workflows']
+        items: [
+          { type: 'command-group', name: 'workflows' }
+        ]
       }
     ])
 

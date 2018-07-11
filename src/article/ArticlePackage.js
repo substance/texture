@@ -37,11 +37,13 @@ export default {
 
     config.addToolPanel('nav-bar', [
       {
-        name: 'view',
+        name: 'views',
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['switch-view']
+        items: [
+          { type: 'command-group', name: 'switch-view' }
+        ]
       }
     ])
 

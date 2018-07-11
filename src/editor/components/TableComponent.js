@@ -7,6 +7,7 @@ import TableEditing from '../../article/TableEditing'
 import {
   getCellRange, computeUpdatedSelection
 } from '../../article/tableHelpers'
+import Managed from '../../shared/Managed'
 import TableClipboard from '../util/TableClipboard'
 import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
@@ -127,8 +128,9 @@ export default class TableComponent extends CustomSurface {
     const toolPanel = configurator.getToolPanel('table-context-menu')
     if (!toolPanel) return
 
-    let contextMenu = $$(TableContextMenu, {
-      toolPanel: configurator.getToolPanel('table-context-menu')
+    let contextMenu = $$(Managed(TableContextMenu), {
+      toolPanel: configurator.getToolPanel('table-context-menu'),
+      bindings: ['commandStates']
     }).ref('contextMenu')
       .addClass('se-context-menu')
       .css({ display: 'none' })

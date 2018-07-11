@@ -8,7 +8,8 @@ export default class RefContribPropertyEditor extends Component {
     let name = property.name
     
     // Array of RefContrib models
-    let values = model.resolveRelationship(name)
+    let values = model.resolveRelationship(name).map(m => m.toJSON())
+    
 
     return $$(InPlaceEditor, {
       id: model.id,

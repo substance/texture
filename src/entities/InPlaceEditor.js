@@ -26,7 +26,7 @@ export default class InPlaceEditor extends Component {
       $$('button').addClass('se-add-value')
         .append(
           $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
-          'Add new reference'
+          'Add contributor'
         )
         .on('click', this._addContrib)
     )

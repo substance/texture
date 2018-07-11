@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, FontAwesomeIcon } from 'substance'
 import EntityEditor from './EntityEditor'
 
 export default class CollectionEditor extends Component {
@@ -18,10 +18,24 @@ export default class CollectionEditor extends Component {
         })
       )
     })
+
+    el.append(
+      $$('button').addClass('se-add-value')
+        .append(
+          $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
+          'Add ' + label
+        )
+        .on('click', this._addCollectionItem)
+    )
+
     return el
   }
   
   _getItems() {
     return this.props.model.getItems()
+  }
+
+  _addCollectionItem() {
+    
   }
 }

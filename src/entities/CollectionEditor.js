@@ -8,7 +8,15 @@ export default class CollectionEditor extends Component {
     let items = this._getItems()
 
     el.append(
-      $$('div').addClass('se-header').append(items.length + ' ' + label)
+      $$('div').addClass('se-heading').append(
+        $$('div').addClass('se-header').append(items.length + ' ' + label),
+        $$('button').addClass('se-add-value')
+          .append(
+            $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
+            'Add ' + label
+          )
+          .on('click', this._addCollectionItem)
+      )
     )
 
     items.forEach(item => {
@@ -18,15 +26,6 @@ export default class CollectionEditor extends Component {
         })
       )
     })
-
-    el.append(
-      $$('button').addClass('se-add-value')
-        .append(
-          $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
-          'Add ' + label
-        )
-        .on('click', this._addCollectionItem)
-    )
 
     return el
   }

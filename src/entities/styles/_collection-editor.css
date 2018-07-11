@@ -2,11 +2,25 @@
 
 }
 
-.sc-collection-editor .se-header {
+.sc-collection-editor .se-heading {
+  display: flex;
+  justify-content: space-between;
   max-width: 800px;
-  padding: 2px 10px;
+  padding: 6px 10px;
   margin: 10px 20px;
   background: #f4f4f4;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.sc-collection-editor .se-heading .se-add-value {
+  font-size: 12px;
+  background: #fff;
+  padding: 2px 4px;
+  border-radius: 2px;
+  border: 1px solid #dedede;
+}
+
+.sc-collection-editor .se-heading .se-add-value .se-icon {
+  margin-right: 5px;
 }

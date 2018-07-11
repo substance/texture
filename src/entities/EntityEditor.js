@@ -27,7 +27,6 @@ export default class EntityEditor extends Component {
     let el = $$('div').addClass('sc-entity-editor').append(
       $$('div').addClass('se-entity-header').html(
         this.context.api.renderEntity(model)
-        
       )
     )
 

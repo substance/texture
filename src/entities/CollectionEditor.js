@@ -36,6 +36,7 @@ export default class CollectionEditor extends Component {
   }
 
   _addCollectionItem() {
-    
+    this.props.model.addItem()
+    this.rerender()
   }
 }

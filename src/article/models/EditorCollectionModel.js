@@ -6,8 +6,12 @@ export default class EditorCollectionModel extends DefaultCollectionModel {
     this._node = node
   }
 
+  addItem(item) {
+    return this._api.addPerson(item, 'editor')
+  }
+
   getItems() {
-    return this._api.getEditors()
+    return this._api.getPersons('editor')
   }
 
   _getCollectionId() {

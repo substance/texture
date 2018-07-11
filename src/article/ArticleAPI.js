@@ -128,17 +128,47 @@ export default class ArticleAPI {
     return this.pubMetaDb
   }
 
-  getAuthors() {
-    const article = this.getArticle()
-    const authorsContribGroup = article.find('contrib-group[content-type=author]')
-    const contribIds = authorsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
-    return contribIds.map(contribId => this.getEntity(contribId))
+  /*
+    Returns an entity model (not node!)
+  */
+  addEntity(data, type) {
+    const newNode = Object.assign({}, data, {
+      type: type
+    })
+    let node
+    this.pubMetaDbSession.transaction((tx) => {
+      node = tx.create(newNode)
+    })
+    return this.getModel(node.type, node)
   }
 
-  getEditors() {
+  /*
+    Returns an entity model (not node!)
+  */
+  deleteEntity(entityId) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.delete(entityId)
+    })
+    return this.getModel(node.type, node)
+  }
+
+  addPerson(person = {}, type) {
+    const articleSession = this.articleSession
+    const personModel = this.addEntity(person, 'person')
+    articleSession.transaction((tx) => {
+      const contribEl = tx.createElement('contrib').attr({'rid': personModel.id, 'contrib-type': 'person'})
+      const personContribGroup = tx.find('contrib-group[content-type='+type+']')
+      personContribGroup.append(contribEl)
+    })
+    return personModel
+  }
+
+  getPersons(type) {
     const article = this.getArticle()
-    const editorsContribGroup = article.find('contrib-group[content-type=editor]')
-    const contribIds = editorsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
+    const personsContribGroup = article.find('contrib-group[content-type='+type+']')
+    const contribIds = personsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
     return contribIds.map(contribId => this.getEntity(contribId))
   }
 

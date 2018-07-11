@@ -6,8 +6,12 @@ export default class AuthorCollectionModel extends DefaultCollectionModel {
     this._node = node
   }
 
+  addItem(item) {
+    return this._api.addPerson(item, 'author')
+  }
+
   getItems() {
-    return this._api.getAuthors()
+    return this._api.getPersons('author')
   }
 
   _getCollectionId() {

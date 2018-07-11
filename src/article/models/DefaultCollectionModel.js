@@ -11,11 +11,11 @@ export default class DefaultCollectionModel {
     return this._api.getEntitiesByType(this._getCollectionType())
   }
 
-  addItem(item) {
+  addItem(item) { // eslint-disable-line no-unused-vars
     
   }
 
-  removeItem(item) {
+  removeItem(item) { // eslint-disable-line no-unused-vars
 
   }
 }

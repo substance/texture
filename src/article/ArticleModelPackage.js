@@ -19,6 +19,11 @@ import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
 
+import RefContribPropertyEditor from '../entities/RefContribPropertyEditor'
+import StringPropertyEditor from '../entities/StringPropertyEditor'
+import ReferencePropertyEditor from '../entities/ReferencePropertyEditor'
+import UniqueReferencePropertyEditor from '../entities/UniqueReferencePropertyEditor'
+
 export default {
   name: 'TextureArticle',
   configure (config) {
@@ -62,5 +67,10 @@ export default {
     config.addModel('report', ReferenceModel)
     config.addModel('book', ReferenceModel)
     config.addModel('chapter', ReferenceModel)
+
+    config.addPropertyEditor(RefContribPropertyEditor)
+    config.addPropertyEditor(StringPropertyEditor)
+    config.addPropertyEditor(ReferencePropertyEditor)
+    config.addPropertyEditor(UniqueReferencePropertyEditor)
   }
 }

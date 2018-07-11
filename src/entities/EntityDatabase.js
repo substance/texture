@@ -286,8 +286,7 @@ Organisation.schema = {
   phone: { type: 'string', optional: true },
   fax: { type: 'string', optional: true },
   email: { type: 'string', optional: true },
-  uri: { type: 'string', optional: true },
-  members: { type: ['person'], default: [] },
+  uri: { type: 'string', optional: true }
 }
 
 export class Award extends DocumentNode {}

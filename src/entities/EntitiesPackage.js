@@ -4,7 +4,9 @@ import {
   ConferencePaper, Report, DataPublication, MagazineArticle, NewspaperArticle, Patent, 
   Software, Thesis, Webpage, Keyword, Subject, RefContrib
 } from './EntityDatabase'
+
 import EntityLabelsPackage from './EntityLabelsPackage'
+
 
 export default {
   name: 'entities',

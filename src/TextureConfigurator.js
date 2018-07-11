@@ -1,10 +1,11 @@
-import { Configurator, merge, isString, flatten } from 'substance'
+import { Configurator, merge, isString, flatten, includes } from 'substance'
 
 export default class TextureConfigurator extends Configurator {
   constructor () {
     super()
 
     this.config.configurations = {}
+    this.config.propertyEditors = []
     this._compiledToolPanels = {}
   }
 
@@ -55,6 +56,18 @@ export default class TextureConfigurator extends Configurator {
 
   getModelRegistry () {
     return this.config.models
+  }
+
+  
+  addPropertyEditor (PropertyEditorClass) {
+    if (includes(this.config.propertyEditors, PropertyEditorClass)) {
+      throw new Error('Already registered')
+    }
+    this.config.propertyEditors.push(PropertyEditorClass)
+  }
+
+  getPropertyEditors() {
+    return this.config.propertyEditors
   }
 
   addTool (name, ToolClass) {

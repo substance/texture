@@ -13,7 +13,7 @@ export default class StringPropertyEditor extends Component {
       value: value,
       placeholder: 'Enter text',
       size: 'large'
-    }).ref(name)
+    }).ref(property.name)
   }
 }
 

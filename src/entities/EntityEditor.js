@@ -1,22 +1,4 @@
-import { Component, FontAwesomeIcon, isArray } from 'substance'
-import TextInput from './TextInput'
-import MultiSelectInput from './MultiSelectInput'
-import SelectInput from './SelectInput'
-import InPlaceEditor from './InPlaceEditor'
-import entityRenderers from './entityRenderers'
-
-
-// authors: { type: ['ref-contrib'], default: [], optional: true },
-// editors: { type: ['ref-contrib'], default: [], optional: true },
-
-const EDITOR_TYPES = {
-  'journal-article': {
-    'authors': 'in-place-editor',
-    'editors': 'in-place-editor',
-    'translators': 'in-place-editor',
-  }
-}
-
+import { Component, FontAwesomeIcon } from 'substance'
 
 export default class EntityEditor extends Component {
   constructor(...args) {
@@ -39,11 +21,8 @@ export default class EntityEditor extends Component {
 
   render($$) {
     const fullMode = this.state.fullMode
-    // FIXME: in some cases this is not a node. Use a different name.
     let model = this.props.model
-    let data = model.toJSON()
     let schema = model.getSchema()
-    let pubMetaDb = this.context.api.pubMetaDb
 
     let el = $$('div').addClass('sc-entity-editor').append(
       $$('div').addClass('se-entity-header').html(
@@ -52,61 +31,14 @@ export default class EntityEditor extends Component {
     )
 
     for (let property of schema) {
-      let name = property.name
-      let type = property.type
-      let targetTypes = property.targetTypes
-      let isOptional = property.isOptional()
-      
-      let value = data[name]
-      if(!fullMode && value === '' && isOptional) continue
-
-      let customEditor = _getCustomEditor(model.type, property)
-
-      if (name === 'id') {
-        // id property is not editable and skipped
-      } else if (customEditor) {
-        let values = value.map(collabId => pubMetaDb.get(collabId))
+      let PropertyEditorClass = this._getPropertyEditorClass(property)
+      if (PropertyEditorClass) {
         el.append(
-          $$(InPlaceEditor, {
-            id: model.id,
-            label: this.getLabel(name),
-            name: name,
-            values: values
-          }).ref(name)
+          $$(PropertyEditorClass, {
+            model,
+            property
+          })
         )
-      } else if (type === 'string') {
-        el.append(
-          $$(TextInput, {
-            name: name,
-            label: this.getLabel(name),
-            type: 'text',
-            value: value,
-            placeholder: 'Enter text',
-            size: 'large'
-          }).ref(name)
-        )
-      } else if (isArray(type) && type[0] === 'array' && targetTypes[0] !== 'object') {
-        // TODO: How can we handle multiple target types (not just one collection) here?
-        // let targetType = targetTypes[0]
-        // el.append(
-        //   $$(MultiSelectInput, {
-        //     selectedOptions: value,
-        //     availableOptions: this._getAvailableOptions(targetType),
-        //     label: this.getLabel(name)
-        //   }).ref(name)
-        // )
-      } else if (this._isSingleReference(property)) {
-        let targetType = property.type
-        el.append(
-          $$(SelectInput, {
-            name: name,
-            value: value,
-            availableOptions: this._getAvailableOptions(targetType),
-            label: this.getLabel(name)
-          }).ref(name)
-        )
-      } else {
-        console.warn(`type ${type} not yet supported`)
       }
     }
 
@@ -167,21 +99,12 @@ export default class EntityEditor extends Component {
     })
   }
 
-  /*
-    Utility method to render an entity
-  */
-  _renderEntity(entity) {
-    // TODO: we should use pubMetaDb directly when it'll be available
-    return entityRenderers[entity.type](entity.id, this.context.api.pubMetaDb)
-  }
-
-  /*
-    Check if property is single reference to other entity
-  */
-  _isSingleReference(property) {
-    const types = ['string','boolean','number','array','id','object']
-    if(!isArray(property.type) && types.indexOf(property.type) === -1) return true
-    return false
+  _getPropertyEditorClass(property) {
+    let propertyEditors = this.context.configurator.getPropertyEditors()
+    let Editor = propertyEditors.find(Editor => {
+      return Editor.matches(property)
+    })
+    return Editor
   }
 
   _addContrib(propName) {
@@ -205,11 +128,4 @@ export default class EntityEditor extends Component {
     const model = this.props.model
     model.setValue(propName, value)
   }
-}
-
-function _getCustomEditor(nodeType, property) {
-  if (!EDITOR_TYPES[nodeType]) {
-    return undefined
-  }
-  return EDITOR_TYPES[nodeType][property.name]
 }

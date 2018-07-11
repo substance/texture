@@ -36,13 +36,13 @@ export default class DefaultModel {
 
     TODO: is it a good name?
   */
-  resolveProperty(propertyName) {    
+  resolveRelationship(propertyName) {    
     let value = this._node[propertyName]
     let result
     if (isArray(value)) {
-      result = value.map(targetId => this.api.getEntity(targetId))
+      result = value.map(targetId => this._api.getEntity(targetId))
     } else {
-      result = this.api.getEntity(value)
+      result = this._api.getEntity(value)
     }
     return result
   }

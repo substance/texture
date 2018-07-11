@@ -1,14 +1,14 @@
 import { Component } from 'substance'
 import InPlaceEditor from './InPlaceEditor'
 
-
 export default class RefContribPropertyEditor extends Component {
   render($$) {
     let property = this.props.property
     let model = this.props.model
+    let name = property.name
     
     // Array of RefContrib models
-    let values = model.resolveRelationship(property.name)
+    let values = model.resolveRelationship(name)
 
     return $$(InPlaceEditor, {
       id: model.id,

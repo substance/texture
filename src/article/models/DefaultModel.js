@@ -14,6 +14,10 @@ export default class DefaultModel {
     return this._node.type
   }
 
+  toJSON() {
+    return this._node.toJSON()
+  }
+
   getNode() {
     return this._node
   }

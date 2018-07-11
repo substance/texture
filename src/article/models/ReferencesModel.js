@@ -2,6 +2,8 @@ import DefaultModel from './DefaultModel'
 import { getXrefLabel } from '../../editor/util/xrefHelpers'
 import { renderEntity } from '../../entities/entityHelpers'
 
+// TODO: Delete this is obsolete
+
 export default class ReferencesModel extends DefaultModel {
 
   addReference(ref) {

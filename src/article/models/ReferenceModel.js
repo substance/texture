@@ -9,7 +9,7 @@ export default class ReferenceModel extends DefaultModel {
   }
 
   toJSON() {
-    let json = this._node.toJSON()
+    let json = super.toJSON()
     json.label = this.getLabel()
     return json
   }

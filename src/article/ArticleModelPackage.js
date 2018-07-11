@@ -11,6 +11,8 @@ import TableCellElementNode from './TableCellElementNode'
 import FigureModel from './models/FigureModel'
 import ReferenceModel from './models/ReferenceModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
+import GroupCollectionModel from './models/GroupCollectionModel'
+import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 
 export default {
   name: 'TextureArticle',
@@ -31,11 +33,13 @@ export default {
     config.addConverter('html', XMLListNodeHTMLConverter)
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
 
-    // Models: Provide API's on top of raw nodes
+    // Collection Models
+    config.addModel('groups', GroupCollectionModel)
+    config.addModel('organisations', OrganisationCollectionModel)
     config.addModel('references', ReferenceCollectionModel)
+    // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)
     config.addModel('table-wrap', FigureModel)
-    // config.addModel('reference', ReferenceModel)
     config.addModel('journal-article', ReferenceModel)
     config.addModel('conference-paper', ReferenceModel)
     config.addModel('data-publication', ReferenceModel)
@@ -48,6 +52,5 @@ export default {
     config.addModel('report', ReferenceModel)
     config.addModel('book', ReferenceModel)
     config.addModel('chapter', ReferenceModel)
-
   }
 }

@@ -11,6 +11,7 @@ import ReferenceManager from '../editor/util/ReferenceManager'
 import FigureManager from '../editor/util/FigureManager'
 import TableManager from '../editor/util/TableManager'
 import FootnoteManager from '../editor/util/FootnoteManager'
+import DefaultModel from './models/DefaultModel';
 
 export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {
@@ -88,13 +89,28 @@ export default class ArticleAPI {
   /*
     Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
   */
-  getModel (type, node) {
+  getModel(type, node) {
     let ModelClass = this.modelRegistry[type]
     if (ModelClass) {
       return new ModelClass(this, node)
     } else {
-      throw new Error(`No model for ${type} found.`)
+      return new DefaultModel(this, node)
+      // throw new Error(`No model for ${type} found.`)
     }
+  }
+
+  /*
+    Returns an entity model (not node!)
+  */
+  getEntity(entityId) {
+    let entityNode = this.pubMetaDb.get(entityId)
+    let model = this.getModel(entityNode.type, entityNode)
+    return model
+  }
+
+  getEntitiesByType(type) {
+    let entityIds = this.pubMetaDb.findByType(type)
+    return entityIds.map(entityId => this.getEntity(entityId))
   }
 
   getArticle() {

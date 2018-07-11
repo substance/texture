@@ -4,10 +4,7 @@ export default class EntityEditor extends Component {
   constructor(...args) {
     super(...args)
     this.handleActions({
-      'set-value': this._setValue,
-      'add-contrib': this._addContrib,
-      'update-contrib': this._updateContrib,
-      'remove-contrib': this._removeContrib
+      'set-value': this._setValue
     })
   }
 
@@ -108,23 +105,6 @@ export default class EntityEditor extends Component {
       return Editor.matches(property)
     })
     return Editor
-  }
-
-  _addContrib(propName) {
-    const model = this.props.model
-    model.addContrib(propName)
-  }
-
-  _removeContrib(propName, contribId) {
-    const model = this.props.model
-    model.removeContrib(propName, contribId)
-  }
-
-  _updateContrib(contribId, propName, value) {
-    const model = this.props.model
-    model.updateContrib(contribId, propName, value)
-    // TODO: find a better way of updating the entity header
-    this.rerender()
   }
 
   _setValue(propName, value) {

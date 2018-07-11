@@ -3,25 +3,23 @@ import SelectInput from './SelectInput'
 import { getAvailableOptions } from './propertyEditorHelpers'
 
 export default class UniqueReferencePropertyEditor extends Component {
+
   render($$) {
     let property = this.props.property
     let name = property.name
     let data = this.props.model.toJSON()
     let value = data[name]
 
-    let targetType = property.type
     return $$(SelectInput, {
       name: name,
       value: value,
-      availableOptions: getAvailableOptions(this.context.api, [targetType]),
+      availableOptions: getAvailableOptions(this.context.api, property.targetTypes),
       label: this.getLabel(name)
     }).ref(name)
   }
 }
 
 UniqueReferencePropertyEditor.matches = function(property) {
-  // HACK: need to be fixed in substance
-  // return property.isReference() && !property.isArray()
-  return !property.isArray() && new Array('string', 'boolean').indexOf(property.type) === -1
+  return property.isReference() && !property.isArray()
 }
 

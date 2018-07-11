@@ -11,7 +11,9 @@ import ReferenceManager from '../editor/util/ReferenceManager'
 import FigureManager from '../editor/util/FigureManager'
 import TableManager from '../editor/util/TableManager'
 import FootnoteManager from '../editor/util/FootnoteManager'
-import DefaultModel from './models/DefaultModel';
+import DefaultModel from './models/DefaultModel'
+import entityRenderers from '../entities/entityRenderers'
+
 
 export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {
@@ -113,6 +115,11 @@ export default class ArticleAPI {
     return entityIds.map(entityId => this.getEntity(entityId))
   }
 
+  // TODO: This method we should move into the API!
+  renderEntity(model) {
+    return entityRenderers[model.type](model.id, this.pubMetaDb)
+  }
+
   getArticle() {
     return this.doc
   }
@@ -142,6 +149,7 @@ export default class ArticleAPI {
     const model = this.getModel(type+'s')
     return model.getItems()
   }
+
 
   getSchema(type) {
     return this.pubMetaDbSession.getDocument().getSchema().getNodeSchema(type)

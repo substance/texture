@@ -6,6 +6,8 @@ const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
   { label: 'Editors', modelType: 'editors' },
   { label: 'Groups', modelType: 'groups' },
+  { label: 'Affiliations', modelType: 'organisations' },
+  { label: 'Awards', modelType: 'awards' },
   { label: 'References', modelType: 'references' }
 ]
 

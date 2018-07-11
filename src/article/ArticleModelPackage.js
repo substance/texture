@@ -12,6 +12,7 @@ import FigureModel from './models/FigureModel'
 import ReferenceModel from './models/ReferenceModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import AuthorCollectionModel from './models/AuthorCollectionModel'
+import AwardCollectionModel from './models/AwardCollectionModel'
 import EditorCollectionModel from './models/EditorCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
 import OrganisationCollectionModel from './models/OrganisationCollectionModel'
@@ -37,6 +38,7 @@ export default {
 
     // Collection Models
     config.addModel('authors', AuthorCollectionModel)
+    config.addModel('awards', AwardCollectionModel)
     config.addModel('editors', EditorCollectionModel)
     config.addModel('groups', GroupCollectionModel)
     config.addModel('organisations', OrganisationCollectionModel)

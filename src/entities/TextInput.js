@@ -44,6 +44,6 @@ export default class FormInputComponent extends Component {
 
   _getValue() {
     const input = this.refs.input
-    return input.value
+    return input.val()
   }
 }

@@ -77,7 +77,7 @@ export default class EntityEditor extends Component {
       } else if (type === 'string') {
         el.append(
           $$(TextInput, {
-            id: name,
+            name: name,
             label: this.getLabel(name),
             type: 'text',
             value: value,
@@ -99,7 +99,7 @@ export default class EntityEditor extends Component {
         let targetType = property.type
         el.append(
           $$(SelectInput, {
-            id: name,
+            name: name,
             value: value,
             availableOptions: this._getAvailableOptions(targetType),
             label: this.getLabel(name)

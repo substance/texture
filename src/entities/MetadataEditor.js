@@ -3,9 +3,16 @@ import CollectionEditor from './CollectionEditor'
 import ArticleAPI from '../article/ArticleAPI'
 
 const SECTIONS = [
-  { label: 'Authors', collection: 'authors' },
-  { label: 'References', collection: 'references' }
+  { label: 'Authors', modelType: 'authors' },
+  { label: 'Editors', modelType: 'editors' },
+  { label: 'Groups', modelType: 'groups' },
+  { label: 'Affiliations', modelType: 'organisations' },
+  { label: 'Awards', modelType: 'awards' },
+  { label: 'References', modelType: 'references' },
+  { label: 'Keywords', modelType: 'keywords' },
+  { label: 'Subjects', modelType: 'subjects' }
 ]
+
 
 /*
   Example props:
@@ -34,36 +41,22 @@ export default class MetadataEditor extends Component {
     this.api = api
   }
 
-  didMount() {
-    const pubMetaDb = this.api.pubMetaDb
-    pubMetaDb.on('change', this.rerender, this)
-    this.handleActions({
-      'collection:add': this._addToCollection,
-      'collection:update': this._updateCollection,
-      'collection:remove': this._removeFromCollection
-    })
-  }
-
-  dispose() {
-    const pubMetaDb = this.api.pubMetaDb
-    pubMetaDb.off(this)
-  }
-
   render($$) {
     let el = $$('div').addClass('sc-metadata-editor')
-
     let tocEl = $$('div').addClass('se-toc')
     let collectionsEl = $$('div').addClass('se-collections')
+    
 
     SECTIONS.forEach(section => {
+      let model = this.api.getModel(section.modelType)
       tocEl.append(
         $$('a').addClass('se-toc-item')
-          .attr({href: '#' + section.collection})
+          .attr({ href: '#' + model.id })
           .append(section.label)
       )
       collectionsEl.append(
-        $$(CollectionEditor, { collection: section.collection })
-          .attr({id: section.collection})
+        $$(CollectionEditor, { model: model })
+          .attr({id: model.id})
       )
     })
 
@@ -111,21 +104,6 @@ export default class MetadataEditor extends Component {
       tocProvider: this.tocProvider,
       tools
     }
-  }
-
-  _addToCollection(col, item) {
-    const api = this.api
-    api.addToCollection(col, item)
-  }
-
-  _updateCollection(col, itemId, data) {
-    const api = this.api
-    api.updateCollection(col, itemId, data)
-  }
-
-  _removeFromCollection(col, itemId) {
-    const api = this.api
-    api.removeFromCollection(col, itemId)
   }
 }
 

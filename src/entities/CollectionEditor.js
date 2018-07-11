@@ -1,10 +1,10 @@
-import { Component } from 'substance'
+import { Component, FontAwesomeIcon } from 'substance'
 import EntityEditor from './EntityEditor'
 
 export default class CollectionEditor extends Component {
   render($$) {
     let el = $$('div').addClass('sc-collection-editor')
-    let label = this.getLabel(this.props.collection)
+    let label = this.getLabel(this.props.model.id)
     let items = this._getItems()
 
     el.append(
@@ -12,22 +12,31 @@ export default class CollectionEditor extends Component {
     )
 
     items.forEach(item => {
-      let schema = this._getSchema(item.type)
       el.append(
         $$(EntityEditor, {
-          model: item,
-          schema: schema
+          model: item
         })
       )
     })
+
+    el.append(
+      $$('button').addClass('se-add-value')
+        .append(
+          $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
+          'Add ' + label
+        )
+        .on('click', this._addCollectionItem)
+    )
+
     return el
   }
   
   _getItems() {
-    return this.context.api.getCollection(this.props.collection)
+    return this.props.model.getItems()
   }
 
-  _getSchema(itemType) {
-    return this.context.api.getSchema(itemType)
+  _addCollectionItem() {
+    this.props.model.addItem()
+    this.rerender()
   }
 }

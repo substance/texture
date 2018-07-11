@@ -37,15 +37,13 @@ export default class FormInputComponent extends Component {
   }
 
   _onChange() {
-    const id = this.props.id
-    if(id) {
-      const value = this._getValue()
-      this.send('input:change', id, value)
-    }
+    const name = this.props.name
+    const value = this._getValue()
+    this.send('set-value', name, value)
   }
 
   _getValue() {
     const input = this.refs.input
-    return input.value
+    return input.val()
   }
 }

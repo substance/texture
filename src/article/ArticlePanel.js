@@ -1,6 +1,8 @@
 import { Component, Toolbar, isEqual } from 'substance'
 import AppState from '../shared/AppState'
 
+const DEFAULT_VIEW = 'metadata'
+
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
@@ -13,7 +15,7 @@ export default class ArticlePanel extends Component {
   }
 
   getInitialState () {
-    let state = AppState.create({ view: 'manuscript' })
+    let state = AppState.create({ view: DEFAULT_VIEW })
     state.observe(['view'], this.rerender, this)
     return state
   }

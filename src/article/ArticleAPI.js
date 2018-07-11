@@ -11,6 +11,9 @@ import ReferenceManager from '../editor/util/ReferenceManager'
 import FigureManager from '../editor/util/FigureManager'
 import TableManager from '../editor/util/TableManager'
 import FootnoteManager from '../editor/util/FootnoteManager'
+import DefaultModel from './models/DefaultModel'
+import entityRenderers from '../entities/entityRenderers'
+
 
 export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {
@@ -85,42 +88,98 @@ export default class ArticleAPI {
     })
   }
 
-  getCollection(colName) {
-    let items = []
-    switch(colName) {
-      case 'authors':
-        items = this.getContribs().getAuthors()
-        break
-      case 'groups':
-        items = this.getContribs().getGroups()
-        break
-      case 'awards':
-        items = this.getContribs().getAwards()
-        break
-      case 'organisations':
-        items = this.getContribs().getOrganisations()
-        break
-      case 'keywords':
-        items = this.getMeta().getKeywords()
-        break
-      case 'subjects':
-        items = this.getMeta().getSubjects()
-        break
-      case 'references':
-        items = this.getReferences().getReferences()
-        break
-      default:
-        console.error('There is no collection', colName)
+  /*
+    Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
+  */
+  getModel(type, node) {
+    let ModelClass = this.modelRegistry[type]
+    if (ModelClass) {
+      return new ModelClass(this, node)
+    } else {
+      return new DefaultModel(this, node)
+      // throw new Error(`No model for ${type} found.`)
     }
-    return items
+  }
+
+  /*
+    Returns an entity model (not node!)
+  */
+  getEntity(entityId) {
+    let entityNode = this.pubMetaDb.get(entityId)
+    let model = this.getModel(entityNode.type, entityNode)
+    return model
+  }
+
+  getEntitiesByType(type) {
+    let entityIds = this.pubMetaDb.findByType(type)
+    return entityIds.map(entityId => this.getEntity(entityId))
+  }
+
+  // TODO: This method we should move into the API!
+  renderEntity(model) {
+    return entityRenderers[model.type](model.id, this.pubMetaDb)
+  }
+
+  getArticle() {
+    return this.doc
+  }
+
+  getPubMetaDb() {
+    return this.pubMetaDb
+  }
+
+  /*
+    Returns an entity model (not node!)
+  */
+  addEntity(data, type) {
+    const newNode = Object.assign({}, data, {
+      type: type
+    })
+    let node
+    this.pubMetaDbSession.transaction((tx) => {
+      node = tx.create(newNode)
+    })
+    return this.getModel(node.type, node)
+  }
+
+  /*
+    Returns an entity model (not node!)
+  */
+  deleteEntity(entityId) {
+    const pubMetaDbSession = this.context.pubMetaDbSession
+    let node
+    pubMetaDbSession.transaction((tx) => {
+      node = tx.delete(entityId)
+    })
+    return this.getModel(node.type, node)
+  }
+
+  addPerson(person = {}, type) {
+    const articleSession = this.articleSession
+    const personModel = this.addEntity(person, 'person')
+    articleSession.transaction((tx) => {
+      const contribEl = tx.createElement('contrib').attr({'rid': personModel.id, 'contrib-type': 'person'})
+      const personContribGroup = tx.find('contrib-group[content-type='+type+']')
+      personContribGroup.append(contribEl)
+    })
+    return personModel
+  }
+
+  getPersons(type) {
+    const article = this.getArticle()
+    const personsContribGroup = article.find('contrib-group[content-type='+type+']')
+    const contribIds = personsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
+    return contribIds.map(contribId => this.getEntity(contribId))
   }
 
   /*
     NOTE: This only works for collection that contain a single item type. We may need to rethink this
   */
   getCollectionForType(type) {
-    return this.getCollection(type+'s')
+    const model = this.getModel(type+'s')
+    return model.getItems()
   }
+
 
   getSchema(type) {
     return this.pubMetaDbSession.getDocument().getSchema().getNodeSchema(type)
@@ -159,16 +218,6 @@ export default class ArticleAPI {
   getReferences () {
     let refList = this.doc.find('ref-list')
     return new ReferencesModel(refList, this._getContext())
-  }
-
-  /*
-    Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
-  */
-  getModel (node) {
-    let ModelClass = this.modelRegistry[node.type]
-    if (ModelClass) {
-      return new ModelClass(node, this._getContext())
-    }
   }
 
   _getContext () {

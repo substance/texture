@@ -9,6 +9,15 @@ import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
 import FigureModel from './models/FigureModel'
+import ReferenceModel from './models/ReferenceModel'
+import ReferenceCollectionModel from './models/ReferenceCollectionModel'
+import AuthorCollectionModel from './models/AuthorCollectionModel'
+import AwardCollectionModel from './models/AwardCollectionModel'
+import EditorCollectionModel from './models/EditorCollectionModel'
+import GroupCollectionModel from './models/GroupCollectionModel'
+import OrganisationCollectionModel from './models/OrganisationCollectionModel'
+import KeywordCollectionModel from './models/KeywordCollectionModel'
+import SubjectCollectionModel from './models/SubjectCollectionModel'
 
 export default {
   name: 'TextureArticle',
@@ -29,8 +38,29 @@ export default {
     config.addConverter('html', XMLListNodeHTMLConverter)
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
 
+    // Collection Models
+    config.addModel('authors', AuthorCollectionModel)
+    config.addModel('awards', AwardCollectionModel)
+    config.addModel('editors', EditorCollectionModel)
+    config.addModel('groups', GroupCollectionModel)
+    config.addModel('organisations', OrganisationCollectionModel)
+    config.addModel('references', ReferenceCollectionModel)
+    config.addModel('keywords', KeywordCollectionModel)
+    config.addModel('subjects', SubjectCollectionModel)
     // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)
     config.addModel('table-wrap', FigureModel)
+    config.addModel('journal-article', ReferenceModel)
+    config.addModel('conference-paper', ReferenceModel)
+    config.addModel('data-publication', ReferenceModel)
+    config.addModel('magazine-article', ReferenceModel)
+    config.addModel('newspaper-article', ReferenceModel)
+    config.addModel('patent', ReferenceModel)
+    config.addModel('software', ReferenceModel)
+    config.addModel('thesis', ReferenceModel)
+    config.addModel('webpage', ReferenceModel)
+    config.addModel('report', ReferenceModel)
+    config.addModel('book', ReferenceModel)
+    config.addModel('chapter', ReferenceModel)
   }
 }

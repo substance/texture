@@ -33,6 +33,10 @@ export default class AbstractAppState {
     throw new Error('This method is abstract.')
   }
 
+  off (observer) {
+    this.removeObserver(observer)
+  }
+
   propagateUpdates () {
     throw new Error('This method is abstract.')
   }

@@ -1,47 +1,54 @@
 import { Component, isEqual } from 'substance'
 import Managed from '../shared/Managed'
-import managedState from '../shared/managedState'
+import AppState from '../shared/AppState'
 
 const DEFAULT_VIEW = 'metadata'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
-    // TODO: ATM many things such as ToolPanels depend on an editorSession
-    // To be able to move away from that, we need to use customized components
-    // here, i.e. not those from Substance
-    this._articlePanelSession = new ArticlePanelSession(this, this.props.config)
+
+    this.handleActions({
+      executeCommand: this._executeCommand
+    })
 
     this._initialize(this.props)
-  }
-
-  getInitialState () {
-    return managedState(this, {
-      view: 'manuscript',
-      commandStates: {}
-    })
   }
 
   _initialize (props) {
     const config = props.config
     const archive = this.props.archive
 
-    // WIP
-    this._articlePanelSession._updateCommandStates()
-
-    this.context = Object.assign({}, super._getContext(), {
-      state: this.state,
-      // HACK
-      editorSession: this._articlePanelSession,
+    let context = Object.assign({}, super._getContext(), {
       commandGroups: config.getCommandGroups(),
       tools: {},
       componentRegistry: config.getComponentRegistry(),
       labelProvider: config.getLabelProvider(),
       keyboardShortcuts: config.getKeyboardShortcuts(),
       iconProvider: config.getIconProvider(),
-      commandManager: this._articlePanelSession,
       urlResolver: archive
     })
+
+    let appState = new AppState({
+      view: 'manuscript',
+      commandStates: {}
+    })
+    context.state = appState
+    CommandStatesReducer.connect(appState, config, ['view'], context)
+    appState.addObserver(['view'], this._onViewChange, this, { stage: 'render' })
+
+    let editorSession = new ArticlePanelSession(this, config, context)
+    context.editorSession = editorSession
+
+    this.context = context
+    this._appState = appState
+    this._editorSession = editorSession
+  }
+
+  getInitialState () {
+    return {
+      view: 'manuscript'
+    }
   }
 
   willReceiveProps (newProps) {
@@ -54,6 +61,7 @@ export default class ArticlePanel extends Component {
     const archive = this.props.archive
     const config = this._getViewConfig()
     return {
+      state: this._appState,
       configurator: config,
       urlResolver: archive
     }
@@ -97,8 +105,9 @@ export default class ArticlePanel extends Component {
     const articleSession = this.props.articleSession
     const pubMetaDbSession = this.props.pubMetaDbSession
     const config = this._getViewConfig()
+    const view = this.state.view
     let ContentComponent
-    if (this.state.view === 'manuscript') {
+    if (view === 'manuscript') {
       ContentComponent = this.getComponent('manuscript-editor')
     } else if (this.state.view === 'metadata') {
       ContentComponent = this.getComponent('metadata-editor')
@@ -124,6 +133,17 @@ export default class ArticlePanel extends Component {
         throw new Error('Invalid state')
     }
   }
+
+  _onViewChange () {
+    const appState = this._appState
+    this.extendState({
+      view: appState.get('view')
+    })
+  }
+
+  _executeCommand (name, params) {
+    this._editorSession.executeCommand(name, params)
+  }
 }
 
 // HACK: a lot of things, such as tools and panels, depend on EditorSession
@@ -132,35 +152,15 @@ export default class ArticlePanel extends Component {
 // Instead we should generalize implementations so that we can use
 // them in a non-editor scenario, too
 class ArticlePanelSession {
-  constructor (articlePanel, config) {
+  constructor (articlePanel, config, context) {
     this.articlePanel = articlePanel
     this.config = config
     this.commands = {}
-    this.commandStates = []
-
-    this._context = { state: this.articlePanel.state }
+    this.context = context
 
     config.getCommands().forEach(cmd => {
       this.commands[cmd.name] = cmd
     })
-  }
-
-  getCommandStates () {
-    return this.commandStates
-  }
-
-  // HACK: don't know yet how to use AppState API here
-  _updateCommandStates () {
-    let config = this.config
-    let commands = config.getCommands()
-    let params = {
-      editorSession: this
-    }
-    let commandStates = {}
-    commands.forEach(command => {
-      commandStates[command.name] = command.getCommandState(params, this._context)
-    })
-    this.commandStates = commandStates
   }
 
   // isBlurred () {}
@@ -168,9 +168,37 @@ class ArticlePanelSession {
   // getSelection () {}
   // onRender () {}
   off () {}
+
   executeCommand (name, params) {
     let commands = this.commands
     let cmd = commands[name]
-    cmd.execute(params, this._context)
+    cmd.execute(params, this.context)
+  }
+}
+
+class CommandStatesReducer {
+  constructor (appState, config, deps, context) {
+    this.appState = appState
+    this.commands = config.getCommands()
+    this.context = context
+
+    appState.addObserver(deps, this.reduce, this, { stage: 'update' })
+  }
+
+  static connect (...args) {
+    let reducer = new CommandStatesReducer(...args)
+    reducer.reduce()
+    return reducer
+  }
+
+  // HACK: don't know yet how to use AppState API here
+  reduce () {
+    const commands = this.commands
+    const appState = this.appState
+    let commandStates = {}
+    commands.forEach(command => {
+      commandStates[command.name] = command.getCommandState({}, this.context)
+    })
+    appState.set('commandStates', commandStates)
   }
 }

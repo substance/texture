@@ -14,7 +14,7 @@ export default function managedState (component, initialState) {
   })
   appState.addObserver('@any', () => {
     component.rerender()
-  }, component)
+  }, component, { stage: 'render' })
   let state = Object.create({
     observe (...args) { return appState.observe(...args) },
     addObserver (...args) { return appState.addObserver(...args) },

@@ -157,7 +157,7 @@ export default class ArticleAPI {
   addPerson(person = {}, type) {
     const articleSession = this.articleSession
     const personModel = this.addEntity(person, 'person')
-    articleSession.transaction((tx) => {
+    articleSession.transaction(tx => {
       const contribEl = tx.createElement('contrib').attr({'rid': personModel.id, 'contrib-type': 'person'})
       const personContribGroup = tx.find('contrib-group[content-type='+type+']')
       personContribGroup.append(contribEl)
@@ -170,6 +170,17 @@ export default class ArticleAPI {
     const personsContribGroup = article.find('contrib-group[content-type='+type+']')
     const contribIds = personsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
     return contribIds.map(contribId => this.getEntity(contribId))
+  }
+
+  addOrganisation(organisation = {}) {
+    const articleSession = this.articleSession
+    const orgModel = this.addEntity(organisation, 'organisation')
+    articleSession.transaction(tx => {
+      const affEl = tx.createElement('aff').attr('rid', orgModel.id)
+      const affGroup = tx.find('aff-group')
+      affGroup.append(affEl)
+    })
+    return orgModel
   }
 
   /*

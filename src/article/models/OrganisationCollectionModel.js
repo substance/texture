@@ -10,7 +10,7 @@ export default class OrganisationCollectionModel extends DefaultCollectionModel 
     return 'organisation'
   }
 
-  addItem() {
-    // TODO: we need some XML manipulation here, until we have changed the internal model to not use XML anymore
+  addItem(item) {
+    return this._api.addOrganisation(item)
   }
 }

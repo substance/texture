@@ -4,7 +4,7 @@ import EntityEditor from './EntityEditor'
 export default class CollectionEditor extends Component {
   render($$) {
     let el = $$('div').addClass('sc-collection-editor')
-    let label = this.getLabel(this.props.model.type)
+    let label = this.getLabel(this.props.model.id)
     let items = this._getItems()
 
     el.append(
@@ -12,7 +12,6 @@ export default class CollectionEditor extends Component {
     )
 
     items.forEach(item => {
-      // let schema = this._getSchema(item.type)
       el.append(
         $$(EntityEditor, {
           model: item
@@ -25,7 +24,4 @@ export default class CollectionEditor extends Component {
   _getItems() {
     return this.props.model.getItems()
   }
-
-  
-
 }

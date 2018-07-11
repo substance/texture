@@ -705,6 +705,28 @@ function awardRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
+function keywordRenderer($$, entityId, entityDb, options = {}) {
+  let { category, name } = entityDb.get(entityId)
+  let result = [ name ]
+  if (!options.short) {
+    if (category) {
+      result.push(', ', category)
+    }
+  }
+  return result
+}
+
+function subjectRenderer($$, entityId, entityDb, options = {}) {
+  let { category, name } = entityDb.get(entityId)
+  let result = [ name ]
+  if (!options.short) {
+    if (category) {
+      result.push(', ', category)
+    }
+  }
+  return result
+}
+
 // const INTERNAL_RENDERER_MAP = {
 //   'organisation': organisationRenderer,
 //   'person': personRenderer
@@ -729,7 +751,9 @@ export default {
   'newspaper-article': _delegate(newspaperArticleRenderer),
   'software': _delegate(softwareRenderer),
   'thesis': _delegate(thesisRenderer),
-  'webpage': _delegate(webpageRenderer)
+  'webpage': _delegate(webpageRenderer),
+  'keyword': _delegate(keywordRenderer),
+  'subject': _delegate(subjectRenderer)
 }
 
 

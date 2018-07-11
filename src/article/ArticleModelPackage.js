@@ -16,6 +16,8 @@ import AwardCollectionModel from './models/AwardCollectionModel'
 import EditorCollectionModel from './models/EditorCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
 import OrganisationCollectionModel from './models/OrganisationCollectionModel'
+import KeywordCollectionModel from './models/KeywordCollectionModel'
+import SubjectCollectionModel from './models/SubjectCollectionModel'
 
 export default {
   name: 'TextureArticle',
@@ -43,6 +45,8 @@ export default {
     config.addModel('groups', GroupCollectionModel)
     config.addModel('organisations', OrganisationCollectionModel)
     config.addModel('references', ReferenceCollectionModel)
+    config.addModel('keywords', KeywordCollectionModel)
+    config.addModel('subjects', SubjectCollectionModel)
     // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)
     config.addModel('table-wrap', FigureModel)

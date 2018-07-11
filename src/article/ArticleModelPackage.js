@@ -11,6 +11,7 @@ import TableCellElementNode from './TableCellElementNode'
 import FigureModel from './models/FigureModel'
 import ReferenceModel from './models/ReferenceModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
+import AuthorCollectionModel from './models/AuthorCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
 import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 
@@ -34,6 +35,7 @@ export default {
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
 
     // Collection Models
+    config.addModel('authors', AuthorCollectionModel)
     config.addModel('groups', GroupCollectionModel)
     config.addModel('organisations', OrganisationCollectionModel)
     config.addModel('references', ReferenceCollectionModel)

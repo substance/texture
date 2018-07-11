@@ -121,11 +121,19 @@ export default class ArticleAPI {
     return this.pubMetaDb
   }
 
+  getAuthors() {
+    const article = this.getArticle()
+    const authorsContribGroup = article.find('contrib-group[content-type=author]')
+    const contribIds = authorsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
+    return contribIds.map(contribId => this.getEntity(contribId))
+  }
+
   /*
     NOTE: This only works for collection that contain a single item type. We may need to rethink this
   */
   getCollectionForType(type) {
-    return this.getCollection(type+'s')
+    const model = this.getModel(type+'s')
+    return model.getItems()
   }
 
   getSchema(type) {

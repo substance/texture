@@ -24,6 +24,7 @@ export default class EntityEditor extends Component {
     this.handleActions({
       'set-value': this._setValue,
       'add-contrib': this._addContrib,
+      'update-contrib': this._updateContrib,
       'remove-contrib': this._removeContrib
     })
   }
@@ -191,6 +192,11 @@ export default class EntityEditor extends Component {
   _removeContrib(propName, contribId) {
     const model = this.props.model
     model.removeContrib(propName, contribId)
+  }
+
+  _updateContrib(contribId, propName, value) {
+    const model = this.props.model
+    model.updateContrib(contribId, propName, value)
   }
 
   _setValue(propName, value) {

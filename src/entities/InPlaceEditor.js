@@ -28,7 +28,7 @@ export default class InPlaceEditor extends Component {
           $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
           'Add new reference'
         )
-        .on('click', this._addNewReference)
+        .on('click', this._addContrib)
     )
 
     el.append(inputEl)
@@ -41,23 +41,30 @@ export default class InPlaceEditor extends Component {
   
     el.append(
       $$('input').addClass('se-input')
-        .attr({value: item.givenNames, placeholder: 'Given names'}),
+        .attr({value: item.givenNames, placeholder: 'Given names'})
+        .on('change', this._updateContrib.bind(this, item.id, 'givenNames')),
       $$('input').addClass('se-input')
-        .attr({value: item.name, placeholder: 'Last name'}),
+        .attr({value: item.name, placeholder: 'Last name'})
+        .on('change', this._updateContrib.bind(this, item.id, 'name')),
       $$('button').addClass('se-remove-value')
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))
-        .on('click', this._removeReference.bind(this, item.id))  
+        .on('click', this._removeContrib.bind(this, item.id))  
     )
 
     return el
   }
 
-  _addNewReference() {
+  _addContrib() {
     this.send('add-contrib', this.props.name)
   }
 
-  _removeReference(itemId) {
+  _removeContrib(itemId) {
     this.send('remove-contrib', this.props.name, itemId)
+  }
+
+  _updateContrib(itemId, propName, e) {
+    const value = e.currentTarget.value
+    this.send('update-contrib', itemId, propName, value)
   }
 
   _getContrib(id) {

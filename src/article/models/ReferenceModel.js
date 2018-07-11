@@ -39,5 +39,11 @@ export default class ReferenceModel extends DefaultModel {
     }
   }
 
+  updateContrib(contribId, propName, value) {
+    this._api.pubMetaDbSession.transaction(tx => {
+      tx.set([contribId, propName], value)
+    })
+  }
+
 }
 

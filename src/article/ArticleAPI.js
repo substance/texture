@@ -194,6 +194,28 @@ export default class ArticleAPI {
     return awardModel
   }
 
+  addSubject(subject = {}) {
+    const articleSession = this.articleSession
+    const subjectModel = this.addEntity(subject, 'subject')
+    articleSession.transaction(tx => {
+      const subjectEl = tx.createElement('subject').attr('rid', subjectModel.id)
+      const subjGroupEl = tx.find('subj-group')
+      subjGroupEl.append(subjectEl)
+    })
+    return subjectModel
+  }
+
+  addKeyword(keyword = {}) {
+    const articleSession = this.articleSession
+    const keywordModel = this.addEntity(keyword, 'keyword')
+    articleSession.transaction(tx => {
+      const kwdEl = tx.createElement('kwd').attr('rid', keywordModel.id)
+      const kwdGroupEl = tx.find('kwd-group')
+      kwdGroupEl.append(kwdEl)
+    })
+    return keywordModel
+  }
+
   /*
     NOTE: This only works for collection that contain a single item type. We may need to rethink this
   */

@@ -4,6 +4,7 @@ import ArticleAPI from '../article/ArticleAPI'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
+  { label: 'Editors', modelType: 'editors' },
   { label: 'Groups', modelType: 'groups' },
   { label: 'References', modelType: 'references' }
 ]

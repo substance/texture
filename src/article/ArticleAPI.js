@@ -128,6 +128,13 @@ export default class ArticleAPI {
     return contribIds.map(contribId => this.getEntity(contribId))
   }
 
+  getEditors() {
+    const article = this.getArticle()
+    const editorsContribGroup = article.find('contrib-group[content-type=editor]')
+    const contribIds = editorsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
+    return contribIds.map(contribId => this.getEntity(contribId))
+  }
+
   /*
     NOTE: This only works for collection that contain a single item type. We may need to rethink this
   */

@@ -11,7 +11,7 @@ export default class UniqueReferencePropertyEditor extends Component {
 
     let targetType = property.type
     return $$(SelectInput, {
-      id: name,
+      name: name,
       value: value,
       availableOptions: getAvailableOptions(this.context.api, [targetType]),
       label: this.getLabel(name)

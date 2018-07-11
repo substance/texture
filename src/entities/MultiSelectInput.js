@@ -32,7 +32,9 @@ export default class MultiSelectInput extends Component {
     )
 
     if(this.state.editor) {
-      el.append(this.renderEditor($$, options))
+      el.append(
+        this.renderEditor($$, options)
+      )
     }
 
     return el
@@ -51,7 +53,7 @@ export default class MultiSelectInput extends Component {
       editorEl.append(
         $$('div').addClass('se-select-item').append(
           $$(FontAwesomeIcon, { icon: icon }).addClass('se-icon'),
-          $$('div').addClass('se-item-label').append(opt.text)
+          $$('div').addClass('se-item-label').append(opt.text).ref(opt.id)
         ).on('click', this._toggleItem.bind(this, opt.id))
       )
     })
@@ -60,6 +62,7 @@ export default class MultiSelectInput extends Component {
   }
 
   _toggleItem(itemId) {
+    const name = this.props.name
     let selected = this.state.values
     const index = selected.indexOf(itemId)
     if(index < 0) {
@@ -68,7 +71,7 @@ export default class MultiSelectInput extends Component {
       selected.splice(index, 1)
     }
     this.extendState({values: selected})
-    this.send('updatedSelection', selected)
+    this.send('set-value', name, selected)
   }
 
   _toggleEditor() {

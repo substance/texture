@@ -32,13 +32,14 @@ export default class EntityEditor extends Component {
     )
 
     for (let property of schema) {
+      if(property.name === 'id') continue
       let PropertyEditorClass = this._getPropertyEditorClass(property)
       if (PropertyEditorClass) {
         el.append(
           $$(PropertyEditorClass, {
             model,
             property
-          })
+          }).ref(property.name)
         )
       }
     }

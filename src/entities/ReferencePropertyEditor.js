@@ -9,6 +9,7 @@ export default class ReferencePropertyEditor extends Component {
     let data = this.props.model.toJSON()
     let value = data[name]
     return $$(MultiSelectInput, {
+      name: name,
       selectedOptions: value,
       availableOptions: getAvailableOptions(this.context.api, property.targetTypes),
       label: this.getLabel(name)

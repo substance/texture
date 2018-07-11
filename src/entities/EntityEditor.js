@@ -32,7 +32,9 @@ export default class EntityEditor extends Component {
     )
 
     for (let property of schema) {
-      if(property.name === 'id') continue
+      const isOptional = property.isOptional()
+      const isEmpty = model._node[property.name] ? String(model._node[property.name]).length === 0 : true
+      if(property.name === 'id' || !fullMode && isEmpty && isOptional) continue
       let PropertyEditorClass = this._getPropertyEditorClass(property)
       if (PropertyEditorClass) {
         el.append(

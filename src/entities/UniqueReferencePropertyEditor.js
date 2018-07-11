@@ -5,6 +5,7 @@ import { getAvailableOptions } from './propertyEditorHelpers'
 export default class UniqueReferencePropertyEditor extends Component {
   render($$) {
     let property = this.props.property
+    let name = property.name
     let data = this.props.model.toJSON()
     let value = data[name]
 
@@ -19,6 +20,8 @@ export default class UniqueReferencePropertyEditor extends Component {
 }
 
 UniqueReferencePropertyEditor.matches = function(property) {
-  return property.isReference() && !property.isArray()
+  // HACK: need to be fixed in substance
+  // return property.isReference() && !property.isArray()
+  return !property.isArray() && new Array('string', 'boolean').indexOf(property.type) === -1
 }
 

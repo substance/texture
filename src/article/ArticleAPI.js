@@ -183,6 +183,17 @@ export default class ArticleAPI {
     return orgModel
   }
 
+  addAward(award = {}) {
+    const articleSession = this.articleSession
+    const awardModel = this.addEntity(award, 'award')
+    articleSession.transaction(tx => {
+      const awardGroupEl = tx.createElement('award-group').attr('rid', awardModel.id)
+      const fundingGroupEl = tx.find('funding-group')
+      fundingGroupEl.append(awardGroupEl)
+    })
+    return awardModel
+  }
+
   /*
     NOTE: This only works for collection that contain a single item type. We may need to rethink this
   */

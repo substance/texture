@@ -1,5 +1,6 @@
 .sc-in-place-editor {
   display: flex;
+  align-items: baseline;
 }
 
 .sc-in-place-editor .se-entity-input {

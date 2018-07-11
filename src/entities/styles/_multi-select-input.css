@@ -1,6 +1,7 @@
 .sc-multi-select-input {
   position: relative;
   display: flex;
+  align-items: baseline;
 }
 
 .sc-multi-select-input .se-label {

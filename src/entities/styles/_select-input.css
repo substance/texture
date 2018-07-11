@@ -1,6 +1,7 @@
 .sc-select-input {
   position: relative;
   display: flex;
+  align-items: baseline;
 }
 
 .sc-select-input .se-label {

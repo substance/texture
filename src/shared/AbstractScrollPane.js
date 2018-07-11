@@ -77,6 +77,8 @@ export default class AbstractScrollPane extends Component {
   }
 
   _scrollSelectionIntoView (selectionRect) {
+    if (!selectionRect) return
+
     let upperBound = this.getScrollPosition()
     let lowerBound = upperBound + this.getHeight()
     let selTop = selectionRect.top

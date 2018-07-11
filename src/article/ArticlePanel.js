@@ -30,7 +30,7 @@ export default class ArticlePanel extends Component {
     })
 
     let appState = new AppState({
-      view: 'manuscript',
+      view: DEFAULT_VIEW,
       commandStates: {}
     })
     context.state = appState
@@ -47,7 +47,7 @@ export default class ArticlePanel extends Component {
 
   getInitialState () {
     return {
-      view: 'manuscript'
+      view: DEFAULT_VIEW
     }
   }
 

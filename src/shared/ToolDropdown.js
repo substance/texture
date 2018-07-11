@@ -20,7 +20,7 @@ export default class ToolDropdown extends ToolGroup {
     let hasEnabledTools = false
     this._items = items.map(toolSpec => {
       const commandName = toolSpec.commandName
-      let commandState = commandStates[commandName]
+      let commandState = commandStates[commandName] || { disabled: true }
       if (!activeCommandName && commandState.active) activeCommandName = commandName
       if (!commandState.disabled) hasEnabledTools = true
       return {

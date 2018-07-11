@@ -4,19 +4,20 @@ import TextInput from './TextInput'
 export default class StringPropertyEditor extends Component {
   render($$) {
     let property = this.props.property
+    let name = property.name
     let data = this.props.model.toJSON()
     let value = data[name]
     return $$(TextInput, {
-      name: property.name,
-      label: this.getLabel(property.name),
+      name: name,
+      label: this.getLabel(name),
       type: 'text',
       value: value,
       placeholder: 'Enter text',
       size: 'large'
-    }).ref(property.name)
+    }).ref(name)
   }
 }
 
 StringPropertyEditor.matches = function(property) {
-  return property.type === 'string'
+  return property.type === 'string' && property.name !== 'id'
 }

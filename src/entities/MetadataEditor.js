@@ -1,6 +1,7 @@
 import { Component } from 'substance'
 import CollectionEditor from './CollectionEditor'
 import ArticleAPI from '../article/ArticleAPI'
+import Managed from '../shared/Managed'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
@@ -13,19 +14,7 @@ const SECTIONS = [
   { label: 'Subjects', modelType: 'subjects' }
 ]
 
-
-/*
-  Example props:
-
-  {
-    sections: [
-      { label: 'Authors', collection: 'authors' },
-      { label: 'Editors', collection: 'editors' }
-    ]
-  }
-*/
 export default class MetadataEditor extends Component {
-
   constructor (...args) {
     super(...args)
 
@@ -33,41 +22,17 @@ export default class MetadataEditor extends Component {
   }
 
   _initialize (props) {
-    const articleSession = props.articleSession
-    const pubMetaDbSession = props.pubMetaDbSession
-    const config = props.config
+    const { articleSession, pubMetaDbSession, config } = props
     const api = new ArticleAPI(config, articleSession, pubMetaDbSession, this.context)
 
-    this.api = api
-  }
-
-  render($$) {
-    let el = $$('div').addClass('sc-metadata-editor')
-    let tocEl = $$('div').addClass('se-toc')
-    let collectionsEl = $$('div').addClass('se-collections')
-    
-
-    SECTIONS.forEach(section => {
-      let model = this.api.getModel(section.modelType)
-      tocEl.append(
-        $$('a').addClass('se-toc-item')
-          .attr({ href: '#' + model.id })
-          .append(section.label)
-      )
-      collectionsEl.append(
-        $$(CollectionEditor, { model: model })
-          .attr({id: model.id})
-      )
+    // HACK: we need to be careful with leaking context
+    // TODO: maybe we should add Component.defineContext()
+    // which will not inherit parent context automatically
+    let context = Object.assign({}, super._getContext(), {
+      componentRegistry: config.getComponentRegistry()
     })
-
-    el.append(
-      tocEl,
-      $$('div').addClass('se-sections').append(
-        collectionsEl
-      )
-    )
-
-    return el
+    this.api = api
+    this.context = context
   }
 
   getChildContext () {
@@ -107,13 +72,90 @@ export default class MetadataEditor extends Component {
       tools
     }
   }
+
+  render ($$) {
+    let el = $$('div').addClass('sc-metadata-editor')
+    el.append(
+      this._renderMainSection($$),
+      this._renderContextPane($$)
+    )
+    return el
+  }
+
+  _renderMainSection ($$) {
+    const Modal = this.getComponent('modal')
+    const WorkflowPane = this.getComponent('workflow-pane')
+    let mainSection = $$('div').addClass('se-main-section')
+    mainSection.append(
+      this._renderToolbar($$),
+      $$('div').addClass('se-content-section').append(
+        this._renderTOCPane($$),
+        this._renderContentPanel($$)
+      )
+    )
+    let workflowModal = $$(Modal).addClass('se-workflow-modal').append(
+      $$(WorkflowPane).ref('workflowPane')
+    )
+    // TODO: show modal if workflow state is set
+    workflowModal.addClass('sm-hidden')
+
+    mainSection.append(workflowModal)
+
+    return mainSection
+  }
+
+  _renderToolbar ($$) {
+    const Toolbar = this.getComponent('toolbar')
+    let config = this._getConfig()
+    return $$('div').addClass('se-toolbar-wrapper').append(
+      $$(Managed(Toolbar), {
+        toolPanel: config.getToolPanel('toolbar'),
+        bindings: ['commandStates']
+      }).ref('toolbar')
+    )
+  }
+
+  _renderTOCPane ($$) {
+    let el = $$('div').addClass('se-toc-pane').ref('tocPane')
+    let tocEl = $$('div').addClass('se-toc')
+    SECTIONS.forEach(section => {
+      let model = this.api.getModel(section.modelType)
+      tocEl.append(
+        $$('a').addClass('se-toc-item')
+          .attr({ href: '#' + model.id })
+          .append(section.label)
+      )
+    })
+    return el
+  }
+
+  _renderContentPanel ($$) {
+    const ScrollPane = this.getComponent('scroll-pane')
+
+    let contentPanel = $$(ScrollPane, {
+      scrollbarPosition: 'right'
+    }).ref('contentPanel')
+
+    let collectionsEl = $$('div').addClass('se-collections')
+    SECTIONS.forEach(section => {
+      let model = this.api.getModel(section.modelType)
+      collectionsEl.append(
+        $$(CollectionEditor, { model: model })
+          .attr({id: model.id})
+          .ref(model.id)
+      )
+    })
+
+    contentPanel.append(collectionsEl)
+
+    return contentPanel
+  }
+
+  _renderContextPane ($$) {
+    // TODO: here we would instanstiate the issue panel for instance
+  }
+
+  _getConfig () {
+    return this.props.config
+  }
 }
-
-
-
-
-
-
-
-
-

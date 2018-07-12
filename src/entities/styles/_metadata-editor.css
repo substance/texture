@@ -41,3 +41,7 @@
   max-width: 760px;
   padding: 30px;
 }
+
+.sc-metadata-editor .se-workflow-modal.sm-hidden {
+  display: none;
+}

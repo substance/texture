@@ -17,7 +17,6 @@ import Toolbar from './Toolbar'
 import ToolDropdown from './ToolDropdown'
 import ToolGroup from './ToolGroup'
 import ToolPrompt from './ToolPrompt'
-import WorkflowPane from './WorkflowPane'
 
 export default {
   name: 'TextureBase',
@@ -53,7 +52,6 @@ export default {
     configurator.addComponent('tool-dropdown', ToolDropdown, true)
     configurator.addComponent('tool-group', ToolGroup, true)
     configurator.addComponent('tool-prompt', ToolPrompt, true)
-    configurator.addComponent('workflow-pane', WorkflowPane, true)
 
     configurator.addLabel('text-types', {
       en: 'Text Type',

@@ -1,5 +1,90 @@
 import { Component, FontAwesomeIcon } from 'substance'
 
+const REQUIRED_PROPERTIES = {
+  'book': {
+    'authors': true,
+    'title': true
+  },
+  'chapter': {
+    'title': true,
+    'containerTitle': true,
+    'authors': true,
+  },
+  'data-publication': {
+    'title': true,
+    'containerTitle': true,
+    'authors': true,
+  },
+  'magazine-article': {
+    'title': true,
+    'containerTitle': true,
+    'authors': true,
+  },
+  'newspaper-article': {
+    'title': true,
+    'containerTitle': true,
+    'authors': true,
+  },
+  'patent': {
+    'title': true,
+    'containerTitle': true,
+    'inventors': true,
+  },
+  'journal-article': {
+    'title': true,
+    'containerTitle': true,
+    'authors': true,
+  },
+  'conference-paper': {
+    'title': true,
+    'authors': true
+  },
+  'report': {
+    'title': true,
+    'authors': true
+  },
+  'software': {
+    'title': true,
+    'authors': true
+  },
+  'thesis': {
+    'title': true,
+    'authors': true,
+    'year': true
+  },
+  'webpage': {
+    'title': true,
+    'authors': true,
+    'containerTitle': true
+  },
+  'person': {
+    'surname': true,
+    'givenNames': true
+  },
+  'ref-contrib': {
+    'name': true,
+    'givenNames': true
+  },
+  'group': {
+    'name': true
+  },
+  'organisation': {
+    'name': true
+  },
+  'award': {
+    'institution': true
+  },
+  'keyword': {
+    'name': true
+  },
+  'subject': {
+    'name': true
+  }
+
+}
+
+
+
 export default class EntityEditor extends Component {
   constructor(...args) {
     super(...args)
@@ -26,6 +111,12 @@ export default class EntityEditor extends Component {
         this.context.api.renderEntity(model)
       )
     )
+
+    let propertyStates = this._computePropertyStates()
+
+    propertyStates.forEach(propertyState => {
+      
+    })
 
     for (let property of schema) {
       const isOptional = property.isOptional()
@@ -95,16 +186,48 @@ export default class EntityEditor extends Component {
   }
 
   /*
-    Used to populate MultiSelectInput fields
-  */
-  _getAvailableOptions (collection) {
-    let items = this.context.api.getCollectionForType(collection)
-    return items.map(item => {
-      return {
-        id: item.id,
-        text: this._renderEntity(item)
+    [
+      {
+        property: NodeProperty
+        warning: true,
+        hidden: false
       }
-    })
+    ]
+  */
+  _computePropertyStates() {
+    let model = this.props.model
+    let schema = model.getSchema()
+    let result = []
+
+    for (let property of schema) {
+      if (property.name === 'id') continue
+      let warnings = this._getWarnings(property)
+      let empty = this._isPropertyEmpty(property)
+      let hidden = empty && warnings.length === 0
+
+      result.push({
+        property,
+        warnings,
+        hidden
+      })
+    }
+    return result
+  }
+
+  _isPropertyEmpty(property) {
+    let model = this.props.model
+    return model._node[property.name] ? String(model._node[property.name]).length === 0 : true
+  }
+
+  _getWarnings(property, empty) {
+    let model = this.props.model
+    
+    let isRequired = REQUIRED_PROPERTIES[model.type][property.name]
+    if (isRequired && empty) {
+      return [{ message: `${property.name} is required` }]
+    } else {
+      return []
+    }
   }
 
   _getPropertyEditorClass(property) {
@@ -125,3 +248,6 @@ export default class EntityEditor extends Component {
     this.send('remove-item', model)
   }
 }
+
+
+

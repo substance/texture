@@ -16,8 +16,10 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
     return new Promise(function (resolve, reject) {
       readWriteArchiveLoad
         .then(function(archive) {
-          window.archive = archive
           resolve(self)
+        })
+        .catch(function(errors) {
+          reject(errors)
         })
     })
   }

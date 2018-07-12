@@ -19,7 +19,7 @@ export default class ReferenceCollectionModel {
   }
 
   removeItem(item) { // eslint-disable-line no-unused-vars
-
+    this._api.deleteReference(item.id)
   }
 
   _getItem(id) {

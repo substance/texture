@@ -1,4 +1,4 @@
-import { forEach } from 'substance'
+import { forEach, without } from 'substance'
 
 import AnnotatedTextModel from './models/AnnotatedTextModel'
 import ContainerModel from './models/ContainerModel'
@@ -13,7 +13,6 @@ import TableManager from '../editor/util/TableManager'
 import FootnoteManager from '../editor/util/FootnoteManager'
 import DefaultModel from './models/DefaultModel'
 import entityRenderers from '../entities/entityRenderers'
-
 
 export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {
@@ -273,6 +272,29 @@ export default class ArticleAPI {
       tx.delete(subjectEl.id)
     })
     return model
+  }
+
+  deleteReference(refId) {
+    const article = this.getArticle()
+    const articleSession = this.articleSession
+    const xrefIndex = article.getIndex('xrefs')
+    const xrefs = xrefIndex.get(refId)
+    articleSession.transaction(tx => {
+      const refList = tx.find('ref-list')
+      let node = tx.get(refId)
+      // ATTENTION: it is important to nodes from the transaction tx!
+      // Be careful with closures here.
+      refList.removeChild(node)
+      tx.delete(node.id)
+      // Now update xref targets
+      xrefs.forEach(xrefId => {
+        let xref = tx.get(xrefId)
+        let idrefs = xref.attr('rid').split(' ')
+        idrefs = without(idrefs, refId)
+        xref.setAttribute('rid', idrefs.join(' '))
+      })
+      tx.setSelection(null)
+    })
   }
 
   /*

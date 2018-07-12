@@ -16,7 +16,7 @@ const path = require('path')
 const remote = require('electron').remote
 const { shell } = remote
 
-import DesktopAppChrome from '../src/DesktopAppChrome'
+import TextureDesktopAppChrome from '../src/TextureDesktopAppChrome'
 import EditorPackage from '../src/editor/EditorPackage'
 import InMemoryDarBuffer from '../src/dar/InMemoryDarBuffer'
 import Texture from '../src/Texture'
@@ -28,7 +28,7 @@ window.addEventListener("load", function() {
   let app = TextureEditorDesktopApp.start()
 })
 
-export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppChrome) {
+export default class TextureEditorDesktopApp extends TextureAppMixin(TextureDesktopAppChrome) {
   
   static start(customMountConfig, customMountPoint) {
     substanceGlobals.DEBUG_RENDERING = platform.devtools

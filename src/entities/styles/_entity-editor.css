@@ -20,6 +20,12 @@
     font-size: 20px;
     margin-bottom: 20px;
   }
+
+  .sc-entity-editor .se-entity-footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+  }
   
   .sc-entity-editor .sc-text-input {
     position: relative;
@@ -94,7 +100,19 @@
     margin: auto;
   }
 
-  .sc-entity-editor .se-control {
+  .sc-entity-editor .se-entity-footer .se-remove-item {
+    font-size: 12px;
+    background: #fff;
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid #dedede;
+  }
+
+  .sc-entity-editor .se-entity-footer .se-remove-item .se-icon {
+    margin-right: 5px;
+  }
+
+  .sc-entity-editor .se-entity-footer .se-control {
     font-size: 14px;
     color: #499aff;
     cursor: pointer;

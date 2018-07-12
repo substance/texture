@@ -6,6 +6,10 @@ export default class GroupCollectionModel extends DefaultCollectionModel {
     return this._api.addEntity(item, 'group')
   }
 
+  removeItem(item) {
+    return this._api.deleteEntity(item.id)
+  }
+
   _getCollectionId() {
     return 'groups'
   }

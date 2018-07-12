@@ -5,6 +5,10 @@ export default class KeywordCollectionModel extends DefaultCollectionModel {
     return this._api.addKeyword(item)
   }
 
+  removeItem(item) {
+    return this._api.deleteKeyword(item.id)
+  }
+
   _getCollectionId() {
     return 'keywords'
   }

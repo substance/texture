@@ -5,6 +5,10 @@ export default class SubjectCollectionModel extends DefaultCollectionModel {
     return this._api.addSubject(item)
   }
 
+  removeItem(item) {
+    return this._api.deleteSubject(item.id)
+  }
+
   _getCollectionId() {
     return 'subjects'
   }

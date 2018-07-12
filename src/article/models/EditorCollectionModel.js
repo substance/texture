@@ -9,6 +9,10 @@ export default class EditorCollectionModel extends DefaultCollectionModel {
   addItem(item) {
     return this._api.addPerson(item, 'editor')
   }
+  
+  removeItem(item) {
+    return this._api.deletePerson(item.id, 'editor')
+  }
 
   getItems() {
     return this._api.getPersons('editor')

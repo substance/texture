@@ -2,6 +2,13 @@ import { Component, FontAwesomeIcon } from 'substance'
 import EntityEditor from './EntityEditor'
 
 export default class CollectionEditor extends Component {
+  constructor(...args) {
+    super(...args)
+    this.handleActions({
+      'remove-item': this._removeCollectionItem
+    })
+  }
+
   render($$) {
     let el = $$('div').addClass('sc-collection-editor')
     let label = this.getLabel(this.props.model.id)
@@ -36,6 +43,11 @@ export default class CollectionEditor extends Component {
 
   _addCollectionItem() {
     this.props.model.addItem()
+    this.rerender()
+  }
+
+  _removeCollectionItem(item) {
+    this.props.model.removeItem(item)
     this.rerender()
   }
 }

@@ -57,7 +57,15 @@ export default class EntityEditor extends Component {
       )
     }
 
-    el.append(controlEl)
+    el.append(
+      $$('div').addClass('se-entity-footer').append(
+        controlEl,
+        $$('button').addClass('se-remove-item').append(
+          $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),
+          'Remove'
+        ).on('click', this._removeEntity)
+      )
+    )
 
     return el
   }
@@ -110,5 +118,10 @@ export default class EntityEditor extends Component {
   _setValue(propName, value) {
     const model = this.props.model
     model.setValue(propName, value)
+  }
+
+  _removeEntity() {
+    const model = this.props.model
+    this.send('remove-item', model)
   }
 }

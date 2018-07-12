@@ -5,6 +5,10 @@ export default class AwardCollectionModel extends DefaultCollectionModel {
     return this._api.addAward(item)
   }
 
+  removeItem(item) {
+    return this._api.deleteAward(item.id)
+  }
+
   _getCollectionId() {
     return 'awards'
   }

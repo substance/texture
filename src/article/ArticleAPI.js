@@ -146,9 +146,8 @@ export default class ArticleAPI {
     Returns an entity model (not node!)
   */
   deleteEntity(entityId) {
-    const pubMetaDbSession = this.context.pubMetaDbSession
     let node
-    pubMetaDbSession.transaction((tx) => {
+    this.pubMetaDbSession.transaction((tx) => {
       node = tx.delete(entityId)
     })
     return this.getModel(node.type, node)
@@ -172,6 +171,18 @@ export default class ArticleAPI {
     return contribIds.map(contribId => this.getEntity(contribId))
   }
 
+  deletePerson(personId, type) {
+    const articleSession = this.articleSession
+    const model = this.deleteEntity(personId)
+    articleSession.transaction(tx => {
+      const personsContribGroup = tx.find(`contrib-group[content-type=${type}]`)
+      const contrib = personsContribGroup.find(`contrib[rid=${personId}]`)
+      contrib.parentNode.removeChild(contrib)
+      tx.delete(contrib.id)
+    })
+    return model
+  }
+
   addOrganisation(organisation = {}) {
     const articleSession = this.articleSession
     const orgModel = this.addEntity(organisation, 'organisation')
@@ -181,6 +192,18 @@ export default class ArticleAPI {
       affGroup.append(affEl)
     })
     return orgModel
+  }
+
+  deleteOrganisation(orgId) {
+    const articleSession = this.articleSession
+    const model = this.deleteEntity(orgId)
+    articleSession.transaction(tx => {
+      const affGroup = tx.find('aff-group')
+      const affEl = affGroup.find(`aff[rid=${orgId}]`)
+      affEl.parentNode.removeChild(affEl)
+      tx.delete(affEl.id)
+    })
+    return model
   }
 
   addAward(award = {}) {
@@ -194,15 +217,16 @@ export default class ArticleAPI {
     return awardModel
   }
 
-  addSubject(subject = {}) {
+  deleteAward(awardId) {
     const articleSession = this.articleSession
-    const subjectModel = this.addEntity(subject, 'subject')
+    const model = this.deleteEntity(awardId)
     articleSession.transaction(tx => {
-      const subjectEl = tx.createElement('subject').attr('rid', subjectModel.id)
-      const subjGroupEl = tx.find('subj-group')
-      subjGroupEl.append(subjectEl)
+      const fundingGroup = tx.find('funding-group')
+      const awardGroupEl = fundingGroup.find(`award-group[rid=${awardId}]`)
+      awardGroupEl.parentNode.removeChild(awardGroupEl)
+      tx.delete(awardGroupEl.id)
     })
-    return subjectModel
+    return model
   }
 
   addKeyword(keyword = {}) {
@@ -214,6 +238,41 @@ export default class ArticleAPI {
       kwdGroupEl.append(kwdEl)
     })
     return keywordModel
+  }
+
+  deleteKeyword(keywordId) {
+    const articleSession = this.articleSession
+    const model = this.deleteEntity(keywordId)
+    articleSession.transaction(tx => {
+      const kwdGroup = tx.find('kwd-group')
+      const kwdEl = kwdGroup.find(`kwd[rid=${keywordId}]`)
+      kwdEl.parentNode.removeChild(kwdEl)
+      tx.delete(kwdEl.id)
+    })
+    return model
+  }
+
+  addSubject(subject = {}) {
+    const articleSession = this.articleSession
+    const subjectModel = this.addEntity(subject, 'subject')
+    articleSession.transaction(tx => {
+      const subjectEl = tx.createElement('subject').attr('rid', subjectModel.id)
+      const subjGroupEl = tx.find('subj-group')
+      subjGroupEl.append(subjectEl)
+    })
+    return subjectModel
+  }
+
+  deleteSubject(subjectId) {
+    const articleSession = this.articleSession
+    const model = this.deleteEntity(subjectId)
+    articleSession.transaction(tx => {
+      const subjGroup = tx.find('subj-group')
+      const subjectEl = subjGroup.find(`subject[rid=${subjectId}]`)
+      subjectEl.parentNode.removeChild(subjectEl)
+      tx.delete(subjectEl.id)
+    })
+    return model
   }
 
   /*

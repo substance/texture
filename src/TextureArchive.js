@@ -27,3 +27,4 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
         vfsSaveHook(this._storage, TextureArchive, documentArchiveConfig)
     }
   }
+}

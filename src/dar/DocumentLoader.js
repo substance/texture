@@ -1,8 +1,8 @@
 import { forEach } from "substance"
 
-import TextureConfigurator from "../editor/util/TextureConfigurator"
+import TextureConfigurator from "../TextureConfigurator"
 import JATSImporter from "../article/converter/JATSImporter"
-import TextureArticlePackage from "../article/TextureArticlePackage"
+import TextureArticlePackage from "../article/ArticlePackage"
 
 /**
  * @module dar/DocumentLoader

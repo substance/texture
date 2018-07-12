@@ -8,9 +8,9 @@ import Texture from './Texture'
 import TextureAppMixin from './TextureAppMixin'
 import TextureArchiveConfig from './TextureArchiveConfig'
 import VfsStorageClientConfig from './dar/VfsStorageClientConfig'
-import WebAppChrome from './WebAppChrome'
+import TextureWebAppChrome from './TextureWebAppChrome'
 
-export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
+export default class TextureEditorWebApp extends TextureAppMixin(TextureWebAppChrome) {
     
     // TODO: document why we need a different keydown behavior here
     // otherwise, if it should be the same, move the common implementation
@@ -70,12 +70,12 @@ export default class TextureEditorWebApp extends TextureAppMixin(WebAppChrome) {
         let storageClientConfigHttp = new HttpStorageClientConfig()
         storageClientConfigHttp.setStorageUrl("http://localhost:4100")
 
-        let storageClient = StorageClientFactory.getStorageClient(storageClientConfigHttp)
+        let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
 
         let documentArchiveConfig = new TextureArchiveConfig()
         documentArchiveConfig.setArticleConfig(EditorPackage)
         documentArchiveConfig.setBuffer( new InMemoryDarBuffer() )
-        documentArchiveConfig.setStorageConfig(storageClientConfigHttp)
+        documentArchiveConfig.setStorageConfig(storageClientConfig)
         documentArchiveConfig.setStorageClient(storageClient)
         
 

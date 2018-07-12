@@ -1,9 +1,9 @@
 import { DefaultDOMElement } from 'substance'
-import AppChrome from './AppChrome'
+import TextureAppChrome from './TextureAppChrome'
 import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
 import TextureArchive from './TextureArchive'
 
-export default class DesktopAppChrome extends AppChrome {
+export default class DesktopAppChrome extends TextureAppChrome {
 
   didMount() {
     super.didMount()

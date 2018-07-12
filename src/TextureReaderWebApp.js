@@ -6,9 +6,9 @@ import HttpStorageClientConfig from './dar/HttpStorageClientConfig'
 import StorageClientFactory from './dar/StorageClientFactory'
 import TextureAppMixin from './TextureAppMixin'
 import VfsStorageClientConfig from './dar/VfsStorageClientConfig'
-import WebAppChrome from './WebAppChrome'
+import TextureWebAppChrome from './TextureWebAppChrome'
 
-export default class TextureReaderAppWeb extends TextureAppMixin(WebAppChrome) {
+export default class TextureReaderAppWeb extends TextureAppMixin(TextureWebAppChrome) {
     
     static start(customMountConfig, customMountPoint) {
         substanceGlobals.DEBUG_RENDERING = platform.devtools

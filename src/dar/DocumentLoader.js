@@ -1,8 +1,8 @@
 import { forEach } from "substance"
 
-import TextureConfigurator from "../TextureConfigurator"
+import ArticleConfigurator from "../article/ArticleConfigurator"
+import ArticleModelPackage from "../article/ArticleModelPackage"
 import JATSImporter from "../article/converter/JATSImporter"
-import TextureArticlePackage from "../article/ArticlePackage"
 
 /**
  * @module dar/DocumentLoader
@@ -48,13 +48,16 @@ export default class DocumentLoader {
     return new Promise(function(resolve, reject) {
       Promise.all(singleDocumentLoads)
         .then(function(results) {
-          let documents = {}
+          let loadingResults = {}
           
           forEach(results, function(value, key) {
-            documents[value.id] = value.document
+            loadingResults[value.id] = {
+              configurator: value.configurator,
+              document: value.document
+            }
           })
 
-          resolve(documents)
+          resolve(loadingResults)
         })
         .catch(function(errors) {
           reject(errors)
@@ -88,8 +91,8 @@ export default class DocumentLoader {
           reject(documentImporterResult.errors)
         }
 
-        let configurator = new TextureConfigurator()
-        configurator.import(TextureArticlePackage)
+        let configurator = new ArticleConfigurator()
+        configurator.import(ArticleModelPackage)
 
         let textureArticleImporter = configurator.createImporter("texture-article"),
             textureArticleImporterResult = textureArticleImporter.importDocument(documentImporterResult.dom)
@@ -98,6 +101,7 @@ export default class DocumentLoader {
         
         resolve({
           id: rawDocumentId,
+          configurator: configurator,
           document: textureArticleImporterResult
         })
       }

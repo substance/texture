@@ -1,12 +1,42 @@
 .sc-metadata-editor {
   display: flex;
-  width: 100%;
+  flex-direction: row;
+  height: 100%;
+  overflow: auto;
+  flex-grow: 1;
 }
 
-.sc-metadata-editor .se-toc {
+.sc-metadata-editor > .se-main-section {
+  flex: 1 1 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sc-metadata-editor > .se-main-section > .se-toolbar-wrapper {
+  flex: 0 0 40px;
+  z-index: 1000;
+  padding: 3px;
+  padding-bottom: 4px;
+  padding-left: 270px;
+  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
+}
+
+.sc-metadata-editor > .se-main-section > .se-content-section {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.sc-metadata-editor > .se-main-section > .se-content-section > .se-toc-pane {
   flex: 0 0 250px;
   overflow: auto;
   padding: 30px;
+}
+
+.sc-metadata-editor > .se-main-section > .se-content-section > .sc-scroll-pane {
+  flex: 1 1 600px;
+  position: relative;
 }
 
 .sc-metadata-editor .se-toc .se-toc-item {
@@ -25,16 +55,6 @@
 
 .sc-metadata-editor .se-toc .se-toc-item:hover {
   color: #111;
-}
-
-.sc-metadata-editor .se-sections {
-  flex: auto;
-  position: relative;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  overflow: auto;
 }
 
 .sc-metadata-editor .se-collections {

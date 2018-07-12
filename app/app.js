@@ -19,6 +19,7 @@ const { shell } = remote
 import DesktopAppChrome from '../src/DesktopAppChrome'
 import EditorPackage from '../src/editor/EditorPackage'
 import InMemoryDarBuffer from '../src/dar/InMemoryDarBuffer'
+import Texture from '../src/Texture'
 import TextureAppMixin from '../src/TextureAppMixin'
 import TextureArchiveConfig from '../src/TextureArchiveConfig'
 
@@ -66,6 +67,7 @@ export default class TextureEditorDesktopApp extends TextureAppMixin(DesktopAppC
         documentArchiveConfig.setStorageClient( new FSStorageClient() )
 
     return {
+      appClass: Texture,
       archiveId: getQueryStringParam('archiveDir') ,
       documentArchiveConfig: documentArchiveConfig,
       ipc,

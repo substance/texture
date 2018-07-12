@@ -57,7 +57,7 @@ export default class TextureAppChrome extends Component {
 
     // TODO: do we really need to separated the first two steps?
     
-    new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       self._setupChildContext()
         .then(function(childContext) {
           self._childContext = childContext

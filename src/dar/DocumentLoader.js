@@ -49,7 +49,7 @@ export default class DocumentLoader {
       Promise.all(singleDocumentLoads)
         .then(function(results) {
           let loadingResults = {}
-          
+
           forEach(results, function(value, key) {
             loadingResults[value.id] = {
               configurator: value.configurator,
@@ -88,7 +88,10 @@ export default class DocumentLoader {
             documentImporterResult = documentImporter.import(rawDocument.data, context)
 
         if (documentImporterResult.hasErrored) {
-          reject(documentImporterResult.errors)
+          let error = new Error()
+          error.type = 'jats-import-error'
+          error.detail = documentImporterResult.errors
+          reject(error)
         }
 
         let configurator = new ArticleConfigurator()

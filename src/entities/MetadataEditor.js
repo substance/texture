@@ -126,6 +126,7 @@ export default class MetadataEditor extends Component {
           .append(section.label)
       )
     })
+    el.append(tocEl)
     return el
   }
 

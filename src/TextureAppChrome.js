@@ -1,21 +1,30 @@
 import { Component, DefaultDOMElement, platform } from 'substance'
 
+import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
+import TextureArchive from './TextureArchive'
+
 export default class TextureAppChrome extends Component {
   didMount () {
     // when the developer console is not open, display when there is an error
+    
     if (!platform.devtools) {
-      try {
-        this._init().catch(error => {
-          console.error(error)
-          this.setState({error})
-        })
-      } catch (error) {
+      try 
+      {
+        this._init()
+          .catch(function(error) {
+            console.error(error)
+            this.setState({error})
+          })
+      } 
+      catch(error) {
         console.error(error)
         this.setState({error})
       }
-    } else {
+    } 
+    else {
       this._init()
     }
+
     DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
     DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
     DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
@@ -43,31 +52,59 @@ export default class TextureAppChrome extends Component {
     - _loadArchive
     - _initArchive
   */
-  async _init () {
+  _init () {
+    let self = this
+
     // TODO: do we really need to separated the first two steps?
-    let childContext = await this._setupChildContext()
-    await this._initContext(childContext)
-    let archive = await this._loadArchive(this.props.archiveId, childContext)
-    archive = await this._initArchive(archive, childContext)
-    this._childContext = childContext
-    this._afterInit()
-    this.setState({archive})
+    
+    new Promise(function(resolve, reject) {
+      self._setupChildContext()
+        .then(function(childContext) {
+          self._childContext = childContext
+          return self._initContext(childContext)
+        })
+        .then(function(initializedContext) {
+          return self._loadArchive(self.props.archiveId, self._childContext)
+        })
+        .then(function(archive) {
+          return self._initArchive(archive)
+        })
+        .then(function(archive) {
+          self._afterInit()
+          self.setState({archive})
+          resolve(archive)
+        })
+        .catch(function(error) {
+          self.setState({error})
+          reject(error)
+        })
+    })
   }
 
-  async _setupChildContext () {
-    return {}
+  _setupChildContext () {
+    return Promise.resolve({})
   }
 
-  async _initContext (context) {
-    return context
+  _initContext(context) {
+    return Promise.resolve(context)
   }
 
-  async _loadArchive () {
-    throw new Error('_loadArchive not implemented')
+  _loadArchive(archiveId, context) {
+    let documentArchiveConfig = this.props.documentArchiveConfig
+    documentArchiveConfig.setContext(context)
+    
+    let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
+    
+    if (!archive)
+    {
+      archive = new TextureArchive(documentArchiveConfig)
+    }
+
+    return archive.load(archiveId)
   }
 
-  async _initArchive (archive) {
-    return archive
+  _initArchive(archive) {
+    return Promise.resolve(archive)
   }
 
   _afterInit () {}

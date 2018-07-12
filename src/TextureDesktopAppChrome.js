@@ -1,39 +1,40 @@
 import { DefaultDOMElement } from 'substance'
 import TextureAppChrome from './TextureAppChrome'
-import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
-import TextureArchive from './TextureArchive'
 
 export default class DesktopAppChrome extends TextureAppChrome {
 
   didMount() {
     super.didMount()
+
     this.props.ipc.on('document:save', () => {
       this._save()
     })
+    
     this.props.ipc.on('document:save-as', (event, newArchiveDir) => {
       this._saveAs(newArchiveDir)
     })
+
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
-  async _loadArchive(archiveId, context) {
-    let documentArchiveConfig = this.props.documentArchiveConfig
-    documentArchiveConfig.setContext(context)
-    
-    let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
-    
-    if (!archive)
-    {
-      archive = new TextureArchive(documentArchiveConfig)
-    }
+  _loadArchive(archiveId, context) {
+    let self = this,
+        archiveLoadingExecution = super._loadArchive(archiveId, context)
 
-    // HACK: this should be done earlier in the lifecycle (after first didMount)
-    // and later disposed properly. However we can accept this for now as
-    // the app lives as a singleton atm.
-    // NOTE: _archiveChanged is implemented by DesktopAppChrome
-    archive.on('archive:changed', this._archiveChanged, this)
-    
-    return archive.load(archiveId)
+    return new Promise(function(resolve, reject) {
+      archiveLoadingExecution
+        .then(function(archive) {
+          // HACK: this should be done earlier in the lifecycle (after first didMount)
+          // and later disposed properly. However we can accept this for now as
+          // the app lives as a singleton atm.
+          // NOTE: _archiveChanged is implemented by DesktopAppChrome
+          archive.on('archive:changed', self._archiveChanged, self)
+          resolve(archive)
+        })
+        .catch(function(errors) {
+          reject(errors)
+        })
+    })
   }
 
   _saveAs(newArchiveDir) {

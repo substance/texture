@@ -62,7 +62,9 @@ export default class MetadataEditor extends Component {
 
     el.append(
       tocEl,
-      collectionsEl
+      $$('div').addClass('se-sections').append(
+        collectionsEl
+      )
     )
 
     return el

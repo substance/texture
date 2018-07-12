@@ -4,18 +4,30 @@
 }
 
 .sc-metadata-editor .se-toc {
-  flex: 0 0 150px;
+  flex: 0 0 250px;
   overflow: auto;
-  padding: 10px;
+  padding: 30px;
 }
 
 .sc-metadata-editor .se-toc .se-toc-item {
+  position: relative;
   display: block;
-  margin: 10px 0px;
-  color: inherit;
+  text-decoration: none;
+  color: #888;
+  font-weight: 500;
+  font-family: 'Avenir Next', Helvetica;
+  display: block;
+  padding: 2px 0px;
+  font-size: 14px;
+  line-height: 30px;
+  cursor: pointer;
 }
 
-.sc-metadata-editor .se-collections {
+.sc-metadata-editor .se-toc .se-toc-item:hover {
+  color: #111;
+}
+
+.sc-metadata-editor .se-sections {
   flex: auto;
   position: relative;
   top: 0px;
@@ -23,4 +35,9 @@
   left: 0px;
   right: 0px;
   overflow: auto;
+}
+
+.sc-metadata-editor .se-collections {
+  max-width: 760px;
+  padding: 30px;
 }

@@ -1,7 +1,8 @@
-import { EditorSession, keys } from 'substance'
+import { keys } from 'substance'
 import {
-  TableComponent, TextureDocument, TextureConfigurator, tableHelpers,
-  EditorPackage, TableEditing
+  TextureConfigurator, ArticlePackage,
+  TextureEditorSession, EditorState, TextureDocument,
+  TableComponent, tableHelpers, TableEditing
 } from '../index'
 import { testAsync, getMountPoint } from './testHelpers'
 
@@ -125,22 +126,25 @@ testAsync('TableComponent: keyboard interactions', async (t) => {
 
 function _setup (t) {
   let configurator = new TextureConfigurator()
-  configurator.import(EditorPackage)
-  let doc = _createEmptyTextureArticle(configurator)
+  configurator.import(ArticlePackage)
+  // TODO: this could be a little easier
+  let config = configurator.getConfiguration('article').getConfiguration('manuscript')
+  let doc = _createEmptyTextureArticle(config)
   let table = tableHelpers.generateTable(doc, 10, 5)
   doc.find('body').append(table)
   // TODO: look closely here: this is the footprint of how context
   // is used by TableComponent and children
-  let editorSession = new EditorSession(doc, { configurator })
-  let componentRegistry = configurator.getComponentRegistry()
-  let commandGroups = configurator.getCommandGroups()
-  let iconProvider = configurator.getIconProvider()
-  let labelProvider = configurator.getLabelProvider()
-  let keyboardShortcuts = configurator.getKeyboardShortcuts()
-  let tools = configurator.getTools()
+  let editorState = new EditorState(doc)
+  let editorSession = new TextureEditorSession(editorState, config)
+  let componentRegistry = config.getComponentRegistry()
+  let commandGroups = config.getCommandGroups()
+  let iconProvider = config.getIconProvider()
+  let labelProvider = config.getLabelProvider()
+  let keyboardShortcuts = config.getKeyboardShortcuts()
+  let tools = config.getTools()
   let context = {
     editorSession,
-    configurator,
+    configurator: config,
     componentRegistry,
     commandGroups,
     tools,

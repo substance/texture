@@ -55,6 +55,99 @@ export const OrganisationConverter = {
   }
 }
 
+/*
+  <award-group> -> Award
+
+  <!--
+    Used for modelling award:
+
+  <award-group id="fund1">
+    <funding-source>
+      <institution-wrap>
+        <institution-id institution-id-type="FundRef">https://dx.doi.org/10.13039/100000011</institution-id>
+        <institution>Howard Hughes Medical Institute</institution>
+      </institution-wrap>
+    </funding-source>
+    <award-id>F32 GM089018</award-id>
+  </award-group>
+  -->
+*/
+export const AwardConverter = {
+
+  import(el, pubMetaDb) {
+    // Use existing record when possible
+    let entity = _findAward(el, pubMetaDb)
+    if (!entity) {
+      let node = {
+        type: 'award',
+        institution: _getText(el, 'institution'),
+        fundRefId: _getText(el, 'institution-id'),
+        awardId: _getText(el, 'award-id')
+      }
+      entity = pubMetaDb.create(node)
+    } else {
+      console.warn(`Skipping duplicate: ${entity.institution}, ${entity.awardId} already exists.`)
+    }
+    return entity.id
+  },
+
+  export($$, node) {
+    let el = $$('award-group')
+
+    let institutionWrapEl = $$('institution-wrap')
+    institutionWrapEl.append(_createTextElement($$, node.fundRefId, 'institution-id', { 'institution-id-type': 'FundRef'}))
+    institutionWrapEl.append(_createTextElement($$, node.institution, 'institution'))
+
+    el.append(
+      $$('funding-source').append(institutionWrapEl),
+      _createTextElement($$, node.awardId, 'award-id')
+    )
+
+    return el
+  }
+}
+
+/*
+  <kwd> -> Keyword
+*/
+export const KeywordConverter = {
+
+  import(el, pubMetaDb) {
+    const node = {
+      type: 'keyword',
+      name: el.textContent,
+      category: el.getAttribute('content-type')
+    }
+    const entity = pubMetaDb.create(node)
+
+    return entity.id
+  },
+
+  export($$, node) {
+    return _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
+  }
+}
+
+/*
+  <subject> -> Subject
+*/
+export const SubjectConverter = {
+
+  import(el, pubMetaDb) {
+    const node = {
+      type: 'subject',
+      name: el.textContent,
+      category: el.getAttribute('content-type')
+    }
+    const entity = pubMetaDb.create(node)
+
+    return entity.id
+  },
+
+  export($$, node) {
+    return _createTextElement($$, node.name, 'subject', {'content-type': node.category})
+  }
+}
 
 /*
   <contrib contrib-type='group'> -> Group
@@ -102,7 +195,10 @@ export const GroupConverter = {
         name: _getText(el, 'named-content[content-type=name]'),
         email: _getText(el, 'email'),
         affiliations: _extractAffiliations(el),
-        members: _extractGroupMembers(el)
+        members: _extractGroupMembers(el),
+        equalContrib: el.getAttribute('equal-contrib') === 'yes',
+        corresp: el.getAttribute('corresp') === 'yes',
+        awards: _extractAwards(el)
       }
       entity = pubMetaDb.create(node)
     } else {
@@ -112,7 +208,11 @@ export const GroupConverter = {
   },
 
   export($$, node) {
-    let el = $$('contrib').attr('contrib-type', 'group')
+    let el = $$('contrib').attr({
+      'contrib-type': 'group',
+      'equal-contrib': node.equalContrib ? 'yes' : 'no',
+      'corresp': node.corresp ? 'yes' : 'no'
+    })
     let collab = $$('collab')
     collab.append(
       $$('named-content').attr('content-type', 'name').append(node.name),
@@ -120,6 +220,8 @@ export const GroupConverter = {
     )
     // Adds affiliations to group
     _addAffiliations(collab, $$, node)
+    // Add awards to group
+    _addAwards(collab, $$, node)
     _addGroupMembers(collab, $$, node)
     el.append(collab)
     return el
@@ -155,13 +257,21 @@ export const PersonConverter = {
     let el = _exportPerson($$, node)
     // Adds affiliations to el
     _addAffiliations(el, $$, node)
+    // Adds awards to el
+    _addAwards(el, $$, node)
     return el
   }
 }
 
 
 function _exportPerson($$, node) {
-  let el = $$('contrib').attr('contrib-type', 'person')
+  let el = $$('contrib').attr({
+    'contrib-type': 'person',
+    'equal-contrib': node.equalContrib ? 'yes' : 'no',
+    'corresp': node.corresp ? 'yes' : 'no',
+    'deceased': node.deceased ? 'yes' : 'no'
+  })
+  
   el.append(
     $$('name').append(
       _createTextElement($$, node.surname, 'surname'),
@@ -171,6 +281,7 @@ function _exportPerson($$, node) {
     ),
     _createTextElement($$, node.email, 'email')
   )
+
   return el
 }
 
@@ -182,6 +293,18 @@ function _addAffiliations(el, $$, node) {
     let affEl = dom.find(`aff[rid=${organisationId}]`)
     el.append(
       $$('xref').attr('ref-type', 'aff').attr('rid', affEl.id)
+    )
+  })
+}
+
+function _addAwards(el, $$, node) {
+  let dom = el.ownerDocument
+  node.awards.forEach(awardId => {
+    // NOTE: we need to query the document for the internal award record to
+    // map from the global entityId to the local awardId
+    let awardGroupEl = dom.find(`award-group[rid=${awardId}]`)
+    el.append(
+      $$('xref').attr('ref-type', 'aff').attr('rid', awardGroupEl.id)
     )
   })
 }
@@ -406,7 +529,11 @@ function _extractPerson(el) {
     email: _getText(el, 'email'),
     prefix: _getText(el, 'prefix'),
     suffix: _getText(el, 'suffix'),
-    affiliations: _extractAffiliations(el)
+    affiliations: _extractAffiliations(el),
+    awards: _extractAwards(el),
+    equalContrib: el.getAttribute('equal-contrib') === 'yes',
+    corresp: el.getAttribute('corresp') === 'yes',
+    deceased: el.getAttribute('deceased') === 'yes'
   }
 }
 
@@ -455,6 +582,23 @@ function _extractAffiliations(el) {
   return affs
 }
 
+function _extractAwards(el) {
+  let dom = el.ownerDocument
+  let xrefs = el.findAll('xref[ref-type=award]')
+  let awardGroups = []
+  xrefs.forEach(xref => {
+    // NOTE: we need to query the document for the internal aff id to
+    // access the global entityId for the award
+    let awardGroupEl = dom.find(`#${xref.attr('rid')}`)
+    if (awardGroupEl) {
+      awardGroups.push(awardGroupEl.attr('rid'))
+    } else {
+      console.warn(`Could not find award-group#${xref.attr('rid')} in document`)
+    }
+  })
+  return awardGroups
+}
+
 
 
 function _findCitation(el, pubMetaDb) {
@@ -483,6 +627,20 @@ function _findOrganisation(el, pubMetaDb) {
     let division1 = _getText(el, 'institution[content-type=orgdiv1]')
     entity = organisations.find(o => {
       return o.name === name && o.division1 === division1
+    })
+  }
+  return entity
+}
+
+function _findAward(el, pubMetaDb) {
+  let entity = pubMetaDb.get(_getText(el, 'award-id'))
+  if (!entity) {
+    let awards = pubMetaDb.find({ type: 'award' }).map(id => pubMetaDb.get(id))
+    let institutionWrapEl = el.find('institution-wrap')
+    let name = _getText(institutionWrapEl, 'institution')
+    let fundRefId = _getText(institutionWrapEl, 'institution-id')
+    entity = awards.find(a => {
+      return a.institution === name && a.fundRefId === fundRefId
     })
   }
   return entity

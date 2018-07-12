@@ -1,4 +1,3 @@
-import './ConvertCodeCell.test'
 import './ConvertFig.test'
 import './ConvertTableWrap.test'
 import './FnGroupConverter.test'

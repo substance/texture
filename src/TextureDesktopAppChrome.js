@@ -1,9 +1,9 @@
-import { DefaultDOMElement, InMemoryDarBuffer } from 'substance'
-import AppChrome from './AppChrome'
+import { DefaultDOMElement } from 'substance'
+import { InMemoryDarBuffer } from './dar/index'
+import TextureAppChrome from './TextureAppChrome'
 
-export default class DesktopAppChrome extends AppChrome {
-
-  didMount() {
+export default class TextureDesktopAppChrome extends TextureAppChrome {
+  didMount () {
     super.didMount()
     this.props.ipc.on('document:save', () => {
       this._save()
@@ -14,7 +14,7 @@ export default class DesktopAppChrome extends AppChrome {
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
-  async _loadArchive(archiveId, context) {
+  async _loadArchive (archiveId, context) {
     const ArchiveClass = this._getArchiveClass()
     let storage = new this.props.FSStorageClient()
     let buffer = new InMemoryDarBuffer()
@@ -27,7 +27,7 @@ export default class DesktopAppChrome extends AppChrome {
     return archive.load(archiveId)
   }
 
-  _saveAs(newArchiveDir) {
+  _saveAs (newArchiveDir) {
     console.info('saving as', newArchiveDir)
     this.state.archive.saveAs(newArchiveDir).then(() => {
       this._updateTitle(false)
@@ -48,7 +48,7 @@ export default class DesktopAppChrome extends AppChrome {
     })
   }
 
-  _archiveChanged() {
+  _archiveChanged () {
     if (!this.state.archive) return
     const hasPendingChanges = this.state.archive.hasPendingChanges()
     if (hasPendingChanges) {
@@ -57,16 +57,17 @@ export default class DesktopAppChrome extends AppChrome {
     }
   }
 
-  _updateTitle(hasPendingChanges) {
+  _updateTitle (hasPendingChanges) {
     let newTitle = this.state.archive.getTitle()
     if (hasPendingChanges) {
-      newTitle += " *"
+      newTitle += ' *'
     }
     document.title = newTitle
   }
 
-  _click(event) {
-    if (event.target.tagName === 'A' && event.target.attributes.href.value !== '#') {
+  _click (event) {
+    const target = DefaultDOMElement.wrapNativeElement(event.target)
+    if (target.is('a') && target.getAttribute('href') !== '#') {
       event.preventDefault()
       this.props.shell.openExternal(event.target.href)
     }

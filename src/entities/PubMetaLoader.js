@@ -1,5 +1,5 @@
 import { JSONConverter } from 'substance'
-import createEntityDbSession from './entities/createEntityDbSession'
+import createEntityDbSession from './createEntityDbSession'
 
 export default {
   load(jsonStr) {

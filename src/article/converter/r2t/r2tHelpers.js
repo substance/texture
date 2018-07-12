@@ -1,7 +1,7 @@
-import InternalArticle from '../../InternalArticle'
 import { forEach } from 'substance'
+import InternalArticle from '../../InternalArticle'
+import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
 import { replaceWith, findChild, findAllChilds } from '../util/domHelpers'
-import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../../constants'
 
 /*
   el being <article-meta> or <element-citation>

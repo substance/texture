@@ -1,10 +1,9 @@
-import {
-  Configurator,
-  EditorSession
-} from 'substance'
+import { Configurator } from 'substance'
+import TextureEditorSession from '../shared/TextureEditorSession'
+import EditorState from '../shared/EditorState'
 import EntitiesPackage from './EntitiesPackage'
 
-export default function createEntityDbSession(seed = []) {
+export default function createEntityDbSession (seed = []) {
   let configurator = new Configurator()
   configurator.import(EntitiesPackage)
   let entityDb = configurator.createDocument()
@@ -14,8 +13,7 @@ export default function createEntityDbSession(seed = []) {
     entityDb.create(node)
   })
 
-  let entityDbSession = new EditorSession(entityDb, {
-    configurator
-  })
+  let editorState = new EditorState(entityDb)
+  let entityDbSession = new TextureEditorSession(editorState, configurator)
   return entityDbSession
 }

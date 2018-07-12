@@ -1,6 +1,6 @@
 import { Component, DefaultDOMElement, platform } from 'substance'
 
-export default class AppChrome extends Component {
+export default class TextureAppChrome extends Component {
   didMount () {
     // when the developer console is not open, display when there is an error
     if (!platform.devtools) {
@@ -16,21 +16,20 @@ export default class AppChrome extends Component {
     } else {
       this._init()
     }
-
     DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
     DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
     DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
   }
 
-  dispose() {
+  dispose () {
     DefaultDOMElement.getBrowserWindow().off(this)
   }
 
-  getChildContext() {
-    return this._childContext
+  getChildContext () {
+    return this._childContext || {}
   }
 
-  getInitialState() {
+  getInitialState () {
     return {
       archive: undefined,
       error: undefined
@@ -38,8 +37,7 @@ export default class AppChrome extends Component {
   }
 
   /*
-    4 initialisation stages
-
+    4 initialisation stages:
     - _setupChildContext
     - _initContext
     - _loadArchive
@@ -64,21 +62,18 @@ export default class AppChrome extends Component {
     return context
   }
 
-  async _loadArchive() {
+  async _loadArchive () {
     throw new Error('_loadArchive not implemented')
   }
 
-  async _initArchive(archive) {
+  async _initArchive (archive) {
     return archive
   }
 
-  _afterInit() {}
+  _afterInit () {}
 
-  /*
-    We may want an explicit save button, that can be configured on app level,
-    but passed down to editor toolbars.
-  */
-  _save() {
+  // TODO: need to rethink
+  _save () {
     return this.state.archive.save().then(() => {
       this._updateTitle(false)
     }).catch(err => {
@@ -86,18 +81,16 @@ export default class AppChrome extends Component {
     })
   }
 
-  _updateTitle() {
-    // no-op
-  }
+  _updateTitle () {}
 
-  _keyDown(event) {
-    if ( event.key === 'Dead' ) return
+  _keyDown (event) {
+    if (event.key === 'Dead') return
     if (this._handleKeyDown) {
       this._handleKeyDown(event)
     }
   }
 
-  _supressDnD(event) {
+  _supressDnD (event) {
     event.preventDefault()
   }
 }

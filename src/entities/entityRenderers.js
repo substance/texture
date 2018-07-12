@@ -706,6 +706,17 @@ function organisationRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
+function awardRenderer($$, entityId, entityDb, options = {}) {
+  let { awardId, institution } = entityDb.get(entityId)
+  let result = [ institution ]
+  if (!options.short) {
+    if (awardId) {
+      result.push(', ', awardId)
+    }
+  }
+  return result
+}
+
 // const INTERNAL_RENDERER_MAP = {
 //   'organisation': organisationRenderer,
 //   'person': personRenderer
@@ -723,6 +734,7 @@ export default {
   'conference-paper': _delegate(conferencePaperRenderer),
   'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
+  'award': _delegate(awardRenderer),
   'patent': _delegate(patentRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
   'magazine-aricle': _delegate(magazineArticleRenderer),

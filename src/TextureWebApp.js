@@ -1,8 +1,8 @@
 import { parseKeyEvent } from 'substance'
-import WebAppChrome from './WebAppChrome'
 import TextureAppMixin from './TextureAppMixin'
+import TextureWebAppChrome from './TextureWebAppChrome'
 
-export default class TextureWebApp extends TextureAppMixin(WebAppChrome) {
+export default class TextureWebApp extends TextureAppMixin(TextureWebAppChrome) {
   _getDefaultDataFolder () {
     return './data/'
   }

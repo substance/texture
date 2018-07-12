@@ -9,7 +9,6 @@ import InternalArticle from '../InternalArticle'
 
 import { r2t } from './r2t'
 import { j2r } from './j2r'
-import custom from './custom'
 
 import { createEntityDbSession } from '../../entities'
 
@@ -32,7 +31,6 @@ export default class JATSImporter extends EventEmitter {
       errors: {
         'parse': [],
         'validate-jats': [],
-        'custom': [],
         'j2r': [],
         'validate-dar-article': [],
         'r2t': [],
@@ -56,9 +54,6 @@ export default class JATSImporter extends EventEmitter {
     }
 
     if (!this._validate(JATS, state)) return state
-
-    // Custom transformations
-    if (!this._transform('custom', state)) return state
 
     // JATS -> restricted JATS
     if (!this._transform('j2r', state)) return state
@@ -95,9 +90,6 @@ export default class JATSImporter extends EventEmitter {
         break
       case 'r2t':
         r2t(dom, api)
-        break
-      case 'custom':
-        custom.import(dom, api)
         break
       default:
         //

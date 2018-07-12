@@ -165,7 +165,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
                     return self.save(newArchiveId)
                 })
                 .then(function(rawArchiveSaved) {
-                    self._archiveId = archiveId
+                    self._archiveId = newArchiveId
                     resolve(rawArchiveSaved)
                 })
                 .catch(function(errors) {

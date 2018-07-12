@@ -1,9 +1,11 @@
 import { DefaultDOMElement } from 'substance'
-import { InMemoryDarBuffer } from './dar/index'
-import TextureAppChrome from './TextureAppChrome'
+import AppChrome from './AppChrome'
+import DocumentArchiveFactory from './dar/DocumentArchiveFactory'
+import TextureArchive from './TextureArchive'
 
-export default class TextureDesktopAppChrome extends TextureAppChrome {
-  didMount () {
+export default class DesktopAppChrome extends AppChrome {
+
+  didMount() {
     super.didMount()
     this.props.ipc.on('document:save', () => {
       this._save()
@@ -14,20 +16,27 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
-  async _loadArchive (archiveId, context) {
-    const ArchiveClass = this._getArchiveClass()
-    let storage = new this.props.FSStorageClient()
-    let buffer = new InMemoryDarBuffer()
-    let archive = new ArchiveClass(storage, buffer, context)
+  async _loadArchive(archiveId, context) {
+    let documentArchiveConfig = this.props.documentArchiveConfig
+    documentArchiveConfig.setContext(context)
+    
+    let archive = DocumentArchiveFactory.getDocumentArchive(documentArchiveConfig)
+    
+    if (!archive)
+    {
+      archive = new TextureArchive(documentArchiveConfig)
+    }
+
     // HACK: this should be done earlier in the lifecycle (after first didMount)
     // and later disposed properly. However we can accept this for now as
     // the app lives as a singleton atm.
     // NOTE: _archiveChanged is implemented by DesktopAppChrome
     archive.on('archive:changed', this._archiveChanged, this)
+    
     return archive.load(archiveId)
   }
 
-  _saveAs (newArchiveDir) {
+  _saveAs(newArchiveDir) {
     console.info('saving as', newArchiveDir)
     this.state.archive.saveAs(newArchiveDir).then(() => {
       this._updateTitle(false)
@@ -48,7 +57,7 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     })
   }
 
-  _archiveChanged () {
+  _archiveChanged() {
     if (!this.state.archive) return
     const hasPendingChanges = this.state.archive.hasPendingChanges()
     if (hasPendingChanges) {
@@ -57,17 +66,16 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     }
   }
 
-  _updateTitle (hasPendingChanges) {
+  _updateTitle(hasPendingChanges) {
     let newTitle = this.state.archive.getTitle()
     if (hasPendingChanges) {
-      newTitle += ' *'
+      newTitle += " *"
     }
     document.title = newTitle
   }
 
-  _click (event) {
-    const target = DefaultDOMElement.wrapNativeElement(event.target)
-    if (target.is('a') && target.getAttribute('href') !== '#') {
+  _click(event) {
+    if (event.target.tagName === 'A' && event.target.attributes.href.value !== '#') {
       event.preventDefault()
       this.props.shell.openExternal(event.target.href)
     }

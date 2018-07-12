@@ -2,8 +2,8 @@ import { sendRequest, forEach } from 'substance'
 
 export default class HttpStorageClient {
 
-  constructor(apiUrl) {
-    this.apiUrl = apiUrl
+  constructor(storageConfig) {
+    this.apiUrl = storageConfig.getStorageUrl()
   }
 
   /*

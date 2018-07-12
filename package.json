@@ -28,7 +28,7 @@
   },
   "scripts": {
     "prepack": "npm install && node make publish",
-    "start": "node make web -s -w -d data",
+    "start": "node make web -s -w -d data -f ./dist",
     "app": "node make run-app -w",
     "release": "node make app && build --project app-dist",
     "pretest": "npm run lint",

@@ -1,6 +1,7 @@
 logs
 *.log
 dist
+dist-rewrite-dar-loading-code
 app-dist
 bundle
 node_modules

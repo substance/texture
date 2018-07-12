@@ -160,7 +160,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
         let self = this
 
         return new Promise(function(resolve, reject) {
-            self._storage.clone(this._archiveId, newArchiveId)
+            self._storage.clone(self._archiveId, newArchiveId)
                 .then(function() {
                     return self.save(newArchiveId)
                 })
@@ -343,7 +343,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
      * @return {string} The title of this DAR or 'Untitled' if no title is present
      */
     getTitle() {
-        let manuscriptSession = this._session['manuscript']
+        let manuscriptSession = this._sessions['manuscript']
 
         if (!manuscriptSession) {
             return 'Untitled'

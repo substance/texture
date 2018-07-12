@@ -58,7 +58,7 @@ export default class TextureConfigurator extends Configurator {
     return this.config.models
   }
 
-  
+
   addPropertyEditor (PropertyEditorClass) {
     if (includes(this.config.propertyEditors, PropertyEditorClass)) {
       throw new Error('Already registered')

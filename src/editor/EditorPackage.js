@@ -22,6 +22,8 @@ import PlainTextComponent from './components/PlainTextComponent'
 import UnsupportedNodeComponent from './components/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './components/UnsupportedInlineNodeComponent'
 
+import WorkflowPane from './components/WorkflowPane'
+
 import AbstractComponent from './components/AbstractComponent'
 import AffiliationsListComponent from './components/AffiliationsListComponent'
 import AuthorsListComponent from './components/AuthorsListComponent'
@@ -118,6 +120,8 @@ export default {
       and: ',',
       to: '-'
     })
+
+    config.addComponent('workflow-pane', WorkflowPane, true)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

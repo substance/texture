@@ -1,4 +1,4 @@
-import ToolPanel from './ToolPanel'
+import ToolPanel from '../../shared/ToolPanel'
 
 export default class WorkflowPane extends ToolPanel {
   render ($$) {

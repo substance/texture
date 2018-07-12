@@ -1,9 +1,11 @@
 import { EditorSession, forEach } from "substance"
 
+import EditorState from '../shared/EditorState'
 import DocumentLoader from "../dar/DocumentLoader"
 import ManifestLoaderNew from "../dar/ManifestLoaderNew"
 import PubMetaLoader from "../entities/PubMetaLoader"
 import TextureConfigurator from "../TextureConfigurator"
+import TextureEditorSession from "../shared/TextureEditorSession"
 
 /** 
  * @module editor/util/EditorSessionsGenerator
@@ -99,11 +101,11 @@ export default class EditorSessionsGenerator {
                 archive: archive,
                 pubMetaDb: existingSessions["pub-meta"].getDocument()
             }, archiveConfig)
-                .then(function(documents) {
+                .then(function(loadingResults) {
                     let sessions = {}
-                    
-                    forEach(documents, function(document, documentId) {
-                        sessions[documentId] = EditorSessionsGenerator._createSession(document, archiveConfig, existingSessions)
+
+                    forEach(loadingResults, function(loadingResult, documentId) {
+                        sessions[documentId] = EditorSessionsGenerator._createSession(loadingResult, archiveConfig, existingSessions)
                     })
 
                     resolve(sessions)
@@ -145,20 +147,23 @@ export default class EditorSessionsGenerator {
     /**
      * A helper function that creates the actual document session
      * 
-     * @param {Object} document The document for which to create a session 
+     * @param {Object} loadingResult The document for which to create a session 
      * @param {Object} archiveConfig
      * @param {Object} existingSessions Already existing sessions (the context) of the DAR 
      * @returns {Object} The document session
      */
-    static _createSession(document, archiveConfig, existingSessions) {
+    static _createSession(loadingResult, archiveConfig, existingSessions) {
+        
+        /*
         let configurator = new TextureConfigurator()
         configurator.import(archiveConfig.ArticleConfig)
         
         let options = {
             configurator: configurator,
             context: existingSessions
-        }
-        
-        return new EditorSession(document, options)
+        }*/
+
+        let state = new EditorState(loadingResult.document)
+        return new TextureEditorSession(state, loadingResult.configurator)
     }
 }

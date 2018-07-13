@@ -186,24 +186,33 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
    * Saves a raw representation of this DAR 
    * 
    * @description
-   * The raw representation of thie DAR is saved via this DAR's associated
+   * The raw representation of this DAR is saved via this DAR's associated
    * storage client 
    * 
    * @param {string} archiveId The id of the archive to save
+   * @param {boolean} forceSave A flag indicating if the archive should be saved even when there are no pending changes
    * @returns {Promise} A promise that will be resolved with the JSONified raw version of the 
    * saved DAR or rejected with errors that occured during the saving process
    */
-  save() {
-    if (!this.buffer.hasPendingChanges()) {
-      console.info('Save: no pending changes.')
+  save(archiveId, forceSave) {
+    if (!this.buffer.hasPendingChanges() && !forceSave) {
+      console.info('Save: no pending changes')
       return Promise.resolve()
     }
 
-    let readOnlyArchiveSave = super.save(),
-      self = this
+    let self = this
 
     return new Promise(function (resolve, reject) {
-      readOnlyArchiveSave
+      self.export(self)
+        .then(function (rawArchive) {
+          // CHALLENGE: we either need to lock the buffer, so that
+          // new changes are interfering with ongoing sync
+          // or we need something pretty smart caching changes until the
+          // sync has succeeded or failed, e.g. we could use a second buffer in the meantime
+          // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
+          // a slower persisted buffer
+          return self._storage.write((archiveId || self._archiveId), rawArchive)
+        })
         .then(function (rawArchiveSaved) {
           self.buffer.reset(rawArchiveSaved.version)
           resolve(rawArchiveSaved)
@@ -218,22 +227,29 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
   /**
    * Saves a raw representation of this DAR under a new id
    * 
+   * @description
+   * This feature is implemented as follows:
+   * 1. clone: copy all files from original archive to new archive (backend)
+   * 2. save: perform a regular save using user buffer (over new archive, including pending
+   * documents and blobs) 
+   * 
    * @param {string} newArchiveId The new id under which the DAR should be saved
    * @returns {Promise} A promise that will be resolved with the JSONified raw version of the 
    * saved DAR or rejected with errors that occured during the saving process
    */
   saveAs(newArchiveId) {
-    let readOnlyArchiveSaveAs = super.saveAs(newArchiveId),
-      self = this
+    let self = this
 
     return new Promise(function (resolve, reject) {
-      readOnlyArchiveSaveAs
+      self._storage.clone(self._archiveId, newArchiveId)
+        .then(function () {
+          return self.save(newArchiveId, true)
+        })
         .then(function (rawArchiveSaved) {
-          self.buffer.reset(rawArchiveSaved.version)
+          self._archiveId = newArchiveId
           resolve(rawArchiveSaved)
         })
         .catch(function (errors) {
-          console.error('Saving failed.', errors)
           reject(errors)
         })
     })

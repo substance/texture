@@ -10,10 +10,6 @@ export default function vfsSaveHook(storage, ArchiveClass, documentArchiveConfig
   storage.write = function(archiveId, rawArchiveToSave) {
     return new Promise(function (resolve, reject) {
       
-      console.group("Writing archive version: " + rawArchiveToSave.version)
-        console.log(rawArchiveToSave) // eslint-disable-line
-      console.groupEnd()
-
       let rawArchiveSaved, archiveSaved
 
       storage.read(archiveId)

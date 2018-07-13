@@ -6,51 +6,51 @@
  * It should not be initialized directly.
  */
 export default class DocumentArchiveConfig {
-    constructor() {
-        this._articleConfig = null
-        this._context = null
-        this._id = null
-        this._storageClient = null
-        this._storageConfig = null
-    }
+  constructor() {
+    this._articleConfig = null
+    this._context = null
+    this._id = null
+    this._storageClient = null
+    this._storageConfig = null
+  }
 
-    getId() {
-        return this._id
-    }
+  getId() {
+    return this._id
+  }
 
-    setId(id) {
-        this._id = id
-    }
+  setId(id) {
+    this._id = id
+  }
 
-    getArticleConfig() {
-        return this._articleConfig
-    }
+  getArticleConfig() {
+    return this._articleConfig
+  }
 
-    setArticleConfig(articleConfig) {
-        this._articleConfig = articleConfig
-    }
+  setArticleConfig(articleConfig) {
+    this._articleConfig = articleConfig
+  }
 
-    getContext() {
-        return this._context
-    }
+  getContext() {
+    return this._context
+  }
 
-    setContext(context) {
-        this._context = context
-    }
+  setContext(context) {
+    this._context = context
+  }
 
-    getStorageClient() {
-        return this._storageClient
-    }
+  getStorageClient() {
+    return this._storageClient
+  }
 
-    setStorageClient(storageClient) {
-        this._storageClient = storageClient
-    }
+  setStorageClient(storageClient) {
+    this._storageClient = storageClient
+  }
 
-    getStorageConfig() {
-        return this._storageConfig
-    }
+  getStorageConfig() {
+    return this._storageConfig
+  }
 
-    setStorageConfig(storageConfig) {
-        this._storageConfig = storageConfig
-    }
+  setStorageConfig(storageConfig) {
+    this._storageConfig = storageConfig
+  }
 }

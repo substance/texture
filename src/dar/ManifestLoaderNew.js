@@ -11,52 +11,49 @@ import ManifestDocument from "./ManifestDocument"
  */
 export default class ManifestLoaderNew {
 
-    constructor() {
-        this._configurator = new Configurator()
-        this._configure()
-    }
+  constructor() {
+    this._configurator = new Configurator()
+    this._configure()
+  }
 
-    /**
-     * Loads the raw manifest of a DAR and converts it to an instance of the ManifestDocument class
-     * 
-     * @param {Object} rawManifest The raw manifest of a DAR
-     * @returns {Promise} A promise that will be resolved with the manifest of a DAR as instance of the ManifestDocument class or 
-     * rejected with errors that occured during the loading process 
-     */
-    load(rawManifest) {
-        var self = this
-        
-        return new Promise(function(resolve, reject) {
-            if (!rawManifest) {
-                reject('manifest.xml is missing')
-            }
+  /**
+   * Loads the raw manifest of a DAR and converts it to an instance of the ManifestDocument class
+   * 
+   * @param {Object} rawManifest The raw manifest of a DAR
+   * @returns {Promise} A promise that will be resolved with the manifest of a DAR as instance of the ManifestDocument class or 
+   * rejected with errors that occured during the loading process 
+   */
+  load(rawManifest) {
+    var self = this
 
-            try 
-            {
-                let manifestImporter = self._configurator.createImporter( ManifestSchema.getName() )
-                resolve( manifestImporter.importDocument(rawManifest) )
-            } 
-            catch(errors) 
-            {
-                reject(errors)
-            } 
-        })
-    }
+    return new Promise(function (resolve, reject) {
+      if (!rawManifest) {
+        reject('manifest.xml is missing')
+      }
 
-    /**
-     * Geths the configurator of this manifest loader
-     * @return {Configurator} The configurator of this manifest loader
-     */
-    getConfigurator() {
-        return this._configurator
-    }
+      try {
+        let manifestImporter = self._configurator.createImporter(ManifestSchema.getName())
+        resolve(manifestImporter.importDocument(rawManifest))
+      } catch (errors) {
+        reject(errors)
+      }
+    })
+  }
 
-    /**
-     * Configures this manifest loader
-     */
-    _configure() {
-        registerSchema(this._configurator, ManifestSchema, ManifestDocument, {
-            ImporterClass: XMLDocumentImporter
-        })
-    }
+  /**
+   * Geths the configurator of this manifest loader
+   * @return {Configurator} The configurator of this manifest loader
+   */
+  getConfigurator() {
+    return this._configurator
+  }
+
+  /**
+   * Configures this manifest loader
+   */
+  _configure() {
+    registerSchema(this._configurator, ManifestSchema, ManifestDocument, {
+      ImporterClass: XMLDocumentImporter
+    })
+  }
 }

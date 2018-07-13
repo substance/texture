@@ -9,16 +9,16 @@ import StorageClientTypes from "./StorageClientTypes"
  * VfsStorageClient instance
  */
 export default class VfsStorageClientConfig extends StorageClientConfig {
-    constructor() {
-        super(StorageClientTypes.VFS)
-        this.dataFolder = null
-    }
+  constructor() {
+    super(StorageClientTypes.VFS)
+    this.dataFolder = null
+  }
 
-    getDataFolder() {
-        return this.dataFolder
-    }
+  getDataFolder() {
+    return this.dataFolder
+  }
 
-    setDataFolder(dataFolder) {
-        this.dataFolder = dataFolder
-    }
+  setDataFolder(dataFolder) {
+    this.dataFolder = dataFolder
+  }
 }

@@ -9,16 +9,16 @@ import StorageClientTypes from "./StorageClientTypes"
  * HttpStorageClient instance
  */
 export default class HttpStorageClientConfig extends StorageClientConfig {
-    constructor() {
-        super(StorageClientTypes.HTTP)
-        this._storageUrl = null
-    }
+  constructor() {
+    super(StorageClientTypes.HTTP)
+    this._storageUrl = null
+  }
 
-    getStorageUrl() {
-        return this._storageUrl
-    }
+  getStorageUrl() {
+    return this._storageUrl
+  }
 
-    setStorageUrl(storageUrl) {
-        this._storageUrl = storageUrl
-    }
+  setStorageUrl(storageUrl) {
+    this._storageUrl = storageUrl
+  }
 }

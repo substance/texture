@@ -10,13 +10,12 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
   }
 
   load(archiveId) {
-    let self = this,
-        readWriteArchiveLoad = super.load(archiveId)
+    let readWriteArchiveLoad = super.load(archiveId)
 
     return new Promise(function (resolve, reject) {
       readWriteArchiveLoad
         .then(function(archive) {
-          resolve(self)
+          resolve(archive)
         })
         .catch(function(errors) {
           reject(errors)
@@ -26,7 +25,7 @@ export default class TextureArchive extends DocumentArchiveReadWrite {
 
   _checkStorage(documentArchiveConfig) {
     if (this._storageConfig && this._storageConfig.getId() === StorageClientTypes.VFS ) {
-        vfsSaveHook(this._storage, TextureArchive, documentArchiveConfig)
+      vfsSaveHook(this._storage, TextureArchive, documentArchiveConfig)
     }
   }
 }

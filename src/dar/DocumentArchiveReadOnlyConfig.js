@@ -9,8 +9,8 @@ import DocumentArchiveConfig from "./DocumentArchiveConfig";
  * read-only document archive (read-only DAR) instance
  */
 export default class DocumentArchiveReadOnlyConfig extends DocumentArchiveConfig {
-    constructor() {
-        super()
-        this.setId(DocumentArchiveTypes.READ_ONLY)
-    }
+  constructor() {
+    super()
+    this.setId(DocumentArchiveTypes.READ_ONLY)
+  }
 }

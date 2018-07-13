@@ -10,11 +10,12 @@ export default class TextureAppChrome extends Component {
     if (!platform.devtools) {
       try 
       {
-        this._init()
-          .catch(function(error) {
-            console.error(error)
-            this.setState({error})
-          })
+        let self = this
+        
+        self._init().catch(function(error) {
+          console.error(error)
+          self.setState({error})
+        })
       } 
       catch(error) {
         console.error(error)

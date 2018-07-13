@@ -9,17 +9,17 @@ import DocumentArchiveConfig from "./DocumentArchiveConfig";
  * read-write document archive (read-write DAR) instance
  */
 export default class DocumentArchiveReadWriteConfig extends DocumentArchiveConfig {
-    constructor() {
-        super()
-        this.setId(DocumentArchiveTypes.READ_WRITE)
-        this.buffer = null
-    }
+  constructor() {
+    super()
+    this.setId(DocumentArchiveTypes.READ_WRITE)
+    this.buffer = null
+  }
 
-    getBuffer() {
-        return this.buffer
-    }
+  getBuffer() {
+    return this.buffer
+  }
 
-    setBuffer(buffer) {
-        this.buffer = buffer
-    }
+  setBuffer(buffer) {
+    this.buffer = buffer
+  }
 }

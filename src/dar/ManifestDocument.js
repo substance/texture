@@ -9,7 +9,7 @@ export default class ManifestDocument extends XMLDocument {
    */
   addDocumentEntry(rawDocumentEntry) {
     this.find('documents').append(
-        this.createElement('document').attr(rawDocumentEntry)
+      this.createElement('document').attr(rawDocumentEntry)
     )
   }
 

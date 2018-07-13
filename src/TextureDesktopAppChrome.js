@@ -18,8 +18,8 @@ export default class DesktopAppChrome extends TextureAppChrome {
   }
 
   _loadArchive(archiveId, context) {
-    let self = this,
-        archiveLoadingExecution = super._loadArchive(archiveId, context)
+    let self = this
+    let archiveLoadingExecution = super._loadArchive(archiveId, context)
 
     return new Promise(function(resolve, reject) {
       archiveLoadingExecution

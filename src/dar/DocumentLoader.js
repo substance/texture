@@ -34,8 +34,7 @@ export default class DocumentLoader {
       rawDocuments = tmp
     }
 
-    let singleDocumentLoads = [],
-        self = this
+    let singleDocumentLoads = [], self = this
 
     forEach(rawDocuments, function(rawDocument, rawDocumentId) {
       if (!rawDocument || !rawDocument.type === "pub-meta") {
@@ -62,7 +61,7 @@ export default class DocumentLoader {
         .catch(function(errors) {
           reject(errors)
         })
-      })
+    })
   }
 
   /**
@@ -71,11 +70,10 @@ export default class DocumentLoader {
    * @param {string} rawDocumentId The id of the raw document of a DAR
    * @param {Object} rawDocuments The raw document of a DAR
    * @param {Object} context
-   * @param {Object} config
    * @returns {Promise} A promise that will be resolved with the document of a DAR as instance of the TextureArchive class or 
    * rejected with errors that occured during the loading process 
    */
-  loadSingleDocument(rawDocumentId, rawDocument, context, config) {
+  loadSingleDocument(rawDocumentId, rawDocument, context) {
     return new Promise(function(resolve, reject) {
       if (!rawDocument || !rawDocument.data) {
         reject("rawDocument to load is missing")
@@ -84,8 +82,8 @@ export default class DocumentLoader {
       try 
       {
         // TODO this could be done dynamically based upon the type of rawDocument
-        let documentImporter = new JATSImporter(), 
-            documentImporterResult = documentImporter.import(rawDocument.data, context)
+        let documentImporter = new JATSImporter()
+        let documentImporterResult = documentImporter.import(rawDocument.data, context)
 
         if (documentImporterResult.hasErrored) {
           let error = new Error()
@@ -97,8 +95,8 @@ export default class DocumentLoader {
         let configurator = new ArticleConfigurator()
         configurator.import(ArticleModelPackage)
 
-        let textureArticleImporter = configurator.createImporter("texture-article"),
-            textureArticleImporterResult = textureArticleImporter.importDocument(documentImporterResult.dom)
+        let textureArticleImporter = configurator.createImporter("texture-article")
+        let textureArticleImporterResult = textureArticleImporter.importDocument(documentImporterResult.dom)
         
         textureArticleImporterResult.type = rawDocument.type
         

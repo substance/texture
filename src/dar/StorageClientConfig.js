@@ -6,11 +6,11 @@
  * It should not be initialized directly.
  */
 export default class StorageClientConfig {
-    constructor(id) {
-        this.id = id
-    }
+  constructor(id) {
+    this.id = id
+  }
 
-    getId() {
-        return this.id
-    }
+  getId() {
+    return this.id
+  }
 }

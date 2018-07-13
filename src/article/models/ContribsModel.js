@@ -1,4 +1,4 @@
-import entityRenderers from '../../entities/entityRenderers'
+import entityRenderers from '../shared/entityRenderers'
 import DefaultModel from './DefaultModel'
 
 /*

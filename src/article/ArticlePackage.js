@@ -1,13 +1,16 @@
 import { ToggleTool } from 'substance'
-import BasePackage from '../shared/BasePackage'
-import ModelPackage from './ArticleModelPackage'
-import EditorPackage from '../editor/EditorPackage'
-import MetadataPackage from './metadata/MetadataPackage'
-import PreviewPackage from '../reader/ReaderPackage'
-import ArticlePanel from './ArticlePanel'
+import { BasePackage } from '../shared'
+
 import ArticleConfigurator from './ArticleConfigurator'
-import ManuscriptEditor from '../editor/components/ManuscriptEditor'
-import MetadataEditor from '../entities/MetadataEditor'
+
+import ModelPackage from './ArticleModelPackage'
+import EditorPackage from './editor/EditorPackage'
+import MetadataPackage from './metadata/MetadataPackage'
+import ReaderPackage from './reader/ReaderPackage'
+
+import ArticlePanel from './ArticlePanel'
+import ManuscriptEditor from './editor/ManuscriptEditor'
+import MetadataEditor from './metadata/MetadataEditor'
 import SwitchViewCommand from './SwitchViewCommand'
 
 export default {
@@ -27,7 +30,7 @@ export default {
     let metadataEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(MetadataPackage)
     config.setConfiguration('metadata', metadataEditorConfig)
     // used for preview
-    let previewConfig = ArticleConfigurator.createFrom(modelConfig).import(PreviewPackage)
+    let previewConfig = ArticleConfigurator.createFrom(modelConfig).import(ReaderPackage)
     config.setConfiguration('preview', previewConfig)
 
     config.import(BasePackage)

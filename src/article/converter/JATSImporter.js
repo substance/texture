@@ -10,7 +10,7 @@ import InternalArticle from '../InternalArticle'
 import { r2t } from './r2t'
 import { j2r } from './j2r'
 
-import { createEntityDbSession } from '../../entities'
+import { createEntityDbSession } from '../metadata'
 
 /*
   Goal:

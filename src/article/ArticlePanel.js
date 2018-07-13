@@ -1,6 +1,5 @@
 import { Component, isEqual } from 'substance'
-import Managed from '../shared/Managed'
-import AppState from '../shared/AppState'
+import { Managed, AppState } from '../shared'
 
 const DEFAULT_VIEW = 'metadata'
 

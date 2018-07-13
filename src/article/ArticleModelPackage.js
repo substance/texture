@@ -8,6 +8,7 @@ import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
+
 import FigureModel from './models/FigureModel'
 import ReferenceModel from './models/ReferenceModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
@@ -19,10 +20,10 @@ import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
 
-import RefContribPropertyEditor from '../entities/RefContribPropertyEditor'
-import StringPropertyEditor from '../entities/StringPropertyEditor'
-import ReferencePropertyEditor from '../entities/ReferencePropertyEditor'
-import UniqueReferencePropertyEditor from '../entities/UniqueReferencePropertyEditor'
+import RefContribPropertyEditor from './metadata/RefContribPropertyEditor'
+import StringPropertyEditor from './metadata/StringPropertyEditor'
+import ReferencePropertyEditor from './metadata/ReferencePropertyEditor'
+import UniqueReferencePropertyEditor from './metadata/UniqueReferencePropertyEditor'
 
 export default {
   name: 'TextureArticle',

@@ -1,5 +1,5 @@
 import { DefaultDOMElement } from 'substance'
-import { InMemoryDarBuffer } from './dar/index'
+import { InMemoryDarBuffer } from './dar'
 import TextureAppChrome from './TextureAppChrome'
 
 export default class TextureDesktopAppChrome extends TextureAppChrome {

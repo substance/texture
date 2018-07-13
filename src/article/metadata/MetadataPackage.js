@@ -1,6 +1,5 @@
-import BasePackage from '../../shared/BasePackage'
-import EditorBasePackage from '../../shared/EditorBasePackage'
-import EntityLabelsPackage from '../../entities/EntityLabelsPackage'
+import { BasePackage, EditorBasePackage } from '../../shared'
+import EntityLabelsPackage from './EntityLabelsPackage'
 import AddEntityCommand from './AddEntityCommand'
 import WorkflowPane from './WorkflowPane'
 

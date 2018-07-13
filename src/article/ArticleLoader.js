@@ -1,5 +1,4 @@
-import EditorState from '../shared/EditorState'
-import TextureEditorSession from '../shared/TextureEditorSession'
+import { EditorState, TextureEditorSession } from '../shared'
 import JATSImporter from './converter/JATSImporter'
 import ArticleConfigurator from './ArticleConfigurator'
 import ArticleModelPackage from './ArticleModelPackage'

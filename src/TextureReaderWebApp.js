@@ -46,6 +46,7 @@ export default class TextureReaderAppWeb extends TextureAppMixin(TextureWebAppCh
     let documentArchiveConfig = new DocumentArchiveReadOnlyConfig()
     documentArchiveConfig.setArticleConfig(ReaderPackage)
     documentArchiveConfig.setStorageClient(storageClient)
+    documentArchiveConfig.setStorageConfig(storageClientConfig)
 
     return {
       appClass: TextureReader,

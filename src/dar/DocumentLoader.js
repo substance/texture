@@ -86,10 +86,10 @@ export default class DocumentLoader {
         let documentImporterResult = documentImporter.import(rawDocument.data, context)
 
         if (documentImporterResult.hasErrored) {
-          let error = new Error()
-          error.type = 'jats-import-error'
-          error.detail = documentImporterResult.errors
-          reject(error)
+          reject({
+            type: 'jats-import-error',
+            detail: documentImporterResult.errors
+          })
         }
 
         let configurator = new ArticleConfigurator()

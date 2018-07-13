@@ -1,6 +1,8 @@
-import * as tableHelpers from './tableHelpers'
-export * from './converter/index'
-export * from './shared/index'
+export * from './converter'
+export * from './editor'
+export * from './metadata'
+export * from './reader'
+export * from './shared'
 
 export { default as ArticleLoader } from './ArticleLoader'
 export { default as ArticlePackage } from './ArticlePackage'
@@ -14,7 +16,4 @@ export { default as TextureDocument } from './TextureDocument'
 export { default as TextureHTMLConverters } from './TextureHTMLConverters'
 export { default as TextureArticleExporter } from './TextureArticleExporter'
 export { default as TextureArticleImporter } from './TextureArticleImporter'
-
-export { default as TableEditing } from './TableEditing'
-export { tableHelpers }
 export { default as XrefIndex } from './XrefIndex'

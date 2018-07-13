@@ -5,6 +5,6 @@ export default class AddEntityCommand extends Command {
     return { disable: false }
   }
   execute () {
-    console.log('MEH')
+    console.info('MEH')
   }
 }

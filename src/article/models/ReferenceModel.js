@@ -1,5 +1,5 @@
 import DefaultModel from './DefaultModel'
-import { getLabel } from '../../editor/util/nodeHelpers'
+import { getLabel } from '../editor/nodeHelpers'
 import { updateModel } from './modelHelpers'
 
 export default class ReferenceModel extends DefaultModel {

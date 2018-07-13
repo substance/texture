@@ -1,6 +1,6 @@
 import DefaultModel from './DefaultModel'
-import { getXrefLabel } from '../../editor/util/xrefHelpers'
-import { renderEntity } from '../../entities/entityHelpers'
+import { getXrefLabel } from '../shared/xrefHelpers'
+import { renderEntity } from '../shared/entityHelpers'
 
 // TODO: Delete this is obsolete
 

@@ -7,12 +7,12 @@ import MetaModel from './models/MetaModel'
 import FootnotesModel from './models/FootnotesModel'
 import ReferencesModel from './models/ReferencesModel'
 
-import ReferenceManager from '../editor/util/ReferenceManager'
-import FigureManager from '../editor/util/FigureManager'
-import TableManager from '../editor/util/TableManager'
-import FootnoteManager from '../editor/util/FootnoteManager'
+import ReferenceManager from './editor/ReferenceManager'
+import FigureManager from './editor/FigureManager'
+import TableManager from './editor/TableManager'
+import FootnoteManager from './editor/FootnoteManager'
 import DefaultModel from './models/DefaultModel'
-import entityRenderers from '../entities/entityRenderers'
+import entityRenderers from './shared/entityRenderers'
 
 export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {

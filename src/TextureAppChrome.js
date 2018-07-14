@@ -10,11 +10,9 @@ export default class TextureAppChrome extends Component {
     if (!platform.devtools) {
       try 
       {
-        let self = this
-        
-        self._init().catch(function(error) {
+        this._init().catch(error => {
           console.error(error)
-          self.setState({error})
+          this.setState({error})
         })
       } 
       catch(error) {
@@ -54,29 +52,26 @@ export default class TextureAppChrome extends Component {
     - _initArchive
   */
   _init () {
-    let self = this
-
     // TODO: do we really need to separated the first two steps?
-    
-    return new Promise(function(resolve, reject) {
-      self._setupChildContext()
-        .then(function(childContext) {
-          self._childContext = childContext
-          return self._initContext(childContext)
+    return new Promise((resolve, reject) => {
+      this._setupChildContext()
+        .then(childContext => {
+          this._childContext = childContext
+          return this._initContext(childContext)
         })
-        .then(function(initializedContext) {
-          return self._loadArchive(self.props.archiveId, self._childContext)
+        .then(initializedContext => {
+          return this._loadArchive(this.props.archiveId, this._childContext)
         })
-        .then(function(archive) {
-          return self._initArchive(archive)
+        .then(archive => {
+          return this._initArchive(archive)
         })
-        .then(function(archive) {
-          self._afterInit()
-          self.setState({archive})
+        .then(archive => {
+          this._afterInit()
+          this.setState({archive})
           resolve(archive)
         })
-        .catch(function(error) {
-          self.setState({error})
+        .catch(error => {
+          this.setState({error})
           reject(error)
         })
     })

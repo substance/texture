@@ -107,16 +107,16 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
    * @returns {Promise} A promise that will be resolved with the DAR or rejected with errors that occured during the loading process 
    */
   load(archiveId) {
-    let self = this, readOnlyArchiveLoad = super.load(archiveId)
+    let readOnlyArchiveLoad = super.load(archiveId)
 
     const buffer = this.buffer
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       readOnlyArchiveLoad
-        .then(function() {
+        .then((archive) => {
           return buffer.load()
         })
-        .then(function() {
+        .then(() => {
           /**
            * TODO Completely understand this synch logic and check if the execution 
            * of this logic can happen after the archive has been completely loaded (e.g. after 
@@ -124,19 +124,19 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
            */
           if (!buffer.hasPendingChanges()) {
             let localVersion = buffer.getVersion()
-            let upstreamVersion = self._upstreamArchive.version
+            let upstreamVersion = this._upstreamArchive.version
             if (localVersion && upstreamVersion && localVersion !== upstreamVersion) {
               // If the local version is out-of-date, it would be necessary to 'rebase' the
               // local changes.
               console.error('Upstream document has changed. Discarding local changes')
-              self.buffer.reset(upstreamVersion)
+              this.buffer.reset(upstreamVersion)
             } else {
               buffer.reset(upstreamVersion)
             }
           }
           return null
         })
-        .then(function() {
+        .then(() => {
           /**
            * TODO Completely understand this synch logic and check if the execution 
            * of this logic can happen after the archive has been completely loaded (e.g. after 
@@ -147,16 +147,16 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
             // changes.
             // For now, we always start with a fresh buffer
           } else {
-            buffer.reset(self._upstreamArchive.version)
+            buffer.reset(this._upstreamArchive.version)
           }
 
-          self._registerForAllChanges(self._sessions)
-          return self._repair()
+          this._registerForAllChanges(this._sessions)
+          return this._repair()
         })
-        .then(function(repairedSelf) {
-          resolve(repairedSelf)
+        .then(repairedArchive => {
+          resolve(repairedArchive)
         })
-        .catch(function(errors) {
+        .catch(errors => {
           reject(errors)
         })
     })
@@ -200,24 +200,22 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
       return Promise.resolve()
     }
 
-    let self = this
-
-    return new Promise(function (resolve, reject) {
-      self.export(self)
-        .then(function (rawArchive) {
+    return new Promise((resolve, reject) => {
+      this.export()
+        .then(rawArchive => {
           // CHALLENGE: we either need to lock the buffer, so that
           // new changes are interfering with ongoing sync
           // or we need something pretty smart caching changes until the
           // sync has succeeded or failed, e.g. we could use a second buffer in the meantime
           // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
           // a slower persisted buffer
-          return self._storage.write((archiveId || self._archiveId), rawArchive)
+          return this._storage.write((archiveId || this._archiveId), rawArchive)
         })
-        .then(function (rawArchiveSaved) {
-          self.buffer.reset(rawArchiveSaved.version)
+        .then(rawArchiveSaved => {
+          this.buffer.reset(rawArchiveSaved.version)
           resolve(rawArchiveSaved)
         })
-        .catch(function (errors) {
+        .catch(errors => {
           console.error('Saving failed.', errors)
           reject(errors)
         })
@@ -238,18 +236,16 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
    * saved DAR or rejected with errors that occured during the saving process
    */
   saveAs(newArchiveId) {
-    let self = this
-
-    return new Promise(function (resolve, reject) {
-      self._storage.clone(self._archiveId, newArchiveId)
-        .then(function () {
-          return self.save(newArchiveId, true)
+    return new Promise((resolve, reject) => {
+      this._storage.clone(this._archiveId, newArchiveId)
+        .then(() => {
+          return this.save(newArchiveId, true)
         })
-        .then(function (rawArchiveSaved) {
-          self._archiveId = newArchiveId
+        .then(rawArchiveSaved => {
+          this._archiveId = newArchiveId
           resolve(rawArchiveSaved)
         })
-        .catch(function (errors) {
+        .catch(errors => {
           reject(errors)
         })
     })
@@ -288,13 +284,13 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
    * Runs a series of repair steps such as removing missing files from archive
    */
   _repair() {
-    let self = this
-
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       try {
-        let manifestSession = self._sessions["manifest"]
+        let manifestSession = this._sessions["manifest"]
         let entries = manifestSession.getDocument().getDocumentEntries()
         let missingEntries = []
+
+        let self = this
 
         entries.forEach(entry => {
           let session = self._sessions[entry.id]
@@ -313,7 +309,7 @@ export default class DocumentArchiveReadWrite extends DocumentArchiveReadOnly {
           })
         })
 
-        resolve(self)
+        resolve(this)
       } catch (errors) {
         reject(errors)
       }

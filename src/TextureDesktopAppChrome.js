@@ -18,20 +18,19 @@ export default class DesktopAppChrome extends TextureAppChrome {
   }
 
   _loadArchive(archiveId, context) {
-    let self = this
     let archiveLoadingExecution = super._loadArchive(archiveId, context)
 
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       archiveLoadingExecution
-        .then(function(archive) {
+        .then(archive => {
           // HACK: this should be done earlier in the lifecycle (after first didMount)
           // and later disposed properly. However we can accept this for now as
           // the app lives as a singleton atm.
           // NOTE: _archiveChanged is implemented by DesktopAppChrome
-          archive.on('archive:changed', self._archiveChanged, self)
+          archive.on('archive:changed', this._archiveChanged, this)
           resolve(archive)
         })
-        .catch(function(errors) {
+        .catch(errors => {
           reject(errors)
         })
     })

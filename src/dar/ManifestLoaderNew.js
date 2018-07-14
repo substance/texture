@@ -24,15 +24,13 @@ export default class ManifestLoaderNew {
    * rejected with errors that occured during the loading process 
    */
   load(rawManifest) {
-    var self = this
-
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!rawManifest) {
         reject('manifest.xml is missing')
       }
 
       try {
-        let manifestImporter = self._configurator.createImporter(ManifestSchema.getName())
+        let manifestImporter = this._configurator.createImporter(ManifestSchema.getName())
         resolve(manifestImporter.importDocument(rawManifest))
       } catch (errors) {
         reject(errors)

@@ -57,35 +57,33 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
    * @returns {Promise} A promise that will be resolved with the DAR or rejected with errors that occured during the loading process 
    */
   load(archiveId) {
-    let self = this
-
-    return new Promise(function (resolve, reject) {
-      self._storage.read(archiveId)
-        .then(function (upstreamArchive) {
-          self._archiveId = archiveId
-          self._upstreamArchive = upstreamArchive
+    return new Promise((resolve, reject) => {
+      this._storage.read(archiveId)
+        .then(upstreamArchive => {
+          this._archiveId = archiveId
+          this._upstreamArchive = upstreamArchive
           return Promise.all([
-            EditorSessionsGenerator.generateSessionForManifest(self),
-            EditorSessionsGenerator.generateSessionForPubMeta(self)
+            EditorSessionsGenerator.generateSessionForManifest(this),
+            EditorSessionsGenerator.generateSessionForPubMeta(this)
           ])
         })
-        .then(function (sessions) {
-          self._sessions["manifest"] = sessions[0]
-          self._sessions["pub-meta"] = sessions[1]
-          return EditorSessionsGenerator.generateSessionsForExistingDocuments(self)
+        .then(sessions => {
+          this._sessions["manifest"] = sessions[0]
+          this._sessions["pub-meta"] = sessions[1]
+          return EditorSessionsGenerator.generateSessionsForExistingDocuments(this)
         })
-        .then(function (documentSessions) {
-          self._sessions = Object.assign(self._sessions, documentSessions)
-          return EditorSessionsValidator.areSessionsValid(self._sessions)
+        .then(documentSessions => {
+          this._sessions = Object.assign(this._sessions, documentSessions)
+          return EditorSessionsValidator.areSessionsValid(this._sessions)
         })
-        .then(function (validationResult) {
+        .then(validationResult => {
           if (!validationResult.isOk()) {
             reject(validationResult.getErrors())
           }
 
-          resolve(self)
+          resolve(this)
         })
-        .catch(function (errors) {
+        .catch(errors => {
           reject(errors);
         });
     });
@@ -99,6 +97,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
    */
   resolveUrl(path) {
     let blobUrl = this._pendingFiles[path]
+    
     if (blobUrl) {
       return blobUrl
     } else {

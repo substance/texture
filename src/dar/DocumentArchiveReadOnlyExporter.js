@@ -17,8 +17,7 @@ export default class DocumentArchiveReadOnlyExporter {
    * @returns {Promise} A promise that will be resolved with the exported version 
    * of the DAR or rejected with errors that occured during the export process
    */
-  static
-  export (archive) {
+  static export (archive) {
     return new Promise(function (resolve, reject) {
       try {
         /**

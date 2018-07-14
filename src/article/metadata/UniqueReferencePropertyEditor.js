@@ -9,12 +9,14 @@ export default class UniqueReferencePropertyEditor extends Component {
     let name = property.name
     let data = this.props.model.toJSON()
     let value = data[name]
+    let warning = this.props.warnings.map(w => w.message).join(', ')
 
     return $$(SelectInput, {
       name: name,
       value: value,
       availableOptions: getAvailableOptions(this.context.api, property.targetTypes),
-      label: this.getLabel(name)
+      label: this.getLabel(name),
+      warning: warning
     }).ref(name)
   }
 }

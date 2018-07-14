@@ -7,7 +7,7 @@ export default class FormInputComponent extends Component {
     const type = this.props.type || 'text'
     const label = this.props.label
     const placeholder = this.props.placeholder
-    const error = this.props.error
+    const warning = this.props.warning
 
     const el = $$('div').addClass('sc-text-input sm-size-'+size)
 
@@ -25,13 +25,16 @@ export default class FormInputComponent extends Component {
       .ref('input')
       .on('change', this._onChange)
 
-    el.append(input)
+    const inputWrap = $$('div').addClass('se-text-input').append(input)
 
-    if(error) {
-      el.addClass('sm-error').append(
-        $$('div').addClass('se-error-msg').append(error)
+    if(warning) {
+      el.addClass('sm-warning')
+      inputWrap.append(
+        $$('div').addClass('se-warning-msg').append(warning)
       )
     }
+
+    el.append(inputWrap)
 
     return el
   }

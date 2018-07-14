@@ -14,19 +14,19 @@
   height: var(--input-height);
 }
 
-.sc-text-input .se-error-msg {
+.sc-text-input .se-warning-msg {
   font-size: 12px;
   line-height: 15px;
   margin: 5px 0 0;
 }
 
-.sc-text-input.sm-error {
-  color: var(--error-color);
+.sc-text-input.sm-warning {
+  color: var(--warning-color);
 }
 
-.sc-text-input.sm-error .se-input {
-  border: 1px solid var(--error-color);
-  background-color: var(--error-bg-color);
+.sc-text-input.sm-warning .se-input {
+  border: 1px solid var(--warning-color);
+  background-color: var(--warning-bg-color);
 }
 
 .sc-text-input.sm-size-small {

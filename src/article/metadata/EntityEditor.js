@@ -103,49 +103,55 @@ export default class EntityEditor extends Component {
 
   render($$) {
     const fullMode = this.state.fullMode
-    let model = this.props.model
-    let schema = model.getSchema()
-
-    let el = $$('div').addClass('sc-entity-editor').append(
+    const model = this.props.model
+    const el = $$('div').addClass('sc-entity-editor').append(
       $$('div').addClass('se-entity-header').html(
         this.context.api.renderEntity(model)
       )
     )
 
-    let propertyStates = this._computePropertyStates()
+    const propertyStates = this._computePropertyStates()
+    const hasWarnings = propertyStates.some(prop => prop.warnings.length > 0)
+    const hasHiddenProps = propertyStates.some(prop => prop.hidden)
 
+    if(hasWarnings) el.addClass('sm-warning')
+
+    // [{
+    //   property: NodeProperty
+    //   warnings: [{message: 'property is required'}],
+    //   hidden: false
+    // }]
     propertyStates.forEach(propertyState => {
-      
-    })
-
-    for (let property of schema) {
-      const isOptional = property.isOptional()
-      const isEmpty = model._node[property.name] ? String(model._node[property.name]).length === 0 : true
-      if(property.name === 'id' || !fullMode && isEmpty && isOptional) continue
-      let PropertyEditorClass = this._getPropertyEditorClass(property)
+      const property = propertyState.property
+      if(propertyState.hidden && !fullMode) return
+      const warnings = propertyState.warnings
+      const PropertyEditorClass = this._getPropertyEditorClass(property)
       if (PropertyEditorClass) {
         el.append(
           $$(PropertyEditorClass, {
             model,
-            property
+            property,
+            warnings
           }).ref(property.name)
         )
       }
-    }
+    })
 
     const controlEl = $$('div').addClass('se-control')
       .on('click', this._toggleMode)
 
-    if(!fullMode) {
-      controlEl.append(
-        $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon'),
-        this.getLabel('show-more-fields')
-      )
-    } else {
-      controlEl.append(
-        $$(FontAwesomeIcon, { icon: 'fa-chevron-up' }).addClass('se-icon'),
-        this.getLabel('show-less-fields')
-      )
+    if(hasHiddenProps) {
+      if(!fullMode) {
+        controlEl.append(
+          $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon'),
+          this.getLabel('show-more-fields')
+        )
+      } else {
+        controlEl.append(
+          $$(FontAwesomeIcon, { icon: 'fa-chevron-up' }).addClass('se-icon'),
+          this.getLabel('show-less-fields')
+        )
+      }
     }
 
     el.append(
@@ -189,7 +195,7 @@ export default class EntityEditor extends Component {
     [
       {
         property: NodeProperty
-        warning: true,
+        warnings: [{message: 'property is required'}],
         hidden: false
       }
     ]
@@ -201,8 +207,8 @@ export default class EntityEditor extends Component {
 
     for (let property of schema) {
       if (property.name === 'id') continue
-      let warnings = this._getWarnings(property)
       let empty = this._isPropertyEmpty(property)
+      let warnings = this._getWarnings(property, empty)
       let hidden = empty && warnings.length === 0
 
       result.push({

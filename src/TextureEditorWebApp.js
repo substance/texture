@@ -58,11 +58,11 @@ export default class TextureEditorWebApp extends TextureAppMixin(TextureWebAppCh
   }
 
   static _getDefaultMountConfig() {
+    // let storageClientConfigHttp = new HttpStorageClientConfig()
+    // storageClientConfigHttp.setStorageUrl("http://localhost:4100")
+
     let storageClientConfig = new VfsStorageClientConfig()
     storageClientConfig.setDataFolder("./data/")
-
-    let storageClientConfigHttp = new HttpStorageClientConfig()
-    storageClientConfigHttp.setStorageUrl("http://localhost:4100")
 
     let storageClient = StorageClientFactory.getStorageClient(storageClientConfig)
 
@@ -71,8 +71,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(TextureWebAppCh
     documentArchiveConfig.setBuffer(new InMemoryDarBuffer())
     documentArchiveConfig.setStorageConfig(storageClientConfig)
     documentArchiveConfig.setStorageClient(storageClient)
-
-
+    
     return {
       appClass: Texture,
       archiveId: 'kitchen-sink',

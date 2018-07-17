@@ -4,7 +4,6 @@ import AnnotatedTextModel from './models/AnnotatedTextModel'
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
-import FootnotesModel from './models/FootnotesModel'
 import ReferencesModel from './models/ReferencesModel'
 
 import ReferenceManager from './editor/ReferenceManager'
@@ -336,8 +335,8 @@ export default class ArticleAPI {
   }
 
   getFootnotes () {
-    let fnGroup = this.doc.find('fn-group')
-    return new FootnotesModel(fnGroup, this._getContext())
+    let fns = this.doc.findAll('fn-group > fn')
+    return fns.map(fn => this.getModel(fn.type, fn))
   }
 
   getReferences () {

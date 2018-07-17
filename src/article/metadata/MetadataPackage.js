@@ -6,9 +6,11 @@ import WorkflowPane from './WorkflowPane'
 
 import TextureContainerEditor from '../../shared/TextureContainerEditor'
 import TextNodeComponent from '../editor/TextNodeComponent'
+
 import EntityEditor from './EntityEditor'
 import FigureComponent from '../reader/FigureComponent'
 import GraphicComponent from './GraphicComponent'
+import FnComponent from '../editor/FnComponent'
 
 export default {
   name: 'ArticleMetadata',
@@ -62,6 +64,7 @@ export default {
     // using the API instead of the original low-level text property editors
     config.addComponent('text-node', TextNodeComponent)
     config.addComponent('text-property', TextPropertyEditor)
+    config.addComponent('container', TextureContainerEditor)
 
     // Note: in many cases the general EntityEditor implementation is used
     // In some other cases we use custom ones (e.g. figures)
@@ -72,5 +75,8 @@ export default {
 
     // TODO: we should use a default component for TextModels
     config.addComponent('caption', TextureContainerEditor)
+
+    // LEGACY:
+    config.addComponent('footnote', FnComponent)
   }
 }

@@ -1,4 +1,5 @@
 import { Component, FontAwesomeIcon } from 'substance'
+import Tooltip from '../../shared/Tooltip'
 
 export default class FormRowComponent extends Component {
   render($$) {
@@ -14,7 +15,10 @@ export default class FormRowComponent extends Component {
     
       if(hasWarnings) {
         labelEl.append(
-          $$(FontAwesomeIcon, { icon: 'fa-warning' }).addClass('se-icon')
+          $$('div').addClass('se-warning').append(
+            $$(FontAwesomeIcon, { icon: 'fa-warning' }).addClass('se-icon'),
+            $$(Tooltip, {text: warnings.join(', ')})
+          )
         )
       }
 

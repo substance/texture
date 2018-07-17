@@ -30,3 +30,21 @@
 .sc-form-row > .se-editor {
   width: 100%;
 }
+
+.sc-form-row.sm-warning > .se-label > .se-warning {
+  position: absolute;
+  top: 5px;
+  left: 175px;
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning > .se-icon {
+  color: var(--warning-color);
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning > .sc-tooltip {
+  display: none;
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning:hover > .sc-tooltip {
+  display: block;
+}

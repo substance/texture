@@ -22,6 +22,7 @@ import SubjectCollectionModel from './models/SubjectCollectionModel'
 
 import RefContribPropertyEditor from './metadata/RefContribPropertyEditor'
 import StringPropertyEditor from './metadata/StringPropertyEditor'
+import BooleanPropertyEditor from './metadata/BooleanPropertyEditor'
 import ReferencePropertyEditor from './metadata/ReferencePropertyEditor'
 import UniqueReferencePropertyEditor from './metadata/UniqueReferencePropertyEditor'
 
@@ -70,6 +71,7 @@ export default {
     config.addModel('chapter', ReferenceModel)
 
     config.addPropertyEditor(RefContribPropertyEditor)
+    config.addPropertyEditor(BooleanPropertyEditor)
     config.addPropertyEditor(StringPropertyEditor)
     config.addPropertyEditor(ReferencePropertyEditor)
     config.addPropertyEditor(UniqueReferencePropertyEditor)

@@ -54,6 +54,7 @@
 .sc-entity-editor .sc-text-input label,
 .sc-entity-editor .sc-in-place-editor label,
 .sc-entity-editor .sc-select-input .se-label,
+.sc-entity-editor .sc-checkbox .se-label,
 .sc-entity-editor .sc-multi-select-input .se-label {
   display: block;
   flex: 1 0 200px;
@@ -69,6 +70,8 @@
 }
 
 .sc-entity-editor .sc-text-input label::after,
+.sc-entity-editor .sc-select-input label::after,
+.sc-entity-editor .sc-checkbox label::after,
 .sc-entity-editor .sc-multi-select-input .se-label::after {
   content: ':'
 }

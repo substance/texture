@@ -1,14 +1,8 @@
-@import './_text-input.css';
-@import './_select-input.css';
-@import './_multi-select-input.css';
-@import './_boolean-input.css';
+@import '/_text-input.css';
+@import '/_select-input.css';
+@import '/_multi-select-input.css';
+@import '/_checkbox-input.css';
 @import '/_in-place-editor.css';
 @import '/_collection-editor.css';
 @import '/_metadata-editor.css';
 @import '/_entity-editor.css';
-
-/* HACK: make metadata editor scrollable */
-
-.sc-editor {
-  overflow: auto;
-}

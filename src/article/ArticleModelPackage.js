@@ -10,6 +10,9 @@ import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
 
 import FigureModel from './models/FigureModel'
+import FigureCollectionModel from './models/FigureCollectionModel'
+import FootnoteModel from './models/FootnoteModel'
+import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import ReferenceModel from './models/ReferenceModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import AuthorCollectionModel from './models/AuthorCollectionModel'
@@ -54,8 +57,12 @@ export default {
     config.addModel('references', ReferenceCollectionModel)
     config.addModel('keywords', KeywordCollectionModel)
     config.addModel('subjects', SubjectCollectionModel)
+    config.addModel('figures', FigureCollectionModel)
+    config.addModel('footnotes', FootnoteCollectionModel)
+
     // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)
+    config.addModel('fn', FootnoteModel)
     config.addModel('table-wrap', FigureModel)
     config.addModel('journal-article', ReferenceModel)
     config.addModel('conference-paper', ReferenceModel)

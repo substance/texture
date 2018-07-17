@@ -1,5 +1,4 @@
 import { Component, FontAwesomeIcon } from 'substance'
-import EntityEditor from './EntityEditor'
 
 export default class CollectionEditor extends Component {
   constructor(...args) {
@@ -26,17 +25,21 @@ export default class CollectionEditor extends Component {
       )
     )
 
+    const EntityEditor = this.getComponent('entity-editor')
     items.forEach(item => {
+      let ItemEditor = this.getComponent(item.type, true) || EntityEditor
       el.append(
-        $$(EntityEditor, {
-          model: item
+        $$(ItemEditor, {
+          model: item,
+          // LEGACY:
+          node: item._node
         })
       )
     })
 
     return el
   }
-  
+
   _getItems() {
     return this.props.model.getItems()
   }

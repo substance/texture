@@ -1,9 +1,8 @@
 import { NodeComponent } from 'substance'
 
 export default class FigureComponent extends NodeComponent {
-
   // TODO: In the reader, if title or caption is empty, should we drop those elements from the view?
-  render($$) {
+  render ($$) {
     let model = this.props.model
     let title = model.getTitle()
     let caption = model.getCaption()
@@ -22,13 +21,14 @@ export default class FigureComponent extends NodeComponent {
     if (content) {
       // TODO: switch to using model: content
       let contentEl = $$(this.getComponent(contentType), {
-        node: content,
+        model: content,
+        node: content._node,
         disabled: this.props.disabled
       })
       el.append(contentEl.ref('content'))
     }
 
-    let titleEl = $$(this.getComponent('text-property-editor'), {
+    let titleEl = $$(this.getComponent('text-property'), {
       placeholder: 'Enter Title',
       path: title.getTextPath(),
       disabled: this.props.disabled

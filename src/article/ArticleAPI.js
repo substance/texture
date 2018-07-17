@@ -90,7 +90,7 @@ export default class ArticleAPI {
   /*
     Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
   */
-  getModel(type, node) {
+  getModel (type, node) {
     let ModelClass = this.modelRegistry[type]
     if (ModelClass) {
       return new ModelClass(this, node)
@@ -343,6 +343,11 @@ export default class ArticleAPI {
   getReferences () {
     let refList = this.doc.find('ref-list')
     return new ReferencesModel(refList, this._getContext())
+  }
+
+  getFigures () {
+    let figs = this.doc.findAll('fig')
+    return figs.map(fig => this.getModel(fig.type, fig))
   }
 
   _getContext () {

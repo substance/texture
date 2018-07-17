@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 
-export default class GraphicComponent extends Component {
+export default class DeprecatedGraphicComponent extends Component {
 
   render($$) {
     const node = this.props.node

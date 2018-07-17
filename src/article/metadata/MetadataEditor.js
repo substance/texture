@@ -9,6 +9,7 @@ const SECTIONS = [
   { label: 'Groups', modelType: 'groups' },
   { label: 'Affiliations', modelType: 'organisations' },
   { label: 'Awards', modelType: 'awards' },
+  { label: 'Figures', modelType: 'figures' },
   { label: 'References', modelType: 'references' },
   { label: 'Keywords', modelType: 'keywords' },
   { label: 'Subjects', modelType: 'subjects' }

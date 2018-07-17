@@ -3,21 +3,20 @@
   line-height: var(--input-line-height);
 }
 
-.sc-text-input label {
-  display: block;
-  margin-bottom: 2px;
-}
-
 .sc-text-input .se-input {
   width: 100%;
-  border: 1px solid var(--border-color);
+  border: 1px solid transparent;
   height: var(--input-height);
+  font-family: 'Avenir Next', Helvetica;
+  font-size: var(--input-font-size);
+  font-weight: 500;
+  padding-left: 4px;
+  margin-left: -4px;
 }
 
-.sc-text-input .se-warning-msg {
-  font-size: 12px;
-  line-height: 15px;
-  margin: 5px 0 0;
+.sc-text-input .se-input:hover,
+.sc-text-input .se-input:focus {
+  border: 1px solid var(--border-color);
 }
 
 .sc-text-input.sm-warning {

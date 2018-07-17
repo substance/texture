@@ -1,15 +1,4 @@
 .sc-checkbox {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-}
-
-.sc-checkbox .se-label {
-  flex: 1 0 200px;
-  color: #9e9e9e;
-}
-
-.sc-checkbox .se-checkbox-input {
   width: 100%;
   cursor: pointer;
 }

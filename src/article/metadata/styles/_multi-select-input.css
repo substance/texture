@@ -1,21 +1,12 @@
 .sc-multi-select-input {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  font-size: 14px;
-}
-
-.sc-multi-select-input .se-label {
-  flex: 1 0 200px;
-  color: #9e9e9e;
-}
-
-.sc-multi-select-input .se-value {
   width: 100%;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
   cursor: pointer;
+
 }
 
-.sc-multi-select-input .se-value.sm-empty {
+.sc-multi-select-input.sm-empty {
   color: #767575;
 }
 

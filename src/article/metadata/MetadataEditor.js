@@ -120,10 +120,11 @@ export default class MetadataEditor extends Component {
     let tocEl = $$('div').addClass('se-toc')
     SECTIONS.forEach(section => {
       let model = this.api.getModel(section.modelType)
+      const items = model.getItems()
       tocEl.append(
         $$('a').addClass('se-toc-item')
           .attr({ href: '#' + model.id })
-          .append(section.label)
+          .append(section.label + ' (' + items.length + ')')
       )
     })
     el.append(tocEl)

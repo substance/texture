@@ -114,6 +114,9 @@ export default {
     config.addLabel('affiliations', 'Affiliations')
     config.addLabel('awards', 'Awards')
     config.addLabel('group', 'Group')
+    config.addLabel('equalContrib', 'Equal Contribution')
+    config.addLabel('corresp', 'Corresponding Author')
+    config.addLabel('deceased', 'Deceased')
 
     // organisation labels
     config.addLabel('organisation', 'Organisation')

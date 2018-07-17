@@ -22,7 +22,7 @@ export default class MultiSelectInput extends Component {
 
     const isEmptyValue = selectedLabels.length === 0
     const valuelEl = $$('div').addClass('se-value').append(
-      isEmptyValue ? this.getLabel('multi-select-default-value') : selectedLabels.join(', ')
+      isEmptyValue ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
     )
     if(isEmptyValue) valuelEl.addClass('sm-empty')
 

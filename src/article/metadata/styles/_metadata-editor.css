@@ -4,7 +4,10 @@
   height: 100%;
   overflow: auto;
   flex-grow: 1;
+  font-weight: 500;
+  font-family: 'Avenir Next', Helvetica;
 }
+
 
 .sc-metadata-editor > .se-main-section {
   flex: 1 1 600px;
@@ -58,10 +61,18 @@
 }
 
 .sc-metadata-editor .se-collections {
-  max-width: 760px;
+  max-width: 840px;
   padding: 30px;
 }
 
 .sc-metadata-editor .se-workflow-modal.sm-hidden {
   display: none;
+}
+
+
+/* HACK: Overrides */
+
+.sc-metadata-editor a {
+  color: inherit;
+  text-decoration: underline;
 }

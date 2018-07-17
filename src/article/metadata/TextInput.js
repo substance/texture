@@ -19,6 +19,8 @@ export default class FormInputComponent extends Component {
 
     el.append(input)
 
+    if(this.props.warning) el.addClass('sm-warning')
+
     return el
   }
 

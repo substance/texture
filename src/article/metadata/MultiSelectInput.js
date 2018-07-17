@@ -10,7 +10,6 @@ export default class MultiSelectInput extends Component {
   }
 
   render($$) {
-    const label = this.props.label
     const selected = this.state.values
     const options = this.props.availableOptions
     const selectedLabels = options.reduce((labels, opt) => {
@@ -21,15 +20,10 @@ export default class MultiSelectInput extends Component {
     }, [])
 
     const isEmptyValue = selectedLabels.length === 0
-    const valuelEl = $$('div').addClass('se-value').append(
-      isEmptyValue ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
-    )
-    if(isEmptyValue) valuelEl.addClass('sm-empty')
-
     const el = $$('div').addClass('sc-multi-select-input').append(
-      $$('div').addClass('se-label').append(label),
-      valuelEl.on('click', this._toggleEditor)
-    )
+      isEmptyValue ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
+    ).on('click', this._toggleEditor)
+    if(isEmptyValue) el.addClass('sm-empty')
 
     if(this.state.editor) {
       el.append(
@@ -37,11 +31,13 @@ export default class MultiSelectInput extends Component {
       )
     }
 
+    if(this.props.warning) el.addClass('sm-warning')
+
     return el
   }
 
   renderEditor($$, options) {
-    const label = this.props.label
+    const label = this.props.name
     const selected = this.state.values
     const editorEl = $$('div').addClass('se-select-editor').append(
       $$('div').addClass('se-arrow'),

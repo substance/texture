@@ -13,6 +13,7 @@ export default class UniqueReferencePropertyEditor extends Component {
     return $$(SelectInput, {
       name: name,
       value: value,
+      warning: this.props.warning,
       availableOptions: getAvailableOptions(this.context.api, property.targetTypes)
     }).ref(name)
   }

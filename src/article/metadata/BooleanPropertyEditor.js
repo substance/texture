@@ -10,7 +10,8 @@ export default class BooleanPropertyEditor extends Component {
 
     return $$(CheckboxInput, {
       name: name,
-      value: value
+      value: value,
+      warning: this.props.warning
     }).ref(name)
   }
 }

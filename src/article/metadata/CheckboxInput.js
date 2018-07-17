@@ -10,6 +10,8 @@ export default class CheckboxInput extends Component {
       .append(
         $$(FontAwesomeIcon, { icon: icon }).addClass('se-icon')
       )
+
+    if(this.props.warning) el.addClass('sm-warning')
     
     return el
   }

@@ -23,6 +23,7 @@ export default class RefContribPropertyEditor extends Component {
     return $$(InPlaceEditor, {
       id: model.id,
       name: name,
+      warning: this.props.warning,
       values: values
     }).ref(name)
   }

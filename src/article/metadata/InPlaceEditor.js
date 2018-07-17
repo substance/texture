@@ -22,6 +22,8 @@ export default class InPlaceEditor extends Component {
         .on('click', this._addContrib)
     )
 
+    if(this.props.warning) el.addClass('sm-warning')
+
     return el
   }
 

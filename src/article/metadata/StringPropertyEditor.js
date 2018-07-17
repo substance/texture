@@ -11,8 +11,9 @@ export default class StringPropertyEditor extends Component {
       name: name,
       type: 'text',
       value: value,
+      warning: this.props.warning,
       placeholder: 'Enter text',
-      size: 'large',
+      size: 'large'
     }).ref(name)
   }
 }

@@ -28,6 +28,8 @@ export default class SelectInput extends Component {
 
     el.append(selectEl)
 
+    if(this.props.warning) el.addClass('sm-warning')
+
     return el
   }
 

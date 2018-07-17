@@ -21,14 +21,23 @@ export default class MultiSelectInput extends Component {
     }, [])
 
     const isEmptyValue = selectedLabels.length === 0
-    const valuelEl = $$('div').addClass('se-value').append(
-      isEmptyValue ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
-    )
-    if(isEmptyValue) valuelEl.addClass('sm-empty')
+    const valueEl = $$('div').addClass('se-value')
+    if(isEmptyValue) valueEl.addClass('sm-empty')
+
+    if (isEmptyValue) {
+      valueEl.addClass('sm-empty')
+      valueEl.append(this.getLabel('multi-select-default-value'))
+    } else {
+      selectedLabels.forEach(label => {
+        valueEl.append(
+          $$('div').addClass('se-option').text(label)
+        )
+      })
+    }
 
     const el = $$('div').addClass('sc-multi-select-input').append(
       $$('div').addClass('se-label').append(label),
-      valuelEl.on('click', this._toggleEditor)
+      valueEl.on('click', this._toggleEditor)
     )
 
     if(this.state.editor) {

@@ -82,5 +82,29 @@ export default {
     config.addPropertyEditor(StringPropertyEditor)
     config.addPropertyEditor(ReferencePropertyEditor)
     config.addPropertyEditor(UniqueReferencePropertyEditor)
+
+    // Experimental
+    config.setLabelGenerator('references', {
+      template: '[$]',
+      and: ',',
+      to: '-'
+    })
+    config.setLabelGenerator('figures', {
+      name: 'Figure',
+      plural: 'Figures',
+      and: ',',
+      to: '-'
+    })
+    config.setLabelGenerator('tables', {
+      name: 'Table',
+      plural: 'Tables',
+      and: ',',
+      to: '-'
+    })
+    config.setLabelGenerator('footnotes', {
+      template: '$',
+      and: ',',
+      to: '-'
+    })
   }
 }

@@ -143,6 +143,7 @@ function _setup (t) {
   let keyboardShortcuts = config.getKeyboardShortcuts()
   let tools = config.getTools()
   let context = {
+    state: editorState,
     editorSession,
     configurator: config,
     componentRegistry,

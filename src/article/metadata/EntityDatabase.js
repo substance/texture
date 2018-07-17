@@ -233,9 +233,6 @@ export class Person extends DocumentNode {}
 
 Person.schema = {
   type: 'person',
-  equalContrib: { type: 'boolean', optional: true },
-  corresp: { type: 'boolean', optional: true },
-  deceased: { type: 'boolean', optional: true },
   givenNames: { type: 'string', optional: true },
   surname: { type: 'string', optional: true },
   prefix: { type: 'string', optional: true },
@@ -244,7 +241,10 @@ Person.schema = {
   orcid: { type: 'string', optional: true },
   group: { type: 'group', optional: true },
   affiliations: { type: ['organisation'], default: [] },
-  awards: { type: ['award'], default: [] }
+  awards: { type: ['award'], default: [] },
+  equalContrib: { type: 'boolean', optional: true },
+  corresp: { type: 'boolean', optional: true },
+  deceased: { type: 'boolean', optional: true }
 }
 
 /* Holds data for persons and instituions/groups in references */

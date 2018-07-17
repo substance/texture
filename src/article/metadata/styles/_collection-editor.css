@@ -6,14 +6,13 @@
   display: flex;
   justify-content: space-between;
   max-width: 800px;
-  padding: 6px 10px;
-  margin: 10px 20px;
-  background: #f4f4f4;
+  margin: 30px 0px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .sc-collection-editor .se-heading .se-add-value {
+  display: none;
   font-size: 12px;
   background: #fff;
   padding: 2px 4px;

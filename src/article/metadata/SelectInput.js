@@ -2,10 +2,8 @@ import { Component } from 'substance'
 
 export default class SelectInput extends Component {
   render($$) {
-    const label = this.props.label
     const value = this.props.value
     const options = this.props.availableOptions
-    const warning = this.props.warning
 
     const el = $$('div').addClass('sc-select-input')
     const selectEl = $$('select').addClass('se-select')
@@ -28,19 +26,7 @@ export default class SelectInput extends Component {
       selectEl.append(optEl)
     })
 
-    const inputWrap = $$('div').addClass('se-select-input').append(selectEl)
-
-    if(warning) {
-      el.addClass('sm-warning')
-      inputWrap.append(
-        $$('div').addClass('se-warning-msg').append(warning)
-      )
-    }
-    
-    el.append(
-      $$('div').addClass('se-label').append(label),
-      inputWrap
-    )
+    el.append(selectEl)
 
     return el
   }

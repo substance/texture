@@ -7,12 +7,10 @@ export default class BooleanPropertyEditor extends Component {
     let name = property.name
     let data = this.props.model.toJSON()
     let value = data[name]
-    let warning = this.props.warnings.map(w => w.message).join(', ')
+
     return $$(CheckboxInput, {
       name: name,
-      label: this.getLabel(name),
-      value: value,
-      warning: warning
+      value: value
     }).ref(name)
   }
 }

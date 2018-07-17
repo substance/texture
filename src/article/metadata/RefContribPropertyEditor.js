@@ -22,7 +22,6 @@ export default class RefContribPropertyEditor extends Component {
 
     return $$(InPlaceEditor, {
       id: model.id,
-      label: this.getLabel(name),
       name: name,
       values: values
     }).ref(name)

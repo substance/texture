@@ -5,17 +5,9 @@ export default class FormInputComponent extends Component {
     const val = this.props.value
     const size = this.props.size || 'medium'
     const type = this.props.type || 'text'
-    const label = this.props.label
     const placeholder = this.props.placeholder
-    const warning = this.props.warning
 
     const el = $$('div').addClass('sc-text-input sm-size-'+size)
-
-    if(label) {
-      el.append(
-        $$('label').append(label)
-      )
-    }
 
     const input = $$('input').attr({
       value: val,
@@ -25,16 +17,7 @@ export default class FormInputComponent extends Component {
       .ref('input')
       .on('change', this._onChange)
 
-    const inputWrap = $$('div').addClass('se-text-input').append(input)
-
-    if(warning) {
-      el.addClass('sm-warning')
-      inputWrap.append(
-        $$('div').addClass('se-warning-msg').append(warning)
-      )
-    }
-
-    el.append(inputWrap)
+    el.append(input)
 
     return el
   }

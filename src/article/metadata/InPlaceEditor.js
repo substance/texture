@@ -4,25 +4,16 @@ export default class InPlaceEditor extends Component {
 
   render($$) {
     const items = this.props.values
-    const label = this.props.label
 
     let el = $$('div').addClass('sc-in-place-editor')
 
-    if(label) {
-      el.append(
-        $$('label').append(label)
-      )
-    }
-
-    let inputEl = $$('div').addClass('se-entity-input')
-
     items.forEach(item => {
-      inputEl.append(
+      el.append(
         this._renderEditor($$, item)
       )
     })
 
-    inputEl.append(
+    el.append(
       $$('button').addClass('se-add-value')
         .append(
           $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
@@ -30,8 +21,6 @@ export default class InPlaceEditor extends Component {
         )
         .on('click', this._addContrib)
     )
-
-    el.append(inputEl)
 
     return el
   }

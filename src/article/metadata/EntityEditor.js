@@ -1,4 +1,5 @@
 import { Component, FontAwesomeIcon } from 'substance'
+import FormRowComponent from './FormRowComponent'
 
 const REQUIRED_PROPERTIES = {
   'book': {
@@ -124,15 +125,21 @@ export default class EntityEditor extends Component {
     propertyStates.forEach(propertyState => {
       const property = propertyState.property
       if(propertyState.hidden && !fullMode) return
-      const warnings = propertyState.warnings
+      const warnings = propertyState.warnings.map(w => w.message)
+
       const PropertyEditorClass = this._getPropertyEditorClass(property)
       if (PropertyEditorClass) {
         el.append(
-          $$(PropertyEditorClass, {
-            model,
-            property,
-            warnings
-          }).ref(property.name)
+          $$(FormRowComponent, {
+            label: this.getLabel(property.name),
+            warnings: warnings
+          }).append(
+            $$(PropertyEditorClass, {
+              model,
+              property,
+              warning: warnings.length > 0
+            }).ref(property.name)
+          )
         )
       }
     })

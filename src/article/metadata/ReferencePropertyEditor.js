@@ -12,8 +12,7 @@ export default class ReferencePropertyEditor extends Component {
     return $$(MultiSelectInput, {
       name: name,
       selectedOptions: value,
-      availableOptions: getAvailableOptions(this.context.api, property.targetTypes),
-      label: this.getLabel(name)
+      availableOptions: getAvailableOptions(this.context.api, property.targetTypes)
     }).ref(name)
   }
 }

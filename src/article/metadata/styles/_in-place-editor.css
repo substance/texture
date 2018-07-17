@@ -1,31 +1,30 @@
 .sc-in-place-editor {
-  display: flex;
-  align-items: baseline;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
 }
 
-.sc-in-place-editor .se-entity-input {
+.sc-in-place-editor > .sc-form-row {
   width: 100%;
 }
 
-.sc-in-place-editor .se-entity-item {
+.sc-in-place-editor > .sc-form-row > .se-editor {
   display: flex;
   align-items: center;
-  justify-content: space-around;
   margin-bottom: 10px;
 }
 
-.sc-in-place-editor .se-entity-item .se-input {
+.sc-in-place-editor > .sc-form-row > .se-editor > .se-input {
   width: 100%;
   margin-right: 10px;
 }
 
-.sc-in-place-editor .se-entity-input .se-add-value {
+.sc-in-place-editor > .sc-form-row > .se-editor > .se-add-value {
   font-size: 14px;
   border-radius: 4px;
   border: 1px solid #dfdfdf;
   padding: 2px 8px;
 }
 
-.sc-in-place-editor .se-entity-input .se-icon {
+.sc-in-place-editor > .se-add-value > .se-icon {
   margin-right: 6px;
 }

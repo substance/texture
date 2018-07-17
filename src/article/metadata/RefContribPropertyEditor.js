@@ -41,8 +41,6 @@ export default class RefContribPropertyEditor extends Component {
   _updateContrib(contribId, propName, value) {
     const model = this.props.model
     model.updateContrib(contribId, propName, value)
-    // TODO: find a better way of updating the entity header
-    this.rerender()
   }
 }
 

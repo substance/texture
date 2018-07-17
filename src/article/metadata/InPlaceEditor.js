@@ -1,6 +1,14 @@
 import { Component, FontAwesomeIcon } from 'substance'
+import FormRowComponent from './FormRowComponent'
+import TextInput from './TextInput'
 
 export default class InPlaceEditor extends Component {
+  constructor(...args) {
+    super(...args)
+    this.handleActions({
+      'set-value': this._updateContrib
+    })
+  }
 
   render($$) {
     const items = this.props.values
@@ -28,21 +36,13 @@ export default class InPlaceEditor extends Component {
   }
 
   _renderEditor($$, item) {
-    let el = $$('div').addClass('se-entity-item').ref(item.id)
-  
-    el.append(
-      $$('input').addClass('se-input')
-        .attr({value: item.givenNames, placeholder: 'Given names'})
-        .on('change', this._updateContrib.bind(this, item.id, 'givenNames')),
-      $$('input').addClass('se-input')
-        .attr({value: item.name, placeholder: 'Last name'})
-        .on('change', this._updateContrib.bind(this, item.id, 'name')),
+    return $$(FormRowComponent).append(
+      $$(TextInput, {id: item.id, name: 'givenNames', value: item.givenNames, placeholder: 'Given names'}),
+      $$(TextInput, {id: item.id, name: 'name', value: item.name, placeholder: 'Last name'}),
       $$('button').addClass('se-remove-value')
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))
         .on('click', this._removeContrib.bind(this, item.id))  
-    )
-
-    return el
+    ).ref(item.id)
   }
 
   _addContrib() {
@@ -53,8 +53,7 @@ export default class InPlaceEditor extends Component {
     this.send('remove-contrib', this.props.name, itemId)
   }
 
-  _updateContrib(itemId, propName, e) {
-    const value = e.currentTarget.value
+  _updateContrib(propName, value, itemId) {
     this.send('update-contrib', itemId, propName, value)
   }
 

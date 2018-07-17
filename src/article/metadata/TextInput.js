@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 
-export default class FormInputComponent extends Component {
+export default class TextInputComponent extends Component {
   render($$) {
     const val = this.props.value
     const size = this.props.size || 'medium'
@@ -25,9 +25,10 @@ export default class FormInputComponent extends Component {
   }
 
   _onChange() {
+    const id = this.props.id
     const name = this.props.name
     const value = this._getValue()
-    this.send('set-value', name, value)
+    this.send('set-value', name, value, id)
   }
 
   _getValue() {

@@ -11,7 +11,7 @@ import {
   MultiSelectPackage
 } from 'substance'
 
-import { 
+import {
   BasePackage, EditorBasePackage, TextureTextPropertyComponent
 } from '../../shared'
 
@@ -97,30 +97,6 @@ export default {
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
-
-    // Experimental
-    config.setLabelGenerator('references', {
-      template: '[$]',
-      and: ',',
-      to: '-'
-    })
-    config.setLabelGenerator('figures', {
-      name: 'Figure',
-      plural: 'Figures',
-      and: ',',
-      to: '-'
-    })
-    config.setLabelGenerator('tables', {
-      name: 'Table',
-      plural: 'Tables',
-      and: ',',
-      to: '-'
-    })
-    config.setLabelGenerator('footnotes', {
-      template: '$',
-      and: ',',
-      to: '-'
-    })
 
     config.addComponent('workflow-pane', WorkflowPane, true)
 

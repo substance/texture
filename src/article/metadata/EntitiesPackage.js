@@ -1,12 +1,10 @@
-import EntityDatabase from './EntityDatabase'
-import {
+import EntityDatabase, {
   BibliographicEntry, JournalArticle, Book, Chapter, Person, Group, Organisation, Award,
   ConferencePaper, Report, DataPublication, MagazineArticle, NewspaperArticle, Patent, 
-  Software, Thesis, Webpage, Keyword, Subject, RefContrib
+  Software, Thesis, Webpage, Keyword, Subject, RefContrib, ArticleRecord
 } from './EntityDatabase'
 
 import EntityLabelsPackage from './EntityLabelsPackage'
-
 
 export default {
   name: 'entities',
@@ -17,6 +15,7 @@ export default {
       DocumentClass: EntityDatabase,
       defaultTextType: 'paragraph'
     })
+    config.addNode(ArticleRecord)
     config.addNode(BibliographicEntry)
     config.addNode(JournalArticle)
     config.addNode(ConferencePaper)

@@ -1,6 +1,5 @@
 export { default as AppState } from './AppState'
 export { default as BasePackage } from './BasePackage'
-export { default as checkArchive } from './checkArchive'
 export { default as EditorBasePackage } from './EditorBasePackage'
 export { default as EditorState } from './EditorState'
 export { default as Managed } from './Managed'

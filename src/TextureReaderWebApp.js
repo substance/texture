@@ -1,5 +1,5 @@
 import { getQueryStringParam, substanceGlobals, platform } from 'substance'
-import { TextureReader, ReaderPackage } from './reader'
+import { TextureReader, ReaderPackage } from './article/reader'
 
 import DocumentArchiveReadOnlyConfig from './dar/DocumentArchiveReadOnlyConfig'
 import HttpStorageClientConfig from './dar/HttpStorageClientConfig'

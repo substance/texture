@@ -1,6 +1,6 @@
 import DocumentArchiveReadWrite from './dar/DocumentArchiveReadWrite'
 import StorageClientTypes from "./dar/StorageClientTypes"
-import vfsSaveHook from "./util/vfsSaveHook"
+import vfsSaveHook from "./shared/vfsSaveHook"
 
 export default class TextureArchive extends DocumentArchiveReadWrite {
 

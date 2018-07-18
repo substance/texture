@@ -3,24 +3,24 @@ import { EditorSession, forEach } from "substance"
 import EditorState from '../shared/EditorState'
 import DocumentLoader from "../dar/DocumentLoader"
 import ManifestLoaderNew from "../dar/ManifestLoaderNew"
-import PubMetaLoader from "../entities/PubMetaLoader"
+import PubMetaLoader from "../article/metadata/PubMetaLoader"
 import TextureEditorSession from "../shared/TextureEditorSession"
 
-/** 
+/**
  * @module editor/util/EditorSessionsGenerator
- * 
+ *
  * @description
- * A service class that provived various method to 
+ * A service class that provived various method to
  * create editor (better document archive - DAR) sessions
  */
 export default class EditorSessionsGenerator {
 
   /**
-   * Creates a session for the manifest of a document archive DAR 
-   * 
-   * @param {Object} archive The document archive DAR 
-   * @returns {Promise} A promise that will be resolved with the manifest session 
-   * or rejected with errors that occured during the session generation process 
+   * Creates a session for the manifest of a document archive DAR
+   *
+   * @param {Object} archive The document archive DAR
+   * @returns {Promise} A promise that will be resolved with the manifest session
+   * or rejected with errors that occured during the session generation process
    */
   static generateSessionForManifest(archive) {
     return new Promise(function (resolve, reject) {
@@ -56,12 +56,12 @@ export default class EditorSessionsGenerator {
   }
 
   /**
-   * Creates a session for the publication metadata resource of a DAR 
-   * 
-   * @param {Object} archive The document archive DAR 
+   * Creates a session for the publication metadata resource of a DAR
+   *
+   * @param {Object} archive The document archive DAR
    * @returns {Promise} A promise that will be resolved with the session for the
-   * publication metadata resource or rejected with errors that occured during 
-   * the session generation process 
+   * publication metadata resource or rejected with errors that occured during
+   * the session generation process
    */
   static generateSessionForPubMeta(archive) {
     return new Promise(function (resolve, reject) {
@@ -74,12 +74,12 @@ export default class EditorSessionsGenerator {
   }
 
   /**
-   * Creates sessions for the existing document contained within a DAR 
-   * 
-   * @param {Object} archive The document archive DAR 
+   * Creates sessions for the existing document contained within a DAR
+   *
+   * @param {Object} archive The document archive DAR
    * @returns {Promise} A promise that will be resolved with the sessions for the
    * documents or rejected with errors that occured during the generation process
-   * of the sessions 
+   * of the sessions
    */
   static generateSessionsForExistingDocuments(archive) {
     return new Promise(function (resolve, reject) {
@@ -113,10 +113,10 @@ export default class EditorSessionsGenerator {
   }
 
   /**
-   * Creates a session for a document that has been newly added to a DAR 
-   * 
-   * @param {Object} archive The document archive DAR 
-   * @param {Object} rawDocument The document added newly to the DAR 
+   * Creates a session for a document that has been newly added to a DAR
+   *
+   * @param {Object} archive The document archive DAR
+   * @param {Object} rawDocument The document added newly to the DAR
    * @returns {Promise} A promise that will be resolved with the sessions for the
    * new document or rejected with errors that occured during the session generation process
    */
@@ -142,8 +142,8 @@ export default class EditorSessionsGenerator {
 
   /**
    * A helper function that creates the actual document session
-   * 
-   * @param {Object} loadingResult The document for which to create a session 
+   *
+   * @param {Object} loadingResult The document for which to create a session
    * @returns {Object} The document session
    */
   static _createSession(loadingResult) {
@@ -151,7 +151,7 @@ export default class EditorSessionsGenerator {
     /*
     let configurator = new TextureConfigurator()
     configurator.import(archiveConfig.ArticleConfig)
-        
+
     let options = {
         configurator: configurator,
         context: existingSessions

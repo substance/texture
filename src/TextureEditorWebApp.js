@@ -1,6 +1,6 @@
 import { getQueryStringParam, substanceGlobals, parseKeyEvent, platform } from 'substance'
 
-import EditorPackage from './editor/EditorPackage'
+import EditorPackage from './article/editor/EditorPackage'
 import HttpStorageClientConfig from './dar/HttpStorageClientConfig'
 import InMemoryDarBuffer from './dar/InMemoryDarBuffer';
 import StorageClientFactory from './dar/StorageClientFactory'
@@ -38,7 +38,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(TextureWebAppCh
 
     let finalMountConfig = TextureEditorWebApp._getFinalMountConfig(customMountConfig)
     let finalMountPoint = TextureEditorWebApp._getFinalMountPoint(customMountPoint)
-    
+
     return TextureEditorWebApp.mount(finalMountConfig, finalMountPoint)
   }
 
@@ -71,7 +71,7 @@ export default class TextureEditorWebApp extends TextureAppMixin(TextureWebAppCh
     documentArchiveConfig.setBuffer(new InMemoryDarBuffer())
     documentArchiveConfig.setStorageConfig(storageClientConfig)
     documentArchiveConfig.setStorageClient(storageClient)
-    
+
     return {
       appClass: Texture,
       archiveId: 'kitchen-sink',

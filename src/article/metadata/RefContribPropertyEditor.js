@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import InPlaceEditor from './InPlaceEditor'
+import RefContribEditor from './RefContribEditor'
 
 export default class RefContribPropertyEditor extends Component {
   constructor(...args) {
@@ -20,7 +20,7 @@ export default class RefContribPropertyEditor extends Component {
     let values = model.resolveRelationship(name).map(m => m.toJSON())
     
 
-    return $$(InPlaceEditor, {
+    return $$(RefContribEditor, {
       id: model.id,
       name: name,
       warning: this.props.warning,

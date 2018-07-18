@@ -2,7 +2,7 @@ import { Component, FontAwesomeIcon } from 'substance'
 import FormRowComponent from './FormRowComponent'
 import TextInput from './TextInput'
 
-export default class InPlaceEditor extends Component {
+export default class RefContribEditor extends Component {
   constructor(...args) {
     super(...args)
     this.handleActions({
@@ -13,7 +13,7 @@ export default class InPlaceEditor extends Component {
   render($$) {
     const items = this.props.values
 
-    let el = $$('div').addClass('sc-in-place-editor')
+    let el = $$('div').addClass('sc-ref-contrib-editor')
 
     items.forEach(item => {
       el.append(

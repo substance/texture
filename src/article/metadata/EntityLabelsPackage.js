@@ -87,6 +87,7 @@ export default {
     config.addLabel('issue', 'Issue')
     config.addLabel('lpage', 'Last Page')
     config.addLabel('month', 'Month')
+    config.addLabel('pageCount', 'Page Count')
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('patentCountry', 'Patent Country')
     config.addLabel('patentNumber', 'Patent Number')
@@ -95,6 +96,7 @@ export default {
     config.addLabel('publisherLoc', 'Publisher Location')
     config.addLabel('publisherName', 'Publisher Name')
     config.addLabel('source', 'Source')
+    config.addLabel('sponsors', 'Sponsors')
     config.addLabel('series', 'Series')
     config.addLabel('title', 'Title')
     config.addLabel('version', 'Version')
@@ -140,5 +142,13 @@ export default {
     config.addLabel('members', 'Members')
     config.addLabel('edit-members', 'Edit Members')
 
+    // award labels
+    config.addLabel('institution', 'Institution Name')
+    config.addLabel('fundRefId', 'Institution Identifier')
+    config.addLabel('awardId', 'Award Identifier')
+  
+    // keyword labels
+    config.addLabel('category', 'Category')
+    config.addLabel('language', 'Language')
   }
 }

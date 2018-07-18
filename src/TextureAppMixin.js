@@ -1,6 +1,4 @@
-import Texture from './Texture'
-import TextureArchive from './TextureArchive'
-import { JATSImportDialog } from './article'
+import { JATSImportDialog } from './article/index'
 
 export default function TextureAppMixin (ParentAppChrome) {
   return class TextureApp extends ParentAppChrome {
@@ -8,7 +6,7 @@ export default function TextureAppMixin (ParentAppChrome) {
       let el = $$('div').addClass('sc-app')
       let { archive, error } = this.state
       if (archive) {
-        const Texture = this._getAppClass()
+        const Texture = this.props.appClass
         el.append(
           $$(Texture, { archive })
         )
@@ -24,14 +22,6 @@ export default function TextureAppMixin (ParentAppChrome) {
         // LOADING...
       }
       return el
-    }
-
-    _getAppClass () {
-      return Texture
-    }
-
-    _getArchiveClass () {
-      return TextureArchive
     }
   }
 }

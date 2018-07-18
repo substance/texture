@@ -3,6 +3,16 @@ import ManifestSchema from './ManifestSchema'
 
 export default class ManifestDocument extends XMLDocument {
 
+  /**
+   * Adds a document entry to the manifest
+   * @param {Object} rawDocumentEntry The raw version of the document entry to be added to the manifest
+   */
+  addDocumentEntry(rawDocumentEntry) {
+    this.find('documents').append(
+      this.createElement('document').attr(rawDocumentEntry)
+    )
+  }
+
   getRootNode() {
     if (!this.root) {
       let nodes = this.getNodes()

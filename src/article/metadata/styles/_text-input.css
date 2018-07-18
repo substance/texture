@@ -19,6 +19,11 @@
   border: 1px solid var(--border-color);
 }
 
+.sc-text-input .se-input::placeholder {
+  color: #ccc;
+  font-weight: 400;
+}
+
 .sc-text-input.sm-warning {
   color: var(--warning-color);
 }

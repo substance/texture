@@ -1,5 +1,23 @@
 import { DocumentNode, Document, without } from 'substance'
 
+export class ArticleRecord extends DocumentNode {}
+
+ArticleRecord.schema = {
+  type: 'article-record',
+  volume: { type: 'string', optional: false, default: '' },
+  issue: { type: 'string', optional: false, default: '' },
+  fpage: { type: 'string', optional: false, default: '' },
+  lpage: { type: 'string', optional: false, default: '' },
+  pageRange: { type: 'string', optional: false, default: '' },
+  elocationId: { type: 'string', optional: false, default: '' },
+  acceptedDate: { type: 'string', optional: false, default: '' },
+  publishedDate: { type: 'string', optional: false, default: '' },
+  receivedDate: { type: 'string', optional: false, default: '' },
+  revReceivedDate: { type: 'string', optional: false },
+  revRequestedDate: { type: 'string', optional: false }
+}
+
+
 // Using an 'abstract base class' to be
 // able to identify sub-types via isInstanceOf
 export class BibliographicEntry extends DocumentNode {}

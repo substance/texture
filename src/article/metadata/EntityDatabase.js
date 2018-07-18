@@ -303,7 +303,8 @@ export class Keyword extends DocumentNode {}
 Keyword.schema = {
   type: 'keyword',
   name: { type: 'string', optional: false, default: '' },
-  category: { type: 'string', optional: false, default: '' }
+  category: { type: 'string', optional: false, default: '' },
+  language: { type: 'string', optional: false, default: '' }
 }
 
 export class Subject extends DocumentNode {}

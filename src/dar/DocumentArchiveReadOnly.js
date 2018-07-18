@@ -4,17 +4,17 @@ import DocumentArchiveReadOnlyExporter from "./DocumentArchiveReadOnlyExporter"
 import EditorSessionsGenerator from "../sessions/EditorSessionsGenerator"
 import EditorSessionsValidator from "../sessions/EditorSessionsValidator"
 
-/** 
+/**
  * @module dar/DocumentArchiveReadOnly
- * 
+ *
  * @description
- * A read only DAR which contains a subset of the functionality 
+ * A read only DAR which contains a subset of the functionality
  * of the PersistedDocumentArchive. It is intended to be used for the usage
  * within reader application which don't need to modify DARs.
- * 
+ *
  * During the loading of an archive not only the raw DAR archive will be loaded
- * from storage but also the internal representations of the DAR's manifest (as 
- * an instance of ManifestDocument) as well as all the DAR's sessions via the 
+ * from storage but also the internal representations of the DAR's manifest (as
+ * an instance of ManifestDocument) as well as all the DAR's sessions via the
  * external EditorSessionsGenerator class
  */
 export default class DocumentArchiveReadOnly extends EventEmitter {
@@ -25,9 +25,11 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
     this._archiveId = null
 
     /**
-     * TODO 
-     * Find out if we can we do 
+     * TODO
+     * Find out if we can we do
      * this._articleConfig = documentArchiveConfig.getArticleConfig()
+     *
+     * OB: a configuration for 'article' should come from a nested configuration
      */
     this._config = {
       ArticleConfig: documentArchiveConfig.getArticleConfig()
@@ -43,7 +45,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Exports this DAR
-   * 
+   *
    * @returns {Object} The exported DAR in different format/representation
    */
   export () {
@@ -52,9 +54,9 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Loads a DAR
-   * 
+   *
    * @param {string} archiveId The id of the  DAR to load
-   * @returns {Promise} A promise that will be resolved with the DAR or rejected with errors that occured during the loading process 
+   * @returns {Promise} A promise that will be resolved with the DAR or rejected with errors that occured during the loading process
    */
   load(archiveId) {
     return new Promise((resolve, reject) => {
@@ -91,13 +93,13 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * TODO Find out what this function is doing exactly.
-   * 
+   *
    * @param {string} path
-   * @returns 
+   * @returns
    */
   resolveUrl(path) {
     let blobUrl = this._pendingFiles[path]
-    
+
     if (blobUrl) {
       return blobUrl
     } else {
@@ -110,7 +112,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Returns the id this DAR
-   * 
+   *
    * @returns {string} The id of this DAR
    */
   getArchiveId() {
@@ -119,8 +121,8 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * TODO can we rename this to getArticleConfig()?
-   * 
-   * Returns the configuration of this DAR 
+   *
+   * Returns the configuration of this DAR
    * @return {Object} The configuration of this DAR
    */
   getConfig() {
@@ -128,19 +130,19 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
   }
 
   /**
-   * Gets the all document entries contained in the manifest of this DAR 
-   * 
-   * @returns {Object} All document entries contained in the manifest of this DAR 
+   * Gets the all document entries contained in the manifest of this DAR
+   *
+   * @returns {Object} All document entries contained in the manifest of this DAR
    */
   getDocumentEntries() {
     return this.getManifest().getDocumentEntries()
   }
 
   /**
-   * Gets a single document entry contained in the manifest of this DAR 
-   * 
+   * Gets a single document entry contained in the manifest of this DAR
+   *
    * @param {string} id The id of a document entry contained in the manifest of this DAR
-   * @returns {Object} A single document entry contained in the manifest of this DAR 
+   * @returns {Object} A single document entry contained in the manifest of this DAR
    */
   getDocumentEntry(id) {
     return this.getManifest().getDocumentEntry(id)
@@ -148,7 +150,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Gets the manifest of this DAR
-   * 
+   *
    * @returns {ManifestDocument} The manifest of this DAR
    */
   getManifest() {
@@ -157,7 +159,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Gets the manifest session of this DAR
-   * 
+   *
    * @returns {ManifestDocument} The manifest session of this DAR
    */
   getManifestSession() {
@@ -166,7 +168,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Gets the raw documents of this DAR
-   * 
+   *
    * @returns {Object} The raw documents of this DAR
    */
   getRawDocuments() {
@@ -190,7 +192,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Gets the version of the this DAR
-   * 
+   *
    * @returns {string} The version of this ready-only DAR
    */
   getVersion() {
@@ -199,7 +201,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Gets the raw version (as loaded from the server) of this DAR
-   * 
+   *
    * @returns {Object} The raw version of this DAR
    */
   getUpstreamArchive() {
@@ -208,7 +210,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Sets the raw version (as loaded from the server) of this DAR
-   * 
+   *
    * @param {Object} upstreamArchive The raw version of this DAR
    */
   setUpstreamArchive(upstreamArchive) {
@@ -217,9 +219,9 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * TODO can this be renamed to getSession()?
-   * 
+   *
    * Returns a single session of this DAR
-   * 
+   *
    * @param {string} sessionId The id of the session
    * @returns {Object} A single session of this DAR
    */
@@ -229,7 +231,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Returns a single session of this DAR
-   * 
+   *
    * @param {string} sessionId The id of the session
    * @returns {Object} A single session of this DAR
    */
@@ -239,7 +241,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Sets a single session of this DAR
-   * 
+   *
    * @param {string} sessionId The id of the session
    * @param {Object} session The session to set
    */
@@ -253,9 +255,9 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * TODO Can this be deleted in favour of getSessions()?
-   * 
+   *
    * Returns all session of this DAR
-   * 
+   *
    * @returns {Object} All sessions of this DAR
    */
   getEditorSessions() {
@@ -264,7 +266,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Returns all session of this DAR
-   * 
+   *
    * @returns {Object} All sessions of this DAR
    */
   getSessions() {
@@ -273,7 +275,7 @@ export default class DocumentArchiveReadOnly extends EventEmitter {
 
   /**
    * Returns the title of this DAR
-   * 
+   *
    * @return {string} The title of this DAR or 'Untitled' if no title is present
    */
   getTitle() {

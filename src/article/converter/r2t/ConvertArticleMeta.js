@@ -14,9 +14,12 @@ export default class ConvertArticleMeta {
     const keywords = dom.findAll('article-meta > kwd-group > kwd')
     // Convert <kwd> elements to keywords entities
     keywords.forEach(kwd => {
-      let entityId = KeywordConverter.import(kwd, pubMetaDb)
-      kwd.setAttribute('rid', entityId)
-      kwd.empty()
+      KeywordConverter.import(kwd, pubMetaDb)
+      kwd.getParent().removeChild(kwd)
+    })
+
+    dom.findAll('article-meta > kwd-group').forEach(kwdGroup => {
+      kwdGroup.getParent().removeChild(kwdGroup)
     })
 
     const subjects = dom.findAll('article-meta subj-group > subject')
@@ -30,15 +33,21 @@ export default class ConvertArticleMeta {
 
   export(dom, api) {
     const $$ = dom.createElement.bind(dom)
+    const articleMeta = dom.find('article-meta')
     const pubMetaDb = api.pubMetaDb
-    const keywords = dom.findAll('article-meta > kwd-group > kwd')
+    //const keywords = dom.findAll('article-meta > kwd-group > kwd')
+    const keywordIdx = pubMetaDb.findByType('keyword')
+    const keywords = keywordIdx.map(kwdId => pubMetaDb.get(kwdId))
+    const keywordLangs = [...new Set(keywords.map(item => item.language))]
+    keywordLangs.forEach(lang => {
+      articleMeta.append(
+        $$('kwd-group').setAttribute('xml-lang', lang)
+      )
+    })
     keywords.forEach(kwd => {
-      let entity = pubMetaDb.get(kwd.attr('rid'))
-      let newKwdEl = KeywordConverter.export($$, entity, pubMetaDb)
-      // We want to keep the original document-specific id, and just assign
-      // the element's content.
-      kwd.innerHTML = newKwdEl.innerHTML
-      kwd.removeAttr('rid')
+      const kwdGroup = dom.find(`article-meta > kwd-group[xml-lang="${kwd.language}"]`)
+      const newKwdEl = KeywordConverter.export($$, kwd, pubMetaDb)
+      kwdGroup.append(newKwdEl)
     })
 
     const subjects = dom.findAll('article-meta subj-group > subject')

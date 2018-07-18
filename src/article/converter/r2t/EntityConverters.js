@@ -117,7 +117,7 @@ export const KeywordConverter = {
       type: 'keyword',
       name: el.textContent,
       category: el.getAttribute('content-type'),
-      language: el.parentNode.getAttribute('xml:lang')
+      language: el.getParent().getAttribute('xml:lang')
     }
     const entity = pubMetaDb.create(node)
 

@@ -1,5 +1,5 @@
 import { KeywordConverter, SubjectConverter } from './EntityConverters'
-import { expandAbstract } from './r2tHelpers'
+import { expandAbstract, insertChildAtFirstValidPos } from './r2tHelpers'
 
 /*
   Expands elements in article-meta which are optional in TextureArticle but
@@ -40,9 +40,9 @@ export default class ConvertArticleMeta {
     const keywords = keywordIdx.map(kwdId => pubMetaDb.get(kwdId))
     const keywordLangs = [...new Set(keywords.map(item => item.language))]
     keywordLangs.forEach(lang => {
-      articleMeta.append(
-        $$('kwd-group').setAttribute('xml-lang', lang)
-      )
+      const kwdGroup = $$('kwd-group').setAttribute('xml-lang', lang)
+      // NOTE: this function is only working if the xml is valid currently, don't use it during invalid state
+      insertChildAtFirstValidPos(articleMeta, kwdGroup)
     })
     keywords.forEach(kwd => {
       const kwdGroup = dom.find(`article-meta > kwd-group[xml-lang="${kwd.language}"]`)

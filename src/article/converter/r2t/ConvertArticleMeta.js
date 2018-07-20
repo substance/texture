@@ -1,4 +1,4 @@
-import { KeywordConverter, SubjectConverter } from './EntityConverters'
+import { AritcleRecordConverter, KeywordConverter, SubjectConverter } from './EntityConverters'
 import { expandAbstract, insertChildAtFirstValidPos } from './r2tHelpers'
 
 /*
@@ -11,6 +11,10 @@ export default class ConvertArticleMeta {
     expandAbstract(dom)
 
     const pubMetaDb = api.pubMetaDb
+
+    const articleMeta = dom.find('article-meta')
+    AritcleRecordConverter.import(articleMeta, pubMetaDb)
+
     const keywords = dom.findAll('article-meta > kwd-group > kwd')
     // Convert <kwd> elements to keywords entities
     keywords.forEach(kwd => {

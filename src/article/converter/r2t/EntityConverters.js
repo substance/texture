@@ -532,6 +532,54 @@ export const ElementCitationConverter = {
 }
 
 
+/*
+  <pub-date>, <history>
+*/
+export const AritcleRecordConverter = {
+
+  import(el, pubMetaDb) {
+    let node = {
+      type: 'article-record',
+      elocationId: _getText(el, 'elocation-id'),
+      fpage: _getText(el, 'fpage'),
+      lpage: _getText(el, 'lpage'),
+      issue: _getText(el, 'issue'),
+      volume: _getText(el, 'volume'),
+      pageRange: _getText(el, 'page-range')
+    }
+    const historyDates = el.findAll('history > date, pub-date')
+    historyDates.forEach(dateEl => {
+      const date = _extractDate(dateEl)
+      node[date.type] = date.value
+    })
+    const entity = pubMetaDb.create(node)
+    window.pubMetaDb = pubMetaDb
+    return entity.id
+  },
+  export($$, node, pubMetaDb) {
+
+  }
+}
+
+function _extractDate(el) {
+  const dateTypesMap = {
+    'pub': 'publishedDate',
+    'accepted': 'acceptedDate',
+    'received': 'receivedDate',
+    'rev-received': 'revReceivedDate',
+    'rev-request': 'revRequestedDate'
+  }
+
+  const dateType = el.getAttribute('date-type')
+  const value = el.getAttribute('iso-8601-date')
+  const entityProp = dateTypesMap[dateType]
+
+  return {
+    value: value,
+    type: entityProp
+  }
+}
+
 function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
   if (contribs && contribs.length > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)

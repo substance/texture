@@ -5,9 +5,6 @@ import DefaultModel from './DefaultModel'
   A model for holding authors and editors information.
 */
 export default class ContribsModel extends DefaultModel {
-  constructor(node, context) {
-    super(node, context)
-  }
 
   addAuthor(author) {
     const editorSession = this.context.editorSession

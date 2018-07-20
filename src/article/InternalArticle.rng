@@ -53,6 +53,7 @@
   <s:elementType name="xref" s:type="inline-element"/>
   <!-- Containers -->
   <s:elementType name="abstract" s:type="container"/>
+  <s:elementType name="trans-abstract" s:type="container"/>
   <s:elementType name="body" s:type="container"/>
   <s:elementType name="caption" s:type="container"/>
   <s:elementType name="disp-quote-content" s:type="container"/>

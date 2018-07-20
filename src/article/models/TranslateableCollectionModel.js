@@ -1,22 +1,8 @@
-export default class FigureCollectionModel {
-  constructor (api) {
-    this._api = api
-  }
+import DefaultCollectionModel from './DefaultCollectionModel'
 
-  get id () {
-    return 'figures'
-  }
-
-  get isCollection() {
-    return true
-  }
-  
-  get type () {
-    return 'collection'
-  }
-
-  getItems () {
-    return this._api.getFigures()
+export default class TranslateableCollectionModel extends DefaultCollectionModel {
+  constructor(api) {
+    super(api)
   }
 
   addItem (item) { // eslint-disable-line no-unused-vars
@@ -27,4 +13,13 @@ export default class FigureCollectionModel {
   removeItem (item) { // eslint-disable-line no-unused-vars
     // TODO: should it really be possible to delete a figure here?
   }
+
+  getItems() {
+    return this._api.getTranslatables()
+  }
+
+  _getCollectionId() {
+    return 'translateables'
+  }
+
 }

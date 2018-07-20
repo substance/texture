@@ -540,36 +540,63 @@ export const AritcleRecordConverter = {
   import(el, pubMetaDb) {
     let node = {
       type: 'article-record',
-      elocationId: _getText(el, 'elocation-id'),
-      fpage: _getText(el, 'fpage'),
-      lpage: _getText(el, 'lpage'),
-      issue: _getText(el, 'issue'),
-      volume: _getText(el, 'volume'),
-      pageRange: _getText(el, 'page-range')
+      elocationId: _getTextAndRemove(el, 'elocation-id'),
+      fpage: _getTextAndRemove(el, 'fpage'),
+      lpage: _getTextAndRemove(el, 'lpage'),
+      issue: _getTextAndRemove(el, 'issue'),
+      volume: _getTextAndRemove(el, 'volume'),
+      pageRange: _getTextAndRemove(el, 'page-range')
     }
-    const historyDates = el.findAll('history > date, pub-date')
-    historyDates.forEach(dateEl => {
+    const articleDates = el.findAll('history > date, pub-date')
+    articleDates.forEach(dateEl => {
       const date = _extractDate(dateEl)
       node[date.type] = date.value
+      dateEl.getParent().removeChild(dateEl)
     })
     const entity = pubMetaDb.create(node)
-    window.pubMetaDb = pubMetaDb
     return entity.id
   },
-  export($$, node, pubMetaDb) {
+  
+  export($$, node) {
+    let els = []
+    els.push(
+      _createTextElement($$, node.volume, 'volume'),
+      _createTextElement($$, node.issue, 'issue')
+    )
 
+    if(node.elocationId && node.elocationId.length > 0) {
+      els.push(_createTextElement($$, node.elocationId, 'elocation-id'))
+    } else {
+      els.push(
+        _createTextElement($$, node.fpage, 'fpage'),
+        _createTextElement($$, node.lpage, 'lpage'),
+        _createTextElement($$, node.pageRange, 'page-range')
+      )
+    }
+
+    const historyProps = ['acceptedDate', 'receivedDate', 'revReceivedDate', 'revRequestedDate']
+    const historyEl = $$('history')
+    historyProps.forEach(historyProp => {
+      historyEl.append(_exportDate($$, node, historyProp))
+    })
+    els.push(
+      _exportDate($$, node, 'publishedDate', 'pub-date'),
+      historyEl
+    )
+
+    return els
   }
 }
 
-function _extractDate(el) {
-  const dateTypesMap = {
-    'pub': 'publishedDate',
-    'accepted': 'acceptedDate',
-    'received': 'receivedDate',
-    'rev-received': 'revReceivedDate',
-    'rev-request': 'revRequestedDate'
-  }
+const dateTypesMap = {
+  'pub': 'publishedDate',
+  'accepted': 'acceptedDate',
+  'received': 'receivedDate',
+  'rev-received': 'revReceivedDate',
+  'rev-request': 'revRequestedDate'
+}
 
+function _extractDate(el) {
   const dateType = el.getAttribute('date-type')
   const value = el.getAttribute('iso-8601-date')
   const entityProp = dateTypesMap[dateType]
@@ -578,6 +605,53 @@ function _extractDate(el) {
     value: value,
     type: entityProp
   }
+}
+
+function _exportDate($$, node, prop, tag) {
+  const date = node[prop]
+  const tagName = tag || 'date'
+  const el = $$(tagName).attr('date-type', reverseMapping(dateTypesMap)[prop])
+    .attr('iso-8601-date', date)
+
+  const year = date.split('-')[0]
+  const month = date.split('-')[1]
+  const day = date.split('-')[2]
+  if(_isDateValid(date)) {
+    el.append(
+      $$('year').append(year),
+      $$('month').append(month),
+      $$('day').append(day)
+    )
+  } else if (_isYearMonthDateValid(date)) {
+    el.append(
+      $$('year').append(year),
+      $$('month').append(month)
+    )
+  } else if (_isYearDateValid(date)) {
+    el.append(
+      $$('year').append(year)
+    )
+  }
+  
+  return el
+}
+
+function _isDateValid(str) {
+  const regexp = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
+  if(!regexp.test(str)) return false
+  return true
+}
+
+function _isYearMonthDateValid(str) {
+  const regexp = /^[0-9]{4}-(0[1-9]|1[0-2])$/
+  if(!regexp.test(str)) return false
+  return true
+}
+
+function _isYearDateValid(str) {
+  const regexp = /^[0-9]{4}$/
+  if(!regexp.test(str)) return false
+  return true
 }
 
 function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
@@ -716,6 +790,16 @@ function _findAward(el, pubMetaDb) {
 function _getText(rootEl, selector) {
   let match = rootEl.find(selector)
   if (match) {
+    return match.textContent
+  } else {
+    return ''
+  }
+}
+
+function _getTextAndRemove(rootEl, selector) {
+  let match = rootEl.find(selector)
+  if (match) {
+    match.getParent().removeChild(match)
     return match.textContent
   } else {
     return ''

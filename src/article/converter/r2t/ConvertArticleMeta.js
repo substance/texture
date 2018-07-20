@@ -39,7 +39,7 @@ export default class ConvertArticleMeta {
     const $$ = dom.createElement.bind(dom)
     const articleMeta = dom.find('article-meta')
     const pubMetaDb = api.pubMetaDb
-    //const keywords = dom.findAll('article-meta > kwd-group > kwd')
+
     const keywordIdx = pubMetaDb.findByType('keyword')
     const keywords = keywordIdx.map(kwdId => pubMetaDb.get(kwdId))
     const keywordLangs = [...new Set(keywords.map(item => item.language))]
@@ -62,6 +62,13 @@ export default class ConvertArticleMeta {
       // the element's content.
       subject.innerHTML = newSubjectEl.innerHTML
       subject.removeAttr('rid')
+    })
+
+    const articleRecordNodeId = pubMetaDb.findByType('article-record')[0]
+    const articleRecordNode = pubMetaDb.get(articleRecordNodeId)
+    const articleRecordEls = AritcleRecordConverter.export($$, articleRecordNode)
+    articleRecordEls.forEach(item => {
+      articleMeta.append(item)
     })
   }
 }

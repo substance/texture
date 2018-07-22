@@ -553,6 +553,8 @@ export const AritcleRecordConverter = {
       node[date.type] = date.value
       dateEl.getParent().removeChild(dateEl)
     })
+    const history = el.find('history')
+    history.getParent().removeChild(history)
     const entity = pubMetaDb.create(node)
     return entity.id
   },
@@ -618,14 +620,14 @@ function _exportDate($$, node, prop, tag) {
   const day = date.split('-')[2]
   if(_isDateValid(date)) {
     el.append(
-      $$('year').append(year),
+      $$('day').append(day),
       $$('month').append(month),
-      $$('day').append(day)
+      $$('year').append(year)
     )
   } else if (_isYearMonthDateValid(date)) {
     el.append(
-      $$('year').append(year),
-      $$('month').append(month)
+      $$('month').append(month),
+      $$('year').append(year)
     )
   } else if (_isYearDateValid(date)) {
     el.append(

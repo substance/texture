@@ -39,6 +39,13 @@ export default class ConvertArticleMeta {
     const $$ = dom.createElement.bind(dom)
     const articleMeta = dom.find('article-meta')
     const pubMetaDb = api.pubMetaDb
+    
+    const articleRecordNodeId = pubMetaDb.findByType('article-record')[0]
+    const articleRecordNode = pubMetaDb.get(articleRecordNodeId)
+    const articleRecordEls = AritcleRecordConverter.export($$, articleRecordNode)
+    articleRecordEls.forEach(item => {
+      if(item) insertChildAtFirstValidPos(articleMeta, item)
+    })
 
     const keywordIdx = pubMetaDb.findByType('keyword')
     const keywords = keywordIdx.map(kwdId => pubMetaDb.get(kwdId))
@@ -62,13 +69,6 @@ export default class ConvertArticleMeta {
       // the element's content.
       subject.innerHTML = newSubjectEl.innerHTML
       subject.removeAttr('rid')
-    })
-
-    const articleRecordNodeId = pubMetaDb.findByType('article-record')[0]
-    const articleRecordNode = pubMetaDb.get(articleRecordNodeId)
-    const articleRecordEls = AritcleRecordConverter.export($$, articleRecordNode)
-    articleRecordEls.forEach(item => {
-      articleMeta.append(item)
     })
   }
 }

@@ -40,8 +40,7 @@ export default class ConvertArticleMeta {
     const articleMeta = dom.find('article-meta')
     const pubMetaDb = api.pubMetaDb
     
-    const articleRecordNodeId = pubMetaDb.findByType('article-record')[0]
-    const articleRecordNode = pubMetaDb.get(articleRecordNodeId)
+    const articleRecordNode = pubMetaDb.get('article-record')
     const articleRecordEls = AritcleRecordConverter.export($$, articleRecordNode)
     articleRecordEls.forEach(item => {
       if(item) insertChildAtFirstValidPos(articleMeta, item)

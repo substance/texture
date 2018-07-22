@@ -539,6 +539,7 @@ export const AritcleRecordConverter = {
 
   import(el, pubMetaDb) {
     let node = {
+      id: 'article-record',
       type: 'article-record',
       elocationId: _getTextAndRemove(el, 'elocation-id'),
       fpage: _getTextAndRemove(el, 'fpage'),

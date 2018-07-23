@@ -727,6 +727,10 @@ function subjectRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
+function articleRecordRenderer() {
+  return 'Article'
+}
+
 // const INTERNAL_RENDERER_MAP = {
 //   'organisation': organisationRenderer,
 //   'person': personRenderer
@@ -753,7 +757,8 @@ export default {
   'thesis': _delegate(thesisRenderer),
   'webpage': _delegate(webpageRenderer),
   'keyword': _delegate(keywordRenderer),
-  'subject': _delegate(subjectRenderer)
+  'subject': _delegate(subjectRenderer),
+  'article-record': _delegate(articleRecordRenderer)
 }
 
 

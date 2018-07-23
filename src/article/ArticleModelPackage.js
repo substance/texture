@@ -9,6 +9,7 @@ import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
 
+import ArticleRecordModel from './models/ArticleRecordModel'
 import FigureModel from './models/FigureModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
 import FootnoteModel from './models/FootnoteModel'
@@ -64,6 +65,7 @@ export default {
     config.addModel('fig', FigureModel)
     config.addModel('fn', FootnoteModel)
     config.addModel('table-wrap', FigureModel)
+    config.addModel('article-record', ArticleRecordModel)
     config.addModel('journal-article', ReferenceModel)
     config.addModel('conference-paper', ReferenceModel)
     config.addModel('data-publication', ReferenceModel)

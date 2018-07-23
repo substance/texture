@@ -80,8 +80,9 @@ const REQUIRED_PROPERTIES = {
   },
   'subject': {
     'name': true
+  },
+  'article-record': {
   }
-
 }
 
 

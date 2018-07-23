@@ -8,6 +8,10 @@ export default class ReferenceCollectionModel {
     return 'references'
   }
 
+  get isCollection() {
+    return true
+  }
+
   getItems() {
     let refNodes = this._api.referenceManager.getBibliography()
     let result = refNodes.map(refNode => this._getItem(refNode.id ))

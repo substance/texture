@@ -111,7 +111,7 @@
           <month id="month-2">03</month>
           <year id="year-2">1998</year>
         </date>
-        <date id="date-3" date-type="rev-received" iso-8601-date="1998-05-24">
+        <date id="date-3" date-type="rev-recd" iso-8601-date="1998-05-24">
           <day id="day-3">24</day>
           <month id="month-3">05</month>
           <year id="year-3">1998</year>

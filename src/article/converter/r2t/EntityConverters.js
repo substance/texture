@@ -11,20 +11,20 @@ export const OrganisationConverter = {
     if (!entity) {
       let node = {
         type: 'organisation',
-        name: _getText(el, 'institution[content-type=orgname]'),
-        division1: _getText(el, 'institution[content-type=orgdiv1]'),
-        division2: _getText(el, 'institution[content-type=orgdiv2]'),
-        division3: _getText(el, 'institution[content-type=orgdiv3]'),
-        street: _getText(el, 'addr-line[content-type=street-address]'),
-        addressComplements: _getText(el, 'addr-line[content-type=complements]'),
-        city: _getText(el, 'city'),
-        state: _getText(el, 'state'),
-        postalCode: _getText(el, 'postal-code'),
-        country: _getText(el, 'country'),
-        phone: _getText(el, 'phone'),
-        fax: _getText(el, 'fax'),
-        email: _getText(el, 'email'),
-        uri: _getText(el, 'uri[content-type=link]')
+        name: getText(el, 'institution[content-type=orgname]'),
+        division1: getText(el, 'institution[content-type=orgdiv1]'),
+        division2: getText(el, 'institution[content-type=orgdiv2]'),
+        division3: getText(el, 'institution[content-type=orgdiv3]'),
+        street: getText(el, 'addr-line[content-type=street-address]'),
+        addressComplements: getText(el, 'addr-line[content-type=complements]'),
+        city: getText(el, 'city'),
+        state: getText(el, 'state'),
+        postalCode: getText(el, 'postal-code'),
+        country: getText(el, 'country'),
+        phone: getText(el, 'phone'),
+        fax: getText(el, 'fax'),
+        email: getText(el, 'email'),
+        uri: getText(el, 'uri[content-type=link]')
       }
       entity = pubMetaDb.create(node)
     } else {
@@ -80,9 +80,9 @@ export const AwardConverter = {
     if (!entity) {
       let node = {
         type: 'award',
-        institution: _getText(el, 'institution'),
-        fundRefId: _getText(el, 'institution-id'),
-        awardId: _getText(el, 'award-id')
+        institution: getText(el, 'institution'),
+        fundRefId: getText(el, 'institution-id'),
+        awardId: getText(el, 'award-id')
       }
       entity = pubMetaDb.create(node)
     } else {
@@ -193,8 +193,8 @@ export const GroupConverter = {
     if (!entity) {
       let node = {
         type: 'group',
-        name: _getText(el, 'named-content[content-type=name]'),
-        email: _getText(el, 'email'),
+        name: getText(el, 'named-content[content-type=name]'),
+        email: getText(el, 'email'),
         affiliations: _extractAffiliations(el, true),
         equalContrib: el.getAttribute('equal-contrib') === 'yes',
         corresp: el.getAttribute('corresp') === 'yes',
@@ -337,17 +337,17 @@ export const RefContribConverter = {
     if (el.tagName === 'name') {
       node = {
         type: 'ref-contrib',
-        givenNames: _getText(el, 'given-names'),
-        name: _getText(el, 'surname')// ,
+        givenNames: getText(el, 'given-names'),
+        name: getText(el, 'surname')// ,
         // TODO: We may want to consider prefix postfix, and mix it into givenNames, or name properties
         // We don't want separate fields because this gets complex/annoying during editing
-        // prefix: _getText(el, 'prefix'),
-        // suffix: _getText(el, 'suffix'),
+        // prefix: getText(el, 'prefix'),
+        // suffix: getText(el, 'suffix'),
       }
     } else if (el.tagName === 'collab') {
       node = {
         type: 'ref-contrib',
-        name: _getText(el, 'named-content[content-type=name]')
+        name: getText(el, 'named-content[content-type=name]')
       }
     } else {
       console.warn(`${el.tagName} not supported inside <person-group>`)
@@ -417,40 +417,40 @@ export const ElementCitationConverter = {
         id: id,
         type: mappingItemTypes[type],
         // normal fields
-        assignee: _getText(el, 'collab[collab-type=assignee] > named-content'),
-        confName: _getText(el, 'conf-name'),
-        confLoc: _getText(el, 'conf-loc'),
-        day: _getText(el, 'day'),
-        edition: _getText(el, 'edition'),
-        elocationId: _getText(el, 'elocation-id'),
-        fpage: _getText(el, 'fpage'),
-        issue: _getText(el, 'issue'),
-        lpage: _getText(el, 'lpage'),
-        month: _getText(el, 'month'),
-        pageCount: _getText(el, 'page-count'),
-        pageRange: _getText(el, 'page-range'),
-        partTitle: _getText(el, 'part-title'),
+        assignee: getText(el, 'collab[collab-type=assignee] > named-content'),
+        confName: getText(el, 'conf-name'),
+        confLoc: getText(el, 'conf-loc'),
+        day: getText(el, 'day'),
+        edition: getText(el, 'edition'),
+        elocationId: getText(el, 'elocation-id'),
+        fpage: getText(el, 'fpage'),
+        issue: getText(el, 'issue'),
+        lpage: getText(el, 'lpage'),
+        month: getText(el, 'month'),
+        pageCount: getText(el, 'page-count'),
+        pageRange: getText(el, 'page-range'),
+        partTitle: getText(el, 'part-title'),
         patentCountry: _getAttr(el, 'patent', 'country'),
-        patentNumber: _getText(el, 'patent'),
+        patentNumber: getText(el, 'patent'),
         publisherLoc: _getSeparatedText(el, 'publisher-loc'),
         publisherName: _getSeparatedText(el, 'publisher-name'),
-        series: _getText(el, 'series'),
-        uri: _getText(el, 'uri'),
-        version: _getText(el, 'version'),
-        volume: _getText(el, 'volume'),
-        year: _getText(el, 'year'),
+        series: getText(el, 'series'),
+        uri: getText(el, 'uri'),
+        version: getText(el, 'version'),
+        volume: getText(el, 'volume'),
+        year: getText(el, 'year'),
         // identifiers
-        accessionId: _getText(el, 'pub-id[pub-id-type=accession]'),
-        archiveId: _getText(el, 'pub-id[pub-id-type=archive]'),
-        arkId: _getText(el, 'pub-id[pub-id-type=ark]'),
-        isbn: _getText(el, 'pub-id[pub-id-type=isbn]'),
-        doi: _getText(el, 'pub-id[pub-id-type=doi]'),
-        pmid: _getText(el, 'pub-id[pub-id-type=pmid]')
+        accessionId: getText(el, 'pub-id[pub-id-type=accession]'),
+        archiveId: getText(el, 'pub-id[pub-id-type=archive]'),
+        arkId: getText(el, 'pub-id[pub-id-type=ark]'),
+        isbn: getText(el, 'pub-id[pub-id-type=isbn]'),
+        doi: getText(el, 'pub-id[pub-id-type=doi]'),
+        pmid: getText(el, 'pub-id[pub-id-type=pmid]')
       }
       if (type === 'book' || type === 'report' || type === 'software') {
-        node.title = _getText(el, 'source')
+        node.title = getText(el, 'source')
       } else {
-        node.containerTitle = _getText(el, 'source')
+        node.containerTitle = getText(el, 'source')
         if (type === 'chapter') {
           node.title = _getHTML(el, 'chapter-title')
         } else if (type === 'data') {
@@ -532,130 +532,8 @@ export const ElementCitationConverter = {
 }
 
 
-/*
-  <pub-date>, <history>
-*/
-export const AritcleRecordConverter = {
 
-  import(el, pubMetaDb) {
-    let node = {
-      id: 'article-record',
-      type: 'article-record',
-      elocationId: _getTextAndRemove(el, 'elocation-id'),
-      fpage: _getTextAndRemove(el, 'fpage'),
-      lpage: _getTextAndRemove(el, 'lpage'),
-      issue: _getTextAndRemove(el, 'issue'),
-      volume: _getTextAndRemove(el, 'volume'),
-      pageRange: _getTextAndRemove(el, 'page-range')
-    }
-    const articleDates = el.findAll('history > date, pub-date')
-    articleDates.forEach(dateEl => {
-      const date = _extractDate(dateEl)
-      node[date.type] = date.value
-      dateEl.getParent().removeChild(dateEl)
-    })
-    const history = el.find('history')
-    history.getParent().removeChild(history)
-    const entity = pubMetaDb.create(node)
-    return entity.id
-  },
-  
-  export($$, node) {
-    let els = []
-    els.push(
-      _createTextElement($$, node.volume, 'volume'),
-      _createTextElement($$, node.issue, 'issue')
-    )
 
-    if(node.elocationId && node.elocationId.length > 0) {
-      els.push(_createTextElement($$, node.elocationId, 'elocation-id'))
-    } else {
-      els.push(
-        _createTextElement($$, node.fpage, 'fpage'),
-        _createTextElement($$, node.lpage, 'lpage'),
-        _createTextElement($$, node.pageRange, 'page-range')
-      )
-    }
-
-    const historyProps = ['acceptedDate', 'receivedDate', 'revReceivedDate', 'revRequestedDate']
-    const historyEl = $$('history')
-    historyProps.forEach(historyProp => {
-      historyEl.append(_exportDate($$, node, historyProp))
-    })
-    els.push(
-      _exportDate($$, node, 'publishedDate', 'pub-date'),
-      historyEl
-    )
-
-    return els
-  }
-}
-
-const dateTypesMap = {
-  'pub': 'publishedDate',
-  'accepted': 'acceptedDate',
-  'received': 'receivedDate',
-  'rev-received': 'revReceivedDate',
-  'rev-request': 'revRequestedDate'
-}
-
-function _extractDate(el) {
-  const dateType = el.getAttribute('date-type')
-  const value = el.getAttribute('iso-8601-date')
-  const entityProp = dateTypesMap[dateType]
-
-  return {
-    value: value,
-    type: entityProp
-  }
-}
-
-function _exportDate($$, node, prop, tag) {
-  const date = node[prop]
-  const tagName = tag || 'date'
-  const el = $$(tagName).attr('date-type', reverseMapping(dateTypesMap)[prop])
-    .attr('iso-8601-date', date)
-
-  const year = date.split('-')[0]
-  const month = date.split('-')[1]
-  const day = date.split('-')[2]
-  if(_isDateValid(date)) {
-    el.append(
-      $$('day').append(day),
-      $$('month').append(month),
-      $$('year').append(year)
-    )
-  } else if (_isYearMonthDateValid(date)) {
-    el.append(
-      $$('month').append(month),
-      $$('year').append(year)
-    )
-  } else if (_isYearDateValid(date)) {
-    el.append(
-      $$('year').append(year)
-    )
-  }
-  
-  return el
-}
-
-function _isDateValid(str) {
-  const regexp = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
-  if(!regexp.test(str)) return false
-  return true
-}
-
-function _isYearMonthDateValid(str) {
-  const regexp = /^[0-9]{4}-(0[1-9]|1[0-2])$/
-  if(!regexp.test(str)) return false
-  return true
-}
-
-function _isYearDateValid(str) {
-  const regexp = /^[0-9]{4}$/
-  if(!regexp.test(str)) return false
-  return true
-}
 
 function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
   if (contribs && contribs.length > 0) {
@@ -673,11 +551,11 @@ function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
 function _extractPerson(el, group) {
   return {
     type: 'person',
-    givenNames: _getText(el, 'given-names'),
-    surname: _getText(el, 'surname'),
-    email: _getText(el, 'email'),
-    prefix: _getText(el, 'prefix'),
-    suffix: _getText(el, 'suffix'),
+    givenNames: getText(el, 'given-names'),
+    surname: getText(el, 'surname'),
+    email: getText(el, 'email'),
+    prefix: getText(el, 'prefix'),
+    suffix: getText(el, 'suffix'),
     group: group,
     affiliations: _extractAffiliations(el),
     awards: _extractAwards(el),
@@ -746,16 +624,16 @@ function _extractAwards(el) {
 
 
 function _findCitation(el, pubMetaDb) {
-  let entityId = _getText(el, 'pub-id[pub-id-type=entity]')
+  let entityId = getText(el, 'pub-id[pub-id-type=entity]')
   return pubMetaDb.get(entityId)
 }
 
 function _findPerson(el, pubMetaDb) {
-  let entity = pubMetaDb.get(_getText(el, 'contrib-id[contrib-id-type=entity]'))
+  let entity = pubMetaDb.get(getText(el, 'contrib-id[contrib-id-type=entity]'))
   if (!entity) {
     let persons = pubMetaDb.find({ type: 'person' }).map(id => pubMetaDb.get(id))
-    let surname = _getText(el, 'surname')
-    let givenNames = _getText(el, 'given-names')
+    let surname = getText(el, 'surname')
+    let givenNames = getText(el, 'given-names')
     entity = persons.find(p => {
       return p.surname === surname && p.givenNames === givenNames
     })
@@ -764,11 +642,11 @@ function _findPerson(el, pubMetaDb) {
 }
 
 function _findOrganisation(el, pubMetaDb) {
-  let entity = pubMetaDb.get(_getText(el, 'uri[content-type=entity]'))
+  let entity = pubMetaDb.get(getText(el, 'uri[content-type=entity]'))
   if (!entity) {
     let organisations = pubMetaDb.find({ type: 'organisation' }).map(id => pubMetaDb.get(id))
-    let name = _getText(el, 'institution[content-type=orgname]')
-    let division1 = _getText(el, 'institution[content-type=orgdiv1]')
+    let name = getText(el, 'institution[content-type=orgname]')
+    let division1 = getText(el, 'institution[content-type=orgdiv1]')
     entity = organisations.find(o => {
       return o.name === name && o.division1 === division1
     })
@@ -777,12 +655,12 @@ function _findOrganisation(el, pubMetaDb) {
 }
 
 function _findAward(el, pubMetaDb) {
-  let entity = pubMetaDb.get(_getText(el, 'award-id'))
+  let entity = pubMetaDb.get(getText(el, 'award-id'))
   if (!entity) {
     let awards = pubMetaDb.find({ type: 'award' }).map(id => pubMetaDb.get(id))
     let institutionWrapEl = el.find('institution-wrap')
-    let name = _getText(institutionWrapEl, 'institution')
-    let fundRefId = _getText(institutionWrapEl, 'institution-id')
+    let name = getText(institutionWrapEl, 'institution')
+    let fundRefId = getText(institutionWrapEl, 'institution-id')
     entity = awards.find(a => {
       return a.institution === name && a.fundRefId === fundRefId
     })
@@ -790,19 +668,9 @@ function _findAward(el, pubMetaDb) {
   return entity
 }
 
-function _getText(rootEl, selector) {
+export function getText(rootEl, selector) {
   let match = rootEl.find(selector)
   if (match) {
-    return match.textContent
-  } else {
-    return ''
-  }
-}
-
-function _getTextAndRemove(rootEl, selector) {
-  let match = rootEl.find(selector)
-  if (match) {
-    match.getParent().removeChild(match)
     return match.textContent
   } else {
     return ''

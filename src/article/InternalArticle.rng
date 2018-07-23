@@ -264,112 +264,6 @@
     </element>
   </define>
 
-  <!-- Introduce some new elements aff-group -->
-  <define name="article-meta">
-    <element name="article-meta">
-      <ref name="article-meta-attlist"/>
-      <zeroOrMore>
-        <ref name="article-id"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="article-categories"/>
-      </optional>
-      <!-- TODO: we should make contrib-group, aff-group, title-group non-optional -->
-      <optional>
-        <ref name="title-group"/>
-      </optional>
-      <!-- contrib-group[content-type=author], contrib-group[content-type=editor] -->
-      <optional>
-        <ref name="contrib-group"/>
-      </optional>
-      <optional>
-        <ref name="contrib-group"/>
-      </optional>
-      <!-- TODO: this must go away, we only have it there to ensure wa always have
-      a valid schema during r2t transform
-      -->
-      <zeroOrMore>
-        <ref name="aff"/>
-      </zeroOrMore>
-      <!-- We wrap affs in a custom aff-group element -->
-      <optional>
-        <ref name="aff-group"/>
-      </optional>
-
-      <optional>
-        <ref name="author-notes"/>
-      </optional>
-      <!-- Should we limit this and be more explicit -->
-      <zeroOrMore>
-        <ref name="pub-date"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="volume"/>
-      </optional>
-      <optional>
-        <ref name="issue"/>
-      </optional>
-      <optional>
-        <ref name="fpage"/>
-      </optional>
-      <optional>  
-        <ref name="lpage"/>
-      </optional>
-      <optional>  
-        <ref name="page-range"/>
-      </optional>
-      <optional>  
-        <ref name="elocation-id"/>
-      </optional>
-      <optional>
-        <ref name="isbn"/>
-      </optional>
-      <optional>
-        <ref name="history"/>
-      </optional>
-      <optional>
-        <ref name="permissions"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="self-uri"/>
-      </zeroOrMore>
-      <!-- Verify the use-cases for related article? Maybe this should not be
-           part of the source, and instead be included in a post-processing step
-           at journals, so database of related articles can be maintained separately
-      -->
-      <zeroOrMore>
-        <ref name="related-article"/>
-        <ref name="related-object"/>
-      </zeroOrMore>
-      <!-- TODO: we should make abstract non-optional! we can't do currently
-           because there is no way to find a valid insert pos if the schema
-           is invalid
-      -->
-      <optional>
-        <ref name="abstract"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="trans-abstract"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="kwd-group"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="funding-group"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="conference"/>
-      </zeroOrMore>
-      <!-- needs specification -->
-      <optional>
-        <ref name="counts"/>
-      </optional>
-      <optional>
-        <ref name="custom-meta-group"/>
-      </optional>
-    </element>
-  </define>
-
 
   <!--
     We only support plain text contrib elements for now
@@ -385,7 +279,6 @@
       </zeroOrMore>
     </element>
   </define>
-
 
 
   <!--

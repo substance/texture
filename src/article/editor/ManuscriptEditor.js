@@ -16,7 +16,8 @@ export default class ManuscriptEditor extends Component {
 
     this.handleActions({
       'tocEntrySelected': this._tocEntrySelected,
-      'switchContext': this._switchContext
+      'switchContext': this._switchContext,
+      executeCommand: this._executeCommand
     })
 
     this._initialize(this.props)
@@ -188,6 +189,10 @@ export default class ManuscriptEditor extends Component {
 
   _getDocument () {
     return this.props.articleSession.getDocument()
+  }
+
+  _executeCommand (name, params) {
+    this.editorSession.executeCommand(name, params)
   }
 
   _restoreViewport () {

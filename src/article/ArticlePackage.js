@@ -65,10 +65,5 @@ export default {
     config.addTool('open-metadata', ToggleTool)
     config.addLabel('open-metadata', 'Open Metadata')
     config.addIcon('open-metadata', { 'fontawesome': 'fa-th-list' })
-
-    config.registerLanguage('en', 'English')
-    config.registerLanguage('es', 'Spanish')
-    config.registerLanguage('pt', 'Portugese')
-    config.registerLanguage('fr', 'French')
   }
 }

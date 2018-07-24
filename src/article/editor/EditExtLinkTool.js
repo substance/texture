@@ -60,7 +60,7 @@ export default class EditExtLinkTool extends ToggleTool {
     return this.context.editorSession.getDocument()
   }
 
-  _onDelete (e) {
+  _onDelete (e) { // eslint-disable-line no-unused-vars
     // TODO: don't manipulate here but use API for that
     // e.preventDefault()
     // let nodeId = this._getNodeId()

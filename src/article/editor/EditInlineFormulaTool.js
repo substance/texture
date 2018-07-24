@@ -44,7 +44,7 @@ export default class EditInlineFormulaTool extends ToggleTool {
     return texMath.getPath()
   }
 
-  onDelete (e) {
+  onDelete (e) { // eslint-disable-line no-unused-vars
     console.error('FIXME: use ArticleAPI to delete formula')
     // e.preventDefault();
     // let nodeId = this.getNodeId()

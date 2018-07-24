@@ -9,7 +9,7 @@ export default class ReferenceManager extends AbstractCitationManager {
   }
 
   // TODO: don't do this here, instead add something like this to ArticleAPI
-  updateReferences (newRefs) {
+  updateReferences (newRefs) { // eslint-disable-line no-unused-vars
     console.error('FIXME: do not update references here, use the ArticleAPI instead')
     // let refList = this.doc.find('ref-list')
     // let oldRefs = this.getReferenceIds()

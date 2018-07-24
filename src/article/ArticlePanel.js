@@ -2,7 +2,6 @@ import { Component } from 'substance'
 import {
   Managed, AppState, createComponentContext, CommandManager
 } from '../shared'
-import ArticleAPI from './ArticleAPI'
 
 const DEFAULT_VIEW = 'manuscript'
 
@@ -19,9 +18,7 @@ export default class ArticlePanel extends Component {
 
   _initialize (props, state) {
     const archive = props.archive
-    const articleSession = props.documentSession
     const config = props.config
-    const modelRegistry = config.getConfiguration('model').getModelRegistry()
     this.commandManager = new CommandManager(state, ['view'], config.getCommands(), this)
     this.context = Object.assign(createComponentContext(config), {
       urlResolver: archive,
@@ -110,7 +107,7 @@ export default class ArticlePanel extends Component {
     this.commandManager.executeCommand(name, params)
   }
 
-  _createAppState (config) {
+  _createAppState (config) { // eslint-disable-line no-unused-vars
     const appState = new AppState({
       view: DEFAULT_VIEW,
       commandStates: {}

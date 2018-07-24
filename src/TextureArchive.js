@@ -118,10 +118,9 @@ export default class TextureArchive extends PersistedDocumentArchive {
     switch (type) {
       case 'article': {
         let jatsExporter = new JATSExporter()
-        let pubMetaDb = sessions['pub-meta'].getDocument()
         let doc = session.getDocument()
         let dom = doc.toXML()
-        let res = jatsExporter.export(dom, { pubMetaDb, doc })
+        let res = jatsExporter.export(dom, { doc, session })
         console.info('saving jats', res.dom.getNativeElement())
         let xmlStr = prettyPrintXML(res.dom)
         return xmlStr

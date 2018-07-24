@@ -9,7 +9,7 @@ export default class ConvertRef {
     const pubMetaDb = api.pubMetaDb
 
     refs.forEach(refEl => {
-      
+
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error({
@@ -38,9 +38,9 @@ export default class ConvertRef {
   export(dom, api) {
     let $$ = dom.createElement.bind(dom)
     let refList = dom.find('back > ref-list')
-    const pubMetaDb = api.pubMetaDb
     const doc = api.doc
-    const referenceManager = doc.referenceManager
+    const session = api.session
+    const referenceManager = session.getReferenceManager()
     let bibliography = referenceManager.getBibliography()
 
     // Empty ref-list
@@ -48,11 +48,11 @@ export default class ConvertRef {
 
     // Re-export refs according to computed order
     bibliography.forEach(refNode => {
-      let entity = pubMetaDb.get(refNode.attr('rid'))
-      let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', 'patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
+      let entity = doc.get(refNode.attr('rid'))
+      let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
       let elementCitation
       if (validTypes.includes(entity.type)) {
-        elementCitation = ElementCitationConverter.export($$, entity, pubMetaDb)
+        elementCitation = ElementCitationConverter.export($$, entity, doc)
       } else {
         throw new Error('publication type not found.')
       }
@@ -63,6 +63,5 @@ export default class ConvertRef {
         )
       )
     })
-
   }
 }

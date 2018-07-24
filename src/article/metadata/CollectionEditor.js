@@ -15,7 +15,7 @@ export default class CollectionEditor extends Component {
 
     el.append(
       $$('div').addClass('se-heading').append(
-        $$('div').addClass('se-header').append(items.length + ' ' + label),
+        $$('div').addClass('se-header').append(label),
         $$('button').addClass('se-add-value')
           .append(
             $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),

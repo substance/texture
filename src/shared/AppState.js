@@ -10,18 +10,14 @@ const STAGE_IDX = STAGES.reduce((m, s, idx) => {
 }, {})
 
 export default class AppState extends AbstractAppState {
-  constructor (initialState) {
-    super()
+  _initialize (initialState) {
+    super._initialize()
 
     const impl = this._getImpl()
     impl.slots = new Map()
     impl.schedule = null
     impl.isFlowing = false
 
-    this._initialize(initialState)
-  }
-
-  _initialize (initialState) {
     const names = Object.keys(initialState)
     names.forEach(name => {
       const initialValue = initialState[name]

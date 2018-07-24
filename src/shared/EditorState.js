@@ -5,8 +5,8 @@ import DocumentObserver from './DocumentObserver'
 const ANY = '@any'
 
 export default class EditorState extends AppState {
-  constructor (initialState) {
-    super(initialState)
+  _initialize (initialState) {
+    super._initialize(initialState)
 
     if (!initialState.document) {
       throw new Error("'document' is required")
@@ -16,7 +16,6 @@ export default class EditorState extends AppState {
     // one observer for all slots that
     let documentObserver = new DocumentObserver(doc)
     impl.documentObserver = documentObserver
-
     let selectionStateReducer = new SelectionStateReducer(this)
     selectionStateReducer.update()
     impl._selectionStateReducer = impl._selectionStateReducer

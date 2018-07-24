@@ -3,8 +3,15 @@ import { uuid } from 'substance'
 const IMPL = Symbol('__AppStateImpl__')
 
 export default class AbstractAppState {
-  constructor () {
+  constructor (...args) {
     this[IMPL] = new AppStateImpl()
+
+    this._initialize(...args)
+    this._reset()
+  }
+
+  _initialize () {
+    // nothing to initialize on this level
   }
 
   dispose () {}

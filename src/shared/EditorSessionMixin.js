@@ -29,7 +29,8 @@ export default function (DocumentSession) {
         focusedSurface: null,
         commandStates: {},
         hasUnsavedChanges: false,
-        isBlurred: false
+        isBlurred: false,
+        overlayId: null
       })
       let surfaceManager = new SurfaceManager(editorState)
       let markersManager = new MarkersManager(editorState)

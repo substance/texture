@@ -11,6 +11,7 @@ import Menu from './Menu'
 import MenuGroup from './MenuGroup'
 import MenuItem from './MenuItem'
 import Button from './Button'
+import ContextMenu from './ContextMenu'
 import Overlay from './Overlay'
 import ToggleTool from './ToggleTool'
 import Toolbar from './Toolbar'
@@ -46,6 +47,7 @@ export default {
     configurator.addComponent('menu-group', MenuGroup, true)
     configurator.addComponent('menu-item', MenuItem, true)
     configurator.addComponent('button', Button, true)
+    configurator.addComponent('context-menu', ContextMenu, true)
     configurator.addComponent('overlay', Overlay, true)
     configurator.addComponent('toggle-tool', ToggleTool, true)
     configurator.addComponent('toolbar', Toolbar, true)

@@ -14,17 +14,16 @@ export default class Texture extends Component {
     const archive = this.props.archive
     let el = $$('div').addClass('sc-texture')
 
-    // TODO: Texture will support multipled resources in future
+    // TODO: switch by current document tab
+    const currentDocumentName = 'manuscript'
     const ResourceComponent = this.config.getComponent('article')
     const config = this.config.getConfiguration('article')
-    const articleSession = archive.getEditorSession('manuscript')
-    const pubMetaDbSession = archive.getEditorSession('pub-meta')
+    const documentSession = archive.getEditorSession(currentDocumentName)
     let props = {
-      articleSession,
-      pubMetaDbSession,
-      config
+      archive,
+      config,
+      documentSession
     }
-
     el.append(
       $$(ResourceComponent, props)
     )
@@ -33,10 +32,8 @@ export default class Texture extends Component {
 
   _getConfiguration () {
     let config = new TextureConfigurator()
-
     // TODO: in future we want to make this configurable (plugin framework)
     config.import(ArticlePackage)
-
     return config
   }
 }

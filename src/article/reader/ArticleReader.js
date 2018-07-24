@@ -1,13 +1,11 @@
-import { DefaultDOMElement } from 'substance'
-import AbstractWriter from '../editor/AbstractWriter'
+import { DefaultDOMElement, Component } from 'substance'
 
 import ArticleHeaderComponent from './ArticleHeaderComponent'
 import ArticleAbstractComponent from './ArticleAbstractComponent'
 import ArticleBodyComponent from './ArticleBodyComponent'
 import BibliographyComponent from './BibliographyComponent'
 
-export default class ArticleReader extends AbstractWriter {
-
+export default class ArticleReader extends Component {
   render($$) {
     const el = $$('div').addClass('sc-article-reader')
     const api = this.context.api
@@ -57,5 +55,4 @@ export default class ArticleReader extends AbstractWriter {
     // AbstractWriter requires this
     // TODO: get rid of AbstractWriter
   }
-
 }

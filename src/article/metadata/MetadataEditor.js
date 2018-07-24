@@ -1,5 +1,7 @@
-import { Component } from 'substance'
-import { Managed } from '../../shared'
+import { Component, DefaultDOMElement} from 'substance'
+import {
+  Managed, EditorSession, createEditorContext
+} from '../../shared'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
 import EntityEditor from './EntityEditor'
@@ -27,55 +29,24 @@ export default class MetadataEditor extends Component {
   }
 
   _initialize (props) {
-    const { articleSession, pubMetaDbSession, config } = props
-    const api = new ArticleAPI(config, articleSession, pubMetaDbSession, this.context)
-
-    // HACK: we need to be careful with leaking context
-    // TODO: maybe we should add Component.defineContext()
-    // which will not inherit parent context automatically
-    let context = Object.assign({}, super._getContext(), {
-      componentRegistry: config.getComponentRegistry()
+    const { articleSession, config, archive } = props
+    const editorSession = new EditorSession(articleSession, config, this)
+    const api = new ArticleAPI(editorSession, config.getModelRegistry())
+    this.editorSession = editorSession
+    this.context = Object.assign(createEditorContext(config, editorSession), {
+      api,
+      urlResolver: archive
     })
-    this.api = api
-    this.context = context
   }
 
-  getChildContext () {
-    const api = this.api
+  dispose () {
     const articleSession = this.props.articleSession
-    const pubMetaDbSession = this.props.pubMetaDbSession
-    const config = this.props.config
-    const componentRegistry = config.getComponentRegistry()
-    const commandManager = api.commandManager
-    const dragManager = api.dragManager
-    const referenceManager = api.getReferenceManager()
-    const surfaceManager = articleSession.surfaceManager
-    const markersManager = articleSession.markersManager
-    const commandGroups = config.getCommandGroups()
-    const tools = config.getTools()
-    const labelProvider = config.getLabelProvider()
-    const keyboardShortcuts = config.getKeyboardShortcuts()
-    const iconProvider = config.getIconProvider()
-    return {
-      api,
-      configurator: config,
-      componentRegistry,
-      referenceManager,
-      // legacy
-      editorSession: articleSession,
-      pubMetaDbSession,
-      // TODO: make the context footprint smaller
-      commandManager,
-      commandGroups,
-      dragManager,
-      iconProvider,
-      keyboardShortcuts,
-      labelProvider,
-      surfaceManager,
-      markersManager,
-      tocProvider: this.tocProvider,
-      tools
-    }
+    const editorSession = this.editorSession
+    articleSession.off(this)
+    editorSession.dispose()
+    // Note: we need to clear everything, as the childContext
+    // changes which is immutable
+    this.empty()
   }
 
   render ($$) {
@@ -111,7 +82,7 @@ export default class MetadataEditor extends Component {
 
   _renderToolbar ($$) {
     const Toolbar = this.getComponent('toolbar')
-    let config = this._getConfig()
+    let config = this.props.config
     return $$('div').addClass('se-toolbar-wrapper').append(
       $$(Managed(Toolbar), {
         toolPanel: config.getToolPanel('toolbar'),
@@ -121,10 +92,11 @@ export default class MetadataEditor extends Component {
   }
 
   _renderTOCPane ($$) {
+    const api = this.props.api
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
     SECTIONS.forEach(section => {
-      let model = this.api.getModel(section.modelType)
+      let model = api.getModel(section.modelType)
       if(model.isCollection) {
         const items = model.getItems()
         tocEl.append(
@@ -145,6 +117,7 @@ export default class MetadataEditor extends Component {
   }
 
   _renderContentPanel ($$) {
+    const api = this.props.api
     const ScrollPane = this.getComponent('scroll-pane')
 
     let contentPanel = $$(ScrollPane, {
@@ -153,8 +126,7 @@ export default class MetadataEditor extends Component {
 
     let collectionsEl = $$('div').addClass('se-collections')
     SECTIONS.forEach(section => {
-      let model = this.api.getModel(section.modelType)
-
+      let model = api.getModel(section.modelType)
       if(model.isCollection) {
         collectionsEl.append(
           $$(CollectionEditor, { model: model })
@@ -162,7 +134,7 @@ export default class MetadataEditor extends Component {
             .ref(model.id)
         )
       } else if (section.modelType === 'article-record') {
-        model = this.api.getEntity('article-record')
+        model = api.getEntity('article-record')
         collectionsEl.append(
           $$(EntityEditor, { model: model })
             .attr({id: model.id})
@@ -178,9 +150,5 @@ export default class MetadataEditor extends Component {
 
   _renderContextPane ($$) { // eslint-disable-line no-unused-vars
     // TODO: here we would instanstiate the issue panel for instance
-  }
-
-  _getConfig () {
-    return this.props.config
   }
 }

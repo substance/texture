@@ -1,5 +1,4 @@
-import { ToggleTool } from 'substance'
-import { BasePackage } from '../shared'
+import { BasePackage, ToggleTool } from '../shared'
 
 import ArticleConfigurator from './ArticleConfigurator'
 

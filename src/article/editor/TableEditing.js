@@ -2,7 +2,7 @@ import { isString, documentHelpers } from 'substance'
 import {
   createTableSelection, getSelectionData, getSelectedRange,
   getCellRange
-} from './tableHelpers'
+} from '../shared/tableHelpers'
 
 export default class TableEditing {
 

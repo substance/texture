@@ -1,10 +1,11 @@
-import { Tool, find, without } from 'substance'
+import { find, without } from 'substance'
+import { ToggleTool } from '../../shared'
 import { getXrefTargets, getAvailableXrefTargets } from '../shared/xrefHelpers'
 
 /*
   Editing of XRefTargets
 */
-export default class EditXRefTool extends Tool {
+export default class EditXRefTool extends ToggleTool {
 
 
   _getNode(nodeId) {

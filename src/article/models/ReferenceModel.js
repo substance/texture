@@ -1,5 +1,5 @@
 import DefaultModel from './DefaultModel'
-import { getLabel } from '../editor/nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 import { updateModel } from './modelHelpers'
 
 export default class ReferenceModel extends DefaultModel {
@@ -21,7 +21,7 @@ export default class ReferenceModel extends DefaultModel {
   addContrib(propName) {
     let id = this.id
     let length = this._node[propName].length
-    this._api.pubMetaDbSession.transaction(tx => {
+    this._api.getArticleSession().transaction(tx => {
       let newNode = tx.create({
         type: 'ref-contrib'
       })
@@ -33,14 +33,14 @@ export default class ReferenceModel extends DefaultModel {
     let id = this.id
     let pos = this._node[propName].indexOf(contribId)
     if (pos !== -1) {
-      this._api.pubMetaDbSession.transaction(tx => {
+      this._api.getArticleSession().transaction(tx => {
         tx.update([id, propName], { type: 'delete', pos: pos })
       })
     }
   }
 
   updateContrib(contribId, propName, value) {
-    this._api.pubMetaDbSession.transaction(tx => {
+    this._api.getArticleSession().transaction(tx => {
       tx.set([contribId, propName], value)
     })
   }

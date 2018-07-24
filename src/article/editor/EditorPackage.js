@@ -5,63 +5,64 @@ import {
   EditAnnotationCommand,
   ListPackage,
   SchemaDrivenCommandManager,
-  TextPropertyEditor,
-  TextPropertyComponent,
-  FindAndReplacePackage,
   MultiSelectPackage
 } from 'substance'
-
 import {
-  BasePackage, EditorBasePackage, TextureTextPropertyComponent
+  BasePackage,
+  EditorBasePackage,
+  TextureTextPropertyEditor,
+  TextureContainerEditor,
+  TextureTextPropertyComponent
 } from '../../shared'
-
 import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
-
+// Editor level components
 import ManuscriptEditor from './ManuscriptEditor'
+import ManuscriptComponent from './ManuscriptComponent'
+import WorkflowPane from './WorkflowPane'
+// General components
+import ContainerNodeComponent from './ContainerNodeComponent'
+import ElementNodeComponent from './ElementNodeComponent'
 import TextNodeComponent from './TextNodeComponent'
 import PlainTextComponent from './PlainTextComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
-
-import WorkflowPane from './WorkflowPane'
-
+// Node components
 import AbstractComponent from './AbstractComponent'
 import AffiliationsListComponent from './AffiliationsListComponent'
 import AuthorsListComponent from './AuthorsListComponent'
-import EditorsListComponent from './EditorsListComponent'
 import BackComponent from './BackComponent'
 import BodyComponent from './BodyComponent'
 import BreakComponent from './BreakComponent'
-import ContainerNodeComponent from './ContainerNodeComponent'
-import ElementNodeComponent from './ElementNodeComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
+import EditorsListComponent from './EditorsListComponent'
+import ExtLinkComponent from '../reader/ExtLinkComponent'
 import FigComponent from './FigComponent'
 import CaptionComponent from './CaptionComponent'
+import DispQuoteComponent from './DispQuoteComponent'
+import FnComponent from './FnComponent'
+import FnGroupComponent from './FnGroupComponent'
 import FrontComponent from './FrontComponent'
 import GraphicComponent from './GraphicComponent'
-import DispQuoteComponent from './DispQuoteComponent'
-import InlineFormulaComponent from './InlineFormulaComponent'
-import TableComponent from './TableComponent'
 import HeadingComponent from './HeadingComponent'
-import ManuscriptComponent from './ManuscriptComponent'
-import TOC from './TOC'
-import TranslationsComponent from './TranslationsComponent'
-import FnGroupComponent from './FnGroupComponent'
-import FnComponent from './FnComponent'
-import RefListComponent from './RefListComponent'
+import InlineFormulaComponent from './InlineFormulaComponent'
+import ListComponent from './ListComponent'
+import ListItemComponent from './ListItemComponent'
 import RefComponent from './RefComponent'
+import RefListComponent from './RefListComponent'
 import SeparatorComponent from './SeparatorComponent'
 import SigBlockComponent from './SigBlockComponent'
+import TableComponent from './TableComponent'
 import TitleGroupComponent from './TitleGroupComponent'
+import TOC from './TOC'
+import TranslationsComponent from './TranslationsComponent'
 import XrefComponent from './XrefComponent'
-import ExtLinkComponent from '../reader/ExtLinkComponent'
-
+// Previews
 import RefPreview from './RefPreview'
 import FnPreview from './FnPreview'
 import FigPreview from './FigPreview'
 import TableFigPreview from './TableFigPreview'
-
+// Commands
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
@@ -73,13 +74,11 @@ import InsertFigureTool from './InsertFigureTool'
 import DropFigure from './DropFigure'
 import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
-
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from './TableCommands'
 import InsertTableTool from './InsertTableTool'
-
 import SchemaAwareToggleListCommand from './SchemaAwareToggleListCommand'
 
 export default {
@@ -87,9 +86,6 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
-    config.import(FindAndReplacePackage, {
-      rootElement: '.sc-article'
-    })
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
 
@@ -102,10 +98,11 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('text-property-editor', TextPropertyEditor)
     config.addComponent('text-property', TextureTextPropertyComponent)
-    config.addComponent('plain-text-property', PlainTextComponent)
+    config.addComponent('text-property-editor', TextureTextPropertyEditor)
     config.addComponent('container', ContainerNodeComponent)
+    config.addComponent('container-editor', TextureContainerEditor)
+    config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
@@ -129,8 +126,8 @@ export default {
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
-    config.addComponent('list', ListPackage.ListComponent)
-    config.addComponent('list-item', TextPropertyComponent)
+    config.addComponent('list', ListComponent)
+    config.addComponent('list-item', ListItemComponent)
     config.addComponent('ref', RefComponent)
     config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)

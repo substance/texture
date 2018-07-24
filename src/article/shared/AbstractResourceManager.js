@@ -1,5 +1,5 @@
 import { DocumentChange, array2table, isArrayEqual } from 'substance'
-import { XREF_TARGET_TYPES } from '../shared/xrefHelpers'
+import { XREF_TARGET_TYPES } from './xrefHelpers'
 
 /*
   A base class for FigureManager and TableManager
@@ -8,34 +8,30 @@ import { XREF_TARGET_TYPES } from '../shared/xrefHelpers'
   TODO: find a better name
 */
 export default class AbstractResourceManager {
-
-  constructor(editorSession, type, labelGenerator) {
-    this.editorSession = editorSession
-    if(!this.editorSession) {
-      throw new Error("'editorSession' is mandatory.")
-    }
+  constructor (articleSession, type, labelGenerator) {
+    this.articleSession = articleSession
     this.type = type
     this.labelGenerator = labelGenerator
     this._targetTypes = array2table(XREF_TARGET_TYPES[type])
     // TODO: should this be a parameter?
     // also, is it ok to assume that all these resources must be placed in a container?
-    this._container = editorSession.getDocument().find('article > body')
+    this._container = articleSession.getDocument().find('article > body')
     this._containerPath = this._container.getContentPath()
 
-    editorSession.onUpdate('document', this._onDocumentChange, this)
+    articleSession.on('change', this._onDocumentChange, this)
   }
 
-  dispose() {
-    this.editorSession.off(this)
+  dispose () {
+    this.articleSession.off(this)
   }
 
-  getAvailableResources() {
+  getAvailableResources () {
     return this._getResourcesFromDocument()
   }
 
-  _onDocumentChange(change) {
+  _onDocumentChange (change) {
     const TARGET_TYPES = this._targetTypes
-    const doc = this.editorSession.getDocument()
+    const doc = this.articleSession.getDocument()
 
     // update labels whenever
     // I.   a <target-type> node is inserted into the body
@@ -60,9 +56,8 @@ export default class AbstractResourceManager {
             // II. a ref-type has been updated
             if (op.path[2] === 'ref-type' && (op.val === this.type || op.original === this.type)) {
               needsUpdate = true
-            }
             // III. references have been updated
-            else if (op.path[2] === 'rid') {
+            } else if (op.path[2] === 'rid') {
               let node = doc.get(op.path[0])
               if (node && node.getAttribute('ref-type') === this.type) {
                 needsUpdate = true
@@ -87,13 +82,12 @@ export default class AbstractResourceManager {
     }
   }
 
-  _getResourcesFromDocument() {
+  _getResourcesFromDocument () {
     return this._container.findAll(XREF_TARGET_TYPES[this.type].join(','))
   }
 
-  _updateLabels() {
-    const editorSession = this.editorSession
-    const doc = editorSession.getDocument()
+  _updateLabels () {
+    const doc = this.articleSession.getDocument()
 
     let resources = this._getResourcesFromDocument()
     let resourcesById = {}
@@ -148,7 +142,5 @@ export default class AbstractResourceManager {
     resources.forEach((res) => {
       change.updated[res.id] = true
     })
-    editorSession._setUpdate('document', {change, info: {}})
-    editorSession.startFlow()
   }
 }

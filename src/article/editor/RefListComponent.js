@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import { ModalDialog } from '../../shared'
 import removeElementAndXrefs from '../shared/removeElementAndXrefs'
 import AddReferenceComponent from './AddReferenceComponent'
@@ -135,8 +135,9 @@ export default class RefListComponent extends NodeComponent {
   // }
 
   _onEdit(entityId) {
-    let db = this.context.pubMetaDbSession.getDocument()
-    let node = db.get(entityId)
+    const api = this.context.api
+    const article = api.getArticle()
+    let node = article.get(entityId)
     this.extendState({
       mode: 'edit',
       modeProps: {
@@ -146,7 +147,8 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _onImport(items) {
-    let db = this.context.pubMetaDbSession.getDocument()
+    const api = this.context.api
+    const db = api.getPubMetaDb()
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
       items.forEach(item => {
@@ -178,9 +180,9 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _getRefIdForEntityId(entityId) {
-    const editorSession = this.context.editorSession
-    const doc = editorSession.getDocument()
-    let refNode = doc.find(`ref-list > ref[rid=${entityId}]`)
+    const api = this.context.api
+    const article = api.getArticle()
+    let refNode = article.find(`ref-list > ref[rid=${entityId}]`)
     if (refNode) return refNode.id
   }
 
@@ -195,7 +197,8 @@ export default class RefListComponent extends NodeComponent {
   }
 
   _getBibliography() {
-    const referenceManager = this.context.referenceManager
+    const api = this.context.api
+    const referenceManager = api.getArticleSession().getReferenceManager()
     return referenceManager.getBibliography()
   }
 }

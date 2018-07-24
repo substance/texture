@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import { getXrefLabel } from '../shared/xrefHelpers'
 
 export default class XrefComponent extends NodeComponent {

@@ -18,8 +18,8 @@ export default function Managed (ComponentClass) {
     constructor (...args) {
       super(...args)
 
-      if (!this.context.state) {
-        throw new Error("'context.state' is required for Managed Components.")
+      if (!this.context.appState) {
+        throw new Error("'context.appState' is required for Managed Components.")
       }
       this._config = this._compileManagedProps(this.props)
       this._props = this._deriveManagedProps(this.props)
@@ -44,7 +44,7 @@ export default function Managed (ComponentClass) {
     }
 
     dispose () {
-      this.context.state.off(this)
+      this.context.appState.off(this)
     }
 
     render ($$) {
@@ -53,11 +53,11 @@ export default function Managed (ComponentClass) {
 
     _register () {
       const { stage, names } = this._config
-      this.context.state.addObserver(names, this._onUpdate, this, { stage })
+      this.context.appState.addObserver(names, this._onUpdate, this, { stage })
     }
 
     _deregister () {
-      this.context.state.off(this)
+      this.context.appState.off(this)
     }
 
     _onUpdate () {
@@ -76,7 +76,7 @@ export default function Managed (ComponentClass) {
     }
 
     _deriveManagedProps (props) {
-      const state = this.context.state
+      const state = this.context.appState
       const config = this._config
       if (config) {
         let derivedProps = Object.assign({}, props)

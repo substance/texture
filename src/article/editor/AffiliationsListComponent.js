@@ -1,4 +1,5 @@
-import { NodeComponent, uniq } from 'substance'
+import { uniq } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import entityRenderers from '../shared/entityRenderers'
 
 /*
@@ -11,16 +12,18 @@ import entityRenderers from '../shared/entityRenderers'
 export default class AffiliationsList extends NodeComponent {
 
   render($$) {
+    const api = this.context.api
+    const article = api.getArticle()
+
     let el = $$('div').addClass('sc-affiliations-list')
-    let db = this.context.pubMetaDbSession.getDocument()
     let entityIds = this._getOrgansiations()
 
     let contentEl = $$('div').addClass('se-content')
     entityIds.forEach((entityId, index) => {
-      let entity = db.get(entityId)
+      let entity = article.get(entityId)
       contentEl.append(
         $$('span').addClass('se-affiliation').html(
-          entityRenderers[entity.type](entity.id, db)
+          entityRenderers[entity.type](entity.id, article)
         )
       )
       if (index < entityIds.length - 1) {
@@ -36,11 +39,13 @@ export default class AffiliationsList extends NodeComponent {
   }
 
   _getOrgansiations() {
+    const api = this.context.api
+    const article = api.getArticle()
+
     let organisations = []
-    let db = this.context.pubMetaDbSession.getDocument()
     let authors = this._getAuthors()
     authors.forEach(authorId => {
-      let author = db.get(authorId)
+      let author = article.get(authorId)
       if (!author) {
         console.error('FIXME: no entity for author', authorId)
       } else {

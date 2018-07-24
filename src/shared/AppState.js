@@ -1,4 +1,4 @@
-import { uuid, isNil, isFunction } from 'substance'
+import { isNil, isFunction } from 'substance'
 import AbstractAppState from './AbstractAppState'
 
 const ANY = '@any'
@@ -10,21 +10,22 @@ const STAGE_IDX = STAGES.reduce((m, s, idx) => {
 }, {})
 
 export default class AppState extends AbstractAppState {
-  constructor (...args) {
+  constructor (initialState) {
     super()
 
-    this._id = uuid()
-    this._slots = new Map()
-    this._schedule = null
+    const impl = this._getImpl()
+    impl.slots = new Map()
+    impl.schedule = null
+    impl.isFlowing = false
 
-    this._initialize(...args)
+    this._initialize(initialState)
   }
 
   _initialize (initialState) {
-    let names = Object.keys(initialState)
+    const names = Object.keys(initialState)
     names.forEach(name => {
-      let val = initialState[name]
-      this._set(name, val)
+      const initialValue = initialState[name]
+      this._addProperty(name, initialValue)
     })
   }
 
@@ -33,15 +34,17 @@ export default class AppState extends AbstractAppState {
     if (!isFunction(handler)) throw new Error('Provided handler is not a function')
     handler = handler.bind(observer)
 
+    const impl = this._getImpl()
+    const ID = impl.id
     if (!options.stage) options.stage = DEFAULT_STAGE
     const stage = options.stage
     const slotId = this._getSlotId(stage, deps.slice())
-    let slot = this._slots.get(slotId)
+    let slot = impl.slots.get(slotId)
     if (!slot) {
       slot = this._createSlot(slotId, stage, deps)
-      this._slots.set(slotId, slot)
+      impl.slots.set(slotId, slot)
     }
-    if (!observer[this._id]) observer[this._id] = new Map()
+    if (!observer[ID]) observer[ID] = new Map()
     slot.addObserver(observer, {
       stage,
       deps,
@@ -51,16 +54,19 @@ export default class AppState extends AbstractAppState {
   }
 
   removeObserver (observer) {
-    let entries = observer[this._id] || []
+    const impl = this._getImpl()
+    const ID = impl.id
+    let entries = observer[ID] || []
     entries.forEach(e => {
       e.slot.removeObserver(observer)
     })
-    delete observer[this._id]
+    delete observer[ID]
   }
 
   propagateUpdates () {
-    if (this._isFlowing) throw new Error('Already updating.')
-    this._isFlowing = true
+    const impl = this._getImpl()
+    if (impl.isFlowing) throw new Error('Already updating.')
+    impl.isFlowing = true
     try {
       const schedule = this._getSchedule()
       for (let slot of schedule) {
@@ -70,7 +76,7 @@ export default class AppState extends AbstractAppState {
       }
       this._reset()
     } finally {
-      this._isFlowing = false
+      impl.isFlowing = false
     }
   }
 
@@ -84,18 +90,20 @@ export default class AppState extends AbstractAppState {
   }
 
   _createSlot (id, stage, deps) {
-    this._schedule = null
+    const impl = this._getImpl()
+    impl.schedule = null
     return new Slot(this, id, stage, deps)
   }
 
   // order slots by stage
   _getSchedule () {
-    let schedule = this._schedule
+    const impl = this._getImpl()
+    let schedule = impl.schedule
     if (!schedule) {
       schedule = []
-      this._slots.forEach(s => schedule.push(s))
+      impl.slots.forEach(s => schedule.push(s))
       schedule.sort((a, b) => STAGE_IDX[a.stage] - STAGE_IDX[b.stage])
-      this._schedule = schedule
+      impl.schedule = schedule
     }
     return schedule
   }
@@ -108,7 +116,7 @@ export default class AppState extends AbstractAppState {
 
 class Slot {
   constructor (appState, id, stage, deps) {
-    this._id = appState._id
+    this._id = appState._getImpl().id
     this.id = id
     this.appState = appState
     this.stage = stage

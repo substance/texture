@@ -1,6 +1,5 @@
 export * from './article/index'
 export * from './dar/index'
-export * from './rich-text-input'
 export * from './shared/index'
 
 export { default as Texture } from './Texture'

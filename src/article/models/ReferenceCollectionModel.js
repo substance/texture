@@ -13,7 +13,7 @@ export default class ReferenceCollectionModel {
   }
 
   getItems() {
-    let refNodes = this._api.referenceManager.getBibliography()
+    let refNodes = this._api.getReferenceManager().getBibliography()
     let result = refNodes.map(refNode => this._getItem(refNode.id ))
     return result
   }
@@ -28,7 +28,7 @@ export default class ReferenceCollectionModel {
 
   _getItem(id) {
     let doc = this._api.getArticle()
-    let pubMetaDb = this._api.getPubMetaDb()
+    let article = this._api.getArticle()
 
     let ref = doc.get(id)
     if (!ref) {
@@ -36,7 +36,7 @@ export default class ReferenceCollectionModel {
       return undefined
     }
     let entityId = ref.attr('rid')
-    let entity = pubMetaDb.get(entityId)
+    let entity = article.get(entityId)
     if (!entity) {
       console.warn(`No db entry found for ${entityId}.`)
       return undefined

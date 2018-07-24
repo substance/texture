@@ -104,9 +104,9 @@ export default class TextureArchive extends PersistedDocumentArchive {
   _loadDocument (type, record, sessions) {
     switch (type) {
       case 'article': {
+        const pubMetaSession = sessions['pub-meta']
         return ArticleLoader.load(record.data, {
-          pubMetaDb: sessions['pub-meta'].getDocument(),
-          archive: this,
+          pubMetaSession
         }, this._config)
       }
       default:

@@ -1,6 +1,5 @@
 import {
-  UndoCommand, RedoCommand, SelectAllCommand,
-  InputPackage
+  UndoCommand, RedoCommand, SelectAllCommand, InputPackage
 } from 'substance'
 
 export default {

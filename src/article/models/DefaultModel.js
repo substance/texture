@@ -1,5 +1,5 @@
 import { isArray } from 'substance'
-import { setModelValue, getModelSession } from './modelHelpers'
+import { setModelValue } from './modelHelpers'
 
 export default class DefaultModel {
   constructor(api, node) {
@@ -40,7 +40,7 @@ export default class DefaultModel {
 
     TODO: is it a good name?
   */
-  resolveRelationship(propertyName) {    
+  resolveRelationship(propertyName) {
     let value = this._node[propertyName]
     let result
     if (isArray(value)) {
@@ -49,15 +49,5 @@ export default class DefaultModel {
       result = this._api.getEntity(value)
     }
     return result
-  }
-
-  onUpdate(handler, component) {
-    let session = getModelSession(this)
-    session.onRender('document', handler, component, { path: [this.id] })
-  }
-
-  off (component) {
-    let session = getModelSession(this)
-    session.off(component)
   }
 }

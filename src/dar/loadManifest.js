@@ -1,8 +1,7 @@
 import {
   Configurator, registerSchema, XMLDocumentImporter
 } from 'substance'
-import TextureEditorSession from '../shared/TextureEditorSession'
-import EditorState from '../shared/EditorState'
+import DocumentSession from '../shared/DocumentSession'
 import ManifestSchema from './ManifestSchema'
 import ManifestDocument from './ManifestDocument'
 
@@ -13,7 +12,5 @@ export default function loadManifest (xmlStr) {
   })
   let importer = configurator.createImporter(ManifestSchema.getName())
   let manifest = importer.importDocument(xmlStr)
-  let editorState = new EditorState(manifest)
-  let editorSession = new TextureEditorSession(editorState, configurator)
-  return editorSession
+  return new DocumentSession(manifest)
 }

@@ -1,13 +1,14 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import { renderEntity } from '../shared/entityHelpers'
 
 export default class RefComponent extends NodeComponent {
 
   render($$) {
-    const db = this.context.pubMetaDbSession.getDocument()
+    const api = this.context.api
+    const article = api.getArticle()
     const ref = this.props.node
     let label = _getReferenceLabel(ref)
-    let entityHtml = renderEntity(_getEntity(ref, db))
+    let entityHtml = renderEntity(_getEntity(ref, article))
 
     // TODO: do we want to display something like this
     // if so, use the label provider
@@ -27,9 +28,9 @@ function _getReferenceLabel(ref) {
   return '?'
 }
 
-function _getEntity(ref, db) {
+function _getEntity(ref, article) {
   if (ref.state && ref.state.entity) {
     return ref.state.entity
   }
-  return db.get(ref.id)
+  return article.get(ref.id)
 }

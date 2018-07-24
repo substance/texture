@@ -1,26 +1,20 @@
 import { DocumentChange } from 'substance'
 
 export default class AbstractCitationManager {
-
-  constructor(editorSession, type, labelGenerator) {
-    this.editorSession = editorSession
-
-    if(!this.editorSession) {
-      throw new Error("'editorSession' is mandatory.")
-    }
-
+  constructor (articleSession, type, labelGenerator) {
+    this.articleSession = articleSession
     this.type = type
     this.labelGenerator = labelGenerator
 
-    this.editorSession.onUpdate('document', this._onDocumentChange, this)
+    this.articleSession.on('change', this._onDocumentChange, this)
   }
 
-  dispose() {
-    this.editorSession.off(this)
+  dispose () {
+    this.articleSession.off(this)
   }
 
-  _onDocumentChange(change) {
-    const doc = this.editorSession.getDocument()
+  _onDocumentChange (change) {
+    const doc = this.articleSession.getDocument()
 
     // updateCitationLabels whenever
     // I.   an xref[ref-type='bibr'] is created or deleted
@@ -94,9 +88,7 @@ export default class AbstractCitationManager {
 
     @param {Array<Object>} a list of citation entries.
   */
-  _updateLabels() {
-    const editorSession = this.editorSession
-
+  _updateLabels () {
     let xrefs = this._getXrefs()
     let refs = this._getReferences()
     let bibEl = this._getBibliographyElement()
@@ -139,9 +131,9 @@ export default class AbstractCitationManager {
       xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
     })
 
+    // HACK
     // Now update the node state of all affected xref[ref-type='bibr']
-    // TODO: we need a node state API
-    // provided via editor session
+    // TODO: solve this properly
     let change = new DocumentChange([], {}, {})
     change._extractInformation()
     xrefs.forEach((xref) => {
@@ -166,21 +158,19 @@ export default class AbstractCitationManager {
       change.updated[ref.id] = true
     })
 
+    // HACK
+    // TODO: solve this properly
+    // e.g. we could implement this manager as a reducer on the application
+    // state, and let the bibliography component react to updates of that
     if (bibEl) {
-      // Note: also mimick a change to ref-list
-      // to trigger an update
+      // Note: mimicking a change to the bibliography element to trigger an update
       change.updated[bibEl.id] = true
     }
-
-    editorSession._setUpdate('document', { change, info: {} })
-    editorSession.startFlow()
   }
 
-  _getXrefs() {
-    return this.editorSession.getDocument().findAll(`xref[ref-type='${this.type}']`)
+  _getXrefs () {
+    return this.articleSession.getDocument().findAll(`xref[ref-type='${this.type}']`)
   }
 
-  _getBibliographyElement() {
-  }
-
+  _getBibliographyElement () {}
 }

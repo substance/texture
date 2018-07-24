@@ -1,12 +1,11 @@
-import { ToggleTool } from 'substance'
+import { ToggleTool } from '../../shared'
 
-class InsertTableTool extends ToggleTool {
-
-  getClassNames() {
+export default class InsertTableTool extends ToggleTool {
+  getClassNames () {
     return 'sc-insert-table-tool'
   }
 
-  onClick() {
+  onClick () {
     const rows = 3
     const columns = 5
     this.executeCommand({
@@ -14,7 +13,4 @@ class InsertTableTool extends ToggleTool {
       columns: columns
     })
   }
-
 }
-
-export default InsertTableTool

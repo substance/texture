@@ -1,13 +1,14 @@
 import {
   Component, DefaultDOMElement, Highlights
 } from 'substance'
-import { Managed } from '../../shared'
-import { getXrefTargets } from '../shared/xrefHelpers'
-import SaveHandler from './SaveHandler'
+import { Managed, EditorSession, createEditorContext } from '../../shared'
+import ArticleAPI from '../ArticleAPI'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
-import ArticleAPI from '../ArticleAPI'
 
+/*
+  Note: an earlier implementation was based on this guy: https://github.com/substance/texture/blob/295e5d39d8d0e4b690ee8575a6d7576329a3844d/src/editor/util/AbstractWriter.js
+*/
 export default class ManuscriptEditor extends Component {
   constructor (...args) {
     super(...args)
@@ -21,30 +22,26 @@ export default class ManuscriptEditor extends Component {
   }
 
   _initialize (props) {
-    const articleSession = props.articleSession
-    const pubMetaDbSession = props.pubMetaDbSession
-    const config = props.config
-    const api = new ArticleAPI(config, articleSession, pubMetaDbSession, this.context)
-
+    const { articleSession, config, archive } = props
+    const editorSession = new EditorSession(articleSession, config, this)
+    const api = new ArticleAPI(editorSession, config.getModelRegistry())
+    this.editorSession = editorSession
     this.api = api
     this.exporter = this._getExporter()
     this.tocProvider = this._getTOCProvider()
-    this.saveHandler = this._getSaveHandler()
     this.contentHighlights = new Highlights(articleSession.getDocument())
-
-    articleSession.setSaveHandler(this.saveHandler)
+    this.context = Object.assign(createEditorContext(config, editorSession), {
+      api,
+      tocProvider: this.tocProvider,
+      urlResolver: archive
+    })
   }
 
   didMount () {
-    const articleSession = this.props.articleSession
-    // HACK: we need to re-evaluate command states, now that the UI has mounted
-    this._updateCommandStates()
-
     this.tocProvider.on('toc:updated', this._showHideTOC, this)
     this._showHideTOC()
     this._restoreViewport()
 
-    articleSession.onUpdate(this._onSessionUpdate, this)
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
   }
 
@@ -55,53 +52,16 @@ export default class ManuscriptEditor extends Component {
 
   dispose () {
     const articleSession = this.props.articleSession
+    const editorSession = this.editorSession
+
     this.tocProvider.off(this)
     articleSession.off(this)
+    editorSession.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
 
     // Note: we need to clear everything, as the childContext
     // changes which is immutable
     this.empty()
-  }
-
-  getChildContext () {
-    const api = this.api
-    const articleSession = this.props.articleSession
-    const state = articleSession.editorState
-    const pubMetaDbSession = this.props.pubMetaDbSession
-    const config = this.props.config
-    const componentRegistry = config.getComponentRegistry()
-    const commandManager = api.commandManager
-    const dragManager = api.dragManager
-    const referenceManager = api.getReferenceManager()
-    const surfaceManager = articleSession.surfaceManager
-    const markersManager = articleSession.markersManager
-    const commandGroups = config.getCommandGroups()
-    const tools = config.getTools()
-    const labelProvider = config.getLabelProvider()
-    const keyboardShortcuts = config.getKeyboardShortcuts()
-    const iconProvider = config.getIconProvider()
-    return {
-      api,
-      state,
-      configurator: config,
-      componentRegistry,
-      referenceManager,
-      // legacy
-      editorSession: articleSession,
-      pubMetaDbSession,
-      // TODO: make the context footprint smaller
-      commandManager,
-      commandGroups,
-      dragManager,
-      iconProvider,
-      keyboardShortcuts,
-      labelProvider,
-      surfaceManager,
-      markersManager,
-      tocProvider: this.tocProvider,
-      tools
-    }
   }
 
   getComponentRegistry () {
@@ -221,30 +181,16 @@ export default class ManuscriptEditor extends Component {
     return this.props.config
   }
 
-  _getArticleSession () {
-    return this.props.articleSession
+  _getEditorSession () {
+    return this.editorSession
   }
 
   _getDocument () {
-    return this._getArticleSession().getDocument()
-  }
-
-  _getSaveHandler () {
-    return new SaveHandler({
-      documentId: this.props.documentId,
-      xmlStore: this.context.xmlStore,
-      exporter: this.exporter
-    })
-  }
-
-  _updateCommandStates () {
-    const api = this.api
-    const articleSession = this._getArticleSession()
-    api.commandManager._updateCommandStates(articleSession)
+    return this.props.articleSession.getDocument()
   }
 
   _restoreViewport () {
-    const articleSession = this._getArticleSession()
+    const editorSession = this._getEditorSession()
     if (this.props.viewport) {
       this.refs.contentPanel.setScrollPosition(this.props.viewport.x)
     }
@@ -253,7 +199,7 @@ export default class ManuscriptEditor extends Component {
     // surfaces which do the surface registering, required here.
     setTimeout(() => {
       // We also use this place to rerender the selection
-      let focusedSurface = articleSession.getFocusedSurface()
+      let focusedSurface = editorSession.getFocusedSurface()
       if (focusedSurface) {
         focusedSurface.rerenderDOMSelection()
       }
@@ -266,14 +212,14 @@ export default class ManuscriptEditor extends Component {
 
   _tocEntrySelected (nodeId) {
     const node = this._getDocument().get(nodeId)
-    const articleSession = this._getArticleSession()
+    const editorSession = this._getEditorSession()
     const nodeComponent = this.refs.contentPanel.find(`[data-id="${nodeId}"]`)
     if (nodeComponent) {
       // TODO: it needs to be easier to retrieve the surface
       let surface = nodeComponent.context.surface
       // There are cases when we can't set selection, e.g. for references
       if (surface) {
-        articleSession.setSelection({
+        editorSession.setSelection({
           type: 'property',
           path: node.getPath(),
           startOffset: 0,
@@ -309,33 +255,12 @@ export default class ManuscriptEditor extends Component {
 
   _getTOCProvider () {
     let containerId = this._getBodyContainerId()
-    let doc = this._getDocument()
-    return new TOCProvider(doc, {
-      containerId: containerId
-    })
+    return new TOCProvider(this.props.articleSession, { containerId: containerId })
   }
 
   _getBodyContainerId () {
     const doc = this._getDocument()
     let body = doc.find('body')
     return body.id
-  }
-
-  _onSessionUpdate () {
-    const articleSession = this._getArticleSession()
-    if (!articleSession.hasChanged('document') && !articleSession.hasChanged('selection')) return
-    let sel = articleSession.getSelection()
-    let selectionState = articleSession.getSelectionState()
-    let xrefs = selectionState.getAnnotationsForType('xref')
-    let highlights = {
-      'fig': [],
-      'bibr': []
-    }
-    if (xrefs.length === 1 && xrefs[0].getSelection().equals(sel)) {
-      let xref = xrefs[0]
-      let targets = getXrefTargets(xref)
-      highlights[xref.referenceType] = targets.concat([xref.id])
-    }
-    this.contentHighlights.set(highlights)
   }
 }

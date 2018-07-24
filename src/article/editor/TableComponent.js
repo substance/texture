@@ -3,11 +3,9 @@ import {
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
+import { Managed } from '../../shared'
+import { getCellRange, computeUpdatedSelection } from '../shared/tableHelpers'
 import TableEditing from './TableEditing'
-import {
-  getCellRange, computeUpdatedSelection
-} from './tableHelpers'
-import Managed from '../../shared/Managed'
 import TableClipboard from './TableClipboard'
 import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
@@ -40,9 +38,10 @@ export default class TableComponent extends CustomSurface {
     super.didMount()
 
     this._tableSha = this.props.node._getSha()
+    const appState = this.context.appState
 
-    this.context.editorSession.onRender('document', this._onDocumentChange, this)
-    this.context.editorSession.onRender('selection', this._onSelectionChange, this)
+    appState.addObserver(['document'], this._onDocumentChange, this)
+    appState.addObserver(['selection'], this._onSelectionChange, this)
 
     this._positionSelection(this._getSelectionData())
   }
@@ -137,7 +136,7 @@ export default class TableComponent extends CustomSurface {
     return contextMenu
   }
 
-  _onDocumentChange() {
+  _onDocumentChange () {
     const table = this.props.node
     // Note: using a simplified way to detect when a table
     // has changed structurally
@@ -149,7 +148,8 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onSelectionChange(sel) {
+  _onSelectionChange () {
+    const sel = this.context.appState.selection
     const self = this
     if (!sel || sel.isNull()) {
       _disableActiveCell()

@@ -1,19 +1,7 @@
 import { AnnotationComponent } from 'substance'
+import NodeComponentMixin from '../../shared/NodeComponentMixin'
 
-export default class ExtLinkComponent extends AnnotationComponent {
-  didMount (...args) {
-    super.didMount(...args)
-    let node = this.props.node
-    this.context.editorSession.onRender('document', this.rerender, this, {
-      path: [node.id, 'attributes', 'xlink:href']
-    })
-  }
-
-  dispose (...args) {
-    super.dispose(...args)
-    this.context.editorSession.off(this)
-  }
-
+export default class ExtLinkComponent extends NodeComponentMixin(AnnotationComponent) {
   render($$) { // eslint-disable-line
     let el = super.render($$)
     let node = this.props.node

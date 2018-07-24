@@ -1,5 +1,5 @@
 import { Command, getRangeFromMatrix, flatten } from 'substance'
-import { getCellRange, generateTable } from './tableHelpers'
+import { tableHelpers } from '../shared'
 import TableEditing from './TableEditing'
 import InsertNodeCommand from './InsertNodeCommand'
 
@@ -24,23 +24,26 @@ export class InsertTableCommand extends InsertNodeCommand {
 }
 
 class BasicTableCommand extends Command {
-
-  getCommandState(params, context) {
+  getCommandState (params, context) {
     const sel = params.selection
     if (sel && sel.customType === 'table') {
       let { nodeId, anchorCellId, focusCellId } = sel.data
-      let editorSession = this._getEditorSession(params, context)
+      let editorSession = params.editorSession
       let doc = editorSession.getDocument()
       let table = doc.get(nodeId)
       let anchorCell = doc.get(anchorCellId)
       let focusCell = doc.get(focusCellId)
-      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
+      let { startRow, startCol, endRow, endCol } = tableHelpers.getCellRange(table, anchorCellId, focusCellId)
       return {
         disabled: false,
-        anchorCell, focusCell,
-        startRow, endRow, startCol, endCol,
-        nrows: endRow-startRow+1,
-        ncols: endCol-startCol+1
+        anchorCell,
+        focusCell,
+        startRow,
+        endRow,
+        startCol,
+        endCol,
+        nrows: endRow - startRow + 1,
+        ncols: endCol - startCol + 1
       }
     }
     // otherwise
@@ -52,7 +55,7 @@ class BasicTableCommand extends Command {
   execute(params, context) {
     const commandState = params.commandState
     if (commandState.disabled) return
-    let editorSession = this._getEditorSession(params, context)
+    let editorSession = params.editorSession
     let sel = params.selection
     let nodeId = sel.data.nodeId
     let surfaceId = sel.surfaceId
@@ -61,27 +64,23 @@ class BasicTableCommand extends Command {
   }
 }
 
-
 export class InsertCellsCommand extends BasicTableCommand {
-
-  __execute(editing, { startRow, startCol, endRow, endCol, ncols, nrows }) {
+  __execute (editing, { startRow, startCol, endRow, endCol, ncols, nrows }) {
     let insertPos = this.config.spec.pos
     let dim = this.config.spec.dim
     if (dim === 'row') {
-      let pos = insertPos === 'below' ? endRow+1 : startRow
+      let pos = insertPos === 'below' ? endRow + 1 : startRow
       editing.insertRows(pos, nrows)
     } else {
-      let pos = insertPos === 'right' ? endCol+1 : startCol
+      let pos = insertPos === 'right' ? endCol + 1 : startCol
       editing.insertCols(pos, ncols)
     }
     return true
   }
-
 }
 
 export class DeleteCellsCommand extends BasicTableCommand {
-
-  __execute(editing, { startRow, startCol, nrows, ncols }) {
+  __execute (editing, { startRow, startCol, nrows, ncols }) {
     let dim = this.config.spec.dim
     if (dim === 'row') {
       editing.deleteRows(startRow, nrows)
@@ -92,9 +91,7 @@ export class DeleteCellsCommand extends BasicTableCommand {
   }
 }
 
-
 export class TableSelectAllCommand extends BasicTableCommand {
-
   __execute(editing) {
     editing.selectAll()
     return true
@@ -103,15 +100,14 @@ export class TableSelectAllCommand extends BasicTableCommand {
 }
 
 export class ToggleCellHeadingCommand extends BasicTableCommand {
-
   getCommandState(params, context) {
     const sel = params.selection
     if (sel && sel.customType === 'table') {
       let { nodeId, anchorCellId, focusCellId } = sel.data
-      let editorSession = this._getEditorSession(params, context)
+      let editorSession = params.editorSession
       let doc = editorSession.getDocument()
       let table = doc.get(nodeId)
-      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
+      let { startRow, startCol, endRow, endCol } = tableHelpers.getCellRange(table, anchorCellId, focusCellId)
       let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
       cells = flatten(cells).filter(c => !c.shadowed)
       let onlyHeadings = true
@@ -138,19 +134,17 @@ export class ToggleCellHeadingCommand extends BasicTableCommand {
     editing.setHeading(cellIds, heading)
     return true
   }
-
 }
 
 export class ToggleCellMergeCommand extends BasicTableCommand {
-
   getCommandState(params, context) {
     const sel = params.selection
     if (sel && sel.customType === 'table') {
       let { nodeId, anchorCellId, focusCellId } = sel.data
-      let editorSession = this._getEditorSession(params, context)
+      let editorSession = params.editorSession
       let doc = editorSession.getDocument()
       let table = doc.get(nodeId)
-      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
+      let { startRow, startCol, endRow, endCol } = tableHelpers.getCellRange(table, anchorCellId, focusCellId)
       let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
       cells = flatten(cells).filter(c => !c.shadowed)
       let onlyMerged = true
@@ -184,5 +178,4 @@ export class ToggleCellMergeCommand extends BasicTableCommand {
     }
     return true
   }
-
 }

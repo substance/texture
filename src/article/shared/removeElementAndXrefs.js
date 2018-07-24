@@ -1,12 +1,12 @@
 import { without } from 'substance'
 
-export default function removeElementAndXrefs(editorSession, elementId, parentEl) {
-  let doc = editorSession.getDocument()
+export default function removeElementAndXrefs (articleSession, elementId, parentEl) {
+  let doc = articleSession.getDocument()
   let xrefIndex = doc.getIndex('xrefs')
   let xrefs = xrefIndex.get(elementId)
 
   if (xrefs.length === 0 || window.confirm(`Deleting this will affect ${xrefs.length} citations. Are you sure?`)) { // eslint-disable-line
-    editorSession.transaction(tx => {
+    articleSession.transaction(tx => {
       let node = tx.get(elementId)
       // ATTENTION: it is important to nodes from the transaction tx!
       // Be careful with closures here.

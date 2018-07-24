@@ -1,7 +1,7 @@
 import DefaultModel from './DefaultModel'
 import AnnotatedTextModel from './AnnotatedTextModel'
 import ContainerModel from './ContainerModel'
-import { getLabel, getPos } from '../editor/nodeHelpers'
+import { getLabel, getPos } from '../shared/nodeHelpers'
 
 export default class FigureModel extends DefaultModel {
   // Type is different to JATS node types (fig, table-wrap)

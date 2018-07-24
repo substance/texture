@@ -1,92 +1,20 @@
-import { forEach, without } from 'substance'
+import { without } from 'substance'
 
 import AnnotatedTextModel from './models/AnnotatedTextModel'
 
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
-import ReferencesModel from './models/ReferencesModel'
-
-import ReferenceManager from './editor/ReferenceManager'
-import FigureManager from './editor/FigureManager'
-import TableManager from './editor/TableManager'
-import FootnoteManager from './editor/FootnoteManager'
 import DefaultModel from './models/DefaultModel'
 import entityRenderers from './shared/entityRenderers'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 
 export default class ArticleAPI {
-  constructor (configurator, articleSession, pubMetaDbSession, context) {
-    this.configurator = configurator
-    this.modelRegistry = configurator.getModelRegistry()
+  constructor (articleSession, modelRegistry) {
+    this.modelRegistry = modelRegistry
     this.articleSession = articleSession
-    this.pubMetaDbSession = pubMetaDbSession
-    this.pubMetaDb = pubMetaDbSession.getDocument()
-    this.doc = articleSession.getDocument()
-    const editorSession = articleSession
-
-    // Create managers
-    this.referenceManager = new ReferenceManager({
-      labelGenerator: configurator.getLabelGenerator('references'),
-      editorSession,
-      pubMetaDbSession
-    })
-    // HACK: we need to expose referenceManager somehow, so it can be used in
-    // the JATSExporter. We may want to consider including referenceManager in
-    // TODO: Exporters should use the API instead
-    this.doc.referenceManager = this.referenceManager
-
-    this.figureManager = new FigureManager({
-      labelGenerator: configurator.getLabelGenerator('figures'),
-      editorSession
-    })
-    this.tableManager = new TableManager({
-      labelGenerator: configurator.getLabelGenerator('tables'),
-      editorSession
-    })
-    this.footnoteManager = new FootnoteManager({
-      labelGenerator: configurator.getLabelGenerator('footnotes'),
-      editorSession
-    })
-    // this will be passed to other managers etc.
-    this._context = Object.assign({}, context, {
-      api: this,
-      // TODO: try to get rid of this by switching to the 'api'
-      editorSession,
-      pubMetaDbSession,
-      referenceManager: this.referenceManager,
-      figureManager: this.figureManager,
-      tableManager: this.tableManager,
-      footnoteManager: this.footnoteManager,
-      get pubMetaDb () { return pubMetaDbSession.getDocument() },
-      get doc () { return editorSession.getDocument() },
-      get surfaceManager () { return editorSession.surfaceManager }
-    })
-
-    const CommandManager = configurator.getCommandManagerClass()
-    this.commandManager = new CommandManager(this._context, configurator.getCommands())
-
-    const FileManager = configurator.getFileManagerClass()
-    this.fileManager = new FileManager(editorSession, configurator.getFileAdapters(), this._context)
-
-    const DragManager = configurator.getDragManagerClass()
-    this.dragManager = new DragManager(configurator.getDropHandlers(), Object.assign({}, this._context, {
-      commandManager: this.commandManager
-    }))
-
-    const MacroManager = configurator.getMacroManagerClass()
-    this.macroManager = new MacroManager(this._context, configurator.getMacros())
-
-    const KeyboardManager = configurator.getKeyboardManagerClass()
-    this.keyboardManager = new KeyboardManager(editorSession, configurator.getKeyboardShortcuts(), {
-      context: this._context
-    })
-
-    this.customManagers = {}
-    forEach(configurator.getManagers(), (ManagerClass, name) => {
-      this.customManagers[name] = new ManagerClass(this._context)
-    })
+    this.article = articleSession.getDocument()
   }
 
   /*
@@ -106,27 +34,27 @@ export default class ArticleAPI {
     Returns an entity model (not node!)
   */
   getEntity(entityId) {
-    let entityNode = this.pubMetaDb.get(entityId)
+    let entityNode = this.article.get(entityId)
     let model = this.getModel(entityNode.type, entityNode)
     return model
   }
 
   getEntitiesByType(type) {
-    let entityIds = this.pubMetaDb.findByType(type)
+    let entityIds = this.article.findByType(type)
     return entityIds.map(entityId => this.getEntity(entityId))
   }
 
   // TODO: This method we should move into the API!
   renderEntity(model) {
-    return entityRenderers[model.type](model.id, this.pubMetaDb)
+    return entityRenderers[model.type](model.id, this.getArticle())
   }
 
-  getArticle() {
-    return this.doc
+  getArticle () {
+    return this.article
   }
 
-  getPubMetaDb() {
-    return this.pubMetaDb
+  getArticleSession () {
+    return this.articleSession
   }
 
   /*
@@ -137,7 +65,7 @@ export default class ArticleAPI {
       type: type
     })
     let node
-    this.pubMetaDbSession.transaction((tx) => {
+    this.articleSession.transaction((tx) => {
       node = tx.create(newNode)
     })
     return this.getModel(node.type, node)
@@ -148,7 +76,7 @@ export default class ArticleAPI {
   */
   deleteEntity(entityId) {
     let node
-    this.pubMetaDbSession.transaction((tx) => {
+    this.articleSession.transaction((tx) => {
       node = tx.delete(entityId)
     })
     return this.getModel(node.type, node)
@@ -319,46 +247,41 @@ export default class ArticleAPI {
 
 
   getSchema(type) {
-    return this.pubMetaDbSession.getDocument().getSchema().getNodeSchema(type)
+    return this.article.getSchema().getNodeSchema(type)
   }
 
   getArticleTitle() {
-    let articleTitle = this.doc.find('article-title')
-    return new AnnotatedTextModel(this, articleTitle, this._getContext())
+    let articleTitle = this.getArticle().find('article-title')
+    return new AnnotatedTextModel(this, articleTitle)
   }
 
   getArticleAbstract () {
-    let abstract = this.doc.find('abstract')
-    return new ContainerModel(this, abstract, this._getContext())
+    let abstract = this.getArticle().find('abstract')
+    return new ContainerModel(this, abstract)
   }
 
   getArticleBody () {
-    let body = this.doc.find('body')
-    return new ContainerModel(this, body, this._getContext())
+    let body = this.getArticle().find('body')
+    return new ContainerModel(this, body)
   }
 
   getContribs () {
-    let articleMeta = this.doc.find('article-meta')
+    let articleMeta = this.getArticle().find('article-meta')
     return new ContribsModel(articleMeta, this._getContext())
   }
 
-  getMeta() {
-    let articleMeta = this.doc.find('article-meta')
+  getMeta () {
+    let articleMeta = this.getArticle().find('article-meta')
     return new MetaModel(articleMeta, this._getContext())
   }
 
   getFootnotes () {
-    let fns = this.doc.findAll('fn-group > fn')
+    let fns = this.getArticle().findAll('fn-group > fn')
     return fns.map(fn => this.getModel(fn.type, fn))
   }
 
-  getReferences () {
-    let refList = this.doc.find('ref-list')
-    return new ReferencesModel(refList, this._getContext())
-  }
-
   getFigures () {
-    let figs = this.doc.findAll('fig')
+    let figs = this.getArticle().findAll('fig')
     return figs.map(fig => this.getModel(fig.type, fig))
   }
 
@@ -419,7 +342,6 @@ export default class ArticleAPI {
       this.getArticleAbstract(),
       translations
     )
-
   }
 
   _getContext () {
@@ -431,18 +353,23 @@ export default class ArticleAPI {
     API's should be used to access information.
   */
   getFigureManager () {
-    return this.figureManager
-  }
-
-  getTableManager () {
-    return this.tableManager
+    return this.getArticleSession().getFigureManager()
   }
 
   getFootnoteManager () {
-    return this.footnoteManager
+    return this.getArticleSession().getFootnoteManager()
   }
 
   getReferenceManager () {
-    return this.referenceManager
+    return this.getArticleSession().getReferenceManager()
+  }
+
+  getTableManager () {
+    return this.getArticleSession().getTableManager()
+  }
+
+  get doc () {
+    console.error('DEPRECATED: use api.getArticle() instead.')
+    return this.getArticle()
   }
 }

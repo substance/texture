@@ -49,16 +49,11 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
   isDisabled(params) {
     const sel = params.selection
     const selectionState = params.editorSession.getSelectionState()
-    const editor = params.editorSession.getEditor()
-    if (!editor) return true
-
     if (!sel.isPropertySelection()) {
       return true
     }
-
-    // We don't allow inserting an inline node on top of an existing inline
-    // node.
-    if (selectionState.isInlineNodeSelection()) {
+    // We don't allow inserting an inline node on top of an existing inline node.
+    if (selectionState.isInlineNodeSelection) {
       return true
     }
     return false

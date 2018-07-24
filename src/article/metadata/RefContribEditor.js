@@ -41,7 +41,7 @@ export default class RefContribEditor extends Component {
       $$(TextInput, {id: item.id, name: 'name', value: item.name, placeholder: 'Last name'}),
       $$('button').addClass('se-remove-value')
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))
-        .on('click', this._removeContrib.bind(this, item.id))  
+        .on('click', this._removeContrib.bind(this, item.id))
     ).ref(item.id)
   }
 
@@ -58,10 +58,10 @@ export default class RefContribEditor extends Component {
   }
 
   _getContrib(id) {
-    const pubMetaDb = this.context.api.pubMetaDb
-    return pubMetaDb.get(id)
+    const article = this.context.api.getArticle()
+    return article.get(id)
   }
-  
+
   _getValue() {
     const items = this.state.items
     return items.map(item => item.id)

@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 
 export default class SigBlockComponent extends NodeComponent {
 

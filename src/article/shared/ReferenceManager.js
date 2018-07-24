@@ -2,28 +2,23 @@ import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AbstractCitationManager from './AbstractCitationManager'
 
 export default class ReferenceManager extends AbstractCitationManager {
-
-  constructor(context) {
-    super(context.editorSession, 'bibr', context.labelGenerator)
-
-    this.pubMetaDbSession = context.pubMetaDbSession
-    if(!this.pubMetaDbSession) {
-      throw new Error("'pubMetaDbSession' is mandatory.")
-    }
+  constructor (articleSession, labelGenerator) {
+    super(articleSession, 'bibr', labelGenerator)
     // compute initial labels
     this._updateLabels()
   }
 
-  updateReferences(newRefs) {
-    let refList = this.editorSession.getDocument().find('ref-list')
+  // TODO: don't do this here, instead add something like this to ArticleAPI
+  updateReferences (newRefs) {
+    let refList = this.articleSession.getDocument().find('ref-list')
     let oldRefs = this.getReferenceIds()
-    this.editorSession.transaction(tx => {
+    this.articleSession.transaction(tx => {
       updateEntityChildArray(tx, refList.id, 'ref', 'rid', oldRefs, newRefs)
     })
   }
 
-  getReferenceIds() {
-    let doc = this.editorSession.getDocument()
+  getReferenceIds () {
+    let doc = this.articleSession.getDocument()
     let refs = doc.findAll('ref-list > ref')
     return refs.map(ref => ref.getAttribute('rid'))
   }
@@ -31,22 +26,20 @@ export default class ReferenceManager extends AbstractCitationManager {
   /*
     Returns a list of formatted citations including labels
   */
-  getBibliography() {
+  getBibliography () {
     let references = this._getReferences()
-    references.sort((a,b) => {
+    references.sort((a, b) => {
       return a.state.pos - b.state.pos
     })
     return references
   }
 
-  // interface for EditXrefTool
-  getAvailableResources() {
+  getAvailableResources () {
     return this.getBibliography()
   }
 
-  _getReferences() {
-    const doc = this.editorSession.getDocument()
-    const db = this.pubMetaDbSession.getDocument()
+  _getReferences () {
+    const doc = this.articleSession.getDocument()
 
     let refs = doc.findAll('ref-list > ref')
     // TODO: determine order and label based on citations in the document
@@ -56,14 +49,13 @@ export default class ReferenceManager extends AbstractCitationManager {
         ref.state = {}
       }
       if (!ref.state.entity) {
-        ref.state.entity = db.get(refId)
+        ref.state.entity = doc.get(refId)
       }
       return ref
     })
   }
 
-  _getBibliographyElement() {
-    return this.editorSession.getDocument().find('ref-list')
+  _getBibliographyElement () {
+    return this.articleSession.getDocument().find('ref-list')
   }
-
 }

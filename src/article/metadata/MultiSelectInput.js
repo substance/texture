@@ -1,11 +1,18 @@
 import { Component, FontAwesomeIcon } from 'substance'
 
 export default class MultiSelectInput extends Component {
+  didMount () {
+    this.context.appState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
+  }
+
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
   getInitialState () {
     const selected = this.props.selectedOptions
     return {
-      values: selected,
-      editor: false
+      values: selected
     }
   }
 
@@ -18,16 +25,17 @@ export default class MultiSelectInput extends Component {
       }
       return labels
     }, [])
-
+    const showValues = this.context.appState.overlayId === this.getId()
     const isEmptyValue = selectedLabels.length === 0
+
     const el = $$('div').addClass('sc-multi-select-input').append(
       isEmptyValue ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
-    ).on('click', this._toggleEditor)
+    ).on('click', this._toggleDropdown)
     if (isEmptyValue) el.addClass('sm-empty')
 
-    if (this.state.editor) {
+    if (showValues) {
       el.append(
-        this.renderEditor($$, options)
+        this.renderValues($$, options)
       )
     }
 
@@ -36,7 +44,7 @@ export default class MultiSelectInput extends Component {
     return el
   }
 
-  renderEditor ($$, options) {
+  renderValues ($$, options) {
     const label = this.props.name
     const selected = this.state.values
     const editorEl = $$('div').addClass('se-select-editor').append(
@@ -70,9 +78,8 @@ export default class MultiSelectInput extends Component {
     this.send('set-value', name, selected)
   }
 
-  _toggleEditor (event) {
+  _toggleDropdown (event) {
     event.stopPropagation()
-    const isEditing = this.state.editor
-    this.extendState({editor: !isEditing})
+    this.send('toggleOverlay', this.getId())
   }
 }

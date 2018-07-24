@@ -5,6 +5,7 @@ export default class TextureConfigurator extends Configurator {
     super()
 
     this.config.configurations = {}
+    this.config.availableLanguages = {} 
     this.config.propertyEditors = []
     this._compiledToolPanels = {}
   }
@@ -126,6 +127,14 @@ export default class TextureConfigurator extends Configurator {
       commandGroup = []
     }
     return commandGroup
+  }
+
+  registerLanguage (code, name) {
+    this.config.availableLanguages[code] = name
+  }
+
+  getAvailableLanguages () {
+    return this.config.availableLanguages
   }
 
   _compileToolPanelItem (itemSpec) {

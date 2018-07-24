@@ -13,7 +13,6 @@ export default class CommandManager {
     this.appState.off(this)
   }
 
-  // HACK: don't know yet how to use AppState API here
   reduce () {
     const commands = this.commands
     const appState = this.appState

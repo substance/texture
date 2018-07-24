@@ -574,7 +574,6 @@ export default {
         type: 'tool-dropdown',
         showDisabled: false,
         style: 'descriptive',
-        commandGroups: ['toggle-content-section', 'view'],
         items: [
           { type: 'command-group', name: 'toggle-content-section' },
           { type: 'command-group', name: 'view' }

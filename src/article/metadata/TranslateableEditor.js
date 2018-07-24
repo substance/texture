@@ -1,5 +1,6 @@
 import { Component } from 'substance'
 import ContainerModel from '../models/ContainerModel'
+import FormRowComponent from './FormRowComponent'
 
 export default class TranslateableEditor extends Component {
 
@@ -13,22 +14,24 @@ export default class TranslateableEditor extends Component {
       .attr('data-id', model.id)
 
     el.append(
-      $$('h1').append(this.getLabel(model.id))
+      $$('div').addClass('se-header').append(this.getLabel(model.id))
     )
+
+    const originalRow = $$(FormRowComponent, {
+      label: this.getLabel('original-translation')
+    })
 
     // TODO: Let's improve this code!
     if (originalText instanceof ContainerModel) {
 
-      el.append(
-        $$('div').append('Original'),
+      originalRow.append(
         $$(ContainerEditor, {
           node: originalText.getContainerNode()
         }).ref(model.id+'Editor')
       )
 
     } else {
-      el.append(
-        $$('div').append('Original'),
+      originalRow.append(
         $$(TextPropertyEditor, {
           name: model.id+'Editor',
           placeholder: 'Enter text',
@@ -37,21 +40,24 @@ export default class TranslateableEditor extends Component {
       )
     }
 
+    el.append(originalRow)
 
     model.getTranslations().forEach(translation => {
       let text = translation.getText()
       let lang = translation.getLanguageCode()
 
+      const translRow = $$(FormRowComponent, {
+        label: this.getLabel(lang + '-translation')
+      })
+
       if (text instanceof ContainerModel) {
-        el.append(
-          $$('div').append('Original'),
+        translRow.append(
           $$(ContainerEditor, {
             node: text.getContainerNode()
           }).ref(model.id+lang+'Editor')
         )
       } else {
-        el.append(
-          $$('div').append(lang),
+        translRow.append(
           $$(TextPropertyEditor, {
             name: model.id+lang+'Editor',
             placeholder: 'Enter text',
@@ -60,6 +66,7 @@ export default class TranslateableEditor extends Component {
         )
       }
 
+      el.append(translRow)
     })
 
     return el

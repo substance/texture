@@ -65,7 +65,8 @@ export default class ArticleAPI {
       type: type
     })
     let node
-    this.articleSession.transaction((tx) => {
+    this.articleSession.transaction(tx => {
+      tx.selection = null
       node = tx.create(newNode)
     })
     return this.getModel(node.type, node)
@@ -78,6 +79,7 @@ export default class ArticleAPI {
     let node
     this.articleSession.transaction((tx) => {
       node = tx.delete(entityId)
+      tx.selection = null
     })
     return this.getModel(node.type, node)
   }
@@ -89,6 +91,7 @@ export default class ArticleAPI {
       const contribEl = tx.createElement('contrib').attr({'rid': personModel.id, 'contrib-type': 'person'})
       const personContribGroup = tx.find('contrib-group[content-type='+type+']')
       personContribGroup.append(contribEl)
+      tx.selection = null
     })
     return personModel
   }
@@ -108,6 +111,7 @@ export default class ArticleAPI {
       const contrib = personsContribGroup.find(`contrib[rid=${personId}]`)
       contrib.parentNode.removeChild(contrib)
       tx.delete(contrib.id)
+      tx.selection = null
     })
     return model
   }
@@ -119,6 +123,7 @@ export default class ArticleAPI {
       const affEl = tx.createElement('aff').attr('rid', orgModel.id)
       const affGroup = tx.find('aff-group')
       affGroup.append(affEl)
+      tx.selection = null
     })
     return orgModel
   }
@@ -131,6 +136,7 @@ export default class ArticleAPI {
       const affEl = affGroup.find(`aff[rid=${orgId}]`)
       affEl.parentNode.removeChild(affEl)
       tx.delete(affEl.id)
+      tx.selection = null
     })
     return model
   }
@@ -142,6 +148,7 @@ export default class ArticleAPI {
       const awardGroupEl = tx.createElement('award-group').attr('rid', awardModel.id)
       const fundingGroupEl = tx.find('funding-group')
       fundingGroupEl.append(awardGroupEl)
+      tx.selection = null
     })
     return awardModel
   }
@@ -154,6 +161,7 @@ export default class ArticleAPI {
       const awardGroupEl = fundingGroup.find(`award-group[rid=${awardId}]`)
       awardGroupEl.parentNode.removeChild(awardGroupEl)
       tx.delete(awardGroupEl.id)
+      tx.selection = null
     })
     return model
   }
@@ -165,6 +173,7 @@ export default class ArticleAPI {
       const kwdEl = tx.createElement('kwd').attr('rid', keywordModel.id)
       const kwdGroupEl = tx.find('kwd-group')
       kwdGroupEl.append(kwdEl)
+      tx.selection = null
     })
     return keywordModel
   }
@@ -177,6 +186,7 @@ export default class ArticleAPI {
       const kwdEl = kwdGroup.find(`kwd[rid=${keywordId}]`)
       kwdEl.parentNode.removeChild(kwdEl)
       tx.delete(kwdEl.id)
+      tx.selection = null
     })
     return model
   }
@@ -188,6 +198,7 @@ export default class ArticleAPI {
       const subjectEl = tx.createElement('subject').attr('rid', subjectModel.id)
       const subjGroupEl = tx.find('subj-group')
       subjGroupEl.append(subjectEl)
+      tx.selection = null
     })
     return subjectModel
   }
@@ -200,6 +211,7 @@ export default class ArticleAPI {
       const subjectEl = subjGroup.find(`subject[rid=${subjectId}]`)
       subjectEl.parentNode.removeChild(subjectEl)
       tx.delete(subjectEl.id)
+      tx.selection = null
     })
     return model
   }
@@ -223,7 +235,7 @@ export default class ArticleAPI {
         idrefs = without(idrefs, refId)
         xref.setAttribute('rid', idrefs.join(' '))
       })
-      tx.setSelection(null)
+      tx.selection = null
     })
   }
 

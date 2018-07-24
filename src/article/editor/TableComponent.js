@@ -40,8 +40,8 @@ export default class TableComponent extends CustomSurface {
     this._tableSha = this.props.node._getSha()
     const appState = this.context.appState
 
-    appState.addObserver(['document'], this._onDocumentChange, this)
-    appState.addObserver(['selection'], this._onSelectionChange, this)
+    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' } )
+    appState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'render' })
 
     this._positionSelection(this._getSelectionData())
   }
@@ -150,6 +150,7 @@ export default class TableComponent extends CustomSurface {
   }
 
   _onSelectionChange () {
+    const doc = this.context.editorSession.getDocument()
     const sel = this.context.appState.selection
     const self = this
     if (!sel || sel.isNull()) {
@@ -168,12 +169,11 @@ export default class TableComponent extends CustomSurface {
       }
       if (this._activeCell) {
         // TODO: this could be simplified
-        let doc = this.context.editorSession.getDocument()
         let cell = doc.get(this._activeCell)
         this._positionSelection({
           type: 'range',
           anchorCellId: cell.id,
-          focusCellId: cell.id,
+          focusCellId: cell.id
         }, true)
       } else {
         this._hideSelection()
@@ -455,7 +455,7 @@ export default class TableComponent extends CustomSurface {
   }
 
   rerenderDOMSelection() {
-    // console.log('SheetComponent.rerenderDOMSelection()')
+    console.log('SheetComponent.rerenderDOMSelection()')
     this._positionSelection(this._getSelectionData())
     // // put the native focus into the keytrap so that we
     // // receive keyboard events

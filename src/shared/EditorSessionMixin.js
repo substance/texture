@@ -17,6 +17,8 @@ export default function (DocumentSession) {
     constructor (doc, config, contextProvider) {
       super(doc, config)
 
+      if (!contextProvider) contextProvider = { context: { editorSession: this } }
+
       this.config = config
       this.contextProvider = contextProvider
 
@@ -90,6 +92,7 @@ export default function (DocumentSession) {
 
     setSelection (sel) {
       // console.log('EditorSession.setSelection()', sel)
+      if (!sel) sel = Selection.nullSelection
       if (sel && isPlainObject(sel)) {
         sel = this.getDocument().createSelection(sel)
       }

@@ -1,7 +1,8 @@
 import {
   Component, DefaultDOMElement, Highlights
 } from 'substance'
-import { Managed, EditorSession, createEditorContext } from '../../shared'
+import { Managed, createEditorContext } from '../../shared'
+import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
@@ -23,7 +24,7 @@ export default class ManuscriptEditor extends Component {
 
   _initialize (props) {
     const { articleSession, config, archive } = props
-    const editorSession = new EditorSession(articleSession, config, this)
+    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this)
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
     this.editorSession = editorSession
     this.api = api

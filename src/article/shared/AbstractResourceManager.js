@@ -8,21 +8,21 @@ import { XREF_TARGET_TYPES } from './xrefHelpers'
   TODO: find a better name
 */
 export default class AbstractResourceManager {
-  constructor (articleSession, type, labelGenerator) {
-    this.articleSession = articleSession
+  constructor (doc, type, labelGenerator) {
+    this.doc = doc
     this.type = type
     this.labelGenerator = labelGenerator
     this._targetTypes = array2table(XREF_TARGET_TYPES[type])
     // TODO: should this be a parameter?
     // also, is it ok to assume that all these resources must be placed in a container?
-    this._container = articleSession.getDocument().find('article > body')
+    this._container = doc.find('article > body')
     this._containerPath = this._container.getContentPath()
 
-    articleSession.on('change', this._onDocumentChange, this)
+    doc.on('document:changed', this._onDocumentChange, this)
   }
 
   dispose () {
-    this.articleSession.off(this)
+    this.doc.off(this)
   }
 
   getAvailableResources () {
@@ -31,7 +31,7 @@ export default class AbstractResourceManager {
 
   _onDocumentChange (change) {
     const TARGET_TYPES = this._targetTypes
-    const doc = this.articleSession.getDocument()
+    const doc = this.doc
 
     // update labels whenever
     // I.   a <target-type> node is inserted into the body
@@ -87,7 +87,7 @@ export default class AbstractResourceManager {
   }
 
   _updateLabels () {
-    const doc = this.articleSession.getDocument()
+    const doc = this.doc
 
     let resources = this._getResourcesFromDocument()
     let resourcesById = {}

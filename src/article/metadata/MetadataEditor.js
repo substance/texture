@@ -1,7 +1,8 @@
-import { Component, DefaultDOMElement} from 'substance'
+import { Component } from 'substance'
 import {
-  Managed, EditorSession, createEditorContext
+  Managed, createEditorContext
 } from '../../shared'
+import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
 import EntityEditor from './EntityEditor'
@@ -30,8 +31,9 @@ export default class MetadataEditor extends Component {
 
   _initialize (props) {
     const { articleSession, config, archive } = props
-    const editorSession = new EditorSession(articleSession, config, this)
+    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this)
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
+    this.api = api
     this.editorSession = editorSession
     this.context = Object.assign(createEditorContext(config, editorSession), {
       api,
@@ -92,7 +94,7 @@ export default class MetadataEditor extends Component {
   }
 
   _renderTOCPane ($$) {
-    const api = this.props.api
+    const api = this.api
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
     SECTIONS.forEach(section => {
@@ -117,7 +119,7 @@ export default class MetadataEditor extends Component {
   }
 
   _renderContentPanel ($$) {
-    const api = this.props.api
+    const api = this.api
     const ScrollPane = this.getComponent('scroll-pane')
 
     let contentPanel = $$(ScrollPane, {

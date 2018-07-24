@@ -13,15 +13,15 @@ import KeyboardManager from './KeyboardManager'
 import CommandManager from './CommandManager'
 
 export default function (DocumentSession) {
+  class EditorSession extends DocumentSession {
+    constructor (doc, config, contextProvider) {
+      super(doc, config)
 
-  export default class EditorSession {
-    constructor (documentSession, config, contextProvider) {
-      this.documentSession = documentSession
       this.config = config
       this.contextProvider = contextProvider
 
       let editorState = new EditorState({
-        document: documentSession.getDocument(),
+        document: doc,
         selection: Selection.nullSelection,
         selectionState: {},
         focusedSurface: null,
@@ -49,11 +49,11 @@ export default function (DocumentSession) {
       this.keyboardManager = keyboardManager
       this.commandManager = commandManager
 
-      this.documentSession.on('change', this._onDocumentChange, this)
+      doc.on('document:changed', this._onDocumentChange, this)
     }
 
     dispose () {
-      this.documentSession.off(this)
+      this.getDocument().off(this)
     }
 
     getConfigurator () {
@@ -64,9 +64,6 @@ export default function (DocumentSession) {
       return this.contextProvider.context
     }
 
-    getDocument () {
-      return this.editorState.document
-    }
     getSelection () {
       return this.editorState.selection
     }
@@ -91,18 +88,6 @@ export default function (DocumentSession) {
       return Boolean(this.editorState.hasUnsavedChanges)
     }
 
-    canUndo () {
-      return this.documentSession.canUndo()
-    }
-
-    canRedo () {
-      return this.documentSession.canRedo()
-    }
-
-    resetHistory () {
-      this.documentSession.resetHistory()
-    }
-
     setSelection (sel) {
       // console.log('EditorSession.setSelection()', sel)
       if (sel && isPlainObject(sel)) {
@@ -125,34 +110,33 @@ export default function (DocumentSession) {
 
     transaction (fn, info) {
       const editorState = this.editorState
-      const documentSession = this.documentSession
-      let tx = documentSession._transaction.tx
+      let tx = this._transaction.tx
       // HACK: setting the state of 'tx' here
       // TODO: find out a way to pass a tx state for the transaction
       // then we could derive this state from the editorState
       let selBefore = editorState.selection
       tx.selection = selBefore
-      let change = documentSession._recordChange(fn, info)
+      let change = this._recordChange(fn, info)
       if (change) {
         let selAfter = tx.selection
         this._setSelection(selAfter)
         change.before = { selection: selBefore }
         change.after = { selection: selAfter }
         // console.log('EditorSession.transaction()', change)
-        documentSession._commit(change, info)
+        this._commit(change, info)
         editorState.propagateUpdates()
       }
       return change
     }
 
     undo () {
-      let change = this.documentSession.undo()
+      let change = super.undo()
       if (change) this._setSelection(change.after.selection)
       this.editorState.propagateUpdates()
     }
 
     redo () {
-      let change = this.documentSession.redo()
+      let change = super.redo()
       if (change) this._setSelection(change.after.selection)
       this.editorState.propagateUpdates()
     }
@@ -250,14 +234,14 @@ export default function (DocumentSession) {
     _applyRemoteChange (change) {
       // console.log('EditorSession: applying remote change');
       if (change.ops.length > 0) {
-        this.documentSession._applyRemoteChange(change)
+        super._applyRemoteChange(change)
         this._setSelection(this._transformSelection(change))
         this.editorState.propagateUpdates()
       }
     }
   }
 
-
+  return EditorSession
 }
 
 function _addSurfaceId (sel, editorSession) {

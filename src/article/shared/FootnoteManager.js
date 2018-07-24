@@ -2,8 +2,8 @@ import AbstractCitationManager from './AbstractCitationManager'
 import { getPos } from './nodeHelpers'
 
 export default class FootnoteManager extends AbstractCitationManager {
-  constructor (articleSession, labelGenerator) {
-    super(articleSession, 'fn', labelGenerator)
+  constructor (doc, labelGenerator) {
+    super(doc, 'fn', labelGenerator)
     // compute initial labels
     this._updateLabels()
   }
@@ -20,10 +20,10 @@ export default class FootnoteManager extends AbstractCitationManager {
   }
 
   _getReferences () {
-    return this.articleSession.getDocument().findAll('fn')
+    return this.doc.findAll('fn')
   }
 
   _getBibliographyElement () {
-    return this.articleSession.getDocument().find('fn-group')
+    return this.doc.find('fn-group')
   }
 }

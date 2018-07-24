@@ -1,20 +1,20 @@
 import { DocumentChange } from 'substance'
 
 export default class AbstractCitationManager {
-  constructor (articleSession, type, labelGenerator) {
-    this.articleSession = articleSession
+  constructor (doc, type, labelGenerator) {
+    this.doc = doc
     this.type = type
     this.labelGenerator = labelGenerator
 
-    this.articleSession.on('change', this._onDocumentChange, this)
+    this.doc.on('document:changed', this._onDocumentChange, this)
   }
 
   dispose () {
-    this.articleSession.off(this)
+    this.doc.off(this)
   }
 
   _onDocumentChange (change) {
-    const doc = this.articleSession.getDocument()
+    const doc = this.doc
 
     // updateCitationLabels whenever
     // I.   an xref[ref-type='bibr'] is created or deleted
@@ -169,7 +169,7 @@ export default class AbstractCitationManager {
   }
 
   _getXrefs () {
-    return this.articleSession.getDocument().findAll(`xref[ref-type='${this.type}']`)
+    return this.doc.findAll(`xref[ref-type='${this.type}']`)
   }
 
   _getBibliographyElement () {}

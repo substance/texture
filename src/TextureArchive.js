@@ -114,7 +114,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _exportDocument (type, session, sessions) {
+  _exportDocument (type, session, sessions) { // eslint-disable-line no-unused-vars
     switch (type) {
       case 'article': {
         let jatsExporter = new JATSExporter()

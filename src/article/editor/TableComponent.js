@@ -197,7 +197,6 @@ export default class TableComponent extends CustomSurface {
         self._activeCell = null
       }
     }
-
   }
 
   _onMousedown(e) {
@@ -455,7 +454,7 @@ export default class TableComponent extends CustomSurface {
   }
 
   rerenderDOMSelection() {
-    console.log('SheetComponent.rerenderDOMSelection()')
+    // console.log('SheetComponent.rerenderDOMSelection()')
     this._positionSelection(this._getSelectionData())
     // // put the native focus into the keytrap so that we
     // // receive keyboard events

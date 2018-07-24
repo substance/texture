@@ -1,23 +1,12 @@
 import { Component, FontAwesomeIcon } from 'substance'
 
 export default class MultiSelectInput extends Component {
-  constructor (...args) {
-    super(...args)
-    console.log('Creating new MultiSelectInput')
-  }
-
   getInitialState () {
-    console.log('MultiSelectInput.getInitialState()')
     const selected = this.props.selectedOptions
     return {
       values: selected,
       editor: false
     }
-  }
-
-  setState (...args) {
-    console.log('MultiSelectInput.setState()')
-    super.setState(...args)
   }
 
   render ($$) {

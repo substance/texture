@@ -1,4 +1,4 @@
-import { XMLDocument } from 'substance'
+import { XMLDocument, without } from 'substance'
 import InternalArticle from './InternalArticle'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
@@ -10,6 +10,28 @@ export default class TextureDocument extends XMLDocument {
     super._initialize()
     // special index for xref lookup
     this.addIndex('xrefs', new XrefIndex())
+  }
+
+  findByType(type) {
+    let NodeClass = this.schema.getNodeClass(type)
+    if (!NodeClass) return []
+    let nodesByType = this.getIndex('type')
+    let nodeIds = []
+    if (NodeClass.abstract) {
+      // TODO: would be nice to get sub-types from the schema
+      const schema = this.schema
+      schema.nodeRegistry.names.forEach((subType) => {
+        if (schema.isInstanceOf(subType, type)) {
+          nodeIds = nodeIds.concat(Object.keys(nodesByType.get(subType)))
+        }
+      })
+    } else {
+      nodeIds = Object.keys(nodesByType.get(type))
+    }
+    // HACK: we do not want to have one of these in the result
+    // how could we generalise this?
+    nodeIds = without(nodeIds, 'main-article')
+    return nodeIds
   }
 
   getDocTypeParams() {
@@ -60,5 +82,4 @@ export default class TextureDocument extends XMLDocument {
     inverted.info = info
     return inverted
   }
-
 }

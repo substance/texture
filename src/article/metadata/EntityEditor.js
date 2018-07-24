@@ -26,7 +26,7 @@ const REQUIRED_PROPERTIES = {
     'containerTitle': true,
     'authors': true,
   },
-  'patent': {
+  '_patent': {
     'title': true,
     'containerTitle': true,
     'inventors': true,

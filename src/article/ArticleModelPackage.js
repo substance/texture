@@ -8,6 +8,7 @@ import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
+import EntitiesPackage from './metadata/EntitiesPackage'
 
 import ArticleRecordModel from './models/ArticleRecordModel'
 import FigureModel from './models/FigureModel'
@@ -44,6 +45,10 @@ export default {
     config.addNode(XMLListItemNode, true)
     config.addNode(TableElementNode, true)
     config.addNode(TableCellElementNode, true)
+
+    // EXPERIMENTAL: extend the InternalArticle schema with entities
+    // we want to merge PubMetaDb into the InternalArticle
+    config.import(EntitiesPackage)
 
     config.addImporter(InternalArticle.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard

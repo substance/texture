@@ -49,9 +49,21 @@ export function getXrefLabel(xref) {
 }
 
 function getXrefResourceManager(xref, context) {
+  const articleSession = context.api.getArticleSession()
   let managerName = RefTypeToManager[xref.getAttribute('ref-type')]
   if (managerName) {
-    return context[managerName]
+    switch(managerName) {
+      case 'figureManager':
+        return articleSession.getFigureManager()
+      case 'footnoteManager':
+        return articleSession.getFootnoteManager()
+      case 'referenceManager':
+        return articleSession.getReferenceManager()
+      case 'tableManager':
+        return articleSession.getTableManager()
+      default:
+        //
+    }
   }
 }
 

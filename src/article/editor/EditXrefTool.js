@@ -6,21 +6,8 @@ import { getXrefTargets, getAvailableXrefTargets } from '../shared/xrefHelpers'
   Editing of XRefTargets
 */
 export default class EditXRefTool extends ToggleTool {
-
-
-  _getNode(nodeId) {
-    return this.context.editorSession.getDocument().get(nodeId)
-  }
-
   getInitialState() {
     return this._computeState(this.props.commandState.nodeId)
-  }
-
-  _computeState(nodeId) {
-    let targets = getAvailableXrefTargets(this._getNode(nodeId), this.context)
-    return {
-      targets
-    }
   }
 
   willReceiveProps(props) {
@@ -56,6 +43,17 @@ export default class EditXRefTool extends ToggleTool {
     // disable editing in TargetComponent
     props.disabled = true
     return $$(TargetComponent, props)
+  }
+
+  _getNode(nodeId) {
+    return this.context.editorSession.getDocument().get(nodeId)
+  }
+
+  _computeState(nodeId) {
+    let targets = getAvailableXrefTargets(this._getNode(nodeId), this.context)
+    return {
+      targets
+    }
   }
 
   _toggleTarget(targetNodeId, e) {

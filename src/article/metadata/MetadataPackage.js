@@ -85,6 +85,9 @@ export default {
     config.addLabel('add-translation', {
       en: 'Add translation'
     })
+    config.addLabel('select-language', {
+      en: 'Select language'
+    })
 
     config.addLabel('title-trans', {
       en: 'Title'

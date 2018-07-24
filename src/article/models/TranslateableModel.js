@@ -45,7 +45,7 @@ export default class TranslateableModel {
     Creates a new translation (with empty text) for a given language code
   */
   addTranslation(languageCode) {
-    this._api.addTranslation(languageCode)
+    this._api.addTranslation(this._id, languageCode)
   }
 
 }

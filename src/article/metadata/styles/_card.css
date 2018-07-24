@@ -32,3 +32,13 @@
   margin: 0px;
 }
 
+.sc-card > * > .se-footer > .se-control {
+  font-size: 12px;
+  color: #499aff;
+  cursor: pointer;
+  margin-bottom: 0px;
+}
+
+.sc-card > * > .se-footer > .se-control > .se-icon {
+  margin-right: 10px;
+}

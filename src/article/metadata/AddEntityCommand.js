@@ -4,7 +4,9 @@ export default class AddEntityCommand extends Command {
   getCommandState () {
     return { disabled: false }
   }
-  execute () {
-    console.info('MEH')
+  execute (params, context) {
+    // EXPERIMENTAL: trying to send an action
+    // TODO: maybe a different approach?
+    context.editor.send('startWorkflow', this.config.workflow)
   }
 }

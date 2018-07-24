@@ -95,9 +95,9 @@ class RelationshipIndex extends NodeIndex {
   update (node, path, newValue, oldValue) {
     let relations = this._getRelations(node)
     if (!relations) return
-    let relation = relations.get(path[1])
-    if (!relation) return
-    if (relation.type === ONE) {
+    let type = relations.get(path[1])
+    if (!type) return
+    if (type === ONE) {
       this._remove(oldValue, node.id)
       this._add(newValue, node.id)
     } else {

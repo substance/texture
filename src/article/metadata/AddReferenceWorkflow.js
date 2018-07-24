@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import DOIInputComponent from '.../editor/DOIInputComponent'
+import DOIInputComponent from '../editor/DOIInputComponent'
 import ReferenceUploadComponent from '../editor/ReferenceUploadComponent'
 
 const targetTypes = [
@@ -44,7 +44,7 @@ export default class AddReferenceWorkflow extends Component {
     return el
   }
 
-  _onAdd(item) {
-    this.send('add', item)
+  _onAdd (item) { // eslint-disable-line no-unused-vars
+    console.error('FIXME: implement add reference')
   }
 }

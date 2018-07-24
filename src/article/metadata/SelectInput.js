@@ -1,6 +1,14 @@
 import { Component } from 'substance'
 
 export default class SelectInput extends Component {
+  didMount () {
+    this.context.appState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
+  }
+
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
   render($$) {
     const value = this.props.value
     const options = this.props.availableOptions
@@ -10,10 +18,10 @@ export default class SelectInput extends Component {
       .ref('input')
       .on('change', this._onChange)
 
-  
+
     const defaultOpt = $$('option').attr({value: false})
       .append(this.getLabel('select-default-value'))
-    
+
     if(!value) {
       defaultOpt.attr({selected: 'selected'})
     }
@@ -26,6 +34,8 @@ export default class SelectInput extends Component {
       selectEl.append(optEl)
     })
 
+    selectEl.on('click', this._onClick, this)
+
     el.append(selectEl)
 
     if(this.props.warning) el.addClass('sm-warning')
@@ -37,6 +47,11 @@ export default class SelectInput extends Component {
     const name = this.props.name
     const value = this._getValue()
     this.send('set-value', name, value)
+  }
+
+  _onClick (event) {
+    event.stopPropagation()
+    this.send('toggleOverlay', this.getId())
   }
 
   _getValue() {

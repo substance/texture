@@ -8,40 +8,28 @@ export default class ToolDropdown extends ToolGroup {
     this._deriveState(this.props)
   }
 
-  willReceiveProps (newProps) {
-    this._showChoices = false
-    this._deriveState(newProps)
+  didMount () {
+    this.context.appState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
   }
 
-  _deriveState (props) {
-    const commandStates = props.commandStates
-    const items = props.items
-    let activeCommandName
-    let hasEnabledTools = false
-    this._items = items.map(toolSpec => {
-      const commandName = toolSpec.commandName
-      let commandState = commandStates[commandName] || { disabled: true }
-      if (!activeCommandName && commandState.active) activeCommandName = commandName
-      if (!commandState.disabled) hasEnabledTools = true
-      return {
-        name: commandName,
-        toolSpec,
-        commandState
-      }
-    })
-    this._activeCommandName = activeCommandName
-    this._hasEnabledTools = hasEnabledTools
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
+  willReceiveProps (newProps) {
+    this._deriveState(newProps)
   }
 
   render ($$) {
     let el = $$('div').addClass('sc-tool-dropdown')
     el.addClass('sm-' + this.props.name)
 
+    const appState = this.context.appState
     const commandStates = this.props.commandStates
     const toggleName = this._getToggleLabel()
     const showDisabled = this.props.showDisabled
     const hasEnabledTools = this._hasEnabledTools
-    const showChoices = this._showChoices
+    const showChoices = appState.overlayId === this.getId()
     const style = this.props.style
     const theme = this.props.theme
 
@@ -99,6 +87,26 @@ export default class ToolDropdown extends ToolGroup {
     })
   }
 
+  _deriveState (props) {
+    const commandStates = props.commandStates
+    const items = props.items
+    let activeCommandName
+    let hasEnabledTools = false
+    this._items = items.map(toolSpec => {
+      const commandName = toolSpec.commandName
+      let commandState = commandStates[commandName] || { disabled: true }
+      if (!activeCommandName && commandState.active) activeCommandName = commandName
+      if (!commandState.disabled) hasEnabledTools = true
+      return {
+        name: commandName,
+        toolSpec,
+        commandState
+      }
+    })
+    this._activeCommandName = activeCommandName
+    this._hasEnabledTools = hasEnabledTools
+  }
+
   /*
     This can be overridden to control the label
   */
@@ -122,7 +130,6 @@ export default class ToolDropdown extends ToolGroup {
   }
 
   _toggleChoices () {
-    this._showChoices = !this._showChoices
-    this.rerender()
+    this.send('toggleOverlay', this.getId())
   }
 }

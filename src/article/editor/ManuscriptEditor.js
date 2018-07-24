@@ -15,9 +15,10 @@ export default class ManuscriptEditor extends Component {
     super(...args)
 
     this.handleActions({
-      'tocEntrySelected': this._tocEntrySelected,
-      'switchContext': this._switchContext,
-      executeCommand: this._executeCommand
+      tocEntrySelected: this._tocEntrySelected,
+      switchContext: this._switchContext,
+      executeCommand: this._executeCommand,
+      toggleOverlay: this._toggleOverlay
     })
 
     this._initialize(this.props)
@@ -37,6 +38,9 @@ export default class ManuscriptEditor extends Component {
       tocProvider: this.tocProvider,
       urlResolver: archive
     })
+
+    // initial reduce etc.
+    this.editorSession.initialize()
   }
 
   didMount () {
@@ -106,19 +110,14 @@ export default class ManuscriptEditor extends Component {
   }
 
   _renderMainSection ($$) {
-    const WorkflowPane = this.getComponent('workflow-pane')
-    const configurator = this._getConfigurator()
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
       $$('div').addClass('se-editor-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
-      ).ref('editorSection'),
-      $$(Managed(WorkflowPane), {
-        toolPanel: configurator.getToolPanel('workflow'),
-        bindings: ['commandStates']
-      })
+      ).ref('editorSection')
+
     )
     return mainSection
   }
@@ -268,5 +267,15 @@ export default class ManuscriptEditor extends Component {
     const doc = this._getDocument()
     let body = doc.find('body')
     return body.id
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this.context.appState
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
   }
 }

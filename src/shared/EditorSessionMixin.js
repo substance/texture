@@ -14,7 +14,7 @@ import CommandManager from './CommandManager'
 
 export default function (DocumentSession) {
   class EditorSession extends DocumentSession {
-    constructor (doc, config, contextProvider) {
+    constructor (doc, config, contextProvider, initialState = {}) {
       super(doc, config)
 
       if (!contextProvider) contextProvider = { context: { editorSession: this } }
@@ -22,7 +22,7 @@ export default function (DocumentSession) {
       this.config = config
       this.contextProvider = contextProvider
 
-      let editorState = new EditorState({
+      let editorState = new EditorState(Object.assign({
         document: doc,
         selection: Selection.nullSelection,
         selectionState: {},
@@ -31,7 +31,7 @@ export default function (DocumentSession) {
         hasUnsavedChanges: false,
         isBlurred: false,
         overlayId: null
-      })
+      }, initialState))
       let surfaceManager = new SurfaceManager(editorState)
       let markersManager = new MarkersManager(editorState)
       let globalEventHandler = new GlobalEventHandler(editorState)

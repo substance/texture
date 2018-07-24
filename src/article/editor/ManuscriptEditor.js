@@ -110,19 +110,14 @@ export default class ManuscriptEditor extends Component {
   }
 
   _renderMainSection ($$) {
-    const WorkflowPane = this.getComponent('workflow-pane')
-    const configurator = this._getConfigurator()
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
       $$('div').addClass('se-editor-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
-      ).ref('editorSection'),
-      $$(Managed(WorkflowPane), {
-        toolPanel: configurator.getToolPanel('workflow'),
-        bindings: ['commandStates']
-      })
+      ).ref('editorSection')
+
     )
     return mainSection
   }

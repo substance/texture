@@ -28,33 +28,42 @@ export default class MetadataEditor extends Component {
 
     this.handleActions({
       executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay
+      toggleOverlay: this._toggleOverlay,
+      startWorkflow: this._startWorkflow,
+      closeModal: this._closeModal
     })
 
     this._initialize(this.props)
   }
 
+  // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
     const { articleSession, config, archive } = props
-    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this)
+    const editorSession = new ArticleEditorSession(
+      articleSession.getDocument(), config, this,
+      { workflowId: null }
+    )
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
     this.api = api
     this.editorSession = editorSession
     this.context = Object.assign(createEditorContext(config, editorSession), {
+      editor: this,
       api,
       urlResolver: archive
     })
     // initial reduce etc.
     this.editorSession.initialize()
+    this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
   }
 
   dispose () {
+    const appState = this.context.appState
     const articleSession = this.props.articleSession
     const editorSession = this.editorSession
     articleSession.off(this)
     editorSession.dispose()
-    // Note: we need to clear everything, as the childContext
-    // changes which is immutable
+    appState.removeObserver(this)
+    // TODO: do we really need to clear here?
     this.empty()
   }
 
@@ -68,8 +77,7 @@ export default class MetadataEditor extends Component {
   }
 
   _renderMainSection ($$) {
-    const Modal = this.getComponent('modal')
-    const WorkflowPane = this.getComponent('workflow-pane')
+    const appState = this.context.appState
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
@@ -78,14 +86,14 @@ export default class MetadataEditor extends Component {
         this._renderContentPanel($$)
       )
     )
-    let workflowModal = $$(Modal).addClass('se-workflow-modal').append(
-      $$(WorkflowPane).ref('workflowPane')
-    )
-    // TODO: show modal if workflow state is set
-    workflowModal.addClass('sm-hidden')
-
-    mainSection.append(workflowModal)
-
+    if (appState.workflowId) {
+      let Modal = this.getComponent('modal')
+      let WorkflowComponent = this.getComponent(appState.workflowId)
+      let workflowModal = $$(Modal).addClass('se-workflow-modal').append(
+        $$(WorkflowComponent).ref('workflow')
+      )
+      mainSection.append(workflowModal)
+    }
     return mainSection
   }
 
@@ -106,7 +114,7 @@ export default class MetadataEditor extends Component {
     let tocEl = $$('div').addClass('se-toc')
     SECTIONS.forEach(section => {
       let model = api.getModel(section.modelType)
-      if(model.isCollection) {
+      if (model.isCollection) {
         const items = model.getItems()
         tocEl.append(
           $$('a').addClass('se-toc-item')
@@ -136,7 +144,7 @@ export default class MetadataEditor extends Component {
     let collectionsEl = $$('div').addClass('se-collections')
     SECTIONS.forEach(section => {
       let model = api.getModel(section.modelType)
-      if(model.isCollection) {
+      if (model.isCollection) {
         collectionsEl.append(
           $$(CollectionEditor, { model: model })
             .attr({id: model.id})
@@ -172,6 +180,20 @@ export default class MetadataEditor extends Component {
     } else {
       appState.overlayId = overlayId
     }
+    appState.propagateUpdates()
+  }
+
+  _startWorkflow (workflowId) {
+    const appState = this.context.appState
+    appState.workflowId = workflowId
+    appState.overlayId = workflowId
+    appState.propagateUpdates()
+  }
+
+  _closeModal () {
+    const appState = this.context.appState
+    appState.workflowId = null
+    appState.overlayId = null
     appState.propagateUpdates()
   }
 }

@@ -18,7 +18,6 @@ import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
 // Editor level components
 import ManuscriptEditor from './ManuscriptEditor'
 import ManuscriptComponent from './ManuscriptComponent'
-import WorkflowPane from './WorkflowPane'
 // General components
 import ContainerNodeComponent from './ContainerNodeComponent'
 import ElementNodeComponent from './ElementNodeComponent'
@@ -93,8 +92,6 @@ export default {
     // a CommandManager that uses the xmlSchema to inhibit commands
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
-
-    config.addComponent('workflow-pane', WorkflowPane, true)
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)

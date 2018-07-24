@@ -80,7 +80,7 @@ export default class ToolGroup extends Component {
     let ToolClass = toolSpec.ToolClass
     // next try if there is a tool registered by the name
     if (!ToolClass) {
-      ToolClass = this.context.configurator.getToolClass(toolSpec.commandName)
+      ToolClass = this.context.toolRegistry.get(toolSpec.commandName)
     }
     // after all fall back to default classes
     if (!ToolClass) {

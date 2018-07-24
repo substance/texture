@@ -1,13 +1,9 @@
 import AbstractResourceManager from './AbstractResourceManager'
 
 export default class TableManager extends AbstractResourceManager {
+  constructor (doc, labelGenerator) {
+    super(doc, 'table', labelGenerator)
 
-  constructor(context) {
-    super(context.editorSession,
-      'table',
-      context.labelGenerator
-    )
     this._updateLabels()
   }
-
 }

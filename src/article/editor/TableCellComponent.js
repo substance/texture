@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import TableCellEditor from './TableCellEditor'
 
 export default class TableCellComponent extends NodeComponent {

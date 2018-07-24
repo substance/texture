@@ -2,19 +2,23 @@ import { Command } from 'substance'
 
 export default class SwitchViewCommand extends Command {
   getCommandState (params, context) {
-    let state = context.state
-    let view = state.get('view')
+    let state = context.appState
+    if (!state) {
+      return Command.DISABLED
+    }
+    let view = state.view
     let active = (view === this.config.view)
-    let commandState = {
+    return {
       disabled: false,
       active
     }
-    return commandState
   }
 
   execute (params, context) {
-    let state = context.state
-    state.set('view', this.config.view)
-    state.propagate()
+    let state = context.appState
+    if (state) {
+      state.view = this.config.view
+      state.propagate()
+    }
   }
 }

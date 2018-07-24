@@ -1,4 +1,5 @@
-import { DefaultDOMElement, NodeComponent } from 'substance'
+import { DefaultDOMElement } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import { getXrefLabel, getXrefTargets } from '../shared/xrefHelpers'
 
 export default class ReaderXrefComponent extends NodeComponent {

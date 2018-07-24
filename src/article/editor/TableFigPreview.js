@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class TableFigPreview extends Component {
 

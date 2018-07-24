@@ -49,8 +49,6 @@ export default class ScrollPane extends AbstractScrollPane {
   dispose () {
     super.dispose()
 
-    this.context.state.off(this)
-
     if (this.props.highlights) {
       this.props.highlights.off(this)
     }

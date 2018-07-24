@@ -1,5 +1,5 @@
-import { NodeComponent } from 'substance'
-import { getLabel } from './nodeHelpers'
+import NodeComponent from '../shared/NodeComponent'
+import { getLabel } from '../shared/nodeHelpers'
 
 /*
   Renders a keyboard-selectable figure target item
@@ -15,7 +15,7 @@ export default class FigPreview extends NodeComponent {
     if (this.props.selected) {
       el.addClass('sm-selected')
     }
-    
+
     el.append(
       this._renderThumbnail($$),
       this._renderLabel($$)

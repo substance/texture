@@ -1,4 +1,5 @@
-import { Component, FontAwesomeIcon } from 'substance'
+import { FontAwesomeIcon } from 'substance'
+import ModelComponent from '../shared/ModelComponent'
 import FormRowComponent from './FormRowComponent'
 
 const REQUIRED_PROPERTIES = {
@@ -26,7 +27,7 @@ const REQUIRED_PROPERTIES = {
     'containerTitle': true,
     'authors': true,
   },
-  'patent': {
+  '_patent': {
     'title': true,
     'containerTitle': true,
     'inventors': true,
@@ -85,38 +86,33 @@ const REQUIRED_PROPERTIES = {
   }
 }
 
-
-
-export default class EntityEditor extends Component {
-  constructor(...args) {
+export default class EntityEditor extends ModelComponent {
+  constructor (...args) {
     super(...args)
+
     this.handleActions({
       'set-value': this._setValue
     })
   }
 
-  didMount() {
-    this.props.model.onUpdate(this.rerender, this)
-  }
-
-  dispose() {
-    this.props.model.off(this)
-  }
-
-  render($$) {
+  render ($$) {
     const fullMode = this.state.fullMode
     const model = this.props.model
-    const el = $$('div').addClass('sc-entity-editor').append(
-      $$('div').addClass('se-entity-header').html(
-        this.context.api.renderEntity(model)
-      )
-    )
-
+    const api = this.context.api
+    // FIXME: compute derived properties when props change, i.e. initially and on willReceiveProps()
     const propertyStates = this._computePropertyStates()
     const hasWarnings = propertyStates.some(prop => prop.warnings.length > 0)
     const hasHiddenProps = propertyStates.some(prop => prop.hidden)
 
-    if(hasWarnings) el.addClass('sm-warning')
+    const el = $$('div').addClass('sc-entity-editor')
+      .addClass(`sm-${model.type}`)
+      .append(
+        $$('div').addClass('se-entity-header').html(
+          api.renderEntity(model)
+        )
+      )
+
+    if (hasWarnings) el.addClass('sm-warning')
 
     // [{
     //   property: NodeProperty
@@ -125,7 +121,7 @@ export default class EntityEditor extends Component {
     // }]
     propertyStates.forEach(propertyState => {
       const property = propertyState.property
-      if(propertyState.hidden && !fullMode) return
+      if (propertyState.hidden && !fullMode) return
       const warnings = propertyState.warnings.map(w => w.message)
 
       const PropertyEditorClass = this._getPropertyEditorClass(property)
@@ -148,8 +144,8 @@ export default class EntityEditor extends Component {
     const controlEl = $$('div').addClass('se-control')
       .on('click', this._toggleMode)
 
-    if(hasHiddenProps) {
-      if(!fullMode) {
+    if (hasHiddenProps) {
+      if (!fullMode) {
         controlEl.append(
           $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon'),
           this.getLabel('show-more-fields')
@@ -235,7 +231,7 @@ export default class EntityEditor extends Component {
 
   _getWarnings(property, empty) {
     let model = this.props.model
-    
+
     let isRequired = REQUIRED_PROPERTIES[model.type][property.name]
     if (isRequired && empty) {
       return [{ message: `${property.name} is required` }]
@@ -262,6 +258,3 @@ export default class EntityEditor extends Component {
     this.send('remove-item', model)
   }
 }
-
-
-

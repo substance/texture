@@ -1,29 +1,25 @@
-import { ToggleTool } from 'substance'
+import { ToggleTool } from '../../shared'
 
-class InsertFigureTool extends ToggleTool {
-
-  getClassNames() {
-    return 'sc-insert-figure-tool'
-  }
-
-  renderButton($$) {
+export default class InsertFigureTool extends ToggleTool {
+  renderButton ($$) {
     let button = super.renderButton($$)
     let input = $$('input').attr('type', 'file').ref('input')
       .on('change', this.onFileSelect)
     return [button, input]
   }
 
-  onClick() {
+  getClassNames () {
+    return 'sc-insert-figure-tool'
+  }
+
+  onClick () {
     this.refs.input.click()
   }
 
-  onFileSelect(e) {
+  onFileSelect (e) {
     let files = e.currentTarget.files
     this.executeCommand({
       files: Array.prototype.slice.call(files)
     })
   }
-
 }
-
-export default InsertFigureTool

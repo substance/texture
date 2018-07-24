@@ -749,7 +749,8 @@ export default {
   'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'award': _delegate(awardRenderer),
-  'patent': _delegate(patentRenderer),
+  // HACK: merging entities into article model, avoiding type collision
+  '_patent': _delegate(patentRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
   'magazine-aricle': _delegate(magazineArticleRenderer),
   'newspaper-article': _delegate(newspaperArticleRenderer),

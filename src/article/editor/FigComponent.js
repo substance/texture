@@ -1,5 +1,5 @@
-import { NodeComponent } from 'substance'
-import { getLabel } from './nodeHelpers'
+import NodeComponent from '../shared/NodeComponent'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class FigComponent extends NodeComponent {
 

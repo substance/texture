@@ -1,8 +1,6 @@
 import {
-  TreeIndex, documentHelpers, Selection, selectionHelpers
+  documentHelpers, Selection, selectionHelpers
 } from 'substance'
-
-import globals from '../textureGlobals'
 
 export default class SelectionStateReducer {
   constructor (appState) {
@@ -39,7 +37,7 @@ export default class SelectionStateReducer {
       if (startPos > 0) {
         state.previousNode = container.getNodeAt(startPos - 1)
       }
-      state._isFirst = selectionHelpers.isFirst(doc, sel.start)
+      state.isFirst = selectionHelpers.isFirst(doc, sel.start)
       let endNode, endPos
       if (endId === startId) {
         endNode = startNode
@@ -51,28 +49,29 @@ export default class SelectionStateReducer {
       if (endPos < container.getLength() - 1) {
         state.nextNode = container.getNodeAt(endPos + 1)
       }
-      state._isLast = selectionHelpers.isLast(doc, sel.end)
+      state.isLast = selectionHelpers.isLast(doc, sel.end)
     }
   }
 
   deriveAnnoState (state, doc, sel) {
     // create a mapping by type for the currently selected annotations
-    let annosByType = new TreeIndex.Arrays()
-    const propAnnos = documentHelpers.getPropertyAnnotationsForSelection(doc, sel)
-    propAnnos.forEach(function (anno) {
-      annosByType.add(anno.type, anno)
-    })
-
-    if (propAnnos.length === 1 && propAnnos[0].isInline()) {
-      state._isInlineNodeSelection = propAnnos[0].getSelection().equals(sel)
+    // create a mapping by type for the currently selected annotations
+    let annosByType = {}
+    function _add (anno) {
+      if (!annosByType[anno.type]) {
+        annosByType[anno.type] = []
+      }
+      annosByType[anno.type].push(anno)
     }
-
+    const propAnnos = documentHelpers.getPropertyAnnotationsForSelection(doc, sel)
+    propAnnos.forEach(_add)
+    if (propAnnos.length === 1 && propAnnos[0].isInline()) {
+      state.isInlineNodeSelection = propAnnos[0].getSelection().equals(sel)
+    }
     const containerId = sel.containerId
     if (containerId) {
       const containerAnnos = documentHelpers.getContainerAnnotationsForSelection(doc, sel, containerId)
-      containerAnnos.forEach(function (anno) {
-        annosByType.add(anno.type, anno)
-      })
+      containerAnnos.forEach(_add)
     }
     state.annosByType = annosByType
   }
@@ -97,54 +96,15 @@ class SelectionState {
       // markers under the current selection
       markers: null,
       // flags for inline nodes
-      _isInlineNodeSelection: false,
+      isInlineNodeSelection: false,
       // container information (only for ContainerSelection)
       container: null,
       previousNode: null,
       nextNode: null,
       // if the previous node is one char away
-      _isFirst: false,
+      isFirst: false,
       // if the next node is one char away
-      _isLast: false
+      isLast: false
     })
-  }
-
-  // HACK: for legacy reasons
-  getSelection () {
-    if (globals.DEBUG) console.error("DEPRECATED: Use EditorState.get('selection') instead")
-    return this.selection
-  }
-
-  getAnnotationsForType (type) {
-    if (globals.DEBUG) console.error("DEPRECATED: Use EditorState.get('selectionState').annosByType instead")
-    const state = this
-    if (state.annosByType) {
-      return state.annosByType.get(type) || []
-    }
-    return []
-  }
-
-  isInlineNodeSelection () {
-    if (globals.DEBUG) console.error('FIXME: we want to get rid of selectionState.isInlineNodeSelection() and use the flat property instead')
-    return this._isInlineNodeSelection
-  }
-
-  isFirst () {
-    if (globals.DEBUG) console.error('FIXME: we want to get rid of selectionState.isFirst() and use the flat property instead')
-    return Boolean(this._isFirst)
-  }
-
-  isLast () {
-    if (globals.DEBUG) console.error('FIXME: we want to get rid of selectionState.isLast() and use the flat property instead')
-    return Boolean(this._isLast)
-  }
-
-  // FIXME: AbstractIsolatedNodeComponent uses this to monkey-patch the selection state
-  // This should be solved in a different way
-  get (name) {
-    return this[name]
-  }
-  set (name, val) {
-    this[name] = val
   }
 }

@@ -1,25 +1,13 @@
-import { Tool, find, without } from 'substance'
+import { find, without } from 'substance'
+import { ToggleTool } from '../../shared'
 import { getXrefTargets, getAvailableXrefTargets } from '../shared/xrefHelpers'
 
 /*
   Editing of XRefTargets
 */
-export default class EditXRefTool extends Tool {
-
-
-  _getNode(nodeId) {
-    return this.context.editorSession.getDocument().get(nodeId)
-  }
-
+export default class EditXRefTool extends ToggleTool {
   getInitialState() {
     return this._computeState(this.props.commandState.nodeId)
-  }
-
-  _computeState(nodeId) {
-    let targets = getAvailableXrefTargets(this._getNode(nodeId), this.context)
-    return {
-      targets
-    }
   }
 
   willReceiveProps(props) {
@@ -55,6 +43,17 @@ export default class EditXRefTool extends Tool {
     // disable editing in TargetComponent
     props.disabled = true
     return $$(TargetComponent, props)
+  }
+
+  _getNode(nodeId) {
+    return this.context.editorSession.getDocument().get(nodeId)
+  }
+
+  _computeState(nodeId) {
+    let targets = getAvailableXrefTargets(this._getNode(nodeId), this.context)
+    return {
+      targets
+    }
   }
 
   _toggleTarget(targetNodeId, e) {

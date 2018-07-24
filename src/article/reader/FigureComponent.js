@@ -1,4 +1,4 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 
 export default class FigureComponent extends NodeComponent {
   // TODO: In the reader, if title or caption is empty, should we drop those elements from the view?

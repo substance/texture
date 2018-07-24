@@ -5,11 +5,10 @@ import DefaultModel from './DefaultModel'
   A model for holding authors and editors information.
 */
 export default class ContribsModel extends DefaultModel {
-
   addAuthor(author) {
-    const editorSession = this.context.editorSession
+    const articleSession = this._api.getArticleSession()
     const authorId = this._addEntity(author, 'person')
-    editorSession.transaction((tx, args) => {
+    articleSession.transaction((tx, args) => {
       const contribEl = tx.createElement('contrib').attr('rid', authorId)
       const authorsContribGroup = tx.find('contrib-group[content-type=author]')
       authorsContribGroup.append(contribEl)
@@ -33,9 +32,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   deleteAuthor(authorId) {
-    const editorSession = this.context.editorSession
+    const articleSession = this._api.getArticleSession()
     const node = this._deleteEntity(authorId)
-    editorSession.transaction((tx, args) => {
+    articleSession.transaction((tx, args) => {
       const authorsContribGroup = this._node.find('contrib-group[content-type=author]')
       const contrib = authorsContribGroup.find(`contrib[rid=${authorId}]`)
       contrib.parentNode.removeChild(contrib)
@@ -46,15 +45,15 @@ export default class ContribsModel extends DefaultModel {
   }
 
   getGroups() {
-    const pubMetaDb = this.context.pubMetaDb
-    const groupIds = pubMetaDb.findByType('group')
-    return groupIds.map(groupId => this._getEntity(groupId)) 
+    const article = this._api.getArticle()
+    const groupIds = article.findByType('group')
+    return groupIds.map(groupId => this._getEntity(groupId))
   }
 
   addAffiliation(affiliation) {
-    const editorSession = this.context.editorSession
+    const articleSession = this._api.getArticleSession()
     const affId = this._addEntity(affiliation, 'organisation')
-    editorSession.transaction((tx, args) => {
+    articleSession.transaction((tx, args) => {
       const affEl = tx.createElement('aff').attr('rid', affId)
       const affGroup = tx.find('aff-group')
       affGroup.append(affEl)
@@ -103,9 +102,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   deleteAffiliation(affId) {
-    const editorSession = this.context.editorSession
+    const articleSession = this._api.getArticleSession()
     const node = this._deleteEntity(affId)
-    editorSession.transaction((tx, args) => {
+    articleSession.transaction((tx, args) => {
       const affGroup = tx.find('aff-group')
       const affEl = affGroup.find(`aff[rid=${affId}]`)
       affEl.parentNode.removeChild(affEl)
@@ -116,9 +115,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   addAward(award) {
-    const editorSession = this.context.editorSession
+    const articleSession = this._api.getArticleSession()
     const awardId = this._addEntity(award, 'award')
-    editorSession.transaction((tx, args) => {
+    articleSession.transaction((tx, args) => {
       const awardGroupEl = tx.createElement('award-group').attr('rid', awardId)
       const fundingGroupEl = tx.find('funding-group')
       fundingGroupEl.append(awardGroupEl)
@@ -142,9 +141,9 @@ export default class ContribsModel extends DefaultModel {
   }
 
   deleteAward(awardId) {
-    const editorSession = this.context.editorSession
+    const articleSession = this._api.getArticleSession()
     const node = this._deleteEntity(awardId)
-    editorSession.transaction((tx, args) => {
+    articleSession.transaction((tx, args) => {
       const fundingGroup = tx.find('funding-group')
       const awardGroupEl = fundingGroup.find(`award-group[rid=${awardId}]`)
       awardGroupEl.parentNode.removeChild(awardGroupEl)
@@ -158,6 +157,6 @@ export default class ContribsModel extends DefaultModel {
     Utility method to render a contrib object
   */
   renderContrib(contrib) {
-    return entityRenderers[contrib.type](contrib.id, this.context.pubMetaDb)
+    return entityRenderers[contrib.type](contrib.id, this._api.getArticle())
   }
 }

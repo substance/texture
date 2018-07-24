@@ -9,13 +9,14 @@ export default class Overlay extends ToolPanel {
 
     this._positionOverlay()
 
-    this.context.state.addObserver(['overlayHints'], this._positionOverlay, this, { stage: 'position' })
+    // TODO: avoid using appState directly, instead use a Managed component
+    this.context.appState.addObserver(['overlayHints'], this._positionOverlay, this, { stage: 'position' })
   }
 
   dispose () {
     super.dispose()
 
-    this.context.state.removeObserver(this)
+    this.context.appState.removeObserver(this)
   }
 
   didUpdate () {
@@ -41,7 +42,7 @@ export default class Overlay extends ToolPanel {
   }
 
   _positionOverlay () {
-    let hints = this.context.state.get('overlayHints')
+    let hints = this.context.appState.get('overlayHints')
 
     if (hints && this.hasEnabledTools()) {
       this.el.removeClass('sm-hidden')

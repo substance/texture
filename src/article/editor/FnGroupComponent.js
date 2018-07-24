@@ -1,7 +1,7 @@
-import { NodeComponent } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 import removeElementAndXrefs from '../shared/removeElementAndXrefs'
 import Button from './Button'
-import { getPos } from './nodeHelpers'
+import { getPos } from '../shared/nodeHelpers'
 
 export default class FnGroupComponent extends NodeComponent {
 

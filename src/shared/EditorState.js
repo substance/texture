@@ -1,32 +1,51 @@
-import { Selection } from 'substance'
 import AppState from './AppState'
 import SelectionStateReducer from './SelectionStateReducer'
+import DocumentObserver from './DocumentObserver'
 
 const ANY = '@any'
 
 export default class EditorState extends AppState {
-  _initialize (doc) {
-    this._set('document', doc)
-    this._set('selection', Selection.nullSelection)
-    this._set('commandStates', [])
+  _initialize (initialState) {
+    super._initialize(initialState)
 
+    if (!initialState.document) {
+      throw new Error("'document' is required")
+    }
+    let doc = initialState.document
+    let impl = this._getImpl()
+    // one observer for all slots that
+    let documentObserver = new DocumentObserver(doc)
+    impl.documentObserver = documentObserver
     let selectionStateReducer = new SelectionStateReducer(this)
     selectionStateReducer.update()
+    impl._selectionStateReducer = impl._selectionStateReducer
+  }
+
+  dispose () {
+    super.dispose()
+
+    this._getImpl().documentObserver.dispose()
   }
 
   _createSlot (id, stage, deps) {
-    this._schedule = null
+    const impl = this._getImpl()
+    impl.schedule = null
     if (deps.indexOf('document') !== -1) {
-      return new DocumentSlot(this, id, stage, deps)
+      return new DocumentSlot(this, id, stage, deps, impl.documentObserver)
     } else {
       return new Slot(this, id, stage, deps)
     }
+  }
+
+  _reset () {
+    super._reset()
+    this._getImpl().documentObserver.reset()
   }
 }
 
 class Slot {
   constructor (editorState, id, stage, deps) {
-    this._id = editorState._id
+    this._id = editorState._getImpl().id
     this.id = id
     this.editorState = editorState
     this.stage = stage
@@ -108,9 +127,10 @@ class Slot {
 }
 
 class DocumentSlot extends Slot {
-  constructor (editorState, id, stage, deps) {
+  constructor (editorState, id, stage, deps, documentObserver) {
     super(editorState, id, stage, deps)
 
+    this.documentObserver = documentObserver
     this.byPath = {'@any': new Set()}
   }
 
@@ -160,13 +180,12 @@ class DocumentSlot extends Slot {
       return index[ANY]
     }
 
-    let updated = Object.keys(change.updated)
+    let updated = this.documentObserver.dirty
     let sets = []
     // observers without a path spec are registered with path=undefined
     sets.push(index[ANY])
-    updated.forEach(path => {
-      let key = String(path)
-      let set = index[key]
+    updated.forEach(id => {
+      let set = index[id]
       if (set) sets.push(set)
     })
     let observers = new Set()

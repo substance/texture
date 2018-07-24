@@ -1,5 +1,5 @@
 import DefaultModel from './DefaultModel'
-import { getLabel, getPos } from '../editor/nodeHelpers'
+import { getLabel, getPos } from '../shared/nodeHelpers'
 
 export default class FootnoteModel extends DefaultModel {
   get type () {

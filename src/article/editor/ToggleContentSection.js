@@ -1,40 +1,21 @@
 import { Command } from 'substance'
 
-class ToggleContentSection extends Command {
-
-  getCommandState(params) {
-    let editor = params.editorSession.getEditor()
-
-    let commandState = {
-      disabled: true,
-    }
-
-    if (editor) {
-      let comp = this._getSectionComponent(params)
-      let hidden = comp.state.hidden
-      commandState.disabled = false
-      commandState.showOrHide = hidden ? 'Show' : 'Hide'
-    }
-
-    return commandState
+// FIXME: this should use editor state to manage 'visibility'
+export default class ToggleContentSection extends Command {
+  getCommandState (params) { // eslint-disable-line no-unused-vars
+    return Command.DISABLED
   }
 
-  /*
-    Returns all cell components found in the document
-  */
-  _getSectionComponent(params) {
-    let editor = params.editorSession.getEditor()
-    return editor.find(this.config.selector)
+  _getSectionComponent (params) { // eslint-disable-line no-unused-vars
+    // let editor = params.editorSession.getEditor()
+    // return editor.find(this.config.selector)
   }
 
-  execute(params) {
-    let comp = this._getSectionComponent(params)
-    comp.extendState({
-      hidden: !comp.state.hidden
-    })
-    params.editorSession.setSelection(null)
+  execute (params) { // eslint-disable-line no-unused-vars
+    // let comp = this._getSectionComponent(params)
+    // comp.extendState({
+    //   hidden: !comp.state.hidden
+    // })
+    // params.editorSession.setSelection(null)
   }
-
 }
-
-export default ToggleContentSection

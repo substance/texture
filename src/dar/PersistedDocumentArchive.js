@@ -219,7 +219,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   _registerForSessionChanges(session, docId) {
-    session.onUpdate('document', (change) => {
+    session.on('change', (change) => {
       this.buffer.addChange(docId, change)
       // Apps can subscribe to this (e.g. to show there's pending changes)
       this.emit('archive:changed')

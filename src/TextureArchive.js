@@ -104,9 +104,9 @@ export default class TextureArchive extends PersistedDocumentArchive {
   _loadDocument (type, record, sessions) {
     switch (type) {
       case 'article': {
+        const pubMetaSession = sessions['pub-meta']
         return ArticleLoader.load(record.data, {
-          pubMetaDb: sessions['pub-meta'].getDocument(),
-          archive: this,
+          pubMetaSession
         }, this._config)
       }
       default:
@@ -114,14 +114,13 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _exportDocument (type, session, sessions) {
+  _exportDocument (type, session, sessions) { // eslint-disable-line no-unused-vars
     switch (type) {
       case 'article': {
         let jatsExporter = new JATSExporter()
-        let pubMetaDb = sessions['pub-meta'].getDocument()
         let doc = session.getDocument()
         let dom = doc.toXML()
-        let res = jatsExporter.export(dom, { pubMetaDb, doc })
+        let res = jatsExporter.export(dom, { doc, session })
         console.info('saving jats', res.dom.getNativeElement())
         let xmlStr = prettyPrintXML(res.dom)
         return xmlStr

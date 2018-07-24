@@ -17,14 +17,15 @@ export default class AbstractScrollPane extends Component {
       this.windowEl = DefaultDOMElement.wrapNativeElement(window)
       this.windowEl.on('resize', this._onResize, this)
     }
-    this.context.state.addObserver(['@any'], this._afterRender, this, { stage: 'post-render' })
+    // TODO: avoid using appState directly instead use it as a Managed component
+    this.context.appState.addObserver(['@any'], this._afterRender, this, { stage: 'post-render' })
   }
 
   dispose () {
     if (this.windowEl) {
       this.windowEl.off(this)
     }
-    this.context.state.off(this)
+    this.context.appState.off(this)
   }
 
   getName () {
@@ -41,7 +42,8 @@ export default class AbstractScrollPane extends Component {
   }
 
   _reduceOverlayHints (hints) {
-    this.context.state.set('overlayHints', hints)
+    // TODO: introduce a reducer for this
+    this.context.appState.set('overlayHints', hints)
   }
 
   /*

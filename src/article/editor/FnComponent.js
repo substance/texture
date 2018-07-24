@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import Button from './Button'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class FnComponent extends Component {
 

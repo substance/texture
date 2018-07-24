@@ -1,4 +1,5 @@
-import { NodeComponent, FontAwesomeIcon as Icon } from 'substance'
+import { FontAwesomeIcon as Icon } from 'substance'
+import NodeComponent from '../shared/NodeComponent'
 
 const languages = {
   cz: 'Czech',
@@ -115,7 +116,7 @@ export default class TranslationsComponent extends NodeComponent {
   }
 
   _renderAbstractEditor($$, transAbstract) {
-    const ContainerEditor = this.getComponent('container')
+    const ContainerEditor = this.getComponent('container-editor')
     let el = $$('div').addClass('se-translation')
     let abstractContent = transAbstract.findChild('abstract-content')
     let transEl = $$('div')

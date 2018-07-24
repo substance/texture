@@ -1,8 +1,7 @@
 /* global vfs */
-import {
-  parseKeyEvent, VfsStorageClient, HttpStorageClient, InMemoryDarBuffer
-} from 'substance'
+import { parseKeyEvent } from 'substance'
 import TextureAppChrome from './TextureAppChrome'
+import { VfsStorageClient, HttpStorageClient, InMemoryDarBuffer } from './dar'
 
 export default class TextureWebAppChrome extends TextureAppChrome {
   async _loadArchive (archiveId, context) {

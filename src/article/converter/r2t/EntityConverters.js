@@ -136,7 +136,8 @@ export const SubjectConverter = {
 
   import(el, pubMetaDb) {
     const node = {
-      type: 'subject',
+      // HACK: trying to merge EntitDb into Article model, avoiding type collision
+      type: '_subject',
       name: el.textContent,
       category: el.getAttribute('content-type')
     }
@@ -201,7 +202,7 @@ export const GroupConverter = {
         awards: _extractAwards(el)
       }
       entity = pubMetaDb.create(node)
-      
+
       let dom = el.ownerDocument
       let persons = _extractGroupMembers(el, entity.id)
       persons.forEach(person => {
@@ -214,7 +215,7 @@ export const GroupConverter = {
         const authorsContribGroup = dom.find('contrib-group[content-type=author]')
         authorsContribGroup.append(contribEl)
       })
-      
+
     } else {
       console.warn(`Skipping duplicate: ${entity.name} already exists.`)
     }
@@ -286,7 +287,7 @@ function _exportPerson($$, node) {
     'corresp': node.corresp ? 'yes' : 'no',
     'deceased': node.deceased ? 'yes' : 'no'
   })
-  
+
   el.append(
     $$('name').append(
       _createTextElement($$, node.surname, 'surname'),
@@ -326,7 +327,7 @@ function _addAwards(el, $$, node) {
 
 /*
   <name> -> { type: 'ref-contrib', name: 'Doe', givenNames: 'John }
-  <collab>  -> { type: 'ref-contrib' name: 'International Business Machines' } 
+  <collab>  -> { type: 'ref-contrib' name: 'International Business Machines' }
 
   Used within <ref>
 */
@@ -382,7 +383,8 @@ let mappingItemTypes = {
   'chapter': 'chapter',
   'confproc': 'conference-paper',
   'data': 'data-publication',
-  'patent': 'patent',
+  // HACK: trying to merge EntitDb into Article model, avoiding type collision
+  'patent': '_patent',
   'magazine': 'magazine-article',
   'newspaper': 'newspaper-article',
   'report': 'report',
@@ -411,10 +413,11 @@ export const ElementCitationConverter = {
   import(el, pubMetaDb, id) {
     let entity = _findCitation(el, pubMetaDb)
     let type = el.attr('publication-type')
-    
+
     if (!entity) {
       let node = {
-        id: id,
+        // HACK: trying to merge EntitDb into Article model, avoiding id collision
+        id: `@${id}`,
         type: mappingItemTypes[type],
         // normal fields
         assignee: getText(el, 'collab[collab-type=assignee] > named-content'),
@@ -586,7 +589,7 @@ function _extractGroupMembers(el, group) {
 function _extractAffiliations(el, isGroup) {
   let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=aff]')
-  // NOTE: for groups we need to extract only affiliations of group, without members 
+  // NOTE: for groups we need to extract only affiliations of group, without members
   if(isGroup) {
     xrefs = el.findAll('collab>xref[ref-type=aff]')
   }
@@ -631,7 +634,7 @@ function _findCitation(el, pubMetaDb) {
 function _findPerson(el, pubMetaDb) {
   let entity = pubMetaDb.get(getText(el, 'contrib-id[contrib-id-type=entity]'))
   if (!entity) {
-    let persons = pubMetaDb.find({ type: 'person' }).map(id => pubMetaDb.get(id))
+    let persons = pubMetaDb.findByType('person').map(id => pubMetaDb.get(id))
     let surname = getText(el, 'surname')
     let givenNames = getText(el, 'given-names')
     entity = persons.find(p => {
@@ -644,7 +647,7 @@ function _findPerson(el, pubMetaDb) {
 function _findOrganisation(el, pubMetaDb) {
   let entity = pubMetaDb.get(getText(el, 'uri[content-type=entity]'))
   if (!entity) {
-    let organisations = pubMetaDb.find({ type: 'organisation' }).map(id => pubMetaDb.get(id))
+    let organisations = pubMetaDb.findByType('organisation').map(id => pubMetaDb.get(id))
     let name = getText(el, 'institution[content-type=orgname]')
     let division1 = getText(el, 'institution[content-type=orgdiv1]')
     entity = organisations.find(o => {
@@ -657,7 +660,7 @@ function _findOrganisation(el, pubMetaDb) {
 function _findAward(el, pubMetaDb) {
   let entity = pubMetaDb.get(getText(el, 'award-id'))
   if (!entity) {
-    let awards = pubMetaDb.find({ type: 'award' }).map(id => pubMetaDb.get(id))
+    let awards = pubMetaDb.findByType('award').map(id => pubMetaDb.get(id))
     let institutionWrapEl = el.find('institution-wrap')
     let name = getText(institutionWrapEl, 'institution')
     let fundRefId = getText(institutionWrapEl, 'institution-id')

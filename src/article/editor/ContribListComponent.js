@@ -1,5 +1,6 @@
-import { NodeComponent, FontAwesomeIcon, uniq, without, uuid } from 'substance'
+import { FontAwesomeIcon, uniq, without, uuid } from 'substance'
 import { ModalDialog } from '../../shared'
+import NodeComponent from '../shared/NodeComponent'
 import entityRenderers from '../shared/entityRenderers'
 import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AffiliationsListComponent from './AffiliationsListComponent'
@@ -29,8 +30,9 @@ export default class ContribsListComponent extends NodeComponent {
   }
 
   render($$) {
+    const api = this.context.api
+    const article = api.getArticle()
     const entityIds = this._getEntityIds()
-    let db = this.context.pubMetaDbSession.getDocument()
     let el = $$('div').addClass(this.getClassNames())
 
     if (this.state.hidden) {
@@ -56,14 +58,14 @@ export default class ContribsListComponent extends NodeComponent {
     let contentEl = $$('div').addClass('se-content')
     if (entityIds.length > 0) {
       entityIds.forEach((entityId, index) => {
-        let entity = db.get(entityId)
+        let entity = article.get(entityId)
         if (!entity) {
           console.error('FIXME: no entity for contrib', entityId)
         } else {
           let short = entity.type === 'organisation'
           contentEl.append(
             $$('span').addClass('se-contrib').html(
-              entityRenderers[entity.type](entity.id, db, { short })
+              entityRenderers[entity.type](entity.id, article, { short })
             )
           )
           if (index < entityIds.length - 1) {
@@ -124,13 +126,14 @@ export default class ContribsListComponent extends NodeComponent {
     Creates new aff entries and removes old ones
   */
   _updateAffs(tx, contribIds) {
-    let pubMetaDb = this.context.pubMetaDbSession.getDocument()
+    const api = this.context.api
+    const article = api.getArticle()
     let editorSession = this.context.editorSession
     let doc = editorSession.getDocument()
     let oldOrgIds = doc.findAll('aff-group > aff').map(a => a.attr('rid'))
     let newOrgIds = []
     contribIds.forEach(contribId => {
-      let entity = pubMetaDb.get(contribId)
+      let entity = article.get(contribId)
       newOrgIds = newOrgIds.concat(entity.affiliations)
     })
     newOrgIds = uniq(newOrgIds)

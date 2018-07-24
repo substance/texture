@@ -1,21 +1,10 @@
-import { includes, forEach, EventEmitter } from 'substance'
+import { includes, EventEmitter } from 'substance'
 
-/*
-  Manages a table of content for a container. Default implementation considers
-  all headings as TOC entries. You can extend this implementation and override
-  `computeEntries`. Instantiate this class on controller level and pass it to relevant components
-  (such as {@link ui/TOCPanel} and {@link ui/ScrollPane}).
+export default class TOCProvider extends EventEmitter {
+  constructor (documentSession, config) {
+    super()
 
-  @class TOCProvider
-  @component
-
-  @prop {Controller}
- */
-
-class TOCProvider extends EventEmitter {
-  constructor(document, config) {
-    super(document, config)
-    this.document = document
+    this.documentSession = documentSession
     this.config = config
 
     this.entries = this.computeEntries()
@@ -25,17 +14,14 @@ class TOCProvider extends EventEmitter {
       this.activeEntry = null
     }
 
-    this.document.on('document:changed', this.handleDocumentChange, this)
+    this.documentSession.on('change', this.handleDocumentChange, this)
   }
 
-  dispose() {
-    let doc = this.getDocument()
-    doc.disconnect(this)
+  dispose () {
+    this.documentSession.off(this)
   }
 
-  // Inspects a document change and recomputes the
-  // entries if necessary
-  handleDocumentChange(change) {
+  handleDocumentChange (change) {
     let doc = this.getDocument()
     let needsUpdate = false
     let tocTypes = this.constructor.tocTypes
@@ -71,7 +57,7 @@ class TOCProvider extends EventEmitter {
     }
   }
 
-  computeEntries() {
+  computeEntries () {
     const doc = this.getDocument()
     const config = this.config
     let entries = []
@@ -89,7 +75,7 @@ class TOCProvider extends EventEmitter {
     }
 
     const contentNodes = doc.get(config.containerId).getChildren()
-    forEach(contentNodes, function(node) {
+    contentNodes.forEach(node => {
       if (node.type === 'heading') {
         entries.push({
           id: node.id,
@@ -101,7 +87,7 @@ class TOCProvider extends EventEmitter {
     })
 
     const fn = doc.find('fn')
-    if(fn) {
+    if (fn) {
       entries.push({
         id: 'fn-group',
         name: 'Footnotes',
@@ -110,7 +96,7 @@ class TOCProvider extends EventEmitter {
     }
 
     const ref = doc.find('ref')
-    if(ref) {
+    if (ref) {
       entries.push({
         id: 'ref-list',
         name: 'References',
@@ -121,15 +107,15 @@ class TOCProvider extends EventEmitter {
     return entries
   }
 
-  getEntries() {
+  getEntries () {
     return this.entries
   }
 
-  getDocument() {
-    return this.document
+  getDocument () {
+    return this.documentSession.getDocument()
   }
 
-  markActiveEntry(scrollPane) {
+  markActiveEntry (scrollPane) {
     let panelContent = scrollPane.getContentElement()
     let contentHeight = scrollPane.getContentHeight()
     let scrollPaneHeight = scrollPane.getHeight()
@@ -147,7 +133,7 @@ class TOCProvider extends EventEmitter {
     let activeEntry = tocNodes[0].id
     for (let i = tocNodes.length - 1; i >= 0; i--) {
       let tocNode = tocNodes[i]
-      let nodeEl = panelContent.find('[data-id="'+tocNode.id+'"]')
+      let nodeEl = panelContent.find('[data-id="' + tocNode.id + '"]')
       if (!nodeEl) {
         console.warn('Not found in Content panel', tocNode.id)
         return
@@ -167,5 +153,3 @@ class TOCProvider extends EventEmitter {
 }
 
 TOCProvider.tocTypes = ['heading', 'ref', 'fn', 'p']
-
-export default TOCProvider

@@ -1,5 +1,5 @@
 import DefaultModel from './DefaultModel'
-import { getLabel } from '../editor/nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class ArticleRecord extends DefaultModel {
   get type () {

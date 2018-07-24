@@ -3,11 +3,9 @@ import {
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
+import { Managed } from '../../shared'
+import { getCellRange, computeUpdatedSelection } from '../shared/tableHelpers'
 import TableEditing from './TableEditing'
-import {
-  getCellRange, computeUpdatedSelection
-} from './tableHelpers'
-import Managed from '../../shared/Managed'
 import TableClipboard from './TableClipboard'
 import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
@@ -40,9 +38,10 @@ export default class TableComponent extends CustomSurface {
     super.didMount()
 
     this._tableSha = this.props.node._getSha()
+    const appState = this.context.appState
 
-    this.context.editorSession.onRender('document', this._onDocumentChange, this)
-    this.context.editorSession.onRender('selection', this._onSelectionChange, this)
+    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' } )
+    appState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'render' })
 
     this._positionSelection(this._getSelectionData())
   }
@@ -50,7 +49,8 @@ export default class TableComponent extends CustomSurface {
   dispose() {
     super.dispose()
 
-    this.context.editorSession.off(this)
+    const appState = this.context.appState
+    appState.off(this)
   }
 
   render($$) {
@@ -137,7 +137,7 @@ export default class TableComponent extends CustomSurface {
     return contextMenu
   }
 
-  _onDocumentChange() {
+  _onDocumentChange () {
     const table = this.props.node
     // Note: using a simplified way to detect when a table
     // has changed structurally
@@ -149,7 +149,9 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onSelectionChange(sel) {
+  _onSelectionChange () {
+    const doc = this.context.editorSession.getDocument()
+    const sel = this.context.appState.selection
     const self = this
     if (!sel || sel.isNull()) {
       _disableActiveCell()
@@ -167,12 +169,11 @@ export default class TableComponent extends CustomSurface {
       }
       if (this._activeCell) {
         // TODO: this could be simplified
-        let doc = this.context.editorSession.getDocument()
         let cell = doc.get(this._activeCell)
         this._positionSelection({
           type: 'range',
           anchorCellId: cell.id,
-          focusCellId: cell.id,
+          focusCellId: cell.id
         }, true)
       } else {
         this._hideSelection()
@@ -196,7 +197,6 @@ export default class TableComponent extends CustomSurface {
         self._activeCell = null
       }
     }
-
   }
 
   _onMousedown(e) {

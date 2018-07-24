@@ -17,7 +17,6 @@ ArticleRecord.schema = {
   revRequestedDate: { type: 'string', optional: false, default: '' }
 }
 
-
 // Using an 'abstract base class' to be
 // able to identify sub-types via isInstanceOf
 export class BibliographicEntry extends DocumentNode {}
@@ -129,7 +128,8 @@ NewspaperArticle.schema = {
 export class Patent extends BibliographicEntry {}
 
 Patent.schema = {
-  type: 'patent',
+  // HACK: trying to merge EntitDb into Article model, avoiding type collision
+  type: '_patent',
   inventors: { type: ['ref-contrib'], default: [], optional: true },
   assignee: { type: 'string', optional: true },
   title: { type: 'string', optional: true },
@@ -328,18 +328,13 @@ Keyword.schema = {
 export class Subject extends DocumentNode {}
 
 Subject.schema = {
-  type: 'subject',
+  // HACK: trying to merge EntitDb into Article model, avoiding type collision
+  type: '_subject',
   name: { type: 'string', optional: false, default: '' },
   category: { type: 'string', optional: false, default: '' }
 }
 
 export default class EntityDatabase extends Document {
-  /*
-    Simple API to find records in the entity database.
-  */
-  find(qry) {
-    return this.findByType(qry.type)
-  }
 
   findByType(type) {
     let NodeClass = this.schema.getNodeClass(type)
@@ -362,7 +357,4 @@ export default class EntityDatabase extends Document {
     nodeIds = without(nodeIds, 'main-article')
     return nodeIds
   }
-
 }
-
-EntityDatabase.prototype._isEntityDatabase = true

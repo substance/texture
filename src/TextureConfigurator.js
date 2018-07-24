@@ -1,4 +1,4 @@
-import { Configurator, merge, isString, flatten, includes } from 'substance'
+import { Configurator, merge, isString, flatten, includes, forEach } from 'substance'
 
 export default class TextureConfigurator extends Configurator {
   constructor () {
@@ -58,7 +58,6 @@ export default class TextureConfigurator extends Configurator {
     return this.config.models
   }
 
-
   addPropertyEditor (PropertyEditorClass) {
     if (includes(this.config.propertyEditors, PropertyEditorClass)) {
       throw new Error('Already registered')
@@ -66,7 +65,7 @@ export default class TextureConfigurator extends Configurator {
     this.config.propertyEditors.push(PropertyEditorClass)
   }
 
-  getPropertyEditors() {
+  getPropertyEditors () {
     return this.config.propertyEditors
   }
 
@@ -84,8 +83,12 @@ export default class TextureConfigurator extends Configurator {
     this.config.tools[name] = ToolClass
   }
 
-  getTools () {
-    return this.config.tools
+  getToolRegistry () {
+    let result = new Map()
+    forEach(this.config.tools, (ToolClass, name) => {
+      result.set(name, ToolClass)
+    })
+    return result
   }
 
   getToolClass (name) {
@@ -104,6 +107,16 @@ export default class TextureConfigurator extends Configurator {
     let toolPanel = toolPanelSpec.map(itemSpec => this._compileToolPanelItem(itemSpec))
     this._compiledToolPanels[name] = toolPanel
     return toolPanel
+  }
+
+  getCommands () {
+    let commands = new Map()
+    forEach(this.config.commands, (item, name) => {
+      const Command = item.CommandClass
+      let command = new Command(Object.assign({name: name}, item.options))
+      commands.set(name, command)
+    })
+    return commands
   }
 
   getCommandGroup (name) {

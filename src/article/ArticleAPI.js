@@ -345,23 +345,23 @@ export default class ArticleAPI {
   _deleteTitleTranslation(languageCode) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const abstractEl = tx.find('trans-abstract[xml:lang'+languageCode+']')
-
-      const subjGroup = tx.find('subj-group')
-      const subjectEl = subjGroup.find(`subject[rid=${subjectId}]`)
-      subjectEl.parentNode.removeChild(subjectEl)
-      tx.delete(subjectEl.id)
-
-      const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
-        tx.createElement('p')
-      )
-      const articleMeta = tx.find('article-meta')
-      articleMeta.append(abstractEl)
+      // HACK: attribute selector with colon is invalid
+      const titles = tx.findAll('trans-title-group')
+      const titleEl = titles.find(t => t.attr('xml:lang') === languageCode)
+      titleEl.parentNode.removeChild(titleEl)
+      tx.delete(titleEl.id)
     })
   }
 
   _deleteAbstractTranslation(languageCode) {
-    
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      // HACK: attribute selector with colon is invalid
+      const abstracts = tx.findAll('trans-abstract')
+      const abstractEl = abstracts.find(a => a.attr('xml:lang') === languageCode)
+      abstractEl.parentNode.removeChild(abstractEl)
+      tx.delete(abstractEl.id)
+    })
   }
 
   _getTitleTranslateable() {

@@ -47,5 +47,12 @@ export default class TranslateableModel {
   addTranslation(languageCode) {
     this._api.addTranslation(this._id, languageCode)
   }
+
+  /*
+    Removes a translation for a given language code
+  */
+  removeTranslation(languageCode) {
+    this._api.deleteTranslation(this._id, languageCode)
+  }
 }
 

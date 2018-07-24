@@ -71,7 +71,7 @@ export default class TranslateableEditor extends Component {
       el.append(
         translRow.append(
           $$('div').addClass('se-remove').append(
-            $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon')
+            $$(FontAwesomeIcon, { icon: 'fa-remove' }).addClass('se-icon')
           ).on('click', this._removeLanguage.bind(this, lang))
         )
       )

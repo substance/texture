@@ -2,6 +2,7 @@ import { Component } from 'substance'
 import { Managed } from '../../shared'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
+import EntityEditor from './EntityEditor'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
@@ -13,7 +14,8 @@ const SECTIONS = [
   { label: 'Footnotes', modelType: 'footnotes' },
   { label: 'References', modelType: 'references' },
   { label: 'Keywords', modelType: 'keywords' },
-  { label: 'Subjects', modelType: 'subjects' }
+  { label: 'Subjects', modelType: 'subjects' },
+  { label: 'Article', modelType: 'article-record' }
 ]
 
 export default class MetadataEditor extends Component {
@@ -122,12 +124,20 @@ export default class MetadataEditor extends Component {
     let tocEl = $$('div').addClass('se-toc')
     SECTIONS.forEach(section => {
       let model = this.api.getModel(section.modelType)
-      const items = model.getItems()
-      tocEl.append(
-        $$('a').addClass('se-toc-item')
-          .attr({ href: '#' + model.id })
-          .append(section.label + ' (' + items.length + ')')
-      )
+      if(model.isCollection) {
+        const items = model.getItems()
+        tocEl.append(
+          $$('a').addClass('se-toc-item')
+            .attr({ href: '#' + model.id })
+            .append(section.label + ' (' + items.length + ')')
+        )
+      } else {
+        tocEl.append(
+          $$('a').addClass('se-toc-item')
+            .attr({ href: '#' + model.id })
+            .append(section.label)
+        )
+      }
     })
     el.append(tocEl)
     return el
@@ -143,11 +153,21 @@ export default class MetadataEditor extends Component {
     let collectionsEl = $$('div').addClass('se-collections')
     SECTIONS.forEach(section => {
       let model = this.api.getModel(section.modelType)
-      collectionsEl.append(
-        $$(CollectionEditor, { model: model })
-          .attr({id: model.id})
-          .ref(model.id)
-      )
+
+      if(model.isCollection) {
+        collectionsEl.append(
+          $$(CollectionEditor, { model: model })
+            .attr({id: model.id})
+            .ref(model.id)
+        )
+      } else if (section.modelType === 'article-record') {
+        model = this.api.getEntity('article-record')
+        collectionsEl.append(
+          $$(EntityEditor, { model: model })
+            .attr({id: model.id})
+            .ref(model.id)
+        )
+      }
     })
 
     contentPanel.append(collectionsEl)

@@ -15,6 +15,10 @@ export default class DefaultModel {
     return this._node.type
   }
 
+  get isCollection() {
+    return false
+  }
+
   toJSON() {
     return this._node.toJSON()
   }

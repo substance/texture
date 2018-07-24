@@ -7,6 +7,10 @@ export default class FootnoteCollectionModel {
     return 'footnotes'
   }
 
+  get isCollection() {
+    return true
+  }
+
   getItems () {
     return this._api.getFootnotes()
   }

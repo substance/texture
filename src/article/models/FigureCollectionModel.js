@@ -7,6 +7,10 @@ export default class FigureCollectionModel {
     return 'figures'
   }
 
+  get isCollection() {
+    return true
+  }
+
   getItems () {
     return this._api.getFigures()
   }

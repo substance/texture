@@ -1,5 +1,9 @@
 export default class AbstractCollectionModel {
 
+  get isCollection() {
+    return true
+  }
+
   getItems() {
     // return rich objects
   }

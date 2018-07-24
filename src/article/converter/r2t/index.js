@@ -1,5 +1,4 @@
 // import PruneText from './PruneText'
-import WrapAff from './WrapAff'
 import WrapDispQuoteContent from './WrapDispQuoteContent'
 import Sec2Heading from './Sec2Heading'
 import UpdateDocType from './UpdateDocType'
@@ -7,10 +6,7 @@ import FnGroupConverter from './FnGroupConverter'
 import ConvertFig from './ConvertFig'
 import ConvertTable from './ConvertTable'
 import ConvertTableWrap from './ConvertTableWrap'
-import ConvertContentLoc from './ConvertContentLoc'
 import ConvertSigBlock from './ConvertSigBlock'
-import UnifyPublicationHistory from './UnifyPublicationHistory'
-import NormalizeHistoryDates from './NormalizeHistoryDates'
 import PruneEmptyElements from './PruneEmptyElements'
 import ConvertRefs from './ConvertRefs'
 import ConvertAuthors from './ConvertAuthors'
@@ -24,11 +20,6 @@ import ConvertList from './ConvertList'
 // ATM
 const trafos = [
   PruneEmptyElements,
-  UnifyPublicationHistory,
-  NormalizeHistoryDates,
-  // NOTE: ConvertContentLoc must go before ConvertAuthors otherwise we end up in
-  // invalid schema.
-  ConvertContentLoc,
   // NOTE: It is important that ConvertAuthors goes before ConvertRefs, as
   // as person records with affiliations (contrib) should have priority over
   // person records in
@@ -41,7 +32,6 @@ const trafos = [
   ConvertTable,
   ConvertTableWrap,
   ConvertList,
-  WrapAff,
   WrapDispQuoteContent,
   Sec2Heading,
   ConvertXref,
@@ -65,16 +55,12 @@ export function t2r(dom, api) {
 
 export {
   PruneEmptyElements,
-  UnifyPublicationHistory,
-  NormalizeHistoryDates,
   ConvertSigBlock,
   FnGroupConverter,
   ConvertFig,
   ConvertTableWrap,
   ConvertList,
-  WrapAff,
   WrapDispQuoteContent,
   Sec2Heading,
-  ConvertContentLoc,
   UpdateDocType
 }

@@ -13,8 +13,8 @@ ArticleRecord.schema = {
   acceptedDate: { type: 'string', optional: false, default: '' },
   publishedDate: { type: 'string', optional: false, default: '' },
   receivedDate: { type: 'string', optional: false, default: '' },
-  revReceivedDate: { type: 'string', optional: false },
-  revRequestedDate: { type: 'string', optional: false }
+  revReceivedDate: { type: 'string', optional: false, default: '' },
+  revRequestedDate: { type: 'string', optional: false, default: '' }
 }
 
 

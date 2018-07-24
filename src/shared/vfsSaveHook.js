@@ -12,6 +12,7 @@ export default function vfsSaveHook(storage, ArchiveClass) {
       let err = checkArchive(ArchiveClass, rawArchive)
       if (err) {
         if (platform.inBrowser) {
+          console.error(err)
           window.alert('Exported archive is corrupt!') //eslint-disable-line no-alert
         }
         console.error(err.detail)

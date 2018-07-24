@@ -129,7 +129,7 @@
         <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </abstract>
       <trans-abstract xml:lang="es">
-      <p>Spanish abstract</p>
+      <p id="p-1-1">Spanish abstract</p>
       </trans-abstract>
       <kwd-group xml:lang="en">
         <kwd content-type="author-keyword">optogenetics</kwd>

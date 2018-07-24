@@ -267,9 +267,9 @@ function _addContainerId (sel, editorSession) {
 }
 
 const _exceptions = [
-  /TextPropertyEditor\.didMount.*substance\.js/,
-  /IsolatedNodeComponent\.didMount.*substance\.js/,
-  /IsolatedInlineNodeComponent\.didMount.*substance\.js/
+  /TextPropertyEditor.*substance\.js/,
+  /IsolatedNodeComponent.*substance\.js/,
+  /IsolatedInlineNodeComponent.*substance\.js/
 ]
 function _shouldDisplayDeprecatedWarning () {
   let caller = _getCaller(2)

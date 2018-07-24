@@ -49,7 +49,8 @@ export default class TableComponent extends CustomSurface {
   dispose() {
     super.dispose()
 
-    this.context.editorSession.off(this)
+    const appState = this.context.appState
+    appState.off(this)
   }
 
   render($$) {

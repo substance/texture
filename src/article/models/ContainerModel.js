@@ -5,7 +5,7 @@ import DefaultModel from './DefaultModel'
 */
 export default class ContainerModel extends DefaultModel {
   getContainerNode () {
-    console.warn(' TODO: In the future ContainerEditor should work with ContainerModel, instead of low-level ContainerNode.')
+    // TODO: In the future ContainerEditor should work with ContainerModel, instead of low-level ContainerNode.
     return this._node
   }
 }

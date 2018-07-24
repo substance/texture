@@ -1,4 +1,4 @@
-import { Component, without } from 'substance'
+import { Component, FontAwesomeIcon, without } from 'substance'
 import ContainerModel from '../models/ContainerModel'
 import FormRowComponent from './FormRowComponent'
 
@@ -68,7 +68,13 @@ export default class TranslateableEditor extends Component {
         )
       }
 
-      el.append(translRow)
+      el.append(
+        translRow.append(
+          $$('div').addClass('se-remove').append(
+            $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon')
+          ).on('click', this._removeLanguage.bind(this, lang))
+        )
+      )
     })
 
     if(availableLanguages.length > 0) {
@@ -116,6 +122,11 @@ export default class TranslateableEditor extends Component {
     model.addTranslation(value)
     
     this._toggleDropdown()
+  }
+
+  _removeLanguage(lang) {
+    const model = this.props.model
+    model.removeTranslation(lang)
   }
 
   _toggleDropdown() {

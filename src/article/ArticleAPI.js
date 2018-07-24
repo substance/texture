@@ -334,6 +334,36 @@ export default class ArticleAPI {
     })
   }
 
+  deleteTranslation (translatableId, languageCode) {
+    if (translatableId === 'title-trans') {
+      this._deleteTitleTranslation(languageCode)
+    } else if (translatableId === 'abstract-trans') {
+      this._deleteAbstractTranslation(languageCode)
+    }
+  }
+
+  _deleteTitleTranslation(languageCode) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      const abstractEl = tx.find('trans-abstract[xml:lang'+languageCode+']')
+
+      const subjGroup = tx.find('subj-group')
+      const subjectEl = subjGroup.find(`subject[rid=${subjectId}]`)
+      subjectEl.parentNode.removeChild(subjectEl)
+      tx.delete(subjectEl.id)
+
+      const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
+        tx.createElement('p')
+      )
+      const articleMeta = tx.find('article-meta')
+      articleMeta.append(abstractEl)
+    })
+  }
+
+  _deleteAbstractTranslation(languageCode) {
+    
+  }
+
   _getTitleTranslateable() {
     let transTitleGroups = this.getArticle().findAll('trans-title-group')
     const translatableId = 'title-trans'
@@ -350,7 +380,6 @@ export default class ArticleAPI {
       this.getArticleTitle(),
       translations
     )
-
   }
 
   _getAbstractTranslateable() {

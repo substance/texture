@@ -47,6 +47,5 @@ export default class TranslateableModel {
   addTranslation(languageCode) {
     this._api.addTranslation(this._id, languageCode)
   }
-
 }
 

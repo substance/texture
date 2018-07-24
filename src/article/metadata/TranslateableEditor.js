@@ -1,4 +1,4 @@
-import { Component, FontAwesomeIcon, without } from 'substance'
+import { Component, FontAwesomeIcon } from 'substance'
 import ContainerModel from '../models/ContainerModel'
 import FormRowComponent from './FormRowComponent'
 
@@ -146,6 +146,7 @@ export default class TranslateableEditor extends Component {
     const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode())
     // HACK: english is hardcoded here as original language
     // we will need to use default lang setting from article level 
-    return without(languageCodes, alreadyTranslated, 'en')
+    alreadyTranslated.push('en')
+    return languageCodes.filter(l => !alreadyTranslated.find(t => t === l))
   }
 }

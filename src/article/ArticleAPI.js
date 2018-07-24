@@ -233,7 +233,7 @@ export default class ArticleAPI {
     Falls back to 'en'
   */
   getOriginalLanguageCode() {
-    let article = this.doc.getRootNode()
+    let article = this.getArticle().getRootNode()
     return article.attr('xml:lang') || 'en'
   }
 
@@ -309,7 +309,7 @@ export default class ArticleAPI {
   }
 
   _getTitleTranslateable() {
-    let transTitleGroups = this.doc.findAll('trans-title-group')
+    let transTitleGroups = this.getArticle().findAll('trans-title-group')
     const translatableId = 'title-trans'
     let translations = transTitleGroups.map(transTitleGroup => {
       let transTitle = transTitleGroup.find('trans-title')
@@ -328,7 +328,7 @@ export default class ArticleAPI {
   }
 
   _getAbstractTranslateable() {
-    let transAbstracts = this.doc.findAll('trans-abstract')
+    let transAbstracts = this.getArticle().findAll('trans-abstract')
     const translatableId = 'abstract-trans'
     let translations = transAbstracts.map(transAbstract => {
       let transAbstractModel = new ContainerModel(this, transAbstract, this._getContext())

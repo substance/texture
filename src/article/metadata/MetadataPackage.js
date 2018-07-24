@@ -26,6 +26,24 @@ export default {
 
     config.addToolPanel('toolbar', [
       {
+        name: 'undo-redo',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'undo-redo' }
+        ]
+      },
+      {
+        name: 'annotations',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'formatting' }
+        ]
+      },
+      {
         name: 'edit',
         type: 'tool-group',
         showDisabled: true,
@@ -81,5 +99,49 @@ export default {
 
     // LEGACY:
     config.addComponent('footnote', FnComponent)
+
+
+    // TODO: we should try to extract these into a package and share with ManuscriptEditor
+    config.addAnnotationTool({
+      name: 'bold',
+      nodeType: 'bold',
+      commandGroup: 'formatting',
+      icon: 'fa-bold',
+      label: 'Strong',
+      accelerator: 'CommandOrControl+B'
+    })
+
+    config.addAnnotationTool({
+      name: 'italic',
+      nodeType: 'italic',
+      commandGroup: 'formatting',
+      icon: 'fa-italic',
+      label: 'Emphasize',
+      accelerator: 'CommandOrControl+I'
+    })
+
+    config.addAnnotationTool({
+      name: 'sub',
+      nodeType: 'sub',
+      commandGroup: 'formatting',
+      icon: 'fa-subscript',
+      label: 'Subscript'
+    })
+
+    config.addAnnotationTool({
+      name: 'sup',
+      nodeType: 'sup',
+      commandGroup: 'formatting',
+      icon: 'fa-superscript',
+      label: 'Superscript'
+    })
+
+    config.addAnnotationTool({
+      name: 'monospace',
+      nodeType: 'monospace',
+      commandGroup: 'formatting',
+      icon: 'fa-code',
+      label: 'Monospace'
+    })
   }
 }

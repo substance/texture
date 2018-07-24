@@ -9,6 +9,8 @@ export default class TranslateableEditor extends Component {
     const originalText = model.getOriginalText()
     const TextPropertyEditor = this.getComponent('text-property')
     const ContainerEditor = this.getComponent('container')
+    const languages = this._getAvailableLanguages()
+
     let el = $$('div')
       .addClass('sc-translatable-editor')
       .attr('data-id', model.id)
@@ -45,9 +47,10 @@ export default class TranslateableEditor extends Component {
     model.getTranslations().forEach(translation => {
       let text = translation.getText()
       let lang = translation.getLanguageCode()
+      let langName = languages[lang]
 
       const translRow = $$(FormRowComponent, {
-        label: this.getLabel(lang + '-translation')
+        label: langName
       })
 
       if (text instanceof ContainerModel) {
@@ -70,5 +73,10 @@ export default class TranslateableEditor extends Component {
     })
 
     return el
+  }
+
+  _getAvailableLanguages() {
+    const configurator = this.context.configurator
+    return configurator.getAvailableLanguages()
   }
 }

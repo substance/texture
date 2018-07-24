@@ -15,9 +15,10 @@ export default class ManuscriptEditor extends Component {
     super(...args)
 
     this.handleActions({
-      'tocEntrySelected': this._tocEntrySelected,
-      'switchContext': this._switchContext,
-      executeCommand: this._executeCommand
+      tocEntrySelected: this._tocEntrySelected,
+      switchContext: this._switchContext,
+      executeCommand: this._executeCommand,
+      toggleOverlay: this._toggleOverlay
     })
 
     this._initialize(this.props)
@@ -271,5 +272,15 @@ export default class ManuscriptEditor extends Component {
     const doc = this._getDocument()
     let body = doc.find('body')
     return body.id
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this.context.appState
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
   }
 }

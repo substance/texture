@@ -27,7 +27,8 @@ export default class MetadataEditor extends Component {
     super(...args)
 
     this.handleActions({
-      executeCommand: this._executeCommand
+      executeCommand: this._executeCommand,
+      toggleOverlay: this._toggleOverlay
     })
 
     this._initialize(this.props)
@@ -162,5 +163,15 @@ export default class MetadataEditor extends Component {
 
   _executeCommand (name, params) {
     this.editorSession.executeCommand(name, params)
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this.context.appState
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
   }
 }

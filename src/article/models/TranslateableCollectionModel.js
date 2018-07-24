@@ -11,7 +11,6 @@ export default class TranslateableCollectionModel extends DefaultCollectionModel
   }
 
   removeItem (item) { // eslint-disable-line no-unused-vars
-    this._api.deleteTranslation(item.id)
   }
 
   getItems() {

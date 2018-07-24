@@ -45,7 +45,7 @@ export default {
       },
       {
         name: 'edit',
-        type: 'tool-group',
+        type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
         items: [
@@ -54,7 +54,7 @@ export default {
       },
       {
         name: 'workflows',
-        type: 'tool-group',
+        type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
         items: [

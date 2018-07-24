@@ -37,6 +37,9 @@ export default class ManuscriptEditor extends Component {
       tocProvider: this.tocProvider,
       urlResolver: archive
     })
+
+    // initial reduce etc.
+    this.editorSession.initialize()
   }
 
   didMount () {

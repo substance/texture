@@ -58,6 +58,12 @@ export default function (DocumentSession) {
       this.getDocument().off(this)
     }
 
+    initialize () {
+      // TODO: is this the right place?
+      // initial reduce step
+      this.commandManager.reduce()
+    }
+
     getConfigurator () {
       return this.config
     }

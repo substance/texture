@@ -43,6 +43,8 @@ export default class MetadataEditor extends Component {
       api,
       urlResolver: archive
     })
+    // initial reduce etc.
+    this.editorSession.initialize()
   }
 
   dispose () {

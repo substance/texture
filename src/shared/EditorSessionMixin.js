@@ -35,7 +35,7 @@ export default function (DocumentSession) {
       let markersManager = new MarkersManager(editorState)
       let globalEventHandler = new GlobalEventHandler(editorState)
       let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName) => {
-        return this._executeCommand(commandName)
+        return this.executeCommand(commandName)
       }, contextProvider)
       let commandManager = new CommandManager(editorState,
         // update commands when document or selection have changed
@@ -195,7 +195,7 @@ export default function (DocumentSession) {
       this.editorState.hasUnsavedChanges = true
     }
 
-    _executeCommand (commandName) {
+    executeCommand (commandName) {
       this.commandManager.executeCommand(commandName)
     }
 

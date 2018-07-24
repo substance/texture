@@ -11,6 +11,14 @@ export default {
     config.addCommand('redo', RedoCommand, { commandGroup: 'undo-redo' })
     config.addCommand('select-all', SelectAllCommand, { commandGroup: 'selection' })
 
+    config.addIcon('insert', { 'fontawesome': 'fa-plus' })
+    config.addIcon('undo', { 'fontawesome': 'fa-undo' })
+    config.addIcon('redo', { 'fontawesome': 'fa-repeat' })
+    config.addIcon('edit', { 'fontawesome': 'fa-cog' })
+    config.addIcon('delete', { 'fontawesome': 'fa-times' })
+    config.addIcon('expand', { 'fontawesome': 'fa-arrows-h' })
+    config.addIcon('truncate', { 'fontawesome': 'fa-arrows-h' })
+
     config.addLabel('undo', {
       en: 'Undo',
       de: 'Rückgängig'

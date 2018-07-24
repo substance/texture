@@ -15,6 +15,7 @@ export function setModelValue(model, name, value) {
   let id = model.id
   session.transaction(tx => {
     tx.set([id, name], value)
+    tx.selection = null
   })
 }
 

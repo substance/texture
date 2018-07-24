@@ -1,6 +1,7 @@
 import { forEach, without } from 'substance'
 
 import AnnotatedTextModel from './models/AnnotatedTextModel'
+
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
@@ -12,6 +13,8 @@ import TableManager from './editor/TableManager'
 import FootnoteManager from './editor/FootnoteManager'
 import DefaultModel from './models/DefaultModel'
 import entityRenderers from './shared/entityRenderers'
+import TranslateableModel from './models/TranslateableModel'
+import TranslationModel from './models/TranslationModel'
 
 export default class ArticleAPI {
   constructor (configurator, articleSession, pubMetaDbSession, context) {
@@ -297,6 +300,16 @@ export default class ArticleAPI {
   }
 
   /*
+    Article language code
+
+    Falls back to 'en'
+  */
+  getOriginalLanguageCode() {
+    let article = this.doc.getRootNode()
+    return article.attr('xml:lang') || 'en'
+  }
+
+  /*
     NOTE: This only works for collection that contain a single item type. We may need to rethink this
   */
   getCollectionForType(type) {
@@ -311,17 +324,17 @@ export default class ArticleAPI {
 
   getArticleTitle() {
     let articleTitle = this.doc.find('article-title')
-    return new AnnotatedTextModel(articleTitle, this._getContext())
+    return new AnnotatedTextModel(this, articleTitle, this._getContext())
   }
 
   getArticleAbstract () {
     let abstract = this.doc.find('abstract')
-    return new ContainerModel(abstract, this._getContext())
+    return new ContainerModel(this, abstract, this._getContext())
   }
 
   getArticleBody () {
     let body = this.doc.find('body')
-    return new ContainerModel(body, this._getContext())
+    return new ContainerModel(this, body, this._getContext())
   }
 
   getContribs () {
@@ -347,6 +360,66 @@ export default class ArticleAPI {
   getFigures () {
     let figs = this.doc.findAll('fig')
     return figs.map(fig => this.getModel(fig.type, fig))
+  }
+
+  getTranslatables () {
+    return [
+      this._getTitleTranslateable(),
+      this._getAbstractTranslateable()
+    ]
+  }
+
+  addTranslation (translatableId, languageCode) {
+    if (translatableId === 'title-trans') {
+      this._addTitleTranslation(languageCode)
+    } else if (translatableId === 'abstract-trans') {
+      this._addAbstractTranslation(languageCode)
+    }
+  }
+
+  _addTitleTranslation(languageCode) { // eslint-disable-line no-unused-vars
+    throw new Error('NOT IMPLEMENTED')
+  }
+
+  _addAbstractTranslation(languageCode) { // eslint-disable-line no-unused-vars
+    throw new Error('NOT IMPLEMENTED')
+  }
+
+  _getTitleTranslateable() {
+    let transTitleGroups = this.doc.findAll('trans-title-group')
+    const translatableId = 'title-trans'
+    let translations = transTitleGroups.map(transTitleGroup => {
+      let transTitle = transTitleGroup.find('trans-title')
+      let transTitleModel = new AnnotatedTextModel(this, transTitle, this._getContext())
+      return new TranslationModel(this, transTitleModel, translatableId, transTitleGroup.attr('xml:lang'))
+    })
+
+    return new TranslateableModel(
+      this,
+      translatableId,
+      this.getOriginalLanguageCode(),
+      this.getArticleTitle(),
+      translations
+    )
+
+  }
+
+  _getAbstractTranslateable() {
+    let transAbstracts = this.doc.findAll('trans-abstract')
+    const translatableId = 'abstract-trans'
+    let translations = transAbstracts.map(transAbstract => {
+      let transAbstractModel = new ContainerModel(this, transAbstract, this._getContext())
+      return new TranslationModel(this, transAbstractModel, translatableId, transAbstract.attr('xml:lang'))
+    })
+
+    return new TranslateableModel(
+      this,
+      translatableId,
+      this.getOriginalLanguageCode(),
+      this.getArticleAbstract(),
+      translations
+    )
+
   }
 
   _getContext () {

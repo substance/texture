@@ -6,6 +6,7 @@ import EntityEditor from './EntityEditor'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
+  { label: 'Translations', modelType: 'translatables' },
   { label: 'Editors', modelType: 'editors' },
   { label: 'Groups', modelType: 'groups' },
   { label: 'Affiliations', modelType: 'organisations' },

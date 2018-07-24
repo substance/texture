@@ -8,6 +8,7 @@ import TextureContainerEditor from '../../shared/TextureContainerEditor'
 import TextNodeComponent from '../editor/TextNodeComponent'
 
 import EntityEditor from './EntityEditor'
+import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../reader/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
@@ -70,7 +71,9 @@ export default {
     // In some other cases we use custom ones (e.g. figures)
     config.addComponent('entity-editor', EntityEditor)
 
+    config.addComponent('translatable', TranslateableEditor)
     config.addComponent('figure', FigureComponent)
+
     config.addComponent('graphic', GraphicComponent)
 
     // TODO: we should use a default component for TextModels

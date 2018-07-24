@@ -11,6 +11,10 @@ export default class DefaultCollectionModel {
     return true
   }
 
+  get type() {
+    return 'collection'
+  }
+
   getItems() {
     return this._api.getEntitiesByType(this._getCollectionType())
   }

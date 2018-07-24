@@ -24,6 +24,10 @@ import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
 
+import TranslateableCollectionModel from './models/TranslateableCollectionModel'
+import TranslateableModel from './models/TranslateableModel'
+import TranslationModel from './models/TranslationModel'
+
 import RefContribPropertyEditor from './metadata/RefContribPropertyEditor'
 import StringPropertyEditor from './metadata/StringPropertyEditor'
 import BooleanPropertyEditor from './metadata/BooleanPropertyEditor'
@@ -60,6 +64,11 @@ export default {
     config.addModel('subjects', SubjectCollectionModel)
     config.addModel('figures', FigureCollectionModel)
     config.addModel('footnotes', FootnoteCollectionModel)
+
+    // Other special models
+    config.addModel('translatables', TranslateableCollectionModel)
+    config.addModel('translatable', TranslateableModel)
+    config.addModel('translation', TranslationModel)
 
     // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)

@@ -143,5 +143,17 @@ export default {
       icon: 'fa-code',
       label: 'Monospace'
     })
+
+    // Section labels
+    config.addLabel('authors', 'Authors')
+    config.addLabel('figures', 'Figures')
+    config.addLabel('footnotes', 'Footnotes')
+    config.addLabel('groups', 'Groups')
+    config.addLabel('keywords', 'Keywords')
+    config.addLabel('organisations', 'Organisations')
+    config.addLabel('references', 'References')
+    config.addLabel('translateables', 'Translations')
+    config.addLabel('title-trans', 'Title')
+    config.addLabel('abstract-trans', 'Abstract')
   }
 }

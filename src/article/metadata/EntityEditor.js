@@ -100,6 +100,12 @@ export default class EntityEditor extends ModelComponent {
     const model = this.props.model
     const api = this.context.api
     // FIXME: compute derived properties when props change, i.e. initially and on willReceiveProps()
+    const el = $$('div').addClass('sc-entity-editor').append(
+      $$('div').addClass('se-header').html(
+        this.context.api.renderEntity(model)
+      )
+    )
+
     const propertyStates = this._computePropertyStates()
     const hasWarnings = propertyStates.some(prop => prop.warnings.length > 0)
     const hasHiddenProps = propertyStates.some(prop => prop.hidden)
@@ -159,7 +165,7 @@ export default class EntityEditor extends ModelComponent {
     }
 
     el.append(
-      $$('div').addClass('se-entity-footer').append(
+      $$('div').addClass('se-footer').append(
         controlEl,
         $$('button').addClass('se-remove-item').append(
           $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),

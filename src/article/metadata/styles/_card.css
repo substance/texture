@@ -15,3 +15,15 @@
 .sc-card > .sm-warning {
   border: 1px solid var(--warning-color);
 }
+
+.sc-card > * > .se-header {
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.sc-card > * > .se-footer {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px;
+}
+

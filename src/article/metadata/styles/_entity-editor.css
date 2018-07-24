@@ -2,18 +2,7 @@
   margin-bottom: 15px;
 }
 
-.sc-entity-editor .se-entity-header {
-  font-size: 17px;
-  margin-bottom: 20px;
-}
-
-.sc-entity-editor .se-entity-footer {
-  display: flex;
-  justify-content: space-between;
-  margin: 0px;
-}
-
-.sc-entity-editor .se-entity-footer .se-remove-item {
+.sc-entity-editor > .se-footer > .se-remove-item {
   font-size: 12px;
   background: #fff;
   padding: 2px 4px;
@@ -21,17 +10,17 @@
   border: 1px solid #dedede;
 }
 
-.sc-entity-editor .se-entity-footer .se-remove-item .se-icon {
+.sc-entity-editor > .se-footer > .se-remove-item > .se-icon {
   margin-right: 5px;
 }
 
-.sc-entity-editor .se-entity-footer .se-control {
+.sc-entity-editor > .se-footer > .se-control {
   font-size: 12px;
   color: #499aff;
   cursor: pointer;
   margin-bottom: 0px;
 }
 
-.sc-entity-editor .se-control .se-icon {
+.sc-entity-editor > .se-footer > .se-control > .se-icon {
   margin-right: 10px;
 }

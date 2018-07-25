@@ -71,6 +71,30 @@ export default {
       en: 'Workflows'
     })
 
+    config.addCommand('add-author', AddEntityCommand, {
+      type: 'author',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-author', {
+      en: 'Add Author'
+    })
+
+    config.addLabel('original-translation', {
+      en: 'Original'
+    })
+    config.addLabel('add-translation', {
+      en: 'Add translation'
+    })
+    config.addLabel('select-language', {
+      en: 'Select language'
+    })
+
+    config.addLabel('title-trans', {
+      en: 'Title'
+    })
+    config.addLabel('abstract-trans', {
+      en: 'Abstract'
+    })
     // Components for editors
     config.addComponent('text-node', TextNodeComponent)
     config.addComponent('text-property', TextPropertyEditor)

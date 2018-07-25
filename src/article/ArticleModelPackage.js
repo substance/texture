@@ -35,6 +35,8 @@ import BooleanPropertyEditor from './metadata/BooleanPropertyEditor'
 import ReferencePropertyEditor from './metadata/ReferencePropertyEditor'
 import UniqueReferencePropertyEditor from './metadata/UniqueReferencePropertyEditor'
 
+import LanguagesPackage from './LanguagesPackage'
+
 export default {
   name: 'TextureArticle',
   configure (config) {
@@ -57,6 +59,9 @@ export default {
     })
     config.addConverter('html', XMLListNodeHTMLConverter)
     config.addConverter('html', ListPackage.ListItemHTMLConverter)
+
+    // Registry of available languages
+    config.import(LanguagesPackage)
 
     // Collection Models
     config.addModel('authors', AuthorCollectionModel)

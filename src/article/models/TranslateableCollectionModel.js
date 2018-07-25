@@ -11,7 +11,6 @@ export default class TranslateableCollectionModel extends DefaultCollectionModel
   }
 
   removeItem (item) { // eslint-disable-line no-unused-vars
-    // TODO: should it really be possible to delete a figure here?
   }
 
   getItems() {

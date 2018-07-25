@@ -1,4 +1,5 @@
 import { Component, FontAwesomeIcon } from 'substance'
+import CardComponent from './CardComponent'
 
 export default class CollectionEditor extends Component {
   constructor(...args) {
@@ -29,11 +30,13 @@ export default class CollectionEditor extends Component {
     items.forEach(item => {
       let ItemEditor = this.getComponent(item.type, true) || EntityEditor
       el.append(
-        $$(ItemEditor, {
-          model: item,
-          // LEGACY:
-          node: item._node
-        })
+        $$(CardComponent).append(
+          $$(ItemEditor, {
+            model: item,
+            // LEGACY:
+            node: item._node
+          })
+        )
       )
     })
 

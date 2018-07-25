@@ -312,12 +312,59 @@ export default class ArticleAPI {
     }
   }
 
-  _addTitleTranslation(languageCode) { // eslint-disable-line no-unused-vars
-    throw new Error('NOT IMPLEMENTED')
+  _addTitleTranslation(languageCode) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      const titleEl = tx.createElement('trans-title-group').attr('xml:lang', languageCode).append(
+        tx.createElement('trans-title')
+      )
+      const titleGroup = tx.find('title-group')
+      titleGroup.append(titleEl)
+    })
   }
 
-  _addAbstractTranslation(languageCode) { // eslint-disable-line no-unused-vars
-    throw new Error('NOT IMPLEMENTED')
+  _addAbstractTranslation(languageCode) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
+        tx.createElement('p')
+      )
+      // TODO: replace it with schema driven smartness
+      const abstract = tx.find('article-meta > abstract')
+      const articleMeta = abstract.getParent()
+      const abtractPos = articleMeta.getChildPosition(abstract)
+      articleMeta.insertAt(abtractPos+1, abstractEl)
+    })
+  }
+
+  deleteTranslation (translatableId, languageCode) {
+    if (translatableId === 'title-trans') {
+      this._deleteTitleTranslation(languageCode)
+    } else if (translatableId === 'abstract-trans') {
+      this._deleteAbstractTranslation(languageCode)
+    }
+  }
+
+  _deleteTitleTranslation(languageCode) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      // HACK: attribute selector with colon is invalid
+      const titles = tx.findAll('trans-title-group')
+      const titleEl = titles.find(t => t.attr('xml:lang') === languageCode)
+      titleEl.parentNode.removeChild(titleEl)
+      tx.delete(titleEl.id)
+    })
+  }
+
+  _deleteAbstractTranslation(languageCode) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      // HACK: attribute selector with colon is invalid
+      const abstracts = tx.findAll('trans-abstract')
+      const abstractEl = abstracts.find(a => a.attr('xml:lang') === languageCode)
+      abstractEl.parentNode.removeChild(abstractEl)
+      tx.delete(abstractEl.id)
+    })
   }
 
   _getTitleTranslateable() {
@@ -336,7 +383,6 @@ export default class ArticleAPI {
       this.getArticleTitle(),
       translations
     )
-
   }
 
   _getAbstractTranslateable() {

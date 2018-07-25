@@ -107,7 +107,7 @@ export default class EntityEditor extends ModelComponent {
     const el = $$('div').addClass('sc-entity-editor')
       .addClass(`sm-${model.type}`)
       .append(
-        $$('div').addClass('se-entity-header').html(
+        $$('div').addClass('se-header').html(
           api.renderEntity(model)
         )
       )
@@ -159,7 +159,7 @@ export default class EntityEditor extends ModelComponent {
     }
 
     el.append(
-      $$('div').addClass('se-entity-footer').append(
+      $$('div').addClass('se-footer').append(
         controlEl,
         $$('button').addClass('se-remove-item').append(
           $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),

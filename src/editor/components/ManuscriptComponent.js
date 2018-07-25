@@ -12,7 +12,8 @@ export default class ManuscriptComponent extends Component {
     const front = article.findChild('front')
     const FrontComponent = this.getComponent('front')
     el.append($$(FrontComponent, {
-      node: front
+      node: front,
+      disabled: this.props.disabled
     }).ref('front'))
 
     // body is optional
@@ -25,6 +26,7 @@ export default class ManuscriptComponent extends Component {
       // }))
       const BodyComponent = this.getComponent('body')
       el.append($$(BodyComponent, {
+        disabled: this.props.disabled,
         node: body
       }).ref('body'))
       // el.append($$(this.getComponent('separator'), {
@@ -36,7 +38,8 @@ export default class ManuscriptComponent extends Component {
     if (back) {
       const BackComponent = this.getComponent('back')
       el.append($$(BackComponent, {
-        node: back
+        node: back,
+        disabled: this.props.disabled
       }).ref('back'))
     }
 

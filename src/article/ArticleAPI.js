@@ -329,8 +329,11 @@ export default class ArticleAPI {
       const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
         tx.createElement('p')
       )
-      const articleMeta = tx.find('article-meta')
-      articleMeta.append(abstractEl)
+      // TODO: replace it with schema driven smartness
+      const abstract = tx.find('article-meta > abstract')
+      const articleMeta = abstract.getParent()
+      const abtractPos = articleMeta.getChildPosition(abstract)
+      articleMeta.insertAt(abtractPos+1, abstractEl)
     })
   }
 

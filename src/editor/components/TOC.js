@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, FontAwesomeIcon } from 'substance'
 
 export default class TOC extends Component {
 
@@ -43,11 +43,25 @@ export default class TOC extends Component {
       }
     }
 
+    let reproduceMode = this.context.appState.reproduce
+    let icon = reproduceMode ? 'fa-check-square-o' : 'fa-square-o'
+
+    tocEntries.append(
+      $$('button').addClass('se-toggle-reproduce se-toc-entry sm-level-1').append(
+        $$(FontAwesomeIcon, {icon:  icon }),
+        ' Reproduce'
+      ).on('click', this._toggleReproduce)
+    )
 
     let el = $$('div').addClass('sc-toc').append(
       tocEntries
     )
     return el
+  }
+
+  _toggleReproduce() {
+    this.send('toggleReproduce')
+    this.rerender()
   }
 
   getDocument() {

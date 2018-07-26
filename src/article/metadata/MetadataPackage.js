@@ -27,7 +27,7 @@ export default {
       {
         name: 'undo-redo',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'undo-redo' }
@@ -36,14 +36,14 @@ export default {
       {
         name: 'annotations',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'formatting' }
         ]
       },
       {
-        name: 'edit',
+        name: 'Add',
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',

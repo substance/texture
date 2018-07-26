@@ -78,6 +78,48 @@ export default {
     config.addLabel('add-author', {
       en: 'Add Author'
     })
+    config.addCommand('add-editor', AddEntityCommand, {
+      type: 'editor',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-editor', {
+      en: 'Add Editor'
+    })
+    config.addCommand('add-group', AddEntityCommand, {
+      type: 'group',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-group', {
+      en: 'Add Group'
+    })
+    config.addCommand('add-affiliation', AddEntityCommand, {
+      type: 'affiliation',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-affiliation', {
+      en: 'Add Affiliation'
+    })
+    config.addCommand('add-award', AddEntityCommand, {
+      type: 'award',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-award', {
+      en: 'Add Award'
+    })
+    config.addCommand('add-keyword', AddEntityCommand, {
+      type: 'keyword',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-keyword', {
+      en: 'Add Keyword'
+    })
+    config.addCommand('add-subject', AddEntityCommand, {
+      type: 'subject',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-subject', {
+      en: 'Add Subject'
+    })
 
     config.addLabel('original-translation', {
       en: 'Original'

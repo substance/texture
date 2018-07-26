@@ -1,6 +1,7 @@
 import { TextPropertyEditor } from 'substance'
 import { BasePackage, EditorBasePackage } from '../../shared'
 import EntityLabelsPackage from './EntityLabelsPackage'
+import ArticleNavPackage from '../ArticleNavPackage'
 import AddEntityCommand from './AddEntityCommand'
 
 import TextureContainerEditor from '../../shared/TextureContainerEditor'
@@ -19,6 +20,7 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
+    config.import(ArticleNavPackage)
     // TODO: register MetaDataEditor related UI stuff here
     // Note, that the model package is already loaded by ArticlePackage
     config.import(EntityLabelsPackage)
@@ -50,7 +52,16 @@ export default {
         items: [
           { type: 'command-group', name: 'add-entity' }
         ]
-      }
+      },
+      {
+        name: 'mode',
+        type: 'tool-dropdown',
+        showDisabled: false,
+        style: 'descriptive',
+        items: [
+          { type: 'command-group', name: 'switch-view' }
+        ]
+      },
       // TODO: enable this when we have a first workflow
       // which does not belong to the add-entity group
       // {

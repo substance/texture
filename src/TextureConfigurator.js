@@ -113,7 +113,7 @@ export default class TextureConfigurator extends Configurator {
 
   addViewMode (spec) {
     this.addCommand(spec.name, SwitchViewCommand, {
-      view: spec.view,
+      viewName: spec.viewName,
       commandGroup: 'switch-view'
     })
     this.addIcon(spec.name, { 'fontawesome': spec.icon })

@@ -6,8 +6,8 @@ export default class SwitchViewCommand extends Command {
     if (!state) {
       return Command.DISABLED
     }
-    let view = state.view
-    let active = (view === this.config.view)
+    let viewName = state.viewName
+    let active = (viewName === this.config.viewName)
     return {
       disabled: false,
       active
@@ -17,7 +17,7 @@ export default class SwitchViewCommand extends Command {
   execute (params, context) {
     let state = context.appState
     if (state) {
-      state.view = this.config.view
+      state.viewName = this.config.viewName
       state.propagate()
     }
   }

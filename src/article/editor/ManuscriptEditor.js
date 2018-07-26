@@ -26,7 +26,9 @@ export default class ManuscriptEditor extends Component {
 
   _initialize (props) {
     const { articleSession, config, archive } = props
-    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this)
+    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
+      viewName: this.props.viewName
+    })
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
     this.editorSession = editorSession
     this.api = api
@@ -38,9 +40,15 @@ export default class ManuscriptEditor extends Component {
       tocProvider: this.tocProvider,
       urlResolver: archive
     })
+    this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
 
     // initial reduce etc.
     this.editorSession.initialize()
+  }
+
+  _updateViewName() {
+    let appState = this.context.appState
+    this.send('updateViewName', appState.viewName)
   }
 
   didMount () {

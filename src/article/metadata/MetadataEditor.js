@@ -6,6 +6,7 @@ import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
 import EntityEditor from './EntityEditor'
+import CardComponent from './CardComponent'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
@@ -153,9 +154,11 @@ export default class MetadataEditor extends Component {
       } else if (section.modelType === 'article-record') {
         model = api.getEntity('article-record')
         collectionsEl.append(
-          $$(EntityEditor, { model: model })
-            .attr({id: model.id})
-            .ref(model.id)
+          $$(CardComponent).append(
+            $$(EntityEditor, { model: model })
+              .attr({id: model.id})
+              .ref(model.id)
+          )
         )
       }
     })

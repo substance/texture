@@ -1,4 +1,4 @@
-import { BasePackage, ToggleTool } from '../shared'
+import { BasePackage } from '../shared'
 
 import ArticleConfigurator from './ArticleConfigurator'
 
@@ -10,7 +10,6 @@ import ReaderPackage from './reader/ReaderPackage'
 import ArticlePanel from './ArticlePanel'
 import ManuscriptEditor from './editor/ManuscriptEditor'
 import MetadataEditor from './metadata/MetadataEditor'
-import SwitchViewCommand from './SwitchViewCommand'
 
 export default {
   name: 'Article',
@@ -40,30 +39,46 @@ export default {
     config.addToolPanel('nav-bar', [
       {
         name: 'views',
-        type: 'tool-group',
+        type: 'tool-dropdown',
         showDisabled: true,
-        style: 'minimal',
+        style: 'descriptive',
         items: [
           { type: 'command-group', name: 'switch-view' }
         ]
       }
     ])
 
-    config.addCommand('open-manuscript', SwitchViewCommand, {
+    // config.addCommand('open-manuscript', SwitchViewCommand, {
+    //   view: 'manuscript',
+    //   commandGroup: 'switch-view'
+    // })
+    // config.addCommand('open-metadata', SwitchViewCommand, {
+    //   view: 'metadata',
+    //   commandGroup: 'switch-view'
+    // })
+
+    config.addViewMode({
+      name: 'open-manuscript',
       view: 'manuscript',
-      commandGroup: 'switch-view'
+      commandGroup: 'switch-view',
+      icon: 'fa-align-left',
+      label: 'Open Manuscript'
     })
-    config.addCommand('open-metadata', SwitchViewCommand, {
+
+    config.addViewMode({
+      name: 'open-metadata',
       view: 'metadata',
-      commandGroup: 'switch-view'
+      commandGroup: 'switch-view',
+      icon: 'fa-th-list',
+      label: 'Open Metadata'
     })
 
-    config.addTool('open-manuscript', ToggleTool)
-    config.addLabel('open-manuscript', 'Open Manuscript')
-    config.addIcon('open-manuscript', { 'fontawesome': 'fa-align-left' })
+    // config.addTool('open-manuscript', ToggleTool)
+    // config.addLabel('open-manuscript', 'Open Manuscript')
+    // config.addIcon('open-manuscript', { 'fontawesome': 'fa-align-left' })
 
-    config.addTool('open-metadata', ToggleTool)
-    config.addLabel('open-metadata', 'Open Metadata')
-    config.addIcon('open-metadata', { 'fontawesome': 'fa-th-list' })
+    // config.addTool('open-metadata', ToggleTool)
+    // config.addLabel('open-metadata', 'Open Metadata')
+    // config.addIcon('open-metadata', { 'fontawesome': 'fa-th-list' })
   }
 }

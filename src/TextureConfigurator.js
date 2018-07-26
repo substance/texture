@@ -1,4 +1,5 @@
 import { Configurator, merge, isString, flatten, includes, forEach } from 'substance'
+import SwitchViewCommand from './article/SwitchViewCommand'
 
 export default class TextureConfigurator extends Configurator {
   constructor () {
@@ -108,6 +109,18 @@ export default class TextureConfigurator extends Configurator {
     let toolPanel = toolPanelSpec.map(itemSpec => this._compileToolPanelItem(itemSpec))
     this._compiledToolPanels[name] = toolPanel
     return toolPanel
+  }
+
+  addViewMode (spec) {
+    this.addCommand(spec.name, SwitchViewCommand, {
+      view: spec.view,
+      commandGroup: 'switch-view'
+    })
+    this.addIcon(spec.name, { 'fontawesome': spec.icon })
+    this.addLabel(spec.name, spec.label)
+    if (spec.accelerator) {
+      this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+    }
   }
 
   getCommands () {

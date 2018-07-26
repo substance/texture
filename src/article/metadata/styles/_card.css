@@ -1,8 +1,6 @@
 .sc-card {
   max-width: 800px;
-  border: 1px solid transparent;
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
-  padding: 20px;
   margin: 20px 0;
   --label-font-size: 12px;
   --input-font-size: 14px;
@@ -14,6 +12,11 @@
 
 .sc-card > .sm-warning {
   border: 1px solid var(--warning-color);
+}
+
+.sc-card > * {
+  padding: 20px;
+  border: 1px solid transparent;
 }
 
 .sc-card > * > * {

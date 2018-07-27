@@ -1,3 +1,8 @@
+/* TODO: why is this selector prefixed with .sc-article-panel? */
+.sc-article-panel .sc-editor {
+  flex-grow: 1;
+}
+
 .sc-editor {
   font-size: 17px;
   font-family: Avenir, Helvetica;

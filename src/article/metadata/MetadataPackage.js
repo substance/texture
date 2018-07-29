@@ -84,6 +84,7 @@ export default {
 
     config.addCommand('add-author', AddEntityCommand, {
       type: 'author',
+      collection: 'authors',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-author', {
@@ -91,6 +92,7 @@ export default {
     })
     config.addCommand('add-editor', AddEntityCommand, {
       type: 'editor',
+      collection: 'editors',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-editor', {
@@ -98,6 +100,7 @@ export default {
     })
     config.addCommand('add-group', AddEntityCommand, {
       type: 'group',
+      collection: 'groups',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-group', {
@@ -105,6 +108,7 @@ export default {
     })
     config.addCommand('add-affiliation', AddEntityCommand, {
       type: 'affiliation',
+      collection: 'organisations',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-affiliation', {
@@ -112,6 +116,7 @@ export default {
     })
     config.addCommand('add-award', AddEntityCommand, {
       type: 'award',
+      collection: 'awards',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-award', {
@@ -119,6 +124,7 @@ export default {
     })
     config.addCommand('add-keyword', AddEntityCommand, {
       type: 'keyword',
+      collection: 'keywords',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-keyword', {
@@ -126,6 +132,7 @@ export default {
     })
     config.addCommand('add-subject', AddEntityCommand, {
       type: 'subject',
+      collection: 'subjects',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-subject', {

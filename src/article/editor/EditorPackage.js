@@ -571,7 +571,7 @@ export default {
         name: 'mode',
         type: 'tool-dropdown',
         showDisabled: false,
-        style: 'descriptive',
+        style: 'full',
         items: [
           { type: 'command-group', name: 'switch-view' }
         ]

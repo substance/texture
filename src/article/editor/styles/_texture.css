@@ -27,3 +27,24 @@
 .sc-article-panel .sc-editor {
   flex-grow: 1;
 }
+
+.sc-article-panel .sc-toolbar .se-active-tools {
+  position: relative;
+}
+
+.sc-article-panel .sc-toolbar .se-active-tools .sm-mode {
+  position: absolute;
+  left: 650px;
+  background: #f0f0f0;
+  border-radius: 2px;
+}
+
+.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .se-label {
+  margin: 0px 5px 0px 15px;
+}
+
+.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),
+.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light.sm-active {
+  background: inherit;
+  color: inherit;
+}

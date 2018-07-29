@@ -121,8 +121,11 @@ export default class ArticleAPI {
     const orgModel = this.addEntity(organisation, 'organisation')
     articleSession.transaction(tx => {
       const affEl = tx.createElement('aff').attr('rid', orgModel.id)
-      const affGroup = tx.find('aff-group')
-      affGroup.append(affEl)
+      // TODO: replace it with schema driven smartness
+      const aff = tx.find('article-meta > aff')
+      const articleMeta = aff.getParent()
+      const affPos = articleMeta.getChildPosition(aff)
+      articleMeta.insertAt(affPos+1, affEl)
       tx.selection = null
     })
     return orgModel

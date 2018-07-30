@@ -37,7 +37,6 @@ export default class ConvertArticleMeta {
   }
 }
 
-
 function _exportKeywords(dom, api) {
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
@@ -48,12 +47,12 @@ function _exportKeywords(dom, api) {
   const keywords = keywordIdx.map(kwdId => pubMetaDb.get(kwdId))
   const keywordLangs = [...new Set(keywords.map(item => item.language))]
   keywordLangs.forEach(lang => {
-    const kwdGroup = $$('kwd-group').setAttribute('xml-lang', lang)
+    const kwdGroup = $$('kwd-group').setAttribute('xml:lang', lang)
     // NOTE: this function is only working if the xml is valid currently, don't use it during invalid state
     insertChildAtFirstValidPos(articleMeta, kwdGroup)
   })
   keywords.forEach(kwd => {
-    const kwdGroup = dom.find(`article-meta > kwd-group[xml-lang="${kwd.language}"]`)
+    const kwdGroup = dom.find(`article-meta > kwd-group[xml\\:lang="${kwd.language}"]`)
     const newKwdEl = KeywordConverter.export($$, kwd, pubMetaDb)
     kwdGroup.append(newKwdEl)
   })
@@ -68,21 +67,21 @@ function _exportSubjects(dom, api) {
   let articleCategories = $$('article-categories')
   insertChildAtFirstValidPos(articleMeta, articleCategories)
 
+  // debugger
   // Export Subjects
   const subjectIdx = pubMetaDb.findByType('_subject')
   const subjects = subjectIdx.map(subjectId => pubMetaDb.get(subjectId))
   const subjectLangs = [...new Set(subjects.map(item => item.language))]
   subjectLangs.forEach(lang => {
-    const subjGroup = $$('subj-group').setAttribute('xml-lang', lang)
+    const subjGroup = $$('subj-group').setAttribute('xml:lang', lang)
     articleCategories.append(subjGroup)
   })
-  subjects.forEach(kwd => {
-    const kwdGroup = dom.find(`article-meta > kwd-group[xml-lang="${kwd.language}"]`)
-    const newKwdEl = KeywordConverter.export($$, kwd, pubMetaDb)
-    kwdGroup.append(newKwdEl)
+  subjects.forEach(subject => {
+    const subjGroup = articleCategories.find(`subj-group[xml\\:lang="${subject.language}"]`)
+    const newSubjectEl = SubjectConverter.export($$, subject, pubMetaDb)
+    subjGroup.append(newSubjectEl)
   })
 }
-
 
 function _importKeywordsOrSubjects(dom, api, selector, Converter) {
   const pubMetaDb = api.pubMetaDb
@@ -92,24 +91,6 @@ function _importKeywordsOrSubjects(dom, api, selector, Converter) {
     Converter.import(kwd, pubMetaDb)
   })
 }
-
-// function _importKeywords(dom, api) {
-//   const pubMetaDb = api.pubMetaDb
-//   const keywords = dom.findAll('article-meta > kwd-group > kwd')
-//   // Convert <kwd> elements to keywords entities
-//   keywords.forEach(kwd => {
-//     KeywordConverter.import(kwd, pubMetaDb)
-//   })
-// }
-
-// function _importSubjects(dom, api) {
-//   const pubMetaDb = api.pubMetaDb
-//   const subjects = dom.findAll('article-meta subj-group > subject')
-//   // Convert <subject> elements to _subject entities
-//   subjects.forEach(subject => {
-//     SubjectConverter.import(subject, pubMetaDb)
-//   })
-// }
 
 
 function _importArticleRecord(dom, api) {

@@ -158,6 +158,7 @@ export default {
     config.addLabel('footnotes', 'Footnotes')
     config.addLabel('groups', 'Groups')
     config.addLabel('keywords', 'Keywords')
+    config.addLabel('subjects', 'Subjects')
     config.addLabel('organisations', 'Organisations')
     config.addLabel('references', 'References')
     config.addLabel('translateables', 'Translations')

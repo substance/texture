@@ -18,11 +18,11 @@ export default class ReferenceCollectionModel {
     return result
   }
 
-  addItem(item) { // eslint-disable-line no-unused-vars
-
+  addItem(item) {
+    this._api.addReference(item, item.type)
   }
 
-  removeItem(item) { // eslint-disable-line no-unused-vars
+  removeItem(item) {
     this._api.deleteReference(item.id)
   }
 

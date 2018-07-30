@@ -219,6 +219,18 @@ export default class ArticleAPI {
     return model
   }
 
+  addReference(reference = {}, type) {
+    const articleSession = this.articleSession
+    const referenceModel = this.addEntity(reference, type)
+    articleSession.transaction(tx => {
+      const refEl = tx.createElement('ref').attr('rid',referenceModel.id)
+      const refList = tx.find('ref-list')
+      refList.append(refEl)
+      tx.selection = null
+    })
+    return referenceModel
+  }
+
   deleteReference(refId) {
     const article = this.getArticle()
     const articleSession = this.articleSession

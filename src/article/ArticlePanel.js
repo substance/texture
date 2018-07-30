@@ -3,7 +3,7 @@ import {
   AppState, createComponentContext
 } from '../shared'
 
-const DEFAULT_VIEW = 'manuscript'
+const DEFAULT_VIEW = 'metadata'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {

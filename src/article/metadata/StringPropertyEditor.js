@@ -19,5 +19,5 @@ export default class StringPropertyEditor extends Component {
 }
 
 StringPropertyEditor.matches = function(property) {
-  return property.type === 'string' && property.name !== 'id'
+  return property.type === 'string' && property.name !== 'id' && property.name !== 'language'
 }

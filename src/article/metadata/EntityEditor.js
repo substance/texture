@@ -123,7 +123,6 @@ export default class EntityEditor extends ModelComponent {
       const property = propertyState.property
       if (propertyState.hidden && !fullMode) return
       const warnings = propertyState.warnings.map(w => w.message)
-
       const PropertyEditorClass = this._getPropertyEditorClass(property)
       if (PropertyEditorClass) {
         el.append(

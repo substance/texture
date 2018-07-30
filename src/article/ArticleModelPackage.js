@@ -34,6 +34,7 @@ import StringPropertyEditor from './metadata/StringPropertyEditor'
 import BooleanPropertyEditor from './metadata/BooleanPropertyEditor'
 import ReferencePropertyEditor from './metadata/ReferencePropertyEditor'
 import UniqueReferencePropertyEditor from './metadata/UniqueReferencePropertyEditor'
+import TranslationPropertyEditor from './metadata/TranslationPropertyEditor'
 
 import LanguagesPackage from './LanguagesPackage'
 
@@ -103,6 +104,7 @@ export default {
     config.addPropertyEditor(StringPropertyEditor)
     config.addPropertyEditor(ReferencePropertyEditor)
     config.addPropertyEditor(UniqueReferencePropertyEditor)
+    config.addPropertyEditor(TranslationPropertyEditor)
 
     // Experimental
     config.setLabelGenerator('references', {

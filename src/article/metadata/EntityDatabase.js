@@ -331,7 +331,8 @@ Subject.schema = {
   // HACK: trying to merge EntitDb into Article model, avoiding type collision
   type: '_subject',
   name: { type: 'string', optional: false, default: '' },
-  category: { type: 'string', optional: false, default: '' }
+  category: { type: 'string', optional: false, default: '' },
+  language: { type: 'string', optional: false, default: '' }
 }
 
 export default class EntityDatabase extends Document {

@@ -139,7 +139,8 @@ export const SubjectConverter = {
       // HACK: trying to merge EntitDb into Article model, avoiding type collision
       type: '_subject',
       name: el.textContent,
-      category: el.getAttribute('content-type')
+      category: el.getAttribute('content-type'),
+      language: el.getParent().getAttribute('xml:lang')
     }
     const entity = pubMetaDb.create(node)
 

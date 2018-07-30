@@ -14,6 +14,6 @@ export default class SubjectCollectionModel extends DefaultCollectionModel {
   }
 
   _getCollectionType() {
-    return 'subject'
+    return '_subject'
   }
 }

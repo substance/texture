@@ -758,7 +758,8 @@ export default {
   'thesis': _delegate(thesisRenderer),
   'webpage': _delegate(webpageRenderer),
   'keyword': _delegate(keywordRenderer),
-  'subject': _delegate(subjectRenderer),
+  // HACK: merging entities into article model, avoiding type collision
+  '_subject': _delegate(subjectRenderer),
   'article-record': _delegate(articleRecordRenderer)
 }
 

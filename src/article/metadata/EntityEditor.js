@@ -79,7 +79,7 @@ const REQUIRED_PROPERTIES = {
   'keyword': {
     'name': true
   },
-  'subject': {
+  '_subject': {
     'name': true
   },
   'article-record': {

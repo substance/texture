@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import {
-  Managed, AppState, createComponentContext, CommandManager
+  AppState, createComponentContext
 } from '../shared'
 
 const DEFAULT_VIEW = 'manuscript'
@@ -8,24 +8,25 @@ const DEFAULT_VIEW = 'manuscript'
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
-
     this._initialize(this.props, this.state)
-
     this.handleActions({
-      executeCommand: this._executeCommand
+      'updateViewName': this._updateViewName
     })
   }
 
-  _initialize (props, state) {
+  _updateViewName(viewName) {
+    this.context.appState.viewName = viewName
+    this.rerender()
+  }
+
+  _initialize (props) {
     const archive = props.archive
     const config = props.config
-    this.commandManager = new CommandManager(state, ['view'], config.getCommands(), this)
+    
     this.context = Object.assign(createComponentContext(config), {
       urlResolver: archive,
       appState: this.state
     })
-    // initial reduce step
-    this.commandManager.reduce()
   }
 
   getInitialState () {
@@ -60,42 +61,28 @@ export default class ArticlePanel extends Component {
   render ($$) {
     let el = $$('div').addClass('sc-article-panel')
     el.append(
-      this._renderNavbar($$),
       this._renderContent($$)
     )
     return el
   }
 
-  _renderNavbar ($$) {
-    const config = this.props.config
-    const Toolbar = this.getComponent('toolbar')
-    let el = $$('div').addClass('se-nav-bar')
-    el.append(
-      $$(Managed(Toolbar), {
-        toolPanel: config.getToolPanel('nav-bar'),
-        bindings: [
-          'commandStates'
-        ]
-      }).ref('navBar')
-    )
-    return el
-  }
 
   _renderContent ($$) {
     const props = this.props
-    const view = this.state.view
+    const viewName = this.state.viewName
     const api = this.api
     const archive = props.archive
     const articleSession = props.documentSession
-    const config = props.config.getConfiguration(view)
+    const config = props.config.getConfiguration(viewName)
 
     let ContentComponent
-    if (view === 'manuscript') {
+    if (viewName === 'manuscript') {
       ContentComponent = this.getComponent('manuscript-editor')
-    } else if (this.state.view === 'metadata') {
+    } else if (viewName === 'metadata') {
       ContentComponent = this.getComponent('metadata-editor')
     }
     return $$(ContentComponent, {
+      viewName,
       api,
       archive,
       config,
@@ -103,14 +90,9 @@ export default class ArticlePanel extends Component {
     })
   }
 
-  _executeCommand (name, params) {
-    this.commandManager.executeCommand(name, params)
-  }
-
   _createAppState (config) { // eslint-disable-line no-unused-vars
     const appState = new AppState({
-      view: DEFAULT_VIEW,
-      commandStates: {}
+      viewName: DEFAULT_VIEW
     })
     appState.addObserver(['view'], this.rerender, this, { stage: 'render' })
     return appState

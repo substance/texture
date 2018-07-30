@@ -1,6 +1,7 @@
 import { TextPropertyEditor } from 'substance'
 import { BasePackage, EditorBasePackage } from '../../shared'
 import EntityLabelsPackage from './EntityLabelsPackage'
+import ArticleNavPackage from '../ArticleNavPackage'
 import AddEntityCommand from './AddEntityCommand'
 
 import TextureContainerEditor from '../../shared/TextureContainerEditor'
@@ -19,6 +20,7 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
+    config.import(ArticleNavPackage)
     // TODO: register MetaDataEditor related UI stuff here
     // Note, that the model package is already loaded by ArticlePackage
     config.import(EntityLabelsPackage)
@@ -27,7 +29,7 @@ export default {
       {
         name: 'undo-redo',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'undo-redo' }
@@ -36,21 +38,30 @@ export default {
       {
         name: 'annotations',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'formatting' }
         ]
       },
       {
-        name: 'edit',
+        name: 'Add',
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'add-entity' }
         ]
-      }
+      },
+      {
+        name: 'mode',
+        type: 'tool-dropdown',
+        showDisabled: false,
+        style: 'full',
+        items: [
+          { type: 'command-group', name: 'switch-view' }
+        ]
+      },
       // TODO: enable this when we have a first workflow
       // which does not belong to the add-entity group
       // {
@@ -73,10 +84,59 @@ export default {
 
     config.addCommand('add-author', AddEntityCommand, {
       type: 'author',
+      collection: 'authors',
       commandGroup: 'add-entity'
     })
     config.addLabel('add-author', {
       en: 'Add Author'
+    })
+    config.addCommand('add-editor', AddEntityCommand, {
+      type: 'editor',
+      collection: 'editors',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-editor', {
+      en: 'Add Editor'
+    })
+    config.addCommand('add-group', AddEntityCommand, {
+      type: 'group',
+      collection: 'groups',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-group', {
+      en: 'Add Group'
+    })
+    config.addCommand('add-affiliation', AddEntityCommand, {
+      type: 'affiliation',
+      collection: 'organisations',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-affiliation', {
+      en: 'Add Affiliation'
+    })
+    config.addCommand('add-award', AddEntityCommand, {
+      type: 'award',
+      collection: 'awards',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-award', {
+      en: 'Add Award'
+    })
+    config.addCommand('add-keyword', AddEntityCommand, {
+      type: 'keyword',
+      collection: 'keywords',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-keyword', {
+      en: 'Add Keyword'
+    })
+    config.addCommand('add-subject', AddEntityCommand, {
+      type: 'subject',
+      collection: 'subjects',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-subject', {
+      en: 'Add Subject'
     })
 
     config.addLabel('original-translation', {

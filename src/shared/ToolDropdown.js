@@ -55,6 +55,16 @@ export default class ToolDropdown extends ToolGroup {
           // HACK: this allows tool buttons to render labels with template strings
           commandState: commandStates[toggleName]
         }).on('click', this._toggleChoices)
+      } else if (style === 'full') {
+        toggleButton = $$(Button, {
+          icon: toggleName,
+          label: toggleName,
+          dropdown: true,
+          active: showChoices,
+          theme: theme,
+          // HACK: this allows tool buttons to render labels with template strings
+          commandState: commandStates[toggleName]
+        }).on('click', this._toggleChoices)
       } else {
         throw new Error('Style ' + this.props.style + ' not supported')
       }

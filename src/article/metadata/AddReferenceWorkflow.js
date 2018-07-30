@@ -44,7 +44,9 @@ export default class AddReferenceWorkflow extends Component {
     return el
   }
 
-  _onAdd (item) { // eslint-disable-line no-unused-vars
-    console.error('FIXME: implement add reference')
+  _onAdd (type) {
+    const api = this.context.api
+    const collection = api.getModel('references')
+    collection.addItem({type: type})
   }
 }

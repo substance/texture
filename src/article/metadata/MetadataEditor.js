@@ -6,6 +6,7 @@ import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
 import EntityEditor from './EntityEditor'
+import CardComponent from './CardComponent'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
@@ -40,8 +41,10 @@ export default class MetadataEditor extends Component {
   _initialize (props) {
     const { articleSession, config, archive } = props
     const editorSession = new ArticleEditorSession(
-      articleSession.getDocument(), config, this,
-      { workflowId: null }
+      articleSession.getDocument(), config, this, {
+        workflowId: null,
+        viewName: this.props.viewName
+      }
     )
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
     this.api = api
@@ -54,6 +57,12 @@ export default class MetadataEditor extends Component {
     // initial reduce etc.
     this.editorSession.initialize()
     this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
+    this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
+  }
+
+  _updateViewName() {
+    let appState = this.context.appState
+    this.send('updateViewName', appState.viewName)
   }
 
   dispose () {
@@ -153,9 +162,11 @@ export default class MetadataEditor extends Component {
       } else if (section.modelType === 'article-record') {
         model = api.getEntity('article-record')
         collectionsEl.append(
-          $$(EntityEditor, { model: model })
-            .attr({id: model.id})
-            .ref(model.id)
+          $$(CardComponent).append(
+            $$(EntityEditor, { model: model })
+              .attr({id: model.id})
+              .ref(model.id)
+          )
         )
       }
     })

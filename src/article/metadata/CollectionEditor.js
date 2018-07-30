@@ -1,4 +1,4 @@
-import { Component, FontAwesomeIcon } from 'substance'
+import { Component } from 'substance'
 import CardComponent from './CardComponent'
 
 export default class CollectionEditor extends Component {
@@ -16,13 +16,7 @@ export default class CollectionEditor extends Component {
 
     el.append(
       $$('div').addClass('se-heading').append(
-        $$('div').addClass('se-header').append(label),
-        $$('button').addClass('se-add-value')
-          .append(
-            $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
-            'Add ' + label
-          )
-          .on('click', this._addCollectionItem)
+        $$('div').addClass('se-header').append(label)
       )
     )
 
@@ -45,11 +39,6 @@ export default class CollectionEditor extends Component {
 
   _getItems() {
     return this.props.model.getItems()
-  }
-
-  _addCollectionItem() {
-    this.props.model.addItem()
-    this.rerender()
   }
 
   _removeCollectionItem(item) {

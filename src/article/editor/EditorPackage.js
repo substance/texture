@@ -79,6 +79,7 @@ import {
 } from './TableCommands'
 import InsertTableTool from './InsertTableTool'
 import SchemaAwareToggleListCommand from './SchemaAwareToggleListCommand'
+import ArticleNavPackage from '../ArticleNavPackage'
 
 export default {
   name: 'ManscruptEditor',
@@ -87,6 +88,7 @@ export default {
     config.import(EditorBasePackage)
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
+    config.import(ArticleNavPackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands
@@ -157,7 +159,6 @@ export default {
     config.addComponent('table-wrap-preview', TableFigPreview)
 
     // Commands
-
     config.addCommand('toggle-abstract', ToggleContentSection, {
       selector: '.sc-abstract',
       commandGroup: 'toggle-content-section'
@@ -490,17 +491,7 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
-    config.addToolPanel('nav-bar', [
-      {
-        name: 'views',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'switch-view' }
-        ]
-      }
-    ])
+
 
     config.addToolPanel('toolbar', [
       {
@@ -575,7 +566,18 @@ export default {
           { type: 'command-group', name: 'toggle-content-section' },
           { type: 'command-group', name: 'view' }
         ]
-      }
+      },
+      {
+        name: 'mode',
+        type: 'tool-dropdown',
+        showDisabled: false,
+        style: 'full',
+        items: [
+          { type: 'command-group', name: 'switch-view' }
+        ]
+      },
+      
+      
     ])
 
     config.addToolPanel('main-overlay', [

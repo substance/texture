@@ -9,7 +9,7 @@ import TextNodeComponent from '../editor/TextNodeComponent'
 
 import EntityEditor from './EntityEditor'
 import TranslateableEditor from './TranslateableEditor'
-import FigureComponent from '../reader/FigureComponent'
+import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 

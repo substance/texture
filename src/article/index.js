@@ -1,7 +1,6 @@
 export * from './converter'
 export * from './editor'
 export * from './metadata'
-export * from './reader'
 export * from './shared'
 
 export { default as ArticleEditorSession } from './ArticleEditorSession'

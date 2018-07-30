@@ -35,7 +35,7 @@ import BreakComponent from './BreakComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import EditorsListComponent from './EditorsListComponent'
-import ExtLinkComponent from '../reader/ExtLinkComponent'
+import ExtLinkComponent from '../shared/ExtLinkComponent'
 import FigComponent from './FigComponent'
 import CaptionComponent from './CaptionComponent'
 import DispQuoteComponent from './DispQuoteComponent'
@@ -576,8 +576,8 @@ export default {
           { type: 'command-group', name: 'switch-view' }
         ]
       },
-      
-      
+
+
     ])
 
     config.addToolPanel('main-overlay', [

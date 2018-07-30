@@ -1,7 +1,3 @@
-.sc-texture {
-  height: 100%;
-}
-
 .sc-article-panel {
   display: flex;
   flex-flow: row nowrap;

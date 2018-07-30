@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, FontAwesomeIcon } from 'substance'
 
 export default class SelectInput extends Component {
   didMount () {
@@ -9,46 +9,69 @@ export default class SelectInput extends Component {
     this.context.appState.removeObserver(this)
   }
 
-  render($$) {
-    const value = this.props.value
+  render ($$) {
+    const selected = this.props.value
     const options = this.props.availableOptions
+    const optionsMap = options.reduce((map,opt)=>{map[opt.id]=opt.text;return map;},{})
 
+    const showValues = this.context.appState.overlayId === this.getId()
+    const isEmptyValue = selected === undefined
     const el = $$('div').addClass('sc-select-input')
-    const selectEl = $$('select').addClass('se-select')
-      .ref('input')
-      .on('change', this._onChange)
+      .on('click', this._toggleDropdown)
 
+    if(isEmptyValue) {
+      el.append(this.getLabel('select-default-value'))
+    } else {
+      el.append(
+        optionsMap[selected],
+        $$(FontAwesomeIcon, { icon: 'fa-remove' }).addClass('se-icon')
+          .on('click', this._removeValue)
+      )
+    }
+    if (isEmptyValue) el.addClass('sm-empty')
 
-    const defaultOpt = $$('option').attr({value: false})
-      .append(this.getLabel('select-default-value'))
-
-    if(!value) {
-      defaultOpt.attr({selected: 'selected'})
+    if (showValues && !(!isEmptyValue && options.length === 1)) {
+      el.append(
+        this.renderValues($$, options)
+      )
     }
 
-    selectEl.append(defaultOpt)
-
-    options.forEach(opt => {
-      const optEl = $$('option').attr({value: opt.id}).append(opt.text)
-      if(opt.id === value) optEl.attr({selected: 'selected'})
-      selectEl.append(optEl)
-    })
-
-    el.append(selectEl)
-
-    if(this.props.warning) el.addClass('sm-warning')
+    if (this.props.warning) el.addClass('sm-warning')
 
     return el
   }
 
-  _onChange() {
+  renderValues ($$, options) {
+    const label = this.props.name
+    const value = this.props.value
+    const editorEl = $$('div').addClass('se-select-editor').append(
+      $$('div').addClass('se-arrow'),
+      $$('div').addClass('se-select-label').append('Choose ' + label)
+    )
+    options.forEach(opt => {
+      if(value !== opt.id) {
+        editorEl.append(
+          $$('div').addClass('se-select-item').append(opt.text).ref(opt.id)
+            .on('click', this._setValue.bind(this, opt.id))
+        )
+      }
+    })
+    return editorEl
+  }
+
+  _setValue(value) {
     const name = this.props.name
-    const value = this._getValue()
     this.send('set-value', name, value)
   }
 
-  _getValue() {
-    const input = this.refs.input
-    return input.val()
+  _removeValue (event) {
+    event.stopPropagation()
+    const name = this.props.name
+    this.send('set-value', name, undefined)
+  }
+
+  _toggleDropdown (event) {
+    event.stopPropagation()
+    this.send('toggleOverlay', this.getId())
   }
 }

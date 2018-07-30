@@ -187,7 +187,9 @@ export default class PersistedDocumentArchive extends EventEmitter {
     //   console.info('Save: no pending changes.')
     //   return Promise.resolve()
     // }
-    return this._save(this._archiveId)
+    this.buffer._isDirty["manuscript"] = true
+    let result = this._save(this._archiveId)
+    return result
   }
 
   /*

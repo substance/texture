@@ -34,8 +34,6 @@ export default class SelectInput extends Component {
       selectEl.append(optEl)
     })
 
-    selectEl.on('click', this._onClick, this)
-
     el.append(selectEl)
 
     if(this.props.warning) el.addClass('sm-warning')
@@ -47,11 +45,6 @@ export default class SelectInput extends Component {
     const name = this.props.name
     const value = this._getValue()
     this.send('set-value', name, value)
-  }
-
-  _onClick (event) {
-    event.stopPropagation()
-    this.send('toggleOverlay', this.getId())
   }
 
   _getValue() {

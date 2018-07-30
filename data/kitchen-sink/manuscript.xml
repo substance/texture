@@ -4,12 +4,18 @@
   <front id="front-1">
     <article-meta id="article-meta-1">
       <article-categories>
-        <subj-group>
+        <subj-group xml:lang="en">
           <subject content-type="display-channel">Research Article</subject>
           <subject content-type="heading">Computational and Systems Biology</subject>
           <subject content-type="heading">Epidemiology and Global Health</subject>
         </subj-group>
+        <subj-group xml:lang="es">
+          <subject content-type="display-channel">Artículo de investigación</subject>
+          <subject content-type="heading">Biología computacional y de sistemas</subject>
+          <subject content-type="heading">Epidemiología y salud global</subject>
+        </subj-group>
       </article-categories>
+
       <title-group id="title-group-1">
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
 				<trans-title-group xml:lang="es">

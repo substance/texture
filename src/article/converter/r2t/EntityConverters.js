@@ -143,12 +143,11 @@ export const SubjectConverter = {
       language: el.getParent().getAttribute('xml:lang')
     }
     const entity = pubMetaDb.create(node)
-
     return entity.id
   },
 
   export($$, node) {
-    return _createTextElement($$, node.name, 'subject', {'content-type': node.category})
+    return _createTextElement($$, node.name, 'subject', { 'content-type': node.category })
   }
 }
 

@@ -181,11 +181,15 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   save() {
-    if (!this.buffer.hasPendingChanges()) {
-      console.info('Save: no pending changes.')
-      return Promise.resolve()
-    }
-    return this._save(this._archiveId)
+    // HACK: we skip checking if there are pending changes,
+    // because of some restructuring buffer.hasPendingChanges() is not working atm
+    // if (!this.buffer.hasPendingChanges()) {
+    //   console.info('Save: no pending changes.')
+    //   return Promise.resolve()
+    // }
+    this.buffer._isDirty["manuscript"] = true
+    let result = this._save(this._archiveId)
+    return result
   }
 
   /*

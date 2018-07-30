@@ -134,7 +134,7 @@ export default class EntityEditor extends ModelComponent {
               model,
               property,
               warning: warnings.length > 0
-            }).ref(property.name)
+            }) // .ref(property.name) HACK: we make sure TextInputs are rerendered undo/redo
           )
         )
       }

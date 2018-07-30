@@ -64,7 +64,8 @@ export default class SelectInput extends Component {
     this.send('set-value', name, value)
   }
 
-  _removeValue() {
+  _removeValue (event) {
+    event.stopPropagation()
     const name = this.props.name
     this.send('set-value', name, undefined)
   }

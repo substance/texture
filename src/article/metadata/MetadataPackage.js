@@ -29,7 +29,7 @@ export default {
       {
         name: 'undo-redo',
         type: 'tool-group',
-        showDisabled: false,
+        showDisabled: true,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'undo-redo' }

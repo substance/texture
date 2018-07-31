@@ -5,7 +5,8 @@ import { ElementCitationConverter } from './EntityConverters'
 */
 export default class ConvertRef {
   import(dom, api) {
-    let refs = dom.findAll('ref')
+    let refList = dom.find('ref-list')
+    let refs = refList.findAll('ref')
     const pubMetaDb = api.pubMetaDb
     refs.forEach(refEl => {
 
@@ -16,11 +17,10 @@ export default class ConvertRef {
           el: refEl
         })
       } else {
-        let entityId
         let pubType = elementCitation.attr('publication-type')
         let validTypes = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
         if (validTypes.includes(pubType)) {
-          entityId = ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
+          ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
         } else {
           console.error(`Publication type ${pubType} not found`)
           api.error({
@@ -28,10 +28,9 @@ export default class ConvertRef {
             el: elementCitation
           })
         }
-        refEl.attr('rid', entityId)
-        refEl.empty()
       }
     })
+    refList.empty()
   }
 
   export(dom, api) {

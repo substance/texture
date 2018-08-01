@@ -43,11 +43,11 @@ export default class ConvertArticleMeta {
 function _exportKeywords(dom, api) {
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
-  const pubMetaDb = api.pubMetaDb
+  const doc = api.doc
 
   // Export Keywords
-  const keywordIdx = pubMetaDb.findByType('keyword')
-  const keywords = keywordIdx.map(kwdId => pubMetaDb.get(kwdId))
+  const keywordIdx = doc.findByType('keyword')
+  const keywords = keywordIdx.map(kwdId => doc.get(kwdId))
   const keywordLangs = [...new Set(keywords.map(item => item.language))]
   keywordLangs.forEach(lang => {
     const kwdGroup = $$('kwd-group').setAttribute('xml:lang', lang)
@@ -56,7 +56,7 @@ function _exportKeywords(dom, api) {
   })
   keywords.forEach(kwd => {
     const kwdGroup = dom.find(`article-meta > kwd-group[xml\\:lang="${kwd.language}"]`)
-    const newKwdEl = KeywordConverter.export($$, kwd, pubMetaDb)
+    const newKwdEl = KeywordConverter.export($$, kwd, doc)
     kwdGroup.append(newKwdEl)
   })
 }
@@ -65,14 +65,14 @@ function _exportKeywords(dom, api) {
 function _exportSubjects(dom, api) {
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
-  const pubMetaDb = api.pubMetaDb
+  const doc = api.doc
 
   let articleCategories = $$('article-categories')
   insertChildAtFirstValidPos(articleMeta, articleCategories)
 
   // Export Subjects
-  const subjectIdx = pubMetaDb.findByType('_subject')
-  const subjects = subjectIdx.map(subjectId => pubMetaDb.get(subjectId))
+  const subjectIdx = doc.findByType('_subject')
+  const subjects = subjectIdx.map(subjectId => doc.get(subjectId))
   const subjectLangs = [...new Set(subjects.map(item => item.language))]
   subjectLangs.forEach(lang => {
     const subjGroup = $$('subj-group').setAttribute('xml:lang', lang)
@@ -80,7 +80,7 @@ function _exportSubjects(dom, api) {
   })
   subjects.forEach(subject => {
     const subjGroup = articleCategories.find(`subj-group[xml\\:lang="${subject.language}"]`)
-    const newSubjectEl = SubjectConverter.export($$, subject, pubMetaDb)
+    const newSubjectEl = SubjectConverter.export($$, subject, doc)
     subjGroup.append(newSubjectEl)
   })
 }
@@ -163,60 +163,56 @@ function _importContribs(dom, api, type) {
 
 
 function _exportAffiliations(dom, api) {
-  const pubMetaDb = api.pubMetaDb
+  const doc = api.doc
   const articleMeta = dom.find('article-meta')
   const $$ = dom.createElement.bind(dom)
-  const organisationIds = pubMetaDb.findByType('organisation')
+  const organisationIds = doc.findByType('organisation')
 
   organisationIds.forEach(organisationId => {
-    let node = pubMetaDb.get(organisationId)
-    let newAffEl = OrganisationConverter.export($$, node, pubMetaDb)
+    let node = doc.get(organisationId)
+    let newAffEl = OrganisationConverter.export($$, node, doc)
     insertChildAtFirstValidPos(articleMeta, newAffEl)
   })
 }
 
 function _exportAwards(dom, api) {
-  const pubMetaDb = api.pubMetaDb
+  const doc = api.doc
   const articleMeta = dom.find('article-meta')
   const $$ = dom.createElement.bind(dom)
-  const awardIds = pubMetaDb.findByType('award')
+  const awardIds = doc.findByType('award')
 
   if (awardIds.length > 0) {
     let fundingGroupEl = $$('funding-group')
 
     awardIds.forEach(awardId => {
-      let node = pubMetaDb.get(awardId)
-      let awardGroupEl = AwardConverter.export($$, node, pubMetaDb)
+      let node = doc.get(awardId)
+      let awardGroupEl = AwardConverter.export($$, node, doc)
       fundingGroupEl.append(awardGroupEl)
     })
     insertChildAtFirstValidPos(articleMeta, fundingGroupEl)
   }
-  
   console.log(articleMeta.getNativeElement())
 }
 
 
 function _exportContribs(dom, api, type) {
-  const pubMetaDb = api.pubMetaDb
+  const doc = api.doc
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
-  const articleRecord = pubMetaDb.get('article-record')
-
+  const articleRecord = doc.get('article-record')
   let contribGroup = $$('contrib-group').attr('content-type', type)
-  let contribs = articleRecord[type+'s'].map(contribId => pubMetaDb.get(contribId))
-
+  let contribs = articleRecord[type+'s'].map(contribId => doc.get(contribId))
   contribs.forEach(node => {
-    let newContribEl = PersonConverter.export($$, node, pubMetaDb)
+    let newContribEl = PersonConverter.export($$, node, doc)
     contribGroup.append(newContribEl)
   })
-
   insertChildAtFirstValidPos(articleMeta, contribGroup)
 }
 
 
-function _exportGroup($$, contribGroup, pubMetaDb, groupId) {
-  let node = pubMetaDb.get(groupId)
-  let newContribEl = GroupConverter.export($$, node, pubMetaDb)
+function _exportGroup($$, contribGroup, doc, groupId) {
+  let node = doc.get(groupId)
+  let newContribEl = GroupConverter.export($$, node, doc)
   contribGroup.append(newContribEl)
 }
 
@@ -270,9 +266,9 @@ function _exportGroup($$, contribGroup, pubMetaDb, groupId) {
   NOTE: We need to be really careful about the element order inside <article-meta>
 */
 function _exportArticleRecord(dom, api) {
-  const pubMetaDb = api.pubMetaDb
+  const doc = api.doc
   const articleMeta = dom.find('article-meta')
-  const node = pubMetaDb.get('article-record')
+  const node = doc.get('article-record')
   const $$ = dom.createElement.bind(dom)
 
   _exportAffiliations(dom, api)

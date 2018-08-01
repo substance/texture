@@ -5,9 +5,9 @@ import { forEach } from 'substance'
 */
 export const OrganisationConverter = {
 
-  import(el, pubMetaDb) {    
+  import(el, pubMetaDb) {
     let node = {
-      id,
+      id: el.id,
       type: 'organisation',
       name: getText(el, 'institution[content-type=orgname]'),
       division1: getText(el, 'institution[content-type=orgdiv1]'),
@@ -24,7 +24,7 @@ export const OrganisationConverter = {
       email: getText(el, 'email'),
       uri: getText(el, 'uri[content-type=link]')
     }
-    entity = pubMetaDb.create(node)
+    let entity = pubMetaDb.create(node)
     return entity.id
   },
 
@@ -373,65 +373,61 @@ let reverseMapping = function(mapping) {
 export const ElementCitationConverter = {
 
   import(el, pubMetaDb, id) {
-    let entity = _findCitation(el, pubMetaDb)
     let type = el.attr('publication-type')
-
-    if (!entity) {
-      let node = {
-        // HACK: trying to merge EntitDb into Article model, avoiding id collision
-        id: `@${id}`,
-        type: mappingItemTypes[type],
-        // normal fields
-        assignee: getText(el, 'collab[collab-type=assignee] > named-content'),
-        confName: getText(el, 'conf-name'),
-        confLoc: getText(el, 'conf-loc'),
-        day: getText(el, 'day'),
-        edition: getText(el, 'edition'),
-        elocationId: getText(el, 'elocation-id'),
-        fpage: getText(el, 'fpage'),
-        issue: getText(el, 'issue'),
-        lpage: getText(el, 'lpage'),
-        month: getText(el, 'month'),
-        pageCount: getText(el, 'page-count'),
-        pageRange: getText(el, 'page-range'),
-        partTitle: getText(el, 'part-title'),
-        patentCountry: _getAttr(el, 'patent', 'country'),
-        patentNumber: getText(el, 'patent'),
-        publisherLoc: _getSeparatedText(el, 'publisher-loc'),
-        publisherName: _getSeparatedText(el, 'publisher-name'),
-        series: getText(el, 'series'),
-        uri: getText(el, 'uri'),
-        version: getText(el, 'version'),
-        volume: getText(el, 'volume'),
-        year: getText(el, 'year'),
-        // identifiers
-        accessionId: getText(el, 'pub-id[pub-id-type=accession]'),
-        archiveId: getText(el, 'pub-id[pub-id-type=archive]'),
-        arkId: getText(el, 'pub-id[pub-id-type=ark]'),
-        isbn: getText(el, 'pub-id[pub-id-type=isbn]'),
-        doi: getText(el, 'pub-id[pub-id-type=doi]'),
-        pmid: getText(el, 'pub-id[pub-id-type=pmid]')
-      }
-      if (type === 'book' || type === 'report' || type === 'software') {
-        node.title = getText(el, 'source')
-      } else {
-        node.containerTitle = getText(el, 'source')
-        if (type === 'chapter') {
-          node.title = _getHTML(el, 'chapter-title')
-        } else if (type === 'data') {
-          node.title = _getHTML(el, 'data-title')
-        } else {
-          node.title = _getHTML(el, 'article-title')
-        }
-      }
-
-      node.authors = _getRefContribs(el, pubMetaDb, 'author')
-      node.editors = _getRefContribs(el, pubMetaDb, 'editor')
-      node.inventors = _getRefContribs(el, pubMetaDb, 'inventor')
-      node.sponsors = _getRefContribs(el, pubMetaDb, 'sponsor')
-      node.translators = _getRefContribs(el, pubMetaDb, 'translator')
-      entity = pubMetaDb.create(node)
+    let node = {
+      // HACK: trying to merge EntitDb into Article model, avoiding id collision
+      id: `@${id}`,
+      type: mappingItemTypes[type],
+      // normal fields
+      assignee: getText(el, 'collab[collab-type=assignee] > named-content'),
+      confName: getText(el, 'conf-name'),
+      confLoc: getText(el, 'conf-loc'),
+      day: getText(el, 'day'),
+      edition: getText(el, 'edition'),
+      elocationId: getText(el, 'elocation-id'),
+      fpage: getText(el, 'fpage'),
+      issue: getText(el, 'issue'),
+      lpage: getText(el, 'lpage'),
+      month: getText(el, 'month'),
+      pageCount: getText(el, 'page-count'),
+      pageRange: getText(el, 'page-range'),
+      partTitle: getText(el, 'part-title'),
+      patentCountry: _getAttr(el, 'patent', 'country'),
+      patentNumber: getText(el, 'patent'),
+      publisherLoc: _getSeparatedText(el, 'publisher-loc'),
+      publisherName: _getSeparatedText(el, 'publisher-name'),
+      series: getText(el, 'series'),
+      uri: getText(el, 'uri'),
+      version: getText(el, 'version'),
+      volume: getText(el, 'volume'),
+      year: getText(el, 'year'),
+      // identifiers
+      accessionId: getText(el, 'pub-id[pub-id-type=accession]'),
+      archiveId: getText(el, 'pub-id[pub-id-type=archive]'),
+      arkId: getText(el, 'pub-id[pub-id-type=ark]'),
+      isbn: getText(el, 'pub-id[pub-id-type=isbn]'),
+      doi: getText(el, 'pub-id[pub-id-type=doi]'),
+      pmid: getText(el, 'pub-id[pub-id-type=pmid]')
     }
+    if (type === 'book' || type === 'report' || type === 'software') {
+      node.title = getText(el, 'source')
+    } else {
+      node.containerTitle = getText(el, 'source')
+      if (type === 'chapter') {
+        node.title = _getHTML(el, 'chapter-title')
+      } else if (type === 'data') {
+        node.title = _getHTML(el, 'data-title')
+      } else {
+        node.title = _getHTML(el, 'article-title')
+      }
+    }
+
+    node.authors = _getRefContribs(el, pubMetaDb, 'author')
+    node.editors = _getRefContribs(el, pubMetaDb, 'editor')
+    node.inventors = _getRefContribs(el, pubMetaDb, 'inventor')
+    node.sponsors = _getRefContribs(el, pubMetaDb, 'sponsor')
+    node.translators = _getRefContribs(el, pubMetaDb, 'translator')
+    let entity = pubMetaDb.create(node)
     return entity.id
   },
 
@@ -561,12 +557,6 @@ function _extractAwards(el) {
   let xrefs = el.findAll('xref[ref-type=award]')
   let awardIds = xrefs.map(xref => xref.attr('rid'))
   return awardIds
-}
-
-
-function _findCitation(el, pubMetaDb) {
-  let entityId = getText(el, 'pub-id[pub-id-type=entity]')
-  return pubMetaDb.get(entityId)
 }
 
 

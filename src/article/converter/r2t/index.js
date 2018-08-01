@@ -9,7 +9,6 @@ import ConvertTableWrap from './ConvertTableWrap'
 import ConvertSigBlock from './ConvertSigBlock'
 import PruneEmptyElements from './PruneEmptyElements'
 import ConvertRefs from './ConvertRefs'
-import ConvertAuthors from './ConvertAuthors'
 import ConvertArticleMeta from './ConvertArticleMeta'
 import ConvertXref from './ConvertXref'
 import ConvertList from './ConvertList'
@@ -24,7 +23,6 @@ const trafos = [
   // as person records with affiliations (contrib) should have priority over
   // person records in
   ConvertArticleMeta,
-  ConvertAuthors, // extracts org and person entities
   ConvertRefs, // extracts publication entities
   ConvertSigBlock,
   FnGroupConverter,

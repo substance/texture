@@ -39,6 +39,10 @@ export default class ArticleAPI {
     return model
   }
 
+  _getNode(nodeId) {
+    return this.article.get(nodeId)
+  }
+
   getEntitiesByType(type) {
     let entityIds = this.article.findByType(type)
     return entityIds.map(entityId => this.getEntity(entityId))
@@ -83,139 +87,105 @@ export default class ArticleAPI {
     })
     return this.getModel(node.type, node)
   }
-
-  addPerson(person = {}, type) {
-    const articleSession = this.articleSession
-    const personModel = this.addEntity(person, 'person')
-    articleSession.transaction(tx => {
-      const contribEl = tx.createElement('contrib').attr({'rid': personModel.id, 'contrib-type': 'person'})
-      const personContribGroup = tx.find('contrib-group[content-type='+type+']')
-      personContribGroup.append(contribEl)
-      tx.selection = null
-    })
-    return personModel
+  
+  addAuthor(person = {}) {
+    this._addPerson(person, 'authors')
   }
 
-  getPersons(type) {
+  addEditor(person = {}) {
+    this._addPerson(person, 'editors')
+  }
+
+  _addPerson(person = {}, type) {
+    throw new Error('TODO: create person + article-record.authors/editors in one transaction')
+    // const articleSession = this.articleSession
+    // const personModel = this.addEntity(person, 'person')
+    // // TODO: we probably want to have addAuthor, addEditor as more understandable API's.
+    // return personModel
+  }
+
+  getAuthors() {
+    return this._getPersons('authors')
+  }
+
+  getEditors() {
+    return this._getPersons('editors')
+  }
+
+  _getPersons(prop) {
     const article = this.getArticle()
-    const personsContribGroup = article.find('contrib-group[content-type='+type+']')
-    const contribIds = personsContribGroup.findAll('contrib[contrib-type=person]').map(contrib => contrib.getAttribute('rid'))
-    return contribIds.map(contribId => this.getEntity(contribId))
+    let articleRecord = this._getNode('article-record')
+    let persons = articleRecord[prop].map(personId => this.getEntity(personId))
+    return persons
   }
 
-  deletePerson(personId, type) {
-    const articleSession = this.articleSession
-    const model = this.deleteEntity(personId)
-    articleSession.transaction(tx => {
-      const personsContribGroup = tx.find(`contrib-group[content-type=${type}]`)
-      const contrib = personsContribGroup.find(`contrib[rid=${personId}]`)
-      contrib.parentNode.removeChild(contrib)
-      tx.delete(contrib.id)
-      tx.selection = null
-    })
-    return model
+  deleteAuthor(personId) {
+    return this._deletePerson(personId, 'authors')
+  }
+
+  deleteEditor(personId) {
+    return this._deletePerson(personId, 'editors')
+  }
+
+  _deletePerson(personId, prop) {
+    throw new Error('TODO: remove person + article-record.authors/editors in one transaction')
+    // const articleSession = this.articleSession
+    // const model = this.deleteEntity(personId)
+    // articleSession.transaction(tx => {
+    //   const personsContribGroup = tx.find(`contrib-group[content-type=${type}]`)
+    //   const contrib = personsContribGroup.find(`contrib[rid=${personId}]`)
+    //   contrib.parentNode.removeChild(contrib)
+    //   tx.delete(contrib.id)
+    //   tx.selection = null
+    // })
+    // return model
   }
 
   addOrganisation(organisation = {}) {
     const articleSession = this.articleSession
     const orgModel = this.addEntity(organisation, 'organisation')
-    articleSession.transaction(tx => {
-      const affEl = tx.createElement('aff').attr('rid', orgModel.id)
-      // TODO: replace it with schema driven smartness
-      const aff = tx.find('article-meta > aff')
-      const articleMeta = aff.getParent()
-      const affPos = articleMeta.getChildPosition(aff)
-      articleMeta.insertAt(affPos+1, affEl)
-      tx.selection = null
-    })
     return orgModel
   }
 
   deleteOrganisation(orgId) {
     const articleSession = this.articleSession
     const model = this.deleteEntity(orgId)
-    articleSession.transaction(tx => {
-      const affGroup = tx.find('aff-group')
-      const affEl = affGroup.find(`aff[rid=${orgId}]`)
-      affEl.parentNode.removeChild(affEl)
-      tx.delete(affEl.id)
-      tx.selection = null
-    })
     return model
   }
 
   addAward(award = {}) {
     const articleSession = this.articleSession
     const awardModel = this.addEntity(award, 'award')
-    articleSession.transaction(tx => {
-      const awardGroupEl = tx.createElement('award-group').attr('rid', awardModel.id)
-      const fundingGroupEl = tx.find('funding-group')
-      fundingGroupEl.append(awardGroupEl)
-      tx.selection = null
-    })
     return awardModel
   }
 
   deleteAward(awardId) {
     const articleSession = this.articleSession
     const model = this.deleteEntity(awardId)
-    articleSession.transaction(tx => {
-      const fundingGroup = tx.find('funding-group')
-      const awardGroupEl = fundingGroup.find(`award-group[rid=${awardId}]`)
-      awardGroupEl.parentNode.removeChild(awardGroupEl)
-      tx.delete(awardGroupEl.id)
-      tx.selection = null
-    })
     return model
   }
 
   addKeyword(keyword = {}) {
     const articleSession = this.articleSession
     const keywordModel = this.addEntity(keyword, 'keyword')
-    articleSession.transaction(tx => {
-      const kwdEl = tx.createElement('kwd').attr('rid', keywordModel.id)
-      const kwdGroupEl = tx.find('kwd-group')
-      kwdGroupEl.append(kwdEl)
-      tx.selection = null
-    })
     return keywordModel
   }
 
   deleteKeyword(keywordId) {
     const articleSession = this.articleSession
     const model = this.deleteEntity(keywordId)
-    articleSession.transaction(tx => {
-      const kwdGroup = tx.find('kwd-group')
-      const kwdEl = kwdGroup.find(`kwd[rid=${keywordId}]`)
-      kwdEl.parentNode.removeChild(kwdEl)
-      tx.delete(kwdEl.id)
-      tx.selection = null
-    })
     return model
   }
 
   addSubject(subject = {}) {
     const articleSession = this.articleSession
     const subjectModel = this.addEntity(subject, 'subject')
-    articleSession.transaction(tx => {
-      const subjectEl = tx.createElement('subject').attr('rid', subjectModel.id)
-      const subjGroupEl = tx.find('subj-group')
-      subjGroupEl.append(subjectEl)
-      tx.selection = null
-    })
     return subjectModel
   }
 
   deleteSubject(subjectId) {
     const articleSession = this.articleSession
     const model = this.deleteEntity(subjectId)
-    articleSession.transaction(tx => {
-      const subjGroup = tx.find('subj-group')
-      const subjectEl = subjGroup.find(`subject[rid=${subjectId}]`)
-      subjectEl.parentNode.removeChild(subjectEl)
-      tx.delete(subjectEl.id)
-      tx.selection = null
-    })
     return model
   }
 

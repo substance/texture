@@ -7,15 +7,15 @@ export default class AuthorCollectionModel extends DefaultCollectionModel {
   }
 
   addItem(item) {
-    return this._api.addPerson(item, 'author')
+    return this._api.addAuthor(item)
   }
 
   getItems() {
-    return this._api.getPersons('author')
+    return this._api.getAuthors()
   }
 
   removeItem(item) {
-    return this._api.deletePerson(item.id, 'author')
+    return this._api.deleteAuthor(item.id)
   }
 
   _getCollectionId() {

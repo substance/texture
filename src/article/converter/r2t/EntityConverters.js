@@ -5,36 +5,31 @@ import { forEach } from 'substance'
 */
 export const OrganisationConverter = {
 
-  import(el, pubMetaDb) {
-    // Use existing record when possible
-    let entity = _findOrganisation(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'organisation',
-        name: getText(el, 'institution[content-type=orgname]'),
-        division1: getText(el, 'institution[content-type=orgdiv1]'),
-        division2: getText(el, 'institution[content-type=orgdiv2]'),
-        division3: getText(el, 'institution[content-type=orgdiv3]'),
-        street: getText(el, 'addr-line[content-type=street-address]'),
-        addressComplements: getText(el, 'addr-line[content-type=complements]'),
-        city: getText(el, 'city'),
-        state: getText(el, 'state'),
-        postalCode: getText(el, 'postal-code'),
-        country: getText(el, 'country'),
-        phone: getText(el, 'phone'),
-        fax: getText(el, 'fax'),
-        email: getText(el, 'email'),
-        uri: getText(el, 'uri[content-type=link]')
-      }
-      entity = pubMetaDb.create(node)
-    } else {
-      console.warn(`Skipping duplicate: ${entity.name}, ${entity.division1} already exists.`)
+  import(el, pubMetaDb) {    
+    let node = {
+      id,
+      type: 'organisation',
+      name: getText(el, 'institution[content-type=orgname]'),
+      division1: getText(el, 'institution[content-type=orgdiv1]'),
+      division2: getText(el, 'institution[content-type=orgdiv2]'),
+      division3: getText(el, 'institution[content-type=orgdiv3]'),
+      street: getText(el, 'addr-line[content-type=street-address]'),
+      addressComplements: getText(el, 'addr-line[content-type=complements]'),
+      city: getText(el, 'city'),
+      state: getText(el, 'state'),
+      postalCode: getText(el, 'postal-code'),
+      country: getText(el, 'country'),
+      phone: getText(el, 'phone'),
+      fax: getText(el, 'fax'),
+      email: getText(el, 'email'),
+      uri: getText(el, 'uri[content-type=link]')
     }
+    entity = pubMetaDb.create(node)
     return entity.id
   },
 
   export($$, node) {
-    let el = $$('aff')
+    let el = $$('aff').attr('id', node.id)
     el.append(_createTextElement($$, node.name, 'institution', { 'content-type': 'orgname'}))
     el.append(_createTextElement($$, node.division1, 'institution', { 'content-type': 'orgdiv1'}))
     el.append(_createTextElement($$, node.division2, 'institution', { 'content-type': 'orgdiv2'}))
@@ -49,8 +44,6 @@ export const OrganisationConverter = {
     el.append(_createTextElement($$, node.fax, 'fax'))
     el.append(_createTextElement($$, node.email, 'email'))
     el.append(_createTextElement($$, node.uri, 'uri', { 'content-type': 'link'}))
-    // Store entityId for explicit lookup on next import
-    // el.append(_createTextElement($$, node.id, 'uri', {'content-type': 'entity'}))
     return el
   }
 }
@@ -75,24 +68,19 @@ export const OrganisationConverter = {
 export const AwardConverter = {
 
   import(el, pubMetaDb) {
-    // Use existing record when possible
-    let entity = _findAward(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'award',
-        institution: getText(el, 'institution'),
-        fundRefId: getText(el, 'institution-id'),
-        awardId: getText(el, 'award-id')
-      }
-      entity = pubMetaDb.create(node)
-    } else {
-      console.warn(`Skipping duplicate: ${entity.institution}, ${entity.awardId} already exists.`)
+    let node = {
+      id: el.id,
+      type: 'award',
+      institution: getText(el, 'institution'),
+      fundRefId: getText(el, 'institution-id'),
+      awardId: getText(el, 'award-id')
     }
+    let entity = pubMetaDb.create(node)
     return entity.id
   },
 
   export($$, node) {
-    let el = $$('award-group')
+    let el = $$('award-group').attr('id', node.id)
 
     let institutionWrapEl = $$('institution-wrap')
     institutionWrapEl.append(_createTextElement($$, node.fundRefId, 'institution-id', { 'institution-id-type': 'FundRef'}))
@@ -102,7 +90,6 @@ export const AwardConverter = {
       $$('funding-source').append(institutionWrapEl),
       _createTextElement($$, node.awardId, 'award-id')
     )
-
     return el
   }
 }
@@ -190,35 +177,29 @@ export const GroupConverter = {
 
   import(el, pubMetaDb) {
     // Use existing record when possible
-    let entity = _findPerson(el, pubMetaDb)
-    if (!entity) {
-      let node = {
-        type: 'group',
-        name: getText(el, 'named-content[content-type=name]'),
-        email: getText(el, 'email'),
-        affiliations: _extractAffiliations(el, true),
-        equalContrib: el.getAttribute('equal-contrib') === 'yes',
-        corresp: el.getAttribute('corresp') === 'yes',
-        awards: _extractAwards(el)
-      }
-      entity = pubMetaDb.create(node)
-
-      let dom = el.ownerDocument
-      let persons = _extractGroupMembers(el, entity.id)
-      persons.forEach(person => {
-        const personNode = pubMetaDb.create(person)
-        const contribEl = dom.createElement('contrib').attr({
-          'rid': personNode.id,
-          'gid': node.id,
-          'contrib-type': 'person'
-        })
-        const authorsContribGroup = dom.find('contrib-group[content-type=author]')
-        authorsContribGroup.append(contribEl)
-      })
-
-    } else {
-      console.warn(`Skipping duplicate: ${entity.name} already exists.`)
+    let node = {
+      type: 'group',
+      name: getText(el, 'named-content[content-type=name]'),
+      email: getText(el, 'email'),
+      affiliations: _extractAffiliations(el, true),
+      equalContrib: el.getAttribute('equal-contrib') === 'yes',
+      corresp: el.getAttribute('corresp') === 'yes',
+      awards: _extractAwards(el)
     }
+    entity = pubMetaDb.create(node)
+
+    let dom = el.ownerDocument
+    let persons = _extractGroupMembers(el, entity.id)
+    persons.forEach(person => {
+      const personNode = pubMetaDb.create(person)
+      const contribEl = dom.createElement('contrib').attr({
+        'rid': personNode.id,
+        'gid': node.id,
+        'contrib-type': 'person'
+      })
+      const authorsContribGroup = dom.find('contrib-group[content-type=author]')
+      authorsContribGroup.append(contribEl)
+    })
     return entity.id
   },
 
@@ -242,10 +223,7 @@ export const GroupConverter = {
     el.append(collab)
     return el
   }
-
 }
-
-
 
 
 /*
@@ -256,16 +234,9 @@ export const GroupConverter = {
 export const PersonConverter = {
 
   import(el, pubMetaDb) {
-    // Use existing record when possible
-    let entity = _findPerson(el, pubMetaDb)
-    if (!entity) {
-      entity = pubMetaDb.create(
-        _extractPerson(el)
-      )
-    } else {
-      console.warn(`Skipping duplicate: ${entity.givenNames} ${entity.surname} already exists.`)
-    }
-
+    let entity = pubMetaDb.create(
+      _extractPerson(el)
+    )
     return entity.id
   },
 
@@ -278,7 +249,6 @@ export const PersonConverter = {
     return el
   }
 }
-
 
 function _exportPerson($$, node) {
   let el = $$('contrib').attr({
@@ -297,18 +267,13 @@ function _exportPerson($$, node) {
     ),
     _createTextElement($$, node.email, 'email')
   )
-
   return el
 }
 
 function _addAffiliations(el, $$, node) {
-  let dom = el.ownerDocument
   node.affiliations.forEach(organisationId => {
-    // NOTE: we need to query the document for the internal aff record to
-    // map from the global entityId to the local affId
-    let affEl = dom.find(`aff[rid=${organisationId}]`)
     el.append(
-      $$('xref').attr('ref-type', 'aff').attr('rid', affEl.id)
+      $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
     )
   })
 }
@@ -316,11 +281,8 @@ function _addAffiliations(el, $$, node) {
 function _addAwards(el, $$, node) {
   let dom = el.ownerDocument
   node.awards.forEach(awardId => {
-    // NOTE: we need to query the document for the internal award record to
-    // map from the global entityId to the local awardId
-    let awardGroupEl = dom.find(`award-group[rid=${awardId}]`)
     el.append(
-      $$('xref').attr('ref-type', 'award').attr('rid', awardGroupEl.id)
+      $$('xref').attr('ref-type', 'award').attr('rid', awardId)
     )
   })
 }
@@ -463,11 +425,11 @@ export const ElementCitationConverter = {
         }
       }
 
-      node.authors = _getRefCollabs(el, pubMetaDb, 'author')
-      node.editors = _getRefCollabs(el, pubMetaDb, 'editor')
-      node.inventors = _getRefCollabs(el, pubMetaDb, 'inventor')
-      node.sponsors = _getRefCollabs(el, pubMetaDb, 'sponsor')
-      node.translators = _getRefCollabs(el, pubMetaDb, 'translator')
+      node.authors = _getRefContribs(el, pubMetaDb, 'author')
+      node.editors = _getRefContribs(el, pubMetaDb, 'editor')
+      node.inventors = _getRefContribs(el, pubMetaDb, 'inventor')
+      node.sponsors = _getRefContribs(el, pubMetaDb, 'sponsor')
+      node.translators = _getRefContribs(el, pubMetaDb, 'translator')
       entity = pubMetaDb.create(node)
     }
     return entity.id
@@ -534,10 +496,6 @@ export const ElementCitationConverter = {
   }
 }
 
-
-
-
-
 function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
   if (contribs && contribs.length > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
@@ -568,7 +526,7 @@ function _extractPerson(el, group) {
   }
 }
 
-function _getRefCollabs(el, pubMetaDb, type) {
+function _getRefContribs(el, pubMetaDb, type) {
   let personGroup = el.find(`person-group[person-group-type=${type}]`)
   if (personGroup) {
     return personGroup.childNodes.map(el => {
@@ -587,43 +545,23 @@ function _extractGroupMembers(el, group) {
 }
 
 function _extractAffiliations(el, isGroup) {
-  let dom = el.ownerDocument
+  // let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=aff]')
   // NOTE: for groups we need to extract only affiliations of group, without members
-  if(isGroup) {
-    xrefs = el.findAll('collab>xref[ref-type=aff]')
+  if (isGroup) {
+    xrefs = el.findAll('collab > xref[ref-type=aff]')
   }
-  let affs = []
-  xrefs.forEach(xref => {
-    // NOTE: we need to query the document for the internal aff id to
-    // access the global entityId for the organisation
-    let affEl = dom.find(`#${xref.attr('rid')}`)
-    if (affEl) {
-      affs.push(affEl.attr('rid'))
-    } else {
-      console.warn(`Could not find aff#${xref.attr('rid')} in document`)
-    }
-  })
+
+  let affs = xrefs.map(xref => xref.attr('rid'))
   return affs
 }
 
 function _extractAwards(el) {
   let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=award]')
-  let awardGroups = []
-  xrefs.forEach(xref => {
-    // NOTE: we need to query the document for the internal aff id to
-    // access the global entityId for the award
-    let awardGroupEl = dom.find(`#${xref.attr('rid')}`)
-    if (awardGroupEl) {
-      awardGroups.push(awardGroupEl.attr('rid'))
-    } else {
-      console.warn(`Could not find award-group#${xref.attr('rid')} in document`)
-    }
-  })
-  return awardGroups
+  let awardIds = xrefs.map(xref => xref.attr('rid'))
+  return awardIds
 }
-
 
 
 function _findCitation(el, pubMetaDb) {
@@ -631,45 +569,6 @@ function _findCitation(el, pubMetaDb) {
   return pubMetaDb.get(entityId)
 }
 
-function _findPerson(el, pubMetaDb) {
-  let entity = pubMetaDb.get(getText(el, 'contrib-id[contrib-id-type=entity]'))
-  if (!entity) {
-    let persons = pubMetaDb.findByType('person').map(id => pubMetaDb.get(id))
-    let surname = getText(el, 'surname')
-    let givenNames = getText(el, 'given-names')
-    entity = persons.find(p => {
-      return p.surname === surname && p.givenNames === givenNames
-    })
-  }
-  return entity
-}
-
-function _findOrganisation(el, pubMetaDb) {
-  let entity = pubMetaDb.get(getText(el, 'uri[content-type=entity]'))
-  if (!entity) {
-    let organisations = pubMetaDb.findByType('organisation').map(id => pubMetaDb.get(id))
-    let name = getText(el, 'institution[content-type=orgname]')
-    let division1 = getText(el, 'institution[content-type=orgdiv1]')
-    entity = organisations.find(o => {
-      return o.name === name && o.division1 === division1
-    })
-  }
-  return entity
-}
-
-function _findAward(el, pubMetaDb) {
-  let entity = pubMetaDb.get(getText(el, 'award-id'))
-  if (!entity) {
-    let awards = pubMetaDb.findByType('award').map(id => pubMetaDb.get(id))
-    let institutionWrapEl = el.find('institution-wrap')
-    let name = getText(institutionWrapEl, 'institution')
-    let fundRefId = getText(institutionWrapEl, 'institution-id')
-    entity = awards.find(a => {
-      return a.institution === name && a.fundRefId === fundRefId
-    })
-  }
-  return entity
-}
 
 export function getText(rootEl, selector) {
   let match = rootEl.find(selector)

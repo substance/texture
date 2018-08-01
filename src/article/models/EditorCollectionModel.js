@@ -7,15 +7,15 @@ export default class EditorCollectionModel extends DefaultCollectionModel {
   }
 
   addItem(item) {
-    return this._api.addPerson(item, 'editor')
+    return this._api.addEditor(item)
   }
   
   removeItem(item) {
-    return this._api.deletePerson(item.id, 'editor')
+    return this._api.deleteEditor(item.id)
   }
 
   getItems() {
-    return this._api.getPersons('editor')
+    return this._api.getEditors()
   }
 
   _getCollectionId() {

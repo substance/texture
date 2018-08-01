@@ -1,4 +1,4 @@
-import { KeywordConverter, SubjectConverter, getText } from './EntityConverters'
+import { KeywordConverter, SubjectConverter, PersonConverter, GroupConverter, OrganisationConverter, AwardConverter, getText } from './EntityConverters'
 import { expandAbstract, insertChildAtFirstValidPos, insertChildrenAtFirstValidPos, removeElements } from './r2tHelpers'
 
 /*
@@ -20,6 +20,9 @@ export default class ConvertArticleMeta {
       'article-meta > kwd-group',
       'article-meta > article-categories',
       'history',
+      'aff',
+      'funding-group',
+      'contrib-group',
       'volume',
       'issue',
       'fpage',
@@ -67,7 +70,6 @@ function _exportSubjects(dom, api) {
   let articleCategories = $$('article-categories')
   insertChildAtFirstValidPos(articleMeta, articleCategories)
 
-  // debugger
   // Export Subjects
   const subjectIdx = pubMetaDb.findByType('_subject')
   const subjects = subjectIdx.map(subjectId => pubMetaDb.get(subjectId))
@@ -92,14 +94,21 @@ function _importKeywordsOrSubjects(dom, api, selector, Converter) {
   })
 }
 
-
 function _importArticleRecord(dom, api) {
   let el = dom.find('article-meta')
   let pubMetaDb = api.pubMetaDb
 
+  _importAffiliations(dom, api)
+  _importAwards(dom, api)
+
+  let authors = _importContribs(dom, api, 'author')
+  let editors = _importContribs(dom, api, 'editor')
+
   let node = {
     id: 'article-record',
     type: 'article-record',
+    authors,
+    editors,
     elocationId: getText(el, 'elocation-id'),
     fpage: getText(el, 'fpage'),
     lpage: getText(el, 'lpage'),
@@ -111,11 +120,149 @@ function _importArticleRecord(dom, api) {
   articleDates.forEach(dateEl => {
     const date = _extractDate(dateEl)
     node[date.type] = date.value
-    dateEl.getParent().removeChild(dateEl)
   })
   pubMetaDb.create(node)
 }
 
+function _importAffiliations(dom, api) {
+  const pubMetaDb = api.pubMetaDb
+  const affs = dom.findAll('article-meta > aff')
+  affs.forEach(aff => {
+    OrganisationConverter.import(aff, pubMetaDb)
+  })
+}
+
+function _importAwards(dom, api) {
+  const pubMetaDb = api.pubMetaDb
+  const awards = dom.findAll('article-meta > funding-group > award-group')
+  // Convert <award-group> elements to award entities
+  awards.forEach(award => {
+    AwardConverter.import(award, pubMetaDb)
+  })
+}
+
+function _importContribs(dom, api, type) {
+  let pubMetaDb = api.pubMetaDb
+  let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
+  if(contribGroup === null) return
+  let contribs = contribGroup.findAll('contrib')
+  let result = []
+  contribs.forEach(contrib => {
+    let entityId
+    if (contrib.attr('contrib-type') === 'group') {
+      // entityId = GroupConverter.import(contrib, pubMetaDb)
+    } else {
+      entityId = PersonConverter.import(contrib, pubMetaDb)
+    }
+    if (entityId) {
+      result.push(entityId)
+    }
+  })
+  return result
+}
+
+
+function _exportAffiliations(dom, api) {
+  const pubMetaDb = api.pubMetaDb
+  const articleMeta = dom.find('article-meta')
+  const $$ = dom.createElement.bind(dom)
+  const organisationIds = pubMetaDb.findByType('organisation')
+
+  organisationIds.forEach(organisationId => {
+    let node = pubMetaDb.get(organisationId)
+    let newAffEl = OrganisationConverter.export($$, node, pubMetaDb)
+    insertChildAtFirstValidPos(articleMeta, newAffEl)
+  })
+}
+
+function _exportAwards(dom, api) {
+  const pubMetaDb = api.pubMetaDb
+  const articleMeta = dom.find('article-meta')
+  const $$ = dom.createElement.bind(dom)
+  const awardIds = pubMetaDb.findByType('award')
+
+  if (awardIds.length > 0) {
+    let fundingGroupEl = $$('funding-group')
+
+    awardIds.forEach(awardId => {
+      let node = pubMetaDb.get(awardId)
+      let awardGroupEl = AwardConverter.export($$, node, pubMetaDb)
+      fundingGroupEl.append(awardGroupEl)
+    })
+    insertChildAtFirstValidPos(articleMeta, fundingGroupEl)
+  }
+  
+  console.log(articleMeta.getNativeElement())
+}
+
+
+function _exportContribs(dom, api, type) {
+  const pubMetaDb = api.pubMetaDb
+  const $$ = dom.createElement.bind(dom)
+  const articleMeta = dom.find('article-meta')
+  const articleRecord = pubMetaDb.get('article-record')
+
+  let contribGroup = $$('contrib-group').attr('content-type', type)
+  let contribs = articleRecord[type+'s'].map(contribId => pubMetaDb.get(contribId))
+
+  contribs.forEach(node => {
+    let newContribEl = PersonConverter.export($$, node, pubMetaDb)
+    contribGroup.append(newContribEl)
+  })
+
+  insertChildAtFirstValidPos(articleMeta, contribGroup)
+}
+
+
+function _exportGroup($$, contribGroup, pubMetaDb, groupId) {
+  let node = pubMetaDb.get(groupId)
+  let newContribEl = GroupConverter.export($$, node, pubMetaDb)
+  contribGroup.append(newContribEl)
+}
+
+
+// function _exportPersons($$, dom, pubMetaDb, type) {
+//   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
+//   if(contribGroup === null) return
+//   let contribs = contribGroup.findAll('contrib')
+//   let groupMembers = []
+//   contribs.forEach(contrib => {
+//     const groupId = contrib.attr('gid')
+//     if(groupId) {
+//       groupMembers.push(contrib)
+//       const groupEl = dom.find(`contrib#${groupId}`)
+//       if(!groupEl) {
+//         _exportGroup($$, contribGroup, pubMetaDb, groupId)
+//       }
+//       return
+//     }
+//     let node = pubMetaDb.get(contrib.attr('rid'))
+//     let newContribEl
+//     if (node.type === 'group') {
+//       newContribEl = GroupConverter.export($$, node, pubMetaDb)
+//     } else {
+//       newContribEl = PersonConverter.export($$, node, pubMetaDb)
+//     }
+    
+//     contrib.innerHTML = newContribEl.innerHTML
+//     contrib.removeAttr('rid')
+//   })
+
+//   groupMembers.forEach(contrib => {
+//     let node = pubMetaDb.get(contrib.attr('rid'))
+//     let contribEl = dom.find(`contrib#${node.group} collab`)
+//     let contribGroupEl = contribEl.find('contrib-group')
+//     if(!contribGroupEl) {
+//       contribEl.append(
+//         $$('contrib-group').attr({'contrib-type': 'group-member'})
+//       )
+//       contribGroupEl = contribEl.find('contrib-group')
+//     }
+//     let newContribEl = PersonConverter.export($$, node, pubMetaDb)
+//     contribGroupEl.append(newContribEl)
+//     contrib.parentNode.removeChild(contrib)
+//   })
+// }
 
 /*
   Export Article Record Node to <article-meta>
@@ -128,6 +275,11 @@ function _exportArticleRecord(dom, api) {
   const node = pubMetaDb.get('article-record')
   const $$ = dom.createElement.bind(dom)
 
+  _exportAffiliations(dom, api)
+  _exportAwards(dom, api)
+  _exportContribs(dom, api, 'author')
+  _exportContribs(dom, api, 'editor')
+
   insertChildAtFirstValidPos(articleMeta, $$('volume').append(node.volume))
   insertChildAtFirstValidPos(articleMeta, $$('issue').append(node.issue))
 
@@ -137,7 +289,7 @@ function _exportArticleRecord(dom, api) {
     insertChildAtFirstValidPos(articleMeta, $$('elocation-id').append(node.elocationId))
   } else if (node.fpage && node.lpage) {
     // NOTE: last argument is used to resolve insert position, as we don't have means
-    // yet to ask for insert position of a multiple elements
+    // yet to ask for insert position of multiple elements
     let pageRange = node.pageRange || node.fpage+'-'+node.lpage
     insertChildrenAtFirstValidPos(articleMeta, [
       $$('fpage').append(node.fpage),
@@ -202,7 +354,6 @@ function _exportDate($$, node, prop, dateType, tag) {
       $$('year').append(year)
     )
   }
-  
   return el
 }
 

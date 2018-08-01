@@ -45,8 +45,8 @@ export default class ConvertRef {
     refList.empty()
 
     // Re-export refs according to computed order
-    bibliography.forEach(refNode => {
-      let entity = doc.get(refNode.attr('rid'))
+    bibliography.forEach(ref => {
+      let entity = ref.state.entity
       let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
       let elementCitation
       if (validTypes.includes(entity.type)) {
@@ -56,7 +56,7 @@ export default class ConvertRef {
       }
 
       refList.append(
-        dom.createElement('ref').attr('id', refNode.id).append(
+        dom.createElement('ref').attr('id', entity.id).append(
           elementCitation
         )
       )

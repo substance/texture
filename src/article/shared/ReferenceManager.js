@@ -1,6 +1,12 @@
 // import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AbstractCitationManager from './AbstractCitationManager'
 
+const referenceTypes = [
+  'journal-article', 'book', 'chapter', 'conference-paper',
+  'report', 'newspaper-article', 'magazine-article', 'data-publication',
+  'patent', 'webpage', 'thesis', 'software'
+]
+
 export default class ReferenceManager extends AbstractCitationManager {
   constructor (doc, labelGenerator) {
     super(doc, 'bibr', labelGenerator)
@@ -41,22 +47,33 @@ export default class ReferenceManager extends AbstractCitationManager {
 
   _getReferences () {
     const doc = this.doc
-
-    let refs = doc.findAll('ref-list > ref')
-    // TODO: determine order and label based on citations in the document
-    return refs.map((ref) => {
-      let refId = ref.getAttribute('rid')
-      if (!ref.state) {
-        ref.state = {}
+    const refs = referenceTypes.reduce((refs, type) => {
+      return refs.concat(doc.findByType(type))
+    }, [])
+    const refsOrder = this._getReferencesOrder()
+    return refs.map(r => {
+      const index = refsOrder.indexOf(r.replace('@',''))
+      return {
+        state: {
+          entity: doc.get(r),
+          pos: index > -1 ? index : 9999
+        }
       }
-      if (!ref.state.entity) {
-        ref.state.entity = doc.get(refId)
-      }
-      return ref
     })
   }
 
-  _getBibliographyElement () {
-    return this.doc.find('ref-list')
+  // Determine order based on citations in the document
+  _getReferencesOrder() {
+    const doc = this.doc
+    const xrefs = doc.findAll('xref[ref-type=bibr]')
+    return xrefs.reduce((refs, xref) => {
+      const ref = xref.getAttribute('rid')
+      ref.split(' ').forEach(r => {
+        if(refs.indexOf(r) === -1) {
+          refs.push(r)
+        }
+      })
+      return refs
+    }, [])
   }
 }

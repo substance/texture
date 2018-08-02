@@ -5,6 +5,8 @@ export class ArticleRecord extends DocumentNode {}
 ArticleRecord.schema = {
   type: 'article-record',
   volume: { type: 'string', optional: false, default: '' },
+  authors: { type: ['person'], default: [] },
+  editors: { type: ['person'], default: [] },
   issue: { type: 'string', optional: false, default: '' },
   fpage: { type: 'string', optional: false, default: '' },
   lpage: { type: 'string', optional: false, default: '' },

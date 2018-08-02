@@ -7,7 +7,6 @@ export default class ConvertRef {
   import(dom, api) {
     let refs = dom.findAll('ref')
     const pubMetaDb = api.pubMetaDb
-
     refs.forEach(refEl => {
 
       let elementCitation = refEl.find('element-citation')

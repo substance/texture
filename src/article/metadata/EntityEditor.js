@@ -210,6 +210,9 @@ export default class EntityEditor extends ModelComponent {
 
     for (let property of schema) {
       if (property.name === 'id') continue
+      // HACK: skip person target type properties (authors and editors, these will be 
+      // managed internally and are not intended for editing)
+      if (property.targetTypes && property.targetTypes[0] === 'person') continue
       let empty = this._isPropertyEmpty(property)
       let warnings = this._getWarnings(property, empty)
       let hidden = empty && warnings.length === 0

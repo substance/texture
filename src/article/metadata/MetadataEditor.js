@@ -10,7 +10,6 @@ import CardComponent from './CardComponent'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },
-  { label: 'Translations', modelType: 'translatables' },
   { label: 'Editors', modelType: 'editors' },
   { label: 'Groups', modelType: 'groups' },
   { label: 'Affiliations', modelType: 'organisations' },
@@ -20,6 +19,7 @@ const SECTIONS = [
   { label: 'References', modelType: 'references' },
   { label: 'Keywords', modelType: 'keywords' },
   { label: 'Subjects', modelType: 'subjects' },
+  { label: 'Translations', modelType: 'translatables' },
   { label: 'Article', modelType: 'article-record' }
 ]
 

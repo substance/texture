@@ -15,15 +15,14 @@
           <subject content-type="heading">Epidemiología y salud global</subject>
         </subj-group>
       </article-categories>
-
       <title-group id="title-group-1">
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
-				<trans-title-group xml:lang="es">
-					<trans-title>Si <italic>signore</italic></trans-title>
-				</trans-title-group>
+        <trans-title-group id="trans-title-group-1" xml:lang="es">
+          <trans-title id="trans-title-1">Si <italic id="italic-1">signore</italic></trans-title>
+        </trans-title-group>
       </title-group>
-      <contrib-group id="contrib-group-1" content-type="author">
-        <contrib id="contrib-1" contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
+      <contrib-group content-type="author">
+        <contrib contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
           <name>
             <surname>Schaffelhofer</surname>
             <given-names>Stefan</given-names>
@@ -31,7 +30,7 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff2" />
         </contrib>
-        <contrib id="contrib-2" contrib-type="person">
+        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Scherberger</surname>
             <given-names>Hansjörg</given-names>
@@ -39,37 +38,34 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
         </contrib>
-        <!-- group author with members -->
-        <contrib contrib-type="group" equal-contrib="yes" corresp="no" deceased="no">
+        <contrib id="group-82b48e1f5a16997cea0f19c820f933d4" contrib-type="group" equal-contrib="yes" corresp="no">
           <collab>
             <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
             <email>mouse-project@example.com</email>
-            <xref ref-type="aff" rid="aff2"/>
+            <xref ref-type="aff" rid="aff2" />
             <xref ref-type="award" rid="fund1" />
             <contrib-group contrib-type="group-member">
-              <contrib contrib-type="person">
+              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
-                  <surname>Kelly</surname><given-names>Laura A.</given-names>
+                  <surname>Kelly</surname>
+                  <given-names>Laura A.</given-names>
                 </name>
-                <!-- role can be used to group members into subgroups, note that role element
-                is used on contrib level not contrib-group level. -->
-                <role>Writing Group</role>
-                <xref ref-type="aff" rid="aff2"/>
+                <xref ref-type="aff" rid="aff2" />
               </contrib>
-              <contrib contrib-type="person">
+              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
-                  <surname>Randall</surname><given-names>Daniel Lee</given-names>
+                  <surname>Randall</surname>
+                  <given-names>Daniel Lee</given-names>
                   <suffix>Jr.</suffix>
                 </name>
-                <role>Lab Group</role>
-                <xref ref-type="aff" rid="aff3"/>
+                <xref ref-type="aff" rid="aff3" />
               </contrib>
             </contrib-group>
           </collab>
         </contrib>
       </contrib-group>
-      <contrib-group id="contrib-group-2" content-type="editor">
-        <contrib id="contrib-3" contrib-type="person">
+      <contrib-group content-type="editor">
+        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Kastner</surname>
             <given-names>Sabine</given-names>
@@ -100,42 +96,43 @@
         <city>Princeton</city>
         <country>United States</country>
       </aff>
-      <pub-date id="date-5" publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
-        <day id="day-5">29</day>
-        <month id="month-5">01</month>
-        <year id="year-5">1999</year>
+      <pub-date date-type="pub" iso-8601-date="1999-01-29">
+        <day>29</day>
+        <month>01</month>
+        <year>1999</year>
       </pub-date>
-      <volume id="volume-1">318</volume>
-      <issue id="issue-1">7187</issue>
-      <fpage id="fpage-1">837</fpage>
-      <lpage id="lpage-1">841</lpage>
-      <history id="history-1">
-        <date id="date-1" date-type="received" iso-8601-date="1998-01-05">
-          <day id="day-1">05</day>
-          <month id="month-1">01</month>
-          <year id="year-1">1998</year>
+      <volume>318</volume>
+      <issue>7187</issue>
+      <fpage>837</fpage>
+      <lpage>841</lpage>
+      <page-range>837-841</page-range>
+      <history>
+        <date date-type="accepted" iso-8601-date="1998-06-06">
+          <day>06</day>
+          <month>06</month>
+          <year>1998</year>
         </date>
-        <date id="date-2" date-type="rev-request" iso-8601-date="1998-03-14">
-          <day id="day-2">14</day>
-          <month id="month-2">03</month>
-          <year id="year-2">1998</year>
+        <date date-type="received" iso-8601-date="1998-01-05">
+          <day>05</day>
+          <month>01</month>
+          <year>1998</year>
         </date>
-        <date id="date-3" date-type="rev-recd" iso-8601-date="1998-05-24">
-          <day id="day-3">24</day>
-          <month id="month-3">05</month>
-          <year id="year-3">1998</year>
+        <date date-type="rev-recd" iso-8601-date="1998-05-24">
+          <day>24</day>
+          <month>05</month>
+          <year>1998</year>
         </date>
-        <date id="date-4" date-type="accepted" iso-8601-date="1998-06-06">
-          <day id="day-4">06</day>
-          <month id="month-4">06</month>
-          <year id="year-4">1998</year>
+        <date date-type="rev-request" iso-8601-date="1998-03-14">
+          <day>14</day>
+          <month>03</month>
+          <year>1998</year>
         </date>
       </history>
       <abstract id="abstract-1">
         <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </abstract>
-      <trans-abstract xml:lang="es">
-      <p id="p-1-1">Spanish abstract</p>
+      <trans-abstract id="trans-abstract-1" xml:lang="es">
+        <p id="p-1-1">Spanish abstract</p>
       </trans-abstract>
       <kwd-group xml:lang="en">
         <kwd content-type="author-keyword">optogenetics</kwd>
@@ -538,13 +535,17 @@
       </ref>
       <ref id="r8">
         <element-citation publication-type="patent">
-          <collab collab-type="assignee"><named-content content-type="name">Hospira, Inc.</named-content></collab>
+          <collab collab-type="assignee">
+            <named-content content-type="name">Hospira, Inc.</named-content>
+          </collab>
           <day>5</day>
           <month>10</month>
           <patent country="US">US 6,980,855</patent>
           <year>2009</year>
           <person-group person-group-type="inventor">
-            <collab><named-content content-type="name">National Research Council</named-content></collab>
+            <collab>
+              <named-content content-type="name">National Research Council</named-content>
+            </collab>
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>

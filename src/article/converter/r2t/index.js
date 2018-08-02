@@ -19,9 +19,6 @@ import ConvertList from './ConvertList'
 // ATM
 const trafos = [
   PruneEmptyElements,
-  // NOTE: It is important that ConvertAuthors goes before ConvertRefs, as
-  // as person records with affiliations (contrib) should have priority over
-  // person records in
   ConvertArticleMeta,
   ConvertRefs, // extracts publication entities
   ConvertSigBlock,
@@ -34,7 +31,7 @@ const trafos = [
   Sec2Heading,
   ConvertXref,
   UpdateDocType
-  // TODO: is this really necessary again?
+  // TODO: is PruneText really necessary again?
   // PruneText,
 ].map(C => new C())
 

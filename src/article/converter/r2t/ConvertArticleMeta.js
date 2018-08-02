@@ -1,3 +1,4 @@
+import { forEach, isArray } from 'substance'
 import { KeywordConverter, SubjectConverter, PersonConverter, GroupConverter, OrganisationConverter, AwardConverter, getText } from './EntityConverters'
 import { expandAbstract, insertChildAtFirstValidPos, insertChildrenAtFirstValidPos, removeElements } from './r2tHelpers'
 
@@ -60,7 +61,6 @@ function _exportKeywords(dom, api) {
     kwdGroup.append(newKwdEl)
   })
 }
-
 
 function _exportSubjects(dom, api) {
   const $$ = dom.createElement.bind(dom)
@@ -148,14 +148,14 @@ function _importContribs(dom, api, type) {
   let contribs = contribGroup.findAll('contrib')
   let result = []
   contribs.forEach(contrib => {
-    let entityId
     if (contrib.attr('contrib-type') === 'group') {
-      // entityId = GroupConverter.import(contrib, pubMetaDb)
+      result = result.concat(
+        GroupConverter.import(contrib, pubMetaDb)
+      )
     } else {
-      entityId = PersonConverter.import(contrib, pubMetaDb)
-    }
-    if (entityId) {
-      result.push(entityId)
+      result.push(
+        PersonConverter.import(contrib, pubMetaDb)
+      )
     }
   })
   return result
@@ -191,9 +191,29 @@ function _exportAwards(dom, api) {
     })
     insertChildAtFirstValidPos(articleMeta, fundingGroupEl)
   }
-  console.log(articleMeta.getNativeElement())
 }
 
+
+/*
+  Uses group association of person nodes to create groups
+
+  [p1,p2g1,p3g2,p4g1] => {p1: p1, g1: [p2,p4], g2: [p3] }
+*/
+function _groupContribs(contribs) {
+  let groups = {}
+  contribs.forEach(contrib => {
+    if (contrib.group) {
+      if (groups[contrib.group]) {
+        groups[contrib.group].push(contrib.id)
+      } else {
+        groups[contrib.group] = [contrib.id]
+      }
+    } else {
+      groups[contrib.id] = contrib.id
+    }
+  })
+  return groups
+}
 
 function _exportContribs(dom, api, type) {
   const doc = api.doc
@@ -202,63 +222,22 @@ function _exportContribs(dom, api, type) {
   const articleRecord = doc.get('article-record')
   let contribGroup = $$('contrib-group').attr('content-type', type)
   let contribs = articleRecord[type+'s'].map(contribId => doc.get(contribId))
-  contribs.forEach(node => {
-    let newContribEl = PersonConverter.export($$, node, doc)
+  let groupedContribs = _groupContribs(contribs)
+  
+  forEach(groupedContribs, (val, key) => {
+    let newContribEl
+    if (isArray(val)) { // in case of a group with members
+      let group = doc.get(key)
+      // NOTE: val has an array of contrib ids to be exported as group members
+      newContribEl = GroupConverter.export($$, group, doc, val)
+    } else {
+      let person = doc.get(key)
+      newContribEl = PersonConverter.export($$, person, doc)
+    }
     contribGroup.append(newContribEl)
   })
   insertChildAtFirstValidPos(articleMeta, contribGroup)
 }
-
-
-function _exportGroup($$, contribGroup, doc, groupId) {
-  let node = doc.get(groupId)
-  let newContribEl = GroupConverter.export($$, node, doc)
-  contribGroup.append(newContribEl)
-}
-
-
-// function _exportPersons($$, dom, pubMetaDb, type) {
-//   let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
-//   if(contribGroup === null) return
-//   let contribs = contribGroup.findAll('contrib')
-//   let groupMembers = []
-//   contribs.forEach(contrib => {
-//     const groupId = contrib.attr('gid')
-//     if(groupId) {
-//       groupMembers.push(contrib)
-//       const groupEl = dom.find(`contrib#${groupId}`)
-//       if(!groupEl) {
-//         _exportGroup($$, contribGroup, pubMetaDb, groupId)
-//       }
-//       return
-//     }
-//     let node = pubMetaDb.get(contrib.attr('rid'))
-//     let newContribEl
-//     if (node.type === 'group') {
-//       newContribEl = GroupConverter.export($$, node, pubMetaDb)
-//     } else {
-//       newContribEl = PersonConverter.export($$, node, pubMetaDb)
-//     }
-    
-//     contrib.innerHTML = newContribEl.innerHTML
-//     contrib.removeAttr('rid')
-//   })
-
-//   groupMembers.forEach(contrib => {
-//     let node = pubMetaDb.get(contrib.attr('rid'))
-//     let contribEl = dom.find(`contrib#${node.group} collab`)
-//     let contribGroupEl = contribEl.find('contrib-group')
-//     if(!contribGroupEl) {
-//       contribEl.append(
-//         $$('contrib-group').attr({'contrib-type': 'group-member'})
-//       )
-//       contribGroupEl = contribEl.find('contrib-group')
-//     }
-//     let newContribEl = PersonConverter.export($$, node, pubMetaDb)
-//     contribGroupEl.append(newContribEl)
-//     contrib.parentNode.removeChild(contrib)
-//   })
-// }
 
 /*
   Export Article Record Node to <article-meta>

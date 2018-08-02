@@ -173,58 +173,6 @@ export const SubjectConverter = {
   -->
 */
 
-export const GroupConverter = {
-
-  import(el, pubMetaDb) {
-    // Use existing record when possible
-    let node = {
-      type: 'group',
-      name: getText(el, 'named-content[content-type=name]'),
-      email: getText(el, 'email'),
-      affiliations: _extractAffiliations(el, true),
-      equalContrib: el.getAttribute('equal-contrib') === 'yes',
-      corresp: el.getAttribute('corresp') === 'yes',
-      awards: _extractAwards(el)
-    }
-    entity = pubMetaDb.create(node)
-
-    let dom = el.ownerDocument
-    let persons = _extractGroupMembers(el, entity.id)
-    persons.forEach(person => {
-      const personNode = pubMetaDb.create(person)
-      const contribEl = dom.createElement('contrib').attr({
-        'rid': personNode.id,
-        'gid': node.id,
-        'contrib-type': 'person'
-      })
-      const authorsContribGroup = dom.find('contrib-group[content-type=author]')
-      authorsContribGroup.append(contribEl)
-    })
-    return entity.id
-  },
-
-  export($$, node) {
-    let el = $$('contrib').attr({
-      'id': node.id,
-      'contrib-type': 'group',
-      'equal-contrib': node.equalContrib ? 'yes' : 'no',
-      'corresp': node.corresp ? 'yes' : 'no'
-    })
-    let collab = $$('collab')
-    collab.append(
-      $$('named-content').attr('content-type', 'name').append(node.name),
-      $$('email').append(node.email)
-    )
-    // Adds affiliations to group
-    _addAffiliations(collab, $$, node)
-    // Add awards to group
-    _addAwards(collab, $$, node)
-    //_addGroupMembers(collab, $$, node)
-    el.append(collab)
-    return el
-  }
-}
-
 
 /*
   <contrib> -> Person
@@ -279,13 +227,73 @@ function _addAffiliations(el, $$, node) {
 }
 
 function _addAwards(el, $$, node) {
-  let dom = el.ownerDocument
   node.awards.forEach(awardId => {
     el.append(
       $$('xref').attr('ref-type', 'award').attr('rid', awardId)
     )
   })
 }
+
+
+export const GroupConverter = {
+
+  /*
+    NOTE: this returns an array of person nodes, as the group is
+    transformed to a list of members
+  */
+  import(el, pubMetaDb) {
+    let node = {
+      type: 'group',
+      name: getText(el, 'named-content[content-type=name]'),
+      email: getText(el, 'email'),
+      affiliations: _extractAffiliations(el, true),
+      equalContrib: el.getAttribute('equal-contrib') === 'yes',
+      corresp: el.getAttribute('corresp') === 'yes',
+      awards: _extractAwards(el)
+    }
+    let group = pubMetaDb.create(node)
+
+    let persons = _extractGroupMembers(el, group.id)
+    let results = []
+    persons.forEach(person => {
+      let node = pubMetaDb.create(person)
+      results.push(node.id)
+    })
+    return results
+  },
+
+  export($$, node, doc, groupMembers) {
+    let el = $$('contrib').attr({
+      'id': node.id,
+      'contrib-type': 'group',
+      'equal-contrib': node.equalContrib ? 'yes' : 'no',
+      'corresp': node.corresp ? 'yes' : 'no'
+    })
+    let collab = $$('collab')
+    collab.append(
+      $$('named-content').attr('content-type', 'name').append(node.name),
+      $$('email').append(node.email)
+    )
+    // Adds affiliations to group
+    _addAffiliations(collab, $$, node)
+    // Add awards to group
+    _addAwards(collab, $$, node)
+
+    // Add group members
+    // <contrib-group contrib-type="group-member">
+    let contribGroup = $$('contrib-group').attr('contrib-type', 'group-member')
+    groupMembers.forEach(member => {
+      let person = doc.get(member)
+      let contribEl = PersonConverter.export($$, person)
+      contribGroup.append(contribEl)
+    })
+
+    collab.append(contribGroup)
+    el.append(collab)
+    return el
+  }
+}
+
 
 /*
   <name> -> { type: 'ref-contrib', name: 'Doe', givenNames: 'John }
@@ -547,13 +555,11 @@ function _extractAffiliations(el, isGroup) {
   if (isGroup) {
     xrefs = el.findAll('collab > xref[ref-type=aff]')
   }
-
   let affs = xrefs.map(xref => xref.attr('rid'))
   return affs
 }
 
 function _extractAwards(el) {
-  let dom = el.ownerDocument
   let xrefs = el.findAll('xref[ref-type=award]')
   let awardIds = xrefs.map(xref => xref.attr('rid'))
   return awardIds

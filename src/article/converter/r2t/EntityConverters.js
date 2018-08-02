@@ -243,6 +243,7 @@ export const GroupConverter = {
   */
   import(el, pubMetaDb) {
     let node = {
+      id: el.id,
       type: 'group',
       name: getText(el, 'named-content[content-type=name]'),
       email: getText(el, 'email'),
@@ -447,8 +448,8 @@ export const ElementCitationConverter = {
     // Regular properties
     if (node.assignee) {
       el.append(
-        $$('collab').append(
-          _createTextElement($$, node.assignee, 'named-content', {'content-type': 'name'})
+        $$('collab').attr('collab-type', 'assignee').append(
+          _createTextElement($$, node.assignee, 'named-content', { 'content-type': 'name' })
         )
       )
     }

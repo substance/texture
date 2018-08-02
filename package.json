@@ -33,7 +33,7 @@
     "release": "node make app && build --project app-dist",
     "pretest": "npm run lint",
     "test": "node make test-nodejs && node --require esm test | tap-spec",
-    "webtest": "node make build:test-browser -s -w",
+    "webtest": "node make test-browser -s -w",
     "cover": "nyc --require esm --reporter=lcov --reporter=text node test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

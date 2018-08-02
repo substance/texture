@@ -96,7 +96,7 @@ export default class ArticleAPI {
     this._addPerson(person, 'editors')
   }
 
-  _addPerson(person = {}, type) {
+  _addPerson(/*person = {}, type*/) {
     throw new Error('TODO: create person + article-record.authors/editors in one transaction')
     // const articleSession = this.articleSession
     // const personModel = this.addEntity(person, 'person')
@@ -113,7 +113,6 @@ export default class ArticleAPI {
   }
 
   _getPersons(prop) {
-    const article = this.getArticle()
     let articleRecord = this._getNode('article-record')
     let persons = articleRecord[prop].map(personId => this.getEntity(personId))
     return persons
@@ -127,7 +126,7 @@ export default class ArticleAPI {
     return this._deletePerson(personId, 'editors')
   }
 
-  _deletePerson(personId, prop) {
+  _deletePerson(/*personId, prop*/) {
     throw new Error('TODO: remove person + article-record.authors/editors in one transaction')
     // const articleSession = this.articleSession
     // const model = this.deleteEntity(personId)
@@ -142,49 +141,41 @@ export default class ArticleAPI {
   }
 
   addOrganisation(organisation = {}) {
-    const articleSession = this.articleSession
     const orgModel = this.addEntity(organisation, 'organisation')
     return orgModel
   }
 
   deleteOrganisation(orgId) {
-    const articleSession = this.articleSession
     const model = this.deleteEntity(orgId)
     return model
   }
 
   addAward(award = {}) {
-    const articleSession = this.articleSession
     const awardModel = this.addEntity(award, 'award')
     return awardModel
   }
 
   deleteAward(awardId) {
-    const articleSession = this.articleSession
     const model = this.deleteEntity(awardId)
     return model
   }
 
   addKeyword(keyword = {}) {
-    const articleSession = this.articleSession
     const keywordModel = this.addEntity(keyword, 'keyword')
     return keywordModel
   }
 
   deleteKeyword(keywordId) {
-    const articleSession = this.articleSession
     const model = this.deleteEntity(keywordId)
     return model
   }
 
   addSubject(subject = {}) {
-    const articleSession = this.articleSession
     const subjectModel = this.addEntity(subject, 'subject')
     return subjectModel
   }
 
   deleteSubject(subjectId) {
-    const articleSession = this.articleSession
     const model = this.deleteEntity(subjectId)
     return model
   }

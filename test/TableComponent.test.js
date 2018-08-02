@@ -29,7 +29,6 @@ testAsync('TableComponent: setting table selections', async (t) => {
     anchorCellId: firstCell.id,
     focusCellId: firstCell.id
   })
-  debugger
   editorSession.setSelection(sel)
   t.equal(comp.refs.selAnchor.el.css('visibility'), 'visible', 'the selection overlay for the selection anchor should be visible')
   t.equal(comp.refs.selRange.el.css('visibility'), 'visible', 'the selection overlay for the selection range should be visible')

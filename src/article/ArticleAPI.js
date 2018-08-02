@@ -96,12 +96,19 @@ export default class ArticleAPI {
     this._addPerson(person, 'editors')
   }
 
-  _addPerson(/*person = {}, type*/) {
-    throw new Error('TODO: create person + article-record.authors/editors in one transaction')
-    // const articleSession = this.articleSession
-    // const personModel = this.addEntity(person, 'person')
-    // // TODO: we probably want to have addAuthor, addEditor as more understandable API's.
-    // return personModel
+  _addPerson(person = {}, type) {
+    const newNode = Object.assign({}, person, {
+      type: 'person'
+    })
+    let node
+    this.articleSession.transaction(tx => {
+      node = tx.create(newNode)
+      const articleRecord = tx.get('article-record')
+      let length = articleRecord[type].length
+      tx.update(['article-record', type], { type: 'insert', pos: length, value: node.id })
+      tx.selection = null
+    })
+    return this.getModel(node.type, node)
   }
 
   getAuthors() {
@@ -126,18 +133,18 @@ export default class ArticleAPI {
     return this._deletePerson(personId, 'editors')
   }
 
-  _deletePerson(/*personId, prop*/) {
-    throw new Error('TODO: remove person + article-record.authors/editors in one transaction')
-    // const articleSession = this.articleSession
-    // const model = this.deleteEntity(personId)
-    // articleSession.transaction(tx => {
-    //   const personsContribGroup = tx.find(`contrib-group[content-type=${type}]`)
-    //   const contrib = personsContribGroup.find(`contrib[rid=${personId}]`)
-    //   contrib.parentNode.removeChild(contrib)
-    //   tx.delete(contrib.id)
-    //   tx.selection = null
-    // })
-    // return model
+  _deletePerson(personId, type) {
+    let node
+    this.articleSession.transaction((tx) => {
+      node = tx.delete(personId)
+      const articleRecord = tx.get('article-record')
+      let pos = articleRecord[type].indexOf(personId)
+      if (pos !== -1) {
+        tx.update(['article-record', type], { type: 'delete', pos: pos })
+      }
+      tx.selection = null
+    })
+    return this.getModel(node.type, node)
   }
 
   addOrganisation(organisation = {}) {

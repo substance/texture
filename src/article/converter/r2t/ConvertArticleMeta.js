@@ -11,15 +11,17 @@ import { expandAbstract, insertChildAtFirstValidPos, insertChildrenAtFirstValidP
 export default class ConvertArticleMeta {
 
   import(dom, api) {
+
     expandAbstract(dom)
+    let articleMeta = dom.find('article-meta')
     _importArticleRecord(dom, api)
     _importKeywordsOrSubjects(dom, api, 'article-meta > kwd-group > kwd', KeywordConverter)
     _importKeywordsOrSubjects(dom, api, ' article-meta > article-categories > subj-group > subject', SubjectConverter)
 
     // We don't need these in InternalArticle, as they are represented as entity nodes
-    removeElements(dom, [
-      'article-meta > kwd-group',
-      'article-meta > article-categories',
+    removeElements(articleMeta, [
+      'kwd-group',
+      'article-categories',
       'history',
       'aff',
       'funding-group',
@@ -29,7 +31,8 @@ export default class ConvertArticleMeta {
       'fpage',
       'lpage',
       'page-range',
-      'elocation-id' 
+      'elocation-id' ,
+      'pub-date'
     ])
   }
 
@@ -50,6 +53,8 @@ function _exportKeywords(dom, api) {
   const keywordIdx = doc.findByType('keyword')
   const keywords = keywordIdx.map(kwdId => doc.get(kwdId))
   const keywordLangs = [...new Set(keywords.map(item => item.language))]
+  // HACK: we need to reverse
+  keywordLangs.reverse()
   keywordLangs.forEach(lang => {
     const kwdGroup = $$('kwd-group').setAttribute('xml:lang', lang)
     // NOTE: this function is only working if the xml is valid currently, don't use it during invalid state
@@ -143,9 +148,10 @@ function _importAwards(dom, api) {
 
 function _importContribs(dom, api, type) {
   let pubMetaDb = api.pubMetaDb
-  let contribGroup = dom.find(`contrib-group[content-type=${type}]`)
-  if(contribGroup === null) return
-  let contribs = contribGroup.findAll('contrib')
+  
+  // Find all direct children of contrib-group
+  let contribs = dom.findAll(`contrib-group[content-type=${type}] > contrib`)
+  
   let result = []
   contribs.forEach(contrib => {
     if (contrib.attr('contrib-type') === 'group') {
@@ -167,6 +173,10 @@ function _exportAffiliations(dom, api) {
   const articleMeta = dom.find('article-meta')
   const $$ = dom.createElement.bind(dom)
   const organisationIds = doc.findByType('organisation')
+
+  // HACK: we inverse the order since insertChildAtFirstValid pos will lead
+  // first in last out
+  organisationIds.reverse()
 
   organisationIds.forEach(organisationId => {
     let node = doc.get(organisationId)
@@ -192,7 +202,6 @@ function _exportAwards(dom, api) {
     insertChildAtFirstValidPos(articleMeta, fundingGroupEl)
   }
 }
-
 
 /*
   Uses group association of person nodes to create groups
@@ -223,7 +232,6 @@ function _exportContribs(dom, api, type) {
   let contribGroup = $$('contrib-group').attr('content-type', type)
   let contribs = articleRecord[type+'s'].map(contribId => doc.get(contribId))
   let groupedContribs = _groupContribs(contribs)
-  
   forEach(groupedContribs, (val, key) => {
     let newContribEl
     if (isArray(val)) { // in case of a group with members
@@ -252,8 +260,11 @@ function _exportArticleRecord(dom, api) {
 
   _exportAffiliations(dom, api)
   _exportAwards(dom, api)
-  _exportContribs(dom, api, 'author')
+
+  // NOTE: we flip the order here as schema based insertion is done first in last out
   _exportContribs(dom, api, 'editor')
+  _exportContribs(dom, api, 'author')
+  
 
   insertChildAtFirstValidPos(articleMeta, $$('volume').append(node.volume))
   insertChildAtFirstValidPos(articleMeta, $$('issue').append(node.issue))
@@ -281,6 +292,7 @@ function _exportArticleRecord(dom, api) {
   historyEl.append(_exportDate($$, node, 'revReceivedDate', 'rev-recd'))
   historyEl.append(_exportDate($$, node, 'revRequestedDate', 'rev-request'))
 
+  // Export published date
   insertChildAtFirstValidPos(articleMeta, _exportDate($$, node, 'publishedDate', 'pub', 'pub-date'))
   insertChildAtFirstValidPos(articleMeta, historyEl)
 }

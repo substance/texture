@@ -208,9 +208,9 @@ export function getFirstValidInsertPos(parent, tagName) {
 /*
   Remove elements based on an array of matchers
 */
-export function removeElements(dom, matchers) {
+export function removeElements(rootEl, matchers) {
   matchers.forEach(matcher => {
-    let elements = dom.findAll(matcher)
+    let elements = rootEl.findAll(matcher)
     elements.forEach(element => {
       element.getParent().removeChild(element)
     })

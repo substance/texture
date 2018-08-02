@@ -382,6 +382,7 @@ export const ElementCitationConverter = {
 
   import(el, pubMetaDb, id) {
     let type = el.attr('publication-type')
+
     let node = {
       // HACK: trying to merge EntitDb into Article model, avoiding id collision
       id: `@${id}`,

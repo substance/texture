@@ -728,6 +728,8 @@ function subjectRenderer($$, entityId, entityDb, options = {}) {
 }
 
 function articleRecordRenderer() {
+  // Hack: while for oth er entities we are trying to render dynamic title
+  // here we just returning static name for metadata editor's section
   return 'Article'
 }
 

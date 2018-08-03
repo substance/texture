@@ -9,6 +9,14 @@ const targetTypes = [
 ]
 
 export default class AddReferenceWorkflow extends Component {
+  didMount() {
+    super.didMount()
+
+    this.handleActions({
+      'importBib': this._onImport
+    })
+  }
+
   render($$) {
     const labelProvider = this.context.labelProvider
 
@@ -42,6 +50,12 @@ export default class AddReferenceWorkflow extends Component {
     )
 
     return el
+  }
+
+  _onImport(items) {
+    const api = this.context.api
+    const collection = api.getModel('references')
+    collection.addItems(items)
   }
 
   _onAdd (type) {

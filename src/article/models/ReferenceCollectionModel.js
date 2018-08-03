@@ -22,6 +22,10 @@ export default class ReferenceCollectionModel {
     this._api.addReference(item, item.type)
   }
 
+  addItems(items) {
+    this._api.addReferences(items)
+  }
+
   removeItem(item) {
     this._api.deleteReference(item.id)
   }

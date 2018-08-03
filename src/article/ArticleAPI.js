@@ -199,6 +199,31 @@ export default class ArticleAPI {
     return referenceModel
   }
 
+  addReferences(refs) {
+    const refContribProps = ['authors','editors','inventors','sponsors','translators']
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      const refList = tx.find('ref-list')
+      refs.forEach(ref => {
+        refContribProps.forEach(propName => {
+          if(ref[propName]) {
+            let refContribs = ref[propName].map(contrib => {
+              contrib.type = 'ref-contrib'
+              const node = tx.create(contrib)
+              return node.id
+            })
+            ref[propName] = refContribs
+          }
+        })
+        const node = tx.create(ref)
+        const refEl = tx.createElement('ref').attr('rid',node.id)
+        refList.append(refEl)
+      })
+      tx.selection = null
+    })
+    return
+  }
+
   deleteReference(refId) {
     const article = this.getArticle()
     const articleSession = this.articleSession

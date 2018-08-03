@@ -234,5 +234,14 @@ export default {
       en: 'Add Reference'
     })
     config.addComponent('add-reference', AddReferenceWorkflow)
+
+    // Add reference workflow
+    config.addLabel('add-reference-title', 'Add Reference(s)')
+    config.addLabel('add-ref-manually', 'Or create manually')
+    config.addLabel('fetch-datacite', 'Fetch from DataCite')
+    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
+    config.addLabel('doi-fetch-action', 'Add')
+    config.addLabel('import-refs', 'Import')
+    config.addLabel('supported-ref-formats', 'Supported formats')
   }
 }

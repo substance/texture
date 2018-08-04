@@ -1,6 +1,6 @@
 import { Component } from 'substance'
-import DOIInputComponent from '../editor/DOIInputComponent'
-import ReferenceUploadComponent from '../editor/ReferenceUploadComponent'
+import DOIInputComponent from './DOIInputComponent'
+import ReferenceUploadComponent from './ReferenceUploadComponent'
 
 const targetTypes = [
   'journal-article', 'book', 'chapter', 'conference-paper',
@@ -56,6 +56,7 @@ export default class AddReferenceWorkflow extends Component {
     const api = this.context.api
     const collection = api.getModel('references')
     collection.addItems(items)
+    this.send('closeModal')
   }
 
   _onAdd (type) {

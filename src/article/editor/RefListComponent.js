@@ -1,7 +1,5 @@
 import NodeComponent from '../shared/NodeComponent'
-import { ModalDialog } from '../../shared'
 import removeElementAndXrefs from '../shared/removeElementAndXrefs'
-import AddReferenceComponent from './AddReferenceComponent'
 import RefComponent from './RefComponent'
 import Button from './Button'
 
@@ -36,7 +34,6 @@ export default class RefListComponent extends NodeComponent {
 
   render($$) {
     const bibliography = this._getBibliography()
-    const mode = this.state.mode
 
     let el = $$('div').addClass('sc-ref-list')
       .attr('data-id', 'ref-list')
@@ -44,27 +41,6 @@ export default class RefListComponent extends NodeComponent {
     if (this.state.hidden) {
       el.addClass('sm-hidden')
       return el
-    }
-
-    if (mode) {
-      let ModeComponent
-      if(mode === 'add') {
-        ModeComponent = AddReferenceComponent
-      } else if (mode === 'edit') {
-        ModeComponent = this.getComponent('edit-entity')
-      } else {
-        ModeComponent = this.getComponent('create-entity')
-      }
-
-      el.append(
-        $$(ModalDialog, {
-          width: 'medium',
-          textAlign: 'center',
-          transparent: true
-        }).append(
-          $$(ModeComponent, this.state.modeProps)
-        )
-      )
     }
 
     if (bibliography.length > 0) {

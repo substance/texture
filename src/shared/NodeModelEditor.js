@@ -40,6 +40,9 @@ export default class NodeModelEditor extends CustomSurface {
       if (hidden) hasHiddenProps = true
       if (fullMode || !hidden) {
         const PropertyEditor = this._getPropertyEditorClass(property)
+        // skip this property if the editor implementation produces nil
+        if (!PropertyEditor) continue
+
         const label = this.getLabel(property.name)
         const model = property.model
         el.append(

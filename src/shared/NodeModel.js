@@ -78,6 +78,8 @@ export class NodeModelProperty {
 
   get model () { return this._valueModel }
 
+  get targetTypes () { return this._nodeProperty.targetTypes || [] }
+
   isRequired () {
     return this._api._isPropertyRequired(this._node.type, this.name)
   }

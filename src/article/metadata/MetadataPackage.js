@@ -14,6 +14,8 @@ import CollectionEditor from './CollectionEditor'
 import ModelPreviewComponent from '../shared/ModelPreviewComponent'
 
 import ArticleRecordEditor from './ArticleRecordEditor'
+import BibliographicEntryEditor from './BibliographicEntryEditor'
+
 import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
@@ -38,6 +40,7 @@ export default {
     config.addComponent('collection', CollectionEditor)
     config.addComponent('entity', NodeModelEditor)
     config.addComponent('article-record', ArticleRecordEditor)
+    config.addComponent('bibr', BibliographicEntryEditor)
 
     config.addToolPanel('toolbar', [
       {

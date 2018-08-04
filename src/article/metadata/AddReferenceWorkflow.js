@@ -1,6 +1,6 @@
 import { Component } from 'substance'
-import DOIInputComponent from '../editor/DOIInputComponent'
-import ReferenceUploadComponent from '../editor/ReferenceUploadComponent'
+import DOIInputComponent from './DOIInputComponent'
+import ReferenceUploadComponent from './ReferenceUploadComponent'
 
 const targetTypes = [
   'journal-article', 'book', 'chapter', 'conference-paper',
@@ -9,6 +9,14 @@ const targetTypes = [
 ]
 
 export default class AddReferenceWorkflow extends Component {
+  didMount() {
+    super.didMount()
+
+    this.handleActions({
+      'importBib': this._onImport
+    })
+  }
+
   render($$) {
     const labelProvider = this.context.labelProvider
 
@@ -42,6 +50,13 @@ export default class AddReferenceWorkflow extends Component {
     )
 
     return el
+  }
+
+  _onImport(items) {
+    const api = this.context.api
+    const collection = api.getModel('references')
+    collection.addItems(items)
+    this.send('closeModal')
   }
 
   _onAdd (type) {

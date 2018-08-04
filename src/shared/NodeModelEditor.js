@@ -1,6 +1,14 @@
 import { FontAwesomeIcon, CustomSurface } from 'substance'
 import FormRowComponent from './FormRowComponent'
 
+/*
+  General purpose editor for Substance Document nodes.
+  Built-in editor components are different types of properties.
+
+  If you need to deviate from this default implementation
+  you can register a custom component for a specific node type
+  deriving from this class, and for instance overriding `_getPropertyEditorClass()`.
+*/
 export default class NodeModelEditor extends CustomSurface {
   getInitialState () {
     return {
@@ -31,7 +39,7 @@ export default class NodeModelEditor extends CustomSurface {
       let hidden = !property.isRequired() && property.isEmpty()
       if (hidden) hasHiddenProps = true
       if (fullMode || !hidden) {
-        const PropertyEditor = this.getComponent(property.type)
+        const PropertyEditor = this._getPropertyEditorClass(property)
         const label = this.getLabel(property.name)
         const model = property.model
         el.append(
@@ -77,12 +85,16 @@ export default class NodeModelEditor extends CustomSurface {
     return el
   }
 
+  _getPropertyEditorClass(property) {
+    return this.getComponent(property.type)
+  }
+
   _getCustomResourceId () {
     return this.props.model.id
   }
 
   rerenderDOMSelection (...args) {
-    console.log('EntityEditor.rerenderDOMSelection()', args)
+    // console.log('EntityEditor.rerenderDOMSelection()', args)
   }
 
   _toggleMode () {

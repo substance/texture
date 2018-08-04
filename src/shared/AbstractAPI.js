@@ -1,4 +1,4 @@
-import NodeModelFactory from './NodeModelFactory'
+import { NodeModelFactory as ModelFactory } from './NodeModel'
 
 export default class AbstractAPI {
   _getDocument () {
@@ -21,7 +21,7 @@ export default class AbstractAPI {
   }
 
   _getModelForNode (node) {
-    return NodeModelFactory.create(this, node)
+    return ModelFactory.create(this, node)
   }
 
   // TODO: rethink. this should come from some configuration

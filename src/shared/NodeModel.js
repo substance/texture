@@ -2,7 +2,7 @@ import { isNil } from 'substance'
 
 const MODELCLASS_CACHE = new Map()
 
-export default class NodeModelFactory {
+export class NodeModelFactory {
   static create (api, node) {
     let ModelClass = MODELCLASS_CACHE.get(node.type)
     if (!ModelClass) {
@@ -22,8 +22,9 @@ export default class NodeModelFactory {
   }
 }
 
-class NodeModel {
+export class NodeModel {
   constructor (api, node) {
+    if (!node) throw new Error("'node' is required")
     this._api = api
     this._node = node
 
@@ -62,7 +63,7 @@ function _getter (name) {
   return ['get', name[0].toUpperCase(), name.slice(1)].join('')
 }
 
-class NodeModelProperty {
+export class NodeModelProperty {
   constructor (api, node, nodeProperty) {
     this._api = api
     this._node = node
@@ -114,7 +115,11 @@ class NodeModelProperty {
     if (!valueModel) {
       if (nodeProperty.isReference()) {
         if (nodeProperty.isArray()) {
-          valueModel = new ManyRelationshipModel(api, path, nodeProperty.targetTypes)
+          if (nodeProperty.isOwned()) {
+            valueModel = new ChildrenModel(api, path, nodeProperty.targetTypes)
+          } else {
+            valueModel = new ManyRelationshipModel(api, path, nodeProperty.targetTypes)
+          }
         } else {
           valueModel = new SingleRelationshipModel(api, path, nodeProperty.targetTypes)
         }
@@ -127,7 +132,7 @@ class NodeModelProperty {
   }
 }
 
-class ValueModel {
+export class ValueModel {
   constructor (api, path) {
     this._api = api
     this._path = path
@@ -152,8 +157,8 @@ class ValueModel {
   get _value () { return this.getValue() }
 }
 
-class BooleanModel extends ValueModel {
-  get type () { return 'boolean' }
+export class BooleanModel extends ValueModel {
+  get type () { return 'boolean-model' }
 
   // Note: Nil is interpreted as false, and false is thus also interpreted as isEmpty()
   isEmpty () {
@@ -161,12 +166,12 @@ class BooleanModel extends ValueModel {
   }
 }
 
-class NumberModel extends ValueModel {
-  get type () { return 'number' }
+export class NumberModel extends ValueModel {
+  get type () { return 'number-model' }
 }
 
-class StringModel extends ValueModel {
-  get type () { return 'string' }
+export class StringModel extends ValueModel {
+  get type () { return 'string-model' }
 
   isEmpty () {
     let value = this.getValue()
@@ -174,11 +179,11 @@ class StringModel extends ValueModel {
   }
 }
 
-class TextModel extends StringModel {
+export class TextModel extends StringModel {
   get type () { return 'text' }
 }
 
-class RelationshipModel extends ValueModel {
+export class RelationshipModel extends ValueModel {
   constructor (api, path, targetTypes) {
     super(api, path)
 
@@ -190,8 +195,8 @@ class RelationshipModel extends ValueModel {
   }
 }
 
-class SingleRelationshipModel extends RelationshipModel {
-  get type () { return 'single-relationship' }
+export class SingleRelationshipModel extends RelationshipModel {
+  get type () { return 'single-relationship-model' }
 
   getTarget () {
     let id = this.getValue()
@@ -205,8 +210,8 @@ class SingleRelationshipModel extends RelationshipModel {
   }
 }
 
-class ManyRelationshipModel extends RelationshipModel {
-  get type () { return 'many-relationship' }
+export class ManyRelationshipModel extends RelationshipModel {
+  get type () { return 'many-relationship-model' }
 
   getValue () {
     return super.getValue() || []
@@ -221,11 +226,41 @@ class ManyRelationshipModel extends RelationshipModel {
   }
 }
 
+export class ChildrenModel extends ValueModel {
+  constructor (api, path, targetTypes) {
+    super(api, path)
+
+    this._targetTypes = targetTypes
+  }
+
+  get type () { return 'children-model' }
+
+  getValue () {
+    return super.getValue() || []
+  }
+
+  getChildren () {
+    return this.getValue().map(id => this._api._getModelById(id))
+  }
+
+  isEmpty () {
+    return this.getValue().length === 0
+  }
+
+  appendChild (child) {
+    this._api._appendChild(this._path, child)
+  }
+
+  removeChild (child) {
+    this._api._removeChild(this._path, child)
+  }
+}
+
 function _getAvailableRelationshipOptions (api, targetTypes) {
-  let items = []
-  targetTypes.forEach(targetType => {
-    items = items.concat(api.getCollectionForType(targetType))
-  })
+  let items = targetTypes.reduce((items, targetType) => {
+    let collection = api.getCollectionForType(targetType)
+    return items.concat(collection.getItems())
+  }, [])
   return items.map(item => _getRelationshipOption(api, item.id))
 }
 

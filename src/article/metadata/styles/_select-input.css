@@ -39,6 +39,11 @@
   cursor: pointer;
 }
 
+.sc-select-input .se-select-editor .se-select-item.sm-active {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .sc-select-input .se-select-editor .se-arrow {
   width: 60px;
   height: 16px;

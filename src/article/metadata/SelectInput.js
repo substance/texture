@@ -54,6 +54,10 @@ export default class SelectInput extends Component {
           $$('div').addClass('se-select-item').append(opt.text).ref(opt.id)
             .on('click', this._setValue.bind(this, opt.id))
         )
+      } else {
+        editorEl.append(
+          $$('div').addClass('se-select-item sm-active').append(opt.text).ref(opt.id)
+        )
       }
     })
     return editorEl

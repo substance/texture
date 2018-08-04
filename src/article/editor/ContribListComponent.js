@@ -1,7 +1,7 @@
 import { FontAwesomeIcon, uniq, without, uuid } from 'substance'
 import { ModalDialog } from '../../shared'
 import NodeComponent from '../shared/NodeComponent'
-import entityRenderers from '../shared/entityRenderers'
+import renderEntity from '../shared/renderEntity'
 import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AffiliationsListComponent from './AffiliationsListComponent'
 
@@ -65,7 +65,7 @@ export default class ContribsListComponent extends NodeComponent {
           let short = entity.type === 'organisation'
           contentEl.append(
             $$('span').addClass('se-contrib').html(
-              entityRenderers[entity.type](entity.id, article, { short })
+              renderEntity(entity, { short })
             )
           )
           if (index < entityIds.length - 1) {

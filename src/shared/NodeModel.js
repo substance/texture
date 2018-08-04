@@ -111,6 +111,9 @@ export class NodeModelProperty {
         valueModel = new TextModel(api, path)
         break
       }
+      case 'object': {
+        valueModel = new ObjectModel(api, path)
+      }
       default:
         //
     }
@@ -179,6 +182,10 @@ export class StringModel extends ValueModel {
     let value = this.getValue()
     return isNil(value) || value.length === 0
   }
+}
+
+export class ObjectModel extends ValueModel {
+  get type () { return 'object-model' }
 }
 
 export class TextModel extends StringModel {

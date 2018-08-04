@@ -59,7 +59,7 @@
   color: #111;
 }
 
-.sc-metadata-editor .se-collections {
+.sc-metadata-editor .se-sections {
   max-width: 760px;
   padding: 30px;
 }
@@ -74,4 +74,13 @@
 .sc-metadata-editor a {
   color: inherit;
   text-decoration: underline;
+}
+
+.sc-metadata-section > .se-heading {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 30px 0px;
+  border-radius: 4px;
+  font-size: var(--h1-font-size);
 }

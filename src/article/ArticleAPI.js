@@ -1,17 +1,22 @@
 import { without } from 'substance'
 
+import AbstractAPI from '../shared/AbstractAPI'
+import DynamicCollection from '../shared/DynamicCollection'
+
 import AnnotatedTextModel from './models/AnnotatedTextModel'
 
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
-import DefaultModel from './models/DefaultModel'
-import entityRenderers from './shared/entityRenderers'
+// import DefaultModel from './models/DefaultModel'
+import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 
-export default class ArticleAPI {
+export default class ArticleAPI extends AbstractAPI {
   constructor (articleSession, modelRegistry) {
+    super()
+
     this.modelRegistry = modelRegistry
     this.articleSession = articleSession
     this.article = articleSession.getDocument()
@@ -22,11 +27,14 @@ export default class ArticleAPI {
   */
   getModel (type, node) {
     let ModelClass = this.modelRegistry[type]
+    // HACK: trying to retrieve the node if it is not given
+    if (!node) {
+      node = this.article.get(type)
+    }
     if (ModelClass) {
       return new ModelClass(this, node)
-    } else {
-      return new DefaultModel(this, node)
-      // throw new Error(`No model for ${type} found.`)
+    } else if (node) {
+      return this._getModelForNode(node)
     }
   }
 
@@ -48,9 +56,11 @@ export default class ArticleAPI {
     return entityIds.map(entityId => this.getEntity(entityId))
   }
 
-  // TODO: This method we should move into the API!
+  // TODO: this should be configurable. As it is similar to HTML conversion
+  // we could use the converter registry for this
   renderEntity(model) {
-    return entityRenderers[model.type](model.id, this.getArticle())
+    let entity = this.getArticle().get(model.id)
+    return renderEntity(entity)
   }
 
   getArticle () {
@@ -87,7 +97,7 @@ export default class ArticleAPI {
     })
     return this.getModel(node.type, node)
   }
-  
+
   addAuthor(person = {}) {
     this._addPerson(person, 'authors')
   }
@@ -257,14 +267,27 @@ export default class ArticleAPI {
     return article.attr('xml:lang') || 'en'
   }
 
-  /*
-    NOTE: This only works for collection that contain a single item type. We may need to rethink this
-  */
-  getCollectionForType(type) {
-    const model = this.getModel(type+'s')
-    return model.getItems()
+  getCollectionForType (type) {
+    // TODO: need to rethink this.
+    // ATM we are registering special model classes for collections,
+    // which are named after the single entity they contain,
+    // e.g. 'authors' is a the collection of author nodes (which are person nodes essentially).
+    // This is currently pretty confusing. It would be better to have
+    // specific node in the model for that.
+    // Still, we would need a mechanism to specify which node is acting as the parent
+    // collection for which node.
+    let collectionType = COLLECTIONS[type]
+    // I don't like this implicit mapping.
+    if (!collectionType) {
+      collectionType = type + 's'
+    }
+    let model = this.getModel(collectionType)
+    if (!model) {
+      console.error(`No collection specified for type '${type}'. Using DynamicCollection. You should register a collection for this type explicitly.`)
+      model = new DynamicCollection(this, type)
+    }
+    return model
   }
-
 
   getSchema(type) {
     return this.article.getSchema().getNodeSchema(type)
@@ -438,4 +461,47 @@ export default class ArticleAPI {
     console.error('DEPRECATED: use api.getArticle() instead.')
     return this.getArticle()
   }
+
+  _getDocument () {
+    return this.getArticleSession().getDocument()
+  }
+
+  _getDocumentSession () {
+    return this.getArticleSession()
+  }
+
+  _isPropertyRequired (type, propertyName) {
+    let REQUIRED = REQUIRED_PROPERTIES[type]
+    if (REQUIRED) return REQUIRED.has(propertyName)
+    return false
+  }
+}
+
+// TODO: this should come from configuration
+const REQUIRED_PROPERTIES = {
+  'book': new Set(['authors', 'title']),
+  'chapter': new Set(['title', 'containerTitle', 'authors']),
+  'data-publication': new Set(['title', 'containerTitle', 'authors']),
+  'magazine-article': new Set(['title', 'containerTitle', 'authors']),
+  'newspaper-article': new Set(['title', 'containerTitle', 'authors']),
+  '_patent': new Set(['title', 'containerTitle', 'inventors']),
+  'journal-article': new Set(['title', 'containerTitle', 'authors']),
+  'conference-paper': new Set(['title', 'authors']),
+  'report': new Set(['title', 'authors']),
+  'software': new Set(['title', 'authors']),
+  'thesis': new Set(['title', 'authors', 'year']),
+  'webpage': new Set(['title', 'containerTitle', 'authors']),
+  'person': new Set(['surname', 'givenNames']),
+  'ref-contrib': new Set(['name', 'givenNames']),
+  'group': new Set(['name']),
+  'organisation': new Set(['name']),
+  'award': new Set(['institution']),
+  'keyword': new Set(['name']),
+  '_subject': new Set(['name'])
+}
+
+// TODO: this should come from configuration
+const COLLECTIONS = {
+  'author': 'authors',
+  'editor': 'editors',
 }

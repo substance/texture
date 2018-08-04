@@ -8,7 +8,6 @@ export default class ReferencePropertyEditor extends Component {
     let name = property.name
     let data = this.props.model.toJSON()
     let value = data[name]
-    // TODO: remove a div wrapper after ref persistence will be fixed in substance
     return $$(MultiSelectInput, {
       name: name,
       selectedOptions: value,

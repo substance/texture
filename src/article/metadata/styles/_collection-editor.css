@@ -1,8 +1,0 @@
-.sc-collection-editor .se-heading {
-  display: flex;
-  justify-content: space-between;
-  max-width: 800px;
-  margin: 30px 0px;
-  border-radius: 4px;
-  font-size: var(--h1-font-size);
-}

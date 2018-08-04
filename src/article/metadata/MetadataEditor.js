@@ -1,26 +1,25 @@
 import { Component } from 'substance'
-import {
-  Managed, createEditorContext
-} from '../../shared'
+import { Managed, createEditorContext } from '../../shared'
+import CardComponent from '../shared/CardComponent'
+import EntityEditor from '../shared/EntityEditor'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
-import EntityEditor from '../shared/EntityEditor'
-import CardComponent from '../shared/CardComponent'
+import MetadataSection from './MetadataSection'
 
 const SECTIONS = [
-  { label: 'Authors', modelType: 'authors' },
-  { label: 'Editors', modelType: 'editors' },
-  { label: 'Groups', modelType: 'groups' },
-  { label: 'Affiliations', modelType: 'organisations' },
-  { label: 'Awards', modelType: 'awards' },
-  { label: 'Figures', modelType: 'figures' },
-  { label: 'Footnotes', modelType: 'footnotes' },
+  // { label: 'Article', modelType: 'article-record' },
+  // { label: 'Authors', modelType: 'authors' },
+  // { label: 'Translations', modelType: 'translatables' },
+  // { label: 'Editors', modelType: 'editors' },
+  // { label: 'Groups', modelType: 'groups' },
+  // { label: 'Affiliations', modelType: 'organisations' },
+  // { label: 'Awards', modelType: 'awards' },
+  // { label: 'Figures', modelType: 'figures' },
+  // { label: 'Footnotes', modelType: 'footnotes' },
   { label: 'References', modelType: 'references' },
-  { label: 'Keywords', modelType: 'keywords' },
-  { label: 'Subjects', modelType: 'subjects' },
-  { label: 'Translations', modelType: 'translatables' },
-  { label: 'Article', modelType: 'article-record' }
+  // { label: 'Keywords', modelType: 'keywords' },
+  // { label: 'Subjects', modelType: 'subjects' },
 ]
 
 export default class MetadataEditor extends Component {
@@ -150,28 +149,15 @@ export default class MetadataEditor extends Component {
       scrollbarPosition: 'right'
     }).ref('contentPanel')
 
-    let collectionsEl = $$('div').addClass('se-collections')
+    let sectionsEl = $$('div').addClass('se-sections')
     SECTIONS.forEach(section => {
-      let model = api.getModel(section.modelType)
-      if (model.isCollection) {
-        collectionsEl.append(
-          $$(CollectionEditor, { model: model })
-            .attr({id: model.id})
-            .ref(model.id)
-        )
-      } else if (section.modelType === 'article-record') {
-        model = api.getEntity('article-record')
-        collectionsEl.append(
-          $$(CardComponent).append(
-            $$(EntityEditor, { model: model })
-              .attr({id: model.id})
-              .ref(model.id)
-          )
-        )
-      }
+      const model = api.getModel(section.modelType)
+      const id = model.id
+      let content = $$(MetadataSection, { model }).attr({id}).ref(id)
+      sectionsEl.append(content)
     })
 
-    contentPanel.append(collectionsEl)
+    contentPanel.append(sectionsEl)
 
     return contentPanel
   }

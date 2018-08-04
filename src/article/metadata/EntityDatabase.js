@@ -8,11 +8,16 @@ function MANY (...targetTypes) {
 function ONE (...targetTypes) {
   return { type: 'id', targetTypes, default: null }
 }
+function CHILDREN (...targetTypes) {
+  return { type: ['array', 'id'], targetTypes, default: [], owned: true }
+}
 
 export class ArticleRecord extends DocumentNode {}
 
 ArticleRecord.schema = {
   type: 'article-record',
+  authors: MANY('person'),
+  editors: MANY('person'),
   volume: STRING,
   issue: STRING,
   fpage: STRING,
@@ -38,9 +43,9 @@ export class Book extends BibliographicEntry {}
 
 Book.schema = {
   type: 'book',
-  authors: MANY('ref-contrib'),
-  editors: MANY('ref-contrib'),
-  translators: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
+  editors: CHILDREN('ref-contrib'),
+  translators: CHILDREN('ref-contrib'),
   title: STRING,
   volume: STRING,
   edition: STRING,
@@ -63,9 +68,9 @@ Chapter.schema = {
   title: STRING, // <chapter-title>
   containerTitle: STRING, // <source>
   volume: STRING,
-  authors: MANY('ref-contrib'), // <person-group person-group-type="author">
-  editors: MANY('ref-contrib'),
-  translators: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  editors: CHILDREN('ref-contrib'),
+  translators: CHILDREN('ref-contrib'),
   edition: STRING,
   publisherLoc: STRING,
   publisherName: STRING,
@@ -87,7 +92,7 @@ export class DataPublication extends BibliographicEntry {}
 DataPublication.schema = {
   type: 'data-publication',
   title: STRING,
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   year: STRING,
   month: STRING,
@@ -103,7 +108,7 @@ export class MagazineArticle extends BibliographicEntry {}
 MagazineArticle.schema = {
   type: 'magazine-article',
   title: STRING,
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   year: STRING,
   month: STRING,
@@ -120,7 +125,7 @@ export class NewspaperArticle extends BibliographicEntry {}
 NewspaperArticle.schema = {
   type: 'newspaper-article',
   title: STRING,
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   year: STRING,
   month: STRING,
@@ -139,7 +144,7 @@ export class Patent extends BibliographicEntry {}
 Patent.schema = {
   // HACK: trying to merge EntitDb into Article model, avoiding type collision
   type: '_patent',
-  inventors: MANY('ref-contrib'),
+  inventors: CHILDREN('ref-contrib'),
   assignee: STRING,
   title: STRING,
   containerTitle: STRING, // <source>
@@ -156,8 +161,8 @@ export class JournalArticle extends BibliographicEntry {}
 JournalArticle.schema = {
   type: 'journal-article',
   title: STRING,
-  authors: MANY('ref-contrib'),
-  editors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
+  editors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   volume: STRING,
   issue: STRING,
@@ -177,7 +182,7 @@ export class ConferencePaper extends BibliographicEntry {}
 ConferencePaper.schema = {
   type: 'conference-paper',
   title: STRING, // <article-title>
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   confName: STRING,
   confLoc: STRING,
   containerTitle: STRING, // <source>
@@ -199,8 +204,8 @@ export class Report extends BibliographicEntry {
 
 Report.schema = {
   type: 'report',
-  authors: MANY('ref-contrib'),
-  sponsors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
+  sponsors: CHILDREN('ref-contrib'),
   title: STRING,
   year: STRING,
   month: STRING,
@@ -217,7 +222,7 @@ export class Software extends BibliographicEntry {}
 Software.schema = {
   type: 'software',
   title: STRING,
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   version: STRING,
   publisherLoc: STRING,
   publisherName: STRING,
@@ -232,7 +237,7 @@ export class Thesis extends BibliographicEntry {}
 Thesis.schema = {
   type: 'thesis',
   title: STRING,
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   year: STRING,
   month: STRING,
   day: STRING,
@@ -248,7 +253,7 @@ Webpage.schema = {
   title: STRING,
   // E.g. website name, where the page appeared
   containerTitle: STRING, // <source>
-  authors: MANY('ref-contrib'),
+  authors: CHILDREN('ref-contrib'),
   year: STRING,
   month: STRING,
   day: STRING,

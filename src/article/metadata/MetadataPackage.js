@@ -7,12 +7,18 @@ import AddEntityCommand from './AddEntityCommand'
 import TextureContainerEditor from '../../shared/TextureContainerEditor'
 import TextNodeComponent from '../editor/TextNodeComponent'
 
+import ModelEditorPackage from '../../shared/ModelEditorPackage'
+import NodeModelEditor from '../../shared/NodeModelEditor'
+
+import CollectionEditor from './CollectionEditor'
+import ModelPreviewComponent from '../shared/ModelPreviewComponent'
 import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
+import ArticleRecordModel from './ArticleRecordModel'
 
 export default {
   name: 'ArticleMetadata',
@@ -23,6 +29,18 @@ export default {
     // TODO: register MetaDataEditor related UI stuff here
     // Note, that the model package is already loaded by ArticlePackage
     config.import(EntityLabelsPackage)
+
+    // built-ins
+    config.import(ModelEditorPackage)
+    config.addComponent('model-preview', ModelPreviewComponent)
+
+    config.addModel('article-record', ArticleRecordModel)
+
+    // sections and editors
+    config.addComponent('collection', CollectionEditor)
+    config.addComponent('entity', NodeModelEditor)
+    config.addComponent('article-record', NodeModelEditor)
+    config.addComponent('person', NodeModelEditor)
 
     config.addToolPanel('toolbar', [
       {
@@ -73,6 +91,9 @@ export default {
       //   ]
       // }
     ])
+    config.addLabel('article-record', {
+      en: 'Article'
+    })
 
     config.addLabel('edit', {
       en: 'Edit'

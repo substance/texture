@@ -8,18 +8,18 @@ import CollectionEditor from './CollectionEditor'
 import MetadataSection from './MetadataSection'
 
 const SECTIONS = [
-  // { label: 'Article', modelType: 'article-record' },
-  // { label: 'Authors', modelType: 'authors' },
-  // { label: 'Translations', modelType: 'translatables' },
-  // { label: 'Editors', modelType: 'editors' },
-  // { label: 'Groups', modelType: 'groups' },
-  // { label: 'Affiliations', modelType: 'organisations' },
-  // { label: 'Awards', modelType: 'awards' },
-  // { label: 'Figures', modelType: 'figures' },
-  // { label: 'Footnotes', modelType: 'footnotes' },
+  { label: 'Article', modelType: 'article-record' },
+  { label: 'Authors', modelType: 'authors' },
+  { label: 'Translations', modelType: 'translatables' },
+  { label: 'Editors', modelType: 'editors' },
+  { label: 'Groups', modelType: 'groups' },
+  { label: 'Affiliations', modelType: 'organisations' },
+  { label: 'Awards', modelType: 'awards' },
+  { label: 'Figures', modelType: 'figures' },
+  { label: 'Footnotes', modelType: 'footnotes' },
   { label: 'References', modelType: 'references' },
-  // { label: 'Keywords', modelType: 'keywords' },
-  // { label: 'Subjects', modelType: 'subjects' },
+  { label: 'Keywords', modelType: 'keywords' },
+  { label: 'Subjects', modelType: 'subjects' }
 ]
 
 export default class MetadataEditor extends Component {

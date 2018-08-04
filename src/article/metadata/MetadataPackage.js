@@ -6,19 +6,19 @@ import AddEntityCommand from './AddEntityCommand'
 
 import TextureContainerEditor from '../../shared/TextureContainerEditor'
 import TextNodeComponent from '../editor/TextNodeComponent'
-
+import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import ModelEditorPackage from '../../shared/ModelEditorPackage'
 import NodeModelEditor from '../../shared/NodeModelEditor'
 
 import CollectionEditor from './CollectionEditor'
 import ModelPreviewComponent from '../shared/ModelPreviewComponent'
+
+import ArticleRecordEditor from './ArticleRecordEditor'
 import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 
-import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-import ArticleRecordModel from './ArticleRecordModel'
 
 export default {
   name: 'ArticleMetadata',
@@ -34,13 +34,10 @@ export default {
     config.import(ModelEditorPackage)
     config.addComponent('model-preview', ModelPreviewComponent)
 
-    config.addModel('article-record', ArticleRecordModel)
-
     // sections and editors
     config.addComponent('collection', CollectionEditor)
     config.addComponent('entity', NodeModelEditor)
-    config.addComponent('article-record', NodeModelEditor)
-    config.addComponent('person', NodeModelEditor)
+    config.addComponent('article-record', ArticleRecordEditor)
 
     config.addToolPanel('toolbar', [
       {

@@ -1,0 +1,16 @@
+import NodeModelEditor from '../../shared/NodeModelEditor'
+
+export default class ArticleRecordEditor extends NodeModelEditor {
+  _getPropertyEditorClass (property) {
+    switch (property.name) {
+      // don't provide an editor for 'authors' and 'editors'
+      // these fields are managed in dedicated metadata sections
+      case 'authors':
+      case 'editors': {
+        return null
+      }
+      default:
+        return super._getPropertyEditorClass(property)
+    }
+  }
+}

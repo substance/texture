@@ -1,6 +1,10 @@
 import NodeModelEditor from '../../shared/NodeModelEditor'
 
 export default class ArticleRecordEditor extends NodeModelEditor {
+  _renderHeader () {
+    // no header
+  }
+
   _getPropertyEditorClass (property) {
     switch (property.name) {
       // don't provide an editor for 'authors' and 'editors'

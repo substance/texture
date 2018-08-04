@@ -13,6 +13,8 @@ import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 
+import { REQUIRED_PROPERTIES } from './ArticleConstants'
+
 export default class ArticleAPI extends AbstractAPI {
   constructor (articleSession, modelRegistry) {
     super()
@@ -475,29 +477,6 @@ export default class ArticleAPI extends AbstractAPI {
     if (REQUIRED) return REQUIRED.has(propertyName)
     return false
   }
-}
-
-// TODO: this should come from configuration
-const REQUIRED_PROPERTIES = {
-  'book': new Set(['authors', 'title']),
-  'chapter': new Set(['title', 'containerTitle', 'authors']),
-  'data-publication': new Set(['title', 'containerTitle', 'authors']),
-  'magazine-article': new Set(['title', 'containerTitle', 'authors']),
-  'newspaper-article': new Set(['title', 'containerTitle', 'authors']),
-  '_patent': new Set(['title', 'containerTitle', 'inventors']),
-  'journal-article': new Set(['title', 'containerTitle', 'authors']),
-  'conference-paper': new Set(['title', 'authors']),
-  'report': new Set(['title', 'authors']),
-  'software': new Set(['title', 'authors']),
-  'thesis': new Set(['title', 'authors', 'year']),
-  'webpage': new Set(['title', 'containerTitle', 'authors']),
-  'person': new Set(['surname', 'givenNames']),
-  'ref-contrib': new Set(['name', 'givenNames']),
-  'group': new Set(['name']),
-  'organisation': new Set(['name']),
-  'award': new Set(['institution']),
-  'keyword': new Set(['name']),
-  '_subject': new Set(['name'])
 }
 
 // TODO: this should come from configuration

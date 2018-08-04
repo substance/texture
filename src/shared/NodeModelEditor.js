@@ -20,18 +20,19 @@ export default class NodeModelEditor extends CustomSurface {
     // FIXME: bring back validation
     const fullMode = this.state.fullMode
     const model = this.props.model
-    const ModelPreviewComponent = this.getComponent('model-preview')
+    // TODO: issues should be accessed via model, not directly
+    const nodeIssues = model._node['@issues']
+    let hasIssues = (nodeIssues && nodeIssues.size > 0)
 
     const el = $$('div').addClass('sc-entity-editor')
       .addClass(`sm-${model.type}`)
 
-    let header = $$('div').addClass('se-header')
-    if (ModelPreviewComponent) {
-      header.append(
-        $$(ModelPreviewComponent, { model })
-      )
+    // EXPERIMENTAL: highlight editors for nodes with issues
+    if (hasIssues) {
+      el.addClass('sm-warning')
     }
-    el.append(header)
+
+    el.append(this._renderHeader($$))
 
     let hasHiddenProps = false
     const properties = model.getProperties()
@@ -45,9 +46,11 @@ export default class NodeModelEditor extends CustomSurface {
 
         const label = this.getLabel(property.name)
         const model = property.model
+        const issues = nodeIssues ? nodeIssues.get(property.name) : []
         el.append(
           $$(FormRowComponent, {
-            label
+            label,
+            issues
           }).append(
             $$(PropertyEditor, {
               label,
@@ -88,7 +91,19 @@ export default class NodeModelEditor extends CustomSurface {
     return el
   }
 
-  _getPropertyEditorClass(property) {
+  _renderHeader ($$) {
+    const ModelPreviewComponent = this.getComponent('model-preview')
+    const model = this.props.model
+    let header = $$('div').addClass('se-header')
+    if (ModelPreviewComponent) {
+      header.append(
+        $$(ModelPreviewComponent, { model })
+      )
+    }
+    return header
+  }
+
+  _getPropertyEditorClass (property) {
     return this.getComponent(property.type)
   }
 

@@ -4,20 +4,22 @@ import Tooltip from './Tooltip'
 export default class FormRowComponent extends Component {
   render ($$) {
     const label = this.props.label
-    const warnings = this.props.warnings || []
-    const hasWarnings = warnings.length > 0
+    const issues = this.props.issues || []
+    const hasIssues = issues.length > 0
     const children = this.props.children
 
     const el = $$('div').addClass('sc-form-row')
 
-    if(label) {
+    if (label) {
       const labelEl = $$('div').addClass('se-label').append(label)
 
-      if(hasWarnings) {
+      if (hasIssues) {
+        // TODO: use issue.key and labelProvider here
+        let tooltipText = issues.map(issue => issue.message).join(', ')
         labelEl.append(
           $$('div').addClass('se-warning').append(
             $$(FontAwesomeIcon, { icon: 'fa-warning' }).addClass('se-icon'),
-            $$(Tooltip, {text: warnings.join(', ')})
+            $$(Tooltip, {text: tooltipText})
           )
         )
       }
@@ -25,7 +27,7 @@ export default class FormRowComponent extends Component {
       el.append(labelEl)
     }
 
-    if (hasWarnings) {
+    if (hasIssues) {
       el.addClass('sm-warning')
     }
 

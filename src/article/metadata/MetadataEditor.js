@@ -6,6 +6,7 @@ import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
 import MetadataSection from './MetadataSection'
+import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 
 const SECTIONS = [
   { label: 'Article', modelType: 'article-record' },
@@ -53,13 +54,17 @@ export default class MetadataEditor extends Component {
       api,
       urlResolver: archive
     })
+    this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
+
     // initial reduce etc.
     this.editorSession.initialize()
+    this.articleValidator.initialize()
+
     this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
   }
 
-  _updateViewName() {
+  _updateViewName () {
     let appState = this.context.appState
     this.send('updateViewName', appState.viewName)
   }
@@ -68,8 +73,10 @@ export default class MetadataEditor extends Component {
     const appState = this.context.appState
     const articleSession = this.props.articleSession
     const editorSession = this.editorSession
+    const articleValidator = this.articleValidator
     articleSession.off(this)
     editorSession.dispose()
+    articleValidator.dispose()
     appState.removeObserver(this)
     // TODO: do we really need to clear here?
     this.empty()

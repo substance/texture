@@ -66,7 +66,9 @@ export default class RefListComponent extends NodeComponent {
 
   _editReference(reference) {
     const api = this.context.api
-    const model = api.getModel('reference', reference)
+    // HACK: this should be removed once we deattach references from xml model
+    const entity = reference.state.entity
+    const model = api.getModel(entity.type, entity)
     this.send('startWorkflow', 'edit-reference', {item: model})
   }
 

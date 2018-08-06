@@ -29,12 +29,12 @@ import TranslateableCollectionModel from './models/TranslateableCollectionModel'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 
-import RefContribPropertyEditor from './metadata/RefContribPropertyEditor'
-import StringPropertyEditor from './metadata/StringPropertyEditor'
-import BooleanPropertyEditor from './metadata/BooleanPropertyEditor'
-import ReferencePropertyEditor from './metadata/ReferencePropertyEditor'
-import UniqueReferencePropertyEditor from './metadata/UniqueReferencePropertyEditor'
-import TranslationPropertyEditor from './metadata/TranslationPropertyEditor'
+import RefContribPropertyEditor from './shared/RefContribPropertyEditor'
+import StringPropertyEditor from './shared/StringPropertyEditor'
+import BooleanPropertyEditor from './shared/BooleanPropertyEditor'
+import ReferencePropertyEditor from './shared/ReferencePropertyEditor'
+import UniqueReferencePropertyEditor from './shared/UniqueReferencePropertyEditor'
+import TranslationPropertyEditor from './shared/TranslationPropertyEditor'
 
 import LanguagesPackage from './LanguagesPackage'
 

@@ -9,6 +9,10 @@ import EntityLabelsPackage from './EntityLabelsPackage'
 export default {
   name: 'entities',
   configure(config, options = {}) {
+    // ATTENTION: we started with this being used as an independent document model
+    // until we found out that it is better to have it merged into the article model.
+    // ATM, our JATS converters rely on this being still available.
+    // TODO: refactor converters so that we can get rid of this
     if (options.standalone) {
       config.defineSchema({
         name: 'entities-database',

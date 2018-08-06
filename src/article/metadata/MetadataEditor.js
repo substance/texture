@@ -1,15 +1,14 @@
 import { Component } from 'substance'
-import {
-  Managed, createEditorContext
-} from '../../shared'
+import { Managed, createEditorContext } from '../../shared'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
-import CollectionEditor from './CollectionEditor'
-import EntityEditor from '../shared/EntityEditor'
-import CardComponent from '../shared/CardComponent'
+import MetadataSection from './MetadataSection'
+import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 
 const SECTIONS = [
+  { label: 'Article', modelType: 'article-record' },
   { label: 'Authors', modelType: 'authors' },
+  { label: 'Translations', modelType: 'translatables' },
   { label: 'Editors', modelType: 'editors' },
   { label: 'Groups', modelType: 'groups' },
   { label: 'Affiliations', modelType: 'organisations' },
@@ -18,9 +17,7 @@ const SECTIONS = [
   { label: 'Footnotes', modelType: 'footnotes' },
   { label: 'References', modelType: 'references' },
   { label: 'Keywords', modelType: 'keywords' },
-  { label: 'Subjects', modelType: 'subjects' },
-  { label: 'Translations', modelType: 'translatables' },
-  { label: 'Article', modelType: 'article-record' }
+  { label: 'Subjects', modelType: 'subjects' }
 ]
 
 export default class MetadataEditor extends Component {
@@ -54,13 +51,17 @@ export default class MetadataEditor extends Component {
       api,
       urlResolver: archive
     })
+    this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
+
     // initial reduce etc.
     this.editorSession.initialize()
+    this.articleValidator.initialize()
+
     this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
   }
 
-  _updateViewName() {
+  _updateViewName () {
     let appState = this.context.appState
     this.send('updateViewName', appState.viewName)
   }
@@ -69,8 +70,10 @@ export default class MetadataEditor extends Component {
     const appState = this.context.appState
     const articleSession = this.props.articleSession
     const editorSession = this.editorSession
+    const articleValidator = this.articleValidator
     articleSession.off(this)
     editorSession.dispose()
+    articleValidator.dispose()
     appState.removeObserver(this)
     // TODO: do we really need to clear here?
     this.empty()
@@ -150,28 +153,15 @@ export default class MetadataEditor extends Component {
       scrollbarPosition: 'right'
     }).ref('contentPanel')
 
-    let collectionsEl = $$('div').addClass('se-collections')
+    let sectionsEl = $$('div').addClass('se-sections')
     SECTIONS.forEach(section => {
-      let model = api.getModel(section.modelType)
-      if (model.isCollection) {
-        collectionsEl.append(
-          $$(CollectionEditor, { model: model })
-            .attr({id: model.id})
-            .ref(model.id)
-        )
-      } else if (section.modelType === 'article-record') {
-        model = api.getEntity('article-record')
-        collectionsEl.append(
-          $$(CardComponent).append(
-            $$(EntityEditor, { model: model })
-              .attr({id: model.id})
-              .ref(model.id)
-          )
-        )
-      }
+      const model = api.getModel(section.modelType)
+      const id = model.id
+      let content = $$(MetadataSection, { model }).attr({id}).ref(id)
+      sectionsEl.append(content)
     })
 
-    contentPanel.append(collectionsEl)
+    contentPanel.append(sectionsEl)
 
     return contentPanel
   }

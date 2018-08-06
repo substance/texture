@@ -1,5 +1,5 @@
 import InternalArticle from '../../InternalArticle'
-import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../constants'
+import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../ArticleConstants'
 import { findChild, findAllChilds } from '../util/domHelpers'
 
 export function expandElementCitation(el, doc) {

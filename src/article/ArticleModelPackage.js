@@ -10,12 +10,10 @@ import TableElementNode from './TableElementNode'
 import TableCellElementNode from './TableCellElementNode'
 import EntitiesPackage from './metadata/EntitiesPackage'
 
-import ArticleRecordModel from './models/ArticleRecordModel'
 import FigureModel from './models/FigureModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
 import FootnoteModel from './models/FootnoteModel'
 import FootnoteCollectionModel from './models/FootnoteCollectionModel'
-import ReferenceModel from './models/ReferenceModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import AuthorCollectionModel from './models/AuthorCollectionModel'
 import AwardCollectionModel from './models/AwardCollectionModel'
@@ -85,19 +83,6 @@ export default {
     config.addModel('fig', FigureModel)
     config.addModel('fn', FootnoteModel)
     config.addModel('table-wrap', FigureModel)
-    config.addModel('article-record', ArticleRecordModel)
-    config.addModel('journal-article', ReferenceModel)
-    config.addModel('conference-paper', ReferenceModel)
-    config.addModel('data-publication', ReferenceModel)
-    config.addModel('magazine-article', ReferenceModel)
-    config.addModel('newspaper-article', ReferenceModel)
-    config.addModel('patent', ReferenceModel)
-    config.addModel('software', ReferenceModel)
-    config.addModel('thesis', ReferenceModel)
-    config.addModel('webpage', ReferenceModel)
-    config.addModel('report', ReferenceModel)
-    config.addModel('book', ReferenceModel)
-    config.addModel('chapter', ReferenceModel)
 
     config.addPropertyEditor(RefContribPropertyEditor)
     config.addPropertyEditor(BooleanPropertyEditor)

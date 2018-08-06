@@ -1,4 +1,4 @@
-import entityRenderers from '../shared/entityRenderers'
+import renderEntity from '../shared/renderEntity'
 import DefaultModel from './DefaultModel'
 
 /*
@@ -157,6 +157,6 @@ export default class ContribsModel extends DefaultModel {
     Utility method to render a contrib object
   */
   renderContrib(contrib) {
-    return entityRenderers[contrib.type](contrib.id, this._api.getArticle())
+    return renderEntity(contrib)
   }
 }

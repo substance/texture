@@ -279,7 +279,8 @@ function _addContainerId (sel, editorSession) {
 const _exceptions = [
   /TextPropertyEditor.*substance\.js/,
   /IsolatedNodeComponent.*substance\.js/,
-  /IsolatedInlineNodeComponent.*substance\.js/
+  /IsolatedInlineNodeComponent.*substance\.js/,
+  /TextInput.*substance\.js/
 ]
 function _shouldDisplayDeprecatedWarning () {
   let caller = _getCaller(2)

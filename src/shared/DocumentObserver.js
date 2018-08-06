@@ -16,13 +16,18 @@ export default class DocumentObserver {
     this.doc.off(this)
   }
 
+  // called by EditorState when updates have been propagated
   reset () {
     this.dirty = new Set()
   }
 
+  setDirty (path) {
+    this.dirty.add(String(path))
+  }
+
   // TODO: this is built on top of the current implementation of
   // DocumentChange. We could try to consolidate and have just
-  // one place where this is information is derived
+  // one place where this information is derived
   _onDocumentChanged (change) {
     const doc = this.doc
     const index = doc.getIndex('relationships')

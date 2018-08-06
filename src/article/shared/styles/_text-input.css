@@ -15,11 +15,12 @@
 }
 
 .sc-text-input .se-input:hover,
-.sc-text-input .se-input:focus {
+.sc-text-input:focus .se-input {
   border: 1px solid var(--border-color);
 }
 
-.sc-text-input .se-input::placeholder {
+/* TODO: use variables! */
+.sc-text-input .se-input.sm-empty {
   color: #ccc;
   font-weight: 400;
 }
@@ -43,4 +44,10 @@
 
 .sc-text-input.sm-size-large {
   width: var(--width-large);
+}
+
+/* HACK: unfortunately Substance default-style is using a hard-coded value  */
+.sc-text-input .sc-text-property.sm-empty .se-placeholder {
+  /* TODO: use variables! */
+  color: inherit !important;
 }

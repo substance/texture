@@ -727,17 +727,6 @@ function subjectRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function articleRecordRenderer() {
-  // Hack: while for oth er entities we are trying to render dynamic title
-  // here we just returning static name for metadata editor's section
-  return 'Article'
-}
-
-// const INTERNAL_RENDERER_MAP = {
-//   'organisation': organisationRenderer,
-//   'person': personRenderer
-// }
-
 /*
   Exports
 */
@@ -751,8 +740,6 @@ export default {
   'report': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'award': _delegate(awardRenderer),
-  // HACK: merging entities into article model, avoiding type collision
-  '_patent': _delegate(patentRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
   'magazine-aricle': _delegate(magazineArticleRenderer),
   'newspaper-article': _delegate(newspaperArticleRenderer),
@@ -760,11 +747,11 @@ export default {
   'thesis': _delegate(thesisRenderer),
   'webpage': _delegate(webpageRenderer),
   'keyword': _delegate(keywordRenderer),
+  'ref-contrib': _delegate(refContribRenderer),
   // HACK: merging entities into article model, avoiding type collision
-  '_subject': _delegate(subjectRenderer),
-  'article-record': _delegate(articleRecordRenderer)
+  '_patent': _delegate(patentRenderer),
+  '_subject': _delegate(subjectRenderer)
 }
-
 
 /*
   Helpers

@@ -1,6 +1,6 @@
 import { uniq } from 'substance'
 import NodeComponent from '../shared/NodeComponent'
-import entityRenderers from '../shared/entityRenderers'
+import renderEntity from '../shared/renderEntity'
 
 /*
   TODO: find a way to detect updates.
@@ -23,7 +23,7 @@ export default class AffiliationsList extends NodeComponent {
       let entity = article.get(entityId)
       contentEl.append(
         $$('span').addClass('se-affiliation').html(
-          entityRenderers[entity.type](entity.id, article)
+          renderEntity(entity)
         )
       )
       if (index < entityIds.length - 1) {

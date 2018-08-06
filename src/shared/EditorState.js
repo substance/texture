@@ -13,9 +13,12 @@ export default class EditorState extends AppState {
     }
     let doc = initialState.document
     let impl = this._getImpl()
-    // one observer for all slots that
+    // EXPERIMENTAL:
+    // one observer for all slots that looks watches for document changes and marks paths as dirty
+    // this is also used to broadcast other node based changes such as node state updates
     let documentObserver = new DocumentObserver(doc)
     impl.documentObserver = documentObserver
+
     let selectionStateReducer = new SelectionStateReducer(this)
     selectionStateReducer.update()
     impl._selectionStateReducer = impl._selectionStateReducer
@@ -40,6 +43,10 @@ export default class EditorState extends AppState {
   _reset () {
     super._reset()
     this._getImpl().documentObserver.reset()
+  }
+
+  _getDocumentObserver () {
+    return this._getImpl().documentObserver
   }
 }
 

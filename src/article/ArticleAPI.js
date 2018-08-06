@@ -1,17 +1,29 @@
 import { without } from 'substance'
 
-import AnnotatedTextModel from './models/AnnotatedTextModel'
-
-import ContainerModel from './models/ContainerModel'
+import AbstractAPI from '../shared/AbstractAPI'
+import DynamicCollection from '../shared/DynamicCollection'
+import {
+  StringModel, TextModel, FlowContentModel
+} from '../shared/ValueModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
-import DefaultModel from './models/DefaultModel'
-import entityRenderers from './shared/entityRenderers'
+// import DefaultModel from './models/DefaultModel'
+import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 
-export default class ArticleAPI {
+import { REQUIRED_PROPERTIES } from './ArticleConstants'
+
+// TODO: this should come from configuration
+const COLLECTIONS = {
+  'author': 'authors',
+  'editor': 'editors'
+}
+
+export default class ArticleAPI extends AbstractAPI {
   constructor (articleSession, modelRegistry) {
+    super()
+
     this.modelRegistry = modelRegistry
     this.articleSession = articleSession
     this.article = articleSession.getDocument()
@@ -22,11 +34,14 @@ export default class ArticleAPI {
   */
   getModel (type, node) {
     let ModelClass = this.modelRegistry[type]
+    // HACK: trying to retrieve the node if it is not given
+    if (!node) {
+      node = this.article.get(type)
+    }
     if (ModelClass) {
       return new ModelClass(this, node)
-    } else {
-      return new DefaultModel(this, node)
-      // throw new Error(`No model for ${type} found.`)
+    } else if (node) {
+      return this._getModelForNode(node)
     }
   }
 
@@ -48,9 +63,11 @@ export default class ArticleAPI {
     return entityIds.map(entityId => this.getEntity(entityId))
   }
 
-  // TODO: This method we should move into the API!
+  // TODO: this should be configurable. As it is similar to HTML conversion
+  // we could use the converter registry for this
   renderEntity(model) {
-    return entityRenderers[model.type](model.id, this.getArticle())
+    let entity = this.getArticle().get(model.id)
+    return renderEntity(entity)
   }
 
   getArticle () {
@@ -87,7 +104,7 @@ export default class ArticleAPI {
     })
     return this.getModel(node.type, node)
   }
-  
+
   addAuthor(person = {}) {
     this._addPerson(person, 'authors')
   }
@@ -248,42 +265,53 @@ export default class ArticleAPI {
   }
 
   /*
-    Article language code
-
-    Falls back to 'en'
+    @return {StringModel} Model for the language code of article's main language
   */
   getOriginalLanguageCode() {
     let article = this.getArticle().getRootNode()
-    return article.attr('xml:lang') || 'en'
+    return new StringModel(this, [article.id, 'attributes', 'xml:lang'])
   }
 
-  /*
-    NOTE: This only works for collection that contain a single item type. We may need to rethink this
-  */
-  getCollectionForType(type) {
-    const model = this.getModel(type+'s')
-    return model.getItems()
+  getCollectionForType (type) {
+    // TODO: need to rethink this.
+    // ATM we are registering special model classes for collections,
+    // which are named after the single entity they contain,
+    // e.g. 'authors' is a the collection of author nodes (which are person nodes essentially).
+    // This is currently pretty confusing. It would be better to have
+    // specific node in the model for that.
+    // Still, we would need a mechanism to specify which node is acting as the parent
+    // collection for which node.
+    let collectionType = COLLECTIONS[type]
+    // I don't like this implicit mapping.
+    if (!collectionType) {
+      collectionType = type + 's'
+    }
+    let model = this.getModel(collectionType)
+    if (!model) {
+      console.error(`No collection specified for type '${type}'. Using DynamicCollection. You should register a collection for this type explicitly.`)
+      model = new DynamicCollection(this, type)
+    }
+    return model
   }
-
 
   getSchema(type) {
     return this.article.getSchema().getNodeSchema(type)
   }
 
-  getArticleTitle() {
-    let articleTitle = this.getArticle().find('article-title')
-    return new AnnotatedTextModel(this, articleTitle)
+  getArticleTitle () {
+    let titleNode = this.getArticle().find('article-title')
+    return new TextModel(this, titleNode.getPath())
   }
 
   getArticleAbstract () {
     let abstract = this.getArticle().find('abstract')
-    return new ContainerModel(this, abstract)
+    return new FlowContentModel(this, [abstract.id, '_children'])
   }
 
-  getArticleBody () {
-    let body = this.getArticle().find('body')
-    return new ContainerModel(this, body)
-  }
+  // getArticleBody () {
+  //   let body = this.getArticle().find('body')
+  //   return new ContainerModel(this, body)
+  // }
 
   getContribs () {
     let articleMeta = this.getArticle().find('article-meta')
@@ -377,35 +405,40 @@ export default class ArticleAPI {
 
   _getTitleTranslateable() {
     let transTitleGroups = this.getArticle().findAll('trans-title-group')
-    const translatableId = 'title-trans'
+    let translatableId = 'title-trans'
+    let orinialLanguageCode = this.getOriginalLanguageCode()
+    let articleTitle = this.getArticleTitle()
     let translations = transTitleGroups.map(transTitleGroup => {
       let transTitle = transTitleGroup.find('trans-title')
-      let transTitleModel = new AnnotatedTextModel(this, transTitle, this._getContext())
-      return new TranslationModel(this, transTitleModel, translatableId, transTitleGroup.attr('xml:lang'))
+      let textModel = new TextModel(this, transTitle.getPath())
+      let languageModel = new StringModel(this, [transTitleGroup.id, 'attributes', 'xml:lang'])
+      return new TranslationModel(this, translatableId, textModel, languageModel)
     })
-
     return new TranslateableModel(
       this,
       translatableId,
-      this.getOriginalLanguageCode(),
-      this.getArticleTitle(),
+      orinialLanguageCode,
+      articleTitle,
       translations
     )
   }
 
   _getAbstractTranslateable() {
     let transAbstracts = this.getArticle().findAll('trans-abstract')
-    const translatableId = 'abstract-trans'
+    let translatableId = 'abstract-trans'
+    let orinialLanguageCode = this.getOriginalLanguageCode()
+    let articleAbstract = this.getArticleAbstract()
     let translations = transAbstracts.map(transAbstract => {
-      let transAbstractModel = new ContainerModel(this, transAbstract, this._getContext())
-      return new TranslationModel(this, transAbstractModel, translatableId, transAbstract.attr('xml:lang'))
+      let transAbstractModel = new FlowContentModel(this, [transAbstract.id, '_children'])
+      let languageModel = new StringModel(this, [transAbstract.id, 'attributes', 'xml:lang'])
+      return new TranslationModel(this, translatableId, transAbstractModel, languageModel)
     })
 
     return new TranslateableModel(
       this,
       translatableId,
-      this.getOriginalLanguageCode(),
-      this.getArticleAbstract(),
+      orinialLanguageCode,
+      articleAbstract,
       translations
     )
   }
@@ -437,5 +470,19 @@ export default class ArticleAPI {
   get doc () {
     console.error('DEPRECATED: use api.getArticle() instead.')
     return this.getArticle()
+  }
+
+  _getDocument () {
+    return this.getArticleSession().getDocument()
+  }
+
+  _getDocumentSession () {
+    return this.getArticleSession()
+  }
+
+  _isPropertyRequired (type, propertyName) {
+    let REQUIRED = REQUIRED_PROPERTIES[type]
+    if (REQUIRED) return REQUIRED.has(propertyName)
+    return false
   }
 }

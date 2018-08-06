@@ -1,5 +1,7 @@
-import { isNil } from 'substance'
-
+import {
+  BooleanModel, NumberModel, StringModel, TextModel, ObjectModel,
+  ChildrenModel, SingleRelationshipModel, ManyRelationshipModel
+} from './ValueModel'
 const MODELCLASS_CACHE = new Map()
 
 export class NodeModelFactory {
@@ -113,6 +115,7 @@ export class NodeModelProperty {
       }
       case 'object': {
         valueModel = new ObjectModel(api, path)
+        break
       }
       default:
         //
@@ -134,150 +137,5 @@ export class NodeModelProperty {
       throw new Error('Unsupported property: ' + type)
     }
     return valueModel
-  }
-}
-
-export class ValueModel {
-  constructor (api, path) {
-    this._api = api
-    this._path = path
-  }
-
-  get id () {
-    return String(this._path)
-  }
-
-  getValue () {
-    return this._api._getValue(this._path)
-  }
-
-  setValue (val) {
-    this._api._setValue(this._path, val)
-  }
-
-  isEmpty () {
-    return isNil(this.getValue())
-  }
-
-  get _value () { return this.getValue() }
-}
-
-export class BooleanModel extends ValueModel {
-  get type () { return 'boolean-model' }
-
-  // Note: Nil is interpreted as false, and false is thus also interpreted as isEmpty()
-  isEmpty () {
-    return !this.getValue()
-  }
-}
-
-export class NumberModel extends ValueModel {
-  get type () { return 'number-model' }
-}
-
-export class StringModel extends ValueModel {
-  get type () { return 'string-model' }
-
-  isEmpty () {
-    let value = this.getValue()
-    return isNil(value) || value.length === 0
-  }
-}
-
-export class ObjectModel extends ValueModel {
-  get type () { return 'object-model' }
-}
-
-export class TextModel extends StringModel {
-  get type () { return 'text' }
-}
-
-export class RelationshipModel extends ValueModel {
-  constructor (api, path, targetTypes) {
-    super(api, path)
-
-    this._targetTypes = targetTypes
-  }
-
-  getAvailableTargets () {
-    return _getAvailableRelationshipOptions(this._api, this._targetTypes)
-  }
-}
-
-export class SingleRelationshipModel extends RelationshipModel {
-  get type () { return 'single-relationship-model' }
-
-  getTarget () {
-    let id = this.getValue()
-    if (id) {
-      return _getRelationshipOption(this._api, id)
-    }
-  }
-
-  setTarget () {
-    console.error('TODO: implement SingleRelationshipModel.setTarget()')
-  }
-}
-
-export class ManyRelationshipModel extends RelationshipModel {
-  get type () { return 'many-relationship-model' }
-
-  getValue () {
-    return super.getValue() || []
-  }
-
-  isEmpty () {
-    return this.getValue().length === 0
-  }
-
-  toggleTarget (target) {
-    this._api._toggleRelationship(this._path, target.id)
-  }
-}
-
-export class ChildrenModel extends ValueModel {
-  constructor (api, path, targetTypes) {
-    super(api, path)
-
-    this._targetTypes = targetTypes
-  }
-
-  get type () { return 'children-model' }
-
-  getValue () {
-    return super.getValue() || []
-  }
-
-  getChildren () {
-    return this.getValue().map(id => this._api._getModelById(id))
-  }
-
-  isEmpty () {
-    return this.getValue().length === 0
-  }
-
-  appendChild (child) {
-    this._api._appendChild(this._path, child)
-  }
-
-  removeChild (child) {
-    this._api._removeChild(this._path, child)
-  }
-}
-
-function _getAvailableRelationshipOptions (api, targetTypes) {
-  let items = targetTypes.reduce((items, targetType) => {
-    let collection = api.getCollectionForType(targetType)
-    return items.concat(collection.getItems())
-  }, [])
-  return items.map(item => _getRelationshipOption(api, item.id))
-}
-
-function _getRelationshipOption (api, id) {
-  return {
-    id,
-    toString () {
-      return api.renderEntity(api._getModelById(id))
-    }
   }
 }

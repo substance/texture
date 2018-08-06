@@ -80,6 +80,8 @@ import {
 import InsertTableTool from './InsertTableTool'
 import SchemaAwareToggleListCommand from './SchemaAwareToggleListCommand'
 import ArticleNavPackage from '../ArticleNavPackage'
+// Workflows
+import AddReferenceWorkflow from '../metadata/AddReferenceWorkflow'
 
 export default {
   name: 'ManscruptEditor',
@@ -662,6 +664,9 @@ export default {
     config.addLabel('add-ref', 'Add Reference')
     config.addLabel('edit-ref', 'Edit')
     config.addLabel('remove-ref', 'Remove')
+
+    // Workflows
+    config.addComponent('add-reference', AddReferenceWorkflow)
 
     /*
       Define panel structure

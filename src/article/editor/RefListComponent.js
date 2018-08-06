@@ -70,7 +70,7 @@ export default class RefListComponent extends NodeComponent {
     let options = $$('div').addClass('se-ref-list-options').append(
       $$('button').addClass('sc-button sm-style-big').append(
         this.getLabel('add-ref')
-      ).on('click', this._toggleNewReferenceModal)
+      ).on('click', this._addNewReferenceModal)
     )
 
     el.append(options)
@@ -142,11 +142,8 @@ export default class RefListComponent extends NodeComponent {
     this.setState({})
   }
 
-  _toggleNewReferenceModal() {
-    this.extendState({
-      mode: 'add',
-      modeProps: {}
-    })
+  _addNewReferenceModal() {
+    this.send('startWorkflow', 'add-reference')
   }
 
   _doneEditing() {

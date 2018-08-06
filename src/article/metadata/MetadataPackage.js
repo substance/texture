@@ -13,7 +13,7 @@ import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 
-import AddReferenceWorkflow from './AddReferenceWorkflow'
+import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 
 export default {
   name: 'ArticleMetadata',

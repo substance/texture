@@ -82,6 +82,7 @@ import SchemaAwareToggleListCommand from './SchemaAwareToggleListCommand'
 import ArticleNavPackage from '../ArticleNavPackage'
 // Workflows
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
+import EditReferenceWorkflow from './EditReferenceWorkflow'
 
 export default {
   name: 'ManscruptEditor',
@@ -674,7 +675,7 @@ export default {
     config.addLabel('doi-fetch-action', 'Add')
     config.addLabel('import-refs', 'Import')
     config.addLabel('supported-ref-formats', 'Supported formats')
-
+    config.addComponent('edit-reference', EditReferenceWorkflow)
     /*
       Define panel structure
     */

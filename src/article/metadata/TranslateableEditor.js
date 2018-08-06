@@ -1,16 +1,13 @@
 import { Component, FontAwesomeIcon } from 'substance'
-import ContainerModel from '../models/ContainerModel'
 import FormRowComponent from '../shared/FormRowComponent'
 
 export default class TranslateableEditor extends Component {
-
-  render($$) {
+  render ($$) {
     const model = this.props.model
     const originalText = model.getOriginalText()
-    const TextPropertyEditor = this.getComponent('text-property')
-    const ContainerEditor = this.getComponent('container')
     const languages = this._getArticleLanguages()
     const availableLanguages = this._getAvailableLanguages()
+    let ModelEditor = this.getComponent(originalText.type)
 
     let el = $$('div')
       .addClass('sc-translatable-editor')
@@ -20,54 +17,25 @@ export default class TranslateableEditor extends Component {
       $$('div').addClass('se-header').append(this.getLabel(model.id))
     )
 
-    const originalRow = $$(FormRowComponent, {
+    let originalRow = $$(FormRowComponent, {
       label: this.getLabel('original-translation')
     })
-
-    // TODO: Let's improve this code!
-    if (originalText instanceof ContainerModel) {
-      originalRow.append(
-        $$(ContainerEditor, {
-          node: originalText.getContainerNode()
-        }).ref(model.id+'Editor')
-      )
-    } else {
-      originalRow.append(
-        $$(TextPropertyEditor, {
-          name: model.id+'Editor',
-          placeholder: 'Enter text',
-          path: originalText.getTextPath()
-        }).ref(model.id+'Editor')
-      )
-    }
-
+    originalRow.append(
+      $$(ModelEditor, { model: originalText })
+    )
     el.append(originalRow)
 
     model.getTranslations().forEach(translation => {
       let text = translation.getText()
-      let lang = translation.getLanguageCode()
+      let lang = translation.getLanguageCode().getValue()
       let langName = languages[lang]
-
-      const translRow = $$(FormRowComponent, {
+      let translRow = $$(FormRowComponent, {
         label: langName
       })
-
-      if (text instanceof ContainerModel) {
-        translRow.append(
-          $$(ContainerEditor, {
-            node: text.getContainerNode()
-          }).ref(model.id+lang+'Editor')
-        )
-      } else {
-        translRow.append(
-          $$(TextPropertyEditor, {
-            name: model.id+lang+'Editor',
-            placeholder: 'Enter text',
-            path: text.getTextPath()
-          }).ref(model.id+lang+'Editor')
-        )
-      }
-
+      // TODO: is it ok to assume that the editor of the original text is the same type as the translations?
+      translRow.append(
+        $$(ModelEditor, { model: text })
+      )
       el.append(
         translRow.append(
           $$('div').addClass('se-remove').append(
@@ -120,7 +88,7 @@ export default class TranslateableEditor extends Component {
     const value = e.target.value
     const model = this.props.model
     model.addTranslation(value)
-    
+
     this._toggleDropdown()
   }
 
@@ -143,9 +111,9 @@ export default class TranslateableEditor extends Component {
     const model = this.props.model
     const languages = this._getArticleLanguages()
     const languageCodes = Object.keys(languages)
-    const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode())
+    const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode().getValue())
     // HACK: english is hardcoded here as original language
-    // we will need to use default lang setting from article level 
+    // we will need to use default lang setting from article level
     alreadyTranslated.push('en')
     return languageCodes.filter(l => !alreadyTranslated.find(t => t === l))
   }

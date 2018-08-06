@@ -1,13 +1,24 @@
 
-/* 
-  A special view on a translatable text inside the document
+/*
+  A special view on a translatable text inside the document.
+
+  Note: in terms of JATS this model can not represented as a single element.
+  We use this class to provide a general abstraction of the concept of
+  an translatable entity.
 */
 
 export default class TranslateableModel {
-  constructor(api, id, _originalLanguageCode, originalText, translations) {
-    this._api = api 
+  /*
+    @param {ArticleAPI} api
+    @param {string} id
+    @param {StringModel} originalLanguageCode The main language i.e. the language of the article
+    @param {StringModel} originalText The content in the original language
+    @param {CollectionModel} translations
+  */
+  constructor(api, id, originalLanguageCode, originalText, translations) {
+    this._api = api
     this._id = id // e.g. title-trans|abstract-trans|figure-caption-1-trans
-    this._originalLanguageCode = _originalLanguageCode
+    this._originalLanguageCode = originalLanguageCode
     this._originalText = originalText
     this._translations = translations
   }
@@ -27,7 +38,7 @@ export default class TranslateableModel {
     return this._originalLanguageCode
   }
 
-  /*  
+  /*
     Returns the text model to be translated
   */
   getOriginalText() {
@@ -55,4 +66,3 @@ export default class TranslateableModel {
     this._api.deleteTranslation(this._id, languageCode)
   }
 }
-

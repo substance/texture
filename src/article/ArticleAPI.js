@@ -2,9 +2,9 @@ import { without } from 'substance'
 
 import AbstractAPI from '../shared/AbstractAPI'
 import DynamicCollection from '../shared/DynamicCollection'
-
-import AnnotatedTextModel from './models/AnnotatedTextModel'
-
+import {
+  StringModel, TextModel, FlowContentModel
+} from '../shared/ValueModel'
 import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
@@ -260,13 +260,11 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   /*
-    Article language code
-
-    Falls back to 'en'
+    @return {StringModel} Model for the language code of article's main language
   */
   getOriginalLanguageCode() {
     let article = this.getArticle().getRootNode()
-    return article.attr('xml:lang') || 'en'
+    return new StringModel(this, [article.id, 'attributes', 'xml:lang'])
   }
 
   getCollectionForType (type) {
@@ -295,20 +293,20 @@ export default class ArticleAPI extends AbstractAPI {
     return this.article.getSchema().getNodeSchema(type)
   }
 
-  getArticleTitle() {
-    let articleTitle = this.getArticle().find('article-title')
-    return new AnnotatedTextModel(this, articleTitle)
+  getArticleTitle () {
+    let titleNode = this.getArticle().find('article-title')
+    return new TextModel(this, titleNode.getPath())
   }
 
   getArticleAbstract () {
     let abstract = this.getArticle().find('abstract')
-    return new ContainerModel(this, abstract)
+    return new FlowContentModel(this, [abstract.id, '_children'])
   }
 
-  getArticleBody () {
-    let body = this.getArticle().find('body')
-    return new ContainerModel(this, body)
-  }
+  // getArticleBody () {
+  //   let body = this.getArticle().find('body')
+  //   return new ContainerModel(this, body)
+  // }
 
   getContribs () {
     let articleMeta = this.getArticle().find('article-meta')
@@ -402,35 +400,40 @@ export default class ArticleAPI extends AbstractAPI {
 
   _getTitleTranslateable() {
     let transTitleGroups = this.getArticle().findAll('trans-title-group')
-    const translatableId = 'title-trans'
+    let translatableId = 'title-trans'
+    let orinialLanguageCode = this.getOriginalLanguageCode()
+    let articleTitle = this.getArticleTitle()
     let translations = transTitleGroups.map(transTitleGroup => {
       let transTitle = transTitleGroup.find('trans-title')
-      let transTitleModel = new AnnotatedTextModel(this, transTitle, this._getContext())
-      return new TranslationModel(this, transTitleModel, translatableId, transTitleGroup.attr('xml:lang'))
+      let textModel = new TextModel(this, transTitle.getPath())
+      let languageModel = new StringModel(this, [transTitleGroup.id, 'attributes', 'xml:lang'])
+      return new TranslationModel(this, translatableId, textModel, languageModel)
     })
-
     return new TranslateableModel(
       this,
       translatableId,
-      this.getOriginalLanguageCode(),
-      this.getArticleTitle(),
+      orinialLanguageCode,
+      articleTitle,
       translations
     )
   }
 
   _getAbstractTranslateable() {
     let transAbstracts = this.getArticle().findAll('trans-abstract')
-    const translatableId = 'abstract-trans'
+    let translatableId = 'abstract-trans'
+    let orinialLanguageCode = this.getOriginalLanguageCode()
+    let articleAbstract = this.getArticleAbstract()
     let translations = transAbstracts.map(transAbstract => {
-      let transAbstractModel = new ContainerModel(this, transAbstract, this._getContext())
-      return new TranslationModel(this, transAbstractModel, translatableId, transAbstract.attr('xml:lang'))
+      let transAbstractModel = new FlowContentModel(this, [transAbstract.id, '_children'])
+      let languageModel = new StringModel(this, [transAbstract.id, 'attributes', 'xml:lang'])
+      return new TranslationModel(this, translatableId, transAbstractModel, languageModel)
     })
 
     return new TranslateableModel(
       this,
       translatableId,
-      this.getOriginalLanguageCode(),
-      this.getArticleAbstract(),
+      orinialLanguageCode,
+      articleAbstract,
       translations
     )
   }
@@ -482,5 +485,5 @@ export default class ArticleAPI extends AbstractAPI {
 // TODO: this should come from configuration
 const COLLECTIONS = {
   'author': 'authors',
-  'editor': 'editors',
+  'editor': 'editors'
 }

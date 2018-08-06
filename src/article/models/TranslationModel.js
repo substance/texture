@@ -1,39 +1,35 @@
+/*
+  EXPERIMENTAL
+  Model for a specific translation.
+*/
 export default class TranslationModel {
-  constructor(api, text, translatableId, languageCode) {
-    this._api = api 
-    this._text = text
+  /*
+    @param {ArticleAPI} api
+    @param {TextModel} text
+    @param {string} translatableId id of the translatable this belongs to
+    @param {StringModel} languageCode model for the language code of the language this translation is written in
+  */
+  constructor (api, translatableId, textModel, languageCodeModel) {
+    this._api = api
     this._translateableId = this._translateableId
-    this._languageCode = languageCode
+    this._languageCode = languageCodeModel
+    this._text = textModel
   }
 
-  get id() {
-    return this._translateableId + '_' + this._languageCode
+  // TODO: is it really cool to have a dynamic id?
+  get id () {
+    return this._translateableId + '_' + this._languageCode.getValue()
   }
 
-  get type() {
+  get type () {
     return 'translation'
   }
 
-  getLanguageCode() {
+  getLanguageCode () {
     return this._languageCode
   }
 
-  getText() {
+  getText () {
     return this._text
   }
-
-  /*
-    Returns original language code
-  */
-  getOriginalLangageCode() {
-    return this._originalLanguageCode
-  }
-
-  /*  
-    Returns the text model to be translated
-  */
-  getOriginalText() {
-    return this._originalText
-  }
-
 }

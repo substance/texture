@@ -1,5 +1,6 @@
 import { Component } from 'substance'
-import CardComponent from './CardComponent'
+import CardComponent from '../shared/CardComponent'
+import EntityEditor from '../shared/EntityEditor'
 
 export default class CollectionEditor extends Component {
   constructor(...args) {
@@ -20,7 +21,6 @@ export default class CollectionEditor extends Component {
       )
     )
 
-    const EntityEditor = this.getComponent('entity-editor')
     items.forEach(item => {
       let ItemEditor = this.getComponent(item.type, true) || EntityEditor
       el.append(

@@ -1,5 +1,5 @@
 import { Component, FontAwesomeIcon } from 'substance'
-import FormRowComponent from './FormRowComponent'
+import FormRowComponent from '../shared/FormRowComponent'
 import TextInput from './TextInput'
 
 export default class RefContribEditor extends Component {

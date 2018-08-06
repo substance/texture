@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import CardComponent from '../shared/CardComponent'
-import EntityEditor from '../shared/EntityEditor'
+import NodeModelEditor from '../../shared/NodeModelEditor'
 
 export default class EditReferenceWorkflow extends Component {
   constructor(...args) {
@@ -12,7 +12,7 @@ export default class EditReferenceWorkflow extends Component {
 
   render($$) {
     const item = this.props.item
-    const ItemEditor = this.getComponent(item.type, true) || EntityEditor
+    const ItemEditor = this.getComponent(item.type, true) || NodeModelEditor
 
     let el = $$('div').addClass('se-edit-reference').append(
       $$(CardComponent).append(

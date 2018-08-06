@@ -92,7 +92,7 @@ export default class NodeModelEditor extends CustomSurface {
   }
 
   _renderHeader ($$) {
-    const ModelPreviewComponent = this.getComponent('model-preview')
+    const ModelPreviewComponent = this.getComponent('model-preview', true)
     const model = this.props.model
     let header = $$('div').addClass('se-header')
     if (ModelPreviewComponent) {

@@ -7,13 +7,12 @@ import {
   SchemaDrivenCommandManager,
   MultiSelectPackage
 } from 'substance'
-import {
-  BasePackage,
-  EditorBasePackage,
-  TextureTextPropertyEditor,
-  TextureContainerEditor,
-  TextureTextPropertyComponent
-} from '../../shared'
+import BasePackage from '../../shared/BasePackage'
+import EditorBasePackage from '../../shared/EditorBasePackage'
+import ModelEditorPackage from '../../shared/ModelEditorPackage'
+import TextureTextPropertyEditor from '../../shared/TextureTextPropertyEditor'
+import TextureContainerEditor from '../../shared/TextureContainerEditor'
+import TextureTextPropertyComponent from '../../shared/TextureTextPropertyComponent'
 import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
 // Editor level components
 import ManuscriptEditor from './ManuscriptEditor'
@@ -89,6 +88,7 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
+    config.import(ModelEditorPackage)
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(ArticleNavPackage)

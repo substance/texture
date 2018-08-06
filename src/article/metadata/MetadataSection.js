@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import CardComponent from './CardComponent'
+import CardComponent from '../shared/CardComponent'
 
 export default class MetadataSection extends Component {
   render ($$) {

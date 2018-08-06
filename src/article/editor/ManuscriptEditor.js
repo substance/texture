@@ -18,7 +18,9 @@ export default class ManuscriptEditor extends Component {
       tocEntrySelected: this._tocEntrySelected,
       switchContext: this._switchContext,
       executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay
+      toggleOverlay: this._toggleOverlay,
+      startWorkflow: this._startWorkflow,
+      closeModal: this._closeModal
     })
 
     this._initialize(this.props)
@@ -27,6 +29,7 @@ export default class ManuscriptEditor extends Component {
   _initialize (props) {
     const { articleSession, config, archive } = props
     const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
+      workflowId: null,
       viewName: this.props.viewName
     })
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
@@ -40,6 +43,7 @@ export default class ManuscriptEditor extends Component {
       tocProvider: this.tocProvider,
       urlResolver: archive
     })
+    this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
 
     // initial reduce etc.
@@ -65,6 +69,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   dispose () {
+    const appState = this.context.appState
     const articleSession = this.props.articleSession
     const editorSession = this.editorSession
 
@@ -72,7 +77,7 @@ export default class ManuscriptEditor extends Component {
     articleSession.off(this)
     editorSession.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
-
+    appState.removeObserver(this)
     // Note: we need to clear everything, as the childContext
     // changes which is immutable
     this.empty()
@@ -118,6 +123,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   _renderMainSection ($$) {
+    const appState = this.context.appState
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
@@ -127,6 +133,16 @@ export default class ManuscriptEditor extends Component {
       ).ref('editorSection')
 
     )
+
+    if (appState.workflowId) {
+      let Modal = this.getComponent('modal')
+      let WorkflowComponent = this.getComponent(appState.workflowId)
+      let workflowModal = $$(Modal).addClass('se-workflow-modal').append(
+        $$(WorkflowComponent).ref('workflow')
+      )
+      mainSection.append(workflowModal)
+    }
+
     return mainSection
   }
 
@@ -284,6 +300,20 @@ export default class ManuscriptEditor extends Component {
     } else {
       appState.overlayId = overlayId
     }
+    appState.propagateUpdates()
+  }
+
+  _startWorkflow (workflowId) {
+    const appState = this.context.appState
+    appState.workflowId = workflowId
+    appState.overlayId = workflowId
+    appState.propagateUpdates()
+  }
+
+  _closeModal () {
+    const appState = this.context.appState
+    appState.workflowId = null
+    appState.overlayId = null
     appState.propagateUpdates()
   }
 }

@@ -138,7 +138,7 @@ export default class ManuscriptEditor extends Component {
       let Modal = this.getComponent('modal')
       let WorkflowComponent = this.getComponent(appState.workflowId)
       let workflowModal = $$(Modal).addClass('se-workflow-modal').append(
-        $$(WorkflowComponent).ref('workflow')
+        $$(WorkflowComponent, appState.workflowProps).ref('workflow')
       )
       mainSection.append(workflowModal)
     }
@@ -303,10 +303,11 @@ export default class ManuscriptEditor extends Component {
     appState.propagateUpdates()
   }
 
-  _startWorkflow (workflowId) {
+  _startWorkflow (workflowId, props) {
     const appState = this.context.appState
     appState.workflowId = workflowId
     appState.overlayId = workflowId
+    appState.workflowProps = props
     appState.propagateUpdates()
   }
 
@@ -314,6 +315,7 @@ export default class ManuscriptEditor extends Component {
     const appState = this.context.appState
     appState.workflowId = null
     appState.overlayId = null
+    appState.workflowProps = null
     appState.propagateUpdates()
   }
 }

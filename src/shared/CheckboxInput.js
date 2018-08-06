@@ -14,6 +14,8 @@ export default class CheckboxInput extends Component {
   }
 
   _onClick (e) {
+    e.preventDefault()
+    e.stopPropagation()
     this.send('toggleValue')
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { forEach, isNil } from 'substance'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 
@@ -39,7 +40,7 @@ export default class ExperimentalArticleValidator {
     Thoughts: adding issues one-by-one, and clearing by type
   */
   addIssue (path, issue) {
-    console.log('ArticleValidator: adding issue for %s', path.join('.'), issue)
+    // console.log('ArticleValidator: adding issue for %s', path.join('.'), issue)
     let nodeIssues = this._getNodeIssues(path[0])
     nodeIssues.add(path.slice(1).join('.'), issue)
     this._markAsDirty(path)

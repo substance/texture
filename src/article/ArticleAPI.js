@@ -5,7 +5,6 @@ import DynamicCollection from '../shared/DynamicCollection'
 import {
   StringModel, TextModel, FlowContentModel
 } from '../shared/ValueModel'
-import ContainerModel from './models/ContainerModel'
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
 // import DefaultModel from './models/DefaultModel'
@@ -14,6 +13,12 @@ import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
+
+// TODO: this should come from configuration
+const COLLECTIONS = {
+  'author': 'authors',
+  'editor': 'editors'
+}
 
 export default class ArticleAPI extends AbstractAPI {
   constructor (articleSession, modelRegistry) {
@@ -480,10 +485,4 @@ export default class ArticleAPI extends AbstractAPI {
     if (REQUIRED) return REQUIRED.has(propertyName)
     return false
   }
-}
-
-// TODO: this should come from configuration
-const COLLECTIONS = {
-  'author': 'authors',
-  'editor': 'editors'
 }

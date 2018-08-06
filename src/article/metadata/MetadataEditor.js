@@ -1,10 +1,7 @@
 import { Component } from 'substance'
 import { Managed, createEditorContext } from '../../shared'
-import CardComponent from '../shared/CardComponent'
-import EntityEditor from '../shared/EntityEditor'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
-import CollectionEditor from './CollectionEditor'
 import MetadataSection from './MetadataSection'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 

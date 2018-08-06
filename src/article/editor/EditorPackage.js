@@ -486,8 +486,6 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
-
-
     config.addToolPanel('toolbar', [
       {
         name: 'undo-redo',

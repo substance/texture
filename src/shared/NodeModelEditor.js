@@ -111,9 +111,9 @@ export default class NodeModelEditor extends CustomSurface {
     return this.props.model.id
   }
 
-  rerenderDOMSelection (...args) {
-    // console.log('EntityEditor.rerenderDOMSelection()', args)
-  }
+  // rerenderDOMSelection (...args) {
+  //   console.log('EntityEditor.rerenderDOMSelection()', args)
+  // }
 
   _toggleMode () {
     const fullMode = this.state.fullMode

@@ -32,7 +32,7 @@ export default class AbstractAPI {
   //   if (REQUIRED) return REQUIRED.has(propertyName)
   //   return false
   // }
-  _isPropertyRequired (type, propertyName) {
+  _isPropertyRequired (type, propertyName) { // eslint-disable-line
     return false
   }
 

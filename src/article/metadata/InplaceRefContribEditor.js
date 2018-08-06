@@ -44,7 +44,7 @@ export default class InplaceRefContribEditor extends ValueComponent {
     console.error('TODO: implement InplaceRefContribEditor._addContrib()')
   }
 
-  _removeContrib (contribId) {
+  _removeContrib (contribId) { // eslint-disable-line
     console.error('TODO: implement InplaceRefContribEditor._removeContrib()')
   }
 }

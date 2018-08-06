@@ -5,8 +5,8 @@ import {
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import CollectionEditor from './CollectionEditor'
-import EntityEditor from './EntityEditor'
-import CardComponent from './CardComponent'
+import EntityEditor from '../shared/EntityEditor'
+import CardComponent from '../shared/CardComponent'
 
 const SECTIONS = [
   { label: 'Authors', modelType: 'authors' },

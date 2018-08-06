@@ -7,13 +7,12 @@ import AddEntityCommand from './AddEntityCommand'
 import TextureContainerEditor from '../../shared/TextureContainerEditor'
 import TextNodeComponent from '../editor/TextNodeComponent'
 
-import EntityEditor from './EntityEditor'
 import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 
-import AddReferenceWorkflow from './AddReferenceWorkflow'
+import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 
 export default {
   name: 'ArticleMetadata',
@@ -161,7 +160,6 @@ export default {
     config.addComponent('container', TextureContainerEditor)
     // Note: in many cases the general EntityEditor implementation is used
     // In some other cases we use custom ones (e.g. figures)
-    config.addComponent('entity-editor', EntityEditor)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('figure', FigureComponent)
     config.addComponent('graphic', GraphicComponent)

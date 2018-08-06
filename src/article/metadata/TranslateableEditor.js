@@ -1,6 +1,6 @@
 import { Component, FontAwesomeIcon } from 'substance'
 import ContainerModel from '../models/ContainerModel'
-import FormRowComponent from './FormRowComponent'
+import FormRowComponent from '../shared/FormRowComponent'
 
 export default class TranslateableEditor extends Component {
 

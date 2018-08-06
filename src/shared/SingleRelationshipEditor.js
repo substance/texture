@@ -1,14 +1,10 @@
-import { Component } from 'substance'
-import SelectInput from './SelectInput'
+import ManyRelationshipEditor from './ManyRelationshipEditor'
 
-export default class SingleRelationshipEditor extends Component {
-  render ($$) {
-    const model = this.props.model
-    const value = model.getTarget()
-    const options = model.getAvailableTargets()
-    return $$(SelectInput, {
-      value,
-      options
-    })
+export default class SingleRelationshipEditor extends ManyRelationshipEditor {
+  _getSelectedOptions (options) {
+    let targetId = this.props.model.getValue()
+    let selectedOption = options.find(item => item.id === targetId)
+    let selected = selectedOption ? [selectedOption] : []
+    return selected
   }
 }

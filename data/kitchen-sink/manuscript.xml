@@ -18,7 +18,7 @@
       <title-group id="title-group-1">
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
         <trans-title-group id="trans-title-group-1" xml:lang="es">
-          <trans-title id="trans-title-1">Si <italic id="italic-1">signore</italic></trans-title>
+          <trans-title id="trans-title-1">Objeto de visión a acción manual en <italic id="italic-1">cortezas parietales</italic>, premotoras y motoras de macaco</trans-title>
         </trans-title-group>
       </title-group>
       <contrib-group content-type="author">
@@ -132,7 +132,7 @@
         <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </abstract>
       <trans-abstract id="trans-abstract-1" xml:lang="es">
-        <p id="p-1-1">Spanish abstract</p>
+        <p id="p-1-1">Tenga en cuenta que este artículo utiliza contenido de diferentes artículos de acceso abierto (eLife) con fines de demostración. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </trans-abstract>
       <kwd-group xml:lang="en">
         <kwd content-type="author-keyword">optogenetics</kwd>

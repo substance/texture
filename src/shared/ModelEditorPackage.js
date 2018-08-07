@@ -6,6 +6,7 @@ import ObjectModelEditor from './ObjectModelEditor'
 import SingleRelationshipEditor from './SingleRelationshipEditor'
 import ManyRelationshipEditor from './ManyRelationshipEditor'
 import ChildrenModelEditor from './ChildrenModelEditor'
+import CompositeModelComponent from './CompositeModelComponent'
 
 export default {
   name: 'Model Editors',
@@ -18,5 +19,6 @@ export default {
     configurator.addComponent('single-relationship-model', SingleRelationshipEditor)
     configurator.addComponent('many-relationship-model', ManyRelationshipEditor)
     configurator.addComponent('children-model', ChildrenModelEditor)
+    configurator.addComponent('composite-model', CompositeModelComponent)
   }
 }

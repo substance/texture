@@ -132,6 +132,11 @@ export default class ArticleAPI extends AbstractAPI {
     return this._getPersons('authors')
   }
 
+  getAuthorsModel() {
+    return this.getModel('authors')
+  }
+
+
   getEditors() {
     return this._getPersons('editors')
   }
@@ -305,13 +310,13 @@ export default class ArticleAPI extends AbstractAPI {
 
   getArticleAbstract () {
     let abstract = this.getArticle().find('abstract')
-    return new FlowContentModel(this, [abstract.id, '_children'])
+    return new FlowContentModel(this, abstract.getContentPath())
   }
 
-  // getArticleBody () {
-  //   let body = this.getArticle().find('body')
-  //   return new ContainerModel(this, body)
-  // }
+  getArticleBody () {
+    let body = this.getArticle().find('body')
+    return new FlowContentModel(this, body.getContentPath())
+  }
 
   getContribs () {
     let articleMeta = this.getArticle().find('article-meta')

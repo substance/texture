@@ -2,6 +2,7 @@ import {
   Component, DefaultDOMElement, Highlights
 } from 'substance'
 import { Managed, createEditorContext } from '../../shared'
+import ManuscriptModel from '../shared/ManuscriptModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import TOCProvider from './TOCProvider'
@@ -35,6 +36,7 @@ export default class ManuscriptEditor extends Component {
     const api = new ArticleAPI(editorSession, config.getModelRegistry())
     this.editorSession = editorSession
     this.api = api
+    this.model = new ManuscriptModel(api)
     this.exporter = this._getExporter()
     this.tocProvider = this._getTOCProvider()
     this.contentHighlights = new Highlights(articleSession.getDocument())
@@ -147,10 +149,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   _renderContentPanel ($$) {
-    const doc = this._getDocument()
     const configurator = this._getConfigurator()
-    const article = doc.get('article')
-
     const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
     const Overlay = this.getComponent('overlay')
@@ -167,7 +166,7 @@ export default class ManuscriptEditor extends Component {
 
     contentPanel.append(
       $$(ManuscriptComponent, {
-        node: article,
+        model: this.model,
         disabled: this.props.disabled
       }).ref('article'),
       $$(Managed(Overlay), {

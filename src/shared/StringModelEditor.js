@@ -7,13 +7,17 @@ export default class StringModelEditor extends Component {
     let path = model._path
     // TODO: use label provider for this
     let placeholder = 'Enter ' + label
-    let el = $$('div').addClass('sc-string-model-editor')
+    let el = $$('div').addClass(this.getClassNames())
     el.append($$(TextInput, {
       name: path.join('.'),
       path,
       placeholder
     }))
     return el
+  }
+
+  getClassNames () {
+    return 'sc-string-model-editor'
   }
 }
 

@@ -15,21 +15,12 @@ export default class ManuscriptComponent extends Component {
       node: front
     }).ref('front'))
 
-    // body is optional
-    // TODO: do we really want this? Otherwise we need to change InternalArticle
-    // and create an empty body on import
     const body = article.findChild('body')
     if (body) {
-      // el.append($$(this.getComponent('separator'), {
-      //   label: 'manuscript-start'
-      // }))
       const BodyComponent = this.getComponent('body')
       el.append($$(BodyComponent, {
         node: body
       }).ref('body'))
-      // el.append($$(this.getComponent('separator'), {
-      //   label: 'manuscript-end'
-      // }))
     }
 
     const back = article.findChild('back')
@@ -42,5 +33,4 @@ export default class ManuscriptComponent extends Component {
 
     return el
   }
-
 }

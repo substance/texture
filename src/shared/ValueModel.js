@@ -98,7 +98,30 @@ export class ManyRelationshipModel extends RelationshipModel {
   }
 }
 
-export class ChildrenModel extends ValueModel {
+class _ContainerModel extends ValueModel {
+  constructor (api, path, targetTypes) {
+    super(api, path)
+
+    this._targetTypes = targetTypes
+  }
+
+  get length () { return this.getValue().length }
+
+  getValue () {
+    return super.getValue() || []
+  }
+
+  isEmpty () {
+    return this.getValue().length === 0
+  }
+
+  _getItems () {
+    return this.getValue().map(id => this._api._getModelById(id))
+  }
+}
+
+
+export class ChildrenModel extends _ContainerModel {
   constructor (api, path, targetTypes) {
     super(api, path)
 
@@ -107,16 +130,8 @@ export class ChildrenModel extends ValueModel {
 
   get type () { return 'children-model' }
 
-  getValue () {
-    return super.getValue() || []
-  }
-
   getChildren () {
-    return this.getValue().map(id => this._api._getModelById(id))
-  }
-
-  isEmpty () {
-    return this.getValue().length === 0
+    return this._getItems()
   }
 
   appendChild (child) {
@@ -128,15 +143,26 @@ export class ChildrenModel extends ValueModel {
   }
 }
 
-// TODO: at this higher level, 'Container' is not a very good name because ot is not very specific
+// Note: at this higher level, 'Container' is not a very good name because ot is not very specific
 // We should come up with a name that makes clear that this is something that could be editied in a classical 'word-processor'.
 // I.e. the content consists of a sequence of TextBlocks as well as blocks with other typically structured content.
 // As a working title I'd suggest to use the term 'flow content' which is used in HTML for exactly this type of content
-export class FlowContentModel extends ChildrenModel {
-  // ATTENTION: the current implementation relies heavily on the model's node being a ContainerNode
-  // TODO: it would be good if we could find a way to get ContainerEditing implemented on a path instead of a node
-  get id () { return this._path[0] }
+export class FlowContentModel extends _ContainerModel {
   get type () { return 'flow-content-model' }
+
+  get id () { return this._path[0] }
+
+  getItems () {
+    return this._getItems()
+  }
+
+  addItem (item) {
+    this._api._appendChild(this._path, item)
+  }
+
+  removeItem (item) {
+    this._api._removeChild(this._path, item)
+  }
 }
 
 function _getAvailableRelationshipOptions (api, targetTypes) {

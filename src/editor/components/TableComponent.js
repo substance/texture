@@ -54,8 +54,8 @@ export default class TableComponent extends CustomSurface {
 
   render($$) {
     let el = $$('div').addClass('sc-table')
-    el.on('mousedown', this._onMousedown)
-      .on('mouseup', this._onMouseup)
+    // el.on('mousedown', this._onMousedown)
+    //   .on('mouseup', this._onMouseup)
     el.append(this._renderTable($$))
     el.append(this._renderKeyTrap($$))
     el.append(this._renderUnclickableOverlays($$))
@@ -155,7 +155,7 @@ export default class TableComponent extends CustomSurface {
         let newCellEditor = this.refs[nodeId]
         if (newCellEditor) {
           // console.log('ENABLING CELL EDITOR', nodeId)
-          newCellEditor.extendProps({ disabled: false })
+          newCellEditor.extendProps({ disabled: true })
           this._activeCell = nodeId
         }
       }

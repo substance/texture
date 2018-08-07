@@ -19,7 +19,7 @@ export default class FigComponent extends NodeComponent {
     if (content) {
       contentEl = $$(this.getComponent(figType), {
         node: content,
-        disabled: this.props.disabled
+        disabled: true
       })
       el.append(contentEl.ref('content'))
     }
@@ -28,7 +28,7 @@ export default class FigComponent extends NodeComponent {
     let titleEl = $$(this.getComponent('text-property-editor'), {
       placeholder: 'Enter Title',
       path: title.getPath(),
-      disabled: this.props.disabled
+      disabled: true
     }).addClass('se-title').ref('title')
     el.append(titleEl)
 
@@ -37,7 +37,7 @@ export default class FigComponent extends NodeComponent {
     if (caption) {
       captionEl = $$(this.getComponent('caption'), {
         node: caption,
-        disabled: this.props.disabled
+        disabled: true
       })
     }
     el.append(captionEl.ref('caption'))

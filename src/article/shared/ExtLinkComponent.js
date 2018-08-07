@@ -1,5 +1,5 @@
 import { AnnotationComponent } from 'substance'
-import NodeComponentMixin from '../../shared/NodeComponentMixin'
+import { NodeComponentMixin } from '../../kit'
 
 export default class ExtLinkComponent extends NodeComponentMixin(AnnotationComponent) {
   render($$) {

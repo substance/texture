@@ -7,8 +7,8 @@ import {
   AnnotationComponent
 } from 'substance'
 import {
-  TextureIsolatedNodeComponent, TextureIsolatedInlineNodeComponent
-} from '../../shared'
+  IsolatedNodeComponent, IsolatedInlineNodeComponent
+} from '../../kit'
 
 import TextNodeComponent from '../editor/TextNodeComponent'
 import PlainTextComponent from '../editor/PlainTextComponent'
@@ -78,8 +78,8 @@ export default {
     })
 
     // Base functionality
-    config.addComponent('isolated-node', TextureIsolatedNodeComponent, 'force')
-    config.addComponent('inline-node', TextureIsolatedInlineNodeComponent, 'force')
+    config.addComponent('isolated-node', IsolatedNodeComponent, 'force')
+    config.addComponent('inline-node', IsolatedInlineNodeComponent, 'force')
     config.addComponent('text-node', TextNodeComponent, 'force')
     config.addComponent('text-property-editor', TextPropertyEditor, 'force')
     config.addComponent('plain-text-property', PlainTextComponent, 'force')

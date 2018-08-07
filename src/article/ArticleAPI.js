@@ -1,13 +1,12 @@
 import { without } from 'substance'
 
-import AbstractAPI from '../shared/AbstractAPI'
-import DynamicCollection from '../shared/DynamicCollection'
 import {
+  AbstractAPI, DynamicCollection,
   StringModel, TextModel, FlowContentModel
-} from '../shared/ValueModel'
+} from '../kit'
+
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
-// import DefaultModel from './models/DefaultModel'
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'

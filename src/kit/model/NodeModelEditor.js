@@ -1,5 +1,5 @@
 import { FontAwesomeIcon, CustomSurface } from 'substance'
-import FormRowComponent from './FormRowComponent'
+import FormRowComponent from '../ui/FormRowComponent'
 
 /*
   General purpose editor for Substance Document nodes.

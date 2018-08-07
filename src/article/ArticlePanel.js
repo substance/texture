@@ -1,7 +1,5 @@
 import { Component } from 'substance'
-import {
-  AppState, createComponentContext
-} from '../shared'
+import { AppState, createComponentContext } from '../kit'
 
 const DEFAULT_VIEW = 'manuscript'
 

@@ -7,22 +7,22 @@ import {
   SchemaDrivenCommandManager,
   MultiSelectPackage
 } from 'substance'
-import BasePackage from '../../shared/BasePackage'
-import EditorBasePackage from '../../shared/EditorBasePackage'
-import ModelEditorPackage from '../../shared/ModelEditorPackage'
-import TextureTextPropertyEditor from '../../shared/TextureTextPropertyEditor'
-import TextureContainerEditor from '../../shared/TextureContainerEditor'
-import TextureTextPropertyComponent from '../../shared/TextureTextPropertyComponent'
+
+import {
+  BasePackage, EditorBasePackage, ModelEditorPackage,
+  TextPropertyEditor, ContainerEditor, TextPropertyComponent,
+  CompositeModelComponent, NodeModelEditor
+} from '../../kit'
+
 import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
 
+import ManuscriptEditor from './ManuscriptEditor'
+
 // new model based components
-import CompositeModelComponent from '../../shared/CompositeModelComponent'
 import ManuscriptComponent from '../shared/ManuscriptComponent'
 import FrontMatterComponent from '../shared/FrontMatterComponent'
 import ReferenceListComponent from '../shared/ReferenceListComponent'
 
-// Editor level components
-import ManuscriptEditor from './ManuscriptEditor'
 // General components
 import ContainerNodeComponent from './ContainerNodeComponent'
 import ElementNodeComponent from './ElementNodeComponent'
@@ -91,7 +91,6 @@ import EditReferenceWorkflow from './EditReferenceWorkflow'
 
 // FIXME: this should be shared
 import CollectionEditor from '../metadata/CollectionEditor'
-import NodeModelEditor from '../../shared/NodeModelEditor'
 
 export default {
   name: 'ManscruptEditor',
@@ -110,10 +109,10 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('text-property', TextureTextPropertyComponent)
-    config.addComponent('text-property-editor', TextureTextPropertyEditor)
+    config.addComponent('text-property', TextPropertyComponent)
+    config.addComponent('text-property-editor', TextPropertyEditor)
     config.addComponent('container', ContainerNodeComponent)
-    config.addComponent('container-editor', TextureContainerEditor)
+    config.addComponent('container-editor', ContainerEditor)
     config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
@@ -692,6 +691,10 @@ export default {
 
     config.addIcon('pencil', {
       'fontawesome': 'fa-pencil'
+    })
+
+    config.addIcon('trash', {
+      'fontawesome': 'fa-trash'
     })
 
     /*

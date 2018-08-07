@@ -1,4 +1,4 @@
-import CompositeModel from '../../shared/CompositeModel'
+import { CompositeModel } from '../../kit'
 import ReferenceCollectionModel from '../models/ReferenceCollectionModel'
 
 export default class BackMatterModel extends CompositeModel {

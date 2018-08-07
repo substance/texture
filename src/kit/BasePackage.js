@@ -5,19 +5,19 @@ import {
   InlineNodeComponent, AnnotationComponent
 } from 'substance'
 
-import ScrollPane from './ScrollPane'
-import BodyScrollPane from './BodyScrollPane'
-import Menu from './Menu'
-import MenuGroup from './MenuGroup'
-import MenuItem from './MenuItem'
-import Button from './Button'
-import ContextMenu from './ContextMenu'
-import Overlay from './Overlay'
-import ToggleTool from './ToggleTool'
-import Toolbar from './Toolbar'
-import ToolDropdown from './ToolDropdown'
-import ToolGroup from './ToolGroup'
-import ToolPrompt from './ToolPrompt'
+import ScrollPane from './ui/ScrollPane'
+import BodyScrollPane from './ui/BodyScrollPane'
+import Menu from './ui/Menu'
+import MenuGroup from './ui/MenuGroup'
+import MenuItem from './ui/MenuItem'
+import Button from './ui/Button'
+import ContextMenu from './ui/ContextMenu'
+import Overlay from './ui/Overlay'
+import ToggleTool from './ui/ToggleTool'
+import Toolbar from './ui/Toolbar'
+import ToolDropdown from './ui/ToolDropdown'
+import ToolGroup from './ui/ToolGroup'
+import ToolPrompt from './ui/ToolPrompt'
 
 export default {
   name: 'TextureBase',

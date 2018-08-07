@@ -1,4 +1,4 @@
-import { NodeModelFactory as ModelFactory } from './NodeModel'
+import ModelFactory from './NodeModelFactory'
 
 export default class AbstractAPI {
   _getDocument () {

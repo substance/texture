@@ -1,30 +1,13 @@
-import {
-  BooleanModel, NumberModel, StringModel, TextModel, ObjectModel,
-  ChildrenModel, SingleRelationshipModel, ManyRelationshipModel
-} from './ValueModel'
-const MODELCLASS_CACHE = new Map()
+import BooleanModel from './BooleanModel'
+import NumberModel from './NumberModel'
+import StringModel from './StringModel'
+import TextModel from './TextModel'
+import ObjectModel from './ObjectModel'
+import ChildrenModel from './ChildrenModel'
+import SingleRelationshipModel from './SingleRelationshipModel'
+import ManyRelationshipModel from './ManyRelationshipModel'
 
-export class NodeModelFactory {
-  static create (api, node) {
-    let ModelClass = MODELCLASS_CACHE.get(node.type)
-    if (!ModelClass) {
-      class _GeneratedModel extends NodeModel {}
-      let nodeSchema = node.getSchema()
-      for (let prop of nodeSchema) {
-        // skip id and type
-        if (prop.name === 'id') continue
-        _GeneratedModel.prototype[_getter(prop.name)] = function () {
-          return this._getPropertyModel(prop.name)
-        }
-      }
-      ModelClass = _GeneratedModel
-      MODELCLASS_CACHE.set(node.type, ModelClass)
-    }
-    return new ModelClass(api, node)
-  }
-}
-
-export class NodeModel {
+export default class NodeModel {
   constructor (api, node) {
     if (!node) throw new Error("'node' is required")
     this._api = api
@@ -59,10 +42,6 @@ export class NodeModel {
   _getPropertyModel (name) {
     return this._propertiesByName.get(name)
   }
-}
-
-function _getter (name) {
-  return ['get', name[0].toUpperCase(), name.slice(1)].join('')
 }
 
 export class NodeModelProperty {

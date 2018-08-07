@@ -1,5 +1,5 @@
 import { FontAwesomeIcon, Component } from 'substance'
-import { ModalDialog } from '../../shared'
+import { ModalDialog } from '../../kit'
 import renderEntity from './renderEntity'
 // import AffiliationsListComponent from './AffiliationsListComponent'
 

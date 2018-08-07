@@ -1,4 +1,4 @@
-import NodeModelEditor from '../../shared/NodeModelEditor'
+import { NodeModelEditor } from '../../kit'
 
 export default class ArticleRecordEditor extends NodeModelEditor {
   _renderHeader () {

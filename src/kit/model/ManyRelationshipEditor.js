@@ -1,5 +1,5 @@
 import ValueComponent from './ValueComponent'
-import MultiSelectInput from './MultiSelectInput'
+import MultiSelectInput from '../ui/MultiSelectInput'
 
 export default class ManyRelationshipEditor extends ValueComponent {
   render ($$) {

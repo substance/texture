@@ -1,4 +1,4 @@
-import { DocumentSession } from '../shared'
+import { DocumentSession } from '../kit'
 import FigureManager from './shared/FigureManager'
 import FootnoteManager from './shared/FootnoteManager'
 import ReferenceManager from './shared/ReferenceManager'

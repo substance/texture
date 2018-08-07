@@ -1,4 +1,4 @@
-import CompositeModelComponent from '../../shared/CompositeModelComponent'
+import { CompositeModelComponent } from '../../kit'
 
 export default class ManuscriptComponent extends CompositeModelComponent {
   getClassNames () {

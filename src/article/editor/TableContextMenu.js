@@ -1,4 +1,4 @@
-import ToolPanel from '../../shared/ToolPanel'
+import { ToolPanel } from '../../kit'
 
 export default class TableContextMenu extends ToolPanel {
 

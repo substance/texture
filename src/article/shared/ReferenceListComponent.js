@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import Button from '../../shared/Button'
+import { Button } from '../../kit'
 
 export default class ReferenceListComponent extends Component {
   getInitialState () {

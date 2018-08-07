@@ -1,7 +1,9 @@
 import {
   Configurator, registerSchema, XMLDocumentImporter
 } from 'substance'
-import DocumentSession from '../shared/DocumentSession'
+import {
+  DocumentSession
+} from '../kit'
 import ManifestSchema from './ManifestSchema'
 import ManifestDocument from './ManifestDocument'
 

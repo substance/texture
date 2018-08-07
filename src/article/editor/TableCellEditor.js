@@ -1,4 +1,4 @@
-import TextPropertyEditor from '../../shared/TextureTextPropertyEditor'
+import { TextPropertyEditor } from '../../kit'
 
 export default class TableCellEditor extends TextPropertyEditor {
 

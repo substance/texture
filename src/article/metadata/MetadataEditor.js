@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { Managed, createEditorContext } from '../../shared'
+import { Managed, createEditorContext } from '../../kit'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'

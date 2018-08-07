@@ -1,4 +1,4 @@
-import CompositeModel from '../../shared/CompositeModel'
+import { CompositeModel } from '../../kit'
 
 export default class FrontMatterModel extends CompositeModel {
   constructor (api) {

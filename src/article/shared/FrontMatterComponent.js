@@ -1,5 +1,4 @@
-import CompositeModelComponent from '../../shared/CompositeModelComponent'
-// import AuthorsListComponent from './AuthorsListComponent'
+import { CompositeModelComponent } from '../../kit'
 
 export default class FrontMatterComponent extends CompositeModelComponent {
   getClassNames () {

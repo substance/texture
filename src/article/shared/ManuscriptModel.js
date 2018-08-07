@@ -1,4 +1,4 @@
-import CompositeModel from '../../shared/CompositeModel'
+import { CompositeModel } from '../../kit'
 import FrontMatterModel from './FrontMatterModel'
 import BackMatterModel from './BackMatterModel'
 

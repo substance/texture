@@ -4,7 +4,8 @@ export default class AbstractComponent extends Component {
   getInitialState () {
     const model = this.props.model
     const items = model.getItems()
-    // by default we hide empty abstracts
+
+    // Attention: by default we hide empty abstracts
     // TODO: this should be configurable
     let isEmpty = items.length === 1 && items[0].getContent().isEmpty()
     return {

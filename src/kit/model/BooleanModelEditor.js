@@ -1,5 +1,5 @@
 import ValueComponent from './ValueComponent'
-import CheckboxInput from './CheckboxInput'
+import CheckboxInput from '../ui/CheckboxInput'
 
 export default class BooleanModelEditor extends ValueComponent {
   getActionHandlers () {

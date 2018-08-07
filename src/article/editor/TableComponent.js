@@ -3,7 +3,7 @@ import {
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
-import { Managed } from '../../shared'
+import { Managed } from '../../kit'
 import { getCellRange, computeUpdatedSelection } from '../shared/tableHelpers'
 import TableEditing from './TableEditing'
 import TableClipboard from './TableClipboard'

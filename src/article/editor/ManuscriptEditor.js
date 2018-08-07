@@ -1,7 +1,9 @@
 import {
   Component, DefaultDOMElement, Highlights
 } from 'substance'
-import { Managed, createEditorContext } from '../../shared'
+import {
+  Managed, createEditorContext
+} from '../../kit'
 import ManuscriptModel from '../shared/ManuscriptModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'

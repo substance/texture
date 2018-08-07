@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import NodeComponentMixin from '../../shared/NodeComponentMixin'
+import { NodeComponentMixin } from '../../kit'
 
 export default class NodeComponent extends NodeComponentMixin(Component) {
 }

@@ -55,6 +55,24 @@ export default class AbstractAPI {
       tx.setSelection(_customSelection(path))
     })
   }
+
+  _addModel (data) {
+    let node
+    this._getDocumentSession().transaction(tx => {
+      node = tx.create(data)
+      tx.setSelection(null)
+    })
+    return this._getModelForNode(node)
+  }
+
+  _removeModel (model) {
+    let node
+    this.articleSession.transaction((tx) => {
+      node = tx.delete(model.id)
+      tx.selection = null
+    })
+    return this._getModelForNode(node)
+  }
 }
 
 function _customSelection (path) {

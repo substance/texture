@@ -1,11 +1,8 @@
-import { BasePackage } from '../shared'
-
+import { BasePackage } from '../kit'
 import ArticleConfigurator from './ArticleConfigurator'
-
 import ModelPackage from './ArticleModelPackage'
 import EditorPackage from './editor/EditorPackage'
 import MetadataPackage from './metadata/MetadataPackage'
-
 import ArticlePanel from './ArticlePanel'
 import ManuscriptEditor from './editor/ManuscriptEditor'
 import MetadataEditor from './metadata/MetadataEditor'

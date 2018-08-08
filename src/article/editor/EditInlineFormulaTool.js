@@ -1,5 +1,5 @@
 import { domHelpers } from 'substance'
-import { ToggleTool } from '../../shared'
+import { ToggleTool } from '../../kit'
 
 /*
   Tool to edit math markup.

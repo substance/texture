@@ -1,5 +1,5 @@
 import { Component, FontAwesomeIcon } from 'substance'
-import Tooltip from '../../shared/Tooltip'
+import { Tooltip } from '../../kit'
 
 export default class FormRowComponent extends Component {
   render($$) {
@@ -9,10 +9,10 @@ export default class FormRowComponent extends Component {
     const children = this.props.children
 
     const el = $$('div').addClass('sc-form-row')
-    
+
     if(label) {
       const labelEl = $$('div').addClass('se-label').append(label)
-    
+
       if(hasWarnings) {
         labelEl.append(
           $$('div').addClass('se-warning').append(
@@ -32,7 +32,7 @@ export default class FormRowComponent extends Component {
     el.append(
       $$('div').addClass('se-editor').append(children)
     )
-    
+
     return el
   }
 }

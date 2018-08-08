@@ -1,0 +1,6 @@
+.sc-manuscript .sc-text-model-editor.sm-title {
+  line-height: 1.3em;
+  font-size: var(--title-font-size);
+  font-family: 'Avenir Next', 'Lato', Helvetica;
+  font-weight: 600;
+}

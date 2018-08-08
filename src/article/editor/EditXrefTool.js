@@ -1,5 +1,5 @@
 import { find, without } from 'substance'
-import { ToggleTool } from '../../shared'
+import { ToggleTool } from '../../kit'
 import { getXrefTargets, getAvailableXrefTargets } from '../shared/xrefHelpers'
 
 /*

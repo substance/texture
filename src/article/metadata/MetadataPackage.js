@@ -1,14 +1,14 @@
 import { TextPropertyEditor } from 'substance'
-import { BasePackage, EditorBasePackage } from '../../shared'
+import {
+  BasePackage, EditorBasePackage, ModelEditorPackage,
+  ContainerEditor, NodeModelEditor
+} from '../../kit'
 import EntityLabelsPackage from './EntityLabelsPackage'
 import ArticleNavPackage from '../ArticleNavPackage'
 import AddEntityCommand from './AddEntityCommand'
 
-import TextureContainerEditor from '../../shared/TextureContainerEditor'
 import TextNodeComponent from '../editor/TextNodeComponent'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-import ModelEditorPackage from '../../shared/ModelEditorPackage'
-import NodeModelEditor from '../../shared/NodeModelEditor'
 
 import CollectionEditor from './CollectionEditor'
 import ModelPreviewComponent from '../shared/ModelPreviewComponent'
@@ -20,7 +20,6 @@ import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
-
 
 export default {
   name: 'ArticleMetadata',
@@ -178,13 +177,13 @@ export default {
     // Components for editors
     config.addComponent('text-node', TextNodeComponent)
     config.addComponent('text-property', TextPropertyEditor)
-    config.addComponent('container', TextureContainerEditor)
+    config.addComponent('container', ContainerEditor)
     // Note: in many cases the general EntityEditor implementation is used
     // In some other cases we use custom ones (e.g. figures)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('figure', FigureComponent)
     config.addComponent('graphic', GraphicComponent)
-    config.addComponent('caption', TextureContainerEditor)
+    config.addComponent('caption', ContainerEditor)
     // LEGACY:
     config.addComponent('footnote', FnComponent)
 

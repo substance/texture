@@ -1,13 +1,12 @@
 import { without } from 'substance'
 
-import AbstractAPI from '../shared/AbstractAPI'
-import DynamicCollection from '../shared/DynamicCollection'
 import {
+  AbstractAPI, DynamicCollection,
   StringModel, TextModel, FlowContentModel
-} from '../shared/ValueModel'
+} from '../kit'
+
 import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
-// import DefaultModel from './models/DefaultModel'
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
@@ -131,6 +130,11 @@ export default class ArticleAPI extends AbstractAPI {
   getAuthors() {
     return this._getPersons('authors')
   }
+
+  getAuthorsModel() {
+    return this.getModel('authors')
+  }
+
 
   getEditors() {
     return this._getPersons('editors')
@@ -305,13 +309,13 @@ export default class ArticleAPI extends AbstractAPI {
 
   getArticleAbstract () {
     let abstract = this.getArticle().find('abstract')
-    return new FlowContentModel(this, [abstract.id, '_children'])
+    return new FlowContentModel(this, abstract.getContentPath())
   }
 
-  // getArticleBody () {
-  //   let body = this.getArticle().find('body')
-  //   return new ContainerModel(this, body)
-  // }
+  getArticleBody () {
+    let body = this.getArticle().find('body')
+    return new FlowContentModel(this, body.getContentPath())
+  }
 
   getContribs () {
     let articleMeta = this.getArticle().find('article-meta')

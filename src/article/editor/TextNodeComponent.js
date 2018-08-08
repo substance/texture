@@ -9,6 +9,7 @@ export default class TextNodeComponent extends NodeComponent {
 
     let el = $$(tagName).addClass('sc-'+node.type)
       .append($$(TextPropertyComponent, {
+        doc: node.getDocument(),
         placeholder: this.props.placeholder,
         path: node.getPath()
       }).attr('data-id', node.id)

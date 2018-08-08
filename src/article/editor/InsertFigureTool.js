@@ -1,4 +1,4 @@
-import { ToggleTool } from '../../shared'
+import { ToggleTool } from '../../kit'
 
 export default class InsertFigureTool extends ToggleTool {
   renderButton ($$) {

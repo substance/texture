@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from 'substance'
-import ValueComponent from '../../shared/ValueComponent'
-import FormRowComponent from '../../shared/FormRowComponent'
-import StringModelEditor from '../../shared/StringModelEditor'
+import {
+  FormRowComponent, ValueComponent, StringModelEditor
+} from '../../kit'
 
 export default class InplaceRefContribEditor extends ValueComponent {
   render ($$) {

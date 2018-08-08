@@ -64,12 +64,12 @@
   position: relative;
 }
 
-.sc-article {
+.sc-manuscript {
   max-width: 760px;
   padding: 30px;
 }
 
-.sc-editor.sm-compact .sc-article {
+.sc-editor.sm-compact .sc-manuscript {
   margin: 0 auto;
 }
 

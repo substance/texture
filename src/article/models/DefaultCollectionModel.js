@@ -20,7 +20,7 @@ export default class DefaultCollectionModel {
   }
 
   addItem(item) { // eslint-disable-line no-unused-vars
-    
+
   }
 
   removeItem(item) { // eslint-disable-line no-unused-vars

@@ -1,5 +1,5 @@
+import { DocumentSession } from '../../kit'
 import TextureConfigurator from '../../TextureConfigurator'
-import DocumentSession from '../../shared/DocumentSession'
 import EntitiesPackage from './EntitiesPackage'
 
 export default function createEntityDbSession (seed = []) {

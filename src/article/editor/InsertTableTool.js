@@ -1,4 +1,4 @@
-import { ToggleTool } from '../../shared'
+import { ToggleTool } from '../../kit'
 
 export default class InsertTableTool extends ToggleTool {
   getClassNames () {

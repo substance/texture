@@ -7,16 +7,22 @@ import {
   SchemaDrivenCommandManager,
   MultiSelectPackage
 } from 'substance'
-import BasePackage from '../../shared/BasePackage'
-import EditorBasePackage from '../../shared/EditorBasePackage'
-import ModelEditorPackage from '../../shared/ModelEditorPackage'
-import TextureTextPropertyEditor from '../../shared/TextureTextPropertyEditor'
-import TextureContainerEditor from '../../shared/TextureContainerEditor'
-import TextureTextPropertyComponent from '../../shared/TextureTextPropertyComponent'
+
+import {
+  BasePackage, EditorBasePackage, ModelEditorPackage,
+  TextPropertyEditor, ContainerEditor, TextPropertyComponent,
+  CompositeModelComponent, NodeModelEditor
+} from '../../kit'
+
 import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
-// Editor level components
+
 import ManuscriptEditor from './ManuscriptEditor'
-import ManuscriptComponent from './ManuscriptComponent'
+
+// new model based components
+import ManuscriptComponent from '../shared/ManuscriptComponent'
+import FrontMatterComponent from '../shared/FrontMatterComponent'
+import ReferenceListComponent from '../shared/ReferenceListComponent'
+
 // General components
 import ContainerNodeComponent from './ContainerNodeComponent'
 import ElementNodeComponent from './ElementNodeComponent'
@@ -24,11 +30,12 @@ import TextNodeComponent from './TextNodeComponent'
 import PlainTextComponent from './PlainTextComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
+
+import AbstractComponent from '../shared/AbstractComponent'
+import AuthorsListComponent from '../shared/AuthorsListComponent'
+
 // Node components
-import AbstractComponent from './AbstractComponent'
 import AffiliationsListComponent from './AffiliationsListComponent'
-import AuthorsListComponent from './AuthorsListComponent'
-import BackComponent from './BackComponent'
 import BodyComponent from './BodyComponent'
 import BreakComponent from './BreakComponent'
 import EditXrefTool from './EditXrefTool'
@@ -40,7 +47,6 @@ import CaptionComponent from './CaptionComponent'
 import DispQuoteComponent from './DispQuoteComponent'
 import FnComponent from './FnComponent'
 import FnGroupComponent from './FnGroupComponent'
-import FrontComponent from './FrontComponent'
 import GraphicComponent from './GraphicComponent'
 import HeadingComponent from './HeadingComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
@@ -83,6 +89,9 @@ import ArticleNavPackage from '../ArticleNavPackage'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import EditReferenceWorkflow from './EditReferenceWorkflow'
 
+// FIXME: this should be shared
+import CollectionEditor from '../metadata/CollectionEditor'
+
 export default {
   name: 'ManscruptEditor',
   configure (config) {
@@ -100,29 +109,34 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('text-property', TextureTextPropertyComponent)
-    config.addComponent('text-property-editor', TextureTextPropertyEditor)
+    config.addComponent('text-property', TextPropertyComponent)
+    config.addComponent('text-property-editor', TextPropertyEditor)
     config.addComponent('container', ContainerNodeComponent)
-    config.addComponent('container-editor', TextureContainerEditor)
+    config.addComponent('container-editor', ContainerEditor)
     config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
-    // Node components
+    // HACK: to get components working taken from metadata editor
+    config.addComponent('entity', NodeModelEditor)
+
+    config.addComponent('front-matter', FrontMatterComponent)
+    config.addComponent('back-matter', CompositeModelComponent)
+    config.addComponent('references', ReferenceListComponent)
     config.addComponent('abstract', AbstractComponent)
-    config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('authors-list', AuthorsListComponent)
+
+    // Node components
+    config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
     config.addComponent('translations', TranslationsComponent)
-    config.addComponent('back', BackComponent)
     config.addComponent('body', BodyComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('col', ElementNodeComponent)
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('front', FrontComponent)
     config.addComponent('fig', FigComponent)
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
@@ -154,6 +168,7 @@ export default {
 
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('collection', CollectionEditor)
 
     // Preview components for Ref, Fn, Figure
     config.addComponent('ref-preview', RefPreview)
@@ -570,7 +585,6 @@ export default {
         ]
       },
 
-
     ])
 
     config.addToolPanel('main-overlay', [
@@ -674,6 +688,15 @@ export default {
     config.addLabel('import-refs', 'Import')
     config.addLabel('supported-ref-formats', 'Supported formats')
     config.addComponent('edit-reference', EditReferenceWorkflow)
+
+    config.addIcon('pencil', {
+      'fontawesome': 'fa-pencil'
+    })
+
+    config.addIcon('trash', {
+      'fontawesome': 'fa-trash'
+    })
+
     /*
       Define panel structure
     */

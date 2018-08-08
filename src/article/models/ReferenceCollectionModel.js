@@ -4,6 +4,8 @@ export default class ReferenceCollectionModel {
     this._api = api
   }
 
+  get type () { return 'references' }
+
   get id() {
     return 'references'
   }

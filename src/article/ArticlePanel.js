@@ -1,9 +1,7 @@
 import { Component } from 'substance'
-import {
-  AppState, createComponentContext
-} from '../shared'
+import { AppState, createComponentContext } from '../kit'
 
-const DEFAULT_VIEW = 'metadata'
+const DEFAULT_VIEW = 'manuscript'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
@@ -22,7 +20,7 @@ export default class ArticlePanel extends Component {
   _initialize (props) {
     const archive = props.archive
     const config = props.config
-    
+
     this.context = Object.assign(createComponentContext(config), {
       urlResolver: archive,
       appState: this.state

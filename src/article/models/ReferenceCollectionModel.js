@@ -21,7 +21,7 @@ export default class ReferenceCollectionModel {
   }
 
   addItem(item) {
-    this._api.addReference(item, item.type)
+    this._api._addModel(item)
   }
 
   addItems(items) {
@@ -29,18 +29,18 @@ export default class ReferenceCollectionModel {
   }
 
   removeItem(item) {
-    this._api.deleteReference(item.id)
+    this._api._removeModel(item)
   }
 
   _getItem(id) {
     let article = this._api.getArticle()
-    let entity = article.get(id)
-    if (!entity) {
+    let node = article.get(id)
+    if (!node) {
       console.warn(`No db entry found for ${id}.`)
       return undefined
     }
 
-    let model = this._api.getModel(entity.type, entity)
+    let model = this._api._getModelForNode(node)
     return model
   }
 

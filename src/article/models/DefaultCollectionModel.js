@@ -19,11 +19,13 @@ export default class DefaultCollectionModel {
     return this._api.getEntitiesByType(this._getCollectionType())
   }
 
-  addItem(item) { // eslint-disable-line no-unused-vars
-
+  addItem(item = {}) {
+    const itemType = this._getCollectionType()
+    item.type = itemType
+    return this._api._addModel(item)
   }
 
-  removeItem(item) { // eslint-disable-line no-unused-vars
-
+  removeItem(item) {
+    return this._api._removeModel(item)
   }
 }

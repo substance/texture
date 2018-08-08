@@ -1,6 +1,7 @@
 import ToolGroup from './ToolGroup'
 import Tooltip from './Tooltip'
 
+// TODO: use OverlayMixin
 export default class ToolDropdown extends ToolGroup {
   constructor (...args) {
     super(...args)
@@ -139,7 +140,9 @@ export default class ToolDropdown extends ToolGroup {
     return menuItems
   }
 
-  _toggleChoices () {
+  _toggleChoices (event) {
+    event.preventDefault()
+    event.stopPropagation()
     this.send('toggleOverlay', this.getId())
   }
 }

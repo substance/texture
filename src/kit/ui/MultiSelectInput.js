@@ -56,4 +56,10 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     event.stopPropagation()
     this.send('toggleOption', option)
   }
+
+  _toggleOverlay (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    super._toggleOverlay()
+  }
 }

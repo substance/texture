@@ -16,8 +16,7 @@ export default function (Component) {
       return this.context.appState.overlayId === this.getId()
     }
 
-    _toggleOverlay (event) {
-      event.stopPropagation()
+    _toggleOverlay () {
       this.send('toggleOverlay', this.getId())
     }
   }

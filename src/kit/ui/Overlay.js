@@ -10,7 +10,7 @@ export default class Overlay extends ToolPanel {
     this._positionOverlay()
 
     // TODO: avoid using appState directly, instead use a Managed component
-    this.context.appState.addObserver(['overlayHints'], this._positionOverlay, this, { stage: 'position' })
+    this.context.appState.addObserver(['overlayHints'], this._positionOverlay, this, { stage: 'finalize' })
   }
 
   dispose () {

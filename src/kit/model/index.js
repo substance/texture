@@ -12,6 +12,7 @@ export { default as ManyRelationshipModel } from './ManyRelationshipModel'
 export { default as ManyRelationshipEditor } from './ManyRelationshipEditor'
 export { default as ModelEditorPackage } from './ModelEditorPackage'
 export { default as ModelProperty } from './ModelProperty'
+export { default as NodeComponent } from './NodeComponent'
 export { default as NodeComponentMixin } from './NodeComponentMixin'
 export { default as NodeModel } from './NodeModel'
 export { default as NodeModelEditor } from './NodeModelEditor'
@@ -27,5 +28,12 @@ export { default as TextModelEditor } from './TextModelEditor'
 export { default as ValueComponent } from './ValueComponent'
 export { default as ValueModel } from './ValueModel'
 
-export * from './SubstanceModifications'
 export * from './schemaHelpers'
+
+export {
+  ContainerEditorNew as ContainerEditor,
+  IsolatedInlineNodeComponentNew as IsolatedInlineNodeComponent,
+  IsolatedNodeComponentNew as IsolatedNodeComponent,
+  TextPropertyComponentNew as TextPropertyComponent,
+  TextPropertyEditorNew as TextPropertyEditor
+} from './SubstanceModifications'

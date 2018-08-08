@@ -3,7 +3,7 @@ import {
 } from 'substance'
 
 export default {
-  name: 'editor-basics',
+  name: 'EditorBase',
   configure: function (config) {
     config.import(InputPackage)
 

@@ -109,10 +109,7 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('text-property', TextPropertyComponent)
-    config.addComponent('text-property-editor', TextPropertyEditor)
     config.addComponent('container', ContainerNodeComponent)
-    config.addComponent('container-editor', ContainerEditor)
     config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)

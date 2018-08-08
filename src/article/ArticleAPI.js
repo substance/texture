@@ -44,22 +44,13 @@ export default class ArticleAPI extends AbstractAPI {
     }
   }
 
-  /*
-    Returns an entity model (not node!)
-  */
-  getEntity(entityId) {
-    let entityNode = this.article.get(entityId)
-    let model = this.getModel(entityNode.type, entityNode)
-    return model
-  }
-
   _getNode(nodeId) {
     return this.article.get(nodeId)
   }
 
   getEntitiesByType(type) {
     let entityIds = this.article.findByType(type)
-    return entityIds.map(entityId => this.getEntity(entityId))
+    return entityIds.map(entityId => this._getModelById(entityId))
   }
 
   // TODO: this should be configurable. As it is similar to HTML conversion
@@ -75,33 +66,6 @@ export default class ArticleAPI extends AbstractAPI {
 
   getArticleSession () {
     return this.articleSession
-  }
-
-  /*
-    Returns an entity model (not node!)
-  */
-  addEntity(data, type) {
-    const newNode = Object.assign({}, data, {
-      type: type
-    })
-    let node
-    this.articleSession.transaction(tx => {
-      tx.selection = null
-      node = tx.create(newNode)
-    })
-    return this.getModel(node.type, node)
-  }
-
-  /*
-    Returns an entity model (not node!)
-  */
-  deleteEntity(entityId) {
-    let node
-    this.articleSession.transaction((tx) => {
-      node = tx.delete(entityId)
-      tx.selection = null
-    })
-    return this.getModel(node.type, node)
   }
 
   addAuthor(person = {}) {
@@ -142,7 +106,7 @@ export default class ArticleAPI extends AbstractAPI {
 
   _getPersons(prop) {
     let articleRecord = this._getNode('article-record')
-    let persons = articleRecord[prop].map(personId => this.getEntity(personId))
+    let persons = articleRecord[prop].map(personId => this._getModelById(personId))
     return persons
   }
 
@@ -166,58 +130,6 @@ export default class ArticleAPI extends AbstractAPI {
       tx.selection = null
     })
     return this.getModel(node.type, node)
-  }
-
-  addOrganisation(organisation = {}) {
-    const orgModel = this.addEntity(organisation, 'organisation')
-    return orgModel
-  }
-
-  deleteOrganisation(orgId) {
-    const model = this.deleteEntity(orgId)
-    return model
-  }
-
-  addAward(award = {}) {
-    const awardModel = this.addEntity(award, 'award')
-    return awardModel
-  }
-
-  deleteAward(awardId) {
-    const model = this.deleteEntity(awardId)
-    return model
-  }
-
-  addKeyword(keyword = {}) {
-    const keywordModel = this.addEntity(keyword, 'keyword')
-    return keywordModel
-  }
-
-  deleteKeyword(keywordId) {
-    const model = this.deleteEntity(keywordId)
-    return model
-  }
-
-  addSubject(subject = {}) {
-    const subjectModel = this.addEntity(subject, 'subject')
-    return subjectModel
-  }
-
-  deleteSubject(subjectId) {
-    const model = this.deleteEntity(subjectId)
-    return model
-  }
-
-  addReference(reference = {}, type) {
-    const articleSession = this.articleSession
-    const referenceModel = this.addEntity(reference, type)
-    articleSession.transaction(tx => {
-      const refEl = tx.createElement('ref').attr('rid',referenceModel.id)
-      const refList = tx.find('ref-list')
-      refList.append(refEl)
-      tx.selection = null
-    })
-    return referenceModel
   }
 
   addReferences(refs) {

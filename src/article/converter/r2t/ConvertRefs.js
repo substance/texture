@@ -46,7 +46,7 @@ export default class ConvertRef {
 
     // Re-export refs according to computed order
     bibliography.forEach(ref => {
-      let entity = ref.state.entity
+      let entity = ref._node
       let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
       let elementCitation
       if (validTypes.includes(entity.type)) {

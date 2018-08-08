@@ -16,7 +16,7 @@ export default class ReferenceCollectionModel {
 
   getItems() {
     let refs = this._api.getReferenceManager().getBibliography()
-    let result = refs.map(ref => this._getItem(ref.state.entity.id))
+    let result = refs.map(ref => this._getItem(ref.id))
     return result
   }
 

@@ -36,7 +36,7 @@ export default class ReferenceManager extends AbstractCitationManager {
   getBibliography () {
     let references = this._getReferences()
     references.sort((a, b) => {
-      return a.state.pos - b.state.pos
+      return a.pos - b.pos
     })
     return references
   }
@@ -47,29 +47,37 @@ export default class ReferenceManager extends AbstractCitationManager {
 
   _getReferences () {
     const doc = this.doc
+    // because references have different types we need to
+    // all the different types
     const refs = referenceTypes.reduce((refs, type) => {
       return refs.concat(doc.findByType(type))
     }, [])
+    // there are different strategies to determine the order
+    // of references depending on the citation style
+    // Note: Texture applies numbered citation labels
+    // which are determined by the order of occurrences of citations
     const refsOrder = this._getReferencesOrder()
+    // TODO: We should provide models here
     return refs.map(r => {
-      const index = refsOrder.indexOf(r.replace('@',''))
+      const index = refsOrder.indexOf(r.replace('@', ''))
+      const node = doc.get(r)
+      // HACK: mimicking a model
       return {
-        state: {
-          entity: doc.get(r),
-          pos: index > -1 ? index : 9999
-        }
+        id: node.id,
+        _node: node,
+        pos: index > -1 ? index : 9999
       }
     })
   }
 
   // Determine order based on citations in the document
-  _getReferencesOrder() {
+  _getReferencesOrder () {
     const doc = this.doc
     const xrefs = doc.findAll('xref[ref-type=bibr]')
     return xrefs.reduce((refs, xref) => {
       const ref = xref.getAttribute('rid')
       ref.split(' ').forEach(r => {
-        if(refs.indexOf(r) === -1) {
+        if (refs.indexOf(r) === -1) {
           refs.push(r)
         }
       })

@@ -30,15 +30,16 @@ export default class ReferenceListComponent extends Component {
     }
 
     // ATTENTION: bibliography still works with document nodes
-    bibliography.forEach(referenceNode => {
+    bibliography.forEach(ref => {
+      const node = ref._node
       el.append(
         $$('div').addClass('se-ref-item').append(
-          $$(RefComponent, { node: referenceNode }),
+          $$(RefComponent, { node }),
           $$('div').addClass('se-ref-actions').append(
             $$(Button, {icon: 'pencil', tooltip: this.getLabel('edit-ref')})
-              .on('click', this._editReference.bind(this, referenceNode)),
+              .on('click', this._editReference.bind(this, node)),
             $$(Button, {icon: 'trash', tooltip: this.getLabel('remove-ref')})
-              .on('click', this._removeReference.bind(this, referenceNode))
+              .on('click', this._removeReference.bind(this, node))
           )
         )
       )

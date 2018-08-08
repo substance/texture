@@ -33,7 +33,6 @@ import SigBlockComponent from '../editor/SigBlockComponent'
 import ArticleAbstractComponent from './ArticleAbstractComponent'
 import ArticleBodyComponent from './ArticleBodyComponent'
 import ArticleHeaderComponent from './ArticleHeaderComponent'
-import ArticleReferencesComponent from './ArticleReferencesComponent'
 import ArticleTitleComponent from './ArticleTitleComponent'
 import ArticleContribsComponent from './ArticleContribsComponent'
 import BibliographyComponent from './BibliographyComponent'
@@ -128,7 +127,6 @@ export default {
     config.addComponent('article-body', ArticleBodyComponent)
     config.addComponent('article-contribs', ArticleContribsComponent)
     config.addComponent('article-header', ArticleHeaderComponent)
-    config.addComponent('article-references', ArticleReferencesComponent)
     config.addComponent('article-title', ArticleTitleComponent)
   }
 }

@@ -4,7 +4,7 @@ import {
   TextureDocument, ArticleEditorSession,
   TableComponent, tableHelpers, TableEditing
 } from '../index'
-import { createEditorContext } from '../src/shared'
+import { createEditorContext } from '../src/kit'
 import { testAsync, getMountPoint } from './testHelpers'
 
 testAsync('TableComponent: mounting a table component', async (t) => {

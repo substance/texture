@@ -55,15 +55,15 @@ export default class ReferenceListComponent extends Component {
     return el
   }
 
-  _addNewReference () {
+  _addNewReference () { // eslint-disable-line
     console.error('TODO: implement ReferenceListComponent._addNewReference()')
   }
 
-  _editReference (reference) {
+  _editReference (reference) { // eslint-disable-line
     console.error('TODO: implement ReferenceListComponent._editReference()')
   }
 
-  _removeReference (reference) {
+  _removeReference (reference) { // eslint-disable-line
     console.error('TODO: implement ReferenceListComponent._editReference()')
   }
 

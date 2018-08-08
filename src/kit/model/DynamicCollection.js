@@ -6,6 +6,10 @@ export default class DynamicCollection {
     this._type = type
   }
 
+  get type() {
+    return this._type
+  }
+
   getItems () {
     const api = this._api
     const doc = api._getDocument()

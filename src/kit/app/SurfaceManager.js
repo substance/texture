@@ -6,7 +6,7 @@ export default class SurfaceManager {
     this.surfaces = {}
 
     editorState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'update' })
-    editorState.addObserver(['@any'], this._recoverDOMSelection, this, { stage: 'post-render' })
+    editorState.addObserver(['selection', 'document'], this._recoverDOMSelection, this, { stage: 'post-render' })
   }
 
   dispose () {

@@ -1,4 +1,4 @@
-import { Component, Surface, TextPropertyComponent } from 'substance'
+import { Component, Surface } from 'substance'
 
 export default class StringModelEditor extends Component {
   render ($$) {
@@ -23,6 +23,7 @@ export default class StringModelEditor extends Component {
 
 class TextInput extends Surface {
   render ($$) {
+    const TextPropertyComponent = this.getComponent('text-property')
     let placeholder = this.props.placeholder
     let path = this.props.path
     // TODO: we should refactor Substance.TextPropertyEditor
@@ -37,6 +38,7 @@ class TextInput extends Surface {
       el.attr('spellcheck', this.props.spellcheck === 'native')
     }
     let content = $$(TextPropertyComponent, {
+      doc: this.getDocument(),
       tagName: 'div',
       placeholder,
       path

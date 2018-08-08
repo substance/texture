@@ -57,11 +57,13 @@ export default class ReferenceListComponent extends Component {
   }
 
   _addNewReference () { // eslint-disable-line
-    console.error('TODO: implement ReferenceListComponent._addNewReference()')
+    this.send('startWorkflow', 'add-reference')
   }
 
   _editReference (reference) { // eslint-disable-line
-    console.error('TODO: implement ReferenceListComponent._editReference()')
+    const api = this.context.api
+    const model = api._getModelForNode(reference)
+    this.send('startWorkflow', 'edit-reference', {model: model})
   }
 
   _removeReference (reference) { // eslint-disable-line

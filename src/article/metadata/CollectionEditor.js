@@ -21,7 +21,7 @@ export default class CollectionEditor extends Component {
             // LEGACY
             // TODO: try to get rid of this
             node: item._node
-          })
+          }).ref(item.id)
         )
       )
     })

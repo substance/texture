@@ -5,7 +5,8 @@ import { ElementCitationConverter } from './EntityConverters'
 */
 export default class ConvertRef {
   import(dom, api) {
-    let refs = dom.findAll('ref')
+    let refList = dom.find('ref-list')
+    let refs = refList.findAll('ref')
     const pubMetaDb = api.pubMetaDb
     refs.forEach(refEl => {
 
@@ -16,11 +17,10 @@ export default class ConvertRef {
           el: refEl
         })
       } else {
-        let entityId
         let pubType = elementCitation.attr('publication-type')
         let validTypes = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
         if (validTypes.includes(pubType)) {
-          entityId = ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
+          ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
         } else {
           console.error(`Publication type ${pubType} not found`)
           api.error({
@@ -28,10 +28,9 @@ export default class ConvertRef {
             el: elementCitation
           })
         }
-        refEl.attr('rid', entityId)
-        refEl.empty()
       }
     })
+    refList.empty()
   }
 
   export(dom, api) {
@@ -46,8 +45,8 @@ export default class ConvertRef {
     refList.empty()
 
     // Re-export refs according to computed order
-    bibliography.forEach(refNode => {
-      let entity = doc.get(refNode.attr('rid'))
+    bibliography.forEach(ref => {
+      let entity = ref._node
       let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
       let elementCitation
       if (validTypes.includes(entity.type)) {
@@ -57,7 +56,7 @@ export default class ConvertRef {
       }
 
       refList.append(
-        dom.createElement('ref').attr('id', refNode.id).append(
+        dom.createElement('ref').attr('id', entity.id).append(
           elementCitation
         )
       )

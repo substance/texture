@@ -722,12 +722,6 @@
     </choice>
   </define>
 
-  <define name="ref">
-    <element name="ref">
-      <ref name="ref-attlist"/>
-    </element>
-  </define>
-
   <!--
     Overriding sec.class to use <heading>
   -->

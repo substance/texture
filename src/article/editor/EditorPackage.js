@@ -53,7 +53,6 @@ import InlineFormulaComponent from './InlineFormulaComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
 import RefComponent from './RefComponent'
-import RefListComponent from './RefListComponent'
 import SeparatorComponent from './SeparatorComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
@@ -145,7 +144,6 @@ export default {
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('ref', RefComponent)
-    config.addComponent('ref-list', RefListComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
     config.addComponent('table-wrap', FigComponent)

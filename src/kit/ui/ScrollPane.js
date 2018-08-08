@@ -209,6 +209,7 @@ export default class ScrollPane extends AbstractScrollPane {
     @param {String} componentId component id, must be present in data-id attribute
   */
   scrollTo (selector, onlyIfNotVisible) {
+    // console.log('ScrollPane.scrollTo()', selector)
     let scrollableEl = this.getScrollableElement()
     let targetNode = scrollableEl.find(selector)
     if (targetNode) {

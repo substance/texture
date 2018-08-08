@@ -3,6 +3,11 @@ import {
 } from 'substance'
 
 export default class AbstractScrollPane extends Component {
+  getActionHandlers () {
+    return {
+      'scrollSelectionIntoView': this._scrollSelectionIntoView
+    }
+  }
   /*
     Expose scrollPane as a child context
   */
@@ -17,8 +22,9 @@ export default class AbstractScrollPane extends Component {
       this.windowEl = DefaultDOMElement.wrapNativeElement(window)
       this.windowEl.on('resize', this._onResize, this)
     }
-    // TODO: avoid using appState directly instead use it as a Managed component
-    this.context.appState.addObserver(['@any'], this._afterRender, this, { stage: 'post-render' })
+    // FIXME: we need to define when exactly this must be executed
+    // ATM this causes trouble when
+    this.context.appState.addObserver(['@any'], this._afterRender, this, { stage: 'position' })
   }
 
   dispose () {
@@ -54,7 +60,14 @@ export default class AbstractScrollPane extends Component {
     let hints = this._computeOverlayHints()
     if (hints) {
       this._reduceOverlayHints(hints)
-      this._scrollSelectionIntoView(hints.selectionRect)
+      // TODO: this is problematic and needs to be approached in
+      // a different way.
+      // Now we use overlays not only for selection anchored popups
+      // but also for menu dropdowns.
+      // Only for cases where the overlay needs to be position with a selection
+      // we should do that. I.e. I guess this should not be considered here at all
+      // but rather done along with the selection rendering
+      // this._scrollSelectionIntoView(hints.selectionRect)
     }
   }
 
@@ -78,9 +91,11 @@ export default class AbstractScrollPane extends Component {
     })
   }
 
-  _scrollSelectionIntoView (selectionRect) {
+  _scrollSelectionIntoView () {
+    let hints = this.context.appState.get('overlayHints')
+    if (!hints) return
+    let selectionRect = hints.selectionRect
     if (!selectionRect) return
-
     let upperBound = this.getScrollPosition()
     let lowerBound = upperBound + this.getHeight()
     let selTop = selectionRect.top

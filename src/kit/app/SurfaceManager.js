@@ -7,6 +7,7 @@ export default class SurfaceManager {
 
     editorState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'update' })
     editorState.addObserver(['selection', 'document'], this._recoverDOMSelection, this, { stage: 'post-render' })
+    editorState.addObserver(['selection', 'document'], this._scrollSelectionIntoView, this, { stage: 'finalize' })
   }
 
   dispose () {
@@ -89,6 +90,14 @@ export default class SurfaceManager {
       // more explicitly. For now, any code using surfaces need
       // to be aware of the fact, that this might be not availabls
       // while in the model it is referenced.
+    }
+  }
+
+  _scrollSelectionIntoView () {
+    const editorState = this.editorState
+    let focusedSurface = editorState.focusedSurface
+    if (focusedSurface && !focusedSurface.isDisabled()) {
+      focusedSurface.send('scrollSelectionIntoView')
     }
   }
 }

@@ -96,10 +96,10 @@ export function hasAvailableXrefTargets(refType, context) {
   ]
   ```
 */
-export function getAvailableXrefTargets(xref, context) {
+export function getAvailableXrefTargets (xref, context) {
   let manager = getXrefResourceManager(xref, context)
   if (!manager) return []
-  let selectedTargets= getXrefTargets(xref)
+  let selectedTargets = getXrefTargets(xref)
   // retrieve all possible nodes that this
   // xref could potentially point to,
   // so that we can let the user select from a list.
@@ -115,11 +115,9 @@ export function getAvailableXrefTargets(xref, context) {
       id: node.id
     }
   })
-
   targets = brokenTargets.map(id => {
     return { selected: true, node: undefined, id }
   }).concat(targets)
-
   // Makes the selected targets go to top
   targets = orderBy(targets, ['selected'], ['desc'])
   return targets

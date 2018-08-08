@@ -52,7 +52,6 @@ import HeadingComponent from './HeadingComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
-import RefComponent from './RefComponent'
 import SeparatorComponent from './SeparatorComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
@@ -61,7 +60,6 @@ import TOC from './TOC'
 import TranslationsComponent from './TranslationsComponent'
 import XrefComponent from './XrefComponent'
 // Previews
-import RefPreview from './RefPreview'
 import FnPreview from './FnPreview'
 import FigPreview from './FigPreview'
 import TableFigPreview from './TableFigPreview'
@@ -87,6 +85,8 @@ import ArticleNavPackage from '../ArticleNavPackage'
 // Workflows
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import EditReferenceWorkflow from './EditReferenceWorkflow'
+
+import BibliographicEntryComponent from '../shared/BibliographicEntryComponent'
 
 // FIXME: this should be shared
 import CollectionEditor from '../metadata/CollectionEditor'
@@ -142,7 +142,6 @@ export default {
     config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
-    config.addComponent('ref', RefComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
     config.addComponent('table-wrap', FigComponent)
@@ -151,6 +150,8 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
+
+    config.addComponent('bibr', BibliographicEntryComponent)
 
     // ATTENTION: I have changed the behavior so that
     // unregistered annotations or inline-nodes are
@@ -168,7 +169,6 @@ export default {
     config.addComponent('collection', CollectionEditor)
 
     // Preview components for Ref, Fn, Figure
-    config.addComponent('ref-preview', RefPreview)
     config.addComponent('fn-preview', FnPreview)
     config.addComponent('fig-preview', FigPreview)
     config.addComponent('table-wrap-preview', TableFigPreview)

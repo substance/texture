@@ -10,7 +10,7 @@
     "lodash": "^4.14.1"
   },
   "peerDependency": {
-    "substance": "^1.0.0-preview.71"
+    "substance": "^1.0.0-preview.81"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",
@@ -21,7 +21,7 @@
     "font-awesome": "4.5.0",
     "nyc": "11.8.0",
     "source-map-support": "0.5.3",
-    "substance": "1.0.0-preview.71",
+    "substance": "1.0.0-preview.81",
     "substance-bundler": "0.25.4",
     "substance-test": "0.12.2",
     "tap-spec": "^4.1.1"
@@ -33,6 +33,7 @@
     "release": "node make app && build --project app-dist",
     "pretest": "npm run lint",
     "test": "node make test-nodejs && node --require esm test | tap-spec",
+    "webtest": "node make test-browser -s -w",
     "cover": "nyc --require esm --reporter=lcov --reporter=text node test",
     "lint": "eslint -c .eslintrc.js src index.es.js"
   },

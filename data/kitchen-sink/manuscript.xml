@@ -4,17 +4,25 @@
   <front id="front-1">
     <article-meta id="article-meta-1">
       <article-categories>
-        <subj-group>
+        <subj-group xml:lang="en">
           <subject content-type="display-channel">Research Article</subject>
           <subject content-type="heading">Computational and Systems Biology</subject>
           <subject content-type="heading">Epidemiology and Global Health</subject>
         </subj-group>
+        <subj-group xml:lang="es">
+          <subject content-type="display-channel">Artículo de investigación</subject>
+          <subject content-type="heading">Biología computacional y de sistemas</subject>
+          <subject content-type="heading">Epidemiología y salud global</subject>
+        </subj-group>
       </article-categories>
       <title-group id="title-group-1">
         <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
+        <trans-title-group id="trans-title-group-1" xml:lang="es">
+          <trans-title id="trans-title-1">Objeto de visión a acción manual en <italic id="italic-1">cortezas parietales</italic>, premotoras y motoras de macaco</trans-title>
+        </trans-title-group>
       </title-group>
-      <contrib-group id="contrib-group-1" content-type="author">
-        <contrib id="contrib-1" contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
+      <contrib-group content-type="author">
+        <contrib contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
           <name>
             <surname>Schaffelhofer</surname>
             <given-names>Stefan</given-names>
@@ -22,7 +30,7 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff2" />
         </contrib>
-        <contrib id="contrib-2" contrib-type="person">
+        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Scherberger</surname>
             <given-names>Hansjörg</given-names>
@@ -30,37 +38,34 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
         </contrib>
-        <!-- group author with members -->
-        <contrib contrib-type="group" equal-contrib="yes" corresp="no" deceased="no">
+        <contrib id="group-82b48e1f5a16997cea0f19c820f933d4" contrib-type="group" equal-contrib="yes" corresp="no">
           <collab>
             <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
             <email>mouse-project@example.com</email>
-            <xref ref-type="aff" rid="aff2"/>
+            <xref ref-type="aff" rid="aff2" />
             <xref ref-type="award" rid="fund1" />
             <contrib-group contrib-type="group-member">
-              <contrib contrib-type="person">
+              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
-                  <surname>Kelly</surname><given-names>Laura A.</given-names>
+                  <surname>Kelly</surname>
+                  <given-names>Laura A.</given-names>
                 </name>
-                <!-- role can be used to group members into subgroups, note that role element
-                is used on contrib level not contrib-group level. -->
-                <role>Writing Group</role>
-                <xref ref-type="aff" rid="aff2"/>
+                <xref ref-type="aff" rid="aff2" />
               </contrib>
-              <contrib contrib-type="person">
+              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
-                  <surname>Randall</surname><given-names>Daniel Lee</given-names>
+                  <surname>Randall</surname>
+                  <given-names>Daniel Lee</given-names>
                   <suffix>Jr.</suffix>
                 </name>
-                <role>Lab Group</role>
-                <xref ref-type="aff" rid="aff3"/>
+                <xref ref-type="aff" rid="aff3" />
               </contrib>
             </contrib-group>
           </collab>
         </contrib>
       </contrib-group>
-      <contrib-group id="contrib-group-2" content-type="editor">
-        <contrib id="contrib-3" contrib-type="person">
+      <contrib-group content-type="editor">
+        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Kastner</surname>
             <given-names>Sabine</given-names>
@@ -91,45 +96,53 @@
         <city>Princeton</city>
         <country>United States</country>
       </aff>
-      <pub-date id="date-5" publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
-        <day id="day-5">29</day>
-        <month id="month-5">01</month>
-        <year id="year-5">1999</year>
+      <pub-date date-type="pub" iso-8601-date="1999-01-29">
+        <day>29</day>
+        <month>01</month>
+        <year>1999</year>
       </pub-date>
-      <volume id="volume-1">318</volume>
-      <issue id="issue-1">7187</issue>
-      <fpage id="fpage-1">837</fpage>
-      <lpage id="lpage-1">841</lpage>
-      <history id="history-1">
-        <date id="date-1" date-type="received" iso-8601-date="1998-01-05">
-          <day id="day-1">05</day>
-          <month id="month-1">01</month>
-          <year id="year-1">1998</year>
+      <volume>318</volume>
+      <issue>7187</issue>
+      <fpage>837</fpage>
+      <lpage>841</lpage>
+      <page-range>837-841</page-range>
+      <history>
+        <date date-type="accepted" iso-8601-date="1998-06-06">
+          <day>06</day>
+          <month>06</month>
+          <year>1998</year>
         </date>
-        <date id="date-2" date-type="rev-request" iso-8601-date="1998-03-14">
-          <day id="day-2">14</day>
-          <month id="month-2">03</month>
-          <year id="year-2">1998</year>
+        <date date-type="received" iso-8601-date="1998-01-05">
+          <day>05</day>
+          <month>01</month>
+          <year>1998</year>
         </date>
-        <date id="date-3" date-type="rev-received" iso-8601-date="1998-05-24">
-          <day id="day-3">24</day>
-          <month id="month-3">05</month>
-          <year id="year-3">1998</year>
+        <date date-type="rev-recd" iso-8601-date="1998-05-24">
+          <day>24</day>
+          <month>05</month>
+          <year>1998</year>
         </date>
-        <date id="date-4" date-type="accepted" iso-8601-date="1998-06-06">
-          <day id="day-4">06</day>
-          <month id="month-4">06</month>
-          <year id="year-4">1998</year>
+        <date date-type="rev-request" iso-8601-date="1998-03-14">
+          <day>14</day>
+          <month>03</month>
+          <year>1998</year>
         </date>
       </history>
       <abstract id="abstract-1">
-        <p id="p-1"><bold id="bold-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes</bold>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante. <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref></p>
+        <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </abstract>
-      <kwd-group>
+      <trans-abstract id="trans-abstract-1" xml:lang="es">
+        <p id="p-1-1">Tenga en cuenta que este artículo utiliza contenido de diferentes artículos de acceso abierto (eLife) con fines de demostración. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
+      </trans-abstract>
+      <kwd-group xml:lang="en">
         <kwd content-type="author-keyword">optogenetics</kwd>
         <kwd content-type="author-keyword">two-photon</kwd>
         <kwd content-type="author-keyword">calcium imaging</kwd>
         <kwd content-type="research-organism">Mouse</kwd>
+      </kwd-group>
+      <kwd-group xml:lang="es">
+        <kwd content-type="author-keyword">nada</kwd>
+        <kwd content-type="author-keyword">si</kwd>
       </kwd-group>
       <funding-group>
         <award-group id="fund1">
@@ -182,7 +195,7 @@
           </tbody>
         </table>
       </table-wrap>
-      <p id="p-2">Lorem ipsum <xref id="xref-2" ref-type="bibr" rid="book1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
+      <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="book1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
       <sec id="heading-2">
         <title>Orci varius natoque penatibus et magnis</title>
         <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="book1 r7">[1,2]</xref>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
@@ -522,13 +535,17 @@
       </ref>
       <ref id="r8">
         <element-citation publication-type="patent">
-          <collab collab-type="assignee"><named-content content-type="name">Hospira, Inc.</named-content></collab>
+          <collab collab-type="assignee">
+            <named-content content-type="name">Hospira, Inc.</named-content>
+          </collab>
           <day>5</day>
           <month>10</month>
           <patent country="US">US 6,980,855</patent>
           <year>2009</year>
           <person-group person-group-type="inventor">
-            <collab><named-content content-type="name">National Research Council</named-content></collab>
+            <collab>
+              <named-content content-type="name">National Research Council</named-content>
+            </collab>
             <name>
               <surname>Doe</surname>
               <given-names>John</given-names>

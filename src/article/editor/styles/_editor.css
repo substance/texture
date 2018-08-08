@@ -1,0 +1,173 @@
+/* TODO: why is this selector prefixed with .sc-article-panel? */
+.sc-article-panel .sc-editor {
+  flex-grow: 1;
+}
+
+.sc-editor {
+  font-size: 17px;
+  font-family: Avenir, Helvetica;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1.7em;
+}
+
+.sc-editor .se-toolbar-wrapper {
+  z-index: 1000;
+  padding: 3px;
+  padding-bottom: 4px;
+  padding-left: 270px;
+  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
+}
+
+.sc-editor.sm-compact .se-toolbar-wrapper {
+  padding-left: 20px;
+}
+
+.sc-editor.sm-compact .se-toolbar-wrapper .sc-toolbar {
+  max-width: 730px; /* 760 - 30 for padding */
+  margin: 0 auto;
+}
+
+.sc-editor .sc-body-content > .sc-container-editor {
+  padding: 0;
+  margin: 0 auto;
+}
+
+/* Add padding to each child except last one */
+.sc-editor .sc-container-editor > * {
+  margin: 15px 0;
+}
+
+.sc-editor .sc-container-editor > .sc-p {
+  font-family: Georgia;
+}
+
+.sc-editor .sc-container-editor .sc-isolated-node {
+  margin: 30px 0;
+}
+
+.sc-editor .sc-container-editor .sc-isolated-node.sm-focused,
+.sc-editor .sc-container-editor .sc-isolated-node.sm-co-focused {
+  outline: 1px solid var(--local-selection-color);
+}
+
+.sc-editor {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.sc-editor > .se-context-pane {
+  flex: 0 2 300px;
+  background: #fafbfc;
+  border-left: 1px solid #e1e4e8;
+  position: relative;
+}
+
+.sc-manuscript {
+  max-width: 760px;
+  padding: 30px;
+}
+
+.sc-editor.sm-compact .sc-manuscript {
+  margin: 0 auto;
+}
+
+.sc-editor .se-context-pane > .se-context-pane-content {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow: auto;
+}
+
+.sc-editor > .se-main-section {
+  flex: 1 1 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sc-editor > .se-main-section > .se-toolbar-wrapper {
+  flex: 0 0 40px;
+}
+
+.sc-editor > .se-main-section > .se-editor-section {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.sc-editor > .se-main-section > .se-editor-section > .se-toc-pane {
+  flex: 0 0 250px;
+  overflow: auto;
+}
+
+/* Do not display in compact mode to make more space for the rest */
+.sc-editor.sm-compact > .se-main-section > .se-editor-section > .se-toc-pane {
+  display: none;
+}
+
+.sc-editor > .se-main-section > .se-editor-section > .se-toc-pane.sm-hidden {
+  display: none;
+}
+
+.sc-editor > .se-main-section > .se-editor-section > .sc-scroll-pane {
+  flex: 1 1 600px;
+}
+
+.sc-editor > .se-main-section > .sc-workflow-pane {
+  flex: 0 0 0;
+}
+
+.sc-editor .se-main-section .sc-scroll-pane {
+  position: relative;
+}
+
+/* General editor styles */
+.sc-heading {
+  font-family: 'Avenir Next', 'Lato', Helvetica;
+  padding-top: 10px;
+}
+
+h1.sc-heading {
+  font-size: 20px;
+}
+
+h2.sc-heading {
+  font-size: 18px;
+}
+
+h3.sc-heading {
+  font-size: 16px;
+}
+
+
+.sc-caption {
+  font-size: 14px;
+  line-height: 1.8em;
+}
+
+.sc-ref-list, .sc-fig, .sc-table-wrap, .sc-edit-xref-tool, .sc-editor .sc-caption .sc-p {
+  font-family: Avenir, Helvetica, Arial;
+  font-weight: 500;
+}
+
+.sc-editor .sc-caption .sc-p .sc-italic, .sc-editor em {
+  font-weight: 600;
+}
+
+.sc-fig .se-title .sc-italic {
+  font-weight: 700;
+}
+
+.sc-ref-list {
+  font-size: 15px;
+}
+
+.sc-context-menu .sc-tool-separator {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}

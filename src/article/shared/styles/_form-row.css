@@ -1,0 +1,50 @@
+.sc-form-row {
+  --label-font-size: 12px;
+  --input-font-size: 14px;
+  --label-font-weight: 400;
+  --label-line-height: 14px;
+  --label-color: #9e9e9e;
+  --warning-color: #ffaf46;
+
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+}
+
+.sc-form-row > .se-label {
+  display: block;
+  flex: 1 0 200px;
+  margin-bottom: 0px;
+  color: var(--label-color);
+  font-size: var(--label-font-size);
+  font-weight: var(--label-font-weight);
+  line-height: var(--label-line-height);
+}
+
+.sc-form-row > .se-label::after {
+  content: ':'
+}
+
+.sc-form-row > .se-editor {
+  width: 100%;
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning {
+  position: absolute;
+  top: 5px;
+  left: 175px;
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning > .se-icon {
+  color: var(--warning-color);
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning > .sc-tooltip {
+  display: none;
+}
+
+.sc-form-row.sm-warning > .se-label > .se-warning:hover > .sc-tooltip {
+  display: block;
+}

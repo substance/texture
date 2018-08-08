@@ -1,5 +1,5 @@
 import DefaultModel from './DefaultModel'
-import { getXrefLabel } from '../../editor/util/xrefHelpers'
+import { getXrefLabel } from '../shared/xrefHelpers'
 
 export default class FootnotesModel extends DefaultModel {
   getLabel(id) {

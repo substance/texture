@@ -1,14 +1,11 @@
-import { ToggleTool } from 'substance'
-import BasePackage from '../shared/BasePackage'
-import ModelPackage from './ArticleModelPackage'
-import EditorPackage from '../editor/EditorPackage'
-import MetaDataPackage from './meta-data/MetaDataPackage'
-import PreviewPackage from '../reader/ReaderPackage'
-import ArticlePanel from './ArticlePanel'
+import { BasePackage } from '../kit'
 import ArticleConfigurator from './ArticleConfigurator'
-import ManuscriptEditor from '../editor/components/ManuscriptEditor'
-import MetaDataEditor from './meta-data/MetaDataEditor'
-import SwitchViewCommand from './SwitchViewCommand'
+import ModelPackage from './ArticleModelPackage'
+import EditorPackage from './editor/EditorPackage'
+import MetadataPackage from './metadata/MetadataPackage'
+import ArticlePanel from './ArticlePanel'
+import ManuscriptEditor from './editor/ManuscriptEditor'
+import MetadataEditor from './metadata/MetadataEditor'
 
 export default {
   name: 'Article',
@@ -23,43 +20,13 @@ export default {
     // used for the manuscript editor view
     let manuscriptEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(EditorPackage)
     config.setConfiguration('manuscript', manuscriptEditorConfig)
-    // used for the meta-data editor view
-    let metaDataEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(MetaDataPackage)
-    config.setConfiguration('meta-data', metaDataEditorConfig)
-    // used for preview
-    let previewConfig = ArticleConfigurator.createFrom(modelConfig).import(PreviewPackage)
-    config.setConfiguration('preview', previewConfig)
+    // used for the metadata editor view
+    let metadataEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(MetadataPackage)
+    config.setConfiguration('metadata', metadataEditorConfig)
 
     config.import(BasePackage)
     // UI stuff for the ArticlePanel
     config.addComponent('manuscript-editor', ManuscriptEditor)
-    config.addComponent('meta-data-editor', MetaDataEditor)
-
-    config.addToolPanel('nav-bar', [
-      {
-        name: 'view',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        commandGroups: ['switch-view']
-      }
-    ])
-
-    config.addCommand('open-manuscript', SwitchViewCommand, {
-      view: 'manuscript',
-      commandGroup: 'switch-view'
-    })
-    config.addCommand('open-meta-data', SwitchViewCommand, {
-      view: 'meta-data',
-      commandGroup: 'switch-view'
-    })
-
-    config.addTool('open-manuscript', ToggleTool)
-    config.addLabel('open-manuscript', 'Open Manuscript')
-    config.addIcon('open-manuscript', { 'fontawesome': 'fa-align-left' })
-
-    config.addTool('open-meta-data', ToggleTool)
-    config.addLabel('open-meta-data', 'Open Meta-Data')
-    config.addIcon('open-meta-data', { 'fontawesome': 'fa-th-list' })
+    config.addComponent('metadata-editor', MetadataEditor)
   }
 }

@@ -1,10 +1,10 @@
-/*
-  A model for annotated text (e.g. <article-title>)
-*/
+import { isArray } from 'substance'
+import { setModelValue } from './modelHelpers'
+
 export default class DefaultModel {
-  constructor(node, context) {
+  constructor(api, node) {
+    this._api = api
     this._node = node
-    this.context = context
   }
 
   get id() {
@@ -15,58 +15,39 @@ export default class DefaultModel {
     return this._node.type
   }
 
+  get isCollection() {
+    return false
+  }
+
+  toJSON() {
+    return this._node.toJSON()
+  }
+
   getNode() {
     return this._node
   }
 
-  /*
-    Internal method for adding an entity of certain type
-  */
-  _addEntity(data, type) {
-    const newNode = Object.assign({}, data, {
-      type: type
-    })
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    let node
-    pubMetaDbSession.transaction((tx) => {
-      node = tx.create(newNode)
-    })
-    return node.id
+  getSchema() {
+    return this._node.getSchema()
+  }
+
+  setValue(name, value) {
+    setModelValue(this, name, value)
   }
 
   /*
-    Internal method for adding an entity of certain type
+    Used to resolve references.
+
+    TODO: is it a good name?
   */
-  _getEntity(nodeId) {
-    const pubMetaDb = this.context.pubMetaDb
-    const node = pubMetaDb.get(nodeId)
-    if(!node) {
-      console.error(`Entity with id ${nodeId} not found`)
-      return
+  resolveRelationship(propertyName) {
+    let value = this._node[propertyName]
+    let result
+    if (isArray(value)) {
+      result = value.map(targetId => this._api.getEntity(targetId))
+    } else {
+      result = this._api.getEntity(value)
     }
-    return node.toJSON()
-  }
-
-  /*
-    Internal method for updating a certain entity
-  */
-  _updateEntity(nodeId, data) {
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    pubMetaDbSession.transaction((tx) => {
-      tx.updateNode(nodeId, data)
-    })
-    return this._getEntity(nodeId)
-  }
-
-  /*
-    Internal method for removing a certain entity
-  */
-  _deleteEntity(nodeId) {
-    const pubMetaDbSession = this.context.pubMetaDbSession
-    let node
-    pubMetaDbSession.transaction((tx) => {
-      node = tx.delete(nodeId)
-    })
-    return node
+    return result
   }
 }

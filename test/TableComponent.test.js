@@ -1,9 +1,10 @@
 import { keys } from 'substance'
 import {
   TextureConfigurator, ArticlePackage,
-  TextureEditorSession, EditorState, TextureDocument,
+  TextureDocument, ArticleEditorSession,
   TableComponent, tableHelpers, TableEditing
 } from '../index'
+import { createEditorContext } from '../src/kit'
 import { testAsync, getMountPoint } from './testHelpers'
 
 testAsync('TableComponent: mounting a table component', async (t) => {
@@ -132,26 +133,10 @@ function _setup (t) {
   let doc = _createEmptyTextureArticle(config)
   let table = tableHelpers.generateTable(doc, 10, 5)
   doc.find('body').append(table)
-  // TODO: look closely here: this is the footprint of how context
-  // is used by TableComponent and children
-  let editorState = new EditorState(doc)
-  let editorSession = new TextureEditorSession(editorState, config)
-  let componentRegistry = config.getComponentRegistry()
-  let commandGroups = config.getCommandGroups()
-  let iconProvider = config.getIconProvider()
-  let labelProvider = config.getLabelProvider()
-  let keyboardShortcuts = config.getKeyboardShortcuts()
-  let tools = config.getTools()
-  let context = {
-    editorSession,
-    configurator: config,
-    componentRegistry,
-    commandGroups,
-    tools,
-    iconProvider,
-    labelProvider,
-    keyboardShortcuts
-  }
+
+  let editorSession = new ArticleEditorSession(doc, config)
+  let context = createEditorContext(config, editorSession)
+
   return { context, editorSession, doc, table }
 }
 

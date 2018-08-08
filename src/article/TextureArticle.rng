@@ -393,61 +393,59 @@
     </element>
   </define>
 
-  <!--
-    We develop the element citation incrementally, we only enable tags that can be
-    edited through the user interface so far. This is why many elements are
-    commented out.
-
-    NOTE: This must be kept in sync with InternalArticle.rng
-  -->
-  <define name="element-citation">
-    <element name="element-citation">
-      <ref name="element-citation-attlist"/>
-      <interleave>
-        <optional><ref name="article-title"/></optional>
-        <optional><ref name="chapter-title"/></optional>
-        <optional><ref name="comment"/></optional>
-        <optional><ref name="collab"/></optional>
-        <optional><ref name="edition"/></optional>
-        <optional><ref name="elocation-id"/></optional>
-        <optional><ref name="fpage"/></optional>
-        <optional><ref name="issue"/></optional>
-        <optional><ref name="lpage"/></optional>
-        <optional><ref name="page-range"/></optional>
-        <!--
-          TODO: specify different available person-groups per publication type
-        -->
-        <zeroOrMore>
-          <ref name="person-group"/>
-        </zeroOrMore>
-        <!--
-          TODO: specify different available pub-id-types per publication type
-        -->
-        <zeroOrMore>
-          <ref name="pub-id"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="publisher-loc"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="publisher-name"/>
-        </zeroOrMore>
-        <optional><ref name="source"/></optional>
-        <optional><ref name="volume"/></optional>
-        <optional><ref name="year"/></optional>
-        <optional><ref name="month"/></optional>
-        <optional><ref name="day"/></optional>
-
-        <optional><ref name="conf-name"/></optional>
-        <optional><ref name="conf-loc"/></optional>
-        <optional><ref name="data-title"/></optional>
-        <optional><ref name="part-title"/></optional>
-        <optional><ref name="patent"/></optional>
-        <optional><ref name="series"/></optional>
-        <optional><ref name="version"/></optional>
-        <optional><ref name="uri"/></optional>
-      </interleave>
-    </element>
+  <!--	
+    We develop the element citation incrementally, we only enable tags that can be	
+    edited through the user interface so far. This is why many elements are	
+    commented out.	
+     NOTE: This must be kept in sync with InternalArticle.rng	
+  -->	
+  <define name="element-citation">	
+    <element name="element-citation">	
+      <ref name="element-citation-attlist"/>	
+      <interleave>	
+        <optional><ref name="article-title"/></optional>	
+        <optional><ref name="chapter-title"/></optional>	
+        <optional><ref name="comment"/></optional>	
+        <optional><ref name="collab"/></optional>	
+        <optional><ref name="edition"/></optional>	
+        <optional><ref name="elocation-id"/></optional>	
+        <optional><ref name="fpage"/></optional>	
+        <optional><ref name="issue"/></optional>	
+        <optional><ref name="lpage"/></optional>	
+        <optional><ref name="page-range"/></optional>	
+        <!--	
+          TODO: specify different available person-groups per publication type	
+        -->	
+        <zeroOrMore>	
+          <ref name="person-group"/>	
+        </zeroOrMore>	
+        <!--	
+          TODO: specify different available pub-id-types per publication type	
+        -->	
+        <zeroOrMore>	
+          <ref name="pub-id"/>	
+        </zeroOrMore>	
+        <zeroOrMore>	
+          <ref name="publisher-loc"/>	
+        </zeroOrMore>	
+        <zeroOrMore>	
+          <ref name="publisher-name"/>	
+        </zeroOrMore>	
+        <optional><ref name="source"/></optional>	
+        <optional><ref name="volume"/></optional>	
+        <optional><ref name="year"/></optional>	
+        <optional><ref name="month"/></optional>	
+        <optional><ref name="day"/></optional>	
+         <optional><ref name="conf-name"/></optional>	
+        <optional><ref name="conf-loc"/></optional>	
+        <optional><ref name="data-title"/></optional>	
+        <optional><ref name="part-title"/></optional>	
+        <optional><ref name="patent"/></optional>	
+        <optional><ref name="series"/></optional>	
+        <optional><ref name="version"/></optional>	
+        <optional><ref name="uri"/></optional>	
+      </interleave>	
+    </element>	
   </define>
 
   <define name="elocation-id">
@@ -729,13 +727,13 @@
     </element>
   </define>
 
-  <define name="ref">
-    <element name="ref">
-      <ref name="ref-attlist"/>
-      <oneOrMore>
-        <ref name="element-citation"/>
-      </oneOrMore>
-    </element>
+  <define name="ref">	
+    <element name="ref">	
+      <ref name="ref-attlist"/>	
+      <oneOrMore>	
+        <ref name="element-citation"/>	
+      </oneOrMore>	
+    </element>	
   </define>
 
   <define name="ref-list">

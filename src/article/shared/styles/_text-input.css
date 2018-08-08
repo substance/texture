@@ -1,0 +1,53 @@
+.sc-text-input {
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+}
+
+.sc-text-input .se-input {
+  width: 100%;
+  border: 1px solid transparent;
+  height: var(--input-height);
+  font-family: 'Avenir Next', Helvetica;
+  font-size: var(--input-font-size);
+  font-weight: 500;
+  padding-left: 4px;
+  margin-left: -4px;
+}
+
+.sc-text-input .se-input:hover,
+.sc-text-input:focus .se-input {
+  border: 1px solid var(--border-color);
+}
+
+/* TODO: use variables! */
+.sc-text-input .se-input.sm-empty {
+  color: #ccc;
+  font-weight: 400;
+}
+
+.sc-text-input.sm-warning {
+  color: var(--warning-color);
+}
+
+.sc-text-input.sm-warning .se-input {
+  border: 1px solid var(--warning-color);
+  background-color: var(--warning-bg-color);
+}
+
+.sc-text-input.sm-size-small {
+  width: var(--width-small);
+}
+
+.sc-text-input.sm-size-medium {
+  width: var(--width-medium);
+}
+
+.sc-text-input.sm-size-large {
+  width: var(--width-large);
+}
+
+/* HACK: unfortunately Substance default-style is using a hard-coded value  */
+.sc-text-input .sc-text-property.sm-empty .se-placeholder {
+  /* TODO: use variables! */
+  color: inherit !important;
+}

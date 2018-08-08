@@ -1,16 +1,16 @@
 import DefaultModel from './DefaultModel'
 import AnnotatedTextModel from './AnnotatedTextModel'
 import ContainerModel from './ContainerModel'
-import { getLabel, getPos } from '../../editor/util/nodeHelpers'
+import { getLabel, getPos } from '../shared/nodeHelpers'
 
 export default class FigureModel extends DefaultModel {
   // Type is different to JATS node types (fig, table-wrap)
-  get type() {
+  get type () {
     return 'figure'
   }
 
   // TODO: we probably want to store the label on the model, not the node?
-  getLabel() {
+  getLabel () {
     return getLabel(this._node)
   }
 
@@ -18,21 +18,21 @@ export default class FigureModel extends DefaultModel {
     return getPos(this._node)
   }
 
-  getTitle() {
-    const title = this._node.find('title')
-    return new AnnotatedTextModel(title, this.context)
+  getTitle () {
+    const titleNode = this._node.find('title')
+    return new AnnotatedTextModel(this._api, titleNode)
   }
 
-  getCaption() {
-    let caption = this._node.find('caption')
-    return new ContainerModel(caption, this.context)
+  getCaption () {
+    let captionNode = this._node.find('caption')
+    return new ContainerModel(this._api, captionNode)
   }
 
   /*
     For now we use the XML node type to differentiate between table and graphic figures
   */
-  getContentType() {
-    switch(this._node.type) {
+  getContentType () {
+    switch (this._node.type) {
       case 'table-wrap': {
         return 'table'
       }
@@ -45,10 +45,9 @@ export default class FigureModel extends DefaultModel {
 
     TODO: return a Model instead of a Node.
   */
-  getContent() {
+  getContent () {
     let contentType = this.getContentType()
-    const content = this._node.findChild(contentType)
-    return content
+    const contentNode = this._node.findChild(contentType)
+    return this._api.getModel(contentType, contentNode)
   }
-
 }

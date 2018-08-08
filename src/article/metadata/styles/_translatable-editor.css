@@ -1,0 +1,13 @@
+.sc-translatable-editor .se-editor {
+  display: flex;
+}
+
+.sc-translatable-editor .se-editor > .sc-surface {
+  flex: 1;
+}
+
+.sc-translatable-editor .se-editor > .se-remove {
+  width: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}

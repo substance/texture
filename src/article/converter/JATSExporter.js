@@ -8,21 +8,14 @@ export default class JATSExporter {
     following TextureArticle guidelines.
   */
   export(dom, context = {}) {
-    let pubMetaDb = context.pubMetaDb
     let doc = context.doc
-    let referenceManager = context.referenceManager
-
-    if (!pubMetaDb) {
-      throw new Error('context.pubMetaDb is missing')
-    }
-
+    let session = context.session
     let state = {
       hasErrored: false,
       errors: [],
       dom,
       doc,
-      referenceManager,
-      pubMetaDb
+      session
     }
     const api = this._createAPI(state)
 
@@ -43,8 +36,12 @@ export default class JATSExporter {
       error(data) {
         self._error(state, data)
       },
-      pubMetaDb: state.pubMetaDb,
-      doc: state.doc
+      doc: state.doc,
+      session: state.session,
+      get pubMetaDb () {
+        console.error('DEPRECATED: use api.doc instead')
+        return state.doc
+      }
     }
     return api
   }
@@ -53,5 +50,4 @@ export default class JATSExporter {
     state.hasErrored = true
     state.errors.push(err)
   }
-
 }

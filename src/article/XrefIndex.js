@@ -1,5 +1,5 @@
-import { getXrefTargets } from '../editor/util'
 import { DocumentIndex, TreeIndex } from 'substance'
+import { getXrefTargets } from './shared/xrefHelpers'
 
 /*
   Index for Xrefs.

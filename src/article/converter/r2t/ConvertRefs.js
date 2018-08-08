@@ -5,10 +5,11 @@ import { ElementCitationConverter } from './EntityConverters'
 */
 export default class ConvertRef {
   import(dom, api) {
-    let refs = dom.findAll('ref')
+    let refList = dom.find('ref-list')
+    let refs = refList.findAll('ref')
     const pubMetaDb = api.pubMetaDb
-
     refs.forEach(refEl => {
+
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error({
@@ -16,11 +17,10 @@ export default class ConvertRef {
           el: refEl
         })
       } else {
-        let entityId
         let pubType = elementCitation.attr('publication-type')
         let validTypes = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
         if (validTypes.includes(pubType)) {
-          entityId = ElementCitationConverter.import(elementCitation, pubMetaDb, pubType)
+          ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
         } else {
           console.error(`Publication type ${pubType} not found`)
           api.error({
@@ -28,40 +28,38 @@ export default class ConvertRef {
             el: elementCitation
           })
         }
-        refEl.attr('rid', entityId)
-        refEl.empty()
       }
     })
+    refList.empty()
   }
 
   export(dom, api) {
     let $$ = dom.createElement.bind(dom)
     let refList = dom.find('back > ref-list')
-    const pubMetaDb = api.pubMetaDb
     const doc = api.doc
-    const referenceManager = doc.referenceManager
+    const session = api.session
+    const referenceManager = session.getReferenceManager()
     let bibliography = referenceManager.getBibliography()
 
     // Empty ref-list
     refList.empty()
 
     // Re-export refs according to computed order
-    bibliography.forEach(refNode => {
-      let entity = pubMetaDb.get(refNode.attr('rid'))
-      let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', 'patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
+    bibliography.forEach(ref => {
+      let entity = ref._node
+      let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
       let elementCitation
       if (validTypes.includes(entity.type)) {
-        elementCitation = ElementCitationConverter.export($$, entity, pubMetaDb)
+        elementCitation = ElementCitationConverter.export($$, entity, doc)
       } else {
         throw new Error('publication type not found.')
       }
 
       refList.append(
-        dom.createElement('ref').attr('id', refNode.id).append(
+        dom.createElement('ref').attr('id', entity.id).append(
           elementCitation
         )
       )
     })
-
   }
 }

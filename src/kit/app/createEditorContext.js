@@ -1,0 +1,18 @@
+import createComponentContext from './createComponentContext'
+
+export default function createEditorContext (config, editorSession) {
+  return Object.assign(createComponentContext(config), {
+    config,
+    editorSession: editorSession,
+    appState: editorSession.editorState,
+    surfaceManager: editorSession.surfaceManager,
+    markersManager: editorSession.markersManager,
+    globalEventHandler: editorSession.globalEventHandler,
+    keyboardManager: editorSession.keyboardManager,
+    // TODO: I'd like to move towards 'config', instead of configurator
+    // because it is a configurator only during configuration
+    // In the app we want to have a configuration.
+    // FIXME: Substance.Surface assumes to find context.configurator
+    configurator: config
+  })
+}

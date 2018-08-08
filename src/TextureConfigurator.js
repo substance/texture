@@ -1,10 +1,14 @@
-import { Configurator, merge } from 'substance'
+import { Configurator, merge, isString, flatten, includes, forEach } from 'substance'
+import SwitchViewCommand from './article/SwitchViewCommand'
 
 export default class TextureConfigurator extends Configurator {
   constructor () {
     super()
 
     this.config.configurations = {}
+    this.config.availableLanguages = {} 
+    this.config.propertyEditors = []
+    this._compiledToolPanels = {}
   }
 
   static createFrom (parentConfig) {
@@ -45,14 +49,125 @@ export default class TextureConfigurator extends Configurator {
   /*
     Map an XML node type to a model
   */
-  addModel (nodeType, ModelClass) {
-    if (this.config.models[nodeType]) {
-      throw new Error(`nodeType ${nodeType} already registered.`)
+  addModel (modelType, ModelClass) {
+    if (this.config.models[modelType]) {
+      throw new Error(`model type ${modelType} already registered.`)
     }
-    this.config.models[nodeType] = ModelClass
+    this.config.models[modelType] = ModelClass
   }
 
   getModelRegistry () {
     return this.config.models
+  }
+
+  addPropertyEditor (PropertyEditorClass) {
+    if (includes(this.config.propertyEditors, PropertyEditorClass)) {
+      throw new Error('Already registered')
+    }
+    this.config.propertyEditors.push(PropertyEditorClass)
+  }
+
+  getPropertyEditors () {
+    return this.config.propertyEditors
+  }
+
+  addTool (name, ToolClass) {
+    if (!isString(name)) {
+      throw new Error("Expecting 'name' to be a String")
+    }
+    if (!ToolClass) {
+      throw new Error('Provided nil for tool ' + name)
+    }
+    if (!ToolClass || !ToolClass.prototype._isTool) {
+      throw new Error("Expecting 'ToolClass' to be of type Tool. name:", name)
+    }
+
+    this.config.tools[name] = ToolClass
+  }
+
+  getToolRegistry () {
+    let result = new Map()
+    forEach(this.config.tools, (ToolClass, name) => {
+      result.set(name, ToolClass)
+    })
+    return result
+  }
+
+  getToolClass (name) {
+    return this.config.tools[name]
+  }
+
+  addToolPanel (name, spec) {
+    this.config.toolPanels[name] = spec
+  }
+
+  getToolPanel (name) {
+    let toolPanelSpec = this.config.toolPanels[name]
+    if (!toolPanelSpec) throw new Error('No toolpanel is registered by this name: ' + name)
+    // return cache compiled tool-panels
+    if (this._compiledToolPanels[name]) return this._compiledToolPanels[name]
+    let toolPanel = toolPanelSpec.map(itemSpec => this._compileToolPanelItem(itemSpec))
+    this._compiledToolPanels[name] = toolPanel
+    return toolPanel
+  }
+
+  addViewMode (spec) {
+    this.addCommand(spec.name, SwitchViewCommand, {
+      viewName: spec.viewName,
+      commandGroup: 'switch-view'
+    })
+    this.addIcon(spec.name, { 'fontawesome': spec.icon })
+    this.addLabel(spec.name, spec.label)
+    if (spec.accelerator) {
+      this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
+    }
+  }
+
+  getCommands () {
+    let commands = new Map()
+    forEach(this.config.commands, (item, name) => {
+      const Command = item.CommandClass
+      let command = new Command(Object.assign({name: name}, item.options))
+      commands.set(name, command)
+    })
+    return commands
+  }
+
+  getCommandGroup (name) {
+    let commandGroup = this.config.commandGroups[name]
+    if (!commandGroup) {
+      console.warn('No command group registered by this name: ' + name)
+      commandGroup = []
+    }
+    return commandGroup
+  }
+
+  registerLanguage (code, name) {
+    this.config.availableLanguages[code] = name
+  }
+
+  getAvailableLanguages () {
+    return this.config.availableLanguages
+  }
+
+  _compileToolPanelItem (itemSpec) {
+    let item = Object.assign({}, itemSpec)
+    let type = itemSpec.type
+    switch (type) {
+      case 'command-group':
+        return this.getCommandGroup(itemSpec.name).map(commandName => {
+          return { commandName }
+        })
+      case 'tool-prompt':
+      case 'tool-group':
+      case 'tool-dropdown':
+        item.items = flatten(itemSpec.items.map(itemSpec => this._compileToolPanelItem(itemSpec)))
+        break
+      case 'tool-separator':
+        break
+      default:
+        throw new Error('Unsupported tool panel item type: ' + type)
+    }
+    return item
   }
 }

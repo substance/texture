@@ -286,12 +286,12 @@ let reverseMapping = function(mapping) {
 */
 export const ElementCitationConverter = {
 
-  import(el, pubMetaDb, id) {
+  import (el, pubMetaDb, id) {
     let type = el.attr('publication-type')
 
     let node = {
       // HACK: trying to merge EntitDb into Article model, avoiding id collision
-      id: `@${id}`,
+      id,
       type: mappingItemTypes[type],
       // normal fields
       assignee: getText(el, 'collab[collab-type=assignee] > named-content'),

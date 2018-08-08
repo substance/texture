@@ -17,7 +17,15 @@ export default class DynamicCollection {
     return items
   }
 
-  addItem () {
-    console.error('TODO: should we implement DynamicCollection.addItem()?')
+  addItem (item) {
+    const api = this._api
+    const model = api._addModel(item)
+    return model
+  }
+
+  removeItem (item) {
+    const api = this._api
+    const model = api._removeModel(item)
+    return model
   }
 }

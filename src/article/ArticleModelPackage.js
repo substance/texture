@@ -1,6 +1,6 @@
 import { registerSchema, ListPackage } from 'substance'
-import TextureDocument from './TextureDocument'
-import InternalArticle from './InternalArticle'
+import InternalArticleSchema from './InternalArticleSchema'
+import InternalArticleDocument from './InternalArticleDocument'
 import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNode from './XMLListNode'
@@ -39,7 +39,7 @@ import LanguagesPackage from './LanguagesPackage'
 export default {
   name: 'TextureArticle',
   configure (config) {
-    registerSchema(config, InternalArticle, TextureDocument)
+    registerSchema(config, InternalArticleSchema, InternalArticleDocument)
 
     // override registered nodes
     config.addNode(XMLListNode, true)
@@ -51,7 +51,7 @@ export default {
     // we want to merge PubMetaDb into the InternalArticle
     config.import(EntitiesPackage)
 
-    config.addImporter(InternalArticle.getName(), TextureArticleImporter)
+    config.addImporter(InternalArticleSchema.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard
     TextureHTMLConverters.forEach(converter => {
       config.addConverter('html', converter)

@@ -1,8 +1,9 @@
 import { Editing, validateXMLSchema, isString, paste } from 'substance'
-import InternalArticle from './InternalArticle'
+import InternalArticleSchema from './InternalArticleSchema'
 
 /*
-  Proposal for Substance 2.0 XMLEditing implementation
+  EXPERIMENTAL: an 'Editing' interface that takes the XML schema into account.
+  TODO: try to generalize this and add it to the 'app dev kit'
 */
 export default class TextureEditing extends Editing {
 
@@ -26,7 +27,7 @@ export default class TextureEditing extends Editing {
       throw new Error('Illegal content for paste.')
     }
 
-    let res = validateXMLSchema(InternalArticle, tx.getDocument().toXML())
+    let res = validateXMLSchema(InternalArticleSchema, tx.getDocument().toXML())
     if (!res.ok) {
       res.errors.forEach((err) => {
         console.error(err.msg, err.el)
@@ -55,7 +56,7 @@ export default class TextureEditing extends Editing {
 
   createTextNode(tx, container, text) {
     let parentType = container.type
-    let schema = InternalArticle.getElementSchema(parentType)
+    let schema = InternalArticleSchema.getElementSchema(parentType)
     if (schema.isAllowed('p')) {
       return tx.create({ type: 'p', content: text })
     } else {
@@ -65,7 +66,7 @@ export default class TextureEditing extends Editing {
 
   createListNode(tx, container, params) {
     let parentType = container.type
-    let schema = InternalArticle.getElementSchema(parentType)
+    let schema = InternalArticleSchema.getElementSchema(parentType)
     if (schema.isAllowed('list')) {
       let el = tx.create({ type: 'list' })
       if (params.listType) {

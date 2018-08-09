@@ -3,7 +3,7 @@ import {
   ValidatingChildNodeIterator
 } from 'substance'
 
-import InternalArticle from './InternalArticle'
+import InternalArticleSchema from './InternalArticleSchema'
 
 export default
 class TextureArticleImporter extends DOMImporter {
@@ -16,7 +16,7 @@ class TextureArticleImporter extends DOMImporter {
       converters: config.converters
     }, context)
 
-    this.xmlSchema = InternalArticle
+    this.xmlSchema = InternalArticleSchema
   }
 
   importDocument(dom) {

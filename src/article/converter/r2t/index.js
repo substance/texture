@@ -8,7 +8,7 @@ import ConvertTable from './ConvertTable'
 import ConvertTableWrap from './ConvertTableWrap'
 import ConvertSigBlock from './ConvertSigBlock'
 import PruneEmptyElements from './PruneEmptyElements'
-import ConvertRefs from './ConvertRefs'
+import ConvertReflist from './ConvertReflist'
 import ConvertArticleMeta from './ConvertArticleMeta'
 import ConvertXref from './ConvertXref'
 import ConvertList from './ConvertList'
@@ -20,7 +20,7 @@ import ConvertList from './ConvertList'
 const trafos = [
   PruneEmptyElements,
   ConvertArticleMeta,
-  ConvertRefs, // extracts publication entities
+  ConvertReflist, // extracts publication entities
   ConvertSigBlock,
   FnGroupConverter,
   ConvertFig,

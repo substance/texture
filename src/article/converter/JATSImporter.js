@@ -5,7 +5,7 @@ import {
 
 import JATS from '../JATS'
 import TextureArticle from '../TextureArticle'
-import InternalArticle from '../InternalArticle'
+import InternalArticleSchema from '../InternalArticleSchema'
 
 import { r2t } from './r2t'
 import { j2r } from './j2r'
@@ -63,7 +63,7 @@ export default class JATSImporter extends EventEmitter {
     // restrictedJATS -> InternalArticle
     if (!this._transform('r2t', state)) return state
 
-    if (!this._validate(InternalArticle, state)) return state
+    if (!this._validate(InternalArticleSchema, state)) return state
 
     return state
   }

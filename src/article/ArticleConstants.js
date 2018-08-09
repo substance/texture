@@ -34,6 +34,10 @@ export const REQUIRED_ELEMENT_CITATION_ELEMENTS = [
   ['pub-id', 'pub-id-type', 'isbn']
 ]
 
+export const JATS_BIBR_TYPES = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
+
+export const INTERNAL_BIBR_TYPES = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
+
 // EXPERIMENTAL: properties that must not be empty
 // TODO: this should be configurable
 export const REQUIRED_PROPERTIES = {

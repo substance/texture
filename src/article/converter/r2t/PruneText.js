@@ -1,5 +1,5 @@
 import pruneText from '../util/pruneText'
-import InternalArticle from '../article/InternalArticle'
+import InternalArticleSchema from '../article/InternalArticleSchema'
 
 /*
   Removes all native TextNodes from elements which we specified to be
@@ -8,7 +8,7 @@ import InternalArticle from '../article/InternalArticle'
 export default class PruneText {
 
   import(dom) {
-    pruneText(dom.find('article'), InternalArticle)
+    pruneText(dom.find('article'), InternalArticleSchema)
   }
 
   export() {

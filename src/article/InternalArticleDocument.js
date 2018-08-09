@@ -1,10 +1,13 @@
 import { XMLDocument, without } from 'substance'
-import InternalArticle from './InternalArticle'
+import InternalArticleSchema from './InternalArticleSchema'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 import TextureEditingInterface from './TextureEditingInterface'
 
-export default class TextureDocument extends XMLDocument {
+// TODO: it would be better to use a general document implementation (like XMLDocument)
+// and come up with a new mechanism to bind indexes to the document instance
+// Helpers like findByType and such can be achieved differently
+export default class InternalArticleDocument extends XMLDocument {
 
   _initialize() {
     super._initialize()
@@ -35,11 +38,11 @@ export default class TextureDocument extends XMLDocument {
   }
 
   getDocTypeParams() {
-    return InternalArticle.getDocTypeParams()
+    return InternalArticleSchema.getDocTypeParams()
   }
 
   getXMLSchema() {
-    return InternalArticle
+    return InternalArticleSchema
   }
 
   getRootNode() {

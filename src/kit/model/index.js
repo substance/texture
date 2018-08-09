@@ -28,3 +28,4 @@ export { default as ValueComponent } from './ValueComponent'
 export { default as ValueModel } from './ValueModel'
 
 export * from './SubstanceModifications'
+export * from './schemaHelpers'

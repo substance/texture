@@ -1,17 +1,9 @@
 import { DocumentNode, Document, without } from 'substance'
+import { BOOLEAN, STRING, MANY, ONE, CHILDREN } from '../../kit'
 
-const STRING = { type: 'string', default: '' }
-const BOOLEAN = { type: 'boolean', default: false }
-function MANY (...targetTypes) {
-  return { type: ['array', 'id'], targetTypes, default: [] }
-}
-function ONE (...targetTypes) {
-  return { type: 'id', targetTypes, default: null }
-}
-function CHILDREN (...targetTypes) {
-  return { type: ['array', 'id'], targetTypes, default: [], owned: true }
-}
+// TODO: move all of this into InternalArticleSchema
 
+// LEGACY
 export class ArticleRecord extends DocumentNode {}
 
 ArticleRecord.schema = {

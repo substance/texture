@@ -1,24 +1,10 @@
 import { Component } from 'substance'
 import { Managed, createEditorContext } from '../../kit'
+import MetadataModel from '../shared/MetadataModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
-
-const SECTIONS = [
-  { label: 'Article', modelType: 'article-record' },
-  { label: 'Authors', modelType: 'authors' },
-  { label: 'Translations', modelType: 'translatables' },
-  { label: 'Editors', modelType: 'editors' },
-  { label: 'Groups', modelType: 'groups' },
-  { label: 'Affiliations', modelType: 'organisations' },
-  { label: 'Awards', modelType: 'awards' },
-  { label: 'Figures', modelType: 'figures' },
-  { label: 'Footnotes', modelType: 'footnotes' },
-  { label: 'References', modelType: 'references' },
-  { label: 'Keywords', modelType: 'keywords' },
-  { label: 'Subjects', modelType: 'subjects' }
-]
 
 export default class MetadataEditor extends Component {
   constructor (...args) {
@@ -52,6 +38,7 @@ export default class MetadataEditor extends Component {
       urlResolver: archive
     })
     this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
+    this.model = new MetadataModel(api)
 
     // initial reduce etc.
     this.editorSession.initialize()
@@ -121,32 +108,38 @@ export default class MetadataEditor extends Component {
   }
 
   _renderTOCPane ($$) {
-    const api = this.api
+    const model = this.model
+    const properties = model.getProperties()
+
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
-    SECTIONS.forEach(section => {
-      let model = api.getModel(section.modelType)
-      if (model.isCollection) {
-        const items = model.getItems()
+
+    properties.forEach(property => {
+      let valueModel = property.valueModel
+      let id = valueModel.id || property.type
+      if (valueModel.isCollection) {
+        const items = valueModel.getItems()
         tocEl.append(
           $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + model.id })
-            .append(section.label + ' (' + items.length + ')')
+            .attr({ href: '#' + id })
+            .append(this.getLabel(property.name) + ' (' + items.length + ')')
         )
       } else {
         tocEl.append(
           $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + model.id })
-            .append(section.label)
+            .attr({ href: '#' + id })
+            .append(this.getLabel(property.name))
         )
       }
     })
+
     el.append(tocEl)
     return el
   }
 
   _renderContentPanel ($$) {
-    const api = this.api
+    const model = this.model
+    const properties = model.getProperties()
     const ScrollPane = this.getComponent('scroll-pane')
 
     let contentPanel = $$(ScrollPane, {
@@ -154,10 +147,11 @@ export default class MetadataEditor extends Component {
     }).ref('contentPanel')
 
     let sectionsEl = $$('div').addClass('se-sections')
-    SECTIONS.forEach(section => {
-      const model = api.getModel(section.modelType)
-      const id = model.id
-      let content = $$(MetadataSection, { model }).attr({id}).ref(id)
+
+    properties.forEach(property => {
+      let valueModel = property.valueModel
+      let id = valueModel.id || property.type
+      let content = $$(MetadataSection, { model: valueModel }).attr({id}).ref(property.name)
       sectionsEl.append(content)
     })
 

@@ -11,13 +11,13 @@ export default class EditReferenceWorkflow extends Component {
   }
 
   render($$) {
-    const item = this.props.item
-    const ItemEditor = this.getComponent(item.type, true) || NodeModelEditor
+    const model = this.props.model
+    const ItemEditor = this.getComponent(model.type, true) || NodeModelEditor
 
     let el = $$('div').addClass('se-edit-reference').append(
       $$(CardComponent).append(
         $$(ItemEditor, {
-          model: item
+          model: model
         })
       )
     )
@@ -25,10 +25,10 @@ export default class EditReferenceWorkflow extends Component {
     return el
   }
 
-  _removeReference(item) {
+  _removeReference(model) {
     const api = this.context.api
-    const collection = api.getModel('references')
-    collection.removeItem(item)
+    const collection = api.getCollectionForType('reference')
+    collection.removeItem(model)
     this.send('closeModal')
   }
 }

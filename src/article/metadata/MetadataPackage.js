@@ -231,6 +231,7 @@ export default {
     })
 
     // Section labels
+    config.addLabel('article', 'Article')
     config.addLabel('authors', 'Authors')
     config.addLabel('figures', 'Figures')
     config.addLabel('footnotes', 'Footnotes')
@@ -240,6 +241,7 @@ export default {
     config.addLabel('organisations', 'Organisations')
     config.addLabel('references', 'References')
     config.addLabel('translateables', 'Translations')
+    config.addLabel('translations', 'Translations')
     config.addLabel('title-trans', 'Title')
     config.addLabel('abstract-trans', 'Abstract')
 

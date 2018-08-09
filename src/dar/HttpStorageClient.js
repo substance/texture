@@ -1,15 +1,15 @@
+/* global FormData */
 import { sendRequest, forEach } from 'substance'
 
 export default class HttpStorageClient {
-
-  constructor(apiUrl) {
+  constructor (apiUrl) {
     this.apiUrl = apiUrl
   }
 
   /*
     @returns a Promise for a raw archive, i.e. the data for a DocumentArchive.
   */
-  read(archiveId) {
+  read (archiveId, cb) {
     let url = this.apiUrl
     if (archiveId) {
       url = url + '/' + archiveId
@@ -18,11 +18,13 @@ export default class HttpStorageClient {
       method: 'GET',
       url
     }).then(response => {
-      return JSON.parse(response)
+      cb(null, JSON.parse(response))
+    }).catch(err => {
+      cb(err)
     })
   }
 
-  write(archiveId, data) {
+  write (archiveId, data, cb) {
     let form = new FormData()
     forEach(data.resources, (record, filePath) => {
       if (record.encoding === 'blob') {
@@ -40,7 +42,10 @@ export default class HttpStorageClient {
       method: 'PUT',
       url,
       data: form
+    }).then(() => {
+      cb()
+    }).catch(err => {
+      cb(err)
     })
   }
-
 }

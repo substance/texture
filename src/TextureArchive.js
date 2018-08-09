@@ -30,17 +30,9 @@ export default class TextureArchive extends PersistedDocumentArchive {
       if (entry.type !== 'pub-meta') {
         // TODO: we need better concept for handling errors
         let session
-        try {
-          // Passing down 'sessions' so that we can add to the pub-meta session
-          session = this._loadDocument(entry.type, record, sessions)
-          sessions[entry.id] = session
-        } catch (err) {
-          console.error(err.message)
-          if (err.detail) {
-            console.error(String(err.detail))
-          }
-          throw err
-        }
+        // Passing down 'sessions' so that we can add to the pub-meta session
+        session = this._loadDocument(entry.type, record, sessions)
+        sessions[entry.id] = session
       }
     })
     return sessions

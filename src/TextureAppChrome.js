@@ -43,30 +43,39 @@ export default class TextureAppChrome extends Component {
     - _loadArchive
     - _initArchive
   */
-  async _init () {
-    // TODO: do we really need to separated the first two steps?
-    let childContext = await this._setupChildContext()
-    await this._initContext(childContext)
-    let archive = await this._loadArchive(this.props.archiveId, childContext)
-    archive = await this._initArchive(archive, childContext)
-    this._childContext = childContext
-    this._afterInit()
-    this.setState({archive})
+  _init (cb) {
+    if (!cb) cb = (err) => { if (err) throw err }
+    this._setupChildContext((err, context) => {
+      if (err) return cb(err)
+      this._initContext(context, (err, context) => {
+        if (err) return cb(err)
+        debugger
+        this._loadArchive(this.props.archiveId, context, (err, archive) => {
+          if (err) return cb(err)
+          this._initArchive(archive, context, (err, archive) => {
+            if (err) return cb(err)
+            this._childContext = context
+            this._afterInit()
+            this._setState({ archive })
+          })
+        })
+      })
+    })
   }
 
-  async _setupChildContext () {
-    return {}
+  _setupChildContext (cb) {
+    cb(null, {})
   }
 
-  async _initContext (context) {
-    return context
+  _initContext (context, cb) {
+    cb(null, context)
   }
 
-  async _loadArchive () {
+  _loadArchive () {
     throw new Error('_loadArchive not implemented')
   }
 
-  async _initArchive (archive) {
+  _initArchive (archive) {
     return archive
   }
 

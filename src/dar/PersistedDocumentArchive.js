@@ -18,8 +18,7 @@ import ManifestLoader from './ManifestLoader'
   and eventually saving a new version of the ardhive.
 */
 export default class PersistedDocumentArchive extends EventEmitter {
-
-  constructor(storage, buffer, context, config) {
+  constructor (storage, buffer, context, config) {
     super()
     this.storage = storage
     this.buffer = buffer
@@ -31,11 +30,11 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._config = config
   }
 
-  hasPendingChanges() {
+  hasPendingChanges () {
     return this.buffer.hasPendingChanges()
   }
 
-  createFile(file) {
+  createFile (file) {
     let assetId = uuid()
     let fileExtension = last(file.name.split('.'))
     let filePath = `${assetId}.${fileExtension}`
@@ -59,7 +58,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   /*
     Adds a document record to the manifest file
   */
-  _addDocumentRecord(documentId, type, name, path) {
+  _addDocumentRecord (documentId, type, name, path) {
     this._sessions.manifest.transaction(tx => {
       let documents = tx.find('documents')
       let docEntry = tx.createElement('document', { id: documentId }).attr({
@@ -71,20 +70,17 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  addDocument(type, name, xml) {
+  addDocument (type, name, xml) {
     let documentId = uuid()
     let sessions = this._sessions
     let session = this._loadDocument(type, { data: xml }, sessions)
     sessions[documentId] = session
-
     this._registerForSessionChanges(session, documentId)
-
     this._addDocumentRecord(documentId, type, name, documentId+'.xml')
-
     return documentId
   }
 
-  removeDocument(documentId) {
+  removeDocument (documentId) {
     let session = this._sessions[documentId]
     this._unregisterFromSession(session)
     this._sessions.manifest.transaction(tx => {
@@ -94,18 +90,18 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  renameDocument(documentId, name) {
+  renameDocument (documentId, name) {
     this._sessions.manifest.transaction(tx => {
       let docEntry = tx.find(`#${documentId}`)
       docEntry.attr({name})
     })
   }
 
-  getDocumentEntries() {
+  getDocumentEntries () {
     return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
 
-  resolveUrl(path) {
+  resolveUrl (path) {
     let blobUrl = this._pendingFiles[path]
     if (blobUrl) {
       return blobUrl
@@ -117,70 +113,62 @@ export default class PersistedDocumentArchive extends EventEmitter {
     }
   }
 
-  load(archiveId) {
+  load (archiveId, cb) {
     const storage = this.storage
     const buffer = this.buffer
-
-    let upstreamArchive
-    return Promise.resolve()
-    .then(() => {
-      return storage.read(archiveId)
-    })
-    .then((res) => {
-      upstreamArchive = res
-      return buffer.load()
-    })
-    .then(() => {
-      // Ensure that the upstream version is compatible with the buffer.
-      // The buffer may contain pending changes.
-      // In this case the buffer should be based on the same version
-      // as the latest version in the storage.
-      if (!buffer.hasPendingChanges()) {
-        let localVersion = buffer.getVersion()
-        let upstreamVersion = upstreamArchive.version
-        if (localVersion && upstreamVersion && localVersion !== upstreamVersion) {
-          // If the local version is out-of-date, it would be necessary to 'rebase' the
-          // local changes.
-          console.error('Upstream document has changed. Discarding local changes')
-          this.buffer.reset(upstreamVersion)
-        } else {
-          buffer.reset(upstreamVersion)
+    storage.read(archiveId, (err, upstreamArchive) => {
+      if (err) return cb(err)
+      buffer.load(archiveId, err => {
+        if (err) return cb(err)
+        // Ensure that the upstream version is compatible with the buffer.
+        // The buffer may contain pending changes.
+        // In this case the buffer should be based on the same version
+        // as the latest version in the storage.
+        if (!buffer.hasPendingChanges()) {
+          let localVersion = buffer.getVersion()
+          let upstreamVersion = upstreamArchive.version
+          if (localVersion && upstreamVersion && localVersion !== upstreamVersion) {
+            // If the local version is out-of-date, it would be necessary to 'rebase' the
+            // local changes.
+            console.error('Upstream document has changed. Discarding local changes')
+            this.buffer.reset(upstreamVersion)
+          } else {
+            buffer.reset(upstreamVersion)
+          }
         }
-      }
-    })
-    .then(() => {
-      // convert raw archive into sessions (=ingestion)
-      let sessions = this._ingest(upstreamArchive)
-      // contract: there must be a manifest
-      if (!sessions['manifest']) {
-        throw new Error('There must be a manifest session.')
-      }
-      // apply pending changes
-      if (!buffer.hasPendingChanges()) {
-        // TODO: when we have a persisted buffer we need to apply all pending
-        // changes.
-        // For now, we always start with a fresh buffer
-      } else {
-        buffer.reset(upstreamArchive.version)
-      }
-      // register for any changes in each session
-      this._registerForAllChanges(sessions)
+        // convert raw archive into sessions (=ingestion)
+        let sessions = this._ingest(upstreamArchive)
+        // contract: there must be a manifest
+        if (!sessions['manifest']) {
+          throw new Error('There must be a manifest session.')
+        }
+        // apply pending changes
+        if (!buffer.hasPendingChanges()) {
+          // TODO: when we have a persisted buffer we need to apply all pending
+          // changes.
+          // For now, we always start with a fresh buffer
+        } else {
+          buffer.reset(upstreamArchive.version)
+        }
+        // register for any changes in each session
+        this._registerForAllChanges(sessions)
 
-      this._archiveId = archiveId
-      this._upstreamArchive = upstreamArchive
-      this._sessions = sessions
+        this._archiveId = archiveId
+        this._upstreamArchive = upstreamArchive
+        this._sessions = sessions
 
-      // Run through a repair step (e.g. remove missing files from archive)
-      this._repair()
-      return this
+        // Run through a repair step (e.g. remove missing files from archive)
+        this._repair()
+        cb(null, this)
+      })
     })
   }
 
-  _repair() {
+  _repair () {
     // no-op
   }
 
-  save() {
+  save () {
     // HACK: we skip checking if there are pending changes,
     // because of some restructuring buffer.hasPendingChanges() is not working atm
     // if (!this.buffer.hasPendingChanges()) {
@@ -199,30 +187,30 @@ export default class PersistedDocumentArchive extends EventEmitter {
     2. save: perform a regular save using user buffer (over new archive, including pending
        documents and blobs)
   */
-  saveAs(newArchiveId) {
+  saveAs (newArchiveId) {
     return this.storage.clone(this._archiveId, newArchiveId).then(() => {
       return this._save(newArchiveId)
     })
   }
 
-  getEditorSession(docId) {
+  getEditorSession (docId) {
     return this._sessions[docId]
   }
 
-  _loadManifest(record) {
+  _loadManifest (record) {
     if (!record) {
       throw new Error('manifest.xml is missing')
     }
     return ManifestLoader.load(record.data)
   }
 
-  _registerForAllChanges(sessions) {
+  _registerForAllChanges (sessions) {
     forEach(sessions, (session, docId) => {
       this._registerForSessionChanges(session, docId)
     })
   }
 
-  _registerForSessionChanges(session, docId) {
+  _registerForSessionChanges (session, docId) {
     session.on('change', (change) => {
       this.buffer.addChange(docId, change)
       // Apps can subscribe to this (e.g. to show there's pending changes)
@@ -230,14 +218,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
     }, this)
   }
 
-  _unregisterFromSession(session) {
+  _unregisterFromSession (session) {
     session.off(this)
   }
 
   /*
     Create a raw archive for upload from the changed resources.
   */
-  _save(archiveId) {
+  _save (archiveId) {
     const buffer = this.buffer
     const storage = this.storage
     const sessions = this._sessions
@@ -264,7 +252,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  _exportAssets(sessions, buffer, rawArchive) {
+  _exportAssets (sessions, buffer, rawArchive) {
     let manifest = sessions.manifest.getDocument()
     let assetNodes = manifest.getAssetNodes()
     assetNodes.forEach(node => {
@@ -286,7 +274,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     Uses the current state of the buffer to generate a rawArchive object
     containing all changed documents
   */
-  _exportChanges(sessions, buffer) {
+  _exportChanges (sessions, buffer) {
     let rawArchive = {
       version: buffer.getVersion(),
       diff: buffer.getChanges(),
@@ -297,5 +285,4 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._exportAssets(sessions, buffer, rawArchive)
     return rawArchive
   }
-
 }

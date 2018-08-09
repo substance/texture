@@ -103,6 +103,12 @@ export default {
     config.addLabel('volume', 'Volume')
     config.addLabel('year', 'Year')
 
+    config.addLabel('acceptedDate', 'Accepted Date')
+    config.addLabel('publishedDate', 'Published Date')
+    config.addLabel('receivedDate', 'Received Date')
+    config.addLabel('revReceivedDate', 'Revision Received Date')
+    config.addLabel('revRequestedDate', 'Revision Requested Date')
+
     // person labels
     config.addLabel('person', 'Person')
     config.addLabel('add-person', 'Add Person')

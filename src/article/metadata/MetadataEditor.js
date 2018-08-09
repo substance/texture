@@ -1,5 +1,5 @@
-import { Component } from 'substance'
-import { Managed, createEditorContext } from '../../kit'
+import { CompositeModelComponent, Managed, createEditorContext } from '../../kit'
+import MetadataMatterModel from '../shared/MetadataMatterModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'
@@ -20,7 +20,7 @@ const SECTIONS = [
   { label: 'Subjects', modelType: 'subjects' }
 ]
 
-export default class MetadataEditor extends Component {
+export default class MetadataEditor extends CompositeModelComponent {
   constructor (...args) {
     super(...args)
 
@@ -52,6 +52,7 @@ export default class MetadataEditor extends Component {
       urlResolver: archive
     })
     this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
+    this.model = new MetadataMatterModel(api)
 
     // initial reduce etc.
     this.editorSession.initialize()
@@ -121,32 +122,38 @@ export default class MetadataEditor extends Component {
   }
 
   _renderTOCPane ($$) {
-    const api = this.api
+    const model = this.model
+    const properties = model.getProperties()
+
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
-    SECTIONS.forEach(section => {
-      let model = api.getModel(section.modelType)
-      if (model.isCollection) {
-        const items = model.getItems()
+
+    properties.forEach(property => {
+      let valueModel = property.valueModel
+      // TODO: find a better way to differentiate collections and other models  
+      if (valueModel.getItems) {
+        const items = valueModel.getItems()
         tocEl.append(
           $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + model.id })
-            .append(section.label + ' (' + items.length + ')')
+            .attr({ href: '#' + property.name })
+            .append(this.getLabel(property.name) + ' (' + items.length + ')')
         )
       } else {
         tocEl.append(
           $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + model.id })
-            .append(section.label)
+            .attr({ href: '#' + property.name })
+            .append(this.getLabel(property.name))
         )
       }
     })
+
     el.append(tocEl)
     return el
   }
 
   _renderContentPanel ($$) {
-    const api = this.api
+    const model = this.model
+    const properties = model.getProperties()
     const ScrollPane = this.getComponent('scroll-pane')
 
     let contentPanel = $$(ScrollPane, {
@@ -154,10 +161,10 @@ export default class MetadataEditor extends Component {
     }).ref('contentPanel')
 
     let sectionsEl = $$('div').addClass('se-sections')
-    SECTIONS.forEach(section => {
-      const model = api.getModel(section.modelType)
-      const id = model.id
-      let content = $$(MetadataSection, { model }).attr({id}).ref(id)
+
+    properties.forEach(property => {
+      let valueModel = property.valueModel
+      let content = $$(MetadataSection, { model: valueModel }).ref(property.name)
       sectionsEl.append(content)
     })
 

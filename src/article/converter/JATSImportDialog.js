@@ -2,8 +2,7 @@ import { Component } from 'substance'
 import { printElement } from './util/domHelpers'
 
 export default class JATSImportDialog extends Component {
-
-  render($$) {
+  render ($$) {
     const errors = this.props.errors
     let el = $$('div').addClass('sc-jats-import-dialog')
     el.append($$('h1').addClass('se-title').text('Importing JATS'))
@@ -17,12 +16,10 @@ export default class JATSImportDialog extends Component {
 
     return el
   }
-
 }
 
 class ImportStage extends Component {
-
-  render($$) {
+  render ($$) {
     const errors = this.props.errors
     let el = $$('div').addClass('sc-import-stage')
     el.append($$('h2').addClass('se-title').text(_getTitle(this.props.stage)))
@@ -37,7 +34,7 @@ class ImportStage extends Component {
     return el
   }
 
-  _renderError($$, err) {
+  _renderError ($$, err) {
     let el = $$('div').addClass('se-error')
     // TODO: maybe we will have more structured errors
     el.append(
@@ -61,6 +58,6 @@ const TITLES = {
   'r2t': 'Transform TextureArticle -> InternalArticle'
 }
 
-function _getTitle(stage) {
+function _getTitle (stage) {
   return TITLES[stage]
 }

@@ -49,7 +49,6 @@ export default class TextureAppChrome extends Component {
       if (err) return cb(err)
       this._initContext(context, (err, context) => {
         if (err) return cb(err)
-        debugger
         this._loadArchive(this.props.archiveId, context, (err, archive) => {
           if (err) return cb(err)
           this._initArchive(archive, context, (err, archive) => {

@@ -1,20 +1,6 @@
-import { XMLSchema } from 'substance'
+import createSchema from './createDocumentSchemaFromXMLSchema'
 import TextureArticleData from '../../tmp/TextureArticle.data'
 
-const TextureArticle = XMLSchema.fromJSON(TextureArticleData)
+const DOC_TYPE_PARAMS = ['article', 'TextureArticle 0.1.0', 'http://substance.io/TextureArticle-1.0.0.dtd']
 
-
-// TODO: this should come from compilation
-TextureArticle.getName = function() {
-  return 'dar-article'
-}
-
-TextureArticle.getVersion = function() {
-  return '0.1.0'
-}
-
-TextureArticle.getDocTypeParams = function() {
-  return ['article', 'TextureArticle 0.1.0', 'http://substance.io/TextureArticle-1.0.0.dtd']
-}
-
-export default TextureArticle
+export default createSchema(TextureArticleData, 'dar-article', '0.1.0', DOC_TYPE_PARAMS)

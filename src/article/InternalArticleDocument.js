@@ -1,5 +1,4 @@
-import { XMLDocument, without } from 'substance'
-import InternalArticleSchema from './InternalArticleSchema'
+import { Document } from 'substance'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 import TextureEditingInterface from './TextureEditingInterface'
@@ -7,62 +6,40 @@ import TextureEditingInterface from './TextureEditingInterface'
 // TODO: it would be better to use a general document implementation (like XMLDocument)
 // and come up with a new mechanism to bind indexes to the document instance
 // Helpers like findByType and such can be achieved differently
-export default class InternalArticleDocument extends XMLDocument {
-
-  _initialize() {
+export default class InternalArticleDocument extends Document {
+  _initialize () {
     super._initialize()
+
     // special index for xref lookup
     this.addIndex('xrefs', new XrefIndex())
   }
 
-  findByType(type) {
-    let NodeClass = this.schema.getNodeClass(type)
-    if (!NodeClass) return []
-    let nodesByType = this.getIndex('type')
-    let nodeIds = []
-    if (NodeClass.abstract) {
-      // TODO: would be nice to get sub-types from the schema
-      const schema = this.schema
-      schema.nodeRegistry.names.forEach((subType) => {
-        if (schema.isInstanceOf(subType, type)) {
-          nodeIds = nodeIds.concat(Object.keys(nodesByType.get(subType)))
-        }
-      })
-    } else {
-      nodeIds = Object.keys(nodesByType.get(type))
-    }
-    // HACK: we do not want to have one of these in the result
-    // how could we generalise this?
-    nodeIds = without(nodeIds, 'main-article')
-    return nodeIds
-  }
-
-  getDocTypeParams() {
-    return InternalArticleSchema.getDocTypeParams()
-  }
-
-  getXMLSchema() {
-    return InternalArticleSchema
-  }
-
-  getRootNode() {
+  getRootNode () {
     return this.get('article')
   }
 
-  getXRefs() {
+  getXRefs () {
     let articleEl = this.get('article')
-    // this traverses the article in the same way as css-select
     return articleEl.findAll('xref')
   }
 
-  createEditingInterface() {
+  createEditingInterface () {
     return new TextureEditingInterface(this, { editing: new TextureEditing() })
   }
 
-  invert(change) {
+  find () {
+    console.error('FIXME: InternalArticleDocument should implement find()')
+  }
+
+  findAll () {
+    console.error('FIXME: InternalArticleDocument should implement findAll()')
+    return []
+  }
+
+  invert (change) {
     let inverted = change.invert()
     let info = inverted.info || {}
-    switch(change.info.action) {
+    switch (change.info.action) {
       case 'insertRows': {
         info.action = 'deleteRows'
         break
@@ -84,5 +61,35 @@ export default class InternalArticleDocument extends XMLDocument {
     }
     inverted.info = info
     return inverted
+  }
+
+  static createEmptyArticle (schema) {
+    let doc = new InternalArticleDocument(schema)
+    const $$ = (type, id) => {
+      if (!id) id = type
+      return doc.create({type, id})
+    }
+    $$('article').append(
+      $$('metadata').append(
+        $$('article-record'),
+        $$('authors'),
+        $$('editors'),
+        $$('groups'),
+        $$('affiliations'),
+        $$('awards')
+      ),
+      $$('content').append(
+        $$('front').append(
+          $$('title'),
+          $$('abstract')
+        ),
+        $$('body'),
+        $$('back').append(
+          $$('references'),
+          $$('footnotes')
+        )
+      )
+    )
+    return doc
   }
 }

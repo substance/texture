@@ -9,21 +9,15 @@ export default {
     let configurator = new ArticleConfigurator()
     configurator.import(ArticleModelPackage)
     let jatsImporter = new JATSImporter()
-    const pubMetaSession = context.pubMetaSession
-    const pubMetaDb = pubMetaSession.getDocument()
     // TODO: find a more consistent notion of 'context'
-    let jats = jatsImporter.import(xml, { pubMetaDb })
-    if (jats.hasErrored) {
+    let result = jatsImporter.import(xml)
+    if (result.hasErrored) {
       let err = new Error('JATS import failed')
       err.type = 'jats-import-error'
-      err.detail = new ImporterErrorReport(jats.errors)
+      err.detail = new ImporterErrorReport(result.errors)
       throw err
     }
-    let importer = configurator.createImporter('texture-article')
-    let doc = importer.importDocument(jats.dom)
-    forEach(pubMetaDb.getNodes(), entity => {
-      doc.create(entity)
-    })
+    let doc = result.doc
     let editorSession = new ArticleSession(doc, configurator)
     return editorSession
   }

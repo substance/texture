@@ -1,5 +1,7 @@
 export const STRING = { type: 'string', default: '' }
 
+export const STRING_ARRAY = { type: ['array', 'string'], default: [] }
+
 export const BOOLEAN = { type: 'boolean', default: false }
 
 export function MANY (...targetTypes) {

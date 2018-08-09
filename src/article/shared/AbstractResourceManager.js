@@ -15,8 +15,8 @@ export default class AbstractResourceManager {
     this._targetTypes = array2table(XREF_TARGET_TYPES[type])
     // TODO: should this be a parameter?
     // also, is it ok to assume that all these resources must be placed in a container?
-    this._container = doc.find('article > body')
-    this._containerPath = this._container.getContentPath()
+    this._container = doc.get('body')
+    this._containerPath = ['body', '_childNodes']
 
     doc.on('document:changed', this._onDocumentChange, this)
   }

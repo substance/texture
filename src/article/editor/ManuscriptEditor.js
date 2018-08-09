@@ -290,7 +290,7 @@ export default class ManuscriptEditor extends Component {
 
   _getBodyContainerId () {
     const doc = this._getDocument()
-    let body = doc.find('body')
+    let body = doc.get('body')
     return body.id
   }
 

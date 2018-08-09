@@ -12,50 +12,37 @@ import ConvertReflist from './ConvertReflist'
 import ConvertArticleMeta from './ConvertArticleMeta'
 import ConvertXref from './ConvertXref'
 import ConvertList from './ConvertList'
+import InternalArticleSchema from '../../InternalArticleSchema'
+import InternalArticle from '../../InternalArticleDocument'
+
+import jats2internal from './jats2internal'
 
 // ATTENTION: the order of converters is critical,
 // as some of them need to do insert nodes in a way
 // that adheres to the schema
 // ATM
-const trafos = [
-  PruneEmptyElements,
-  ConvertArticleMeta,
-  ConvertReflist, // extracts publication entities
-  ConvertSigBlock,
-  FnGroupConverter,
-  ConvertFig,
-  ConvertTable,
-  ConvertTableWrap,
-  ConvertList,
-  WrapDispQuoteContent,
-  Sec2Heading,
-  ConvertXref,
-  UpdateDocType
-  // TODO: is PruneText really necessary again?
-  // PruneText,
-].map(C => new C())
+// const trafos = [
+//   PruneEmptyElements,
+//   ConvertArticleMeta,
+//   ConvertReflist, // extracts publication entities
+//   ConvertSigBlock,
+//   FnGroupConverter,
+//   ConvertFig,
+//   ConvertTable,
+//   ConvertTableWrap,
+//   ConvertList,
+//   WrapDispQuoteContent,
+//   Sec2Heading,
+//   ConvertXref,
+//   UpdateDocType
+//   // TODO: is PruneText really necessary again?
+//   // PruneText,
+// ].map(C => new C())
 
-export function r2t(dom, api) {
-  for (let i = 0; i < trafos.length; i++) {
-    trafos[i].import(dom, api)
-  }
-}
+const converters = []
+
+export { jats2internal }
 
 // NOTE: exporters are called in inverse order
-export function t2r(dom, api) {
-  for (let i = trafos.length - 1; i >= 0; i--) {
-    trafos[i].export(dom, api)
-  }
-}
-
-export {
-  PruneEmptyElements,
-  ConvertSigBlock,
-  FnGroupConverter,
-  ConvertFig,
-  ConvertTableWrap,
-  ConvertList,
-  WrapDispQuoteContent,
-  Sec2Heading,
-  UpdateDocType
+export function internal2jats (dom, api) {
 }

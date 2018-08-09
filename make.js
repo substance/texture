@@ -12,10 +12,8 @@ const RNG_SEARCH_DIRS = [
 ]
 
 const RNG_FILES = [
-  'src/article/JATS-publishing.rng',
   'src/article/JATS-archiving.rng',
-  'src/article/TextureArticle.rng',
-  'src/article/InternalArticle.rng'
+  'src/article/TextureArticle.rng'
 ]
 
 // Server configuration
@@ -88,12 +86,11 @@ b.task('run-app', ['app'], () => {
 b.task('schema:single-jats-file', _singleJATSFile)
 
 b.task('schema:jats', () => {
-  _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1))
-  _compileSchema('JATS-archiving', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(1,2))
+  _compileSchema('JATS-archiving', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1))
 })
 
 b.task('schema:dar-article', () => {
-  _compileSchema('TextureArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3))
+  _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0,2))
 })
 
 b.task('schema:dar-manifest', () => {
@@ -101,14 +98,11 @@ b.task('schema:dar-manifest', () => {
 })
 
 b.task('schema:texture-article', () => {
-  _compileSchema('InternalArticle', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4))
 })
 
 b.task('schema:debug', () => {
-  _compileSchema('JATS-publishing', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
-  _compileSchema('JATS-archiving', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(1,2), { debug: true })
-  _compileSchema('TextureArticle', RNG_FILES[2], RNG_SEARCH_DIRS, RNG_FILES.slice(0,3), { debug: true })
-  _compileSchema('InternalArticle', RNG_FILES[3], RNG_SEARCH_DIRS, RNG_FILES.slice(0,4), { debug: true })
+  _compileSchema('JATS-archiving', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0,1), { debug: true })
+  _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0,2), { debug: true })
 })
 
 b.task('build:assets', function() {
@@ -350,11 +344,6 @@ function _singleJATSFile() {
     RNG_DIR: 'data/jats/archiving',
     ENTRY: 'JATS-archive-oasis-article1-mathml3.rng',
     DEST: 'src/article/JATS-archiving.rng',
-  },
-  {
-    RNG_DIR: 'data/jats/publishing',
-    ENTRY: 'JATS-journalpublishing-oasis-article1-mathml3.rng',
-    DEST: 'src/article/JATS-publishing.rng',
   }].forEach(({ RNG_DIR, ENTRY, DEST}) => {
     b.custom(`Pulling JATS spec into a single file...`, {
       src: [RNG_DIR+'/*.rng'],

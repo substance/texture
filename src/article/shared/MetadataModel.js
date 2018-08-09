@@ -1,7 +1,7 @@
 import { CompositeModel } from '../../kit'
 import ReferenceCollectionModel from '../models/ReferenceCollectionModel'
 
-export default class MetadataMatterModel extends CompositeModel {
+export default class MetadataModel extends CompositeModel {
   constructor (api) {
     super(api)
 

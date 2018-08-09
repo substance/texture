@@ -1,26 +1,12 @@
-import { CompositeModelComponent, Managed, createEditorContext } from '../../kit'
-import MetadataMatterModel from '../shared/MetadataMatterModel'
+import { Component } from 'substance'
+import { Managed, createEditorContext } from '../../kit'
+import MetadataModel from '../shared/MetadataModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 
-const SECTIONS = [
-  { label: 'Article', modelType: 'article-record' },
-  { label: 'Authors', modelType: 'authors' },
-  { label: 'Translations', modelType: 'translatables' },
-  { label: 'Editors', modelType: 'editors' },
-  { label: 'Groups', modelType: 'groups' },
-  { label: 'Affiliations', modelType: 'organisations' },
-  { label: 'Awards', modelType: 'awards' },
-  { label: 'Figures', modelType: 'figures' },
-  { label: 'Footnotes', modelType: 'footnotes' },
-  { label: 'References', modelType: 'references' },
-  { label: 'Keywords', modelType: 'keywords' },
-  { label: 'Subjects', modelType: 'subjects' }
-]
-
-export default class MetadataEditor extends CompositeModelComponent {
+export default class MetadataEditor extends Component {
   constructor (...args) {
     super(...args)
 
@@ -52,7 +38,7 @@ export default class MetadataEditor extends CompositeModelComponent {
       urlResolver: archive
     })
     this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
-    this.model = new MetadataMatterModel(api)
+    this.model = new MetadataModel(api)
 
     // initial reduce etc.
     this.editorSession.initialize()

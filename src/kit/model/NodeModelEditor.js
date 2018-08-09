@@ -10,6 +10,10 @@ import FormRowComponent from '../ui/FormRowComponent'
   deriving from this class, and for instance overriding `_getPropertyEditorClass()`.
 */
 export default class NodeModelEditor extends CustomSurface {
+  get isRemovable() {
+    return true
+  }
+
   getInitialState () {
     return {
       fullMode: false
@@ -20,6 +24,7 @@ export default class NodeModelEditor extends CustomSurface {
     // FIXME: bring back validation
     const fullMode = this.state.fullMode
     const model = this.props.model
+
     // TODO: issues should be accessed via model, not directly
     const nodeIssues = model._node['@issues']
     let hasIssues = (nodeIssues && nodeIssues.size > 0)
@@ -78,15 +83,20 @@ export default class NodeModelEditor extends CustomSurface {
       }
     }
 
-    el.append(
-      $$('div').addClass('se-footer').append(
-        controlEl,
+    const footer = $$('div').addClass('se-footer').append(
+      controlEl
+    )
+
+    if(this.isRemovable) {
+      footer.append(
         $$('button').addClass('se-remove-item').append(
           $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),
           'Remove'
         ).on('click', this._removeEntity)
       )
-    )
+    }
+
+    el.append(footer)
 
     return el
   }

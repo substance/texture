@@ -1,22 +1,75 @@
 import InternalArticleSchema from '../../InternalArticleSchema'
 import InternalArticle from '../../InternalArticleDocument'
 
+/*
+  TextureJATs Reference: (Please keep this up-to-date)
+  article:
+    (
+      front,
+      body?,
+      back?,
+    )
+  front:
+    (
+      journal-meta?,    // not supported yet
+      article-meta,     // -> metadata and others
+      // TODO: define a strict schema here ( why multiple ones? )
+      (def-list|list|ack|bio|fn-group|glossary|notes)*
+    )
+  article-meta:
+    (
+      article-id*,      // not supported yet
+      article-categories?,  //   -> article-record
+      title-group?,     // this is not optional internally, at least it contains the main title
+      contrib-group*,   // -> mapped to authors, editors, and contributors
+      aff*,             // -> affiliations
+      author-notes?,    // not supported yet
+      pub-date*,        // -> article-record
+      volume?,          // -> article-record
+      issue?,           // -> article-record
+      isbn?,            // -> article-record
+      (((fpage,lpage?)?,page-range?)|elocation-id)?,  // -> article-record
+      history?,         // -> article-record
+      permissions?,
+      self-uri*,        // not supported yet
+      (related-article,related-object)*, // not supported yet
+      abstract?,        // -> content.abstract
+      trans-abstract*,  // -> translations
+      kwd-group*,       // -> keywords
+      funding-group*,   // not supported yet
+      conference*,      // not supported yet
+      counts?,          // not supported yet
+      custom-meta-group?  // not supported yet
+    )
+  back:
+    (
+      label?,   // not supported
+      title*, // not supported
+      (ack|app-group|bio|fn-group|glossary|ref-list|notes|sec)* // not supported
+    )
+
+  TODO:
+    Allow only one place for '<ack>', '<bio>', '<fn-group>', '<glossary>', '<notes>'
+*/
+
 export default function jats2internal (jats, api) {
   // Create an empty document
   // TODO: how could we support custom nodes coming from configurator?
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
 
+  // metadata
   _populateAffiliations(doc, jats)
   _populateAuthors(doc, jats)
   _populateEditors(doc, jats)
   _populateAwards(doc, jats)
+  _populateArticleRecord(doc, jats)
+  _populateKeywords(doc, jats)
+  _populateSubjects(doc, jats)
+
+  // content
 
   return doc
 }
-
-// function _populateArticleRecord (doc, jats) {
-//   let articleRecord = doc.get('article-record')
-// }
 
 function _populateAffiliations (doc, jats) {
   const affiliations = doc.get('affiliations')
@@ -126,6 +179,41 @@ function _populateAwards (doc, jats) {
     awards.append(doc.create(award))
   })
 }
+
+function _populateArticleRecord (doc, jats) {
+  let articleRecord = doc.get('article-record')
+}
+
+function _populateKeywords (doc, jats) {
+  let keywords = doc.get('keywords')
+  let kwdEls = jats.findAll('article-meta > kwd-group > kwd')
+  kwdEls.forEach(kwdEl => {
+    const kwd = {
+      type: 'keyword',
+      name: kwdEl.textContent,
+      category: kwdEl.getAttribute('content-type'),
+      language: kwdEl.getParent().getAttribute('xml:lang')
+    }
+    keywords.append(doc.create(kwd))
+  })
+}
+
+function _populateSubjects (doc, jats) {
+  let subjects = doc.get('subjects')
+  let subjectEls = jats.findAll('article-meta > article-categories > subj-group > subject')
+  subjectEls.forEach(subjectEl => {
+    const subject = {
+      // HACK: trying to merge EntitDb into Article model, avoiding type collision
+      type: '_subject',
+      name: subjectEl.textContent,
+      category: subjectEl.getAttribute('content-type'),
+      language: subjectEl.getParent().getAttribute('xml:lang')
+    }
+    subjects.append(doc.create(subject))
+  })
+}
+
+// Helpers
 
 function getText (rootEl, selector) {
   let el = rootEl.find(selector)

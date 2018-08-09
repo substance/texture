@@ -63,19 +63,6 @@ export const AwardConverter = {
   <kwd> -> Keyword
 */
 export const KeywordConverter = {
-
-  import(el, pubMetaDb) {
-    const node = {
-      type: 'keyword',
-      name: el.textContent,
-      category: el.getAttribute('content-type'),
-      language: el.getParent().getAttribute('xml:lang')
-    }
-    const entity = pubMetaDb.create(node)
-
-    return entity.id
-  },
-
   export($$, node) {
     return _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
   }

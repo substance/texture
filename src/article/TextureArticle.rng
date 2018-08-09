@@ -2,6 +2,21 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="JATS-archiving.rng"/>
 
+  <!-- TODO: not supported yet: floats-group?, (sub-article*|response*)
+    Qestions:
+    - how is 'float-group' used here?
+    - why does JATS not allow sub-articles AND responses?)
+  -->
+  <define name="article-full-model">
+    <ref name="front"/>
+    <optional>
+      <ref name="body"/>
+    </optional>
+    <optional>
+      <ref name="back"/>
+    </optional>
+  </define>
+
   <define name="abstract">
     <element name="abstract">
       <ref name="abstract-attlist"/>

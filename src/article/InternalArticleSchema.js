@@ -41,7 +41,9 @@ ArticleRecord.schema = {
 class Metadata extends XMLElementNode {}
 Metadata.schema = {
   type: 'metadata',
-  _childNodes: CHILDREN('article-record', 'authors', 'editors', 'groups', 'affiliations', 'awards')
+  _childNodes: CHILDREN(
+    'article-record', 'authors', 'editors', 'groups', 'affiliations', 'awards', 'keywords', 'subjects'
+  )
 }
 
 class Affiliations extends XMLElementNode {}
@@ -71,6 +73,18 @@ Groups.schema = {
 class Awards extends XMLElementNode {}
 Awards.schema = {
   type: 'awards',
+  _childNodes: CHILDREN('award')
+}
+
+class Keywords extends XMLElementNode {}
+Keywords.schema = {
+  type: 'keywords',
+  _childNodes: CHILDREN('award')
+}
+
+class Subjects extends XMLElementNode {}
+Subjects.schema = {
+  type: 'subjects',
   _childNodes: CHILDREN('award')
 }
 
@@ -423,13 +437,15 @@ InternalArticleSchema.addNodes([
   Awards,
   Groups,
   Editors,
-  Keyword,
-  Subject,
+  Keywords,
+  Subjects,
   // entities used in metadata
   Award,
   Group,
   Person,
   Organisation,
+  Keyword,
+  Subject,
   // content
   Content,
   Front,

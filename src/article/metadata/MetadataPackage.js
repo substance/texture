@@ -231,6 +231,7 @@ export default {
     })
 
     // Section labels
+    config.addLabel('article', 'Article')
     config.addLabel('authors', 'Authors')
     config.addLabel('figures', 'Figures')
     config.addLabel('footnotes', 'Footnotes')

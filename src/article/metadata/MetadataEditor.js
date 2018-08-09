@@ -116,18 +116,18 @@ export default class MetadataEditor extends Component {
 
     properties.forEach(property => {
       let valueModel = property.valueModel
-      // TODO: find a better way to differentiate collections and other models  
-      if (valueModel.getItems) {
+      let id = valueModel.id || property.type
+      if (valueModel.isCollection) {
         const items = valueModel.getItems()
         tocEl.append(
           $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + property.name })
+            .attr({ href: '#' + id })
             .append(this.getLabel(property.name) + ' (' + items.length + ')')
         )
       } else {
         tocEl.append(
           $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + property.name })
+            .attr({ href: '#' + id })
             .append(this.getLabel(property.name))
         )
       }
@@ -150,7 +150,8 @@ export default class MetadataEditor extends Component {
 
     properties.forEach(property => {
       let valueModel = property.valueModel
-      let content = $$(MetadataSection, { model: valueModel }).ref(property.name)
+      let id = valueModel.id || property.type
+      let content = $$(MetadataSection, { model: valueModel }).attr({id}).ref(property.name)
       sectionsEl.append(content)
     })
 

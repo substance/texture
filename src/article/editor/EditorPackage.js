@@ -90,6 +90,7 @@ import EditReferenceWorkflow from './EditReferenceWorkflow'
 
 // FIXME: this should be shared
 import CollectionEditor from '../metadata/CollectionEditor'
+import ModelPreviewComponent from '../shared/ModelPreviewComponent'
 
 export default {
   name: 'ManscruptEditor',
@@ -119,6 +120,7 @@ export default {
 
     // HACK: to get components working taken from metadata editor
     config.addComponent('entity', NodeModelEditor)
+    config.addComponent('model-preview', ModelPreviewComponent)
 
     config.addComponent('front-matter', FrontMatterComponent)
     config.addComponent('back-matter', CompositeModelComponent)

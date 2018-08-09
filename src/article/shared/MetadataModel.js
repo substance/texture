@@ -7,17 +7,17 @@ export default class MetadataModel extends CompositeModel {
 
     this.setProperties(
       { name: 'article', model: api._getModelById('article-record') },
-      { name: 'authors', model: api.getCollectionForType('authors') },
-      { name: 'translations', model: api.getCollectionForType('translatables') },
-      { name: 'editors', model: api.getCollectionForType('editors') },
-      { name: 'groups', model: api.getCollectionForType('groups') },
-      { name: 'organisations', model: api.getCollectionForType('organisations') },
-      { name: 'awards', model: api.getCollectionForType('awards') },
-      { name: 'figures', model: api.getCollectionForType('figures') },
-      { name: 'footnotes', model: api.getCollectionForType('footnotes') },
+      { name: 'authors', model: api.getCollectionForType('author') },
+      { name: 'translations', model: api.getCollectionForType('translatable') },
+      { name: 'editors', model: api.getCollectionForType('editor') },
+      { name: 'groups', model: api.getCollectionForType('group') },
+      { name: 'organisations', model: api.getCollectionForType('organisation') },
+      { name: 'awards', model: api.getCollectionForType('award') },
+      { name: 'figures', model: api.getCollectionForType('figure') },
+      { name: 'footnotes', model: api.getCollectionForType('footnote') },
       { name: 'references', model: new ReferenceCollectionModel(api) },
-      { name: 'keywords', model: api.getCollectionForType('keywords') },
-      { name: 'subjects', model: api.getCollectionForType('subjects') }
+      { name: 'keywords', model: api.getCollectionForType('keyword') },
+      { name: 'subjects', model: api.getCollectionForType('subject') }
     )
   }
 

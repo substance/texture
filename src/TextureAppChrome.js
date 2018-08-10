@@ -4,15 +4,12 @@ export default class TextureAppChrome extends Component {
   didMount () {
     // when the developer console is not open, display when there is an error
     if (!platform.devtools) {
-      try {
-        this._init().catch(error => {
-          console.error(error)
-          this.setState({error})
-        })
-      } catch (error) {
-        console.error(error)
-        this.setState({error})
-      }
+      this._init(err => {
+        if (err) {
+          console.error(err)
+          this.setState({ error: err })
+        }
+      })
     } else {
       this._init()
     }

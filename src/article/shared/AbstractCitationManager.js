@@ -1,20 +1,19 @@
-import { DocumentChange } from 'substance'
-
 export default class AbstractCitationManager {
-  constructor (doc, type, labelGenerator) {
-    this.doc = doc
+  constructor (documentSession, type, labelGenerator) {
+    this.documentSession = documentSession
     this.type = type
     this.labelGenerator = labelGenerator
 
-    this.doc.on('document:changed', this._onDocumentChange, this)
+    documentSession.on('change', this._onDocumentChange, this)
   }
 
   dispose () {
-    this.doc.off(this)
+    this.documentSession.off(this)
   }
 
+  // TODO: how could this be generalized so that it is less dependent on the internal model?
   _onDocumentChange (change) {
-    const doc = this.doc
+    const doc = this._getDocument()
 
     // updateCitationLabels whenever
     // I.   an xref[ref-type='bibr'] is created or deleted
@@ -45,9 +44,9 @@ export default class AbstractCitationManager {
             // II. citation has been created, i.e. ref-type has been set to 'bibr' (or vice versa)
             if (op.path[2] === 'ref-type' && (op.val === this.type || op.original === this.type)) {
               needsUpdate = true
-            }
+
             // III. the references of a citation have been updated
-            else if (op.path[2] === 'rid') {
+            } else if (op.path[2] === 'rid') {
               let node = doc.get(op.path[0])
               if (node && node.getAttribute('ref-type') === this.type) {
                 needsUpdate = true
@@ -97,6 +96,8 @@ export default class AbstractCitationManager {
       return m
     }, {})
 
+    let stateUpdates = []
+
     let pos = 1
     let order = {}
     let refLabels = {}
@@ -134,28 +135,20 @@ export default class AbstractCitationManager {
     // HACK
     // Now update the node state of all affected xref[ref-type='bibr']
     // TODO: solve this properly
-    let change = new DocumentChange([], {}, {})
-    change._extractInformation()
-    xrefs.forEach((xref) => {
+    xrefs.forEach(xref => {
       const label = xrefLabels[xref.id]
-      if (!xref.state) {
-        xref.state = {}
-      }
-      xref.state.label = label
-      change.updated[xref.id] = true
+      const state = { label }
+      stateUpdates.push([xref.id, state])
     })
     refs.forEach((ref, index) => {
-      const label = refLabels[ref.id]
-      if (!ref.state) {
-        ref.state = {}
-      }
-      ref.state.label = label || ''
+      const label = refLabels[ref.id] || ''
+      const state = { label }
       if (order[ref.id]) {
-        ref.state.pos = order[ref.id]
+        state.pos = order[ref.id]
       } else {
-        ref.state.pos = pos + index
+        state.pos = pos + index
       }
-      change.updated[ref.id] = true
+      stateUpdates.push([ref.id, state])
     })
 
     // HACK
@@ -163,13 +156,25 @@ export default class AbstractCitationManager {
     // e.g. we could implement this manager as a reducer on the application
     // state, and let the bibliography component react to updates of that
     if (bibEl) {
-      // Note: mimicking a change to the bibliography element to trigger an update
-      change.updated[bibEl.id] = true
+      // Note: mimicking a state update on the bibliography element itself
+      // so that it rerenders, e.g. because the order might have changed
+      stateUpdates.push([bibEl.id, {}])
     }
+
+    this.documentSession.updateNodeStates(stateUpdates)
+  }
+
+  _getDocument () {
+    return this.documentSession.getDocument()
   }
 
   _getXrefs () {
-    return this.doc.findAll(`xref[ref-type='${this.type}']`)
+    // TODO: we should generalize this and/or move it into ArticelAPI
+    // so that this code gets independent of the overall document layout
+    const doc = this._getDocument()
+    let content = doc.get('content')
+    let refs = content.findAll(`xref[ref-type='${this.type}']`)
+    return refs
   }
 
   _getBibliographyElement () {}

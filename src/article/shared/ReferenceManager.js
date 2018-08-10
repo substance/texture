@@ -2,8 +2,8 @@
 import AbstractCitationManager from './AbstractCitationManager'
 
 export default class ReferenceManager extends AbstractCitationManager {
-  constructor (doc, labelGenerator) {
-    super(doc, 'bibr', labelGenerator)
+  constructor (documentSession, labelGenerator) {
+    super(documentSession, 'bibr', labelGenerator)
     // compute initial labels
     this._updateLabels()
   }
@@ -30,11 +30,16 @@ export default class ReferenceManager extends AbstractCitationManager {
   }
 
   _getReferences () {
-    const doc = this.doc
+    const doc = this._getDocument()
     let refs = doc.get('references').getChildren()
     refs.forEach(ref => {
       if (!ref.state) ref.state = { pos: Number.MAX_VALUE }
     })
     return refs
+  }
+
+  _getBibliographyElement () {
+    const doc = this._getDocument()
+    return doc.get('references')
   }
 }

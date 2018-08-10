@@ -1,5 +1,41 @@
 import { DomUtils } from 'substance'
 
+export function getText (rootEl, selector) {
+  let el = rootEl.find(selector)
+  if (el) {
+    return el.textContent
+  } else {
+    return ''
+  }
+}
+
+export function getSeparatedText (rootEl, selector) {
+  let el = rootEl.findAll(selector)
+  if (el) {
+    return el.map(m => { return m.textContent }).join('; ')
+  } else {
+    return ''
+  }
+}
+
+export function getHTML (rootEl, selector) {
+  let el = rootEl.find(selector)
+  if (el) {
+    return el.innerHTML
+  } else {
+    return ''
+  }
+}
+
+export function getAttr (rootEl, selector, attr) {
+  let el = rootEl.find(selector)
+  if (el) {
+    return el.attr(attr)
+  } else {
+    return ''
+  }
+}
+
 export function replaceWith(el, els) {
   const parent = el.parentNode
   const next = el.nextSibling

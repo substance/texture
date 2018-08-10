@@ -38,9 +38,9 @@ export default class EditXRefTool extends ToggleTool {
     return model.getAvailableTargets()
   }
 
-  _toggleTarget (targetNodeId, e) {
+  _toggleTarget (targetNodeId, e) { // eslint-disable-line
     // TODO: implement this in a model idiomatic way
-    console.log('TODO: implement EditXRefTool._toggleTarget()')
+    console.error('TODO: implement EditXRefTool._toggleTarget()')
 
     // // Make sure we don't follow external links
     // e.preventDefault()

@@ -1,8 +1,5 @@
 import { ListPackage } from 'substance'
-import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
-import XMLListNode from './XMLListNode'
-import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import EntitiesPackage from './metadata/EntitiesPackage'
 

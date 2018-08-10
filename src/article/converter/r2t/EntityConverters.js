@@ -1,4 +1,5 @@
 import { forEach } from 'substance'
+import { getText } from '../util/domHelpers'
 
 /*
   <aff> -> Organisation

@@ -59,7 +59,7 @@ import ElementCitationConverter from './ElementCitationConverter'
     Allow only one place for '<ack>', '<bio>', '<fn-group>', '<glossary>', '<notes>'
 */
 
-export default function jats2internal (jats, api) {
+export default function jats2internal (jats) {
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
   // this is used to for parts of the DOM where we use JATS in the internal model
   let jatsImporter = _createImporter(doc)

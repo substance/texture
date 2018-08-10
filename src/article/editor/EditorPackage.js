@@ -10,7 +10,6 @@ import {
 
 import {
   BasePackage, EditorBasePackage, ModelEditorPackage,
-  TextPropertyEditor, ContainerEditor, TextPropertyComponent,
   CompositeModelComponent, NodeModelEditor
 } from '../../kit'
 

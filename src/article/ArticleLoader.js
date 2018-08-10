@@ -5,7 +5,7 @@ import ArticleModelPackage from './ArticleModelPackage'
 import ArticleSession from './ArticleSession'
 
 export default {
-  load (xml, context) {
+  load (xml) {
     let configurator = new ArticleConfigurator()
     configurator.import(ArticleModelPackage)
     let jatsImporter = new JATSImporter()

@@ -69,7 +69,7 @@ export default class ElementCitationConverter {
 }
 
 function _convertPersonGroup (el, doc, type) {
-  let groupEl = el.find(`person-group[person-group-type=author]`)
+  let groupEl = el.find(`person-group[person-group-type=${type}]`)
   if (groupEl) {
     return groupEl.children.reduce((ids, childEl) => {
       let refContrib = _convertRefContrib(doc, childEl)

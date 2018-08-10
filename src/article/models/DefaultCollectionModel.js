@@ -1,6 +1,7 @@
 export default class DefaultCollectionModel {
-  constructor(api) {
+  constructor (api, node) {
     this._api = api
+    this._node = node
   }
 
   get id() {
@@ -16,7 +17,7 @@ export default class DefaultCollectionModel {
   }
 
   getItems() {
-    return this._api.getEntitiesByType(this._getCollectionType())
+    return this._node._childNodes.map(id => this._api._getModelById(id))
   }
 
   addItem(item = {}) {

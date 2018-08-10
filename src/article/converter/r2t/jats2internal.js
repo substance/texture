@@ -355,7 +355,7 @@ function _populateReferences (doc, jats, jatsImporter) {
 // Customized Element converters
 
 const UnsupportedNodeConverter = {
-  type: '@unsupported-node',
+  type: 'unsupported-node',
   matchElement (el) {
     return false
   },

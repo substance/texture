@@ -74,7 +74,7 @@ export default function jats2internal (jats, api) {
   _populateTitle(doc, jats, jatsImporter)
   _populateAbstract(doc, jats, jatsImporter)
   _populateBody(doc, jats, jatsImporter)
-  // _populateFootnotes(doc, jats)
+  _populateFootnotes(doc, jats, jatsImporter)
   // _populateReferences(doc, jats)
 
   return doc
@@ -321,6 +321,14 @@ function _populateBody (doc, jats, jatsImporter) {
     let body = doc.get('body')
     BodyConverter.instance().import(bodyEl, body, jatsImporter)
   }
+}
+
+function _populateFootnotes (doc, jats, jatsImporter) {
+  let fnEls = jats.findAll('back > fn-group > fn')
+  let footnotes = doc.get('footnotes')
+  fnEls.forEach(fnEl => {
+    footnotes.append(jatsImporter.convertElement(fnEl))
+  })
 }
 
 // Customized Element converters

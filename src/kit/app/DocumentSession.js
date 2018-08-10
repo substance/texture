@@ -1,5 +1,5 @@
 import {
-  EventEmitter, ChangeHistory, Transaction, operationHelpers, Selection
+  EventEmitter, ChangeHistory, Transaction, operationHelpers, Selection, DocumentChange
 } from 'substance'
 
 export default class DocumentSession extends EventEmitter {
@@ -61,6 +61,27 @@ export default class DocumentSession extends EventEmitter {
   */
   resetHistory () {
     this._history.reset()
+  }
+
+
+  // EXPERIMENTAL: for certain cases it is useful to store volatile information on nodes
+  // Then the data does not need to be disposed when a node is deleted.
+  updateNodeStates (tuples) {
+    // using a pseudo change to get into the existing updating mechanism
+    const doc = this._document
+    let change = new DocumentChange([], {}, {})
+    let info = { action: 'node-state-update' }
+    change._extractInformation()
+    change.info = info
+    for (let [id, state] of tuples) {
+      let node = doc.get(id)
+      if (!node) continue
+      if (!node.state) node.state = {}
+      Object.assign(node.state, state)
+      change.updated[id] = true
+    }
+    doc._notifyChangeListeners(change, info)
+    this.emit('change', change, info)
   }
 
   _recordChange (transformation, info) {

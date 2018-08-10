@@ -225,46 +225,40 @@ function _populateAwards (doc, jats) {
 }
 
 function _populateArticleRecord (doc, jats) {
-  console.error('FIXME: populate article-record')
+  let articleMetaEl = jats.find('article-meta')
+  let articleRecord = doc.get('article-record')
+  Object.assign(articleRecord, {
+    elocationId: getText(articleMetaEl, 'elocation-id'),
+    fpage: getText(articleMetaEl, 'fpage'),
+    lpage: getText(articleMetaEl, 'lpage'),
+    issue: getText(articleMetaEl, 'issue'),
+    volume: getText(articleMetaEl, 'volume'),
+    pageRange: getText(articleMetaEl, 'page-range')
+  })
+  const articleDateEls = articleMetaEl.findAll('history > date, pub-date')
+  articleDateEls.forEach(dateEl => {
+    const date = _extractDate(dateEl)
+    articleRecord[date.type] = date.value
+  })
 }
-// This is the original implementation
-// function _importArticleRecord(dom, api) {
-//   let el = dom.find('article-meta')
 
-//   let node = {
-//     id: 'article-record',
-//     type: 'article-record',
-//     elocationId: getText(el, 'elocation-id'),
-//     fpage: getText(el, 'fpage'),
-//     lpage: getText(el, 'lpage'),
-//     issue: getText(el, 'issue'),
-//     volume: getText(el, 'volume'),
-//     pageRange: getText(el, 'page-range')
-//   }
-//   const articleDates = el.findAll('history > date, pub-date')
-//   articleDates.forEach(dateEl => {
-//     const date = _extractDate(dateEl)
-//     node[date.type] = date.value
-//   })
-// }
-// const dateTypesMap = {
-//   'pub': 'publishedDate',
-//   'accepted': 'acceptedDate',
-//   'received': 'receivedDate',
-//   'rev-recd': 'revReceivedDate',
-//   'rev-request': 'revRequestedDate'
-// }
-// function _extractDate(el) {
-//   const dateType = el.getAttribute('date-type')
-//   const value = el.getAttribute('iso-8601-date')
-//   const entityProp = dateTypesMap[dateType]
+const DATE_TYPES_MAP = {
+  'pub': 'publishedDate',
+  'accepted': 'acceptedDate',
+  'received': 'receivedDate',
+  'rev-recd': 'revReceivedDate',
+  'rev-request': 'revRequestedDate'
+}
 
-//   return {
-//     value: value,
-//     type: entityProp
-//   }
-// }
-
+function _extractDate (el) {
+  const dateType = el.getAttribute('date-type')
+  const value = el.getAttribute('iso-8601-date')
+  const entityProp = DATE_TYPES_MAP[dateType]
+  return {
+    value: value,
+    type: entityProp
+  }
+}
 
 function _populateKeywords (doc, jats) {
   let keywords = doc.get('keywords')

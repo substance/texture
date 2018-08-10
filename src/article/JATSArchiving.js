@@ -1,5 +1,5 @@
+import { createSchema } from './shared/xmlSchemaHelpers'
 import JATSArchivingData from '../../tmp/JATS-archiving.data'
-import createSchema from './createDocumentSchemaFromXMLSchema'
 
 const DOC_TYPE_PARAMS = [
   'article',

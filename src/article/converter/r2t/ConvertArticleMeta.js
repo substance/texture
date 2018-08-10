@@ -62,16 +62,6 @@ import { insertChildAtFirstValidPos, insertChildrenAtFirstValidPos } from './r2t
 */
 export default class ConvertArticleMeta {
 
-  import(dom, api) {
-    // ATTENTION: this implementation creates a new article-meta element
-    // which complies to the InternalArticleSchema
-
-    _importArticleRecord(dom, api)
-
-    _importKeywordsOrSubjects(dom, api, 'article-meta > kwd-group > kwd', KeywordConverter)
-    _importKeywordsOrSubjects(dom, api, ' article-meta > article-categories > subj-group > subject', SubjectConverter)
-  }
-
   export(dom, api) {
     _exportKeywords(dom, api)
     _exportSubjects(dom, api)
@@ -123,35 +113,6 @@ function _exportSubjects(dom, api) {
     const subjGroup = articleCategories.find(`subj-group[xml\\:lang="${subject.language}"]`)
     const newSubjectEl = SubjectConverter.export($$, subject, doc)
     subjGroup.append(newSubjectEl)
-  })
-}
-
-function _importKeywordsOrSubjects(dom, api, selector, Converter) {
-  const pubMetaDb = api.pubMetaDb
-  const keywords = dom.findAll(selector)
-  // Convert <kwd> or <subject> elements to keywords entities
-  keywords.forEach(kwd => {
-    Converter.import(kwd, pubMetaDb)
-  })
-}
-
-function _importArticleRecord(dom, api) {
-  let el = dom.find('article-meta')
-
-  let node = {
-    id: 'article-record',
-    type: 'article-record',
-    elocationId: getText(el, 'elocation-id'),
-    fpage: getText(el, 'fpage'),
-    lpage: getText(el, 'lpage'),
-    issue: getText(el, 'issue'),
-    volume: getText(el, 'volume'),
-    pageRange: getText(el, 'page-range')
-  }
-  const articleDates = el.findAll('history > date, pub-date')
-  articleDates.forEach(dateEl => {
-    const date = _extractDate(dateEl)
-    node[date.type] = date.value
   })
 }
 
@@ -252,7 +213,6 @@ function _exportArticleRecord(dom, api) {
   _exportContribs(dom, api, 'editor')
   _exportContribs(dom, api, 'author')
 
-
   insertChildAtFirstValidPos(articleMeta, $$('volume').append(node.volume))
   insertChildAtFirstValidPos(articleMeta, $$('issue').append(node.issue))
 
@@ -266,7 +226,7 @@ function _exportArticleRecord(dom, api) {
     let pageRange = node.pageRange || node.fpage+'-'+node.lpage
     insertChildrenAtFirstValidPos(articleMeta, [
       $$('fpage').append(node.fpage),
-      $$('lpage').append (node.lpage),
+      $$('lpage').append(node.lpage),
       $$('page-range').append(pageRange),
     ], 'isbn')
   }
@@ -282,25 +242,6 @@ function _exportArticleRecord(dom, api) {
   // Export published date
   insertChildAtFirstValidPos(articleMeta, _exportDate($$, node, 'publishedDate', 'pub', 'pub-date'))
   insertChildAtFirstValidPos(articleMeta, historyEl)
-}
-
-const dateTypesMap = {
-  'pub': 'publishedDate',
-  'accepted': 'acceptedDate',
-  'received': 'receivedDate',
-  'rev-recd': 'revReceivedDate',
-  'rev-request': 'revRequestedDate'
-}
-
-function _extractDate(el) {
-  const dateType = el.getAttribute('date-type')
-  const value = el.getAttribute('iso-8601-date')
-  const entityProp = dateTypesMap[dateType]
-
-  return {
-    value: value,
-    type: entityProp
-  }
 }
 
 function _exportDate($$, node, prop, dateType, tag) {

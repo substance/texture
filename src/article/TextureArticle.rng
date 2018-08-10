@@ -2,6 +2,97 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="JATS-archiving.rng"/>
 
+  <!--
+    Element-Type Overrides: These are necessary to generate
+    an editor document model correctly.
+   -->
+  <!-- Annotations -->
+  <s:elementType name="bold" s:type="annotation"/>
+  <s:elementType name="ext-link" s:type="annotation"/>
+  <s:elementType name="fixed-case" s:type="annotation"/>
+  <s:elementType name="italic" s:type="annotation"/>
+  <s:elementType name="monospace" s:type="annotation"/>
+  <s:elementType name="named-content" s:type="annotation"/>
+  <s:elementType name="overline" s:type="annotation"/>
+  <s:elementType name="roman" s:type="annotation"/>
+  <s:elementType name="sans-serif" s:type="annotation"/>
+  <s:elementType name="sc" s:type="annotation"/>
+  <s:elementType name="strike" s:type="annotation"/>
+  <s:elementType name="sub" s:type="annotation"/>
+  <s:elementType name="sup" s:type="annotation"/>
+  <s:elementType name="target" s:type="annotation"/>
+  <s:elementType name="underline" s:type="annotation"/>
+  <!-- Anchors -->
+  <s:elementType name="milestone-start" s:type="anchor"/>
+  <s:elementType name="milestone-end" s:type="anchor"/>
+  <s:elementType name="overline-start" s:type="anchor"/>
+  <s:elementType name="overline-end" s:type="anchor"/>
+  <s:elementType name="underline-start" s:type="anchor"/>
+  <s:elementType name="underline-end" s:type="anchor"/>
+  <!-- Inline-Elements -->
+  <s:elementType name="abbrev" s:type="inline-element"/>
+  <s:elementType name="break" s:type="inline-element"/>
+  <s:elementType name="chem-struct" s:type="inline-element"/>
+  <s:elementType name="hr" s:type="inline-element"/>
+  <s:elementType name="inline-formula" s:type="inline-element"/>
+  <s:elementType name="inline-graphic" s:type="inline-element"/>
+  <s:elementType name="inline-supplementary-material" s:type="inline-element"/>
+  <s:elementType name="private-char" s:type="inline-element"/>
+  <s:elementType name="ruby" s:type="inline-element"/>
+  <s:elementType name="std-organization" s:type="inline-element"/>
+  <s:elementType name="styled-content" s:type="inline-element"/>
+  <s:elementType name="ruby" s:type="inline-element"/>
+  <s:elementType name="x" s:type="inline-element"/>
+  <s:elementType name="xref" s:type="inline-element"/>
+  <!-- Containers -->
+  <s:elementType name="abstract" s:type="container"/>
+  <s:elementType name="trans-abstract" s:type="container"/>
+  <s:elementType name="body" s:type="container"/>
+  <s:elementType name="caption" s:type="container"/>
+  <s:elementType name="fn" s:type="container"/>
+  <s:elementType name="sig" s:type="container"/>
+  <!-- External = not editable in Texture -->
+  <!-- TODO: we just don't know yet how to 'fix' the spec for <chem-struct> -->
+  <s:elementType name="chem-struct" s:type="external"/>
+  <!-- mml -->
+  <s:elementType name="mml:math" s:type="external"/>
+  <s:elementType name="mml:maction" s:type="external"/>
+  <s:elementType name="mml:malignmark" s:type="external"/>
+  <s:elementType name="mml:menclose" s:type="external"/>
+  <s:elementType name="mml:merror" s:type="external"/>
+  <s:elementType name="mml:mfenced" s:type="external"/>
+  <s:elementType name="mml:mfrac" s:type="external"/>
+  <s:elementType name="mml:mglyph" s:type="external"/>
+  <s:elementType name="mml:mi" s:type="external"/>
+  <s:elementType name="mml:mlongdiv" s:type="external"/>
+  <s:elementType name="mml:mmultiscripts" s:type="external"/>
+  <s:elementType name="mml:mn" s:type="external"/>
+  <s:elementType name="mml:mo" s:type="external"/>
+  <s:elementType name="mml:mover" s:type="external"/>
+  <s:elementType name="mml:mpadded" s:type="external"/>
+  <s:elementType name="mml:mphantom" s:type="external"/>
+  <s:elementType name="mml:mroot" s:type="external"/>
+  <s:elementType name="mml:mrow" s:type="external"/>
+  <s:elementType name="mml:ms" s:type="external"/>
+  <s:elementType name="mml:msqrt" s:type="external"/>
+  <s:elementType name="mml:mstack" s:type="external"/>
+  <s:elementType name="mml:mstyle" s:type="external"/>
+  <s:elementType name="mml:msub" s:type="external"/>
+  <s:elementType name="mml:msubsup" s:type="external"/>
+  <s:elementType name="mml:msup" s:type="external"/>
+  <s:elementType name="mml:mtable" s:type="external"/>
+  <s:elementType name="mml:mtext" s:type="external"/>
+  <s:elementType name="mml:munder" s:type="external"/>
+  <s:elementType name="mml:munderover" s:type="external"/>
+  <s:elementType name="mml:sep" s:type="external"/>
+  <!-- oasis -->
+  <s:elementType name="oasis:table" s:type="external"/>
+  <s:elementType name="oasis:tbody" s:type="external"/>
+  <s:elementType name="oasis:entry" s:type="external"/>
+  <!-- deprecated elements -->
+  <s:elementType name="access-date" s:type="external"/>
+  <s:elementType name="time-stamp" s:type="external"/>
+
   <!-- TODO: not supported yet: floats-group?, (sub-article*|response*)
     Qestions:
     - how is 'float-group' used here?

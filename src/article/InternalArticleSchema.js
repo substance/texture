@@ -1,4 +1,7 @@
-import { DocumentSchema, XMLElementNode, DocumentNode } from 'substance'
+import {
+  DocumentSchema, DocumentNode, InlineNode,
+  XMLElementNode, XMLTextElement
+} from 'substance'
 import { BOOLEAN, STRING, STRING_ARRAY, MANY, ONE, CHILDREN } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
@@ -110,6 +113,9 @@ Back.schema = {
 
 class Title extends TextureArticleSchema.getNodeClass('article-title') {}
 Title.type = 'title'
+
+class Heading extends XMLTextElement {}
+Heading.type = 'heading'
 
 class References extends XMLElementNode {}
 References.schema = {
@@ -421,6 +427,18 @@ Subject.schema = {
   language: STRING
 }
 
+class UnsupportedNode extends DocumentNode {}
+UnsupportedNode.schema = {
+  type: '@unsupported-node',
+  data: 'string'
+}
+
+class UnsupportedInlineNode extends InlineNode {}
+UnsupportedInlineNode.schema = {
+  type: '@unsupported-inline-node',
+  data: 'string'
+}
+
 const InternalArticleSchema = new DocumentSchema({
   name: 'TextureInternalArticle',
   version: '0.1.0',
@@ -450,6 +468,7 @@ InternalArticleSchema.addNodes([
   Content,
   Front,
   Title,
+  Heading,
   Back,
   References,
   Footnotes,
@@ -467,7 +486,10 @@ InternalArticleSchema.addNodes([
   Thesis,
   Webpage,
   // entity used in bibliography
-  RefContrib
+  RefContrib,
+  // others
+  UnsupportedNode,
+  UnsupportedInlineNode
 ])
 
 // Elements taken from the JATS spec
@@ -477,6 +499,7 @@ InternalArticleSchema.addNodes([
   'body',
   'fn',
   'p',
+  'label',
   // formatting
   'bold',
   'fixed-case',

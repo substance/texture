@@ -1,34 +1,47 @@
 import { last } from 'substance'
-import { replaceWith, findChild } from '../util/domHelpers'
+import { findChild } from '../util/domHelpers'
 
-export default class Sec2Heading {
+export default class BodyConverter {
+  get type () { return 'body' }
 
-  import(dom) {
-    // find all top-level sections
-    let topLevelSecs = dom.findAll('sec').filter(sec => sec.parentNode.tagName !== 'sec')
-    topLevelSecs.forEach((sec) => {
-      replaceWith(sec, _flattenSec(sec, 1))
-    })
+  matchElement (el) {
+    return el.is('body')
   }
 
-  export(dom) {
-    let allHeadings = dom.findAll('heading')
+  import (el, node, importer) {
+    // find all top-level sections
+    let topLevelSecs = el.findAll('sec').filter(sec => sec.parentNode.tagName !== 'sec')
+    let els = topLevelSecs.reduce((flattened, sec) => {
+      return flattened.concat(_flattenSec(sec, 1))
+    }, [])
+    let nodeIds = els.map(el => importer.convertElement(el).id)
+    node._childNodes = nodeIds
+  }
+
+  export (node, el, exporter) {
+    let allHeadings = node.findAll('heading')
     let containers = []
-    allHeadings.forEach((heading)=> {
+    allHeadings.forEach(heading => {
       let container = heading.parentNode
       if (!container._sec2heading) {
         containers.push(container)
         container._sec2heading = true
       }
     })
-    containers.forEach((container) => {
+    containers.forEach(container => {
       _createSections(container)
     })
   }
 
+  static instance () {
+    if (!this._instance) {
+      this._instance = new BodyConverter()
+    }
+    return this._instance
+  }
 }
 
-function _flattenSec(sec, level) {
+function _flattenSec (sec, level) {
   let result = []
 
   let h = sec.createElement('heading')
@@ -36,7 +49,7 @@ function _flattenSec(sec, level) {
   h.attr('level', level)
 
   // move the section front matter
-  if(sec.find('sec-meta')) {
+  if (sec.find('sec-meta')) {
     console.error('<sec-meta> is not supported by <heading> right now.')
   }
   let label = sec.find('label')
@@ -58,7 +71,7 @@ function _flattenSec(sec, level) {
   for (let i = 0; i < L; i++) {
     const child = children[i]
     if (child.tagName === 'sec') {
-      result = result.concat(_flattenSec(child, level+1))
+      result = result.concat(_flattenSec(child, level + 1))
     } else {
       result.push(child)
     }
@@ -67,7 +80,7 @@ function _flattenSec(sec, level) {
   return result
 }
 
-function _createSections(container) {
+function _createSections (container) {
   const doc = container.getOwnerDocument()
   const children = container.children
   // clear the container first

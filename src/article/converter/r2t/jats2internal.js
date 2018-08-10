@@ -1,5 +1,9 @@
+import { XMLDocumentImporter } from 'substance'
+import JATSSchema from '../../TextureArticle'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import InternalArticle from '../../InternalArticleDocument'
+import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
+import BodyConverter from './BodyConverter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -53,9 +57,9 @@ import InternalArticle from '../../InternalArticleDocument'
 */
 
 export default function jats2internal (jats, api) {
-  // Create an empty document
-  // TODO: how could we support custom nodes coming from configurator?
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
+  // this is used to for parts of the DOM where we use JATS in the internal model
+  let jatsImporter = _createImporter(doc)
 
   // metadata
   _populateAffiliations(doc, jats)
@@ -67,8 +71,49 @@ export default function jats2internal (jats, api) {
   _populateSubjects(doc, jats)
 
   // content
+  _populateTitle(doc, jats, jatsImporter)
+  _populateAbstract(doc, jats, jatsImporter)
+  debugger
+  _populateBody(doc, jats, jatsImporter)
+  _populateFootnotes(doc, jats)
+  _populateReferences(doc, jats)
 
   return doc
+}
+
+function _createImporter (doc) {
+  // Note: we are applying a hybrid approach, i.e. we create XML importers for the JATS schema
+  // but only for those elements which are supported by our internal article schema.
+  let jatsSchema = JATSSchema.xmlSchema
+  let tagNames = jatsSchema.getTagNames().filter(name => Boolean(InternalArticleSchema.getNodeClass(name)))
+  let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
+  let converters = [
+    // Note: this is actually not used ATM because we populate the body node 'manually'
+    HeadingConverter
+  ].concat(jatsConverters)
+  let jatsImporter = new _HybridJATSImporter({
+    schema: InternalArticleSchema,
+    xmlSchema: jatsSchema,
+    idAttribute: 'id',
+    converters
+  })
+  // ATTENTION: this looks hacky, but we know what we are doing (hopefully)
+  jatsImporter.state.doc = doc
+  return jatsImporter
+}
+
+class _HybridJATSImporter extends XMLDocumentImporter {
+  _getConverterForElement (el, mode) {
+    let converter = super._getConverterForElement(el, mode)
+    if (!converter) {
+      if (mode === 'inline') {
+        return UnsupportedInlineNodeConverter
+      } else {
+        return UnsupportedNodeConverter
+      }
+    }
+    return converter
+  }
 }
 
 function _populateAffiliations (doc, jats) {
@@ -181,8 +226,46 @@ function _populateAwards (doc, jats) {
 }
 
 function _populateArticleRecord (doc, jats) {
-  let articleRecord = doc.get('article-record')
+  console.error('FIXME: populate article-record')
 }
+// This is the original implementation
+// function _importArticleRecord(dom, api) {
+//   let el = dom.find('article-meta')
+
+//   let node = {
+//     id: 'article-record',
+//     type: 'article-record',
+//     elocationId: getText(el, 'elocation-id'),
+//     fpage: getText(el, 'fpage'),
+//     lpage: getText(el, 'lpage'),
+//     issue: getText(el, 'issue'),
+//     volume: getText(el, 'volume'),
+//     pageRange: getText(el, 'page-range')
+//   }
+//   const articleDates = el.findAll('history > date, pub-date')
+//   articleDates.forEach(dateEl => {
+//     const date = _extractDate(dateEl)
+//     node[date.type] = date.value
+//   })
+// }
+// const dateTypesMap = {
+//   'pub': 'publishedDate',
+//   'accepted': 'acceptedDate',
+//   'received': 'receivedDate',
+//   'rev-recd': 'revReceivedDate',
+//   'rev-request': 'revRequestedDate'
+// }
+// function _extractDate(el) {
+//   const dateType = el.getAttribute('date-type')
+//   const value = el.getAttribute('iso-8601-date')
+//   const entityProp = dateTypesMap[dateType]
+
+//   return {
+//     value: value,
+//     type: entityProp
+//   }
+// }
+
 
 function _populateKeywords (doc, jats) {
   let keywords = doc.get('keywords')
@@ -213,6 +296,74 @@ function _populateSubjects (doc, jats) {
   })
 }
 
+function _populateTitle (doc, jats, jatsImporter) {
+  let titleEl = jats.find('article > front > article-meta > title-group > article-title')
+  if (titleEl) {
+    let title = doc.get('title')
+    _convertAnnotatedText(jatsImporter, titleEl, title)
+  }
+}
+
+function _populateAbstract (doc, jats, jatsImporter) {
+  // ATTENTION: JATS can have multiple abstracts
+  // ATM we only take the first, loosing the others
+  let abstractEls = jats.findAll('article > front > article-meta > abstract')
+  if (abstractEls.length > 0) {
+    let abstractEl = abstractEls[0]
+    if (abstractEls.length > 1) {
+      console.error('FIXME: Texture only supports one <abstract>.')
+    }
+    let abstract = doc.get('abstract')
+    abstractEl.children.forEach(el => {
+      abstract.append(jatsImporter.convertElement(el))
+    })
+  }
+}
+
+function _populateBody (doc, jats, jatsImporter) {
+  // ATTENTION: JATS can have multiple abstracts
+  // ATM we only take the first, loosing the others
+  let bodyEl = jats.find('article > body')
+  if (bodyEl) {
+    let body = doc.get('body')
+    BodyConverter.instance().import(bodyEl, body, jatsImporter)
+  }
+}
+
+// Customized Element converters
+
+const UnsupportedNodeConverter = {
+  type: '@unsupported-node',
+  matchElement (el) {
+    return false
+  },
+  import (el, node, converter) {
+    node.data = el.serialize()
+  }
+}
+
+const UnsupportedInlineNodeConverter = {
+  type: '@unsupported-inline-node',
+  matchElement (el) {
+    return false
+  },
+  import (el, node, converter) {
+    node.data = el.serialize()
+  }
+}
+
+const HeadingConverter = {
+  type: 'heading',
+  tagName: 'heading',
+  import (el, node, importer) {
+    // Note: attributes are converted automatically
+    node.content = importer.annotatedText(el, [node.id, 'content'])
+  },
+  export (node, el, exporter) {
+    console.error('FIXME: implement HeadingConverter.export()')
+  }
+}
+
 // Helpers
 
 function getText (rootEl, selector) {
@@ -222,4 +373,13 @@ function getText (rootEl, selector) {
   } else {
     return ''
   }
+}
+
+function _convertAnnotatedText (jatsImporter, el, textNode) {
+  // NOTE: this is a bit difficult but necessary
+  // The importer maintains a stack of 'scopes' to deal with recursive calls
+  // triggered by converters for nesteded element (annotations and inline nodes)
+  jatsImporter.state.pushContext(el.tagName)
+  textNode.content = jatsImporter.annotatedText(el, textNode.getPath())
+  jatsImporter.state.popContext()
 }

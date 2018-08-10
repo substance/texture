@@ -73,18 +73,6 @@ export const KeywordConverter = {
 */
 export const SubjectConverter = {
 
-  import(el, pubMetaDb) {
-    const node = {
-      // HACK: trying to merge EntitDb into Article model, avoiding type collision
-      type: '_subject',
-      name: el.textContent,
-      category: el.getAttribute('content-type'),
-      language: el.getParent().getAttribute('xml:lang')
-    }
-    const entity = pubMetaDb.create(node)
-    return entity.id
-  },
-
   export($$, node) {
     return _createTextElement($$, node.name, 'subject', { 'content-type': node.category })
   }

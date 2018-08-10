@@ -75,7 +75,7 @@ export default class InternalArticleDocument extends Document {
         $$('authors'),
         $$('editors'),
         $$('groups'),
-        $$('affiliations'),
+        $$('organisations'),
         $$('awards'),
         $$('keywords'),
         $$('subjects')

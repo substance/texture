@@ -44,13 +44,13 @@ class Metadata extends XMLElementNode {}
 Metadata.schema = {
   type: 'metadata',
   _childNodes: CHILDREN(
-    'article-record', 'authors', 'editors', 'groups', 'affiliations', 'awards', 'keywords', 'subjects'
+    'article-record', 'authors', 'editors', 'groups', 'organisations', 'awards', 'keywords', 'subjects'
   )
 }
 
-class Affiliations extends XMLElementNode {}
-Affiliations.schema = {
-  type: 'affiliations',
+class Organisations extends XMLElementNode {}
+Organisations.schema = {
+  type: 'organisations',
   _childNodes: CHILDREN(...INTERNAL_BIBR_TYPES)
 }
 
@@ -449,7 +449,7 @@ InternalArticleSchema.addNodes([
   // metadata
   Metadata,
   ArticleRecord,
-  Affiliations,
+  Organisations,
   Authors,
   Awards,
   Groups,

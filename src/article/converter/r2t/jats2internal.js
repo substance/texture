@@ -65,7 +65,7 @@ export default function jats2internal (jats, api) {
   let jatsImporter = _createImporter(doc)
 
   // metadata
-  _populateAffiliations(doc, jats)
+  _populateOrganisations(doc, jats)
   _populateAuthors(doc, jats)
   _populateEditors(doc, jats)
   _populateAwards(doc, jats)
@@ -119,11 +119,11 @@ class _HybridJATSImporter extends XMLDocumentImporter {
   }
 }
 
-function _populateAffiliations (doc, jats) {
-  const affiliations = doc.get('affiliations')
+function _populateOrganisations (doc, jats) {
+  const organisations = doc.get('organisations')
   const affEls = jats.findAll('article-meta > aff')
   affEls.forEach(el => {
-    let aff = {
+    let org = {
       id: el.id,
       type: 'organisation',
       name: getText(el, 'institution[content-type=orgname]'),
@@ -141,7 +141,7 @@ function _populateAffiliations (doc, jats) {
       email: getText(el, 'email'),
       uri: getText(el, 'uri[content-type=link]')
     }
-    affiliations.append(doc.create(aff))
+    organisations.append(doc.create(org))
   })
 }
 

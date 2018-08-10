@@ -6,8 +6,9 @@ export default class AuthorCollectionModel extends DefaultCollectionModel {
     this._node = node
   }
 
-  addItem (item) {
-    return this._api.addAuthor(item)
+  addItem (item = {}) {
+    item.type = 'person'
+    return this._api.addItemToCollection(item, this)
   }
 
   getItems () {
@@ -15,8 +16,7 @@ export default class AuthorCollectionModel extends DefaultCollectionModel {
   }
 
   removeItem (item) {
-    // TODO: add a method to ArticleAPI such as api.removeItemFromCollection(item, this)
-    console.error('FIXME: Implement AuthorCollectionModel.removeItem()')
+    this._api.removeItemFromCollection(item, this)
   }
 
   _getCollectionId() {

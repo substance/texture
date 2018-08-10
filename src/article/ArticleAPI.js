@@ -72,6 +72,22 @@ export default class ArticleAPI extends AbstractAPI {
     return this.articleSession
   }
 
+  addItemToCollection(item, collection) {
+    this.articleSession.transaction(tx => {
+      let node = tx.create(item)
+      tx.get(collection._node.id).appendChild(tx.get(node.id))
+      tx.selection = null 
+    })
+  }
+
+  removeItemFromCollection(item, collection) {
+    this.articleSession.transaction(tx => {
+      tx.get(collection._node.id).removeChild(tx.get(item.id))
+      tx.delete(item.id)
+      tx.selection = null 
+    })
+  }
+
   addAuthor(person = {}) {
     this._addPerson(person, 'authors')
   }

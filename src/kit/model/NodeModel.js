@@ -6,6 +6,7 @@ import ObjectModel from './ObjectModel'
 import ChildrenModel from './ChildrenModel'
 import SingleRelationshipModel from './SingleRelationshipModel'
 import ManyRelationshipModel from './ManyRelationshipModel'
+import AnyModel from './AnyModel'
 
 export default class NodeModel {
   constructor (api, node) {
@@ -113,7 +114,7 @@ export class NodeModelProperty {
       }
     }
     if (!valueModel) {
-      throw new Error('Unsupported property: ' + type)
+      valueModel = new AnyModel(api, path)
     }
     return valueModel
   }

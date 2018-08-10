@@ -428,13 +428,13 @@ Subject.schema = {
 
 class UnsupportedNode extends DocumentNode {}
 UnsupportedNode.schema = {
-  type: '@unsupported-node',
+  type: 'unsupported-node',
   data: 'string'
 }
 
 class UnsupportedInlineNode extends InlineNode {}
 UnsupportedInlineNode.schema = {
-  type: '@unsupported-inline-node',
+  type: 'unsupported-inline-node',
   data: 'string'
 }
 

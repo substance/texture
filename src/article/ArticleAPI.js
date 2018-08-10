@@ -44,6 +44,30 @@ export default class ArticleAPI extends AbstractAPI {
     }
   }
 
+  getModelById (id) {
+    let node = this.article.get(id)
+    if (node) {
+      // now check if there is a custom model for this type
+      let ModelClass = this.modelRegistry[node.type]
+      // TODO: we could go and check if there is a component
+      // registered for any of the parent types
+      if (!ModelClass) {
+        let superTypes = node.getSchema().getSuperTypes()
+        for (let superType of superTypes) {
+          ModelClass = this.modelRegistry[superType]
+          if (ModelClass) break
+        }
+      }
+      if (ModelClass) {
+        return new ModelClass(this, node)
+      }
+      let model = this._getModelForNode(node)
+      if (model) {
+        return model
+      }
+    }
+  }
+
   _getNode(nodeId) {
     return this.article.get(nodeId)
   }

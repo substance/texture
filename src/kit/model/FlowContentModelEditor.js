@@ -1,9 +1,9 @@
-import { ContainerEditor } from 'substance'
+import { ContainerEditorNew } from './SubstanceModifications'
 
 /*
   Customized ContainerEditor for FlowContentModels.
 */
-export default class FlowContentModelEditor extends ContainerEditor {
+export default class FlowContentModelEditor extends ContainerEditorNew {
   constructor (parent, props, options) {
     // TODO: we should refactor ContainerEditor so that it is easier to customize
     super(parent, _monkeyPatchProps(props), options)
@@ -80,7 +80,7 @@ export default class FlowContentModelEditor extends ContainerEditor {
 
   _getNodeProps (node) {
     let props = super._getNodeProps(node)
-    let model = this.context.api.getModel(node)
+    let model = this.context.api.getModelById(node.id)
     props.model = model
     return props
   }

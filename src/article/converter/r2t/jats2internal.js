@@ -6,7 +6,7 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
-import ElementCitationConverter from './ElementCitationConverter'
+import ReferenceConverter from './ReferenceConverter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -59,7 +59,7 @@ import ElementCitationConverter from './ElementCitationConverter'
     Allow only one place for '<ack>', '<bio>', '<fn-group>', '<glossary>', '<notes>'
 */
 
-export default function jats2internal (jats, api) {
+export default function jats2internal (jats) {
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
   // this is used to for parts of the DOM where we use JATS in the internal model
   let jatsImporter = _createImporter(doc)
@@ -90,9 +90,9 @@ function _createImporter (doc) {
   let tagNames = jatsSchema.getTagNames().filter(name => Boolean(InternalArticleSchema.getNodeClass(name)))
   let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
   let converters = [
-    // Note: this is actually not used ATM because we populate the body node 'manually'
+    new BodyConverter(),
     HeadingConverter,
-    ElementCitationConverter
+    ReferenceConverter
   ].concat(jatsConverters)
   let jatsImporter = new _HybridJATSImporter({
     schema: InternalArticleSchema,
@@ -323,7 +323,9 @@ function _populateBody (doc, jats, jatsImporter) {
   let bodyEl = jats.find('article > body')
   if (bodyEl) {
     let body = doc.get('body')
-    BodyConverter.instance().import(bodyEl, body, jatsImporter)
+    let tmp = jatsImporter.convertElement(bodyEl)
+    body.append(tmp.children)
+    doc.delete(tmp)
   }
 }
 
@@ -342,10 +344,7 @@ function _populateReferences (doc, jats, jatsImporter) {
   if (refListEl) {
     let refEls = refListEl.findAll('ref')
     refEls.forEach(refEl => {
-      let elementCitation = refEl.find('element-citation')
-      if (elementCitation) {
-        references.append(jatsImporter.convertElement(elementCitation))
-      }
+      references.append(jatsImporter.convertElement(refEl))
     })
   }
 }
@@ -353,7 +352,7 @@ function _populateReferences (doc, jats, jatsImporter) {
 // Customized Element converters
 
 const UnsupportedNodeConverter = {
-  type: '@unsupported-node',
+  type: 'unsupported-node',
   matchElement (el) {
     return false
   },

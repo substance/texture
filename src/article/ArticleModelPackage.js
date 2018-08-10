@@ -1,11 +1,9 @@
 import { ListPackage } from 'substance'
-import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
-import XMLListNode from './XMLListNode'
-import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
 import EntitiesPackage from './metadata/EntitiesPackage'
 
+// TODO: most of these need to be rewritten
 import FigureModel from './models/FigureModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
 import FootnoteModel from './models/FootnoteModel'
@@ -19,18 +17,13 @@ import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
 
+import LanguagesPackage from './LanguagesPackage'
+
+// Custom models
 import TranslateableCollectionModel from './models/TranslateableCollectionModel'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
-
-import RefContribPropertyEditor from './shared/RefContribPropertyEditor'
-import StringPropertyEditor from './shared/StringPropertyEditor'
-import BooleanPropertyEditor from './shared/BooleanPropertyEditor'
-import ReferencePropertyEditor from './shared/ReferencePropertyEditor'
-import UniqueReferencePropertyEditor from './shared/UniqueReferencePropertyEditor'
-import TranslationPropertyEditor from './shared/TranslationPropertyEditor'
-
-import LanguagesPackage from './LanguagesPackage'
+import XrefModel from './models/XrefModel'
 
 export default {
   name: 'TextureArticle',
@@ -66,17 +59,12 @@ export default {
     config.addModel('translatable', TranslateableModel)
     config.addModel('translation', TranslationModel)
 
+    config.addModel('xref', XrefModel)
+
     // Models: Provide API's on top of raw nodes
     config.addModel('fig', FigureModel)
     config.addModel('fn', FootnoteModel)
     config.addModel('table-wrap', FigureModel)
-
-    config.addPropertyEditor(RefContribPropertyEditor)
-    config.addPropertyEditor(BooleanPropertyEditor)
-    config.addPropertyEditor(StringPropertyEditor)
-    config.addPropertyEditor(ReferencePropertyEditor)
-    config.addPropertyEditor(UniqueReferencePropertyEditor)
-    config.addPropertyEditor(TranslationPropertyEditor)
 
     // Experimental
     config.setLabelGenerator('references', {

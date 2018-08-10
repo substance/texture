@@ -1,8 +1,8 @@
 import AbstractResourceManager from './AbstractResourceManager'
 
 export default class FigureManager extends AbstractResourceManager {
-  constructor (doc, labelGenerator) {
-    super(doc, 'fig', labelGenerator)
+  constructor (documentSession, labelGenerator) {
+    super(documentSession, 'fig', labelGenerator)
     this._updateLabels()
   }
 }

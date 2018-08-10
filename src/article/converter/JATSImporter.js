@@ -15,7 +15,7 @@ import { jats2internal } from './r2t'
 
 */
 export default class JATSImporter extends EventEmitter {
-  import (xml, context = {}) {
+  import (xml) {
     let state = {
       dom: null,
       errors: {

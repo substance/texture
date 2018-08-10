@@ -17,7 +17,7 @@ import {
 */
 // TODO: try to provide basic Surface and ContainerEditor implementations
 // making it easier to use a different data binding mechanism
-export class ContainerEditor extends SubstanceContainerEditor {
+export class ContainerEditorNew extends SubstanceContainerEditor {
   // overriding event registration
   didMount () {
     let appState = this.context.appState
@@ -89,7 +89,12 @@ export class ContainerEditor extends SubstanceContainerEditor {
   }
 }
 
-export class IsolatedInlineNodeComponent extends SubstanceIsolatedInlineNodeComponent {
+export class IsolatedInlineNodeComponentNew extends SubstanceIsolatedInlineNodeComponent {
+  constructor (parent, props, options) {
+    super(parent, props, options)
+    if (!props.model) throw new Error("Property 'model' is required and must be a NodeModel")
+    if (!props.model._node) throw new Error('Provided model must container a DocumentNode')
+  }
   _getContentProps () {
     let props = super._getContentProps()
     props.model = this.props.model
@@ -97,7 +102,12 @@ export class IsolatedInlineNodeComponent extends SubstanceIsolatedInlineNodeComp
   }
 }
 
-export class IsolatedNodeComponent extends SubstanceIsolatedNodeComponent {
+export class IsolatedNodeComponentNew extends SubstanceIsolatedNodeComponent {
+  constructor (parent, props, options) {
+    super(parent, props, options)
+    if (!props.model) throw new Error("Property 'model' is required and must be a NodeModel")
+    if (!props.model._node) throw new Error('Provided model must container a DocumentNode')
+  }
   _getContentProps () {
     let props = super._getContentProps()
     props.model = this.props.model
@@ -105,10 +115,10 @@ export class IsolatedNodeComponent extends SubstanceIsolatedNodeComponent {
   }
 }
 
-export class TextPropertyComponent extends SubstanceTextPropertyComponent {
+export class TextPropertyComponentNew extends SubstanceTextPropertyComponent {
   _getFragmentProps (node) {
     let props = super._getFragmentProps(node)
-    let model = this.context.api.getModel(node)
+    let model = this.context.api.getModelById(node.id)
     props.model = model
     return props
   }
@@ -120,7 +130,7 @@ export class TextPropertyComponent extends SubstanceTextPropertyComponent {
 
 // TODO: try to provide basic Surface and ContainerEditor implementations
 // making it easier to use a different data binding mechanism
-export class TextPropertyEditor extends SubstanceTextPropertyEditor {
+export class TextPropertyEditorNew extends SubstanceTextPropertyEditor {
   // overriding event registration
   didMount () {
     let appState = this.context.appState

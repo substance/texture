@@ -1,9 +1,13 @@
 import {
   ButtonPackage, ContextMenuPackage, ModalPackage, OverlayPackage, DropzonesPackage,
   ScrollbarPackage, ScrollPanePackage, BodyScrollPanePackage, SplitPanePackage,
-  TabbedPanePackage, ToolPanelPackage, IsolatedNodeComponent,
-  InlineNodeComponent, AnnotationComponent
+  TabbedPanePackage, ToolPanelPackage, AnnotationComponent
 } from 'substance'
+
+import {
+  IsolatedNodeComponentNew, IsolatedInlineNodeComponentNew, ContainerEditorNew,
+  TextPropertyComponentNew, TextPropertyEditorNew
+} from './model/SubstanceModifications'
 
 import ScrollPane from './ui/ScrollPane'
 import BodyScrollPane from './ui/BodyScrollPane'
@@ -34,9 +38,13 @@ export default {
     configurator.import(DropzonesPackage)
     configurator.import(ToolPanelPackage)
 
-    configurator.addComponent('isolated-node', IsolatedNodeComponent)
-    configurator.addComponent('inline-node', InlineNodeComponent)
     configurator.addComponent('annotation', AnnotationComponent)
+    // customized built-ins
+    configurator.addComponent('container-editor', ContainerEditorNew)
+    configurator.addComponent('isolated-node', IsolatedNodeComponentNew)
+    configurator.addComponent('inline-node', IsolatedInlineNodeComponentNew)
+    configurator.addComponent('text-property', TextPropertyComponentNew)
+    configurator.addComponent('text-property-editor', TextPropertyEditorNew)
 
     // replacing Substance components with custom ones
     configurator.addComponent('scroll-pane', ScrollPane, true)

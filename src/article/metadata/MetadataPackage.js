@@ -1,4 +1,3 @@
-import { TextPropertyEditor } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelEditorPackage,
   ContainerEditor, NodeModelEditor
@@ -176,8 +175,6 @@ export default {
     })
     // Components for editors
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('text-property', TextPropertyEditor)
-    config.addComponent('container', ContainerEditor)
     // Note: in many cases the general EntityEditor implementation is used
     // In some other cases we use custom ones (e.g. figures)
     config.addComponent('translatable', TranslateableEditor)

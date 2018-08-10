@@ -18,7 +18,8 @@ export default class BodyConverter {
     node._childNodes = nodeIds
   }
 
-  export (node, el, exporter) {
+  export (node, el) {
+    // TODO FIXME
     let allHeadings = node.findAll('heading')
     let containers = []
     allHeadings.forEach(heading => {

@@ -183,20 +183,6 @@ export default function (DocumentSession) {
       return this._registerObserver('finalize', args)
     }
 
-    on (stage, ...args) {
-      if (_shouldDisplayDeprecatedWarning()) {
-        console.error("DEPRECATED: use 'editorState.addObserver(...)' instead.")
-      }
-      return this._registerObserver(stage, args)
-    }
-
-    off (observer) {
-      if (_shouldDisplayDeprecatedWarning()) {
-        console.error("DEPRECATED: use 'editorState.off(...)' instead.")
-      }
-      this.editorState.removeObserver(observer)
-    }
-
     _onDocumentChange (change, info) {
       this.editorState._setUpdate('document', { change, info })
       this.editorState.hasUnsavedChanges = true

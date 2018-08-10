@@ -2,8 +2,8 @@
 import AbstractCitationManager from './AbstractCitationManager'
 
 export default class ReferenceManager extends AbstractCitationManager {
-  constructor (doc, labelGenerator) {
-    super(doc, 'bibr', labelGenerator)
+  constructor (documentSession, labelGenerator) {
+    super(documentSession, 'bibr', labelGenerator)
     // compute initial labels
     this._updateLabels()
   }
@@ -13,18 +13,14 @@ export default class ReferenceManager extends AbstractCitationManager {
     console.error('FIXME: do not update references here, use the ArticleAPI instead')
   }
 
-  getReferenceIds () {
-    // FIXME
-    return []
-  }
-
   /*
     Returns a list of formatted citations including labels
   */
   getBibliography () {
     let references = this._getReferences()
+    // ATTENTION: state.pos is computed by AbstractCitationManager
     references.sort((a, b) => {
-      return a.pos - b.pos
+      return a.state.pos - b.state.pos
     })
     return references
   }
@@ -34,7 +30,16 @@ export default class ReferenceManager extends AbstractCitationManager {
   }
 
   _getReferences () {
-    // FIXME
-    return []
+    const doc = this._getDocument()
+    let refs = doc.get('references').getChildren()
+    refs.forEach(ref => {
+      if (!ref.state) ref.state = { pos: Number.MAX_VALUE }
+    })
+    return refs
+  }
+
+  _getBibliographyElement () {
+    const doc = this._getDocument()
+    return doc.get('references')
   }
 }

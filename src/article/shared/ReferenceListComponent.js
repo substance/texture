@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { Button } from '../../kit'
+import { Button, NodeModelFactory } from '../../kit'
 
 export default class ReferenceListComponent extends Component {
   getInitialState () {
@@ -10,7 +10,7 @@ export default class ReferenceListComponent extends Component {
   }
 
   render ($$) {
-    const RefComponent = this.getComponent('ref')
+    const BibliographicEntryComponent = this.getComponent('bibr')
     const bibliography = this._getBibliography()
 
     let el = $$('div').addClass('sc-ref-list')
@@ -30,16 +30,16 @@ export default class ReferenceListComponent extends Component {
     }
 
     // ATTENTION: bibliography still works with document nodes
-    bibliography.forEach(ref => {
-      const node = ref._node
+    bibliography.forEach(refNode => {
+      let model = NodeModelFactory.create(this.context.api, refNode)
       el.append(
         $$('div').addClass('se-ref-item').append(
-          $$(RefComponent, { node }),
+          $$(BibliographicEntryComponent, { model }),
           $$('div').addClass('se-ref-actions').append(
             $$(Button, {icon: 'pencil', tooltip: this.getLabel('edit-ref')})
-              .on('click', this._editReference.bind(this, node)),
+              .on('click', this._editReference.bind(this, refNode)),
             $$(Button, {icon: 'trash', tooltip: this.getLabel('remove-ref')})
-              .on('click', this._removeReference.bind(this, node))
+              .on('click', this._removeReference.bind(this, refNode))
           )
         )
       )

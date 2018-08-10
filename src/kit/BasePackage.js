@@ -1,7 +1,7 @@
 import {
   ButtonPackage, ContextMenuPackage, ModalPackage, OverlayPackage, DropzonesPackage,
   ScrollbarPackage, ScrollPanePackage, BodyScrollPanePackage, SplitPanePackage,
-  TabbedPanePackage, FilePackage, ToolPanelPackage, IsolatedNodeComponent,
+  TabbedPanePackage, ToolPanelPackage, IsolatedNodeComponent,
   InlineNodeComponent, AnnotationComponent
 } from 'substance'
 
@@ -23,7 +23,6 @@ export default {
   name: 'TextureBase',
   configure: function (configurator) {
     configurator.import(ButtonPackage)
-    configurator.import(FilePackage)
     configurator.import(ScrollPanePackage)
     configurator.import(BodyScrollPanePackage)
     configurator.import(SplitPanePackage)

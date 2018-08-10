@@ -500,6 +500,7 @@ InternalArticleSchema.addNodes([
   'fn',
   'p',
   'label',
+  'tex-math',
   // formatting
   'bold',
   'fixed-case',
@@ -525,7 +526,7 @@ InternalArticleSchema.addNodes([
   'inline-graphic',
   'styled-content',
   'x',
-  'xref'
+  'xref',
 ].map(name => TextureArticleSchema.getNodeClass(name)))
 
 export default InternalArticleSchema

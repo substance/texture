@@ -73,10 +73,9 @@ export default function jats2internal (jats, api) {
   // content
   _populateTitle(doc, jats, jatsImporter)
   _populateAbstract(doc, jats, jatsImporter)
-  debugger
   _populateBody(doc, jats, jatsImporter)
-  _populateFootnotes(doc, jats)
-  _populateReferences(doc, jats)
+  // _populateFootnotes(doc, jats)
+  // _populateReferences(doc, jats)
 
   return doc
 }

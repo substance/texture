@@ -6,7 +6,7 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
-import ElementCitationConverter from './ElementCitationConverter'
+import ReferenceConverter from './ReferenceConverter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -92,7 +92,7 @@ function _createImporter (doc) {
   let converters = [
     new BodyConverter(),
     HeadingConverter,
-    ElementCitationConverter
+    ReferenceConverter
   ].concat(jatsConverters)
   let jatsImporter = new _HybridJATSImporter({
     schema: InternalArticleSchema,
@@ -344,10 +344,7 @@ function _populateReferences (doc, jats, jatsImporter) {
   if (refListEl) {
     let refEls = refListEl.findAll('ref')
     refEls.forEach(refEl => {
-      let elementCitation = refEl.find('element-citation')
-      if (elementCitation) {
-        references.append(jatsImporter.convertElement(elementCitation))
-      }
+      references.append(jatsImporter.convertElement(refEl))
     })
   }
 }

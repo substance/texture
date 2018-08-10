@@ -9,8 +9,9 @@ export default class EditXRefTool extends ToggleTool {
     // ATTENTION the targets are not models or nodes, but entries
     // created by xrefHelpers.getAvailableTargets()
     // TODO: use something more idiomatic
-    targets.forEach(entry => {
+    for (let entry of targets) {
       const target = entry.model
+      if (!target) continue
       const selected = entry.selected
       let targetPreviewEl = this._renderPreview($$, target)
       if (selected) {
@@ -18,7 +19,7 @@ export default class EditXRefTool extends ToggleTool {
       }
       targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
       el.append(targetPreviewEl)
-    })
+    }
     return el
   }
 

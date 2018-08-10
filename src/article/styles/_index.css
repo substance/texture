@@ -1,6 +1,5 @@
 @import '../editor/styles/_index.css';
 @import '../metadata/styles/_index.css';
-@import '../reader/styles/_index.css';
 @import '../shared/styles/_index.css';
 
 @import './_article-panel.css';

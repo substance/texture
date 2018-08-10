@@ -14,9 +14,8 @@ export default class ReferenceManager extends AbstractCitationManager {
   }
 
   getReferenceIds () {
-    let doc = this.doc
-    let refs = doc.findAll('ref-list > ref')
-    return refs.map(ref => ref.getAttribute('rid'))
+    // FIXME
+    return []
   }
 
   /*
@@ -35,40 +34,7 @@ export default class ReferenceManager extends AbstractCitationManager {
   }
 
   _getReferences () {
-    const doc = this.doc
-    // because references have different types we need to
-    // all the different types
-    const refs = doc.get('references').children
-    // there are different strategies to determine the order
-    // of references depending on the citation style
-    // Note: Texture applies numbered citation labels
-    // which are determined by the order of occurrences of citations
-    const refsOrder = this._getReferencesOrder()
-    // TODO: We should provide models here
-    return refs.map(r => {
-      const index = refsOrder.indexOf(r.replace('@', ''))
-      const node = doc.get(r)
-      // HACK: mimicking a model
-      return {
-        id: node.id,
-        _node: node,
-        pos: index > -1 ? index : 9999
-      }
-    })
-  }
-
-  // Determine order based on citations in the document
-  _getReferencesOrder () {
-    const doc = this.doc
-    const xrefs = doc.findAll('xref[ref-type=bibr]')
-    return xrefs.reduce((refs, xref) => {
-      const ref = xref.getAttribute('rid')
-      ref.split(' ').forEach(r => {
-        if (refs.indexOf(r) === -1) {
-          refs.push(r)
-        }
-      })
-      return refs
-    }, [])
+    // FIXME
+    return []
   }
 }

@@ -34,9 +34,30 @@ export const REQUIRED_ELEMENT_CITATION_ELEMENTS = [
   ['pub-id', 'pub-id-type', 'isbn']
 ]
 
-export const JATS_BIBR_TYPES = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
+export const JATS_BIBR_TYPES_TO_INTERNAL = {
+  'journal': 'journal-article',
+  'book': 'book',
+  'chapter': 'chapter',
+  'confproc': 'conference-paper',
+  'data': 'data-publication',
+  'patent': '_patent',
+  'newspaper': 'newspaper-article',
+  'magazine': 'magazine-article',
+  'report': 'report',
+  'software': 'software',
+  'thesis': 'thesis',
+  'webpage': 'webpage'
+}
 
-export const INTERNAL_BIBR_TYPES = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
+export const INTERNAL_BIBR_TYPES_TO_JATS = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL).reduce((map, jatsType) => {
+  let internalType = JATS_BIBR_TYPES_TO_INTERNAL[jatsType]
+  map[internalType] = jatsType
+  return map
+}, {})
+
+export const JATS_BIBR_TYPES = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL)
+
+export const INTERNAL_BIBR_TYPES = Object.keys(INTERNAL_BIBR_TYPES_TO_JATS)
 
 // EXPERIMENTAL: properties that must not be empty
 // TODO: this should be configurable

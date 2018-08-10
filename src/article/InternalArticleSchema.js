@@ -472,6 +472,7 @@ InternalArticleSchema.addNodes([
   References,
   Footnotes,
   // bibliography
+  BibliographicEntry,
   Book,
   Chapter,
   ConferencePaper,

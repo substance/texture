@@ -1,4 +1,4 @@
-import { Document } from 'substance'
+import { XMLDocument } from 'substance'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 import TextureEditingInterface from './TextureEditingInterface'
@@ -6,7 +6,7 @@ import TextureEditingInterface from './TextureEditingInterface'
 // TODO: it would be better to use a general document implementation (like XMLDocument)
 // and come up with a new mechanism to bind indexes to the document instance
 // Helpers like findByType and such can be achieved differently
-export default class InternalArticleDocument extends Document {
+export default class InternalArticleDocument extends XMLDocument {
   _initialize () {
     super._initialize()
 

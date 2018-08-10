@@ -90,7 +90,7 @@ function _createImporter (doc) {
   let tagNames = jatsSchema.getTagNames().filter(name => Boolean(InternalArticleSchema.getNodeClass(name)))
   let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
   let converters = [
-    // Note: this is actually not used ATM because we populate the body node 'manually'
+    new BodyConverter(),
     HeadingConverter,
     ElementCitationConverter
   ].concat(jatsConverters)
@@ -323,7 +323,9 @@ function _populateBody (doc, jats, jatsImporter) {
   let bodyEl = jats.find('article > body')
   if (bodyEl) {
     let body = doc.get('body')
-    BodyConverter.instance().import(bodyEl, body, jatsImporter)
+    let tmp = jatsImporter.convertElement(bodyEl)
+    body.append(tmp.children)
+    doc.delete(tmp)
   }
 }
 

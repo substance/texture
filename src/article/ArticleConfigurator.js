@@ -1,12 +1,18 @@
 import { AnnotationCommand, SwitchTextTypeCommand } from 'substance'
 import TextureConfigurator from '../TextureConfigurator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
+import InternalArticleSchema from './InternalArticleSchema'
 
 export default class ArticleConfigurator extends TextureConfigurator {
   constructor () {
     super()
 
     this.config.models = {}
+    this.schema = InternalArticleSchema
+  }
+
+  addNode () {
+    throw new Error('Texture Article Schema is final and can no be extended.')
   }
 
   addAnnotationTool (spec) {

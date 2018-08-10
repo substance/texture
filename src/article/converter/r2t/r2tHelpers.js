@@ -1,4 +1,4 @@
-import InternalArticle from '../../InternalArticle'
+import InternalArticleSchema from '../../InternalArticleSchema'
 import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../ArticleConstants'
 import { findChild, findAllChilds } from '../util/domHelpers'
 
@@ -177,7 +177,7 @@ export function removeEmptyElementsIfNoChildren(dom, selector) {
 }
 
 export function insertChildAtFirstValidPos(parent, child) {
-  let schema = InternalArticle.getElementSchema(parent.tagName)
+  let schema = InternalArticleSchema.getElementSchema(parent.tagName)
   let insertPos = schema.findFirstValidPos(parent, child.tagName)
   if (insertPos >= 0) {
     parent.insertAt(insertPos, child)
@@ -189,7 +189,7 @@ export function insertChildAtFirstValidPos(parent, child) {
 // NOTE: Last param is there because we have no way to ask the schema for
 // insert pos of multiple elements e.g. (fpage, lpage)?
 export function insertChildrenAtFirstValidPos(parent, children, tagName) {
-  let schema = InternalArticle.getElementSchema(parent.tagName)
+  let schema = InternalArticleSchema.getElementSchema(parent.tagName)
   let insertPos = schema.findFirstValidPos(parent, tagName)
   if (insertPos >= 0) {
     children.forEach((child, index) => {
@@ -201,7 +201,7 @@ export function insertChildrenAtFirstValidPos(parent, children, tagName) {
 }
 
 export function getFirstValidInsertPos(parent, tagName) {
-  let schema = InternalArticle.getElementSchema(tagName)
+  let schema = InternalArticleSchema.getElementSchema(tagName)
   return schema.findFirstValidPos(parent, tagName)
 }
 

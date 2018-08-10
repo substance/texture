@@ -6,7 +6,7 @@ export default class TextureConfigurator extends Configurator {
     super()
 
     this.config.configurations = {}
-    this.config.availableLanguages = {} 
+    this.config.availableLanguages = {}
     this.config.propertyEditors = []
     this._compiledToolPanels = {}
   }

@@ -101,9 +101,6 @@
   <s:elementType name="access-date" s:type="external"/>
   <s:elementType name="time-stamp" s:type="external"/>
 
-
-
-
   <!-- Stub out some of the content for that we do not provide
        a UI  -->
   <define name="chem-struct">
@@ -899,6 +896,25 @@
           <ref name="simple-display-noalt.class"/>
         </choice>
       </choice>
+    </element>
+  </define>
+
+  <!-- EXPERIMENTAL:
+    We are starting to deviate from the classical XML model because sometimes XML is
+    a but cumber-some, or less explicit: particularly for db-like records.
+    Internally we want to use a hybrid model, i.e. essentially it is a DOM but allows to
+    have records as leafs.
+    On the long run these should even be searchable using CSS selectors and serializable
+    using `el.serialize() / el.innerXML
+    - Stage I: introduce new type elements which are backed by classical Substance Data nodes.
+      Make XML API aware of these nodes and not choke.
+    - Stage II: support deep search via `el.find(cssSelector)` and `el.serialize()`
+  -->
+
+  <!-- HACK: need to 'override' the spec coming from JATS -->
+  <s:elementType name="references" s:type="external"/>
+  <define name="ref-list">
+    <element name="references">
     </element>
   </define>
 

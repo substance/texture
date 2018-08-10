@@ -1,15 +1,21 @@
 import { ElementCitationConverter } from './EntityConverters'
+import { JATS_BIBR_TYPES, INTERNAL_BIBR_TYPES } from '../../ArticleConstants'
 
 /*
-  We convert <ref> elements into entities and back
+  In the Internal Article format we use a custom model,
+  which is similar to what JATS `<ref-list>` and `<element-citation>`s are used for.
+
+  In the internal model there is a dedicated place for references: `article > back > references`
+  It consists of an (unordered) list of bibliographic entries (sub-types of type 'bibr').
 */
-export default class ConvertRef {
-  import(dom, api) {
+export default class ConvertReflist {
+  import (dom, api) {
     let refList = dom.find('ref-list')
     let refs = refList.findAll('ref')
+
+    let references = dom.createElement('references', { id: 'references' })
     const pubMetaDb = api.pubMetaDb
     refs.forEach(refEl => {
-
       let elementCitation = refEl.find('element-citation')
       if (!elementCitation) {
         api.error({
@@ -18,8 +24,9 @@ export default class ConvertRef {
         })
       } else {
         let pubType = elementCitation.attr('publication-type')
-        let validTypes = ['journal', 'book', 'chapter', 'confproc', 'data', 'patent', 'newspaper', 'magazine', 'report', 'software', 'thesis', 'webpage']
+        let validTypes = JATS_BIBR_TYPES
         if (validTypes.includes(pubType)) {
+          // TODO: let EntityConverters return nodes, not ids
           ElementCitationConverter.import(elementCitation, pubMetaDb, refEl.id)
         } else {
           console.error(`Publication type ${pubType} not found`)
@@ -30,33 +37,33 @@ export default class ConvertRef {
         }
       }
     })
+
     refList.empty()
   }
 
-  export(dom, api) {
+  export (dom, api) {
     let $$ = dom.createElement.bind(dom)
     let refList = dom.find('back > ref-list')
     const doc = api.doc
     const session = api.session
     const referenceManager = session.getReferenceManager()
-    let bibliography = referenceManager.getBibliography()
+    let references = referenceManager._getReferences()
 
     // Empty ref-list
     refList.empty()
 
     // Re-export refs according to computed order
-    bibliography.forEach(ref => {
-      let entity = ref._node
-      let validTypes = ['journal-article', 'book', 'chapter', 'conference-paper', 'data-publication', '_patent', 'magazine-article', 'newspaper-article', 'report', 'software', 'thesis', 'webpage']
+    references.forEach(ref => {
+      let validTypes = INTERNAL_BIBR_TYPES
       let elementCitation
-      if (validTypes.includes(entity.type)) {
-        elementCitation = ElementCitationConverter.export($$, entity, doc)
+      if (validTypes.includes(ref.type)) {
+        elementCitation = ElementCitationConverter.export($$, ref, doc)
       } else {
         throw new Error('publication type not found.')
       }
 
       refList.append(
-        dom.createElement('ref').attr('id', entity.id).append(
+        dom.createElement('ref').attr('id', ref.id).append(
           elementCitation
         )
       )

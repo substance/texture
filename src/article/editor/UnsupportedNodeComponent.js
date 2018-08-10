@@ -1,17 +1,24 @@
 import { Component, IsolatedNodeComponent } from 'substance'
 
 export default class UnsupportedNodeComponent extends IsolatedNodeComponent {
-  _getContentClass() {
+  _getContentClass () {
     return UnsupportedContentComponent
   }
 }
 
 class UnsupportedContentComponent extends Component {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
+    let data
+    if (node._isXMLNode) {
+      data = node.toXML().serialize()
+    } else if (node.data) {
+      data = node.data
+    } else {
+      data = JSON.stringify(node.toJSON())
+    }
     let el = $$('div').addClass('sc-unsupported').append(
-      $$('pre').text(node.toXML().serialize())
+      $$('pre').text(data)
     ).attr({
       'data-id': node.id,
       'contenteditable': false
@@ -19,5 +26,4 @@ class UnsupportedContentComponent extends Component {
 
     return el
   }
-
 }

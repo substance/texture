@@ -49,8 +49,12 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   getEntitiesByType(type) {
-    let entityIds = this.article.findByType(type)
-    return entityIds.map(entityId => this._getModelById(entityId))
+    // TODO: this needs to be done in a different way:
+    // nodes have specific place now, e.g. 'author' nodes are located in 'authors'
+    // That means rather than using the general 'type' index we should get the appropriate collection
+    // let entityIds = this.article.findByType(type)
+    // return entityIds.map(entityId => this._getModelById(entityId))
+    return []
   }
 
   // TODO: this should be configurable. As it is similar to HTML conversion
@@ -91,23 +95,21 @@ export default class ArticleAPI extends AbstractAPI {
     return this.getModel(node.type, node)
   }
 
-  getAuthors() {
+  getAuthors () {
     return this._getPersons('authors')
   }
 
-  getAuthorsModel() {
+  getAuthorsModel () {
     return this.getModel('authors')
   }
 
-
-  getEditors() {
+  getEditors () {
     return this._getPersons('editors')
   }
 
   _getPersons(prop) {
-    let articleRecord = this._getNode('article-record')
-    let persons = articleRecord[prop].map(personId => this._getModelById(personId))
-    return persons
+    // TODO: authors and editors are now in article/metadata/authors and article/metadata/editors
+    return []
   }
 
   deleteAuthor(personId) {
@@ -119,17 +121,18 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   _deletePerson(personId, type) {
-    let node
-    this.articleSession.transaction((tx) => {
-      node = tx.delete(personId)
-      const articleRecord = tx.get('article-record')
-      let pos = articleRecord[type].indexOf(personId)
-      if (pos !== -1) {
-        tx.update(['article-record', type], { type: 'delete', pos: pos })
-      }
-      tx.selection = null
-    })
-    return this.getModel(node.type, node)
+    // FIXME: persons are now in a different place
+    // let node
+    // this.articleSession.transaction((tx) => {
+    //   node = tx.delete(personId)
+    //   const articleRecord = tx.get('article-record')
+    //   let pos = articleRecord[type].indexOf(personId)
+    //   if (pos !== -1) {
+    //     tx.update(['article-record', type], { type: 'delete', pos: pos })
+    //   }
+    //   tx.selection = null
+    // })
+    // return this.getModel(node.type, node)
   }
 
   addReferences(refs) {
@@ -215,17 +218,17 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   getArticleTitle () {
-    let titleNode = this.getArticle().find('article-title')
+    let titleNode = this.getArticle().get('title')
     return new TextModel(this, titleNode.getPath())
   }
 
   getArticleAbstract () {
-    let abstract = this.getArticle().find('abstract')
+    let abstract = this.getArticle().get('abstract')
     return new FlowContentModel(this, abstract.getContentPath())
   }
 
   getArticleBody () {
-    let body = this.getArticle().find('body')
+    let body = this.getArticle().get('body')
     return new FlowContentModel(this, body.getContentPath())
   }
 
@@ -240,12 +243,12 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   getFootnotes () {
-    let fns = this.getArticle().findAll('fn-group > fn')
-    return fns.map(fn => this.getModel(fn.type, fn))
+    // TODO: this should return a Model for article.get('footnotes')
+    return []
   }
 
   getFigures () {
-    let figs = this.getArticle().findAll('fig')
+    let figs = this.getArticle().get('body').findAll('fig')
     return figs.map(fig => this.getModel(fig.type, fig))
   }
 

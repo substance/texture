@@ -1,13 +1,9 @@
-import { registerSchema, ListPackage } from 'substance'
-import TextureDocument from './TextureDocument'
-import InternalArticle from './InternalArticle'
+import { ListPackage } from 'substance'
 import TextureArticleImporter from './TextureArticleImporter'
 import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNode from './XMLListNode'
 import XMLListItemNode from './XMLListItemNode'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
-import TableElementNode from './TableElementNode'
-import TableCellElementNode from './TableCellElementNode'
 import EntitiesPackage from './metadata/EntitiesPackage'
 
 import FigureModel from './models/FigureModel'
@@ -39,19 +35,10 @@ import LanguagesPackage from './LanguagesPackage'
 export default {
   name: 'TextureArticle',
   configure (config) {
-    registerSchema(config, InternalArticle, TextureDocument)
-
-    // override registered nodes
-    config.addNode(XMLListNode, true)
-    config.addNode(XMLListItemNode, true)
-    config.addNode(TableElementNode, true)
-    config.addNode(TableCellElementNode, true)
-
     // EXPERIMENTAL: extend the InternalArticle schema with entities
     // we want to merge PubMetaDb into the InternalArticle
     config.import(EntitiesPackage)
 
-    config.addImporter(InternalArticle.getName(), TextureArticleImporter)
     // enable rich-text support for clipboard
     TextureHTMLConverters.forEach(converter => {
       config.addConverter('html', converter)

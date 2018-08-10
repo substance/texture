@@ -1,40 +1,66 @@
 import { forEach, isArray } from 'substance'
-import { KeywordConverter, SubjectConverter, PersonConverter, GroupConverter, OrganisationConverter, AwardConverter, getText } from './EntityConverters'
-import { expandAbstract, insertChildAtFirstValidPos, insertChildrenAtFirstValidPos, removeElements } from './r2tHelpers'
+import { KeywordConverter, SubjectConverter, PersonConverter, GroupConverter, OrganisationConverter, AwardConverter } from './EntityConverters'
+import { insertChildAtFirstValidPos, insertChildrenAtFirstValidPos } from './r2tHelpers'
 
 /*
-  Expands elements in article-meta which are optional in TextureArticle but
-  required in InternalArticle.
+  This converter takes a JATS `<article-meta>` record
+  and creates a transformed one that complies to the InternalArticle Schema.
+  Note, that the internal schema deviates from JATS to simplify our life.
 
-  TODO: Remove subjects from the DOM after conversion, like we do with keywords
+  JATS Schema (Restricted version aka TextureJATS):
+    (
+      article-id*,
+      article-categories?,
+      title-group?,
+      contrib-group*,
+      aff*,
+      author-notes?,
+      pub-date*,
+      volume?,
+      issue?,
+      isbn?,
+      (((fpage,lpage?)?,page-range?)|elocation-id)?,
+      history?,
+      permissions?,
+      self-uri*,
+      related-article*,
+      related-object*,
+      abstract?,
+      trans-abstract*,
+      kwd-group*,
+      funding-group*,
+      conference*,
+      counts?,
+      custom-meta-group?
+    )
+
+  Internal Schema: (used for all meta-data that is scoped to the article)
+    (~unordered
+      article-record, // for article-data
+      container-record,
+      keywords,
+      affiliations,
+      author-notes,
+      permissions,
+      related
+    )
+    (title-group?,contrib-group?,contrib-group?,aff*,author-notes?,pub-date*,volume?,issue?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,self-uri*,(related-article,related-object)*,abstract?,trans-abstract*,kwd-group*,funding-group*,conference*,counts?,custom-meta-group?)
+
+  NOTES:
+    - Comparing the specification of bibliography records and the JATS article meta, it is clear
+      that there it is built only for a subset of publication types (book)
+    - It does not make sense to store container related information on the article-meta element
+    - `article-id*, article-categories*, title-group?, contrib-group*, pub-date*, history?` go into `article-record`
+    - `volume?, issue?, isbn?, (fpage...)?` go into 'container-record'
+    - `abstract, trans-abstract*` go into abstract
+    - `kwd-group*' go into 'keywords'
+
+  TODO:
+    - article-ids* should go into article-record.ids:string[]
+    - article-categories -> article-record.categories:string[]
+    - title-group -> article-record.title +
 */
 export default class ConvertArticleMeta {
-
-  import(dom, api) {
-
-    expandAbstract(dom)
-    let articleMeta = dom.find('article-meta')
-    _importArticleRecord(dom, api)
-    _importKeywordsOrSubjects(dom, api, 'article-meta > kwd-group > kwd', KeywordConverter)
-    _importKeywordsOrSubjects(dom, api, ' article-meta > article-categories > subj-group > subject', SubjectConverter)
-
-    // We don't need these in InternalArticle, as they are represented as entity nodes
-    removeElements(articleMeta, [
-      'kwd-group',
-      'article-categories',
-      'history',
-      'aff',
-      'funding-group',
-      'contrib-group',
-      'volume',
-      'issue',
-      'fpage',
-      'lpage',
-      'page-range',
-      'elocation-id' ,
-      'pub-date'
-    ])
-  }
 
   export(dom, api) {
     _exportKeywords(dom, api)
@@ -89,84 +115,6 @@ function _exportSubjects(dom, api) {
     subjGroup.append(newSubjectEl)
   })
 }
-
-function _importKeywordsOrSubjects(dom, api, selector, Converter) {
-  const pubMetaDb = api.pubMetaDb
-  const keywords = dom.findAll(selector)
-  // Convert <kwd> or <subject> elements to keywords entities
-  keywords.forEach(kwd => {
-    Converter.import(kwd, pubMetaDb)
-  })
-}
-
-function _importArticleRecord(dom, api) {
-  let el = dom.find('article-meta')
-  let pubMetaDb = api.pubMetaDb
-
-  _importAffiliations(dom, api)
-  _importAwards(dom, api)
-
-  let authors = _importContribs(dom, api, 'author')
-  let editors = _importContribs(dom, api, 'editor')
-
-  let node = {
-    id: 'article-record',
-    type: 'article-record',
-    authors,
-    editors,
-    elocationId: getText(el, 'elocation-id'),
-    fpage: getText(el, 'fpage'),
-    lpage: getText(el, 'lpage'),
-    issue: getText(el, 'issue'),
-    volume: getText(el, 'volume'),
-    pageRange: getText(el, 'page-range')
-  }
-  const articleDates = el.findAll('history > date, pub-date')
-  articleDates.forEach(dateEl => {
-    const date = _extractDate(dateEl)
-    node[date.type] = date.value
-  })
-  pubMetaDb.create(node)
-}
-
-function _importAffiliations(dom, api) {
-  const pubMetaDb = api.pubMetaDb
-  const affs = dom.findAll('article-meta > aff')
-  affs.forEach(aff => {
-    OrganisationConverter.import(aff, pubMetaDb)
-  })
-}
-
-function _importAwards(dom, api) {
-  const pubMetaDb = api.pubMetaDb
-  const awards = dom.findAll('article-meta > funding-group > award-group')
-  // Convert <award-group> elements to award entities
-  awards.forEach(award => {
-    AwardConverter.import(award, pubMetaDb)
-  })
-}
-
-function _importContribs(dom, api, type) {
-  let pubMetaDb = api.pubMetaDb
-  
-  // Find all direct children of contrib-group
-  let contribs = dom.findAll(`contrib-group[content-type=${type}] > contrib`)
-  
-  let result = []
-  contribs.forEach(contrib => {
-    if (contrib.attr('contrib-type') === 'group') {
-      result = result.concat(
-        GroupConverter.import(contrib, pubMetaDb)
-      )
-    } else {
-      result.push(
-        PersonConverter.import(contrib, pubMetaDb)
-      )
-    }
-  })
-  return result
-}
-
 
 function _exportAffiliations(dom, api) {
   const doc = api.doc
@@ -264,7 +212,6 @@ function _exportArticleRecord(dom, api) {
   // NOTE: we flip the order here as schema based insertion is done first in last out
   _exportContribs(dom, api, 'editor')
   _exportContribs(dom, api, 'author')
-  
 
   insertChildAtFirstValidPos(articleMeta, $$('volume').append(node.volume))
   insertChildAtFirstValidPos(articleMeta, $$('issue').append(node.issue))
@@ -279,7 +226,7 @@ function _exportArticleRecord(dom, api) {
     let pageRange = node.pageRange || node.fpage+'-'+node.lpage
     insertChildrenAtFirstValidPos(articleMeta, [
       $$('fpage').append(node.fpage),
-      $$('lpage').append (node.lpage),
+      $$('lpage').append(node.lpage),
       $$('page-range').append(pageRange),
     ], 'isbn')
   }
@@ -295,25 +242,6 @@ function _exportArticleRecord(dom, api) {
   // Export published date
   insertChildAtFirstValidPos(articleMeta, _exportDate($$, node, 'publishedDate', 'pub', 'pub-date'))
   insertChildAtFirstValidPos(articleMeta, historyEl)
-}
-
-const dateTypesMap = {
-  'pub': 'publishedDate',
-  'accepted': 'acceptedDate',
-  'received': 'receivedDate',
-  'rev-recd': 'revReceivedDate',
-  'rev-request': 'revRequestedDate'
-}
-
-function _extractDate(el) {
-  const dateType = el.getAttribute('date-type')
-  const value = el.getAttribute('iso-8601-date')
-  const entityProp = dateTypesMap[dateType]
-
-  return {
-    value: value,
-    type: entityProp
-  }
 }
 
 function _exportDate($$, node, prop, dateType, tag) {

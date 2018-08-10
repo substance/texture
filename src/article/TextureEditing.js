@@ -1,11 +1,10 @@
-import { Editing, validateXMLSchema, isString, paste } from 'substance'
-import InternalArticle from './InternalArticle'
+import { Editing, isString, paste } from 'substance'
 
 /*
-  Proposal for Substance 2.0 XMLEditing implementation
+  EXPERIMENTAL: an 'Editing' interface that takes the XML schema into account.
+  TODO: try to generalize this and add it to the 'app dev kit'
 */
 export default class TextureEditing extends Editing {
-
   // EXPERIMENTAL: run validation after pasting
   // and throw if there are errors
   // We need to find out which is the best way regarding schema
@@ -15,7 +14,7 @@ export default class TextureEditing extends Editing {
   // and instead failing badly, just make the user aware of these
   // issues
   // TODO: in general we would need to 'pre-process'
-  paste(tx, content) {
+  paste (tx, content) {
     if (!content) return
     /* istanbul ignore else  */
     if (isString(content)) {
@@ -26,19 +25,20 @@ export default class TextureEditing extends Editing {
       throw new Error('Illegal content for paste.')
     }
 
-    let res = validateXMLSchema(InternalArticle, tx.getDocument().toXML())
-    if (!res.ok) {
-      res.errors.forEach((err) => {
-        console.error(err.msg, err.el)
-      })
-      throw new Error('Paste is violating the schema')
-    }
+    // FIXME: revisit on-the-fly validation
+    // let res = validateXMLSchema(InternalArticleSchema, tx.getDocument().toXML())
+    // if (!res.ok) {
+    //   res.errors.forEach((err) => {
+    //     console.error(err.msg, err.el)
+    //   })
+    //   throw new Error('Paste is violating the schema')
+    // }
   }
 
   /*
     2.0 API suggestion (pass only id, not data)
   */
-  insertInlineNode(tx, node) {
+  insertInlineNode (tx, node) {
     let sel = tx.selection
     let text = "\uFEFF"
     this.insertText(tx, text)
@@ -53,28 +53,36 @@ export default class TextureEditing extends Editing {
     return node
   }
 
-  createTextNode(tx, container, text) {
-    let parentType = container.type
-    let schema = InternalArticle.getElementSchema(parentType)
-    if (schema.isAllowed('p')) {
-      return tx.create({ type: 'p', content: text })
-    } else {
-      throw new Error(`FIXME: which default element should be used in <${parentType}>`)
-    }
+  createTextNode (tx, container, text) {
+    console.error('FIXME: bring back schema compliant tx.createTextNode()')
+    // let parentType = container.type
+    // TODO: revisit on-the-fly schema check
+    // let schema = InternalArticleSchema.getElementSchema(parentType)
+    // if (schema.isAllowed('p')) {
+    //   return tx.create({ type: 'p', content: text })
+    // } else {
+    //   throw new Error(`FIXME: which default element should be used in <${parentType}>`)
+    // }
+    return tx.create({ type: 'p', content: text })
   }
 
-  createListNode(tx, container, params) {
-    let parentType = container.type
-    let schema = InternalArticle.getElementSchema(parentType)
-    if (schema.isAllowed('list')) {
-      let el = tx.create({ type: 'list' })
-      if (params.listType) {
-        el.attr('list-type', params.listType)
-      }
-      return el
-    } else {
-      throw new Error(`<list> is not allowed in <${parentType}>`)
+  createListNode (tx, container, params) {
+    console.error('FIXME: bring back schema compliant tx.createTextNode()')
+    // let parentType = container.type
+    // let schema = InternalArticleSchema.getElementSchema(parentType)
+    // if (schema.isAllowed('list')) {
+    //   let el = tx.create({ type: 'list' })
+    //   if (params.listType) {
+    //     el.attr('list-type', params.listType)
+    //   }
+    //   return el
+    // } else {
+    //   throw new Error(`<list> is not allowed in <${parentType}>`)
+    // }
+    let el = tx.create({ type: 'list' })
+    if (params.listType) {
+      el.attr('list-type', params.listType)
     }
+    return el
   }
-
 }

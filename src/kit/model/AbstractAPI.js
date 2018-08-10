@@ -60,6 +60,8 @@ export default class AbstractAPI {
     let node
     this._getDocumentSession().transaction(tx => {
       node = tx.create(data)
+      // TODO: it would be good to set the selection here
+      // e.g. to the first text property
       tx.setSelection(null)
     })
     return this._getModelForNode(node)
@@ -67,9 +69,9 @@ export default class AbstractAPI {
 
   _removeModel (model) {
     let node
-    this.articleSession.transaction((tx) => {
+    this._getDocumentSession().transaction((tx) => {
       node = tx.delete(model.id)
-      tx.selection = null
+      tx.setSelection(null)
     })
     return this._getModelForNode(node)
   }

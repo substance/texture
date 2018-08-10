@@ -1,6 +1,6 @@
 import { prettyPrintXML, DefaultDOMElement } from 'substance'
 import { PersistedDocumentArchive } from './dar'
-import { ArticleLoader, JATSExporter, PubMetaLoader } from './article'
+import { ArticleLoader, JATSExporter } from './article'
 
 export default class TextureArchive extends PersistedDocumentArchive {
   /*
@@ -14,10 +14,6 @@ export default class TextureArchive extends PersistedDocumentArchive {
     sessions['manifest'] = manifestSession
     let entries = manifestSession.getDocument().getDocumentEntries()
 
-    // Setup empty pubMetaSession for holding the entity database
-    let pubMetaSession = PubMetaLoader.load()
-    sessions['pub-meta'] = pubMetaSession
-
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
       // Note: this happens when a resource is referenced in the manifest
@@ -28,8 +24,10 @@ export default class TextureArchive extends PersistedDocumentArchive {
       }
       // Load any document except pub-meta (which we prepared manually)
       if (entry.type !== 'pub-meta') {
+        // TODO: we need better concept for handling errors
+        let session
         // Passing down 'sessions' so that we can add to the pub-meta session
-        let session = this._loadDocument(entry.type, record, sessions)
+        session = this._loadDocument(entry.type, record, sessions)
         sessions[entry.id] = session
       }
     })
@@ -63,7 +61,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     let manifest = sessions.manifest.getDocument()
     if (buffer.hasResourceChanged('manifest')) {
       let manifestDom = manifest.toXML()
-      let manifestXmlStr = prettyPrintXML(_exportManifest(manifestDom))
+      let manifestXmlStr = prettyPrintXML(manifestDom)
       rawArchive.resources['manifest.xml'] = {
         id: 'manifest',
         data: manifestXmlStr,
@@ -104,10 +102,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
   _loadDocument (type, record, sessions) {
     switch (type) {
       case 'article': {
-        const pubMetaSession = sessions['pub-meta']
-        return ArticleLoader.load(record.data, {
-          pubMetaSession
-        }, this._config)
+        return ArticleLoader.load(record.data, {}, this._config)
       }
       default:
         throw new Error('Unsupported document type')
@@ -151,24 +146,5 @@ export default class TextureArchive extends PersistedDocumentArchive {
 function _importManifest (rawArchive) {
   let manifestXML = rawArchive.resources['manifest.xml'].data
   let dom = DefaultDOMElement.parseXML(manifestXML)
-  let documentsEl = dom.find('documents')
-  documentsEl.append(
-    dom.createElement('document').attr({
-      id: 'pub-meta',
-      type: 'pub-meta',
-      path: 'pub-meta.json'
-    })
-  )
   return dom.serialize()
-}
-
-/*
-  The serialised manifest should have no pub-meta document entry, so we
-  remove it here.
-*/
-function _exportManifest (manifestDom) {
-  let documents = manifestDom.find('documents')
-  let pubMetaEl = documents.find('document#pub-meta')
-  documents.removeChild(pubMetaEl)
-  return manifestDom
 }

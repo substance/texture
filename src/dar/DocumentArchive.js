@@ -1,6 +1,5 @@
 export default class DocumentArchive {
-
-  constructor(sessions, buffer) {
+  constructor (sessions, buffer) {
     this.sessions = sessions
     this.buffer = buffer
 
@@ -9,22 +8,17 @@ export default class DocumentArchive {
     this.init()
   }
 
-  init() {
-    // register listeners for every session
+  init () {}
 
-  }
-
-  getManifest() {
+  getManifest () {
     return this.sessions.manifest.getDocument()
   }
 
-  getDocumentEntries() {
+  getDocumentEntries () {
     return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
 
-  getEditorSession(docId) {
+  getEditorSession (docId) {
     return this.sessions[docId]
   }
-
-
 }

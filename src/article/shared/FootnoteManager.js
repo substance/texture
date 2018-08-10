@@ -20,10 +20,10 @@ export default class FootnoteManager extends AbstractCitationManager {
   }
 
   _getReferences () {
-    return this.doc.findAll('fn')
+    return this.doc.get('footnotes').children
   }
 
   _getBibliographyElement () {
-    return this.doc.find('fn-group')
+    return this.doc.get('footnotes')
   }
 }

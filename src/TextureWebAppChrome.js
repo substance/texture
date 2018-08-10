@@ -4,12 +4,12 @@ import TextureAppChrome from './TextureAppChrome'
 import { VfsStorageClient, HttpStorageClient, InMemoryDarBuffer } from './dar'
 
 export default class TextureWebAppChrome extends TextureAppChrome {
-  async _loadArchive (archiveId, context) {
+  _loadArchive (archiveId, context, cb) {
     let storage = this._getStorage(this.props.storageType)
     let buffer = new InMemoryDarBuffer()
     let ArchiveClass = this._getArchiveClass()
     let archive = new ArchiveClass(storage, buffer, context)
-    return archive.load(archiveId)
+    archive.load(archiveId, cb)
   }
 
   _getStorage (storageType) {

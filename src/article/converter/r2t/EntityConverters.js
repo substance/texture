@@ -5,29 +5,6 @@ import { forEach } from 'substance'
 */
 export const OrganisationConverter = {
 
-  import(el, pubMetaDb) {
-    let node = {
-      id: el.id,
-      type: 'organisation',
-      name: getText(el, 'institution[content-type=orgname]'),
-      division1: getText(el, 'institution[content-type=orgdiv1]'),
-      division2: getText(el, 'institution[content-type=orgdiv2]'),
-      division3: getText(el, 'institution[content-type=orgdiv3]'),
-      street: getText(el, 'addr-line[content-type=street-address]'),
-      addressComplements: getText(el, 'addr-line[content-type=complements]'),
-      city: getText(el, 'city'),
-      state: getText(el, 'state'),
-      postalCode: getText(el, 'postal-code'),
-      country: getText(el, 'country'),
-      phone: getText(el, 'phone'),
-      fax: getText(el, 'fax'),
-      email: getText(el, 'email'),
-      uri: getText(el, 'uri[content-type=link]')
-    }
-    let entity = pubMetaDb.create(node)
-    return entity.id
-  },
-
   export($$, node) {
     let el = $$('aff').attr('id', node.id)
     el.append(_createTextElement($$, node.name, 'institution', { 'content-type': 'orgname'}))
@@ -67,18 +44,6 @@ export const OrganisationConverter = {
 */
 export const AwardConverter = {
 
-  import(el, pubMetaDb) {
-    let node = {
-      id: el.id,
-      type: 'award',
-      institution: getText(el, 'institution'),
-      fundRefId: getText(el, 'institution-id'),
-      awardId: getText(el, 'award-id')
-    }
-    let entity = pubMetaDb.create(node)
-    return entity.id
-  },
-
   export($$, node) {
     let el = $$('award-group').attr('id', node.id)
 
@@ -98,19 +63,6 @@ export const AwardConverter = {
   <kwd> -> Keyword
 */
 export const KeywordConverter = {
-
-  import(el, pubMetaDb) {
-    const node = {
-      type: 'keyword',
-      name: el.textContent,
-      category: el.getAttribute('content-type'),
-      language: el.getParent().getAttribute('xml:lang')
-    }
-    const entity = pubMetaDb.create(node)
-
-    return entity.id
-  },
-
   export($$, node) {
     return _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
   }
@@ -120,18 +72,6 @@ export const KeywordConverter = {
   <subject> -> Subject
 */
 export const SubjectConverter = {
-
-  import(el, pubMetaDb) {
-    const node = {
-      // HACK: trying to merge EntitDb into Article model, avoiding type collision
-      type: '_subject',
-      name: el.textContent,
-      category: el.getAttribute('content-type'),
-      language: el.getParent().getAttribute('xml:lang')
-    }
-    const entity = pubMetaDb.create(node)
-    return entity.id
-  },
 
   export($$, node) {
     return _createTextElement($$, node.name, 'subject', { 'content-type': node.category })
@@ -181,13 +121,6 @@ export const SubjectConverter = {
 */
 export const PersonConverter = {
 
-  import(el, pubMetaDb) {
-    let entity = pubMetaDb.create(
-      _extractPerson(el)
-    )
-    return entity.id
-  },
-
   export($$, node) {
     let el = _exportPerson($$, node)
     // Adds affiliations to el
@@ -234,34 +167,7 @@ function _addAwards(el, $$, node) {
   })
 }
 
-
 export const GroupConverter = {
-
-  /*
-    NOTE: this returns an array of person nodes, as the group is
-    transformed to a list of members
-  */
-  import(el, pubMetaDb) {
-    let node = {
-      id: el.id,
-      type: 'group',
-      name: getText(el, 'named-content[content-type=name]'),
-      email: getText(el, 'email'),
-      affiliations: _extractAffiliations(el, true),
-      equalContrib: el.getAttribute('equal-contrib') === 'yes',
-      corresp: el.getAttribute('corresp') === 'yes',
-      awards: _extractAwards(el)
-    }
-    let group = pubMetaDb.create(node)
-
-    let persons = _extractGroupMembers(el, group.id)
-    let results = []
-    persons.forEach(person => {
-      let node = pubMetaDb.create(person)
-      results.push(node.id)
-    })
-    return results
-  },
 
   export($$, node, doc, groupMembers) {
     let el = $$('contrib').attr({
@@ -294,7 +200,6 @@ export const GroupConverter = {
     return el
   }
 }
-
 
 /*
   <name> -> { type: 'ref-contrib', name: 'Doe', givenNames: 'John }
@@ -515,23 +420,6 @@ function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
   }
 }
 
-function _extractPerson(el, group) {
-  return {
-    type: 'person',
-    givenNames: getText(el, 'given-names'),
-    surname: getText(el, 'surname'),
-    email: getText(el, 'email'),
-    prefix: getText(el, 'prefix'),
-    suffix: getText(el, 'suffix'),
-    group: group,
-    affiliations: _extractAffiliations(el),
-    awards: _extractAwards(el),
-    equalContrib: el.getAttribute('equal-contrib') === 'yes',
-    corresp: el.getAttribute('corresp') === 'yes',
-    deceased: el.getAttribute('deceased') === 'yes'
-  }
-}
-
 function _getRefContribs(el, pubMetaDb, type) {
   let personGroup = el.find(`person-group[person-group-type=${type}]`)
   if (personGroup) {
@@ -543,39 +431,6 @@ function _getRefContribs(el, pubMetaDb, type) {
   }
 }
 
-function _extractGroupMembers(el, group) {
-  let members = el.findAll('contrib')
-  return members.map(el => {
-    return _extractPerson(el, group)
-  })
-}
-
-function _extractAffiliations(el, isGroup) {
-  // let dom = el.ownerDocument
-  let xrefs = el.findAll('xref[ref-type=aff]')
-  // NOTE: for groups we need to extract only affiliations of group, without members
-  if (isGroup) {
-    xrefs = el.findAll('collab > xref[ref-type=aff]')
-  }
-  let affs = xrefs.map(xref => xref.attr('rid'))
-  return affs
-}
-
-function _extractAwards(el) {
-  let xrefs = el.findAll('xref[ref-type=award]')
-  let awardIds = xrefs.map(xref => xref.attr('rid'))
-  return awardIds
-}
-
-
-export function getText(rootEl, selector) {
-  let match = rootEl.find(selector)
-  if (match) {
-    return match.textContent
-  } else {
-    return ''
-  }
-}
 
 function _getSeparatedText(rootEl, selector) {
   let match = rootEl.findAll(selector)

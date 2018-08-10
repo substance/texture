@@ -85,7 +85,9 @@ export default class FnGroupComponent extends NodeComponent {
     let editorSession = this.context.editorSession
     const doc = editorSession.getDocument()
     const parent = doc.find('fn-group')
-    removeElementAndXrefs(editorSession, fnId, parent)
-    this.rerender()
+    if (parent) {
+      removeElementAndXrefs(editorSession, fnId, parent)
+      this.rerender()
+    }
   }
 }

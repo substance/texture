@@ -1,7 +1,7 @@
 import loadManifest from './loadManifest'
 
 export default {
-  load(manifestXml) {
+  load (manifestXml) {
     return loadManifest(manifestXml)
   }
 }

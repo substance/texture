@@ -1,12 +1,6 @@
 // import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AbstractCitationManager from './AbstractCitationManager'
 
-const referenceTypes = [
-  'journal-article', 'book', 'chapter', 'conference-paper',
-  'report', 'newspaper-article', 'magazine-article', 'data-publication',
-  'patent', 'webpage', 'thesis', 'software'
-]
-
 export default class ReferenceManager extends AbstractCitationManager {
   constructor (doc, labelGenerator) {
     super(doc, 'bibr', labelGenerator)
@@ -17,11 +11,6 @@ export default class ReferenceManager extends AbstractCitationManager {
   // TODO: don't do this here, instead add something like this to ArticleAPI
   updateReferences (newRefs) { // eslint-disable-line no-unused-vars
     console.error('FIXME: do not update references here, use the ArticleAPI instead')
-    // let refList = this.doc.find('ref-list')
-    // let oldRefs = this.getReferenceIds()
-    // this.articleSession.transaction(tx => {
-    //   updateEntityChildArray(tx, refList.id, 'ref', 'rid', oldRefs, newRefs)
-    // })
   }
 
   getReferenceIds () {
@@ -49,9 +38,7 @@ export default class ReferenceManager extends AbstractCitationManager {
     const doc = this.doc
     // because references have different types we need to
     // all the different types
-    const refs = referenceTypes.reduce((refs, type) => {
-      return refs.concat(doc.findByType(type))
-    }, [])
+    const refs = doc.get('references').children
     // there are different strategies to determine the order
     // of references depending on the citation style
     // Note: Texture applies numbered citation labels

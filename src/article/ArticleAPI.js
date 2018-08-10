@@ -49,8 +49,12 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   getEntitiesByType(type) {
-    let entityIds = this.article.findByType(type)
-    return entityIds.map(entityId => this._getModelById(entityId))
+    // TODO: this needs to be done in a different way:
+    // nodes have specific place now, e.g. 'author' nodes are located in 'authors'
+    // That means rather than using the general 'type' index we should get the appropriate collection
+    // let entityIds = this.article.findByType(type)
+    // return entityIds.map(entityId => this._getModelById(entityId))
+    return []
   }
 
   // TODO: this should be configurable. As it is similar to HTML conversion

@@ -2,7 +2,7 @@ import {
   DocumentSchema, DocumentNode, InlineNode,
   XMLElementNode, XMLTextElement
 } from 'substance'
-import { BOOLEAN, STRING, STRING_ARRAY, MANY, ONE, CHILDREN } from '../kit'
+import { BOOLEAN, STRING, MANY, ONE, CHILDREN } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
@@ -27,7 +27,6 @@ Article.schema = {
 class ArticleRecord extends DocumentNode {}
 ArticleRecord.schema = {
   type: 'article-record',
-  articleIds: STRING_ARRAY,
   volume: STRING,
   issue: STRING,
   fpage: STRING,

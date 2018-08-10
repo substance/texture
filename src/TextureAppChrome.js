@@ -55,7 +55,7 @@ export default class TextureAppChrome extends Component {
             if (err) return cb(err)
             this._childContext = context
             this._afterInit()
-            this._setState({ archive })
+            this.setState({ archive })
           })
         })
       })
@@ -74,18 +74,18 @@ export default class TextureAppChrome extends Component {
     throw new Error('_loadArchive not implemented')
   }
 
-  _initArchive (archive) {
-    return archive
+  _initArchive (archive, context, cb) {
+    cb(null, archive)
   }
 
   _afterInit () {}
 
   // TODO: need to rethink
-  _save () {
-    return this.state.archive.save().then(() => {
+  _save (cb) {
+    this.state.archive.save(err => {
+      if (err) return cb(err)
       this._updateTitle(false)
-    }).catch(err => {
-      console.error(err)
+      cb(null)
     })
   }
 

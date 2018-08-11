@@ -16,11 +16,11 @@
     "dar-server": "^0.4.1",
     "electron": "2.0.1",
     "electron-builder": "20.13.4",
-    "eslint": "^4.19.1",
     "esm": "3.0.47",
     "font-awesome": "4.5.0",
     "nyc": "11.8.0",
     "source-map-support": "0.5.3",
+    "standard": "^11.0.1",
     "substance": "1.0.0-preview.82",
     "substance-bundler": "0.25.4",
     "substance-test": "0.12.2",
@@ -35,7 +35,7 @@
     "test": "node make test-nodejs && node --require esm test | tap-spec",
     "webtest": "node make test-browser -s -w",
     "cover": "nyc --require esm --reporter=lcov --reporter=text node test",
-    "lint": "eslint -c .eslintrc.js src index.es.js"
+    "lint": "standard src/**/*.js"
   },
   "nyc": {
     "include": [

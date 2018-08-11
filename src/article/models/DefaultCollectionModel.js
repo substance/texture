@@ -4,29 +4,32 @@ export default class DefaultCollectionModel {
     this._node = node
   }
 
-  get id() {
+  get id () {
     return this._getCollectionId()
   }
 
-  get isCollection() {
+  get isCollection () {
     return true
   }
 
-  get type() {
+  get type () {
     return 'collection'
   }
 
-  getItems() {
+  getItems () {
     return this._node._childNodes.map(id => this._api._getModelById(id))
   }
 
-  addItem(item = {}) {
-    const itemType = this._getCollectionType()
-    item.type = itemType
-    return this._api._addModel(item)
+  addItem (item = {}) {
+    item.type = this._getCollectionType()
+    return this._api.addItemToCollection(item, this)
   }
 
-  removeItem(item) {
-    return this._api._removeModel(item)
+  removeItem (item) {
+    this._api.removeItemFromCollection(item, this)
+  }
+
+  _getCollectionType () {
+    return 'collection'
   }
 }

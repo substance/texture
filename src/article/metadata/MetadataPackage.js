@@ -125,13 +125,13 @@ export default {
     config.addLabel('add-group', {
       en: 'Add Group'
     })
-    config.addCommand('add-affiliation', AddEntityCommand, {
-      type: 'affiliation',
+    config.addCommand('add-organisation', AddEntityCommand, {
+      type: 'organisation',
       collection: 'organisations',
       commandGroup: 'add-entity'
     })
-    config.addLabel('add-affiliation', {
-      en: 'Add Affiliation'
+    config.addLabel('add-organisation', {
+      en: 'Add Organisation'
     })
     config.addCommand('add-award', AddEntityCommand, {
       type: 'award',

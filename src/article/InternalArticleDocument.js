@@ -1,4 +1,4 @@
-import { XMLDocument } from 'substance'
+import { Document } from 'substance'
 import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 import TextureEditingInterface from './TextureEditingInterface'
@@ -6,7 +6,7 @@ import TextureEditingInterface from './TextureEditingInterface'
 // TODO: it would be better to use a general document implementation (like XMLDocument)
 // and come up with a new mechanism to bind indexes to the document instance
 // Helpers like findByType and such can be achieved differently
-export default class InternalArticleDocument extends XMLDocument {
+export default class InternalArticleDocument extends Document {
   _initialize () {
     super._initialize()
 
@@ -27,13 +27,12 @@ export default class InternalArticleDocument extends XMLDocument {
     return new TextureEditingInterface(this, { editing: new TextureEditing() })
   }
 
-  find () {
-    console.error('FIXME: InternalArticleDocument should implement find()')
+  find (selector) {
+    return this.get('article').find(selector)
   }
 
-  findAll () {
-    console.error('FIXME: InternalArticleDocument should implement findAll()')
-    return []
+  findAll (selector) {
+    return this.get('article').findAll(selector)
   }
 
   invert (change) {

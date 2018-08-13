@@ -23,8 +23,7 @@ window.addEventListener('load', () => {
 // if the stored data could be loaded again, or if there is a bug in
 // Textures exporter
 class DevWebApp extends TextureWebApp {
-
-  _getStorage(storageType) {
+  _getStorage (storageType) {
     let storage = super._getStorage(storageType)
     if (storageType === 'vfs') {
       vfsSaveHook(storage, TextureArchive)
@@ -32,7 +31,7 @@ class DevWebApp extends TextureWebApp {
     return storage
   }
 
-  _getArticleConfig() {
+  _getArticleConfig () {
     return EditorPackage
   }
 }

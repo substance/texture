@@ -2,7 +2,7 @@ import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import { Sec2Heading } from '../../index'
 
-const two_sections = `
+const TWO_SECTIONS = `
 <body>
   <sec id="s1">
     <title>1</title>
@@ -14,8 +14,8 @@ const two_sections = `
   </sec>
 </body>
 `
-test("Sec2Heading: Sections to headings (two sections)", function(t) {
-  let els = DefaultDOMElement.parseSnippet(two_sections, 'xml')
+test('Sec2Heading: Sections to headings (two sections)', function (t) {
+  let els = DefaultDOMElement.parseSnippet(TWO_SECTIONS, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
   converter.import(dom)
@@ -32,8 +32,8 @@ test("Sec2Heading: Sections to headings (two sections)", function(t) {
   t.end()
 })
 
-test("Sec2Heading: Headings to sections (two sections)", function(t) {
-  let els = DefaultDOMElement.parseSnippet(two_sections, 'xml')
+test('Sec2Heading: Headings to sections (two sections)', function (t) {
+  let els = DefaultDOMElement.parseSnippet(TWO_SECTIONS, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
   converter.import(dom)
@@ -43,19 +43,19 @@ test("Sec2Heading: Headings to sections (two sections)", function(t) {
   let s1 = dom.find('#s1')
   t.equal(s1.tagName, 'sec', 's1 should be converted into a sec')
   t.equal(s1.children.length, 2, '.. and should have 2 children')
-  let s1_title = s1.find('title')
-  t.notNil(s1_title, 's1 should have a title element')
-  t.equal(s1_title.textContent, '1', '.. with correct content')
+  let s1Title = s1.find('title')
+  t.notNil(s1Title, 's1 should have a title element')
+  t.equal(s1Title.textContent, '1', '.. with correct content')
   let s2 = dom.find('#s2')
   t.equal(s2.tagName, 'sec', 's2 should be converted into a sec')
   t.equal(s2.children.length, 2, '.. and should have 2 children')
-  let s2_title = s2.find('title')
-  t.notNil(s2_title, 's2 should have a title element')
-  t.equal(s2_title.textContent, '2', '.. with correct content')
+  let s2Title = s2.find('title')
+  t.notNil(s2Title, 's2 should have a title element')
+  t.equal(s2Title.textContent, '2', '.. with correct content')
   t.end()
 })
 
-const nested_sections = `
+const NESTED_SECTIONS = `
 <body>
   <sec id="s1">
     <title>1</title>
@@ -71,8 +71,8 @@ const nested_sections = `
   </sec>
 </body>
 `
-test("Sec2Heading: Sections to headings (nested sections)", function(t) {
-  let els = DefaultDOMElement.parseSnippet(nested_sections, 'xml')
+test('Sec2Heading: Sections to headings (nested sections)', function (t) {
+  let els = DefaultDOMElement.parseSnippet(NESTED_SECTIONS, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
   converter.import(dom)
@@ -82,10 +82,10 @@ test("Sec2Heading: Sections to headings (nested sections)", function(t) {
   t.equal(s1.tagName, 'heading', 's1 should be converted into a heading')
   t.equal(s1.attr('level'), '1', '.. of level 1')
   t.equal(s1.textContent, '1', '.. and the section title transferred')
-  let s1_2 = dom.find('#s1_2')
-  t.equal(s1_2.tagName, 'heading', 's1_2 should be converted into a heading')
-  t.equal(s1_2.attr('level'), '2', '.. of level 2')
-  t.equal(s1_2.textContent, '1.2', '.. and the section title transferred')
+  let s12 = dom.find('#s1_2')
+  t.equal(s12.tagName, 'heading', 's1_2 should be converted into a heading')
+  t.equal(s12.attr('level'), '2', '.. of level 2')
+  t.equal(s12.textContent, '1.2', '.. and the section title transferred')
   let s2 = dom.find('#s2')
   t.equal(s2.tagName, 'heading', 's2 should be converted into a heading')
   t.equal(s2.attr('level'), '1', '.. of level 1')
@@ -93,8 +93,8 @@ test("Sec2Heading: Sections to headings (nested sections)", function(t) {
   t.end()
 })
 
-test("Sec2Heading: Headings to sections (nested sections)", function(t) {
-  let els = DefaultDOMElement.parseSnippet(nested_sections, 'xml')
+test('Sec2Heading: Headings to sections (nested sections)', function (t) {
+  let els = DefaultDOMElement.parseSnippet(NESTED_SECTIONS, 'xml')
   let dom = els[0].getOwnerDocument()
   let converter = new Sec2Heading()
   converter.import(dom)
@@ -104,20 +104,20 @@ test("Sec2Heading: Headings to sections (nested sections)", function(t) {
   let s1 = dom.find('#s1')
   t.equal(s1.tagName, 'sec', 's1 should be converted into a sec')
   t.equal(s1.children.length, 3, '.. and should have 3 children')
-  let s1_title = s1.find('title')
-  t.notNil(s1_title, 's1 should have a title element')
-  t.equal(s1_title.textContent, '1', '.. with correct content')
-  let s1_2 = dom.find('#s1_2')
-  t.equal(s1_2.tagName, 'sec', 's1_2 should be converted into a sec')
-  t.equal(s1_2.children.length, 2, '.. and should have 2 children')
-  let s1_2_title = s1_2.find('title')
-  t.notNil(s1_2_title, 's1_2 should have a title element')
-  t.equal(s1_2_title.textContent, '1.2', '.. with correct content')
+  let s1Title = s1.find('title')
+  t.notNil(s1Title, 's1 should have a title element')
+  t.equal(s1Title.textContent, '1', '.. with correct content')
+  let s12 = dom.find('#s1_2')
+  t.equal(s12.tagName, 'sec', 's1_2 should be converted into a sec')
+  t.equal(s12.children.length, 2, '.. and should have 2 children')
+  let s12Title = s12.find('title')
+  t.notNil(s12Title, 's1_2 should have a title element')
+  t.equal(s12Title.textContent, '1.2', '.. with correct content')
   let s2 = dom.find('#s2')
   t.equal(s2.tagName, 'sec', 's2 should be converted into a sec')
   t.equal(s2.children.length, 2, '.. and should have 2 children')
-  let s2_title = s2.find('title')
-  t.notNil(s2_title, 's2 should have a title element')
-  t.equal(s2_title.textContent, '2', '.. with correct content')
+  let s2Title = s2.find('title')
+  t.notNil(s2Title, 's2 should have a title element')
+  t.equal(s2Title.textContent, '2', '.. with correct content')
   t.end()
 })

@@ -5,7 +5,7 @@ import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('element-citation.xml')
 
-test("ImportEntities: Import journal citation", function(t) {
+test('ImportEntities: Import journal citation', function (t) {
   let { entityDb } = _setupImportTest()
 
   // TODO: how can we turn the original id into a uuid, what to do
@@ -27,7 +27,7 @@ test("ImportEntities: Import journal citation", function(t) {
   t.end()
 })
 
-test("ImportEntities: Import book citation", function(t) {
+test('ImportEntities: Import book citation', function (t) {
   let { entityDb } = _setupImportTest()
   let r2 = entityDb.get('r2')
 
@@ -48,7 +48,7 @@ test("ImportEntities: Import book citation", function(t) {
   t.end()
 })
 
-test("ImportEntities: Extract persons from element citation", function(t) {
+test('ImportEntities: Extract persons from element citation', function (t) {
   let { entityDb } = _setupImportTest()
   const r1 = entityDb.get('r1')
   const authors = r1.authors
@@ -69,7 +69,7 @@ test("ImportEntities: Extract persons from element citation", function(t) {
   t.end()
 })
 
-test("ImportEntities: Export journal citation", function(t) {
+test('ImportEntities: Export journal citation', function (t) {
   let { dom } = _setupExportTest()
 
   let r1 = dom.find('#r1')
@@ -94,7 +94,7 @@ test("ImportEntities: Export journal citation", function(t) {
   t.end()
 })
 
-test("ImportEntities: Export book citation", function(t) {
+test('ImportEntities: Export book citation', function (t) {
   let { dom } = _setupExportTest()
 
   let r2 = dom.find('#r2')
@@ -120,7 +120,7 @@ test("ImportEntities: Export book citation", function(t) {
   t.end()
 })
 
-test("ImportEntities: Export person entities to element citations", function(t) {
+test('ImportEntities: Export person entities to element citations', function (t) {
   let { dom } = _setupExportTest()
 
   const r1 = dom.find('#r1')
@@ -148,7 +148,7 @@ test("ImportEntities: Export person entities to element citations", function(t) 
   t.end()
 })
 
-function _emptyEntityDb() {
+function _emptyEntityDb () {
   // creating an in-memory model of the EntityDB
   // which will be used to create records from JATS
   let entitiesConf = new Configurator()
@@ -158,18 +158,18 @@ function _emptyEntityDb() {
 
 // By storing the errors we can later check for an error count in failing
 // tests.
-function _createAPI(entityDb) {
+function _createAPI (entityDb) {
   let errors = []
   return {
     entityDb,
-    error: function(data) {
+    error: function (data) {
       errors.push(data)
     }
   }
 }
 
 // Import entities from XML, used in the beginning of each test
-function _setupImportTest() {
+function _setupImportTest () {
   let entityDb = _emptyEntityDb()
   let dom = DefaultDOMElement.parseXML(fixture)
   let api = _createAPI(entityDb)
@@ -180,7 +180,7 @@ function _setupImportTest() {
   return { converter, dom, entityDb }
 }
 
-function _setupExportTest() {
+function _setupExportTest () {
   let entityDb = _emptyEntityDb()
   let dom = DefaultDOMElement.parseXML(fixture)
   let api = _createAPI(entityDb)

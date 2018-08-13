@@ -5,7 +5,7 @@ import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('fig.xml')
 
-test("ConvertFig: Extract caption title from figure", function(t) {
+test('ConvertFig: Extract caption title from figure', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertFig()
   converter.import(dom)
@@ -19,7 +19,7 @@ test("ConvertFig: Extract caption title from figure", function(t) {
   t.end()
 })
 
-test("ConvertFig: Should expand title and caption if not there", function(t) {
+test('ConvertFig: Should expand title and caption if not there', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertFig()
   converter.import(dom)
@@ -31,8 +31,7 @@ test("ConvertFig: Should expand title and caption if not there", function(t) {
   t.end()
 })
 
-
-test("ConvertFig: Should expand title if not there", function(t) {
+test('ConvertFig: Should expand title if not there', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertFig()
   converter.import(dom)

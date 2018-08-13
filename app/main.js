@@ -14,8 +14,7 @@ const BLANK_DOCUMENT_FOLDER = path.join(__dirname, 'data/blank')
 let windows = []
 
 // TODO: Make sure the same dar folder can't be opened multiple times
-function createEditorWindow(darFolder, isNew) {
-
+function createEditorWindow (darFolder, isNew) {
   // Create the browser window.
   let editorWindow = new BrowserWindow({ width: 1024, height: 768 })
 
@@ -25,7 +24,7 @@ function createEditorWindow(darFolder, isNew) {
 
   editorWindow.isSaved = true
   if (isNew) {
-    query.isNew = "true"
+    query.isNew = 'true'
     // Remember on the window object, so on next save we can delegate
     // to saveAs workflow
     editorWindow.isNew = true
@@ -53,19 +52,18 @@ function createEditorWindow(darFolder, isNew) {
     }
   })
 
-  editorWindow.on('close', function(e) {
+  editorWindow.on('close', function (e) {
     // const focusedWindow = BrowserWindow.getFocusedWindow()
     const isSaved = editorWindow.isSaved
-    if(!isSaved) {
-
+    if (!isSaved) {
       dialog.showMessageBox({
-        type: "question",
-        title: "Unsaved changes",
-        message: "Document has changes, do you want to save them?",
-        buttons: ["Don't save", "Cancel", "Save"],
+        type: 'question',
+        title: 'Unsaved changes',
+        message: 'Document has changes, do you want to save them?',
+        buttons: ["Don't save", 'Cancel', 'Save'],
         defaultId: 2,
         cancelId: 1
-      }, function(buttonId) {
+      }, function (buttonId) {
         if (buttonId === 0) {
           // Just close, no saving
         } else if (buttonId === 1) {
@@ -111,7 +109,7 @@ app.on('activate', function () {
   }
 })
 
-function createMenu() {
+function createMenu () {
   // Set up the application menu1
   const template = [
     {
@@ -120,28 +118,28 @@ function createMenu() {
         {
           label: 'New',
           accelerator: 'CommandOrControl+N',
-          click() {
+          click () {
             openNew()
           }
         },
         {
           label: 'Open',
           accelerator: 'CommandOrControl+O',
-          click() {
+          click () {
             promptOpen()
           }
         },
         {
           label: 'Save',
           accelerator: 'CommandOrControl+S',
-          click() {
+          click () {
             save()
           }
         },
         {
           label: 'Save As...',
           accelerator: 'CommandOrControl+Shift+S',
-          click() {
+          click () {
             saveAs()
           }
         }
@@ -215,7 +213,7 @@ function createMenu() {
   Menu.setApplicationMenu(menu)
 }
 
-function promptOpen() {
+function promptOpen () {
   dialog.showOpenDialog({
     properties: ['openDirectory']
   }, (dirPaths) => {
@@ -228,11 +226,11 @@ function promptOpen() {
   })
 }
 
-function openNew() {
+function openNew () {
   createEditorWindow(BLANK_DOCUMENT_FOLDER, true)
 }
 
-function save() {
+function save () {
   let focusedWindow = BrowserWindow.getFocusedWindow()
   if (focusedWindow.isNew) {
     saveAs()
@@ -241,7 +239,7 @@ function save() {
   }
 }
 
-function saveAs() {
+function saveAs () {
   let focusedWindow = BrowserWindow.getFocusedWindow()
   dialog.showOpenDialog({
     title: 'Save archive as...',
@@ -255,7 +253,7 @@ function saveAs() {
   })
 }
 
-ipcMain.on('document:save-as:successful', (/*event*/) => {
+ipcMain.on('document:save-as:successful', (/* event */) => {
   console.info('Save As was successful.')
   let focusedWindow = BrowserWindow.getFocusedWindow()
   focusedWindow.isNew = false

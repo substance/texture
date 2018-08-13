@@ -5,7 +5,7 @@ import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('table.xml')
 
-test("ConvertTableWrap: table-wrap without caption", function(t) {
+test('ConvertTableWrap: table-wrap without caption', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new ConvertTableWrap()
   converter.import(dom)

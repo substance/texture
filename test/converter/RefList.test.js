@@ -6,7 +6,7 @@ import readFixture from '../fixture/readFixture'
 const fixture = readFixture('ref-list.xml')
 const emptyBackFixture = readFixture('empty-back.xml')
 
-test("RefList: Import document without ref-list", function(t) {
+test('RefList: Import document without ref-list', function (t) {
   let dom = DefaultDOMElement.parseXML(emptyBackFixture)
   let converter = new RefList()
   converter.import(dom)
@@ -18,7 +18,7 @@ test("RefList: Import document without ref-list", function(t) {
   t.end()
 })
 
-test("RefList: Cleaning up existing ref-list", function(t) {
+test('RefList: Cleaning up existing ref-list', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new RefList()
   converter.import(dom)

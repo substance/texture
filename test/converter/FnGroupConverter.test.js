@@ -6,7 +6,7 @@ import readFixture from '../fixture/readFixture'
 const fixture = readFixture('fn-group.xml')
 const noFnGroupFixture = readFixture('empty-back.xml')
 
-test("FnGroupConverter: Import document without fn-group", function(t) {
+test('FnGroupConverter: Import document without fn-group', function (t) {
   let dom = DefaultDOMElement.parseXML(noFnGroupFixture)
   let converter = new FnGroupConverter()
   converter.import(dom)
@@ -18,7 +18,7 @@ test("FnGroupConverter: Import document without fn-group", function(t) {
   t.end()
 })
 
-test("FnGroupConverter: Import document with fn-group", function(t) {
+test('FnGroupConverter: Import document with fn-group', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new FnGroupConverter()
   converter.import(dom)
@@ -33,7 +33,7 @@ test("FnGroupConverter: Import document with fn-group", function(t) {
   t.end()
 })
 
-test("FnGroupConverter: Export empty fn-group", function(t) {
+test('FnGroupConverter: Export empty fn-group', function (t) {
   let dom = DefaultDOMElement.parseXML(noFnGroupFixture)
   let converter = new FnGroupConverter()
   converter.import(dom)
@@ -45,7 +45,7 @@ test("FnGroupConverter: Export empty fn-group", function(t) {
   t.end()
 })
 
-test("FnGroupConverter: Export not empty fn-group", function(t) {
+test('FnGroupConverter: Export not empty fn-group', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new FnGroupConverter()
   converter.import(dom)

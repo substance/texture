@@ -5,7 +5,7 @@ import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('fn-group.xml')
 
-test("NormalizeFn: Unwrap fn > p > disp-quote > p", function(t) {
+test('NormalizeFn: Unwrap fn > p > disp-quote > p', function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new NormalizeFn()
   converter.import(dom)
@@ -14,7 +14,7 @@ test("NormalizeFn: Unwrap fn > p > disp-quote > p", function(t) {
   t.end()
 })
 
-test("NormalizeFn: Removing all elements except inner p's", function(t) {
+test("NormalizeFn: Removing all elements except inner p's", function (t) {
   let dom = DefaultDOMElement.parseXML(fixture)
   let converter = new NormalizeFn()
   converter.import(dom)

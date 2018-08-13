@@ -1,13 +1,12 @@
 import NodeComponent from '../shared/NodeComponent'
 
 export default class TextNodeComponent extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const TextPropertyComponent = this.getComponent('text-property')
     const node = this.props.node
     const tagName = this.getTagName()
 
-    let el = $$(tagName).addClass('sc-'+node.type)
+    let el = $$(tagName).addClass('sc-' + node.type)
       .append($$(TextPropertyComponent, {
         doc: node.getDocument(),
         placeholder: this.props.placeholder,
@@ -19,7 +18,7 @@ export default class TextNodeComponent extends NodeComponent {
     return el
   }
 
-  getTagName() {
+  getTagName () {
     return 'div'
   }
 }

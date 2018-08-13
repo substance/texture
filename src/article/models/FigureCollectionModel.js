@@ -7,10 +7,10 @@ export default class FigureCollectionModel {
     return 'figures'
   }
 
-  get isCollection() {
+  get isCollection () {
     return true
   }
-  
+
   get type () {
     return 'collection'
   }

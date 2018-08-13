@@ -1,6 +1,6 @@
 import { DefaultDOMElement } from 'substance'
 
-function journalArticleRenderer($$, entityId, entityDb) {
+function journalArticleRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -34,7 +34,7 @@ function journalArticleRenderer($$, entityId, entityDb) {
     )
   }
 
-  let date = _renderDate($$, entity.year, entity.month, entity.day, "short")
+  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
   if (date) {
     fragments.push(' ', date, ';')
   }
@@ -66,7 +66,7 @@ function journalArticleRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function bookRenderer($$, entityId, entityDb) {
+function bookRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -76,7 +76,7 @@ function bookRenderer($$, entityId, entityDb) {
       '.'
     )
   } else if (entity.editors.length > 0) {
-    let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+    let editorLabel = entity.editors.length > 1 ? 'eds' : 'ed'
     fragments = fragments.concat(
       _renderAuthors($$, entity.editors, entityDb),
       ', ',
@@ -109,7 +109,7 @@ function bookRenderer($$, entityId, entityDb) {
     fragments.push(' ', entity.edition, '.')
   }
   if (entity.editors.length > 0 && entity.authors.length > 0) {
-    let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+    let editorLabel = entity.editors.length > 1 ? 'eds' : 'ed'
     fragments = fragments.concat(
       ' (',
       _renderAuthors($$, entity.editors, entityDb),
@@ -128,7 +128,7 @@ function bookRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
   }
   let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
@@ -148,7 +148,7 @@ function bookRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function chapterRenderer($$, entityId, entityDb) {
+function chapterRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -175,7 +175,7 @@ function chapterRenderer($$, entityId, entityDb) {
 
   fragments = fragments.concat('In: ')
   if (entity.editors.length > 0) {
-    let editorLabel = entity.editors.length>1 ? 'eds': 'ed'
+    let editorLabel = entity.editors.length > 1 ? 'eds' : 'ed'
     fragments = fragments.concat(
       ' ',
       _renderAuthors($$, entity.editors, entityDb),
@@ -213,7 +213,7 @@ function chapterRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
   }
   let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
@@ -233,7 +233,7 @@ function chapterRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function patentRenderer($$, entityId, entityDb) {
+function patentRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -254,7 +254,7 @@ function patentRenderer($$, entityId, entityDb) {
   if (entity.assignee) {
     fragments.push(' ', entity.assignee, ',')
   }
-  let date = _renderDate($$, entity.year, entity.month, entity.day, "short")
+  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
   if (date) {
     fragments.push(' ', date, ';')
   }
@@ -267,7 +267,7 @@ function patentRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function dataPublicationRenderer($$, entityId, entityDb) {
+function dataPublicationRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -295,7 +295,7 @@ function dataPublicationRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
     fragments.push('.')
   }
@@ -308,8 +308,7 @@ function dataPublicationRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-
-function magazineArticleRenderer($$, entityId, entityDb) {
+function magazineArticleRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -338,7 +337,7 @@ function magazineArticleRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
   }
 
@@ -359,8 +358,7 @@ function magazineArticleRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-
-function newspaperArticleRenderer($$, entityId, entityDb) {
+function newspaperArticleRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -396,7 +394,7 @@ function newspaperArticleRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
   }
 
@@ -419,8 +417,7 @@ function newspaperArticleRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-
-function reportRenderer($$, entityId, entityDb) {
+function reportRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
   if (entity.authors.length > 0) {
@@ -453,7 +450,7 @@ function reportRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
     fragments.push('.')
   }
@@ -468,7 +465,7 @@ function reportRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function conferencePaperRenderer($$, entityId, entityDb) {
+function conferencePaperRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -501,7 +498,7 @@ function conferencePaperRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
   }
 
@@ -521,7 +518,7 @@ function conferencePaperRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function softwareRenderer($$, entityId, entityDb) {
+function softwareRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -546,7 +543,7 @@ function softwareRenderer($$, entityId, entityDb) {
 
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
-  let date = _renderDate($$, entity.year, entity.month, entity.day, "short")
+  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
   if (date) {
     fragments.push(' ', date, ';')
   }
@@ -561,7 +558,7 @@ function softwareRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function thesisRenderer($$, entityId, entityDb) {
+function thesisRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -584,7 +581,7 @@ function thesisRenderer($$, entityId, entityDb) {
   if (entity.year) {
     fragments.push(' ', entity.year)
     if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, "short"))
+      fragments.push(' ', _renderMonth(entity.month, 'short'))
     }
     fragments.push('.')
   }
@@ -592,7 +589,7 @@ function thesisRenderer($$, entityId, entityDb) {
   return fragments
 }
 
-function webpageRenderer($$, entityId, entityDb) {
+function webpageRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -627,7 +624,7 @@ function webpageRenderer($$, entityId, entityDb) {
   }
 
   if (entity.year) {
-    let dateFormatted = _renderDate($$, entity.year, entity.month, entity.day, "long")
+    let dateFormatted = _renderDate($$, entity.year, entity.month, entity.day, 'long')
     fragments.push('. Accessed ', dateFormatted, '.')
   }
 
@@ -635,7 +632,7 @@ function webpageRenderer($$, entityId, entityDb) {
 }
 
 /* This is used for authors and editors */
-function personRenderer($$, entityId, entityDb, options = {}) {
+function personRenderer ($$, entityId, entityDb, options = {}) {
   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
   if (options.short) {
     givenNames = _getInitials(givenNames)
@@ -655,14 +652,14 @@ function personRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function groupRenderer($$, entityId, entityDb) {
+function groupRenderer ($$, entityId, entityDb) {
   let { name } = entityDb.get(entityId)
   return [ name ]
 }
 
 // function personRenderer($$, entityId, entityDb, options = {}) {
 //   let { prefix, suffix, givenNames, surname } = entityDb.get(entityId)
-function refContribRenderer($$, entityId, entityDb, options = {}) {
+function refContribRenderer ($$, entityId, entityDb, options = {}) {
   let { givenNames, name } = entityDb.get(entityId)
 
   let result = [
@@ -682,8 +679,7 @@ function refContribRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-
-function organisationRenderer($$, entityId, entityDb, options = {}) {
+function organisationRenderer ($$, entityId, entityDb, options = {}) {
   let { name, country } = entityDb.get(entityId)
   let result = [ name ]
   if (!options.short) {
@@ -694,7 +690,7 @@ function organisationRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function awardRenderer($$, entityId, entityDb, options = {}) {
+function awardRenderer ($$, entityId, entityDb, options = {}) {
   let { awardId, institution } = entityDb.get(entityId)
   let result = [ institution ]
   if (!options.short) {
@@ -705,7 +701,7 @@ function awardRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function keywordRenderer($$, entityId, entityDb, options = {}) {
+function keywordRenderer ($$, entityId, entityDb, options = {}) {
   let { category, name } = entityDb.get(entityId)
   let result = [ name ]
   if (!options.short) {
@@ -716,7 +712,7 @@ function keywordRenderer($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function subjectRenderer($$, entityId, entityDb, options = {}) {
+function subjectRenderer ($$, entityId, entityDb, options = {}) {
   let { category, name } = entityDb.get(entityId)
   let result = [ name ]
   if (!options.short) {
@@ -756,7 +752,7 @@ export default {
 /*
   Helpers
 */
-function _renderAuthors($$, authors, entityDb) {
+function _renderAuthors ($$, authors, entityDb) {
   let fragments = []
   authors.forEach((refContribId, i) => {
     fragments = fragments.concat(
@@ -769,7 +765,7 @@ function _renderAuthors($$, authors, entityDb) {
   return fragments
 }
 
-function _renderDate($$, year, month, day, format) {
+function _renderDate ($$, year, month, day, format) {
   if (year) {
     if (month) {
       if (day) {
@@ -781,12 +777,11 @@ function _renderDate($$, year, month, day, format) {
       return year
     }
   }
-
 }
 
-function _renderMonth(month, format) {
+function _renderMonth (month, format) {
   let monthNames
-  if (format==="long") {
+  if (format === 'long') {
     monthNames = [null, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   } else {
     monthNames = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -796,7 +791,7 @@ function _renderMonth(month, format) {
   }
 }
 
-function _renderDOI($$, doi) {
+function _renderDOI ($$, doi) {
   return $$('a').attr({
     href: `https://doi.org/${doi}`,
     target: '_blank'
@@ -806,13 +801,13 @@ function _renderDOI($$, doi) {
   )
 }
 
-function _renderLocation($$, fpage, lpage, pageRange, elocationId) {
+function _renderLocation ($$, fpage, lpage, pageRange, elocationId) {
   if (pageRange) {
     // Give up to three page ranges, then use passim for more, see
     // https://www.ncbi.nlm.nih.gov/books/NBK7282/box/A33679/?report=objectonly
     let parts = pageRange.split(',')
-    if (parts.length>3) {
-      return parts.slice(0, 3).join(',') + " passim"
+    if (parts.length > 3) {
+      return parts.slice(0, 3).join(',') + ' passim'
     } else {
       return pageRange
     }
@@ -820,10 +815,10 @@ function _renderLocation($$, fpage, lpage, pageRange, elocationId) {
     if (lpage) {
       // Do not repeat page numbers unless they are followed by a letter
       // e.g. 211-218 => 211-8 but 211A-218A stays
-      if (fpage.length===lpage.length && /^\d+$/.test(fpage) && /^\d+$/.test(lpage)) {
+      if (fpage.length === lpage.length && /^\d+$/.test(fpage) && /^\d+$/.test(lpage)) {
         let i
-        for (i=0; i<fpage.length; i++) {
-          if (fpage[i]!==lpage[i]) break
+        for (i = 0; i < fpage.length; i++) {
+          if (fpage[i] !== lpage[i]) break
         }
         return fpage + '-' + lpage.substring(i)
       }
@@ -836,7 +831,7 @@ function _renderLocation($$, fpage, lpage, pageRange, elocationId) {
   }
 }
 
-function _renderPublisherPlace($$, place, publisher) {
+function _renderPublisherPlace ($$, place, publisher) {
   if (place && publisher) {
     return ' ' + place + ': ' + publisher + '; '
   } else if (place) {
@@ -848,7 +843,7 @@ function _renderPublisherPlace($$, place, publisher) {
   }
 }
 
-function _getInitials(givenNames) {
+function _getInitials (givenNames) {
   return givenNames.split(' ').map(part => {
     return part[0] ? part[0].toUpperCase() : ''
   }).join('')
@@ -859,12 +854,12 @@ function _getInitials(givenNames) {
 //   return INTERNAL_RENDERER_MAP[entity.type]($$, entityId, entityDb, options)
 // }
 
-function _renderHTML($$, htmlString) {
+function _renderHTML ($$, htmlString) {
   return $$('span').html(htmlString)
 }
 
-function _delegate(fn) {
-  return function(entityId, db, options) {
+function _delegate (fn) {
+  return function (entityId, db, options) {
     let el = _createElement()
     let $$ = el.createElement.bind(el)
     let fragments = fn($$, entityId, db, options)
@@ -873,6 +868,6 @@ function _delegate(fn) {
   }
 }
 
-function _createElement() {
+function _createElement () {
   return DefaultDOMElement.parseSnippet('<div>', 'html')
 }

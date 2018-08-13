@@ -19,7 +19,7 @@ import { isArray, last } from 'substance'
 const HYPHEN = '‒'
 
 export default class NumberedLabelGenerator {
-  constructor(config = {}) {
+  constructor (config = {}) {
     // for labels with a type name such as 'Figure 1'
     this.name = config.name
     // for labels with type name, with multiple refs, such as 'Figures 1-3'
@@ -38,7 +38,7 @@ export default class NumberedLabelGenerator {
     this.invalid = config.invalid || '???'
   }
 
-  getLabel(numbers) {
+  getLabel (numbers) {
     if (!numbers) return this.invalid
     if (!isArray(numbers)) numbers = [numbers]
     if (numbers.length === 0) return this.invalid
@@ -70,7 +70,7 @@ export default class NumberedLabelGenerator {
         return
       } else {
         // join with the 'to' operator, i.e. [1,2,3] => "1 to 3"
-        str = String(g[0])+this.to+String(last(g))
+        str = String(g[0]) + this.to + String(last(g))
       }
       if (this.groupTemplate) {
         str = this.groupTemplate.slice(0).replace('$', str)
@@ -79,7 +79,7 @@ export default class NumberedLabelGenerator {
     }
     for (let i = 0; i < L; i++) {
       let n = numbers[i]
-      if (n === numbers[i-1]+1) {
+      if (n === numbers[i - 1] + 1) {
         group.push(n)
       } else {
         if (group) {

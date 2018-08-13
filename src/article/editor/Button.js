@@ -1,8 +1,7 @@
 import { Component, FontAwesomeIcon as Icon } from 'substance'
 
 export default class Button extends Component {
-
-  render($$) {
+  render ($$) {
     let label = this.props.label
     let icon = this.props.icon
     let style = this.props.style || 'default'
@@ -10,19 +9,19 @@ export default class Button extends Component {
 
     let el = $$('button').addClass('sc-button sm-style-' + style)
 
-    if(icon) {
+    if (icon) {
       el.append(
         $$(Icon, {icon: 'fa-' + icon}).addClass('se-icon')
       )
     }
 
-    if(label) {
+    if (label) {
       el.append(
         $$('div').addClass('se-label').append(label)
       )
     }
 
-    if(tooltip) {
+    if (tooltip) {
       el.append(
         $$('span').addClass('se-tooltip').append(tooltip)
       )
@@ -30,5 +29,4 @@ export default class Button extends Component {
 
     return el
   }
-
 }

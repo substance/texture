@@ -9,7 +9,7 @@ const targetTypes = [
 ]
 
 export default class AddReferenceWorkflow extends Component {
-  didMount() {
+  didMount () {
     super.didMount()
 
     this.handleActions({
@@ -17,7 +17,7 @@ export default class AddReferenceWorkflow extends Component {
     })
   }
 
-  render($$) {
+  render ($$) {
     const labelProvider = this.context.labelProvider
 
     let el = $$('div').addClass('se-add-reference')
@@ -52,7 +52,7 @@ export default class AddReferenceWorkflow extends Component {
     return el
   }
 
-  _onImport(items) {
+  _onImport (items) {
     const api = this.context.api
     const collection = api.getCollectionForType('reference')
     collection.addItems(items)

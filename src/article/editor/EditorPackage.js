@@ -579,7 +579,7 @@ export default {
         items: [
           { type: 'command-group', name: 'switch-view' }
         ]
-      },
+      }
 
     ])
 

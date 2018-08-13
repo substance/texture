@@ -1,8 +1,7 @@
 import NodeComponent from '../shared/NodeComponent'
 
 export default class SigBlockComponent extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const sigBlock = this.props.node
 
     let el = $$('div').addClass('sc-sig-block')
@@ -25,5 +24,4 @@ export default class SigBlockComponent extends NodeComponent {
 
     return el
   }
-
 }

@@ -19,11 +19,11 @@ export default class AuthorCollectionModel extends DefaultCollectionModel {
     this._api.removeItemFromCollection(item, this)
   }
 
-  _getCollectionId() {
+  _getCollectionId () {
     return 'authors'
   }
 
-  _getCollectionType() {
+  _getCollectionType () {
     return 'author'
   }
 }

@@ -2,11 +2,10 @@ import NodeComponent from '../shared/NodeComponent'
 import { getLabel } from '../shared/nodeHelpers'
 
 export default class FigComponent extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let el = $$('div')
-      .addClass('sc-'+node.type)
+      .addClass('sc-' + node.type)
       .attr('data-id', node.id)
 
     let label = getLabel(node)
@@ -44,8 +43,8 @@ export default class FigComponent extends NodeComponent {
     return el
   }
 
-  _getContentType() {
-    switch(this.props.node.type) {
+  _getContentType () {
+    switch (this.props.node.type) {
       case 'table-wrap': {
         return 'table'
       }

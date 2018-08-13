@@ -5,8 +5,7 @@ import { getLabel } from '../shared/nodeHelpers'
   Renders a keyboard-selectable figure target item
 */
 export default class FigPreview extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     let node = this.props.node
     let el = $$('div')
       .addClass('sc-fig-preview')
@@ -26,7 +25,7 @@ export default class FigPreview extends NodeComponent {
   /*
     Render thumbnail based on the contents of the figure
   */
-  _renderThumbnail($$) {
+  _renderThumbnail ($$) {
     let node = this.props.node
     // TODO: Make this work with tables as well
     let contentNode = node.find('graphic')
@@ -44,7 +43,7 @@ export default class FigPreview extends NodeComponent {
     return el
   }
 
-  _renderLabel($$) {
+  _renderLabel ($$) {
     let label = getLabel(this.props.node)
     return $$('div').addClass('se-label').append(label)
   }

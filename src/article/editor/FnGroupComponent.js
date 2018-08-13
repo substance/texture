@@ -4,8 +4,7 @@ import Button from './Button'
 import { getPos } from '../shared/nodeHelpers'
 
 export default class FnGroupComponent extends NodeComponent {
-
-  getInitialState() {
+  getInitialState () {
     const node = this.props.node
     let fns = node.findAll('fn')
     return {
@@ -13,14 +12,14 @@ export default class FnGroupComponent extends NodeComponent {
     }
   }
 
-  didMount() {
+  didMount () {
     super.didMount()
     this.handleActions({
       'removeFn': this._removeFn
     })
   }
 
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let el = $$('div').addClass('sc-fn-group')
       .attr('data-id', 'fn-group')
@@ -38,7 +37,7 @@ export default class FnGroupComponent extends NodeComponent {
       )
     }
 
-    fns.sort((a,b) => {
+    fns.sort((a, b) => {
       return getPos(a) - getPos(b)
     })
     fns.forEach((fn) => {
@@ -55,7 +54,7 @@ export default class FnGroupComponent extends NodeComponent {
     return el
   }
 
-  _onLabelsChanged(refType) {
+  _onLabelsChanged (refType) {
     if (refType === 'fn') {
       this.rerender()
     }
@@ -68,7 +67,7 @@ export default class FnGroupComponent extends NodeComponent {
       <p>Please enter footnote content</p>
     </fn>
   */
-  _addFn() {
+  _addFn () {
     const editorSession = this.context.editorSession
     editorSession.transaction((tx) => {
       let fnGroup = tx.find('fn-group')
@@ -81,7 +80,7 @@ export default class FnGroupComponent extends NodeComponent {
     this.rerender()
   }
 
-  _removeFn(fnId) {
+  _removeFn (fnId) {
     let editorSession = this.context.editorSession
     const doc = editorSession.getDocument()
     const parent = doc.find('fn-group')

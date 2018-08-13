@@ -1,7 +1,7 @@
 import { AnnotationCommand } from 'substance'
 
 class InsertExtLinkCommand extends AnnotationCommand {
-  executeCreate(params) {
+  executeCreate (params) {
     let result = super.executeCreate(params)
     let editorSession = this._getEditorSession(params)
     editorSession.transaction((tx) => {

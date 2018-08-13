@@ -2,8 +2,7 @@ import { Component } from 'substance'
 import { getLabel } from '../shared/nodeHelpers'
 
 export default class TableFigPreview extends Component {
-
-  render($$) {
+  render ($$) {
     let node = this.props.node
     let el = $$('div')
       .addClass('sc-table-fig-preview')
@@ -16,7 +15,7 @@ export default class TableFigPreview extends Component {
     return el
   }
 
-  _renderLabel($$) {
+  _renderLabel ($$) {
     let label = getLabel(this.props.node)
     return $$('div').addClass('se-label').append(label)
   }

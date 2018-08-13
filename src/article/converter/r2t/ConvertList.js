@@ -1,9 +1,8 @@
 import { renderListNode } from 'substance'
 
 export default class ConvertList {
-
   // ATTENTION: this is pretty rudimentary still
-  import(dom) {
+  import (dom) {
     const $$ = dom.createElement.bind(dom)
     let lists = dom.findAll('list')
     let visited = new Set()
@@ -32,19 +31,19 @@ export default class ConvertList {
     })
   }
 
-  _extractItems(el, config, items, level, visited) {
-    if(el.is('list-item')) items.push({ el, level })
-    if(el.is('list')) {
+  _extractItems (el, config, items, level, visited) {
+    if (el.is('list-item')) items.push({ el, level })
+    if (el.is('list')) {
       let listType = el.attr('list-type') || 'bullet'
       if (!config[level]) config[level] = listType
       level++
       visited.add(el)
     }
-    el.getChildren().forEach(c => this._extractItems(c,config,items,level,visited))
+    el.getChildren().forEach(c => this._extractItems(c, config, items, level, visited))
   }
 
   // ATTENTION: this is pretty rudimentary still
-  export(dom, { doc }) {
+  export (dom, { doc }) {
     const $$ = dom.createElement.bind(dom)
     dom.findAll('list').forEach(list => {
       let listNode = doc.get(list.id)
@@ -58,7 +57,7 @@ export default class ConvertList {
         } else if (arg === 'li') {
           return $$('list-item')
         } else {
-          return $$('list-item', {id: arg.id }).append(
+          return $$('list-item', {id: arg.id}).append(
             $$('p').setInnerXML(arg.getInnerXML())
           )
         }
@@ -68,4 +67,3 @@ export default class ConvertList {
     })
   }
 }
-

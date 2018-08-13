@@ -3,22 +3,21 @@ import { getLabel } from '../shared/nodeHelpers'
 import { updateModel } from './modelHelpers'
 
 export default class ReferenceModel extends DefaultModel {
-
-  getLabel() {
+  getLabel () {
     return getLabel(this._node)
   }
 
-  toJSON() {
+  toJSON () {
     let json = super.toJSON()
     json.label = this.getLabel()
     return json
   }
 
-  update(props) {
+  update (props) {
     updateModel(this, props)
   }
 
-  addContrib(propName) {
+  addContrib (propName) {
     let id = this.id
     let length = this._node[propName].length
     this._api.getArticleSession().transaction(tx => {
@@ -29,7 +28,7 @@ export default class ReferenceModel extends DefaultModel {
     })
   }
 
-  removeContrib(propName, contribId) {
+  removeContrib (propName, contribId) {
     let id = this.id
     let pos = this._node[propName].indexOf(contribId)
     if (pos !== -1) {
@@ -39,11 +38,9 @@ export default class ReferenceModel extends DefaultModel {
     }
   }
 
-  updateContrib(contribId, propName, value) {
+  updateContrib (contribId, propName, value) {
     this._api.getArticleSession().transaction(tx => {
       tx.set([contribId, propName], value)
     })
   }
-
 }
-

@@ -63,7 +63,6 @@ export default class DocumentSession extends EventEmitter {
     this._history.reset()
   }
 
-
   // EXPERIMENTAL: for certain cases it is useful to store volatile information on nodes
   // Then the data does not need to be disposed when a node is deleted.
   updateNodeStates (tuples) {

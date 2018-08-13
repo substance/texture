@@ -1,20 +1,18 @@
 import { isMixed } from '../util/domHelpers'
 
 export default class WrapSig {
-
-  import(dom, api) {
+  import (dom, api) {
     dom.findAll('sig-block').forEach((sigBlock) => {
       _importSigBlock(sigBlock, api)
     })
   }
 
-  export() {
+  export () {
     // nothing
   }
-
 }
 
-function _importSigBlock(sigBlock, api) {
+function _importSigBlock (sigBlock, api) {
   let dom = sigBlock.getOwnerDocument()
   let sig = sigBlock.find('sig')
 

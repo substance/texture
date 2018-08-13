@@ -2,8 +2,7 @@ import NodeComponent from '../shared/NodeComponent'
 import { renderEntity } from '../shared/entityHelpers'
 
 export default class RefComponent extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const api = this.context.api
     const article = api.getArticle()
     const ref = this.props.node
@@ -21,14 +20,14 @@ export default class RefComponent extends NodeComponent {
   }
 }
 
-function _getReferenceLabel(ref) {
+function _getReferenceLabel (ref) {
   if (ref.state && ref.state.label) {
     return ref.state.label
   }
   return '?'
 }
 
-function _getEntity(ref, article) {
+function _getEntity (ref, article) {
   if (ref.state && ref.state.entity) {
     return ref.state.entity
   }

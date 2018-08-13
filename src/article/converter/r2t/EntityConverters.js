@@ -6,14 +6,14 @@ import { getText } from '../util/domHelpers'
 */
 export const OrganisationConverter = {
 
-  export($$, node) {
+  export ($$, node) {
     let el = $$('aff').attr('id', node.id)
-    el.append(_createTextElement($$, node.name, 'institution', { 'content-type': 'orgname'}))
-    el.append(_createTextElement($$, node.division1, 'institution', { 'content-type': 'orgdiv1'}))
-    el.append(_createTextElement($$, node.division2, 'institution', { 'content-type': 'orgdiv2'}))
-    el.append(_createTextElement($$, node.division3, 'institution', { 'content-type': 'orgdiv3'}))
-    el.append(_createTextElement($$, node.street, 'addr-line', { 'content-type': 'street-address'}))
-    el.append(_createTextElement($$, node.addressComplements, 'addr-line', { 'content-type': 'complements'}))
+    el.append(_createTextElement($$, node.name, 'institution', {'content-type': 'orgname'}))
+    el.append(_createTextElement($$, node.division1, 'institution', {'content-type': 'orgdiv1'}))
+    el.append(_createTextElement($$, node.division2, 'institution', {'content-type': 'orgdiv2'}))
+    el.append(_createTextElement($$, node.division3, 'institution', {'content-type': 'orgdiv3'}))
+    el.append(_createTextElement($$, node.street, 'addr-line', {'content-type': 'street-address'}))
+    el.append(_createTextElement($$, node.addressComplements, 'addr-line', {'content-type': 'complements'}))
     el.append(_createTextElement($$, node.city, 'city'))
     el.append(_createTextElement($$, node.state, 'state'))
     el.append(_createTextElement($$, node.postalCode, 'postal-code'))
@@ -21,7 +21,7 @@ export const OrganisationConverter = {
     el.append(_createTextElement($$, node.phone, 'phone'))
     el.append(_createTextElement($$, node.fax, 'fax'))
     el.append(_createTextElement($$, node.email, 'email'))
-    el.append(_createTextElement($$, node.uri, 'uri', { 'content-type': 'link'}))
+    el.append(_createTextElement($$, node.uri, 'uri', {'content-type': 'link'}))
     return el
   }
 }
@@ -45,11 +45,11 @@ export const OrganisationConverter = {
 */
 export const AwardConverter = {
 
-  export($$, node) {
+  export ($$, node) {
     let el = $$('award-group').attr('id', node.id)
 
     let institutionWrapEl = $$('institution-wrap')
-    institutionWrapEl.append(_createTextElement($$, node.fundRefId, 'institution-id', { 'institution-id-type': 'FundRef'}))
+    institutionWrapEl.append(_createTextElement($$, node.fundRefId, 'institution-id', {'institution-id-type': 'FundRef'}))
     institutionWrapEl.append(_createTextElement($$, node.institution, 'institution'))
 
     el.append(
@@ -64,7 +64,7 @@ export const AwardConverter = {
   <kwd> -> Keyword
 */
 export const KeywordConverter = {
-  export($$, node) {
+  export ($$, node) {
     return _createTextElement($$, node.name, 'kwd', {'content-type': node.category})
   }
 }
@@ -74,7 +74,7 @@ export const KeywordConverter = {
 */
 export const SubjectConverter = {
 
-  export($$, node) {
+  export ($$, node) {
     return _createTextElement($$, node.name, 'subject', { 'content-type': node.category })
   }
 }
@@ -114,7 +114,6 @@ export const SubjectConverter = {
   -->
 */
 
-
 /*
   <contrib> -> Person
 
@@ -122,7 +121,7 @@ export const SubjectConverter = {
 */
 export const PersonConverter = {
 
-  export($$, node) {
+  export ($$, node) {
     let el = _exportPerson($$, node)
     // Adds affiliations to el
     _addAffiliations(el, $$, node)
@@ -132,7 +131,7 @@ export const PersonConverter = {
   }
 }
 
-function _exportPerson($$, node) {
+function _exportPerson ($$, node) {
   let el = $$('contrib').attr({
     'contrib-type': 'person',
     'equal-contrib': node.equalContrib ? 'yes' : 'no',
@@ -152,7 +151,7 @@ function _exportPerson($$, node) {
   return el
 }
 
-function _addAffiliations(el, $$, node) {
+function _addAffiliations (el, $$, node) {
   node.affiliations.forEach(organisationId => {
     el.append(
       $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
@@ -160,7 +159,7 @@ function _addAffiliations(el, $$, node) {
   })
 }
 
-function _addAwards(el, $$, node) {
+function _addAwards (el, $$, node) {
   node.awards.forEach(awardId => {
     el.append(
       $$('xref').attr('ref-type', 'award').attr('rid', awardId)
@@ -170,7 +169,7 @@ function _addAwards(el, $$, node) {
 
 export const GroupConverter = {
 
-  export($$, node, doc, groupMembers) {
+  export ($$, node, doc, groupMembers) {
     let el = $$('contrib').attr({
       'id': node.id,
       'contrib-type': 'group',
@@ -210,7 +209,7 @@ export const GroupConverter = {
 */
 export const RefContribConverter = {
 
-  import(el, pubMetaDb) {
+  import (el, pubMetaDb) {
     let node
     if (el.tagName === 'name') {
       node = {
@@ -235,7 +234,7 @@ export const RefContribConverter = {
     return entity.id
   },
 
-  export($$, node) {
+  export ($$, node) {
     let el
     if (node.givenNames) {
       el = $$('name')
@@ -252,7 +251,6 @@ export const RefContribConverter = {
     return el
   }
 }
-
 
 let mappingItemTypes = {
   'journal': 'journal-article',
@@ -272,7 +270,7 @@ let mappingItemTypes = {
 
 // reverse key-value-pairs in a mapping to value-key-pairs
 // (Assume: one-to-one-mapping)
-let reverseMapping = function(mapping) {
+let reverseMapping = function (mapping) {
   let reverseMapping = {}
   for (let key in mapping) {
     if (mapping.hasOwnProperty(key)) {
@@ -347,7 +345,7 @@ export const ElementCitationConverter = {
     return entity.id
   },
 
-  export($$, node, pubMetaDb) {
+  export ($$, node, pubMetaDb) {
     let type = node.type
     let el = $$('element-citation').attr('publication-type', reverseMapping(mappingItemTypes)[type])
 
@@ -408,7 +406,7 @@ export const ElementCitationConverter = {
   }
 }
 
-function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
+function _exportPersonGroup ($$, contribs, personGroupType, pubMetaDb) {
   if (contribs && contribs.length > 0) {
     let el = $$('person-group').attr('person-group-type', personGroupType)
     contribs.forEach(refContribId => {
@@ -421,7 +419,7 @@ function _exportPersonGroup($$, contribs, personGroupType, pubMetaDb) {
   }
 }
 
-function _getRefContribs(el, pubMetaDb, type) {
+function _getRefContribs (el, pubMetaDb, type) {
   let personGroup = el.find(`person-group[person-group-type=${type}]`)
   if (personGroup) {
     return personGroup.childNodes.map(el => {
@@ -432,8 +430,7 @@ function _getRefContribs(el, pubMetaDb, type) {
   }
 }
 
-
-function _getSeparatedText(rootEl, selector) {
+function _getSeparatedText (rootEl, selector) {
   let match = rootEl.findAll(selector)
   if (match) {
     return match.map(m => { return m.textContent }).join('; ')
@@ -442,7 +439,7 @@ function _getSeparatedText(rootEl, selector) {
   }
 }
 
-function _getHTML(rootEl, selector) {
+function _getHTML (rootEl, selector) {
   let match = rootEl.find(selector)
   if (match) {
     return match.innerHTML
@@ -451,7 +448,7 @@ function _getHTML(rootEl, selector) {
   }
 }
 
-function _getAttr(rootEl, selector, attr) {
+function _getAttr (rootEl, selector, attr) {
   let match = rootEl.find(selector)
   if (match) {
     return match.attr(attr)
@@ -460,7 +457,7 @@ function _getAttr(rootEl, selector, attr) {
   }
 }
 
-function _createTextElement($$, text, tagName, attrs) {
+function _createTextElement ($$, text, tagName, attrs) {
   if (text) {
     let el = $$(tagName).append(text)
     forEach(attrs, (value, key) => {
@@ -470,7 +467,7 @@ function _createTextElement($$, text, tagName, attrs) {
   }
 }
 
-function _createMultipleTextElements($$, text, tagName, attrs) {
+function _createMultipleTextElements ($$, text, tagName, attrs) {
   if (text) {
     const textItems = text.split(';')
     const elements = textItems.map(ti => {
@@ -484,7 +481,7 @@ function _createMultipleTextElements($$, text, tagName, attrs) {
   }
 }
 
-function _createHTMLElement($$, html, tagName, attrs) {
+function _createHTMLElement ($$, html, tagName, attrs) {
   if (html) {
     let el = $$(tagName)
     el.innerHTML = html

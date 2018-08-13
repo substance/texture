@@ -1,11 +1,10 @@
 
 export default class SaveHandler {
-
-  constructor(context) {
+  constructor (context) {
     this.context = context
   }
 
-  saveDocument({editorSession}) {
+  saveDocument ({editorSession}) {
     return new Promise((resolve) => {
       let exporter = this.context.exporter
       let doc = editorSession.getDocument()

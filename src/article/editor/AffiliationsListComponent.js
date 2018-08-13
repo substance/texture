@@ -10,8 +10,7 @@ import renderEntity from '../shared/renderEntity'
   updates if changes are made to the organisation entries in the entity db.
 */
 export default class AffiliationsList extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const api = this.context.api
     const article = api.getArticle()
 
@@ -34,11 +33,11 @@ export default class AffiliationsList extends NodeComponent {
     return el
   }
 
-  _getAuthors() {
+  _getAuthors () {
     return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
   }
 
-  _getOrgansiations() {
+  _getOrgansiations () {
     const api = this.context.api
     const article = api.getArticle()
 

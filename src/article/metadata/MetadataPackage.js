@@ -76,7 +76,7 @@ export default {
         items: [
           { type: 'command-group', name: 'switch-view' }
         ]
-      },
+      }
       // TODO: enable this when we have a first workflow
       // which does not belong to the add-entity group
       // {

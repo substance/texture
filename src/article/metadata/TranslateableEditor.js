@@ -45,10 +45,10 @@ export default class TranslateableEditor extends Component {
       )
     })
 
-    if(availableLanguages.length > 0) {
+    if (availableLanguages.length > 0) {
       let footerEl = $$('div').addClass('se-footer')
 
-      if(this.state.dropdown) {
+      if (this.state.dropdown) {
         footerEl.append(this._renderLanguageDropdown($$))
       } else {
         footerEl.append(
@@ -64,7 +64,7 @@ export default class TranslateableEditor extends Component {
     return el
   }
 
-  _renderLanguageDropdown($$) {
+  _renderLanguageDropdown ($$) {
     const languages = this._getArticleLanguages()
     const availableLanguages = this._getAvailableLanguages()
 
@@ -84,7 +84,7 @@ export default class TranslateableEditor extends Component {
     return el
   }
 
-  _addTranslation(e) {
+  _addTranslation (e) {
     const value = e.target.value
     const model = this.props.model
     model.addTranslation(value)
@@ -92,22 +92,22 @@ export default class TranslateableEditor extends Component {
     this._toggleDropdown()
   }
 
-  _removeLanguage(lang) {
+  _removeLanguage (lang) {
     const model = this.props.model
     model.removeTranslation(lang)
   }
 
-  _toggleDropdown() {
+  _toggleDropdown () {
     const dropdown = this.state.dropdown
     this.extendState({dropdown: !dropdown})
   }
 
-  _getArticleLanguages() {
+  _getArticleLanguages () {
     const configurator = this.context.configurator
     return configurator.getAvailableLanguages()
   }
 
-  _getAvailableLanguages() {
+  _getAvailableLanguages () {
     const model = this.props.model
     const languages = this._getArticleLanguages()
     const languageCodes = Object.keys(languages)

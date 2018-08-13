@@ -1,15 +1,14 @@
 import { Component } from 'substance'
 
 export default class TextInput extends Component {
-
-  render($$) {
+  render ($$) {
     let node = this.props.node
     let label = this.props.label
     let TextPropertyEditor = this.getComponent('text-property-editor')
 
     let el = $$('div').addClass('sc-text-input')
 
-    if(label) {
+    if (label) {
       el.append(
         $$('div').addClass('se-label').append(label)
       )
@@ -25,5 +24,4 @@ export default class TextInput extends Component {
 
     return el
   }
-
 }

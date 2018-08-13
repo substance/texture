@@ -1,12 +1,11 @@
 import DefaultCollectionModel from './DefaultCollectionModel'
 
 export default class GroupCollectionModel extends DefaultCollectionModel {
-
-  _getCollectionId() {
+  _getCollectionId () {
     return 'groups'
   }
 
-  _getCollectionType() {
+  _getCollectionType () {
     return 'group'
   }
 }

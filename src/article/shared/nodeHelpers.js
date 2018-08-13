@@ -1,10 +1,10 @@
-export function getLabel(node) {
+export function getLabel (node) {
   if (node && node.state) {
     return node.state.label
   }
 }
 
-export function getPos(node) {
+export function getPos (node) {
   let pos
   if (node && node.state) {
     pos = node.state.pos

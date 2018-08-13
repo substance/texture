@@ -14,7 +14,7 @@ export default class FigureModel extends DefaultModel {
     return getLabel(this._node)
   }
 
-  getPos() {
+  getPos () {
     return getPos(this._node)
   }
 

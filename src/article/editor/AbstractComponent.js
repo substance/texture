@@ -1,13 +1,12 @@
 import { Component } from 'substance'
 
 export default class AbstractComponent extends Component {
-
   /*
     Hide abstract by default if empty
 
     TODO: we should make this configurable
   */
-  getInitialState() {
+  getInitialState () {
     const node = this.props.node
     let isEmpty = node.children.length === 1 && node.children[0].textContent === ''
     return {
@@ -15,7 +14,7 @@ export default class AbstractComponent extends Component {
     }
   }
 
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let el = $$('div')
       .addClass('sc-abstract')
@@ -38,5 +37,4 @@ export default class AbstractComponent extends Component {
     }
     return el
   }
-
 }

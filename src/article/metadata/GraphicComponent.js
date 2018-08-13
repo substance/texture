@@ -1,8 +1,7 @@
 import { Component } from 'substance'
 
 export default class GraphicComponent extends Component {
-
-  render($$) {
+  render ($$) {
     const model = this.props.model
     // TODO: implement this based on a GraphicModel
     let url

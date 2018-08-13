@@ -3,8 +3,7 @@ import Button from './Button'
 import { getLabel } from '../shared/nodeHelpers'
 
 export default class FnComponent extends Component {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let el = $$('div')
       .addClass('sc-fn-item')
@@ -33,7 +32,7 @@ export default class FnComponent extends Component {
     return el
   }
 
-  _removeFn(fnId) {
+  _removeFn (fnId) {
     this.send('removeFn', fnId)
   }
 }

@@ -2,12 +2,11 @@ import { hasAvailableXrefTargets } from '../shared/xrefHelpers'
 import InsertInlineNodeCommand from './InsertInlineNodeCommand'
 
 export default class InsertXrefCommand extends InsertInlineNodeCommand {
-
-  getType() {
+  getType () {
     return 'xref'
   }
 
-  createNode(tx) {
+  createNode (tx) {
     const refType = this.config.refType
     let xref = tx.createElement('xref')
     xref.attr('ref-type', refType)
@@ -15,7 +14,7 @@ export default class InsertXrefCommand extends InsertInlineNodeCommand {
     return xref
   }
 
-  isDisabled(params, context) {
+  isDisabled (params, context) {
     const sel = params.selection
     const selectionState = params.editorSession.getSelectionState()
     const refType = this.config.refType

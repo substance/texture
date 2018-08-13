@@ -1,22 +1,21 @@
 import { Component } from 'substance'
 
 export default class TOC extends Component {
-
-  didMount() {
+  didMount () {
     let tocProvider = this.context.tocProvider
     tocProvider.on('toc:updated', this.onTOCUpdated, this)
   }
 
-  dispose() {
+  dispose () {
     let tocProvider = this.context.tocProvider
     tocProvider.off(this)
   }
 
-  render($$) {
+  render ($$) {
     let tocProvider = this.context.tocProvider
     let activeEntry = tocProvider.activeEntry
-    let tocEntries = $$("div")
-      .addClass("se-toc-entries")
+    let tocEntries = $$('div')
+      .addClass('se-toc-entries')
       .ref('tocEntries')
 
     let entries = tocProvider.getEntries()
@@ -26,10 +25,10 @@ export default class TOC extends Component {
         let level = entry.level
 
         let tocEntryEl = $$('a')
-          .addClass('se-toc-entry sm-level-'+level)
+          .addClass('se-toc-entry sm-level-' + level)
           .attr({
-            href: "#",
-            "data-id": entry.id,
+            href: '#',
+            'data-id': entry.id
           })
           .ref(entry.id)
           .on('click', this.handleClick)
@@ -37,12 +36,11 @@ export default class TOC extends Component {
             entry.name
           )
         if (activeEntry === entry.id) {
-          tocEntryEl.addClass("sm-active")
+          tocEntryEl.addClass('sm-active')
         }
         tocEntries.append(tocEntryEl)
       }
     }
-
 
     let el = $$('div').addClass('sc-toc').append(
       tocEntries
@@ -50,18 +48,17 @@ export default class TOC extends Component {
     return el
   }
 
-  getDocument() {
+  getDocument () {
     return this.context.doc
   }
 
-  onTOCUpdated() {
+  onTOCUpdated () {
     this.rerender()
   }
 
-  handleClick(e) {
+  handleClick (e) {
     e.preventDefault()
     let nodeId = e.currentTarget.dataset.id
     this.send('tocEntrySelected', nodeId)
   }
-
 }

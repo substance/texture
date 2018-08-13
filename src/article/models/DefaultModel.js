@@ -2,36 +2,36 @@ import { isArray } from 'substance'
 import { setModelValue } from './modelHelpers'
 
 export default class DefaultModel {
-  constructor(api, node) {
+  constructor (api, node) {
     this._api = api
     this._node = node
   }
 
-  get id() {
+  get id () {
     return this._node.id
   }
 
-  get type() {
+  get type () {
     return this._node.type
   }
 
-  get isCollection() {
+  get isCollection () {
     return false
   }
 
-  toJSON() {
+  toJSON () {
     return this._node.toJSON()
   }
 
-  getNode() {
+  getNode () {
     return this._node
   }
 
-  getSchema() {
+  getSchema () {
     return this._node.getSchema()
   }
 
-  setValue(name, value) {
+  setValue (name, value) {
     setModelValue(this, name, value)
   }
 
@@ -40,7 +40,7 @@ export default class DefaultModel {
 
     TODO: is it a good name?
   */
-  resolveRelationship(propertyName) {
+  resolveRelationship (propertyName) {
     let value = this._node[propertyName]
     let result
     if (isArray(value)) {

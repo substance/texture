@@ -1,6 +1,6 @@
 import { tableHelpers } from 'substance'
 
-export function createTableSelection(data) {
+export function createTableSelection (data) {
   if (!data.anchorCellId || !data.focusCellId) throw new Error('Invalid selection data')
   return {
     type: 'custom',
@@ -9,18 +9,18 @@ export function createTableSelection(data) {
   }
 }
 
-export function getSelectionData(sel) {
+export function getSelectionData (sel) {
   if (sel && sel.customType === 'table') {
     return sel.data
   }
   return {}
 }
 
-export function getSelectedRange(table, selData) {
+export function getSelectedRange (table, selData) {
   return getCellRange(table, selData.anchorCellId, selData.focusCellId)
 }
 
-export function computeSelectionRectangle(ulRect, lrRect) {
+export function computeSelectionRectangle (ulRect, lrRect) {
   let selRect = {}
   selRect.top = ulRect.top
   selRect.left = ulRect.left
@@ -29,17 +29,17 @@ export function computeSelectionRectangle(ulRect, lrRect) {
   return selRect
 }
 
-export function getCellRange(table, anchorCellId, focusCellId) {
+export function getCellRange (table, anchorCellId, focusCellId) {
   let anchorCell = table.get(anchorCellId)
   let focusCell = table.get(focusCellId)
   let startRow = Math.min(anchorCell.rowIdx, focusCell.rowIdx)
   let startCol = Math.min(anchorCell.colIdx, focusCell.colIdx)
-  let endRow = Math.max(anchorCell.rowIdx+anchorCell.rowspan-1,focusCell.rowIdx+focusCell.rowspan-1)
-  let endCol = Math.max(anchorCell.colIdx+anchorCell.colspan-1,focusCell.colIdx+focusCell.colspan-1)
+  let endRow = Math.max(anchorCell.rowIdx + anchorCell.rowspan - 1, focusCell.rowIdx + focusCell.rowspan - 1)
+  let endCol = Math.max(anchorCell.colIdx + anchorCell.colspan - 1, focusCell.colIdx + focusCell.colspan - 1)
   return { startRow, startCol, endRow, endCol }
 }
 
-export function computeUpdatedSelection(table, selData, dr, dc, expand) {
+export function computeUpdatedSelection (table, selData, dr, dc, expand) {
   let focusCellId = selData.focusCellId
   let focusCell = table.get(focusCellId)
   let rowIdx = focusCell.rowIdx
@@ -49,15 +49,15 @@ export function computeUpdatedSelection(table, selData, dr, dc, expand) {
   let newFocusCell
   if (dr) {
     if (dr < 0) {
-      newFocusCell = table.getCell(rowIdx+dr, colIdx)
+      newFocusCell = table.getCell(rowIdx + dr, colIdx)
     } else if (dr > 0) {
-      newFocusCell = table.getCell(rowIdx+rowspan-1+dr, colIdx)
+      newFocusCell = table.getCell(rowIdx + rowspan - 1 + dr, colIdx)
     }
   } else if (dc) {
     if (dc < 0) {
-      newFocusCell = table.getCell(rowIdx, colIdx+dc)
+      newFocusCell = table.getCell(rowIdx, colIdx + dc)
     } else if (dc > 0) {
-      newFocusCell = table.getCell(rowIdx, colIdx+colspan-1+dc)
+      newFocusCell = table.getCell(rowIdx, colIdx + colspan - 1 + dc)
     }
   }
   if (newFocusCell) {

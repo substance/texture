@@ -1,7 +1,7 @@
 import { NodeModelEditor } from '../../kit'
 
 export default class ArticleRecordEditor extends NodeModelEditor {
-  get isRemovable() {
+  get isRemovable () {
     return false
   }
 

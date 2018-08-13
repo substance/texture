@@ -4,11 +4,7 @@ import DefaultModel from './DefaultModel'
   A model for holding metadata.
 */
 export default class MetaModel extends DefaultModel {
-  constructor(node, context) {
-    super(node, context)
-  }
-
-  addKeyword(keyword) {
+  addKeyword (keyword) {
     const editorSession = this.context.editorSession
     const keywordId = this._addEntity(keyword, 'keyword')
     editorSession.transaction((tx, args) => {
@@ -20,29 +16,29 @@ export default class MetaModel extends DefaultModel {
     return keywordId
   }
 
-  getKeyword(keywordId) {
+  getKeyword (keywordId) {
     return this._getEntity(keywordId)
   }
 
-  getKeywords(category) {
+  getKeywords (category) {
     const kwdGroup = this._node.find('kwd-group')
     const keywordIds = kwdGroup.findAll('kwd').map(kwd => kwd.getAttribute('rid'))
     const keywords = keywordIds.map(keywordId => this._getEntity(keywordId))
-    if(!category) return keywords
+    if (!category) return keywords
     return keywords.filter(kwd => kwd.category === category)
   }
 
-  getKeywordCategories() {
+  getKeywordCategories () {
     const keywords = this.getKeywords()
     const categories = keywords.map(kwd => kwd.category)
     return categories.filter((cat, i, a) => a.indexOf(cat) === i)
   }
 
-  updateKeyword(keywordId, data) {
+  updateKeyword (keywordId, data) {
     return this._updateEntity(keywordId, data)
   }
 
-  deleteKeyword(keywordId) {
+  deleteKeyword (keywordId) {
     const editorSession = this.context.editorSession
     const node = this._deleteEntity(keywordId)
     editorSession.transaction((tx, args) => {
@@ -55,7 +51,7 @@ export default class MetaModel extends DefaultModel {
     return node
   }
 
-  addSubject(subject) {
+  addSubject (subject) {
     const editorSession = this.context.editorSession
     const subjectId = this._addEntity(subject, 'subject')
     editorSession.transaction((tx, args) => {
@@ -67,29 +63,29 @@ export default class MetaModel extends DefaultModel {
     return subjectId
   }
 
-  getSubject(subjectId) {
+  getSubject (subjectId) {
     return this._getEntity(subjectId)
   }
 
-  getSubjects(category) {
+  getSubjects (category) {
     const subjGroup = this._node.find('subj-group')
     const subjectIds = subjGroup.findAll('subject').map(subject => subject.getAttribute('rid'))
     const subjects = subjectIds.map(subjectId => this._getEntity(subjectId))
-    if(!category) return subjects
+    if (!category) return subjects
     return subjects.filter(subject => subject.category === category)
   }
 
-  getSubjectCategories() {
+  getSubjectCategories () {
     const subjects = this.getSubjects()
     const categories = subjects.map(subject => subject.category)
     return categories.filter((cat, i, a) => a.indexOf(cat) === i)
   }
 
-  updateSubject(subjectId, data) {
+  updateSubject (subjectId, data) {
     return this._updateEntity(subjectId, data)
   }
 
-  deleteSubject(subjectId) {
+  deleteSubject (subjectId) {
     const editorSession = this.context.editorSession
     const node = this._deleteEntity(subjectId)
     editorSession.transaction((tx, args) => {

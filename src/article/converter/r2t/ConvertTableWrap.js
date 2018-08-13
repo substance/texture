@@ -10,8 +10,7 @@ import {
 } from './r2tHelpers'
 
 export default class ConvertTableWrap {
-
-  import(dom) {
+  import (dom) {
     let tableWrap = dom.findAll('table-wrap')
     tableWrap.forEach(tableWrap => {
       removeChild(tableWrap, 'label')
@@ -22,7 +21,7 @@ export default class ConvertTableWrap {
     })
   }
 
-  export(dom, {doc}) {
+  export (dom, {doc}) {
     let tableWrap = dom.findAll('table-wrap')
     tableWrap.forEach(tableWrap => {
       let tableWrapNode = doc.get(tableWrap.id)

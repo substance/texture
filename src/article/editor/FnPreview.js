@@ -2,8 +2,7 @@ import NodeComponent from '../shared/NodeComponent'
 import { getLabel } from '../shared/nodeHelpers'
 
 export default class FnPreview extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
     const TextNode = this.getComponent('text-node')
 
@@ -31,4 +30,3 @@ export default class FnPreview extends NodeComponent {
     return el
   }
 }
-

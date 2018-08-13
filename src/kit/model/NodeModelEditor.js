@@ -10,7 +10,7 @@ import FormRowComponent from '../ui/FormRowComponent'
   deriving from this class, and for instance overriding `_getPropertyEditorClass()`.
 */
 export default class NodeModelEditor extends CustomSurface {
-  get isRemovable() {
+  get isRemovable () {
     return true
   }
 
@@ -87,7 +87,7 @@ export default class NodeModelEditor extends CustomSurface {
       controlEl
     )
 
-    if(this.isRemovable) {
+    if (this.isRemovable) {
       footer.append(
         $$('button').addClass('se-remove-item').append(
           $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),

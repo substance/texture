@@ -1,8 +1,7 @@
 import { Component } from 'substance'
 
 export default class TitleGroupComponent extends Component {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let el = $$('div')
       .addClass('sc-title-group')

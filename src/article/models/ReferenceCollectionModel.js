@@ -1,38 +1,38 @@
 
 export default class ReferenceCollectionModel {
-  constructor(api) {
+  constructor (api) {
     this._api = api
   }
 
   get type () { return 'references' }
 
-  get id() {
+  get id () {
     return 'references'
   }
 
-  get isCollection() {
+  get isCollection () {
     return true
   }
 
-  getItems() {
+  getItems () {
     let refs = this._api.getReferenceManager().getBibliography()
     let result = refs.map(ref => this._getItem(ref.id))
     return result
   }
 
-  addItem(item) {
+  addItem (item) {
     this._api._addModel(item)
   }
 
-  addItems(items) {
+  addItems (items) {
     this._api.addReferences(items)
   }
 
-  removeItem(item) {
+  removeItem (item) {
     this._api._removeModel(item)
   }
 
-  _getItem(id) {
+  _getItem (id) {
     let article = this._api.getArticle()
     let node = article.get(id)
     if (!node) {
@@ -43,5 +43,4 @@ export default class ReferenceCollectionModel {
     let model = this._api._getModelForNode(node)
     return model
   }
-
 }

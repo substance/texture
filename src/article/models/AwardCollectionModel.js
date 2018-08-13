@@ -1,12 +1,11 @@
 import DefaultCollectionModel from './DefaultCollectionModel'
 
 export default class AwardCollectionModel extends DefaultCollectionModel {
-
-  _getCollectionId() {
+  _getCollectionId () {
     return 'awards'
   }
 
-  _getCollectionType() {
+  _getCollectionType () {
     return 'award'
   }
 }

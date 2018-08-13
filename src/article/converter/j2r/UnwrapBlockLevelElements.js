@@ -5,22 +5,20 @@
   which would otherwise violate JATS
 */
 export default class UnwrapBlockLevelElements {
-
-  import(dom) {
+  import (dom) {
     dom.findAll('body p').forEach(_pBlock)
   }
 
-  export() {
+  export () {
     console.error('TODO: implement UnwrapBlockLevelElements.export()')
   }
-
 }
 
 // TODO: add all of them
 const BLOCKS = ['fig', 'fig-group', 'media', 'list', 'disp-formula', 'disp-quote']
-const isBlock = BLOCKS.reduce((m, n) => { m[n] = true; return m}, {})
+const isBlock = BLOCKS.reduce((m, n) => { m[n] = true; return m }, {})
 
-function _pBlock(p) {
+function _pBlock (p) {
   let parent = p.parentNode
   let children = p.children
   let L = children.length
@@ -31,14 +29,14 @@ function _pBlock(p) {
       // create a new <p>
       let newP = parent.createElement('p')
       let childPos = p.getChildIndex(child)
-      let siblings = p.childNodes.slice(childPos+1)
+      let siblings = p.childNodes.slice(childPos + 1)
       // move all subsequent siblings to the new <p>
       // and insert the block element and the new one after the current <p>
-      let pos = parent.getChildIndex(p)+1
+      let pos = parent.getChildIndex(p) + 1
       parent.insertAt(pos, child)
       if (siblings.length > 0 && _needsP(siblings)) {
         newP.append(siblings)
-        parent.insertAt(pos+1, newP)
+        parent.insertAt(pos + 1, newP)
       }
     }
   }
@@ -48,11 +46,11 @@ function _pBlock(p) {
   }
 }
 
-function _needsP(nodes) {
+function _needsP (nodes) {
   for (let i = 0; i < nodes.length; i++) {
     let child = nodes[i]
     // don't prune if there is something else left
-    if (!child.isTextNode() || !(/^\s*$/.exec(child.textContent)) ) return true
+    if (!child.isTextNode() || !(/^\s*$/.exec(child.textContent))) return true
   }
   return false
 }

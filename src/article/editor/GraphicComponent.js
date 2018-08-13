@@ -1,8 +1,7 @@
 import { Component } from 'substance'
 
 export default class DeprecatedGraphicComponent extends Component {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let url = node.getAttribute('xlink:href')
     let urlResolver = this.context.urlResolver

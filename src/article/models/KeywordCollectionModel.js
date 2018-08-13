@@ -1,12 +1,11 @@
 import DefaultCollectionModel from './DefaultCollectionModel'
 
 export default class KeywordCollectionModel extends DefaultCollectionModel {
-
-  _getCollectionId() {
+  _getCollectionId () {
     return 'keywords'
   }
 
-  _getCollectionType() {
+  _getCollectionType () {
     return 'keyword'
   }
 }

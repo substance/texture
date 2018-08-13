@@ -1,7 +1,6 @@
 import { ToolPanel } from '../../kit'
 
 export default class TableContextMenu extends ToolPanel {
-
   getEntryTypeComponents () {
     return Object.assign({}, super.getEntryTypeComponents(), {
       'tool-group': this.getComponent('menu-group'),

@@ -1,7 +1,7 @@
 import { Component } from 'substance'
 
 export default class BreakComponent extends Component {
-  render($$) {
+  render ($$) {
     return $$('br')
   }
 }

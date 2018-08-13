@@ -12,24 +12,23 @@ const languages = {
   Edit translations for title and abstract
 */
 export default class TranslationsComponent extends NodeComponent {
-
-  didMount() {
+  didMount () {
     super.didMount()
 
     const articleMeta = this.props.node
     let titleGroup = articleMeta.findChild('title-group')
     if (titleGroup) {
-      this.context.editorSession.onRender('document', this.rerender, this, { path: [titleGroup.id]})
+      this.context.editorSession.onRender('document', this.rerender, this, {path: [titleGroup.id]})
     }
     // TODO: in future, we could introduce an <abstract-group>
     // as a container for all <abstract> and <trans-abstracts>
   }
 
-  dispose() {
+  dispose () {
     super.dispose()
   }
 
-  render($$) {
+  render ($$) {
     let el = $$('div').addClass('sc-translations')
     el.append(
       this._renderTitleTranslations($$),
@@ -38,7 +37,7 @@ export default class TranslationsComponent extends NodeComponent {
     return el
   }
 
-  _renderTitleTranslations($$) {
+  _renderTitleTranslations ($$) {
     const articleMeta = this.props.node
     const transTitleGroups = articleMeta.findAll('title-group > trans-title-group')
     let el = $$('div').addClass('se-title-translations')
@@ -56,7 +55,7 @@ export default class TranslationsComponent extends NodeComponent {
     return el
   }
 
-  _renderAbstractTranslations($$) {
+  _renderAbstractTranslations ($$) {
     let articleMeta = this.props.node
     let transAbstracts = articleMeta.findAll('trans-abstract')
     let el = $$('div').addClass('se-abstract-translations')
@@ -74,7 +73,7 @@ export default class TranslationsComponent extends NodeComponent {
     return el
   }
 
-  _renderLanguageSelector($$, node) {
+  _renderLanguageSelector ($$, node) {
     let currentLanguage = node.getAttribute('xml:lang')
     let el = $$('select').addClass('se-language-selector')
       .append(
@@ -82,19 +81,19 @@ export default class TranslationsComponent extends NodeComponent {
           .append('Select language...')
       )
       .on('change', this._onLanguageChange.bind(this, node))
-    for(let lang in languages) {
-      if(languages[lang]) {
+    for (let lang in languages) {
+      if (languages[lang]) {
         let option = $$('option')
           .attr({value: lang})
           .append(languages[lang])
-        if(lang === currentLanguage) option.attr({selected: 'selected'})
+        if (lang === currentLanguage) option.attr({selected: 'selected'})
         el.append(option)
       }
     }
     return el
   }
 
-  _renderTitleEditor($$, transTitleGroup) {
+  _renderTitleEditor ($$, transTitleGroup) {
     const TextPropertyEditor = this.getComponent('text-property-editor')
     let transTitle = transTitleGroup.findChild('trans-title')
     let el = $$('div').addClass('se-translation')
@@ -115,7 +114,7 @@ export default class TranslationsComponent extends NodeComponent {
     return el
   }
 
-  _renderAbstractEditor($$, transAbstract) {
+  _renderAbstractEditor ($$, transAbstract) {
     const ContainerEditor = this.getComponent('container-editor')
     let el = $$('div').addClass('se-translation')
     let abstractContent = transAbstract.findChild('abstract-content')
@@ -142,7 +141,7 @@ export default class TranslationsComponent extends NodeComponent {
     return el
   }
 
-  _addTitleTranslation() {
+  _addTitleTranslation () {
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
       let titleGroup = tx.find('article-meta > title-group')
@@ -152,7 +151,7 @@ export default class TranslationsComponent extends NodeComponent {
     })
   }
 
-  _addAbstractTranslation() {
+  _addAbstractTranslation () {
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
       let articleMeta = tx.get(this.props.node.id)
@@ -165,7 +164,7 @@ export default class TranslationsComponent extends NodeComponent {
     })
   }
 
-  _removeTitleTranslation(nodeId) {
+  _removeTitleTranslation (nodeId) {
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
       let title = tx.get(nodeId)
@@ -173,7 +172,7 @@ export default class TranslationsComponent extends NodeComponent {
     })
   }
 
-  _removeAbstractTranslation(nodeId) {
+  _removeAbstractTranslation (nodeId) {
     const editorSession = this.context.editorSession
     editorSession.transaction(tx => {
       let transAbstract = tx.get(nodeId)
@@ -181,9 +180,8 @@ export default class TranslationsComponent extends NodeComponent {
     })
   }
 
-  _onLanguageChange(node, e) {
+  _onLanguageChange (node, e) {
     let value = e.target.value
     node.setAttribute('xml:lang', value)
   }
-
 }

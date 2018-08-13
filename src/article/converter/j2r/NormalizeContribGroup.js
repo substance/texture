@@ -2,8 +2,7 @@
   Ensures the first contrib-group is tagged as authors and second as editors
 */
 export default class NormalizeContribGroup {
-
-  import(dom) {
+  import (dom) {
     let contribGroups = dom.findAll('article-meta > contrib-group')
     if (contribGroups[0]) {
       _normalizeContribGroup(contribGroups[0], 'author')
@@ -18,12 +17,11 @@ export default class NormalizeContribGroup {
     }
   }
 
-  export() {
+  export () {
     // nothing
   }
 }
 
-
-function _normalizeContribGroup(contribGroup, targetType) {
+function _normalizeContribGroup (contribGroup, targetType) {
   contribGroup.attr('content-type', targetType)
 }

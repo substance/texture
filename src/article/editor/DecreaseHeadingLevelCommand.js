@@ -1,8 +1,7 @@
 import { Command } from 'substance'
 
 class DecreaseHeadingLevelCommand extends Command {
-
-  getCommandState(params) {
+  getCommandState (params) {
     let doc = params.editorSession.getDocument()
     let sel = params.selection
     let isBlurred = params.editorSession.isBlurred()
@@ -14,9 +13,9 @@ class DecreaseHeadingLevelCommand extends Command {
     if (sel.isPropertySelection() && !isBlurred) {
       let path = sel.getPath()
       let node = doc.get(path[0])
-      if (node 
-        && node.isBlock() 
-        && node.type === 'heading') {
+      if (node &&
+        node.isBlock() &&
+        node.type === 'heading') {
         commandState.active = true
       } else {
         commandState.disabled = true
@@ -28,7 +27,7 @@ class DecreaseHeadingLevelCommand extends Command {
     return commandState
   }
 
-  execute(params) {
+  execute (params) {
     let sel = params.selection
     let editorSession = params.editorSession
     let doc = editorSession.getDocument()

@@ -7,7 +7,7 @@ export default class FootnoteCollectionModel {
     return 'footnotes'
   }
 
-  get isCollection() {
+  get isCollection () {
     return true
   }
 

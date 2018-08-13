@@ -1,4 +1,4 @@
-export function updateModel(model, props) {
+export function updateModel (model, props) {
   let session = getDocumentSessionForModel(model)
   let id = model.id
   session.transaction(tx => {
@@ -10,7 +10,7 @@ export function updateModel(model, props) {
 }
 
 // HACK: we do not know which session to use, so we compare it with node.getDocument()
-export function setModelValue(model, name, value) {
+export function setModelValue (model, name, value) {
   let session = getDocumentSessionForModel(model)
   let id = model.id
   session.transaction(tx => {
@@ -19,7 +19,7 @@ export function setModelValue(model, name, value) {
   })
 }
 
-export function getDocumentSessionForModel(model) {
+export function getDocumentSessionForModel (model) {
   let api = model._api
   let session = api.getArticleSession()
   return session

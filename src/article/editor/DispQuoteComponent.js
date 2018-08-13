@@ -1,7 +1,7 @@
 import { Component, TextPropertyEditor } from 'substance'
 
 export default class DispQuote extends Component {
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let quoteContent = node.find('disp-quote-content')
     let attribContent = node.find('attrib')

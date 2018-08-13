@@ -18,8 +18,7 @@ import { Component } from 'substance'
   ```
 */
 export default class ModalDialog extends Component {
-
-  render($$) {
+  render ($$) {
     let el = $$('div').addClass('sc-modal-dialog')
 
     // TODO: don't think that this is good enough. Right the modal is closed by any unhandled click.
@@ -28,7 +27,7 @@ export default class ModalDialog extends Component {
     el.on('keydown', this._onKeydown)
 
     if (this.props.width) {
-      el.addClass('sm-width-'+this.props.width)
+      el.addClass('sm-width-' + this.props.width)
     }
 
     if (this.props.transparent) {
@@ -43,11 +42,11 @@ export default class ModalDialog extends Component {
     return el
   }
 
-  _onKeydown(e) {
+  _onKeydown (e) {
     e.stopPropagation()
   }
 
-  _closeModal(e) {
+  _closeModal (e) {
     e.preventDefault()
     e.stopPropagation()
     let closeSurfaceClick = e.target.classList.contains('sc-modal-dialog')

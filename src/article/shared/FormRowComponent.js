@@ -2,7 +2,7 @@ import { Component, FontAwesomeIcon } from 'substance'
 import { Tooltip } from '../../kit'
 
 export default class FormRowComponent extends Component {
-  render($$) {
+  render ($$) {
     const label = this.props.label
     const warnings = this.props.warnings || []
     const hasWarnings = warnings.length > 0
@@ -10,10 +10,10 @@ export default class FormRowComponent extends Component {
 
     const el = $$('div').addClass('sc-form-row')
 
-    if(label) {
+    if (label) {
       const labelEl = $$('div').addClass('se-label').append(label)
 
-      if(hasWarnings) {
+      if (hasWarnings) {
         labelEl.append(
           $$('div').addClass('se-warning').append(
             $$(FontAwesomeIcon, { icon: 'fa-warning' }).addClass('se-icon'),
@@ -25,7 +25,7 @@ export default class FormRowComponent extends Component {
       el.append(labelEl)
     }
 
-    if(hasWarnings) {
+    if (hasWarnings) {
       el.addClass('sm-warning')
     }
 

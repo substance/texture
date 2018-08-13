@@ -15,7 +15,7 @@ export default class TranslateableModel {
     @param {StringModel} originalText The content in the original language
     @param {CollectionModel} translations
   */
-  constructor(api, id, originalLanguageCode, originalText, translations) {
+  constructor (api, id, originalLanguageCode, originalText, translations) {
     this._api = api
     this._id = id // e.g. title-trans|abstract-trans|figure-caption-1-trans
     this._originalLanguageCode = originalLanguageCode
@@ -23,46 +23,46 @@ export default class TranslateableModel {
     this._translations = translations
   }
 
-  get id() {
+  get id () {
     return this._id
   }
 
-  get type() {
+  get type () {
     return 'translatable'
   }
 
   /*
     Returns original language code
   */
-  getOriginalLangageCode() {
+  getOriginalLangageCode () {
     return this._originalLanguageCode
   }
 
   /*
     Returns the text model to be translated
   */
-  getOriginalText() {
+  getOriginalText () {
     return this._originalText
   }
 
   /*
     Returns a list of translations
   */
-  getTranslations() {
+  getTranslations () {
     return this._translations
   }
 
   /*
     Creates a new translation (with empty text) for a given language code
   */
-  addTranslation(languageCode) {
+  addTranslation (languageCode) {
     this._api.addTranslation(this._id, languageCode)
   }
 
   /*
     Removes a translation for a given language code
   */
-  removeTranslation(languageCode) {
+  removeTranslation (languageCode) {
     this._api.deleteTranslation(this._id, languageCode)
   }
 }

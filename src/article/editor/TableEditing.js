@@ -5,52 +5,51 @@ import {
 } from '../shared/tableHelpers'
 
 export default class TableEditing {
-
-  constructor(editorSession, tableId, surfaceId) {
+  constructor (editorSession, tableId, surfaceId) {
     this.editorSession = editorSession
     this.tableId = tableId
     this.surfaceId = surfaceId
   }
 
-  getTable() {
+  getTable () {
     return this.editorSession.getDocument().get(this.tableId)
   }
 
-  getSelectionData() {
+  getSelectionData () {
     return getSelectionData(this.editorSession.getSelection())
   }
 
-  getSelectedRange() {
+  getSelectedRange () {
     return getSelectedRange(this.getTable(), this.getSelectionData())
   }
 
-  insertRows(pos, count) {
+  insertRows (pos, count) {
     this.editorSession.transaction((tx) => {
       this._createRowsAt(this._getTable(tx), pos, count)
     }, { action: 'insertRows', pos, count })
   }
 
-  insertCols(pos, count) {
+  insertCols (pos, count) {
     this.editorSession.transaction((tx) => {
       this._createColumnsAt(this._getTable(tx), pos, count)
     }, { action: 'insertCols', pos, count })
   }
 
-  deleteRows(pos, count) {
+  deleteRows (pos, count) {
     this.editorSession.transaction((tx) => {
-      this._deleteRows(this._getTable(tx), pos, pos+count-1)
+      this._deleteRows(this._getTable(tx), pos, pos + count - 1)
       tx.selection = null
     }, { action: 'deleteRows', pos, count })
   }
 
-  deleteCols(pos, count) {
+  deleteCols (pos, count) {
     this.editorSession.transaction((tx) => {
-      this._deleteCols(this._getTable(tx), pos, pos+count-1)
+      this._deleteCols(this._getTable(tx), pos, pos + count - 1)
       tx.selection = null
     }, { action: 'deleteCols', pos, count })
   }
 
-  setCell(cellId, val) {
+  setCell (cellId, val) {
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
       let cell = table.get(cellId)
@@ -67,7 +66,7 @@ export default class TableEditing {
     }, { action: 'setCell' })
   }
 
-  editCell(cellId, newVal) {
+  editCell (cellId, newVal) {
     if (isString(newVal)) {
       this.editorSession.transaction(tx => {
         let cell = tx.get(cellId)
@@ -77,7 +76,7 @@ export default class TableEditing {
           type: 'property',
           path,
           startOffset: newVal.length,
-          surfaceId: this.surfaceId+'/'+path.join('.')
+          surfaceId: this.surfaceId + '/' + path.join('.')
         })
       })
     } else {
@@ -88,18 +87,18 @@ export default class TableEditing {
         type: 'property',
         path,
         startOffset: cell.getLength(),
-        surfaceId: this.surfaceId+'/'+path.join('.')
+        surfaceId: this.surfaceId + '/' + path.join('.')
       })
     }
   }
 
-  setValues(anchorCellId, vals) {
+  setValues (anchorCellId, vals) {
     let n = vals.length
     let m = vals[0].length
     let table = this.getTable()
     let { startRow, startCol } = getCellRange(table, anchorCellId, anchorCellId)
-    this.ensureSize(startRow+n, startCol+m)
-    let lastCell = table.getCell(startRow+n-1, startCol+m-1)
+    this.ensureSize(startRow + n, startCol + m)
+    let lastCell = table.getCell(startRow + n - 1, startCol + m - 1)
     if (lastCell.shadowed) lastCell = lastCell.masterCell
     this.editorSession.transaction(tx => {
       let table = this._getTable(tx)
@@ -113,7 +112,7 @@ export default class TableEditing {
     }, { action: 'setValues' })
   }
 
-  clearValues(anchorCellId, focusCellId) {
+  clearValues (anchorCellId, focusCellId) {
     let table = this.getTable()
     let { startRow, endRow, startCol, endCol } = getCellRange(table, anchorCellId, focusCellId)
     this.editorSession.transaction(tx => {
@@ -122,24 +121,24 @@ export default class TableEditing {
     })
   }
 
-  ensureSize(nrows, ncols) {
+  ensureSize (nrows, ncols) {
     let table = this._getTable(this.editorSession.getDocument())
     let [_nrows, _ncols] = table.getDimensions()
     if (_ncols < ncols) {
-      this.insertCols(_ncols, ncols-_ncols)
+      this.insertCols(_ncols, ncols - _ncols)
     }
     if (_nrows < nrows) {
-      this.insertRows(_nrows, nrows-_nrows)
+      this.insertRows(_nrows, nrows - _nrows)
     }
   }
 
-  insertSoftBreak() {
+  insertSoftBreak () {
     this.editorSession.transaction(tx => {
       tx.insertText('\n')
     }, 'insertSoftBreak')
   }
 
-  setHeading(cellIds, heading) {
+  setHeading (cellIds, heading) {
     let doc = this.editorSession.getDocument()
     cellIds = cellIds.filter(id => {
       let cell = doc.get(id)
@@ -159,7 +158,7 @@ export default class TableEditing {
     }, { action: 'setHeading' })
   }
 
-  merge() {
+  merge () {
     let table = this.getTable()
     let { startRow, endRow, startCol, endCol } = this.getSelectedRange()
     let bigOne = table.getCell(startRow, startCol)
@@ -171,10 +170,10 @@ export default class TableEditing {
         let rowspan = cell.rowspan
         let colspan = cell.colspan
         if (rowspan > 1) {
-          endRow = Math.max(endRow, i+rowspan-1)
+          endRow = Math.max(endRow, i + rowspan - 1)
         }
         if (colspan > 1) {
-          endCol = Math.max(endCol, j+colspan-1)
+          endCol = Math.max(endCol, j + colspan - 1)
         }
       }
     }
@@ -190,7 +189,7 @@ export default class TableEditing {
     }
   }
 
-  unmerge() {
+  unmerge () {
     let table = this.getTable()
     let { startRow, endRow, startCol, endCol } = this.getSelectedRange()
     let cellIds = []
@@ -215,23 +214,23 @@ export default class TableEditing {
     }
   }
 
-  _getTable(tx) {
+  _getTable (tx) {
     return tx.get(this.tableId)
   }
 
-  createTableSelection(data) {
+  createTableSelection (data) {
     let sel = createTableSelection(data)
     sel.data.nodeId = this.tableId
     sel.surfaceId = this.surfaceId
     return sel
   }
 
-  selectAll() {
+  selectAll () {
     let table = this.getTable()
     let [N, M] = table.getDimensions()
     if (N === 0 || M === 0) return
-    let anchorCell = table.getCell(0,0)
-    let focusCell = table.getCell(N-1, M-1)
+    let anchorCell = table.getCell(0, 0)
+    let focusCell = table.getCell(N - 1, M - 1)
     if (focusCell.shadowed) {
       focusCell = focusCell.masterCell
     }
@@ -242,12 +241,12 @@ export default class TableEditing {
     }))
   }
 
-  _setValues(table, startRow, startCol, vals) {
+  _setValues (table, startRow, startCol, vals) {
     for (let i = 0; i < vals.length; i++) {
       let row = vals[i]
       for (let j = 0; j < row.length; j++) {
         let val = row[j]
-        let cell = table.getCell(startRow+i, startCol+j)
+        let cell = table.getCell(startRow + i, startCol + j)
         cell.textContent = val
         // HACK: for now we remove merge
         cell.removeAttribute('rowspan')
@@ -256,7 +255,7 @@ export default class TableEditing {
     }
   }
 
-  _clearValues(table, startRow, startCol, endRow, endCol) {
+  _clearValues (table, startRow, startCol, endRow, endCol) {
     for (let rowIdx = startRow; rowIdx <= endRow; rowIdx++) {
       for (let colIdx = startCol; colIdx <= endCol; colIdx++) {
         let cell = table.getCell(rowIdx, colIdx)
@@ -265,7 +264,7 @@ export default class TableEditing {
     }
   }
 
-  _setCellTypesForRange(table, startRow, startCol, endRow, endCol, type) {
+  _setCellTypesForRange (table, startRow, startCol, endRow, endCol, type) {
     for (let rowIdx = startRow; rowIdx <= endRow; rowIdx++) {
       for (let colIdx = startCol; colIdx <= endCol; colIdx++) {
         let cell = table.getCell(rowIdx, colIdx)
@@ -274,12 +273,12 @@ export default class TableEditing {
     }
   }
 
-  _getCreateElement(table) {
+  _getCreateElement (table) {
     const doc = table.getDocument()
     return doc.createElement.bind(doc)
   }
 
-  _createRowsAt(table, rowIdx, n) {
+  _createRowsAt (table, rowIdx, n) {
     let $$ = this._getCreateElement(table)
     const M = table.getColumnCount()
     let rowAfter = table.getChildAt(rowIdx)
@@ -293,7 +292,7 @@ export default class TableEditing {
     }
   }
 
-  _deleteRows(table, startRow, endRow) {
+  _deleteRows (table, startRow, endRow) {
     for (let rowIdx = endRow; rowIdx >= startRow; rowIdx--) {
       let row = table.getChildAt(rowIdx)
       table.removeChild(row)
@@ -301,9 +300,9 @@ export default class TableEditing {
     }
   }
 
-  _deleteCols(table, startCol, endCol) {
+  _deleteCols (table, startCol, endCol) {
     let N = table.getRowCount()
-    for (let rowIdx = N-1; rowIdx >= 0; rowIdx--) {
+    for (let rowIdx = N - 1; rowIdx >= 0; rowIdx--) {
       let row = table.getChildAt(rowIdx)
       for (let colIdx = endCol; colIdx >= startCol; colIdx--) {
         let cell = row.getChildAt(colIdx)
@@ -313,10 +312,10 @@ export default class TableEditing {
     }
   }
 
-  _createColumnsAt(table, colIdx, n) {
+  _createColumnsAt (table, colIdx, n) {
     let $$ = this._getCreateElement(table)
     let rowIt = table.getChildNodeIterator()
-    while(rowIt.hasNext()) {
+    while (rowIt.hasNext()) {
       let row = rowIt.next()
       let cellAfter = row.getChildAt(colIdx)
       for (let j = 0; j < n; j++) {
@@ -325,6 +324,4 @@ export default class TableEditing {
       }
     }
   }
-
 }
-

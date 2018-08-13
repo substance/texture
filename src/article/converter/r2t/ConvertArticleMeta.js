@@ -61,8 +61,7 @@ import { insertChildAtFirstValidPos, insertChildrenAtFirstValidPos } from './r2t
     - title-group -> article-record.title +
 */
 export default class ConvertArticleMeta {
-
-  export(dom, api) {
+  export (dom, api) {
     _exportKeywords(dom, api)
     _exportSubjects(dom, api)
     // Order is very important here!
@@ -70,7 +69,7 @@ export default class ConvertArticleMeta {
   }
 }
 
-function _exportKeywords(dom, api) {
+function _exportKeywords (dom, api) {
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
   const doc = api.doc
@@ -93,7 +92,7 @@ function _exportKeywords(dom, api) {
   })
 }
 
-function _exportSubjects(dom, api) {
+function _exportSubjects (dom, api) {
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
   const doc = api.doc
@@ -116,7 +115,7 @@ function _exportSubjects(dom, api) {
   })
 }
 
-function _exportAffiliations(dom, api) {
+function _exportAffiliations (dom, api) {
   const doc = api.doc
   const articleMeta = dom.find('article-meta')
   const $$ = dom.createElement.bind(dom)
@@ -133,7 +132,7 @@ function _exportAffiliations(dom, api) {
   })
 }
 
-function _exportAwards(dom, api) {
+function _exportAwards (dom, api) {
   const doc = api.doc
   const articleMeta = dom.find('article-meta')
   const $$ = dom.createElement.bind(dom)
@@ -156,7 +155,7 @@ function _exportAwards(dom, api) {
 
   [p1,p2g1,p3g2,p4g1] => {p1: p1, g1: [p2,p4], g2: [p3] }
 */
-function _groupContribs(contribs) {
+function _groupContribs (contribs) {
   let groups = {}
   contribs.forEach(contrib => {
     if (contrib.group) {
@@ -172,13 +171,13 @@ function _groupContribs(contribs) {
   return groups
 }
 
-function _exportContribs(dom, api, type) {
+function _exportContribs (dom, api, type) {
   const doc = api.doc
   const $$ = dom.createElement.bind(dom)
   const articleMeta = dom.find('article-meta')
   const articleRecord = doc.get('article-record')
   let contribGroup = $$('contrib-group').attr('content-type', type)
-  let contribs = articleRecord[type+'s'].map(contribId => doc.get(contribId))
+  let contribs = articleRecord[type + 's'].map(contribId => doc.get(contribId))
   let groupedContribs = _groupContribs(contribs)
   forEach(groupedContribs, (val, key) => {
     let newContribEl
@@ -200,7 +199,7 @@ function _exportContribs(dom, api, type) {
 
   NOTE: We need to be really careful about the element order inside <article-meta>
 */
-function _exportArticleRecord(dom, api) {
+function _exportArticleRecord (dom, api) {
   const doc = api.doc
   const articleMeta = dom.find('article-meta')
   const node = doc.get('article-record')
@@ -223,11 +222,11 @@ function _exportArticleRecord(dom, api) {
   } else if (node.fpage && node.lpage) {
     // NOTE: last argument is used to resolve insert position, as we don't have means
     // yet to ask for insert position of multiple elements
-    let pageRange = node.pageRange || node.fpage+'-'+node.lpage
+    let pageRange = node.pageRange || node.fpage + '-' + node.lpage
     insertChildrenAtFirstValidPos(articleMeta, [
       $$('fpage').append(node.fpage),
       $$('lpage').append(node.lpage),
-      $$('page-range').append(pageRange),
+      $$('page-range').append(pageRange)
     ], 'isbn')
   }
 
@@ -244,7 +243,7 @@ function _exportArticleRecord(dom, api) {
   insertChildAtFirstValidPos(articleMeta, historyEl)
 }
 
-function _exportDate($$, node, prop, dateType, tag) {
+function _exportDate ($$, node, prop, dateType, tag) {
   const date = node[prop]
   const tagName = tag || 'date'
   const el = $$(tagName).attr('date-type', dateType)
@@ -253,7 +252,7 @@ function _exportDate($$, node, prop, dateType, tag) {
   const year = date.split('-')[0]
   const month = date.split('-')[1]
   const day = date.split('-')[2]
-  if(_isDateValid(date)) {
+  if (_isDateValid(date)) {
     el.append(
       $$('day').append(day),
       $$('month').append(month),
@@ -272,20 +271,20 @@ function _exportDate($$, node, prop, dateType, tag) {
   return el
 }
 
-function _isDateValid(str) {
+function _isDateValid (str) {
   const regexp = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
-  if(!regexp.test(str)) return false
+  if (!regexp.test(str)) return false
   return true
 }
 
-function _isYearMonthDateValid(str) {
+function _isYearMonthDateValid (str) {
   const regexp = /^[0-9]{4}-(0[1-9]|1[0-2])$/
-  if(!regexp.test(str)) return false
+  if (!regexp.test(str)) return false
   return true
 }
 
-function _isYearDateValid(str) {
+function _isYearDateValid (str) {
   const regexp = /^[0-9]{4}$/
-  if(!regexp.test(str)) return false
+  if (!regexp.test(str)) return false
   return true
 }

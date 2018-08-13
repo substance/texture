@@ -1,6 +1,6 @@
 export default {
   name: 'entity-labels',
-  configure(config) {
+  configure (config) {
     // general
     config.addLabel('edit-references', 'Edit References')
     config.addLabel('edit-affiliations', 'Edit Affiliations')
@@ -152,7 +152,7 @@ export default {
     config.addLabel('institution', 'Institution Name')
     config.addLabel('fundRefId', 'Institution Identifier')
     config.addLabel('awardId', 'Award Identifier')
-  
+
     // keyword labels
     config.addLabel('category', 'Category')
     config.addLabel('language', 'Language')

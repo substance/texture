@@ -2,7 +2,7 @@ import DefaultModel from './DefaultModel'
 import { getXrefLabel } from '../shared/xrefHelpers'
 
 export default class FootnotesModel extends DefaultModel {
-  getLabel(id) {
+  getLabel (id) {
     let doc = this.context.doc
     let fn = doc.get(id)
     return getXrefLabel(fn)
@@ -11,10 +11,10 @@ export default class FootnotesModel extends DefaultModel {
   /*
     Render footnote as HTML
   */
-  renderFootnote(id) {
-    const node = this._node.find('#'+id)
+  renderFootnote (id) {
+    const node = this._node.find('#' + id)
     const content = node.getContent()
-    let html = content.map(pId => `<p>${this._node.find('#'+pId).getText()}</p>`)
+    let html = content.map(pId => `<p>${this._node.find('#' + pId).getText()}</p>`)
     return html
   }
 }

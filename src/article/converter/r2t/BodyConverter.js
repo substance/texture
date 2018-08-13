@@ -89,12 +89,12 @@ function _createSections (container) {
   let stack = [{
     el: container
   }]
-  for (let i=0; i < children.length; i++) {
+  for (let i = 0; i < children.length; i++) {
     let child = children[i]
     if (child.tagName === 'heading') {
       let heading = child
-      let level = parseInt(child.attr('level') || "1", 10)
-      while (stack.length >= level+1) {
+      let level = parseInt(child.attr('level') || '1', 10)
+      while (stack.length >= level + 1) {
         stack.pop()
       }
       let sec = doc.createElement('sec')

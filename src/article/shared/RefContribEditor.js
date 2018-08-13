@@ -3,14 +3,14 @@ import FormRowComponent from '../shared/FormRowComponent'
 import TextInput from './TextInput'
 
 export default class RefContribEditor extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args)
     this.handleActions({
       'set-value': this._updateContrib
     })
   }
 
-  render($$) {
+  render ($$) {
     const items = this.props.values
 
     let el = $$('div').addClass('sc-ref-contrib-editor')
@@ -30,12 +30,12 @@ export default class RefContribEditor extends Component {
         .on('click', this._addContrib)
     )
 
-    if(this.props.warning) el.addClass('sm-warning')
+    if (this.props.warning) el.addClass('sm-warning')
 
     return el
   }
 
-  _renderEditor($$, item) {
+  _renderEditor ($$, item) {
     return $$(FormRowComponent).append(
       $$(TextInput, {id: item.id, name: 'givenNames', value: item.givenNames, placeholder: 'Given names'}),
       $$(TextInput, {id: item.id, name: 'name', value: item.name, placeholder: 'Last name'}),
@@ -45,24 +45,24 @@ export default class RefContribEditor extends Component {
     ).ref(item.id)
   }
 
-  _addContrib() {
+  _addContrib () {
     this.send('add-contrib', this.props.name)
   }
 
-  _removeContrib(itemId) {
+  _removeContrib (itemId) {
     this.send('remove-contrib', this.props.name, itemId)
   }
 
-  _updateContrib(propName, value, itemId) {
+  _updateContrib (propName, value, itemId) {
     this.send('update-contrib', itemId, propName, value)
   }
 
-  _getContrib(id) {
+  _getContrib (id) {
     const article = this.context.api.getArticle()
     return article.get(id)
   }
 
-  _getValue() {
+  _getValue () {
     const items = this.state.items
     return items.map(item => item.id)
   }

@@ -1,20 +1,19 @@
 import { TextPropertyEditor } from '../../kit'
 
 export default class TableCellEditor extends TextPropertyEditor {
-
-  _handleEscapeKey(event) {
+  _handleEscapeKey (event) {
     this.__handleKey(event, 'escape')
   }
 
-  _handleEnterKey(event) {
+  _handleEnterKey (event) {
     this.__handleKey(event, 'enter')
   }
 
-  _handleTabKey(event) {
+  _handleTabKey (event) {
     this.__handleKey(event, 'tab')
   }
 
-  __handleKey(event, name) {
+  __handleKey (event, name) {
     event.stopPropagation()
     event.preventDefault()
     this.el.emit(name, {
@@ -25,5 +24,4 @@ export default class TableCellEditor extends TextPropertyEditor {
       code: event.code
     })
   }
-
 }

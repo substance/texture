@@ -42,7 +42,7 @@ class ImportStage extends Component {
     )
     if (err.el) {
       el.append(
-        $$('pre').addClass('se-element').text(printElement(err.el, { maxLevel: 1}))
+        $$('pre').addClass('se-element').text(printElement(err.el, {maxLevel: 1}))
       )
     }
     return el

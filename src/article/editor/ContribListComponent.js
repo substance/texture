@@ -6,8 +6,7 @@ import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AffiliationsListComponent from './AffiliationsListComponent'
 
 export default class ContribsListComponent extends NodeComponent {
-
-  didMount() {
+  didMount () {
     super.didMount()
     this.handleActions({
       'done': this._doneEditing,
@@ -17,7 +16,7 @@ export default class ContribsListComponent extends NodeComponent {
     })
   }
 
-  getInitialState() {
+  getInitialState () {
     let entityIds = this._getEntityIds()
     return {
       hidden: entityIds.length === 0,
@@ -25,11 +24,11 @@ export default class ContribsListComponent extends NodeComponent {
     }
   }
 
-  _getEntityIds() {
+  _getEntityIds () {
     return this.props.node.findAll('contrib').map(contrib => contrib.getAttribute('rid'))
   }
 
-  render($$) {
+  render ($$) {
     const api = this.context.api
     const article = api.getArticle()
     const entityIds = this._getEntityIds()
@@ -96,19 +95,19 @@ export default class ContribsListComponent extends NodeComponent {
     return el
   }
 
-  _editContribs() {
+  _editContribs () {
     this.setState({
       edit: true
     })
   }
 
-  _doneEditing() {
+  _doneEditing () {
     this.setState({
       edit: false
     })
   }
 
-  _updateContribs(entityIds) {
+  _updateContribs (entityIds) {
     let oldEntityIds = this._getEntityIds()
     let editorSession = this.context.editorSession
 
@@ -125,7 +124,7 @@ export default class ContribsListComponent extends NodeComponent {
   /*
     Creates new aff entries and removes old ones
   */
-  _updateAffs(tx, contribIds) {
+  _updateAffs (tx, contribIds) {
     const api = this.context.api
     const article = api.getArticle()
     let editorSession = this.context.editorSession
@@ -154,11 +153,10 @@ export default class ContribsListComponent extends NodeComponent {
     addedOrgIds.forEach(entityId => {
       let affNode = affGroupEl.find(`aff[rid=${entityId}]`)
       if (!affNode) {
-        affNode = tx.createElement('aff', {id: uuid('aff') })
+        affNode = tx.createElement('aff', {id: uuid('aff')})
         affNode.attr('rid', entityId)
       }
       affGroupEl.appendChild(affNode)
     })
   }
-
 }

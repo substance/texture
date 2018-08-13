@@ -3,8 +3,7 @@
   Removes everything except textual paragraphs from footnotes.
 */
 export default class NormalizeFn {
-
-  import(dom) {
+  import (dom) {
     let fns = dom.findAll('fn')
     fns.forEach(fn => {
       // Find all ptags that are nested in another p tag
@@ -17,7 +16,7 @@ export default class NormalizeFn {
     })
   }
 
-  export() {
+  export () {
     // nothing
   }
 }

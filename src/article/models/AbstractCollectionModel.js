@@ -1,19 +1,17 @@
 export default class AbstractCollectionModel {
-
-  get isCollection() {
+  get isCollection () {
     return true
   }
 
-  getItems() {
+  getItems () {
     // return rich objects
   }
 
-  addItem(item) { // eslint-disable-line no-unused-vars
+  addItem (item) { // eslint-disable-line no-unused-vars
 
   }
 
-  removeItem(item) { // eslint-disable-line no-unused-vars
-    
-  }
+  removeItem (item) { // eslint-disable-line no-unused-vars
 
+  }
 }

@@ -1,6 +1,5 @@
 export default class ConvertTable {
-
-  import(dom) {
+  import (dom) {
     const $$ = dom.createElement.bind(dom)
     let tables = dom.findAll('table')
 
@@ -18,7 +17,7 @@ export default class ConvertTable {
         let tr = rows[i]
         let newRow = newRows[i]
         let children = tr.getChildren()
-        for (let j=0, k=0; j < children.length; j++, k++) {
+        for (let j = 0, k = 0; j < children.length; j++, k++) {
           // skipping spanned cells which is necessary
           // because HTML tables have a sparse representation
           // w.r.t. spanning
@@ -26,7 +25,7 @@ export default class ConvertTable {
           let c = children[j]
 
           let attributes = {}
-          if(c.is('th')) attributes.heading = true
+          if (c.is('th')) attributes.heading = true
           let rowspan = c.attr('rowspan') || 0
           if (rowspan) {
             rowspan = parseInt(rowspan, 10)
@@ -55,7 +54,7 @@ export default class ConvertTable {
       )
       htmlTable.parentNode.replaceChild(htmlTable, textureTable)
 
-      function _fillSpanned(row, col, rowspan, colspan) {
+      function _fillSpanned (row, col, rowspan, colspan) {
         if (!rowspan && !colspan) return
         for (let i = row; i <= row + rowspan; i++) {
           for (let j = col; j <= col + colspan; j++) {
@@ -67,7 +66,7 @@ export default class ConvertTable {
     })
   }
 
-  export(dom) {
+  export (dom) {
     const $$ = dom.createElement.bind(dom)
     let tables = dom.findAll('table')
     tables.forEach(table => {
@@ -105,7 +104,7 @@ export default class ConvertTable {
       htmlTable.append(tbody)
       table.parentNode.replaceChild(table, htmlTable)
 
-      function _clearSpanned(row, col, rowspan, colspan) {
+      function _clearSpanned (row, col, rowspan, colspan) {
         if (!rowspan && !colspan) return
         for (let i = row; i <= row + rowspan; i++) {
           for (let j = col; j <= col + colspan; j++) {
@@ -116,5 +115,4 @@ export default class ConvertTable {
       }
     })
   }
-
 }

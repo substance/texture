@@ -2,7 +2,7 @@ import { Component, FontAwesomeIcon as Icon, sendRequest } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
 
 export default class DOIInputComponent extends Component {
-  render($$) {
+  render ($$) {
     const labelProvider = this.context.labelProvider
 
     const inputEl = $$('div').addClass('se-input-group').append(
@@ -24,8 +24,8 @@ export default class DOIInputComponent extends Component {
       errorsList.append(
         $$('li').append(this.state.error.message)
       )
-      if(dois) {
-        errorsList.append(dois.map(d => $$('li').append('- '+d)))
+      if (dois) {
+        errorsList.append(dois.map(d => $$('li').append('- ' + d)))
       }
       inputEl.append(
         $$('div').addClass('se-input-sign sm-error').append(
@@ -51,7 +51,7 @@ export default class DOIInputComponent extends Component {
     return el
   }
 
-  _startImporting() {
+  _startImporting () {
     const input = this.refs.DOIInput
     const val = input.val()
     const dois = val.split(' ').map(v => v.trim()).filter(v => Boolean(v))
@@ -64,20 +64,19 @@ export default class DOIInputComponent extends Component {
     })
   }
 
-  _unblockUI() {
-    if(this.state.error) {
+  _unblockUI () {
+    if (this.state.error) {
       this.extendState({error: undefined})
     }
   }
 }
-
 
 /*
   Helpers
 */
 const ENDPOINT = 'https://doi.org/'
 
-function _getBibEntries(dois) {
+function _getBibEntries (dois) {
   return _fetchCSLJSONEntries(dois).then(entries => {
     let conversionErrors = []
     let convertedEntries = []
@@ -86,7 +85,7 @@ function _getBibEntries(dois) {
         convertedEntries.push(
           convertCSLJSON(entry)
         )
-      } catch(error) {
+      } catch (error) {
         conversionErrors.push(entry.DOI)
       }
     })
@@ -103,7 +102,7 @@ function _getBibEntries(dois) {
 /*
   Fetch CSL JSON entries
 */
-function _fetchCSLJSONEntries(dois) {
+function _fetchCSLJSONEntries (dois) {
   let errored = []
   let entries = []
 
@@ -114,7 +113,7 @@ function _fetchCSLJSONEntries(dois) {
       .catch(() => errored.push(doi))
   }, Promise.resolve())
     .then(() => {
-      if(errored.length > 0) {
+      if (errored.length > 0) {
         let err = new Error(`Could not resolve some DOI's`)
         err.dois = errored
         throw err
@@ -127,7 +126,7 @@ function _fetchCSLJSONEntries(dois) {
 /*
   Fetch single entry for DOI
 */
-function _fetchDOI(doi) {
+function _fetchDOI (doi) {
   const url = ENDPOINT + doi
   return sendRequest({url: url, method: 'GET', header: {'accept': 'application/vnd.citationstyles.csl+json'}})
 }

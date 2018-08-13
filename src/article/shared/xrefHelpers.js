@@ -29,7 +29,7 @@ export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {
   return m
 }, {})
 
-export function getXrefTargets(xref) {
+export function getXrefTargets (xref) {
   let idrefs = xref.getAttribute('rid')
   if (idrefs) {
     return idrefs.split(' ')
@@ -38,7 +38,7 @@ export function getXrefTargets(xref) {
   }
 }
 
-export function getXrefLabel(xref) {
+export function getXrefLabel (xref) {
   // Note: we will store the label in the node state
   // when we generate it
   if (xref.state && xref.state.label) {
@@ -48,11 +48,11 @@ export function getXrefLabel(xref) {
   return xref.textContent || ' '
 }
 
-function getXrefResourceManager(xref, context) {
+function getXrefResourceManager (xref, context) {
   const articleSession = context.api.getArticleSession()
   let managerName = RefTypeToManager[xref.getAttribute('ref-type')]
   if (managerName) {
-    switch(managerName) {
+    switch (managerName) {
       case 'figureManager':
         return articleSession.getFigureManager()
       case 'footnoteManager':
@@ -67,7 +67,7 @@ function getXrefResourceManager(xref, context) {
   }
 }
 
-export function hasAvailableXrefTargets(refType, context) {
+export function hasAvailableXrefTargets (refType, context) {
   let managerName = RefTypeToManager[refType]
   if (managerName) {
     const manager = context[managerName]

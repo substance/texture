@@ -11,8 +11,7 @@ import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
 
 export default class TableComponent extends CustomSurface {
-
-  constructor(...args) {
+  constructor (...args) {
     super(...args)
 
     this._selectionData = {}
@@ -20,7 +19,7 @@ export default class TableComponent extends CustomSurface {
     this._clipboard = new TableClipboard(this._tableEditing)
   }
 
-  getChildContext() {
+  getChildContext () {
     return {
       surface: this,
       parentSurfaceId: this.getId(),
@@ -30,30 +29,30 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  shouldRerender(newProps) {
+  shouldRerender (newProps) {
     return (newProps.node !== this.props.node || newProps.disabled !== this.props.disabled)
   }
 
-  didMount() {
+  didMount () {
     super.didMount()
 
     this._tableSha = this.props.node._getSha()
     const appState = this.context.appState
 
-    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' } )
+    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
     appState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'render' })
 
     this._positionSelection(this._getSelectionData())
   }
 
-  dispose() {
+  dispose () {
     super.dispose()
 
     const appState = this.context.appState
     appState.off(this)
   }
 
-  render($$) {
+  render ($$) {
     let el = $$('div').addClass('sc-table')
     el.on('mousedown', this._onMousedown)
       .on('mouseup', this._onMouseup)
@@ -65,7 +64,7 @@ export default class TableComponent extends CustomSurface {
     return el
   }
 
-  _renderTable($$) {
+  _renderTable ($$) {
     let table = $$('table').ref('table')
     let node = this.props.node
     let matrix = node.getCellMatrix()
@@ -92,7 +91,7 @@ export default class TableComponent extends CustomSurface {
     return table
   }
 
-  _renderKeyTrap($$) {
+  _renderKeyTrap ($$) {
     return $$('textarea').addClass('se-keytrap').ref('keytrap')
       .css({ position: 'absolute', width: 0, height: 0, opacity: 0 })
       .on('keydown', this._onKeydown)
@@ -102,7 +101,7 @@ export default class TableComponent extends CustomSurface {
       .on('cut', this._onCut)
   }
 
-  _renderUnclickableOverlays($$) {
+  _renderUnclickableOverlays ($$) {
     let el = $$('div').addClass('se-unclickable-overlays')
     el.append(
       this._renderSelectionOverlay($$)
@@ -113,7 +112,7 @@ export default class TableComponent extends CustomSurface {
     return el
   }
 
-  _renderSelectionOverlay($$) {
+  _renderSelectionOverlay ($$) {
     let el = $$('div').addClass('se-selection-overlay')
     el.append(
       $$('div').addClass('se-selection-anchor').ref('selAnchor').css('visibility', 'hidden'),
@@ -122,7 +121,7 @@ export default class TableComponent extends CustomSurface {
     return el
   }
 
-  _renderContextMenu($$) {
+  _renderContextMenu ($$) {
     const configurator = this.context.configurator
     // HACK: Skip if toolpanel not defined (this happens when used from the reader)
     const toolPanel = configurator.getToolPanel('table-context-menu')
@@ -186,9 +185,9 @@ export default class TableComponent extends CustomSurface {
     }
     this._hideContextMenu()
 
-    function _disableActiveCell() {
+    function _disableActiveCell () {
       const activeCellId = self._activeCell
-      if(activeCellId) {
+      if (activeCellId) {
         let cellEditor = self.refs[activeCellId]
         if (cellEditor) {
           // console.log('DISABLING CELL EDITOR', activeCellId)
@@ -199,7 +198,7 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onMousedown(e) {
+  _onMousedown (e) {
     e.stopPropagation()
     // TODO: do not update the selection if right-clicked and already having a selection
     if (platform.inBrowser) {
@@ -249,7 +248,7 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onMouseup(e) {
+  _onMouseup (e) {
     e.stopPropagation()
     if (this._isSelecting) {
       e.preventDefault()
@@ -257,7 +256,7 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onMousemove(e) {
+  _onMousemove (e) {
     if (this._isSelecting) {
       const selData = this._selectionData
       let cellId = this._mapClientXYToCellId(e.clientX, e.clientY)
@@ -268,13 +267,13 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onDblclick(e) {
+  _onDblclick (e) {
     e.preventDefault()
     e.stopPropagation()
     this._requestEditCell()
   }
 
-  _onKeydown(e) {
+  _onKeydown (e) {
     let handled = false
     switch (e.keyCode) {
       case keys.LEFT:
@@ -328,14 +327,14 @@ export default class TableComponent extends CustomSurface {
   /*
     Type into cell (replacing the existing content)
   */
-  _onInput() {
+  _onInput () {
     const value = this.refs.keytrap.val()
     this._requestEditCell(value)
     // Clear keytrap after sending an action
     this.refs.keytrap.val('')
   }
 
-  _onCellEnter(e) {
+  _onCellEnter (e) {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
@@ -346,69 +345,69 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _onCellTab(e) {
+  _onCellTab (e) {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
     this._nav(0, 1, false, { anchorCellId: cellEl.id, focusCellId: cellEl.id })
   }
 
-  _onCellEscape(e) {
+  _onCellEscape (e) {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
     this._requestSelectionChange(this._tableEditing.createTableSelection({ anchorCellId: cellEl.id, focusCellId: cellEl.id }))
   }
 
-  _onCopy(e) {
+  _onCopy (e) {
     this._clipboard.onCopy(e)
   }
 
-  _onPaste(e) {
+  _onPaste (e) {
     this._clipboard.onPaste(e)
   }
 
-  _onCut(e) {
+  _onCut (e) {
     this._clipboard.onCut(e)
   }
 
-  _onContextMenu(e) {
+  _onContextMenu (e) {
     e.preventDefault()
     e.stopPropagation()
     this._showContextMenu(e)
   }
 
-  _onContextmenuitemclick(e) {
+  _onContextmenuitemclick (e) {
     e.preventDefault()
     e.stopPropagation()
     this._hideContextMenu()
   }
 
-  _getSelection() {
+  _getSelection () {
     return this.context.editorSession.getSelection()
   }
 
-  _getSelectionData() {
+  _getSelectionData () {
     let sel = this._getSelection()
     if (sel && sel.surfaceId === this.getId()) {
       return sel.data
     }
   }
 
-  _requestEditCell(initialValue) {
+  _requestEditCell (initialValue) {
     let selData = this._getSelectionData()
     if (selData) {
       this._tableEditing.editCell(selData.anchorCellId, initialValue)
     }
   }
 
-  _requestSelectionChange(newSel) {
+  _requestSelectionChange (newSel) {
     // console.log('requesting selection change', newSel)
     if (newSel) newSel.surfaceId = this.getId()
     this.context.editorSession.setSelection(newSel)
   }
 
-  _getClickTargetForEvent(e) {
+  _getClickTargetForEvent (e) {
     let target = DOM.wrap(e.target)
     let cellEl = domHelpers.findParent(target, 'td,th')
     if (cellEl) {
@@ -416,13 +415,13 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _getRowCol(cellEl) {
+  _getRowCol (cellEl) {
     let rowIdx = parseInt(cellEl.getAttribute('data-row-idx'), 10)
     let colIdx = parseInt(cellEl.getAttribute('data-col-idx'), 10)
     return [rowIdx, colIdx]
   }
 
-  _mapClientXYToCellId(x, y) {
+  _mapClientXYToCellId (x, y) {
     // TODO: this could be optimized using bisect search
     let cellEls = this.refs.table.el.findAll('th,td')
     for (let i = 0; i < cellEls.length; i++) {
@@ -434,7 +433,7 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _nav(dr, dc, expand, selData) {
+  _nav (dr, dc, expand, selData) {
     selData = selData || this._getSelectionData()
     if (selData) {
       let newSelData = computeUpdatedSelection(this.props.node, selData, dr, dc, expand)
@@ -442,18 +441,18 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _getCustomResourceId() {
+  _getCustomResourceId () {
     return this.props.node.id
   }
 
-  _clearSelection() {
+  _clearSelection () {
     let selData = this._getSelectionData()
     if (selData) {
       this._tableEditing.clearValues(selData.anchorCellId, selData.focusCellId)
     }
   }
 
-  rerenderDOMSelection() {
+  rerenderDOMSelection () {
     // console.log('SheetComponent.rerenderDOMSelection()')
     this._positionSelection(this._getSelectionData())
     // // put the native focus into the keytrap so that we
@@ -461,7 +460,7 @@ export default class TableComponent extends CustomSurface {
     this.refs.keytrap.el.focus()
   }
 
-  _positionSelection(selData, focused) {
+  _positionSelection (selData, focused) {
     // TODO: find a better criteria for integrity checking
     if (!selData) {
       this._hideSelection()
@@ -488,23 +487,23 @@ export default class TableComponent extends CustomSurface {
     }
   }
 
-  _getActualCellComp(cellId) {
+  _getActualCellComp (cellId) {
     let table = this._tableEditing.getTable()
     let cell = table.get(cellId)
     if (cell.shadowed) cell = cell.masterCell
     return this.refs[cell.id]
   }
 
-  _hideSelection() {
+  _hideSelection () {
     this.refs.selAnchor.css('visibility', 'hidden')
     this.refs.selRange.css('visibility', 'hidden')
   }
 
-  _hideContextMenu() {
+  _hideContextMenu () {
     this.refs.contextMenu.addClass('sm-hidden')
   }
 
-  _showContextMenu(e) {
+  _showContextMenu (e) {
     let contextMenu = this.refs.contextMenu
     let offset = this.el.getOffset()
     contextMenu.css({
@@ -515,7 +514,7 @@ export default class TableComponent extends CustomSurface {
     contextMenu.removeClass('sm-hidden')
   }
 
-  _getStylesForRectangle(rect) {
+  _getStylesForRectangle (rect) {
     let styles = { visibility: 'hidden' }
     if (rect) {
       Object.assign(styles, rect)

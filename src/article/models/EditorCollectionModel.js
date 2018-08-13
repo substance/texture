@@ -1,7 +1,7 @@
 import DefaultCollectionModel from './DefaultCollectionModel'
 
 export default class EditorCollectionModel extends DefaultCollectionModel {
-  constructor(api, node) {
+  constructor (api, node) {
     super(api, node)
     this._node = node
   }
@@ -19,11 +19,11 @@ export default class EditorCollectionModel extends DefaultCollectionModel {
     this._api.removeItemFromCollection(item, this)
   }
 
-  _getCollectionId() {
+  _getCollectionId () {
     return 'editors'
   }
 
-  _getCollectionType() {
+  _getCollectionType () {
     return 'editor'
   }
 }

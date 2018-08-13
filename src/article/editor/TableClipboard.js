@@ -3,12 +3,11 @@ import {
 } from 'substance'
 
 export default class TableClipboard {
-
-  constructor(tableEditing) {
+  constructor (tableEditing) {
     this.tableEditing = tableEditing
   }
 
-  onCopy(e) {
+  onCopy (e) {
     e.preventDefault()
     e.stopPropagation()
     if (e.clipboardData) {
@@ -18,19 +17,19 @@ export default class TableClipboard {
         e.clipboardData.setData('text/plain', data.text)
         try {
           e.clipboardData.setData('text/html', data.html)
-        } catch(err) {
+        } catch (err) {
           // fails under some browsers
         }
       }
     }
   }
 
-  onCut(e) {
+  onCut (e) {
     this.onCopy(e)
     this._cut()
   }
 
-  onPaste(event) {
+  onPaste (event) {
     let clipboardData = event.clipboardData
     let types = {}
     for (let i = 0; i < clipboardData.types.length; i++) {
@@ -61,7 +60,7 @@ export default class TableClipboard {
     }
   }
 
-  _pasteHtml(html, plainText) {
+  _pasteHtml (html, plainText) {
     let vals = this._htmlToVals(html)
     if (vals && vals.length > 0) {
       let selData = this.tableEditing.getSelectionData()
@@ -73,7 +72,7 @@ export default class TableClipboard {
     }
   }
 
-  _pastePlainText(plainText) {
+  _pastePlainText (plainText) {
     let selData = this.tableEditing.getSelectionData()
     const { anchorCellId } = selData
     // TODO: we could try to detect csv/tsv in the plain text
@@ -81,7 +80,7 @@ export default class TableClipboard {
     this.tableEditing.setCell(anchorCellId, plainText)
   }
 
-  _copy() {
+  _copy () {
     const table = this.tableEditing.getTable()
     const range = this._getRange()
     if (!range) return null
@@ -96,13 +95,13 @@ export default class TableClipboard {
     return { text, html }
   }
 
-  _cut() {
+  _cut () {
     const range = this._getRange()
     if (!range) return
     this._clearValues()
   }
 
-  _valsToHTML(vals) {
+  _valsToHTML (vals) {
     let bodyHTML = vals.map((rowVals) => {
       const rowHTML = rowVals.map((val) => {
         return `<td>${val}</td>`
@@ -112,13 +111,13 @@ export default class TableClipboard {
     return `<table>${bodyHTML}</table>`
   }
 
-  _valsToPlainText(vals) {
+  _valsToPlainText (vals) {
     return vals.map((rowVals) => {
       return rowVals.join('\t')
     }).join('\n')
   }
 
-  _htmlToVals(html) {
+  _htmlToVals (html) {
     let doc = DOM.parseHTML(html)
     let table = doc.find('table')
     if (table) {
@@ -132,16 +131,15 @@ export default class TableClipboard {
     }
   }
 
-  _setValues(anchorCellId, vals) {
+  _setValues (anchorCellId, vals) {
     this.tableEditing.setValues(anchorCellId, vals)
   }
 
-  _clearValues() {
+  _clearValues () {
     this.tableEditing.clearValues()
   }
 
-  _getRange() {
+  _getRange () {
     return this.tableEditing.getSelectedRange()
   }
-
 }

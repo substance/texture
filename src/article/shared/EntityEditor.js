@@ -10,32 +10,32 @@ const REQUIRED_PROPERTIES = {
   'chapter': {
     'title': true,
     'containerTitle': true,
-    'authors': true,
+    'authors': true
   },
   'data-publication': {
     'title': true,
     'containerTitle': true,
-    'authors': true,
+    'authors': true
   },
   'magazine-article': {
     'title': true,
     'containerTitle': true,
-    'authors': true,
+    'authors': true
   },
   'newspaper-article': {
     'title': true,
     'containerTitle': true,
-    'authors': true,
+    'authors': true
   },
   '_patent': {
     'title': true,
     'containerTitle': true,
-    'inventors': true,
+    'inventors': true
   },
   'journal-article': {
     'title': true,
     'containerTitle': true,
-    'authors': true,
+    'authors': true
   },
   'conference-paper': {
     'title': true,
@@ -173,7 +173,7 @@ export default class EntityEditor extends ModelComponent {
   /*
     Return complete form data
   */
-  getData() {
+  getData () {
     let result = {}
     let schema = this._getNodeSchema()
     for (let property of schema) {
@@ -189,7 +189,7 @@ export default class EntityEditor extends ModelComponent {
   /*
     Toogle form, by default we are showing only filled and required filds
   */
-  _toggleMode() {
+  _toggleMode () {
     const fullMode = this.state.fullMode
     this.extendState({fullMode: !fullMode})
   }
@@ -203,14 +203,14 @@ export default class EntityEditor extends ModelComponent {
       }
     ]
   */
-  _computePropertyStates() {
+  _computePropertyStates () {
     let model = this.props.model
     let schema = model.getSchema()
     let result = []
 
     for (let property of schema) {
       if (property.name === 'id') continue
-      // HACK: skip person target type properties (authors and editors, these will be 
+      // HACK: skip person target type properties (authors and editors, these will be
       // managed internally and are not intended for editing)
       if (property.targetTypes && property.targetTypes[0] === 'person') continue
       let empty = this._isPropertyEmpty(property)
@@ -226,12 +226,12 @@ export default class EntityEditor extends ModelComponent {
     return result
   }
 
-  _isPropertyEmpty(property) {
+  _isPropertyEmpty (property) {
     let model = this.props.model
     return model._node[property.name] ? String(model._node[property.name]).length === 0 : true
   }
 
-  _getWarnings(property, empty) {
+  _getWarnings (property, empty) {
     let model = this.props.model
 
     let isRequired = REQUIRED_PROPERTIES[model.type][property.name]
@@ -242,7 +242,7 @@ export default class EntityEditor extends ModelComponent {
     }
   }
 
-  _getPropertyEditorClass(property) {
+  _getPropertyEditorClass (property) {
     let propertyEditors = this.context.configurator.getPropertyEditors()
     let Editor = propertyEditors.find(Editor => {
       return Editor.matches(property)
@@ -250,12 +250,12 @@ export default class EntityEditor extends ModelComponent {
     return Editor
   }
 
-  _setValue(propName, value) {
+  _setValue (propName, value) {
     const model = this.props.model
     model.setValue(propName, value)
   }
 
-  _removeEntity() {
+  _removeEntity () {
     const model = this.props.model
     this.send('remove-item', model)
   }

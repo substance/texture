@@ -54,7 +54,7 @@ export default class ManuscriptEditor extends Component {
     this.editorSession.initialize()
   }
 
-  _updateViewName() {
+  _updateViewName () {
     let appState = this.context.appState
     this.send('updateViewName', appState.viewName)
   }
@@ -141,7 +141,7 @@ export default class ManuscriptEditor extends Component {
     if (appState.workflowId) {
       let Modal = this.getComponent('modal')
       let WorkflowComponent = this.getComponent(appState.workflowId)
-      let workflowModal = $$(Modal).addClass('se-workflow-modal sm-workflow-'+appState.workflowId).append(
+      let workflowModal = $$(Modal).addClass('se-workflow-modal sm-workflow-' + appState.workflowId).append(
         $$(WorkflowComponent, appState.workflowProps).ref('workflow')
       )
       mainSection.append(workflowModal)

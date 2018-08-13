@@ -6,22 +6,21 @@
 // Alternatively, we could treat sig as TextProperty and somehow
 // override the break behavior and insert a <break> instead
 export default class ConvertSigBlock {
-
-  import(dom) {
+  import (dom) {
     dom.findAll('sig-block > sig').forEach(_importSig)
   }
 
-  export(dom) {
+  export (dom) {
     dom.findAll('sig-block > sig').forEach(_exportSig)
   }
 }
 
-function _importSig(sig) {
+function _importSig (sig) {
   let dom = sig.getOwnerDocument()
   let nodes = []
   let blocks = []
 
-  function _createParagraph() {
+  function _createParagraph () {
     if (nodes.length > 0) {
       let p = dom.createElement('p').append(nodes)
       blocks.push(p)
@@ -42,7 +41,7 @@ function _importSig(sig) {
   sig.append(blocks)
 }
 
-function _exportSig(sig) {
+function _exportSig (sig) {
   let dom = sig.getOwnerDocument()
 
   let content = []

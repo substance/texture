@@ -1,8 +1,7 @@
 import { Component } from 'substance'
 
 export default class SeparatorComponent extends Component {
-
-  render($$) {
+  render ($$) {
     let label = this.props.label
     let el = $$('div').addClass('sc-separator')
       .append(
@@ -11,5 +10,4 @@ export default class SeparatorComponent extends Component {
 
     return el
   }
-
 }

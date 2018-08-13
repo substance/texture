@@ -2,7 +2,7 @@ import { AnnotationComponent } from 'substance'
 import { NodeComponentMixin } from '../../kit'
 
 export default class ExtLinkComponent extends NodeComponentMixin(AnnotationComponent) {
-  render($$) {
+  render ($$) {
     let el = super.render($$)
     let node = this.props.node
     el.tagName = 'a'

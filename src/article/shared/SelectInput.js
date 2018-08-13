@@ -12,14 +12,14 @@ export default class SelectInput extends Component {
   render ($$) {
     const selected = this.props.value
     const options = this.props.availableOptions
-    const optionsMap = options.reduce((map,opt)=>{map[opt.id]=opt.text;return map;},{})
+    const optionsMap = options.reduce((map, opt) => { map[opt.id] = opt.text; return map }, {})
 
     const showValues = this.context.appState.overlayId === this.getId()
     const isEmptyValue = selected === undefined
     const el = $$('div').addClass('sc-select-input')
       .on('click', this._toggleDropdown)
 
-    if(isEmptyValue) {
+    if (isEmptyValue) {
       el.append(this.getLabel('select-default-value'))
     } else {
       el.append(
@@ -49,7 +49,7 @@ export default class SelectInput extends Component {
       $$('div').addClass('se-select-label').append('Choose ' + label)
     )
     options.forEach(opt => {
-      if(value !== opt.id) {
+      if (value !== opt.id) {
         editorEl.append(
           $$('div').addClass('se-select-item').append(opt.text).ref(opt.id)
             .on('click', this._setValue.bind(this, opt.id))
@@ -63,7 +63,7 @@ export default class SelectInput extends Component {
     return editorEl
   }
 
-  _setValue(value) {
+  _setValue (value) {
     const name = this.props.name
     this.send('set-value', name, value)
   }

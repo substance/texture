@@ -1,8 +1,7 @@
 import InsertNodeCommand from './InsertNodeCommand'
 
 export default class InsertDispQuoteCommand extends InsertNodeCommand {
-
-  createNode(tx) {
+  createNode (tx) {
     let dispQuote = tx.createElement('disp-quote')
     dispQuote.append(
       tx.createElement('disp-quote-content').append(

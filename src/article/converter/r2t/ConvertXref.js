@@ -1,10 +1,9 @@
 export default class ConvertXref {
-
-  import() {
+  import () {
     // nop
   }
 
-  export(dom, {doc}) {
+  export (dom, {doc}) {
     let xrefs = dom.findAll('xref')
     xrefs.forEach(xref => {
       let xrefNode = doc.get(xref.id)

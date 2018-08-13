@@ -5,7 +5,7 @@ const PRESERVE_WHITESPACE = {
   'code': true
 }
 
-export default function pruneText(el, xmlSchema) {
+export default function pruneText (el, xmlSchema) {
   if (el.isElementNode()) {
     let schema = xmlSchema.getElementSchema(el.tagName)
     if (!schema.isTextAllowed()) {
@@ -16,7 +16,7 @@ export default function pruneText(el, xmlSchema) {
   }
 }
 
-function _pruneText(el, xmlSchema) {
+function _pruneText (el, xmlSchema) {
   let childNodes = el.childNodes
   for (let i = childNodes.length - 1; i >= 0; i--) {
     let child = childNodes[i]
@@ -28,7 +28,7 @@ function _pruneText(el, xmlSchema) {
   }
 }
 
-function _pruneWhiteSpace(el, xmlSchema) {
+function _pruneWhiteSpace (el, xmlSchema) {
   // TODO:
   // - remove all leading ws
   // - replace all inner ws with one space
@@ -54,9 +54,9 @@ function _pruneWhiteSpace(el, xmlSchema) {
     if (child.isTextNode()) {
       let text = child.textContent
       let m
-      while ( (m = /\s\s+/g.exec(text)) ) {
+      while ((m = /\s\s+/g.exec(text))) {
         const L = m[0].length
-        text = text.slice(0, m.index) + ' ' + text.slice(m.index+L)
+        text = text.slice(0, m.index) + ' ' + text.slice(m.index + L)
       }
       child.textContent = text
     } else if (child.isElementNode()) {
@@ -66,5 +66,4 @@ function _pruneWhiteSpace(el, xmlSchema) {
       }
     }
   }
-
 }

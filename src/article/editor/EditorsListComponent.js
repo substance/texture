@@ -1,19 +1,19 @@
 import ContribsListComponent from './ContribListComponent'
 
 export default class EditorsListComponent extends ContribsListComponent {
-  getClassNames() {
+  getClassNames () {
     return 'sc-authors-list'
   }
 
-  getTargetTypes() {
+  getTargetTypes () {
     return ['person']
   }
 
-  getPropertyName() {
+  getPropertyName () {
     return 'editors'
   }
 
-  getEmptyMessage() {
+  getEmptyMessage () {
     return this.getLabel('no-editors')
   }
 }

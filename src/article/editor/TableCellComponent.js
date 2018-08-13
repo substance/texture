@@ -2,17 +2,16 @@ import NodeComponent from '../shared/NodeComponent'
 import TableCellEditor from './TableCellEditor'
 
 export default class TableCellComponent extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const cell = this.props.node
     let el = $$(cell.attr('heading') ? 'th' : 'td')
     el.addClass('sc-table-cell')
     let attributes = {
       id: cell.id,
-      "data-row-idx": cell.rowIdx,
-      "data-col-idx": cell.colIdx,
+      'data-row-idx': cell.rowIdx,
+      'data-col-idx': cell.colIdx,
       rowspan: cell.rowspan,
-      colspan: cell.colspan,
+      colspan: cell.colspan
     }
     el.attr(attributes)
     el.append(
@@ -23,5 +22,4 @@ export default class TableCellComponent extends NodeComponent {
     )
     return el
   }
-
 }

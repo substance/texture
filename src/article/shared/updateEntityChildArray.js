@@ -1,7 +1,6 @@
 import { without } from 'substance'
 
-export default function updateEntityChildArray(tx, nodeId, tagName, attribute, oldEntityIds, newEntityIds) {
-
+export default function updateEntityChildArray (tx, nodeId, tagName, attribute, oldEntityIds, newEntityIds) {
   let node = tx.get(nodeId)
   let addedEntityIds = without(newEntityIds, ...oldEntityIds)
   let removedEntityIds = without(oldEntityIds, ...newEntityIds)

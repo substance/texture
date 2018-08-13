@@ -3,14 +3,14 @@ import { NodeModelEditor } from '../../kit'
 import CardComponent from '../shared/CardComponent'
 
 export default class EditReferenceWorkflow extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args)
     this.handleActions({
       'remove-item': this._removeReference
     })
   }
 
-  render($$) {
+  render ($$) {
     const model = this.props.model
     const ItemEditor = this.getComponent(model.type, true) || NodeModelEditor
 
@@ -25,7 +25,7 @@ export default class EditReferenceWorkflow extends Component {
     return el
   }
 
-  _removeReference(model) {
+  _removeReference (model) {
     const api = this.context.api
     const collection = api.getCollectionForType('reference')
     collection.removeItem(model)

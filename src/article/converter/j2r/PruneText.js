@@ -6,12 +6,11 @@ import TextureArticle from '../../TextureArticle'
   not-mixed.
 */
 export default class PruneText {
-
-  import(dom) {
+  import (dom) {
     pruneText(dom.find('article'), TextureArticle)
   }
 
-  export() {
+  export () {
     // nothing
   }
 }

@@ -2,7 +2,7 @@ import { expandElementCitation } from '../converter/r2t/r2tHelpers'
 
 // TODO: we need to find a way to make sure the element-citation element is valid InternalArticle after creation
 // Currently we would fail late somewhere in the UI if we made a mistake here
-export default function createEmptyRef(doc) {
+export default function createEmptyRef (doc) {
   let ref = doc.createElement('ref')
   let elementCitation = doc.createElement('element-citation').attr('publication-type', 'journal')
 

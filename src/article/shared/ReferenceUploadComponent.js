@@ -4,7 +4,7 @@ import { convertCSLJSON } from '../converter/bib/BibConversion'
 const supportedFormats = ['CSL-JSON']
 
 export default class ReferenceUploadComponent extends Component {
-  render($$) {
+  render ($$) {
     const labelProvider = this.context.labelProvider
     const el = $$('div').addClass('se-import').append(
       $$('div').addClass('se-section-title').append(
@@ -21,14 +21,14 @@ export default class ReferenceUploadComponent extends Component {
         .append('select')
         .on('click', this._onClick),
       ' file',
-      $$('input').attr('type','file')
+      $$('input').attr('type', 'file')
         .on('click', this._supressClickPropagation)
         .on('change', this._selectFile)
         .ref('input')
     ).on('drop', this._handleDrop)
-    .on('dragstart', this._onDrag)
-    .on('dragenter', this._onDrag)
-    .on('dragend', this._onDrag)
+      .on('dragstart', this._onDrag)
+      .on('dragenter', this._onDrag)
+      .on('dragend', this._onDrag)
 
     el.append(dropZone)
 
@@ -38,8 +38,8 @@ export default class ReferenceUploadComponent extends Component {
       errorsList.append(
         $$('li').append(this.state.error.message)
       )
-      if(dois) {
-        errorsList.append(dois.map(d => $$('li').append('- '+d)))
+      if (dois) {
+        errorsList.append(dois.map(d => $$('li').append('- ' + d)))
       }
       el.append(
         $$('div').addClass('se-error-popup').append(errorsList)
@@ -49,38 +49,38 @@ export default class ReferenceUploadComponent extends Component {
     return el
   }
 
-  _onClick() {
+  _onClick () {
     this.refs.input.click()
   }
 
-  _supressClickPropagation(e) {
+  _supressClickPropagation (e) {
     e.stopPropagation()
   }
 
-  _selectFile(e) {
+  _selectFile (e) {
     const files = e.currentTarget.files
     this._handleUploadedFiles(files)
   }
 
-  _handleDrop(e) {
+  _handleDrop (e) {
     const files = e.dataTransfer.files
     this._handleUploadedFiles(files)
   }
 
-  _handleUploadedFiles(files) {
+  _handleUploadedFiles (files) {
     Object.values(files).forEach(file => {
       const isJSON = file.type.indexOf('application/json') === 0
-      if(isJSON) {
-        const reader = new FileReader()
+      if (isJSON) {
+        const reader = new window.FileReader()
         reader.onload = this._onFileLoad.bind(this)
         reader.readAsText(file)
       }
     })
   }
 
-  _onFileLoad(e) {
+  _onFileLoad (e) {
     const res = e.target.result
-    if(res) {
+    if (res) {
       let conversionErrors = []
       let convertedEntries = []
       const entries = JSON.parse(res)
@@ -89,7 +89,7 @@ export default class ReferenceUploadComponent extends Component {
           convertedEntries.push(
             convertCSLJSON(entry)
           )
-        } catch(error) {
+        } catch (error) {
           conversionErrors.push(entry.DOI || error)
         }
       })
@@ -104,7 +104,7 @@ export default class ReferenceUploadComponent extends Component {
     }
   }
 
-  _onDrag(e) {
+  _onDrag (e) {
     // Stop event propagation for the dragstart and dragenter
     // events, to avoid editor drag manager errors
     e.stopPropagation()

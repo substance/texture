@@ -1,14 +1,13 @@
 import { Component, FontAwesomeIcon as Icon } from 'substance'
 
 export default class Navigator extends Component {
-
-  getInitialState() {
+  getInitialState () {
     return {
       expanded: false
     }
   }
 
-  render($$) {
+  render ($$) {
     let el = $$('div').addClass('sc-navigator')
     const panelsSpec = this.props.panelsSpec
     let label = this.context.labelProvider.getLabel(this.props.contextId)
@@ -52,7 +51,7 @@ export default class Navigator extends Component {
     return el
   }
 
-  _panelSelected(contextId) {
+  _panelSelected (contextId) {
     this.send('navigate', contextId)
     // Close popup
     this.setState({
@@ -60,10 +59,9 @@ export default class Navigator extends Component {
     })
   }
 
-  _toggle() {
+  _toggle () {
     this.setState({
       expanded: !this.state.expanded
     })
   }
-
 }

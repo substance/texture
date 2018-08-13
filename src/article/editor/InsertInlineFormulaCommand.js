@@ -1,11 +1,11 @@
 import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand, documentHelpers } from 'substance'
 
 export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNodeCommand {
-  getType() {
+  getType () {
     return 'inline-formula'
   }
 
-  createNode(tx) {
+  createNode (tx) {
     const inlineFormula = tx.createElement('inline-formula')
       .attr('content-type', 'math/tex')
       .appendChild(
@@ -17,7 +17,7 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
   /**
     Insert new inline node at the current selection
   */
-  execute(params) {
+  execute (params) {
     const state = this.getCommandState(params)
     if (state.disabled) return
     const editorSession = this._getEditorSession(params)
@@ -35,8 +35,8 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
     })
   }
 
-  setSelection(tx, node) {
-    if(node.isPropertyAnnotation()) {
+  setSelection (tx, node) {
+    if (node.isPropertyAnnotation()) {
       tx.selection = {
         type: 'property',
         path: node.getPath(),
@@ -46,7 +46,7 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
     }
   }
 
-  isDisabled(params) {
+  isDisabled (params) {
     const sel = params.selection
     const selectionState = params.editorSession.getSelectionState()
     if (!sel.isPropertySelection()) {

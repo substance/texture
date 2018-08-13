@@ -10,8 +10,7 @@ import {
 } from './r2tHelpers'
 
 export default class ConvertElementCitation {
-
-  import(dom) {
+  import (dom) {
     let figs = dom.findAll('fig')
     figs.forEach(fig => {
       removeChild(fig, 'label')
@@ -22,7 +21,7 @@ export default class ConvertElementCitation {
     })
   }
 
-  export(dom, {doc}) {
+  export (dom, {doc}) {
     let figs = dom.findAll('fig')
     figs.forEach(fig => {
       let figNode = doc.get(fig.id)
@@ -31,6 +30,5 @@ export default class ConvertElementCitation {
       wrapCaptionTitle(fig)
       removeEmptyElements(fig, 'object-id')
     })
-
   }
 }

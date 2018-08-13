@@ -2,8 +2,7 @@ import { InsertNodeCommand as SubstanceInsertNodeCommand } from 'substance'
 import insertFigure from './insertFigure'
 
 export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
-
-  execute(params, context) {
+  execute (params, context) {
     let state = params.commandState
     if (state.disabled) return
     let editorSession = this._getEditorSession(params, context)
@@ -13,7 +12,7 @@ export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
     })
   }
 
-  createNodes(tx, params, context) {
+  createNodes (tx, params, context) {
     let lastNode = {}
     params.files.forEach((file) => {
       let node = insertFigure(tx, file, context)

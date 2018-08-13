@@ -1,8 +1,7 @@
 import NodeComponent from '../shared/NodeComponent'
 
 export default class ElementNodeComponent extends NodeComponent {
-
-  render($$) {
+  render ($$) {
     const node = this.props.node
     let el = $$(this.getTagName())
       .addClass(this.getClassNames())
@@ -16,12 +15,11 @@ export default class ElementNodeComponent extends NodeComponent {
     return el
   }
 
-  getTagName() {
+  getTagName () {
     return this.props.node.type
   }
 
-  getClassNames() {
+  getClassNames () {
     return `sc-${this.props.node.type}`
   }
-
 }

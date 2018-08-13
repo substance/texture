@@ -1,6 +1,6 @@
 import {
   DocumentSchema, DocumentNode, InlineNode,
-  XMLElementNode, XMLTextElement
+  XMLContainerNode, XMLElementNode, XMLTextElement
 } from 'substance'
 import { BOOLEAN, STRING, MANY, ONE, CHILDREN } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
@@ -423,6 +423,17 @@ Subject.schema = {
   type: '_subject',
   name: STRING,
   category: STRING,
+  language: STRING
+}
+
+class ContainerTranslation extends XMLContainerNode {}
+ContainerTranslation.type = 'container-translation'
+ContainerTranslation.language = STRING
+
+class TextTranslation extends DocumentNode {}
+TextTranslation.schema = {
+  type: 'text-translation',
+  content: STRING,
   language: STRING
 }
 

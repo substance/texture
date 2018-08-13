@@ -75,7 +75,7 @@ export default class InternalArticleDocument extends XMLDocument {
         $$('authors'),
         $$('editors'),
         $$('groups'),
-        $$('affiliations'),
+        $$('organisations'),
         $$('awards'),
         $$('keywords'),
         $$('subjects')

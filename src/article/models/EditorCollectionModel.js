@@ -6,16 +6,17 @@ export default class EditorCollectionModel extends DefaultCollectionModel {
     this._node = node
   }
 
-  addItem(item) {
-    return this._api.addEditor(item)
-  }
-  
-  removeItem(item) {
-    return this._api.deleteEditor(item.id)
+  addItem (item = {}) {
+    item.type = 'person'
+    return this._api.addItemToCollection(item, this)
   }
 
-  getItems() {
-    return this._api.getEditors()
+  getItems () {
+    return this._node._childNodes.map(id => this._api._getModelById(id))
+  }
+
+  removeItem (item) {
+    this._api.removeItemFromCollection(item, this)
   }
 
   _getCollectionId() {

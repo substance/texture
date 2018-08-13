@@ -2,52 +2,51 @@ import { XMLElementNode, ListMixin } from 'substance'
 
 export default
 class XMLListNode extends ListMixin(XMLElementNode) {
-
-  createListItem(text) {
+  createListItem (text) {
     let item = this.getDocument().create({ type: 'list-item', content: text })
     item.attr('level', 1)
     return item
   }
 
-  getItemsPath() {
+  getItemsPath () {
     return [this.id, '_childNodes']
   }
 
-  get items() { return this._childNodes }
+  get items () { return this._childNodes }
 
-  getItems() {
+  getItems () {
     return this.getChildren()
   }
 
-  getItemAt(idx) {
+  getItemAt (idx) {
     return this.getChildAt(idx)
   }
 
-  getItemPosition(item) {
+  getItemPosition (item) {
     return this.getChildPosition(item)
   }
 
-  insertItemAt(pos, item) {
+  insertItemAt (pos, item) {
     return this.insertAt(pos, item)
   }
 
-  appendItem(item) {
+  appendItem (item) {
     return this.appendChild(item)
   }
 
-  removeItemAt(pos) {
+  removeItemAt (pos) {
     this.removeAt(pos)
   }
 
-  getLength() {
+  getLength () {
     return this.getChildCount()
   }
 
-  getListTypeString() {
+  getListTypeString () {
     return this.attr('list-type')
   }
 
-  setListTypeString(listTypeStr) {
+  setListTypeString (listTypeStr) {
     this.attr('list-type', listTypeStr)
   }
 }

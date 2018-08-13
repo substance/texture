@@ -63,5 +63,4 @@ export default class ArticleConfigurator extends TextureConfigurator {
     }
     return new NumberedLabelGenerator(config)
   }
-
 }

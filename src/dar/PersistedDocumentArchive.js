@@ -76,7 +76,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let session = this._loadDocument(type, { data: xml }, sessions)
     sessions[documentId] = session
     this._registerForSessionChanges(session, documentId)
-    this._addDocumentRecord(documentId, type, name, documentId+'.xml')
+    this._addDocumentRecord(documentId, type, name, documentId + '.xml')
     return documentId
   }
 
@@ -175,7 +175,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     //   console.info('Save: no pending changes.')
     //   return Promise.resolve()
     // }
-    this.buffer._isDirty["manuscript"] = true
+    this.buffer._isDirty['manuscript'] = true
     let result = this._save(this._archiveId)
     return result
   }

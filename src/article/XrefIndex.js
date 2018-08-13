@@ -13,28 +13,27 @@ import { getXrefTargets } from './shared/xrefHelpers'
     xIndex.get('fn-1')
 */
 export default class XrefIndex extends DocumentIndex {
-
-  constructor() {
+  constructor () {
     super()
     this.byTarget = new TreeIndex.Arrays()
   }
 
-  select(node) {
+  select (node) {
     return node.type === 'xref'
   }
 
-  clear() {
+  clear () {
     this.byTarget.clear()
   }
 
   // TODO: use object interface? so we can combine filters (path and type)
-  get(targetId) {
+  get (targetId) {
     let ids = this.byTarget.get(targetId)
     // We need to return a clone, as the index may change while the result is used
     return ids ? ids.slice() : []
   }
 
-  create(xref) {
+  create (xref) {
     // const path = anno.start.path
     let targets = getXrefTargets(xref)
     targets.forEach((target) => {
@@ -42,22 +41,22 @@ export default class XrefIndex extends DocumentIndex {
     })
   }
 
-  _delete(xrefId, targets) {
+  _delete (xrefId, targets) {
     targets.forEach((target) => {
       this.byTarget.remove(target, xrefId)
     })
   }
 
-  delete(xref) {
+  delete (xref) {
     let targets = getXrefTargets(xref)
     this._delete(xref.id, targets)
   }
 
-  update(node, path, newValue, oldValue) {
+  update (node, path, newValue, oldValue) {
     if (path[2] === 'rid') {
       let targets = []
       if (oldValue) {
-        targets = oldValue.split(" ")
+        targets = oldValue.split(' ')
       }
       this._delete(node.id, targets)
       this.create(node)

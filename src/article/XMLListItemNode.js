@@ -2,20 +2,19 @@ import { XMLTextElement } from 'substance'
 
 export default
 class XMLListItemNode extends XMLTextElement {
-
-  isListItem() {
+  isListItem () {
     return true
   }
 
-  get level() {
+  get level () {
     return this.getLevel()
   }
 
-  getLevel() {
+  getLevel () {
     return parseInt(this.attributes.level, 10)
   }
 
-  setLevel(newLevel) {
+  setLevel (newLevel) {
     if (this.getLevel() !== newLevel) {
       this.setAttribute('level', newLevel)
     }

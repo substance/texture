@@ -4,15 +4,15 @@ import ManifestSchemaData from '../../tmp/Manifest.data.js'
 const ManifestSchema = XMLSchema.fromJSON(ManifestSchemaData)
 
 // TODO: this should come from compilation
-ManifestSchema.getName = function() {
+ManifestSchema.getName = function () {
   return 'RDC-Manifest'
 }
 
-ManifestSchema.getVersion = function() {
+ManifestSchema.getVersion = function () {
   return '1.0'
 }
 
-ManifestSchema.getDocTypeParams = function() {
+ManifestSchema.getDocTypeParams = function () {
   return ['manifest', 'RDC-Manifest 1.0', ManifestSchema.uri]
 }
 

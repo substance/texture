@@ -40,7 +40,7 @@ export default class TextureEditing extends Editing {
   */
   insertInlineNode (tx, node) {
     let sel = tx.selection
-    let text = "\uFEFF"
+    let text = '\uFEFF'
     this.insertText(tx, text)
     sel = tx.selection
     let endOffset = tx.selection.end.offset

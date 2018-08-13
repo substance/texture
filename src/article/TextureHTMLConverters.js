@@ -4,17 +4,17 @@ export default [
   {
     type: 'p',
     tagName: 'p',
-    import(el, node, converter) {
+    import (el, node, converter) {
       node.content = converter.annotatedText(el, [node.id, 'content'])
     },
-    export(node, el, converter) {
+    export (node, el, converter) {
       el.append(converter.annotatedText([node.id, 'content']))
     }
   },
   {
     type: 'bold',
     tagName: 'b',
-    matchElement(el) {
+    matchElement (el) {
       return (el.is('b')) ||
         // To support non-semantic formatting, like GDocs does
         // ATTENTION: GDocs packs all formatting into one span using style attributes.
@@ -25,7 +25,7 @@ export default [
   {
     type: 'italic',
     tagName: 'i',
-    matchElement(el) {
+    matchElement (el) {
       return (el.is('i')) ||
         (el.is('span') && el.getStyle('font-style') === 'italic')
     }
@@ -33,36 +33,36 @@ export default [
   {
     type: 'underline',
     tagName: 'span',
-    matchElement(el) {
+    matchElement (el) {
       return el.getStyle('text-decoration') === 'underline'
     },
-    export(node, el) {
+    export (node, el) {
       el.setStyle('text-decoration', 'underline')
     }
   },
   {
     type: 'strike',
     tagName: 'span',
-    matchElement(el) {
+    matchElement (el) {
       return el.getStyle('text-decoration') === 'line-through'
     },
-    export(node, el) {
+    export (node, el) {
       el.setStyle('text-decoration', 'line-through')
     }
   },
   {
     type: 'sub',
     tagName: 'sub',
-    matchElement(el) {
+    matchElement (el) {
       return (el.is('sub')) || (el.is('span') && el.getStyle('vertical-align') === 'sub')
     }
   },
   {
     type: 'sup',
     tagName: 'sup',
-    matchElement(el) {
+    matchElement (el) {
       return (el.is('sup')) || (el.is('span') && el.getStyle('vertical-align') === 'super')
-    },
+    }
     // export(node, el, converter) {
     //   el.tagName = 'span'
     //   el.setStyle('vertical-align', 'super')
@@ -71,7 +71,7 @@ export default [
   {
     type: 'ext-link',
     tagName: 'a',
-    import(el, node) {
+    import (el, node) {
       let href = el.getAttribute('href')
       if (href) {
         node.attributes = {
@@ -79,7 +79,7 @@ export default [
         }
       }
     },
-    export(node, el) {
+    export (node, el) {
       el.setAttribute('href', node.attributes['xlink:href'])
     }
   }

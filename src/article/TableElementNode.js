@@ -1,8 +1,7 @@
 import { XMLElementNode } from 'substance'
 
 export default class TableElementNode extends XMLElementNode {
-
-  constructor(...args) {
+  constructor (...args) {
     super(...args)
 
     this._matrix = null
@@ -13,12 +12,12 @@ export default class TableElementNode extends XMLElementNode {
     this._enableCaching()
   }
 
-  get(cellId) {
+  get (cellId) {
     if (!this._cellIds.has(cellId)) throw new Error('Cell is not part of this table.')
     return this.document.get(cellId)
   }
 
-  getCellMatrix() {
+  getCellMatrix () {
     if (!this._matrix) {
       let spanningCells = []
       let matrix = this.getChildren().map((row, rowIdx) => {
@@ -28,7 +27,7 @@ export default class TableElementNode extends XMLElementNode {
           c.rowIdx = rowIdx
           c.colIdx = colIdx
           c.shadowed = false
-          if(c.colspan || c.rowspan) {
+          if (c.colspan || c.rowspan) {
             spanningCells.push(c)
           }
         }
@@ -42,21 +41,21 @@ export default class TableElementNode extends XMLElementNode {
     return this._matrix
   }
 
-  getRowCount() {
+  getRowCount () {
     return this.getChildCount()
   }
 
-  getColumnCount() {
+  getColumnCount () {
     if (this._childNodes.length === 0) return 0
     let firstRow = this.getChildAt(0)
     return firstRow.getChildCount()
   }
 
-  getDimensions() {
+  getDimensions () {
     return [this.getRowCount(), this.getColumnCount()]
   }
 
-  getCell(rowIdx, colIdx) {
+  getCell (rowIdx, colIdx) {
     const matrix = this.getCellMatrix()
     let row = matrix[rowIdx]
     if (row) {
@@ -64,7 +63,7 @@ export default class TableElementNode extends XMLElementNode {
     }
   }
 
-  _enableCaching() {
+  _enableCaching () {
     // this hook is used to invalidate cached positions
     if (this.document) {
       this._rowIds = new Set(this._childNodes)
@@ -76,7 +75,7 @@ export default class TableElementNode extends XMLElementNode {
     }
   }
 
-  _onOperationApplied(op) {
+  _onOperationApplied (op) {
     if (!op.path) return
     let nodeId = op.path[0]
     let hasChanged = false
@@ -112,22 +111,21 @@ export default class TableElementNode extends XMLElementNode {
     }
   }
 
-  _hasShaChanged(sha) {
+  _hasShaChanged (sha) {
     return (this._sha !== sha)
   }
 
-  _getSha() {
+  _getSha () {
     return this._sha
   }
-
 }
 
 TableElementNode.type = 'table'
 
-function _shadowSpanned(matrix, row, col, rowspan, colspan, masterCell) {
+function _shadowSpanned (matrix, row, col, rowspan, colspan, masterCell) {
   if (!rowspan && !colspan) return
-  for (let i = row; i <= row + rowspan-1; i++) {
-    for (let j = col; j <= col + colspan-1; j++) {
+  for (let i = row; i <= row + rowspan - 1; i++) {
+    for (let j = col; j <= col + colspan - 1; j++) {
       if (i === row && j === col) continue
       let cell = matrix[i][j]
       cell.shadowed = true

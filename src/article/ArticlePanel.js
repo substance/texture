@@ -12,7 +12,7 @@ export default class ArticlePanel extends Component {
     })
   }
 
-  _updateViewName(viewName) {
+  _updateViewName (viewName) {
     this.context.appState.viewName = viewName
     this.rerender()
   }
@@ -63,7 +63,6 @@ export default class ArticlePanel extends Component {
     )
     return el
   }
-
 
   _renderContent ($$) {
     const props = this.props

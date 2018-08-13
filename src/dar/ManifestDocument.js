@@ -2,8 +2,7 @@ import { XMLDocument } from 'substance'
 import ManifestSchema from './ManifestSchema'
 
 export default class ManifestDocument extends XMLDocument {
-
-  getRootNode() {
+  getRootNode () {
     if (!this.root) {
       let nodes = this.getNodes()
       let ids = Object.keys(nodes)
@@ -17,36 +16,35 @@ export default class ManifestDocument extends XMLDocument {
     return this.root
   }
 
-  getDocTypeParams() {
+  getDocTypeParams () {
     return ManifestSchema.getDocTypeParams()
   }
 
-  getXMLSchema() {
+  getXMLSchema () {
     return ManifestSchema
   }
 
-  getDocumentNodes() {
+  getDocumentNodes () {
     return this.findAll('documents > document')
   }
 
-  getAssetNodes() {
+  getAssetNodes () {
     return this.findAll('assets > asset')
   }
 
-  getDocumentEntries() {
+  getDocumentEntries () {
     let documents = this.findAll('documents > document')
     return documents.map(_getEntryFromDocumentNode)
   }
 
-  getDocumentEntry(id) {
+  getDocumentEntry (id) {
     let entryNode = this.get(id)
     if (entryNode && entryNode.type === 'document') {
       return _getEntryFromDocumentNode(entryNode)
     }
   }
-
 }
 
-function _getEntryFromDocumentNode(documentNode) {
+function _getEntryFromDocumentNode (documentNode) {
   return Object.assign({ id: documentNode.id }, documentNode.getAttributes())
 }

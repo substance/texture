@@ -526,7 +526,7 @@ InternalArticleSchema.addNodes([
   'inline-graphic',
   'styled-content',
   'x',
-  'xref',
+  'xref'
 ].map(name => TextureArticleSchema.getNodeClass(name)))
 
 export default InternalArticleSchema

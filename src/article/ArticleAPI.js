@@ -68,11 +68,11 @@ export default class ArticleAPI extends AbstractAPI {
     }
   }
 
-  _getNode(nodeId) {
+  _getNode (nodeId) {
     return this.article.get(nodeId)
   }
 
-  getEntitiesByType(type) {
+  getEntitiesByType (type) {
     // TODO: this needs to be done in a different way:
     // nodes have specific place now, e.g. 'author' nodes are located in 'authors'
     // That means rather than using the general 'type' index we should get the appropriate collection
@@ -83,7 +83,7 @@ export default class ArticleAPI extends AbstractAPI {
 
   // TODO: this should be configurable. As it is similar to HTML conversion
   // we could use the converter registry for this
-  renderEntity(model) {
+  renderEntity (model) {
     let entity = this.getArticle().get(model.id)
     return renderEntity(entity)
   }
@@ -96,7 +96,7 @@ export default class ArticleAPI extends AbstractAPI {
     return this.articleSession
   }
 
-  addItemToCollection(item, collection) {
+  addItemToCollection (item, collection) {
     this.articleSession.transaction(tx => {
       let node = tx.create(item)
       tx.get(collection._node.id).appendChild(tx.get(node.id))
@@ -104,23 +104,23 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  removeItemFromCollection(item, collection) {
+  removeItemFromCollection (item, collection) {
     this.articleSession.transaction(tx => {
       tx.get(collection._node.id).removeChild(tx.get(item.id))
       tx.delete(item.id)
-      tx.selection = null 
+      tx.selection = null
     })
   }
 
-  addAuthor(person = {}) {
+  addAuthor (person = {}) {
     this._addPerson(person, 'authors')
   }
 
-  addEditor(person = {}) {
+  addEditor (person = {}) {
     this._addPerson(person, 'editors')
   }
 
-  _addPerson(person = {}, type) {
+  _addPerson (person = {}, type) {
     const newNode = Object.assign({}, person, {
       type: 'person'
     })
@@ -147,20 +147,20 @@ export default class ArticleAPI extends AbstractAPI {
     return this._getPersons('editors')
   }
 
-  _getPersons(prop) {
+  _getPersons (prop) {
     // TODO: authors and editors are now in article/metadata/authors and article/metadata/editors
     return []
   }
 
-  deleteAuthor(personId) {
+  deleteAuthor (personId) {
     return this._deletePerson(personId, 'authors')
   }
 
-  deleteEditor(personId) {
+  deleteEditor (personId) {
     return this._deletePerson(personId, 'editors')
   }
 
-  _deletePerson(personId, type) {
+  _deletePerson (personId, type) {
     // FIXME: persons are now in a different place
     // let node
     // this.articleSession.transaction((tx) => {
@@ -175,14 +175,14 @@ export default class ArticleAPI extends AbstractAPI {
     // return this.getModel(node.type, node)
   }
 
-  addReferences(refs) {
-    const refContribProps = ['authors','editors','inventors','sponsors','translators']
+  addReferences (refs) {
+    const refContribProps = ['authors', 'editors', 'inventors', 'sponsors', 'translators']
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       const refList = tx.find('ref-list')
       refs.forEach(ref => {
         refContribProps.forEach(propName => {
-          if(ref[propName]) {
+          if (ref[propName]) {
             let refContribs = ref[propName].map(contrib => {
               contrib.type = 'ref-contrib'
               const node = tx.create(contrib)
@@ -192,15 +192,14 @@ export default class ArticleAPI extends AbstractAPI {
           }
         })
         const node = tx.create(ref)
-        const refEl = tx.createElement('ref').attr('rid',node.id)
+        const refEl = tx.createElement('ref').attr('rid', node.id)
         refList.append(refEl)
       })
       tx.selection = null
     })
-    return
   }
 
-  deleteReference(refId) {
+  deleteReference (refId) {
     const article = this.getArticle()
     const articleSession = this.articleSession
     const xrefIndex = article.getIndex('xrefs')
@@ -226,7 +225,7 @@ export default class ArticleAPI extends AbstractAPI {
   /*
     @return {StringModel} Model for the language code of article's main language
   */
-  getOriginalLanguageCode() {
+  getOriginalLanguageCode () {
     let article = this.getArticle().getRootNode()
     return new StringModel(this, [article.id, 'attributes', 'xml:lang'])
   }
@@ -253,7 +252,7 @@ export default class ArticleAPI extends AbstractAPI {
     return model
   }
 
-  getSchema(type) {
+  getSchema (type) {
     return this.article.getSchema().getNodeSchema(type)
   }
 
@@ -307,7 +306,7 @@ export default class ArticleAPI extends AbstractAPI {
     }
   }
 
-  _addTitleTranslation(languageCode) {
+  _addTitleTranslation (languageCode) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       const titleEl = tx.createElement('trans-title-group').attr('xml:lang', languageCode).append(
@@ -318,7 +317,7 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  _addAbstractTranslation(languageCode) {
+  _addAbstractTranslation (languageCode) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
@@ -328,7 +327,7 @@ export default class ArticleAPI extends AbstractAPI {
       const abstract = tx.find('article-meta > abstract')
       const articleMeta = abstract.getParent()
       const abtractPos = articleMeta.getChildPosition(abstract)
-      articleMeta.insertAt(abtractPos+1, abstractEl)
+      articleMeta.insertAt(abtractPos + 1, abstractEl)
     })
   }
 
@@ -340,7 +339,7 @@ export default class ArticleAPI extends AbstractAPI {
     }
   }
 
-  _deleteTitleTranslation(languageCode) {
+  _deleteTitleTranslation (languageCode) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       // HACK: attribute selector with colon is invalid
@@ -351,7 +350,7 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  _deleteAbstractTranslation(languageCode) {
+  _deleteAbstractTranslation (languageCode) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       // HACK: attribute selector with colon is invalid
@@ -362,7 +361,7 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  _getTitleTranslateable() {
+  _getTitleTranslateable () {
     let transTitleGroups = this.getArticle().findAll('trans-title-group')
     let translatableId = 'title-trans'
     let orinialLanguageCode = this.getOriginalLanguageCode()
@@ -382,7 +381,7 @@ export default class ArticleAPI extends AbstractAPI {
     )
   }
 
-  _getAbstractTranslateable() {
+  _getAbstractTranslateable () {
     let transAbstracts = this.getArticle().findAll('trans-abstract')
     let translatableId = 'abstract-trans'
     let orinialLanguageCode = this.getOriginalLanguageCode()

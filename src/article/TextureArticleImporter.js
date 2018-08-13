@@ -7,8 +7,7 @@ import InternalArticleSchema from './InternalArticleSchema'
 
 export default
 class TextureArticleImporter extends DOMImporter {
-
-  constructor(config, context) {
+  constructor (config, context) {
     super({
       idAttribute: 'id',
       schema: config.schema,
@@ -19,7 +18,7 @@ class TextureArticleImporter extends DOMImporter {
     this.xmlSchema = InternalArticleSchema
   }
 
-  importDocument(dom) {
+  importDocument (dom) {
     this.reset()
     const doc = this.state.doc
     if (isString(dom)) {
@@ -29,11 +28,10 @@ class TextureArticleImporter extends DOMImporter {
     if (!articleEl) throw new Error('Could not find <article> element.')
     doc.article = this.convertElement(articleEl)
 
-
     return this.state.doc
   }
 
-  _initialize() {
+  _initialize () {
     const schema = this.schema
     const defaultTextType = schema.getDefaultTextType()
     const converters = this.converters
@@ -80,7 +78,7 @@ class TextureArticleImporter extends DOMImporter {
     this._allConverters = this._blockConverters.concat(this._propertyAnnotationConverters)
   }
 
-  _createNodeData(el, type) {
+  _createNodeData (el, type) {
     let nodeData = super._createNodeData(el, type)
     let attributes = {}
     el.getAttributes().forEach((value, key) => {
@@ -90,14 +88,14 @@ class TextureArticleImporter extends DOMImporter {
     return nodeData
   }
 
-  getChildNodeIterator(el) {
+  getChildNodeIterator (el) {
     // TODO: this looks very hacky. Why do we need el plus it?
     let schema = this.xmlSchema.getElementSchema(el.tagName)
     let it = el.getChildNodeIterator()
     return new ValidatingChildNodeIterator(el, it, schema.expr)
   }
 
-  _getIdForElement(el, type) {
+  _getIdForElement (el, type) {
     if (type === 'article') {
       return 'article'
     } else {
@@ -105,11 +103,11 @@ class TextureArticleImporter extends DOMImporter {
     }
   }
 
-  _convertPropertyAnnotation() {
+  _convertPropertyAnnotation () {
     throw new Error('stand-alone annotations are not supported.')
   }
 
-  _convertInlineNode(el, nodeData, converter) {
+  _convertInlineNode (el, nodeData, converter) {
     const path = []
     if (converter.import) {
       nodeData = converter.import(el, nodeData, this) || nodeData
@@ -118,5 +116,4 @@ class TextureArticleImporter extends DOMImporter {
     nodeData.end = { offset: 0 }
     return nodeData
   }
-
 }

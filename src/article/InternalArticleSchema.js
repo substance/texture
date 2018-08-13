@@ -41,10 +41,14 @@ ArticleRecord.schema = {
 }
 
 class TranslatableTextElement extends XMLTextElement {}
-TranslatableTextElement.translations = CHILDREN('text-translation')
+TranslatableTextElement.schema = {
+  translations: CHILDREN('text-translation')
+}
 
 class TranslatableContainerElement extends XMLContainerNode {}
-TranslatableTextElement.translations = CHILDREN('container-translation')
+TranslatableContainerElement.schema = {
+  translations: CHILDREN('container-translation')
+}
 
 class Metadata extends XMLElementNode {}
 Metadata.schema = {

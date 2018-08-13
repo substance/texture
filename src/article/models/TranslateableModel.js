@@ -1,3 +1,6 @@
+import {
+  TextModel, FlowContentModel
+} from '../../kit'
 
 /*
   A special view on a translatable text inside the document.
@@ -15,16 +18,13 @@ export default class TranslateableModel {
     @param {StringModel} originalText The content in the original language
     @param {CollectionModel} translations
   */
-  constructor (api, id, originalLanguageCode, originalText, translations) {
+  constructor (api, node) {
     this._api = api
-    this._id = id // e.g. title-trans|abstract-trans|figure-caption-1-trans
-    this._originalLanguageCode = originalLanguageCode
-    this._originalText = originalText
-    this._translations = translations
+    this._node = node
   }
 
   get id () {
-    return this._id
+    return this._node.id
   }
 
   get type () {
@@ -42,14 +42,25 @@ export default class TranslateableModel {
     Returns the text model to be translated
   */
   getOriginalText () {
-    return this._originalText
+    return this._node
+  }
+
+  getOriginalModel () {
+    let model
+    if (this._node.isText()) {
+      model = new TextModel(this._api, this._node.getTextPath())
+    } else {
+      model = new FlowContentModel(this._api, this._node.getContentPath())
+    }
+    return model
   }
 
   /*
     Returns a list of translations
   */
   getTranslations () {
-    return this._translations
+    let article = this._api.getArticle()
+    return this._node.translations.map(t => article.get(t))
   }
 
   /*

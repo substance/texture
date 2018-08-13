@@ -286,18 +286,22 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   getTranslatables () {
-    return [
-      this._getTitleTranslateable(),
-      this._getAbstractTranslateable()
-    ]
+    const translatableItems = ['title', 'abstract']
+    const article = this.getArticle()
+    const models = translatableItems.map(item => new TranslateableModel(this, article.get(item)))
+    return models
+    // return [
+    //   this._getTitleTranslateable(),
+    //   this._getAbstractTranslateable()
+    // ]
   }
 
   addTranslation (translatableId, languageCode) {
-    if (translatableId === 'title-trans') {
-      this._addTitleTranslation(languageCode)
-    } else if (translatableId === 'abstract-trans') {
-      this._addAbstractTranslation(languageCode)
-    }
+    // if (translatableId === 'title-trans') {
+    //   this._addTitleTranslation(languageCode)
+    // } else if (translatableId === 'abstract-trans') {
+    //   this._addAbstractTranslation(languageCode)
+    // }
   }
 
   _addTitleTranslation (languageCode) {

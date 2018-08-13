@@ -4,10 +4,10 @@ import FormRowComponent from '../shared/FormRowComponent'
 export default class TranslateableEditor extends Component {
   render ($$) {
     const model = this.props.model
-    const originalText = model.getOriginalText()
+    const originalModel = model.getOriginalModel()
     const languages = this._getArticleLanguages()
     const availableLanguages = this._getAvailableLanguages()
-    let ModelEditor = this.getComponent(originalText.type)
+    let ModelEditor = this.getComponent(originalModel.type)
 
     let el = $$('div')
       .addClass('sc-translatable-editor')
@@ -21,7 +21,10 @@ export default class TranslateableEditor extends Component {
       label: this.getLabel('original-translation')
     })
     originalRow.append(
-      $$(ModelEditor, { model: originalText })
+      $$(ModelEditor, {
+        model: originalModel,
+        label: originalModel.name
+      })
     )
     el.append(originalRow)
 

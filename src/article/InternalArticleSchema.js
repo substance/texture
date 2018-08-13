@@ -40,6 +40,12 @@ ArticleRecord.schema = {
   revRequestedDate: STRING
 }
 
+class TranslatableTextElement extends XMLTextElement {}
+TranslatableTextElement.translations = CHILDREN('text-translation')
+
+class TranslatableContainerElement extends XMLContainerNode {}
+TranslatableTextElement.translations = CHILDREN('container-translation')
+
 class Metadata extends XMLElementNode {}
 Metadata.schema = {
   type: 'metadata',
@@ -110,8 +116,11 @@ Back.schema = {
   _childNodes: CHILDREN('references', 'footnotes')
 }
 
-class Title extends TextureArticleSchema.getNodeClass('article-title') {}
+class Title extends TranslatableTextElement {}
 Title.type = 'title'
+
+class Abstract extends TranslatableContainerElement {}
+Abstract.type = 'abstract'
 
 class Heading extends XMLTextElement {}
 Heading.type = 'heading'
@@ -430,7 +439,7 @@ class ContainerTranslation extends XMLContainerNode {}
 ContainerTranslation.type = 'container-translation'
 ContainerTranslation.language = STRING
 
-class TextTranslation extends DocumentNode {}
+class TextTranslation extends XMLTextElement {}
 TextTranslation.schema = {
   type: 'text-translation',
   content: STRING,
@@ -478,6 +487,7 @@ InternalArticleSchema.addNodes([
   Content,
   Front,
   Title,
+  Abstract,
   Heading,
   Back,
   References,
@@ -506,7 +516,6 @@ InternalArticleSchema.addNodes([
 // Elements taken from the JATS spec
 // TODO: make sure that we do not need to modify them, e.g. marking them as inline nodes
 InternalArticleSchema.addNodes([
-  'abstract',
   'body',
   'fn',
   'p',

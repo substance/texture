@@ -35,7 +35,7 @@
     "test": "node make test-nodejs && node --require esm test | tap-spec",
     "webtest": "node make test-browser -s -w",
     "cover": "nyc --require esm --reporter=lcov --reporter=text node test",
-    "lint": "standard app/**/*.js src/**/*.js test/**/*.js web/**/*.js"
+    "lint": "standard \"app/**/*.js\" \"src/**/*.js\" \"test/**/*.js\" \"web/**/*.js\""
   },
   "nyc": {
     "include": [

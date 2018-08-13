@@ -1,7 +1,8 @@
 
 export default class ReferenceCollectionModel {
-  constructor (api) {
+  constructor (api, node) {
     this._api = api
+    this._node = node
   }
 
   get type () { return 'references' }
@@ -29,7 +30,7 @@ export default class ReferenceCollectionModel {
   }
 
   removeItem (item) {
-    this._api._removeModel(item)
+    this._api.deleteReference(item, this)
   }
 
   _getItem (id) {

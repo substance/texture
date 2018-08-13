@@ -199,25 +199,19 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  deleteReference (refId) {
-    const article = this.getArticle()
+  deleteReference (item, collection) {
     const articleSession = this.articleSession
-    const xrefIndex = article.getIndex('xrefs')
-    const xrefs = xrefIndex.get(refId)
     articleSession.transaction(tx => {
-      const refList = tx.find('ref-list')
-      let node = tx.get(refId)
-      // ATTENTION: it is important to nodes from the transaction tx!
-      // Be careful with closures here.
-      refList.removeChild(node)
-      tx.delete(node.id)
-      // Now update xref targets
+      const xrefIndex = tx.getIndex('xrefs')
+      const xrefs = xrefIndex.get(item.id)
+      tx.get(collection._node.id).removeChild(tx.get(item.id))
       xrefs.forEach(xrefId => {
         let xref = tx.get(xrefId)
         let idrefs = xref.attr('rid').split(' ')
-        idrefs = without(idrefs, refId)
+        idrefs = without(idrefs, item.id)
         xref.setAttribute('rid', idrefs.join(' '))
       })
+      tx.delete(item.id)
       tx.selection = null
     })
   }
@@ -309,8 +303,8 @@ export default class ArticleAPI extends AbstractAPI {
   _addTitleTranslation (languageCode) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const titleEl = tx.createElement('trans-title-group').attr('xml:lang', languageCode).append(
-        tx.createElement('trans-title')
+      const titleEl = tx.create({type: 'trans-title-group'}).attr('xml:lang', languageCode).append(
+        tx.createElement({type: 'trans-title'})
       )
       const titleGroup = tx.find('title-group')
       titleGroup.append(titleEl)

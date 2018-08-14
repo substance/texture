@@ -126,7 +126,14 @@ Title.type = 'title'
 class Abstract extends TranslatableContainerElement {}
 Abstract.type = 'abstract'
 
-class Heading extends XMLTextElement {}
+class Heading extends XMLTextElement {
+  getLevel () {
+    return parseInt(this.getAttribute('level') || '1', 10)
+  }
+  setLevel (level) {
+    this.setAttribute('level', String(level))
+  }
+}
 Heading.type = 'heading'
 
 class References extends XMLElementNode {}

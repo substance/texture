@@ -39,6 +39,7 @@ export default class TranslateableEditor extends Component {
         $$(ModelEditor, {
           model: translationModel,
           label: model.name,
+          // TODO: use label here?
           placeholder: 'Enter ' + model.name
         })
       )

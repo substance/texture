@@ -2,7 +2,8 @@
   display: flex;
 }
 
-.sc-translatable-editor .se-editor > .sc-surface {
+.sc-translatable-editor .se-editor > .sc-surface,
+.sc-translatable-editor .se-editor > .sc-text-model-editor {
   flex: 1;
 }
 

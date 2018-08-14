@@ -305,105 +305,25 @@ export default class ArticleAPI extends AbstractAPI {
         item.type = 'container-translation'
       }
       let node = tx.create(item)
+      // HACK: trying to avoid selection errors of empty container
+      if (!isText) node.append(tx.create({type:'p'}))
       let length = tx.get([model.id, 'translations']).length
       tx.update([model.id, 'translations'], { type: 'insert', pos: length, value: node.id })
       tx.selection = null
     })
   }
 
-  _addTitleTranslation (languageCode) {
+  deleteTranslation (translatableModel, translationModel) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const titleEl = tx.create({type: 'trans-title-group'}).attr('xml:lang', languageCode).append(
-        tx.createElement({type: 'trans-title'})
-      )
-      const titleGroup = tx.find('title-group')
-      titleGroup.append(titleEl)
+      let translatable = tx.get(translatableModel.id)
+      let pos = translatable.translations.indexOf(translationModel.id)
+      if (pos !== -1) {
+        tx.update([translatableModel.id, 'translations'], { type: 'delete', pos: pos })
+      }
+      tx.delete(translationModel.id)
+      tx.selection = null
     })
-  }
-
-  _addAbstractTranslation (languageCode) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
-        tx.createElement('p')
-      )
-      // TODO: replace it with schema driven smartness
-      const abstract = tx.find('article-meta > abstract')
-      const articleMeta = abstract.getParent()
-      const abtractPos = articleMeta.getChildPosition(abstract)
-      articleMeta.insertAt(abtractPos + 1, abstractEl)
-    })
-  }
-
-  deleteTranslation (translatableId, languageCode) {
-    if (translatableId === 'title-trans') {
-      this._deleteTitleTranslation(languageCode)
-    } else if (translatableId === 'abstract-trans') {
-      this._deleteAbstractTranslation(languageCode)
-    }
-  }
-
-  _deleteTitleTranslation (languageCode) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      // HACK: attribute selector with colon is invalid
-      const titles = tx.findAll('trans-title-group')
-      const titleEl = titles.find(t => t.attr('xml:lang') === languageCode)
-      titleEl.parentNode.removeChild(titleEl)
-      tx.delete(titleEl.id)
-    })
-  }
-
-  _deleteAbstractTranslation (languageCode) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      // HACK: attribute selector with colon is invalid
-      const abstracts = tx.findAll('trans-abstract')
-      const abstractEl = abstracts.find(a => a.attr('xml:lang') === languageCode)
-      abstractEl.parentNode.removeChild(abstractEl)
-      tx.delete(abstractEl.id)
-    })
-  }
-
-  _getTitleTranslateable () {
-    let transTitleGroups = this.getArticle().findAll('trans-title-group')
-    let translatableId = 'title-trans'
-    let orinialLanguageCode = this.getOriginalLanguageCode()
-    let articleTitle = this.getArticleTitle()
-    let translations = transTitleGroups.map(transTitleGroup => {
-      let transTitle = transTitleGroup.find('trans-title')
-      let textModel = new TextModel(this, transTitle.getPath())
-      let languageModel = new StringModel(this, [transTitleGroup.id, 'attributes', 'xml:lang'])
-      return new TranslationModel(this, translatableId, textModel, languageModel)
-    })
-    return new TranslateableModel(
-      this,
-      translatableId,
-      orinialLanguageCode,
-      articleTitle,
-      translations
-    )
-  }
-
-  _getAbstractTranslateable () {
-    let transAbstracts = this.getArticle().findAll('trans-abstract')
-    let translatableId = 'abstract-trans'
-    let orinialLanguageCode = this.getOriginalLanguageCode()
-    let articleAbstract = this.getArticleAbstract()
-    let translations = transAbstracts.map(transAbstract => {
-      let transAbstractModel = new FlowContentModel(this, [transAbstract.id, '_children'])
-      let languageModel = new StringModel(this, [transAbstract.id, 'attributes', 'xml:lang'])
-      return new TranslationModel(this, translatableId, transAbstractModel, languageModel)
-    })
-
-    return new TranslateableModel(
-      this,
-      translatableId,
-      orinialLanguageCode,
-      articleAbstract,
-      translations
-    )
   }
 
   _getContext () {

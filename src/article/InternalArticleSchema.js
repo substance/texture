@@ -440,8 +440,10 @@ Subject.schema = {
 }
 
 class ContainerTranslation extends XMLContainerNode {}
-ContainerTranslation.type = 'container-translation'
-ContainerTranslation.language = STRING
+ContainerTranslation.schema = {
+  type: 'container-translation',
+  language: STRING
+}
 
 class TextTranslation extends XMLTextElement {}
 TextTranslation.schema = {

@@ -70,6 +70,7 @@ export default {
     config.addLabel('translators', 'Translators')
     config.addLabel('edit-translators', 'Edit Translators')
 
+    config.addLabel('abstract', 'Abstract')
     config.addLabel('accessionId', 'Accession ID')
     config.addLabel('archiveId', 'Archive ID')
     config.addLabel('arkId', 'ARK ID')

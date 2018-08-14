@@ -13,10 +13,7 @@ import {
 export default class TranslateableModel {
   /*
     @param {ArticleAPI} api
-    @param {string} id
-    @param {StringModel} originalLanguageCode The main language i.e. the language of the article
-    @param {StringModel} originalText The content in the original language
-    @param {CollectionModel} translations
+    @param {Title|Abstract} node
   */
   constructor (api, node) {
     this._api = api
@@ -48,7 +45,7 @@ export default class TranslateableModel {
   getOriginalModel () {
     let model
     if (this._node.isText()) {
-      model = new TextModel(this._api, this._node.getTextPath())
+      model = new TextModel(this._api, this._node.getPath())
     } else {
       model = new FlowContentModel(this._api, this._node.getContentPath())
     }
@@ -60,20 +57,23 @@ export default class TranslateableModel {
   */
   getTranslations () {
     let article = this._api.getArticle()
-    return this._node.translations.map(t => article.get(t))
+    return this._node.translations.map(t => {
+      const node = article.get(t)
+      return this._api.getModel(node.type, node)
+    })
   }
 
   /*
     Creates a new translation (with empty text) for a given language code
   */
   addTranslation (languageCode) {
-    this._api.addTranslation(this._id, languageCode)
+    this._api.addTranslation(this, languageCode)
   }
 
   /*
     Removes a translation for a given language code
   */
   removeTranslation (languageCode) {
-    this._api.deleteTranslation(this._id, languageCode)
+    this._api.deleteTranslation(this, languageCode)
   }
 }

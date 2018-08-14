@@ -29,15 +29,17 @@ export default class TranslateableEditor extends Component {
     el.append(originalRow)
 
     model.getTranslations().forEach(translation => {
-      let text = translation.getText()
-      let lang = translation.getLanguageCode().getValue()
+      let lang = translation.getLanguageCode()
       let langName = languages[lang]
+      let translationModel = translation.getModel()
       let translRow = $$(FormRowComponent, {
         label: langName
       })
       // TODO: is it ok to assume that the editor of the original text is the same type as the translations?
       translRow.append(
-        $$(ModelEditor, { model: text })
+        $$(ModelEditor, {
+          model: translationModel
+        })
       )
       el.append(
         translRow.append(
@@ -114,7 +116,7 @@ export default class TranslateableEditor extends Component {
     const model = this.props.model
     const languages = this._getArticleLanguages()
     const languageCodes = Object.keys(languages)
-    const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode().getValue())
+    const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode())
     // HACK: english is hardcoded here as original language
     // we will need to use default lang setting from article level
     alreadyTranslated.push('en')

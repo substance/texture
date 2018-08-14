@@ -512,6 +512,9 @@ InternalArticleSchema.addNodes([
   Webpage,
   // entity used in bibliography
   RefContrib,
+  // translations
+  TextTranslation,
+  ContainerTranslation,
   // others
   UnsupportedNode,
   UnsupportedInlineNode

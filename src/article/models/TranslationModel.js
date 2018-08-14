@@ -1,24 +1,19 @@
-/*
-  EXPERIMENTAL
-  Model for a specific translation.
-*/
+import {
+  TextModel, FlowContentModel
+} from '../../kit'
+
 export default class TranslationModel {
   /*
     @param {ArticleAPI} api
-    @param {TextModel} text
-    @param {string} translatableId id of the translatable this belongs to
-    @param {StringModel} languageCode model for the language code of the language this translation is written in
+    @param {TextTranslation|ContainerTranslation} node
   */
-  constructor (api, translatableId, textModel, languageCodeModel) {
+  constructor (api, node) {
     this._api = api
-    this._translateableId = this._translateableId
-    this._languageCode = languageCodeModel
-    this._text = textModel
+    this._node = node
   }
 
-  // TODO: is it really cool to have a dynamic id?
   get id () {
-    return this._translateableId + '_' + this._languageCode.getValue()
+    return this._node.id
   }
 
   get type () {
@@ -26,10 +21,16 @@ export default class TranslationModel {
   }
 
   getLanguageCode () {
-    return this._languageCode
+    return this._node.language
   }
 
-  getText () {
-    return this._text
+  getModel () {
+    let model
+    if (this._node.isText()) {
+      model = new TextModel(this._api, this._node.getPath())
+    } else {
+      model = new FlowContentModel(this._api, this._node.getContentPath())
+    }
+    return model
   }
 }

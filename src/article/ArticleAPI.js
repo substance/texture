@@ -290,18 +290,25 @@ export default class ArticleAPI extends AbstractAPI {
     const article = this.getArticle()
     const models = translatableItems.map(item => new TranslateableModel(this, article.get(item)))
     return models
-    // return [
-    //   this._getTitleTranslateable(),
-    //   this._getAbstractTranslateable()
-    // ]
   }
 
-  addTranslation (translatableId, languageCode) {
-    // if (translatableId === 'title-trans') {
-    //   this._addTitleTranslation(languageCode)
-    // } else if (translatableId === 'abstract-trans') {
-    //   this._addAbstractTranslation(languageCode)
-    // }
+  addTranslation (model, languageCode) {
+    const isText = model._node.isText()
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      let item = {
+        language: languageCode
+      }
+      if (isText) {
+        item.type = 'text-translation'
+      } else {
+        item.type = 'container-translation'
+      }
+      let node = tx.create(item)
+      let length = tx.get([model.id, 'translations']).length
+      tx.update([model.id, 'translations'], { type: 'insert', pos: length, value: node.id })
+      tx.selection = null
+    })
   }
 
   _addTitleTranslation (languageCode) {

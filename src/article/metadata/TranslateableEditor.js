@@ -23,7 +23,7 @@ export default class TranslateableEditor extends Component {
     originalRow.append(
       $$(ModelEditor, {
         model: originalModel,
-        label: originalModel.name
+        label: model.name
       })
     )
     el.append(originalRow)
@@ -35,17 +35,18 @@ export default class TranslateableEditor extends Component {
       let translRow = $$(FormRowComponent, {
         label: langName
       })
-      // TODO: is it ok to assume that the editor of the original text is the same type as the translations?
       translRow.append(
         $$(ModelEditor, {
-          model: translationModel
+          model: translationModel,
+          label: model.name,
+          placeholder: 'Enter ' + model.name
         })
       )
       el.append(
         translRow.append(
           $$('div').addClass('se-remove').append(
             $$(FontAwesomeIcon, { icon: 'fa-remove' }).addClass('se-icon')
-          ).on('click', this._removeLanguage.bind(this, lang))
+          ).on('click', this._removeTranslation.bind(this, translation))
         )
       )
     })
@@ -97,9 +98,9 @@ export default class TranslateableEditor extends Component {
     this._toggleDropdown()
   }
 
-  _removeLanguage (lang) {
+  _removeTranslation (translationModel) {
     const model = this.props.model
-    model.removeTranslation(lang)
+    model.removeTranslation(translationModel)
   }
 
   _toggleDropdown () {

@@ -24,6 +24,11 @@ export default class TranslateableModel {
     return this._node.id
   }
 
+  get name () {
+    // TODO: probably we will need something more sophisticable here
+    return this._node.id
+  }
+
   get type () {
     return 'translatable'
   }
@@ -73,7 +78,7 @@ export default class TranslateableModel {
   /*
     Removes a translation for a given language code
   */
-  removeTranslation (languageCode) {
-    this._api.deleteTranslation(this, languageCode)
+  removeTranslation (translationModel) {
+    this._api.deleteTranslation(this, translationModel)
   }
 }

@@ -9,7 +9,6 @@ import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
-import TranslationModel from './models/TranslationModel'
 
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 
@@ -306,7 +305,7 @@ export default class ArticleAPI extends AbstractAPI {
       }
       let node = tx.create(item)
       // HACK: trying to avoid selection errors of empty container
-      if (!isText) node.append(tx.create({type:'p'}))
+      if (!isText) node.append(tx.create({type: 'p'}))
       let length = tx.get([model.id, 'translations']).length
       tx.update([model.id, 'translations'], { type: 'insert', pos: length, value: node.id })
       tx.selection = null

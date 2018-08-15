@@ -14,6 +14,7 @@ import TableWrapConverter from './TableWrapConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
+import XrefConverter from './XrefConverter'
 
 /*
   Output will have the following form:
@@ -103,7 +104,8 @@ function _createExporter (jats, doc) {
     new TableConverter(),
     new ElementCitationConverter(),
     UnsupportedNodeConverter,
-    UnsupportedInlineNodeConverter
+    UnsupportedInlineNodeConverter,
+    new XrefConverter()
   ])
   let exporter = new Internal2JATSExporter({
     converters,

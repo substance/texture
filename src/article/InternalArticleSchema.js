@@ -8,16 +8,6 @@ import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
 import TextureArticleSchema from './TextureArticle'
 
-/*
-  TODO: we want to move away from a JATS oriented internal model.
-
-  The internal model structures the data in different categories: content vs metadata.
-  It is a challenge to define the boundary between these two categories.
-  Here are some criteria:
-  - Is the content displayed in a classical manuscript?
-  - May the content contain citations, or references to other displayed elements?
-*/
-
 class Article extends XMLElementNode {}
 Article.schema = {
   type: 'article',

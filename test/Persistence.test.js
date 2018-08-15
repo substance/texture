@@ -8,9 +8,13 @@ testAsync('Persistence: loading and saving the kitchen-sink article', async (t) 
   let {app, archive, manuscriptSession} = res
   applyNOP(manuscriptSession)
   spy(archive.storage, 'write')
-  await app._save()
+  await async(cb => {
+    app._save(cb)
+  })
   let rawArchive = archive.storage.write.args[1]
-  let originalRawArchive = await archive.storage.read('kitchen-sink')
+  let originalRawArchive = await async(cb => {
+    archive.storage.read('kitchen-sink', cb)
+  })
   // the XML should have actually not changed
   let originalManuscriptXML = originalRawArchive.resources['manuscript.xml'].data
   let newManuscriptXML = rawArchive.resources['manuscript.xml'].data
@@ -50,5 +54,14 @@ function _setupApp (t) {
     let manifestSession = archive.getEditorSession('manifest')
     let manuscriptSession = archive.getEditorSession('manuscript')
     return { app, archive, manifestSession, manuscriptSession }
+  })
+}
+
+function async(fn) {
+  return new Promise((resolve, reject) => {
+    fn((err, result) => {
+      if (err) reject(err)
+      else resolve(result)
+    })
   })
 }

@@ -7,6 +7,7 @@ import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
 import TextureArticleSchema from './TextureArticle'
+import TableElementNode from './TableElementNode'
 
 class Article extends XMLElementNode {}
 Article.schema = {
@@ -469,7 +470,7 @@ TextTranslation.schema = {
   language: STRING
 }
 
-class Table extends XMLElementNode {}
+class Table extends TableElementNode {}
 Table.schema = {
   type: 'table',
   _childNodes: CHILDREN('table-row')

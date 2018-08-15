@@ -2,16 +2,6 @@ import { forEach } from 'substance'
 import { getText } from '../util/domHelpers'
 
 /*
-  <subject> -> Subject
-*/
-export const SubjectConverter = {
-
-  export ($$, node) {
-    return _createTextElement($$, node.name, 'subject', { 'content-type': node.category })
-  }
-}
-
-/*
   <contrib contrib-type='group'> -> Group
 
   Used for group authors
@@ -103,8 +93,7 @@ let mappingItemTypes = {
   'chapter': 'chapter',
   'confproc': 'conference-paper',
   'data': 'data-publication',
-  // HACK: trying to merge EntitDb into Article model, avoiding type collision
-  'patent': '_patent',
+  'patent': 'patent',
   'magazine': 'magazine-article',
   'newspaper': 'newspaper-article',
   'report': 'report',

@@ -4,9 +4,7 @@ import { findChild } from '../util/domHelpers'
 export default class BodyConverter {
   get type () { return 'body' }
 
-  matchElement (el) {
-    return el.is('body')
-  }
+  get tagName () { return 'body' }
 
   import (el, node, importer) {
     // find all top-level sections

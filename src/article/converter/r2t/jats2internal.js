@@ -7,6 +7,8 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
 import ReferenceConverter from './ReferenceConverter'
+import UnsupportedNodeConverter from './UnsupportedNodeConverter'
+import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -158,7 +160,7 @@ function _populateEditors (doc, jats) {
 }
 
 function _populateContribs (doc, jats, contribs, contribEls, groupId) {
-  contribEls.forEach(contribEl => {
+  for (let contribEl of contribEls) {
     if (contribEl.attr('contrib-type') === 'group') {
       // ATTENTION: groups are defined 'inplace'
       // the members of the group are appended to the list of persons
@@ -178,21 +180,24 @@ function _populateContribs (doc, jats, contribs, contribEls, groupId) {
       let memberEls = contribEl.findAll('contrib')
       _populateContribs(doc, jats, contribs, memberEls, group.id)
     } else {
-      contribs.append(doc.create({
-        type: 'person',
-        givenNames: getText(contribEl, 'given-names'),
-        surname: getText(contribEl, 'surname'),
-        email: getText(contribEl, 'email'),
-        prefix: getText(contribEl, 'prefix'),
-        suffix: getText(contribEl, 'suffix'),
-        affiliations: _getAffiliationIds(contribEl),
-        awards: _getAwardIds(contribEl),
-        equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
-        corresp: contribEl.getAttribute('corresp') === 'yes',
-        deceased: contribEl.getAttribute('deceased') === 'yes'
-      }))
+      contribs.append(
+        doc.create({
+          type: 'person',
+          givenNames: getText(contribEl, 'given-names'),
+          surname: getText(contribEl, 'surname'),
+          email: getText(contribEl, 'email'),
+          prefix: getText(contribEl, 'prefix'),
+          suffix: getText(contribEl, 'suffix'),
+          affiliations: _getAffiliationIds(contribEl),
+          awards: _getAwardIds(contribEl),
+          equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
+          corresp: contribEl.getAttribute('corresp') === 'yes',
+          deceased: contribEl.getAttribute('deceased') === 'yes',
+          group: groupId
+        })
+      )
     }
-  })
+  }
 }
 
 function _getAffiliationIds (el, isGroup) {
@@ -215,7 +220,6 @@ function _getAwardIds (el) {
 function _populateAwards (doc, jats) {
   const awards = doc.get('awards')
   const awardEls = jats.findAll('article-meta > funding-group > award-group')
-  // Convert <award-group> elements to award entities
   awardEls.forEach(el => {
     let award = {
       id: el.id,
@@ -279,18 +283,27 @@ function _populateKeywords (doc, jats) {
 }
 
 function _populateSubjects (doc, jats) {
+  // TODO: IMO we need to consolidate this. The original meaning of <subj-group> seems to be
+  // to be able to define an ontology, also hierarchically
+  // This implementation assumes that subjects are flat.
+  // To support translations, multiple subj-groups can be provided with different xml:lang
   let subjects = doc.get('subjects')
-  let subjectEls = jats.findAll('article-meta > article-categories > subj-group > subject')
-  subjectEls.forEach(subjectEl => {
-    const subject = {
-      // HACK: trying to merge EntitDb into Article model, avoiding type collision
-      type: '_subject',
-      name: subjectEl.textContent,
-      category: subjectEl.getAttribute('content-type'),
-      language: subjectEl.getParent().getAttribute('xml:lang')
+  let subjGroups = jats.findAll('article-meta > article-categories > subj-group')
+  // TODO: get this from the article element
+  const DEFAULT_LANG = 'en'
+  for (let subjGroup of subjGroups) {
+    let language = subjGroup.attr('xml:lang') || DEFAULT_LANG
+    let subjectEls = subjGroup.findAll('subject')
+    for (let subjectEl of subjectEls) {
+      const subject = {
+        type: 'subject',
+        name: subjectEl.textContent,
+        category: subjectEl.getAttribute('content-type'),
+        language
+      }
+      subjects.append(doc.create(subject))
     }
-    subjects.append(doc.create(subject))
-  })
+  }
 }
 
 function _populateTitle (doc, jats, jatsImporter) {
@@ -346,28 +359,6 @@ function _populateReferences (doc, jats, jatsImporter) {
     refEls.forEach(refEl => {
       references.append(jatsImporter.convertElement(refEl))
     })
-  }
-}
-
-// Customized Element converters
-
-const UnsupportedNodeConverter = {
-  type: 'unsupported-node',
-  matchElement (el) {
-    return false
-  },
-  import (el, node, converter) {
-    node.data = el.serialize()
-  }
-}
-
-const UnsupportedInlineNodeConverter = {
-  type: '@unsupported-inline-node',
-  matchElement (el) {
-    return false
-  },
-  import (el, node, converter) {
-    node.data = el.serialize()
   }
 }
 

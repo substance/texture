@@ -8,3 +8,6 @@
   background: #ccc;
   margin: 5px 0px;
 }
+.sc-unsupported-inline-node > pre {
+  display: inline-block;
+}

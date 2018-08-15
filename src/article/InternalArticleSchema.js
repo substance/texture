@@ -290,8 +290,7 @@ NewspaperArticle.schema = {
 
 class Patent extends BibliographicEntry {}
 Patent.schema = {
-  // HACK: trying to merge EntitDb into Article model, avoiding type collision
-  type: '_patent',
+  type: 'patent',
   inventors: CHILDREN('ref-contrib'),
   assignee: STRING,
   title: STRING,
@@ -439,8 +438,7 @@ Organisation.schema = {
 
 class Subject extends DocumentNode {}
 Subject.schema = {
-  // HACK: trying to merge EntitDb into Article model, avoiding type collision
-  type: '_subject',
+  type: 'subject',
   name: STRING,
   category: STRING,
   language: STRING

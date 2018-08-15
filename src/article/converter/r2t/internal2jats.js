@@ -8,6 +8,8 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import createEmptyJATS from '../util/createEmptyJATS'
 import BodyConverter from './BodyConverter'
 import ReferenceConverter from './ReferenceConverter'
+import UnsupportedNodeConverter from './UnsupportedNodeConverter'
+import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
 /*
   Output will have the following form:
@@ -27,7 +29,7 @@ import ReferenceConverter from './ReferenceConverter'
   article-meta:
     (
       article-id*,      // not supported yet
-      article-categories?,  // not supported yet
+      article-categories?,  // derived from subjects
       title-group?,
       contrib-group*,
       aff*,
@@ -45,20 +47,20 @@ import ReferenceConverter from './ReferenceConverter'
       abstract?,
       trans-abstract*,
       kwd-group*,
-      funding-group*,   // not supported yet
+      funding-group*,   // derived from awards
       conference*,      // not supported yet
       counts?,          // not supported yet
       custom-meta-group?  // not supported yet
     )
   back:
     (
-      ack*,
-      bio*,
+      ack*, // not supported yet
+      bio*, // not supported yet
       fn-group?,
-      glossary?,
+      glossary?,  // not supported yet
       ref-list?,
-      notes*,
-      sec*
+      notes*, // not supported yet
+      sec*  // do we want to support this at all?
     )
 
   TODO:
@@ -92,7 +94,8 @@ function _createExporter (jats, doc) {
   let converters = jatsConverters.concat([
     new BodyConverter(),
     ReferenceConverter,
-    UnsupportedNodeExporter
+    UnsupportedNodeConverter,
+    UnsupportedInlineNodeConverter
   ])
   let exporter = new XMLExporter({
     converters,
@@ -115,13 +118,13 @@ function _populateFront (jats, doc, jatsExporter) {
 function _populateArticleMeta (jats, doc, jatsExporter) {
   const $$ = jats.$$
   let articleMeta = jats.createElement('article-meta')
+  let articleRecord = doc.get('article-record')
 
   // article-id*
   // TODO not supported yet
 
   // article-categories?
-  // TODO not supported yet
-  // or do we want derive them from keywords and subjects?
+  articleMeta.append(_exportSubjects(jats, doc))
 
   // title-group?
   let titleGroup = jats.createElement('title-group')
@@ -129,16 +132,25 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   _populateTitleGroup(jats, doc, titleGroup, jatsExporter)
 
   // contrib-group*
-  articleMeta.append(_exportContribGroup(jats, doc, doc.get('authors'), 'author'))
-  articleMeta.append(_exportContribGroup(jats, doc, doc.get('editors'), 'editor'))
-  // TODO: add more types
+  ;[
+    ['author', 'authors'],
+    ['editor', 'editors'],
+    ['inventor', 'inventors'],
+    ['sponsor', 'sponsors']
+  ].forEach(([type, collectionId]) => {
+    let collection = doc.get(collectionId)
+    // TODO: support all considered person collections
+    // these hard-coded collections however seem to be a bad approach
+    if (!collection) return
+    articleMeta.append(
+      _exportContribGroup(jats, doc, collection, type)
+    )
+  })
 
   // aff*
   articleMeta.append(_exportAffiliations(jats, doc))
 
   // author-notes? // not supported yet
-
-  let articleRecord = doc.get('article-record')
 
   // pub-date*,
   articleMeta.append(
@@ -203,7 +215,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
 
   // funding-group*,
   articleMeta.append(
-    _exportFundingGroups(jats, doc, jatsExporter)
+    _exportAwards(jats, doc, jatsExporter)
   )
 
   // conference*,      // not supported yet
@@ -218,6 +230,36 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   front.replaceChild(oldArticleMeta, articleMeta)
 }
 
+function _exportSubjects (jats, doc) {
+  // NOTE: subjects are used to populate <article-categories>
+  // - subjects are organized flat, not hierarchically
+  // - `subject.category` is mapped to subject[content-type]
+  // - subjects are grouped into <subj-groups> using their language property
+  // group subjects by language
+  // TODO: this should come from the article node
+  let $$ = jats.$$
+  let subjects = doc.get('subjects')
+  let byLang = subjects.getChildren().reduce((byLang, subject) => {
+    let lang = subject.language
+    if (!byLang[lang]) {
+      byLang[lang] = []
+    }
+    byLang[lang].push(subject)
+    return byLang
+  }, {})
+  let articleCategories = $$('article-categories')
+  forEach(byLang, (subjects, lang) => {
+    let groupEl = $$('subj-group').attr('xml:lang', lang)
+    groupEl.append(
+      subjects.map(subject => {
+        return $$('subject').attr({ 'content-type': subject.category }).text(subject.name)
+      })
+    )
+    articleCategories.append(groupEl)
+  })
+  return articleCategories
+}
+
 function _populateTitleGroup (jats, doc, titleGroup, jatsExporter) {
   // ATTENTION: ATM only one, *the* title is supported
   // Potentially there are sub-titles, and JATS even supports more titles beyond this (e.g. for special purposes)
@@ -227,24 +269,25 @@ function _populateTitleGroup (jats, doc, titleGroup, jatsExporter) {
 }
 
 function _exportContribGroup (jats, doc, personCollection, type) {
+  // FIXME: this should not happen if we have general support for 'person-groups'
+  // ATM, we only support authors, and editors.
   let $$ = jats.$$
   let contribs = personCollection.getChildren()
-  let contribGroup = $$('contrib-group').attr('content-type', type)
+  let contribGroupEl = $$('contrib-group').attr('content-type', type)
   let groupedContribs = _groupContribs(contribs)
-  forEach(groupedContribs, (val, key) => {
-    // persons without a group
-    if (key === 'NOGROUP') {
-      val.forEach(person => {
-        contribGroup.append(_exportPerson($$, person))
+  for (let [groupId, persons] of groupedContribs) {
+    // append persons without a group first
+    if (groupId === 'NOGROUP') {
+      persons.forEach(person => {
+        contribGroupEl.append(_exportPerson($$, person))
       })
-    // persons within a group are nested
+    // persons within a group are nested into an extra <contrib> layer
     } else {
-      let group = doc.get(key)
-      let persons = val
-      contribGroup.append(_exportGroup($$, group, persons))
+      let group = doc.get(groupId)
+      contribGroupEl.append(_exportGroup($$, group, persons))
     }
-  })
-  return contribGroup
+  }
+  return contribGroupEl
 }
 
 /*
@@ -253,18 +296,19 @@ function _exportContribGroup (jats, doc, personCollection, type) {
   [p1,p2g1,p3g2,p4g1] => {p1: p1, g1: [p2,p4], g2: [p3] }
 */
 function _groupContribs (contribs) {
-  let groups = { 'NOGROUP': [] }
-  contribs.forEach(contrib => {
-    if (contrib.group) {
-      let group = groups[contrib.group]
-      if (!group) {
-        groups[contrib.group] = group = []
+  let groups = new Map()
+  groups.set('NOGROUP', [])
+  for (let contrib of contribs) {
+    let groupId = contrib.group
+    if (groupId) {
+      if (!groups.has(groupId)) {
+        groups.set(groupId, [])
       }
-      group.push(contrib)
+      groups.get(groupId).push(contrib)
     } else {
-      groups['NOGROUP'].push(contrib)
+      groups.get('NOGROUP').push(contrib)
     }
-  })
+  }
   return groups
 }
 
@@ -298,7 +342,26 @@ function _exportPerson ($$, node) {
 }
 
 function _exportGroup ($$, node, groupMembers) {
-  let el = $$('contrib').attr({
+  /*
+    <contrib id="${node.id}" contrib-type="group" equal-contrib="yes|no" corresp="yes|no">
+      <collab>
+        <named-content content-type="name">${node.name}</named-content>
+        <email>${node.email}</email>
+        <$ for (let affId of node.affiliations) {$>
+          <xref ref-type="aff" rid=${affId} />
+        <$ } $>
+        <$ for (let awardId of node.awards) {$>
+          <xref ref-type="award" rid=${awardId} />
+        <$ } $>
+        <contrib-group contrib-type="group-member">
+          <$ for (let person of groupMembers) {$>
+            <Person node=${person} />
+          <$ } $>
+        </contrib-group>
+        </collab>
+    </contrib>
+  */
+  let contribEl = $$('contrib').attr({
     'id': node.id,
     'contrib-type': 'group',
     'equal-contrib': node.equalContrib ? 'yes' : 'no',
@@ -311,13 +374,13 @@ function _exportGroup ($$, node, groupMembers) {
   )
   // Adds affiliations to group
   node.affiliations.forEach(organisationId => {
-    el.append(
+    collab.append(
       $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
     )
   })
   // Add awards to group
   node.awards.forEach(awardId => {
-    el.append(
+    collab.append(
       $$('xref').attr('ref-type', 'award').attr('rid', awardId)
     )
   })
@@ -329,8 +392,8 @@ function _exportGroup ($$, node, groupMembers) {
     contribGroup.append(contribEl)
   })
   collab.append(contribGroup)
-  el.append(collab)
-  return el
+  contribEl.append(collab)
+  return contribEl
 }
 
 function _exportAffiliations (jats, doc) {
@@ -432,18 +495,30 @@ function _exportKeywords (jats, doc) {
   const $$ = jats.$$
   // TODO: keywords should be translatables
   const keywords = doc.get('keywords')
-  const kwdGroup = $$('kwd-group')
-  keywords.getChildren().forEach(keyword => {
-    kwdGroup.append(
-      _createTextElement($$, keyword.name, 'kwd', {'content-type': keyword.category})
+  let byLang = keywords.getChildren().reduce((byLang, keyword) => {
+    let lang = keyword.language
+    if (!byLang[lang]) {
+      byLang[lang] = []
+    }
+    byLang[lang].push(keyword)
+    return byLang
+  }, {})
+  let keywordGroups = []
+  forEach(byLang, (keywords, lang) => {
+    let groupEl = $$('kwd-group').attr('xml:lang', lang)
+    groupEl.append(
+      keywords.map(keyword => {
+        return $$('kwd').attr({ 'content-type': keyword.category }).text(keyword.name)
+      })
     )
+    keywordGroups.push(groupEl)
   })
-  return kwdGroup
+  return keywordGroups
 }
 
-function _exportFundingGroups (jats, doc) {
+function _exportAwards (jats, doc) {
   const $$ = jats.$$
-  let awards = doc.get('awards')
+  let awards = doc.get('awards').getChildren()
   if (awards.length > 0) {
     let fundingGroupEl = $$('funding-group')
     awards.forEach(award => {
@@ -461,37 +536,6 @@ function _exportFundingGroups (jats, doc) {
   }
 }
 
-/*
-function _exportSubjects (dom, api) {
-  const $$ = dom.createElement.bind(dom)
-  const articleMeta = dom.find('article-meta')
-  const doc = api.doc
-
-  let articleCategories = $$('article-categories')
-  insertChildAtFirstValidPos(articleMeta, articleCategories)
-
-  // Export Subjects
-  const subjectIdx = doc.findByType('_subject')
-  const subjects = subjectIdx.map(subjectId => doc.get(subjectId))
-  const subjectLangs = [...new Set(subjects.map(item => item.language))]
-  subjectLangs.forEach(lang => {
-    const subjGroup = $$('subj-group').setAttribute('xml:lang', lang)
-    articleCategories.append(subjGroup)
-  })
-  subjects.forEach(subject => {
-    const subjGroup = articleCategories.find(`subj-group[xml\\:lang="${subject.language}"]`)
-    const newSubjectEl = SubjectConverter.export($$, subject, doc)
-    subjGroup.append(newSubjectEl)
-  })
-}
-export const SubjectConverter = {
-
-  export ($$, node) {
-    return _createTextElement($$, node.name, 'subject', { 'content-type': node.category })
-  }
-}
-*/
-
 function _populateBody (jats, doc, jatsExporter) {
   let body = doc.get('body')
   let bodyEl = jatsExporter.convertNode(body)
@@ -501,11 +545,4 @@ function _populateBody (jats, doc, jatsExporter) {
 
 function _exportAnnotatedText (jatsExporter, path, el) {
   el.append(jatsExporter.annotatedText(path))
-}
-
-const UnsupportedNodeExporter = {
-  type: 'unsupported-node',
-  export (node, el) {
-    return DefaultDOMElement.parseSnippet(node.data, 'xml')
-  }
 }

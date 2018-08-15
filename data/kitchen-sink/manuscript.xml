@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "TextureArticle 0.1.0" "http://substance.io/TextureArticle-1.0.0.dtd">
-<article id="article" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <front id="front-1">
-    <article-meta id="article-meta-1">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <article-meta>
       <article-categories>
         <subj-group xml:lang="en">
           <subject content-type="display-channel">Research Article</subject>
@@ -15,8 +15,8 @@
           <subject content-type="heading">Epidemiología y salud global</subject>
         </subj-group>
       </article-categories>
-      <title-group id="title-group-1">
-        <article-title id="article-title-1">Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
+      <title-group>
+        <article-title>Object vision to hand action in macaque parietal, premotor, and motor cortices</article-title>
         <trans-title-group id="trans-title-group-1" xml:lang="es">
           <trans-title id="trans-title-1">Objeto de visión a acción manual en <italic id="italic-1">cortezas parietales</italic>, premotoras y motoras de macaco</trans-title>
         </trans-title-group>
@@ -128,7 +128,7 @@
           <year>1998</year>
         </date>
       </history>
-      <abstract id="abstract-1">
+      <abstract>
         <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </abstract>
       <trans-abstract id="trans-abstract-1" xml:lang="es">

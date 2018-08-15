@@ -744,9 +744,8 @@ export default {
   'webpage': _delegate(webpageRenderer),
   'keyword': _delegate(keywordRenderer),
   'ref-contrib': _delegate(refContribRenderer),
-  // HACK: merging entities into article model, avoiding type collision
-  '_patent': _delegate(patentRenderer),
-  '_subject': _delegate(subjectRenderer)
+  'patent': _delegate(patentRenderer),
+  'subject': _delegate(subjectRenderer)
 }
 
 /*

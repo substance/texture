@@ -7,6 +7,7 @@ import InternalArticleSchema from '../../InternalArticleSchema'
 import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import createEmptyJATS from '../util/createEmptyJATS'
 import BodyConverter from './BodyConverter'
+import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ListConverter from './ListConverter'
 import TableConverter from './TableConverter'
@@ -98,6 +99,7 @@ function _createExporter (jats, doc) {
   // registered for a specific nody type, i.e. a later converter overrides a previous one
   let converters = jatsConverters.concat([
     new BodyConverter(),
+    new DispQuoteConverter(),
     new FigConverter(),
     new ListConverter(),
     new TableWrapConverter(),

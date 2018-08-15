@@ -6,6 +6,7 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
+import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import ListConverter from './ListConverter'
@@ -100,6 +101,7 @@ function _createImporter (doc) {
     // this is only used for import, because BodyConverter does an on-the-fly DOM transformation
     // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
     HeadingImporter,
+    new DispQuoteConverter(),
     new FigConverter(),
     new ListConverter(),
     new TableWrapConverter(),

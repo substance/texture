@@ -69,6 +69,13 @@ Editors.schema = {
   _childNodes: CHILDREN('person')
 }
 
+class DispQuote extends XMLContainerNode {}
+DispQuote.schema = {
+  type: 'disp-quote',
+  attrib: 'text',
+  _childNodes: CHILDREN('p')
+}
+
 class Figure extends DocumentNode {
   getContent () {
     return this.getDocument().get(this.content)
@@ -533,6 +540,7 @@ InternalArticleSchema.addNodes([
   Abstract,
   Back,
   Content,
+  DispQuote,
   Figure,
   Footnotes,
   Front,

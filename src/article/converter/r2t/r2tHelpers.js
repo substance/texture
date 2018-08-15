@@ -1,6 +1,6 @@
 import InternalArticleSchema from '../../InternalArticleSchema'
 import { REQUIRED_ELEMENT_CITATION_ELEMENTS } from '../../ArticleConstants'
-import { findChild, findAllChilds } from '../util/domHelpers'
+import { findChild, findAllChildren } from '../util/domHelpers'
 
 export function expandElementCitation (el, doc) {
   REQUIRED_ELEMENT_CITATION_ELEMENTS.forEach((element) => {
@@ -56,7 +56,7 @@ export function expandObjectId (el, insertPos) {
 }
 
 export function removeEmptyElements (el, tagName) {
-  let childs = findAllChilds(el, tagName)
+  let childs = findAllChildren(el, tagName)
   childs.forEach(child => {
     if (child.textContent === '') {
       el.removeChild(child)

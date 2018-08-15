@@ -1,3 +1,6 @@
+import {
+  TextModel, FlowContentModel
+} from '../../kit'
 
 /*
   A special view on a translatable text inside the document.
@@ -10,21 +13,20 @@
 export default class TranslateableModel {
   /*
     @param {ArticleAPI} api
-    @param {string} id
-    @param {StringModel} originalLanguageCode The main language i.e. the language of the article
-    @param {StringModel} originalText The content in the original language
-    @param {CollectionModel} translations
+    @param {Title|Abstract} node
   */
-  constructor (api, id, originalLanguageCode, originalText, translations) {
+  constructor (api, node) {
     this._api = api
-    this._id = id // e.g. title-trans|abstract-trans|figure-caption-1-trans
-    this._originalLanguageCode = originalLanguageCode
-    this._originalText = originalText
-    this._translations = translations
+    this._node = node
   }
 
   get id () {
-    return this._id
+    return this._node.id
+  }
+
+  get name () {
+    // TODO: probably we will need something more sophisticable here
+    return this._node.id
   }
 
   get type () {
@@ -42,27 +44,41 @@ export default class TranslateableModel {
     Returns the text model to be translated
   */
   getOriginalText () {
-    return this._originalText
+    return this._node
+  }
+
+  getOriginalModel () {
+    let model
+    if (this._node.isText()) {
+      model = new TextModel(this._api, this._node.getPath())
+    } else {
+      model = new FlowContentModel(this._api, this._node.getContentPath())
+    }
+    return model
   }
 
   /*
     Returns a list of translations
   */
   getTranslations () {
-    return this._translations
+    let article = this._api.getArticle()
+    return this._node.translations.map(t => {
+      const node = article.get(t)
+      return this._api.getModel(node.type, node)
+    })
   }
 
   /*
     Creates a new translation (with empty text) for a given language code
   */
   addTranslation (languageCode) {
-    this._api.addTranslation(this._id, languageCode)
+    this._api.addTranslation(this, languageCode)
   }
 
   /*
     Removes a translation for a given language code
   */
-  removeTranslation (languageCode) {
-    this._api.deleteTranslation(this._id, languageCode)
+  removeTranslation (translationModel) {
+    this._api.deleteTranslation(this, translationModel)
   }
 }

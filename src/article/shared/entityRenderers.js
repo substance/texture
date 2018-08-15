@@ -737,7 +737,7 @@ export default {
   'organisation': _delegate(organisationRenderer),
   'award': _delegate(awardRenderer),
   'data-publication': _delegate(dataPublicationRenderer),
-  'magazine-aricle': _delegate(magazineArticleRenderer),
+  'magazine-article': _delegate(magazineArticleRenderer),
   'newspaper-article': _delegate(newspaperArticleRenderer),
   'software': _delegate(softwareRenderer),
   'thesis': _delegate(thesisRenderer),

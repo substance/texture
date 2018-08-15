@@ -32,7 +32,7 @@ export function convertCSLJSON (source) {
     // "musical_score"
     // "pamphlet"
     'paper-conference': 'conference-paper',
-    'patent': 'patent',
+    'patent': '_patent',
     // "post"
     // "post-weblog"
     // "personal_communication"
@@ -110,16 +110,16 @@ function _convertFromCSLJSON (source, type) {
   // Authors, editors, translators, inventors
   if (source.author) {
     if (type === 'patent') {
-      data.inventors = source.author.map(a => { return {surname: a.family, givenNames: a.given} })
+      data.inventors = source.author.map(a => { return {name: a.family, givenNames: a.given} })
     } else {
-      data.authors = source.author.map(a => { return {surname: a.family, givenNames: a.given} })
+      data.authors = source.author.map(a => { return {name: a.family, givenNames: a.given} })
     }
   }
   if (source.editor) {
-    data.editors = source.editor.map(a => { return {surname: a.family, givenNames: a.given} })
+    data.editors = source.editor.map(a => { return {name: a.family, givenNames: a.given} })
   }
   if (source.translator) {
-    data.translators = source.translator.map(a => { return {surname: a.family, givenNames: a.given} })
+    data.translators = source.translator.map(a => { return {name: a.family, givenNames: a.given} })
   }
 
   // Cleanup output to avoid any undefined values

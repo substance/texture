@@ -1,6 +1,6 @@
 import {
   DocumentSchema, DocumentNode, InlineNode,
-  XMLElementNode, XMLTextElement
+  XMLContainerNode, XMLElementNode, XMLTextElement
 } from 'substance'
 import { BOOLEAN, STRING, MANY, ONE, CHILDREN } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
@@ -38,6 +38,16 @@ ArticleRecord.schema = {
   receivedDate: STRING,
   revReceivedDate: STRING,
   revRequestedDate: STRING
+}
+
+class TranslatableTextElement extends XMLTextElement {}
+TranslatableTextElement.schema = {
+  translations: CHILDREN('text-translation')
+}
+
+class TranslatableContainerElement extends XMLContainerNode {}
+TranslatableContainerElement.schema = {
+  translations: CHILDREN('container-translation')
 }
 
 class Metadata extends XMLElementNode {}
@@ -110,8 +120,11 @@ Back.schema = {
   _childNodes: CHILDREN('references', 'footnotes')
 }
 
-class Title extends TextureArticleSchema.getNodeClass('article-title') {}
+class Title extends TranslatableTextElement {}
 Title.type = 'title'
+
+class Abstract extends TranslatableContainerElement {}
+Abstract.type = 'abstract'
 
 class Heading extends XMLTextElement {}
 Heading.type = 'heading'
@@ -426,6 +439,19 @@ Subject.schema = {
   language: STRING
 }
 
+class ContainerTranslation extends XMLContainerNode {}
+ContainerTranslation.schema = {
+  type: 'container-translation',
+  language: STRING
+}
+
+class TextTranslation extends XMLTextElement {}
+TextTranslation.schema = {
+  type: 'text-translation',
+  content: STRING,
+  language: STRING
+}
+
 class UnsupportedNode extends DocumentNode {}
 UnsupportedNode.schema = {
   type: 'unsupported-node',
@@ -467,6 +493,7 @@ InternalArticleSchema.addNodes([
   Content,
   Front,
   Title,
+  Abstract,
   Heading,
   Back,
   References,
@@ -487,6 +514,9 @@ InternalArticleSchema.addNodes([
   Webpage,
   // entity used in bibliography
   RefContrib,
+  // translations
+  TextTranslation,
+  ContainerTranslation,
   // others
   UnsupportedNode,
   UnsupportedInlineNode
@@ -495,7 +525,6 @@ InternalArticleSchema.addNodes([
 // Elements taken from the JATS spec
 // TODO: make sure that we do not need to modify them, e.g. marking them as inline nodes
 InternalArticleSchema.addNodes([
-  'abstract',
   'body',
   'fn',
   'p',

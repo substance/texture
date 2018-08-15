@@ -9,7 +9,6 @@ import ContribsModel from './models/ContribsModel'
 import MetaModel from './models/MetaModel'
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
-import TranslationModel from './models/TranslationModel'
 
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 
@@ -99,7 +98,7 @@ export default class ArticleAPI extends AbstractAPI {
   addItemToCollection (item, collection) {
     this.articleSession.transaction(tx => {
       let node = tx.create(item)
-      tx.get(collection._node.id).appendChild(tx.get(node.id))
+      tx.get(collection._node.id).appendChild(node)
       tx.selection = null
     })
   }
@@ -112,112 +111,47 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  addAuthor (person = {}) {
-    this._addPerson(person, 'authors')
-  }
-
-  addEditor (person = {}) {
-    this._addPerson(person, 'editors')
-  }
-
-  _addPerson (person = {}, type) {
-    const newNode = Object.assign({}, person, {
-      type: 'person'
-    })
-    let node
-    this.articleSession.transaction(tx => {
-      node = tx.create(newNode)
-      const articleRecord = tx.get('article-record')
-      let length = articleRecord[type].length
-      tx.update(['article-record', type], { type: 'insert', pos: length, value: node.id })
-      tx.selection = null
-    })
-    return this.getModel(node.type, node)
-  }
-
-  getAuthors () {
-    return this._getPersons('authors')
-  }
-
   getAuthorsModel () {
     return this.getModel('authors')
   }
 
-  getEditors () {
-    return this._getPersons('editors')
-  }
-
-  _getPersons (prop) {
-    // TODO: authors and editors are now in article/metadata/authors and article/metadata/editors
-    return []
-  }
-
-  deleteAuthor (personId) {
-    return this._deletePerson(personId, 'authors')
-  }
-
-  deleteEditor (personId) {
-    return this._deletePerson(personId, 'editors')
-  }
-
-  _deletePerson (personId, type) {
-    // FIXME: persons are now in a different place
-    // let node
-    // this.articleSession.transaction((tx) => {
-    //   node = tx.delete(personId)
-    //   const articleRecord = tx.get('article-record')
-    //   let pos = articleRecord[type].indexOf(personId)
-    //   if (pos !== -1) {
-    //     tx.update(['article-record', type], { type: 'delete', pos: pos })
-    //   }
-    //   tx.selection = null
-    // })
-    // return this.getModel(node.type, node)
-  }
-
-  addReferences (refs) {
+  addReferences (items, collection) {
     const refContribProps = ['authors', 'editors', 'inventors', 'sponsors', 'translators']
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const refList = tx.find('ref-list')
-      refs.forEach(ref => {
+      let refs = tx.get(collection._node.id)
+      items.forEach(item => {
         refContribProps.forEach(propName => {
-          if (ref[propName]) {
-            let refContribs = ref[propName].map(contrib => {
+          if (item[propName]) {
+            let refContribs = item[propName].map(contrib => {
               contrib.type = 'ref-contrib'
               const node = tx.create(contrib)
               return node.id
             })
-            ref[propName] = refContribs
+            item[propName] = refContribs
           }
         })
-        const node = tx.create(ref)
-        const refEl = tx.createElement('ref').attr('rid', node.id)
-        refList.append(refEl)
+
+        let node = tx.create(item)
+        refs.appendChild(tx.get(node.id))
       })
       tx.selection = null
     })
   }
 
-  deleteReference (refId) {
-    const article = this.getArticle()
+  deleteReference (item, collection) {
     const articleSession = this.articleSession
-    const xrefIndex = article.getIndex('xrefs')
-    const xrefs = xrefIndex.get(refId)
     articleSession.transaction(tx => {
-      const refList = tx.find('ref-list')
-      let node = tx.get(refId)
-      // ATTENTION: it is important to nodes from the transaction tx!
-      // Be careful with closures here.
-      refList.removeChild(node)
-      tx.delete(node.id)
-      // Now update xref targets
+      const xrefIndex = tx.getIndex('xrefs')
+      const xrefs = xrefIndex.get(item.id)
+      tx.get(collection._node.id).removeChild(tx.get(item.id))
       xrefs.forEach(xrefId => {
         let xref = tx.get(xrefId)
         let idrefs = xref.attr('rid').split(' ')
-        idrefs = without(idrefs, refId)
+        idrefs = without(idrefs, item.id)
         xref.setAttribute('rid', idrefs.join(' '))
       })
+      tx.delete(item.id)
       tx.selection = null
     })
   }
@@ -292,113 +226,44 @@ export default class ArticleAPI extends AbstractAPI {
   }
 
   getTranslatables () {
-    return [
-      this._getTitleTranslateable(),
-      this._getAbstractTranslateable()
-    ]
+    const translatableItems = ['title', 'abstract']
+    const article = this.getArticle()
+    const models = translatableItems.map(item => new TranslateableModel(this, article.get(item)))
+    return models
   }
 
-  addTranslation (translatableId, languageCode) {
-    if (translatableId === 'title-trans') {
-      this._addTitleTranslation(languageCode)
-    } else if (translatableId === 'abstract-trans') {
-      this._addAbstractTranslation(languageCode)
-    }
-  }
-
-  _addTitleTranslation (languageCode) {
+  addTranslation (model, languageCode) {
+    const isText = model._node.isText()
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const titleEl = tx.createElement('trans-title-group').attr('xml:lang', languageCode).append(
-        tx.createElement('trans-title')
-      )
-      const titleGroup = tx.find('title-group')
-      titleGroup.append(titleEl)
+      let item = {
+        language: languageCode
+      }
+      if (isText) {
+        item.type = 'text-translation'
+      } else {
+        item.type = 'container-translation'
+      }
+      let node = tx.create(item)
+      // HACK: trying to avoid selection errors of empty container
+      if (!isText) node.append(tx.create({type: 'p'}))
+      let length = tx.get([model.id, 'translations']).length
+      tx.update([model.id, 'translations'], { type: 'insert', pos: length, value: node.id })
+      tx.selection = null
     })
   }
 
-  _addAbstractTranslation (languageCode) {
+  deleteTranslation (translatableModel, translationModel) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const abstractEl = tx.createElement('trans-abstract').attr('xml:lang', languageCode).append(
-        tx.createElement('p')
-      )
-      // TODO: replace it with schema driven smartness
-      const abstract = tx.find('article-meta > abstract')
-      const articleMeta = abstract.getParent()
-      const abtractPos = articleMeta.getChildPosition(abstract)
-      articleMeta.insertAt(abtractPos + 1, abstractEl)
+      let translatable = tx.get(translatableModel.id)
+      let pos = translatable.translations.indexOf(translationModel.id)
+      if (pos !== -1) {
+        tx.update([translatableModel.id, 'translations'], { type: 'delete', pos: pos })
+      }
+      tx.delete(translationModel.id)
+      tx.selection = null
     })
-  }
-
-  deleteTranslation (translatableId, languageCode) {
-    if (translatableId === 'title-trans') {
-      this._deleteTitleTranslation(languageCode)
-    } else if (translatableId === 'abstract-trans') {
-      this._deleteAbstractTranslation(languageCode)
-    }
-  }
-
-  _deleteTitleTranslation (languageCode) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      // HACK: attribute selector with colon is invalid
-      const titles = tx.findAll('trans-title-group')
-      const titleEl = titles.find(t => t.attr('xml:lang') === languageCode)
-      titleEl.parentNode.removeChild(titleEl)
-      tx.delete(titleEl.id)
-    })
-  }
-
-  _deleteAbstractTranslation (languageCode) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      // HACK: attribute selector with colon is invalid
-      const abstracts = tx.findAll('trans-abstract')
-      const abstractEl = abstracts.find(a => a.attr('xml:lang') === languageCode)
-      abstractEl.parentNode.removeChild(abstractEl)
-      tx.delete(abstractEl.id)
-    })
-  }
-
-  _getTitleTranslateable () {
-    let transTitleGroups = this.getArticle().findAll('trans-title-group')
-    let translatableId = 'title-trans'
-    let orinialLanguageCode = this.getOriginalLanguageCode()
-    let articleTitle = this.getArticleTitle()
-    let translations = transTitleGroups.map(transTitleGroup => {
-      let transTitle = transTitleGroup.find('trans-title')
-      let textModel = new TextModel(this, transTitle.getPath())
-      let languageModel = new StringModel(this, [transTitleGroup.id, 'attributes', 'xml:lang'])
-      return new TranslationModel(this, translatableId, textModel, languageModel)
-    })
-    return new TranslateableModel(
-      this,
-      translatableId,
-      orinialLanguageCode,
-      articleTitle,
-      translations
-    )
-  }
-
-  _getAbstractTranslateable () {
-    let transAbstracts = this.getArticle().findAll('trans-abstract')
-    let translatableId = 'abstract-trans'
-    let orinialLanguageCode = this.getOriginalLanguageCode()
-    let articleAbstract = this.getArticleAbstract()
-    let translations = transAbstracts.map(transAbstract => {
-      let transAbstractModel = new FlowContentModel(this, [transAbstract.id, '_children'])
-      let languageModel = new StringModel(this, [transAbstract.id, 'attributes', 'xml:lang'])
-      return new TranslationModel(this, translatableId, transAbstractModel, languageModel)
-    })
-
-    return new TranslateableModel(
-      this,
-      translatableId,
-      orinialLanguageCode,
-      articleAbstract,
-      translations
-    )
   }
 
   _getContext () {

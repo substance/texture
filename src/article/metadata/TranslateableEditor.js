@@ -4,10 +4,10 @@ import FormRowComponent from '../shared/FormRowComponent'
 export default class TranslateableEditor extends Component {
   render ($$) {
     const model = this.props.model
-    const originalText = model.getOriginalText()
+    const originalModel = model.getOriginalModel()
     const languages = this._getArticleLanguages()
     const availableLanguages = this._getAvailableLanguages()
-    let ModelEditor = this.getComponent(originalText.type)
+    let ModelEditor = this.getComponent(originalModel.type)
 
     let el = $$('div')
       .addClass('sc-translatable-editor')
@@ -21,26 +21,33 @@ export default class TranslateableEditor extends Component {
       label: this.getLabel('original-translation')
     })
     originalRow.append(
-      $$(ModelEditor, { model: originalText })
+      $$(ModelEditor, {
+        model: originalModel,
+        label: model.name
+      })
     )
     el.append(originalRow)
 
     model.getTranslations().forEach(translation => {
-      let text = translation.getText()
-      let lang = translation.getLanguageCode().getValue()
+      let lang = translation.getLanguageCode()
       let langName = languages[lang]
+      let translationModel = translation.getModel()
       let translRow = $$(FormRowComponent, {
         label: langName
       })
-      // TODO: is it ok to assume that the editor of the original text is the same type as the translations?
       translRow.append(
-        $$(ModelEditor, { model: text })
+        $$(ModelEditor, {
+          model: translationModel,
+          label: model.name,
+          // TODO: use label here?
+          placeholder: 'Enter ' + model.name
+        })
       )
       el.append(
         translRow.append(
           $$('div').addClass('se-remove').append(
             $$(FontAwesomeIcon, { icon: 'fa-remove' }).addClass('se-icon')
-          ).on('click', this._removeLanguage.bind(this, lang))
+          ).on('click', this._removeTranslation.bind(this, translation))
         )
       )
     })
@@ -92,9 +99,9 @@ export default class TranslateableEditor extends Component {
     this._toggleDropdown()
   }
 
-  _removeLanguage (lang) {
+  _removeTranslation (translationModel) {
     const model = this.props.model
-    model.removeTranslation(lang)
+    model.removeTranslation(translationModel)
   }
 
   _toggleDropdown () {
@@ -111,7 +118,7 @@ export default class TranslateableEditor extends Component {
     const model = this.props.model
     const languages = this._getArticleLanguages()
     const languageCodes = Object.keys(languages)
-    const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode().getValue())
+    const alreadyTranslated = model.getTranslations().map(t => t.getLanguageCode())
     // HACK: english is hardcoded here as original language
     // we will need to use default lang setting from article level
     alreadyTranslated.push('en')

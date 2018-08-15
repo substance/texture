@@ -57,7 +57,7 @@ export default {
     config.addLabel('create-newspaper-article', 'Create Newspaper Article')
     config.addLabel('edit-newspaper-article', 'Edit Newspaper Article')
 
-    config.addLabel('patent', 'Patent')
+    config.addLabel('_patent', 'Patent')
     config.addLabel('create-patent', 'Create Patent')
 
     // fields labels
@@ -70,6 +70,7 @@ export default {
     config.addLabel('translators', 'Translators')
     config.addLabel('edit-translators', 'Edit Translators')
 
+    config.addLabel('abstract', 'Abstract')
     config.addLabel('accessionId', 'Accession ID')
     config.addLabel('archiveId', 'Archive ID')
     config.addLabel('arkId', 'ARK ID')

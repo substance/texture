@@ -1,5 +1,4 @@
 import { CompositeModel } from '../../kit'
-import ReferenceCollectionModel from '../models/ReferenceCollectionModel'
 
 export default class MetadataModel extends CompositeModel {
   constructor (api) {
@@ -15,7 +14,7 @@ export default class MetadataModel extends CompositeModel {
       { name: 'awards', model: api.getCollectionForType('award') },
       { name: 'figures', model: api.getCollectionForType('figure') },
       { name: 'footnotes', model: api.getCollectionForType('footnote') },
-      { name: 'references', model: new ReferenceCollectionModel(api) },
+      { name: 'references', model: api.getCollectionForType('reference') },
       { name: 'keywords', model: api.getCollectionForType('keyword') },
       { name: 'subjects', model: api.getCollectionForType('subject') }
     )

@@ -57,7 +57,8 @@ export default {
     // Other special models
     config.addModel('translatables', TranslateableCollectionModel)
     config.addModel('translatable', TranslateableModel)
-    config.addModel('translation', TranslationModel)
+    config.addModel('text-translation', TranslationModel)
+    config.addModel('container-translation', TranslationModel)
 
     config.addModel('xref', XrefModel)
 

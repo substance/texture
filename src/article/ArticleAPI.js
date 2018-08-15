@@ -98,7 +98,7 @@ export default class ArticleAPI extends AbstractAPI {
   addItemToCollection (item, collection) {
     this.articleSession.transaction(tx => {
       let node = tx.create(item)
-      tx.get(collection._node.id).appendChild(tx.get(node.id))
+      tx.get(collection._node.id).appendChild(node)
       tx.selection = null
     })
   }
@@ -115,25 +115,25 @@ export default class ArticleAPI extends AbstractAPI {
     return this.getModel('authors')
   }
 
-  addReferences (refs) {
+  addReferences (items, collection) {
     const refContribProps = ['authors', 'editors', 'inventors', 'sponsors', 'translators']
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
-      const refList = tx.find('ref-list')
-      refs.forEach(ref => {
+      let refs = tx.get(collection._node.id)
+      items.forEach(item => {
         refContribProps.forEach(propName => {
-          if (ref[propName]) {
-            let refContribs = ref[propName].map(contrib => {
+          if (item[propName]) {
+            let refContribs = item[propName].map(contrib => {
               contrib.type = 'ref-contrib'
               const node = tx.create(contrib)
               return node.id
             })
-            ref[propName] = refContribs
+            item[propName] = refContribs
           }
         })
-        const node = tx.create(ref)
-        const refEl = tx.createElement('ref').attr('rid', node.id)
-        refList.append(refEl)
+
+        let node = tx.create(item)
+        refs.appendChild(tx.get(node.id))
       })
       tx.selection = null
     })

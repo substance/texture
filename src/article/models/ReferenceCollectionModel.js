@@ -22,11 +22,11 @@ export default class ReferenceCollectionModel {
   }
 
   addItem (item) {
-    this._api._addModel(item)
+    return this._api.addItemToCollection(item, this)
   }
 
   addItems (items) {
-    this._api.addReferences(items)
+    this._api.addReferences(items, this)
   }
 
   removeItem (item) {

@@ -7,7 +7,7 @@ import InternalArticleSchema from '../../InternalArticleSchema'
 import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import createEmptyJATS from '../util/createEmptyJATS'
 import BodyConverter from './BodyConverter'
-import ReferenceConverter from './ReferenceConverter'
+import ElementCitationConverter from './ElementCitationConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
@@ -77,7 +77,7 @@ export default function internal2jats (doc) { // eslint-disable-line
   // metadata
   _populateFront(jats, doc, jatsExporter)
   _populateBody(jats, doc, jatsExporter)
-  // _populateBack(jats, doc)
+  _populateBack(jats, doc, jatsExporter)
 
   return jats
 }
@@ -93,11 +93,11 @@ function _createExporter (jats, doc) {
   // registered for a specific nody type, i.e. a later converter overrides a previous one
   let converters = jatsConverters.concat([
     new BodyConverter(),
-    ReferenceConverter,
+    ElementCitationConverter,
     UnsupportedNodeConverter,
     UnsupportedInlineNodeConverter
   ])
-  let exporter = new XMLExporter({
+  let exporter = new Internal2JATSExporter({
     converters,
     elementFactory: {
       createElement: jats.createElement.bind(jats)
@@ -105,6 +105,16 @@ function _createExporter (jats, doc) {
   })
   exporter.state.doc = doc
   return exporter
+}
+
+class Internal2JATSExporter extends XMLExporter {
+  getNodeConverter (node) {
+    let type = node.type
+    if (node.isInstanceOf('bibr')) {
+      type = 'bibr'
+    }
+    return this.converters.get(type)
+  }
 }
 
 function _populateFront (jats, doc, jatsExporter) {
@@ -134,14 +144,9 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   // contrib-group*
   ;[
     ['author', 'authors'],
-    ['editor', 'editors'],
-    ['inventor', 'inventors'],
-    ['sponsor', 'sponsors']
+    ['editor', 'editors']
   ].forEach(([type, collectionId]) => {
     let collection = doc.get(collectionId)
-    // TODO: support all considered person collections
-    // these hard-coded collections however seem to be a bad approach
-    if (!collection) return
     articleMeta.append(
       _exportContribGroup(jats, doc, collection, type)
     )
@@ -541,6 +546,35 @@ function _populateBody (jats, doc, jatsExporter) {
   let bodyEl = jatsExporter.convertNode(body)
   let oldBody = jats.find('article > body')
   oldBody.parentNode.replaceChild(oldBody, bodyEl)
+}
+
+function _populateBack (jats, doc, jatsExporter) {
+  let $$ = jats.$$
+  let backEl = jats.find('article > back')
+  /*
+    back:
+    (
+      fn-group?,
+      ref-list?,
+    )
+  */
+  let footnotes = doc.get('footnotes').getChildren()
+  backEl.append(
+    $$('fn-group').append(
+      footnotes.map(footnote => {
+        return jatsExporter.convertNode(footnote)
+      })
+    )
+  )
+
+  let references = doc.get('references').getChildren()
+  backEl.append(
+    $$('ref-list').append(
+      references.map(ref => {
+        return jatsExporter.convertNode(ref)
+      })
+    )
+  )
 }
 
 function _exportAnnotatedText (jatsExporter, path, el) {

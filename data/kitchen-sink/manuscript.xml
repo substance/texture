@@ -259,8 +259,8 @@
       </sec>
     </sec>
   </body>
-  <back id="back-1">
-    <fn-group id="fn-group-1">
+  <back>
+    <fn-group>
       <fn id="fn1">
         <p id="p-10">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
       </fn>
@@ -268,7 +268,7 @@
         <p id="p-11">Phasellus ex nulla, interdum condimentum pretium ac, auctor et tellus. Maecenas eu est a neque vestibulum laoreet. Mauris libero nulla, pretium eu iaculis id, mollis ac erat. Suspendisse rutrum gravida malesuada</p>
       </fn>
     </fn-group>
-    <ref-list id="ref-list-1">
+    <ref-list>
       <ref id="r7">
         <element-citation publication-type="journal">
           <day>5</day>

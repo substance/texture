@@ -6,7 +6,7 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
-import ReferenceConverter from './ReferenceConverter'
+import ReferenceConverter from './ElementCitationConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 

@@ -8,6 +8,8 @@ import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
 import TextureArticleSchema from './TextureArticle'
 import TableElementNode from './TableElementNode'
+import ListNode from './XMLListNode'
+import ListItemNode from './XMLListItemNode'
 
 class Article extends XMLElementNode {}
 Article.schema = {
@@ -532,6 +534,8 @@ InternalArticleSchema.addNodes([
   Footnotes,
   Front,
   Heading,
+  ListNode,
+  ListItemNode,
   References,
   Table,
   TableFigure,

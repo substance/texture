@@ -8,6 +8,7 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import createEmptyJATS from '../util/createEmptyJATS'
 import BodyConverter from './BodyConverter'
 import FigConverter from './FigConverter'
+import ListConverter from './ListConverter'
 import TableConverter from './TableConverter'
 import TableWrapConverter from './TableWrapConverter'
 import ElementCitationConverter from './ElementCitationConverter'
@@ -97,6 +98,7 @@ function _createExporter (jats, doc) {
   let converters = jatsConverters.concat([
     new BodyConverter(),
     new FigConverter(),
+    new ListConverter(),
     new TableWrapConverter(),
     new TableConverter(),
     new ElementCitationConverter(),

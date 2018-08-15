@@ -8,6 +8,7 @@ import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
 import FigConverter from './FigConverter'
 import ElementCitationConverter from './ElementCitationConverter'
+import ListConverter from './ListConverter'
 import TableConverter from './TableConverter'
 import TableWrapConverter from './TableWrapConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
@@ -100,6 +101,7 @@ function _createImporter (doc) {
     // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
     HeadingImporter,
     new FigConverter(),
+    new ListConverter(),
     new TableWrapConverter(),
     new TableConverter(),
     new ElementCitationConverter()

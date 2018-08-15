@@ -1,11 +1,6 @@
 import { XMLTextElement } from 'substance'
 
-export default
-class XMLListItemNode extends XMLTextElement {
-  isListItem () {
-    return true
-  }
-
+export default class XMLListItemNode extends XMLTextElement {
   get level () {
     return this.getLevel()
   }
@@ -18,6 +13,10 @@ class XMLListItemNode extends XMLTextElement {
     if (this.getLevel() !== newLevel) {
       this.setAttribute('level', newLevel)
     }
+  }
+
+  static isListItem () {
+    return true
   }
 }
 

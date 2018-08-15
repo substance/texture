@@ -65,7 +65,7 @@ export default class SelectionStateReducer {
     }
     const propAnnos = documentHelpers.getPropertyAnnotationsForSelection(doc, sel)
     propAnnos.forEach(_add)
-    if (propAnnos.length === 1 && propAnnos[0].isInline()) {
+    if (propAnnos.length === 1 && propAnnos[0].isInlineNode()) {
       state.isInlineNodeSelection = propAnnos[0].getSelection().equals(sel)
     }
     const containerId = sel.containerId

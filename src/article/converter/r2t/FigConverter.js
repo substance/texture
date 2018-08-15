@@ -7,33 +7,43 @@ export default class FigConverter {
   get tagName () { return 'fig' }
 
   import (el, node, importer) {
+    let $$ = el.createElement.bind(el.getOwnerDocument())
     let labelEl = findChild(el, 'label')
     let contentEl = this._getContent(el)
     let captionEl = findChild(el, 'caption')
-    let titleEl
-    if (captionEl) {
-      titleEl = findChild(captionEl, 'title')
+
+    // Preparations:
+    if (!captionEl) {
+      captionEl = $$('caption')
+    }
+    // drop everything than 'p' from caption
+    let captionContent = captionEl.children
+    for (let idx = captionContent.length - 1; idx >= 0; idx--) {
+      let child = captionContent[idx]
+      if (child.tagName !== 'p') {
+        captionEl.removeAt(idx)
+      }
+    }
+    // there must be at least one paragraph
+    if (!captionEl.find('p')) {
+      captionEl.append($$('p'))
+    }
+    let titleEl = findChild(captionEl, 'title')
+    if (!titleEl) {
+      titleEl = $$('title')
     }
 
+    // Conversion
     if (labelEl) {
       node.label = labelEl.text()
     }
-    if (titleEl) {
-      node.title = importer.annotatedText(titleEl, [node.id, 'title'])
-    }
+    node.title = importer.annotatedText(titleEl, [node.id, 'title'])
+    // content is optional
+    // TODO: really?
     if (contentEl) {
       node.content = importer.convertElement(contentEl).id
     }
-    if (captionEl) {
-      let children = captionEl.children
-      for (let idx = children.length - 1; idx >= 0; idx--) {
-        let child = children[idx]
-        if (child.tagName !== 'p') {
-          captionEl.removeAt(idx)
-        }
-      }
-      node.caption = importer.convertElement(captionEl).id
-    }
+    node.caption = importer.convertElement(captionEl).id
   }
 
   _getContent (el) {

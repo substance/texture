@@ -504,7 +504,10 @@ UnsupportedInlineNode.schema = {
 const InternalArticleSchema = new DocumentSchema({
   name: 'TextureInternalArticle',
   version: '0.1.0',
-  DocumentClass: InternalArticleDocument
+  DocumentClass: InternalArticleDocument,
+  // HACK: still necessary
+  // Instead we should find a general way
+  defaultTextType: 'p'
 })
 
 InternalArticleSchema.addNodes([

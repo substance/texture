@@ -34,6 +34,7 @@ export default class FigComponent extends NodeComponent {
     let captionEl
     if (caption) {
       captionEl = $$(this.getComponent('container-editor'), {
+        placeholder: 'Enter Caption',
         node: caption,
         disabled: this.props.disabled
       }).ref('caption')

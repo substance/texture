@@ -57,7 +57,7 @@ export default {
     config.addLabel('create-newspaper-article', 'Create Newspaper Article')
     config.addLabel('edit-newspaper-article', 'Edit Newspaper Article')
 
-    config.addLabel('patent', 'Patent')
+    config.addLabel('_patent', 'Patent')
     config.addLabel('create-patent', 'Create Patent')
 
     // fields labels

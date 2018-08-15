@@ -32,7 +32,7 @@ export function convertCSLJSON (source) {
     // "musical_score"
     // "pamphlet"
     'paper-conference': 'conference-paper',
-    'patent': '_patent',
+    'patent': 'patent',
     // "post"
     // "post-weblog"
     // "personal_communication"

@@ -41,9 +41,9 @@ export default class FigureComponent extends NodeComponent {
         // TODO: Use a component that works on the ContainerModel rather than ContainerNode
         node: caption.getContainerNode(),
         disabled: this.props.disabled
-      })
+      }).ref('caption')
+      el.append(captionEl)
     }
-    el.append(captionEl.ref('caption'))
     return el
   }
 }

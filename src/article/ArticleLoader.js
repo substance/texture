@@ -21,8 +21,8 @@ export default {
     }
     let doc = result.doc
 
-    let jats = internal2jats(doc)
-    console.log(prettyPrintXML(jats))
+    // let jats = internal2jats(doc)
+    // console.log(prettyPrintXML(jats))
 
     let editorSession = new ArticleSession(doc, configurator)
     return editorSession

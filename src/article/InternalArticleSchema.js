@@ -76,6 +76,28 @@ Editors.schema = {
   _childNodes: CHILDREN('person')
 }
 
+class Figure extends DocumentNode {
+  getContent () {
+    return this.getDocument().get(this.content)
+  }
+  getCaption () {
+    return this.getDocument().get(this.caption)
+  }
+}
+Figure.schema = {
+  type: 'figure',
+  title: 'text',
+  content: { type: 'id', targetTypes: ['graphic'], default: null },
+  label: STRING,
+  caption: { type: 'caption', default: null }
+}
+
+class TableFigure extends Figure {}
+TableFigure.schema = {
+  type: 'table-figure',
+  content: { type: 'id', targetTypes: ['table'], default: null }
+}
+
 class Groups extends XMLElementNode {}
 Groups.schema = {
   type: 'groups',
@@ -457,6 +479,23 @@ TextTranslation.schema = {
   language: STRING
 }
 
+class Table extends XMLElementNode {}
+Table.schema = {
+  type: 'table',
+  _childNodes: CHILDREN('table-row')
+}
+
+class TableRow extends XMLElementNode {}
+TableRow.schema = {
+  type: 'table-row',
+  _childNodes: CHILDREN('table-cell')
+}
+
+class TableCell extends XMLTextElement {}
+TableCell.schema = {
+  type: 'table-cell'
+}
+
 class UnsupportedNode extends DocumentNode {}
 UnsupportedNode.schema = {
   type: 'unsupported-node',
@@ -495,14 +534,19 @@ InternalArticleSchema.addNodes([
   Keyword,
   Subject,
   // content
-  Content,
-  Front,
-  Title,
   Abstract,
-  Heading,
   Back,
-  References,
+  Content,
+  Figure,
   Footnotes,
+  Front,
+  Heading,
+  References,
+  Table,
+  TableFigure,
+  TableRow,
+  TableCell,
+  Title,
   // bibliography
   BibliographicEntry,
   Book,
@@ -531,9 +575,11 @@ InternalArticleSchema.addNodes([
 // TODO: make sure that we do not need to modify them, e.g. marking them as inline nodes
 InternalArticleSchema.addNodes([
   'body',
+  'caption',
   'fn',
-  'p',
+  'graphic',
   'label',
+  'p',
   'tex-math',
   // formatting
   'bold',

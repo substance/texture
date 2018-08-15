@@ -134,7 +134,7 @@ export default {
     config.addComponent('col', ElementNodeComponent)
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('fig', FigComponent)
+    config.addComponent('figure', FigComponent)
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)

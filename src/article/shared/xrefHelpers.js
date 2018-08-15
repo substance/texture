@@ -3,12 +3,12 @@ import { orderBy, includes, without } from 'substance'
 // left side: node type
 // right side: ref-type
 export const REF_TYPES = {
-  'fig': 'fig',
+  'figure': 'fig',
   'repro-fig': 'fig',
   'fig-group': 'fig',
   'fn': 'fn',
   'ref': 'bibr',
-  'table-wrap': 'table',
+  'table-figure': 'table',
   'table-wrap-group': 'table'
 }
 

@@ -1,7 +1,7 @@
 import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES_TO_JATS } from '../../ArticleConstants'
 import { getText, getSeparatedText, getHTML, getAttr } from '../util/domHelpers'
 
-export default class ReferenceConverter {
+export default class ElementCitationConverter {
   // Note: this will create different types according to the attributes in the JATS element
   get type () { return 'bibr' }
 

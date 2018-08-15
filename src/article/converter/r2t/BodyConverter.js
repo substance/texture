@@ -26,12 +26,12 @@ export default class BodyConverter {
       level
     })
     // ATTENTION: <sec-meta> is not supported
-    if (sec.find('sec-meta')) {
+    if (findChild(sec, 'sec-meta')) {
       console.error('<sec-meta> is not supported by <heading> right now.')
     }
     // mapping sec > label to heading[label]
     // TODO: is this really the way we want to do it?
-    let label = sec.find('label')
+    let label = findChild(sec, 'label')
     if (label) {
       h.attr('label', label.textContent)
       label.remove()

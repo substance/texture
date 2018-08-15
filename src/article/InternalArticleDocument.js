@@ -27,6 +27,13 @@ export default class InternalArticleDocument extends Document {
     return new TextureEditingInterface(this, { editing: new TextureEditing() })
   }
 
+  createElement (type, data) {
+    let nodeData = Object.assign({
+      type
+    }, data)
+    return this.create(nodeData)
+  }
+
   find (selector) {
     return this.get('article').find(selector)
   }

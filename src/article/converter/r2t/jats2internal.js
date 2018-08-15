@@ -6,7 +6,10 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
-import ReferenceConverter from './ElementCitationConverter'
+import FigConverter from './FigConverter'
+import ElementCitationConverter from './ElementCitationConverter'
+import TableConverter from './TableConverter'
+import TableWrapConverter from './TableWrapConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
@@ -93,8 +96,13 @@ function _createImporter (doc) {
   let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
   let converters = [
     new BodyConverter(),
-    HeadingConverter,
-    ReferenceConverter
+    // this is only used for import, because BodyConverter does an on-the-fly DOM transformation
+    // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
+    HeadingImporter,
+    new FigConverter(),
+    new TableWrapConverter(),
+    new TableConverter(),
+    new ElementCitationConverter()
   ].concat(jatsConverters)
   let jatsImporter = new _HybridJATSImporter({
     schema: InternalArticleSchema,
@@ -123,7 +131,7 @@ class _HybridJATSImporter extends XMLDocumentImporter {
 
 function _populateOrganisations (doc, jats) {
   const organisations = doc.get('organisations')
-  const affEls = jats.findAll('article-meta > aff')
+  const affEls = jats.findAll('article > front > article-meta > aff')
   affEls.forEach(el => {
     let org = {
       id: el.id,
@@ -219,7 +227,7 @@ function _getAwardIds (el) {
 
 function _populateAwards (doc, jats) {
   const awards = doc.get('awards')
-  const awardEls = jats.findAll('article-meta > funding-group > award-group')
+  const awardEls = jats.findAll('article > front > article-meta > funding-group > award-group')
   awardEls.forEach(el => {
     let award = {
       id: el.id,
@@ -233,7 +241,7 @@ function _populateAwards (doc, jats) {
 }
 
 function _populateArticleRecord (doc, jats) {
-  let articleMetaEl = jats.find('article-meta')
+  let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
   Object.assign(articleRecord, {
     elocationId: getText(articleMetaEl, 'elocation-id'),
@@ -270,7 +278,7 @@ function _extractDate (el) {
 
 function _populateKeywords (doc, jats) {
   let keywords = doc.get('keywords')
-  let kwdEls = jats.findAll('article-meta > kwd-group > kwd')
+  let kwdEls = jats.findAll('article > front > article-meta > kwd-group > kwd')
   kwdEls.forEach(kwdEl => {
     const kwd = {
       type: 'keyword',
@@ -288,7 +296,7 @@ function _populateSubjects (doc, jats) {
   // This implementation assumes that subjects are flat.
   // To support translations, multiple subj-groups can be provided with different xml:lang
   let subjects = doc.get('subjects')
-  let subjGroups = jats.findAll('article-meta > article-categories > subj-group')
+  let subjGroups = jats.findAll('article > front > article-meta > article-categories > subj-group')
   // TODO: get this from the article element
   const DEFAULT_LANG = 'en'
   for (let subjGroup of subjGroups) {
@@ -343,7 +351,7 @@ function _populateBody (doc, jats, jatsImporter) {
 }
 
 function _populateFootnotes (doc, jats, jatsImporter) {
-  let fnEls = jats.findAll('back > fn-group > fn')
+  let fnEls = jats.findAll('article > back > fn-group > fn')
   let footnotes = doc.get('footnotes')
   fnEls.forEach(fnEl => {
     footnotes.append(jatsImporter.convertElement(fnEl))
@@ -362,15 +370,12 @@ function _populateReferences (doc, jats, jatsImporter) {
   }
 }
 
-const HeadingConverter = {
+const HeadingImporter = {
   type: 'heading',
   tagName: 'heading',
   import (el, node, importer) {
     // Note: attributes are converted automatically
     node.content = importer.annotatedText(el, [node.id, 'content'])
-  },
-  export (node, el, exporter) {
-    console.error('FIXME: implement HeadingConverter.export()')
   }
 }
 

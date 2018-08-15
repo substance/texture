@@ -1,7 +1,9 @@
 export function getLabel (node) {
+  let label = node.label
   if (node && node.state) {
-    return node.state.label
+    label = node.state.label || label
   }
+  return label
 }
 
 export function getPos (node) {

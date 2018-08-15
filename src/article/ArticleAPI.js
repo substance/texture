@@ -111,67 +111,8 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
-  addAuthor (person = {}) {
-    this._addPerson(person, 'authors')
-  }
-
-  addEditor (person = {}) {
-    this._addPerson(person, 'editors')
-  }
-
-  _addPerson (person = {}, type) {
-    const newNode = Object.assign({}, person, {
-      type: 'person'
-    })
-    let node
-    this.articleSession.transaction(tx => {
-      node = tx.create(newNode)
-      const articleRecord = tx.get('article-record')
-      let length = articleRecord[type].length
-      tx.update(['article-record', type], { type: 'insert', pos: length, value: node.id })
-      tx.selection = null
-    })
-    return this.getModel(node.type, node)
-  }
-
-  getAuthors () {
-    return this._getPersons('authors')
-  }
-
   getAuthorsModel () {
     return this.getModel('authors')
-  }
-
-  getEditors () {
-    return this._getPersons('editors')
-  }
-
-  _getPersons (prop) {
-    // TODO: authors and editors are now in article/metadata/authors and article/metadata/editors
-    return []
-  }
-
-  deleteAuthor (personId) {
-    return this._deletePerson(personId, 'authors')
-  }
-
-  deleteEditor (personId) {
-    return this._deletePerson(personId, 'editors')
-  }
-
-  _deletePerson (personId, type) {
-    // FIXME: persons are now in a different place
-    // let node
-    // this.articleSession.transaction((tx) => {
-    //   node = tx.delete(personId)
-    //   const articleRecord = tx.get('article-record')
-    //   let pos = articleRecord[type].indexOf(personId)
-    //   if (pos !== -1) {
-    //     tx.update(['article-record', type], { type: 'delete', pos: pos })
-    //   }
-    //   tx.selection = null
-    // })
-    // return this.getModel(node.type, node)
   }
 
   addReferences (refs) {

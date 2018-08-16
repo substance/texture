@@ -33,12 +33,22 @@ ArticleRecord.schema = {
   revRequestedDate: STRING
 }
 
-class TranslatableTextElement extends XMLTextElement {}
+class TranslatableTextElement extends XMLTextElement {
+  getTranslations () {
+    const doc = this.getDocument()
+    return this.translations.map(id => doc.get(id)).filter(Boolean)
+  }
+}
 TranslatableTextElement.schema = {
   translations: CHILDREN('text-translation')
 }
 
-class TranslatableContainerElement extends XMLContainerNode {}
+class TranslatableContainerElement extends XMLContainerNode {
+  getTranslations () {
+    const doc = this.getDocument()
+    return this.translations.map(id => doc.get(id)).filter(Boolean)
+  }
+}
 TranslatableContainerElement.schema = {
   translations: CHILDREN('container-translation')
 }
@@ -475,7 +485,6 @@ ContainerTranslation.schema = {
 class TextTranslation extends XMLTextElement {}
 TextTranslation.schema = {
   type: 'text-translation',
-  content: STRING,
   language: STRING
 }
 

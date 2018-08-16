@@ -11,10 +11,13 @@ export default class FigConverter {
     let labelEl = findChild(el, 'label')
     let contentEl = this._getContent(el)
     let captionEl = findChild(el, 'caption')
-
     // Preparations:
     if (!captionEl) {
       captionEl = $$('caption')
+    }
+    let titleEl = findChild(captionEl, 'title')
+    if (!titleEl) {
+      titleEl = $$('title')
     }
     // drop everything than 'p' from caption
     let captionContent = captionEl.children
@@ -27,10 +30,6 @@ export default class FigConverter {
     // there must be at least one paragraph
     if (!captionEl.find('p')) {
       captionEl.append($$('p'))
-    }
-    let titleEl = findChild(captionEl, 'title')
-    if (!titleEl) {
-      titleEl = $$('title')
     }
 
     // Conversion

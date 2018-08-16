@@ -319,11 +319,21 @@ function _populateSubjects (doc, jats) {
 }
 
 function _populateTitle (doc, jats, jatsImporter) {
+  let title = doc.get('title')
   let titleEl = jats.find('article > front > article-meta > title-group > article-title')
   if (titleEl) {
-    let title = doc.get('title')
     _convertAnnotatedText(jatsImporter, titleEl, title)
   }
+  // translations
+  let titleTranslations = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
+  let translationIds = titleTranslations.map(transTitleEl => {
+    let group = transTitleEl.parentNode
+    let language = group.attr('xml:lang')
+    let translation = doc.create({ type: 'text-translation', id: transTitleEl.id, language })
+    _convertAnnotatedText(jatsImporter, transTitleEl, translation)
+    return translation.id
+  })
+  doc.set(['title', 'translations'], translationIds)
 }
 
 function _populateAbstract (doc, jats, jatsImporter) {
@@ -340,6 +350,22 @@ function _populateAbstract (doc, jats, jatsImporter) {
       abstract.append(jatsImporter.convertElement(el))
     })
   }
+  // translations
+  let transAbstractEls = jats.findAll('article > front > article-meta > trans-abstract')
+  let translationIds = transAbstractEls.map(transAbstractEl => {
+    let language = transAbstractEl.attr('xml:lang')
+    let _childNodes = transAbstractEl.getChildren().map(child => {
+      return jatsImporter.convertElement(child).id
+    })
+    let translation = doc.create({
+      type: 'container-translation',
+      id: transAbstractEl.id,
+      language,
+      _childNodes
+    })
+    return translation.id
+  })
+  doc.set(['abstract', 'translations'], translationIds)
 }
 
 function _populateBody (doc, jats, jatsImporter) {
@@ -386,10 +412,12 @@ const HeadingImporter = {
 // Helpers
 
 function _convertAnnotatedText (jatsImporter, el, textNode) {
+  const doc = jatsImporter.state.doc
   // NOTE: this is a bit difficult but necessary
   // The importer maintains a stack of 'scopes' to deal with recursive calls
   // triggered by converters for nesteded element (annotations and inline nodes)
   jatsImporter.state.pushContext(el.tagName)
   textNode.content = jatsImporter.annotatedText(el, textNode.getPath())
-  jatsImporter.state.popContext()
+  let context = jatsImporter.state.popContext()
+  context.annos.forEach(nodeData => doc.create(nodeData))
 }

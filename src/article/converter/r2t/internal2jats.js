@@ -149,9 +149,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   articleMeta.append(_exportSubjects(jats, doc))
 
   // title-group?
-  let titleGroup = jats.createElement('title-group')
-  articleMeta.append(titleGroup)
-  _populateTitleGroup(jats, doc, titleGroup, jatsExporter)
+  articleMeta.append(_exportTitleGroup(jats, doc, jatsExporter))
 
   // contrib-group*
   ;[
@@ -220,7 +218,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
 
   // abstract?,
   articleMeta.append(
-    _extractAbstract(jats, doc, jatsExporter)
+    _exportAbstract(jats, doc, jatsExporter)
   )
 
   // trans-abstract*, // not yet supported
@@ -277,12 +275,29 @@ function _exportSubjects (jats, doc) {
   return articleCategories
 }
 
-function _populateTitleGroup (jats, doc, titleGroup, jatsExporter) {
+function _exportTitleGroup (jats, doc, jatsExporter) {
+  let $$ = jats.$$
   // ATTENTION: ATM only one, *the* title is supported
   // Potentially there are sub-titles, and JATS even supports more titles beyond this (e.g. for special purposes)
-  let articleTitle = jats.createElement('article-title')
-  _exportAnnotatedText(jatsExporter, doc.get('title').getPath(), articleTitle)
-  titleGroup.append(articleTitle)
+  let title = doc.get('title')
+  let titleGroupEl = $$('title-group')
+  let articleTitle = $$('article-title')
+  _exportAnnotatedText(jatsExporter, title.getPath(), articleTitle)
+  titleGroupEl.append(articleTitle)
+
+  // translations
+  titleGroupEl.append(
+    title.getTranslations().map(translation => {
+      return $$('trans-title-group').attr({ 'xml:lang': translation.language })
+        .append(
+          $$('trans-title').attr({ id: translation.id }).append(
+            jatsExporter.annotatedText(translation.getPath())
+          )
+        )
+    })
+  )
+
+  return titleGroupEl
 }
 
 function _exportContribGroup (jats, doc, personCollection, type) {
@@ -498,14 +513,20 @@ function _createTextElement ($$, text, tagName, attrs) {
  * @param {Document} doc the document to convert from
  * @param {XMLExporter} jatsExporter an exporter instance used to export nested nodes
  */
-function _extractAbstract (jats, doc, jatsExporter) {
+function _exportAbstract (jats, doc, jatsExporter) {
   const $$ = jats.$$
-  let abstractEl = $$('abstract')
   let abstract = doc.get('abstract')
+  let abstractEl = $$('abstract')
   abstract.getChildren().forEach(p => {
     abstractEl.append(jatsExporter.convertNode(p))
   })
-  return abstractEl
+  let transAbstractEls = abstract.getTranslations().map(translation => {
+    return $$('trans-abstract').attr({ id: translation.id, 'xml:lang': translation.language })
+      .append(
+        translation.getChildren().map(child => jatsExporter.convertNode(child))
+      )
+  })
+  return [abstractEl].concat(transAbstractEls)
 }
 
 function _exportKeywords (jats, doc) {

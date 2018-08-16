@@ -10,6 +10,7 @@ export default class XrefConverter {
   }
 
   export (node, el, exporter) {
+    el.attr(node.attributes)
     let label = getLabel(node)
     if (label) {
       el.text(label)

@@ -21,7 +21,7 @@ export default class DispQuoteConverter {
     let children = node.getChildren()
     el.append(
       children.map(child => {
-        exporter.convertNode(child)
+        return exporter.convertNode(child)
       })
     )
     if (node.attrib) {

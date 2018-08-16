@@ -12,34 +12,34 @@ export default class FigComponent extends NodeComponent {
     let labelEl = $$('div').addClass('se-label').text(label)
     el.append(labelEl)
 
-    const figType = this._getContentType()
-    const content = node.findChild(figType)
+    const content = node.getContent()
     let contentEl
     if (content) {
-      contentEl = $$(this.getComponent(figType), {
+      contentEl = $$(this.getComponent(content.type), {
         node: content,
         disabled: this.props.disabled
       })
       el.append(contentEl.ref('content'))
     }
 
-    const title = node.findChild('title')
     let titleEl = $$(this.getComponent('text-property-editor'), {
       placeholder: 'Enter Title',
-      path: title.getPath(),
+      path: [node.id, 'title'],
       disabled: this.props.disabled
     }).addClass('se-title').ref('title')
     el.append(titleEl)
 
-    const caption = node.findChild('caption')
+    // TODO: we need a ContainerEditor that can be configured using a path
+    const caption = node.getCaption()
     let captionEl
     if (caption) {
-      captionEl = $$(this.getComponent('caption'), {
+      captionEl = $$(this.getComponent('container-editor'), {
+        placeholder: 'Enter Caption',
         node: caption,
         disabled: this.props.disabled
-      })
+      }).ref('caption')
+      el.append(captionEl)
     }
-    el.append(captionEl.ref('caption'))
     return el
   }
 

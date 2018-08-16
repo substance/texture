@@ -277,12 +277,8 @@ function _shouldDisplayDeprecatedWarning () {
 }
 
 function _getCaller (level) {
-  try {
-    throw new Error()
-  } catch (err) {
-    let stack = err.stack
-    let lines = stack.split(/\n/)
-    let line = lines[2 + level]
-    return line
-  }
+  let stack = new Error().stack
+  let lines = stack.split(/\n/)
+  let line = lines[2 + level]
+  return line
 }

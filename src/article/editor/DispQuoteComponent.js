@@ -1,24 +1,24 @@
-import { Component, TextPropertyEditor } from 'substance'
+import { Component } from 'substance'
 
-export default class DispQuote extends Component {
+export default class DispQuoteComponent extends Component {
   render ($$) {
     const node = this.props.node
-    let quoteContent = node.find('disp-quote-content')
-    let attribContent = node.find('attrib')
+    const ContainerEditor = this.getComponent('container-editor')
+    const TextPropertyEditor = this.getComponent('text-property-editor')
 
     let el = $$('div')
       .addClass('sc-disp-quote')
       .attr('data-id', node.id)
 
-    let quoteContentEl = $$(this.getComponent('container'), {
-      node: quoteContent,
-      disabled: this.props.disabled,
-      placeholder: 'Blockquote'
+    let quoteContentEl = $$(ContainerEditor, {
+      placeholder: 'Enter Blockquote',
+      node,
+      disabled: this.props.disabled
     }).ref('editor')
 
     let attribContentEl = $$(TextPropertyEditor, {
       placeholder: 'Enter attribution',
-      path: attribContent.getPath(),
+      path: [node.id, 'attrib'],
       disabled: this.props.disabled
     }).addClass('se-attribution')
 
@@ -26,7 +26,6 @@ export default class DispQuote extends Component {
       quoteContentEl,
       attribContentEl
     )
-
     return el
   }
 }

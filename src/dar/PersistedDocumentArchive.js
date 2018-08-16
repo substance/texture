@@ -168,7 +168,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // no-op
   }
 
-  save () {
+  save (cb) {
     // HACK: we skip checking if there are pending changes,
     // because of some restructuring buffer.hasPendingChanges() is not working atm
     // if (!this.buffer.hasPendingChanges()) {
@@ -176,8 +176,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     //   return Promise.resolve()
     // }
     this.buffer._isDirty['manuscript'] = true
-    let result = this._save(this._archiveId)
-    return result
+    this._save(this._archiveId, cb)
   }
 
   /*
@@ -187,9 +186,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
     2. save: perform a regular save using user buffer (over new archive, including pending
        documents and blobs)
   */
-  saveAs (newArchiveId) {
-    return this.storage.clone(this._archiveId, newArchiveId).then(() => {
-      return this._save(newArchiveId)
+  saveAs (newArchiveId, cb) {
+    this.storage.clone(this._archiveId, newArchiveId, (err) => {
+      if (err) return cb(err)
+      this._save(newArchiveId, cb)
     })
   }
 
@@ -225,7 +225,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   /*
     Create a raw archive for upload from the changed resources.
   */
-  _save (archiveId) {
+  _save (archiveId, cb) {
     const buffer = this.buffer
     const storage = this.storage
     const sessions = this._sessions
@@ -238,7 +238,9 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // sync has succeeded or failed, e.g. we could use a second buffer in the meantime
     // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
     // a slower persisted buffer
-    return storage.write(archiveId, rawArchive).then(res => {
+    storage.write(archiveId, rawArchive, (err, res) => {
+      if (err) return cb(err)
+
       // TODO: if successful we should receive the new version as response
       // and then we can reset the buffer
       res = JSON.parse(res)
@@ -247,8 +249,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId
-    }).catch(err => {
-      console.error('Saving failed.', err)
+
+      cb()
     })
   }
 

@@ -27,7 +27,7 @@ const REQUIRED_PROPERTIES = {
     'containerTitle': true,
     'authors': true
   },
-  '_patent': {
+  'patent': {
     'title': true,
     'containerTitle': true,
     'inventors': true
@@ -79,7 +79,7 @@ const REQUIRED_PROPERTIES = {
   'keyword': {
     'name': true
   },
-  '_subject': {
+  'subject': {
     'name': true
   },
   'article-record': {

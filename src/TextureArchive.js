@@ -112,12 +112,16 @@ export default class TextureArchive extends PersistedDocumentArchive {
   _exportDocument (type, session, sessions) { // eslint-disable-line no-unused-vars
     switch (type) {
       case 'article': {
-        let jatsExporter = new JATSExporter()
+        let exporter = new JATSExporter()
         let doc = session.getDocument()
-        let dom = doc.toXML()
-        let res = jatsExporter.export(dom, { doc, session })
-        console.info('saving jats', res.dom.getNativeElement())
-        let xmlStr = prettyPrintXML(res.dom)
+        let res = exporter.export(doc)
+        // TODO: we need a way to report this problem, i.e. make us at least aware of it
+        // if (!res.ok) {
+        //   throw new Error('FIXME: generated XML is not JATS compliant!')
+        // }
+        let jats = res.jats
+        console.info('saving jats', jats.getNativeElement())
+        let xmlStr = prettyPrintXML(jats)
         return xmlStr
       }
       default:

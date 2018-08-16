@@ -6,7 +6,14 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
 import BodyConverter from './BodyConverter'
-import ReferenceConverter from './ReferenceConverter'
+import DispQuoteConverter from './DispQuoteConverter'
+import FigConverter from './FigConverter'
+import ElementCitationConverter from './ElementCitationConverter'
+import ListConverter from './ListConverter'
+import TableConverter from './TableConverter'
+import TableWrapConverter from './TableWrapConverter'
+import UnsupportedNodeConverter from './UnsupportedNodeConverter'
+import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -91,8 +98,15 @@ function _createImporter (doc) {
   let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
   let converters = [
     new BodyConverter(),
-    HeadingConverter,
-    ReferenceConverter
+    // this is only used for import, because BodyConverter does an on-the-fly DOM transformation
+    // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
+    HeadingImporter,
+    new DispQuoteConverter(),
+    new FigConverter(),
+    new ListConverter(),
+    new TableWrapConverter(),
+    new TableConverter(),
+    new ElementCitationConverter()
   ].concat(jatsConverters)
   let jatsImporter = new _HybridJATSImporter({
     schema: InternalArticleSchema,
@@ -121,7 +135,7 @@ class _HybridJATSImporter extends XMLDocumentImporter {
 
 function _populateOrganisations (doc, jats) {
   const organisations = doc.get('organisations')
-  const affEls = jats.findAll('article-meta > aff')
+  const affEls = jats.findAll('article > front > article-meta > aff')
   affEls.forEach(el => {
     let org = {
       id: el.id,
@@ -158,7 +172,7 @@ function _populateEditors (doc, jats) {
 }
 
 function _populateContribs (doc, jats, contribs, contribEls, groupId) {
-  contribEls.forEach(contribEl => {
+  for (let contribEl of contribEls) {
     if (contribEl.attr('contrib-type') === 'group') {
       // ATTENTION: groups are defined 'inplace'
       // the members of the group are appended to the list of persons
@@ -178,21 +192,24 @@ function _populateContribs (doc, jats, contribs, contribEls, groupId) {
       let memberEls = contribEl.findAll('contrib')
       _populateContribs(doc, jats, contribs, memberEls, group.id)
     } else {
-      contribs.append(doc.create({
-        type: 'person',
-        givenNames: getText(contribEl, 'given-names'),
-        surname: getText(contribEl, 'surname'),
-        email: getText(contribEl, 'email'),
-        prefix: getText(contribEl, 'prefix'),
-        suffix: getText(contribEl, 'suffix'),
-        affiliations: _getAffiliationIds(contribEl),
-        awards: _getAwardIds(contribEl),
-        equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
-        corresp: contribEl.getAttribute('corresp') === 'yes',
-        deceased: contribEl.getAttribute('deceased') === 'yes'
-      }))
+      contribs.append(
+        doc.create({
+          type: 'person',
+          givenNames: getText(contribEl, 'given-names'),
+          surname: getText(contribEl, 'surname'),
+          email: getText(contribEl, 'email'),
+          prefix: getText(contribEl, 'prefix'),
+          suffix: getText(contribEl, 'suffix'),
+          affiliations: _getAffiliationIds(contribEl),
+          awards: _getAwardIds(contribEl),
+          equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
+          corresp: contribEl.getAttribute('corresp') === 'yes',
+          deceased: contribEl.getAttribute('deceased') === 'yes',
+          group: groupId
+        })
+      )
     }
-  })
+  }
 }
 
 function _getAffiliationIds (el, isGroup) {
@@ -214,8 +231,7 @@ function _getAwardIds (el) {
 
 function _populateAwards (doc, jats) {
   const awards = doc.get('awards')
-  const awardEls = jats.findAll('article-meta > funding-group > award-group')
-  // Convert <award-group> elements to award entities
+  const awardEls = jats.findAll('article > front > article-meta > funding-group > award-group')
   awardEls.forEach(el => {
     let award = {
       id: el.id,
@@ -229,7 +245,7 @@ function _populateAwards (doc, jats) {
 }
 
 function _populateArticleRecord (doc, jats) {
-  let articleMetaEl = jats.find('article-meta')
+  let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
   Object.assign(articleRecord, {
     elocationId: getText(articleMetaEl, 'elocation-id'),
@@ -266,7 +282,7 @@ function _extractDate (el) {
 
 function _populateKeywords (doc, jats) {
   let keywords = doc.get('keywords')
-  let kwdEls = jats.findAll('article-meta > kwd-group > kwd')
+  let kwdEls = jats.findAll('article > front > article-meta > kwd-group > kwd')
   kwdEls.forEach(kwdEl => {
     const kwd = {
       type: 'keyword',
@@ -279,26 +295,45 @@ function _populateKeywords (doc, jats) {
 }
 
 function _populateSubjects (doc, jats) {
+  // TODO: IMO we need to consolidate this. The original meaning of <subj-group> seems to be
+  // to be able to define an ontology, also hierarchically
+  // This implementation assumes that subjects are flat.
+  // To support translations, multiple subj-groups can be provided with different xml:lang
   let subjects = doc.get('subjects')
-  let subjectEls = jats.findAll('article-meta > article-categories > subj-group > subject')
-  subjectEls.forEach(subjectEl => {
-    const subject = {
-      // HACK: trying to merge EntitDb into Article model, avoiding type collision
-      type: '_subject',
-      name: subjectEl.textContent,
-      category: subjectEl.getAttribute('content-type'),
-      language: subjectEl.getParent().getAttribute('xml:lang')
+  let subjGroups = jats.findAll('article > front > article-meta > article-categories > subj-group')
+  // TODO: get this from the article element
+  const DEFAULT_LANG = 'en'
+  for (let subjGroup of subjGroups) {
+    let language = subjGroup.attr('xml:lang') || DEFAULT_LANG
+    let subjectEls = subjGroup.findAll('subject')
+    for (let subjectEl of subjectEls) {
+      const subject = {
+        type: 'subject',
+        name: subjectEl.textContent,
+        category: subjectEl.getAttribute('content-type'),
+        language
+      }
+      subjects.append(doc.create(subject))
     }
-    subjects.append(doc.create(subject))
-  })
+  }
 }
 
 function _populateTitle (doc, jats, jatsImporter) {
+  let title = doc.get('title')
   let titleEl = jats.find('article > front > article-meta > title-group > article-title')
   if (titleEl) {
-    let title = doc.get('title')
     _convertAnnotatedText(jatsImporter, titleEl, title)
   }
+  // translations
+  let titleTranslations = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
+  let translationIds = titleTranslations.map(transTitleEl => {
+    let group = transTitleEl.parentNode
+    let language = group.attr('xml:lang')
+    let translation = doc.create({ type: 'text-translation', id: transTitleEl.id, language })
+    _convertAnnotatedText(jatsImporter, transTitleEl, translation)
+    return translation.id
+  })
+  doc.set(['title', 'translations'], translationIds)
 }
 
 function _populateAbstract (doc, jats, jatsImporter) {
@@ -315,6 +350,22 @@ function _populateAbstract (doc, jats, jatsImporter) {
       abstract.append(jatsImporter.convertElement(el))
     })
   }
+  // translations
+  let transAbstractEls = jats.findAll('article > front > article-meta > trans-abstract')
+  let translationIds = transAbstractEls.map(transAbstractEl => {
+    let language = transAbstractEl.attr('xml:lang')
+    let _childNodes = transAbstractEl.getChildren().map(child => {
+      return jatsImporter.convertElement(child).id
+    })
+    let translation = doc.create({
+      type: 'container-translation',
+      id: transAbstractEl.id,
+      language,
+      _childNodes
+    })
+    return translation.id
+  })
+  doc.set(['abstract', 'translations'], translationIds)
 }
 
 function _populateBody (doc, jats, jatsImporter) {
@@ -330,7 +381,7 @@ function _populateBody (doc, jats, jatsImporter) {
 }
 
 function _populateFootnotes (doc, jats, jatsImporter) {
-  let fnEls = jats.findAll('back > fn-group > fn')
+  let fnEls = jats.findAll('article > back > fn-group > fn')
   let footnotes = doc.get('footnotes')
   fnEls.forEach(fnEl => {
     footnotes.append(jatsImporter.convertElement(fnEl))
@@ -349,47 +400,24 @@ function _populateReferences (doc, jats, jatsImporter) {
   }
 }
 
-// Customized Element converters
-
-const UnsupportedNodeConverter = {
-  type: 'unsupported-node',
-  matchElement (el) {
-    return false
-  },
-  import (el, node, converter) {
-    node.data = el.serialize()
-  }
-}
-
-const UnsupportedInlineNodeConverter = {
-  type: '@unsupported-inline-node',
-  matchElement (el) {
-    return false
-  },
-  import (el, node, converter) {
-    node.data = el.serialize()
-  }
-}
-
-const HeadingConverter = {
+const HeadingImporter = {
   type: 'heading',
   tagName: 'heading',
   import (el, node, importer) {
     // Note: attributes are converted automatically
     node.content = importer.annotatedText(el, [node.id, 'content'])
-  },
-  export (node, el, exporter) {
-    console.error('FIXME: implement HeadingConverter.export()')
   }
 }
 
 // Helpers
 
 function _convertAnnotatedText (jatsImporter, el, textNode) {
+  const doc = jatsImporter.state.doc
   // NOTE: this is a bit difficult but necessary
   // The importer maintains a stack of 'scopes' to deal with recursive calls
   // triggered by converters for nesteded element (annotations and inline nodes)
   jatsImporter.state.pushContext(el.tagName)
   textNode.content = jatsImporter.annotatedText(el, textNode.getPath())
-  jatsImporter.state.popContext()
+  let context = jatsImporter.state.popContext()
+  context.annos.forEach(nodeData => doc.create(nodeData))
 }

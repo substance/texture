@@ -25,7 +25,12 @@ export default class EditXRefTool extends ToggleTool {
 
   _renderPreview ($$, target) {
     let TargetComponent = getComponentForModel(this.context, target)
-    return $$(TargetComponent, { model: target, mode: 'preview' })
+    return $$(TargetComponent, {
+      model: target,
+      mode: 'preview',
+      // LEGACY:
+      node: target._node
+    })
   }
 
   _getModel () {

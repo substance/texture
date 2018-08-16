@@ -6,6 +6,6 @@ export default class SubjectCollectionModel extends DefaultCollectionModel {
   }
 
   _getCollectionType () {
-    return '_subject'
+    return 'subject'
   }
 }

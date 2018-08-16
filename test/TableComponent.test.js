@@ -1,7 +1,7 @@
 import { keys } from 'substance'
 import {
   TextureConfigurator, ArticlePackage,
-  TextureDocument, ArticleEditorSession,
+  InternalArticleDocument, ArticleEditorSession,
   TableComponent, tableHelpers, TableEditing
 } from '../index'
 import { createEditorContext } from '../src/kit'
@@ -141,21 +141,7 @@ function _setup (t) {
 }
 
 function _createEmptyTextureArticle (configurator) {
-  let doc = new TextureDocument(configurator.getSchema())
-  doc.$$ = doc.createElement.bind(doc)
-  const $$ = doc.$$
-  $$('article', { id: 'article' }).append(
-    $$('front').append(
-      $$('article-meta').append(
-        $$('title-group').append(
-          $$('article-title')
-        ),
-        $$('abstract')
-      )
-    ),
-    $$('body'),
-    $$('back')
-  )
+  let doc = InternalArticleDocument.createEmptyArticle(configurator.getSchema())
   return doc
 }
 

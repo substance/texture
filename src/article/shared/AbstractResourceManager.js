@@ -1,4 +1,4 @@
-import { DocumentChange, array2table, isArrayEqual } from 'substance'
+import { array2table, isArrayEqual } from 'substance'
 import { XREF_TARGET_TYPES } from './xrefHelpers'
 
 /*
@@ -99,6 +99,8 @@ export default class AbstractResourceManager {
   _updateLabels () {
     const doc = this._getDocument()
 
+    let stateUpdates = []
+
     let resources = this._getResourcesFromDocument()
     let resourcesById = {}
     let order = {}
@@ -107,11 +109,7 @@ export default class AbstractResourceManager {
       resourcesById[res.id] = res
       order[res.id] = pos
       let label = this.labelGenerator.getLabel([pos])
-      if (!res.state) {
-        res.state = {}
-      }
-      res.state.label = label
-      res.state.pos = pos
+      stateUpdates.push([res.id, { label, pos }])
       pos++
     })
 
@@ -135,22 +133,12 @@ export default class AbstractResourceManager {
       if (isInvalid) numbers = []
       xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
     })
-
-    // Now update the node state of all affected xref[ref-type='bibr']
-    // TODO: we need a node state API
-    // provided via editor session
-    let change = new DocumentChange([], {}, {})
-    change._extractInformation()
+    // also update the state of the xrefs
     xrefs.forEach((xref) => {
       const label = xrefLabels[xref.id]
-      if (!xref.state) {
-        xref.state = {}
-      }
-      xref.state.label = label
-      change.updated[xref.id] = true
+      stateUpdates.push([xref.id, { label }])
     })
-    resources.forEach((res) => {
-      change.updated[res.id] = true
-    })
+
+    this.documentSession.updateNodeStates(stateUpdates)
   }
 }

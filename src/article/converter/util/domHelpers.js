@@ -61,7 +61,7 @@ export function findChild (el, cssSelector) {
   }
 }
 
-export function findAllChilds (el, cssSelector) {
+export function findAllChildren (el, cssSelector) {
   const children = el.getChildren()
   let result = []
   for (let i = 0; i < children.length; i++) {

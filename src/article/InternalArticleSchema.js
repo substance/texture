@@ -7,16 +7,9 @@ import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
 import TextureArticleSchema from './TextureArticle'
-
-/*
-  TODO: we want to move away from a JATS oriented internal model.
-
-  The internal model structures the data in different categories: content vs metadata.
-  It is a challenge to define the boundary between these two categories.
-  Here are some criteria:
-  - Is the content displayed in a classical manuscript?
-  - May the content contain citations, or references to other displayed elements?
-*/
+import TableElementNode from './TableElementNode'
+import ListNode from './XMLListNode'
+import ListItemNode from './XMLListItemNode'
 
 class Article extends XMLElementNode {}
 Article.schema = {
@@ -40,12 +33,22 @@ ArticleRecord.schema = {
   revRequestedDate: STRING
 }
 
-class TranslatableTextElement extends XMLTextElement {}
+class TranslatableTextElement extends XMLTextElement {
+  getTranslations () {
+    const doc = this.getDocument()
+    return this.translations.map(id => doc.get(id)).filter(Boolean)
+  }
+}
 TranslatableTextElement.schema = {
   translations: CHILDREN('text-translation')
 }
 
-class TranslatableContainerElement extends XMLContainerNode {}
+class TranslatableContainerElement extends XMLContainerNode {
+  getTranslations () {
+    const doc = this.getDocument()
+    return this.translations.map(id => doc.get(id)).filter(Boolean)
+  }
+}
 TranslatableContainerElement.schema = {
   translations: CHILDREN('container-translation')
 }
@@ -74,6 +77,35 @@ class Editors extends XMLElementNode {}
 Editors.schema = {
   type: 'editors',
   _childNodes: CHILDREN('person')
+}
+
+class DispQuote extends XMLContainerNode {}
+DispQuote.schema = {
+  type: 'disp-quote',
+  attrib: 'text',
+  _childNodes: CHILDREN('p')
+}
+
+class Figure extends DocumentNode {
+  getContent () {
+    return this.getDocument().get(this.content)
+  }
+  getCaption () {
+    return this.getDocument().get(this.caption)
+  }
+}
+Figure.schema = {
+  type: 'figure',
+  title: 'text',
+  content: { type: 'id', targetTypes: ['graphic'], default: null },
+  label: STRING,
+  caption: { type: 'caption', default: null }
+}
+
+class TableFigure extends Figure {}
+TableFigure.schema = {
+  type: 'table-figure',
+  content: { type: 'id', targetTypes: ['table'], default: null }
 }
 
 class Groups extends XMLElementNode {}
@@ -126,7 +158,14 @@ Title.type = 'title'
 class Abstract extends TranslatableContainerElement {}
 Abstract.type = 'abstract'
 
-class Heading extends XMLTextElement {}
+class Heading extends XMLTextElement {
+  getLevel () {
+    return parseInt(this.getAttribute('level') || '1', 10)
+  }
+  setLevel (level) {
+    this.setAttribute('level', String(level))
+  }
+}
 Heading.type = 'heading'
 
 class References extends XMLElementNode {}
@@ -283,8 +322,7 @@ NewspaperArticle.schema = {
 
 class Patent extends BibliographicEntry {}
 Patent.schema = {
-  // HACK: trying to merge EntitDb into Article model, avoiding type collision
-  type: '_patent',
+  type: 'patent',
   inventors: CHILDREN('ref-contrib'),
   assignee: STRING,
   title: STRING,
@@ -432,8 +470,7 @@ Organisation.schema = {
 
 class Subject extends DocumentNode {}
 Subject.schema = {
-  // HACK: trying to merge EntitDb into Article model, avoiding type collision
-  type: '_subject',
+  type: 'subject',
   name: STRING,
   category: STRING,
   language: STRING
@@ -448,8 +485,24 @@ ContainerTranslation.schema = {
 class TextTranslation extends XMLTextElement {}
 TextTranslation.schema = {
   type: 'text-translation',
-  content: STRING,
   language: STRING
+}
+
+class Table extends TableElementNode {}
+Table.schema = {
+  type: 'table',
+  _childNodes: CHILDREN('table-row')
+}
+
+class TableRow extends XMLElementNode {}
+TableRow.schema = {
+  type: 'table-row',
+  _childNodes: CHILDREN('table-cell')
+}
+
+class TableCell extends XMLTextElement {}
+TableCell.schema = {
+  type: 'table-cell'
 }
 
 class UnsupportedNode extends DocumentNode {}
@@ -467,7 +520,10 @@ UnsupportedInlineNode.schema = {
 const InternalArticleSchema = new DocumentSchema({
   name: 'TextureInternalArticle',
   version: '0.1.0',
-  DocumentClass: InternalArticleDocument
+  DocumentClass: InternalArticleDocument,
+  // HACK: still necessary
+  // Instead we should find a general way
+  defaultTextType: 'p'
 })
 
 InternalArticleSchema.addNodes([
@@ -490,14 +546,22 @@ InternalArticleSchema.addNodes([
   Keyword,
   Subject,
   // content
-  Content,
-  Front,
-  Title,
   Abstract,
-  Heading,
   Back,
-  References,
+  Content,
+  DispQuote,
+  Figure,
   Footnotes,
+  Front,
+  Heading,
+  ListNode,
+  ListItemNode,
+  References,
+  Table,
+  TableFigure,
+  TableRow,
+  TableCell,
+  Title,
   // bibliography
   BibliographicEntry,
   Book,
@@ -526,9 +590,11 @@ InternalArticleSchema.addNodes([
 // TODO: make sure that we do not need to modify them, e.g. marking them as inline nodes
 InternalArticleSchema.addNodes([
   'body',
+  'caption',
   'fn',
-  'p',
+  'graphic',
   'label',
+  'p',
   'tex-math',
   // formatting
   'bold',

@@ -40,7 +40,7 @@ export const JATS_BIBR_TYPES_TO_INTERNAL = {
   'chapter': 'chapter',
   'confproc': 'conference-paper',
   'data': 'data-publication',
-  'patent': '_patent',
+  'patent': 'patent',
   'newspaper': 'newspaper-article',
   'magazine': 'magazine-article',
   'report': 'report',
@@ -67,7 +67,7 @@ export const REQUIRED_PROPERTIES = {
   'data-publication': new Set(['title', 'containerTitle', 'authors']),
   'magazine-article': new Set(['title', 'containerTitle', 'authors']),
   'newspaper-article': new Set(['title', 'containerTitle', 'authors']),
-  '_patent': new Set(['title', 'containerTitle', 'inventors']),
+  'patent': new Set(['title', 'containerTitle', 'inventors']),
   'journal-article': new Set(['title', 'containerTitle', 'authors']),
   'conference-paper': new Set(['title', 'authors']),
   'report': new Set(['title', 'authors']),
@@ -80,5 +80,5 @@ export const REQUIRED_PROPERTIES = {
   'organisation': new Set(['name']),
   'award': new Set(['institution']),
   'keyword': new Set(['name']),
-  '_subject': new Set(['name'])
+  'subject': new Set(['name'])
 }

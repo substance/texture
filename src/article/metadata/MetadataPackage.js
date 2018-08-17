@@ -1,7 +1,12 @@
 import {
+  AnnotationComponent
+} from 'substance'
+
+import {
   BasePackage, EditorBasePackage, ModelEditorPackage,
   ContainerEditor, NodeModelEditor
 } from '../../kit'
+
 import EntityLabelsPackage from './EntityLabelsPackage'
 import ArticleNavPackage from '../ArticleNavPackage'
 import AddEntityCommand from './AddEntityCommand'
@@ -20,6 +25,10 @@ import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 
+import UnsupportedNodeComponent from '../editor/UnsupportedNodeComponent'
+import UnsupportedInlineNodeComponent from '../editor/UnsupportedInlineNodeComponent'
+import ExtLinkComponent from '../shared/ExtLinkComponent'
+
 export default {
   name: 'ArticleMetadata',
   configure (config) {
@@ -29,6 +38,16 @@ export default {
     // TODO: register MetaDataEditor related UI stuff here
     // Note, that the model package is already loaded by ArticlePackage
     config.import(EntityLabelsPackage)
+
+    config.addComponent('unsupported', UnsupportedNodeComponent)
+    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
+    // Annotations
+    config.addComponent('bold', AnnotationComponent)
+    config.addComponent('italic', AnnotationComponent)
+    config.addComponent('sub', AnnotationComponent)
+    config.addComponent('sup', AnnotationComponent)
+    config.addComponent('monospace', AnnotationComponent)
+    config.addComponent('ext-link', ExtLinkComponent)
 
     // built-ins
     config.import(ModelEditorPackage)

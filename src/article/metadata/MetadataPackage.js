@@ -109,7 +109,7 @@ export default {
       // }
     ])
     config.addLabel('article-record', {
-      en: 'Article'
+      en: 'Article Information'
     })
 
     config.addLabel('edit', {
@@ -247,7 +247,7 @@ export default {
     })
 
     // Section labels
-    config.addLabel('article', 'Article')
+    config.addLabel('article', 'Article Information')
     config.addLabel('authors', 'Authors')
     config.addLabel('figures', 'Figures')
     config.addLabel('footnotes', 'Footnotes')

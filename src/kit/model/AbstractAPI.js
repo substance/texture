@@ -93,7 +93,7 @@ export default class AbstractAPI {
       node = tx.delete(child.id)
       let children = tx.get(path)
       let idx = children.indexOf(child.id)
-      if(idx > -1) {
+      if (idx > -1) {
         tx.update(path, {type: 'delete', pos: idx, value: child.id})
       }
       tx.setSelection(_customSelection(path))

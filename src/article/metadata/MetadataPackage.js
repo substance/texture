@@ -19,6 +19,7 @@ import ModelPreviewComponent from '../shared/ModelPreviewComponent'
 
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
+import TranslatableEntryEditor from './TranslatableEntryEditor'
 
 import TranslateableEditor from './TranslateableEditor'
 import FigureComponent from '../shared/FigureComponent'
@@ -58,6 +59,7 @@ export default {
     config.addComponent('entity', NodeModelEditor)
     config.addComponent('article-record', ArticleRecordEditor)
     config.addComponent('bibr', BibliographicEntryEditor)
+    config.addComponent('subject', TranslatableEntryEditor)
 
     config.addToolPanel('toolbar', [
       {

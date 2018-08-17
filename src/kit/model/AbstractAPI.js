@@ -80,8 +80,22 @@ export default class AbstractAPI {
     let node
     this._getDocumentSession().transaction((tx) => {
       node = tx.create(child)
-      let ids = tx.get(path)
-      tx.update(path, {type: 'insert', pos: ids.length, value: node.id})
+      let children = tx.get(path)
+      tx.update(path, {type: 'insert', pos: children.length, value: node.id})
+      tx.setSelection(_customSelection(path))
+    })
+    return this._getModelForNode(node)
+  }
+
+  _removeChild (path, child) {
+    let node
+    this._getDocumentSession().transaction((tx) => {
+      node = tx.delete(child.id)
+      let children = tx.get(path)
+      let idx = children.indexOf(child.id)
+      if(idx > -1) {
+        tx.update(path, {type: 'delete', pos: idx, value: child.id})
+      }
       tx.setSelection(_customSelection(path))
     })
     return this._getModelForNode(node)

@@ -122,14 +122,12 @@ Awards.schema = {
 
 class Keywords extends XMLElementNode {}
 Keywords.schema = {
-  type: 'keywords',
-  _childNodes: CHILDREN('award')
+  type: 'keywords'
 }
 
 class Subjects extends XMLElementNode {}
 Subjects.schema = {
-  type: 'subjects',
-  _childNodes: CHILDREN('award')
+  type: 'subjects'
 }
 
 // TODO: as this node has a fixed layout, we might want to use a classical DocumentNode

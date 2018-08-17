@@ -36,15 +36,17 @@ export default class InplaceRefContribEditor extends ValueComponent {
       // TODO: use icon provider
       $$('button').addClass('se-remove-value')
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))
-        .on('click', this._removeContrib.bind(this, id))
+        .on('click', this._removeContrib.bind(this, refContrib))
     ).ref(id)
   }
 
   _addContrib () {
-    console.error('TODO: implement InplaceRefContribEditor._addContrib()')
+    const model = this.props.model
+    model.appendChild({type: 'ref-contrib'})
   }
 
-  _removeContrib (contribId) { // eslint-disable-line
-    console.error('TODO: implement InplaceRefContribEditor._removeContrib()')
+  _removeContrib (contrib) {
+    const model = this.props.model
+    model.removeChild(contrib)
   }
 }

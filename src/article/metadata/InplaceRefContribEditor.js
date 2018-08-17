@@ -41,10 +41,11 @@ export default class InplaceRefContribEditor extends ValueComponent {
   }
 
   _addContrib () {
-    console.error('TODO: implement InplaceRefContribEditor._addContrib()')
+    const model = this.props.model
+    model.appendChild({type: 'ref-contrib'})
   }
 
-  _removeContrib (contribId) { // eslint-disable-line
+  _removeContrib (contribId) {
     console.error('TODO: implement InplaceRefContribEditor._removeContrib()')
   }
 }

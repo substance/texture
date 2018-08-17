@@ -11,7 +11,7 @@ export default class BibliographicEntryComponent extends NodeComponent {
     // if so, use the label provider
     html = html || '<i>Not available</i>'
 
-    return $$('div').addClass('sc-ref-component').append(
+    return $$('div').addClass('sc-ref-preview').append(
       $$('div').addClass('se-label').append(label),
       $$('div').addClass('se-text').html(html)
     ).attr('data-id', refNode.id)

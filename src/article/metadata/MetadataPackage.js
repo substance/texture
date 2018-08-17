@@ -60,6 +60,7 @@ export default {
     config.addComponent('article-record', ArticleRecordEditor)
     config.addComponent('bibr', BibliographicEntryEditor)
     config.addComponent('subject', TranslatableEntryEditor)
+    config.addComponent('keyword', TranslatableEntryEditor)
 
     config.addToolPanel('toolbar', [
       {

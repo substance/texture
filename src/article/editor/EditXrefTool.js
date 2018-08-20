@@ -44,43 +44,17 @@ export default class EditXRefTool extends ToggleTool {
     return model.getAvailableTargets()
   }
 
-  _toggleTarget (targetNodeId, e) { // eslint-disable-line
-    // TODO: implement this in a model idiomatic way
-    console.error('TODO: implement EditXRefTool._toggleTarget()')
-
+  _toggleTarget (targetNodeId, e) {
     // // Make sure we don't follow external links
-    // e.preventDefault()
-    // e.stopPropagation()
+    e.preventDefault()
+    e.stopPropagation()
 
-    // let node = this._getNode(this.props.commandState.nodeId)
-    // let editorSession = this.context.editorSession
-    // // console.log('XRefTargets: toggling target of ', node.id);
+    const model = this._getModel()
+    const targets = model.toggleTarget(targetNodeId)
 
-    // // Update model
-    // let newTargets = getXrefTargets(node)
-    // if (newTargets.indexOf(targetNodeId) >= 0) {
-    //   newTargets = without(newTargets, targetNodeId)
-    // } else {
-    //   newTargets.push(targetNodeId)
-    // }
-
-    // // Compute visual feedback
-    // let targets = this.state.targets;
-    // let target = find(this.state.targets, function(t) {
-    //   return t.id === targetNodeId
-    // })
-
-    // // Flip the selected flag
-    // target.selected = !target.selected
-
-    // editorSession.transaction(tx => {
-    //   let xref = tx.get(node.id)
-    //   xref.setAttribute('rid', newTargets.join(' '))
-    // })
-
-    // // Triggers a rerender
-    // this.setState({
-    //   targets: targets
-    // })
+    // Triggers a rerender
+    this.setState({
+      targets: targets
+    })
   }
 }

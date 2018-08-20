@@ -24,6 +24,10 @@ export default class DocumentSession extends EventEmitter {
     return this._history.canRedo()
   }
 
+  createSelection (...args) {
+    return this._document.createSelection(...args)
+  }
+
   /**
     Start a transaction to manipulate the document
 

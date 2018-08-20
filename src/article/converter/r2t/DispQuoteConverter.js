@@ -1,5 +1,10 @@
 import { findChild, findAllChildren } from '../util/domHelpers'
 
+/**
+ * A converter for JATS `<disp-quote>`.
+ * Our internal model deviates from the original one in that the the attribution is separated from
+ * the quote content by using a dedicated text property 'attrib'
+ */
 export default class DispQuoteConverter {
   get type () { return 'disp-quote' }
 

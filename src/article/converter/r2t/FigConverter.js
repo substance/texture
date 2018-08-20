@@ -11,7 +11,8 @@ export default class FigConverter {
     let labelEl = findChild(el, 'label')
     let contentEl = this._getContent(el)
     let captionEl = findChild(el, 'caption')
-    // Preparations:
+
+    // Preparations
     if (!captionEl) {
       captionEl = $$('caption')
     }

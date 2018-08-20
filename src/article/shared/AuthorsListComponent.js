@@ -1,4 +1,4 @@
-import { FontAwesomeIcon, Component } from 'substance'
+import { Component } from 'substance'
 import { ModalDialog } from '../../kit'
 import renderEntity from './renderEntity'
 // import AffiliationsListComponent from './AffiliationsListComponent'
@@ -53,15 +53,6 @@ export default class AuthorsListComponent extends Component {
         $$('span').addClass('se-contrib sm-empty').append(this.getEmptyMessage())
       )
     }
-
-    contentEl.append(
-      ' ',
-      $$('button').append(
-        $$(FontAwesomeIcon, { icon: 'fa-pencil' })
-      )
-      // FIXME: allow editing
-      // .on('click', this._editContribs)
-    )
 
     el.append(contentEl)
 

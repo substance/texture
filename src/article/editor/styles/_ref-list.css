@@ -22,25 +22,23 @@
   display: flex;
 }
 
-.sc-ref-list > .se-ref-item > .sc-ref-component {
+.sc-ref-list > .se-ref-item > .sc-ref-preview {
   display: flex;
   flex: 1 1 0;
   margin-bottom: 15px;
+  font-size: 15px;
+  border: none;
 }
 
-.sc-ref-list > .se-ref-item > .sc-ref-component > .se-label {
+.sc-ref-list > .se-ref-item > .sc-ref-preview > .se-label {
   min-width: 20px;
-  margin: 0px 20px;
   font-weight: var(--strong-font-weight);
   text-align: center;
 }
 
-.sc-ref-list > .se-ref-item > .sc-ref-component > .se-text {
+.sc-ref-list > .se-ref-item > .sc-ref-preview > .se-text {
   margin-right: 10px;
   flex: 1 1 0;
-}
-
-.sc-ref-list > .se-ref-item > .se-ref-actions {
 }
 
 .sc-ref-list > .se-ref-item > .se-ref-actions > .sc-button {

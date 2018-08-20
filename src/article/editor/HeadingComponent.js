@@ -1,4 +1,4 @@
-import TextNodeComponent from './TextNodeComponent'
+import TextNodeComponent from '../shared/TextNodeComponent'
 
 export default
 class HeadingComponent extends TextNodeComponent {

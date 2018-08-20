@@ -1,5 +1,8 @@
-import NodeComponent from '../shared/NodeComponent'
+import NodeComponent from './NodeComponent'
 
+/*
+  TODO: do a full transition to model-first components, with legacy support for nodes
+*/
 export default class TextNodeComponent extends NodeComponent {
   render ($$) {
     const TextPropertyComponent = this.getComponent('text-property')

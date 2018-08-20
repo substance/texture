@@ -24,11 +24,11 @@ import ReferenceListComponent from '../shared/ReferenceListComponent'
 
 // General components
 import ContainerNodeComponent from './ContainerNodeComponent'
-import ElementNodeComponent from './ElementNodeComponent'
-import TextNodeComponent from './TextNodeComponent'
+import ElementNodeComponent from '../shared/ElementNodeComponent'
+import TextNodeComponent from '../shared/TextNodeComponent'
 import PlainTextComponent from './PlainTextComponent'
-import UnsupportedNodeComponent from './UnsupportedNodeComponent'
-import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
+import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
+import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
 
 import AbstractComponent from '../shared/AbstractComponent'
 import AuthorsListComponent from '../shared/AuthorsListComponent'

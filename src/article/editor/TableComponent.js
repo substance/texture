@@ -123,14 +123,17 @@ export default class TableComponent extends CustomSurface {
 
   _renderContextMenu ($$) {
     const configurator = this.context.configurator
-    // HACK: Skip if toolpanel not defined (this happens when used from the reader)
+    let contextMenu
     const toolPanel = configurator.getToolPanel('table-context-menu')
-    if (!toolPanel) return
-
-    let contextMenu = $$(Managed(TableContextMenu), {
-      toolPanel: configurator.getToolPanel('table-context-menu'),
-      bindings: ['commandStates']
-    }).ref('contextMenu')
+    if (toolPanel) {
+      contextMenu = $$(Managed(TableContextMenu), {
+        toolPanel: configurator.getToolPanel('table-context-menu'),
+        bindings: ['commandStates']
+      })
+    } else {
+      contextMenu = $$('div')
+    }
+    contextMenu.ref('contextMenu')
       .addClass('se-context-menu')
       .css({ display: 'none' })
     return contextMenu

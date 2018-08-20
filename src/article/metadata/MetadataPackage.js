@@ -11,7 +11,7 @@ import EntityLabelsPackage from './EntityLabelsPackage'
 import ArticleNavPackage from '../ArticleNavPackage'
 import AddEntityCommand from './AddEntityCommand'
 
-import TextNodeComponent from '../editor/TextNodeComponent'
+import TextNodeComponent from '../shared/TextNodeComponent'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 
 import CollectionEditor from './CollectionEditor'
@@ -26,8 +26,8 @@ import FigureComponent from '../shared/FigureComponent'
 import GraphicComponent from './GraphicComponent'
 import FnComponent from '../editor/FnComponent'
 
-import UnsupportedNodeComponent from '../editor/UnsupportedNodeComponent'
-import UnsupportedInlineNodeComponent from '../editor/UnsupportedInlineNodeComponent'
+import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
+import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
 import ExtLinkComponent from '../shared/ExtLinkComponent'
 
 export default {

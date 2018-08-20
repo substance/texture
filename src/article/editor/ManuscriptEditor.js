@@ -4,9 +4,9 @@ import {
 import {
   Managed, createEditorContext
 } from '../../kit'
-import ManuscriptModel from '../shared/ManuscriptModel'
-import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
+import ArticleEditorSession from '../ArticleEditorSession'
+import ManuscriptModel from '../shared/ManuscriptModel'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
 

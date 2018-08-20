@@ -2,13 +2,6 @@ import { uniq } from 'substance'
 import NodeComponent from '../shared/NodeComponent'
 import renderEntity from '../shared/renderEntity'
 
-/*
-  TODO: find a way to detect updates.
-
-  We need to update this list when a new author has been added or removed, which
-  can be auto-detected this.props.node. However it should also
-  updates if changes are made to the organisation entries in the entity db.
-*/
 export default class AffiliationsList extends NodeComponent {
   render ($$) {
     const api = this.context.api

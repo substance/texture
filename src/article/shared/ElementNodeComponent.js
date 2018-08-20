@@ -1,11 +1,10 @@
-import NodeComponent from '../shared/NodeComponent'
+import NodeComponent from './NodeComponent'
 
 export default class ElementNodeComponent extends NodeComponent {
   render ($$) {
-    const node = this.props.node
     let el = $$(this.getTagName())
       .addClass(this.getClassNames())
-    node.getChildren().forEach(child => {
+    this._getChildren().forEach(child => {
       el.append(
         $$(this.getComponent(child.type), {
           node: child
@@ -13,6 +12,10 @@ export default class ElementNodeComponent extends NodeComponent {
       )
     })
     return el
+  }
+
+  _getChildren () {
+    return this.props.node.getChildren()
   }
 
   getTagName () {

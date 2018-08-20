@@ -34,42 +34,12 @@ export default class ReferenceListComponent extends Component {
       let model = NodeModelFactory.create(this.context.api, refNode)
       el.append(
         $$('div').addClass('se-ref-item').append(
-          $$(BibliographicEntryComponent, { model }),
-          $$('div').addClass('se-ref-actions').append(
-            $$(Button, {icon: 'pencil', tooltip: this.getLabel('edit-ref')})
-              .on('click', this._editReference.bind(this, refNode)),
-            $$(Button, {icon: 'trash', tooltip: this.getLabel('remove-ref')})
-              .on('click', this._removeReference.bind(this, refNode))
-          )
+          $$(BibliographicEntryComponent, { model })
         )
       )
     })
 
-    let options = $$('div').addClass('se-ref-list-options').append(
-      $$('button').addClass('sc-button sm-style-big').append(
-        this.getLabel('add-ref')
-      ).on('click', this._addNewReference)
-    )
-
-    el.append(options)
-
     return el
-  }
-
-  _addNewReference () {
-    this.send('startWorkflow', 'add-reference')
-  }
-
-  _editReference (reference) {
-    const api = this.context.api
-    const model = api._getModelForNode(reference)
-    this.send('startWorkflow', 'edit-reference', {model: model})
-  }
-
-  _removeReference (reference) {
-    const api = this.context.api
-    const collection = api.getModel('references')
-    collection.removeItem(reference)
   }
 
   _getBibliography () {

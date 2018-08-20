@@ -1,8 +1,7 @@
 .sc-ref-preview {
   font-size: 12px;
   border-bottom: 1px solid var(--separator-color);
-  padding: 5px var(--default-padding);
-  padding-left: 40px;
+  padding: 5px 0 5px 40px;
   cursor: pointer;
   position: relative;
   line-height: 1.5em;

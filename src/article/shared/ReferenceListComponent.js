@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { Button, NodeModelFactory } from '../../kit'
+import { NodeModelFactory } from '../../kit'
 
 export default class ReferenceListComponent extends Component {
   getInitialState () {

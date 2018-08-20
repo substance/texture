@@ -266,6 +266,27 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
+  addXrefTarget (targetId, model) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      const xref = tx.get(model.id)
+      let targets = xref.getAttribute('rid').split(' ')
+      targets.push(targetId)
+      xref.setAttribute('rid', targets.join(' '))
+    })
+  }
+
+  removeXrefTarget (targetId, model) {
+    const articleSession = this.articleSession
+    articleSession.transaction(tx => {
+      const xref = tx.get(model.id)
+      let targets = xref.getAttribute('rid').split(' ')
+      let idx = targets.indexOf(targetId)
+      targets.splice(idx, 1)
+      xref.setAttribute('rid', targets.join(' '))
+    })
+  }
+
   _getContext () {
     return this._context
   }

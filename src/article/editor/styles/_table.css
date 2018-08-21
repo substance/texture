@@ -1,20 +1,20 @@
-.sc-table-wrap {
+.sc-table-figure {
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
   padding: 20px;
 }
 
-.sc-table-wrap > .se-label {
+.sc-table-figure > .se-label {
   font-weight: 600;
   font-size: 18px;
   padding-bottom: 10px;
 }
 
-.sc-table-wrap .se-title {
+.sc-table-figure .se-title {
   padding-top: 20px;
   font-weight: 600;
 }
 
-.sc-table-wrap .se-title .sc-bold {
+.sc-table-figure .se-title .sc-bold {
   font-weight: 900;
 }
 

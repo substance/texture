@@ -1,19 +1,19 @@
-.sc-fig {
+.sc-figure {
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
   padding: 20px;
 }
 
-.sc-fig > .se-label {
+.sc-figure > .se-label {
   font-weight: 600;
   font-size: 18px;
   padding-bottom: 10px;
 }
 
-.sc-fig .se-title {
+.sc-figure .se-title {
   padding-top: 30px;
   font-weight: 600;
 }
 
-.sc-fig .se-title .sc-bold {
+.sc-figure .se-title .sc-bold {
   font-weight: 900;
 }

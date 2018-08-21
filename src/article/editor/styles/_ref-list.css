@@ -28,6 +28,7 @@
   margin-bottom: 15px;
   font-size: 15px;
   border: none;
+  cursor: default;
 }
 
 .sc-ref-list > .se-ref-item > .sc-ref-preview > .se-label {

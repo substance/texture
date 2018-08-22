@@ -18,7 +18,6 @@ import FrontMatterComponent from '../shared/FrontMatterComponent'
 import ReferenceListComponent from '../shared/ReferenceListComponent'
 
 // General components
-import ContainerNodeComponent from './ContainerNodeComponent'
 import ElementNodeComponent from '../shared/ElementNodeComponent'
 import TextNodeComponent from '../shared/TextNodeComponent'
 import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
@@ -35,6 +34,7 @@ import AffiliationsListComponent from '../editor/AffiliationsListComponent'
 import BreakComponent from '../editor/BreakComponent'
 import EditorsListComponent from '../editor/EditorsListComponent'
 import CaptionComponent from '../editor/CaptionComponent'
+import ContainerNodeComponent from '../shared/ContainerNodeComponent'
 import DispQuoteComponent from '../editor/DispQuoteComponent'
 import FnComponent from '../editor/FnComponent'
 import FnGroupComponent from '../editor/FnGroupComponent'
@@ -66,13 +66,13 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('container', ContainerNodeComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
     // LEGACY: to get our model based approach working with some 'old' stuff
     config.addComponent('entity', NodeModelComponent)
+    config.addComponent('container', ContainerNodeComponent)
 
     config.addComponent('front-matter', FrontMatterComponent)
     config.addComponent('back-matter', CompositeComponent)

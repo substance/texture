@@ -1,5 +1,6 @@
 import { Component } from 'substance'
 
+// TODO: turn this into a Model based component
 export default class CaptionComponent extends Component {
   render ($$) {
     const node = this.props.node

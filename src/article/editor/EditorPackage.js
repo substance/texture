@@ -23,7 +23,6 @@ import FrontMatterComponent from '../shared/FrontMatterComponent'
 import ReferenceListComponent from '../shared/ReferenceListComponent'
 
 // General components
-import ContainerNodeComponent from './ContainerNodeComponent'
 import ElementNodeComponent from '../shared/ElementNodeComponent'
 import TextNodeComponent from '../shared/TextNodeComponent'
 import PlainTextComponent from './PlainTextComponent'
@@ -42,6 +41,7 @@ import EditExtLinkTool from './EditExtLinkTool'
 import EditorsListComponent from './EditorsListComponent'
 import ExtLinkComponent from '../shared/ExtLinkComponent'
 import CaptionComponent from './CaptionComponent'
+import ContainerNodeComponent from '../shared/ContainerNodeComponent'
 import DispQuoteComponent from './DispQuoteComponent'
 import FnComponent from './FnComponent'
 import FnGroupComponent from './FnGroupComponent'
@@ -57,6 +57,7 @@ import TitleGroupComponent from './TitleGroupComponent'
 import TOC from './TOC'
 import TranslationsComponent from './TranslationsComponent'
 import XrefComponent from './XrefComponent'
+
 // Previews
 import FnPreview from './FnPreview'
 import FigPreview from './FigPreview'
@@ -105,7 +106,6 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('container', ContainerNodeComponent)
     config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
@@ -126,6 +126,7 @@ export default {
     config.addComponent('translations', TranslationsComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
+    config.addComponent('container', ContainerNodeComponent)
     config.addComponent('col', ElementNodeComponent)
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)

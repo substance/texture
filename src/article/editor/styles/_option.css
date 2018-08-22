@@ -1,4 +1,5 @@
-.sc-ref-preview {
+.sc-option {
+  position: flex;
   font-size: 12px;
   border-bottom: 1px solid var(--separator-color);
   padding: 5px 0 5px 40px;
@@ -8,7 +9,7 @@
   border-left: 3px solid transparent;
 }
 
-.sc-ref-preview .se-label {
+.sc-option .se-label {
   position: absolute;
   top: 5px;
   left: 10px;
@@ -17,12 +18,12 @@
   overflow: visible;
 }
 
-.sc-ref-preview.sm-selected {
+.sc-option.sm-selected {
   border-left: 3px solid var(--border-action-color);
   color: var(--default-text-color);
   background: var(--active-light-bg-color);
 }
 
-.sc-ref-preview a {
+.sc-option a {
   text-decoration: none;
 }

@@ -577,20 +577,6 @@ export default {
     config.addIcon('trash', {
       'fontawesome': 'fa-trash'
     })
-
-    /*
-      Define panel structure
-    */
-    config.setPanelsSpec([
-      { group: 'structure' },
-      { panel: 'toc' },
-      { group: 'article-info' },
-      // { panel: 'contributors' },
-      // { panel: 'affiliations' },
-      { panel: 'translations' },
-      { group: 'pub-data' },
-      { panel: 'article-record' }
-    ])
   },
   ManuscriptEditor,
   // legacy

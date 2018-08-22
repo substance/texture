@@ -1,7 +1,7 @@
 import { NodeComponent } from '../../kit'
 import { renderEntity } from './entityHelpers'
 
-export default class BibliographicEntryComponent extends NodeComponent {
+export default class ReferenceComponent extends NodeComponent {
   render ($$) {
     const refNode = this.getNode()
     let label = _getReferenceLabel(refNode)
@@ -11,7 +11,7 @@ export default class BibliographicEntryComponent extends NodeComponent {
     // if so, use the label provider
     html = html || '<i>Not available</i>'
 
-    return $$('div').addClass('sc-ref-preview').append(
+    return $$('div').addClass('sc-reference').append(
       $$('div').addClass('se-label').append(label),
       $$('div').addClass('se-text').html(html)
     ).attr('data-id', refNode.id)

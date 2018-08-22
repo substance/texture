@@ -13,21 +13,20 @@ export default class EditXRefTool extends ToggleTool {
       const target = entry.model
       if (!target) continue
       const selected = entry.selected
-      let targetPreviewEl = this._renderPreview($$, target)
-      if (selected) {
-        targetPreviewEl.addClass('sm-selected')
-      }
+      let targetPreviewEl = this._renderPreview($$, target, selected)
       targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
       el.append(targetPreviewEl)
     }
     return el
   }
 
-  _renderPreview ($$, target) {
+  _renderPreview ($$, target, selected) {
     let TargetComponent = getComponentForModel(this.context, target)
+    console.log('TargetComponent', target)
     return $$(TargetComponent, {
       model: target,
-      mode: 'preview',
+      selected,
+      mode: 'option',
       // LEGACY:
       node: target._node
     })

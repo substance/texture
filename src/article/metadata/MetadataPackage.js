@@ -11,7 +11,6 @@ import EntityLabelsPackage from './EntityLabelsPackage'
 import ArticleNavPackage from '../ArticleNavPackage'
 import AddEntityCommand from './AddEntityCommand'
 
-import TextNodeComponent from '../shared/TextNodeComponent'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 
 import CollectionEditor from './CollectionEditor'
@@ -196,7 +195,6 @@ export default {
       en: 'Abstract'
     })
     // Components for editors
-    config.addComponent('text-node', TextNodeComponent)
     // Note: in many cases the general NodeModelComponent implementation is used
     // In some other cases we use custom ones (e.g. figures)
     config.addComponent('translatable', TranslateableEditor)

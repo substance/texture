@@ -19,7 +19,6 @@ import ReferenceListComponent from '../shared/ReferenceListComponent'
 
 // General components
 import ElementNodeComponent from '../shared/ElementNodeComponent'
-import TextNodeComponent from '../shared/TextNodeComponent'
 import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
 
@@ -40,7 +39,7 @@ import FnComponent from '../editor/FnComponent'
 import FnGroupComponent from '../editor/FnGroupComponent'
 import GraphicComponent from '../editor/GraphicComponent'
 import HeadingComponent from '../editor/HeadingComponent'
-import InlineFormulaComponent from '../editor/InlineFormulaComponent'
+import InlineFormulaComponent from '../shared/InlineFormulaComponent'
 import ListComponent from '../editor/ListComponent'
 import ListItemComponent from '../editor/ListItemComponent'
 import SeparatorComponent from '../editor/SeparatorComponent'
@@ -88,7 +87,6 @@ export default {
     // TODO: try to get rid of any 'polyfill' and convert components into a Model based implementation
     config.addComponent('entity', NodeModelComponent)
     config.addComponent('container', ContainerNodeComponent)
-    config.addComponent('text-node', TextNodeComponent)
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
     config.addComponent('break', BreakComponent)

@@ -7,6 +7,7 @@ import SingleRelationshipComponent from './SingleRelationshipComponent'
 import ManyRelationshipComponent from './ManyRelationshipComponent'
 import ChildrenComponent from './ChildrenComponent'
 import CompositeComponent from './CompositeComponent'
+import TextNodeComponent from './TextNodeComponent'
 
 export default {
   name: 'Model Components',
@@ -21,5 +22,7 @@ export default {
     configurator.addComponent('many-relationship-model', ManyRelationshipComponent)
     configurator.addComponent('children-model', ChildrenComponent)
     configurator.addComponent('composite-model', CompositeComponent)
+    // LEGACY
+    configurator.addComponent('text-node', TextNodeComponent)
   }
 }

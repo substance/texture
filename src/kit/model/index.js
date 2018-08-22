@@ -27,6 +27,7 @@ export { default as StringModel } from './StringModel'
 export { default as StringComponent } from './StringComponent'
 export { default as TextModel } from './TextModel'
 export { default as TextComponent } from './TextComponent'
+export { default as TextNodeComponent } from './TextNodeComponent'
 export { default as ValueComponent } from './ValueComponent'
 export { default as ValueModel } from './ValueModel'
 

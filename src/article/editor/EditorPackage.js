@@ -24,7 +24,6 @@ import ReferenceListComponent from '../shared/ReferenceListComponent'
 
 // General components
 import ElementNodeComponent from '../shared/ElementNodeComponent'
-import TextNodeComponent from '../shared/TextNodeComponent'
 import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
 
@@ -46,7 +45,7 @@ import FnComponent from './FnComponent'
 import FnGroupComponent from './FnGroupComponent'
 import GraphicComponent from './GraphicComponent'
 import HeadingComponent from './HeadingComponent'
-import InlineFormulaComponent from './InlineFormulaComponent'
+import InlineFormulaComponent from '../shared/InlineFormulaComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
 import SeparatorComponent from './SeparatorComponent'
@@ -102,18 +101,30 @@ export default {
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
 
-    // Base functionality
-    config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('heading', HeadingComponent)
-    config.addComponent('unsupported', UnsupportedNodeComponent)
-    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
-
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('back-matter', CompositeComponent)
     config.addComponent('bibr', BibliographicEntryComponent)
     config.addComponent('front-matter', FrontMatterComponent)
+    config.addComponent('heading', HeadingComponent)
     config.addComponent('references', ReferenceListComponent)
+    config.addComponent('unsupported', UnsupportedNodeComponent)
+    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
+
+    // ATTENTION: I have changed the behavior so that
+    // unregistered annotations or inline-nodes are
+    // rendered using the UnsupportedInlineNodeComponent
+    // instead of rendering all by default with AnnotationComponent
+    config.addComponent('bold', AnnotationComponent)
+    config.addComponent('italic', AnnotationComponent)
+    config.addComponent('sub', AnnotationComponent)
+    config.addComponent('sup', AnnotationComponent)
+    config.addComponent('monospace', AnnotationComponent)
+    config.addComponent('ext-link', ExtLinkComponent)
+
+    // Panels and other displays
+    config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('collection', CollectionEditor)
 
     // LEGACY: Node based components
     config.addComponent('entity', NodeModelComponent)
@@ -142,23 +153,6 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
-
-    // ATTENTION: I have changed the behavior so that
-    // unregistered annotations or inline-nodes are
-    // rendered using the UnsupportedInlineNodeComponent
-    // instead of rendering all by default with AnnotationComponent
-    config.addComponent('bold', AnnotationComponent)
-    config.addComponent('italic', AnnotationComponent)
-    config.addComponent('sub', AnnotationComponent)
-    config.addComponent('sup', AnnotationComponent)
-    config.addComponent('monospace', AnnotationComponent)
-    config.addComponent('ext-link', ExtLinkComponent)
-
-    // Panels and other displays
-    config.addComponent('manuscript', ManuscriptComponent)
-    config.addComponent('collection', CollectionEditor)
-
-    // Preview components for Ref, Fn, Figure
     config.addComponent('fn-preview', FnPreview)
     config.addComponent('fig-preview', FigPreview)
     config.addComponent('table-wrap-preview', TableFigPreview)
@@ -168,22 +162,18 @@ export default {
       selector: '.sc-abstract',
       commandGroup: 'toggle-content-section'
     })
-
     config.addCommand('toggle-authors', ToggleContentSection, {
       selector: '.sc-authors-list',
       commandGroup: 'toggle-content-section'
     })
-
     config.addCommand('toggle-references', ToggleContentSection, {
       selector: '.sc-ref-list',
       commandGroup: 'toggle-content-section'
     })
-
     config.addCommand('toggle-footnotes', ToggleContentSection, {
       selector: '.sc-fn-group',
       commandGroup: 'toggle-content-section'
     })
-
     config.addCommand('edit-xref', EditInlineNodeCommand, {
       nodeType: 'xref',
       commandGroup: 'prompt'
@@ -204,7 +194,6 @@ export default {
       refType: 'fn',
       commandGroup: 'insert-xref'
     })
-
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
       nodeType: 'disp-quote',
       commandGroup: 'insert'
@@ -224,7 +213,6 @@ export default {
       nodeType: 'inline-formula',
       commandGroup: 'prompt'
     })
-
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
     })
@@ -243,7 +231,6 @@ export default {
     config.addCommand('toggle-cell-merge', ToggleCellMergeCommand, {
       commandGroup: 'table'
     })
-
     config.addCommand('insert-columns-left', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'left' },
       commandGroup: 'table-insert'

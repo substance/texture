@@ -1,7 +1,6 @@
-import TextNodeComponent from '../shared/TextNodeComponent'
+import { TextNodeComponent } from '../../kit'
 
-export default
-class HeadingComponent extends TextNodeComponent {
+export default class HeadingComponent extends TextNodeComponent {
   getLevel () {
     return parseInt(this.props.node.level, 10) || 1
   }

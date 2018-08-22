@@ -1,8 +1,8 @@
 .sc-option {
-  position: flex;
+  display: flex;
   font-size: 12px;
   border-bottom: 1px solid var(--separator-color);
-  padding: 5px 0 5px 40px;
+  padding: 5px 20px 5px 0px;
   cursor: pointer;
   position: relative;
   line-height: 1.5em;
@@ -10,12 +10,8 @@
 }
 
 .sc-option .se-label {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  width: 20px;
-  font-weight: 600;
-  overflow: visible;
+  flex: 0 0 40px;
+  padding-left: 10px;
 }
 
 .sc-option.sm-selected {

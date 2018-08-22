@@ -10,9 +10,6 @@ import ManuscriptModel from '../shared/ManuscriptModel'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
 
-/*
-  Note: an earlier implementation was based on this guy: https://github.com/substance/texture/blob/295e5d39d8d0e4b690ee8575a6d7576329a3844d/src/editor/util/AbstractWriter.js
-*/
 export default class ManuscriptEditor extends Component {
   constructor (...args) {
     super(...args)
@@ -82,8 +79,6 @@ export default class ManuscriptEditor extends Component {
     editorSession.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
     appState.removeObserver(this)
-    // Note: we need to clear everything, as the childContext
-    // changes which is immutable
     this.empty()
   }
 
@@ -93,6 +88,8 @@ export default class ManuscriptEditor extends Component {
 
   render ($$) {
     let el = $$('div').addClass('sc-editor')
+      // sharing styles with sc-article-reader
+      .addClass('sc-manuscript-view')
     el.append(
       this._renderMainSection($$),
       this._renderContextPane($$)
@@ -100,41 +97,15 @@ export default class ManuscriptEditor extends Component {
     return el
   }
 
-  _renderTOCPane ($$) {
-    let el = $$('div').addClass('se-toc-pane').ref('tocPane')
-    el.append(
-      $$('div').addClass('se-context-pane-content').append(
-        $$(TOC)
-      )
-    )
-    return el
-  }
-
-  _renderContextPane ($$) {
-    // TODO: we need to revisit this
-    // We have introduced this to be able to inject a shared context panel
-    // in Stencila. However, ATM we try to keep the component
-    // as modular as possible, and avoid these kind of things.
-    if (this.props.contextComponent) {
-      let el = $$('div').addClass('se-context-pane')
-      el.append(
-        $$('div').addClass('se-context-pane-content').append(
-          this.props.contextComponent
-        )
-      )
-      return el
-    }
-  }
-
   _renderMainSection ($$) {
     const appState = this.context.appState
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
-      $$('div').addClass('se-editor-section').append(
+      $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
-      ).ref('editorSection')
+      ).ref('contentSection')
 
     )
 
@@ -148,6 +119,28 @@ export default class ManuscriptEditor extends Component {
     }
 
     return mainSection
+  }
+
+  _renderTOCPane ($$) {
+    let el = $$('div').addClass('se-toc-pane').ref('tocPane')
+    el.append(
+      $$('div').addClass('se-context-pane-content').append(
+        $$(TOC)
+      )
+    )
+    return el
+  }
+
+  _renderToolbar ($$) {
+    const Toolbar = this.getComponent('toolbar')
+    const configurator = this._getConfigurator()
+    const toolPanel = configurator.getToolPanel('toolbar', true)
+    return $$('div').addClass('se-toolbar-wrapper').append(
+      $$(Managed(Toolbar), {
+        toolPanel,
+        bindings: ['commandStates']
+      }).ref('toolbar')
+    )
   }
 
   _renderContentPanel ($$) {
@@ -186,15 +179,20 @@ export default class ManuscriptEditor extends Component {
     return contentPanel
   }
 
-  _renderToolbar ($$) {
-    const Toolbar = this.getComponent('toolbar')
-    let configurator = this._getConfigurator()
-    return $$('div').addClass('se-toolbar-wrapper').append(
-      $$(Managed(Toolbar), {
-        toolPanel: configurator.getToolPanel('toolbar'),
-        bindings: ['commandStates']
-      }).ref('toolbar')
-    )
+  _renderContextPane ($$) {
+    // TODO: we need to revisit this
+    // We have introduced this to be able to inject a shared context panel
+    // in Stencila. However, ATM we try to keep the component
+    // as modular as possible, and avoid these kind of things.
+    if (this.props.contextComponent) {
+      let el = $$('div').addClass('se-context-pane')
+      el.append(
+        $$('div').addClass('se-context-pane-content').append(
+          this.props.contextComponent
+        )
+      )
+      return el
+    }
   }
 
   getViewport () {
@@ -266,8 +264,8 @@ export default class ManuscriptEditor extends Component {
   }
 
   _showHideTOC () {
-    let editorSectionWidth = this.refs.editorSection.el.width
-    if (!this._isTOCVisible() || editorSectionWidth < 960) {
+    let contentSectionWidth = this.refs.contentSection.el.width
+    if (!this._isTOCVisible() || contentSectionWidth < 960) {
       this.el.addClass('sm-compact')
     } else {
       this.el.removeClass('sm-compact')
@@ -289,9 +287,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   _getBodyContainerId () {
-    const doc = this._getDocument()
-    let body = doc.get('body')
-    return body.id
+    return 'body'
   }
 
   _toggleOverlay (overlayId) {

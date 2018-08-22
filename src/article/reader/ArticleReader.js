@@ -77,6 +77,8 @@ export default class ArticleReader extends Component {
 
   render ($$) {
     let el = $$('div').addClass('sc-article-reader')
+      // sharing styles with sc-article-reader
+      .addClass('sc-manuscript-view')
     el.append(
       this._renderMainSection($$),
       this._renderContextPane($$)

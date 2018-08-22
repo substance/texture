@@ -34,9 +34,8 @@ import AbstractComponent from '../shared/AbstractComponent'
 import AuthorsListComponent from '../shared/AuthorsListComponent'
 import FigureComponent from '../shared/FigureComponent'
 
-// Node components
+// LEGACY: Node based components
 import AffiliationsListComponent from './AffiliationsListComponent'
-import BodyComponent from './BodyComponent'
 import BreakComponent from './BreakComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
@@ -86,8 +85,6 @@ import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import EditReferenceWorkflow from './EditReferenceWorkflow'
 
 import BibliographicEntryComponent from '../shared/BibliographicEntryComponent'
-
-// FIXME: this should be shared
 import CollectionEditor from '../metadata/CollectionEditor'
 import ModelPreviewComponent from '../shared/ModelPreviewComponent'
 
@@ -114,7 +111,6 @@ export default {
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
-    // HACK: to get components working taken from metadata editor
     config.addComponent('entity', NodeModelComponent)
     config.addComponent('model-preview', ModelPreviewComponent)
 
@@ -124,11 +120,10 @@ export default {
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
 
-    // Node components
+    // LEGACY: Node based components
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
     config.addComponent('translations', TranslationsComponent)
-    config.addComponent('body', BodyComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('col', ElementNodeComponent)

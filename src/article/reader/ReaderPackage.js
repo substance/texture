@@ -30,9 +30,8 @@ import BibliographicEntryComponent from '../shared/BibliographicEntryComponent'
 import ExtLinkComponent from '../shared/ExtLinkComponent'
 import FigureComponent from '../shared/FigureComponent'
 
-// Node components
+// LEGACY: Node based components
 import AffiliationsListComponent from '../editor/AffiliationsListComponent'
-import BodyComponent from '../editor/BodyComponent'
 import BreakComponent from '../editor/BreakComponent'
 import EditorsListComponent from '../editor/EditorsListComponent'
 import CaptionComponent from '../editor/CaptionComponent'
@@ -72,7 +71,7 @@ export default {
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
-    // HACK: to get components working taken from metadata editor
+    // LEGACY: to get our model based approach working with some 'old' stuff
     config.addComponent('entity', NodeModelComponent)
 
     config.addComponent('front-matter', FrontMatterComponent)
@@ -85,7 +84,6 @@ export default {
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
     config.addComponent('translations', TranslationsComponent)
-    config.addComponent('body', BodyComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('col', ElementNodeComponent)

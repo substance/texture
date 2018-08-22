@@ -1,6 +1,5 @@
 import { FontAwesomeIcon, uniq, without, uuid } from 'substance'
-import { ModalDialog } from '../../kit'
-import NodeComponent from '../shared/NodeComponent'
+import { ModalDialog, NodeComponent } from '../../kit'
 import renderEntity from '../shared/renderEntity'
 import updateEntityChildArray from '../shared/updateEntityChildArray'
 import AffiliationsListComponent from './AffiliationsListComponent'

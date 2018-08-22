@@ -1,4 +1,4 @@
-import NodeComponent from '../shared/NodeComponent'
+import { NodeComponent } from '../../kit'
 import katex from 'katex'
 
 export default class InlineFormulaComponent extends NodeComponent {

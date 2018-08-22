@@ -1,4 +1,4 @@
-import NodeComponent from '../shared/NodeComponent'
+import { NodeComponent } from '../../kit'
 
 export default class SigBlockComponent extends NodeComponent {
   render ($$) {

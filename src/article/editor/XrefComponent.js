@@ -1,4 +1,4 @@
-import NodeComponent from '../shared/NodeComponent'
+import { NodeComponent } from '../../kit'
 import { getXrefLabel } from '../shared/xrefHelpers'
 
 export default class XrefComponent extends NodeComponent {

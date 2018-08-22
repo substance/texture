@@ -1,4 +1,4 @@
-import NodeComponent from './NodeComponent'
+import { NodeComponent } from '../../kit'
 
 /*
   TODO: do a full transition to model-first components, with legacy support for nodes

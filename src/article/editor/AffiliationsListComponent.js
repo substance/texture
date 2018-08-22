@@ -1,5 +1,5 @@
 import { uniq } from 'substance'
-import NodeComponent from '../shared/NodeComponent'
+import { NodeComponent } from '../../kit'
 import renderEntity from '../shared/renderEntity'
 
 export default class AffiliationsList extends NodeComponent {

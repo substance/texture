@@ -1,5 +1,5 @@
 import { isString, renderListNode } from 'substance'
-import NodeComponent from '../shared/NodeComponent'
+import { NodeComponent } from '../../kit'
 
 export default class ListComponent extends NodeComponent {
   render ($$) {

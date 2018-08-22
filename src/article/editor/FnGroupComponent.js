@@ -1,4 +1,4 @@
-import NodeComponent from '../shared/NodeComponent'
+import { NodeComponent } from '../../kit'
 import removeElementAndXrefs from '../shared/removeElementAndXrefs'
 import Button from './Button'
 import { getPos } from '../shared/nodeHelpers'

@@ -1,5 +1,5 @@
 import { CompositeModel } from '../../kit'
-import ReferenceCollectionModel from '../models/ReferenceCollectionModel'
+import ReferenceCollectionModel from './ReferenceCollectionModel'
 
 export default class BackMatterModel extends CompositeModel {
   constructor (api) {

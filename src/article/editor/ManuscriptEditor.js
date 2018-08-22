@@ -6,7 +6,7 @@ import {
 } from '../../kit'
 import ArticleAPI from '../ArticleAPI'
 import ArticleEditorSession from '../ArticleEditorSession'
-import ManuscriptModel from '../shared/ManuscriptModel'
+import ManuscriptModel from '../models/ManuscriptModel'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
 

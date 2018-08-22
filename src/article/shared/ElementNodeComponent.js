@@ -1,4 +1,4 @@
-import NodeComponent from './NodeComponent'
+import { NodeComponent } from '../../kit'
 
 export default class ElementNodeComponent extends NodeComponent {
   render ($$) {

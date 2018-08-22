@@ -1,5 +1,3 @@
 export { default as EditorPackage } from './EditorPackage'
 export { default as InsertNodeCommand } from './InsertNodeCommand'
-export { default as TableComponent } from './TableComponent'
-export { default as TableEditing } from './TableEditing'
 export { default as SaveHandler } from './SaveHandler'

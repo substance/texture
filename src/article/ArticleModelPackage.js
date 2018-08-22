@@ -1,7 +1,7 @@
 import { ListPackage } from 'substance'
 import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
-import EntityLabelsPackage from './metadata/EntityLabelsPackage'
+import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import LanguagesPackage from './LanguagesPackage'
 
 import FigureModel from './models/FigureModel'

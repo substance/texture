@@ -1,5 +1,5 @@
 import { NodeComponent } from '../../kit'
-import { getXrefLabel } from '../shared/xrefHelpers'
+import { getXrefLabel } from './xrefHelpers'
 
 export default class XrefComponent extends NodeComponent {
   render ($$) {

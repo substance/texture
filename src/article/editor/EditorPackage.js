@@ -1,6 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
 import {
-  AnnotationComponent,
   EditInlineNodeCommand,
   EditAnnotationCommand,
   ListPackage,
@@ -9,56 +8,19 @@ import {
 } from 'substance'
 
 import {
-  BasePackage, EditorBasePackage, ModelComponentPackage,
-  CompositeComponent, NodeModelComponent
+  BasePackage, EditorBasePackage, ModelComponentPackage
 } from '../../kit'
 
-import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
-
-import ManuscriptEditor from './ManuscriptEditor'
-
-// new model based components
-import ManuscriptComponent from '../shared/ManuscriptComponent'
-import FrontMatterComponent from '../shared/FrontMatterComponent'
+import EntityLabelsPackage from '../shared/EntityLabelsPackage'
+import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
+// FIXME: adding this to ManuscriptContentPackage causes troubles
 import ReferenceListComponent from '../shared/ReferenceListComponent'
 
-// General components
-import ElementNodeComponent from '../shared/ElementNodeComponent'
-import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
-import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
-
-import AbstractComponent from '../shared/AbstractComponent'
-import AuthorsListComponent from '../shared/AuthorsListComponent'
-import FigureComponent from '../shared/FigureComponent'
-
-// LEGACY: Node based components
-import AffiliationsListComponent from './AffiliationsListComponent'
-import BreakComponent from '../shared/BreakComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
-import EditorsListComponent from './EditorsListComponent'
-import ExtLinkComponent from '../shared/ExtLinkComponent'
-import CaptionComponent from '../shared/CaptionComponent'
-import ContainerNodeComponent from '../shared/ContainerNodeComponent'
-import DispQuoteComponent from './DispQuoteComponent'
-import FnComponent from './FnComponent'
-import FnGroupComponent from './FnGroupComponent'
-import GraphicComponent from './GraphicComponent'
-import HeadingComponent from './HeadingComponent'
-import InlineFormulaComponent from '../shared/InlineFormulaComponent'
-import ListComponent from './ListComponent'
-import ListItemComponent from './ListItemComponent'
-import SeparatorComponent from './SeparatorComponent'
-import SigBlockComponent from './SigBlockComponent'
-import TableComponent from './TableComponent'
-import TitleGroupComponent from './TitleGroupComponent'
+import ManuscriptEditor from './ManuscriptEditor'
 import TOC from './TOC'
-import XrefComponent from './XrefComponent'
 
-// Previews
-import FnPreview from './FnPreview'
-import FigPreview from './FigPreview'
-import TableFigPreview from './TableFigPreview'
 // Commands
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
@@ -82,9 +44,7 @@ import ArticleNavPackage from '../ArticleNavPackage'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import EditReferenceWorkflow from './EditReferenceWorkflow'
 
-import BibliographicEntryComponent from '../shared/BibliographicEntryComponent'
 import CollectionEditor from '../metadata/CollectionEditor'
-import ModelPreviewComponent from '../shared/ModelPreviewComponent'
 
 export default {
   name: 'ManscruptEditor',
@@ -92,6 +52,7 @@ export default {
     config.import(BasePackage)
     config.import(EditorBasePackage)
     config.import(ModelComponentPackage)
+    config.import(ManuscriptContentPackage)
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(ArticleNavPackage)
@@ -101,61 +62,11 @@ export default {
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
 
-    config.addComponent('abstract', AbstractComponent)
-    config.addComponent('authors-list', AuthorsListComponent)
-    config.addComponent('back-matter', CompositeComponent)
-    config.addComponent('bibr', BibliographicEntryComponent)
-    config.addComponent('front-matter', FrontMatterComponent)
-    config.addComponent('heading', HeadingComponent)
-    config.addComponent('references', ReferenceListComponent)
-    config.addComponent('unsupported', UnsupportedNodeComponent)
-    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
-
-    // ATTENTION: I have changed the behavior so that
-    // unregistered annotations or inline-nodes are
-    // rendered using the UnsupportedInlineNodeComponent
-    // instead of rendering all by default with AnnotationComponent
-    config.addComponent('bold', AnnotationComponent)
-    config.addComponent('italic', AnnotationComponent)
-    config.addComponent('sub', AnnotationComponent)
-    config.addComponent('sup', AnnotationComponent)
-    config.addComponent('monospace', AnnotationComponent)
-    config.addComponent('ext-link', ExtLinkComponent)
-
-    // Panels and other displays
-    config.addComponent('manuscript', ManuscriptComponent)
-    config.addComponent('collection', CollectionEditor)
-
-    // LEGACY: Node based components
-    config.addComponent('entity', NodeModelComponent)
-    config.addComponent('model-preview', ModelPreviewComponent)
-    config.addComponent('affiliations-list', AffiliationsListComponent)
-    config.addComponent('editors-list', EditorsListComponent)
-    config.addComponent('break', BreakComponent)
-    config.addComponent('caption', CaptionComponent)
-    config.addComponent('container', ContainerNodeComponent)
-    config.addComponent('col', ElementNodeComponent)
-    config.addComponent('colgroup', ElementNodeComponent)
-    config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('figure', FigureComponent)
-    config.addComponent('table-figure', FigureComponent)
-    config.addComponent('fn', FnComponent)
-    config.addComponent('fn-group', FnGroupComponent)
-    config.addComponent('graphic', GraphicComponent)
-    config.addComponent('inline-formula', InlineFormulaComponent)
-    config.addComponent('list', ListComponent)
-    config.addComponent('list-item', ListItemComponent)
-    config.addComponent('separator', SeparatorComponent)
-    config.addComponent('sig-block', SigBlockComponent)
-    config.addComponent('table-wrap', FigureComponent)
-    config.addComponent('table', TableComponent)
-    config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('toc', TOC)
-    config.addComponent('tr', ElementNodeComponent)
-    config.addComponent('xref', XrefComponent)
-    config.addComponent('fn-preview', FnPreview)
-    config.addComponent('fig-preview', FigPreview)
-    config.addComponent('table-wrap-preview', TableFigPreview)
+    config.addComponent('references', ReferenceListComponent)
+
+    // TODO: try to get rid of this one
+    config.addComponent('collection', CollectionEditor)
 
     // Commands
     config.addCommand('toggle-abstract', ToggleContentSection, {
@@ -624,9 +535,6 @@ export default {
         ]
       }
     ])
-
-    // Labels for manuscript parts
-    config.addLabel('references', 'References')
 
     // Labels for groups
     config.addLabel('structure', 'Structure')

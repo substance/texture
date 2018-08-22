@@ -1,33 +1,18 @@
 import {
-  AnnotationComponent
-} from 'substance'
-
-import {
-  BasePackage, EditorBasePackage, ModelComponentPackage,
-  ContainerEditor, NodeModelComponent
+  BasePackage, EditorBasePackage, ModelComponentPackage
 } from '../../kit'
 
-import EntityLabelsPackage from './EntityLabelsPackage'
 import ArticleNavPackage from '../ArticleNavPackage'
-import AddEntityCommand from './AddEntityCommand'
+import EntityLabelsPackage from '../shared/EntityLabelsPackage'
+import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-
+import AddEntityCommand from './AddEntityCommand'
 import CollectionEditor from './CollectionEditor'
-import ModelPreviewComponent from '../shared/ModelPreviewComponent'
-
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
-
 import TranslateableEditor from './TranslateableEditor'
-import FigureComponent from '../shared/FigureComponent'
-import GraphicComponent from './GraphicComponent'
-import FnComponent from '../editor/FnComponent'
-
-import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
-import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
-import ExtLinkComponent from '../shared/ExtLinkComponent'
 
 export default {
   name: 'ArticleMetadata',
@@ -35,31 +20,19 @@ export default {
     config.import(BasePackage)
     config.import(EditorBasePackage)
     config.import(ArticleNavPackage)
-    // TODO: register MetaDataEditor related UI stuff here
-    // Note, that the model package is already loaded by ArticlePackage
-    config.import(EntityLabelsPackage)
-
-    config.addComponent('unsupported', UnsupportedNodeComponent)
-    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
-    // Annotations
-    config.addComponent('bold', AnnotationComponent)
-    config.addComponent('italic', AnnotationComponent)
-    config.addComponent('sub', AnnotationComponent)
-    config.addComponent('sup', AnnotationComponent)
-    config.addComponent('monospace', AnnotationComponent)
-    config.addComponent('ext-link', ExtLinkComponent)
-
-    // built-ins
+    config.import(ManuscriptContentPackage)
     config.import(ModelComponentPackage)
-    config.addComponent('model-preview', ModelPreviewComponent)
+    config.import(EntityLabelsPackage)
 
     // sections and editors
     config.addComponent('collection', CollectionEditor)
-    config.addComponent('entity', NodeModelComponent)
     config.addComponent('article-record', ArticleRecordEditor)
-    config.addComponent('bibr', BibliographicEntryEditor)
+    config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('subject', TranslatableEntryEditor)
+    config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
+    // workflows
+    config.addComponent('add-reference', AddReferenceWorkflow)
 
     config.addToolPanel('toolbar', [
       {
@@ -194,15 +167,6 @@ export default {
     config.addLabel('abstract-trans', {
       en: 'Abstract'
     })
-    // Components for editors
-    // Note: in many cases the general NodeModelComponent implementation is used
-    // In some other cases we use custom ones (e.g. figures)
-    config.addComponent('translatable', TranslateableEditor)
-    config.addComponent('figure', FigureComponent)
-    config.addComponent('graphic', GraphicComponent)
-    config.addComponent('caption', ContainerEditor)
-    // LEGACY:
-    config.addComponent('footnote', FnComponent)
 
     // TODO: we should try to extract these into a package and share with ManuscriptEditor
     config.addAnnotationTool({
@@ -270,7 +234,6 @@ export default {
     config.addLabel('add-reference', {
       en: 'Add Reference'
     })
-    config.addComponent('add-reference', AddReferenceWorkflow)
 
     // Add reference workflow
     config.addLabel('add-reference-title', 'Add Reference(s)')

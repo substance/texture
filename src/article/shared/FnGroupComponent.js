@@ -1,7 +1,6 @@
 import { NodeComponent } from '../../kit'
-import removeElementAndXrefs from '../shared/removeElementAndXrefs'
-import Button from './Button'
-import { getPos } from '../shared/nodeHelpers'
+import removeElementAndXrefs from './removeElementAndXrefs'
+import { getPos } from './nodeHelpers'
 
 export default class FnGroupComponent extends NodeComponent {
   getInitialState () {
@@ -20,6 +19,7 @@ export default class FnGroupComponent extends NodeComponent {
   }
 
   render ($$) {
+    const Button = this.getComponent('button')
     const node = this.props.node
     let el = $$('div').addClass('sc-fn-group')
       .attr('data-id', 'fn-group')

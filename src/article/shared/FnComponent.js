@@ -1,9 +1,9 @@
 import { Component } from 'substance'
-import Button from './Button'
-import { getLabel } from '../shared/nodeHelpers'
+import { getLabel } from './nodeHelpers'
 
 export default class FnComponent extends Component {
   render ($$) {
+    const Button = this.getComponent('button')
     const node = this.props.node
     let el = $$('div')
       .addClass('sc-fn-item')

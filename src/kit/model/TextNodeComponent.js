@@ -1,5 +1,4 @@
 import NodeComponent from './NodeComponent'
-import TextInput from './TextInput'
 
 /*
   TODO: try to get rid of this by switching to a pure model based approach
@@ -8,6 +7,7 @@ import TextInput from './TextInput'
 */
 export default class TextNodeComponent extends NodeComponent {
   render ($$) {
+    const TextPropertyComponent = this.getComponent('text-property')
     const node = this.props.node
     const tagName = this.getTagName()
     const path = node.getPath()
@@ -15,7 +15,8 @@ export default class TextNodeComponent extends NodeComponent {
       .addClass(this.getClassNames())
       .attr('data-id', node.id)
     el.append(
-      $$(TextInput, {
+      $$(TextPropertyComponent, {
+        doc: node.getDocument(),
         name: path.join('.'),
         path
       }).ref('text')

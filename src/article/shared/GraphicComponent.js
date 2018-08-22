@@ -1,6 +1,6 @@
-import { Component } from 'substance'
+import { NodeComponent } from '../../kit'
 
-export default class DeprecatedGraphicComponent extends Component {
+export default class GraphicComponent extends NodeComponent {
   render ($$) {
     const node = this.props.node
     let url = node.getAttribute('xlink:href')
@@ -8,7 +8,6 @@ export default class DeprecatedGraphicComponent extends Component {
     if (urlResolver) {
       url = urlResolver.resolveUrl(url)
     }
-
     let el = $$('div')
       .addClass('sc-graphic')
       .attr('data-id', node.id)

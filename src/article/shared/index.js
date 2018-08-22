@@ -10,4 +10,6 @@ export * from './nodeHelpers'
 export { default as removeElementAndXrefs } from './removeElementAndXrefs'
 export { default as updateEntityChildArray } from './updateEntityChildArray'
 export { tableHelpers }
+export { default as TableComponent } from './TableComponent'
+export { default as TableEditing } from './TableEditing'
 export * from './xrefHelpers'

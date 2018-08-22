@@ -197,7 +197,7 @@ export default {
     })
     // Components for editors
     config.addComponent('text-node', TextNodeComponent)
-    // Note: in many cases the general EntityEditor implementation is used
+    // Note: in many cases the general NodeModelComponent implementation is used
     // In some other cases we use custom ones (e.g. figures)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('figure', FigureComponent)

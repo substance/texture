@@ -117,7 +117,7 @@ export default class NodeModelComponent extends CustomSurface {
   }
 
   // rerenderDOMSelection (...args) {
-  //   console.log('EntityEditor.rerenderDOMSelection()', args)
+  //   console.log('NodeModelComponent.rerenderDOMSelection()', args)
   // }
 
   _toggleMode () {

@@ -1,5 +1,5 @@
 import { Component, FontAwesomeIcon } from 'substance'
-import FormRowComponent from '../shared/FormRowComponent'
+import { FormRowComponent } from '../../kit'
 
 export default class TranslateableEditor extends Component {
   render ($$) {

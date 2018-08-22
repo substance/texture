@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 
-export default class CompositeModelComponent extends Component {
+export default class CompositeComponent extends Component {
   render ($$) {
     const model = this.props.model
     let el = $$('div')

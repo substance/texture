@@ -1,9 +1,14 @@
 import ValueComponent from './ValueComponent'
 
-export default class ChildrenModelEditor extends ValueComponent {
+export default class ChildrenModelComponent extends ValueComponent {
   render ($$) {
-    let el = $$('div').addClass('sc-children-model-editor')
-    el.append(this._renderChildren($$))
+    let el = $$('div').addClass('sc-children')
+    if (!this.context.editable) {
+      el.addClass('sm-readonly')
+    }
+    el.append(
+      this._renderChildren($$)
+    )
     return el
   }
 

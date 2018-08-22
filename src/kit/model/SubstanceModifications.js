@@ -1,4 +1,5 @@
 import {
+  Surface as SubstanceSurface,
   ContainerEditor as SubstanceContainerEditor,
   IsolatedNodeComponent as SubstanceIsolatedNodeComponent,
   IsolatedInlineNodeComponent as SubstanceIsolatedInlineNodeComponent,
@@ -52,6 +53,19 @@ export class ContainerEditorNew extends SubstanceContainerEditor {
     if (globalEventHandler) {
       globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)
     }
+  }
+
+  // overriding this to control editability
+  render ($$) {
+    let el = super.render($$)
+
+    // HACK: removing contenteditable if not editable
+    // TODO: we should fix substance.ContainerEditor to be consistent with props used in substance.Surface
+    if (!this.isEditable()) {
+      el.setAttribute('contenteditable', false)
+    }
+
+    return el
   }
 
   // overriding the default implementation, to control the behavior

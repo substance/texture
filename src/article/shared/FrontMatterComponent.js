@@ -1,6 +1,6 @@
-import { CompositeModelComponent } from '../../kit'
+import { CompositeComponent } from '../../kit'
 
-export default class FrontMatterComponent extends CompositeModelComponent {
+export default class FrontMatterComponent extends CompositeComponent {
   getClassNames () {
     return 'sc-front-matter'
   }

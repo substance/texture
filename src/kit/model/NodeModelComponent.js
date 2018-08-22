@@ -2,18 +2,9 @@ import { FontAwesomeIcon, CustomSurface } from 'substance'
 import FormRowComponent from '../ui/FormRowComponent'
 
 /*
-  General purpose editor for Substance Document nodes.
-  Built-in editor components are different types of properties.
-
-  If you need to deviate from this default implementation
-  you can register a custom component for a specific node type
-  deriving from this class, and for instance overriding `_getPropertyEditorClass()`.
+  TODO: is this used anymore?
 */
-export default class NodeModelEditor extends CustomSurface {
-  get isRemovable () {
-    return true
-  }
-
+export default class NodeModelComponent extends CustomSurface {
   getInitialState () {
     return {
       fullMode: false
@@ -111,6 +102,10 @@ export default class NodeModelEditor extends CustomSurface {
       )
     }
     return header
+  }
+
+  get isRemovable () {
+    return true
   }
 
   _getPropertyEditorClass (property) {

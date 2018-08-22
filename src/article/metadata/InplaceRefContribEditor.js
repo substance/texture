@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from 'substance'
 import {
-  FormRowComponent, ValueComponent, StringModelEditor
+  FormRowComponent, ValueComponent, StringComponent
 } from '../../kit'
 
 export default class InplaceRefContribEditor extends ValueComponent {
@@ -31,8 +31,14 @@ export default class InplaceRefContribEditor extends ValueComponent {
     let name = refContrib.getName()
     return $$(FormRowComponent).append(
       // TODO: it would be good to have a default factory for property editors
-      $$(StringModelEditor, { label: this.getLabel(givenNames.name), model: givenNames.model }),
-      $$(StringModelEditor, { label: this.getLabel(name.name), model: name.model }),
+      $$(StringComponent, {
+        label: this.getLabel(givenNames.name),
+        model: givenNames.model
+      }),
+      $$(StringComponent, {
+        label: this.getLabel(name.name),
+        model: name.model
+      }),
       // TODO: use icon provider
       $$('button').addClass('se-remove-value')
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))

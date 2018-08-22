@@ -9,8 +9,8 @@ import {
 } from 'substance'
 
 import {
-  BasePackage, EditorBasePackage, ModelEditorPackage,
-  CompositeModelComponent, NodeModelEditor
+  BasePackage, EditorBasePackage, ModelComponentPackage,
+  CompositeComponent, NodeModelComponent
 } from '../../kit'
 
 import EntityLabelsPackage from '../metadata/EntityLabelsPackage'
@@ -96,7 +96,7 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
-    config.import(ModelEditorPackage)
+    config.import(ModelComponentPackage)
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(ArticleNavPackage)
@@ -115,11 +115,11 @@ export default {
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
     // HACK: to get components working taken from metadata editor
-    config.addComponent('entity', NodeModelEditor)
+    config.addComponent('entity', NodeModelComponent)
     config.addComponent('model-preview', ModelPreviewComponent)
 
     config.addComponent('front-matter', FrontMatterComponent)
-    config.addComponent('back-matter', CompositeModelComponent)
+    config.addComponent('back-matter', CompositeComponent)
     config.addComponent('references', ReferenceListComponent)
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)

@@ -5,8 +5,8 @@ import {
 } from 'substance'
 
 import {
-  BasePackage, ModelEditorPackage,
-  CompositeModelComponent, NodeModelEditor
+  BasePackage, ModelComponentPackage,
+  CompositeComponent, NodeModelComponent
 } from '../../kit'
 
 import ArticleNavPackage from '../ArticleNavPackage'
@@ -59,7 +59,7 @@ export default {
   name: 'ArticleReader',
   configure (config) {
     config.import(BasePackage)
-    config.import(ModelEditorPackage)
+    config.import(ModelComponentPackage)
 
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
@@ -73,10 +73,10 @@ export default {
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
     // HACK: to get components working taken from metadata editor
-    config.addComponent('entity', NodeModelEditor)
+    config.addComponent('entity', NodeModelComponent)
 
     config.addComponent('front-matter', FrontMatterComponent)
-    config.addComponent('back-matter', CompositeModelComponent)
+    config.addComponent('back-matter', CompositeComponent)
     config.addComponent('references', ReferenceListComponent)
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)

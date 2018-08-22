@@ -3,8 +3,8 @@ import {
 } from 'substance'
 
 import {
-  BasePackage, EditorBasePackage, ModelEditorPackage,
-  ContainerEditor, NodeModelEditor
+  BasePackage, EditorBasePackage, ModelComponentPackage,
+  ContainerEditor, NodeModelComponent
 } from '../../kit'
 
 import EntityLabelsPackage from './EntityLabelsPackage'
@@ -51,12 +51,12 @@ export default {
     config.addComponent('ext-link', ExtLinkComponent)
 
     // built-ins
-    config.import(ModelEditorPackage)
+    config.import(ModelComponentPackage)
     config.addComponent('model-preview', ModelPreviewComponent)
 
     // sections and editors
     config.addComponent('collection', CollectionEditor)
-    config.addComponent('entity', NodeModelEditor)
+    config.addComponent('entity', NodeModelComponent)
     config.addComponent('article-record', ArticleRecordEditor)
     config.addComponent('bibr', BibliographicEntryEditor)
     config.addComponent('subject', TranslatableEntryEditor)

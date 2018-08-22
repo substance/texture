@@ -1,17 +1,27 @@
 import ValueComponent from './ValueComponent'
 import MultiSelectInput from '../ui/MultiSelectInput'
 
-export default class ManyRelationshipEditor extends ValueComponent {
+export default class ManyRelationshipComponent extends ValueComponent {
   render ($$) {
     // TODO: we need a label for the dropdown here
     const label = this.props.label
     let options = this.props.model.getAvailableTargets()
     let selected = this._getSelectedOptions(options)
-    return $$(MultiSelectInput, {
-      label,
-      selected,
-      options
-    }).ref('select')
+    let el = $$('div').addClass('sc-many-relationship')
+    if (this.context.editable) {
+      el.append(
+        $$(MultiSelectInput, {
+          label,
+          selected,
+          options
+        }).ref('select')
+      )
+    } else {
+      const selectedLabels = selected.map(item => item.toString())
+      let label = selectedLabels.join('; ')
+      el.addClass('sm-readonly').append(label)
+    }
+    return el
   }
 
   getActionHandlers () {
@@ -29,6 +39,8 @@ export default class ManyRelationshipEditor extends ValueComponent {
   }
 
   _toggleTarget (target) {
-    this.props.model.toggleTarget(target)
+    if (this.context.editable) {
+      this.props.model.toggleTarget(target)
+    }
   }
 }

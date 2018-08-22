@@ -1,7 +1,7 @@
-import { NodeModelEditor } from '../../kit'
+import { NodeModelComponent } from '../../kit'
 import InplaceRefContribEditor from './InplaceRefContribEditor'
 
-export default class BibliographicEntryEditor extends NodeModelEditor {
+export default class BibliographicEntryEditor extends NodeModelComponent {
   // using a special inplace property editor for 'ref-contrib's
   _getPropertyEditorClass (property) {
     let targetTypes = property.targetTypes

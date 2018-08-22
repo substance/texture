@@ -42,7 +42,8 @@ export default class ManuscriptEditor extends Component {
     this.context = Object.assign(createEditorContext(config, editorSession), {
       api,
       tocProvider: this.tocProvider,
-      urlResolver: archive
+      urlResolver: archive,
+      editable: true
     })
     this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })

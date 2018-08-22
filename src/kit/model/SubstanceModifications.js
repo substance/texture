@@ -1,5 +1,4 @@
 import {
-  Surface as SubstanceSurface,
   ContainerEditor as SubstanceContainerEditor,
   IsolatedNodeComponent as SubstanceIsolatedNodeComponent,
   IsolatedInlineNodeComponent as SubstanceIsolatedInlineNodeComponent,

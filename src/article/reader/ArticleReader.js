@@ -33,7 +33,8 @@ export default class ArticleReader extends Component {
     this.context = Object.assign(createEditorContext(config, editorSession), {
       api,
       tocProvider: this.tocProvider,
-      urlResolver: archive
+      urlResolver: archive,
+      editable: false
     })
     this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
 

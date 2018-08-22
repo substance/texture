@@ -52,7 +52,8 @@ export default {
     config.addModel('translatable', TranslateableModel)
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)
-
+    config.addModel('figure', FigureModel)
+    config.addModel('table-figure', FigureModel)
     config.addModel('xref', XrefModel)
 
     // Experimental

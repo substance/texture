@@ -28,13 +28,13 @@ import AbstractComponent from '../shared/AbstractComponent'
 import AuthorsListComponent from '../shared/AuthorsListComponent'
 import BibliographicEntryComponent from '../shared/BibliographicEntryComponent'
 import ExtLinkComponent from '../shared/ExtLinkComponent'
+import FigureComponent from '../shared/FigureComponent'
 
 // Node components
 import AffiliationsListComponent from '../editor/AffiliationsListComponent'
 import BodyComponent from '../editor/BodyComponent'
 import BreakComponent from '../editor/BreakComponent'
 import EditorsListComponent from '../editor/EditorsListComponent'
-import FigComponent from '../editor/FigComponent'
 import CaptionComponent from '../editor/CaptionComponent'
 import DispQuoteComponent from '../editor/DispQuoteComponent'
 import FnComponent from '../editor/FnComponent'
@@ -91,8 +91,8 @@ export default {
     config.addComponent('col', ElementNodeComponent)
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('figure', FigComponent)
-    config.addComponent('table-figure', FigComponent)
+    config.addComponent('figure', FigureComponent)
+    config.addComponent('table-figure', FigureComponent)
     config.addComponent('fn', FnComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
@@ -101,7 +101,7 @@ export default {
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
-    config.addComponent('table-wrap', FigComponent)
+    config.addComponent('table-wrap', FigureComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('title-group', TitleGroupComponent)
     config.addComponent('toc', TOC)

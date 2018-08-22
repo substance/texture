@@ -11,7 +11,7 @@ export default class BooleanComponent extends ValueComponent {
   render ($$) {
     const model = this.props.model
     const value = model.getValue()
-    let el = $$('div').addclass('sc-boolean')
+    let el = $$('div').addClass('sc-boolean')
     if (!this.context.editable) {
       el.addclass('sm-readonly')
     }

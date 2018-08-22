@@ -581,7 +581,6 @@ export default {
           { type: 'command-group', name: 'switch-view' }
         ]
       }
-
     ])
 
     config.addToolPanel('main-overlay', [

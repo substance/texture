@@ -101,7 +101,7 @@ export default class TextureConfigurator extends Configurator {
     this.config.toolPanels[name] = spec
   }
 
-  getToolPanel (name) {
+  getToolPanel (name, strict) {
     let toolPanelSpec = this.config.toolPanels[name]
     if (toolPanelSpec) {
       // return cache compiled tool-panels
@@ -109,6 +109,8 @@ export default class TextureConfigurator extends Configurator {
       let toolPanel = toolPanelSpec.map(itemSpec => this._compileToolPanelItem(itemSpec))
       this._compiledToolPanels[name] = toolPanel
       return toolPanel
+    } else if (strict) {
+      throw new Error(`No toolpanel configured with name ${name}`)
     }
   }
 

@@ -192,5 +192,17 @@ export default {
     config.addLabel('no-editors', 'No Editors')
     config.addLabel('no-references', 'No References')
     config.addLabel('no-footnotes', 'No Footnotes')
+
+    config.addToolPanel('toolbar', [
+      {
+        name: 'mode',
+        type: 'tool-dropdown',
+        showDisabled: false,
+        style: 'full',
+        items: [
+          { type: 'command-group', name: 'switch-view' }
+        ]
+      }
+    ])
   }
 }

@@ -1,7 +1,7 @@
 import {
   Component, DefaultDOMElement
 } from 'substance'
-import { createEditorContext } from '../../kit'
+import { createEditorContext, Managed } from '../../kit'
 import ArticleAPI from '../ArticleAPI'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ManuscriptModel from '../shared/ManuscriptModel'
@@ -13,7 +13,9 @@ export default class ArticleReader extends Component {
     super(...args)
 
     this.handleActions({
-      tocEntrySelected: this._tocEntrySelected
+      executeCommand: this._executeCommand,
+      tocEntrySelected: this._tocEntrySelected,
+      toggleOverlay: this._toggleOverlay
     })
 
     this._initialize(this.props)
@@ -21,7 +23,6 @@ export default class ArticleReader extends Component {
 
   _initialize (props) {
     const { articleSession, config, archive } = props
-    // TODO: try to get this running with just a regular app state thing
     const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
       viewName: this.props.viewName
     })
@@ -35,6 +36,10 @@ export default class ArticleReader extends Component {
       urlResolver: archive
     })
     this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
+
+    this.editorSession = editorSession
+    // initial reduce etc.
+    this.editorSession.initialize()
   }
 
   _updateViewName () {
@@ -56,9 +61,11 @@ export default class ArticleReader extends Component {
   dispose () {
     const appState = this.context.appState
     const articleSession = this.props.articleSession
+    const editorSession = this.editorSession
 
     this.tocProvider.off(this)
     articleSession.off(this)
+    editorSession.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
     appState.removeObserver(this)
     this.empty()
@@ -96,12 +103,25 @@ export default class ArticleReader extends Component {
   _renderMainSection ($$) {
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
+      this._renderToolbar($$),
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
       ).ref('contentSection')
     )
     return mainSection
+  }
+
+  _renderToolbar ($$) {
+    const Toolbar = this.getComponent('toolbar')
+    const configurator = this._getConfigurator()
+    const toolPanel = configurator.getToolPanel('toolbar', true)
+    return $$('div').addClass('se-toolbar-wrapper').append(
+      $$(Managed(Toolbar), {
+        toolPanel,
+        bindings: ['commandStates']
+      }).ref('toolbar')
+    )
   }
 
   _renderTOCPane ($$) {
@@ -180,8 +200,20 @@ export default class ArticleReader extends Component {
   }
 
   _getBodyContainerId () {
-    const doc = this._getDocument()
-    let body = doc.get('body')
-    return body.id
+    return 'body'
+  }
+
+  _executeCommand (name, params) {
+    this.editorSession.executeCommand(name, params)
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this.context.appState
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
   }
 }

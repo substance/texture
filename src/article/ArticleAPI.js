@@ -5,8 +5,6 @@ import {
   StringModel, TextModel, FlowContentModel
 } from '../kit'
 
-import ContribsModel from './models/ContribsModel'
-import MetaModel from './models/MetaModel'
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 
@@ -203,16 +201,6 @@ export default class ArticleAPI extends AbstractAPI {
   getArticleBody () {
     let body = this.getArticle().get('body')
     return new FlowContentModel(this, body.getContentPath())
-  }
-
-  getContribs () {
-    let articleMeta = this.getArticle().find('article-meta')
-    return new ContribsModel(articleMeta, this._getContext())
-  }
-
-  getMeta () {
-    let articleMeta = this.getArticle().find('article-meta')
-    return new MetaModel(articleMeta, this._getContext())
   }
 
   getFootnotes () {

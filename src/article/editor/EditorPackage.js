@@ -25,7 +25,6 @@ import ReferenceListComponent from '../shared/ReferenceListComponent'
 // General components
 import ElementNodeComponent from '../shared/ElementNodeComponent'
 import TextNodeComponent from '../shared/TextNodeComponent'
-import PlainTextComponent from './PlainTextComponent'
 import UnsupportedNodeComponent from '../shared/UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from '../shared/UnsupportedInlineNodeComponent'
 
@@ -35,12 +34,12 @@ import FigureComponent from '../shared/FigureComponent'
 
 // LEGACY: Node based components
 import AffiliationsListComponent from './AffiliationsListComponent'
-import BreakComponent from './BreakComponent'
+import BreakComponent from '../shared/BreakComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import EditorsListComponent from './EditorsListComponent'
 import ExtLinkComponent from '../shared/ExtLinkComponent'
-import CaptionComponent from './CaptionComponent'
+import CaptionComponent from '../shared/CaptionComponent'
 import ContainerNodeComponent from '../shared/ContainerNodeComponent'
 import DispQuoteComponent from './DispQuoteComponent'
 import FnComponent from './FnComponent'
@@ -55,7 +54,6 @@ import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
 import TitleGroupComponent from './TitleGroupComponent'
 import TOC from './TOC'
-import TranslationsComponent from './TranslationsComponent'
 import XrefComponent from './XrefComponent'
 
 // Previews
@@ -106,24 +104,22 @@ export default {
 
     // Base functionality
     config.addComponent('text-node', TextNodeComponent)
-    config.addComponent('plain-text-property', PlainTextComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
-    config.addComponent('entity', NodeModelComponent)
-    config.addComponent('model-preview', ModelPreviewComponent)
-
-    config.addComponent('front-matter', FrontMatterComponent)
-    config.addComponent('back-matter', CompositeComponent)
-    config.addComponent('references', ReferenceListComponent)
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
+    config.addComponent('back-matter', CompositeComponent)
+    config.addComponent('bibr', BibliographicEntryComponent)
+    config.addComponent('front-matter', FrontMatterComponent)
+    config.addComponent('references', ReferenceListComponent)
 
     // LEGACY: Node based components
+    config.addComponent('entity', NodeModelComponent)
+    config.addComponent('model-preview', ModelPreviewComponent)
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
-    config.addComponent('translations', TranslationsComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('container', ContainerNodeComponent)
@@ -146,8 +142,6 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
-
-    config.addComponent('bibr', BibliographicEntryComponent)
 
     // ATTENTION: I have changed the behavior so that
     // unregistered annotations or inline-nodes are

@@ -53,7 +53,7 @@ export default class EditXRefTool extends ToggleTool {
 
     // Triggers a rerender
     this.setState({
-      targets: targets
+      targets
     })
   }
 }

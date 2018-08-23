@@ -69,12 +69,7 @@ export default class AbstractResourceManager {
       if (needsUpdate) break
     }
     if (needsUpdate) {
-      // we should not do this in a flow
-      // TODO: we need the ability to update the node state
-      // either triggering a new flow, but also during a running flow
-      setTimeout(() => {
-        this._updateLabels()
-      })
+      this._updateLabels()
     }
   }
 

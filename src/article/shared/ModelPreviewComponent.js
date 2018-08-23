@@ -1,4 +1,4 @@
-import ModelComponent from './ModelComponent'
+import { ModelComponent } from '../../kit'
 
 export default class ModelPreviewComponent extends ModelComponent {
   render ($$) {

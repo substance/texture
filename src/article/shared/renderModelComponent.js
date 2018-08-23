@@ -1,7 +1,9 @@
+import getComponentForModel from './getComponentForModel'
+
 export default function renderModelComponent (context, $$, props) {
-  const componentRegistry = context.componentRegistry
   const model = props.model
-  let ModelComponent = componentRegistry.get(model.type)
+  if (!model) throw new Error("'props.model' is required")
+  let ModelComponent = getComponentForModel(context, model)
   if (ModelComponent) {
     // LEGACY
     props.node = model._node

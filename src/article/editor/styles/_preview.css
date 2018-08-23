@@ -1,0 +1,20 @@
+.sc-preview {
+  display: flex;
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.sc-preview .se-thumbnail {
+  max-width: 60px;
+}
+
+.sc-preview .se-label {
+  white-space: nowrap;
+  flex: 0 0 40px;
+  padding-left: 10px;
+}
+
+.sc-preview a {
+  text-decoration: none;
+  color: var(--default-text-color);
+}

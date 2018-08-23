@@ -3,3 +3,16 @@
   max-height: 500px;
   overflow: auto;
 }
+
+.sc-edit-xref-tool .se-option {
+  padding: 5px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--separator-color);
+}
+
+.sc-edit-xref-tool .se-option.sm-selected {
+  border-left: 3px solid var(--border-action-color);
+  color: var(--default-text-color);
+  background: var(--active-light-bg-color);
+}

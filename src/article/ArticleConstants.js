@@ -3,6 +3,10 @@ export const PUB_ID_TYPES = {
   'book': ['doi', 'pmid', 'isbn']
 }
 
+export const MANUSCRIPT_MODE = 'manuscript'
+export const PREVIEW_MODE = 'preview'
+export const METADATA_MODE = 'metadata'
+
 export const PUB_ID_TYPE_LABELS = {
   'doi': 'DOI',
   'pmid': 'PubMed ID',

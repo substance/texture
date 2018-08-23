@@ -229,7 +229,9 @@ export default {
     // Workflows
     config.addCommand('add-reference', AddEntityCommand, {
       workflow: 'add-reference',
-      commandGroup: 'add-entity'
+      commandGroup: 'add-entity',
+      type: 'bibr',
+      collection: 'references'
     })
     config.addLabel('add-reference', {
       en: 'Add Reference'

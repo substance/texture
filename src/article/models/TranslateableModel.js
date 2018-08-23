@@ -42,10 +42,8 @@ export default class TranslateableModel {
     Returns a list of translations
   */
   getTranslations () {
-    let article = this._api.getArticle()
-    return this._node.translations.map(t => {
-      const node = article.get(t)
-      return this._api.getModel(node.type, node)
+    return this._node.translations.map(id => {
+      return this._api.getModelById(id)
     })
   }
 

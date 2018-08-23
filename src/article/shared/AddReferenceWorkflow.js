@@ -54,15 +54,15 @@ export default class AddReferenceWorkflow extends Component {
 
   _onImport (items) {
     const api = this.context.api
-    const collection = api.getCollectionForType('reference')
-    collection.addItems(items)
+    const references = api.getModelById('references')
+    references.addItems(items)
     this.send('closeModal')
   }
 
   _onAdd (type) {
     const api = this.context.api
-    const collection = api.getCollectionForType('reference')
-    collection.addItem({type: type})
+    const references = api.getModelById('references')
+    references.addItem({type: type})
     this.send('closeModal')
   }
 }

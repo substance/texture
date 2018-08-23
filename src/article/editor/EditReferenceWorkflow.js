@@ -27,8 +27,8 @@ export default class EditReferenceWorkflow extends Component {
 
   _removeReference (model) {
     const api = this.context.api
-    const collection = api.getCollectionForType('reference')
-    collection.removeItem(model)
+    const references = api.getModelById('references')
+    references.removeItem(model)
     this.send('closeModal')
   }
 }

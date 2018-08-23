@@ -6,13 +6,8 @@ export default class AddEntityCommand extends Command {
   }
   execute (params, context) {
     const collectionName = this.config.collection
-    if (collectionName) {
-      const collection = context.api.getModel(collectionName)
-      collection.addItem()
-    }
-
-    // EXPERIMENTAL: trying to send an action
-    // TODO: maybe a different approach?
-    context.editor.send('startWorkflow', this.config.workflow)
+    const collection = context.api.getModelById(collectionName)
+    // adding an empty item
+    collection.addItem({})
   }
 }

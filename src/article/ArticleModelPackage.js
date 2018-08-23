@@ -5,15 +5,15 @@ import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import LanguagesPackage from './LanguagesPackage'
 
 import FigureModel from './models/FigureModel'
-import ReferenceCollectionModel from './models/ReferenceCollectionModel'
-import AuthorCollectionModel from './models/AuthorCollectionModel'
+import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import AwardCollectionModel from './models/AwardCollectionModel'
-import EditorCollectionModel from './models/EditorCollectionModel'
+import PersonCollectionModel from './models/PersonCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
 import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
+import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
-import TranslateableCollectionModel from './models/TranslateableCollectionModel'
+import TranslationCollectionModel from './models/TranslationCollectionModel'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
 import XrefModel from './models/XrefModel'
@@ -34,17 +34,18 @@ export default {
     config.import(LanguagesPackage)
 
     // Collection Models
-    config.addModel('authors', AuthorCollectionModel)
+    config.addModel('authors', PersonCollectionModel)
     config.addModel('awards', AwardCollectionModel)
-    config.addModel('editors', EditorCollectionModel)
+    config.addModel('editors', PersonCollectionModel)
+    config.addModel('footnotes', FootnoteCollectionModel)
     config.addModel('groups', GroupCollectionModel)
+    config.addModel('keywords', KeywordCollectionModel)
     config.addModel('organisations', OrganisationCollectionModel)
     config.addModel('references', ReferenceCollectionModel)
-    config.addModel('keywords', KeywordCollectionModel)
     config.addModel('subjects', SubjectCollectionModel)
+    config.addModel('translations', TranslationCollectionModel)
 
     // Other special models
-    config.addModel('translatables', TranslateableCollectionModel)
     config.addModel('translatable', TranslateableModel)
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)

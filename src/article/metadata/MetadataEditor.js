@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import { Managed, createEditorContext } from '../../kit'
-import MetadataModel from '../shared/MetadataModel'
+import MetadataModel from '../models/MetadataModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'
@@ -165,8 +165,8 @@ export default class MetadataEditor extends Component {
     // TODO: here we would instanstiate the issue panel for instance
   }
 
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
+  _executeCommand (name) {
+    this.editorSession.executeCommand(name)
   }
 
   _toggleOverlay (overlayId) {

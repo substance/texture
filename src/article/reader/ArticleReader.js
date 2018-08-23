@@ -206,8 +206,8 @@ export default class ArticleReader extends Component {
     return 'body'
   }
 
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
+  _executeCommand (name) {
+    this.editorSession.executeCommand(name)
   }
 
   _toggleOverlay (overlayId) {

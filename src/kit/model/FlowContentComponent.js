@@ -4,15 +4,6 @@ import { ContainerEditorNew } from './SubstanceModifications'
   Customized ContainerEditor for FlowContentModels.
 */
 export default class FlowContentComponent extends ContainerEditorNew {
-  constructor (parent, props, options) {
-    // TODO: we should refactor ContainerEditor so that it is easier to customize
-    super(parent, _monkeyPatchProps(props, parent), options)
-  }
-
-  setProps (newProps) {
-    return super.setProps(_monkeyPatchProps(newProps, this.parent))
-  }
-
   // overriding event registration
   didMount () {
     // ATTENTION: we are not calling super here, because we want to deviate from the default implementation
@@ -90,17 +81,4 @@ export default class FlowContentComponent extends ContainerEditorNew {
     props.model = model
     return props
   }
-}
-
-function _monkeyPatchProps (props, parent) {
-  let newProps = Object.assign({}, props)
-  const model = props.model
-  newProps.containerId = model.id
-  newProps.node = model._node
-  // TODO: we should revisit this in Substance
-  if (!parent.context.editable) {
-    newProps.editing = 'readonly'
-  }
-  delete newProps.model
-  return newProps
 }

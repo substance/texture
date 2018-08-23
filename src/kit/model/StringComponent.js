@@ -6,11 +6,12 @@ export default class StringComponent extends Component {
     let label = this.props.label
     let model = this.props.model
     let path = model._path
+    let name = path.join('.')
     // TODO: use label provider for this
     let placeholder = 'Enter ' + label
     let el = $$('div').addClass(this.getClassNames())
     el.append($$(TextInput, {
-      name: path.join('.'),
+      name,
       path,
       placeholder
     }))

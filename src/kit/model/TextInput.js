@@ -1,23 +1,26 @@
-import { Surface } from 'substance'
+import { SurfaceNew } from './SubstanceModifications'
 
-export default class TextInput extends Surface {
-  constructor (parent, props, options) {
-    // monkey patching props to map context.editable to props that are understood by substance.Surface
-    super(parent, _monkeyPatchProps(parent, props), options)
-  }
-
+export default class TextInput extends SurfaceNew {
   render ($$) {
     const TextPropertyComponent = this.getComponent('text-property')
-    let placeholder = this.props.placeholder
-    let path = this.props.path
+    const placeholder = this.props.placeholder
+    const path = this.props.path
+    const isEditable = this.isEditable()
     // TODO: we should refactor Substance.TextPropertyEditor so that it can be used more easily
-    let el = Surface.prototype.render.apply(this, arguments)
+    let el = SurfaceNew.prototype.render.apply(this, arguments)
     el.addClass('sc-text-input')
-    if (!this.props.disabled) {
-      el.addClass('sm-enabled')
-      el.attr('contenteditable', true)
-      // native spellcheck
-      el.attr('spellcheck', this.props.spellcheck === 'native')
+    // Attention: being disabled does not necessarily mean not-editable, whereas non-editable is always disabled
+    // A Surface can also be disabled because it is blurred, for instance.
+    if (isEditable) {
+      el.addClass('sm-editable')
+      if (!this.props.disabled) {
+        el.addClass('sm-enabled')
+        el.attr('contenteditable', true)
+        // native spellcheck
+        el.attr('spellcheck', this.props.spellcheck === 'native')
+      }
+    } else {
+      el.addClass('sm-readonly')
     }
     let content = $$(TextPropertyComponent, {
       doc: this.getDocument(),
@@ -28,11 +31,4 @@ export default class TextInput extends Surface {
     el.append(content)
     return el
   }
-}
-
-function _monkeyPatchProps (parent, props) {
-  if (!parent.context.editable) {
-    props.editing = 'readonly'
-  }
-  return props
 }

@@ -93,6 +93,8 @@ export default class NodeModelComponent extends CustomSurface {
   }
 
   _renderHeader ($$) {
+    // TODO: rethink this. IMO it is not possible to generalize this implementation.
+    // Maybe it is better to just use the regular component and pass a prop to allow the component to render in a 'short' style
     const ModelPreviewComponent = this.getComponent('model-preview', true)
     const model = this.props.model
     let header = $$('div').addClass('se-header')

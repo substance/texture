@@ -5,7 +5,7 @@ export default class SurfaceManager {
     this.editorState = editorState
     this.surfaces = {}
 
-    editorState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'update' })
+    editorState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'post-render' })
     editorState.addObserver(['selection', 'document'], this._recoverDOMSelection, this, { stage: 'post-render' })
     editorState.addObserver(['selection', 'document'], this._scrollSelectionIntoView, this, { stage: 'finalize' })
   }

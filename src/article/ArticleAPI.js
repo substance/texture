@@ -88,7 +88,8 @@ export default class ArticleAPI extends AbstractAPI {
     this.articleSession.transaction(tx => {
       let node = tx.create(item)
       tx.get(collection._node.id).appendChild(node)
-      tx.selection = null
+      let newSelection = this._selectFirstRequiredProperty(node)
+      tx.setSelection(newSelection)
     })
   }
 
@@ -307,5 +308,19 @@ export default class ArticleAPI extends AbstractAPI {
     let REQUIRED = REQUIRED_PROPERTIES[type]
     if (REQUIRED) return REQUIRED.has(propertyName)
     return false
+  }
+
+  _selectFirstRequiredProperty (node) {
+    let requiredProps = REQUIRED_PROPERTIES[node.type]
+    if (requiredProps) {
+      let propName = Array.from(requiredProps)[0]
+      let path = [node.id, propName]
+      return {
+        type: 'property',
+        path,
+        startOffset: 0,
+        surfaceId: `${node.id}/${path.join('.')}`
+      }
+    }
   }
 }

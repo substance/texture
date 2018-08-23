@@ -397,8 +397,8 @@ Webpage.schema = {
 class Person extends DocumentNode {}
 Person.schema = {
   type: 'person',
-  givenNames: STRING,
   surname: STRING,
+  givenNames: STRING,
   prefix: STRING,
   suffix: STRING,
   email: STRING,

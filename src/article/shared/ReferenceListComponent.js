@@ -20,7 +20,6 @@ export default class ReferenceListComponent extends Component {
   }
 
   render ($$) {
-    console.log('MEH')
     const ReferenceComponent = this.getComponent('bibr')
     const bibliography = this._getBibliography()
 

@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import FigComponent from './FigComponent'
+import FigureComponent from '../shared/FigureComponent'
 import FigureOptionComponent from './FigureOptionComponent'
 
 export default class FigureDelegatorComponent extends Component {
@@ -7,7 +7,7 @@ export default class FigureDelegatorComponent extends Component {
     if (this.props.mode === 'option') {
       return $$(FigureOptionComponent, this.props)
     } else {
-      return $$(FigComponent, this.props)
+      return $$(FigureComponent, this.props)
     }
   }
 }

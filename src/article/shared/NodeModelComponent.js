@@ -2,6 +2,21 @@ import { FontAwesomeIcon, Component } from 'substance'
 import { FormRowComponent } from '../../kit'
 
 export default class NodeModelComponent extends Component {
+  didMount () {
+    // EXPERIMENTAL: ExperimentalArticleValidator updates `node.id, @issues`
+    const model = this.props.model
+    this.context.appState.addObserver(['document'], this.rerender, this, {
+      stage: 'render',
+      document: {
+        path: [model.id, '@issues']
+      }
+    })
+  }
+
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
   getInitialState () {
     return {
       fullMode: false

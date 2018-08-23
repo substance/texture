@@ -19,11 +19,11 @@ export default class ExperimentalArticleValidator {
       CheckRequiredFields.onCreate(this, node)
     })
     // TODO: or should we bind to editorState updates?
-    this._articleSession.on('change', this._onDocumentChange, this)
+    this._editorState.addObserver(['document'], this._onDocumentChange, this, { stage: 'update' })
   }
 
   dispose () {
-    this._articleSession.off(this)
+    this._editorState.removeObserver(this)
   }
 
   /*
@@ -82,9 +82,9 @@ export default class ExperimentalArticleValidator {
       CheckRequiredFields.onCreate(this, node)
     })
     Object.keys(change.updated).forEach(key => {
-      let path = key.split('.')
+      let path = key.split(',')
       let node = article.get(path[0])
-      CheckRequiredFields.onCreate(this, node, path, article.get(path))
+      CheckRequiredFields.onUpdate(this, node, path, article.get(path))
     })
   }
 

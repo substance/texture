@@ -35,7 +35,8 @@ export default class MetadataEditor extends Component {
     this.context = Object.assign(createEditorContext(config, editorSession), {
       editor: this,
       api,
-      urlResolver: archive
+      urlResolver: archive,
+      editable: true
     })
     this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
     this.model = new MetadataModel(api)

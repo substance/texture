@@ -1,4 +1,5 @@
 import {
+  Surface as SubstanceSurface,
   ContainerEditor as SubstanceContainerEditor,
   IsolatedNodeComponent as SubstanceIsolatedNodeComponent,
   IsolatedInlineNodeComponent as SubstanceIsolatedInlineNodeComponent,
@@ -11,6 +12,69 @@ import {
   are necessary to be compatible with the AppState and the Model API.
 */
 
+export class SurfaceNew extends SubstanceSurface {
+  constructor (parent, props, options) {
+    super(parent, _monkeyPatchSurfaceProps(parent, props), options)
+  }
+
+  setProps (newProps) {
+    return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
+  }
+}
+
+// TODO: try to provide basic Surface and ContainerEditor implementations
+// making it easier to use a different data binding mechanism
+export class TextPropertyEditorNew extends SubstanceTextPropertyEditor {
+  constructor (parent, props, options) {
+    super(parent, _monkeyPatchSurfaceProps(parent, props), options)
+  }
+
+  setProps (newProps) {
+    return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
+  }
+
+  // overriding event registration
+  didMount () {
+    let appState = this.context.appState
+    appState.addObserver(['selection'], this._onSelectionChanged, this, {
+      stage: 'render'
+    })
+    const surfaceManager = this.getSurfaceManager()
+    if (surfaceManager) {
+      surfaceManager.registerSurface(this)
+    }
+    const globalEventHandler = this.getGlobalEventHandler()
+    if (globalEventHandler) {
+      globalEventHandler.addEventListener('keydown', this._muteNativeHandlers, this)
+    }
+  }
+
+  dispose () {
+    this.context.appState.off(this)
+    const surfaceManager = this.getSurfaceManager()
+    if (surfaceManager) {
+      surfaceManager.unregisterSurface(this)
+    }
+    const globalEventHandler = this.getGlobalEventHandler()
+    if (globalEventHandler) {
+      globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)
+    }
+  }
+
+  render ($$) {
+    let el = super.render($$)
+    if (this.isEditable()) {
+      el.addClass('sm-editable')
+    } else {
+      el.addClass('sm-readonly')
+      // HACK: removing contenteditable if not editable
+      // TODO: we should fix substance.TextPropertyEditor to be consistent with props used in substance.Surface
+      el.setAttribute('contenteditable', false)
+    }
+    return el
+  }
+}
+
 /*
   Customized ContainerEditor that produces a fall-back display
   for nodes which are not supported yet.
@@ -18,6 +82,14 @@ import {
 // TODO: try to provide basic Surface and ContainerEditor implementations
 // making it easier to use a different data binding mechanism
 export class ContainerEditorNew extends SubstanceContainerEditor {
+  constructor (parent, props, options) {
+    super(parent, _monkeyPatchSurfaceProps(parent, props), options)
+  }
+
+  setProps (newProps) {
+    return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
+  }
+
   // overriding event registration
   didMount () {
     let appState = this.context.appState
@@ -54,6 +126,19 @@ export class ContainerEditorNew extends SubstanceContainerEditor {
     }
   }
 
+  // overriding this to control editability
+  render ($$) {
+    let el = super.render($$)
+
+    // HACK: removing contenteditable if not editable
+    // TODO: we should fix substance.ContainerEditor to be consistent with props used in substance.Surface
+    if (!this.isEditable()) {
+      el.setAttribute('contenteditable', false)
+    }
+
+    return el
+  }
+
   // overriding the default implementation, to control the behavior
   // for nodes without explicitly registered component
   _getNodeComponentClass (node) {
@@ -87,6 +172,23 @@ export class ContainerEditorNew extends SubstanceContainerEditor {
     props.model = model
     return props
   }
+}
+
+function _monkeyPatchSurfaceProps (parent, props) {
+  let newProps = Object.assign({}, props)
+  if (props.model && !props.node) {
+    const model = props.model
+    if (model.type === 'flow-content-model') {
+      newProps.containerId = model.id
+    } else {
+      newProps.node = model._node
+    }
+  }
+  // TODO: we should revisit this in Substance
+  if (!parent.context.editable) {
+    newProps.editing = 'readonly'
+  }
+  return newProps
 }
 
 export class IsolatedInlineNodeComponentNew extends SubstanceIsolatedInlineNodeComponent {
@@ -125,37 +227,5 @@ export class TextPropertyComponentNew extends SubstanceTextPropertyComponent {
 
   _getUnsupportedInlineNodeComponentClass () {
     return this.getComponent('unsupported-inline-node')
-  }
-}
-
-// TODO: try to provide basic Surface and ContainerEditor implementations
-// making it easier to use a different data binding mechanism
-export class TextPropertyEditorNew extends SubstanceTextPropertyEditor {
-  // overriding event registration
-  didMount () {
-    let appState = this.context.appState
-    appState.addObserver(['selection'], this._onSelectionChanged, this, {
-      stage: 'render'
-    })
-    const surfaceManager = this.getSurfaceManager()
-    if (surfaceManager) {
-      surfaceManager.registerSurface(this)
-    }
-    const globalEventHandler = this.getGlobalEventHandler()
-    if (globalEventHandler) {
-      globalEventHandler.addEventListener('keydown', this._muteNativeHandlers, this)
-    }
-  }
-
-  dispose () {
-    this.context.appState.off(this)
-    const surfaceManager = this.getSurfaceManager()
-    if (surfaceManager) {
-      surfaceManager.unregisterSurface(this)
-    }
-    const globalEventHandler = this.getGlobalEventHandler()
-    if (globalEventHandler) {
-      globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)
-    }
   }
 }

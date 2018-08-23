@@ -1,4 +1,13 @@
-.sc-manuscript .sc-text-model-editor.sm-title {
+.sc-manuscript {
+  max-width: 760px;
+  padding: 30px;
+}
+
+.sc-manuscript-view.sm-compact .sc-manuscript {
+  margin: 0 auto;
+}
+
+.sc-manuscript .sc-text.sm-title {
   line-height: 1.3em;
   font-size: var(--title-font-size);
   font-family: 'Avenir Next', 'Lato', Helvetica;

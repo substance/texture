@@ -1,6 +1,6 @@
-import { NodeModelEditor } from '../../kit'
+import { NodeModelComponent } from '../../kit'
 
-export default class ArticleRecordEditor extends NodeModelEditor {
+export default class ArticleRecordEditor extends NodeModelComponent {
   get isRemovable () {
     return false
   }

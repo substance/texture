@@ -1,4 +1,5 @@
 import './testGlobals'
+import './ArticlePanel.test'
 import './Persistence.test'
 // import './TableComponent.test'
 // import './converter/index'

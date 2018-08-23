@@ -3,9 +3,11 @@ import ArticleConfigurator from './ArticleConfigurator'
 import ModelPackage from './ArticleModelPackage'
 import EditorPackage from './editor/EditorPackage'
 import MetadataPackage from './metadata/MetadataPackage'
+import ReaderPackage from './reader/ReaderPackage'
 import ArticlePanel from './ArticlePanel'
 import ManuscriptEditor from './editor/ManuscriptEditor'
 import MetadataEditor from './metadata/MetadataEditor'
+import ArticleReader from './reader/ArticleReader'
 
 export default {
   name: 'Article',
@@ -23,10 +25,14 @@ export default {
     // used for the metadata editor view
     let metadataEditorConfig = ArticleConfigurator.createFrom(modelConfig).import(MetadataPackage)
     config.setConfiguration('metadata', metadataEditorConfig)
+    // used for the reader view
+    let readerConfig = ArticleConfigurator.createFrom(modelConfig).import(ReaderPackage)
+    config.setConfiguration('reader', readerConfig)
 
     config.import(BasePackage)
     // UI stuff for the ArticlePanel
     config.addComponent('manuscript-editor', ManuscriptEditor)
     config.addComponent('metadata-editor', MetadataEditor)
+    config.addComponent('article-reader', ArticleReader)
   }
 }

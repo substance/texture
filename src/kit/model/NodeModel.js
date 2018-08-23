@@ -1,12 +1,4 @@
-import BooleanModel from './BooleanModel'
-import NumberModel from './NumberModel'
-import StringModel from './StringModel'
-import TextModel from './TextModel'
-import ObjectModel from './ObjectModel'
-import ChildrenModel from './ChildrenModel'
-import SingleRelationshipModel from './SingleRelationshipModel'
-import ManyRelationshipModel from './ManyRelationshipModel'
-import AnyModel from './AnyModel'
+import NodeModelProperty from './NodeModelProperty'
 
 export default class NodeModel {
   constructor (api, node) {
@@ -42,80 +34,5 @@ export default class NodeModel {
 
   _getPropertyModel (name) {
     return this._propertiesByName.get(name)
-  }
-}
-
-export class NodeModelProperty {
-  constructor (api, node, nodeProperty) {
-    this._api = api
-    this._node = node
-    this._nodeProperty = nodeProperty
-
-    this._valueModel = this._createValueModel()
-  }
-
-  get name () { return this._nodeProperty.name }
-
-  get type () { return this._valueModel.type }
-
-  get model () { return this._valueModel }
-
-  get targetTypes () { return this._nodeProperty.targetTypes || [] }
-
-  isRequired () {
-    return this._api._isPropertyRequired(this._node.type, this.name)
-  }
-
-  isEmpty () {
-    return this._valueModel.isEmpty()
-  }
-
-  _createValueModel () {
-    let valueModel
-    const api = this._api
-    const nodeProperty = this._nodeProperty
-    const type = nodeProperty.type
-    const path = [this._node.id, this.name]
-    switch (type) {
-      case 'boolean': {
-        valueModel = new BooleanModel(api, path)
-        break
-      }
-      case 'number': {
-        valueModel = new NumberModel(api, path)
-        break
-      }
-      case 'string': {
-        valueModel = new StringModel(api, path)
-        break
-      }
-      case 'text': {
-        valueModel = new TextModel(api, path)
-        break
-      }
-      case 'object': {
-        valueModel = new ObjectModel(api, path)
-        break
-      }
-      default:
-        //
-    }
-    if (!valueModel) {
-      if (nodeProperty.isReference()) {
-        if (nodeProperty.isArray()) {
-          if (nodeProperty.isOwned()) {
-            valueModel = new ChildrenModel(api, path, nodeProperty.targetTypes)
-          } else {
-            valueModel = new ManyRelationshipModel(api, path, nodeProperty.targetTypes)
-          }
-        } else {
-          valueModel = new SingleRelationshipModel(api, path, nodeProperty.targetTypes)
-        }
-      }
-    }
-    if (!valueModel) {
-      valueModel = new AnyModel(api, path)
-    }
-    return valueModel
   }
 }

@@ -17,5 +17,13 @@ export default {
       icon: 'fa-th-list',
       label: 'Metadata'
     })
+
+    config.addViewMode({
+      name: 'open-reader',
+      viewName: 'reader',
+      commandGroup: 'switch-view',
+      icon: 'fa-th-list',
+      label: 'Reader'
+    })
   }
 }

@@ -1,12 +1,11 @@
 import { ListPackage } from 'substance'
 import TextureHTMLConverters from './TextureHTMLConverters'
 import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
-import EntitiesPackage from './metadata/EntitiesPackage'
+import EntityLabelsPackage from './shared/EntityLabelsPackage'
+import LanguagesPackage from './LanguagesPackage'
 
-// TODO: most of these need to be rewritten
 import FigureModel from './models/FigureModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
-import FootnoteModel from './models/FootnoteModel'
 import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import AuthorCollectionModel from './models/AuthorCollectionModel'
@@ -16,10 +15,6 @@ import GroupCollectionModel from './models/GroupCollectionModel'
 import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
-
-import LanguagesPackage from './LanguagesPackage'
-
-// Custom models
 import TranslateableCollectionModel from './models/TranslateableCollectionModel'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationModel from './models/TranslationModel'
@@ -28,9 +23,7 @@ import XrefModel from './models/XrefModel'
 export default {
   name: 'TextureArticle',
   configure (config) {
-    // EXPERIMENTAL: extend the InternalArticle schema with entities
-    // we want to merge PubMetaDb into the InternalArticle
-    config.import(EntitiesPackage)
+    config.import(EntityLabelsPackage)
 
     // enable rich-text support for clipboard
     TextureHTMLConverters.forEach(converter => {
@@ -59,13 +52,9 @@ export default {
     config.addModel('translatable', TranslateableModel)
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)
-
+    config.addModel('figure', FigureModel)
+    config.addModel('table-figure', FigureModel)
     config.addModel('xref', XrefModel)
-
-    // Models: Provide API's on top of raw nodes
-    config.addModel('fig', FigureModel)
-    config.addModel('fn', FootnoteModel)
-    config.addModel('table-wrap', FigureModel)
 
     // Experimental
     config.setLabelGenerator('references', {

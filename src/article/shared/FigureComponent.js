@@ -1,49 +1,40 @@
-import NodeComponent from '../shared/NodeComponent'
+import { Component } from 'substance'
+import renderModelComponent from './renderModelComponent'
 
-export default class FigureComponent extends NodeComponent {
-  // TODO: In the reader, if title or caption is empty, should we drop those elements from the view?
+export default class FigureComponent extends Component {
   render ($$) {
-    let model = this.props.model
-    let title = model.getTitle()
-    let caption = model.getCaption()
-    let contentType = model.getContentType()
-    let content = model.getContent()
-    let label = model.getLabel()
-
-    // TODO: switch to .sc-figure, once transition to a shared FigureComponent is complete
-    let el = $$('div').addClass('sc-fig')
-      .attr('id', model.id)
+    const model = this.props.model
+    let el = $$('div')
+      .addClass('sc-' + model.type)
       .attr('data-id', model.id)
 
+    // CHALLENGE: this should be rendered as readonly
+    // Furthermore, ATM we use the node.state to store generated labels
+    // as they are volatile. Thus, this component should observe changes to the node state and rerender on change.
+    let label = model.getLabel()
     let labelEl = $$('div').addClass('se-label').text(label)
     el.append(labelEl)
 
-    if (content) {
-      // TODO: switch to using model: content
-      let contentEl = $$(this.getComponent(contentType), {
-        model: content,
-        node: content._node,
-        disabled: this.props.disabled
-      })
-      el.append(contentEl.ref('content'))
-    }
+    el.append(
+      renderModelComponent(this.context, $$, {
+        model: model.getContent()
+      }).ref('content').addClass('se-content')
+    )
 
-    let titleEl = $$(this.getComponent('text-property'), {
-      placeholder: 'Enter Title',
-      path: title.getTextPath(),
-      disabled: this.props.disabled
-    }).addClass('se-title').ref('title')
-    el.append(titleEl)
+    el.append(
+      renderModelComponent(this.context, $$, {
+        model: model.getTitle(),
+        label: 'Title'
+      }).ref('title').addClass('se-title')
+    )
 
-    let captionEl
-    if (caption) {
-      captionEl = $$(this.getComponent('caption'), {
-        // TODO: Use a component that works on the ContainerModel rather than ContainerNode
-        node: caption.getContainerNode(),
-        disabled: this.props.disabled
-      }).ref('caption')
-      el.append(captionEl)
-    }
+    el.append(
+      renderModelComponent(this.context, $$, {
+        model: model.getCaption(),
+        label: 'Caption'
+      }).ref('caption').addClass('se-caption')
+    )
+
     return el
   }
 }

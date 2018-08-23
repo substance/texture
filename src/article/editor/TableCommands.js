@@ -1,6 +1,6 @@
 import { Command, getRangeFromMatrix, flatten } from 'substance'
 import { generateTable, getCellRange } from '../shared/tableHelpers'
-import TableEditing from './TableEditing'
+import TableEditing from '../shared/TableEditing'
 import InsertNodeCommand from './InsertNodeCommand'
 
 export class InsertTableCommand extends InsertNodeCommand {

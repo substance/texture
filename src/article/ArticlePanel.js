@@ -73,10 +73,21 @@ export default class ArticlePanel extends Component {
     const config = props.config.getConfiguration(viewName)
 
     let ContentComponent
-    if (viewName === 'manuscript') {
-      ContentComponent = this.getComponent('manuscript-editor')
-    } else if (viewName === 'metadata') {
-      ContentComponent = this.getComponent('metadata-editor')
+    switch (viewName) {
+      case 'manuscript': {
+        ContentComponent = this.getComponent('manuscript-editor')
+        break
+      }
+      case 'metadata': {
+        ContentComponent = this.getComponent('metadata-editor')
+        break
+      }
+      case 'reader': {
+        ContentComponent = this.getComponent('article-reader')
+        break
+      }
+      default:
+        throw new Error('Unsupported view: ' + viewName)
     }
     return $$(ContentComponent, {
       viewName,

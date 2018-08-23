@@ -1,18 +1,19 @@
 import { MemoryDOMElement } from 'substance'
 import { TextureArchive, checkArchive } from '../index'
-import { spy, getMountPoint, testAsync } from './testHelpers'
-import { applyNOP, toUnix, createTestApp } from './integrationTestHelpers'
+import { spy, testAsync, _async } from './testHelpers'
+import { applyNOP, toUnix } from './integrationTestHelpers'
+import setupTestApp from './setupTestApp'
 
 testAsync('Persistence: loading and saving the kitchen-sink article', async (t) => {
-  let res = await _setupApp(t)
+  let res = await setupTestApp(t)
   let {app, archive, manuscriptSession} = res
   applyNOP(manuscriptSession)
   spy(archive.storage, 'write')
-  await async(cb => {
+  await _async(cb => {
     app._save(cb)
   })
   let rawArchive = archive.storage.write.args[1]
-  let originalRawArchive = await async(cb => {
+  let originalRawArchive = await _async(cb => {
     archive.storage.read('kitchen-sink', cb)
   })
   // the XML should have actually not changed
@@ -40,28 +41,3 @@ testAsync('Persistence: loading and saving the kitchen-sink article', async (t) 
   t.equal(toUnix(newBackXML), toUnix(oldBackXML), 'Back should be the same after saving')
   t.end()
 })
-
-function _setupApp (t) {
-  let app
-  return new Promise((resolve, reject) => {
-    let App = createTestApp(resolve, reject)
-    let el = getMountPoint(t)
-    app = App.mount({
-      archiveId: 'kitchen-sink',
-      storageType: 'vfs'
-    }, el)
-  }).then(archive => {
-    let manifestSession = archive.getEditorSession('manifest')
-    let manuscriptSession = archive.getEditorSession('manuscript')
-    return { app, archive, manifestSession, manuscriptSession }
-  })
-}
-
-function async (fn) {
-  return new Promise((resolve, reject) => {
-    fn((err, result) => {
-      if (err) reject(err)
-      else resolve(result)
-    })
-  })
-}

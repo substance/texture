@@ -1,7 +1,6 @@
 import { Component } from 'substance'
 import { ModalDialog } from '../../kit'
 import renderEntity from './renderEntity'
-// import AffiliationsListComponent from './AffiliationsListComponent'
 
 export default class AuthorsListComponent extends Component {
   getInitialState () {

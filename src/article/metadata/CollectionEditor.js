@@ -1,4 +1,5 @@
 import { Component } from 'substance'
+import { addModelObserver, removeModelObserver } from '../../kit'
 import CardComponent from '../shared/CardComponent'
 
 export default class CollectionEditor extends Component {
@@ -6,6 +7,15 @@ export default class CollectionEditor extends Component {
     return {
       'remove-item': this._removeCollectionItem
     }
+  }
+
+  // TODO: we need a simpler way to register an observer for a given model
+  didMount () {
+    addModelObserver(this.props.model, this.rerender, this, { stage: 'render' })
+  }
+
+  dispose () {
+    removeModelObserver(this)
   }
 
   render ($$) {

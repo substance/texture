@@ -97,11 +97,17 @@ class Slot {
   }
 
   _getEntryForObserver (observer) {
-    return observer[this._id].get(this.id)
+    let entries = observer[this._id]
+    if (entries) {
+      return entries.get(this.id)
+    }
   }
 
   _deleteEntry (observer) {
-    delete observer[this._id].get(this.id)
+    let entries = observer[this._id]
+    if (entries) {
+      entries.delete(this.id)
+    }
   }
 
   _getDocumentChange () {
@@ -159,18 +165,21 @@ class DocumentSlot extends Slot {
   }
 
   removeObserver (observer) {
-    const entry = observer[this._id].get(this.id)
-    const index = this.byPath
+    const entries = observer[this._id]
+    if (entries) {
+      const entry = entries.get(this.id)
+      const index = this.byPath
 
-    super.removeObserver(observer)
+      super.removeObserver(observer)
 
-    let docSpec = entry.spec.options.document
-    if (docSpec && docSpec.path) {
-      let key = docSpec.path
-      let records = index[key]
-      records.delete(observer)
-    } else {
-      index[ANY].delete(observer)
+      let docSpec = entry.spec.options.document
+      if (docSpec && docSpec.path) {
+        let key = docSpec.path
+        let records = index[key]
+        records.delete(observer)
+      } else {
+        index[ANY].delete(observer)
+      }
     }
   }
 

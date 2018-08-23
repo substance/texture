@@ -8,6 +8,8 @@ export default class CompositeModel {
 
   get type () { return 'composite-model' }
 
+  get _isCompositeModel () { return true }
+
   getProperties () {
     return this._properties
   }

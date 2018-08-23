@@ -9,5 +9,7 @@ export default class AddEntityCommand extends Command {
     const collection = context.api.getModelById(collectionName)
     // adding an empty item
     collection.addItem({})
+
+    context.editor.send('toggleOverlay')
   }
 }

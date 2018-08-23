@@ -34,6 +34,7 @@ export default class DefaultCollectionModel {
 
   _prepareItem (item) {
     item.type = this._getItemType()
+    return item
   }
 
   _getItemType () {

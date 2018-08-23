@@ -1,24 +1,9 @@
+import DefaultCollectionModel from './DefaultCollectionModel'
 
-export default class ReferenceCollectionModel {
-  constructor (api, node) {
-    this._api = api
-    this._node = node
-  }
-
-  get type () { return 'references' }
-
-  get id () {
-    return 'references'
-  }
-
-  get isCollection () {
-    return true
-  }
-
+export default class ReferenceCollectionModel extends DefaultCollectionModel {
   getItems () {
-    let refs = this._api.getReferenceManager().getBibliography()
-    let result = refs.map(ref => this._getItem(ref.id))
-    return result
+    // TODO: do we expect this to be sorted?
+    return super.getItems()
   }
 
   addItem (item) {
@@ -26,22 +11,10 @@ export default class ReferenceCollectionModel {
   }
 
   addItems (items) {
-    this._api.addReferences(items, this)
+    return this._api.addItemsToCollection(items, this)
   }
 
   removeItem (item) {
     this._api.deleteReference(item, this)
-  }
-
-  _getItem (id) {
-    let article = this._api.getArticle()
-    let node = article.get(id)
-    if (!node) {
-      console.warn(`No db entry found for ${id}.`)
-      return undefined
-    }
-
-    let model = this._api._getModelForNode(node)
-    return model
   }
 }

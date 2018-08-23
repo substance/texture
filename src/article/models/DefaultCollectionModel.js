@@ -5,31 +5,39 @@ export default class DefaultCollectionModel {
   }
 
   get id () {
-    return this._getCollectionId()
+    return this._node.id
+  }
+
+  get type () {
+    return this._node.type
   }
 
   get isCollection () {
     return true
   }
 
-  get type () {
-    return 'collection'
-  }
-
   getItems () {
-    return this._node._childNodes.map(id => this._api._getModelById(id))
+    return this._node._childNodes.map(id => this._api.getModelById(id))
   }
 
   addItem (item = {}) {
-    item.type = this._getCollectionType()
-    return this._api.addItemToCollection(item, this)
+    return this._api.addItemToCollection(this._prepareItem(item), this)
+  }
+
+  addItems (items) {
+    return this._api.addItemsToCollection(items.map(item => this._prepareItem(item)), this)
   }
 
   removeItem (item) {
     this._api.removeItemFromCollection(item, this)
   }
 
-  _getCollectionType () {
-    return 'collection'
+  _prepareItem (item) {
+    item.type = this._getItemType()
+    return item
+  }
+
+  _getItemType () {
+    throw new Error('This method is abstract.')
   }
 }

@@ -1,11 +1,7 @@
 import DefaultCollectionModel from './DefaultCollectionModel'
 
 export default class SubjectCollectionModel extends DefaultCollectionModel {
-  _getCollectionId () {
-    return 'subjects'
-  }
-
-  _getCollectionType () {
+  _getItemType () {
     return 'subject'
   }
 }

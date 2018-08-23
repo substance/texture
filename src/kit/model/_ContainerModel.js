@@ -18,6 +18,6 @@ export default class _ContainerModel extends ValueModel {
   }
 
   _getItems () {
-    return this.getValue().map(id => this._api._getModelById(id))
+    return this.getValue().map(id => this._api.getModelById(id))
   }
 }

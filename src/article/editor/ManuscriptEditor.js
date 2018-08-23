@@ -214,8 +214,8 @@ export default class ManuscriptEditor extends Component {
     return this.props.articleSession.getDocument()
   }
 
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
+  _executeCommand (name) {
+    this.editorSession.executeCommand(name)
   }
 
   _restoreViewport () {

@@ -6,6 +6,10 @@ export default class DynamicCollection {
     this._type = type
   }
 
+  get isCollection () {
+    return true
+  }
+
   get type () {
     return this._type
   }

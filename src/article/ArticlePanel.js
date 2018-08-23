@@ -1,7 +1,7 @@
 import { Component } from 'substance'
 import { AppState, createComponentContext } from '../kit'
 
-const DEFAULT_VIEW = 'metadata'
+const DEFAULT_VIEW = 'manuscript'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {

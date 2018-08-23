@@ -2,7 +2,7 @@ import {
   AnnotationComponent
 } from 'substance'
 import {
-  CompositeComponent, NodeModelComponent
+  CompositeComponent
 } from '../../kit'
 
 // new model based components
@@ -14,6 +14,7 @@ import HeadingComponent from './HeadingComponent'
 import ManuscriptComponent from './ManuscriptComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
+import NodeModelComponent from './NodeModelComponent'
 
 // TODO: these needs to be revisited
 import AffiliationsListComponent from './AffiliationsListComponent'

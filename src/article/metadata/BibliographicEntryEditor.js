@@ -1,4 +1,4 @@
-import { NodeModelComponent } from '../../kit'
+import NodeModelComponent from '../shared/NodeModelComponent'
 import InplaceRefContribEditor from './InplaceRefContribEditor'
 
 export default class BibliographicEntryEditor extends NodeModelComponent {

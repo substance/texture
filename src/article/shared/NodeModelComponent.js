@@ -1,10 +1,7 @@
-import { FontAwesomeIcon, CustomSurface } from 'substance'
-import FormRowComponent from '../ui/FormRowComponent'
+import { FontAwesomeIcon, Component } from 'substance'
+import { FormRowComponent } from '../../kit'
 
-/*
-  TODO: is this used anymore?
-*/
-export default class NodeModelComponent extends CustomSurface {
+export default class NodeModelComponent extends Component {
   getInitialState () {
     return {
       fullMode: false
@@ -113,14 +110,6 @@ export default class NodeModelComponent extends CustomSurface {
   _getPropertyEditorClass (property) {
     return this.getComponent(property.type)
   }
-
-  _getCustomResourceId () {
-    return this.props.model.id
-  }
-
-  // rerenderDOMSelection (...args) {
-  //   console.log('NodeModelComponent.rerenderDOMSelection()', args)
-  // }
 
   _toggleMode () {
     const fullMode = this.state.fullMode

@@ -9,7 +9,6 @@ export default class CollectionEditor extends Component {
     }
   }
 
-  // TODO: we need a simpler way to register an observer for a given model
   didMount () {
     addModelObserver(this.props.model, this.rerender, this, { stage: 'render' })
   }

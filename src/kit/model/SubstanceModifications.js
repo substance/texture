@@ -168,7 +168,7 @@ export class ContainerEditorNew extends SubstanceContainerEditor {
 
   _getNodeProps (node) {
     let props = super._getNodeProps(node)
-    let model = this.context.api.getModel(node)
+    let model = this.context.api.getModelById(node.id)
     props.model = model
     return props
   }

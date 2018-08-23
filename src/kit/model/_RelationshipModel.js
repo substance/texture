@@ -24,7 +24,7 @@ function _getRelationshipOption (api, id) {
   return {
     id,
     toString () {
-      return api.renderEntity(api._getModelById(id))
+      return api.renderEntity(api.getModelById(id))
     }
   }
 }

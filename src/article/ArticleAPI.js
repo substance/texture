@@ -319,7 +319,7 @@ export default class ArticleAPI extends AbstractAPI {
         type: 'property',
         path,
         startOffset: 0,
-        surfaceId: `${node.id}/${path.join('.')}`
+        surfaceId: `${path.join('.')}`
       }
     }
   }

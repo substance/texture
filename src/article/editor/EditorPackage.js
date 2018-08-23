@@ -20,9 +20,9 @@ import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import TOC from './TOC'
-import FigureDelegatorComponent from './FigureDelegatorComponent'
-import FootnoteDelegatorComponent from './FootnoteDelegatorComponent'
-import ReferenceDelegatorComponent from './ReferenceDelegatorComponent'
+import FigureComponent from '../shared/FigureComponent'
+import FootnoteComponent from '../shared/FootnoteComponent'
+import ReferenceComponent from '../shared/ReferenceComponent'
 
 // Commands
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
@@ -30,7 +30,6 @@ import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertXrefCommand from './InsertXrefCommand'
-import ToggleContentSection from './ToggleContentSection'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
 import DropFigure from './DropFigure'
@@ -69,31 +68,15 @@ export default {
     config.addComponent('references', ReferenceListComponent)
 
     // overriding the default components for preview
-    config.addComponent('figure', FigureDelegatorComponent, true)
-    config.addComponent('table-figure', FigureDelegatorComponent, true)
-    config.addComponent('fn', FootnoteDelegatorComponent, true)
-    config.addComponent('bibr', ReferenceDelegatorComponent, true)
+    config.addComponent('figure', FigureComponent, true)
+    config.addComponent('table-figure', FigureComponent, true)
+    config.addComponent('fn', FootnoteComponent, true)
+    config.addComponent('bibr', ReferenceComponent, true)
 
     // TODO: try to get rid of this one
     config.addComponent('collection', CollectionEditor)
 
     // Commands
-    config.addCommand('toggle-abstract', ToggleContentSection, {
-      selector: '.sc-abstract',
-      commandGroup: 'toggle-content-section'
-    })
-    config.addCommand('toggle-authors', ToggleContentSection, {
-      selector: '.sc-authors-list',
-      commandGroup: 'toggle-content-section'
-    })
-    config.addCommand('toggle-references', ToggleContentSection, {
-      selector: '.sc-ref-list',
-      commandGroup: 'toggle-content-section'
-    })
-    config.addCommand('toggle-footnotes', ToggleContentSection, {
-      selector: '.sc-fn-group',
-      commandGroup: 'toggle-content-section'
-    })
     config.addCommand('edit-xref', EditInlineNodeCommand, {
       nodeType: 'xref',
       commandGroup: 'prompt'
@@ -187,12 +170,6 @@ export default {
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
     config.addLabel('sig-block-end', 'Signature Block ends here')
-
-    config.addLabel('view', 'View')
-    config.addLabel('toggle-abstract', '${showOrHide} Abstract')
-    config.addLabel('toggle-authors', '${showOrHide} Authors')
-    config.addLabel('toggle-references', '${showOrHide} References')
-    config.addLabel('toggle-footnotes', '${showOrHide} Footnotes')
 
     config.addLabel('insert-rows-above', {
       en: 'Insert ${nrows} rows above'

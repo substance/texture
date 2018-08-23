@@ -1,15 +1,17 @@
 import { Component } from 'substance'
 
-export default class OptionComponent extends Component {
+export default class PreviewComponent extends Component {
+  getChildContext () {
+    return {
+      editable: false
+    }
+  }
+
   render ($$) {
     let id = this.props.id
     let el = $$('div')
-      .addClass('sc-option')
+      .addClass('sc-preview')
       .attr({'data-id': id})
-
-    if (this.props.selected) {
-      el.addClass('sm-selected')
-    }
 
     if (this.props.thumbnail) {
       el.append(
@@ -24,7 +26,7 @@ export default class OptionComponent extends Component {
         this.props.label
       ),
       // NOTE: description is passed in as HTML string
-      $$('div').addClass('se-description').html(
+      $$('div').addClass('se-description').append(
         this.props.description
       )
     )

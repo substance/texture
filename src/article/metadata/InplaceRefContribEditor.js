@@ -32,12 +32,12 @@ export default class InplaceRefContribEditor extends ValueComponent {
     return $$(FormRowComponent).append(
       // TODO: it would be good to have a default factory for property editors
       $$(StringComponent, {
-        label: this.getLabel(givenNames.name),
-        model: givenNames.model
-      }),
-      $$(StringComponent, {
         label: this.getLabel(name.name),
         model: name.model
+      }),
+      $$(StringComponent, {
+        label: this.getLabel(givenNames.name),
+        model: givenNames.model
       }),
       // TODO: use icon provider
       $$('button').addClass('se-remove-value')

@@ -430,7 +430,7 @@ export default {
       {
         name: 'cite',
         type: 'tool-dropdown',
-        showDisabled: false,
+        showDisabled: true,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'insert-xref' }

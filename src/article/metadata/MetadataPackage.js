@@ -45,21 +45,21 @@ export default {
         ]
       },
       {
-        name: 'annotations',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'formatting' }
-        ]
-      },
-      {
         name: 'Add',
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'add-entity' }
+        ]
+      },
+      {
+        name: 'annotations',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'formatting' }
         ]
       },
       {
@@ -100,7 +100,7 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-author', {
-      en: 'Add Author'
+      en: 'Author'
     })
     config.addCommand('add-editor', AddEntityCommand, {
       type: 'editor',
@@ -108,7 +108,7 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-editor', {
-      en: 'Add Editor'
+      en: 'Editor'
     })
     config.addCommand('add-group', AddEntityCommand, {
       type: 'group',
@@ -116,7 +116,7 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-group', {
-      en: 'Add Group'
+      en: 'Group'
     })
     config.addCommand('add-organisation', AddEntityCommand, {
       type: 'organisation',
@@ -124,7 +124,7 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-organisation', {
-      en: 'Add Organisation'
+      en: 'Organisation'
     })
     config.addCommand('add-award', AddEntityCommand, {
       type: 'award',
@@ -132,7 +132,7 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-award', {
-      en: 'Add Award'
+      en: 'Award'
     })
     config.addCommand('add-keyword', AddEntityCommand, {
       type: 'keyword',
@@ -140,7 +140,7 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-keyword', {
-      en: 'Add Keyword'
+      en: 'Keyword'
     })
     config.addCommand('add-subject', AddEntityCommand, {
       type: 'subject',
@@ -148,14 +148,14 @@ export default {
       commandGroup: 'add-entity'
     })
     config.addLabel('add-subject', {
-      en: 'Add Subject'
+      en: 'Subject'
     })
 
     config.addLabel('original-translation', {
       en: 'Original'
     })
     config.addLabel('add-translation', {
-      en: 'Add translation'
+      en: 'Translation'
     })
     config.addLabel('select-language', {
       en: 'Select language'

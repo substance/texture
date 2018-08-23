@@ -86,15 +86,6 @@ export default class TOCProvider extends EventEmitter {
       }
     })
 
-    const fn = doc.find('fn')
-    if (fn) {
-      entries.push({
-        id: 'fn-group',
-        name: 'Footnotes',
-        level: 1
-      })
-    }
-
     entries.push({
       id: 'ref-list',
       name: 'References',

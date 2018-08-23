@@ -1,4 +1,4 @@
-import { NodeModelComponent } from '../../kit'
+import NodeModelComponent from '../shared/NodeModelComponent'
 import LanguageEditor from './LanguageEditor'
 
 export default class TranslatableEntryEditor extends NodeModelComponent {

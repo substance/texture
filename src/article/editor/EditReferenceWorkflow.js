@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { NodeModelComponent } from '../../kit'
+import NodeModelComponent from '../shared/NodeModelComponent'
 import CardComponent from '../shared/CardComponent'
 
 export default class EditReferenceWorkflow extends Component {

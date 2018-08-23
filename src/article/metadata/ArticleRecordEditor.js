@@ -1,4 +1,4 @@
-import { NodeModelComponent } from '../../kit'
+import NodeModelComponent from '../shared/NodeModelComponent'
 
 export default class ArticleRecordEditor extends NodeModelComponent {
   get isRemovable () {

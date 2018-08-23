@@ -1,5 +1,6 @@
 import { CompositeModel } from '../../kit'
 import TranslationCollectionModel from './TranslationCollectionModel'
+import FigureCollectionModel from './FigureCollectionModel'
 
 export default class MetadataModel extends CompositeModel {
   constructor (api) {
@@ -16,6 +17,7 @@ export default class MetadataModel extends CompositeModel {
       { name: 'subjects', model: api.getModelById('subjects') },
       { name: 'translations', model: new TranslationCollectionModel(api) },
       { name: 'article', model: api.getModelById('article-record') },
+      { name: 'figures', model: new FigureCollectionModel(api) },
       { name: 'footnotes', model: api.getModelById('footnotes') }
     )
   }

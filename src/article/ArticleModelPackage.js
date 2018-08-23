@@ -5,6 +5,7 @@ import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import LanguagesPackage from './LanguagesPackage'
 
 import FigureModel from './models/FigureModel'
+import FigureCollectionModel from './models/FigureCollectionModel'
 import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import AwardCollectionModel from './models/AwardCollectionModel'
 import PersonCollectionModel from './models/PersonCollectionModel'
@@ -37,6 +38,7 @@ export default {
     config.addModel('authors', PersonCollectionModel)
     config.addModel('awards', AwardCollectionModel)
     config.addModel('editors', PersonCollectionModel)
+    config.addModel('figures', FigureCollectionModel)
     config.addModel('footnotes', FootnoteCollectionModel)
     config.addModel('groups', GroupCollectionModel)
     config.addModel('keywords', KeywordCollectionModel)

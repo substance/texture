@@ -1,6 +1,8 @@
 import { Component } from 'substance'
 import { addModelObserver, removeModelObserver } from '../../kit'
+import { METADATA_MODE } from '../ArticleConstants'
 import CardComponent from '../shared/CardComponent'
+// import renderModelComponent from '../shared/renderModelComponent'
 
 export default class CollectionEditor extends Component {
   getActionHandlers () {
@@ -27,8 +29,7 @@ export default class CollectionEditor extends Component {
         $$(CardComponent).append(
           $$(ItemEditor, {
             model: item,
-            // LEGACY
-            // TODO: try to get rid of this
+            mode: METADATA_MODE,
             node: item._node
           }).ref(item.id)
         )
@@ -59,8 +60,5 @@ export default class CollectionEditor extends Component {
   _removeCollectionItem (item) {
     const model = this.props.model
     model.removeItem(item)
-    // TODO: this is only necessary for fake collection models
-    // i.e. models that are only virtual, which I'd like to avoid
-    this.rerender()
   }
 }

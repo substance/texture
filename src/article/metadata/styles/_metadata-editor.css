@@ -41,7 +41,7 @@
   position: relative;
 }
 
-.sc-metadata-editor .se-toc .se-toc-item {
+.sc-meta-section-toc-entry {
   position: relative;
   display: block;
   text-decoration: none;
@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-.sc-metadata-editor .se-toc .se-toc-item:hover {
+.sc-meta-section-toc-entry:hover {
   color: #111;
 }
 

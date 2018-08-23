@@ -4,6 +4,7 @@ import MetadataModel from '../models/MetadataModel'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'
+import MetadataSectionTOCEntry from './MetadataSectionTOCEntry'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 
 export default class MetadataEditor extends Component {
@@ -118,20 +119,13 @@ export default class MetadataEditor extends Component {
     properties.forEach(property => {
       let valueModel = property.valueModel
       let id = valueModel.id || property.type
-      if (valueModel.isCollection) {
-        const items = valueModel.getItems()
-        tocEl.append(
-          $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + id })
-            .append(this.getLabel(property.name) + ' (' + items.length + ')')
-        )
-      } else {
-        tocEl.append(
-          $$('a').addClass('se-toc-item')
-            .attr({ href: '#' + id })
-            .append(this.getLabel(property.name))
-        )
-      }
+      tocEl.append(
+        $$(MetadataSectionTOCEntry, {
+          id,
+          name: property.name,
+          model: valueModel
+        })
+      )
     })
 
     el.append(tocEl)

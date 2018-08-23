@@ -1,5 +1,5 @@
 import { ToggleTool } from '../../kit'
-import getComponentForModel from '../shared/getComponentForModel'
+import renderModelComponent from '../shared/renderModelComponent'
 
 export default class EditXRefTool extends ToggleTool {
   render ($$) {
@@ -13,23 +13,18 @@ export default class EditXRefTool extends ToggleTool {
       const target = entry.model
       if (!target) continue
       const selected = entry.selected
-      let targetPreviewEl = this._renderPreview($$, target)
-      if (selected) {
-        targetPreviewEl.addClass('sm-selected')
-      }
+      let targetPreviewEl = this._renderPreview($$, target, selected)
       targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
       el.append(targetPreviewEl)
     }
     return el
   }
 
-  _renderPreview ($$, target) {
-    let TargetComponent = getComponentForModel(this.context, target)
-    return $$(TargetComponent, {
+  _renderPreview ($$, target, selected) {
+    return renderModelComponent(this.context, $$, {
       model: target,
-      mode: 'preview',
-      // LEGACY:
-      node: target._node
+      selected,
+      mode: 'option'
     })
   }
 
@@ -54,7 +49,7 @@ export default class EditXRefTool extends ToggleTool {
 
     // Triggers a rerender
     this.setState({
-      targets: targets
+      targets
     })
   }
 }

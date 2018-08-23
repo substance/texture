@@ -1,9 +1,8 @@
 import { Component } from 'substance'
 import { getLabel } from './nodeHelpers'
 
-export default class FnComponent extends Component {
+export default class FootnoteComponent extends Component {
   render ($$) {
-    const Button = this.getComponent('button')
     const node = this.props.node
     let el = $$('div')
       .addClass('sc-fn-item')
@@ -23,12 +22,9 @@ export default class FnComponent extends Component {
         $$('div').addClass('se-label').append(
           label
         ),
-        contentEl,
-        $$(Button, {icon: 'trash', tooltip: 'Remove'}).addClass('se-remove-ref')
-          .on('click', this._removeFn.bind(this, node.id))
+        contentEl
       )
     )
-
     return el
   }
 

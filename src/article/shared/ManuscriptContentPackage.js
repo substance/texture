@@ -8,7 +8,6 @@ import {
 // new model based components
 import AbstractComponent from './AbstractComponent'
 import AuthorsListComponent from './AuthorsListComponent'
-import BibliographicEntryComponent from './BibliographicEntryComponent'
 import FigureComponent from './FigureComponent'
 import FrontMatterComponent from './FrontMatterComponent'
 import HeadingComponent from './HeadingComponent'
@@ -25,16 +24,18 @@ import ExtLinkComponent from './ExtLinkComponent'
 import CaptionComponent from './CaptionComponent'
 import ContainerNodeComponent from './ContainerNodeComponent'
 import DispQuoteComponent from './DispQuoteComponent'
-import FnComponent from './FnComponent'
+import FootnoteComponent from './FootnoteComponent'
 import FnGroupComponent from './FnGroupComponent'
 import GraphicComponent from './GraphicComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
+import ReferenceComponent from './ReferenceComponent'
 import SeparatorComponent from './SeparatorComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
 import XrefComponent from './XrefComponent'
+
 import FnPreview from './FnPreview'
 import FigPreview from './FigPreview'
 import ModelPreviewComponent from './ModelPreviewComponent'
@@ -45,7 +46,7 @@ export default {
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('back-matter', CompositeComponent)
-    config.addComponent('bibr', BibliographicEntryComponent)
+    config.addComponent('bibr', ReferenceComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('front-matter', FrontMatterComponent)
     config.addComponent('heading', HeadingComponent)
@@ -66,8 +67,7 @@ export default {
     config.addComponent('col', ElementNodeComponent)
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('fn', FnComponent)
-    config.addComponent('footnote', FnComponent)
+    config.addComponent('fn', FootnoteComponent)
     config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)

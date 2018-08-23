@@ -4,12 +4,7 @@ import {
 
 /*
   A special view on a translatable text inside the document.
-
-  Note: in terms of JATS this model can not represented as a single element.
-  We use this class to provide a general abstraction of the concept of
-  an translatable entity.
 */
-
 export default class TranslateableModel {
   /*
     @param {ArticleAPI} api
@@ -31,20 +26,6 @@ export default class TranslateableModel {
 
   get type () {
     return 'translatable'
-  }
-
-  /*
-    Returns original language code
-  */
-  getOriginalLangageCode () {
-    return this._originalLanguageCode
-  }
-
-  /*
-    Returns the text model to be translated
-  */
-  getOriginalText () {
-    return this._node
   }
 
   getOriginalModel () {

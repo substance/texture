@@ -22,7 +22,7 @@
   display: flex;
 }
 
-.sc-ref-list > .se-ref-item > .sc-ref-preview {
+.sc-ref-list > .se-ref-item > .sc-reference {
   display: flex;
   flex: 1 1 0;
   margin-bottom: 15px;
@@ -31,28 +31,14 @@
   cursor: default;
 }
 
-.sc-ref-list > .se-ref-item > .sc-ref-preview > .se-label {
+.sc-ref-list > .se-ref-item > .sc-reference > .se-label {
   min-width: 20px;
+  margin: 0px 20px;
   font-weight: var(--strong-font-weight);
   text-align: center;
 }
 
-.sc-ref-list > .se-ref-item > .sc-ref-preview > .se-text {
+.sc-ref-list > .se-ref-item > .sc-reference > .se-text {
   margin-right: 10px;
   flex: 1 1 0;
-}
-
-.sc-ref-list > .se-ref-item > .se-ref-actions > .sc-button {
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.sc-ref-list > .se-ref-list-options {
-  position: relative;
-}
-
-.sc-ref-list > .se-ref-list-options > .sc-button {
-  margin: 30px auto;
 }

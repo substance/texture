@@ -1,6 +1,5 @@
 import {
-  XMLExporter, forEach,
-  DefaultDOMElement, DOMElement // eslint-disable-line
+  XMLExporter, forEach
 } from 'substance'
 import JATSSchema from '../../TextureArticle'
 import InternalArticleSchema from '../../InternalArticleSchema'

@@ -20,6 +20,9 @@ import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import TOC from './TOC'
+import FigureDelegatorComponent from './FigureDelegatorComponent'
+import FootnoteDelegatorComponent from './FootnoteDelegatorComponent'
+import ReferenceDelegatorComponent from './ReferenceDelegatorComponent'
 
 // Commands
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
@@ -64,6 +67,12 @@ export default {
 
     config.addComponent('toc', TOC)
     config.addComponent('references', ReferenceListComponent)
+
+    // overriding the default components for preview
+    config.addComponent('figure', FigureDelegatorComponent, true)
+    config.addComponent('table-figure', FigureDelegatorComponent, true)
+    config.addComponent('fn', FootnoteDelegatorComponent, true)
+    config.addComponent('bibr', ReferenceDelegatorComponent, true)
 
     // TODO: try to get rid of this one
     config.addComponent('collection', CollectionEditor)
@@ -577,20 +586,6 @@ export default {
     config.addIcon('trash', {
       'fontawesome': 'fa-trash'
     })
-
-    /*
-      Define panel structure
-    */
-    config.setPanelsSpec([
-      { group: 'structure' },
-      { panel: 'toc' },
-      { group: 'article-info' },
-      // { panel: 'contributors' },
-      // { panel: 'affiliations' },
-      { panel: 'translations' },
-      { group: 'pub-data' },
-      { panel: 'article-record' }
-    ])
   },
   ManuscriptEditor,
   // legacy

@@ -1,28 +1,25 @@
-.sc-ref-preview {
+.sc-option {
+  display: flex;
   font-size: 12px;
   border-bottom: 1px solid var(--separator-color);
-  padding: 5px 0 5px 40px;
+  padding: 5px 20px 5px 0px;
   cursor: pointer;
   position: relative;
   line-height: 1.5em;
   border-left: 3px solid transparent;
 }
 
-.sc-ref-preview .se-label {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  width: 20px;
-  font-weight: 600;
-  overflow: visible;
+.sc-option .se-label {
+  flex: 0 0 40px;
+  padding-left: 10px;
 }
 
-.sc-ref-preview.sm-selected {
+.sc-option.sm-selected {
   border-left: 3px solid var(--border-action-color);
   color: var(--default-text-color);
   background: var(--active-light-bg-color);
 }
 
-.sc-ref-preview a {
+.sc-option a {
   text-decoration: none;
 }

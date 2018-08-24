@@ -1,11 +1,15 @@
-import NodeComponent from './NodeComponent'
+import { Component } from 'substance'
 
 /*
   TODO: try to get rid of this by switching to a pure model based approach
   ATM, we need this for legacy reasons: e.g. it is used by FlowContentComponent
   for text nodes without a registered model.
+
+  ATTENTION: There is another mechanism which leads to rerendering of TextPropertyComponents (-> MarkersManager)
+  HACK: To avoid double rendering of text nodes, we do not register for updates here
+  TODO: rethink this.
 */
-export default class TextNodeComponent extends NodeComponent {
+export default class TextNodeComponent extends Component {
   render ($$) {
     const TextPropertyComponent = this.getComponent('text-property')
     const node = this.props.node

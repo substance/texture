@@ -33,9 +33,10 @@ export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCo
     Insert new inline node at the current selection
   */
   execute (params, context) {
+    // TODO: use ArticleAPI
     let state = this.getCommandState(params, context)
     if (state.disabled) return
-    let editorSession = this._getEditorSession(params)
+    let editorSession = context.editorSession
     editorSession.transaction((tx) => {
       let node = this.createNode(tx, params, context)
       tx.insertInlineNode(node)

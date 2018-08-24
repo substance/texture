@@ -93,6 +93,23 @@ export default class ArticleAPI extends AbstractAPI {
     })
   }
 
+  addItemsToCollection (items, collection) {
+    if (items.length === 0) return
+    this.articleSession.transaction(tx => {
+      for (let i = 0; i < items.length; i++) {
+        let item = items[0]
+        let node = tx.create(item)
+        tx.get(collection._node.id).appendChild(node)
+        // put the cursor into the first item
+        // TODO: or should it be the last one?
+        if (i === 0) {
+          let newSelection = this._selectFirstRequiredProperty(node)
+          tx.setSelection(newSelection)
+        }
+      }
+    })
+  }
+
   removeItemFromCollection (item, collection) {
     this.articleSession.transaction(tx => {
       tx.get(collection._node.id).removeChild(tx.get(item.id))

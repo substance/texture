@@ -1,29 +1,33 @@
-import { array2table, isArrayEqual } from 'substance'
+import { isArrayEqual } from 'substance'
 import { XREF_TARGET_TYPES } from './xrefHelpers'
+import AbstractCitationManager from './AbstractCitationManager'
 
 /*
-  A base class for FigureManager and TableManager
-  where the labels depend on the order of the resources in the document.
+  A base class for FigureManager and TableManager. In contrast to citables like references or footnotes,
+  the citable content is part of the content itself, and has a fixed order defined by the occurrence in the document.
+  E.g. a reference is sorted and labeled according to the order of citations, but a figure is labeled according
+  to the occurence in the content.
 */
-export default class AbstractResourceManager {
-  constructor (documentSession, type, labelGenerator) {
-    this.documentSession = documentSession
-    this.type = type
-    this.labelGenerator = labelGenerator
-    this._targetTypes = array2table(XREF_TARGET_TYPES[type])
-
-    documentSession.on('change', this._onDocumentChange, this)
+export default class CitableContentManager extends AbstractCitationManager {
+  hasCitables () {
+    return Boolean(this._getContentElement().find(XREF_TARGET_TYPES[this.type].join(',')))
   }
 
-  dispose () {
-    this.documentSession.off(this)
+  getCitables () {
+    return this._getContentElement().findAll(XREF_TARGET_TYPES[this.type].join(','))
   }
 
-  getAvailableResources () {
-    return this._getResourcesFromDocument()
+  getSortedCitables () {
+    return this.getCitables()
   }
 
-  // TODO: how could this be generalized, so that it is less dependent on the actual document model?
+  /*
+    Detection of changes that have an impact on the labeling is different to references.
+    Labels change if
+    1. Citable content is inserted or removed
+    2. an xref ref-type is changed (TODO: this does not affect the other labels)
+    3. xref targets are updated
+  */
   _onDocumentChange (change) {
     const doc = this._getDocument()
     const TARGET_TYPES = this._targetTypes
@@ -36,7 +40,7 @@ export default class AbstractResourceManager {
     for (var i = 0; i < ops.length; i++) {
       let op = ops[i]
       switch (op.type) {
-        // I. citation is created or deleted
+        // I. citable content is inserted or removed
         case 'update': {
           if (isArrayEqual(op.path, contentPath)) {
             let id = op.diff.val
@@ -52,7 +56,7 @@ export default class AbstractResourceManager {
             // II. a ref-type has been updated
             if (op.path[2] === 'ref-type' && (op.val === this.type || op.original === this.type)) {
               needsUpdate = true
-            // III. references have been updated
+            // III. cited targets have been updated
             } else if (op.path[2] === 'rid') {
               let node = doc.get(op.path[0])
               if (node && node.getAttribute('ref-type') === this.type) {
@@ -73,22 +77,12 @@ export default class AbstractResourceManager {
     }
   }
 
-  _getDocument () {
-    return this.documentSession.getDocument()
-  }
-
   _getContentPath () {
-    return this._getContainer().getContentPath()
+    return this._getContentElement().getContentPath()
   }
 
-  // TODO: how could this be generalized?
-  _getContainer () {
-    if (!this._container) this._container = this._getDocument().get('body')
-    return this._container
-  }
-
-  _getResourcesFromDocument () {
-    return this._getContainer().findAll(XREF_TARGET_TYPES[this.type].join(','))
+  _getContentElement () {
+    return this._getDocument().get('body')
   }
 
   _updateLabels () {
@@ -96,7 +90,7 @@ export default class AbstractResourceManager {
 
     let stateUpdates = []
 
-    let resources = this._getResourcesFromDocument()
+    let resources = this.getCitables()
     let resourcesById = {}
     let order = {}
     let pos = 1

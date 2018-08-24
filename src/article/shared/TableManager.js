@@ -1,6 +1,6 @@
-import AbstractResourceManager from './AbstractResourceManager'
+import CitableContentManager from './CitableContentManager'
 
-export default class TableManager extends AbstractResourceManager {
+export default class TableManager extends CitableContentManager {
   constructor (documentSession, labelGenerator) {
     super(documentSession, 'table', labelGenerator)
 

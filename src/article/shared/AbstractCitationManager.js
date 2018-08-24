@@ -1,14 +1,39 @@
+import { array2table } from 'substance'
+import { XREF_TARGET_TYPES } from './xrefHelpers'
+import { getPos } from './nodeHelpers'
+
 export default class AbstractCitationManager {
   constructor (documentSession, type, labelGenerator) {
     this.documentSession = documentSession
     this.type = type
     this.labelGenerator = labelGenerator
+    this._targetTypes = array2table(XREF_TARGET_TYPES[type])
 
     documentSession.on('change', this._onDocumentChange, this)
   }
 
   dispose () {
     this.documentSession.off(this)
+  }
+
+  hasCitables () {
+    // TODO: we should assimilate 'ContainerNode' and 'XMLElementNode' interface
+    // I.e. an XMLElementNode could per se act as a classical container node
+    // ATM only XMLContainerNode has this interface
+    return this._getCollectionElement().getChildCount() > 0
+  }
+
+  getCitables () {
+    // TODO: we should assimilate 'ContainerNode' and 'XMLElementNode' interface
+    // I.e. an XMLElementNode could per se act as a classical container node
+    // ATM only XMLContainerNode has this interface
+    return this._getCollectionElement().getChildren()
+  }
+
+  getSortedCitables () {
+    return this.getCitables().sort((a, b) => {
+      return getPos(a) - getPos(b)
+    })
   }
 
   // TODO: how could this be generalized so that it is less dependent on the internal model?
@@ -84,8 +109,8 @@ export default class AbstractCitationManager {
   */
   _updateLabels () {
     let xrefs = this._getXrefs()
-    let refs = this._getReferences()
-    let bibEl = this._getBibliographyElement()
+    let refs = this.getCitables()
+    let bibEl = this._getCollectionElement()
     let refsById = refs.reduce((m, ref) => {
       m[ref.id] = ref
       return m
@@ -164,13 +189,19 @@ export default class AbstractCitationManager {
   }
 
   _getXrefs () {
-    // TODO: we should generalize this and/or move it into ArticelAPI
-    // so that this code gets independent of the overall document layout
-    const doc = this._getDocument()
-    let content = doc.get('content')
+    const content = this._getContentElement()
     let refs = content.findAll(`xref[ref-type='${this.type}']`)
     return refs
   }
 
-  _getBibliographyElement () {}
+  _getContentElement () {
+    // TODO: we should generalize this and/or move it into ArticelAPI
+    // so that this code gets independent of the overall document layout
+    const doc = this._getDocument()
+    return doc.get('content')
+  }
+
+  _getCollectionElement () {
+    throw new Error('This method is abstract.')
+  }
 }

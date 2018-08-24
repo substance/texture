@@ -189,8 +189,18 @@ export default function (DocumentSession) {
     }
 
     _onDocumentChange (change, info) {
-      this.editorState._setUpdate('document', { change, info })
-      this.editorState.hasUnsavedChanges = true
+      const editorState = this.editorState
+      // ATTENTION: ATM we are using a DocumentChange to implement node states
+      // Now it happens, that something that reacts on document changes (particularly a CitationManager)
+      // updates the node state during a flow.
+      // HACK: In that case we 'merge' the state update into the already propagated document change
+      if (editorState.isDirty('document') && info.action === 'node-state-update') {
+        let propagatedChange = editorState.getUpdate('document').change
+        Object.assign(propagatedChange.updated, change.updated)
+      } else {
+        this.editorState._setUpdate('document', { change, info })
+        this.editorState.hasUnsavedChanges = true
+      }
     }
 
     executeCommand (commandName) {

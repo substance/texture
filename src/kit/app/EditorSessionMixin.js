@@ -221,11 +221,6 @@ export default function (DocumentSession) {
       return sel
     }
 
-    // HACK: Allows to immitate a document change
-    _setUpdate (name, update) {
-      this.editorState._setUpdate(name, update)
-    }
-
     _transformSelection (change) {
       var oldSelection = this.getSelection()
       var newSelection = operationHelpers.transformSelection(oldSelection, change)

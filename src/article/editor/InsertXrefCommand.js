@@ -16,19 +16,12 @@ export default class InsertXrefCommand extends InsertInlineNodeCommand {
 
   isDisabled (params, context) {
     const sel = params.selection
-    const selectionState = params.editorSession.getSelectionState()
     const refType = this.config.refType
     const hasTargets = hasAvailableXrefTargets(refType, context)
-    // We don't allow xref insertion if there are no available targets
-    if (!hasTargets) {
-      return true
-    }
-    if (!sel.isPropertySelection()) {
-      return true
-    }
-    // We don't allow inserting an inline node on top of an existing inline
-    // node.
-    if (selectionState.isInlineNodeSelection()) {
+    // don't xref insertion
+    // 1. if the selections is not a collapsed property selection
+    // 2. if there are no citable targets available
+    if (!sel.isPropertySelection() || !sel.isCollapsed() || !hasTargets) {
       return true
     }
     return false

@@ -1,7 +1,5 @@
 import { getXrefTargets, getAvailableXrefTargets } from '../shared/xrefHelpers'
 
-// TODO: I am not sure yet if I want to make this a CompositeModel
-// or add only some functionality
 export default class XrefModel {
   constructor (api, node) {
     this._api = api

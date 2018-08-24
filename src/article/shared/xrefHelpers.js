@@ -48,9 +48,13 @@ export function getXrefLabel (xref) {
   return xref.textContent || ' '
 }
 
-function getXrefResourceManager (xref, context) {
+function _getCitationManagerForXref (xref, context) {
+  return _getManagerByRefType(xref.getAttribute('ref-type'), context)
+}
+
+function _getManagerByRefType (refType, context) {
   const articleSession = context.api.getArticleSession()
-  let managerName = RefTypeToManager[xref.getAttribute('ref-type')]
+  let managerName = RefTypeToManager[refType]
   if (managerName) {
     switch (managerName) {
       case 'figureManager':
@@ -68,13 +72,9 @@ function getXrefResourceManager (xref, context) {
 }
 
 export function hasAvailableXrefTargets (refType, context) {
-  let managerName = RefTypeToManager[refType]
-  if (managerName) {
-    const manager = context[managerName]
-    if (manager) {
-      const nodes = manager.getAvailableResources()
-      return nodes.length > 0
-    }
+  const manager = _getManagerByRefType(refType, context)
+  if (manager) {
+    return manager.hasCitables()
   }
   return false
 }
@@ -97,13 +97,13 @@ export function hasAvailableXrefTargets (refType, context) {
   ```
 */
 export function getAvailableXrefTargets (xref, context) {
-  let manager = getXrefResourceManager(xref, context)
+  let manager = _getCitationManagerForXref(xref, context)
   if (!manager) return []
   let selectedTargets = getXrefTargets(xref)
   // retrieve all possible nodes that this
   // xref could potentially point to,
   // so that we can let the user select from a list.
-  let nodes = manager.getAvailableResources()
+  let nodes = manager.getSortedCitables()
   // Determine broken targets (such that don't exist in the document)
   let brokenTargets = without(selectedTargets, ...nodes.map(r => r.id))
   let targets = nodes.map((node) => {

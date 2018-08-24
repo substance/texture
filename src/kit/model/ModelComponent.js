@@ -4,9 +4,7 @@ import removeModelObserver from './removeModelObserver'
 
 export default class ModelComponent extends Component {
   didMount () {
-    addModelObserver(this.props.model, this.rerender, this, {
-      stage: 'render'
-    })
+    addModelObserver(this.props.model, this.rerender, this)
   }
 
   dispose () {

@@ -1,7 +1,7 @@
-import { Component, FontAwesomeIcon } from 'substance'
-import { FormRowComponent } from '../../kit'
+import { FontAwesomeIcon } from 'substance'
+import { FormRowComponent, ModelComponent } from '../../kit'
 
-export default class TranslateableEditor extends Component {
+export default class TranslateableEditor extends ModelComponent {
   render ($$) {
     const model = this.props.model
     const originalModel = model.getOriginalModel()

@@ -1,22 +1,12 @@
-import { Component } from 'substance'
-import { addModelObserver, removeModelObserver } from '../../kit'
+import { ModelComponent } from '../../kit'
 import { METADATA_MODE } from '../ArticleConstants'
 import CardComponent from '../shared/CardComponent'
-// import renderModelComponent from '../shared/renderModelComponent'
 
-export default class CollectionEditor extends Component {
+export default class CollectionEditor extends ModelComponent {
   getActionHandlers () {
     return {
       'remove-item': this._removeCollectionItem
     }
-  }
-
-  didMount () {
-    addModelObserver(this.props.model, this.rerender, this, { stage: 'render' })
-  }
-
-  dispose () {
-    removeModelObserver(this)
   }
 
   render ($$) {

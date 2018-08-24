@@ -53,10 +53,15 @@ export default function (DocumentSession) {
       this.commandManager = commandManager
 
       doc.on('document:changed', this._onDocumentChange, this)
+
+      // EXPERIMENTAL:
+      // registering a 'reducer' that resets overlayId whenever the selection changes
+      editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
     }
 
     dispose () {
       this.getDocument().off(this)
+      this.editorState.off(this)
     }
 
     initialize () {
@@ -234,6 +239,10 @@ export default function (DocumentSession) {
         this._setSelection(this._transformSelection(change))
         this.editorState.propagateUpdates()
       }
+    }
+
+    _resetOverlayId () {
+      this.editorState.set('overlayId', null)
     }
   }
 

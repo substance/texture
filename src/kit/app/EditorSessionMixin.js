@@ -53,10 +53,15 @@ export default function (DocumentSession) {
       this.commandManager = commandManager
 
       doc.on('document:changed', this._onDocumentChange, this)
+
+      // EXPERIMENTAL:
+      // registering a 'reducer' that resets overlayId whenever the selection changes
+      editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
     }
 
     dispose () {
       this.getDocument().off(this)
+      this.editorState.off(this)
     }
 
     initialize () {
@@ -184,8 +189,18 @@ export default function (DocumentSession) {
     }
 
     _onDocumentChange (change, info) {
-      this.editorState._setUpdate('document', { change, info })
-      this.editorState.hasUnsavedChanges = true
+      const editorState = this.editorState
+      // ATTENTION: ATM we are using a DocumentChange to implement node states
+      // Now it happens, that something that reacts on document changes (particularly a CitationManager)
+      // updates the node state during a flow.
+      // HACK: In that case we 'merge' the state update into the already propagated document change
+      if (editorState.isDirty('document') && info.action === 'node-state-update') {
+        let propagatedChange = editorState.getUpdate('document').change
+        Object.assign(propagatedChange.updated, change.updated)
+      } else {
+        this.editorState._setUpdate('document', { change, info })
+        this.editorState.hasUnsavedChanges = true
+      }
     }
 
     executeCommand (commandName) {
@@ -216,11 +231,6 @@ export default function (DocumentSession) {
       return sel
     }
 
-    // HACK: Allows to immitate a document change
-    _setUpdate (name, update) {
-      this.editorState._setUpdate(name, update)
-    }
-
     _transformSelection (change) {
       var oldSelection = this.getSelection()
       var newSelection = operationHelpers.transformSelection(oldSelection, change)
@@ -234,6 +244,10 @@ export default function (DocumentSession) {
         this._setSelection(this._transformSelection(change))
         this.editorState.propagateUpdates()
       }
+    }
+
+    _resetOverlayId () {
+      this.editorState.set('overlayId', null)
     }
   }
 

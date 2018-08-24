@@ -150,6 +150,14 @@ export default {
     config.addLabel('add-subject', {
       en: 'Subject'
     })
+    config.addCommand('add-footnote', AddEntityCommand, {
+      type: 'fn',
+      collection: 'footnotes',
+      commandGroup: 'add-entity'
+    })
+    config.addLabel('add-footnote', {
+      en: 'Footnote'
+    })
 
     config.addLabel('original-translation', {
       en: 'Original'

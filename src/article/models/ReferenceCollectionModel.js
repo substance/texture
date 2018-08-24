@@ -9,7 +9,10 @@ export default class ReferenceCollectionModel extends DefaultCollectionModel {
     return result
   }
 
-  // TODO: explain
+  addItem (item = {}) {
+    return this._api.addItemToCollection(item, this)
+  }
+
   addItems (items) {
     return this._api.addReferences(items, this)
   }

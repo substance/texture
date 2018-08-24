@@ -97,7 +97,7 @@ export default class ArticleAPI extends AbstractAPI {
     if (items.length === 0) return
     this.articleSession.transaction(tx => {
       for (let i = 0; i < items.length; i++) {
-        let item = items[0]
+        let item = items[i]
         let node = tx.create(item)
         tx.get(collection._node.id).appendChild(node)
         // put the cursor into the first item
@@ -127,7 +127,7 @@ export default class ArticleAPI extends AbstractAPI {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       let refs = tx.get(collection._node.id)
-      items.forEach(item => {
+      items.forEach((item, i) => {
         refContribProps.forEach(propName => {
           if (item[propName]) {
             let refContribs = item[propName].map(contrib => {
@@ -141,8 +141,11 @@ export default class ArticleAPI extends AbstractAPI {
 
         let node = tx.create(item)
         refs.appendChild(tx.get(node.id))
+        if (i === 0) {
+          let newSelection = this._selectFirstRequiredProperty(node)
+          tx.setSelection(newSelection)
+        }
       })
-      tx.selection = null
     })
   }
 

@@ -1,17 +1,17 @@
 import DefaultCollectionModel from './DefaultCollectionModel'
 
+// TODO: is it possible to implement this collection more like the others?
 export default class ReferenceCollectionModel extends DefaultCollectionModel {
+  // Note: this is special because it provides a sorted list of references
   getItems () {
-    // TODO: do we expect this to be sorted?
-    return super.getItems()
+    let refs = this._api.getReferenceManager().getBibliography()
+    let result = refs.map(ref => this._api.getModelById(ref.id))
+    return result
   }
 
-  addItem (item) {
-    return this._api.addItemToCollection(item, this)
-  }
-
+  // TODO: explain
   addItems (items) {
-    return this._api.addItemsToCollection(items, this)
+    return this._api.addReferences(items, this)
   }
 
   removeItem (item) {

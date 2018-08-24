@@ -1,4 +1,5 @@
-export default function addModelObserver (model, fn, comp, options) {
+export default function addModelObserver (model, fn, comp, options = {}) {
+  let stage = options.stage || 'render'
   // NodeModels and alike
   if (model._node) {
     // NOTE: here we exploit internal knowledge about node types and only register
@@ -17,16 +18,16 @@ export default function addModelObserver (model, fn, comp, options) {
       }
     }
     comp.context.appState.addObserver(['document'], fn, comp, {
-      stage: options.stage,
+      stage,
       document: selector
     })
   // PropertyModels
   } else if (model._path) {
     comp.context.appState.addObserver(['document'], fn, comp, {
+      stage,
       document: {
         path: model._path
-      },
-      stage: options.stage
+      }
     })
   } else if (model._isCompositeModel) {
     console.error('FIXME: Implement addObserver() for CompositeModel')

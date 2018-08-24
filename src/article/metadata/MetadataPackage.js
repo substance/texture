@@ -242,7 +242,7 @@ export default {
       collection: 'references'
     })
     config.addLabel('add-reference', {
-      en: 'Add Reference'
+      en: 'Reference'
     })
 
     // Add reference workflow

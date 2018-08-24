@@ -5,11 +5,16 @@ export default class AddEntityCommand extends Command {
     return { disabled: false }
   }
   execute (params, context) {
-    const collectionName = this.config.collection
-    const collection = context.api.getModelById(collectionName)
-    // adding an empty item
-    collection.addItem({})
+    const workflow = this.config.workflow
+    if (workflow) {
+      context.editor.send('startWorkflow', workflow)
+    } else {
+      const collectionName = this.config.collection
+      const collection = context.api.getModelById(collectionName)
+      // adding an empty item
+      collection.addItem({})
 
-    context.editor.send('toggleOverlay')
+      context.editor.send('toggleOverlay')
+    }
   }
 }

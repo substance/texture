@@ -45,7 +45,7 @@ export default {
         ]
       },
       {
-        name: 'Add',
+        name: 'add',
         type: 'tool-dropdown',
         showDisabled: true,
         style: 'descriptive',
@@ -87,6 +87,9 @@ export default {
       en: 'Article Information'
     })
 
+    config.addLabel('add', {
+      en: 'Add'
+    })
     config.addLabel('edit', {
       en: 'Edit'
     })
@@ -99,61 +102,65 @@ export default {
       collection: 'authors',
       commandGroup: 'add-entity'
     })
-    config.addLabel('add-author', {
-      en: 'Author'
-    })
     config.addCommand('add-editor', AddEntityCommand, {
       type: 'editor',
       collection: 'editors',
       commandGroup: 'add-entity'
-    })
-    config.addLabel('add-editor', {
-      en: 'Editor'
     })
     config.addCommand('add-group', AddEntityCommand, {
       type: 'group',
       collection: 'groups',
       commandGroup: 'add-entity'
     })
-    config.addLabel('add-group', {
-      en: 'Group'
-    })
     config.addCommand('add-organisation', AddEntityCommand, {
       type: 'organisation',
       collection: 'organisations',
       commandGroup: 'add-entity'
-    })
-    config.addLabel('add-organisation', {
-      en: 'Organisation'
     })
     config.addCommand('add-award', AddEntityCommand, {
       type: 'award',
       collection: 'awards',
       commandGroup: 'add-entity'
     })
-    config.addLabel('add-award', {
-      en: 'Award'
-    })
     config.addCommand('add-keyword', AddEntityCommand, {
       type: 'keyword',
       collection: 'keywords',
       commandGroup: 'add-entity'
-    })
-    config.addLabel('add-keyword', {
-      en: 'Keyword'
     })
     config.addCommand('add-subject', AddEntityCommand, {
       type: 'subject',
       collection: 'subjects',
       commandGroup: 'add-entity'
     })
-    config.addLabel('add-subject', {
-      en: 'Subject'
-    })
     config.addCommand('add-footnote', AddEntityCommand, {
       type: 'fn',
       collection: 'footnotes',
       commandGroup: 'add-entity'
+    })
+    config.addLabel('add-reference', {
+      en: 'Reference'
+    })
+
+    config.addLabel('add-author', {
+      en: 'Author'
+    })
+    config.addLabel('add-editor', {
+      en: 'Editor'
+    })
+    config.addLabel('add-group', {
+      en: 'Group'
+    })
+    config.addLabel('add-organisation', {
+      en: 'Organisation'
+    })
+    config.addLabel('add-award', {
+      en: 'Award'
+    })
+    config.addLabel('add-keyword', {
+      en: 'Keyword'
+    })
+    config.addLabel('add-subject', {
+      en: 'Subject'
     })
     config.addLabel('add-footnote', {
       en: 'Footnote'
@@ -270,9 +277,12 @@ export default {
       type: 'bibr',
       collection: 'references'
     })
+<<<<<<< HEAD
     config.addLabel('add-reference', {
       en: 'Reference'
     })
+=======
+>>>>>>> Tidy up.
 
     // Add reference workflow
     config.addLabel('add-reference-title', {

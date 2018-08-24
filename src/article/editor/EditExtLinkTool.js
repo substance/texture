@@ -24,13 +24,15 @@ export default class EditExtLinkTool extends ToggleTool {
       $$(Button, {
         icon: 'open-link',
         theme: this.props.theme
-      }).attr('title', this.getLabel('open-link'))
+      }).addClass('sm-open')
+        .attr('title', this.getLabel('open-link'))
         .on('click', this._openLink),
 
       $$(Button, {
         icon: 'delete',
         theme: this.props.theme
-      }).attr('title', this.getLabel('delete-link'))
+      }).addClass('sm-delete')
+        .attr('title', this.getLabel('delete-link'))
         .on('click', this._onDelete)
     )
     return el

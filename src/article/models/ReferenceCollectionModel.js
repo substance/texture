@@ -20,9 +20,4 @@ export default class ReferenceCollectionModel extends DefaultCollectionModel {
   removeItem (item) {
     this._api.deleteReference(item, this)
   }
-
-  _prepareItem (item) {
-    item.type = this._getItemType()
-    return item
-  }
 }

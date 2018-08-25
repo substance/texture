@@ -1,12 +1,9 @@
 import { keys } from 'substance'
 import {
-  TextureConfigurator, ArticlePackage,
-  InternalArticleDocument, ArticleEditorSession,
-  TableComponent, tableHelpers, TableEditing,
-  ArticleAPI
+  TableComponent, tableHelpers, TableEditing
 } from '../index'
-import { createEditorContext } from '../src/kit'
-import { testAsync, getMountPoint } from './testHelpers'
+import { testAsync, getMountPoint, DOMEvent } from './testHelpers'
+import setupTestArticleSession from './setupTestArticleSession'
 
 testAsync('TableComponent: mounting a table component', async (t) => {
   let { table, context } = _setup(t)
@@ -127,34 +124,15 @@ testAsync('TableComponent: keyboard interactions', async (t) => {
 })
 
 function _setup (t) {
-  let configurator = new TextureConfigurator()
-  configurator.import(ArticlePackage)
-  // TODO: this could be a little easier
-  let config = configurator.getConfiguration('article').getConfiguration('manuscript')
-  let doc = _createEmptyTextureArticle(config)
-  let table = tableHelpers.generateTable(doc, 10, 5)
-  doc.find('body').append(table)
-
-  // NOTE: this indirection is necessary because we need to pass the context to parts of the context
-  let contextProvider = {}
-  let editorSession = new ArticleEditorSession(doc, config, contextProvider)
-  let api = new ArticleAPI(editorSession, config.getModelRegistry())
-  let context = Object.assign(createEditorContext(config, editorSession), { api })
-  // ... after the context is ready we can store it into the provider
-  contextProvider.conntext = context
-
-  return { context, editorSession, doc, table }
-}
-
-function _createEmptyTextureArticle (configurator) {
-  let doc = InternalArticleDocument.createEmptyArticle(configurator.getSchema())
-  return doc
-}
-
-class DOMEvent {
-  constructor (props) {
-    Object.assign(this, props)
+  let table
+  let res = setupTestArticleSession(doc => {
+    table = tableHelpers.generateTable(doc, 10, 5)
+    doc.find('body').append(table)
+  })
+  return {
+    context: res.context,
+    editorSession: res.editorSession,
+    doc: res.doc,
+    table
   }
-  stopPropagation () {}
-  preventDefault () {}
 }

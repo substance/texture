@@ -1,5 +1,5 @@
-import vfs from '../tmp/vfs.es.js'
-
+// Note: so that Nodejs tests can access the example data via VFS
+// we need to require the bundled file which registers itself as `global.vfs`
 if (typeof global !== 'undefined') {
-  global.vfs = vfs
+  require('../dist/vfs.js')
 }

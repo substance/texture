@@ -8,3 +8,11 @@ export function _async (fn) {
     })
   })
 }
+
+export class DOMEvent {
+  constructor (props) {
+    Object.assign(this, props)
+  }
+  stopPropagation () {}
+  preventDefault () {}
+}

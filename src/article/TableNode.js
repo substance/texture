@@ -1,6 +1,7 @@
 import { XMLElementNode } from 'substance'
+import { CHILDREN } from '../kit';
 
-export default class TableElementNode extends XMLElementNode {
+export default class TableNode extends XMLElementNode {
   constructor (...args) {
     super(...args)
 
@@ -120,7 +121,10 @@ export default class TableElementNode extends XMLElementNode {
   }
 }
 
-TableElementNode.type = 'table'
+TableNode.schema = {
+  type: 'table',
+  _childNodes: CHILDREN('table-row')
+}
 
 function _shadowSpanned (matrix, row, col, rowspan, colspan, masterCell) {
   if (!rowspan && !colspan) return

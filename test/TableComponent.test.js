@@ -62,14 +62,18 @@ testAsync('TableComponent: mouse interactions', async (t) => {
 
   // simulate a mouse down on the first cell
   comp._onMousedown(new DOMEvent({ target: firstCellComp.el }))
+  comp._onMouseup(new DOMEvent({ target: firstCellComp.el }))
+
   let sel = editorSession.getSelection()
-  t.equal(sel.customType, 'table', 'The table should be selected,')
+  t.ok(true, 'After a click on the firstCell')
+  t.equal(sel.customType, 'table', '... the table should be selected,')
   t.equal(sel.data.anchorCellId, firstCell.id, '.. with anchor on first cell,')
   t.equal(sel.data.focusCellId, firstCell.id, '.. and focus on first cell,')
 
   // simulate a right mouse down on the second cell
   comp._onMousedown(new DOMEvent({ target: secondCellComp.el, which: 3 }))
   sel = editorSession.getSelection()
+  t.ok(true, 'After a right-click on the secondCell')
   t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, secondCell.id, '.. with anchor on second cell,')
   t.equal(sel.data.focusCellId, secondCell.id, '.. and focus on second cell,')
@@ -126,7 +130,7 @@ testAsync('TableComponent: keyboard interactions', async (t) => {
 function _setup (t) {
   let table
   let res = setupTestArticleSession(doc => {
-    table = tableHelpers.generateTable(doc, 10, 5)
+    table = tableHelpers.generateTable(doc, 10, 5, 't')
     doc.find('body').append(table)
   })
   return {

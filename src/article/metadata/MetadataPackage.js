@@ -277,12 +277,9 @@ export default {
       type: 'bibr',
       collection: 'references'
     })
-<<<<<<< HEAD
     config.addLabel('add-reference', {
       en: 'Reference'
     })
-=======
->>>>>>> Tidy up.
 
     // Add reference workflow
     config.addLabel('add-reference-title', {

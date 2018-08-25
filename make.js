@@ -160,7 +160,7 @@ b.task('build:app', () => {
     execute () {
       let { version } = require('./package.json')
       let tpl = fs.readFileSync('app/package.json.in', 'utf8')
-      let out = tpl.replace('${version}', version)
+      let out = tpl.replace('${version}', version) // eslint-disable-line no-template-curly-in-string
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })

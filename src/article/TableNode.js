@@ -1,5 +1,5 @@
 import { XMLElementNode } from 'substance'
-import { CHILDREN } from '../kit';
+import { CHILDREN } from '../kit'
 
 export default class TableNode extends XMLElementNode {
   constructor (...args) {

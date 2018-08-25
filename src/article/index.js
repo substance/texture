@@ -3,6 +3,7 @@ export * from './editor'
 export * from './metadata'
 export * from './shared'
 
+export { default as ArticleAPI } from './ArticleAPI'
 export { default as ArticleEditorSession } from './ArticleEditorSession'
 export { default as ArticleLoader } from './ArticleLoader'
 export { default as ArticlePackage } from './ArticlePackage'

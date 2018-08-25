@@ -2,7 +2,8 @@ import { keys } from 'substance'
 import {
   TextureConfigurator, ArticlePackage,
   InternalArticleDocument, ArticleEditorSession,
-  TableComponent, tableHelpers, TableEditing
+  TableComponent, tableHelpers, TableEditing,
+  ArticleAPI
 } from '../index'
 import { createEditorContext } from '../src/kit'
 import { testAsync, getMountPoint } from './testHelpers'
@@ -134,8 +135,13 @@ function _setup (t) {
   let table = tableHelpers.generateTable(doc, 10, 5)
   doc.find('body').append(table)
 
-  let editorSession = new ArticleEditorSession(doc, config)
-  let context = createEditorContext(config, editorSession)
+  // NOTE: this indirection is necessary because we need to pass the context to parts of the context
+  let contextProvider = {}
+  let editorSession = new ArticleEditorSession(doc, config, contextProvider)
+  let api = new ArticleAPI(editorSession, config.getModelRegistry())
+  let context = Object.assign(createEditorContext(config, editorSession), { api })
+  // ... after the context is ready we can store it into the provider
+  contextProvider.conntext = context
 
   return { context, editorSession, doc, table }
 }

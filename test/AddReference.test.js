@@ -11,7 +11,8 @@ testAsync('Add Reference: TODO do serious stuff here', async (t) => {
   addDropDown.find('button').click()
   // click on the add-reference button
   addDropDown.find('.sc-menu-item.sm-add-reference').click()
-  // TODO: continue here
-  t.ok(Boolean(res))
+  // check if the modal with a workflow got opened
+  let workflow = articlePanel.find('.se-workflow-modal')
+  t.notNil(workflow, 'There should be a workflow in modal')
   t.end()
 })

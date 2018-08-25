@@ -13,13 +13,14 @@ export default class FigureComponent extends Component {
     let mode = this.props.mode || 'manuscript'
     el.addClass(`sm-${mode}`)
 
-    // CHALLENGE: this should be rendered as readonly
-    // Furthermore, ATM we use the node.state to store generated labels
-    // as they are volatile. Thus, this component should observe changes to the node state and rerender on change.
+    // TODO: this component should listen to label updates
     let label = model.getLabel()
+
+    let contentModel = model.getContent()
     let figureContent = renderModelComponent(this.context, $$, {
-      model: model.getContent()
+      model: contentModel
     }).ref('content').addClass('se-content')
+    el.addClass(`sm-${contentModel.type}`)
 
     if (mode === METADATA_MODE) {
       el.append('FIGURE METADATA EDITION')

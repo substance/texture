@@ -220,19 +220,48 @@ export default {
     })
 
     // Section labels
-    config.addLabel('article', 'Article Information')
-    config.addLabel('authors', 'Authors')
-    config.addLabel('figures', 'Figures')
-    config.addLabel('footnotes', 'Footnotes')
-    config.addLabel('groups', 'Groups')
-    config.addLabel('keywords', 'Keywords')
-    config.addLabel('subjects', 'Subjects')
-    config.addLabel('organisations', 'Organisations')
-    config.addLabel('references', 'References')
-    config.addLabel('translateables', 'Translations')
-    config.addLabel('translations', 'Translations')
-    config.addLabel('title-trans', 'Title')
-    config.addLabel('abstract-trans', 'Abstract')
+    config.addLabel('article', {
+      en: 'Article Information'
+    })
+    config.addLabel('authors', {
+      en: 'Authors'
+    })
+    config.addLabel('figures', {
+      en: 'Figures'
+    })
+    config.addLabel('footnotes', {
+      en: 'Footnotes'
+    })
+    config.addLabel('groups', {
+      en: 'Groups'
+    })
+    config.addLabel('keywords', {
+      en: 'Keywords'
+    })
+    config.addLabel('subjects', {
+      en: 'Subjects'
+    })
+    config.addLabel('organisations', {
+      en: 'Organisations'
+    })
+    config.addLabel('references', {
+      en: 'References'
+    })
+    config.addLabel('tables', {
+      en: 'Tables'
+    })
+    config.addLabel('translateables', {
+      en: 'Translations'
+    })
+    config.addLabel('translations', {
+      en: 'Translations'
+    })
+    config.addLabel('title-trans', {
+      en: 'Title'
+    })
+    config.addLabel('abstract-trans', {
+      en: 'Abstract'
+    })
 
     // Workflows
     config.addCommand('add-reference', AddEntityCommand, {
@@ -246,12 +275,26 @@ export default {
     })
 
     // Add reference workflow
-    config.addLabel('add-reference-title', 'Add Reference(s)')
-    config.addLabel('add-ref-manually', 'Or create manually')
-    config.addLabel('fetch-datacite', 'Fetch from DataCite')
-    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
-    config.addLabel('doi-fetch-action', 'Add')
-    config.addLabel('import-refs', 'Import')
-    config.addLabel('supported-ref-formats', 'Supported formats')
+    config.addLabel('add-reference-title', {
+      en: 'Add Reference(s)'
+    })
+    config.addLabel('add-ref-manually', {
+      en: 'Or create manually'
+    })
+    config.addLabel('fetch-datacite', {
+      en: 'Fetch from DataCite'
+    })
+    config.addLabel('enter-doi-placeholder', {
+      en: 'Enter one or more DOIs'
+    })
+    config.addLabel('doi-fetch-action', {
+      en: 'Add'
+    })
+    config.addLabel('import-refs', {
+      en: 'Import'
+    })
+    config.addLabel('supported-ref-formats', {
+      en: 'Supported formats'
+    })
   }
 }

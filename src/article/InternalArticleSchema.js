@@ -7,7 +7,8 @@ import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
 import TextureArticleSchema from './TextureArticle'
-import TableElementNode from './TableElementNode'
+import TableNode from './TableNode'
+import TableCellNode from './TableCellNode'
 import ListNode from './XMLListNode'
 import ListItemNode from './XMLListItemNode'
 
@@ -486,21 +487,10 @@ TextTranslation.schema = {
   language: STRING
 }
 
-class Table extends TableElementNode {}
-Table.schema = {
-  type: 'table',
-  _childNodes: CHILDREN('table-row')
-}
-
 class TableRow extends XMLElementNode {}
 TableRow.schema = {
   type: 'table-row',
   _childNodes: CHILDREN('table-cell')
-}
-
-class TableCell extends XMLTextElement {}
-TableCell.schema = {
-  type: 'table-cell'
 }
 
 class UnsupportedNode extends DocumentNode {}
@@ -555,10 +545,10 @@ InternalArticleSchema.addNodes([
   ListNode,
   ListItemNode,
   References,
-  Table,
+  TableNode,
   TableFigure,
   TableRow,
-  TableCell,
+  TableCellNode,
   Title,
   // bibliography
   BibliographicEntry,

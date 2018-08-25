@@ -1,6 +1,6 @@
 import { XMLTextElement } from 'substance'
 
-export default class TableCellElementNode extends XMLTextElement {
+export default class TableCellNode extends XMLTextElement {
   constructor (...args) {
     super(...args)
 
@@ -17,7 +17,7 @@ export default class TableCellElementNode extends XMLTextElement {
   }
 }
 
-TableCellElementNode.type = 'table-cell'
+TableCellNode.type = 'table-cell'
 
 function _parseSpan (str) {
   let span = parseInt(str, 10)

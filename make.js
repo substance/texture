@@ -160,7 +160,7 @@ b.task('build:app', () => {
     execute () {
       let { version } = require('./package.json')
       let tpl = fs.readFileSync('app/package.json.in', 'utf8')
-      let out = tpl.replace('${version}', version)
+      let out = tpl.replace('${version}', version) // eslint-disable-line no-template-curly-in-string
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })
@@ -191,7 +191,7 @@ b.task('build:app', () => {
 b.task('build:vfs', () => {
   vfs(b, {
     src: ['./data/**/*'],
-    dest: DIST + '/vfs.js',
+    dest: DIST + 'vfs.js',
     format: 'umd',
     moduleName: 'vfs',
     rootDir: path.join(__dirname, 'data')
@@ -230,28 +230,34 @@ b.task('build:web', ['build:vfs'], () => {
   b.copy('./data', DIST + 'data')
 })
 
-b.task('build:test-assets', ['build:vfs-es'], () => {
+b.task('build:test-assets', ['build:vfs'], () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],
-    dest: './tmp/test-vfs.js',
-    format: 'es',
-    moduleName: 'fixtures'
+    dest: DIST + 'test/test-vfs.js',
+    format: 'umd',
+    moduleName: 'testVfs'
   })
 })
 
-b.task('build:test-browser', ['build:vfs', 'build:assets', 'build:test-assets'], () => {
+b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
   b.copy('test/index.html', 'dist/test/index.html')
   b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
 
+  // NOTE: by declaring texture/index.js as external we manage to serve both environments, browser and nodejs
+  // with the same code.
+  // In the browser, texture is used via the regular texture bundle, in nodejs it is resolved in the regular way
   const INDEX_JS = path.join(__dirname, 'index.js')
+  const TEST_VFS = path.join(__dirname, 'tmp', 'test-vfs.js')
   let globals = {
     'substance': 'substance',
     'substance-test': 'substanceTest',
     'katex': 'katex',
+    // TODO: this should be done in the same way as INDEX_JS and TEST_VFS
     'vfs': 'vfs'
   }
   globals[INDEX_JS] = 'texture'
+  globals[TEST_VFS] = 'testVfs'
 
   b.js('test/index.js', {
     output: [{
@@ -265,17 +271,9 @@ b.task('build:test-browser', ['build:vfs', 'build:assets', 'build:test-assets'],
       'substance-test',
       INDEX_JS,
       'katex',
-      'vfs'
+      'vfs',
+      TEST_VFS
     ]
-  })
-})
-
-b.task('build:vfs-es', () => {
-  vfs(b, {
-    src: ['./data/**/*'],
-    dest: TMP + '/vfs.es.js',
-    format: 'es',
-    rootDir: path.join(__dirname, 'data')
   })
 })
 

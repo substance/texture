@@ -22,7 +22,7 @@
     "source-map-support": "0.5.3",
     "standard": "^11.0.1",
     "substance": "1.0.0-preview.86",
-    "substance-bundler": "0.25.4",
+    "substance-bundler": "0.25.5",
     "substance-test": "0.12.2",
     "tap-spec": "^4.1.1"
   },

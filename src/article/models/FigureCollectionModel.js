@@ -1,8 +1,6 @@
-export default class FigureCollectionModel {
-  constructor (api) {
-    this._api = api
-  }
+import ContentNodeCollection from './ContentNodeCollection'
 
+export default class FigureCollectionModel extends ContentNodeCollection {
   get id () {
     return 'figures'
   }
@@ -11,14 +9,7 @@ export default class FigureCollectionModel {
     return 'figures'
   }
 
-  get isCollection () {
-    return true
-  }
-
-  getItems () {
-    const api = this._api
-    let article = api.getArticle()
-    let figureNodes = article.get('body').findAll('figure')
-    return figureNodes.map(node => api.getModelById(node.id))
+  _getSelector () {
+    return 'figure'
   }
 }

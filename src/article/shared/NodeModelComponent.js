@@ -31,8 +31,7 @@ export default class NodeModelComponent extends Component {
     const nodeIssues = model._node['@issues']
     let hasIssues = (nodeIssues && nodeIssues.size > 0)
 
-    const el = $$('div').addClass('sc-node-model')
-      .addClass(`sm-${model.type}`)
+    const el = $$('div').addClass(this._getClassNames())
 
     // EXPERIMENTAL: highlight editors for nodes with issues
     if (hasIssues) {
@@ -101,6 +100,10 @@ export default class NodeModelComponent extends Component {
     el.append(footer)
 
     return el
+  }
+
+  _getClassNames () {
+    return `sc-node-model sm-${this.props.model.type}`
   }
 
   _renderHeader ($$) {

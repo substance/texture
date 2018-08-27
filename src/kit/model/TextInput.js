@@ -31,4 +31,14 @@ export default class TextInput extends SurfaceNew {
     el.append(content)
     return el
   }
+
+  // HACK: this is needed e.g. by SelectAllCommand
+  get _isTextPropertyEditor () {
+    return true
+  }
+
+  // HACK: this is needed e.g. by SelectAllCommand
+  getPath () {
+    return this.props.path
+  }
 }

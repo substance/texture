@@ -1,4 +1,4 @@
-import getComponentForModel from './getComponentForModel'
+import { getComponentForModel } from '../../kit'
 
 export default function renderModelComponent (context, $$, props) {
   const model = props.model

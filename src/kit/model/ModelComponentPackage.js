@@ -5,6 +5,7 @@ import TextModelComponent from './TextComponent'
 import ObjectComponent from './ObjectComponent'
 import SingleRelationshipComponent from './SingleRelationshipComponent'
 import ManyRelationshipComponent from './ManyRelationshipComponent'
+import ChildComponent from './ChildComponent'
 import ChildrenComponent from './ChildrenComponent'
 import CompositeComponent from './CompositeComponent'
 import TextNodeComponent from './TextNodeComponent'
@@ -20,6 +21,7 @@ export default {
     configurator.addComponent('object-model', ObjectComponent)
     configurator.addComponent('single-relationship-model', SingleRelationshipComponent)
     configurator.addComponent('many-relationship-model', ManyRelationshipComponent)
+    configurator.addComponent('child-model', ChildComponent)
     configurator.addComponent('children-model', ChildrenComponent)
     configurator.addComponent('composite-model', CompositeComponent)
     // LEGACY

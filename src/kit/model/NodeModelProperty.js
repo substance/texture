@@ -35,7 +35,11 @@ export default class NodeModelProperty {
           type = 'many-relationship'
         }
       } else {
-        type = 'single-relationship'
+        if (nodeProperty.isOwned()) {
+          type = 'child'
+        } else {
+          type = 'single-relationship'
+        }
       }
     }
     return createValueModel(api, type, path, nodeProperty.targetTypes)

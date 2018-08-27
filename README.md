@@ -91,6 +91,28 @@ To package the application for distribution do the following:
 $ npm run release
 ```
 
+## Running tests
+
+Running tests in NodeJS (like it is done on TravisCI):
+
+```bash
+npm test
+```
+
+Debugging NodeJS tests:
+
+```
+node make test-nodejs
+node --inspect-brk --require esm test/index.js
+```
+Then open `chrome://inspect`. It should show a `Remove Target` for the test script. Clicking on `inspect` opens a new window with Chrome Developer Tools.
+
+Running tests in the browser:
+```
+node make test-browser -w -s
+```
+Then open `localhost:4000/test`.
+
 ## License
 
 Texture is open source (MIT license), and you are legally free to use it commercially. If you are using Texture to make profit, we expect that you help [fund its development and maintenance](http://substance.io/consortium/).

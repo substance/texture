@@ -1,10 +1,12 @@
 import { createValueModel } from '../../kit'
 import { getLabel } from '../shared/nodeHelpers'
+import NodeModel from '../../kit/model/NodeModel'
 
-export default class FigureModel {
+export default class FigureModel extends NodeModel {
   constructor (api, node) {
-    this._api = api
-    this._node = node
+    super(api, node)
+    // this._api = api
+    // this._node = node
 
     this._title = createValueModel(api, 'text', [node.id, 'title'])
   }

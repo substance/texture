@@ -15,3 +15,9 @@ export function ONE (...targetTypes) {
 export function CHILDREN (...targetTypes) {
   return { type: ['array', 'id'], targetTypes, default: [], owned: true }
 }
+
+// EXPERIMENTAL: similar to CHILDREN but only a single id, e.g. figure.content -> graphic
+// for now we make this non-optional
+export function CHILD (...targetTypes) {
+  return { type: 'id', targetTypes, owned: true }
+}

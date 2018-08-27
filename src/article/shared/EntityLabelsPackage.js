@@ -157,5 +157,9 @@ export default {
     // keyword labels
     config.addLabel('category', 'Category')
     config.addLabel('language', 'Language')
+
+    // figure labels
+    config.addLabel('content', 'Content')
+    config.addLabel('caption', 'Caption')
   }
 }

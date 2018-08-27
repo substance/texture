@@ -1,5 +1,5 @@
 import {
-  ButtonPackage, ContextMenuPackage, ModalPackage, OverlayPackage, DropzonesPackage,
+  ButtonPackage, ContextMenuPackage, OverlayPackage, DropzonesPackage,
   ScrollbarPackage, ScrollPanePackage, BodyScrollPanePackage, SplitPanePackage,
   TabbedPanePackage, ToolPanelPackage, AnnotationComponent
 } from 'substance'
@@ -14,6 +14,7 @@ import BodyScrollPane from './ui/BodyScrollPane'
 import Menu from './ui/Menu'
 import MenuGroup from './ui/MenuGroup'
 import MenuItem from './ui/MenuItem'
+import ModalDialog from './ui/ModalDialog'
 import Button from './ui/Button'
 import ContextMenu from './ui/ContextMenu'
 import Overlay from './ui/Overlay'
@@ -32,7 +33,6 @@ export default {
     configurator.import(SplitPanePackage)
     configurator.import(TabbedPanePackage)
     configurator.import(ScrollbarPackage)
-    configurator.import(ModalPackage)
     configurator.import(ContextMenuPackage)
     configurator.import(OverlayPackage)
     configurator.import(DropzonesPackage)
@@ -53,6 +53,7 @@ export default {
     configurator.addComponent('menu', Menu, true)
     configurator.addComponent('menu-group', MenuGroup, true)
     configurator.addComponent('menu-item', MenuItem, true)
+    configurator.addComponent('modal', ModalDialog)
     configurator.addComponent('button', Button, true)
     configurator.addComponent('context-menu', ContextMenu, true)
     configurator.addComponent('overlay', Overlay, true)

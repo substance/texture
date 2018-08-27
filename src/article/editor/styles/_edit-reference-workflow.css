@@ -1,4 +1,4 @@
-.sc-modal.sm-workflow-edit-reference .se-body {
+.sc-modal-dialog.sm-workflow-edit-reference .se-body {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -8,6 +8,6 @@
   max-height: 100%;
 }
 
-.sc-modal.sm-workflow-edit-reference .se-body .sc-card {
+.sc-modal-dialog.sm-workflow-edit-reference .se-body .sc-card {
   margin: 2px;
 }

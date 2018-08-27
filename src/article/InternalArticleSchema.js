@@ -2,7 +2,7 @@ import {
   DocumentSchema, DocumentNode, InlineNode,
   XMLContainerNode, XMLElementNode, XMLTextElement
 } from 'substance'
-import { BOOLEAN, STRING, MANY, ONE, CHILDREN } from '../kit'
+import { BOOLEAN, STRING, MANY, ONE, CHILDREN, CHILD } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
@@ -98,15 +98,15 @@ class Figure extends DocumentNode {
 Figure.schema = {
   type: 'figure',
   title: 'text',
-  content: { type: 'id', targetTypes: ['graphic'], default: null },
+  content: CHILD('graphic'),
   label: STRING,
-  caption: { type: 'caption', default: null }
+  caption: CHILD('caption')
 }
 
 class TableFigure extends Figure {}
 TableFigure.schema = {
   type: 'table-figure',
-  content: { type: 'id', targetTypes: ['table'], default: null }
+  content: CHILD('table')
 }
 
 class Groups extends XMLElementNode {}

@@ -14,19 +14,15 @@ testAsync('Add Reference: open and closing workflow', async (t) => {
   t.end()
 })
 
-TestManualRefCreation()
-
 /*
-  This function runs manual ref creation test suite for each available reference type
+  Declare a test that tests creation for each available reference type
 */
-function TestManualRefCreation () {
-  const RefTypes = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL)
-  return RefTypes.map(refType => {
-    return testAsync('Add Reference: Manually add ' + refType, async (t) => {
-      testRefCreationForType(t, JATS_BIBR_TYPES_TO_INTERNAL[refType])
-    })
+const RefTypes = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL)
+RefTypes.forEach(refType => {
+  testAsync('Add Reference: Manually add ' + refType, async (t) => {
+    await testRefCreationForType(t, JATS_BIBR_TYPES_TO_INTERNAL[refType])
   })
-}
+})
 
 /*
   Ref creation test suite for a certain ref type

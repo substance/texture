@@ -69,6 +69,7 @@ export default class ToolDropdown extends ToolGroup {
       } else {
         throw new Error('Style ' + this.props.style + ' not supported')
       }
+      toggleButton.addClass('se-toggle')
       el.append(toggleButton)
 
       if (showChoices) {

@@ -35,7 +35,7 @@ export default class AddReferenceWorkflow extends Component {
     const refTypesButtons = $$('ul').addClass('se-reftypes-list')
     targetTypes.forEach(item => {
       refTypesButtons.append(
-        $$('li').addClass('se-type').append(
+        $$('li').addClass('se-type sm-' + item).append(
           labelProvider.getLabel(item)
         ).on('click', this._onAdd.bind(this, item))
       )

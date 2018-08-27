@@ -11,6 +11,7 @@ export default class MenuItem extends Component {
     let commandState = this.props.commandState
     let el = $$('button')
       .addClass('sc-menu-item')
+      .addClass('sm-' + this.props.commandName)
       .append(
         this._renderIcon($$),
         this._renderLabel($$),

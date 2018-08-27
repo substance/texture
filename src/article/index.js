@@ -2,6 +2,7 @@ export * from './converter'
 export * from './editor'
 export * from './metadata'
 export * from './shared'
+export * from './ArticleConstants'
 
 export { default as ArticleAPI } from './ArticleAPI'
 export { default as ArticleEditorSession } from './ArticleEditorSession'

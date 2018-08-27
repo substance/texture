@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, DefaultDOMElement } from 'substance'
 
 /**
   ModalDialog component
@@ -49,7 +49,9 @@ export default class ModalDialog extends Component {
   _closeModal (e) {
     e.preventDefault()
     e.stopPropagation()
-    let closeSurfaceClick = e.target.classList.contains('sc-modal-dialog')
+    // wrap the target so that we can use DOMElement API
+    let targetEl = DefaultDOMElement.wrap(e.target)
+    let closeSurfaceClick = targetEl.hasClass('sc-modal-dialog')
     if (closeSurfaceClick) {
       this.send('closeModal')
     }

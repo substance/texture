@@ -2,6 +2,9 @@ import { Component } from 'substance'
 import renderModelComponent from './renderModelComponent'
 import { PREVIEW_MODE, METADATA_MODE, MANUSCRIPT_MODE } from '../ArticleConstants'
 
+// import { FormRowComponent } from '../kit/FormRowComponent'
+import NodeModelComponent from './NodeModelComponent'
+
 import PreviewComponent from './PreviewComponent'
 
 export default class FigureComponent extends Component {
@@ -23,7 +26,20 @@ export default class FigureComponent extends Component {
     el.addClass(`sm-${contentModel.type}`)
 
     if (mode === METADATA_MODE) {
-      el.append('FIGURE METADATA EDITION')
+      // el.append(
+      //   $$(FormRowComponent, {
+      //     label,
+      //     issues
+      //   }).append(
+      //     $$(PropertyEditor, {
+      //       label,
+      //       model
+      //     }).ref(property.name)
+      //   )
+      // )
+      el.append(
+        $$(NodeModelComponent, { model })
+      )
     } else if (mode === PREVIEW_MODE) {
       el.append(
         $$(PreviewComponent, {

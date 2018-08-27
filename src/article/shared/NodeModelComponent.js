@@ -27,12 +27,11 @@ export default class NodeModelComponent extends Component {
     // FIXME: bring back validation
     const fullMode = this.state.fullMode
     const model = this.props.model
-
     // TODO: issues should be accessed via model, not directly
     const nodeIssues = model._node['@issues']
     let hasIssues = (nodeIssues && nodeIssues.size > 0)
 
-    const el = $$('div').addClass('sc-entity-editor')
+    const el = $$('div').addClass('sc-node-model')
       .addClass(`sm-${model.type}`)
 
     // EXPERIMENTAL: highlight editors for nodes with issues

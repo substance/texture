@@ -1,4 +1,4 @@
-.sc-entity-editor > .se-footer > .se-remove-item {
+.sc-node-model > .se-footer > .se-remove-item {
   font-size: 12px;
   background: #fff;
   padding: 2px 4px;
@@ -6,6 +6,6 @@
   border: 1px solid #dedede;
 }
 
-.sc-entity-editor > .se-footer > .se-remove-item > .se-icon {
+.sc-node-model > .se-footer > .se-remove-item > .se-icon {
   margin-right: 5px;
 }

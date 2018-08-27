@@ -84,5 +84,6 @@ export const REQUIRED_PROPERTIES = {
   'organisation': new Set(['name']),
   'award': new Set(['institution']),
   'keyword': new Set(['name']),
-  'subject': new Set(['name'])
+  'subject': new Set(['name']),
+  'figure': new Set(['caption'])
 }

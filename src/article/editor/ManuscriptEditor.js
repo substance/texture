@@ -88,7 +88,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   render ($$) {
-    let el = $$('div').addClass('sc-editor')
+    let el = $$('div').addClass('sc-manuscript-editor')
       // sharing styles with sc-article-reader
       .addClass('sc-manuscript-view')
     el.append(

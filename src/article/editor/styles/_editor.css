@@ -1,12 +1,12 @@
-.sc-editor .sc-container-editor .sc-isolated-node {
+.sc-manuscript-editor .sc-container-editor .sc-isolated-node {
   margin: 30px 0;
 }
 
-.sc-editor .sc-container-editor .sc-isolated-node.sm-focused,
-.sc-editor .sc-container-editor .sc-isolated-node.sm-co-focused {
+.sc-manuscript-editor .sc-container-editor .sc-isolated-node.sm-focused,
+.sc-manuscript-editor .sc-container-editor .sc-isolated-node.sm-co-focused {
   outline: 1px solid var(--local-selection-color);
 }
 
-.sc-editor > .se-main-section > .sc-workflow-pane {
+.sc-manuscript-editor > .se-main-section > .sc-workflow-pane {
   flex: 0 0 0;
 }

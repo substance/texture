@@ -4,7 +4,7 @@ export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
   execute (params, context) {
     var state = params.commandState
     if (state.disabled) return
-    let editorSession = this._getEditorSession(params, context)
+    let editorSession = context.editorSession
     editorSession.transaction((tx) => {
       let node = this.createNode(tx, params, context)
       tx.insertBlockNode(node)

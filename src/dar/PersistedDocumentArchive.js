@@ -1,4 +1,4 @@
-import { forEach, last, uuid, EventEmitter } from 'substance'
+import { forEach, last, uuid, EventEmitter, platform } from 'substance'
 import ManifestLoader from './ManifestLoader'
 
 /*
@@ -34,6 +34,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return this.buffer.hasPendingChanges()
   }
 
+  // TODO: this can not be used in NodeJS
   createFile (file) {
     let assetId = uuid()
     let fileExtension = last(file.name.split('.'))
@@ -51,7 +52,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
       path: filePath,
       blob: file
     })
-    this._pendingFiles[filePath] = URL.createObjectURL(file)
+    // FIXME: what to do in NodeJS?
+    if (platform.inBrowser) {
+      this._pendingFiles[filePath] = URL.createObjectURL(file)
+    }
     return filePath
   }
 

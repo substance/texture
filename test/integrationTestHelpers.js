@@ -1,16 +1,22 @@
-import { isString, ObjectOperation, DocumentChange } from 'substance'
+import { ObjectOperation, DocumentChange, isString } from 'substance'
 import { TextureWebApp } from '../index'
 
-export function setCursor (editorSession, path, pos) {
-  if (isString(path)) path = path.split('.')
-  let doc = editorSession.getDocument()
-  let node = doc.get(path[0])
+export function setCursor (editor, path, pos) {
+  if (!isString(path)) {
+    path = path.join('.')
+  }
+  let property = editor.find(`.sc-text-property[data-path=${path.replace('.', '\\.')}]`)
+  if (!property) {
+    throw new Error('Could not find text property for path ' + path)
+  }
+  let editorSession = editor.context.editorSession
+  let surface = property.context.surface
   editorSession.setSelection({
     type: 'property',
-    path,
+    path: path.split('.'),
     startOffset: pos,
-    endOffset: pos,
-    surfaceId: node.parentNode.id
+    surfaceId: surface.id,
+    containerId: surface.containerId
   })
 }
 

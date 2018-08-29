@@ -17,10 +17,10 @@ export default class InsertInlineFormulaCommand extends SubstanceInsertInlineNod
   /**
     Insert new inline node at the current selection
   */
-  execute (params) {
+  execute (params, context) {
     const state = this.getCommandState(params)
     if (state.disabled) return
-    const editorSession = this._getEditorSession(params)
+    const editorSession = context.editorSession
     const sel = params.selection
     editorSession.transaction((tx) => {
       const doc = tx.getDocument()

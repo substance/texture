@@ -1,23 +1,14 @@
-import { InsertNodeCommand as SubstanceInsertNodeCommand } from 'substance'
-import insertFigure from './insertFigure'
+import InsertNodeCommand from './InsertNodeCommand'
 
-export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
+// TODO: this is kind of surprising, because it actually allows to insert multiple figures at once
+export default class InsertFigureCommand extends InsertNodeCommand {
   execute (params, context) {
-    let state = params.commandState
+    const state = params.commandState
+    const files = params.files
     if (state.disabled) return
-    let editorSession = this._getEditorSession(params, context)
-    editorSession.transaction((tx) => {
-      let node = this.createNodes(tx, params, context)
-      this.setSelection(tx, node)
-    })
-  }
-
-  createNodes (tx, params, context) {
-    let lastNode = {}
-    params.files.forEach((file) => {
-      let node = insertFigure(tx, file, context)
-      lastNode = tx.insertBlockNode(node)
-    })
-    return lastNode
+    let api = context.api
+    if (files.length > 0) {
+      api._insertFigures(files)
+    }
   }
 }

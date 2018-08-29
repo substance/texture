@@ -35,8 +35,8 @@ export default function (DocumentSession) {
       let surfaceManager = new SurfaceManager(editorState)
       let markersManager = new MarkersManager(editorState)
       let globalEventHandler = new GlobalEventHandler(editorState)
-      let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName) => {
-        return this.executeCommand(commandName)
+      let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName, params) => {
+        return this.executeCommand(commandName, params)
       }, contextProvider)
       let commandManager = new CommandManager(editorState,
         // update commands when document or selection have changed
@@ -203,8 +203,8 @@ export default function (DocumentSession) {
       }
     }
 
-    executeCommand (commandName) {
-      this.commandManager.executeCommand(commandName)
+    executeCommand (commandName, params) {
+      this.commandManager.executeCommand(commandName, params)
     }
 
     _registerObserver (stage, args) {

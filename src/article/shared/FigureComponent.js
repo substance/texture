@@ -11,7 +11,7 @@ export default class FigureComponent extends Component {
 
     // delegating to a implementation in case of 'metadata'
     if (mode === METADATA_MODE) {
-      return $$(FigureMetadataComponent, { model })
+      return $$(FigureMetadataComponent, { model }).ref('metadata')
     }
 
     let el = $$('div')

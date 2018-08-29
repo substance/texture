@@ -32,7 +32,7 @@ export default class ManuscriptEditor extends Component {
       workflowId: null,
       viewName: this.props.viewName
     })
-    const api = new ArticleAPI(editorSession, config.getModelRegistry())
+    const api = new ArticleAPI(editorSession, config.getModelRegistry(), archive)
     this.editorSession = editorSession
     this.api = api
     this.model = new ManuscriptModel(api)
@@ -88,7 +88,7 @@ export default class ManuscriptEditor extends Component {
   }
 
   render ($$) {
-    let el = $$('div').addClass('sc-editor')
+    let el = $$('div').addClass('sc-manuscript-editor')
       // sharing styles with sc-article-reader
       .addClass('sc-manuscript-view')
     el.append(
@@ -214,8 +214,8 @@ export default class ManuscriptEditor extends Component {
     return this.props.articleSession.getDocument()
   }
 
-  _executeCommand (name) {
-    this.editorSession.executeCommand(name)
+  _executeCommand (name, params) {
+    this.editorSession.executeCommand(name, params)
   }
 
   _restoreViewport () {

@@ -87,3 +87,13 @@ export const REQUIRED_PROPERTIES = {
   'subject': new Set(['name']),
   'figure': new Set(['title', 'caption'])
 }
+export const LICENSES = [
+  {
+    id: 'http://creativecommons.org/licenses/by/4.0/',
+    name: 'CC BY 4.0'
+  },
+  {
+    id: 'https://creativecommons.org/licenses/by-sa/2.0/',
+    name: 'CC BY-SA 2.0'
+  }
+]

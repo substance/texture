@@ -1,4 +1,5 @@
 import NodeModelComponent from './NodeModelComponent'
+import LicenseEditor from './LicenseEditor'
 
 export default class FigureMetadataComponent extends NodeModelComponent {
   _getClassNames () {
@@ -19,6 +20,9 @@ export default class FigureMetadataComponent extends NodeModelComponent {
     // skip 'label' here, as it is shown 'read-only' in the header instead
     if (property.name === 'label') {
       return null
+    // special editor to pick license type
+    } else if (property.name === 'license') {
+      return LicenseEditor
     } else {
       return super._getPropertyEditorClass(property)
     }

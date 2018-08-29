@@ -24,7 +24,6 @@ export default class NodeModelComponent extends Component {
   }
 
   render ($$) {
-    // FIXME: bring back validation
     const fullMode = this.state.fullMode
     const model = this.props.model
     // TODO: issues should be accessed via model, not directly

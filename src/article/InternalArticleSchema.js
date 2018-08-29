@@ -95,12 +95,21 @@ class Figure extends DocumentNode {
     return this.getDocument().get(this.caption)
   }
 }
+
 Figure.schema = {
   type: 'figure',
-  title: 'text',
   content: CHILD('graphic'),
+  title: 'text',
   label: STRING,
-  caption: CHILD('caption')
+  caption: CHILD('caption'),
+  copyrightStatement: 'text',
+  copyrightYear: 'text',
+  copyrightHolder: 'text',
+  // URL to license description
+  // used as a unique license identifier
+  license: 'text',
+  // Optional: A paragraph holding the license text if needed
+  licenseText: 'text'
 }
 
 class TableFigure extends Figure {}

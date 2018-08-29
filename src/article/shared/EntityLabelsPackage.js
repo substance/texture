@@ -161,5 +161,11 @@ export default {
     // figure labels
     config.addLabel('content', 'Content')
     config.addLabel('caption', 'Caption')
+
+    config.addLabel('copyrightStatement', 'Copyright Statement')
+    config.addLabel('copyrightYear', 'Copyright Year')
+    config.addLabel('copyrightHolder', 'Copyright Holder')
+    config.addLabel('license', 'License')
+    config.addLabel('licenseText', 'License Text (optional)')
   }
 }

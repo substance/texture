@@ -5,6 +5,7 @@ import ArticleNavPackage from '../ArticleNavPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import ReferenceListComponent from '../shared/ReferenceListComponent'
+import FootnoteGroupComponent from '../shared/FootnoteGroupComponent'
 
 export default {
   name: 'ArticleReader',
@@ -16,6 +17,7 @@ export default {
     config.import(ArticleNavPackage)
 
     config.addComponent('references', ReferenceListComponent)
+    config.addComponent('footnotes', FootnoteGroupComponent)
 
     config.addToolPanel('toolbar', [
       {

@@ -15,6 +15,7 @@ import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 // FIXME: adding this to ManuscriptContentPackage causes troubles
 import ReferenceListComponent from '../shared/ReferenceListComponent'
+import FootnoteGroupComponent from '../shared/FootnoteGroupComponent'
 
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
@@ -66,6 +67,7 @@ export default {
 
     config.addComponent('toc', TOC)
     config.addComponent('references', ReferenceListComponent)
+    config.addComponent('footnotes', FootnoteGroupComponent)
 
     // overriding the default components for preview
     config.addComponent('figure', FigureComponent, true)

@@ -95,5 +95,6 @@ export default {
     config.addComponent('ext-link', ExtLinkComponent)
 
     config.addLabel('references', 'References')
+    config.addLabel('footnotes', 'Footnotes')
   }
 }

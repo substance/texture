@@ -5,6 +5,7 @@ export default class BackMatterModel extends CompositeModel {
     super(api)
 
     this.setProperties(
+      { name: 'footnotes', model: api.getModelById('footnotes') },
       { name: 'references', model: api.getModelById('references') }
     )
   }

@@ -25,7 +25,7 @@ export default class CommandManager {
     appState.set('commandStates', commandStates)
   }
 
-  executeCommand (commandName) {
+  executeCommand (commandName, params = {}) {
     const appState = this.appState
     const cmdState = appState.commandStates[commandName]
     if (!cmdState || cmdState.disabled) {
@@ -33,7 +33,7 @@ export default class CommandManager {
     } else {
       const cmd = this.commands.get(commandName)
       const context = this.contextProvider.context
-      const params = new HandlerParams(context)
+      params = Object.assign(new HandlerParams(context), params)
       params.commandState = cmdState
       cmd.execute(params, context)
     }

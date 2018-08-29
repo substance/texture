@@ -49,7 +49,7 @@ export default class ToggleTool extends Component {
   }
 
   executeCommand (params) {
-    this.send('executeCommand', this.props.commandName, this.props.commandState, params)
+    this.send('executeCommand', this.props.commandName, params)
   }
 
   _getTooltipText () {

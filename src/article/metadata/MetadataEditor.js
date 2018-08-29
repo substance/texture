@@ -30,7 +30,7 @@ export default class MetadataEditor extends Component {
         viewName: this.props.viewName
       }
     )
-    const api = new ArticleAPI(editorSession, config.getModelRegistry())
+    const api = new ArticleAPI(editorSession, config.getModelRegistry(), archive)
     this.api = api
     this.editorSession = editorSession
     this.context = Object.assign(createEditorContext(config, editorSession), {

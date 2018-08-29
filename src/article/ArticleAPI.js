@@ -1,13 +1,10 @@
-import { without } from 'substance'
-
+import { without, selectionHelpers } from 'substance'
 import {
   AbstractAPI, DynamicCollection,
   StringModel, TextModel, FlowContentModel
 } from '../kit'
-
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
-
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 
 // TODO: this should come from configuration
@@ -17,12 +14,13 @@ const COLLECTIONS = {
 }
 
 export default class ArticleAPI extends AbstractAPI {
-  constructor (articleSession, modelRegistry) {
+  constructor (articleSession, modelRegistry, archive) {
     super()
 
     this.modelRegistry = modelRegistry
     this.articleSession = articleSession
     this.article = articleSession.getDocument()
+    this.archive = archive
   }
 
   /*
@@ -342,5 +340,42 @@ export default class ArticleAPI extends AbstractAPI {
         surfaceId: `${path.join('.')}`
       }
     }
+  }
+
+  // TODO: can we improve this?
+  // 1. Here we would need a transaction on archive level, creating assets, plus placing them inside the article body.
+  // 2. It would be interesting to use a more generic interface maybe even JATS
+  _insertFigures (files) {
+    const articleSession = this.articleSession
+    let LAST = files.length - 1
+    let paths = files.map(file => {
+      return this.archive.createFile(file)
+    })
+    let sel = articleSession.getSelection()
+    if (!sel || !sel.containerId) return
+    let containerId = sel.containerId
+    articleSession.transaction(tx => {
+      files.map((file, idx) => {
+        let path = paths[idx]
+        let mimeData = file.type.split('/')
+        let caption = tx.createElement('caption').append(
+          tx.createElement('p')
+        )
+        let graphic = tx.createElement('graphic').attr({
+          'mime-subtype': mimeData[1],
+          'mimetype': mimeData[0],
+          'xlink:href': path
+        })
+        let figure = tx.create({
+          type: 'figure',
+          caption: caption.id,
+          content: graphic.id
+        })
+        tx.insertBlockNode(figure)
+        if (idx === LAST) {
+          selectionHelpers.selectNode(tx, figure.id, containerId)
+        }
+      })
+    })
   }
 }

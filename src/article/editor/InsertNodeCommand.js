@@ -2,7 +2,7 @@ import { InsertNodeCommand as SubstanceInsertNodeCommand } from 'substance'
 
 export default class InsertNodeCommand extends SubstanceInsertNodeCommand {
   execute (params, context) {
-    var state = params.commandState
+    let state = params.commandState
     if (state.disabled) return
     let editorSession = context.editorSession
     editorSession.transaction((tx) => {

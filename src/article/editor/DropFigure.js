@@ -1,5 +1,3 @@
-import insertFigure from './insertFigure'
-
 export default {
   type: 'drop-asset',
   match (params) {
@@ -8,7 +6,7 @@ export default {
     return params.type === 'file' && isImage
   },
   drop (tx, params, context) {
-    let node = insertFigure(tx, params.file, context)
-    return tx.insertBlockNode(node)
+    let api = context.api
+    api._insertFigures([params.file])
   }
 }

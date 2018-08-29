@@ -102,41 +102,49 @@ export default {
       collection: 'authors',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+A', { command: 'add-author' })
     config.addCommand('add-editor', AddEntityCommand, {
       type: 'editor',
       collection: 'editors',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+E', { command: 'add-editor' })
     config.addCommand('add-group', AddEntityCommand, {
       type: 'group',
       collection: 'groups',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-group' })
     config.addCommand('add-organisation', AddEntityCommand, {
       type: 'organisation',
       collection: 'organisations',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+O', { command: 'add-organisation' })
     config.addCommand('add-award', AddEntityCommand, {
       type: 'award',
       collection: 'awards',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+W', { command: 'add-award' })
     config.addCommand('add-keyword', AddEntityCommand, {
       type: 'keyword',
       collection: 'keywords',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+K', { command: 'add-keyword' })
     config.addCommand('add-subject', AddEntityCommand, {
       type: 'subject',
       collection: 'subjects',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+S', { command: 'add-subject' })
     config.addCommand('add-footnote', AddEntityCommand, {
       type: 'fn',
       collection: 'footnotes',
       commandGroup: 'add-entity'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+F', { command: 'add-footnote' })
     config.addLabel('add-reference', {
       en: 'Reference'
     })
@@ -277,6 +285,7 @@ export default {
       type: 'bibr',
       collection: 'references'
     })
+    config.addKeyboardShortcut('CommandOrControl+Alt+R', { command: 'add-reference' })
     config.addLabel('add-reference', {
       en: 'Reference'
     })

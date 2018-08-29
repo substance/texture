@@ -1,14 +1,12 @@
 import { AnnotationCommand } from 'substance'
 
-class InsertExtLinkCommand extends AnnotationCommand {
-  executeCreate (params) {
+export default class InsertExtLinkCommand extends AnnotationCommand {
+  executeCreate (params, context) {
     let result = super.executeCreate(params)
-    let editorSession = this._getEditorSession(params)
+    let editorSession = context.editorSession
     editorSession.transaction((tx) => {
       tx.setSelection(tx.selection.collapse())
     })
     return result
   }
 }
-
-export default InsertExtLinkCommand

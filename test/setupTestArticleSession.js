@@ -1,3 +1,4 @@
+/* global vfs */
 import {
   TextureConfigurator, ArticlePackage,
   ArticleEditorSession,
@@ -12,7 +13,7 @@ export default function setupTestArticleSession (docInitializer) {
   let config = configurator.getConfiguration('article').getConfiguration('manuscript')
 
   // load the empty archive
-  let storage = new VfsStorageClient(window.vfs, './data/')
+  let storage = new VfsStorageClient(vfs, './data/')
   let archive = new TextureArchive(storage, new InMemoryDarBuffer())
   // ATTENTION: in case of the VFS loading is synchronous
   // TODO: make sure that this is always the case

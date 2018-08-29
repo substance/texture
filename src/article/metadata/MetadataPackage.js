@@ -183,6 +183,10 @@ export default {
       en: 'Abstract'
     })
 
+    config.addLabel('select-license', {
+      en: 'Select license'
+    })
+
     // TODO: we should try to extract these into a package and share with ManuscriptEditor
     config.addAnnotationTool({
       name: 'bold',

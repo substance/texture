@@ -165,12 +165,11 @@ export default {
     config.addLabel('add-footnote', {
       en: 'Footnote'
     })
-
     config.addLabel('original-translation', {
       en: 'Original'
     })
     config.addLabel('add-translation', {
-      en: 'Translation'
+      en: 'Add Translation'
     })
     config.addLabel('select-language', {
       en: 'Select language'

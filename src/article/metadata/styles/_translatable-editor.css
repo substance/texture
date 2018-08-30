@@ -2,8 +2,7 @@
   display: flex;
 }
 
-.sc-translatable-editor .se-editor > .sc-surface,
-.sc-translatable-editor .se-editor > .sc-text-model-editor {
+.sc-translatable-editor .se-editor > *:first-child {
   flex: 1;
 }
 

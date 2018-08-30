@@ -102,49 +102,49 @@ export default {
       collection: 'authors',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+A', { command: 'add-author' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+A', { command: 'add-author' })
     config.addCommand('add-editor', AddEntityCommand, {
       type: 'editor',
       collection: 'editors',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+T', { command: 'add-editor' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+E', { command: 'add-editor' })
     config.addCommand('add-group', AddEntityCommand, {
       type: 'group',
       collection: 'groups',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-group' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+P', { command: 'add-group' })
     config.addCommand('add-organisation', AddEntityCommand, {
       type: 'organisation',
       collection: 'organisations',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+O', { command: 'add-organisation' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+O', { command: 'add-organisation' })
     config.addCommand('add-award', AddEntityCommand, {
       type: 'award',
       collection: 'awards',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-award' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+Y', { command: 'add-award' })
     config.addCommand('add-keyword', AddEntityCommand, {
       type: 'keyword',
       collection: 'keywords',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+K', { command: 'add-keyword' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+K', { command: 'add-keyword' })
     config.addCommand('add-subject', AddEntityCommand, {
       type: 'subject',
       collection: 'subjects',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+S', { command: 'add-subject' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+S', { command: 'add-subject' })
     config.addCommand('add-footnote', AddEntityCommand, {
       type: 'fn',
       collection: 'footnotes',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+H', { command: 'add-footnote' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+F', { command: 'add-footnote' })
     config.addLabel('add-reference', {
       en: 'Reference'
     })
@@ -285,7 +285,7 @@ export default {
       type: 'bibr',
       collection: 'references'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+R', { command: 'add-reference' })
+    config.addKeyboardShortcut('CommandOrControl+Shift+L', { command: 'add-reference' })
     config.addLabel('add-reference', {
       en: 'Reference'
     })

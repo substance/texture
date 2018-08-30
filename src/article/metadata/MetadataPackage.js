@@ -108,7 +108,7 @@ export default {
       collection: 'editors',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+E', { command: 'add-editor' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+T', { command: 'add-editor' })
     config.addCommand('add-group', AddEntityCommand, {
       type: 'group',
       collection: 'groups',
@@ -126,7 +126,7 @@ export default {
       collection: 'awards',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+W', { command: 'add-award' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-award' })
     config.addCommand('add-keyword', AddEntityCommand, {
       type: 'keyword',
       collection: 'keywords',
@@ -144,7 +144,7 @@ export default {
       collection: 'footnotes',
       commandGroup: 'add-entity'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+F', { command: 'add-footnote' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+H', { command: 'add-footnote' })
     config.addLabel('add-reference', {
       en: 'Reference'
     })

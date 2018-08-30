@@ -27,11 +27,12 @@ export default class FigureComponent extends Component {
     }).ref('content').addClass('se-content')
     el.addClass(`sm-${contentModel.type}`)
 
+    console.log('figureContent', contentModel)
     if (mode === PREVIEW_MODE) {
       el.append(
         $$(PreviewComponent, {
           id: this.props.model.id,
-          thumbnail: figureContent,
+          thumbnail: contentModel.type === 'graphic' ? figureContent : undefined,
           label
         })
       )

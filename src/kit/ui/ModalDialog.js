@@ -20,6 +20,7 @@ import { Component, DefaultDOMElement } from 'substance'
 export default class ModalDialog extends Component {
   render ($$) {
     let el = $$('div').addClass('sc-modal-dialog')
+    let width = this.props.width || 'large'
 
     // TODO: don't think that this is good enough. Right the modal is closed by any unhandled click.
     // Need to be discussed.
@@ -27,7 +28,7 @@ export default class ModalDialog extends Component {
     el.on('keydown', this._onKeydown)
 
     if (this.props.width) {
-      el.addClass('sm-width-' + this.props.width)
+      el.addClass('sm-width-' + width)
     }
 
     if (this.props.transparent) {

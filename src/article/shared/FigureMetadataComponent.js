@@ -35,4 +35,8 @@ export default class FigureMetadataComponent extends NodeModelComponent {
     }
     return true
   }
+
+  get isRemovable () {
+    return false
+  }
 }

@@ -48,8 +48,10 @@ export default class NodeModelComponent extends Component {
         const PropertyEditor = this._getPropertyEditorClass(property)
         // skip this property if the editor implementation produces nil
         if (!PropertyEditor) continue
-
-        const label = this.getLabel(property.name)
+        let label
+        if (this._showLabelForProperty(property.name)) {
+          label = this.getLabel(property.name)
+        }
         const model = property.model
         const issues = nodeIssues ? nodeIssues.get(property.name) : []
         el.append(
@@ -117,6 +119,13 @@ export default class NodeModelComponent extends Component {
       )
     }
     return header
+  }
+
+  /*
+    Can be overriden to specify for which properties, labels should be hidden.
+  */
+  _showLabelForProperty (prop) {
+    return true
   }
 
   get isRemovable () {

@@ -31,7 +31,7 @@ export default class FigureComponent extends Component {
       el.append(
         $$(PreviewComponent, {
           id: this.props.model.id,
-          thumbnail: figureContent,
+          thumbnail: contentModel.type === 'graphic' ? figureContent : undefined,
           label
         })
       )

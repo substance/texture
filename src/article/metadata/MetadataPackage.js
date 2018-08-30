@@ -151,7 +151,7 @@ export default {
       en: 'Group'
     })
     config.addLabel('add-organisation', {
-      en: 'Organisation'
+      en: 'Affiliation'
     })
     config.addLabel('add-award', {
       en: 'Award'
@@ -165,12 +165,11 @@ export default {
     config.addLabel('add-footnote', {
       en: 'Footnote'
     })
-
     config.addLabel('original-translation', {
       en: 'Original'
     })
     config.addLabel('add-translation', {
-      en: 'Translation'
+      en: 'Add Translation'
     })
     config.addLabel('select-language', {
       en: 'Select language'
@@ -253,7 +252,7 @@ export default {
       en: 'Subjects'
     })
     config.addLabel('organisations', {
-      en: 'Organisations'
+      en: 'Affiliations'
     })
     config.addLabel('references', {
       en: 'References'

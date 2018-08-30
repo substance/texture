@@ -27,4 +27,16 @@ export default class FigureMetadataComponent extends NodeModelComponent {
       return super._getPropertyEditorClass(property)
     }
   }
+
+  _showLabelForProperty (prop) {
+    // Don't render a label for content property to use up the full width
+    if (prop === 'content') {
+      return false
+    }
+    return true
+  }
+
+  get isRemovable () {
+    return false
+  }
 }

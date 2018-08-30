@@ -572,6 +572,9 @@
       <optional>
         <ref name="graphic"/>
       </optional>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
     </element>
   </define>
 

@@ -151,7 +151,7 @@ export default {
       en: 'Group'
     })
     config.addLabel('add-organisation', {
-      en: 'Organisation'
+      en: 'Affiliation'
     })
     config.addLabel('add-award', {
       en: 'Award'
@@ -252,7 +252,7 @@ export default {
       en: 'Subjects'
     })
     config.addLabel('organisations', {
-      en: 'Organisations'
+      en: 'Affiliations'
     })
     config.addLabel('references', {
       en: 'References'

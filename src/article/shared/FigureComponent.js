@@ -27,7 +27,6 @@ export default class FigureComponent extends Component {
     }).ref('content').addClass('se-content')
     el.addClass(`sm-${contentModel.type}`)
 
-    console.log('figureContent', contentModel)
     if (mode === PREVIEW_MODE) {
       el.append(
         $$(PreviewComponent, {

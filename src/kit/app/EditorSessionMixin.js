@@ -174,18 +174,34 @@ export default function (DocumentSession) {
     }
 
     onPostRender (...args) {
-      console.error('DEPRECATED: use EditorState API')
+      if (_shouldDisplayDeprecatedWarning()) {
+        console.error('DEPRECATED: use EditorState API')
+      }
       return this._registerObserver('post-render', args)
     }
 
     onPosition (...args) {
-      console.error('DEPRECATED: use EditorState API')
+      if (_shouldDisplayDeprecatedWarning()) {
+        console.error('DEPRECATED: use EditorState API')
+      }
       return this._registerObserver('position', args)
     }
 
     onFinalize (...args) {
-      console.error('DEPRECATED: use EditorState API')
+      if (_shouldDisplayDeprecatedWarning()) {
+        console.error('DEPRECATED: use EditorState API')
+      }
       return this._registerObserver('finalize', args)
+    }
+
+    // ATTENTION: while we want to get rid of the former event registration
+    // we still need this to avoid breaking legacy code
+    off (...args) {
+      if (args.length === 1) {
+        let observer = args[0]
+        this.editorState.removeObserver(observer)
+      }
+      super.off(...args)
     }
 
     _onDocumentChange (change, info) {

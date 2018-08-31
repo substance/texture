@@ -1,4 +1,4 @@
-import { AnnotationCommand, SwitchTextTypeCommand } from 'substance'
+import { AnnotationCommand, platform, SwitchTextTypeCommand } from 'substance'
 import TextureConfigurator from '../TextureConfigurator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
 import InternalArticleSchema from './InternalArticleSchema'
@@ -62,5 +62,35 @@ export default class ArticleConfigurator extends TextureConfigurator {
       config = this.config.labelGenerator[type] || {}
     }
     return new NumberedLabelGenerator(config)
+  }
+
+  getKeyboardShortcuts () {
+    return this.config.keyboardShortcuts
+  }
+
+  /*
+    Allows lookup of a keyboard shortcut by command name
+  */
+  getKeyboardShortcutsByCommandName (commandName) {
+    let keyboardShortcuts = {}
+    this.config.keyboardShortcuts.forEach((entry) => {
+      if (entry.spec.command) {
+        let shortcut = entry.key.toUpperCase()
+
+        if (platform.isMac) {
+          shortcut = shortcut.replace(/CommandOrControl/i, '⌘')
+          shortcut = shortcut.replace(/Ctrl/i, '^')
+          shortcut = shortcut.replace(/Shift/i, '⇧')
+          shortcut = shortcut.replace(/Enter/i, '↵')
+          shortcut = shortcut.replace(/Alt/i, '⌥')
+          shortcut = shortcut.replace(/\+/g, '')
+        } else {
+          shortcut = shortcut.replace(/CommandOrControl/i, 'Ctrl')
+        }
+
+        keyboardShortcuts[entry.spec.command] = shortcut
+      }
+    })
+    return keyboardShortcuts[commandName]
   }
 }

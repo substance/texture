@@ -44,3 +44,7 @@
   background: inherit;
   color: inherit;
 }
+
+.sc-article-panel .sc-toolbar .sc-menu-item .se-keyboard-shortcut {
+  color: rgba(0, 0, 0, 0.4);
+}

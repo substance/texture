@@ -44,28 +44,6 @@ export default class FigConverter {
       node.content = importer.convertElement(contentEl).id
     }
     node.caption = importer.convertElement(captionEl).id
-
-    // Extract figure permissions
-    let licenseEl = el.find('license')
-    if (licenseEl) {
-      node.license = licenseEl.attr('xlink:href')
-    }
-    let copyrightStatementEl = el.find('copyright-statement')
-    if (copyrightStatementEl) {
-      node.copyrightStatement = copyrightStatementEl.textContent
-    }
-    let copyrightYearEl = el.find('copyright-year')
-    if (copyrightYearEl) {
-      node.copyrighYear = copyrightYearEl.textContent
-    }
-    let copyrightHolderEl = el.find('copyright-holder')
-    if (copyrightHolderEl) {
-      node.copyrightHolder = copyrightHolderEl.textContent
-    }
-    let licenseP = el.find('license > license-p')
-    if (licenseP) {
-      node.licenseText = importer.annotatedText(licenseP, [node.id, 'licenseText'])
-    }
   }
 
   _getContent (el) {
@@ -104,36 +82,5 @@ export default class FigConverter {
         exporter.convertNode(doc.get(node.content))
       )
     }
-
-    if (this._hasPermissions(node)) {
-      let permissionsEl = $$('permissions')
-      if (node.copyrightStatement) {
-        permissionsEl.append($$('copyright-statement').append(node.copyrightStatement))
-      }
-      if (node.copyrightYear) {
-        permissionsEl.append($$('copyright-year').append(node.copyrightYear))
-      }
-      if (node.copyrightHolder) {
-        permissionsEl.append($$('copyright-holder').append(node.copyrightHolder))
-      }
-
-      if (node.license || node.licenseText) {
-        let licenseEl = $$('license')
-        if (node.license) {
-          licenseEl.attr('xlink:href', node.license)
-        }
-        if (node.licenseText) {
-          licenseEl.append(
-            $$('license-p').append(
-              exporter.annotatedText([node.id, 'licenseText'])
-            )
-          )
-        }
-      }
-    }
-  }
-
-  _hasPermissions (node) {
-    return node.copyrightStatement || node.copyrightYear || node.copyrightHolder || node.license || node.licenseText
   }
 }

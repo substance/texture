@@ -49,8 +49,11 @@ export default class MenuItem extends Component {
   }
 
   _renderKeyboardShortcut ($$) {
+    const name = this.props.commandName
+    const config = this.context.config
+    const keyboardShortcut = config.getKeyboardShortcutsByCommandName(name)
     return $$('div').addClass('se-keyboard-shortcut').append(
-      this.props.keyboardShortcut || ''
+      keyboardShortcut || ''
     )
   }
 

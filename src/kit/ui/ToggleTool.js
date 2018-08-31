@@ -54,8 +54,10 @@ export default class ToggleTool extends Component {
 
   _getTooltipText () {
     const label = this._getLabel()
+    const name = this._getName()
     // TODO: instead of letting this tool lookup keyboard shortcutm it should
-    const keyboardShortcut = this.props.keyboardShortcut
+    const config = this.context.config
+    const keyboardShortcut = config.getKeyboardShortcutsByCommandName(name)
     if (keyboardShortcut) {
       return [label, ' (', keyboardShortcut, ')'].join('')
     } else {

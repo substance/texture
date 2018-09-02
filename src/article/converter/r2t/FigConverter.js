@@ -46,21 +46,29 @@ export default class FigConverter {
     node.caption = importer.convertElement(captionEl).id
 
     // Extract figure permissions
-    let licenseEl = el.find('license')
-    if (licenseEl) {
-      node.license = licenseEl.attr('xlink:href')
-    }
     let copyrightStatementEl = el.find('copyright-statement')
     if (copyrightStatementEl) {
       node.copyrightStatement = copyrightStatementEl.textContent
     }
     let copyrightYearEl = el.find('copyright-year')
     if (copyrightYearEl) {
-      node.copyrighYear = copyrightYearEl.textContent
+      node.copyrightYear = copyrightYearEl.textContent
     }
     let copyrightHolderEl = el.find('copyright-holder')
     if (copyrightHolderEl) {
       node.copyrightHolder = copyrightHolderEl.textContent
+    }
+
+    // <license>
+    //   <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
+    //   <license-p>This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, reproduction and adaptation in any medium and for any purpose provided that it is properly attributed. For attribution, the original author(s), title, publication source (PeerJ) and either DOI or URL of the article must be cited.</license-p>
+    // </license>
+    // TODO: it would be more natural and explicit to do el.find('ali:license-rec')
+    let licenseRefEl = el.find('license_ref')
+    console.log(el.getNativeElement())
+    console.log('le license', licenseRefEl)
+    if (licenseRefEl) {
+      node.license = licenseRefEl.textContent
     }
     let licenseP = el.find('license > license-p')
     if (licenseP) {
@@ -120,7 +128,9 @@ export default class FigConverter {
       if (node.license || node.licenseText) {
         let licenseEl = $$('license')
         if (node.license) {
-          licenseEl.attr('xlink:href', node.license)
+          licenseEl.append(
+            $$('ali:license_ref').append(node.license)
+          )
         }
         if (node.licenseText) {
           licenseEl.append(
@@ -129,7 +139,10 @@ export default class FigConverter {
             )
           )
         }
+        permissionsEl.append(licenseEl)
       }
+      el.append(permissionsEl)
+      console.log(el.getNativeElement())
     }
   }
 

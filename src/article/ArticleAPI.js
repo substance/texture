@@ -382,10 +382,10 @@ export default class ArticleAPI extends AbstractAPI {
   _insertFootnote (item, footnotes) {
     this.articleSession.transaction(tx => {
       let node = tx.create(item)
-        .append(tx.create({type: 'p'}))
+      let p = tx.create({type: 'p'})
+      node.append(p)
       tx.get(footnotes._node.id).appendChild(node)
-      let firstChild = Array.from(node._childNodes)[0]
-      let path = [firstChild, 'content']
+      let path = [p.id, 'content']
       let newSelection = {
         type: 'property',
         path,

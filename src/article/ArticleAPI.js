@@ -378,4 +378,21 @@ export default class ArticleAPI extends AbstractAPI {
       })
     })
   }
+
+  _insertFootnote (item, footnotes) {
+    this.articleSession.transaction(tx => {
+      let node = tx.create(item)
+        .append(tx.create({type: 'p'}))
+      tx.get(footnotes._node.id).appendChild(node)
+      let firstChild = Array.from(node._childNodes)[0]
+      let path = [firstChild, 'content']
+      let newSelection = {
+        type: 'property',
+        path,
+        startOffset: 0,
+        surfaceId: node.id
+      }
+      tx.setSelection(newSelection)
+    })
+  }
 }

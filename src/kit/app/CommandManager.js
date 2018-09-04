@@ -36,6 +36,7 @@ export default class CommandManager {
       params = Object.assign(new HandlerParams(context), params)
       params.commandState = cmdState
       cmd.execute(params, context)
+      return true
     }
   }
 }

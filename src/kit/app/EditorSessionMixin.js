@@ -220,7 +220,7 @@ export default function (DocumentSession) {
     }
 
     executeCommand (commandName, params) {
-      this.commandManager.executeCommand(commandName, params)
+      return this.commandManager.executeCommand(commandName, params)
     }
 
     _registerObserver (stage, args) {

@@ -44,6 +44,17 @@ export default class MarkersIndex {
     })
   }
 
+  clearPropertyMarkers (path, filter) {
+    let arr = this._documentMarkers.get(path)
+    for (let idx = arr.length - 1; idx >= 0; idx--) {
+      if (filter(arr[idx])) arr.splice(idx, 1)
+    }
+  }
+
+  addPropertyMarker (path, marker) {
+    this._documentMarkers.add(path, marker)
+  }
+
   _add (marker) {
     const dirtyProps = this._manager._dirtyProps
     // console.log('Indexing marker', marker)

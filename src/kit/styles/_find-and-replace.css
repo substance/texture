@@ -1,0 +1,38 @@
+.sc-find-and-replace-dialog {
+  border-top: 1px solid var(--border-color);
+  padding: 5px;
+}
+
+.sc-find-and-replace-dialog.sm-hidden {
+  display: none;
+}
+
+.sc-find-and-replace-dialog .se-section {
+  flex: 0 0 40px;
+  flex-wrap: nowrap;
+}
+
+.sc-find-and-replace-dialog .se-group {
+  display: inline-block;
+}
+
+.sc-find-and-replace-dialog .se-group > * {
+  display: inline-block;
+}
+
+.sc-find-and-replace-dialog .se-group + .se-group {
+  margin-left: 10px;
+}
+
+.sc-find-and-replace-dialog .se-group > * + * {
+  margin-left: 10px;
+}
+
+.sc-find-and-replace-dialog input:focus,
+.sc-find-and-replace-dialog button:focus {
+  border: 1px solid #50a1ff;
+}
+
+.sc-annotation.sm-find-marker {
+  background-color: yellow;
+}

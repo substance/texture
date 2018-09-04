@@ -5,8 +5,8 @@ export const CHILD = 2
 
 // TODO:this should go into Substance Land
 export function compareDOMElementPosition (a, b) {
-  if (a._isBrowserDOMElement) {
-    let res = a.el.compareDocumentPosition(b.el)
+  if (a.el._isBrowserDOMElement) {
+    let res = a.getNativeElement().compareDocumentPosition(b.getNativeElement())
     if (res & window.Node.DOCUMENT_POSITION_CONTAINS) {
       return CHILD
     } else if (res & window.Node.DOCUMENT_POSITION_CONTAINED_BY) {

@@ -39,6 +39,17 @@ export default class MarkersManager {
     this._markers.clear(key)
   }
 
+  clearPropertyMarkers (path, filter) {
+    this._markers.clearPropertyMarkers(path, filter)
+    this._dirtyProps[path] = true
+  }
+
+  addPropertyMarker (path, data) {
+    // TODO: maybe provide a factory for creating markers
+    this._markers.addPropertyMarker(path, new Marker(this.editorState.document, data))
+    this._dirtyProps[path] = true
+  }
+
   register (textPropertyComponent) {
     this._textProperties.registerTextProperty(textPropertyComponent)
   }
@@ -72,7 +83,7 @@ export default class MarkersManager {
     Trigger rerendering of all dirty text properties.
   */
   _updateProperties () {
-    // console.log('MarkersManager._updateProperties()')
+    console.log('MarkersManager._updateProperties()')
     Object.keys(this._dirtyProps).forEach((path) => {
       let textPropertyComponent = this._textProperties.getTextProperty(path)
       if (textPropertyComponent) {

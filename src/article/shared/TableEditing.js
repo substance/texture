@@ -318,8 +318,16 @@ export default class TableEditing {
     while (rowIt.hasNext()) {
       let row = rowIt.next()
       let cellAfter = row.getChildAt(colIdx)
+      let protoAttributes
+      if (cellAfter) {
+        protoAttributes = cellAfter.getAttributes()
+      } else {
+        let cellBefore = row.getChildAt(colIdx - 1)
+        protoAttributes = cellBefore.getAttributes()
+      }
       for (let j = 0; j < n; j++) {
         let cell = $$('table-cell')
+        cell.attr(protoAttributes)
         row.insertBefore(cell, cellAfter)
       }
     }

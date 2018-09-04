@@ -103,9 +103,9 @@ export default class ManuscriptEditor extends Component {
       this._renderToolbar($$),
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
-        this._renderContentPanel($$)
+        this._renderContentPanel($$),
+        this._renderFooterPane($$)
       ).ref('contentSection')
-
     )
 
     if (appState.workflowId) {
@@ -175,6 +175,14 @@ export default class ManuscriptEditor extends Component {
       $$(Dropzones)
     )
     return contentPanel
+  }
+
+  _renderFooterPane ($$) {
+    const FindAndReplaceDialog = this.getComponent('find-and-replace-dialog')
+    let el = $$('div').addClass('se-footer-pane')
+    let fnr = $$(FindAndReplaceDialog).ref('findAndReplace')
+    el.append(fnr)
+    return el
   }
 
   _renderContextPane ($$) {

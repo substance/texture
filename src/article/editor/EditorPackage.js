@@ -8,7 +8,7 @@ import {
 } from 'substance'
 
 import {
-  BasePackage, EditorBasePackage, ModelComponentPackage
+  BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
@@ -59,6 +59,7 @@ export default {
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(ArticleNavPackage)
+    config.import(FindAndReplacePackage)
 
     // EXPERIMENTAL:
     // a CommandManager that uses the xmlSchema to inhibit commands

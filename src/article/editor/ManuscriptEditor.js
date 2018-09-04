@@ -1,5 +1,5 @@
 import {
-  Component, DefaultDOMElement, Highlights
+  Component, DefaultDOMElement
 } from 'substance'
 import {
   Managed, createEditorContext
@@ -16,7 +16,6 @@ export default class ManuscriptEditor extends Component {
 
     this.handleActions({
       tocEntrySelected: this._tocEntrySelected,
-      switchContext: this._switchContext,
       executeCommand: this._executeCommand,
       toggleOverlay: this._toggleOverlay,
       startWorkflow: this._startWorkflow,
@@ -38,7 +37,6 @@ export default class ManuscriptEditor extends Component {
     this.model = new ManuscriptModel(api)
     this.exporter = this._getExporter()
     this.tocProvider = this._getTOCProvider()
-    this.contentHighlights = new Highlights(articleSession.getDocument())
     this.context = Object.assign(createEditorContext(config, editorSession), {
       api,
       tocProvider: this.tocProvider,
@@ -156,8 +154,7 @@ export default class ManuscriptEditor extends Component {
       tocProvider: this.tocProvider,
       // scrollbarType: 'substance',
       contextMenu: 'custom',
-      scrollbarPosition: 'right',
-      highlights: this.contentHighlights
+      scrollbarPosition: 'right'
     }).ref('contentPanel')
 
     contentPanel.append(
@@ -233,10 +230,6 @@ export default class ManuscriptEditor extends Component {
         focusedSurface.rerenderDOMSelection()
       }
     })
-  }
-
-  _switchContext (state) {
-    this.refs.contextSection.setState(state)
   }
 
   _tocEntrySelected (nodeId) {

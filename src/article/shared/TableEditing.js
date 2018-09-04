@@ -325,9 +325,10 @@ export default class TableEditing {
         let cellBefore = row.getChildAt(colIdx - 1)
         protoAttributes = cellBefore.getAttributes()
       }
+      let isHeading = protoAttributes.heading
       for (let j = 0; j < n; j++) {
         let cell = $$('table-cell')
-        cell.attr(protoAttributes)
+        if (isHeading) cell.attr({heading: true})
         row.insertBefore(cell, cellAfter)
       }
     }

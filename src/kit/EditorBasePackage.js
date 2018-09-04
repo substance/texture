@@ -7,6 +7,7 @@ import SelectAllCommand from './app/SelectAllCommand'
 export default {
   name: 'EditorBase',
   configure: function (config) {
+    // TODO: do we still need this?
     config.import(InputPackage)
 
     config.addCommand('undo', UndoCommand, { commandGroup: 'undo-redo' })

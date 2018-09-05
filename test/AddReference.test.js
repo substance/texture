@@ -3,7 +3,7 @@ import setupTestApp from './setupTestApp'
 import { JATS_BIBR_TYPES_TO_INTERNAL } from '../index'
 
 test('Add Reference: open and closing workflow', t => {
-  let { app } = setupTestApp(t)
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
   let articlePanel = app.find('.sc-article-panel')
   let workflow = _openWorkflow(app)
   t.notNil(workflow, 'There should be a workflow in modal')
@@ -28,7 +28,7 @@ RefTypes.forEach(refType => {
   Ref creation test suite for a certain ref type
 */
 function testRefCreationForType (t, refId) {
-  let { app } = setupTestApp(t)
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
   let articlePanel = app.find('.sc-article-panel')
   let workflow = _openWorkflow(app)
   // After switching to a metadata view and before adding a new reference

@@ -14,7 +14,6 @@ export default class FindAndReplaceManager {
     markersManager.on('text-property:changed', this._onTextPropertyChanged, this)
 
     appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
-    appState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'update' })
 
     this._updateSearch = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
   }
@@ -296,13 +295,6 @@ export default class FindAndReplaceManager {
 
   _onDocumentChange () {
     this._updateSearch()
-  }
-
-  // Note: we keep an internal flag indicating that the next match navigation
-  // should be done relative the current selection rather than relative
-  // to the current match
-  _onSelectionChange () {
-    this._relativeToMatch = false
   }
 
   static defaultState () {

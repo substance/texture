@@ -142,9 +142,8 @@ export default class FindAndReplaceDialog extends Component {
     let state = this._getState()
     let el = $$('span').addClass('se-status')
     if (state.count > 0) {
-      el.append(
-        [String(state.cursor+1), state.count].join(' / ')
-      )
+      let current = state.cursor === -1 ? '?' : String(state.cursor + 1)
+      el.append(`${current} / ${state.count}`)
     } else if (state.pattern) {
       el.append(this.getLabel('no-result'))
     }

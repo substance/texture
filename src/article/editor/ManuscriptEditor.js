@@ -93,6 +93,7 @@ export default class ManuscriptEditor extends Component {
       this._renderMainSection($$),
       this._renderContextPane($$)
     )
+    el.on('keydown', this._onKeydown)
     return el
   }
 
@@ -311,10 +312,32 @@ export default class ManuscriptEditor extends Component {
   }
 
   _closeModal () {
+    // TODO: the name of this method suggests that this is only about a modal
+    // while it is resetting overlay and workflow specific stuff
     const appState = this.context.appState
-    appState.workflowId = null
     appState.overlayId = null
+    appState.workflowId = null
     appState.workflowProps = null
     appState.propagateUpdates()
+  }
+
+  _onKeydown (e) {
+    let handled = false
+    const appState = this.context.appState
+    switch (e.keyCode) {
+      case keys.ESCAPE: {
+        if (appState.findAndReplace.enabled) {
+          this.context.findAndReplaceManager.closeDialog()
+          handled = true
+        }
+        break
+      }
+      default:
+        //
+    }
+    if (handled) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { debounce } from 'substance'
+import { debounce, uuid } from 'substance'
 
 const UPDATE_DELAY = 200
 
@@ -30,10 +30,9 @@ export default class FindAndReplaceManager {
     } else {
       state.enabled = true
       state.showReplace = Boolean(enableReplace)
-      this._searchAndHighlight()
-      this._updateState(state)
       // resetting dirty flags as we do a full search initially
       this._dirty = new Set()
+      this.search()
     }
   }
 
@@ -43,15 +42,43 @@ export default class FindAndReplaceManager {
     state.enabled = false
     this._clearHighlights()
     // Note: recovering the selection here
-    this._updateState(state, true)
+    this._updateState(state, 'recoverSelection')
+  }
+
+  search () {
+    let state = this._getState()
+    if (state.pattern) {
+      this._searchAndHighlight()
+    } else {
+      this._clearHighlights()
+    }
+    state.cursor = -1
+    this._updateState(state)
+    // ATTENTION: scrolling to the first match (if available)
+    // this needs to be done after rolling out the state update
+    // so that the markers have been rendered already
+    if (state.count > 0) {
+      this.next()
+    }
+  }
+
+  next () {
+    let state = this._getState()
+    this._nav('forward')
+    this._updateState(state)
+  }
+
+  previous () {
+    let state = this._getState()
+    this._nav('back')
+    this._updateState(state)
   }
 
   setSearchPattern (pattern) {
     let state = this._getState()
     if (state.pattern !== pattern) {
       state.pattern = pattern
-      this._searchAndHighlight()
-      this._updateState(state)
+      this.search()
     }
   }
 
@@ -82,10 +109,7 @@ export default class FindAndReplaceManager {
   _toggleOption (optionName) {
     let state = this._getState()
     state[optionName] = !state[optionName]
-    if (state.pattern) {
-      this._searchAndHighlight()
-    }
-    this._updateState(state)
+    this.search()
   }
 
   _updateState (state, recoverSelection) {
@@ -151,12 +175,19 @@ export default class FindAndReplaceManager {
     state.count = count
     state.matches = matches
     // HACK: need to make sure that the selection is recovered here
-    this._updateState(state, true)
+    this._updateState(state, 'recoverSelection')
     this._dirty = new Set()
   }
 
   _searchInProperty (tp, pattern, opts) {
-    return _findInText(tp.getText(), pattern, opts)
+    let path = tp.getPath()
+    return _findInText(tp.getText(), pattern, opts).map(m => {
+      // add an id so that we can find it later, e.g. for scroll-to
+      m.id = uuid()
+      m.path = path
+      m.textProperty = tp
+      return m
+    })
   }
 
   _clearHighlights () {
@@ -186,6 +217,7 @@ export default class FindAndReplaceManager {
     matches.forEach(m => {
       markersManager.addPropertyMarker(path, {
         type: 'find-marker',
+        id: m.id,
         start: {
           path,
           offset: m.start
@@ -208,6 +240,55 @@ export default class FindAndReplaceManager {
     return this._markersManager._textProperties.getTextProperty(key)
   }
 
+  _nav (direction) {
+    let state = this._getState()
+    let [cursor, match] = this._getNext(direction)
+    if (match) {
+      state.cursor = cursor
+      this._scrollToMatch(match)
+    }
+  }
+
+  _getNext (direction) {
+    // TODO: support a selection relative navigation
+    // as a first iteration we will do this independently from the selection
+    let state = this._getState()
+    let idx
+    if (direction === 'forward') {
+      idx = Math.min(state.count - 1, state.cursor + 1)
+    } else {
+      idx = Math.max(0, state.cursor - 1)
+    }
+    return [ idx, this._getMatchAt(idx) ]
+  }
+
+  _getMatchAt (idx) {
+    // Note: because we are storing matching grouped by properties
+    // this is a but nasty
+    let state = this._getState()
+    if (state.matches) {
+      for (let [, matches] of state.matches) {
+        if (idx >= matches.length) {
+          idx -= matches.length
+        } else {
+          return matches[idx]
+        }
+      }
+    }
+  }
+
+  _scrollToMatch (match) {
+    let state = this._getState()
+    // HACKIDHACK: instead of relying on rerendering, we toggle the hightlight here
+    // which is also much faster, and still pretty safe, because we throw markers on every change
+    if (state.marker) state.marker.el.removeClass('sm-active')
+    let tp = match.textProperty
+    let marker = tp.find(`.sm-find-marker[data-id="${match.id}"]`)
+    marker.el.addClass('sm-active')
+    state.marker = marker
+    tp.send('scrollElementIntoView', marker.el)
+  }
+
   _onTextPropertyChanged (path) {
     this._dirty.add(String(path))
   }
@@ -224,7 +305,10 @@ export default class FindAndReplaceManager {
       replacePattern: '',
       caseSensitive: false,
       fullWord: false,
-      regexSearch: false
+      regexSearch: false,
+      matches: null,
+      count: 0,
+      cursor: 0
     }
   }
 }

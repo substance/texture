@@ -65,13 +65,15 @@ export default class FindAndReplaceDialog extends Component {
         this._renderStatus($$),
         $$(Button, {
           tooltip: this.getLabel('find-next'),
-          theme: this.props.theme
+          theme: this.props.theme,
+          disabled: state.count < 1
         }).addClass('sm-next')
           .append(this.getLabel('next'))
           .on('click', this._findNext),
         $$(Button, {
           tooltip: this.getLabel('find-previous'),
-          theme: this.props.theme
+          theme: this.props.theme,
+          disabled: state.count < 1
         }).addClass('sm-previous')
           .append(this.getLabel('previous'))
           .on('click', this._findPrevious),
@@ -140,9 +142,8 @@ export default class FindAndReplaceDialog extends Component {
     let state = this._getState()
     let el = $$('span').addClass('se-status')
     if (state.count > 0) {
-      el.append(
-        ['?', state.count].join(' / ')
-      )
+      let current = state.cursor === -1 ? '?' : String(state.cursor + 1)
+      el.append(`${current} / ${state.count}`)
     } else if (state.pattern) {
       el.append(this.getLabel('no-result'))
     }
@@ -168,11 +169,11 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _findNext () {
-    console.error('TODO: findNext()')
+    this._getManager().next()
   }
 
   _findPrevious () {
-    console.error('TODO: findPrevious()')
+    this._getManager().previous()
   }
 
   _replaceNext () {

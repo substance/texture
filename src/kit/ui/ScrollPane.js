@@ -211,20 +211,26 @@ export default class ScrollPane extends AbstractScrollPane {
   scrollTo (selector, onlyIfNotVisible) {
     // console.log('ScrollPane.scrollTo()', selector)
     let scrollableEl = this.getScrollableElement()
-    let targetNode = scrollableEl.find(selector)
-    if (targetNode) {
-      const offset = this.getPanelOffsetForElement(targetNode)
-      let shouldScroll = true
-      if (onlyIfNotVisible) {
-        const height = scrollableEl.height
-        const oldOffset = scrollableEl.getProperty('scrollTop')
-        shouldScroll = (offset < oldOffset || oldOffset + height < offset)
-      }
-      if (shouldScroll) {
-        this.setScrollPosition(offset)
-      }
+    let el = scrollableEl.find(selector)
+    if (el) {
+      this.scrollElementIntoView(el, onlyIfNotVisible)
     } else {
       console.warn(`No match found for selector '${selector}' in scrollable container`)
+    }
+  }
+
+  scrollElementIntoView (el, onlyIfNotVisible) {
+    // console.log('ScrollPane.scrollTo()', selector)
+    let scrollableEl = this.getScrollableElement()
+    const offset = this.getPanelOffsetForElement(el)
+    let shouldScroll = true
+    if (onlyIfNotVisible) {
+      const height = scrollableEl.height
+      const oldOffset = scrollableEl.getProperty('scrollTop')
+      shouldScroll = (offset < oldOffset || oldOffset + height < offset)
+    }
+    if (shouldScroll) {
+      this.setScrollPosition(offset)
     }
   }
 

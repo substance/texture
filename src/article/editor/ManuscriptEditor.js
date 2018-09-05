@@ -7,9 +7,9 @@ import TOC from './TOC'
 
 export default class ManuscriptEditor extends EditorPanel {
   getActionHandlers () {
-    let handlers = super.getActionHandlers()
-    handlers.tocEntrySelected = this._tocEntrySelected
-    return handlers
+    return Object.assign(super.getActionHandlers(), {
+      tocEntrySelected: this._tocEntrySelected
+    })
   }
 
   _initialize (props) {
@@ -164,6 +164,10 @@ export default class ManuscriptEditor extends EditorPanel {
     }
   }
 
+  _getContentPanel () {
+    return this.refs.contentPanel
+  }
+
   getViewport () {
     return {
       x: this.refs.contentPanel.getScrollPosition()
@@ -190,12 +194,13 @@ export default class ManuscriptEditor extends EditorPanel {
   _tocEntrySelected (nodeId) {
     const node = this._getDocument().get(nodeId)
     const editorSession = this._getEditorSession()
-    const nodeComponent = this.refs.contentPanel.find(`[data-id="${nodeId}"]`)
+    const nodeComponent = this._getContentPanel().find(`[data-id="${nodeId}"]`)
     if (nodeComponent) {
       // TODO: it needs to be easier to retrieve the surface
       let surface = nodeComponent.context.surface
       // There are cases when we can't set selection, e.g. for references
       if (surface) {
+        // Note: in this case we do not need to scroll explicitly because this will be done by the SurfaceManager
         editorSession.setSelection({
           type: 'property',
           path: node.getPath(),
@@ -203,13 +208,10 @@ export default class ManuscriptEditor extends EditorPanel {
           surfaceId: surface.id,
           containerId: surface.getContainerId()
         })
+      } else {
+        return this._scrollElementIntoView(nodeComponent.el)
       }
-      return this._scrollTo(nodeId)
     }
-  }
-
-  _scrollTo (nodeId) {
-    this.refs.contentPanel.scrollTo(`[data-id="${nodeId}"]`)
   }
 
   _showHideTOC () {

@@ -33,4 +33,8 @@ export default class TextPropertyIndex {
     }
     return this._sorted
   }
+
+  _hasProperty (pathStr) {
+    return this._index.has(pathStr)
+  }
 }

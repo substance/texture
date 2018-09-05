@@ -9,11 +9,11 @@ export default class FindAndReplaceCommand extends Command {
     let fnr = context.findAndReplaceManager
     switch (this.config.action) {
       case 'open-find': {
-        fnr.showDialog()
+        fnr.openDialog()
         break
       }
       case 'open-replace': {
-        fnr.showDialog('replace')
+        fnr.openDialog('replace')
         break
       }
     }

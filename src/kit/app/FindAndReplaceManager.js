@@ -1,13 +1,25 @@
+import { debounce } from 'substance'
+
+const UPDATE_DELAY = 200
+
 export default class FindAndReplaceManager {
   constructor (appState, markersManager) {
     this._appState = appState
     this._markersManager = markersManager
+    this._dirty = new Set()
+
+    // EXPERIMENTAL: we use the MarkersManager to detect changes on text-properties
+    markersManager.on('text-property:registered', this._onTextPropertyChanged, this)
+    markersManager.on('text-property:deregistered', this._onTextPropertyChanged, this)
+    markersManager.on('text-property:changed', this._onTextPropertyChanged, this)
+
+    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
+
+    this._updateSearch = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
   }
 
-  showDialog (enableReplace) {
-    console.log('AAAA')
+  openDialog (enableReplace) {
     enableReplace = Boolean(enableReplace)
-    // TODO: think about mutual
     let state = this._getState()
     if (state.enabled) {
       // update state if 'showReplace' has changed
@@ -20,14 +32,18 @@ export default class FindAndReplaceManager {
       state.showReplace = Boolean(enableReplace)
       this._searchAndHighlight()
       this._updateState(state)
+      // resetting dirty flags as we do a full search initially
+      this._dirty = new Set()
     }
   }
 
-  hideDialog () {
+  closeDialog () {
     let state = this._getState()
     if (!state.enabled) return
     state.enabled = false
-    this._updateState(state)
+    this._clearHighlights()
+    // Note: recovering the selection here
+    this._updateState(state, true)
   }
 
   setSearchPattern (pattern) {
@@ -55,7 +71,7 @@ export default class FindAndReplaceManager {
     this._toggleOption('regexSearch')
   }
 
-  toggleFullWordMode () {
+  toggleFullWordSearch () {
     this._toggleOption('fullWord')
   }
 
@@ -65,16 +81,21 @@ export default class FindAndReplaceManager {
 
   _toggleOption (optionName) {
     let state = this._getState()
+    state[optionName] = !state[optionName]
     if (state.pattern) {
-      state[optionName] = !state[optionName]
       this._searchAndHighlight()
-      this._updateState()
     }
+    this._updateState(state)
   }
 
-  _updateState (state) {
-    this._appState.set('findAndReplace', state)
-    this._appState.propagateUpdates()
+  _updateState (state, recoverSelection) {
+    const appState = this._appState
+    // HACK: touching appState.selection because we want that the applications recovers the selection
+    if (recoverSelection) {
+      appState._setDirty('selection')
+    }
+    appState.set('findAndReplace', state)
+    appState.propagateUpdates()
   }
 
   _searchAndHighlight () {
@@ -100,6 +121,38 @@ export default class FindAndReplaceManager {
     }
     state.matches = matches
     state.count = count
+  }
+
+  _updateSearch () {
+    let state = this._getState()
+    if (!state.enabled || !state.pattern || this._dirty.size === 0) return
+
+    let markersManager = this._markersManager
+    let count = state.count
+    let matches = state.matches
+    let opts = state
+    for (let key of this._dirty) {
+      let path = key.split(',')
+      let _matches = matches.get(key)
+      if (_matches) {
+        count -= _matches.length
+      }
+      markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
+      let tp = this._getTextProperty(key)
+      if (tp) {
+        _matches = this._searchInProperty(tp, state.pattern, opts)
+        count += _matches.length
+        matches.set(key, _matches)
+        this._addHighlightsForProperty(path, _matches)
+      } else {
+        matches.delete(key)
+      }
+    }
+    state.count = count
+    state.matches = matches
+    // HACK: need to make sure that the selection is recovered here
+    this._updateState(state, true)
+    this._dirty = new Set()
   }
 
   _searchInProperty (tp, pattern, opts) {
@@ -146,7 +199,21 @@ export default class FindAndReplaceManager {
   }
 
   _getTextProperties () {
+    // HACK: accessing TextPropertyIndex via private member of markersManager
     return this._markersManager._textProperties.getSorted()
+  }
+
+  _getTextProperty (key) {
+    // HACK: accessing TextPropertyIndex via private member of markersManager
+    return this._markersManager._textProperties.getTextProperty(key)
+  }
+
+  _onTextPropertyChanged (path) {
+    this._dirty.add(String(path))
+  }
+
+  _onDocumentChange () {
+    this._updateSearch()
   }
 
   static defaultState () {
@@ -156,7 +223,8 @@ export default class FindAndReplaceManager {
       showReplace: false,
       replacePattern: '',
       caseSensitive: false,
-      fullWord: false
+      fullWord: false,
+      regexSearch: false
     }
   }
 }
@@ -166,7 +234,7 @@ function _findInText (text, pattern, opts = {}) {
     pattern = pattern.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&') // eslint-disable-line no-useless-escape
   }
   if (opts.fullWord) {
-    pattern = '\b' + pattern + '\b'
+    pattern = '\\b' + pattern + '\\b'
   }
   let matcher = new RegExp(pattern, opts.caseSensitive ? 'g' : 'gi')
   let matches = []

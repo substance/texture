@@ -1,8 +1,18 @@
 import { debounce, Component, keys } from 'substance'
 
+const UPDATE_DELAY = 300
+
 export default class FindAndReplaceDialog extends Component {
+  constructor (...args) {
+    super(...args)
+
+    // debounce updates when patterns change
+    this._updatePattern = debounce(this._updatePattern.bind(this), UPDATE_DELAY)
+    this._updateReplacePattern = debounce(this._updateReplacePattern.bind(this), UPDATE_DELAY)
+  }
+
   didMount () {
-    this.context.appState.addObserver(['findAndReplace'], this.rerender, this, { stage: 'render' })
+    this.context.appState.addObserver(['findAndReplace'], this._onUpdate, this, { stage: 'render' })
   }
 
   dispose () {
@@ -19,33 +29,57 @@ export default class FindAndReplaceDialog extends Component {
     if (!state.enabled) {
       el.addClass('sm-hidden')
     }
+    el.on('keydown', this._onKeydown)
     return el
   }
 
   _renderFindSection ($$) {
+    const state = this._getState()
     const Button = this.getComponent('button')
     return $$('div').addClass('se-section').addClass('sm-find').append(
-      // TODO use Button Component
-      $$('div').addClass('se-group sm-options').append(
-        $$(Button).addClass('sm-regex-search').append('.*'),
-        $$(Button).addClass('sm-case-sensitive').append('Aa'),
-        $$(Button).addClass('sm-case-sensitive').append('|Abc|')
-      ),
       $$('div').addClass('se-group sm-input').append(
         $$('div').addClass('se-label').append(this.getLabel('find')),
-        this._renderPatternInput($$),
-        this._renderStatusCounter($$)
+        this._renderPatternInput($$)
+      ),
+      $$('div').addClass('se-group sm-options').append(
+        $$(Button, {
+          tooltip: this.getLabel('find-case-sensitive'),
+          active: state.caseSensitive,
+          theme: this.props.theme
+        }).addClass('sm-case-sensitive').append('Aa')
+          .on('click', this._toggleCaseSensitivity),
+        $$(Button, {
+          tooltip: this.getLabel('find-whole-word'),
+          active: state.fullWord,
+          theme: this.props.theme
+        }).addClass('sm-whole-word').append('Abc|')
+          .on('click', this._toggleFullWordSearch),
+        $$(Button, {
+          tooltip: this.getLabel('find-regex'),
+          active: state.regexSearch,
+          theme: this.props.theme
+        }).addClass('sm-regex-search').append('.*')
+          .on('click', this._toggleRegexSearch)
       ),
       $$('div').addClass('se-group sm-actions').append(
-        // TODO: use Button Component
-        $$('button').addClass('sm-next')
+        this._renderStatus($$),
+        $$(Button, {
+          tooltip: this.getLabel('find-next'),
+          theme: this.props.theme
+        }).addClass('sm-next')
           .append(this.getLabel('next'))
           .on('click', this._findNext),
-        $$('button').addClass('sm-previous')
+        $$(Button, {
+          tooltip: this.getLabel('find-previous'),
+          theme: this.props.theme
+        }).addClass('sm-previous')
           .append(this.getLabel('previous'))
           .on('click', this._findPrevious),
-        $$('button').addClass('sm-close')
-          .append(this.getLabel('close'))
+        $$(Button, {
+          tooltip: this.getLabel('close'),
+          theme: this.props.theme
+        }).addClass('sm-close')
+          .append('x')
           .on('click', this._close)
       )
     )
@@ -54,17 +88,24 @@ export default class FindAndReplaceDialog extends Component {
   _renderReplaceSection ($$) {
     let state = this._getState()
     if (state.showReplace) {
+      const Button = this.getComponent('button')
       return $$('div').addClass('se-section').addClass('sm-replace').append(
-        $$('div').addClass('se-group sm-options').append(),
         $$('div').addClass('se-group sm-input').append(
+          $$('div').addClass('se-label').append(this.getLabel('replace')),
           this._renderReplacePatternInput($$)
         ),
-        // TODO: use Button Component
+        $$('div').addClass('se-group sm-options').append(),
         $$('div').addClass('se-group sm-actions').append(
-          $$('button').addClass('sm-replace')
+          $$(Button, {
+            tooltip: this.getLabel('replace'),
+            theme: this.props.theme
+          }).addClass('sm-replace')
             .append(this.getLabel('replace'))
             .on('click', this._replaceNext),
-          $$('button').addClass('sm-replace-all')
+          $$(Button, {
+            tooltip: this.getLabel('replace-all'),
+            theme: this.props.theme
+          }).addClass('sm-replace-all')
             .append(this.getLabel('replace-all'))
             .on('click', this._replaceAll)
         )
@@ -81,7 +122,7 @@ export default class FindAndReplaceDialog extends Component {
       })
       .val(state.pattern)
       .on('keydown', this._onPatternKeydown)
-      .on('input', debounce(this._updatePattern, 300))
+      .on('input', this._updatePattern)
   }
 
   _renderReplacePatternInput ($$) {
@@ -92,16 +133,26 @@ export default class FindAndReplaceDialog extends Component {
         'tabindex': 500
       })
       .val(state.replacePattern)
-      .on('input', debounce(this._updateReplacePattern, 300))
+      .on('input', this._updateReplacePattern)
   }
 
-  _renderStatusCounter ($$) {
+  _renderStatus ($$) {
     let state = this._getState()
+    let el = $$('span').addClass('se-status')
     if (state.count > 0) {
-      return $$('span').addClass('se-status-counter').append(
+      el.append(
         ['?', state.count].join(' / ')
       )
+    } else if (state.pattern) {
+      el.append(this.getLabel('no-result'))
     }
+    return el
+  }
+
+  _grabFocus () {
+    let state = this._getState()
+    let input = state.showReplace ? this.refs.replacePattern : this.refs.pattern
+    input.el.focus()
   }
 
   _getState () {
@@ -113,7 +164,7 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _close () {
-    this._getManager().hideDialog()
+    this._getManager().closeDialog()
   }
 
   _findNext () {
@@ -140,8 +191,31 @@ export default class FindAndReplaceDialog extends Component {
     this._getManager().setSearchPattern(this.refs.replacePattern.val())
   }
 
+  _toggleCaseSensitivity () {
+    this._getManager().toggleCaseSensitivity()
+  }
+
+  _toggleFullWordSearch () {
+    this._getManager().toggleFullWordSearch()
+  }
+
+  _toggleRegexSearch () {
+    this._getManager().toggleRegexSearch()
+  }
+
+  _onUpdate () {
+    // if this dialog is made visible, auto-focus the respective pattern input field
+    // TODO: maybe we should let the app control this
+    let wasHidden = this.el.hasClass('sm-hidden')
+    this.rerender()
+    let isHidden = this.el.hasClass('sm-hidden')
+    if (wasHidden && !isHidden) {
+      this._grabFocus()
+    }
+  }
+
   _onKeydown (e) {
-    if (e.keycode === keys.ESC) {
+    if (e.keyCode === keys.ESCAPE) {
       e.stopPropagation()
       e.preventDefault()
       this._close()
@@ -149,7 +223,7 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _onPatternKeydown (e) {
-    if (e.keycode === keys.ENTER) {
+    if (e.keyCode === keys.ENTER) {
       e.stopPropagation()
       e.preventDefault()
       this._findNext()

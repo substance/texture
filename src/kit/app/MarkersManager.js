@@ -1,11 +1,14 @@
-import { forEach, Marker } from 'substance'
+import { forEach, Marker, EventEmitter } from 'substance'
 import TextPropertyIndex from './TextPropertyIndex'
 import MarkersIndex from './MarkersIndex'
 
 // TODO: extract code that can be shared with original editorSession based implementation
 // TODO: let this act as a reducer for editorState.markers
-export default class MarkersManager {
+// EXPERIMENTAL: events emitted by this class are meant for internal use only
+export default class MarkersManager extends EventEmitter {
   constructor (editorState) {
+    super()
+
     this.editorState = editorState
     // registry
     this._textProperties = new TextPropertyIndex()
@@ -52,10 +55,14 @@ export default class MarkersManager {
 
   register (textPropertyComponent) {
     this._textProperties.registerTextProperty(textPropertyComponent)
+    // ATTENTION: see note about events above
+    this.emit('text-property:registered', textPropertyComponent.getPath())
   }
 
   deregister (textPropertyComponent) {
     this._textProperties.unregisterTextProperty(textPropertyComponent)
+    // ATTENTION: see note about events above
+    this.emit('text-property:deregistered', textPropertyComponent.getPath())
   }
 
   getMarkers (path, opts) {
@@ -73,9 +80,14 @@ export default class MarkersManager {
   }
 
   _recordDirtyTextProperties (change) {
+    const textProperties = this._textProperties
     // mark all updated props per se as dirty
     forEach(change.updated, (val, id) => {
-      this._dirtyProps[id] = true
+      if (textProperties._hasProperty(id)) {
+        this._dirtyProps[id] = true
+        // ATTENTION: see note about events above
+        this.emit('text-property:changed', id)
+      }
     })
   }
 
@@ -83,7 +95,7 @@ export default class MarkersManager {
     Trigger rerendering of all dirty text properties.
   */
   _updateProperties () {
-    console.log('MarkersManager._updateProperties()')
+    // console.log('MarkersManager._updateProperties()')
     Object.keys(this._dirtyProps).forEach((path) => {
       let textPropertyComponent = this._textProperties.getTextProperty(path)
       if (textPropertyComponent) {

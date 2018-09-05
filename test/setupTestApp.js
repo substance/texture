@@ -4,10 +4,11 @@ import { createTestApp } from './integrationTestHelpers'
 export default function setupTestApp (t, options = {}) {
   // TODO: this is a little weird. Maybe just pass App as
   let el = getMountPoint(t)
+  let archiveId = options.archiveId || 'kitchen-sink'
   let App = createTestApp(options)
   // TODO: use options here
   let app = App.mount({
-    archiveId: 'kitchen-sink',
+    archiveId,
     storageType: 'vfs'
   }, el)
   // ATTENTION: in the test suite everything works synchronously

@@ -1,79 +1,31 @@
-import { Component } from 'substance'
-import { Managed, createEditorContext } from '../../kit'
+import { Managed } from '../../kit'
+import EditorPanel from '../shared/EditorPanel'
 import MetadataModel from '../models/MetadataModel'
-import ArticleEditorSession from '../ArticleEditorSession'
-import ArticleAPI from '../ArticleAPI'
 import MetadataSection from './MetadataSection'
 import MetadataSectionTOCEntry from './MetadataSectionTOCEntry'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 
-export default class MetadataEditor extends Component {
-  constructor (...args) {
-    super(...args)
-
-    this.handleActions({
-      executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay,
-      startWorkflow: this._startWorkflow,
-      closeModal: this._closeModal
-    })
-
-    this._initialize(this.props)
-  }
-
-  // TODO: shouldn't we react on willReceiveProps?
+export default class MetadataEditor extends EditorPanel {
   _initialize (props) {
-    const { articleSession, config, archive } = props
-    const editorSession = new ArticleEditorSession(
-      articleSession.getDocument(), config, this, {
-        workflowId: null,
-        viewName: this.props.viewName
-      }
-    )
-    const api = new ArticleAPI(editorSession, config.getModelRegistry(), archive)
-    this.api = api
-    this.editorSession = editorSession
-    this.context = Object.assign(createEditorContext(config, editorSession), {
-      editor: this,
-      api,
-      urlResolver: archive,
-      editable: true
-    })
-    this.articleValidator = new ExperimentalArticleValidator(articleSession, editorSession.editorState)
-    this.model = new MetadataModel(api)
+    super._initialize(props)
 
-    // initial reduce etc.
-    this.editorSession.initialize()
+    this.articleValidator = new ExperimentalArticleValidator(this.editorSession, this.editorSession.editorState)
+    this.model = new MetadataModel(this.api)
+
     this.articleValidator.initialize()
-
-    this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
-    this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
-  }
-
-  _updateViewName () {
-    let appState = this.context.appState
-    this.send('updateViewName', appState.viewName)
   }
 
   dispose () {
-    const appState = this.context.appState
-    const articleSession = this.props.articleSession
-    const editorSession = this.editorSession
-    const articleValidator = this.articleValidator
-    articleSession.off(this)
-    editorSession.dispose()
-    articleValidator.dispose()
-    appState.removeObserver(this)
-    // TODO: do we really need to clear here?
-    this.empty()
+    super.dispose()
+    this.articleValidator.dispose()
   }
 
   render ($$) {
     let el = $$('div').addClass('sc-metadata-editor')
     el.append(
-      this._renderMainSection($$),
-      this._renderContextPane($$)
+      this._renderMainSection($$)
     )
+    el.on('keydown', this._onKeydown)
     return el
   }
 
@@ -84,7 +36,8 @@ export default class MetadataEditor extends Component {
       this._renderToolbar($$),
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
-        this._renderContentPanel($$)
+        this._renderContentPanel($$),
+        this._renderFooterPane($$)
       )
     )
     if (appState.workflowId) {
@@ -155,35 +108,14 @@ export default class MetadataEditor extends Component {
     return contentPanel
   }
 
-  _renderContextPane ($$) { // eslint-disable-line no-unused-vars
-    // TODO: here we would instanstiate the issue panel for instance
-  }
-
-  _executeCommand (name) {
-    this.editorSession.executeCommand(name)
-  }
-
-  _toggleOverlay (overlayId) {
-    const appState = this.context.appState
-    if (appState.overlayId === overlayId) {
-      appState.overlayId = null
-    } else {
-      appState.overlayId = overlayId
-    }
-    appState.propagateUpdates()
-  }
-
-  _startWorkflow (workflowId) {
-    const appState = this.context.appState
-    appState.workflowId = workflowId
-    appState.overlayId = workflowId
-    appState.propagateUpdates()
-  }
-
-  _closeModal () {
-    const appState = this.context.appState
-    appState.workflowId = null
-    appState.overlayId = null
-    appState.propagateUpdates()
+  _renderFooterPane ($$) {
+    const FindAndReplaceDialog = this.getComponent('find-and-replace-dialog')
+    let el = $$('div').addClass('se-footer-pane')
+    el.append(
+      $$(FindAndReplaceDialog, {
+        theme: this._getTheme()
+      }).ref('findAndReplace')
+    )
+    return el
   }
 }

@@ -1,61 +1,28 @@
-import {
-  Component, DefaultDOMElement, keys
-} from 'substance'
-import {
-  Managed, createEditorContext
-} from '../../kit'
-import ArticleAPI from '../ArticleAPI'
-import ArticleEditorSession from '../ArticleEditorSession'
+import { DefaultDOMElement } from 'substance'
+import { Managed } from '../../kit'
+import EditorPanel from '../shared/EditorPanel'
 import ManuscriptModel from '../models/ManuscriptModel'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
 
-export default class ManuscriptEditor extends Component {
-  constructor (...args) {
-    super(...args)
-
-    this.handleActions({
-      tocEntrySelected: this._tocEntrySelected,
-      executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay,
-      startWorkflow: this._startWorkflow,
-      closeModal: this._closeModal
-    })
-
-    this._initialize(this.props)
+export default class ManuscriptEditor extends EditorPanel {
+  getActionHandlers () {
+    let handlers = super.getActionHandlers()
+    handlers.tocEntrySelected = this._tocEntrySelected
+    return handlers
   }
 
   _initialize (props) {
-    const { articleSession, config, archive } = props
-    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
-      workflowId: null,
-      viewName: this.props.viewName
-    })
-    const api = new ArticleAPI(editorSession, config.getModelRegistry(), archive)
-    this.editorSession = editorSession
-    this.api = api
-    this.model = new ManuscriptModel(api)
-    this.exporter = this._getExporter()
+    super._initialize(props)
+
+    this.model = new ManuscriptModel(this.api)
     this.tocProvider = this._getTOCProvider()
-    this.context = Object.assign(createEditorContext(config, editorSession), {
-      api,
-      tocProvider: this.tocProvider,
-      urlResolver: archive,
-      editable: true
-    })
-    this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
-    this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
-
-    // initial reduce etc.
-    this.editorSession.initialize()
-  }
-
-  _updateViewName () {
-    let appState = this.context.appState
-    this.send('updateViewName', appState.viewName)
+    this.context.tocProvider = this.tocProvider
   }
 
   didMount () {
+    super.didMount()
+
     this.tocProvider.on('toc:updated', this._showHideTOC, this)
     this._showHideTOC()
     this._restoreViewport()
@@ -64,25 +31,17 @@ export default class ManuscriptEditor extends Component {
   }
 
   didUpdate () {
+    super.didUpdate()
+
     this._showHideTOC()
     this._restoreViewport()
   }
 
   dispose () {
-    const appState = this.context.appState
-    const articleSession = this.props.articleSession
-    const editorSession = this.editorSession
+    super.dispose()
 
     this.tocProvider.off(this)
-    articleSession.off(this)
-    editorSession.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
-    appState.removeObserver(this)
-    this.empty()
-  }
-
-  getComponentRegistry () {
-    return this.props.config.getComponentRegistry()
   }
 
   render ($$) {
@@ -211,22 +170,6 @@ export default class ManuscriptEditor extends Component {
     }
   }
 
-  _getConfigurator () {
-    return this.props.config
-  }
-
-  _getEditorSession () {
-    return this.editorSession
-  }
-
-  _getDocument () {
-    return this.props.articleSession.getDocument()
-  }
-
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
-  }
-
   _restoreViewport () {
     const editorSession = this._getEditorSession()
     if (this.props.viewport) {
@@ -283,69 +226,7 @@ export default class ManuscriptEditor extends Component {
     return entries.length >= 2
   }
 
-  _getExporter () {
-    return this.context.exporter
-  }
-
   _getTOCProvider () {
-    let containerId = this._getBodyContainerId()
-    return new TOCProvider(this.props.articleSession, { containerId: containerId })
-  }
-
-  _getBodyContainerId () {
-    return 'body'
-  }
-
-  _toggleOverlay (overlayId) {
-    const appState = this.context.appState
-    if (appState.overlayId === overlayId) {
-      appState.overlayId = null
-    } else {
-      appState.overlayId = overlayId
-    }
-    appState.propagateUpdates()
-  }
-
-  _startWorkflow (workflowId, props) {
-    const appState = this.context.appState
-    appState.workflowId = workflowId
-    appState.overlayId = workflowId
-    appState.workflowProps = props
-    appState.propagateUpdates()
-  }
-
-  _closeModal () {
-    // TODO: the name of this method suggests that this is only about a modal
-    // while it is resetting overlay and workflow specific stuff
-    const appState = this.context.appState
-    appState.overlayId = null
-    appState.workflowId = null
-    appState.workflowProps = null
-    appState.propagateUpdates()
-  }
-
-  _onKeydown (e) {
-    let handled = false
-    const appState = this.context.appState
-    switch (e.keyCode) {
-      case keys.ESCAPE: {
-        if (appState.findAndReplace.enabled) {
-          this.context.findAndReplaceManager.closeDialog()
-          handled = true
-        }
-        break
-      }
-      default:
-        //
-    }
-    if (handled) {
-      e.stopPropagation()
-      e.preventDefault()
-    }
-  }
-
-  _getTheme () {
-    // TODO: this should be an application setting
-    return 'light'
+    return new TOCProvider(this.props.articleSession, { containerId: 'body' })
   }
 }

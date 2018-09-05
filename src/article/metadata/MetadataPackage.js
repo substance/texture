@@ -1,5 +1,5 @@
 import {
-  BasePackage, EditorBasePackage, ModelComponentPackage
+  BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
 import ArticleNavPackage from '../ArticleNavPackage'
@@ -23,6 +23,7 @@ export default {
     config.import(ManuscriptContentPackage)
     config.import(ModelComponentPackage)
     config.import(EntityLabelsPackage)
+    config.import(FindAndReplacePackage)
 
     // sections and editors
     config.addComponent('collection', CollectionEditor)

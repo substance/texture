@@ -92,10 +92,8 @@ export default class NodeModelComponent extends Component {
     if (this.isRemovable) {
       const Button = this.getComponent('button')
       footer.append(
-        $$(Button).addClass('se-remove-item').append(
-          $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),
-          this.getLabel('remove')
-        ).on('click', this._removeEntity)
+        $$(Button, {label: 'remove', icon: 'remove'}).addClass('se-remove-item')
+          .on('click', this._removeEntity)
       )
     }
 

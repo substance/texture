@@ -54,6 +54,6 @@
   border: 1px solid #dedede;
 }
 
-.sc-card > * > .se-footer > .se-remove-item > .se-icon {
+.sc-card > * > .se-footer > .se-remove-item > i {
   margin-right: 5px;
 }

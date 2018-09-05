@@ -1,4 +1,4 @@
-import { Component, FontAwesomeIcon } from 'substance'
+import { Component } from 'substance'
 import { getLabel } from './nodeHelpers'
 import { METADATA_MODE, PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
@@ -43,10 +43,8 @@ export default class FootnoteComponent extends Component {
     if (mode === METADATA_MODE) {
       const Button = this.getComponent('button')
       const footer = $$('div').addClass('se-footer').append(
-        $$(Button).addClass('se-remove-item').append(
-          $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),
-          this.getLabel('remove')
-        ).on('click', this._removeFootnote)
+        $$(Button, {label: 'remove', icon: 'remove'}).addClass('se-remove-item')
+          .on('click', this._removeFootnote)
       )
       el.append(footer)
     }

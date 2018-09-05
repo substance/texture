@@ -101,6 +101,10 @@ export default {
       en: 'Workflows'
     })
 
+    config.addIcon('remove', {
+      'fontawesome': 'fa-trash'
+    })
+
     config.addCommand('add-author', AddEntityCommand, {
       type: 'author',
       collection: 'authors',

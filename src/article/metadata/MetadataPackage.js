@@ -94,6 +94,9 @@ export default {
     config.addLabel('edit', {
       en: 'Edit'
     })
+    config.addLabel('remove', {
+      en: 'Remove'
+    })
     config.addLabel('workflows', {
       en: 'Workflows'
     })

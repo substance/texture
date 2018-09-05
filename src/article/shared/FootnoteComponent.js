@@ -41,10 +41,11 @@ export default class FootnoteComponent extends Component {
     }
 
     if (mode === METADATA_MODE) {
+      const Button = this.getComponent('button')
       const footer = $$('div').addClass('se-footer').append(
-        $$('button').addClass('se-remove-item').append(
+        $$(Button).addClass('se-remove-item').append(
           $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon'),
-          'Remove'
+          this.getLabel('remove')
         ).on('click', this._removeFootnote)
       )
       el.append(footer)

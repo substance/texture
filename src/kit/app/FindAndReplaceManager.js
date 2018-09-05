@@ -1,4 +1,4 @@
-import { debounce, uuid } from 'substance'
+import { debounce, uuid, platform } from 'substance'
 
 const UPDATE_DELAY = 200
 
@@ -15,7 +15,9 @@ export default class FindAndReplaceManager {
 
     appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
 
-    this._updateSearch = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
+    if (!platform.test) {
+      this._updateSearch = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
+    }
   }
 
   openDialog (enableReplace) {
@@ -118,6 +120,7 @@ export default class FindAndReplaceManager {
     if (recoverSelection) {
       appState._setDirty('selection')
     }
+    // console.log('Updating appState.findAndReplace', state)
     appState.set('findAndReplace', state)
     appState.propagateUpdates()
   }
@@ -138,7 +141,9 @@ export default class FindAndReplaceManager {
     if (pattern) {
       let tps = this._getTextProperties()
       for (let tp of tps) {
+        // console.log('... searching for matches in ', tp.getPath())
         let _matches = this._searchInProperty(tp, pattern, opts)
+        // if (_matches.length > 0) console.log('found %s matches', _matches.length)
         count += _matches.length
         matches.set(String(tp.getPath()), _matches)
       }

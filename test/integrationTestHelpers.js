@@ -1,5 +1,6 @@
+/* global vfs, testVfs */
 import { ObjectOperation, DocumentChange, isString } from 'substance'
-import { TextureWebApp } from '../index'
+import { TextureWebApp, VfsStorageClient } from '../index'
 
 export function setCursor (editor, path, pos) {
   if (!isString(path)) {
@@ -34,15 +35,27 @@ export function toUnix (str) {
   return str.replace(/\r?\n/g, '\n')
 }
 
-export function createTestApp (resolve, reject) {
+export function createTestApp (options = {}) {
   class App extends TextureWebApp {
+    _getStorage (storageType) {
+      let _vfs = options.vfs || vfs
+      let _rootFolder = options.root || './data/'
+      return new VfsStorageClient(_vfs, _rootFolder)
+    }
+
     willUpdateState (newState) {
       if (newState.archive) {
-        resolve(newState.archive)
+        this.emit('archive:ready', newState.archive)
       } else if (newState.error) {
-        reject(newState.error)
+        this.emit('archive:failed', newState.error)
       }
     }
   }
   return App
+}
+
+export const LOREM_IPSUM = {
+  vfs: testVfs,
+  rootDir: './tests/fixture/',
+  archiveId: 'lorem-ipsum'
 }

@@ -1,9 +1,9 @@
-import { testAsync } from './testHelpers'
+import { test } from 'substance-test'
 import setupTestApp from './setupTestApp'
 import { JATS_BIBR_TYPES_TO_INTERNAL } from '../index'
 
-testAsync('Add Reference: open and closing workflow', async (t) => {
-  let { app } = await setupTestApp(t)
+test('Add Reference: open and closing workflow', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
   let articlePanel = app.find('.sc-article-panel')
   let workflow = _openWorkflow(app)
   t.notNil(workflow, 'There should be a workflow in modal')
@@ -19,16 +19,16 @@ testAsync('Add Reference: open and closing workflow', async (t) => {
 */
 const RefTypes = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL)
 RefTypes.forEach(refType => {
-  testAsync('Add Reference: Manually add ' + refType, async (t) => {
-    await testRefCreationForType(t, JATS_BIBR_TYPES_TO_INTERNAL[refType])
+  test('Add Reference: Manually add ' + refType, t => {
+    testRefCreationForType(t, JATS_BIBR_TYPES_TO_INTERNAL[refType])
   })
 })
 
 /*
   Ref creation test suite for a certain ref type
 */
-async function testRefCreationForType (t, refId) {
-  let { app } = await setupTestApp(t)
+function testRefCreationForType (t, refId) {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
   let articlePanel = app.find('.sc-article-panel')
   let workflow = _openWorkflow(app)
   // After switching to a metadata view and before adding a new reference

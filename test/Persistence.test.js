@@ -5,7 +5,7 @@ import { applyNOP, toUnix } from './integrationTestHelpers'
 import setupTestApp from './setupTestApp'
 
 testAsync('Persistence: loading and saving the kitchen-sink article', async (t) => {
-  let res = await setupTestApp(t)
+  let res = setupTestApp(t)
   let {app, archive, manuscriptSession} = res
   applyNOP(manuscriptSession)
   spy(archive.storage, 'write')

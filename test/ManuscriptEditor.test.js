@@ -1,11 +1,11 @@
 /* global Blob */
 import { platform } from 'substance'
-import { testAsync } from './testHelpers'
+import { test } from 'substance-test'
 import { setCursor } from './integrationTestHelpers'
 import setupTestApp from './setupTestApp'
 
-testAsync('ManuscriptEditor: add figure', async (t) => {
-  let { app } = await setupTestApp(t)
+test('ManuscriptEditor: add figure', t => {
+  let { app } = setupTestApp(t)
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'manuscript')
   let editor = articlePanel.find('.sc-manuscript-editor')

@@ -1,4 +1,4 @@
-## 2018-09-05
+## 2018-09-04
 
 Call with PKP, eLife, Erudit, SciELO mainly to coordinate before the Texture Consortium Meetup in Sao Paulo end of September.
 

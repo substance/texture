@@ -7,6 +7,12 @@
   display: none;
 }
 
+/* because we place the dialog at the bottom of the screen we must place tooltips above */
+.sc-find-and-replace-dialog .sc-button .se-tooltip {
+  top: -30px;
+  left: 30px;
+}
+
 .sc-find-and-replace-dialog .se-section {
   flex: 0 0 40px;
   flex-wrap: nowrap;
@@ -28,9 +34,8 @@
   margin-left: 10px;
 }
 
-.sc-find-and-replace-dialog input:focus,
-.sc-find-and-replace-dialog button:focus {
-  border: 1px solid #50a1ff;
+.sc-find-and-replace-dialog .se-group.sm-input > .se-label::after {
+  content: ':';
 }
 
 .sc-annotation.sm-find-marker {

@@ -27,5 +27,35 @@ export default {
     config.addLabel('find-and-replace-title', {
       en: 'Find and replace'
     })
+    config.addLabel('find', {
+      en: 'Find'
+    })
+    config.addLabel('find-next', {
+      en: 'Next match'
+    })
+    config.addLabel('find-previous', {
+      en: 'Previous match'
+    })
+    config.addLabel('find-case-sensitive', {
+      en: 'Match Case'
+    })
+    config.addLabel('find-whole-word', {
+      en: 'Match Whole Word'
+    })
+    config.addLabel('find-regex', {
+      en: 'Use Regular Expression'
+    })
+    config.addLabel('replace', {
+      en: 'Replace'
+    })
+    config.addLabel('replace-all', {
+      en: 'Replace All'
+    })
+    config.addLabel('next', {
+      en: 'Next'
+    })
+    config.addLabel('previous', {
+      en: 'Previous'
+    })
   }
 }

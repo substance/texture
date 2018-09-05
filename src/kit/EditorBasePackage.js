@@ -34,6 +34,10 @@ export default {
       en: 'Select All',
       de: 'Alles Auswählen'
     })
+    config.addLabel('close', {
+      en: 'Close',
+      de: 'Schließen'
+    })
 
     config.addKeyboardShortcut('CommandOrControl+Z', { command: 'undo' })
     config.addKeyboardShortcut('CommandOrControl+Shift+Z', { command: 'redo' })

@@ -1,5 +1,5 @@
 import {
-  Component, DefaultDOMElement
+  Component, DefaultDOMElement, keys
 } from 'substance'
 import {
   Managed, createEditorContext
@@ -165,12 +165,12 @@ export default class ManuscriptEditor extends Component {
       }).ref('article'),
       $$(Managed(Overlay), {
         toolPanel: configurator.getToolPanel('main-overlay'),
-        theme: 'light',
+        theme: this._getTheme(),
         bindings: ['commandStates']
       }),
       $$(Managed(ContextMenu), {
         toolPanel: configurator.getToolPanel('context-menu'),
-        theme: 'light',
+        theme: this._getTheme(),
         bindings: ['commandStates']
       }),
       $$(Dropzones)
@@ -181,8 +181,11 @@ export default class ManuscriptEditor extends Component {
   _renderFooterPane ($$) {
     const FindAndReplaceDialog = this.getComponent('find-and-replace-dialog')
     let el = $$('div').addClass('se-footer-pane')
-    let fnr = $$(FindAndReplaceDialog).ref('findAndReplace')
-    el.append(fnr)
+    el.append(
+      $$(FindAndReplaceDialog, {
+        theme: this._getTheme()
+      }).ref('findAndReplace')
+    )
     return el
   }
 
@@ -339,5 +342,10 @@ export default class ManuscriptEditor extends Component {
       e.stopPropagation()
       e.preventDefault()
     }
+  }
+
+  _getTheme () {
+    // TODO: this should be an application setting
+    return 'light'
   }
 }

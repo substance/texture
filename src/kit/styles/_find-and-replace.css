@@ -41,3 +41,7 @@
 .sc-annotation.sm-find-marker {
   background-color: yellow;
 }
+
+.sc-annotation.sm-find-marker.sm-active {
+  background-color: darkgoldenrod;
+}

@@ -1,4 +1,4 @@
-import { debounce, Component, keys } from 'substance'
+import { debounce, Component, keys, platform } from 'substance'
 
 const UPDATE_DELAY = 300
 
@@ -6,9 +6,11 @@ export default class FindAndReplaceDialog extends Component {
   constructor (...args) {
     super(...args)
 
-    // debounce updates when patterns change
-    this._updatePattern = debounce(this._updatePattern.bind(this), UPDATE_DELAY)
-    this._updateReplacePattern = debounce(this._updateReplacePattern.bind(this), UPDATE_DELAY)
+    // debounce updates when patterns change, but not during tests
+    if (!platform.test) {
+      this._updatePattern = debounce(this._updatePattern.bind(this), UPDATE_DELAY)
+      this._updateReplacePattern = debounce(this._updateReplacePattern.bind(this), UPDATE_DELAY)
+    }
   }
 
   didMount () {
@@ -185,6 +187,7 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _updatePattern () {
+    // console.log('FindAndReplaceDialog._updatePattern()', this.refs.pattern.val())
     this._getManager().setSearchPattern(this.refs.pattern.val())
   }
 

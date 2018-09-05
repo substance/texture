@@ -1,7 +1,7 @@
 import ToolGroup from './ToolGroup'
 import Tooltip from './Tooltip'
 
-// TODO: use OverlayMixin
+// TODO: use OverlayMixin to avoid code redundancy
 export default class ToolDropdown extends ToolGroup {
   constructor (...args) {
     super(...args)
@@ -39,37 +39,23 @@ export default class ToolDropdown extends ToolGroup {
     if (showDisabled || hasEnabledTools) {
       const Button = this.getComponent('button')
       const Menu = this.getComponent('menu')
-      let toggleButton
-      if (style === 'minimal') {
-        toggleButton = $$(Button, {
-          icon: toggleName,
-          dropdown: true,
-          active: showChoices,
-          theme
-        }).on('click', this._toggleChoices)
-      } else if (style === 'descriptive') {
-        toggleButton = $$(Button, {
-          label: toggleName,
-          dropdown: true,
-          active: showChoices,
-          theme: theme,
-          // HACK: this allows tool buttons to render labels with template strings
-          commandState: commandStates[toggleName]
-        }).on('click', this._toggleChoices)
-      } else if (style === 'full') {
-        toggleButton = $$(Button, {
-          icon: toggleName,
-          label: toggleName,
-          dropdown: true,
-          active: showChoices,
-          theme: theme,
-          // HACK: this allows tool buttons to render labels with template strings
-          commandState: commandStates[toggleName]
-        }).on('click', this._toggleChoices)
-      } else {
-        throw new Error('Style ' + this.props.style + ' not supported')
+      let toggleButtonProps = {
+        dropdown: true,
+        active: showChoices,
+        theme,
+        // Note: we are passing the command state allowing to render labels with template strings
+        commandState: commandStates[toggleName]
       }
-      toggleButton.addClass('se-toggle')
+      if (style === 'minimal') {
+        toggleButtonProps.icon = toggleName
+      } else if (style === 'descriptive') {
+        toggleButtonProps.label = toggleName
+      } else {
+        toggleButtonProps.icon = toggleName
+        toggleButtonProps.label = toggleName
+      }
+      let toggleButton = $$(Button, toggleButtonProps).addClass('se-toggle')
+        .on('click', this._toggleChoices)
       el.append(toggleButton)
 
       if (showChoices) {

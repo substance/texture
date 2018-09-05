@@ -71,3 +71,8 @@
   margin-left: -10px;
   flex: 1 1 0;
 }
+
+/* Place remove button in the right side of card in metadata editor */
+.sc-fn-item > .se-footer {
+  justify-content: flex-end!important;
+}

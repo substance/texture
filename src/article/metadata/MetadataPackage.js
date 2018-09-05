@@ -94,8 +94,15 @@ export default {
     config.addLabel('edit', {
       en: 'Edit'
     })
+    config.addLabel('remove', {
+      en: 'Remove'
+    })
     config.addLabel('workflows', {
       en: 'Workflows'
+    })
+
+    config.addIcon('remove', {
+      'fontawesome': 'fa-trash'
     })
 
     config.addCommand('add-author', AddEntityCommand, {

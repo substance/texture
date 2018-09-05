@@ -1,63 +1,28 @@
-import {
-  Component, DefaultDOMElement, Highlights
-} from 'substance'
-import {
-  Managed, createEditorContext
-} from '../../kit'
-import ArticleAPI from '../ArticleAPI'
-import ArticleEditorSession from '../ArticleEditorSession'
+import { DefaultDOMElement } from 'substance'
+import { Managed } from '../../kit'
+import EditorPanel from '../shared/EditorPanel'
 import ManuscriptModel from '../models/ManuscriptModel'
 import TOCProvider from './TOCProvider'
 import TOC from './TOC'
 
-export default class ManuscriptEditor extends Component {
-  constructor (...args) {
-    super(...args)
-
-    this.handleActions({
-      tocEntrySelected: this._tocEntrySelected,
-      switchContext: this._switchContext,
-      executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay,
-      startWorkflow: this._startWorkflow,
-      closeModal: this._closeModal
-    })
-
-    this._initialize(this.props)
+export default class ManuscriptEditor extends EditorPanel {
+  getActionHandlers () {
+    let handlers = super.getActionHandlers()
+    handlers.tocEntrySelected = this._tocEntrySelected
+    return handlers
   }
 
   _initialize (props) {
-    const { articleSession, config, archive } = props
-    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
-      workflowId: null,
-      viewName: this.props.viewName
-    })
-    const api = new ArticleAPI(editorSession, config.getModelRegistry(), archive)
-    this.editorSession = editorSession
-    this.api = api
-    this.model = new ManuscriptModel(api)
-    this.exporter = this._getExporter()
+    super._initialize(props)
+
+    this.model = new ManuscriptModel(this.api)
     this.tocProvider = this._getTOCProvider()
-    this.contentHighlights = new Highlights(articleSession.getDocument())
-    this.context = Object.assign(createEditorContext(config, editorSession), {
-      api,
-      tocProvider: this.tocProvider,
-      urlResolver: archive,
-      editable: true
-    })
-    this.context.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
-    this.context.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
-
-    // initial reduce etc.
-    this.editorSession.initialize()
-  }
-
-  _updateViewName () {
-    let appState = this.context.appState
-    this.send('updateViewName', appState.viewName)
+    this.context.tocProvider = this.tocProvider
   }
 
   didMount () {
+    super.didMount()
+
     this.tocProvider.on('toc:updated', this._showHideTOC, this)
     this._showHideTOC()
     this._restoreViewport()
@@ -66,25 +31,17 @@ export default class ManuscriptEditor extends Component {
   }
 
   didUpdate () {
+    super.didUpdate()
+
     this._showHideTOC()
     this._restoreViewport()
   }
 
   dispose () {
-    const appState = this.context.appState
-    const articleSession = this.props.articleSession
-    const editorSession = this.editorSession
+    super.dispose()
 
     this.tocProvider.off(this)
-    articleSession.off(this)
-    editorSession.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
-    appState.removeObserver(this)
-    this.empty()
-  }
-
-  getComponentRegistry () {
-    return this.props.config.getComponentRegistry()
   }
 
   render ($$) {
@@ -95,6 +52,7 @@ export default class ManuscriptEditor extends Component {
       this._renderMainSection($$),
       this._renderContextPane($$)
     )
+    el.on('keydown', this._onKeydown)
     return el
   }
 
@@ -105,9 +63,9 @@ export default class ManuscriptEditor extends Component {
       this._renderToolbar($$),
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
-        this._renderContentPanel($$)
+        this._renderContentPanel($$),
+        this._renderFooterPane($$)
       ).ref('contentSection')
-
     )
 
     if (appState.workflowId) {
@@ -156,8 +114,7 @@ export default class ManuscriptEditor extends Component {
       tocProvider: this.tocProvider,
       // scrollbarType: 'substance',
       contextMenu: 'custom',
-      scrollbarPosition: 'right',
-      highlights: this.contentHighlights
+      scrollbarPosition: 'right'
     }).ref('contentPanel')
 
     contentPanel.append(
@@ -167,17 +124,28 @@ export default class ManuscriptEditor extends Component {
       }).ref('article'),
       $$(Managed(Overlay), {
         toolPanel: configurator.getToolPanel('main-overlay'),
-        theme: 'light',
+        theme: this._getTheme(),
         bindings: ['commandStates']
       }),
       $$(Managed(ContextMenu), {
         toolPanel: configurator.getToolPanel('context-menu'),
-        theme: 'light',
+        theme: this._getTheme(),
         bindings: ['commandStates']
       }),
       $$(Dropzones)
     )
     return contentPanel
+  }
+
+  _renderFooterPane ($$) {
+    const FindAndReplaceDialog = this.getComponent('find-and-replace-dialog')
+    let el = $$('div').addClass('se-footer-pane')
+    el.append(
+      $$(FindAndReplaceDialog, {
+        theme: this._getTheme()
+      }).ref('findAndReplace')
+    )
+    return el
   }
 
   _renderContextPane ($$) {
@@ -202,22 +170,6 @@ export default class ManuscriptEditor extends Component {
     }
   }
 
-  _getConfigurator () {
-    return this.props.config
-  }
-
-  _getEditorSession () {
-    return this.editorSession
-  }
-
-  _getDocument () {
-    return this.props.articleSession.getDocument()
-  }
-
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
-  }
-
   _restoreViewport () {
     const editorSession = this._getEditorSession()
     if (this.props.viewport) {
@@ -233,10 +185,6 @@ export default class ManuscriptEditor extends Component {
         focusedSurface.rerenderDOMSelection()
       }
     })
-  }
-
-  _switchContext (state) {
-    this.refs.contextSection.setState(state)
   }
 
   _tocEntrySelected (nodeId) {
@@ -278,42 +226,7 @@ export default class ManuscriptEditor extends Component {
     return entries.length >= 2
   }
 
-  _getExporter () {
-    return this.context.exporter
-  }
-
   _getTOCProvider () {
-    let containerId = this._getBodyContainerId()
-    return new TOCProvider(this.props.articleSession, { containerId: containerId })
-  }
-
-  _getBodyContainerId () {
-    return 'body'
-  }
-
-  _toggleOverlay (overlayId) {
-    const appState = this.context.appState
-    if (appState.overlayId === overlayId) {
-      appState.overlayId = null
-    } else {
-      appState.overlayId = overlayId
-    }
-    appState.propagateUpdates()
-  }
-
-  _startWorkflow (workflowId, props) {
-    const appState = this.context.appState
-    appState.workflowId = workflowId
-    appState.overlayId = workflowId
-    appState.workflowProps = props
-    appState.propagateUpdates()
-  }
-
-  _closeModal () {
-    const appState = this.context.appState
-    appState.workflowId = null
-    appState.overlayId = null
-    appState.workflowProps = null
-    appState.propagateUpdates()
+    return new TOCProvider(this.props.articleSession, { containerId: 'body' })
   }
 }

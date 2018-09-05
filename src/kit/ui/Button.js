@@ -11,11 +11,12 @@ export default class Button extends Component {
     if (this.props.label) {
       el.append(this.renderLabel($$))
     }
-
+    if (this.props.tooltip) {
+      el.append(this.renderTooltip($$))
+    }
     if (this.props.dropdown) {
       el.append(this.renderDropdownIcon($$))
     }
-
     if (this.props.active) {
       el.addClass('sm-active')
     }
@@ -52,6 +53,10 @@ export default class Button extends Component {
     return $$('span').addClass('se-label').append(
       this.getLabel(this.props.label)
     )
+  }
+
+  renderTooltip ($$) {
+    return $$('span').addClass('se-tooltip').append(this.props.tooltip)
   }
 
   getLabel (name) {

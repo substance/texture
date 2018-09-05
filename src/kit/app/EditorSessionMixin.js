@@ -11,6 +11,7 @@ import MarkersManager from './MarkersManager'
 import GlobalEventHandler from './GlobalEventHandler'
 import KeyboardManager from './KeyboardManager'
 import CommandManager from './CommandManager'
+import FindAndReplaceManager from './FindAndReplaceManager'
 
 export default function (DocumentSession) {
   class EditorSession extends DocumentSession {
@@ -30,7 +31,8 @@ export default function (DocumentSession) {
         commandStates: {},
         hasUnsavedChanges: false,
         isBlurred: false,
-        overlayId: null
+        overlayId: null,
+        findAndReplace: FindAndReplaceManager.defaultState()
       }, initialState))
       let surfaceManager = new SurfaceManager(editorState)
       let markersManager = new MarkersManager(editorState)
@@ -44,6 +46,7 @@ export default function (DocumentSession) {
         config.getCommands(),
         contextProvider
       )
+      let findAndReplaceManager = new FindAndReplaceManager(editorState, markersManager)
 
       this.editorState = editorState
       this.surfaceManager = surfaceManager
@@ -51,6 +54,7 @@ export default function (DocumentSession) {
       this.globalEventHandler = globalEventHandler
       this.keyboardManager = keyboardManager
       this.commandManager = commandManager
+      this.findAndReplaceManager = findAndReplaceManager
 
       doc.on('document:changed', this._onDocumentChange, this)
 
@@ -220,7 +224,7 @@ export default function (DocumentSession) {
     }
 
     executeCommand (commandName, params) {
-      this.commandManager.executeCommand(commandName, params)
+      return this.commandManager.executeCommand(commandName, params)
     }
 
     _registerObserver (stage, args) {

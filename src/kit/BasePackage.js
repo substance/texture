@@ -1,7 +1,7 @@
 import {
   ButtonPackage, ContextMenuPackage, OverlayPackage, DropzonesPackage,
   ScrollbarPackage, ScrollPanePackage, BodyScrollPanePackage, SplitPanePackage,
-  TabbedPanePackage, ToolPanelPackage, AnnotationComponent
+  TabbedPanePackage, ToolPanelPackage
 } from 'substance'
 
 import {
@@ -9,6 +9,7 @@ import {
   TextPropertyComponentNew, TextPropertyEditorNew
 } from './model/SubstanceModifications'
 
+import AnnotationComponent from './ui/AnnotationComponent'
 import ScrollPane from './ui/ScrollPane'
 import BodyScrollPane from './ui/BodyScrollPane'
 import Menu from './ui/Menu'

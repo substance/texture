@@ -11,8 +11,10 @@ export default class TextureWebApp extends TextureAppMixin(TextureWebAppChrome) 
     let key = parseKeyEvent(event)
     // CommandOrControl+S
     if (key === 'META+83' || key === 'CTRL+83') {
-      this._save()
       event.preventDefault()
+      this._save(err => {
+        if (err) console.error(err)
+      })
     }
   }
 }

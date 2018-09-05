@@ -7,9 +7,10 @@ import TOC from './TOC'
 
 export default class ManuscriptEditor extends EditorPanel {
   getActionHandlers () {
-    let handlers = super.getActionHandlers()
-    handlers.tocEntrySelected = this._tocEntrySelected
-    return handlers
+    return Object.assign(super.getActionHandlers(), {
+      tocEntrySelected: this._tocEntrySelected,
+      scrollElementIntoView: this._scrollElementIntoView
+    })
   }
 
   _initialize (props) {
@@ -196,6 +197,7 @@ export default class ManuscriptEditor extends EditorPanel {
       let surface = nodeComponent.context.surface
       // There are cases when we can't set selection, e.g. for references
       if (surface) {
+        // Note: in this case we do not need to scroll explicitly because this will be done by the SurfaceManager
         editorSession.setSelection({
           type: 'property',
           path: node.getPath(),
@@ -203,13 +205,10 @@ export default class ManuscriptEditor extends EditorPanel {
           surfaceId: surface.id,
           containerId: surface.getContainerId()
         })
+      } else {
+        return this._scrollElementIntoView(nodeComponent.el)
       }
-      return this._scrollTo(nodeId)
     }
-  }
-
-  _scrollTo (nodeId) {
-    this.refs.contentPanel.scrollTo(`[data-id="${nodeId}"]`)
   }
 
   _showHideTOC () {
@@ -228,5 +227,9 @@ export default class ManuscriptEditor extends EditorPanel {
 
   _getTOCProvider () {
     return new TOCProvider(this.props.articleSession, { containerId: 'body' })
+  }
+
+  _scrollElementIntoView (el) {
+    this.refs.contentPanel.scrollElementIntoView(el, 'onlyIfNotVisible')
   }
 }

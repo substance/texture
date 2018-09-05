@@ -1,3 +1,45 @@
+## 2018-09-05
+
+Call with PKP, eLife, Erudit, SciELO mainly to coordinate before the Texture Consortium Meetup in Sao Paulo end of September.
+
+Notes:
+
+- Giuliano: Work towards lighter and more stable UI
+  - Include eLife Designer Chris to provide suggestions and improvements
+- Michael: Suggest to collect requirements and issues
+- Melissa: Collect requirements to get Texture into a version that can be used under 'real' condition
+- Fabio: Blocker for Erudit: Texture must be able to load a range of files and not loose data
+- Oliver: Get blockers out of the way
+- Melissa: All concepts should be provided in kitchen_sink XML so everyone can look and see if all needed data is captured in Dar
+- Michael: Could we acchieve some knowledge transfer, so developers at organisations get familiar with the Texture codebase and change configuration and code. Not to be dependent on Substance on each issue
+- Melissa: Knowledge transfer to vendors as eLife does not have 
+- Michael: Current main goal is to get feature-complete content-wise. After that iterating on integration and conversion topcis.
+- Melissa: Important to get real content into Texture
+- Fabio: Summarizing....
+   - try to identify issues not yet addressed, consortium members should try to come up with prios for follow up issues
+   - plan for future contribution / financing
+   - plan for integration into existing systems
+   - talk about funding situation (improve how this is communicated)
+- Juan Pablo: Share agenda as Google Doc for Sao Paulo
+- Michael: Goal for Sao Paulo is
+   - Everyone knows where Texture exactly is (features implemented)
+   - And where it should go (create issue list of all blockers before real use is possible)
+- Another call where Fabio can demonstrate stub platform integration of Erudit
+  - Use OJS to convert PDF/Word
+  - run Texture
+  - Result Texture Dar/JATS + Erudit XML format
+
+Next Actions Substance:
+
+- Release Texture 1.0
+- Provide Agenda for Consortium Meetup
+- Describe possible options for integration (Desktop app, web platform integration)
+- Set up another call where Fabio can demonstrate integration at Erudit
+
+Next Actions Contributors:
+
+- Review [Milestone 1](https://github.com/substance/texture/issues?q=is%3Aopen+is%3Aissue+milestone%3A1.0.0) Issues
+
 ## 2018-04-13
 
 Consortium Meetup in Cambridge Day 2.

@@ -1,8 +1,8 @@
-import { testAsync } from './testHelpers'
+import { test } from 'substance-test'
 import setupTestApp from './setupTestApp'
 
-testAsync('ArticlePanel: open every view', async (t) => {
-  let { app } = await setupTestApp(t)
+test('ArticlePanel: open every view', t => {
+  let { app } = setupTestApp(t)
   let articlePanel = app.find('.sc-article-panel')
   t.doesNotThrow(() => {
     articlePanel.send('updateViewName', 'manuscript')
@@ -16,8 +16,8 @@ testAsync('ArticlePanel: open every view', async (t) => {
   t.end()
 })
 
-testAsync('ArticlePanel: no contenteditable in reader view', async (t) => {
-  let { app } = await setupTestApp(t)
+test('ArticlePanel: no contenteditable in reader view', t => {
+  let { app } = setupTestApp(t)
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'reader')
   let editable = articlePanel.find('*[contenteditable=true]')

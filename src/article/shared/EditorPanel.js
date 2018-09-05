@@ -16,7 +16,8 @@ export default class EditorPanel extends Component {
       executeCommand: this._executeCommand,
       toggleOverlay: this._toggleOverlay,
       startWorkflow: this._startWorkflow,
-      closeModal: this._closeModal
+      closeModal: this._closeModal,
+      scrollElementIntoView: this._scrollElementIntoView
     }
   }
 
@@ -94,6 +95,14 @@ export default class EditorPanel extends Component {
     appState.workflowId = null
     appState.overlayId = null
     appState.propagateUpdates()
+  }
+
+  _scrollElementIntoView (el) {
+    this._getContentPanel().scrollElementIntoView(el, 'onlyIfNotVisible')
+  }
+
+  _getContentPanel () {
+    throw new Error('This method is abstract')
   }
 
   _getConfigurator () {

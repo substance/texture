@@ -8,8 +8,7 @@ import TOC from './TOC'
 export default class ManuscriptEditor extends EditorPanel {
   getActionHandlers () {
     return Object.assign(super.getActionHandlers(), {
-      tocEntrySelected: this._tocEntrySelected,
-      scrollElementIntoView: this._scrollElementIntoView
+      tocEntrySelected: this._tocEntrySelected
     })
   }
 
@@ -165,6 +164,10 @@ export default class ManuscriptEditor extends EditorPanel {
     }
   }
 
+  _getContentPanel () {
+    return this.refs.contentPanel
+  }
+
   getViewport () {
     return {
       x: this.refs.contentPanel.getScrollPosition()
@@ -191,7 +194,7 @@ export default class ManuscriptEditor extends EditorPanel {
   _tocEntrySelected (nodeId) {
     const node = this._getDocument().get(nodeId)
     const editorSession = this._getEditorSession()
-    const nodeComponent = this.refs.contentPanel.find(`[data-id="${nodeId}"]`)
+    const nodeComponent = this._getContentPanel().find(`[data-id="${nodeId}"]`)
     if (nodeComponent) {
       // TODO: it needs to be easier to retrieve the surface
       let surface = nodeComponent.context.surface
@@ -227,9 +230,5 @@ export default class ManuscriptEditor extends EditorPanel {
 
   _getTOCProvider () {
     return new TOCProvider(this.props.articleSession, { containerId: 'body' })
-  }
-
-  _scrollElementIntoView (el) {
-    this.refs.contentPanel.scrollElementIntoView(el, 'onlyIfNotVisible')
   }
 }

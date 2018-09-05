@@ -118,4 +118,8 @@ export default class MetadataEditor extends EditorPanel {
     )
     return el
   }
+
+  _getContentPanel () {
+    return this.refs.contentPanel
+  }
 }

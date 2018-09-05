@@ -235,7 +235,8 @@ b.task('build:test-assets', ['build:vfs'], () => {
     src: ['./test/fixture/**/*.xml'],
     dest: DIST + 'test/test-vfs.js',
     format: 'umd',
-    moduleName: 'testVfs'
+    moduleName: 'testVfs',
+    rootDir: path.join(__dirname, 'test', 'fixture')
   })
 })
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "TextureArticle 0.1.0" "http://substance.io/TextureArticle-1.0.0.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Lorem Ipsum</article-title>
+      </title-group>
+      <abstract>
+        <p id="abstract-p-1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <p id="p-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis augue ut orci finibus laoreet. Aliquam venenatis ante scelerisque lectus malesuada, ut blandit leo facilisis. Integer at egestas urna. Nulla facilisi. Quisque imperdiet fermentum euismod. Donec vestibulum semper lorem id accumsan. In ut ligula at enim tempus dictum in nec sapien. Sed suscipit aliquam sapien sit amet cursus. Integer tincidunt est nulla, sit amet bibendum sem condimentum in. Nulla bibendum non lorem eget feugiat. Mauris metus libero, euismod sed ante vitae, euismod commodo leo. Aliquam cursus, tellus at rhoncus molestie, orci sapien iaculis massa, vitae venenatis justo quam eget dolor. Integer mollis imperdiet nunc, vel condimentum magna euismod nec. Mauris ornare, tortor vitae suscipit hendrerit, nunc sem congue ante, nec elementum lorem lorem lacinia magna. Donec vehicula, nisi eget facilisis egestas, dolor urna fringilla nisl, blandit vulputate quam ante vel magna. Nulla vitae maximus massa.</p>
+      <p id="p-2">Cras vel lorem ut eros tristique aliquam eu nec ipsum. Cras interdum nisl eget ipsum euismod, et lobortis nulla sagittis. Nunc bibendum semper neque. Etiam sit amet pretium metus, ac viverra urna. Mauris at turpis lorem. Donec consectetur eros non est malesuada, at posuere orci ultrices. Donec nec nibh vitae augue sollicitudin mollis eu sit amet enim. Duis maximus eros leo, eu porttitor turpis commodo ut. Vivamus sed ligula aliquet, placerat leo eget, blandit leo. Nullam accumsan, tortor ac sodales elementum, dui nisi ultrices urna, at gravida lacus quam in lorem. Nullam luctus lorem eu est bibendum aliquet in ut massa. Mauris malesuada bibendum lorem, vitae pulvinar metus sodales et. Maecenas volutpat suscipit justo, a efficitur mauris lacinia et. Donec eleifend ligula et nunc elementum, ac rutrum dolor ornare. Integer scelerisque erat sagittis tincidunt rhoncus. Pellentesque odio mauris, facilisis in sem eget, blandit luctus leo.</p>
+      <p id="p-3">Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam ac lacus turpis. Ut cursus porttitor nisl, quis condimentum neque tristique nec. Cras finibus egestas euismod. Ut vel leo efficitur, cursus enim vitae, tristique eros. Sed id nunc at turpis tincidunt tempor. Curabitur id urna odio.</p>
+      <p id="p-4">Vivamus lacus mauris, pulvinar et ipsum vitae, scelerisque semper enim. Nunc egestas lorem sit amet diam egestas mattis. Integer eu laoreet elit. Morbi ac lectus eu lorem ultricies laoreet. Donec vitae lacus in dolor semper suscipit. Sed gravida tellus a eleifend elementum. Nunc a nunc volutpat, condimentum nibh a, tincidunt ex. Sed non sapien justo. Cras ornare dolor sit amet neque condimentum, eget suscipit nisi imperdiet. Mauris orci quam, malesuada quis dapibus sed, pharetra vel augue.</p>
+      <p id="p-5">Praesent at luctus lorem. Curabitur ac nisl tellus. Sed at ante et nunc gravida vulputate aliquet ac orci. Cras eu arcu enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec dignissim efficitur neque eu lobortis. Morbi eu est lectus. Etiam at nisl sit amet sem tincidunt imperdiet vestibulum a metus. Duis sit amet leo nec quam tincidunt cursus. Vivamus ultricies bibendum lorem, at hendrerit augue aliquet commodo. Duis faucibus a felis at malesuada. Vivamus tristique vulputate fringilla. Integer scelerisque.</p>
+    </sec>
+  </body>
+  <back>
+  </back>
+</article>

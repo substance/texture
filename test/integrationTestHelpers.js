@@ -1,4 +1,4 @@
-/* global vfs */
+/* global vfs, testVfs */
 import { ObjectOperation, DocumentChange, isString } from 'substance'
 import { TextureWebApp, VfsStorageClient } from '../index'
 
@@ -52,4 +52,10 @@ export function createTestApp (options = {}) {
     }
   }
   return App
+}
+
+export const LOREM_IPSUM = {
+  vfs: testVfs,
+  rootDir: './tests/fixture/',
+  archiveId: 'lorem-ipsum'
 }

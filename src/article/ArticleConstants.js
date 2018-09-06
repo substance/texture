@@ -45,6 +45,7 @@ export const JATS_BIBR_TYPES_TO_INTERNAL = {
   'confproc': 'conference-paper',
   'data': 'data-publication',
   'patent': 'patent',
+  'preprint': 'preprint',
   'newspaper': 'newspaper-article',
   'magazine': 'magazine-article',
   'report': 'report',

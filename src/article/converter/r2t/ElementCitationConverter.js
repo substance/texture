@@ -54,6 +54,7 @@ function _importElementCitation (el, node, doc, importer) {
     version: getText(el, 'version'),
     volume: getText(el, 'volume'),
     year: getText(el, 'year'),
+    accessedDate: getAttr(el, 'date-in-citation', 'iso-8601-date'),
     // identifiers
     accessionId: getText(el, 'pub-id[pub-id-type=accession]'),
     archiveId: getText(el, 'pub-id[pub-id-type=archive]'),
@@ -156,6 +157,7 @@ function _exportElementCitation (node, exporter) {
   el.append(_createTextElement($$, node.version, 'version'))
   el.append(_createTextElement($$, node.volume, 'volume'))
   el.append(_createTextElement($$, node.year, 'year'))
+  el.append(_createTextElement($$, node.accessedDate, 'date-in-citation', {'iso-8601-date': node.accessedDate}))
   // identifiers
   el.append(_createTextElement($$, node.accessionId, 'pub-id', {'pub-id-type': 'accession'}))
   el.append(_createTextElement($$, node.arkId, 'pub-id', {'pub-id-type': 'ark'}))

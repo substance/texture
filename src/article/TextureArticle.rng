@@ -556,6 +556,7 @@
         <optional><ref name="series"/></optional>
         <optional><ref name="version"/></optional>
         <optional><ref name="uri"/></optional>
+        <optional><ref name="date-in-citation"/></optional>
       </interleave>
     </element>
   </define>

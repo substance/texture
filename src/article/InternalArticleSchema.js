@@ -293,6 +293,21 @@ JournalArticle.schema = {
   pmid: STRING
 }
 
+class Preprint extends BibliographicEntry {}
+Preprint.schema = {
+  type: 'preprint',
+  title: STRING,
+  authors: CHILDREN('ref-contrib'),
+  editors: CHILDREN('ref-contrib'),
+  containerTitle: STRING, // <source>
+  year: STRING,
+  month: STRING,
+  day: STRING,
+  elocationId: STRING,
+  doi: STRING,
+  pmid: STRING
+}
+
 class MagazineArticle extends BibliographicEntry {}
 MagazineArticle.schema = {
   type: 'magazine-article',
@@ -417,7 +432,7 @@ Webpage.schema = {
   year: STRING,
   month: STRING,
   day: STRING,
-  publisherLoc: STRING,
+  accessedDate: STRING,
   uri: STRING
 }
 
@@ -596,6 +611,7 @@ InternalArticleSchema.addNodes([
   Report,
   Patent,
   Permission,
+  Preprint,
   Software,
   Thesis,
   Webpage,

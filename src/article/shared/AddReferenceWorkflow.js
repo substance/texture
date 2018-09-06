@@ -5,7 +5,7 @@ import ReferenceUploadComponent from './ReferenceUploadComponent'
 const targetTypes = [
   'journal-article', 'book', 'chapter', 'conference-paper',
   'report', 'newspaper-article', 'magazine-article', 'data-publication',
-  'patent', 'webpage', 'thesis', 'software'
+  'preprint', 'patent', 'webpage', 'thesis', 'software'
 ]
 
 export default class AddReferenceWorkflow extends Component {

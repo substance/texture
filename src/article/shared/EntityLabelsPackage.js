@@ -60,6 +60,9 @@ export default {
     config.addLabel('patent', 'Patent')
     config.addLabel('create-patent', 'Create Patent')
 
+    config.addLabel('preprint', 'Preprint')
+    config.addLabel('create-preprint', 'Create Preprint')
+
     // fields labels
     config.addLabel('authors', 'Authors')
     config.addLabel('edit-authors', 'Edit Authors')

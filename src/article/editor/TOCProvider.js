@@ -22,7 +22,6 @@ export default class TOCProvider extends EventEmitter {
   }
 
   handleDocumentChange (change) {
-    console.log('MEH')
     let doc = this.getDocument()
     let needsUpdate = false
     let tocTypes = this.constructor.tocTypes

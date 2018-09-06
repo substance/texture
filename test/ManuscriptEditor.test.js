@@ -22,6 +22,20 @@ test('ManuscriptEditor: add figure', t => {
   t.end()
 })
 
+test('ManuscriptEditor: TOC should be updated on change', t => {
+  let { app } = setupTestApp(t)
+  let articlePanel = app.find('.sc-article-panel')
+  articlePanel.send('updateViewName', 'manuscript')
+  let editor = articlePanel.find('.sc-manuscript-editor')
+  let toc = editor.find('.sc-toc')
+  editor.context.editorSession.transaction(tx => {
+    tx.set(['heading-1', 'content'], 'TEST')
+  })
+  let h1 = toc.find('*[data-id="heading-1"]')
+  t.equal(h1.el.text(), 'TEST', 'TOC entry should have been updated')
+  t.end()
+})
+
 class PseudoFileEvent {
   constructor () {
     let blob

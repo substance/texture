@@ -1,10 +1,10 @@
 import { includes, EventEmitter } from 'substance'
 
 export default class TOCProvider extends EventEmitter {
-  constructor (documentSession, config) {
+  constructor (articleSession, config) {
     super()
 
-    this.documentSession = documentSession
+    this.articleSession = articleSession
     this.config = config
 
     this.entries = this.computeEntries()
@@ -14,14 +14,15 @@ export default class TOCProvider extends EventEmitter {
       this.activeEntry = null
     }
 
-    this.documentSession.on('change', this.handleDocumentChange, this)
+    this.articleSession.on('change', this.handleDocumentChange, this)
   }
 
   dispose () {
-    this.documentSession.off(this)
+    this.articleSession.off(this)
   }
 
   handleDocumentChange (change) {
+    console.log('MEH')
     let doc = this.getDocument()
     let needsUpdate = false
     let tocTypes = this.constructor.tocTypes
@@ -109,7 +110,7 @@ export default class TOCProvider extends EventEmitter {
   }
 
   getDocument () {
-    return this.documentSession.getDocument()
+    return this.articleSession.getDocument()
   }
 
   markActiveEntry (scrollPane) {

@@ -37,6 +37,8 @@ export default class SchemaDrivenCommandManager extends CommandManager {
     this._insertCommands = insertCommands
     this._switchTypeCommands = switchTypeCommands
     this._otherCommands = otherCommands
+
+    this._allDisabled = _disabled(Array.from(this.commands.values()))
   }
 
   _getCommandStates () {
@@ -49,18 +51,12 @@ export default class SchemaDrivenCommandManager extends CommandManager {
     const isBlurred = appState.isBlurred
     const noSelection = !sel || sel.isNull() || !sel.isAttached()
 
-    const commandStates = {}
+    const commandStates = Object.assign({}, this._allDisabled)
     // all editing commands are disabled if
     // - this editorSession is blurred,
     // - or the selection is null,
     // - or the selection is inside a custom editor
-    if (isBlurred || noSelection || sel.isCustomSelection()) {
-      Object.assign(commandStates,
-        _disabled(this._annotationCommands),
-        _disabled(this._insertCommands),
-        _disabled(this._switchTypeCommands)
-      )
-    } else {
+    if (!isBlurred && !noSelection && !sel.isCustomSelection()) {
       const path = sel.start.path
       const node = doc.get(path[0])
 
@@ -73,42 +69,25 @@ export default class SchemaDrivenCommandManager extends CommandManager {
         throw new Error('FIXME: explain when this happens')
       }
 
-      const isInsideText = node.isText()
+      const nodeProp = _getNodeProp(node, path)
+      const isInsideText = nodeProp ? nodeProp.isText() : false
 
       // annotations can only be applied on PropertySelections inside
       // text, and not on an inline-node
       if (isInsideText && sel.isPropertySelection() && !selectionState.isInlineNodeSelection) {
-        let path = sel.getPath()
-        let propName = last(path)
-        let nodeProp = node.getSchema().getProperty(propName)
         let targetTypes = nodeProp.targetTypes || []
         Object.assign(commandStates, _disabledIfDisallowedTargetType(this._annotationCommands, targetTypes, params, context))
-      } else {
-        Object.assign(commandStates, _disabled(this._annotationCommands))
       }
 
       // for InsertCommands the selection must be inside a ContainerEditor
       let parentNode = node.parentNode
       if (parentNode && parentNode.isContainer()) {
-        let path = parentNode.getContentPath()
-        let propName = last(path)
-        let nodeProp = parentNode.getSchema().getProperty(propName)
-        let targetTypes = nodeProp.targetTypes || []
-        Object.assign(commandStates, _disabledIfDisallowedTargetType(this._insertCommands, targetTypes, params, context))
-      } else {
-        Object.assign(commandStates, _disabled(this._insertCommands))
-      }
-
-      // SwitchTypeCommands can only be applied to
-      // block-level text nodes
-      if (parentNode && sel.containerId && isInsideText && parentNode.isContainer()) {
-        let path = parentNode.getContentPath()
-        let propName = last(path)
-        let nodeProp = parentNode.getSchema().getProperty(propName)
-        let targetTypes = nodeProp.targetTypes || []
-        Object.assign(commandStates, _disabledIfDisallowedTargetType(this._switchTypeCommands, targetTypes, params, context))
-      } else {
-        Object.assign(commandStates, _disabled(this._switchTypeCommands))
+        let contentProp = _getNodeProp(parentNode, parentNode.getContentPath())
+        if (contentProp) {
+          let targetTypes = contentProp.targetTypes || []
+          Object.assign(commandStates, _disabledIfDisallowedTargetType(this._insertCommands, targetTypes, params, context))
+          Object.assign(commandStates, _disabledIfDisallowedTargetType(this._switchTypeCommands, targetTypes, params, context))
+        }
       }
     }
 
@@ -117,6 +96,13 @@ export default class SchemaDrivenCommandManager extends CommandManager {
 
     return commandStates
   }
+}
+
+function _getNodeProp (node, path) {
+  let propName = last(path)
+  let prop = node.getSchema().getProperty(propName)
+  if (!prop) console.error('Could not find property for path %s', path, node)
+  return prop
 }
 
 function _disabled (commands) {

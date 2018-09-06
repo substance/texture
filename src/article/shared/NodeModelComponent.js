@@ -30,7 +30,7 @@ export default class NodeModelComponent extends Component {
     const nodeIssues = model._node['@issues']
     let hasIssues = (nodeIssues && nodeIssues.size > 0)
 
-    const el = $$('div').addClass(this._getClassNames())
+    const el = $$('div').addClass(this._getClassNames()).attr('data-id', model.id)
 
     // EXPERIMENTAL: highlight editors for nodes with issues
     if (hasIssues) {

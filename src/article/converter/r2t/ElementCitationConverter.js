@@ -1,5 +1,5 @@
 import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES_TO_JATS } from '../../ArticleConstants'
-import { getText, getSeparatedText, getHTML, getAttr } from '../util/domHelpers'
+import { getText, getSeparatedText, getAttr } from '../util/domHelpers'
 
 export default class ElementCitationConverter {
   // Note: this will create different types according to the attributes in the JATS element
@@ -228,9 +228,12 @@ function _createTextElement ($$, text, tagName, attrs) {
 
 function _exportAnnotatedText (exporter, path, tagName, attrs) {
   const $$ = exporter.$$
-  return $$(tagName).attr(attrs).append(
-    exporter.annotatedText(path)
-  )
+  let text = exporter.getDocument().get(path)
+  if (text) {
+    return $$(tagName).attr(attrs).append(
+      exporter.annotatedText(path)
+    )
+  }
 }
 
 function _createMultipleTextElements ($$, text, tagName, attrs) {

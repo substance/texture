@@ -1025,13 +1025,25 @@
     </choice>
   </define>
 
+  <define name="_rich-text">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
   <!--
     WIP: for now we only allow plain text
   -->
   <define name="source">
     <element name="source">
       <ref name="source-attlist"/>
-      <optional><text/></optional>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="_rich-text"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
 

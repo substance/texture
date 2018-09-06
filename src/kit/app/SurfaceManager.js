@@ -5,8 +5,7 @@ export default class SurfaceManager {
     this.editorState = editorState
     this.surfaces = {}
 
-    editorState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'post-render' })
-    editorState.addObserver(['selection', 'document'], this._recoverDOMSelection, this, { stage: 'post-render' })
+    editorState.addObserver(['selection', 'document'], this._onSelectionOrDocumentChange, this, { stage: 'post-render' })
     editorState.addObserver(['selection', 'document'], this._scrollSelectionIntoView, this, { stage: 'finalize' })
   }
 
@@ -41,18 +40,25 @@ export default class SurfaceManager {
     }
   }
 
-  _onSelectionChange () {
+  _onSelectionOrDocumentChange () {
     // console.log('SurfaceManager._onSelectionChange()')
-    const selection = this.editorState.selection
-    // update state.focusedSurface
-    this._reduceFocusedSurface(selection)
-    // HACK: removing DOM selection *and* blurring when having a CustomSelection
-    // otherwise we will receive events on the wrong surface
-    // instead of bubbling up to GlobalEventManager
-    if (selection && selection.isCustomSelection() && platform.inBrowser) {
-      window.getSelection().removeAllRanges()
-      window.document.activeElement.blur()
+
+    // Reducing state.focusedSurface (only if selection has changed)
+    if (this.editorState.isDirty('selection')) {
+      const selection = this.editorState.selection
+      // update state.focusedSurface
+      this._reduceFocusedSurface(selection)
+      // HACK: removing DOM selection *and* blurring when having a CustomSelection
+      // otherwise we will receive events on the wrong surface
+      // instead of bubbling up to GlobalEventManager
+      if (selection && selection.isCustomSelection() && platform.inBrowser) {
+        window.getSelection().removeAllRanges()
+        window.document.activeElement.blur()
+      }
     }
+
+    // TODO: this still needs to be improved. The DOM selection can be affected by other updates than document changes
+    this._recoverDOMSelection()
   }
 
   _reduceFocusedSurface (sel) {
@@ -78,7 +84,7 @@ export default class SurfaceManager {
     let focusedSurface = editorState.focusedSurface
     // console.log('focusedSurface', focusedSurface)
     if (focusedSurface && !focusedSurface.isDisabled()) {
-      // console.log('Rendering selection on surface', focusedSurface.getId(), this.editorSession.getSelection().toString());
+      // console.log('Rendering selection on surface', focusedSurface.getId(), this.editorState.selection.toString())
       focusedSurface._focus()
       focusedSurface.rerenderDOMSelection()
     } else {

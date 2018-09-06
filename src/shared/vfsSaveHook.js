@@ -5,7 +5,7 @@ export default function vfsSaveHook (storage, ArchiveClass) {
   // monkey patch VfsStorageClient so that we can check if the stored data
   // can be loaded
   storage.write = (archiveId, rawArchive, cb) => {
-    console.log('Writing archive:', rawArchive) // eslint-disable-line
+    console.info('Writing archive:', rawArchive) // eslint-disable-line
     storage.read(archiveId, (err, originalRawArchive) => {
       if (err) return cb(err)
       rawArchive.resources = Object.assign({}, originalRawArchive.resources, rawArchive.resources)

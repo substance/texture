@@ -92,10 +92,17 @@ export default class AbstractScrollPane extends Component {
   }
 
   _scrollSelectionIntoView () {
+    // console.log('AbstractScrollPane._scrollSelectionIntoView()')
     let hints = this.context.appState.get('overlayHints')
-    if (!hints) return
+    if (!hints) {
+      // console.log('...no hints')
+      return
+    }
     let selectionRect = hints.selectionRect
-    if (!selectionRect) return
+    if (!selectionRect) {
+      // console.log('...no selection rect')
+      return
+    }
     let upperBound = this.getScrollPosition()
     let lowerBound = upperBound + this.getHeight()
     let selTop = selectionRect.top

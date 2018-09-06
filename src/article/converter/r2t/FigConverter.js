@@ -59,14 +59,8 @@ export default class FigConverter {
       node.copyrightHolder = copyrightHolderEl.textContent
     }
 
-    // <license>
-    //   <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
-    //   <license-p>This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, reproduction and adaptation in any medium and for any purpose provided that it is properly attributed. For attribution, the original author(s), title, publication source (PeerJ) and either DOI or URL of the article must be cited.</license-p>
-    // </license>
     // TODO: it would be more natural and explicit to do el.find('ali:license-rec')
     let licenseRefEl = el.find('license_ref')
-    console.log(el.getNativeElement())
-    console.log('le license', licenseRefEl)
     if (licenseRefEl) {
       node.license = licenseRefEl.textContent
     }
@@ -142,7 +136,6 @@ export default class FigConverter {
         permissionsEl.append(licenseEl)
       }
       el.append(permissionsEl)
-      console.log(el.getNativeElement())
     }
   }
 

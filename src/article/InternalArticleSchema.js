@@ -619,6 +619,6 @@ InternalArticleSchema.addNodes([
   'styled-content',
   'x',
   'xref'
-].map(name => TextureArticleSchema.getNodeClass(name)))
+].map(name => TextureArticleSchema.getNodeClass(name, 'strict')))
 
 export default InternalArticleSchema

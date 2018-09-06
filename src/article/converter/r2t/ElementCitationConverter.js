@@ -1,5 +1,5 @@
 import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES_TO_JATS } from '../../ArticleConstants'
-import { getText, getSeparatedText, getHTML, getAttr } from '../util/domHelpers'
+import { getText, getSeparatedText, getAttr } from '../util/domHelpers'
 
 export default class ElementCitationConverter {
   // Note: this will create different types according to the attributes in the JATS element
@@ -15,7 +15,7 @@ export default class ElementCitationConverter {
     if (!elementCitation) {
       throw new Error('<element-citation> is required')
     }
-    _importElementCitation(elementCitation, node, doc)
+    _importElementCitation(elementCitation, node, doc, importer)
   }
 
   export (node, el, exporter) {
@@ -27,7 +27,7 @@ export default class ElementCitationConverter {
   }
 }
 
-function _importElementCitation (el, node, doc) {
+function _importElementCitation (el, node, doc, importer) {
   const type = el.attr('publication-type')
   node.type = JATS_BIBR_TYPES_TO_INTERNAL[type]
 
@@ -64,15 +64,15 @@ function _importElementCitation (el, node, doc) {
   })
 
   if (type === 'book' || type === 'report' || type === 'software') {
-    node.title = getText(el, 'source')
+    node.title = getAnnotatedText(importer, el, 'source', [node.id, 'title'])
   } else {
     node.containerTitle = getText(el, 'source')
     if (type === 'chapter') {
-      node.title = getHTML(el, 'chapter-title')
+      node.title = getAnnotatedText(importer, el, 'chapter-title', [node.id, 'title'])
     } else if (type === 'data') {
-      node.title = getHTML(el, 'data-title')
+      node.title = getAnnotatedText(importer, el, 'data-title', [node.id, 'title'])
     } else {
-      node.title = getHTML(el, 'article-title')
+      node.title = getAnnotatedText(importer, el, 'article-title', [node.id, 'title'])
     }
   }
 
@@ -81,6 +81,15 @@ function _importElementCitation (el, node, doc) {
   node.inventors = _importPersonGroup(el, doc, 'inventor')
   node.sponsors = _importPersonGroup(el, doc, 'sponsor')
   node.translators = _importPersonGroup(el, doc, 'translator')
+}
+
+function getAnnotatedText (importer, rootEl, selector, path) {
+  let el = rootEl.find(selector)
+  if (el) {
+    return importer.annotatedText(el, path)
+  } else {
+    return ''
+  }
 }
 
 function _importPersonGroup (el, doc, type) {
@@ -161,15 +170,21 @@ function _exportElementCitation (node, exporter) {
   el.append(_exportPersonGroup($$, doc, node.sponsors, 'sponsor'))
 
   if (type === 'book' || type === 'report' || type === 'software') {
-    el.append(_createTextElement($$, node.title, 'source'))
+    el.append(_exportAnnotatedText(exporter, [node.id, 'title'], 'source'))
   } else {
     el.append(_createTextElement($$, node.containerTitle, 'source'))
     if (type === 'chapter') {
-      el.append(_createHTMLElement($$, node.title, 'chapter-title'))
+      el.append(
+        _exportAnnotatedText(exporter, [node.id, 'title'], 'chapter-title')
+      )
     } else if (type === 'data') {
-      el.append(_createHTMLElement($$, node.title, 'data-title'))
+      el.append(
+        _exportAnnotatedText(exporter, [node.id, 'title'], 'data-title')
+      )
     } else {
-      el.append(_createHTMLElement($$, node.title, 'article-title'))
+      el.append(
+        _exportAnnotatedText(exporter, [node.id, 'title'], 'article-title')
+      )
     }
   }
   return el
@@ -211,17 +226,21 @@ function _createTextElement ($$, text, tagName, attrs) {
   }
 }
 
+function _exportAnnotatedText (exporter, path, tagName, attrs) {
+  const $$ = exporter.$$
+  let text = exporter.getDocument().get(path)
+  if (text) {
+    return $$(tagName).attr(attrs).append(
+      exporter.annotatedText(path)
+    )
+  }
+}
+
 function _createMultipleTextElements ($$, text, tagName, attrs) {
   if (text) {
     const textItems = text.split(';')
     return textItems.map(ti => {
       return $$(tagName).append(ti.trim()).attr(attrs)
     })
-  }
-}
-
-function _createHTMLElement ($$, html, tagName, attrs) {
-  if (html) {
-    return $$(tagName).html(html).attr(attrs)
   }
 }

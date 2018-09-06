@@ -14,15 +14,18 @@ export default class CommandManager {
   }
 
   reduce () {
-    const commands = this.commands
     const appState = this.appState
+    const commandStates = this._getCommandStates()
+    appState.set('commandStates', commandStates)
+  }
+
+  _getCommandStates () {
     const context = this.contextProvider.context
     const params = new HandlerParams(context)
-    const commandStates = {}
-    commands.forEach(command => {
-      commandStates[command.name] = command.getCommandState(params, context)
-    })
-    appState.set('commandStates', commandStates)
+    return this.commands.reduce((m, command) => {
+      m[command.getName()] = command.getCommandState(params, context)
+      return m
+    }, {})
   }
 
   executeCommand (commandName, params = {}) {

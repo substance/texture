@@ -10,7 +10,7 @@ import SurfaceManager from './SurfaceManager'
 import MarkersManager from './MarkersManager'
 import GlobalEventHandler from './GlobalEventHandler'
 import KeyboardManager from './KeyboardManager'
-import CommandManager from './CommandManager'
+import SchemaDrivenCommandManager from './SchemaDrivenCommandManager'
 import FindAndReplaceManager from './FindAndReplaceManager'
 
 export default function (DocumentSession) {
@@ -40,7 +40,7 @@ export default function (DocumentSession) {
       let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName, params) => {
         return this.executeCommand(commandName, params)
       }, contextProvider)
-      let commandManager = new CommandManager(editorState,
+      let commandManager = new SchemaDrivenCommandManager(editorState,
         // update commands when document or selection have changed
         ['document', 'selection'],
         config.getCommands(),

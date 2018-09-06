@@ -15,11 +15,19 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
   // add node definitions and converters
   tagNames.forEach((tagName) => {
     const elementSchema = xmlSchema.getElementSchema(tagName)
-    const name = elementSchema.name
+    let targetTypes = []
+    if (elementSchema.expr._allowedChildren) {
+      targetTypes = Object.keys(elementSchema.expr._allowedChildren)
+    }
     let NodeClass
-    switch (elementSchema.type) {
+    const elementType = elementSchema.type
+    const type = elementSchema.name
+    switch (elementType) {
       case 'element': {
         NodeClass = class _XMLElementNode extends XMLElementNode {}
+        NodeClass.schema = {
+          _childNodes: { type: ['array', 'id'], default: [], owned: true, targetTypes }
+        }
         break
       }
       case 'hybrid': {
@@ -27,6 +35,9 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
       }
       case 'text': {
         NodeClass = class _XMLTextElement extends XMLTextElement {}
+        NodeClass.schema = {
+          content: { type: 'text', targetTypes }
+        }
         break
       }
       case 'annotation': {
@@ -39,6 +50,9 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
       }
       case 'inline-element': {
         NodeClass = class _XMLInlineElementNode extends XMLInlineElementNode {}
+        NodeClass.schema = {
+          _childNodes: { type: ['array', 'id'], default: [], owned: true, targetTypes }
+        }
         break
       }
       case 'external': {
@@ -47,14 +61,16 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
       }
       case 'container': {
         NodeClass = class _XMLContainerNode extends XMLContainerNode {}
+        NodeClass.schema = {
+          _childNodes: { type: ['array', 'id'], default: [], owned: true, targetTypes }
+        }
         break
       }
       default:
         throw new Error('Illegal state')
     }
-    // anonymous class definition
-    NodeClass.type = name
-    NodeClass._elementSchema = xmlSchema.getElementSchema(name)
+    NodeClass.type = type
+    NodeClass._elementSchema = elementSchema
 
     nodeClasses.push(NodeClass)
   })

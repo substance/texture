@@ -1,5 +1,9 @@
 export const STRING = { type: 'string', default: '' }
 
+export function TEXT (...targetTypes) {
+  return { type: 'text', targetTypes }
+}
+
 export const STRING_ARRAY = { type: ['array', 'string'], default: [] }
 
 export const BOOLEAN = { type: 'boolean', default: false }

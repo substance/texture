@@ -2,7 +2,7 @@ import {
   DocumentSchema, DocumentNode, InlineNode,
   XMLContainerNode, XMLElementNode, XMLTextElement
 } from 'substance'
-import { BOOLEAN, STRING, MANY, ONE, CHILDREN, CHILD } from '../kit'
+import { BOOLEAN, STRING, TEXT, MANY, ONE, CHILDREN, CHILD } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema
@@ -11,6 +11,8 @@ import TableNode from './TableNode'
 import TableCellNode from './TableCellNode'
 import ListNode from './XMLListNode'
 import ListItemNode from './XMLListItemNode'
+
+const RICH_TEXT_ANNOS = ['bold', 'italic', 'sup', 'sub']
 
 class Article extends XMLElementNode {}
 Article.schema = {
@@ -99,7 +101,7 @@ class Figure extends DocumentNode {
 Figure.schema = {
   type: 'figure',
   content: CHILD('graphic'),
-  title: 'text',
+  title: TEXT(...RICH_TEXT_ANNOS),
   label: STRING,
   caption: CHILD('caption'),
   copyrightStatement: 'text',
@@ -201,7 +203,7 @@ Book.schema = {
   authors: CHILDREN('ref-contrib'),
   editors: CHILDREN('ref-contrib'),
   translators: CHILDREN('ref-contrib'),
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   volume: STRING,
   edition: STRING,
   publisherLoc: STRING,
@@ -219,7 +221,7 @@ Book.schema = {
 class Chapter extends BibliographicEntry {}
 Chapter.schema = {
   type: 'chapter',
-  title: STRING, // <chapter-title>
+  title: TEXT(...RICH_TEXT_ANNOS), // <chapter-title>
   containerTitle: STRING, // <source>
   volume: STRING,
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
@@ -244,7 +246,7 @@ Chapter.schema = {
 class ConferencePaper extends BibliographicEntry {}
 ConferencePaper.schema = {
   type: 'conference-paper',
-  title: STRING, // <article-title>
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
   authors: CHILDREN('ref-contrib'),
   confName: STRING,
   confLoc: STRING,
@@ -262,7 +264,7 @@ ConferencePaper.schema = {
 class DataPublication extends BibliographicEntry {}
 DataPublication.schema = {
   type: 'data-publication',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   year: STRING,
@@ -277,7 +279,7 @@ DataPublication.schema = {
 class JournalArticle extends BibliographicEntry {}
 JournalArticle.schema = {
   type: 'journal-article',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   editors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
@@ -297,7 +299,7 @@ JournalArticle.schema = {
 class MagazineArticle extends BibliographicEntry {}
 MagazineArticle.schema = {
   type: 'magazine-article',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   year: STRING,
@@ -313,7 +315,7 @@ MagazineArticle.schema = {
 class NewspaperArticle extends BibliographicEntry {}
 NewspaperArticle.schema = {
   type: 'newspaper-article',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
   year: STRING,
@@ -333,7 +335,7 @@ Patent.schema = {
   type: 'patent',
   inventors: CHILDREN('ref-contrib'),
   assignee: STRING,
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   containerTitle: STRING, // <source>
   year: STRING,
   month: STRING,
@@ -352,7 +354,7 @@ Report.schema = {
   type: 'report',
   authors: CHILDREN('ref-contrib'),
   sponsors: CHILDREN('ref-contrib'),
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   year: STRING,
   month: STRING,
   day: STRING,
@@ -366,7 +368,7 @@ Report.schema = {
 class Software extends BibliographicEntry {}
 Software.schema = {
   type: 'software',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   version: STRING,
   publisherLoc: STRING,
@@ -380,7 +382,7 @@ Software.schema = {
 class Thesis extends BibliographicEntry {}
 Thesis.schema = {
   type: 'thesis',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   year: STRING,
   month: STRING,
@@ -393,7 +395,7 @@ Thesis.schema = {
 class Webpage extends BibliographicEntry {}
 Webpage.schema = {
   type: 'webpage',
-  title: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS),
   // E.g. website name, where the page appeared
   containerTitle: STRING, // <source>
   authors: CHILDREN('ref-contrib'),
@@ -619,6 +621,6 @@ InternalArticleSchema.addNodes([
   'styled-content',
   'x',
   'xref'
-].map(name => TextureArticleSchema.getNodeClass(name)))
+].map(name => TextureArticleSchema.getNodeClass(name, 'strict')))
 
 export default InternalArticleSchema

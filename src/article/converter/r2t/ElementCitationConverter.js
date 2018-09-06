@@ -154,10 +154,10 @@ function _exportElementCitation (node, exporter) {
   el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
   el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
   el.append(_createTextElement($$, node.uri, 'uri'))
+  el.append(_createTextElement($$, node.accessedDate, 'date-in-citation', {'iso-8601-date': node.accessedDate}))
   el.append(_createTextElement($$, node.version, 'version'))
   el.append(_createTextElement($$, node.volume, 'volume'))
   el.append(_createTextElement($$, node.year, 'year'))
-  el.append(_createTextElement($$, node.accessedDate, 'date-in-citation', {'iso-8601-date': node.accessedDate}))
   // identifiers
   el.append(_createTextElement($$, node.accessionId, 'pub-id', {'pub-id-type': 'accession'}))
   el.append(_createTextElement($$, node.arkId, 'pub-id', {'pub-id-type': 'ark'}))

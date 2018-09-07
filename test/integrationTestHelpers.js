@@ -1,6 +1,7 @@
 /* global vfs, testVfs */
 import { ObjectOperation, DocumentChange, isString } from 'substance'
 import { TextureWebApp, VfsStorageClient } from '../index'
+import TestVfs from './TestVfs'
 
 export function setCursor (editor, path, pos) {
   if (!isString(path)) {
@@ -58,4 +59,15 @@ export const LOREM_IPSUM = {
   vfs: testVfs,
   rootDir: './tests/fixture/',
   archiveId: 'lorem-ipsum'
+}
+
+export function setupTestVfs (mainVfs, archiveId) {
+  let data = {}
+  let paths = Object.keys(mainVfs._data)
+  for (let path of paths) {
+    if (path.startsWith(archiveId + '/')) {
+      data[path] = mainVfs._data[path]
+    }
+  }
+  return new TestVfs(data)
 }

@@ -321,6 +321,9 @@ function _populateBody (doc, jats, jatsImporter) {
   let bodyEl = jats.find('article > body')
   if (bodyEl) {
     let body = doc.get('body')
+    // ATTENTION: because there is already a body node in the document, *the* body, with id 'body'
+    // we must use change the id of the body element so that it does not collide with the internal one
+    bodyEl.id = uuid()
     let tmp = jatsImporter.convertElement(bodyEl)
     body.append(tmp.children)
     doc.delete(tmp)

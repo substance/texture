@@ -14,9 +14,8 @@ export default class VfsStorageClient {
   }
 
   write (archiveId, data, cb) { // eslint-disable-line
-    console.error('Can not write on virtual file system')
-    console.info('This would have been written:', data)
-    cb(null, false)
+    _updateRawArchive(this.vfs, archiveId, data, this.baseUrl)
+    cb(null, true)
   }
 }
 
@@ -57,4 +56,13 @@ function _readRawArchive (fs, archiveId, baseUrl = '') {
     }
   })
   return rawArchive
+}
+
+function _updateRawArchive (fs, archiveId, rawArchive, baseUrl = '') {
+  let paths = Object.keys(rawArchive.resources)
+  for (let path of paths) {
+    let resource = rawArchive.resources[path]
+    let data = resource.data
+    fs.writeFileSync(`${archiveId}/${path}`, data)
+  }
 }

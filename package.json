@@ -13,7 +13,9 @@
     "substance": "^1.0.0-preview.90"
   },
   "devDependencies": {
+    "colors": "^1.3.2",
     "dar-server": "^0.4.1",
+    "diff": "^3.5.0",
     "electron": "^2.0.8",
     "electron-builder": "20.13.4",
     "esm": "3.0.47",

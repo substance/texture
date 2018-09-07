@@ -16,3 +16,26 @@ export class DOMEvent {
   stopPropagation () {}
   preventDefault () {}
 }
+
+export function diff (actual, expected) {
+  let colors = require('colors')
+  let jsdiff = require('diff')
+  return jsdiff.diffChars(expected, actual).map(part => {
+    // green for additions, red for deletions
+    // grey for common parts
+    let color = colors.grey
+    let str = part.value
+    if (part.added) {
+      color = colors.green
+    } else if (part.removed) {
+      color = colors.red
+    } else {
+      let lines = str.split(/\r?\n/)
+      let L = lines.length
+      if (L > 5) {
+        str = [lines[0], '...', lines[L - 1]].join('\n')
+      }
+    }
+    return color(str)
+  }).join('')
+}

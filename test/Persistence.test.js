@@ -1,8 +1,8 @@
 /* global vfs */
-import { MemoryDOMElement } from 'substance'
+import { platform } from 'substance'
 import { test } from 'substance-test'
 import { TextureArchive, checkArchive } from '../index'
-import { getMountPoint } from './testHelpers'
+import { getMountPoint, diff } from './testHelpers'
 import { applyNOP, toUnix, setupTestVfs } from './integrationTestHelpers'
 import setupTestApp from './setupTestApp'
 
@@ -35,33 +35,37 @@ test('Persistence: loading and saving the kitchen-sink article', t => {
     newRawArchive = rawArchive
   })
 
-  let originalManuscriptXML = originalRawArchive.resources['manuscript.xml'].data
-  let newManuscriptXML = newRawArchive.resources['manuscript.xml'].data
+  let originalManuscriptXML = toUnix(originalRawArchive.resources['manuscript.xml'].data)
+  let newManuscriptXML = toUnix(newRawArchive.resources['manuscript.xml'].data)
 
   // check the new archive for validator errors
   let err = checkArchive(TextureArchive, newRawArchive)
   let details = err ? err.detail : null
   t.nil(details, 'There should be no error.')
 
-  // TODO: shouldn't be the whole XML the same?
-
-  // compare front
-  let oldFrontXML = MemoryDOMElement.parseMarkup(originalManuscriptXML, 'xml').find('front').getInnerXML()
-  let newFrontXML = MemoryDOMElement.parseMarkup(newManuscriptXML, 'xml').find('front').getInnerXML()
-  // Note: we must make sure to compare strings with comparable line-endings
-  t.equal(toUnix(newFrontXML), toUnix(oldFrontXML), 'Front should be the same after saving')
-
-  // compare body
-  let oldBodyXML = MemoryDOMElement.parseMarkup(originalManuscriptXML, 'xml').find('body').getInnerXML()
-  let newBodyXML = MemoryDOMElement.parseMarkup(newManuscriptXML, 'xml').find('body').getInnerXML()
-  // Note: we must make sure to compare strings with comparable line-endings
-  t.equal(toUnix(newBodyXML), toUnix(oldBodyXML), 'Body should be the same after saving')
-
-  // compare back
-  let oldBackXML = MemoryDOMElement.parseMarkup(originalManuscriptXML, 'xml').find('back').getInnerXML()
-  let newBackXML = MemoryDOMElement.parseMarkup(newManuscriptXML, 'xml').find('back').getInnerXML()
-  // Note: we must make sure to compare strings with comparable line-endings
-  t.equal(toUnix(newBackXML), toUnix(oldBackXML), 'Back should be the same after saving')
+  if (newManuscriptXML !== originalManuscriptXML) {
+    // we are not using the built-in equal assertion
+    // because the error message is not helpful
+    // instead we fail with a general message and an extra that
+    // will be displayed in the browser
+    let msg = 'XML should not have changed'
+    if (platform.inBrowser) {
+      t._assert(false, {
+        message: msg,
+        operator: 'equal',
+        actual: newManuscriptXML,
+        expected: originalManuscriptXML
+      })
+    } else {
+      t.fail(msg)
+      console.log('Diff:')
+      console.log(diff(newManuscriptXML, originalManuscriptXML))
+      let fs = require('fs')
+      fs.writeFileSync('bla.xml', newManuscriptXML)
+    }
+  } else {
+    t.pass('XML did not change')
+  }
 
   // finally try to let the app load the new archive
   getMountPoint(t).empty()

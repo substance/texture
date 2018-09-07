@@ -5,6 +5,27 @@ import {
   createJatsImporter, createJatsExporter, createEmptyJATS
 } from '../index'
 
+const FLAT = `
+<body id="body">
+  <p>p1</p>
+  <p>p2</p>
+</body>
+`
+test('BodyConverter: import flat body', t => {
+  let el = DefaultDOMElement.parseSnippet(FLAT.trim(), 'xml')
+  let body = _importBody(el)
+  t.equal(body.children.length, 2, 'body should have 2 children')
+  t.end()
+})
+
+test('BodyConverter: export flat body', function (t) {
+  let el = DefaultDOMElement.parseSnippet(FLAT.trim(), 'xml')
+  let body = _importBody(el)
+  let bodyEl = _exportBody(body)
+  t.equal(bodyEl.children.length, 2, 'body should have 2 children')
+  t.end()
+})
+
 const TWO_SECTIONS = `
 <body id="body">
   <sec id="s1">

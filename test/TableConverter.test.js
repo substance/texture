@@ -65,6 +65,40 @@ test('TableConverter: export simple table', t => {
   t.end()
 })
 
+const COL_SPAN_1 = `
+<table>
+  <tr><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+  <tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+  <tr><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+  <tr id="tr4"><td colspan="2">9</td><td>11</td><td>12</td></tr>
+  <tr><td>13</td><td>14</td><td>15</td><td>16</td></tr>
+</table>
+`
+
+test('TableConverter: import table with col span (1)', t => {
+  let el = DefaultDOMElement.parseSnippet(COL_SPAN_1.trim(), 'xml')
+  let table = _importTable(el)
+  t.deepEqual(table.getDimensions(), [5, 4], 'table should have correct dimensions')
+  t.ok(table.getChildren().every(row => row.getChildCount() === 4), 'internally every row should have 4 cells')
+  let cellMatrix = table.getCellMatrix()
+  let masterCell = cellMatrix[3][0]
+  let spannedCell = cellMatrix[3][1]
+  t.ok(spannedCell.isShadowed(), 'cell in 4th row and 2nd column should be shadowed')
+  t.ok(spannedCell.getMasterCell() === masterCell, '.. by the cell in the first column')
+  t.end()
+})
+
+test('TableConverter: export table with col span (1)', t => {
+  let el = DefaultDOMElement.parseSnippet(COL_SPAN_1.trim(), 'xml')
+  let table = _importTable(el)
+  let tableEl = _exportTable(table)
+  let tr = tableEl.find('#tr4')
+  let td = tr.getChildAt(0)
+  t.equal(tr.getChildCount(), 3, '4th row should have 3 cells')
+  t.equal(td.getAttribute('colspan'), '2', 'its first cell should have colspan=2')
+  t.end()
+})
+
 function _importTable (el) {
   // TODO: create a minimal document, and the JATS importer
   // then run the converter and see if the body node has the proper content

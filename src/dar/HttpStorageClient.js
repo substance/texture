@@ -43,7 +43,7 @@ export default class HttpStorageClient {
       url,
       data: form
     }).then(response => {
-      cb(response)
+      cb(null, response)
     }).catch(err => {
       cb(err)
     })

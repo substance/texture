@@ -221,7 +221,7 @@
           <label>Figure 2</label>
           <caption id="fig2-caption">
             <title>Visual object processing in area AIP.</title>
-            <p id="fig2-caption-p1"></p>
+            <p id="fig2-caption-p1" />
           </caption>
           <graphic id="graphic-2" xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
         </fig>

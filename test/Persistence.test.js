@@ -60,8 +60,6 @@ test('Persistence: loading and saving the kitchen-sink article', t => {
       t.fail(msg)
       console.log('Diff:')
       console.log(diff(newManuscriptXML, originalManuscriptXML))
-      let fs = require('fs')
-      fs.writeFileSync('bla.xml', newManuscriptXML)
     }
   } else {
     t.pass('XML did not change')

@@ -1,19 +1,9 @@
-import { XMLDocumentImporter } from 'substance'
-import JATSSchema from '../../TextureArticle'
+import { uuid } from 'substance'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import InternalArticle from '../../InternalArticleDocument'
-import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import { getText } from '../util/domHelpers'
-import BodyConverter from './BodyConverter'
-import DispQuoteConverter from './DispQuoteConverter'
-import FigConverter from './FigConverter'
-import ElementCitationConverter from './ElementCitationConverter'
-import ListConverter from './ListConverter'
-import TableConverter from './TableConverter'
-import TableWrapConverter from './TableWrapConverter'
-import UnsupportedNodeConverter from './UnsupportedNodeConverter'
-import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
+import createJatsImporter from './createJatsImporter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -69,7 +59,7 @@ import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 export default function jats2internal (jats) {
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
   // this is used to for parts of the DOM where we use JATS in the internal model
-  let jatsImporter = _createImporter(doc)
+  let jatsImporter = createJatsImporter(doc)
 
   // metadata
   _populateOrganisations(doc, jats)
@@ -88,49 +78,6 @@ export default function jats2internal (jats) {
   _populateReferences(doc, jats, jatsImporter)
 
   return doc
-}
-
-function _createImporter (doc) {
-  // Note: we are applying a hybrid approach, i.e. we create XML importers for the JATS schema
-  // but only for those elements which are supported by our internal article schema.
-  let jatsSchema = JATSSchema.xmlSchema
-  let tagNames = jatsSchema.getTagNames().filter(name => Boolean(InternalArticleSchema.getNodeClass(name)))
-  let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
-  let converters = [
-    new BodyConverter(),
-    // this is only used for import, because BodyConverter does an on-the-fly DOM transformation
-    // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
-    HeadingImporter,
-    new DispQuoteConverter(),
-    new FigConverter(),
-    new ListConverter(),
-    new TableWrapConverter(),
-    new TableConverter(),
-    new ElementCitationConverter()
-  ].concat(jatsConverters)
-  let jatsImporter = new _HybridJATSImporter({
-    schema: InternalArticleSchema,
-    xmlSchema: jatsSchema,
-    idAttribute: 'id',
-    converters
-  })
-  // ATTENTION: this looks hacky, but we know what we are doing (hopefully)
-  jatsImporter.state.doc = doc
-  return jatsImporter
-}
-
-class _HybridJATSImporter extends XMLDocumentImporter {
-  _getConverterForElement (el, mode) {
-    let converter = super._getConverterForElement(el, mode)
-    if (!converter) {
-      if (mode === 'inline') {
-        return UnsupportedInlineNodeConverter
-      } else {
-        return UnsupportedNodeConverter
-      }
-    }
-    return converter
-  }
 }
 
 function _populateOrganisations (doc, jats) {
@@ -374,6 +321,9 @@ function _populateBody (doc, jats, jatsImporter) {
   let bodyEl = jats.find('article > body')
   if (bodyEl) {
     let body = doc.get('body')
+    // ATTENTION: because there is already a body node in the document, *the* body, with id 'body'
+    // we must use change the id of the body element so that it does not collide with the internal one
+    bodyEl.id = uuid()
     let tmp = jatsImporter.convertElement(bodyEl)
     body.append(tmp.children)
     doc.delete(tmp)
@@ -397,15 +347,6 @@ function _populateReferences (doc, jats, jatsImporter) {
     refEls.forEach(refEl => {
       references.append(jatsImporter.convertElement(refEl))
     })
-  }
-}
-
-const HeadingImporter = {
-  type: 'heading',
-  tagName: 'heading',
-  import (el, node, importer) {
-    // Note: attributes are converted automatically
-    node.content = importer.annotatedText(el, [node.id, 'content'])
   }
 }
 

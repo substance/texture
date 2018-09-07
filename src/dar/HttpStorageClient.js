@@ -42,8 +42,8 @@ export default class HttpStorageClient {
       method: 'PUT',
       url,
       data: form
-    }).then(() => {
-      cb()
+    }).then(response => {
+      cb(response)
     }).catch(err => {
       cb(err)
     })

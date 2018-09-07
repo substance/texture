@@ -10,7 +10,7 @@
     "lodash": "^4.14.1"
   },
   "peerDependency": {
-    "substance": "^1.0.0-preview.89"
+    "substance": "^1.0.0-preview.90"
   },
   "devDependencies": {
     "dar-server": "^0.4.1",
@@ -21,9 +21,9 @@
     "nyc": "11.8.0",
     "source-map-support": "0.5.3",
     "standard": "^11.0.1",
-    "substance": "1.0.0-preview.89",
+    "substance": "1.0.0-preview.90",
     "substance-bundler": "0.25.5",
-    "substance-test": "0.12.2",
+    "substance-test": "0.12.3",
     "tap-spec": "^4.1.1"
   },
   "scripts": {

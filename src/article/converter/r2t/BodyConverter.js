@@ -7,12 +7,16 @@ export default class BodyConverter {
   get tagName () { return 'body' }
 
   import (el, node, importer) {
-    // find all top-level sections
-    let topLevelSecs = el.findAll('sec').filter(sec => sec.parentNode.tagName !== 'sec')
-    let els = topLevelSecs.reduce((flattened, sec) => {
-      return flattened.concat(this._flattenSec(sec, 1))
-    }, [])
-    node._childNodes = els.map(el => importer.convertElement(el).id)
+    let children = el.getChildren()
+    let flattened = []
+    for (let child of children) {
+      if (child.tagName === 'sec') {
+        flattened = flattened.concat(this._flattenSec(child, 1))
+      } else {
+        flattened.push(child)
+      }
+    }
+    node._childNodes = flattened.map(el => importer.convertElement(el).id)
   }
 
   _flattenSec (sec, level) {

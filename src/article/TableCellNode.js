@@ -15,6 +15,14 @@ export default class TableCellNode extends XMLTextElement {
   get colspan () {
     return _parseSpan(this.getAttribute('colspan'))
   }
+
+  isShadowed () {
+    return this.shadowed
+  }
+
+  getMasterCell () {
+    return this.masterCell
+  }
 }
 
 TableCellNode.type = 'table-cell'

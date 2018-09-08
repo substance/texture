@@ -1,4 +1,5 @@
 .sc-card {
+  position: relative;
   max-width: 800px;
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
   margin: 20px 0;
@@ -8,6 +9,18 @@
   --label-line-height: 14px;
   --label-color: #9e9e9e;
   --warning-color: #ffaf46;
+}
+
+.sc-card > .se-label {
+  position: absolute;
+  top: -10px;
+  left: 40px;
+  padding: 0px 20px;
+  background: #fff;
+  color: var(--label-color);
+  font-size: var(--label-font-size);
+  font-weight: var(--label-font-weight);
+  line-height: var(--label-line-height);
 }
 
 .sc-card > .sm-warning {

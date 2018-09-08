@@ -128,7 +128,7 @@ export default {
     config.addLabel('deceased', 'Deceased')
 
     // organisation labels
-    config.addLabel('organisation', 'Organisation')
+    config.addLabel('organisation', 'Affiliation')
     config.addLabel('add-organisation', 'Add Organisation')
     config.addLabel('edit-organisation', 'Edit Organisation')
     config.addLabel('create-organisation', 'Create Organisation')
@@ -150,22 +150,33 @@ export default {
     config.addLabel('edit-members', 'Edit Members')
 
     // award labels
+    config.addLabel('award', 'Award')
     config.addLabel('institution', 'Institution Name')
     config.addLabel('fundRefId', 'Institution Identifier')
     config.addLabel('awardId', 'Award Identifier')
 
     // keyword labels
+    config.addLabel('keyword', 'Keyword')
     config.addLabel('category', 'Category')
     config.addLabel('language', 'Language')
 
+    // subject labels
+    config.addLabel('subject', 'Subject')
+
     // figure labels
+    config.addLabel('figure', 'Figure')
     config.addLabel('content', 'Content')
     config.addLabel('caption', 'Caption')
-
     config.addLabel('copyrightStatement', 'Copyright Statement')
     config.addLabel('copyrightYear', 'Copyright Year')
     config.addLabel('copyrightHolder', 'Copyright Holder')
     config.addLabel('license', 'License')
     config.addLabel('licenseText', 'License Text (optional)')
+
+    // translatable labels
+    config.addLabel('translatable', 'Translation')
+
+    // footnote labels
+    config.addLabel('fn', 'Footnote')
   }
 }

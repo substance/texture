@@ -22,6 +22,26 @@ export function setCursor (editor, path, pos) {
   })
 }
 
+export function setSelection (editor, path, from, to) {
+  if (!isString(path)) {
+    path = path.join('.')
+  }
+  let property = editor.find(`.sc-text-property[data-path=${path.replace('.', '\\.')}]`)
+  if (!property) {
+    throw new Error('Could not find text property for path ' + path)
+  }
+  let editorSession = editor.context.editorSession
+  let surface = property.context.surface
+  editorSession.setSelection({
+    type: 'property',
+    path: path.split('.'),
+    startOffset: from,
+    endOffset: to,
+    surfaceId: surface.id,
+    containerId: surface.containerId
+  })
+}
+
 export function insertText (editorSession, text) {
   editorSession.transaction(tx => {
     tx.insertText(text)

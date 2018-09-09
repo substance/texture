@@ -512,6 +512,7 @@ ContainerTranslation.schema = {
 class TextTranslation extends XMLTextElement {}
 TextTranslation.schema = {
   type: 'text-translation',
+  content: TEXT(...RICH_TEXT_ANNOS),
   language: STRING
 }
 

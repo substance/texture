@@ -118,6 +118,7 @@ export default {
     config.addLabel('orcid', 'ORCID')
     config.addLabel('givenNames', 'Given Names')
     config.addLabel('surname', 'Surname')
+    config.addLabel('alias', 'Alias')
     config.addLabel('prefix', 'Prefix')
     config.addLabel('suffix', 'Suffix')
     config.addLabel('affiliations', 'Affiliations')

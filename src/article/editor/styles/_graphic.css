@@ -2,3 +2,13 @@
   display: block;
   width: 100%;
 }
+
+.sc-graphic .se-error { 
+  border: 1px solid #d95859;
+  padding: 20px;
+  color: #d95859;
+}
+
+.sc-graphic .se-error .se-icon { 
+  margin-right: 10px;
+}

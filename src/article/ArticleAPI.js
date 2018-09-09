@@ -1,7 +1,8 @@
 import { without, selectionHelpers } from 'substance'
 import {
-  AbstractAPI, DynamicCollection,
-  StringModel, TextModel, FlowContentModel
+  DynamicCollection,
+  StringModel, TextModel, FlowContentModel,
+  EditorAPI, InternalEditingAPI
 } from '../kit'
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
@@ -13,7 +14,7 @@ const COLLECTIONS = {
   'editor': 'editors'
 }
 
-export default class ArticleAPI extends AbstractAPI {
+export default class ArticleAPI extends EditorAPI {
   constructor (articleSession, modelRegistry, archive) {
     super()
 
@@ -289,6 +290,22 @@ export default class ArticleAPI extends AbstractAPI {
     return this._context
   }
 
+  /* Low-level content editing API */
+
+  _createTextNode (tx, container, text) {
+    // TODO: for Container nodes we should define the default text type
+    // maybe even via a schema attribute
+    return tx.create({ type: 'p', content: text })
+  }
+
+  _createListNode (tx, container, params) {
+    let el = tx.create({ type: 'list' })
+    if (params.listType) {
+      el.attr('list-type', params.listType)
+    }
+    return el
+  }
+
   /*
     TODO: In the future it should be necessary to expose those managers, instead
     API's should be used to access information.
@@ -398,5 +415,29 @@ export default class ArticleAPI extends AbstractAPI {
       }
       tx.setSelection(newSelection)
     })
+  }
+
+  _getSelection () {
+    return this.articleSession.editorState.selection
+  }
+
+  _createInternalEditorAPI () {
+    return new InternalArticleEditingAPI()
+  }
+}
+
+class InternalArticleEditingAPI extends InternalEditingAPI {
+  createTextNode (tx, container, text) {
+    // TODO: for Container nodes we should define the default text type
+    // maybe even via a schema attribute
+    return tx.create({ type: 'p', content: text })
+  }
+
+  createListNode (tx, container, params) {
+    let el = tx.create({ type: 'list' })
+    if (params.listType) {
+      el.attr('list-type', params.listType)
+    }
+    return el
   }
 }

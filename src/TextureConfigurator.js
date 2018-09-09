@@ -1,4 +1,6 @@
-import { Configurator, merge, isString, flatten, includes, forEach } from 'substance'
+import {
+  Configurator, merge, isString, flatten, includes, forEach, Registry
+} from 'substance'
 import SwitchViewCommand from './article/SwitchViewCommand'
 
 export default class TextureConfigurator extends Configurator {
@@ -151,6 +153,14 @@ export default class TextureConfigurator extends Configurator {
 
   getAvailableLanguages () {
     return this.config.availableLanguages
+  }
+
+  getConverters (type) {
+    let registry = new Registry()
+    forEach(this.config.converters[type], (Converter, type) => {
+      registry.add(type, Converter)
+    })
+    return registry
   }
 
   _compileToolPanelItem (itemSpec) {

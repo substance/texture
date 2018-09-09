@@ -2,6 +2,12 @@ import { AnnotationCommand, platform, SwitchTextTypeCommand } from 'substance'
 import TextureConfigurator from '../TextureConfigurator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
 import InternalArticleSchema from './InternalArticleSchema'
+import ArticleHTMLExporter from './converter/ArticleHTMLExporter'
+import ArticleHTMLImporter from './converter/ArticleHTMLImporter'
+import ArticlePlainTextExporter from './converter/ArticlePlainTextExporter'
+import ArticlePlainTextImporter from './converter/ArticlePlainTextImporter'
+import JATSExporter from './converter/JATSExporter'
+import JATSImporter from './converter/JATSImporter'
 
 export default class ArticleConfigurator extends TextureConfigurator {
   constructor () {
@@ -92,5 +98,51 @@ export default class ArticleConfigurator extends TextureConfigurator {
       }
     })
     return keyboardShortcuts[commandName]
+  }
+
+  getExporter (type) {
+    switch (type) {
+      case 'text': {
+        if (!this._textExporter) {
+          this._textExporter = new ArticlePlainTextExporter(this)
+        }
+        return this._textExporter
+      }
+      case 'html': {
+        if (!this._htmlExporter) {
+          this._htmlExporter = new ArticleHTMLExporter(this)
+        }
+        return this._htmlExporter
+      }
+      case 'jats': {
+        if (!this._jatsExporter) {
+          this._jatsExporter = new JATSExporter(this)
+        }
+        return this._jatsExporter
+      }
+    }
+  }
+
+  getImporter (type) {
+    switch (type) {
+      case 'text': {
+        if (!this._textImporter) {
+          this._textImporter = new ArticlePlainTextImporter(this)
+        }
+        return this._textImporter
+      }
+      case 'html': {
+        if (!this._htmlImporter) {
+          this._htmlImporter = new ArticleHTMLImporter(this)
+        }
+        return this._htmlImporter
+      }
+      case 'jats': {
+        if (!this._jatsImporter) {
+          this._jatsImporter = new JATSImporter(this)
+        }
+        return this._jatsImporter
+      }
+    }
   }
 }

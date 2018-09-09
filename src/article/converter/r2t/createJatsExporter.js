@@ -1,3 +1,4 @@
+
 import { XMLExporter } from 'substance'
 import JATSSchema from '../../TextureArticle'
 import InternalArticleSchema from '../../InternalArticleSchema'
@@ -6,6 +7,7 @@ import BodyConverter from './BodyConverter'
 import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ListConverter from './ListConverter'
+import PermissionsConverter from './PermissionsConverter'
 import TableConverter from './TableConverter'
 import TableWrapConverter from './TableWrapConverter'
 import ElementCitationConverter from './ElementCitationConverter'
@@ -27,6 +29,7 @@ export default function createJatsExporter (jatsDom, doc) {
     new DispQuoteConverter(),
     new FigConverter(),
     new ListConverter(),
+    new PermissionsConverter(),
     new TableWrapConverter(),
     new TableConverter(),
     new ElementCitationConverter(),

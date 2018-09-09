@@ -34,7 +34,7 @@ import createJatsImporter from './createJatsImporter'
       isbn?,            // -> article-record
       (((fpage,lpage?)?,page-range?)|elocation-id)?,  // -> article-record
       history?,         // -> article-record
-      permissions?,
+      permissions?,     // -> article-record
       self-uri*,        // not supported yet
       (related-article,related-object)*, // not supported yet
       abstract?,        // -> content.abstract
@@ -66,7 +66,7 @@ export default function jats2internal (jats) {
   _populateAuthors(doc, jats, jatsImporter)
   _populateEditors(doc, jats, jatsImporter)
   _populateAwards(doc, jats)
-  _populateArticleRecord(doc, jats)
+  _populateArticleRecord(doc, jats, jatsImporter)
   _populateKeywords(doc, jats)
   _populateSubjects(doc, jats)
 
@@ -218,7 +218,8 @@ function _populateAwards (doc, jats) {
   })
 }
 
-function _populateArticleRecord (doc, jats) {
+// TODO: use doc API for manipulation, not a bare object
+function _populateArticleRecord (doc, jats, jatsImporter) {
   let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
   Object.assign(articleRecord, {
@@ -229,6 +230,17 @@ function _populateArticleRecord (doc, jats) {
     volume: getText(articleMetaEl, 'volume'),
     pageRange: getText(articleMetaEl, 'page-range')
   })
+  // Import permission if present
+  const permissionsEl = articleMetaEl.find('permissions')
+  let permission
+  // An empty permission is already there, but will be replaced if <permission> element is there
+  if (permissionsEl) {
+    doc.delete(articleRecord.permission)
+    permission = jatsImporter.convertElement(permissionsEl)
+  } else {
+    permission = doc.get(articleRecord.permission)
+  }
+  articleRecord.permission = permission.id
   const articleDateEls = articleMetaEl.findAll('history > date, pub-date')
   articleDateEls.forEach(dateEl => {
     const date = _extractDate(dateEl)

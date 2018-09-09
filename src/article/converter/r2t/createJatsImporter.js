@@ -8,6 +8,7 @@ import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import ListConverter from './ListConverter'
+import PermissionsConverter from './PermissionsConverter'
 import TableConverter from './TableConverter'
 import TableWrapConverter from './TableWrapConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
@@ -27,6 +28,7 @@ export default function createJatsImporter (doc) {
     new DispQuoteConverter(),
     new FigConverter(),
     new ListConverter(),
+    new PermissionsConverter(),
     new TableWrapConverter(),
     new TableConverter(),
     new ElementCitationConverter()

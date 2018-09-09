@@ -75,9 +75,13 @@ export default class InternalArticleDocument extends Document {
       if (!id) id = type
       return doc.create({type, id})
     }
+
+    let permission = doc.create({ type: 'permission', id: 'article-permission' })
+    let articleRecord = doc.create({ type: 'article-record', id: 'article-record', permission: permission.id })
+
     $$('article').append(
       $$('metadata').append(
-        $$('article-record'),
+        articleRecord,
         $$('authors'),
         $$('editors'),
         $$('groups'),

@@ -85,6 +85,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   const $$ = jats.$$
   let articleMeta = jats.createElement('article-meta')
   let articleRecord = doc.get('article-record')
+  let permission = doc.get(articleRecord.permission)
 
   // article-id*
   // TODO not supported yet
@@ -152,7 +153,12 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   historyEl.append(_exportDate($$, articleRecord, 'revRequestedDate', 'rev-request'))
   articleMeta.append(historyEl)
 
-  // permissions?,     // not supported yet
+  // permissions?,
+  if (permission && !permission.isEmpty()) {
+    articleMeta.append(
+      jatsExporter.convertNode(permission)
+    )
+  }
 
   // self-uri*,        // not supported yet
 

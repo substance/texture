@@ -133,6 +133,15 @@
           <year>1998</year>
         </date>
       </history>
+      <permissions id="permission-1">
+        <copyright-statement>© 2018 Substance Consortium</copyright-statement>
+        <copyright-year>2018</copyright-year>
+        <copyright-holder>Substance Consortium</copyright-holder>
+        <license>
+          <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
+          <license-p>This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, reproduction and adaptation in any medium and for any purpose provided that it is properly attributed. For attribution, the original author(s), title, publication source (PeerJ) and either DOI or URL of the article must be cited.</license-p>
+        </license>
+      </permissions>
       <abstract>
         <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
       </abstract>
@@ -206,7 +215,7 @@
             <p id="fig1-caption-p1">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
           </caption>
           <graphic id="graphic-1" xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
-          <permissions>
+          <permissions id="permission-2">
             <copyright-statement>© 2014 Surname et al.</copyright-statement>
             <copyright-year>2014</copyright-year>
             <copyright-holder>Surname et al.</copyright-holder>

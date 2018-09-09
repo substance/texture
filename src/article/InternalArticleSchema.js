@@ -33,7 +33,8 @@ ArticleRecord.schema = {
   publishedDate: STRING,
   receivedDate: STRING,
   revReceivedDate: STRING,
-  revRequestedDate: STRING
+  revRequestedDate: STRING,
+  permission: CHILD('permission')
 }
 
 class TranslatableTextElement extends XMLTextElement {
@@ -104,14 +105,7 @@ Figure.schema = {
   title: TEXT(...RICH_TEXT_ANNOS),
   label: STRING,
   caption: CHILD('caption'),
-  copyrightStatement: 'text',
-  copyrightYear: 'text',
-  copyrightHolder: 'text',
-  // URL to license description
-  // used as a unique license identifier
-  license: 'text',
-  // Optional: A paragraph holding the license text if needed
-  licenseText: 'text'
+  permission: CHILD('permission')
 }
 
 class TableFigure extends Figure {}
@@ -163,7 +157,10 @@ Back.schema = {
 }
 
 class Title extends TranslatableTextElement {}
-Title.type = 'title'
+Title.schema = {
+  type: 'title',
+  content: TEXT(...RICH_TEXT_ANNOS)
+}
 
 class Abstract extends TranslatableContainerElement {}
 Abstract.type = 'abstract'
@@ -345,6 +342,24 @@ Patent.schema = {
   doi: STRING
 }
 
+class Permission extends DocumentNode {
+  isEmpty () {
+    return !(this.copyrightStatement || this.copyrightYear || this.copyrightHolder || this.license || this.licenseText)
+  }
+}
+
+Permission.schema = {
+  type: 'permission',
+  copyrightStatement: 'text',
+  copyrightYear: 'text',
+  copyrightHolder: 'text',
+  // URL to license description
+  // used as a unique license identifier
+  license: 'text',
+  // Optional: A paragraph holding the license text if needed
+  licenseText: 'text'
+}
+
 class Report extends BibliographicEntry {
   getGuid () {
     return this.isbn
@@ -502,6 +517,7 @@ ContainerTranslation.schema = {
 class TextTranslation extends XMLTextElement {}
 TextTranslation.schema = {
   type: 'text-translation',
+  content: TEXT(...RICH_TEXT_ANNOS),
   language: STRING
 }
 
@@ -579,6 +595,7 @@ InternalArticleSchema.addNodes([
   NewspaperArticle,
   Report,
   Patent,
+  Permission,
   Software,
   Thesis,
   Webpage,

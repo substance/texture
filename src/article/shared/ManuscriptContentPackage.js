@@ -50,6 +50,7 @@ export default {
     config.addComponent('back-matter', CompositeComponent)
     config.addComponent('bibr', ReferenceComponent)
     config.addComponent('figure', FigureComponent)
+    config.addComponent('permission', NodeModelComponent)
     config.addComponent('front-matter', FrontMatterComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('manuscript', ManuscriptComponent)

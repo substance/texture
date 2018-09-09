@@ -18,6 +18,7 @@ import NodeModelComponent from './NodeModelComponent'
 
 // TODO: these needs to be revisited
 import AffiliationsListComponent from './AffiliationsListComponent'
+import BioComponent from './BioComponent'
 import BreakComponent from './BreakComponent'
 import EditorsListComponent from './EditorsListComponent'
 import ElementNodeComponent from './ElementNodeComponent'
@@ -62,6 +63,7 @@ export default {
     config.addComponent('entity', NodeModelComponent)
     config.addComponent('affiliations-list', AffiliationsListComponent)
     config.addComponent('editors-list', EditorsListComponent)
+    config.addComponent('bio', BioComponent)
     config.addComponent('break', BreakComponent)
     config.addComponent('caption', CaptionComponent)
     config.addComponent('container', ContainerNodeComponent)

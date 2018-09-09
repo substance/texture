@@ -121,6 +121,7 @@ export default {
     config.addLabel('alias', 'Alias')
     config.addLabel('prefix', 'Prefix')
     config.addLabel('suffix', 'Suffix')
+    config.addLabel('bio', 'Biography')
     config.addLabel('affiliations', 'Affiliations')
     config.addLabel('awards', 'Awards')
     config.addLabel('group', 'Group')

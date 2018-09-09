@@ -48,6 +48,7 @@
   <s:elementType name="abstract" s:type="container"/>
   <s:elementType name="trans-abstract" s:type="container"/>
   <s:elementType name="body" s:type="container"/>
+  <s:elementType name="bio" s:type="container"/>
   <s:elementType name="caption" s:type="container"/>
   <s:elementType name="fn" s:type="container"/>
   <s:elementType name="sig" s:type="container"/>
@@ -396,7 +397,6 @@
   <!--
     WIP: Requirements are not clear.
   -->
-
   <define name="bio">
     <element name="bio">
       <zeroOrMore>

@@ -1169,6 +1169,9 @@
         <ref name="caption"/>
       </optional>
       <ref name="table"/>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
     </element>
   </define>
 

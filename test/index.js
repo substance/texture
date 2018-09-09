@@ -2,6 +2,7 @@ import { platform } from 'substance'
 import './testGlobals'
 // tests
 import './ArticlePanel.test'
+import './Annotations.test'
 import './AddReference.test'
 import './FindAndReplace.test'
 import './ManuscriptEditor.test'

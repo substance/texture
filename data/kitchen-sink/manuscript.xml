@@ -133,7 +133,7 @@
           <year>1998</year>
         </date>
       </history>
-      <permissions>
+      <permissions id="permission-1">
         <copyright-statement>© 2018 Substance Consortium</copyright-statement>
         <copyright-year>2018</copyright-year>
         <copyright-holder>Substance Consortium</copyright-holder>
@@ -203,6 +203,7 @@
             </tr>
           </tbody>
         </table>
+        <permissions id="permission-2" />
       </table-wrap>
       <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="book1">[2]</xref> dolor <ext-link id="ext-link-1" xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
       <sec id="sec-2">
@@ -215,7 +216,7 @@
             <p id="fig1-caption-p1">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium. Ne mel quas quodsi. Ea pri semper nostrum necessitatibus. Mea salutatus gloriatur persecuti eu, augue oportere efficiendi at eum. Ex eam mutat falli dicit.</p>
           </caption>
           <graphic id="graphic-1" xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
-          <permissions>
+          <permissions id="permission-3">
             <copyright-statement>© 2014 Surname et al.</copyright-statement>
             <copyright-year>2014</copyright-year>
             <copyright-holder>Surname et al.</copyright-holder>
@@ -233,6 +234,7 @@
             <p id="fig2-caption-p1" />
           </caption>
           <graphic id="graphic-2" xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
+          <permissions id="permission-4" />
         </fig>
         <disp-quote id="disp-quote-1">
           <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed id nulla eget neque laoreet cursus id non urna. Aenean felis massa, mattis non laoreet ut, ultrices et velit. Fusce imperdiet auctor porttitor. Maecenas sed varius est. Etiam auctor consequat nunc quis pretium. Fusce sollicitudin euismod nisl, id ullamcorper leo. Nunc interdum, nisl sit amet gravida interdum, nibh nunc cursus nunc, sed viverra metus lorem vitae nisi.</p>

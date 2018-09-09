@@ -32,6 +32,7 @@ export default class JATSImporter extends EventEmitter {
       try {
         state.dom = DefaultDOMElement.parseXML(xml)
       } catch (err) {
+        console.error('Could not parse XML:', err)
         this._error(state, 'parse', {
           msg: String(err)
         })

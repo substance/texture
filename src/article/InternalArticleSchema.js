@@ -419,6 +419,7 @@ Person.schema = {
   group: ONE('group'),
   affiliations: MANY('organisation'),
   awards: MANY('award'),
+  bio: CHILD('bio'),
   equalContrib: BOOLEAN,
   corresp: BOOLEAN,
   deceased: BOOLEAN
@@ -590,6 +591,7 @@ InternalArticleSchema.addNodes([
 // TODO: make sure that we do not need to modify them, e.g. marking them as inline nodes
 InternalArticleSchema.addNodes([
   'body',
+  'bio',
   'caption',
   'fn',
   'graphic',

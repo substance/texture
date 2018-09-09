@@ -376,6 +376,7 @@
         <optional><ref name="name"/></optional>
         <optional><ref name="email"/></optional>
         <optional><ref name="string-name"/></optional>
+        <optional><ref name="bio"/></optional>
         <optional><ref name="collab"/></optional>
         <optional><ref name="role"/></optional>
         <zeroOrMore><ref name="xref"/></zeroOrMore>
@@ -389,6 +390,18 @@
       <oneOrMore>
         <ref name="contrib"/>
       </oneOrMore>
+    </element>
+  </define>
+
+  <!--
+    WIP: Requirements are not clear.
+  -->
+
+  <define name="bio">
+    <element name="bio">
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
     </element>
   </define>
 

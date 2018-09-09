@@ -2,7 +2,7 @@ import { uuid } from 'substance'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import InternalArticle from '../../InternalArticleDocument'
 // TODO: rename to XML helpers
-import { getText } from '../util/domHelpers'
+import { findChild, getText } from '../util/domHelpers'
 import createJatsImporter from './createJatsImporter'
 
 /*
@@ -63,8 +63,8 @@ export default function jats2internal (jats) {
 
   // metadata
   _populateOrganisations(doc, jats)
-  _populateAuthors(doc, jats)
-  _populateEditors(doc, jats)
+  _populateAuthors(doc, jats, jatsImporter)
+  _populateEditors(doc, jats, jatsImporter)
   _populateAwards(doc, jats)
   _populateArticleRecord(doc, jats)
   _populateKeywords(doc, jats)
@@ -106,19 +106,19 @@ function _populateOrganisations (doc, jats) {
   })
 }
 
-function _populateAuthors (doc, jats) {
+function _populateAuthors (doc, jats, importer) {
   let authors = doc.get('authors')
   let authorEls = jats.findAll(`contrib-group[content-type=author] > contrib`)
-  _populateContribs(doc, jats, authors, authorEls)
+  _populateContribs(doc, jats, importer, authors, authorEls)
 }
 
-function _populateEditors (doc, jats) {
+function _populateEditors (doc, jats, importer) {
   let editors = doc.get('editors')
   let editorEls = jats.findAll(`contrib-group[content-type=editor] > contrib`)
-  _populateContribs(doc, jats, editors, editorEls)
+  _populateContribs(doc, jats, importer, editors, editorEls)
 }
 
-function _populateContribs (doc, jats, contribs, contribEls, groupId) {
+function _populateContribs (doc, jats, importer, contribs, contribEls, groupId) {
   for (let contribEl of contribEls) {
     if (contribEl.attr('contrib-type') === 'group') {
       // ATTENTION: groups are defined 'inplace'
@@ -137,7 +137,7 @@ function _populateContribs (doc, jats, contribs, contribEls, groupId) {
       groups.append(doc.create(group))
 
       let memberEls = contribEl.findAll('contrib')
-      _populateContribs(doc, jats, contribs, memberEls, group.id)
+      _populateContribs(doc, jats, importer, contribs, memberEls, group.id)
     } else {
       contribs.append(
         doc.create({
@@ -145,10 +145,12 @@ function _populateContribs (doc, jats, contribs, contribEls, groupId) {
           givenNames: getText(contribEl, 'given-names'),
           surname: getText(contribEl, 'surname'),
           email: getText(contribEl, 'email'),
+          alias: getText(contribEl, 'string-name[content-type=alias]'),
           prefix: getText(contribEl, 'prefix'),
           suffix: getText(contribEl, 'suffix'),
           affiliations: _getAffiliationIds(contribEl),
           awards: _getAwardIds(contribEl),
+          bio: _getBio(contribEl, importer),
           equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
           corresp: contribEl.getAttribute('corresp') === 'yes',
           deceased: contribEl.getAttribute('deceased') === 'yes',
@@ -157,6 +159,31 @@ function _populateContribs (doc, jats, contribs, contribEls, groupId) {
       )
     }
   }
+}
+
+function _getBio (el, importer) {
+  let $$ = el.createElement.bind(el.getOwnerDocument())
+  let bioEl = findChild(el, 'bio')
+
+  // If there is no bio element we should provide it
+  if (!bioEl) {
+    bioEl = $$('bio')
+  }
+
+  // drop everything than 'p' from bio
+  let bioContent = bioEl.children
+  for (let idx = bioContent.length - 1; idx >= 0; idx--) {
+    let child = bioContent[idx]
+    if (child.tagName !== 'p') {
+      bioEl.removeAt(idx)
+    }
+  }
+  // there must be at least one paragraph
+  if (!bioEl.find('p')) {
+    bioEl.append($$('p'))
+  }
+
+  return importer.convertElement(bioEl).id
 }
 
 function _getAffiliationIds (el, isGroup) {

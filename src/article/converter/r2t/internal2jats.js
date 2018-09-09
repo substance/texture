@@ -102,7 +102,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   ].forEach(([type, collectionId]) => {
     let collection = doc.get(collectionId)
     articleMeta.append(
-      _exportContribGroup(jats, doc, collection, type)
+      _exportContribGroup(jats, doc, jatsExporter, collection, type)
     )
   })
 
@@ -244,7 +244,7 @@ function _exportTitleGroup (jats, doc, jatsExporter) {
   return titleGroupEl
 }
 
-function _exportContribGroup (jats, doc, personCollection, type) {
+function _exportContribGroup (jats, doc, exporter, personCollection, type) {
   // FIXME: this should not happen if we have general support for 'person-groups'
   // ATM, we only support authors, and editors.
   let $$ = jats.$$
@@ -255,12 +255,12 @@ function _exportContribGroup (jats, doc, personCollection, type) {
     // append persons without a group first
     if (groupId === 'NOGROUP') {
       persons.forEach(person => {
-        contribGroupEl.append(_exportPerson($$, person))
+        contribGroupEl.append(_exportPerson($$, exporter, person))
       })
     // persons within a group are nested into an extra <contrib> layer
     } else {
       let group = doc.get(groupId)
-      contribGroupEl.append(_exportGroup($$, group, persons))
+      contribGroupEl.append(_exportGroup($$, exporter, group, persons))
     }
   }
   return contribGroupEl
@@ -288,7 +288,7 @@ function _groupContribs (contribs) {
   return groups
 }
 
-function _exportPerson ($$, node) {
+function _exportPerson ($$, exporter, node) {
   let el = $$('contrib').attr({
     'contrib-type': 'person',
     'equal-contrib': node.equalContrib ? 'yes' : 'no',
@@ -302,7 +302,9 @@ function _exportPerson ($$, node) {
       _createTextElement($$, node.prefix, 'prefix'),
       _createTextElement($$, node.suffix, 'suffix')
     ),
-    _createTextElement($$, node.email, 'email')
+    _createTextElement($$, node.email, 'email'),
+    _createTextElement($$, node.alias, 'string-name', {'content-type': 'alias'}),
+    _createBioElement($$, exporter, node)
   )
   node.affiliations.forEach(organisationId => {
     el.append(
@@ -317,7 +319,20 @@ function _exportPerson ($$, node) {
   return el
 }
 
-function _exportGroup ($$, node, groupMembers) {
+function _createBioElement ($$, exporter, node) {
+  let bio = node.getBio()
+  if (bio) {
+    // NOTE: we don't want to export empty containers
+    // e.g. if there is only one empty paragraph we are not exporting anything
+    if (bio.length === 1 && bio.children[0].isEmpty()) {
+      return
+    }
+    let bioEl = exporter.convertNode(bio)
+    return bioEl
+  }
+}
+
+function _exportGroup ($$, exporter, node, groupMembers) {
   /*
     <contrib id="${node.id}" contrib-type="group" equal-contrib="yes|no" corresp="yes|no">
       <collab>
@@ -364,7 +379,7 @@ function _exportGroup ($$, node, groupMembers) {
   // <contrib-group contrib-type="group-member">
   let contribGroup = $$('contrib-group').attr('contrib-type', 'group-member')
   groupMembers.forEach(person => {
-    let contribEl = _exportPerson($$, person)
+    let contribEl = _exportPerson($$, exporter, person)
     contribGroup.append(contribEl)
   })
   collab.append(contribGroup)

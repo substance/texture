@@ -48,6 +48,7 @@
   <s:elementType name="abstract" s:type="container"/>
   <s:elementType name="trans-abstract" s:type="container"/>
   <s:elementType name="body" s:type="container"/>
+  <s:elementType name="bio" s:type="container"/>
   <s:elementType name="caption" s:type="container"/>
   <s:elementType name="fn" s:type="container"/>
   <s:elementType name="sig" s:type="container"/>
@@ -375,6 +376,8 @@
         <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
         <optional><ref name="name"/></optional>
         <optional><ref name="email"/></optional>
+        <optional><ref name="string-name"/></optional>
+        <optional><ref name="bio"/></optional>
         <optional><ref name="collab"/></optional>
         <optional><ref name="role"/></optional>
         <zeroOrMore><ref name="xref"/></zeroOrMore>
@@ -388,6 +391,17 @@
       <oneOrMore>
         <ref name="contrib"/>
       </oneOrMore>
+    </element>
+  </define>
+
+  <!--
+    WIP: Requirements are not clear.
+  -->
+  <define name="bio">
+    <element name="bio">
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
     </element>
   </define>
 

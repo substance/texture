@@ -32,6 +32,7 @@ function testAnnotationToggle (t, annoType) {
   // Toggle the tool and check if an annotation appeared
   annoToogle.find('button').click()
   let anno = editor.find('[data-path="p-2.content"] .sc-' + annoType)
+  let annoId = anno.getAttribute('data-id')
   t.notNil(anno, 'There should be an annotation')
   let offset = anno.el.getAttribute('data-offset')
   t.equal(offset, '2', 'The data-offset property must be equal to begining of the selection')
@@ -43,8 +44,8 @@ function testAnnotationToggle (t, annoType) {
   setCursor(editor, 'p-2.content', 3)
   t.equal(isToolActive(articlePanel, annoType), true, 'Tool must be active')
   annoToogle.find('button').click()
-  let rempvedAnno = editor.find('[data-path="p-2.content"] .sc-bold')
-  t.isNil(rempvedAnno, 'There should be no annotation')
+  let removedAnno = editor.find('[data-path="p-2.content"] [data-id="' + annoId + '"]')
+  t.isNil(removedAnno, 'There should be no annotation')
   t.end()
 }
 

@@ -302,7 +302,8 @@ function _exportPerson ($$, node) {
       _createTextElement($$, node.prefix, 'prefix'),
       _createTextElement($$, node.suffix, 'suffix')
     ),
-    _createTextElement($$, node.email, 'email')
+    _createTextElement($$, node.email, 'email'),
+    _createTextElement($$, node.alias, 'string-name', {'content-type': 'alias'})
   )
   node.affiliations.forEach(organisationId => {
     el.append(

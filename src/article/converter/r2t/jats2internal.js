@@ -145,6 +145,7 @@ function _populateContribs (doc, jats, contribs, contribEls, groupId) {
           givenNames: getText(contribEl, 'given-names'),
           surname: getText(contribEl, 'surname'),
           email: getText(contribEl, 'email'),
+          alias: getText(contribEl, 'string-name[content-type=alias]'),
           prefix: getText(contribEl, 'prefix'),
           suffix: getText(contribEl, 'suffix'),
           affiliations: _getAffiliationIds(contribEl),

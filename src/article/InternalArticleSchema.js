@@ -411,6 +411,7 @@ Person.schema = {
   type: 'person',
   surname: STRING,
   givenNames: STRING,
+  alias: STRING,
   prefix: STRING,
   suffix: STRING,
   email: STRING,

@@ -375,6 +375,7 @@
         <zeroOrMore><ref name="contrib-id"/></zeroOrMore>
         <optional><ref name="name"/></optional>
         <optional><ref name="email"/></optional>
+        <optional><ref name="string-name"/></optional>
         <optional><ref name="collab"/></optional>
         <optional><ref name="role"/></optional>
         <zeroOrMore><ref name="xref"/></zeroOrMore>

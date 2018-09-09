@@ -406,7 +406,12 @@ Webpage.schema = {
   uri: STRING
 }
 
-class Person extends DocumentNode {}
+class Person extends DocumentNode {
+  getBio () {
+    return this.getDocument().get(this.bio)
+  }
+}
+
 Person.schema = {
   type: 'person',
   surname: STRING,

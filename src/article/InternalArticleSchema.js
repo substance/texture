@@ -342,7 +342,12 @@ Patent.schema = {
   doi: STRING
 }
 
-class Permission extends DocumentNode {}
+class Permission extends DocumentNode {
+  isEmpty () {
+    return !(this.copyrightStatement || this.copyrightYear || this.copyrightHolder || this.license || this.licenseText)
+  }
+}
+
 Permission.schema = {
   type: 'permission',
   copyrightStatement: 'text',

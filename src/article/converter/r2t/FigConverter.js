@@ -13,7 +13,6 @@ export default class FigConverter {
     let permissionsEl = findChild(el, 'permissions')
     let captionEl = findChild(el, 'caption')
     let doc = importer.getDocument()
-
     // Preparations
     if (!captionEl) {
       captionEl = $$('caption')
@@ -34,7 +33,6 @@ export default class FigConverter {
     if (!captionEl.find('p')) {
       captionEl.append($$('p'))
     }
-
     // Conversion
     if (labelEl) {
       node.label = labelEl.text()
@@ -46,7 +44,6 @@ export default class FigConverter {
       node.content = importer.convertElement(contentEl).id
     }
     node.caption = importer.convertElement(captionEl).id
-
     if (permissionsEl) {
       node.permission = importer.convertElement(permissionsEl).id
     } else {
@@ -61,7 +58,7 @@ export default class FigConverter {
   export (node, el, exporter) {
     let $$ = exporter.$$
     let doc = exporter.getDocument()
-
+    let permission = doc.get(node.permission)
     // ATTENTION: this helper retrieves the label from the state
     let label = getLabel(node)
     if (label) {
@@ -90,9 +87,9 @@ export default class FigConverter {
         exporter.convertNode(doc.get(node.content))
       )
     }
-    if (node.permission) {
+    if (permission && !permission.isEmpty()) {
       el.append(
-        exporter.convertNode(doc.get(node.permission))
+        exporter.convertNode(permission)
       )
     }
   }

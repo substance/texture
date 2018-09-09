@@ -154,9 +154,12 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   articleMeta.append(historyEl)
 
   // permissions?,
-  articleMeta.append(
-    jatsExporter.convertNode(permission)
-  )
+  if (permission && !permission.isEmpty()) {
+    articleMeta.append(
+      jatsExporter.convertNode(permission)
+    )
+  }
+
   // self-uri*,        // not supported yet
 
   // related-article*, // not supported yet

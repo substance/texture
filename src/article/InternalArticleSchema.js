@@ -34,14 +34,7 @@ ArticleRecord.schema = {
   receivedDate: STRING,
   revReceivedDate: STRING,
   revRequestedDate: STRING,
-  copyrightStatement: 'text',
-  copyrightYear: 'text',
-  copyrightHolder: 'text',
-  // URL to license description
-  // used as a unique license identifier
-  license: 'text',
-  // Optional: A paragraph holding the license text if needed
-  licenseText: 'text'
+  permission: CHILD('permission')
 }
 
 class TranslatableTextElement extends XMLTextElement {

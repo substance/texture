@@ -1,4 +1,4 @@
-export default class PermissionConverter {
+export default class PermissionsConverter {
   get type () { return 'permission' }
 
   get tagName () { return 'permissions' }
@@ -17,7 +17,6 @@ export default class PermissionConverter {
     if (copyrightHolderEl) {
       node.copyrightHolder = copyrightHolderEl.textContent
     }
-
     // TODO: it would be more natural and explicit to do el.find('ali:license-rec')
     let licenseRefEl = el.find('license_ref')
     if (licenseRefEl) {
@@ -27,12 +26,10 @@ export default class PermissionConverter {
     if (licenseP) {
       node.licenseText = importer.annotatedText(licenseP, [node.id, 'licenseText'])
     }
-    // nop
   }
 
   export (node, el, exporter) {
     let $$ = exporter.$$
-    // let permissionsEl = $$('permissions')
     if (node.copyrightStatement) {
       el.append($$('copyright-statement').append(node.copyrightStatement))
     }
@@ -42,7 +39,6 @@ export default class PermissionConverter {
     if (node.copyrightHolder) {
       el.append($$('copyright-holder').append(node.copyrightHolder))
     }
-
     if (node.license || node.licenseText) {
       let licenseEl = $$('license')
       if (node.license) {

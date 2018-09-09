@@ -366,10 +366,14 @@ export default class ArticleAPI extends AbstractAPI {
           'mimetype': mimeData[0],
           'xlink:href': path
         })
+        let permission = tx.create({
+          type: 'permission'
+        })
         let figure = tx.create({
           type: 'figure',
           caption: caption.id,
-          content: graphic.id
+          content: graphic.id,
+          permission: permission.id
         })
         tx.insertBlockNode(figure)
         if (idx === LAST) {

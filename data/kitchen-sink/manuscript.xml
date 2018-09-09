@@ -58,11 +58,11 @@
                   <given-names>Daniel Lee</given-names>
                   <suffix>Jr.</suffix>
                 </name>
+                <string-name content-type="alias">Dan Randall</string-name>
                 <bio id="bio1">
                   <p id="bio1_p1">This is a bio example.</p>
                   <p id="bio1_p2">With multiparagraphs.</p>
                 </bio>
-                <string-name content-type="alias">Dan Randall</string-name>
                 <xref ref-type="aff" rid="aff3" />
               </contrib>
             </contrib-group>

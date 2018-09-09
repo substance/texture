@@ -303,8 +303,8 @@ function _exportPerson ($$, exporter, node) {
       _createTextElement($$, node.suffix, 'suffix')
     ),
     _createTextElement($$, node.email, 'email'),
-    _exportBio($$, exporter, el, node),
-    _createTextElement($$, node.alias, 'string-name', {'content-type': 'alias'})
+    _createTextElement($$, node.alias, 'string-name', {'content-type': 'alias'}),
+    _createBioElement($$, exporter, node)
   )
   node.affiliations.forEach(organisationId => {
     el.append(
@@ -319,7 +319,7 @@ function _exportPerson ($$, exporter, node) {
   return el
 }
 
-function _exportBio ($$, exporter, el, node) {
+function _createBioElement ($$, exporter, node) {
   let bio = node.getBio()
   if (bio) {
     // NOTE: we don't want to export empty containers
@@ -328,7 +328,7 @@ function _exportBio ($$, exporter, el, node) {
       return
     }
     let bioEl = exporter.convertNode(bio)
-    el.append(bioEl)
+    return bioEl
   }
 }
 

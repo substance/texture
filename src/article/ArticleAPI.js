@@ -7,6 +7,7 @@ import {
 import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
+import TableEditingAPI from './shared/TableEditingAPI'
 
 // TODO: this should come from configuration
 const COLLECTIONS = {
@@ -22,6 +23,8 @@ export default class ArticleAPI extends EditorAPI {
     this.articleSession = articleSession
     this.article = articleSession.getDocument()
     this.archive = archive
+
+    this._tableApi = new TableEditingAPI(articleSession)
   }
 
   /*
@@ -292,6 +295,29 @@ export default class ArticleAPI extends EditorAPI {
 
   /* Low-level content editing API */
 
+  copy () {
+    const sel = this._getSelection()
+    // use TableAPI to copy table selections
+    if (sel && sel.isCustomSelection() && sel.getCustomType() === 'table') {
+      const doc = this._getDocument()
+      return this._tableApi.copySelection(doc, sel)
+    } else {
+      return super.copy()
+    }
+  }
+
+  paste (options) {
+    const sel = this._getSelection()
+    // use TableAPI to copy table selections
+    if (sel && sel.isCustomSelection() && sel.getCustomType() === 'table') {
+      this.articleSession.transaction(tx => {
+        this._tableApi.paste(tx, options)
+      }, { action: 'paste' })
+    } else {
+      return super.copy()
+    }
+  }
+
   _createTextNode (tx, container, text) {
     // TODO: for Container nodes we should define the default text type
     // maybe even via a schema attribute
@@ -304,6 +330,10 @@ export default class ArticleAPI extends EditorAPI {
       el.attr('list-type', params.listType)
     }
     return el
+  }
+
+  getTableAPI () {
+    return this._tableApi
   }
 
   /*

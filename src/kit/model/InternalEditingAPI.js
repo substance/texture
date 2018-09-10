@@ -1,6 +1,10 @@
-import { Editing, isString, paste } from 'substance'
+import { Editing, isString, paste, copySelection } from 'substance'
 
 export default class InternalEditingAPI extends Editing {
+  copySelection (tx) {
+    copySelection(tx, tx.selection)
+  }
+
   createTextNode (tx, container, text) {
     throw new Error('This method is abstract')
   }

@@ -22,7 +22,7 @@ export default class EditorAPI extends AbstractAPI {
   annotate (annotationData) {
     const sel = this._getSelection()
     if (sel && (sel.isPropertySelection() || sel.isContainerSelection())) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         this._impl.annotate(tx, annotationData)
       }, { action: 'annotate' })
     }
@@ -31,7 +31,7 @@ export default class EditorAPI extends AbstractAPI {
   break () {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         this._impl.break(tx)
       }, { action: 'break' })
     }
@@ -57,7 +57,7 @@ export default class EditorAPI extends AbstractAPI {
   deleteSelection (options) {
     const sel = this._getSelection()
     if (sel && !sel.isNull() && !sel.isCollapsed()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         this._impl.delete(tx, 'right', options)
       }, { action: 'deleteSelection' })
     }
@@ -70,7 +70,7 @@ export default class EditorAPI extends AbstractAPI {
     } else if (!sel.isCollapsed()) {
       this.deleteSelection()
     } else {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         this._impl.delete(tx, direction)
       }, { action: 'deleteCharacter' })
     }
@@ -79,7 +79,7 @@ export default class EditorAPI extends AbstractAPI {
   insertText (text) {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         this._impl.insertText(tx, text)
       }, { action: 'insertText' })
     }
@@ -89,7 +89,7 @@ export default class EditorAPI extends AbstractAPI {
   insertInlineNode (inlineNode) {
     const sel = this._getSelection()
     if (sel && !sel.isNull() && sel.isPropertySelection()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         return this._impl.insertInlineNode(tx, inlineNode)
       }, { action: 'insertInlineNode' })
     }
@@ -98,8 +98,8 @@ export default class EditorAPI extends AbstractAPI {
   insertBlockNode (blockNode) {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
-        return this._impl.insertBlockNode(this, blockNode)
+      this._getEditorSession().transaction(tx => {
+        return this._impl.insertBlockNode(tx, blockNode)
       }, { action: 'insertBlockNode' })
     }
   }
@@ -107,8 +107,8 @@ export default class EditorAPI extends AbstractAPI {
   paste (content, options) {
     const sel = this._getSelection()
     if (sel && !sel.isNull() && !sel.isCustomSelection()) {
-      this.editorSession.transaction(tx => {
-        return this._impl.paste(this, content, options)
+      this._getEditorSession().transaction(tx => {
+        return this._impl.paste(tx, content, options)
       }, { action: 'paste' })
       return true
     }
@@ -117,7 +117,7 @@ export default class EditorAPI extends AbstractAPI {
   switchTextType (nodeData) {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         return this._impl.switchTextType(tx, nodeData)
       }, { action: 'switchTextType' })
     }
@@ -126,7 +126,7 @@ export default class EditorAPI extends AbstractAPI {
   toggleList (params) {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         return this._impl.toggleList(tx, params)
       }, { action: 'toggleList' })
     }
@@ -135,7 +135,7 @@ export default class EditorAPI extends AbstractAPI {
   indent () {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         return this._impl.indent(tx)
       }, { action: 'indent' })
     }
@@ -144,7 +144,7 @@ export default class EditorAPI extends AbstractAPI {
   dedent () {
     const sel = this._getSelection()
     if (sel && !sel.isNull()) {
-      this.editorSession.transaction(tx => {
+      this._getEditorSession().transaction(tx => {
         return this._impl.dedent(tx)
       }, { action: 'dedent' })
     }
@@ -155,6 +155,10 @@ export default class EditorAPI extends AbstractAPI {
   }
 
   _getDocument () {
+    throw new Error('This method is abstract')
+  }
+
+  _getEditorSession () {
     throw new Error('This method is abstract')
   }
 

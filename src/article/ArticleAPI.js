@@ -370,6 +370,10 @@ export default class ArticleAPI extends EditorAPI {
     return this.getArticleSession()
   }
 
+  _getEditorSession () {
+    return this.articleSession
+  }
+
   _isPropertyRequired (type, propertyName) {
     let REQUIRED = REQUIRED_PROPERTIES[type]
     if (REQUIRED) return REQUIRED.has(propertyName)

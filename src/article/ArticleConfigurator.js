@@ -5,7 +5,6 @@ import InternalArticleSchema from './InternalArticleSchema'
 import ArticleHTMLExporter from './converter/html/ArticleHTMLExporter'
 import ArticleHTMLImporter from './converter/html/ArticleHTMLImporter'
 import ArticlePlainTextExporter from './converter/ArticlePlainTextExporter'
-import ArticlePlainTextImporter from './converter/ArticlePlainTextImporter'
 import JATSExporter from './converter/JATSExporter'
 import JATSImporter from './converter/JATSImporter'
 
@@ -125,12 +124,6 @@ export default class ArticleConfigurator extends TextureConfigurator {
 
   getImporter (type) {
     switch (type) {
-      case 'text': {
-        if (!this._textImporter) {
-          this._textImporter = new ArticlePlainTextImporter(this)
-        }
-        return this._textImporter
-      }
       case 'html': {
         if (!this._htmlImporter) {
           this._htmlImporter = new ArticleHTMLImporter(this)

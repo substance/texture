@@ -1,56 +1,36 @@
-export const PUB_ID_TYPES = {
-  'journal': ['doi', 'pmid'],
-  'book': ['doi', 'pmid', 'isbn']
-}
-
 export const MANUSCRIPT_MODE = 'manuscript'
 export const PREVIEW_MODE = 'preview'
 export const METADATA_MODE = 'metadata'
 
-export const PUB_ID_TYPE_LABELS = {
-  'doi': 'DOI',
-  'pmid': 'PubMed ID',
-  'isbn': 'ISBN'
-}
-
-// Elements that must be auto-expanded in InternalArticle <element-citation>
-// NOTE: content-loc must be extracted and prefilled manually (see ConvertElementCitation)
-export const REQUIRED_ELEMENT_CITATION_ELEMENTS = [
-  ['person-group', 'person-group-type', 'author'],
-  ['person-group', 'person-group-type', 'editor'],
-  ['article-title'],
-  ['chapter-title'],
-  ['edition'],
-  ['issue'],
-  ['source'],
-  ['volume'],
-  ['comment'],
-  ['year'],
-  ['publisher-loc'],
-  ['publisher-name'],
-  ['conf-name'],
-  ['data-title'],
-  ['patent'],
-  ['version'],
-  ['uri'],
-  ['pub-id', 'pub-id-type', 'doi'],
-  ['pub-id', 'pub-id-type', 'pmid'],
-  ['pub-id', 'pub-id-type', 'isbn']
-]
+// Reference Types
+export const JOURNAL_ARTICLE_REF = 'journal-article-ref'
+export const BOOK_REF = 'book-ref'
+export const CHAPTER_REF = 'chapter-ref'
+export const CONFERENCE_PAPER_REF = 'conference-paper-ref'
+export const DATA_PUBLICATION_REF = 'data-publication-ref'
+export const PATENT_REF = 'patent-ref'
+export const ARTICLE_REF = 'article-ref'
+export const NEWSPAPER_ARTICLE_REF = 'newspaper-article-ref'
+export const MAGAZINE_ARTICLE_REF = 'magazine-article-ref'
+export const REPORT_REF = 'report-ref'
+export const SOFTWARE_REF = 'software-ref'
+export const THESIS_REF = 'thesis-ref'
+export const WEBPAGE_REF = 'webpage-ref'
 
 export const JATS_BIBR_TYPES_TO_INTERNAL = {
-  'journal': 'journal-article',
-  'book': 'book',
-  'chapter': 'chapter',
-  'confproc': 'conference-paper',
-  'data': 'data-publication',
-  'patent': 'patent',
-  'newspaper': 'newspaper-article',
-  'magazine': 'magazine-article',
-  'report': 'report',
-  'software': 'software',
-  'thesis': 'thesis',
-  'webpage': 'webpage'
+  'journal': JOURNAL_ARTICLE_REF,
+  'book': BOOK_REF,
+  'chapter': CHAPTER_REF,
+  'confproc': CONFERENCE_PAPER_REF,
+  'data': DATA_PUBLICATION_REF,
+  'patent': PATENT_REF,
+  'article': ARTICLE_REF,
+  'newspaper': NEWSPAPER_ARTICLE_REF,
+  'magazine': MAGAZINE_ARTICLE_REF,
+  'report': REPORT_REF,
+  'software': SOFTWARE_REF,
+  'thesis': THESIS_REF,
+  'webpage': WEBPAGE_REF
 }
 
 export const INTERNAL_BIBR_TYPES_TO_JATS = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL).reduce((map, jatsType) => {
@@ -73,6 +53,7 @@ export const REQUIRED_PROPERTIES = {
   'newspaper-article': new Set(['title', 'containerTitle', 'authors']),
   'patent': new Set(['title', 'containerTitle', 'inventors']),
   'journal-article': new Set(['title', 'containerTitle', 'authors']),
+  'article': new Set(['title', 'containerTitle', 'authors']),
   'conference-paper': new Set(['title', 'authors']),
   'report': new Set(['title', 'authors']),
   'software': new Set(['title', 'authors']),

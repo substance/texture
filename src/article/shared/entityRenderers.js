@@ -267,6 +267,62 @@ function patentRenderer ($$, entityId, entityDb) {
   return fragments
 }
 
+function articleRenderer ($$, entityId, entityDb) {
+  let entity = entityDb.get(entityId)
+  let fragments = []
+
+  if (entity.authors.length > 0) {
+    fragments = fragments.concat(
+      _renderAuthors($$, entity.authors, entityDb),
+      '.'
+    )
+  }
+  // We render an annotated article title here:
+  if (entity.title) {
+    fragments.push(
+      ' ',
+      _renderHTML($$, entity.title),
+      '.'
+    )
+  }
+
+  if (entity.editors.length > 0) {
+    fragments = fragments.concat(
+      ' ',
+      _renderAuthors($$, entity.editors, entityDb),
+      '.'
+    )
+  }
+  if (entity.containerTitle) {
+    fragments.push(
+      ' ',
+      $$('em').append(entity.containerTitle),
+      '.'
+    )
+  }
+
+  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
+  if (date) {
+    fragments.push(' ', date, ';')
+  }
+
+  if (entity.issue) {
+    fragments.push('(', entity.issue, ')')
+  }
+
+  if (entity.doi) {
+    fragments.push(
+      ' ',
+      _renderDOI($$, entity.doi)
+    )
+  }
+
+  if (entity.pmid) {
+    fragments.push(' PMID ', entity.pmid)
+  }
+  return fragments
+}
+
 function dataPublicationRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
@@ -727,24 +783,25 @@ function subjectRenderer ($$, entityId, entityDb, options = {}) {
   Exports
 */
 export default {
+  'article-ref': _delegate(articleRenderer),
   'person': _delegate(personRenderer),
   'group': _delegate(groupRenderer),
-  'book': _delegate(bookRenderer),
-  'chapter': _delegate(chapterRenderer),
-  'journal-article': _delegate(journalArticleRenderer),
-  'conference-paper': _delegate(conferencePaperRenderer),
-  'report': _delegate(reportRenderer),
+  'book-ref': _delegate(bookRenderer),
+  'chapter-ref': _delegate(chapterRenderer),
+  'journal-article-ref': _delegate(journalArticleRenderer),
+  'conference-paper-ref': _delegate(conferencePaperRenderer),
+  'report-ref': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'award': _delegate(awardRenderer),
-  'data-publication': _delegate(dataPublicationRenderer),
-  'magazine-article': _delegate(magazineArticleRenderer),
-  'newspaper-article': _delegate(newspaperArticleRenderer),
-  'software': _delegate(softwareRenderer),
-  'thesis': _delegate(thesisRenderer),
-  'webpage': _delegate(webpageRenderer),
+  'data-publication-ref': _delegate(dataPublicationRenderer),
+  'magazine-article-ref': _delegate(magazineArticleRenderer),
+  'newspaper-article-ref': _delegate(newspaperArticleRenderer),
+  'software-ref': _delegate(softwareRenderer),
+  'thesis-ref': _delegate(thesisRenderer),
+  'webpage-ref': _delegate(webpageRenderer),
   'keyword': _delegate(keywordRenderer),
   'ref-contrib': _delegate(refContribRenderer),
-  'patent': _delegate(patentRenderer),
+  'patent-ref': _delegate(patentRenderer),
   'subject': _delegate(subjectRenderer)
 }
 

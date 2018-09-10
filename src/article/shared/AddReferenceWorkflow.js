@@ -1,12 +1,7 @@
 import { Component } from 'substance'
 import DOIInputComponent from './DOIInputComponent'
 import ReferenceUploadComponent from './ReferenceUploadComponent'
-
-const targetTypes = [
-  'journal-article', 'book', 'chapter', 'conference-paper',
-  'report', 'newspaper-article', 'magazine-article', 'data-publication',
-  'patent', 'webpage', 'thesis', 'software'
-]
+import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
 
 export default class AddReferenceWorkflow extends Component {
   didMount () {
@@ -33,7 +28,7 @@ export default class AddReferenceWorkflow extends Component {
     )
 
     const refTypesButtons = $$('ul').addClass('se-reftypes-list')
-    targetTypes.forEach(item => {
+    INTERNAL_BIBR_TYPES.forEach(item => {
       refTypesButtons.append(
         $$('li').addClass('se-type sm-' + item).append(
           labelProvider.getLabel(item)

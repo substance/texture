@@ -204,10 +204,10 @@
           </tbody>
         </table>
       </table-wrap>
-      <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="book1">[2]</xref> dolor <ext-link id="ext-link-1" xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+      <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
       <sec id="sec-2">
         <title>Orci varius natoque penatibus et magnis</title>
-        <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="book1 r7">[1,2]</xref>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
+        <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>. Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus. Suspendisse massa neque, mollis at commodo vel, ornare vel felis. Nulla sit amet sodales erat. Suspendisse potenti. Suspendisse porttitor ullamcorper mollis. Sed tincidunt, leo nec egestas tincidunt, ipsum sapien efficitur magna, sit amet tempor sem urna vitae dui.</p>
         <fig id="fig1">
           <label>Figure 1</label>
           <caption id="fig1-caption">
@@ -287,57 +287,99 @@
       </fn>
     </fn-group>
     <ref-list>
-      <ref id="r7">
-        <element-citation publication-type="journal">
-          <day>5</day>
-          <fpage>6436</fpage>
-          <lpage>6448</lpage>
-          <month>10</month>
-          <page-range>6436-6448</page-range>
-          <volume>29</volume>
-          <year>2009</year>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
+      <ref id="r1">
+        <element-citation publication-type="data">
+          <day>01</day>
+          <month>06</month>
+          <year>2016</year>
+          <pub-id pub-id-type="accession">GSE69545</pub-id>
           <person-group person-group-type="author">
             <name>
-              <surname>Baumann</surname>
-              <given-names>Markus A.</given-names>
+              <surname>Allison</surname>
+              <given-names>KA</given-names>
             </name>
             <name>
-              <surname>Fluet</surname>
-              <given-names>Marie-Christine</given-names>
-            </name>
-            <name>
-              <surname>Scherberger</surname>
-              <given-names>Hansjörg</given-names>
+              <surname>Glass</surname>
+              <given-names>CK</given-names>
             </name>
           </person-group>
-          <source>Journal of Neuroscience</source>
-          <article-title>Context-specific <bold id="bold-1">grasp movement</bold> representation in the macaque anterior intraparietal area</article-title>
+          <source>NCBI Gene Expression Omnibus</source>
+          <data-title>Affinity and Dose of TCR Engagement Yield Proportional Enhancer and Gene Activity in CD4+ T Cells</data-title>
         </element-citation>
       </ref>
-      <ref id="book1">
-        <element-citation publication-type="book">
-          <publisher-loc>Cambridge</publisher-loc>
-          <publisher-name>Cambridge University Press</publisher-name>
-          <year>2004</year>
-          <person-group person-group-type="editor">
+      <ref id="r2">
+        <element-citation publication-type="journal">
+          <day>06</day>
+          <fpage>1141</fpage>
+          <lpage>1144</lpage>
+          <month>11</month>
+          <volume>282</volume>
+          <year>1998</year>
+          <pub-id pub-id-type="doi">10.1126/science.282.5391.1141</pub-id>
+          <pub-id pub-id-type="pmid">9804555</pub-id>
+          <person-group person-group-type="author">
             <name>
-              <surname>Cardé</surname>
-              <given-names>RT</given-names>
+              <surname>Baukrowitz</surname>
+              <given-names>T</given-names>
             </name>
             <name>
-              <surname>Millar</surname>
-              <given-names>JG</given-names>
+              <surname>Schulte</surname>
+              <given-names>U</given-names>
+            </name>
+            <name>
+              <surname>Oliver</surname>
+              <given-names>D</given-names>
+            </name>
+            <name>
+              <surname>Herlitze</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Krauter</surname>
+              <given-names>T</given-names>
+            </name>
+            <name>
+              <surname>Tucker</surname>
+              <given-names>SJ</given-names>
+            </name>
+            <name>
+              <surname>Ruppersberg</surname>
+              <given-names>JP</given-names>
+            </name>
+            <name>
+              <surname>Fakler</surname>
+              <given-names>B</given-names>
             </name>
           </person-group>
-          <source>Advances in insect chemical ecology</source>
+          <source>Science</source>
+          <article-title>PIP<sub id="sub-1">2</sub> and PIP as determinants for ATP inhibition of K<sub id="sub-2">ATP</sub> channels</article-title>
         </element-citation>
       </ref>
-      <ref id="book2">
+      <ref id="r3">
         <element-citation publication-type="book">
+          <publisher-loc>New York</publisher-loc>
+          <publisher-name>Oxford University Press</publisher-name>
+          <year>2006</year>
+          <pub-id pub-id-type="isbn">978-0195301069</pub-id>
+          <pub-id pub-id-type="doi">10.1093/acprof:oso/9780195301069.001.0001</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Buzsaki</surname>
+              <given-names>G</given-names>
+            </name>
+          </person-group>
+          <source>Rhythms of the Brain</source>
+        </element-citation>
+      </ref>
+      <ref id="r4">
+        <element-citation publication-type="book">
+          <day>26</day>
           <edition>2</edition>
+          <month>05</month>
+          <publisher-loc>Oxford</publisher-loc>
           <publisher-name>Wiley-Blackwell</publisher-name>
           <year>2008</year>
+          <pub-id pub-id-type="isbn">978-1405132763</pub-id>
           <person-group person-group-type="editor">
             <name>
               <surname>Chmeil</surname>
@@ -347,11 +389,16 @@
           <source>An Introduction to Work and Organizational Psychology: A European Perspective</source>
         </element-citation>
       </ref>
-      <ref id="book3">
-        <element-citation publication-type="book">
+      <ref id="r5">
+        <element-citation publication-type="chapter">
+          <day>22</day>
+          <fpage>180</fpage>
+          <lpage>207</lpage>
+          <month>08</month>
           <publisher-loc>Sunderland, MA</publisher-loc>
           <publisher-name>Sinauer Associates</publisher-name>
           <year>1989</year>
+          <pub-id pub-id-type="isbn">978-0878936588</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Coyne</surname>
@@ -373,172 +420,118 @@
             </name>
           </person-group>
           <source>Speciation and its consequences</source>
-        </element-citation>
-      </ref>
-      <ref id="book4">
-        <element-citation publication-type="book">
-          <publisher-loc>Victoria</publisher-loc>
-          <publisher-name>Landlinks Press</publisher-name>
-          <year>2008</year>
-          <pub-id pub-id-type="isbn">9780643092570</pub-id>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Horne</surname>
-              <given-names>P</given-names>
-            </name>
-            <name>
-              <surname>Page</surname>
-              <given-names>J</given-names>
-            </name>
-          </person-group>
-          <source>Integrated pest management for crops and pastures</source>
-        </element-citation>
-      </ref>
-      <ref id="book5">
-        <element-citation publication-type="book">
-          <publisher-name>Mcgraw-Hill Book Company</publisher-name>
-          <volume>3: Formulations of the Person and the Social Context</volume>
-          <year>1959</year>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Koch</surname>
-              <given-names>S</given-names>
-            </name>
-          </person-group>
-          <source>Psychology A Study Of A Science</source>
-        </element-citation>
-      </ref>
-      <ref id="chapter1">
-        <element-citation publication-type="chapter">
-          <fpage>21</fpage>
-          <lpage>75</lpage>
-          <publisher-loc>Cambridge</publisher-loc>
-          <publisher-name>Cambridge University Press</publisher-name>
-          <year>2004a</year>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Turlings</surname>
-              <given-names>TCJ</given-names>
-            </name>
-            <name>
-              <surname>Wäckers</surname>
-              <given-names>FL</given-names>
-            </name>
-          </person-group>
-          <person-group person-group-type="editor">
-            <name>
-              <surname>Cardé</surname>
-              <given-names>RT</given-names>
-            </name>
-            <name>
-              <surname>Millar</surname>
-              <given-names>JG</given-names>
-            </name>
-          </person-group>
-          <source>Advances in insect chemical ecology</source>
-          <chapter-title>Recruitment of predators and parasitoids by herbivore-injured plants</chapter-title>
-        </element-citation>
-      </ref>
-      <ref id="book7">
-        <element-citation publication-type="book">
-          <publisher-name>Cambridge University Press</publisher-name>
-          <year>2004b</year>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Turlings</surname>
-              <given-names>TCJ</given-names>
-            </name>
-            <name>
-              <surname>Wäckers</surname>
-              <given-names>FL</given-names>
-            </name>
-          </person-group>
-          <person-group person-group-type="editor">
-            <name>
-              <surname>Cardé</surname>
-              <given-names>RT</given-names>
-            </name>
-            <name>
-              <surname>Millar</surname>
-              <given-names>JG</given-names>
-            </name>
-          </person-group>
-          <source>Advances in insect chemical ecology</source>
-        </element-citation>
-      </ref>
-      <ref id="r2">
-        <element-citation publication-type="report">
-          <day>7</day>
-          <month>4</month>
-          <year>2018</year>
-          <pub-id pub-id-type="doi">https://arxiv.org/abs/1804.02385</pub-id>
-          <person-group person-group-type="author">
-            <name>
-              <surname>de Grey</surname>
-              <given-names>Aubrey D. N. J.</given-names>
-            </name>
-          </person-group>
-        </element-citation>
-      </ref>
-      <ref id="r3">
-        <element-citation publication-type="report">
-          <day>5</day>
-          <month>10</month>
-          <year>2010</year>
-          <person-group person-group-type="sponsor">
-            <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
-            </name>
-          </person-group>
-          <source>Pre-print journal</source>
-        </element-citation>
-      </ref>
-      <ref id="r4">
-        <element-citation publication-type="confproc">
-          <conf-name>2016 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)</conf-name>
-          <conf-loc>Las Vegas, NV, USA</conf-loc>
-          <fpage>533</fpage>
-          <lpage>540</lpage>
-          <year>2016</year>
-          <pub-id pub-id-type="doi">10.1109/CVPRW.2016.73</pub-id>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Prokopetc</surname>
-              <given-names>Kristina</given-names>
-            </name>
-            <name>
-              <surname>Bartoli</surname>
-              <given-names>Adrien</given-names>
-            </name>
-          </person-group>
-          <article-title>Reducing Drift in Mosaicing Slit-Lamp Retinal Images</article-title>
-        </element-citation>
-      </ref>
-      <ref id="r5">
-        <element-citation publication-type="data">
-          <day>5</day>
-          <month>10</month>
-          <year>2010</year>
-          <pub-id pub-id-type="accession">ACCESSION_ID</pub-id>
-          <pub-id pub-id-type="ark">ARK_ID</pub-id>
-          <pub-id pub-id-type="archive">ARCHIVE_ID</pub-id>
-          <pub-id pub-id-type="doi">10.1523/JNEUROSCI.5479-08.2009</pub-id>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
-            </name>
-          </person-group>
-          <source>World Bank</source>
+          <chapter-title>Two rules of speciation</chapter-title>
         </element-citation>
       </ref>
       <ref id="r6">
+        <element-citation publication-type="webpage">
+          <day>10</day>
+          <month>05</month>
+          <uri>http://www.michaeleisen.org/blog/?p=1894</uri>
+          <date-in-citation iso-8601-date="1995-09-10">1995-09-10</date-in-citation>
+          <year>2016</year>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Eisen</surname>
+              <given-names>M</given-names>
+            </name>
+          </person-group>
+          <source>it is NOT junk</source>
+          <article-title>The Imprinter of All Maladies</article-title>
+        </element-citation>
+      </ref>
+      <ref id="r7">
+        <element-citation publication-type="confproc">
+          <conf-name>Proceedings of the 17th Annual Meeting of International Society for Magnetic Resonance in Medicine</conf-name>
+          <conf-loc>Hawaii, United States</conf-loc>
+          <year>2009</year>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Leemans</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Jeurissen</surname>
+              <given-names>B</given-names>
+            </name>
+            <name>
+              <surname>Sijbers</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Jones</surname>
+              <given-names>D</given-names>
+            </name>
+          </person-group>
+          <article-title>ExploreDTI: a graphical toolbox for processing, analyzing, and visualizing diffusion MR data</article-title>
+        </element-citation>
+      </ref>
+      <ref id="r8">
+        <element-citation publication-type="report">
+          <month>06</month>
+          <publisher-loc>Monrovia, Liberia</publisher-loc>
+          <publisher-name>NMCP, LISGIS, and ICF International</publisher-name>
+          <year>2012</year>
+          <person-group person-group-type="author">
+            <collab>
+              <named-content content-type="name">National Malaria Control Program - Ministry of Health and Social Welfare</named-content>
+            </collab>
+            <collab>
+              <named-content content-type="name">Liberia Institute of Statistics and Geo-Information Services</named-content>
+            </collab>
+            <collab>
+              <named-content content-type="name">ICF International</named-content>
+            </collab>
+          </person-group>
+          <person-group person-group-type="sponsor">
+            <collab>
+              <named-content content-type="name">United States Agency for International Development</named-content>
+            </collab>
+            <collab>
+              <named-content content-type="name">President’s Malaria Initiative</named-content>
+            </collab>
+          </person-group>
+          <source>Liberia Malaria Indicator Survey 2011</source>
+        </element-citation>
+      </ref>
+      <ref id="r9">
+        <element-citation publication-type="patent">
+          <day>17</day>
+          <month>03</month>
+          <patent country="United States">US20100941530</patent>
+          <year>2011</year>
+          <person-group person-group-type="inventor">
+            <name>
+              <surname>Patterson</surname>
+              <given-names>JB</given-names>
+            </name>
+            <name>
+              <surname>Lonergan</surname>
+              <given-names>DG</given-names>
+            </name>
+            <name>
+              <surname>Flynn</surname>
+              <given-names>GA</given-names>
+            </name>
+            <name>
+              <surname>Qingpeng</surname>
+              <given-names>Z</given-names>
+            </name>
+            <name>
+              <surname>Pallai</surname>
+              <given-names>PV</given-names>
+            </name>
+          </person-group>
+          <source>United States patent</source>
+          <article-title>IRE-1alpha inhibitors</article-title>
+        </element-citation>
+      </ref>
+      <ref id="r10">
         <element-citation publication-type="newspaper">
           <day>27</day>
           <edition>International Edition</edition>
+          <fpage>21</fpage>
           <month>4</month>
-          <page-range>21</page-range>
           <part-title>Film</part-title>
           <year>2018</year>
           <person-group person-group-type="author">
@@ -551,45 +544,21 @@
           <article-title>What if superheroes aren’t really the good guys?</article-title>
         </element-citation>
       </ref>
-      <ref id="r8">
-        <element-citation publication-type="patent">
-          <collab collab-type="assignee">
-            <named-content content-type="name">Hospira, Inc.</named-content>
-          </collab>
-          <day>5</day>
-          <month>10</month>
-          <patent country="US">US 6,980,855</patent>
-          <year>2009</year>
-          <person-group person-group-type="inventor">
-            <collab>
-              <named-content content-type="name">National Research Council</named-content>
-            </collab>
-            <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
-            </name>
-          </person-group>
-          <source>United States patent</source>
-          <article-title>Patent title</article-title>
-        </element-citation>
-      </ref>
-      <ref id="r9">
-        <element-citation publication-type="report">
-          <day>5</day>
-          <month>10</month>
-          <publisher-loc>Publisher location</publisher-loc>
-          <publisher-name>Publisher name</publisher-name>
-          <year>2009</year>
-          <pub-id pub-id-type="isbn">ISBN_NUMBER</pub-id>
+      <ref id="r11">
+        <element-citation publication-type="thesis">
+          <publisher-loc>Nijmegen, The Netherlands</publisher-loc>
+          <publisher-name>Radboud University Nijmegen Medical Centre</publisher-name>
+          <year>2006</year>
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Schneider</surname>
+              <given-names>P</given-names>
             </name>
           </person-group>
+          <article-title>PhD thesis: Submicroscopic <italic id="italic-2">Plasmodium falciparum</italic> gametocytaemia and the contribution to malaria transmission</article-title>
         </element-citation>
       </ref>
-      <ref id="r10">
+      <ref id="r12">
         <element-citation publication-type="software">
           <day>19</day>
           <month>3</month>
@@ -610,39 +579,54 @@
           <source>pyhector</source>
         </element-citation>
       </ref>
-      <ref id="r11">
-        <element-citation publication-type="thesis">
-          <day>5</day>
-          <month>10</month>
-          <publisher-loc>First software publisher location</publisher-loc>
-          <publisher-loc>Second software publisher location</publisher-loc>
-          <publisher-name>First software publisher name</publisher-name>
-          <publisher-name>Second software publisher name</publisher-name>
-          <year>2009</year>
-          <pub-id pub-id-type="doi">THESIS_DOI</pub-id>
+      <ref id="r13">
+        <element-citation publication-type="article">
+          <year>2016</year>
+          <pub-id pub-id-type="doi">10.1101/029983</pub-id>
           <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Bloss</surname>
+              <given-names>CS</given-names>
             </name>
-          </person-group>
-          <article-title>Thesis title</article-title>
-        </element-citation>
-      </ref>
-      <ref id="r12">
-        <element-citation publication-type="webpage">
-          <day>5</day>
-          <month>10</month>
-          <publisher-loc>Website publisher location?</publisher-loc>
-          <uri>http://example.com/example-page.html</uri>
-          <year>2009</year>
-          <person-group person-group-type="author">
             <name>
-              <surname>Doe</surname>
-              <given-names>John</given-names>
+              <surname>Wineinger</surname>
+              <given-names>NE</given-names>
+            </name>
+            <name>
+              <surname>Peters</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Boeldt</surname>
+              <given-names>DL</given-names>
+            </name>
+            <name>
+              <surname>Ariniello</surname>
+              <given-names>L</given-names>
+            </name>
+            <name>
+              <surname>Kim</surname>
+              <given-names>JL</given-names>
+            </name>
+            <name>
+              <surname>Judy Sheard</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Komatireddy</surname>
+              <given-names>R</given-names>
+            </name>
+            <name>
+              <surname>Barrett</surname>
+              <given-names>P</given-names>
+            </name>
+            <name>
+              <surname>Topol</surname>
+              <given-names>EJ</given-names>
             </name>
           </person-group>
-          <article-title>Webpage title</article-title>
+          <source>bioRxiv</source>
+          <article-title>A prospective randomized trial examining health care utilization in individuals using multiple smartphone-enabled biosensors</article-title>
         </element-citation>
       </ref>
     </ref-list>

@@ -1,3 +1,8 @@
+import {
+  ARTICLE_REF, MAGAZINE_ARTICLE_REF, NEWSPAPER_ARTICLE_REF, JOURNAL_ARTICLE_REF, BOOK_REF,
+  CONFERENCE_PAPER_REF, PATENT_REF, REPORT_REF, THESIS_REF, WEBPAGE_REF, CHAPTER_REF, DATA_PUBLICATION_REF
+} from '../../ArticleConstants'
+
 /*
   Converts a CSLJSON record to our internal format.
   See EntityDatabase for schemas.
@@ -9,18 +14,18 @@ export function convertCSLJSON (source) {
 
   // CSL types: http://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types
   let typeMapping = {
-    'article': 'article-ref',
-    'article-magazine': 'magazine-article-ref',
-    'article-newspaper': 'newspaper-article-ref',
-    'article-journal': 'journal-article-ref',
+    'article': ARTICLE_REF,
+    'article-magazine': MAGAZINE_ARTICLE_REF,
+    'article-newspaper': NEWSPAPER_ARTICLE_REF,
+    'article-journal': JOURNAL_ARTICLE_REF,
     // "bill"
-    'book': 'book-ref',
+    'book': BOOK_REF,
     // "broadcast"
-    'chapter': 'book-ref',
-    'dataset': 'data-publication-ref',
+    'chapter': CHAPTER_REF,
+    'dataset': DATA_PUBLICATION_REF,
     // "entry"
-    'entry-dictionary': 'book-ref',
-    'entry-encyclopedia': 'book-ref',
+    'entry-dictionary': BOOK_REF,
+    'entry-encyclopedia': BOOK_REF,
     // "figure"
     // "graphic"
     // "interview"
@@ -31,19 +36,19 @@ export function convertCSLJSON (source) {
     // "motion_picture"
     // "musical_score"
     // "pamphlet"
-    'paper-conference': 'conference-paper-ref',
-    'patent': 'patent-ref',
+    'paper-conference': CONFERENCE_PAPER_REF,
+    'patent': PATENT_REF,
     // "post"
     // "post-weblog"
     // "personal_communication"
-    'report': 'report-ref',
+    'report': REPORT_REF,
     // "review"
     // "review-book"
     // "song"
     // "speech"
-    'thesis': 'thesis-ref',
+    'thesis': THESIS_REF,
     // "treaty"
-    'webpage': 'webpage-ref'
+    'webpage': WEBPAGE_REF
     // NA : "software"
   }
 

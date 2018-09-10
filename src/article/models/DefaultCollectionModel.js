@@ -16,6 +16,14 @@ export default class DefaultCollectionModel {
     return true
   }
 
+  get isRemovable () {
+    return false
+  }
+
+  get isMovable () {
+    return false
+  }
+
   getItems () {
     return this._node._childNodes.map(id => this._api.getModelById(id))
   }

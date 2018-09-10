@@ -4,4 +4,8 @@ export default class KeywordCollectionModel extends DefaultCollectionModel {
   _getItemType () {
     return 'keyword'
   }
+
+  get isRemovable () {
+    return true
+  }
 }

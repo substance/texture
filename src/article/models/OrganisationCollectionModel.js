@@ -4,4 +4,8 @@ export default class OrganisationCollectionModel extends DefaultCollectionModel 
   _getItemType () {
     return 'organisation'
   }
+
+  get isRemovable () {
+    return true
+  }
 }

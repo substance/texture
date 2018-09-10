@@ -8,4 +8,12 @@ export default class PersonCollectionModel extends DefaultCollectionModel {
   addItem (item = {}) {
     return this._api._insertPerson(this._prepareItem(item), this)
   }
+
+  get isRemovable () {
+    return true
+  }
+
+  get isMovable () {
+    return true
+  }
 }

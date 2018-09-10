@@ -4,4 +4,8 @@ export default class GroupCollectionModel extends DefaultCollectionModel {
   _getItemType () {
     return 'group'
   }
+
+  get isRemovable () {
+    return true
+  }
 }

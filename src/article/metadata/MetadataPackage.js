@@ -8,6 +8,8 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
+import MoveCardCommand from './MoveCardCommand'
+import RemoveCardCommand from './RemoveCardCommand'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -61,6 +63,15 @@ export default {
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'formatting' }
+        ]
+      },
+      {
+        name: 'card-tools',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'card' }
         ]
       },
       {
@@ -328,5 +339,33 @@ export default {
     config.addLabel('supported-ref-formats', {
       en: 'Supported formats'
     })
+
+    // Card tools
+    config.addCommand('move-up-card', MoveCardCommand, {
+      direction: 'up',
+      commandGroup: 'card'
+    })
+    config.addIcon('move-up-card', { 'fontawesome': 'fa-caret-square-o-up' })
+    config.addLabel('move-up-card', {
+      en: 'Move card up'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-card' })
+    config.addCommand('move-down-card', MoveCardCommand, {
+      direction: 'up',
+      commandGroup: 'card'
+    })
+    config.addIcon('move-down-card', { 'fontawesome': 'fa-caret-square-o-down' })
+    config.addLabel('move-down-card', {
+      en: 'Move card down'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-card' })
+    config.addCommand('remove-card', RemoveCardCommand, {
+      commandGroup: 'card'
+    })
+    config.addIcon('remove-card', { 'fontawesome': 'fa-trash' })
+    config.addLabel('remove-card', {
+      en: 'Remove card'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-card' })
   }
 }

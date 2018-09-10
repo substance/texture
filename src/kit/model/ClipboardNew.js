@@ -4,7 +4,6 @@ const INLINENODES = ['a', 'b', 'big', 'i', 'small', 'tt', 'abbr', 'acronym', 'ci
 
 export default class ClipboardNew {
   copy (clipboardData, context) {
-    console.log('MEH')
     // content specific manipulation API
     let api = context.api
     let snippet = api.copy()
@@ -18,7 +17,6 @@ export default class ClipboardNew {
   }
 
   paste (clipboardData, context, options = {}) {
-    console.log('MUH')
     let types = {}
     for (let i = 0; i < clipboardData.types.length; i++) {
       types[clipboardData.types[i]] = true

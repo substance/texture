@@ -363,14 +363,14 @@ export default class TableComponent extends CustomSurface {
     e.preventDefault()
     e.stopPropagation()
     let clipboardData = e.clipboardData
-    this.clipboard.copy(clipboardData, this.context)
+    this._clipboard.copy(clipboardData, this.context)
   }
 
   _onCut (e) {
     e.preventDefault()
     e.stopPropagation()
     let clipboardData = e.clipboardData
-    this.clipboard.cut(clipboardData, this.context)
+    this._clipboard.cut(clipboardData, this.context)
   }
 
   _onPaste (e) {
@@ -378,7 +378,7 @@ export default class TableComponent extends CustomSurface {
     e.stopPropagation()
     let clipboardData = e.clipboardData
     // TODO: allow to force plain-text paste
-    this.clipboard.paste(clipboardData, this.context)
+    this._clipboard.paste(clipboardData, this.context)
   }
 
   _onContextMenu (e) {

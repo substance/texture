@@ -1,5 +1,8 @@
 import { renderListNode } from 'substance'
 
+// TODO: is it possible to assimilate this implementation to '../html/ListConverter'?
+// obviously HTML lists are different w.r.t. to tagNames
+// but very similar to JATS w.r.t. the content
 export default class ListConverter {
   get type () { return 'list' }
 

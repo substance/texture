@@ -1,5 +1,5 @@
 import { documentHelpers } from 'substance'
-import { getCellRange } from '../shared/tableHelpers'
+import { getCellRange, getRangeFromMatrix } from '../shared/tableHelpers'
 
 export default class TableEditingAPI {
   constructor (editorSession) {
@@ -11,12 +11,32 @@ export default class TableEditingAPI {
     return (sel && !sel.isNull() && sel.customType === 'table')
   }
 
-  copySelection (doc, selection) {
-    // TODO: implement copySelection for tables
-    debugger
+  copySelection () {
+    if (!this.isTableSelected()) throw new Error('Table selection required')
+
+    // create a snippet with a table containing only the selected range
+    let selData = this._getSelectionData()
+    let { table, startRow, endRow, startCol, endCol } = selData
+    let doc = this._getDocument()
+    let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
+    let snippet = doc.createSnippet()
+    let tableCopy = snippet.create({ type: 'table' })
+    // TODO: consolidate inconsistent Node API (Container vs XMLElementNode)
+    for (let row of cells) {
+      let trow = snippet.create({ type: 'table-row' })
+      for (let cell of row) {
+        let _nodes = documentHelpers.copyNode(cell).map(_node => snippet.create(_node))
+        trow.appendChild(_nodes[0])
+      }
+      tableCopy.appendChild(trow)
+    }
+    snippet.getContainer().show(tableCopy.id)
+    return snippet
   }
 
-  paste (options) {
+  paste (content, options) {
+    if (!this.isTableSelected()) throw new Error('Table selection required')
+
     // TODO: implement paste for tables
     debugger
   }

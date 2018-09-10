@@ -194,167 +194,310 @@ BibliographicEntry.schema = {
   type: 'bibr'
 }
 
+/*
+  <element-citation publication-type="book">
+    <publisher-loc>New York</publisher-loc>
+    <publisher-name>Oxford University Press</publisher-name>
+    <year>2006</year>
+    <pub-id pub-id-type="isbn">978-0195301069</pub-id>
+    <pub-id pub-id-type="doi">10.1093/acprof:oso/9780195301069.001.0001</pub-id>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Buzsaki</surname>
+        <given-names>G</given-names>
+      </name>
+    </person-group>
+    <source>Rhythms of the Brain</source>
+  </element-citation>
+*/
 class BookRef extends BibliographicEntry {}
 BookRef.schema = {
   type: 'book-ref',
-  authors: CHILDREN('ref-contrib'),
-  editors: CHILDREN('ref-contrib'),
-  translators: CHILDREN('ref-contrib'),
-  title: TEXT(...RICH_TEXT_ANNOS),
-  volume: STRING,
-  edition: STRING,
-  publisherLoc: STRING,
-  publisherName: STRING,
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  pageCount: STRING,
-  series: STRING,
-  doi: STRING,
-  isbn: STRING,
-  pmid: STRING
-}
-
-class ChapterRef extends BibliographicEntry {}
-ChapterRef.schema = {
-  type: 'chapter-ref',
-  title: TEXT(...RICH_TEXT_ANNOS), // <chapter-title>
-  containerTitle: STRING, // <source>
-  volume: STRING,
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
-  editors: CHILDREN('ref-contrib'),
-  translators: CHILDREN('ref-contrib'),
-  edition: STRING,
-  publisherLoc: STRING,
-  publisherName: STRING,
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  fpage: STRING,
-  lpage: STRING,
-  pageRange: STRING,
-  elocationId: STRING,
-  series: STRING,
+  editors: CHILDREN('ref-contrib'), // <person-group person-group-type="editor">
+  translators: CHILDREN('ref-contrib'), // <person-group person-group-type="translator">
+  title: TEXT(...RICH_TEXT_ANNOS), // <source>
+  volume: STRING, // <volume>
+  edition: STRING, // <editor>
+  publisherLoc: STRING, // <publisher-loc>
+  publisherName: STRING, // <publisher-name>
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  pageCount: STRING, // <page-count>
+  series: STRING, // <series>
   doi: STRING, // <pub-id pub-id-type="doi">
   isbn: STRING, // <pub-id pub-id-type="isbn">
   pmid: STRING // <pub-id pub-id-type="pmid">
 }
 
+/*
+  <element-citation publication-type="chapter">
+    <day>22</day>
+    <fpage>180</fpage>
+    <lpage>207</lpage>
+    <month>08</month>
+    <publisher-loc>Sunderland, MA</publisher-loc>
+    <publisher-name>Sinauer Associates</publisher-name>
+    <year>1989</year>
+    <pub-id pub-id-type="isbn">978-0878936588</pub-id>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Coyne</surname>
+        <given-names>JA</given-names>
+      </name>
+    </person-group>
+    <person-group person-group-type="editor">
+      <name>
+        <surname>Otte</surname>
+        <given-names>D</given-names>
+      </name>
+    </person-group>
+    <source>Speciation and its consequences</source>
+    <chapter-title>Two rules of speciation</chapter-title>
+  </element-citation>
+*/
+class ChapterRef extends BibliographicEntry {}
+ChapterRef.schema = {
+  type: 'chapter-ref',
+  title: TEXT(...RICH_TEXT_ANNOS), // <chapter-title>
+  containerTitle: STRING, // <source>
+  volume: STRING, // <volume>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  editors: CHILDREN('ref-contrib'), // <person-group person-group-type="editor">
+  translators: CHILDREN('ref-contrib'), // <person-group person-group-type="translator">
+  edition: STRING, // <edition>
+  publisherLoc: STRING, // <publisher-loc>
+  publisherName: STRING, // <publisher-name>
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  fpage: STRING, // <fpage>
+  lpage: STRING, // <lpage>
+  pageRange: STRING, // <page-range>
+  elocationId: STRING, // <elocation-id>
+  series: STRING, // <series>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  isbn: STRING, // <pub-id pub-id-type="isbn">
+  pmid: STRING // <pub-id pub-id-type="pmid">
+}
+
+/*
+  <element-citation publication-type="confproc">
+    <conf-name>Proceedings of the 17th Annual Meeting of International Society for Magnetic Resonance in Medicine</conf-name>
+    <conf-loc>Hawaii, United States</conf-loc>
+    <year>2009</year>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Leemans</surname>
+        <given-names>A</given-names>
+      </name>
+    </person-group>
+    <article-title>ExploreDTI: a graphical toolbox for processing, analyzing, and visualizing diffusion MR data</article-title>
+  </element-citation>
+*/
 class ConferencePaperRef extends BibliographicEntry {}
 ConferencePaperRef.schema = {
-  type: 'conference-paper-ref',
+  type: 'conference-paper-ref', // publication-type="confproc"
   title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
-  authors: CHILDREN('ref-contrib'),
-  confName: STRING,
-  confLoc: STRING,
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  confName: STRING, // <conf-name>
+  confLoc: STRING, // <conf-loc>
   containerTitle: STRING, // <source>
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  fpage: STRING,
-  lpage: STRING,
-  pageRange: STRING,
-  elocationId: STRING,
-  doi: STRING
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  fpage: STRING, // <fpage>
+  lpage: STRING, // <lpage>
+  pageRange: STRING, // <page-range>
+  elocationId: STRING, // <elocation-id>
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
+/*
+  <element-citation publication-type="data">
+    <day>01</day>
+    <month>06</month>
+    <year>2016</year>
+    <pub-id pub-id-type="accession">GSE69545</pub-id>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Allison</surname>
+        <given-names>KA</given-names>
+      </name>
+    </person-group>
+    <source>NCBI Gene Expression Omnibus</source>
+    <data-title>Affinity and Dose of TCR Engagement Yield Proportional Enhancer and Gene Activity in CD4+ T Cells</data-title>
+  </element-citation>
+*/
 class DataPublicationRef extends BibliographicEntry {}
 DataPublicationRef.schema = {
-  type: 'data-publication-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
-  authors: CHILDREN('ref-contrib'),
+  type: 'data-publication-ref', // publication-type="data"
+  title: TEXT(...RICH_TEXT_ANNOS), // <data-title>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
   containerTitle: STRING, // <source>
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  accessionId: STRING,
-  arkId: STRING,
-  archiveId: STRING,
-  doi: STRING
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  accessionId: STRING, // <pub-id pub-id-type="accession">
+  arkId: STRING, // // <pub-id pub-id-type="ark">
+  archiveId: STRING, // <pub-id pub-id-type="archive">
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
+/*
+  <element-citation publication-type="journal">
+    <day>06</day>
+    <fpage>1141</fpage>
+    <lpage>1144</lpage>
+    <month>11</month>
+    <volume>282</volume>
+    <year>1998</year>
+    <pub-id pub-id-type="doi">10.1126/science.282.5391.1141</pub-id>
+    <pub-id pub-id-type="pmid">9804555</pub-id>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Baukrowitz</surname>
+        <given-names>T</given-names>
+      </name>
+    </person-group>
+    <source>Science</source>
+    <article-title>PIP<sub id="sub-1">2</sub> and PIP as determinants ...</article-title>
+  </element-citation>
+*/
 class JournalArticleRef extends BibliographicEntry {}
 JournalArticleRef.schema = {
-  type: 'journal-article-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
-  authors: CHILDREN('ref-contrib'),
-  editors: CHILDREN('ref-contrib'),
-  containerTitle: STRING, // <source>
-  volume: STRING,
-  issue: STRING,
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  fpage: STRING,
-  lpage: STRING,
-  pageRange: STRING,
-  elocationId: STRING,
-  doi: STRING,
-  pmid: STRING
+  type: 'journal-article-ref', // publication-type="journal"
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  editors: CHILDREN('ref-contrib'), // <person-group person-group-type="editor">
+  containerTitle: STRING, // <source>: label this 'Journal' or 'Publication' as in Zotero?
+  volume: STRING, // <volume>
+  issue: STRING, // <issue>
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  fpage: STRING, // <fpage>
+  lpage: STRING, // <lpage>
+  pageRange: STRING, // <page-range>
+  elocationId: STRING, // <elocation-id>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  pmid: STRING // <pub-id pub-id-type="pmid">
 }
 
+/*
+  <element-citation publication-type="article">
+    <year>2016</year>
+    <pub-id pub-id-type="doi">10.1101/029983</pub-id>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Bloss</surname>
+        <given-names>CS</given-names>
+      </name>
+    </person-group>
+    <source>bioRxiv</source>
+    <article-title>A prospective randomized trial examining...</article-title>
+  </element-citation>
+*/
 class ArticleRef extends BibliographicEntry {}
 ArticleRef.schema = {
-  type: 'article-ref',
-  title: STRING,
-  authors: CHILDREN('ref-contrib'),
-  editors: CHILDREN('ref-contrib'),
+  type: 'article-ref', // publication-type="article"
+  title: STRING, // <article-title>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  editors: CHILDREN('ref-contrib'), // <person-group person-group-type="editor">
   containerTitle: STRING, // <source>
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  elocationId: STRING,
-  doi: STRING,
-  pmid: STRING
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  elocationId: STRING, // <elocation-id>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  pmid: STRING // <pub-id pub-id-type="pmid">
 }
 
+/*
+  TODO: provide sample
+*/
 class MagazineArticleRef extends BibliographicEntry {}
 MagazineArticleRef.schema = {
   type: 'magazine-article-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
-  authors: CHILDREN('ref-contrib'),
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
   containerTitle: STRING, // <source>
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  volume: STRING,
-  fpage: STRING,
-  lpage: STRING,
-  pageRange: STRING,
-  doi: STRING
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <month>
+  volume: STRING, // <volume>
+  fpage: STRING, // <fpage>
+  lpage: STRING, // <lpage>
+  pageRange: STRING, // <page-range>
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
+/*
+  <element-citation publication-type="newspaper">
+    <day>27</day>
+    <edition>International Edition</edition>
+    <fpage>21</fpage>
+    <month>4</month>
+    <part-title>Film</part-title>
+    <year>2018</year>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Rose</surname>
+        <given-names>Steve</given-names>
+      </name>
+    </person-group>
+    <source>The Guardian</source>
+    <article-title>What if superheroes aren’t really the good guys?</article-title>
+  </element-citation>
+*/
 class NewspaperArticleRef extends BibliographicEntry {}
 NewspaperArticleRef.schema = {
-  type: 'newspaper-article-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
-  authors: CHILDREN('ref-contrib'),
+  type: 'newspaper-article-ref', // publication-type="newspaper"
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
   containerTitle: STRING, // <source>
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  volume: STRING,
-  fpage: STRING,
-  lpage: STRING,
-  pageRange: STRING,
-  doi: STRING,
-  edition: STRING,
-  partTitle: STRING
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  volume: STRING, // <volume>
+  fpage: STRING, // <fpage>
+  lpage: STRING, // <lpage>
+  pageRange: STRING, // <page-range>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  edition: STRING, // <edition>
+  partTitle: STRING // <part-title>
 }
 
+/*
+  <element-citation publication-type="patent">
+    <day>17</day>
+    <month>03</month>
+    <patent country="United States">US20100941530</patent>
+    <year>2011</year>
+    <person-group person-group-type="inventor">
+      <name>
+        <surname>Patterson</surname>
+        <given-names>JB</given-names>
+      </name>
+    </person-group>
+    <source>United States patent</source>
+    <article-title>IRE-1alpha inhibitors</article-title>
+  </element-citation>
+*/
 class PatentRef extends BibliographicEntry {}
 PatentRef.schema = {
-  type: 'patent-ref',
-  inventors: CHILDREN('ref-contrib'),
-  assignee: STRING,
-  title: TEXT(...RICH_TEXT_ANNOS),
+  type: 'patent-ref', // publication-type="patent"
+  inventors: CHILDREN('ref-contrib'), // <person-group person-group-type="inventor">
+  assignee: STRING, // <collab collab-type="assignee"><named-content>
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
   containerTitle: STRING, // <source>
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  patentNumber: STRING,
-  patentCountry: STRING,
-  doi: STRING
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  patentNumber: STRING, // <patent>US20100941530</patent>
+  patentCountry: STRING, // <patent country="United States"></patent>
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
 class Permission extends DocumentNode {
@@ -375,65 +518,136 @@ Permission.schema = {
   licenseText: 'text'
 }
 
+/*
+  <element-citation publication-type="report">
+    <month>06</month>
+    <publisher-loc>Monrovia, Liberia</publisher-loc>
+    <publisher-name>NMCP, LISGIS, and ICF International</publisher-name>
+    <year>2012</year>
+    <person-group person-group-type="author">
+      <collab>
+        <named-content content-type="name">National Malaria Control Program - Ministry of Health and Social Welfare</named-content>
+      </collab>
+    </person-group>
+    <person-group person-group-type="sponsor">
+      <collab>
+        <named-content content-type="name">United States Agency for International Development</named-content>
+      </collab>
+    </person-group>
+    <source>Liberia Malaria Indicator Survey 2011</source>
+  </element-citation>
+*/
 class ReportRef extends BibliographicEntry {
   getGuid () {
     return this.isbn
   }
 }
 ReportRef.schema = {
-  type: 'report-ref',
-  authors: CHILDREN('ref-contrib'),
-  sponsors: CHILDREN('ref-contrib'),
-  title: TEXT(...RICH_TEXT_ANNOS),
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  publisherName: STRING,
-  publisherLoc: STRING,
-  series: STRING,
-  isbn: STRING,
-  doi: STRING
+  type: 'report-ref', // publication-type="report"
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  sponsors: CHILDREN('ref-contrib'), // <person-group person-group-type="sponsor">
+  title: TEXT(...RICH_TEXT_ANNOS), // <source>
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  publisherName: STRING, // <publisher-name>
+  publisherLoc: STRING, // <publisher-loc>
+  series: STRING, // <series>
+  isbn: STRING, // <pub-id pub-id-type="isbn">
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
+/*
+  <element-citation publication-type="software">
+    <day>19</day>
+    <month>3</month>
+    <publisher-name>Zenodo</publisher-name>
+    <version>2.0.1</version>
+    <year>2018</year>
+    <pub-id pub-id-type="doi">10.5281/zenodo.1203712</pub-id>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Willner</surname>
+        <given-names>Sven</given-names>
+      </name>
+      <name>
+        <surname>Gieseke</surname>
+        <given-names>Robert</given-names>
+      </name>
+    </person-group>
+    <source>pyhector</source>
+  </element-citation>
+*/
 class SoftwareRef extends BibliographicEntry {}
 SoftwareRef.schema = {
-  type: 'software-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
-  authors: CHILDREN('ref-contrib'),
-  version: STRING,
-  publisherLoc: STRING,
-  publisherName: STRING,
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  doi: STRING
+  type: 'software-ref', // publication-type="software"
+  title: TEXT(...RICH_TEXT_ANNOS), // <source>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  version: STRING, // <version>
+  publisherLoc: STRING, // <publisher-loc>
+  publisherName: STRING, // <publisher-name>
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
+/*
+  <element-citation publication-type="thesis">
+    <publisher-loc>Nijmegen, The Netherlands</publisher-loc>
+    <publisher-name>Radboud University Nijmegen Medical Centre</publisher-name>
+    <year>2006</year>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Schneider</surname>
+        <given-names>P</given-names>
+      </name>
+    </person-group>
+    <article-title>PhD thesis: Submicroscopic <italic id="italic-2">Plasmodium falciparum</italic> gametocytaemia and the contribution to malaria transmission</article-title>
+  </element-citation>
+*/
 class ThesisRef extends BibliographicEntry {}
 ThesisRef.schema = {
-  type: 'thesis-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
-  authors: CHILDREN('ref-contrib'),
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  publisherLoc: STRING,
-  publisherName: STRING,
-  doi: STRING
+  type: 'thesis-ref', // publication-type="thesis"
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  publisherLoc: STRING, // <publisher-loc>
+  publisherName: STRING, // <publisher-name>
+  doi: STRING // <pub-id pub-id-type="doi">
 }
 
+/*
+  <element-citation publication-type="webpage">
+    <day>10</day>
+    <month>05</month>
+    <uri>http://www.michaeleisen.org/blog/?p=1894</uri>
+    <date-in-citation iso-8601-date="1995-09-10">1995-09-10</date-in-citation>
+    <year>2016</year>
+    <person-group person-group-type="author">
+      <name>
+        <surname>Eisen</surname>
+        <given-names>M</given-names>
+      </name>
+    </person-group>
+    <source>it is NOT junk</source>
+    <article-title>The Imprinter of All Maladies</article-title>
+  </element-citation>
+*/
 class WebpageRef extends BibliographicEntry {}
 WebpageRef.schema = {
-  type: 'webpage-ref',
-  title: TEXT(...RICH_TEXT_ANNOS),
+  type: 'webpage-ref', // publication-type="webpage"
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
   // E.g. website name, where the page appeared
   containerTitle: STRING, // <source>
-  authors: CHILDREN('ref-contrib'),
-  year: STRING,
-  month: STRING,
-  day: STRING,
-  accessedDate: STRING,
-  uri: STRING
+  authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  year: STRING, // <year>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  accessedDate: STRING, // <date-in-citation iso-8601-date="1995-09-10">
+  uri: STRING // <uri>
 }
 
 class Person extends DocumentNode {

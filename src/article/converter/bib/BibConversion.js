@@ -9,7 +9,7 @@ export function convertCSLJSON (source) {
 
   // CSL types: http://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types
   let typeMapping = {
-    'article': 'journal-article',
+    'article': 'article',
     'article-magazine': 'magazine-article',
     'article-newspaper': 'newspaper-article',
     'article-journal': 'journal-article',

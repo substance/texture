@@ -194,9 +194,9 @@ BibliographicEntry.schema = {
   type: 'bibr'
 }
 
-class Book extends BibliographicEntry {}
-Book.schema = {
-  type: 'book',
+class BookRef extends BibliographicEntry {}
+BookRef.schema = {
+  type: 'book-ref',
   authors: CHILDREN('ref-contrib'),
   editors: CHILDREN('ref-contrib'),
   translators: CHILDREN('ref-contrib'),
@@ -215,9 +215,9 @@ Book.schema = {
   pmid: STRING
 }
 
-class Chapter extends BibliographicEntry {}
-Chapter.schema = {
-  type: 'chapter',
+class ChapterRef extends BibliographicEntry {}
+ChapterRef.schema = {
+  type: 'chapter-ref',
   title: TEXT(...RICH_TEXT_ANNOS), // <chapter-title>
   containerTitle: STRING, // <source>
   volume: STRING,
@@ -240,9 +240,9 @@ Chapter.schema = {
   pmid: STRING // <pub-id pub-id-type="pmid">
 }
 
-class ConferencePaper extends BibliographicEntry {}
-ConferencePaper.schema = {
-  type: 'conference-paper',
+class ConferencePaperRef extends BibliographicEntry {}
+ConferencePaperRef.schema = {
+  type: 'conference-paper-ref',
   title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
   authors: CHILDREN('ref-contrib'),
   confName: STRING,
@@ -258,9 +258,9 @@ ConferencePaper.schema = {
   doi: STRING
 }
 
-class DataPublication extends BibliographicEntry {}
-DataPublication.schema = {
-  type: 'data-publication',
+class DataPublicationRef extends BibliographicEntry {}
+DataPublicationRef.schema = {
+  type: 'data-publication-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
@@ -273,9 +273,9 @@ DataPublication.schema = {
   doi: STRING
 }
 
-class JournalArticle extends BibliographicEntry {}
-JournalArticle.schema = {
-  type: 'journal-article',
+class JournalArticleRef extends BibliographicEntry {}
+JournalArticleRef.schema = {
+  type: 'journal-article-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   editors: CHILDREN('ref-contrib'),
@@ -293,9 +293,9 @@ JournalArticle.schema = {
   pmid: STRING
 }
 
-class Preprint extends BibliographicEntry {}
-Preprint.schema = {
-  type: 'preprint',
+class ArticleRef extends BibliographicEntry {}
+ArticleRef.schema = {
+  type: 'article-ref',
   title: STRING,
   authors: CHILDREN('ref-contrib'),
   editors: CHILDREN('ref-contrib'),
@@ -308,9 +308,9 @@ Preprint.schema = {
   pmid: STRING
 }
 
-class MagazineArticle extends BibliographicEntry {}
-MagazineArticle.schema = {
-  type: 'magazine-article',
+class MagazineArticleRef extends BibliographicEntry {}
+MagazineArticleRef.schema = {
+  type: 'magazine-article-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
@@ -324,9 +324,9 @@ MagazineArticle.schema = {
   doi: STRING
 }
 
-class NewspaperArticle extends BibliographicEntry {}
-NewspaperArticle.schema = {
-  type: 'newspaper-article',
+class NewspaperArticleRef extends BibliographicEntry {}
+NewspaperArticleRef.schema = {
+  type: 'newspaper-article-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   containerTitle: STRING, // <source>
@@ -342,9 +342,9 @@ NewspaperArticle.schema = {
   partTitle: STRING
 }
 
-class Patent extends BibliographicEntry {}
-Patent.schema = {
-  type: 'patent',
+class PatentRef extends BibliographicEntry {}
+PatentRef.schema = {
+  type: 'patent-ref',
   inventors: CHILDREN('ref-contrib'),
   assignee: STRING,
   title: TEXT(...RICH_TEXT_ANNOS),
@@ -375,13 +375,13 @@ Permission.schema = {
   licenseText: 'text'
 }
 
-class Report extends BibliographicEntry {
+class ReportRef extends BibliographicEntry {
   getGuid () {
     return this.isbn
   }
 }
-Report.schema = {
-  type: 'report',
+ReportRef.schema = {
+  type: 'report-ref',
   authors: CHILDREN('ref-contrib'),
   sponsors: CHILDREN('ref-contrib'),
   title: TEXT(...RICH_TEXT_ANNOS),
@@ -395,9 +395,9 @@ Report.schema = {
   doi: STRING
 }
 
-class Software extends BibliographicEntry {}
-Software.schema = {
-  type: 'software',
+class SoftwareRef extends BibliographicEntry {}
+SoftwareRef.schema = {
+  type: 'software-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   version: STRING,
@@ -409,9 +409,9 @@ Software.schema = {
   doi: STRING
 }
 
-class Thesis extends BibliographicEntry {}
-Thesis.schema = {
-  type: 'thesis',
+class ThesisRef extends BibliographicEntry {}
+ThesisRef.schema = {
+  type: 'thesis-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   authors: CHILDREN('ref-contrib'),
   year: STRING,
@@ -422,9 +422,9 @@ Thesis.schema = {
   doi: STRING
 }
 
-class Webpage extends BibliographicEntry {}
-Webpage.schema = {
-  type: 'webpage',
+class WebpageRef extends BibliographicEntry {}
+WebpageRef.schema = {
+  type: 'webpage-ref',
   title: TEXT(...RICH_TEXT_ANNOS),
   // E.g. website name, where the page appeared
   containerTitle: STRING, // <source>
@@ -565,6 +565,7 @@ const InternalArticleSchema = new DocumentSchema({
 
 InternalArticleSchema.addNodes([
   Article,
+  ArticleRef,
   // metadata
   Metadata,
   ArticleRecord,
@@ -584,6 +585,7 @@ InternalArticleSchema.addNodes([
   Subject,
   // content
   Abstract,
+  Article,
   Back,
   Content,
   DispQuote,
@@ -601,20 +603,19 @@ InternalArticleSchema.addNodes([
   Title,
   // bibliography
   BibliographicEntry,
-  Book,
-  Chapter,
-  ConferencePaper,
-  DataPublication,
-  JournalArticle,
-  MagazineArticle,
-  NewspaperArticle,
-  Report,
-  Patent,
+  BookRef,
+  ChapterRef,
+  ConferencePaperRef,
+  DataPublicationRef,
+  JournalArticleRef,
+  MagazineArticleRef,
+  NewspaperArticleRef,
+  ReportRef,
+  PatentRef,
   Permission,
-  Preprint,
-  Software,
-  Thesis,
-  Webpage,
+  SoftwareRef,
+  ThesisRef,
+  WebpageRef,
   // entity used in bibliography
   RefContrib,
   // translations

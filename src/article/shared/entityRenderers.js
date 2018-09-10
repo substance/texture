@@ -267,7 +267,7 @@ function patentRenderer ($$, entityId, entityDb) {
   return fragments
 }
 
-function preprintRenderer ($$, entityId, entityDb) {
+function articleRenderer ($$, entityId, entityDb) {
   let entity = entityDb.get(entityId)
   let fragments = []
 
@@ -783,25 +783,25 @@ function subjectRenderer ($$, entityId, entityDb, options = {}) {
   Exports
 */
 export default {
+  'article-ref': _delegate(articleRenderer),
   'person': _delegate(personRenderer),
   'group': _delegate(groupRenderer),
-  'book': _delegate(bookRenderer),
-  'chapter': _delegate(chapterRenderer),
-  'journal-article': _delegate(journalArticleRenderer),
-  'conference-paper': _delegate(conferencePaperRenderer),
-  'report': _delegate(reportRenderer),
+  'book-ref': _delegate(bookRenderer),
+  'chapter-ref': _delegate(chapterRenderer),
+  'journal-article-ref': _delegate(journalArticleRenderer),
+  'conference-paper-ref': _delegate(conferencePaperRenderer),
+  'report-ref': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
   'award': _delegate(awardRenderer),
-  'data-publication': _delegate(dataPublicationRenderer),
-  'magazine-article': _delegate(magazineArticleRenderer),
-  'newspaper-article': _delegate(newspaperArticleRenderer),
-  'software': _delegate(softwareRenderer),
-  'thesis': _delegate(thesisRenderer),
-  'webpage': _delegate(webpageRenderer),
+  'data-publication-ref': _delegate(dataPublicationRenderer),
+  'magazine-article-ref': _delegate(magazineArticleRenderer),
+  'newspaper-article-ref': _delegate(newspaperArticleRenderer),
+  'software-ref': _delegate(softwareRenderer),
+  'thesis-ref': _delegate(thesisRenderer),
+  'webpage-ref': _delegate(webpageRenderer),
   'keyword': _delegate(keywordRenderer),
   'ref-contrib': _delegate(refContribRenderer),
-  'patent': _delegate(patentRenderer),
-  'preprint': _delegate(preprintRenderer),
+  'patent-ref': _delegate(patentRenderer),
   'subject': _delegate(subjectRenderer)
 }
 

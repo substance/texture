@@ -426,16 +426,14 @@
   </define>
 
   <!--
-    Use this only as structured element
+    Allow text (which is just redundant information to iso-8601-date, and ignored)
   -->
   <define name="date-in-citation">
     <element name="date-in-citation">
       <ref name="date-in-citation-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <ref name="date-parts.class"/>
-        </choice>
-      </zeroOrMore>
+      <optional>
+        <text />
+      </optional>
     </element>
   </define>
 

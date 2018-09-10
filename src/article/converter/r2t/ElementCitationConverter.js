@@ -1,4 +1,9 @@
-import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES_TO_JATS } from '../../ArticleConstants'
+import {
+  JATS_BIBR_TYPES_TO_INTERNAL,
+  INTERNAL_BIBR_TYPES_TO_JATS,
+  BOOK_REF, REPORT_REF, SOFTWARE_REF, DATA_PUBLICATION_REF, CHAPTER_REF
+} from '../../ArticleConstants'
+
 import { getText, getSeparatedText, getAttr } from '../util/domHelpers'
 
 export default class ElementCitationConverter {
@@ -171,15 +176,15 @@ function _exportElementCitation (node, exporter) {
   el.append(_exportPersonGroup($$, doc, node.inventors, 'inventor'))
   el.append(_exportPersonGroup($$, doc, node.sponsors, 'sponsor'))
 
-  if (type === 'book' || type === 'report' || type === 'software') {
+  if (type === BOOK_REF || type === REPORT_REF || type === SOFTWARE_REF) {
     el.append(_exportAnnotatedText(exporter, [node.id, 'title'], 'source'))
   } else {
     el.append(_createTextElement($$, node.containerTitle, 'source'))
-    if (type === 'chapter') {
+    if (type === CHAPTER_REF) {
       el.append(
         _exportAnnotatedText(exporter, [node.id, 'title'], 'chapter-title')
       )
-    } else if (type === 'data') {
+    } else if (type === DATA_PUBLICATION_REF) {
       el.append(
         _exportAnnotatedText(exporter, [node.id, 'title'], 'data-title')
       )
@@ -211,8 +216,6 @@ function _exportRefContrib ($$, refContrib) {
     el = $$('name')
     el.append(_createTextElement($$, refContrib.name, 'surname'))
     el.append(_createTextElement($$, refContrib.givenNames, 'given-names'))
-    // el.append(_createTextElement($$, record.prefix, 'prefix'))
-    // el.append(_createTextElement($$, record.suffix, 'suffix'))
   } else if (refContrib.name) {
     el = $$('collab')
     el.append(_createTextElement($$, refContrib.name, 'named-content', { 'content-type': 'name' }))

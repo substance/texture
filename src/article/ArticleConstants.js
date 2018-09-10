@@ -2,20 +2,35 @@ export const MANUSCRIPT_MODE = 'manuscript'
 export const PREVIEW_MODE = 'preview'
 export const METADATA_MODE = 'metadata'
 
+// Reference Types
+export const JOURNAL_ARTICLE_REF = 'journal-article-ref'
+export const BOOK_REF = 'book-ref'
+export const CHAPTER_REF = 'chapter-ref'
+export const CONFERENCE_PAPER_REF = 'conference-paper-ref'
+export const DATA_PUBLICATION_REF = 'data-publication-ref'
+export const PATENT_REF = 'patent-ref'
+export const ARTICLE_REF = 'article-ref'
+export const NEWSPAPER_ARTICLE_REF = 'newspaper-article-ref'
+export const MAGAZINE_ARTICLE_REF = 'magazine-article-ref'
+export const REPORT_REF = 'report-ref'
+export const SOFTWARE_REF = 'software-ref'
+export const THESIS_REF = 'thesis-ref'
+export const WEBPAGE_REF = 'webpage-ref'
+
 export const JATS_BIBR_TYPES_TO_INTERNAL = {
-  'journal': 'journal-article-ref',
-  'book': 'book-ref',
-  'chapter': 'chapter-ref',
-  'confproc': 'conference-paper-ref',
-  'data': 'data-publication-ref',
-  'patent': 'patent-ref',
-  'article': 'article-ref',
-  'newspaper': 'newspaper-article-ref',
-  'magazine': 'magazine-article-ref',
-  'report': 'report-ref',
-  'software': 'software-ref',
-  'thesis': 'thesis-ref',
-  'webpage': 'webpage-ref'
+  'journal': JOURNAL_ARTICLE_REF,
+  'book': BOOK_REF,
+  'chapter': CHAPTER_REF,
+  'confproc': CONFERENCE_PAPER_REF,
+  'data': DATA_PUBLICATION_REF,
+  'patent': PATENT_REF,
+  'article': ARTICLE_REF,
+  'newspaper': NEWSPAPER_ARTICLE_REF,
+  'magazine': MAGAZINE_ARTICLE_REF,
+  'report': REPORT_REF,
+  'software': SOFTWARE_REF,
+  'thesis': THESIS_REF,
+  'webpage': WEBPAGE_REF
 }
 
 export const INTERNAL_BIBR_TYPES_TO_JATS = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL).reduce((map, jatsType) => {

@@ -289,6 +289,10 @@
     <ref-list>
       <ref id="r1">
         <element-citation publication-type="data">
+          <day>01</day>
+          <month>06</month>
+          <year>2016</year>
+          <pub-id pub-id-type="accession">GSE69545</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Allison</surname>
@@ -299,17 +303,20 @@
               <given-names>CK</given-names>
             </name>
           </person-group>
-          <year>2016</year>
-          <month>06</month>
-          <day>01</day>
-          <data-title>Affinity and Dose of TCR Engagement Yield Proportional Enhancer and Gene
-            Activity in CD4+ T Cells</data-title>
           <source>NCBI Gene Expression Omnibus</source>
-          <pub-id pub-id-type="accession">GSE69545</pub-id>
+          <data-title>Affinity and Dose of TCR Engagement Yield Proportional Enhancer and Gene Activity in CD4+ T Cells</data-title>
         </element-citation>
       </ref>
       <ref id="r2">
         <element-citation publication-type="journal">
+          <day>06</day>
+          <fpage>1141</fpage>
+          <lpage>1144</lpage>
+          <month>11</month>
+          <volume>282</volume>
+          <year>1998</year>
+          <pub-id pub-id-type="doi">10.1126/science.282.5391.1141</pub-id>
+          <pub-id pub-id-type="pmid">9804555</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Baukrowitz</surname>
@@ -344,55 +351,54 @@
               <given-names>B</given-names>
             </name>
           </person-group>
-          <year>1998</year>
-          <month>11</month>
-          <day>06</day>
-          <article-title>PIP<sub>2</sub> and PIP as determinants for ATP inhibition of K<sub>ATP</sub> channels</article-title>
           <source>Science</source>
-          <volume>282</volume>
-          <fpage>1141</fpage>
-          <lpage>1144</lpage>
-          <pub-id pub-id-type="doi">10.1126/science.282.5391.1141</pub-id>
-          <pub-id pub-id-type="pmid">9804555</pub-id>
+          <article-title>PIP<sub id="sub-1">2</sub> and PIP as determinants for ATP inhibition of K<sub id="sub-2">ATP</sub> channels</article-title>
         </element-citation>
       </ref>
       <ref id="r3">
         <element-citation publication-type="book">
+          <publisher-loc>New York</publisher-loc>
+          <publisher-name>Oxford University Press</publisher-name>
+          <year>2006</year>
+          <pub-id pub-id-type="isbn">978-0195301069</pub-id>
+          <pub-id pub-id-type="doi">10.1093/acprof:oso/9780195301069.001.0001</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Buzsaki</surname>
               <given-names>G</given-names>
             </name>
           </person-group>
-          <year>2006</year>
           <source>Rhythms of the Brain</source>
-          <publisher-loc>New York</publisher-loc>
-          <publisher-name>Oxford University Press</publisher-name>
-          <pub-id pub-id-type="doi">10.1093/acprof:oso/9780195301069.001.0001</pub-id>
-          <pub-id pub-id-type="isbn">978-0195301069</pub-id>
         </element-citation>
       </ref>
       <ref id="r4">
         <element-citation publication-type="book">
+          <day>26</day>
+          <edition>2</edition>
+          <month>05</month>
+          <publisher-loc>Oxford</publisher-loc>
+          <publisher-name>Wiley-Blackwell</publisher-name>
+          <year>2008</year>
+          <pub-id pub-id-type="isbn">978-1405132763</pub-id>
           <person-group person-group-type="editor">
             <name>
               <surname>Chmeil</surname>
               <given-names>N</given-names>
             </name>
           </person-group>
-          <edition>2</edition>
-          <year>2008</year>
-          <month>05</month>
-          <day>26</day>
-          <source>An Introduction to Work and Organizational Psychology: A European
-            Perspective</source>
-          <publisher-loc>Oxford</publisher-loc>
-          <publisher-name>Wiley-Blackwell</publisher-name>
-          <pub-id pub-id-type="isbn">978-1405132763</pub-id>
+          <source>An Introduction to Work and Organizational Psychology: A European Perspective</source>
         </element-citation>
       </ref>
       <ref id="r5">
         <element-citation publication-type="chapter">
+          <day>22</day>
+          <fpage>180</fpage>
+          <lpage>207</lpage>
+          <month>08</month>
+          <publisher-loc>Sunderland, MA</publisher-loc>
+          <publisher-name>Sinauer Associates</publisher-name>
+          <year>1989</year>
+          <pub-id pub-id-type="isbn">978-0878936588</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Coyne</surname>
@@ -413,38 +419,32 @@
               <given-names>JA</given-names>
             </name>
           </person-group>
-          <year>1989</year>
-          <month>08</month>
-          <day>22</day>
-          <chapter-title>Two rules of speciation</chapter-title>
           <source>Speciation and its consequences</source>
-          <fpage>180</fpage>
-          <lpage>207</lpage>
-          <publisher-loc>Sunderland, MA</publisher-loc>
-          <publisher-name>Sinauer Associates</publisher-name>
-          <pub-id pub-id-type="isbn">978-0878936588</pub-id>
+          <chapter-title>Two rules of speciation</chapter-title>
         </element-citation>
       </ref>
       <ref id="r6">
         <element-citation publication-type="webpage">
+          <day>10</day>
+          <month>05</month>
+          <uri>http://www.michaeleisen.org/blog/?p=1894</uri>
+          <date-in-citation iso-8601-date="1995-09-10">1995-09-10</date-in-citation>
+          <year>2016</year>
           <person-group person-group-type="author">
             <name>
               <surname>Eisen</surname>
               <given-names>M</given-names>
             </name>
           </person-group>
-          <year>2016</year>
-          <month>05</month>
-          <day>10</day>
-          <article-title>The Imprinter of All Maladies</article-title>
           <source>it is NOT junk</source>
-          <publisher-loc>Berkeley</publisher-loc>
-          <uri>http://www.michaeleisen.org/blog/?p=1894</uri>
-          <date-in-citation iso-8601-date="1995-09-10">1995-09-10</date-in-citation>
+          <article-title>The Imprinter of All Maladies</article-title>
         </element-citation>
       </ref>
       <ref id="r7">
         <element-citation publication-type="confproc">
+          <conf-name>Proceedings of the 17th Annual Meeting of International Society for Magnetic Resonance in Medicine</conf-name>
+          <conf-loc>Hawaii, United States</conf-loc>
+          <year>2009</year>
           <person-group person-group-type="author">
             <name>
               <surname>Leemans</surname>
@@ -463,34 +463,43 @@
               <given-names>D</given-names>
             </name>
           </person-group>
-          <year>2009</year>
-          <article-title>ExploreDTI: a graphical toolbox for processing, analyzing, and visualizing
-            diffusion MR data</article-title>
-          <conf-name>Proceedings of the 17th Annual Meeting of International Society for Magnetic
-            Resonance in Medicine</conf-name>
-          <conf-loc>Hawaii, United States</conf-loc>
+          <article-title>ExploreDTI: a graphical toolbox for processing, analyzing, and visualizing diffusion MR data</article-title>
         </element-citation>
       </ref>
       <ref id="r8">
         <element-citation publication-type="report">
-          <person-group person-group-type="author">
-            <collab><named-content content-type="name">National Malaria Control Program - Ministry of Health and Social Welfare</named-content></collab>
-            <collab><named-content content-type="name">Liberia Institute of Statistics and Geo-Information Services</named-content></collab>
-            <collab><named-content content-type="name">ICF International</named-content></collab>
-          </person-group>
-          <person-group person-group-type="sponsor">
-            <collab><named-content content-type="name">United States Agency for International Development</named-content></collab>
-            <collab><named-content content-type="name">President’s Malaria Initiative</named-content></collab>
-          </person-group>
-          <year>2012</year>
           <month>06</month>
-          <source>Liberia Malaria Indicator Survey 2011</source>
           <publisher-loc>Monrovia, Liberia</publisher-loc>
           <publisher-name>NMCP, LISGIS, and ICF International</publisher-name>
+          <year>2012</year>
+          <person-group person-group-type="author">
+            <collab>
+              <named-content content-type="name">National Malaria Control Program - Ministry of Health and Social Welfare</named-content>
+            </collab>
+            <collab>
+              <named-content content-type="name">Liberia Institute of Statistics and Geo-Information Services</named-content>
+            </collab>
+            <collab>
+              <named-content content-type="name">ICF International</named-content>
+            </collab>
+          </person-group>
+          <person-group person-group-type="sponsor">
+            <collab>
+              <named-content content-type="name">United States Agency for International Development</named-content>
+            </collab>
+            <collab>
+              <named-content content-type="name">President’s Malaria Initiative</named-content>
+            </collab>
+          </person-group>
+          <source>Liberia Malaria Indicator Survey 2011</source>
         </element-citation>
       </ref>
       <ref id="r9">
         <element-citation publication-type="patent">
+          <day>17</day>
+          <month>03</month>
+          <patent country="United States">US20100941530</patent>
+          <year>2011</year>
           <person-group person-group-type="inventor">
             <name>
               <surname>Patterson</surname>
@@ -513,52 +522,50 @@
               <given-names>PV</given-names>
             </name>
           </person-group>
-          <person-group person-group-type="assignee">
-            <collab><named-content content-type="name">Mankind Corp</named-content></collab>
-          </person-group>
-          <year>2011</year>
-          <month>03</month>
-          <day>17</day>
-          <article-title>IRE-1alpha inhibitors</article-title>
           <source>United States patent</source>
-          <patent country="United States">US20100941530</patent>
+          <article-title>IRE-1alpha inhibitors</article-title>
         </element-citation>
       </ref>
       <ref id="r10">
         <element-citation publication-type="newspaper">
+          <day>27</day>
+          <edition>International Edition</edition>
+          <fpage>21</fpage>
+          <month>4</month>
+          <part-title>Film</part-title>
+          <year>2018</year>
           <person-group person-group-type="author">
             <name>
               <surname>Rose</surname>
               <given-names>Steve</given-names>
             </name>
           </person-group>
-          <year>2018</year>
-          <month>4</month>
-          <day>27</day>
-          <article-title>What if superheroes aren’t really the good guys?</article-title>
           <source>The Guardian</source>
-          <edition>International Edition</edition>
-          <part-title>Film</part-title>
-          <fpage>21</fpage>
+          <article-title>What if superheroes aren’t really the good guys?</article-title>
         </element-citation>
       </ref>
       <ref id="r11">
         <element-citation publication-type="thesis">
+          <publisher-loc>Nijmegen, The Netherlands</publisher-loc>
+          <publisher-name>Radboud University Nijmegen Medical Centre</publisher-name>
+          <year>2006</year>
           <person-group person-group-type="author">
             <name>
               <surname>Schneider</surname>
               <given-names>P</given-names>
             </name>
           </person-group>
-          <year>2006</year>
-          <article-title>PhD thesis: Submicroscopic <italic>Plasmodium falciparum</italic>
-            gametocytaemia and the contribution to malaria transmission</article-title>
-          <publisher-name>Radboud University Nijmegen Medical Centre</publisher-name>
-          <publisher-loc>Nijmegen, The Netherlands</publisher-loc>
+          <article-title>PhD thesis: Submicroscopic <italic id="italic-2">Plasmodium falciparum</italic> gametocytaemia and the contribution to malaria transmission</article-title>
         </element-citation>
       </ref>
       <ref id="r12">
         <element-citation publication-type="software">
+          <day>19</day>
+          <month>3</month>
+          <publisher-name>Zenodo</publisher-name>
+          <version>2.0.1</version>
+          <year>2018</year>
+          <pub-id pub-id-type="doi">10.5281/zenodo.1203712</pub-id>
           <person-group person-group-type="author">
             <name>
               <surname>Willner</surname>
@@ -569,63 +576,57 @@
               <given-names>Robert</given-names>
             </name>
           </person-group>
-          <year>2018</year>
-          <month>3</month>
-          <day>19</day>
           <source>pyhector</source>
-          <version>2.0.1</version>
-          <publisher-name>Zenodo</publisher-name>
-          <pub-id pub-id-type="doi">10.5281/zenodo.1203712</pub-id>
         </element-citation>
       </ref>
       <ref id="r13">
         <element-citation publication-type="article">
-            <person-group person-group-type="author">
-                <name>
-                    <surname>Bloss</surname>
-                    <given-names>CS</given-names>
-                </name>
-                <name>
-                    <surname>Wineinger</surname>
-                    <given-names>NE</given-names>
-                </name>
-                <name>
-                    <surname>Peters</surname>
-                    <given-names>M</given-names>
-                </name>
-                <name>
-                    <surname>Boeldt</surname>
-                    <given-names>DL</given-names>
-                </name>
-                <name>
-                    <surname>Ariniello</surname>
-                    <given-names>L</given-names>
-                </name>
-                <name>
-                    <surname>Kim</surname>
-                    <given-names>JL</given-names>
-                </name>
-                <name>
-                    <surname>Judy Sheard</surname>
-                    <given-names>J</given-names>
-                </name>
-                <name>
-                    <surname>Komatireddy</surname>
-                    <given-names>R</given-names>
-                </name>
-                <name>
-                    <surname>Barrett</surname>
-                    <given-names>P</given-names>
-                </name>
-                <name>
-                    <surname>Topol</surname>
-                    <given-names>EJ</given-names>
-                </name>
-            </person-group>
-            <year iso-8601-date="2016">2016</year>
-            <article-title>A prospective randomized trial examining health care utilization in individuals using multiple smartphone-enabled biosensors</article-title>
-            <source>bioRxiv</source>
-            <pub-id pub-id-type="doi">10.1101/029983</pub-id>
+          <year>2016</year>
+          <pub-id pub-id-type="doi">10.1101/029983</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bloss</surname>
+              <given-names>CS</given-names>
+            </name>
+            <name>
+              <surname>Wineinger</surname>
+              <given-names>NE</given-names>
+            </name>
+            <name>
+              <surname>Peters</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Boeldt</surname>
+              <given-names>DL</given-names>
+            </name>
+            <name>
+              <surname>Ariniello</surname>
+              <given-names>L</given-names>
+            </name>
+            <name>
+              <surname>Kim</surname>
+              <given-names>JL</given-names>
+            </name>
+            <name>
+              <surname>Judy Sheard</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Komatireddy</surname>
+              <given-names>R</given-names>
+            </name>
+            <name>
+              <surname>Barrett</surname>
+              <given-names>P</given-names>
+            </name>
+            <name>
+              <surname>Topol</surname>
+              <given-names>EJ</given-names>
+            </name>
+          </person-group>
+          <source>bioRxiv</source>
+          <article-title>A prospective randomized trial examining health care utilization in individuals using multiple smartphone-enabled biosensors</article-title>
         </element-citation>
       </ref>
     </ref-list>

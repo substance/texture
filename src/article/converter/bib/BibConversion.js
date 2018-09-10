@@ -9,18 +9,18 @@ export function convertCSLJSON (source) {
 
   // CSL types: http://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types
   let typeMapping = {
-    'article': 'article',
-    'article-magazine': 'magazine-article',
-    'article-newspaper': 'newspaper-article',
-    'article-journal': 'journal-article',
+    'article': 'article-ref',
+    'article-magazine': 'magazine-article-ref',
+    'article-newspaper': 'newspaper-article-ref',
+    'article-journal': 'journal-article-ref',
     // "bill"
-    'book': 'book',
+    'book': 'book-ref',
     // "broadcast"
-    'chapter': 'book',
-    'dataset': 'data-publication',
+    'chapter': 'book-ref',
+    'dataset': 'data-publication-ref',
     // "entry"
-    'entry-dictionary': 'book',
-    'entry-encyclopedia': 'book',
+    'entry-dictionary': 'book-ref',
+    'entry-encyclopedia': 'book-ref',
     // "figure"
     // "graphic"
     // "interview"
@@ -31,19 +31,19 @@ export function convertCSLJSON (source) {
     // "motion_picture"
     // "musical_score"
     // "pamphlet"
-    'paper-conference': 'conference-paper',
-    'patent': 'patent',
+    'paper-conference': 'conference-paper-ref',
+    'patent': 'patent-ref',
     // "post"
     // "post-weblog"
     // "personal_communication"
-    'report': 'report',
+    'report': 'report-ref',
     // "review"
     // "review-book"
     // "song"
     // "speech"
-    'thesis': 'thesis',
+    'thesis': 'thesis-ref',
     // "treaty"
-    'webpage': 'webpage'
+    'webpage': 'webpage-ref'
     // NA : "software"
   }
 

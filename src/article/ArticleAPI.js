@@ -296,25 +296,26 @@ export default class ArticleAPI extends EditorAPI {
   /* Low-level content editing API */
 
   copy () {
-    const sel = this._getSelection()
-    // use TableAPI to copy table selections
-    if (sel && sel.isCustomSelection() && sel.getCustomType() === 'table') {
-      const doc = this._getDocument()
-      return this._tableApi.copySelection(doc, sel)
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.copySelection()
     } else {
       return super.copy()
     }
   }
 
-  paste (options) {
-    const sel = this._getSelection()
-    // use TableAPI to copy table selections
-    if (sel && sel.isCustomSelection() && sel.getCustomType() === 'table') {
-      this.articleSession.transaction(tx => {
-        this._tableApi.paste(tx, options)
-      }, { action: 'paste' })
+  paste (content, options) {
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.paste(content, options)
     } else {
-      return super.copy()
+      return super.paste(content, options)
+    }
+  }
+
+  insertText (text) {
+    if (this._tableApi.isTableSelected()) {
+      this._tableApi.insertText(text)
+    } else {
+      return super.insertText(text)
     }
   }
 
@@ -449,6 +450,10 @@ export default class ArticleAPI extends EditorAPI {
 
   _getSelection () {
     return this.articleSession.editorState.selection
+  }
+
+  _setSelection (selData) {
+    this.articleSession.setSelection(selData)
   }
 
   _createInternalEditorAPI () {

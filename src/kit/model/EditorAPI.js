@@ -104,12 +104,13 @@ export default class EditorAPI extends AbstractAPI {
     }
   }
 
-  paste (content) {
+  paste (content, options) {
     const sel = this._getSelection()
     if (sel && !sel.isNull() && !sel.isCustomSelection()) {
       this.editorSession.transaction(tx => {
-        return this._impl.paste(this, content)
+        return this._impl.paste(this, content, options)
       }, { action: 'paste' })
+      return true
     }
   }
 

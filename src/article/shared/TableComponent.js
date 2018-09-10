@@ -419,7 +419,8 @@ export default class TableComponent extends CustomSurface {
         const doc = this.props.node.getDocument()
         let cell = doc.get(selData.anchorCellId)
         let path = cell.getPath()
-        this.editorSession.setSelection({
+        // TODO: we need low-level API to set the selection
+        this.context.api._setSelection({
           type: 'property',
           path,
           startOffset: cell.getLength(),

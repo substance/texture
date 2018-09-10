@@ -11,6 +11,16 @@ export default class TableEditingAPI {
     return (sel && !sel.isNull() && sel.customType === 'table')
   }
 
+  deleteSelection () {
+    if (!this.isTableSelected()) throw new Error('Table selection required')
+    let selData = this._getSelectionData()
+    let { tableId, startRow, endRow, startCol, endCol } = selData
+    this.editorSession.transaction(tx => {
+      // Note: the selection remains the same
+      this._clearValues(tx.get(tableId), startRow, startCol, endRow, endCol)
+    }, { action: 'deleteSelection' })
+  }
+
   copySelection () {
     if (!this.isTableSelected()) throw new Error('Table selection required')
 
@@ -38,7 +48,48 @@ export default class TableEditingAPI {
     if (!this.isTableSelected()) throw new Error('Table selection required')
 
     // TODO: implement paste for tables
-    debugger
+    let snippet = content.get(documentHelpers.SNIPPET_ID)
+    if (!snippet) return false
+    let first = snippet.getNodeAt(0)
+    if (first.type !== 'table') return false
+    return this._pasteTable(first)
+  }
+
+  _pasteTable (copy) {
+    // TODO: extend dimension if necessary
+    // and the assign cell attributes and content
+    // ATTENTION: make sure that col/rowspans do not extend the table dims
+    let [nrows, ncols] = copy.getDimensions()
+    let selData = this._getSelectionData()
+    let { tableId, startRow, startCol } = selData
+    let N = startRow + nrows
+    let M = startCol + ncols
+    // make the table larger if necessary
+    this._ensureSize(tableId, N, M)
+
+    this.editorSession.transaction(tx => {
+      let table = tx.get(tableId)
+      let cellMatrix = table.getCellMatrix()
+      let copyCellMatrix = copy.getCellMatrix()
+      for (let rowIdx = 0; rowIdx < nrows; rowIdx++) {
+        for (let colIdx = 0; colIdx < ncols; colIdx++) {
+          let copyCell = copyCellMatrix[rowIdx][colIdx]
+          let cell = cellMatrix[startRow + rowIdx][startCol + colIdx]
+          if (copyCell.getAttribute('heading')) {
+            cell.setAttribute('heading', true)
+          } else {
+            cell.removeAttribute('heading')
+          }
+          // TODO: limit rowspan so that it does not exceed overall dims
+          cell.setAttribute('rowspan', copyCell.rowspan)
+          cell.setAttribute('colspan', copyCell.colspan)
+          // TODO: copy annotations too
+          cell.textContent = copyCell.textContent
+        }
+      }
+    }, { action: 'paste' })
+
+    return true
   }
 
   insertRows (mode, count) {
@@ -219,6 +270,11 @@ export default class TableEditingAPI {
     }
   }
 
+  _getCreateElement (table) {
+    const doc = table.getDocument()
+    return doc.createElement.bind(doc)
+  }
+
   _createRowsAt (table, rowIdx, n) {
     let $$ = this._getCreateElement(table)
     const M = table.getColumnCount()
@@ -263,6 +319,36 @@ export default class TableEditingAPI {
         let cell = $$('table-cell')
         row.insertBefore(cell, cellAfter)
       }
+    }
+  }
+
+  _clearValues (table, startRow, startCol, endRow, endCol) {
+    for (let rowIdx = startRow; rowIdx <= endRow; rowIdx++) {
+      for (let colIdx = startCol; colIdx <= endCol; colIdx++) {
+        let cell = table.getCell(rowIdx, colIdx)
+        // TODO: are we sure that annotations get deleted this way?
+        // Note that there is a delete logic behind this setText()
+        cell.setText('')
+      }
+    }
+  }
+
+  _ensureSize (tableId, nrows, ncols) {
+    let table = this._getDocument().get(tableId)
+    let [_nrows, _ncols] = table.getDimensions()
+    if (_ncols < ncols) {
+      let pos = _ncols
+      let count = ncols - _ncols
+      this.editorSession.transaction(tx => {
+        this._createColumnsAt(tx.get(tableId), pos, count)
+      }, { action: 'insertCols', pos, count })
+    }
+    if (_nrows < nrows) {
+      let pos = _nrows
+      let count = nrows - _nrows
+      this.editorSession.transaction(tx => {
+        this._createRowsAt(tx.get(tableId), pos, count)
+      }, { action: 'insertRows', pos, count })
     }
   }
 }

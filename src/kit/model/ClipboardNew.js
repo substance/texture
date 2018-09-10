@@ -1,4 +1,5 @@
-import { platform, DefaultDOMElement, documentHelpers, JSONConverter } from 'substance'
+import { platform, DefaultDOMElement, documentHelpers } from 'substance'
+import JSONConverterNew from './JSONConverterNew'
 
 const INLINENODES = ['a', 'b', 'big', 'i', 'small', 'tt', 'abbr', 'acronym', 'cite', 'code', 'dfn', 'em', 'kbd', 'strong', 'samp', 'time', 'var', 'bdo', 'br', 'img', 'map', 'object', 'q', 'script', 'span', 'sub', 'sup', 'button', 'input', 'label', 'select', 'textarea'].reduce((m, n) => { m[n] = true; return m }, {})
 
@@ -58,7 +59,7 @@ export default class ClipboardNew {
         return el.outerHTML
       }).join('')
     }
-    let jsonConverter = new JSONConverter()
+    let jsonConverter = new JSONConverterNew()
     let jsonStr = JSON.stringify(jsonConverter.exportDocument(snippet))
     let substanceContent = `<script id="substance-clipboard" type="application/json">${jsonStr}</script>`
     let html = '<html><head>' + substanceContent + '</head><body>' + snippetHtml + '</body></html>'
@@ -68,11 +69,12 @@ export default class ClipboardNew {
   _pasteHtml (html, context, options = {}) {
     let htmlDoc
     try {
-      htmlDoc = DefaultDOMElement.parseHTML()
+      htmlDoc = DefaultDOMElement.parseHTML(html)
     } catch (err) {
       console.error('Could not parse HTML received from the clipboard', err)
       return false
     }
+
     // when copying from a substance editor we store JSON in a script tag in the head
     // If the import fails e.g. because the schema is incompatible
     // we fall back to plain HTML import
@@ -84,7 +86,9 @@ export default class ClipboardNew {
         try {
           snippet = this._importFromJSON(context, jsonStr)
         } finally {
-          console.error('Could not convert clipboard content.')
+          if (!snippet) {
+            console.error('Could not convert clipboard content.')
+          }
         }
       }
     }
@@ -120,19 +124,19 @@ export default class ClipboardNew {
         container.show(node.id)
       })
     }
+    return context.api.paste(snippet, options)
+  }
+
+  _pasteText (text, context) {
+    context.api.insertText(text)
   }
 
   _importFromJSON (context, jsonStr) {
-    let snippet = context.appState.document.createInstance()
+    let snippet = context.appState.document.newInstance()
     let jsonData = JSON.parse(jsonStr)
-    let converter = new JSONConverter()
+    let converter = new JSONConverterNew()
     converter.importDocument(snippet, jsonData)
     return snippet
-  }
-
-  _getContentApi (context) {
-    // content specific manipulation API
-    return context.api.getContentAPI(context.appState)
   }
 
   _detectApplicationType (html, htmlDoc) {
@@ -154,7 +158,7 @@ export default class ClipboardNew {
     return state
   }
 
-  _sanitizeContent (state, body) {
+  _sanitizeBody (state, body) {
     // Remove <meta> element
     body.findAll('meta').forEach(el => el.remove())
     // Some word processors are exporting new lines instead of spaces

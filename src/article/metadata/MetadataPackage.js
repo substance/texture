@@ -351,7 +351,7 @@ export default {
     })
     config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-card' })
     config.addCommand('move-down-card', MoveCardCommand, {
-      direction: 'up',
+      direction: 'down',
       commandGroup: 'card'
     })
     config.addIcon('move-down-card', { 'fontawesome': 'fa-caret-square-o-down' })

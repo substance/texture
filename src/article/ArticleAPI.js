@@ -121,6 +121,15 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  moveCollectionItem (collection, from, to) {
+    this.articleSession.transaction(tx => {
+      let colNode = tx.get(collection._node.id)
+      let item = colNode.getChildAt(from)
+      colNode.removeAt(from)
+      colNode.insertAt(to, item)
+    })
+  }
+
   getAuthorsModel () {
     return this.getModel('authors')
   }

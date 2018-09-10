@@ -8,6 +8,10 @@ export default class PersonCollectionModel extends DefaultCollectionModel {
   addItem (item = {}) {
     return this._api._insertPerson(this._prepareItem(item), this)
   }
+  
+  get length () {
+    return this._node.children.length
+  }
 
   get isRemovable () {
     return true
@@ -15,5 +19,23 @@ export default class PersonCollectionModel extends DefaultCollectionModel {
 
   get isMovable () {
     return true
+  }
+
+  moveDown (item) {
+    const pos = this._getModelPosition(item)
+    this.moveItem(pos, pos + 1)
+  }
+
+  moveUp (item) {
+    const pos = this._getModelPosition(item)
+    this.moveItem(pos, pos - 1)
+  }
+
+  moveItem (from, to) {
+    return this._api.moveCollectionItem(this, from, to)
+  }
+
+  _getModelPosition (item) {
+    return this._node.getChildPosition(item)
   }
 }

@@ -14,7 +14,13 @@ export default class _ContainerModel extends ValueModel {
   }
 
   isEmpty () {
-    return this.getValue().length === 0
+    let ids = this.getValue()
+    if (ids.length === 0) return true
+    let first = this._api.getModelById(ids[0])
+    if (first && first.isEmpty) {
+      return first.isEmpty()
+    }
+    return false
   }
 
   _getItems () {

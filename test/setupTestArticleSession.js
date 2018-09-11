@@ -21,6 +21,11 @@ export default function setupTestArticleSession (docInitializer) {
   let session = archive.getEditorSession('manuscript')
   let doc = session.getDocument()
   if (docInitializer) {
+    // clear the body
+    let body = doc.get('body')
+    body.removeAt(0)
+  }
+  if (docInitializer) {
     docInitializer(doc)
   }
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context

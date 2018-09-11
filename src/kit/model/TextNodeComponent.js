@@ -22,7 +22,8 @@ export default class TextNodeComponent extends Component {
       $$(TextPropertyComponent, {
         doc: node.getDocument(),
         name: path.join('.'),
-        path
+        path,
+        placeholder: this.props.placeholder
       }).ref('text')
     )
     // TODO: ability to edit attributes
@@ -34,6 +35,6 @@ export default class TextNodeComponent extends Component {
   }
 
   getClassNames () {
-    return 'sc-' + this.props.node.type
+    return 'sc-text-node sc-' + this.props.node.type
   }
 }

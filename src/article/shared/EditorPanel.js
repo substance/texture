@@ -24,14 +24,13 @@ export default class EditorPanel extends Component {
   // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
     const { articleSession, config, archive } = props
-
     const editorSession = new ArticleEditorSession(
       articleSession.getDocument(), config, this, {
         workflowId: null,
         viewName: this.props.viewName
       }
     )
-    const api = new ArticleAPI(editorSession, config.getModelRegistry(), archive)
+    const api = new ArticleAPI(editorSession, config, archive)
     const context = Object.assign(createEditorContext(config, editorSession), {
       editor: this,
       api,

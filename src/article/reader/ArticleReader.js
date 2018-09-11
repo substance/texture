@@ -26,7 +26,7 @@ export default class ArticleReader extends Component {
     const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
       viewName: this.props.viewName
     })
-    const api = new ArticleAPI(articleSession, config.getModelRegistry(), archive)
+    const api = new ArticleAPI(articleSession, config, archive)
     this.api = api
     this.model = new ManuscriptModel(api)
     this.tocProvider = this._getTOCProvider()

@@ -1,3 +1,11 @@
 .sc-texture {
   height: 100%;
 }
+
+.sc-texture .emphasis, .sc-texture em, .sc-texture i:not(.fa) {
+  font-style: italic;
+}
+
+.sc-texture .strong, .sc-texture strong, .sc-texture b {
+  font-weight: bold;
+}

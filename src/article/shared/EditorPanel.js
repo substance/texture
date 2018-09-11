@@ -122,6 +122,7 @@ export default class EditorPanel extends Component {
   }
 
   _onKeydown (e) {
+    // console.log('EditorPanel._onKeydown', e)
     let handled = false
     const appState = this.context.appState
     switch (e.keyCode) {
@@ -135,9 +136,13 @@ export default class EditorPanel extends Component {
       default:
         //
     }
+    if (!handled) {
+      handled = this.context.keyboardManager.onKeydown(e, this.context)
+    }
     if (handled) {
       e.stopPropagation()
       e.preventDefault()
     }
+    return handled
   }
 }

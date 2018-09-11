@@ -20,12 +20,21 @@ export default class TextureWebAppChrome extends TextureAppChrome {
     }
   }
 
-  _handleKeyDown (event) {
+  _handleKeydown (event) {
     let key = parseKeyEvent(event)
+    // console.log('Texture received keydown for combo', key)
+    let handled = false
     // CommandOrControl+S
     if (key === 'META+83' || key === 'CTRL+83') {
       this._save()
-      event.preventDefault()
+      handled = true
+    }
+    if (!handled) {
+      handled = this.refs.texture._handleKeydown(event)
+    }
+    if (handled) {
+      event.prevendDefault()
+      event.stopPropagation()
     }
   }
 

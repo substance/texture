@@ -25,7 +25,7 @@ export default class Texture extends Component {
       documentSession
     }
     el.append(
-      $$(ResourceComponent, props)
+      $$(ResourceComponent, props).ref('resource')
     )
     return el
   }
@@ -35,5 +35,9 @@ export default class Texture extends Component {
     // TODO: in future we want to make this configurable (plugin framework)
     config.import(ArticlePackage)
     return config
+  }
+
+  _handleKeydown (event) {
+    this.refs.resource._handleKeydown(event)
   }
 }

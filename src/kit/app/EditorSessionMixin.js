@@ -267,7 +267,9 @@ export default function (DocumentSession) {
     }
 
     _resetOverlayId () {
-      this.editorState.set('overlayId', null)
+      if (this.editorState.overlayId !== null) {
+        this.editorState.set('overlayId', null)
+      }
     }
   }
 

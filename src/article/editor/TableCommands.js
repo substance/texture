@@ -6,16 +6,21 @@ const DISABLED = { disabled: true }
 
 export class InsertTableCommand extends InsertNodeCommand {
   createNode (tx, params) {
-    let tableWrap = tx.createElement('table-wrap')
-    tableWrap.append(
-      tx.createElement('object-id').text(tableWrap.id),
-      tx.createElement('title').text('Table title'),
-      tx.createElement('caption').append(
-        tx.createElement('p').text('Table caption')
-      ),
-      this.generateTable(tx, params.rows, params.columns)
+    let caption = tx.createElement('caption').append(
+      tx.createElement('p')
     )
-    return tableWrap
+    let permission = tx.create({
+      type: 'permission'
+    })
+    let table = this.generateTable(tx, params.rows, params.columns)
+    let tableFigure = tx.create({
+      type: 'table-figure',
+      caption: caption.id,
+      content: table.id,
+      permission: permission.id
+    })
+
+    return tableFigure
   }
 
   generateTable (tx, nrows, ncols) {

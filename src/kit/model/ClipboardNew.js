@@ -98,9 +98,16 @@ export default class ClipboardNew {
       // Under windows and in Microsoft Word we can exploit the fact
       // that the paste content is wrapped inside <!--StartFragment--> and <!--EndFragment-->
       if (platform.isWindows || state.isMicrosoftWord) {
-        let match = /<!--StartFragment-->(.*)<!--EndFragment-->/.exec(html)
-        if (match) {
-          htmlDoc = DefaultDOMElement.parseHTML(match[1])
+        // very strange: this was not working at some day
+        // let match = /<!--StartFragment-->(.*)<!--EndFragment-->/.exec(html)
+        // ... but still this
+        const START_FRAGMENT = '<!--StartFragment-->'
+        const END_FRAGMENT = '<!--EndFragment-->'
+        let mStart = html.indexOf(START_FRAGMENT)
+        if (mStart >= 0) {
+          let mEnd = html.indexOf(END_FRAGMENT)
+          let fragment = html.slice(mStart + START_FRAGMENT.length, mEnd)
+          htmlDoc = DefaultDOMElement.parseHTML(fragment)
         }
       }
       // Note: because we are parsing the HTML not as snippet
@@ -115,13 +122,15 @@ export default class ClipboardNew {
         return false
       }
       body = this._wrapIntoParagraph(body)
-      let htmlImporter = context.configurator.getImporter('html')
       snippet = context.appState.document.createSnippet()
-      // TODO: how should the snippet look like?
+      let htmlImporter = context.configurator.getImporter('html')
+      htmlImporter.setDocument(snippet)
       let container = snippet.get(documentHelpers.SNIPPET_ID)
       body.getChildren().forEach(el => {
         let node = htmlImporter.convertElement(el)
-        container.show(node.id)
+        if (node) {
+          container.show(node.id)
+        }
       })
     }
     return context.api.paste(snippet, options)
@@ -168,7 +177,7 @@ export default class ClipboardNew {
       body.setInnerHTML(bodyHtml.replace(/\r\n|\r|\n/g, ' '))
     }
     if (state.isGoogleDoc) {
-      body = this._fixupGoogleDocsBody(body)
+      body = this._fixupGoogleDocsBody(state, body)
     }
     return body
   }

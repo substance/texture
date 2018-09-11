@@ -1,6 +1,7 @@
 import {
   DocumentSchema, DocumentNode, InlineNode,
-  XMLContainerNode, XMLElementNode, XMLTextElement
+  XMLContainerNode, XMLElementNode, XMLTextElement,
+  without
 } from 'substance'
 import { BOOLEAN, STRING, TEXT, MANY, ONE, CHILDREN, CHILD } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
@@ -164,6 +165,16 @@ Title.schema = {
 
 class Abstract extends TranslatableContainerElement {}
 Abstract.type = 'abstract'
+
+// In contrast to TextureJATS, our internal <body> does not have <sec> but <heading> instead
+let TextureBody = TextureArticleSchema.getNodeClass('body', 'strict')
+const bodyTargetTypes = without(TextureBody.schema.getProperty('_childNodes').targetTypes, 'sec').concat(['heading'])
+
+class Body extends XMLContainerNode {}
+Body.schema = {
+  type: 'body',
+  _childNodes: CHILDREN(...bodyTargetTypes)
+}
 
 class Heading extends XMLTextElement {
   getLevel () {
@@ -788,6 +799,7 @@ const InternalArticleSchema = new DocumentSchema({
 InternalArticleSchema.addNodes([
   Article,
   ArticleRef,
+  Body,
   // metadata
   Metadata,
   ArticleRecord,
@@ -851,7 +863,6 @@ InternalArticleSchema.addNodes([
 // Elements taken from the JATS spec
 // TODO: make sure that we do not need to modify them, e.g. marking them as inline nodes
 InternalArticleSchema.addNodes([
-  'body',
   'bio',
   'caption',
   'code',

@@ -1,30 +1,13 @@
 import { Command, getRangeFromMatrix, flatten } from 'substance'
-import { generateTable } from '../shared/tableHelpers'
 import InsertNodeCommand from './InsertNodeCommand'
 
 const DISABLED = { disabled: true }
 
 export class InsertTableCommand extends InsertNodeCommand {
-  createNode (tx, params) {
-    let caption = tx.createElement('caption').append(
-      tx.createElement('p')
-    )
-    let permission = tx.create({
-      type: 'permission'
-    })
-    let table = this.generateTable(tx, params.rows, params.columns)
-    let tableFigure = tx.create({
-      type: 'table-figure',
-      caption: caption.id,
-      content: table.id,
-      permission: permission.id
-    })
-
+  createNode (tx, params, context) {
+    const api = context.api
+    let tableFigure = api._createTableFigure(tx, params)
     return tableFigure
-  }
-
-  generateTable (tx, nrows, ncols) {
-    return generateTable(tx, nrows, ncols)
   }
 }
 

@@ -1,21 +1,26 @@
 /* global vfs, TEST_VFS */
-import { ObjectOperation, DocumentChange, isString } from 'substance'
+import { ObjectOperation, DocumentChange, isString, isArray } from 'substance'
 import { TextureWebApp, VfsStorageClient } from '../index'
 import TestVfs from './TestVfs'
 
 export function setCursor (editor, path, pos) {
-  if (!isString(path)) {
+  if (isArray(path)) {
     path = path.join('.')
   }
   let property = editor.find(`.sc-text-property[data-path=${path.replace('.', '\\.')}]`)
   if (!property) {
     throw new Error('Could not find text property for path ' + path)
   }
-  let editorSession = editor.context.editorSession
+  setCursorIntoProperty(property, pos)
+}
+
+export function setCursorIntoProperty (property, pos) {
+  const path = property.getPath()
+  let editorSession = property.context.editorSession
   let surface = property.context.surface
   editorSession.setSelection({
     type: 'property',
-    path: path.split('.'),
+    path,
     startOffset: pos,
     surfaceId: surface.id,
     containerId: surface.containerId

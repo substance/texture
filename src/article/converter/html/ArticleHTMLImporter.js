@@ -16,9 +16,27 @@ export default class ArticleHTMLImporter extends HTMLImporter {
     this.reset()
     this.state.doc = doc
   }
+
+  _getConverterForElement (el, mode) {
+    let converter = super._getConverterForElement(el, mode)
+    // apply a fallback
+    if (!converter) {
+      if (mode !== 'inline') {
+        return UnsupportedElementImporter
+      }
+    }
+    return converter
+  }
 }
 
 // TODO: we should improve the configurators internal format, e.g. use Map instead of {}
 function _getConverters (configurator) {
   return configurator.getConverters('html').values()
+}
+
+const UnsupportedElementImporter = {
+  type: 'p',
+  import (el, node, converter) {
+    node.content = converter.annotatedText(el, [node.id, 'content'], { preserveWhitespace: true })
+  }
 }

@@ -5,7 +5,7 @@ export default class NodeModelComponent extends Component {
   didMount () {
     // EXPERIMENTAL: ExperimentalArticleValidator updates `node.id, @issues`
     const model = this.props.model
-    this.context.appState.addObserver(['document'], this.rerender, this, {
+    this.context.appState.addObserver(['document'], this._rerenderWhenIssueHaveChanged, this, {
       stage: 'render',
       document: {
         path: [model.id, '@issues']
@@ -147,5 +147,10 @@ export default class NodeModelComponent extends Component {
   _removeEntity () {
     const model = this.props.model
     this.send('remove-item', model)
+  }
+
+  _rerenderWhenIssueHaveChanged () {
+    // console.log('Rerendering NodeModelCompent after issues have changed', this.props.model.id)
+    this.rerender()
   }
 }

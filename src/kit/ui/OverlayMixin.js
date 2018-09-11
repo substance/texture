@@ -3,7 +3,7 @@ export default function (Component) {
     didMount () {
       super.didMount()
 
-      this.context.appState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
+      this.context.appState.addObserver(['overlayId'], this._rerenderWhenOverlayIdHasChanged, this, { stage: 'render' })
     }
 
     dispose () {
@@ -18,6 +18,11 @@ export default function (Component) {
 
     _toggleOverlay () {
       this.send('toggleOverlay', this.getId())
+    }
+
+    _rerenderWhenOverlayIdHasChanged () {
+      // console.log('Rerendering overlay component because overlay id has changed', this.getId(), this)
+      this.rerender()
     }
   }
   return OverlayComponent

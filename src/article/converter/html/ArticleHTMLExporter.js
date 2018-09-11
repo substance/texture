@@ -14,8 +14,12 @@ export default class ArticleHTMLExporter extends HTMLExporter {
     compatible with other rendering contexts
   */
   annotatedText (path, doc, $$) {
-    this.state.doc = doc
-    this.$$ = $$
+    if (doc) {
+      this.state.doc = doc
+    }
+    if ($$) {
+      this.$$ = $$
+    }
     return super.annotatedText(path)
   }
 }

@@ -16,14 +16,13 @@ const COLLECTIONS = {
 }
 
 export default class ArticleAPI extends EditorAPI {
-  constructor (articleSession, modelRegistry, archive) {
+  constructor (articleSession, config, archive) {
     super()
-
-    this.modelRegistry = modelRegistry
+    this.config = config
+    this.modelRegistry = config.getModelRegistry()
     this.articleSession = articleSession
     this.article = articleSession.getDocument()
     this.archive = archive
-
     this._tableApi = new TableEditingAPI(articleSession)
   }
 
@@ -75,7 +74,8 @@ export default class ArticleAPI extends EditorAPI {
   // we could use the converter registry for this
   renderEntity (model) {
     let entity = this.getArticle().get(model.id)
-    return renderEntity(entity)
+    let exporter = this.config.getExporter('html')
+    return renderEntity(entity, exporter)
   }
 
   getArticle () {

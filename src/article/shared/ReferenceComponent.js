@@ -1,5 +1,4 @@
 import { NodeComponent } from '../../kit'
-import { renderEntity } from './entityHelpers'
 import { PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
 
@@ -8,7 +7,7 @@ export default class ReferenceComponent extends NodeComponent {
     const refNode = this.getNode()
     let el = $$('div').addClass('sc-reference')
     let label = _getReferenceLabel(refNode)
-    let html = renderEntity(refNode)
+    let html = this.context.api.renderEntity(refNode)
     // TODO: do we want to display something like this
     // if so, use the label provider
     html = html || '<i>Not available</i>'

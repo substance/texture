@@ -28,6 +28,15 @@ export default class FigureMetadataComponent extends NodeModelComponent {
     }
   }
 
+  _getProperties () {
+    let model = this.props.model
+    let permission = model.getPermission()
+    let properties = model.getProperties()
+    properties = properties.filter(p => p.name !== 'permission')
+    properties = properties.concat(permission.getProperties())
+    return properties
+  }
+
   _showLabelForProperty (prop) {
     // Don't render a label for content property to use up the full width
     if (prop === 'content') {

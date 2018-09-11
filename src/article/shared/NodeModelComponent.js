@@ -40,7 +40,7 @@ export default class NodeModelComponent extends Component {
     el.append(this._renderHeader($$))
 
     let hasHiddenProps = false
-    const properties = model.getProperties()
+    const properties = this._getProperties()
     for (let property of properties) {
       let hidden = !property.isRequired() && property.isEmpty()
       if (hidden) hasHiddenProps = true
@@ -100,6 +100,10 @@ export default class NodeModelComponent extends Component {
     el.append(footer)
 
     return el
+  }
+
+  _getProperties () {
+    return this.props.model.getProperties()
   }
 
   _getClassNames () {

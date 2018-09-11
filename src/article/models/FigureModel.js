@@ -23,6 +23,10 @@ export default class FigureModel extends NodeModel {
     return this._api.getModelById(this._node.content)
   }
 
+  getPermission () {
+    return this._api.getModelById(this._node.permission)
+  }
+
   getLabel () {
     return getLabel(this._node)
   }

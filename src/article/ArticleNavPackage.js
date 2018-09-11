@@ -18,6 +18,8 @@ export default {
       label: 'Metadata'
     })
 
+    // TODO: make reader great again
+    /*
     config.addViewMode({
       name: 'open-reader',
       viewName: 'reader',
@@ -25,5 +27,6 @@ export default {
       icon: 'fa-th-list',
       label: 'Reader'
     })
+    */
   }
 }

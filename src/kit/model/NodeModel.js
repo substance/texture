@@ -20,6 +20,15 @@ export default class NodeModel {
     return this._properties
   }
 
+  isEmpty () {
+    // TODO: what does isEmpty() mean on a general node?
+    // ATM we assume that this only makes sense for TextNodes
+    if (this._node.isText()) {
+      return this._node.isEmpty()
+    }
+    return false
+  }
+
   _initialize () {
     const api = this._api
     const node = this._node

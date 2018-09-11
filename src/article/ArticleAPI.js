@@ -114,8 +114,9 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   removeItemFromCollection (item, collection) {
+    const collectionId = collection.id
     this.articleSession.transaction(tx => {
-      tx.get(collection._node.id).removeChild(tx.get(item.id))
+      tx.get(collectionId).removeChild(tx.get(item.id))
       tx.delete(item.id)
       tx.selection = null
     })

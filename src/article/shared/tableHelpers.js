@@ -98,3 +98,7 @@ export function generateTable (doc, nrows, ncols, tableId) {
   }
   return table
 }
+
+const { getRangeFromMatrix } = tableHelpers
+
+export { getRangeFromMatrix }

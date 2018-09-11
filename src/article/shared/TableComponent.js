@@ -3,10 +3,8 @@ import {
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
-import { Managed } from '../../kit'
-import { getCellRange, computeUpdatedSelection } from '../shared/tableHelpers'
-import TableEditing from './TableEditing'
-import TableClipboard from './TableClipboard'
+import { Managed, ClipboardNew } from '../../kit'
+import { getCellRange, computeUpdatedSelection, createTableSelection } from '../shared/tableHelpers'
 import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
 
@@ -15,8 +13,7 @@ export default class TableComponent extends CustomSurface {
     super(...args)
 
     this._selectionData = {}
-    this._tableEditing = new TableEditing(this.context.editorSession, this.props.node.id, this.getId())
-    this._clipboard = new TableClipboard(this._tableEditing)
+    this._clipboard = new ClipboardNew()
   }
 
   getChildContext () {
@@ -235,7 +232,7 @@ export default class TableComponent extends CustomSurface {
           this._isSelecting = true
           selData.anchorCellId = target.id
           selData.focusCellId = target.id
-          this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
+          this._requestSelectionChange(this._createTableSelection(selData))
         }
       }
       return
@@ -247,7 +244,7 @@ export default class TableComponent extends CustomSurface {
         selData.anchorCellId = target.id
       }
       e.preventDefault()
-      this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
+      this._requestSelectionChange(this._createTableSelection(selData))
     }
   }
 
@@ -265,7 +262,7 @@ export default class TableComponent extends CustomSurface {
       let cellId = this._mapClientXYToCellId(e.clientX, e.clientY)
       if (cellId !== selData.focusCellId) {
         selData.focusCellId = cellId
-        this._requestSelectionChange(this._tableEditing.createTableSelection(selData))
+        this._requestSelectionChange(this._createTableSelection(selData))
       }
     }
   }
@@ -342,7 +339,7 @@ export default class TableComponent extends CustomSurface {
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
     if (e.detail.shiftKey) {
-      this._tableEditing.insertSoftBreak()
+      this.context.api.getTableAPI().insertSoftBreak()
     } else {
       this._nav(1, 0, false, { anchorCellId: cellEl.id, focusCellId: cellEl.id })
     }
@@ -359,19 +356,29 @@ export default class TableComponent extends CustomSurface {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
-    this._requestSelectionChange(this._tableEditing.createTableSelection({ anchorCellId: cellEl.id, focusCellId: cellEl.id }))
+    this._requestSelectionChange(this._createTableSelection({ anchorCellId: cellEl.id, focusCellId: cellEl.id }))
   }
 
   _onCopy (e) {
-    this._clipboard.onCopy(e)
-  }
-
-  _onPaste (e) {
-    this._clipboard.onPaste(e)
+    e.preventDefault()
+    e.stopPropagation()
+    let clipboardData = e.clipboardData
+    this._clipboard.copy(clipboardData, this.context)
   }
 
   _onCut (e) {
-    this._clipboard.onCut(e)
+    e.preventDefault()
+    e.stopPropagation()
+    let clipboardData = e.clipboardData
+    this._clipboard.cut(clipboardData, this.context)
+  }
+
+  _onPaste (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    let clipboardData = e.clipboardData
+    // TODO: allow to force plain-text paste
+    this._clipboard.paste(clipboardData, this.context)
   }
 
   _onContextMenu (e) {
@@ -400,13 +407,31 @@ export default class TableComponent extends CustomSurface {
   _requestEditCell (initialValue) {
     let selData = this._getSelectionData()
     if (selData) {
-      this._tableEditing.editCell(selData.anchorCellId, initialValue)
+      // type over cell
+      if (initialValue) {
+        // TODO: is there a more common action to describe this?
+        // seems that this is like 'typing'
+        // Otherwise it is only setting the selection
+        this._getTableApi().insertText(initialValue)
+      } else {
+        // TODO: do we have a general API to set the selection
+        // into a specific editor?
+        const doc = this.props.node.getDocument()
+        let cell = doc.get(selData.anchorCellId)
+        let path = cell.getPath()
+        // TODO: we need low-level API to set the selection
+        this.context.api._setSelection({
+          type: 'property',
+          path,
+          startOffset: cell.getLength(),
+          surfaceId: this.getId() + '/' + path.join('.')
+        })
+      }
     }
   }
 
   _requestSelectionChange (newSel) {
     // console.log('requesting selection change', newSel)
-    if (newSel) newSel.surfaceId = this.getId()
     this.context.editorSession.setSelection(newSel)
   }
 
@@ -440,7 +465,7 @@ export default class TableComponent extends CustomSurface {
     selData = selData || this._getSelectionData()
     if (selData) {
       let newSelData = computeUpdatedSelection(this.props.node, selData, dr, dc, expand)
-      this._requestSelectionChange(this._tableEditing.createTableSelection(newSelData))
+      this._requestSelectionChange(this._createTableSelection(newSelData))
     }
   }
 
@@ -451,7 +476,7 @@ export default class TableComponent extends CustomSurface {
   _clearSelection () {
     let selData = this._getSelectionData()
     if (selData) {
-      this._tableEditing.clearValues(selData.anchorCellId, selData.focusCellId)
+      this._getTableApi().deleteSelection()
     }
   }
 
@@ -491,7 +516,7 @@ export default class TableComponent extends CustomSurface {
   }
 
   _getActualCellComp (cellId) {
-    let table = this._tableEditing.getTable()
+    let table = this.props.node
     let cell = table.get(cellId)
     if (cell.shadowed) cell = cell.masterCell
     return this.refs[cell.id]
@@ -527,5 +552,16 @@ export default class TableComponent extends CustomSurface {
       }
     }
     return styles
+  }
+
+  _createTableSelection (selData) {
+    let sel = createTableSelection(selData)
+    sel.data.nodeId = this.props.node.id
+    sel.surfaceId = this.getId()
+    return sel
+  }
+
+  _getTableApi () {
+    return this.context.api.getTableAPI()
   }
 }

@@ -1,11 +1,12 @@
 import { keys } from 'substance'
+import { test } from 'substance-test'
 import {
   TableComponent, tableHelpers, TableEditing
 } from '../index'
-import { testAsync, getMountPoint, DOMEvent } from './testHelpers'
+import { getMountPoint, DOMEvent } from './testHelpers'
 import setupTestArticleSession from './setupTestArticleSession'
 
-testAsync('TableComponent: mounting a table component', async (t) => {
+test('TableComponent: mounting a table component', t => {
   let { table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -14,7 +15,7 @@ testAsync('TableComponent: mounting a table component', async (t) => {
   t.end()
 })
 
-testAsync('TableComponent: setting table selections', async (t) => {
+test('TableComponent: setting table selections', t => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -49,7 +50,7 @@ testAsync('TableComponent: setting table selections', async (t) => {
   t.end()
 })
 
-testAsync('TableComponent: mouse interactions', async (t) => {
+test('TableComponent: mouse interactions', t => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -81,7 +82,7 @@ testAsync('TableComponent: mouse interactions', async (t) => {
   t.end()
 })
 
-testAsync('TableComponent: keyboard interactions', async (t) => {
+test('TableComponent: keyboard interactions', t => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })

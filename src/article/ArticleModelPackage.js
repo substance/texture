@@ -1,6 +1,4 @@
-import { ListPackage } from 'substance'
-import TextureHTMLConverters from './TextureHTMLConverters'
-import XMLListNodeHTMLConverter from './XMLListNodeHTMLConverter'
+import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import LanguagesPackage from './LanguagesPackage'
 
@@ -25,11 +23,9 @@ export default {
     config.import(EntityLabelsPackage)
 
     // enable rich-text support for clipboard
-    TextureHTMLConverters.forEach(converter => {
+    ArticleHTMLConverters.forEach(converter => {
       config.addConverter('html', converter)
     })
-    config.addConverter('html', XMLListNodeHTMLConverter)
-    config.addConverter('html', ListPackage.ListItemHTMLConverter)
 
     // Registry of available languages
     config.import(LanguagesPackage)

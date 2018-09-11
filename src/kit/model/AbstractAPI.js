@@ -36,6 +36,13 @@ export default class AbstractAPI {
     return false
   }
 
+  // EXPERIMENTAL: want to be able to retrieve a higher-level API
+  // This can be overridden to provide some context specific API,
+  // e.g. such as a TableAPI.
+  _getEditorAPI (context) {
+    throw new Error('This method is abstract')
+  }
+
   _setValue (path, value) {
     this._getDocumentSession().transaction(tx => {
       tx.set(path, value)

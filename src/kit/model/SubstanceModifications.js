@@ -7,32 +7,18 @@ import {
   TextPropertyEditor as SubstanceTextPropertyEditor
 } from 'substance'
 
+import ClipboardNew from './ClipboardNew'
+
 /*
   This file contains derivations of core classes that
   are necessary to be compatible with the AppState and the Model API.
 */
 
-export class SurfaceNew extends SubstanceSurface {
-  constructor (parent, props, options) {
-    super(parent, _monkeyPatchSurfaceProps(parent, props), options)
-  }
-
-  setProps (newProps) {
-    return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
-  }
-}
+export class SurfaceNew extends ModifiedSurface(SubstanceSurface) {}
 
 // TODO: try to provide basic Surface and ContainerEditor implementations
 // making it easier to use a different data binding mechanism
-export class TextPropertyEditorNew extends SubstanceTextPropertyEditor {
-  constructor (parent, props, options) {
-    super(parent, _monkeyPatchSurfaceProps(parent, props), options)
-  }
-
-  setProps (newProps) {
-    return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
-  }
-
+export class TextPropertyEditorNew extends ModifiedSurface(SubstanceTextPropertyEditor) {
   // overriding event registration
   didMount () {
     let appState = this.context.appState
@@ -81,15 +67,7 @@ export class TextPropertyEditorNew extends SubstanceTextPropertyEditor {
 */
 // TODO: try to provide basic Surface and ContainerEditor implementations
 // making it easier to use a different data binding mechanism
-export class ContainerEditorNew extends SubstanceContainerEditor {
-  constructor (parent, props, options) {
-    super(parent, _monkeyPatchSurfaceProps(parent, props), options)
-  }
-
-  setProps (newProps) {
-    return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
-  }
-
+export class ContainerEditorNew extends ModifiedSurface(SubstanceContainerEditor) {
   // overriding event registration
   didMount () {
     let appState = this.context.appState
@@ -228,4 +206,43 @@ export class TextPropertyComponentNew extends SubstanceTextPropertyComponent {
   _getUnsupportedInlineNodeComponentClass () {
     return this.getComponent('unsupported-inline-node')
   }
+}
+
+function ModifiedSurface (Surface) {
+  class _ModifiedSurface extends Surface {
+    constructor (parent, props, options) {
+      super(parent, _monkeyPatchSurfaceProps(parent, props), options)
+    }
+
+    setProps (newProps) {
+      return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
+    }
+
+    _initializeClipboard () {
+      return new ClipboardNew()
+    }
+
+    _onCopy (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      let clipboardData = e.clipboardData
+      this.clipboard.copy(clipboardData, this.context)
+    }
+
+    _onCut (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      let clipboardData = e.clipboardData
+      this.clipboard.cut(clipboardData, this.context)
+    }
+
+    _onPaste (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      let clipboardData = e.clipboardData
+      // TODO: allow to force plain-text paste
+      this.clipboard.paste(clipboardData, this.context)
+    }
+  }
+  return _ModifiedSurface
 }

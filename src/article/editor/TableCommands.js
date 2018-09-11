@@ -1,7 +1,8 @@
 import { Command, getRangeFromMatrix, flatten } from 'substance'
-import { generateTable, getCellRange } from '../shared/tableHelpers'
-import TableEditing from '../shared/TableEditing'
+import { generateTable } from '../shared/tableHelpers'
 import InsertNodeCommand from './InsertNodeCommand'
+
+const DISABLED = { disabled: true }
 
 export class InsertTableCommand extends InsertNodeCommand {
   createNode (tx, params) {
@@ -24,155 +25,115 @@ export class InsertTableCommand extends InsertNodeCommand {
 
 class BasicTableCommand extends Command {
   getCommandState (params, context) { // eslint-disable-line no-unused-vars
-    const sel = params.selection
-    if (sel && sel.customType === 'table') {
-      let { nodeId, anchorCellId, focusCellId } = sel.data
-      let editorSession = params.editorSession
-      let doc = editorSession.getDocument()
-      let table = doc.get(nodeId)
-      let anchorCell = doc.get(anchorCellId)
-      let focusCell = doc.get(focusCellId)
-      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
-      return {
-        disabled: false,
-        anchorCell,
-        focusCell,
-        startRow,
-        endRow,
-        startCol,
-        endCol,
-        nrows: endRow - startRow + 1,
-        ncols: endCol - startCol + 1
-      }
-    }
-    // otherwise
-    return {
-      disabled: true
-    }
+    const tableApi = context.api.getTableAPI()
+    if (!tableApi.isTableSelected()) return DISABLED
+    const selData = tableApi._getSelectionData()
+    return Object.assign({ disabled: false }, selData)
   }
 
   execute (params, context) { // eslint-disable-line no-unused-vars
     const commandState = params.commandState
     if (commandState.disabled) return
-    let editorSession = params.editorSession
-    let sel = params.selection
-    let nodeId = sel.data.nodeId
-    let surfaceId = sel.surfaceId
-    let editing = new TableEditing(editorSession, nodeId, surfaceId)
-    return this.__execute(editing, commandState)
+
+    const tableApi = context.api.getTableAPI()
+    return this._execute(tableApi, commandState)
   }
 }
 
 export class InsertCellsCommand extends BasicTableCommand {
-  __execute (editing, { startRow, startCol, endRow, endCol, ncols, nrows }) {
-    let insertPos = this.config.spec.pos
-    let dim = this.config.spec.dim
+  _execute (tableApi, { ncols, nrows }) {
+    const mode = this.config.spec.pos
+    const dim = this.config.spec.dim
     if (dim === 'row') {
-      let pos = insertPos === 'below' ? endRow + 1 : startRow
-      editing.insertRows(pos, nrows)
+      tableApi.insertRows(mode, nrows)
     } else {
-      let pos = insertPos === 'right' ? endCol + 1 : startCol
-      editing.insertCols(pos, ncols)
+      tableApi.insertCols(mode, ncols)
     }
     return true
   }
 }
 
 export class DeleteCellsCommand extends BasicTableCommand {
-  __execute (editing, { startRow, startCol, nrows, ncols }) {
-    let dim = this.config.spec.dim
+  _execute (tableApi, { startRow, startCol, nrows, ncols }) {
+    const dim = this.config.spec.dim
     if (dim === 'row') {
-      editing.deleteRows(startRow, nrows)
+      tableApi.deleteRows()
     } else {
-      editing.deleteCols(startCol, ncols)
+      tableApi.deleteCols()
     }
     return true
   }
 }
 
 export class TableSelectAllCommand extends BasicTableCommand {
-  __execute (editing) {
-    editing.selectAll()
+  _execute (tableApi) {
+    tableApi.selectAll()
     return true
   }
 }
 
 export class ToggleCellHeadingCommand extends BasicTableCommand {
   getCommandState (params, context) { // eslint-disable-line no-unused-vars
-    const sel = params.selection
-    if (sel && sel.customType === 'table') {
-      let { nodeId, anchorCellId, focusCellId } = sel.data
-      let editorSession = params.editorSession
-      let doc = editorSession.getDocument()
-      let table = doc.get(nodeId)
-      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
-      let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
-      cells = flatten(cells).filter(c => !c.shadowed)
-      let onlyHeadings = true
-      for (let i = 0; i < cells.length; i++) {
-        if (!cells[i].getAttribute('heading')) {
-          onlyHeadings = false
-          break
-        }
-      }
-      return {
-        disabled: false,
-        active: onlyHeadings,
-        heading: !onlyHeadings,
-        cellIds: cells.map(c => c.id)
+    let commandState = super.getCommandState(params, context)
+    if (commandState.disabled) return commandState
+
+    let { table, startRow, endRow, startCol, endCol } = commandState
+    let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
+    cells = flatten(cells).filter(c => !c.shadowed)
+    let onlyHeadings = true
+    for (let i = 0; i < cells.length; i++) {
+      if (!cells[i].getAttribute('heading')) {
+        onlyHeadings = false
+        break
       }
     }
-    // otherwise
-    return {
-      disabled: true
-    }
+    return Object.assign(commandState, {
+      active: onlyHeadings,
+      cellIds: cells.map(c => c.id)
+    })
   }
 
-  __execute (editing, { cellIds, heading }) {
-    editing.setHeading(cellIds, heading)
+  _execute (tableApi, { cellIds, heading }) {
+    tableApi.toggleHeading(cellIds)
     return true
   }
 }
 
 export class ToggleCellMergeCommand extends BasicTableCommand {
   getCommandState (params, context) { // eslint-disable-line no-unused-vars
-    const sel = params.selection
-    if (sel && sel.customType === 'table') {
-      let { nodeId, anchorCellId, focusCellId } = sel.data
-      let editorSession = params.editorSession
-      let doc = editorSession.getDocument()
-      let table = doc.get(nodeId)
-      let { startRow, startCol, endRow, endCol } = getCellRange(table, anchorCellId, focusCellId)
-      let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
-      cells = flatten(cells).filter(c => !c.shadowed)
-      let onlyMerged = true
-      for (let i = 0; i < cells.length; i++) {
-        let cell = cells[i]
-        let rowspan = cell.getAttribute('rowspan')
-        let colspan = cell.getAttribute('colspan')
-        if (!rowspan && !colspan) {
-          onlyMerged = false
-          break
-        }
-      }
-      return {
-        disabled: false,
-        active: onlyMerged,
-        merge: !onlyMerged,
-        cellIds: cells.map(c => c.id)
+    let commandState = super.getCommandState(params, context)
+    if (commandState.disabled) return commandState
+
+    let { table, nrows, ncols, startRow, startCol } = commandState
+    let cell = table.getCell(startRow, startCol)
+    let rowspan = cell.rowspan
+    let colspan = cell.colspan
+    // ATTENTION: at the moment the selection is expressed in absolute
+    // rows and cols, not considering colspans and rowspans
+    // If a single cell with row- or colspan is selected, then
+    // nrows=rowspan and ncols=colspan
+    if (nrows > 1 || ncols > 1) {
+      if (rowspan < nrows || colspan < ncols) {
+        commandState.merge = true
+      } else {
+        commandState.active = true
+        commandState.unmerge = true
       }
     }
-    // otherwise
-    return {
-      disabled: true
+    // only enable if one merge option is enabled
+    // TODO: if table commands are enabled this command should
+    // be shown even if disabled
+    if (!commandState.merge && !commandState.unmerge) {
+      return DISABLED
     }
+    return commandState
   }
 
-  __execute (editing, { cellIds, merge }) {
+  _execute (tableApi, { merge, unmerge }) {
     if (merge) {
-      editing.merge(cellIds)
-    } else {
-      editing.unmerge(cellIds)
+      tableApi.merge()
+    } else if (unmerge) {
+      tableApi.unmerge()
     }
     return true
   }

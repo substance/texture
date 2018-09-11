@@ -46,6 +46,10 @@ export default class EditorPanel extends Component {
     this.editorSession.initialize()
     this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
+
+    // HACK: resetting the app state here, because things might get 'dirty' during initialization
+    // TODO: find out if there is a better way to do this
+    this.appState._reset()
   }
 
   dispose () {

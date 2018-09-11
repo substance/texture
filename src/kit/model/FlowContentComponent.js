@@ -45,7 +45,8 @@ export default class FlowContentComponent extends ContainerEditorNew {
   }
 
   render ($$) {
-    return super.render($$).addClass('sc-flow-content')
+    let el = super.render($$).addClass('sc-flow-content')
+    return el
   }
 
   // overriding the default implementation, to control the behavior
@@ -79,6 +80,8 @@ export default class FlowContentComponent extends ContainerEditorNew {
     let props = super._getNodeProps(node)
     let model = this.context.api.getModelById(node.id)
     props.model = model
+    // TODO: get placeholder message using this.getLabel()
+    props.placeholder = `Enter ${this.props.label}`
     return props
   }
 }

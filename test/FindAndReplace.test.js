@@ -7,14 +7,7 @@ import setupTestApp from './setupTestApp'
 
 test('FindAndReplace: open find dialog', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
-  let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'manuscript')
-  let editor = articlePanel.find('.sc-manuscript-editor')
-  setCursor(editor, 'p-2.content', 290)
-  // open findAndReplace dialog
-  let fnr = editor.context.findAndReplaceManager
-  fnr.openDialog()
-  let fnrDialog = editor.find('.sc-find-and-replace-dialog')
+  let { fnrDialog } = _openFindAndReplaceDialog(app)
   t.notNil(fnrDialog, 'The dialog should be rendered')
   t.notOk(fnrDialog.hasClass('sm-hidden'), '.. and should be visible')
   t.end()
@@ -22,18 +15,38 @@ test('FindAndReplace: open find dialog', t => {
 
 test('FindAndReplace: simple search', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(app)
+  let input = fnrDialog.find('.sm-find input')
+  input.val('Lorem')
+  input.el.emit('input')
+  let state = fnrManager._getState()
+  t.equal(state.count, 19, 'The number of case-insensitive matches should be correct')
+  t.end()
+})
+
+test('FindAndReplace: clear search pattern', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(app)
+  let input = fnrDialog.find('.sm-find input')
+  // first set the search field
+  input.val('Lorem')
+  input.el.emit('input')
+  // then clear it again
+  input.val('')
+  input.el.emit('input')
+  let state = fnrManager._getState()
+  t.equal(state.count, 0, 'The number of case-insensitive matches should be correct')
+  t.end()
+})
+
+function _openFindAndReplaceDialog (app) {
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'manuscript')
   let editor = articlePanel.find('.sc-manuscript-editor')
   setCursor(editor, 'p-2.content', 290)
   // open findAndReplace dialog
-  let fnr = editor.context.findAndReplaceManager
-  fnr.openDialog()
+  let fnrManager = editor.context.findAndReplaceManager
+  fnrManager.openDialog()
   let fnrDialog = editor.find('.sc-find-and-replace-dialog')
-  let input = fnrDialog.find('.sm-find input')
-  input.val('Lorem')
-  input.el.emit('input')
-  let state = fnr._getState()
-  t.equal(state.count, 19, 'The number of case-insensitive matches should be correct')
-  t.end()
-})
+  return { editor, fnrManager, fnrDialog }
+}

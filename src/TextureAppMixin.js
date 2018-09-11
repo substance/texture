@@ -10,7 +10,7 @@ export default function TextureAppMixin (ParentAppChrome) {
       if (archive) {
         const Texture = this._getAppClass()
         el.append(
-          $$(Texture, { archive })
+          $$(Texture, { archive }).ref('texture')
         )
       } else if (error) {
         if (error.type === 'jats-import-error') {

@@ -12,11 +12,6 @@ export default class ArticlePanel extends Component {
     })
   }
 
-  _updateViewName (viewName) {
-    this.context.appState.viewName = viewName
-    this.rerender()
-  }
-
   _initialize (props) {
     const archive = props.archive
     const config = props.config
@@ -95,7 +90,7 @@ export default class ArticlePanel extends Component {
       archive,
       config,
       articleSession
-    })
+    }).ref('content')
   }
 
   _createAppState (config) { // eslint-disable-line no-unused-vars
@@ -104,5 +99,25 @@ export default class ArticlePanel extends Component {
     })
     appState.addObserver(['view'], this.rerender, this, { stage: 'render' })
     return appState
+  }
+
+  _updateViewName (viewName) {
+    this.context.appState.viewName = viewName
+    this.rerender()
+  }
+
+  _handleKeydown (e) {
+    // console.log('ArticlePanel._handleKeydown', e)
+    // ATTENTION: asking the currently active content to handle the keydown event first
+    let handled = this.refs.content._onKeydown(e)
+    // Note: if we had a keyboardManager here we could ask it to handle the event
+    // if (!handled) {
+    //   handled = this.context.keyboardManager.onKeydown(e, this.context)
+    // }
+    if (handled) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+    return handled
   }
 }

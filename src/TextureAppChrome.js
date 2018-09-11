@@ -89,9 +89,10 @@ export default class TextureAppChrome extends Component {
   _updateTitle () {}
 
   _keyDown (event) {
+    // TODO: should this really be suppressed here?
     if (event.key === 'Dead') return
-    if (this._handleKeyDown) {
-      this._handleKeyDown(event)
+    if (this._handleKeydown) {
+      this._handleKeydown(event)
     }
   }
 

@@ -167,10 +167,18 @@ Abstract.type = 'abstract'
 
 class Heading extends XMLTextElement {
   getLevel () {
-    return parseInt(this.getAttribute('level') || '1', 10)
+    return Math.max(parseInt(this.getAttribute('level') || '1', 10), 1)
   }
   setLevel (level) {
+    level = Math.max(1, level)
     this.setAttribute('level', String(level))
+  }
+
+  get level () {
+    return this.getLevel()
+  }
+  set level (level) {
+    this.setLevel(level)
   }
 }
 Heading.type = 'heading'

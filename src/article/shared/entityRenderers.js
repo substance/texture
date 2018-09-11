@@ -280,7 +280,7 @@ function articleRenderer ($$, entityId, entityDb, exporter) {
   if (entity.title) {
     fragments.push(
       ' ',
-      // _renderHTML($$, entity.title),
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
       '.'
     )
   }
@@ -335,7 +335,7 @@ function dataPublicationRenderer ($$, entityId, entityDb, exporter) {
   if (entity.title) {
     fragments.push(
       ' ',
-      // _renderHTML($$, entity.title),
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
       '. '
     )
   }
@@ -376,7 +376,7 @@ function magazineArticleRenderer ($$, entityId, entityDb, exporter) {
   if (entity.title) {
     fragments.push(
       ' ',
-      // _renderHTML($$, entity.title),
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
       '. '
     )
   }

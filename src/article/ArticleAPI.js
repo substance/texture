@@ -452,6 +452,20 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _insertPerson (person, collection) {
+    const collectionId = collection.id
+    this.articleSession.transaction(tx => {
+      let bio = tx.create({type: 'bio'}).append(
+        tx.create({type: 'p'})
+      )
+      person.bio = bio.id
+      let node = tx.create(person)
+      tx.get(collectionId).appendChild(node)
+      let newSelection = this._selectFirstRequiredProperty(node)
+      tx.setSelection(newSelection)
+    })
+  }
+
   _getSelection () {
     return this.articleSession.editorState.selection
   }

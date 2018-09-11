@@ -1,7 +1,25 @@
+import { isArray } from 'substance'
 import ValueComponent from './ValueComponent'
 import MultiSelectInput from '../ui/MultiSelectInput'
 
 export default class ManyRelationshipComponent extends ValueComponent {
+  didMount () {
+    // TODO: in case of relationships it is unfortunately not that simple to detect
+    // a change that is relevant to rerendering
+    // 1. a target id has been added / set
+    // 2. one of the target ids has changed
+    // 3. one of the target ids has been deleted
+    // 4. a new available target has been added
+    // the last is pretty much impossible to detect in a general way
+    // but we can live with that as long this is queried everytime the
+    // component is rendered
+    this.context.appState.addObserver(['document'], this._rerenderOnModelChangeIfNecessary, this, { stage: 'render' })
+  }
+
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
   render ($$) {
     const label = this.getLabel('select-item') + ' ' + this.props.label
     const options = this.getAvailableOptions()
@@ -52,5 +70,31 @@ export default class ManyRelationshipComponent extends ValueComponent {
     if (this.context.editable) {
       this.props.model.toggleTarget(target)
     }
+  }
+
+  _rerenderOnModelChangeIfNecessary (change) {
+    let updateNeeded = Boolean(change.updated[this._getPath()])
+    if (!updateNeeded) {
+      let ids = this.props.model.getValue()
+      if (ids) {
+        if (!isArray(ids)) {
+          ids = [ids]
+        }
+        for (let id of ids) {
+          if (change.deleted[id] || change.updated[id]) {
+            updateNeeded = true
+            break
+          }
+        }
+      }
+    }
+    if (updateNeeded) {
+      this._rerenderOnModelChange()
+    }
+  }
+
+  _rerenderOnModelChange () {
+    // console.log('Rerendering RelationshipComponent because model has changed', this._getPath())
+    this.rerender()
   }
 }

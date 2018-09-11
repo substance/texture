@@ -145,13 +145,10 @@
       <optional>
         <ref name="title-group"/>
       </optional>
-      <!-- we support 0..2 contrib groups, one for authors, one for editors -->
-      <optional>
+      <!-- TODO: find a better way to encode quantities here -->
+      <zeroOrMore>
         <ref name="contrib-group"/>
-      </optional>
-      <optional>
-        <ref name="contrib-group"/>
-      </optional>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="aff"/>
       </zeroOrMore>
@@ -465,10 +462,6 @@
       <optional>
         <ref name="abstract"/>
       </optional>
-      <optional>
-        <ref name="abstract"/>
-      </optional>
-      <!-- TODO: quantity? -->
       <zeroOrMore>
         <ref name="access.class"/>
       </zeroOrMore>

@@ -46,6 +46,10 @@ export default class ArticleAPI extends EditorAPI {
   getModelById (id) {
     let node = this.article.get(id)
     if (node) {
+      // As an optimization, we keep the model once created on the node
+      // which is ok, as model and node are 1-to-1.
+      if (node._model) return node._model
+
       // now check if there is a custom model for this type
       let ModelClass = this.modelRegistry[node.type]
       // TODO: we could go and check if there is a component
@@ -62,6 +66,7 @@ export default class ArticleAPI extends EditorAPI {
       }
       let model = this._getModelForNode(node)
       if (model) {
+        node._model = model
         return model
       }
     }

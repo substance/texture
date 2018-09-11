@@ -3,6 +3,7 @@ import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import LanguagesPackage from './LanguagesPackage'
 
 import FigureModel from './models/FigureModel'
+import ArticleRecordModel from './models/ArticleRecordModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
 import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import AwardCollectionModel from './models/AwardCollectionModel'
@@ -48,6 +49,7 @@ export default {
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)
     config.addModel('figure', FigureModel)
+    config.addModel('article-record', ArticleRecordModel)
     config.addModel('table-figure', FigureModel)
     config.addModel('xref', XrefModel)
 

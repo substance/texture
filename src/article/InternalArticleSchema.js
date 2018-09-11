@@ -640,6 +640,7 @@ InternalArticleSchema.addNodes([
   'body',
   'bio',
   'caption',
+  'code',
   'fn',
   'graphic',
   'label',

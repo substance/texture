@@ -9,6 +9,7 @@ import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import { generateTable } from './shared/tableHelpers'
+import { createEmptyElement } from './articleHelpers'
 
 // TODO: this should come from configuration
 const COLLECTIONS = {
@@ -468,18 +469,20 @@ export default class ArticleAPI extends EditorAPI {
 
   _insertFootnote (item, footnotes) {
     this.articleSession.transaction(tx => {
-      let node = tx.create(item)
-      let p = tx.create({type: 'p'})
-      node.append(p)
-      tx.get(footnotes._node.id).appendChild(node)
-      let path = [p.id, 'content']
-      let newSelection = {
-        type: 'property',
-        path,
-        startOffset: 0,
-        surfaceId: node.id
-      }
-      tx.setSelection(newSelection)
+      // let node = tx.create(item)
+      // let p = tx.create({type: 'p'})
+      // node.append(p)
+      tx.get(footnotes._node.id).appendChild(
+        createEmptyElement(tx, 'footnote')
+      )
+      // let path = [p.id, 'content']
+      // let newSelection = {
+      //   type: 'property',
+      //   path,
+      //   startOffset: 0,
+      //   surfaceId: node.id
+      // }
+      // tx.setSelection(newSelection)
     })
   }
 

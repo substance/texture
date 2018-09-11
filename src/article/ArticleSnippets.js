@@ -1,11 +1,11 @@
 export const FIGURE_SNIPPET = `
-  <fig>
+  <fig xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
     <label></label>
     <caption>
       <title></title>
       <p></p>
     </caption>
-    <graphic xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="" mimetype="image" xlink:href="" />
+    <graphic mime-subtype="" mimetype="image" xlink:href="" />
     <permissions>
       <copyright-statement></copyright-statement>
       <copyright-year></copyright-year>
@@ -16,6 +16,12 @@ export const FIGURE_SNIPPET = `
       </license>
     </permissions>
   </fig>
+`
+
+export const FOOTNOTE_SNIPPET = `
+  <fn>
+    <p></p>
+  </fn>
 `
 
 export const TABLE_SNIPPET = `

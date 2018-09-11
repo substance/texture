@@ -52,7 +52,7 @@ export default class FindAndReplaceManager {
     if (state.pattern) {
       this._searchAndHighlight()
     } else {
-      this._clearHighlights()
+      this._clear()
     }
     state.cursor = -1
     this._updateState(state)
@@ -193,6 +193,13 @@ export default class FindAndReplaceManager {
       m.textProperty = tp
       return m
     })
+  }
+
+  _clear () {
+    let state = this._getState()
+    this._clearHighlights()
+    state.matches = new Map()
+    state.count = 0
   }
 
   _clearHighlights () {

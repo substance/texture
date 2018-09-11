@@ -218,11 +218,6 @@ export default class ArticleAPI extends EditorAPI {
     return new FlowContentModel(this, body.getContentPath())
   }
 
-  getFootnotes () {
-    // TODO: this should return a Model for article.get('footnotes')
-    return []
-  }
-
   getFigures () {
     let figs = this.getArticle().get('body').findAll('fig')
     return figs.map(fig => this.getModel(fig.type, fig))

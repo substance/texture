@@ -3,7 +3,15 @@
   font-size: var(--input-font-size);
   line-height: var(--input-line-height);
   cursor: pointer;
+  padding: var(--input-padding);
+  margin: var(--negative-input-padding);
+  border-radius: var(--input-border-radius);
+  border: var(--input-default-border);
+}
 
+.sc-multi-select-input.sm-active {
+  border: var(--input-focus-border);
+  background: #218df312;
 }
 
 .sc-multi-select-input.sm-empty .se-label {
@@ -13,7 +21,7 @@
 
 .sc-multi-select-input .se-select-editor {
   position: absolute;
-  top: 35px;
+  top: 55px;
   left: 200px;
   background: #fff;
   border: 1px solid #8a8a8a;

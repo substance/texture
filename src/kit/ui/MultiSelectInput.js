@@ -17,6 +17,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     )
 
     if (this._canShowOverlay()) {
+      el.addClass('sm-active')
       el.append(
         this.renderValues($$)
       )

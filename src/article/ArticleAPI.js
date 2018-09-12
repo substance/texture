@@ -1,4 +1,4 @@
-import { without, selectionHelpers } from 'substance'
+import { without } from 'substance'
 import {
   DynamicCollection,
   StringModel, TextModel, FlowContentModel,
@@ -9,7 +9,7 @@ import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import { generateTable } from './shared/tableHelpers'
-import { createEmptyElement } from './articleHelpers'
+import { createEmptyElement, importFigure, setContainerSelection } from './articleHelpers'
 
 // TODO: this should come from configuration
 const COLLECTIONS = {
@@ -407,44 +407,16 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   // TODO: can we improve this?
-  // 1. Here we would need a transaction on archive level, creating assets, plus placing them inside the article body.
-  // 2. It would be interesting to use a more generic interface maybe even JATS
-  // TODO: Use JATS snippet for figure creation
+  // Here we would need a transaction on archive level, creating assets, plus placing them inside the article body.
   _insertFigures (files) {
     const articleSession = this.articleSession
-    let LAST = files.length - 1
     let paths = files.map(file => {
       return this.archive.createFile(file)
     })
     let sel = articleSession.getSelection()
     if (!sel || !sel.containerId) return
-    let containerId = sel.containerId
     articleSession.transaction(tx => {
-      files.map((file, idx) => {
-        let path = paths[idx]
-        let mimeData = file.type.split('/')
-        let caption = tx.createElement('caption').append(
-          tx.createElement('p')
-        )
-        let graphic = tx.createElement('graphic').attr({
-          'mime-subtype': mimeData[1],
-          'mimetype': mimeData[0],
-          'xlink:href': path
-        })
-        let permission = tx.create({
-          type: 'permission'
-        })
-        let figure = tx.create({
-          type: 'figure',
-          caption: caption.id,
-          content: graphic.id,
-          permission: permission.id
-        })
-        tx.insertBlockNode(figure)
-        if (idx === LAST) {
-          selectionHelpers.selectNode(tx, figure.id, containerId)
-        }
-      })
+      importFigure(tx, sel, files, paths)
     })
   }
 
@@ -469,20 +441,11 @@ export default class ArticleAPI extends EditorAPI {
 
   _insertFootnote (item, footnotes) {
     this.articleSession.transaction(tx => {
-      // let node = tx.create(item)
-      // let p = tx.create({type: 'p'})
-      // node.append(p)
+      const node = createEmptyElement(tx, 'footnote')
       tx.get(footnotes._node.id).appendChild(
-        createEmptyElement(tx, 'footnote')
+        node
       )
-      // let path = [p.id, 'content']
-      // let newSelection = {
-      //   type: 'property',
-      //   path,
-      //   startOffset: 0,
-      //   surfaceId: node.id
-      // }
-      // tx.setSelection(newSelection)
+      setContainerSelection(tx, node)
     })
   }
 

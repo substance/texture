@@ -1,12 +1,10 @@
-/* global Blob */
-import { platform } from 'substance'
 import { test } from 'substance-test'
-import { setCursor } from './integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent } from './integrationTestHelpers'
 import setupTestApp from './setupTestApp'
 
 test('ManuscriptEditor: add figure', t => {
   let { app } = setupTestApp(t)
-  let editor = _openManuscriptEditor(app)
+  let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 290)
   // ATTENTION: it is not possible to trigger the file-dialog programmatically
   // instead we are just checking that this does not throw
@@ -22,7 +20,7 @@ test('ManuscriptEditor: add figure', t => {
 
 test('ManuscriptEditor: TOC should be updated on change', t => {
   let { app } = setupTestApp(t)
-  let editor = _openManuscriptEditor(app)
+  let editor = openManuscriptEditor(app)
   let toc = editor.find('.sc-toc')
   editor.context.editorSession.transaction(tx => {
     tx.set(['sec-1', 'content'], 'TEST')
@@ -34,7 +32,7 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
 
 test('ManuscriptEditor: Switch paragraph to heading', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = _openManuscriptEditor(app)
+  let editor = openManuscriptEditor(app)
   editor.context.editorSession.transaction(tx => {
     let body = tx.get('body')
     body.append(tx.create({
@@ -54,25 +52,3 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   t.notNil(h1El, 'there should be a <h1> element now')
   t.end()
 })
-
-function _openManuscriptEditor (app) {
-  let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'manuscript')
-  return articlePanel.find('.sc-manuscript-editor')
-}
-
-class PseudoFileEvent {
-  constructor () {
-    let blob
-    if (platform.inBrowser) {
-      blob = new Blob(['abc'], {type: 'image/png'})
-      blob.name = 'test.png'
-    // FIXME: do something real in NodeJS
-    } else {
-      blob = { name: 'test.png', type: 'image/png' }
-    }
-    this.currentTarget = {
-      files: [ blob ]
-    }
-  }
-}

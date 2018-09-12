@@ -1,5 +1,5 @@
-/* global vfs, TEST_VFS */
-import { ObjectOperation, DocumentChange, isString, isArray } from 'substance'
+/* global vfs, TEST_VFS, Blob */
+import { ObjectOperation, DocumentChange, isString, isArray, platform } from 'substance'
 import { TextureWebApp, VfsStorageClient } from '../index'
 import TestVfs from './TestVfs'
 
@@ -95,4 +95,32 @@ export function setupTestVfs (mainVfs, archiveId) {
     }
   }
   return new TestVfs(data)
+}
+
+export function openManuscriptEditor (app) {
+  let articlePanel = app.find('.sc-article-panel')
+  articlePanel.send('updateViewName', 'manuscript')
+  return articlePanel.find('.sc-manuscript-editor')
+}
+
+export function openMetadataEditor (app) {
+  let articlePanel = app.find('.sc-article-panel')
+  articlePanel.send('updateViewName', 'metadata')
+  return articlePanel.find('.sc-metadata-editor')
+}
+
+export class PseudoFileEvent {
+  constructor () {
+    let blob
+    if (platform.inBrowser) {
+      blob = new Blob(['abc'], {type: 'image/png'})
+      blob.name = 'test.png'
+    // FIXME: do something real in NodeJS
+    } else {
+      blob = { name: 'test.png', type: 'image/png' }
+    }
+    this.currentTarget = {
+      files: [ blob ]
+    }
+  }
 }

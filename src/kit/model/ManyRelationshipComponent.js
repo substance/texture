@@ -29,7 +29,8 @@ export default class ManyRelationshipComponent extends ValueComponent {
       el.append(
         $$(MultiSelectInput, {
           label,
-          selected
+          selected,
+          overlayId: this.props.model.id
         }).ref('select')
       )
     } else {

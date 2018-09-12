@@ -17,9 +17,42 @@ export default class MetadataEditor extends EditorPanel {
     this.appState._reset()
   }
 
+  didMount () {
+    super.didMount()
+    this._restoreViewport()
+  }
+
+  didUpdate () {
+    super.didUpdate()
+    this._restoreViewport()
+  }
+
   dispose () {
     super.dispose()
     this.articleValidator.dispose()
+  }
+
+  getViewport () {
+    return {
+      x: this.refs.contentPanel.getScrollPosition()
+    }
+  }
+
+  _restoreViewport () {
+    const editorSession = this._getEditorSession()
+    if (this.props.viewport) {
+      this.refs.contentPanel.setScrollPosition(this.props.viewport.x)
+    }
+    // HACK: This should work without a timeout, however it seems that
+    // Editor.didMount is called earlier than the didMounts of the different
+    // surfaces which do the surface registering, required here.
+    setTimeout(() => {
+      // We also use this place to rerender the selection
+      let focusedSurface = editorSession.getFocusedSurface()
+      if (focusedSurface) {
+        focusedSurface.rerenderDOMSelection()
+      }
+    })
   }
 
   render ($$) {

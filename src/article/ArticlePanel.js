@@ -7,6 +7,9 @@ export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
     this._initialize(this.props, this.state)
+
+    // Store the viewports, so we can restore scroll positions
+    this._viewports = {}
     this.handleActions({
       'updateViewName': this._updateViewName
     })
@@ -66,6 +69,7 @@ export default class ArticlePanel extends Component {
     const archive = props.archive
     const articleSession = props.documentSession
     const config = props.config.getConfiguration(viewName)
+    const viewport = this._viewports[viewName]
 
     let ContentComponent
     switch (viewName) {
@@ -85,6 +89,7 @@ export default class ArticlePanel extends Component {
         throw new Error('Unsupported view: ' + viewName)
     }
     return $$(ContentComponent, {
+      viewport,
       viewName,
       api,
       archive,
@@ -102,7 +107,9 @@ export default class ArticlePanel extends Component {
   }
 
   _updateViewName (viewName) {
+    let oldViewName = this.context.appState.viewName
     this.context.appState.viewName = viewName
+    this._viewports[oldViewName] = this.refs.content.getViewport()
     this.rerender()
   }
 

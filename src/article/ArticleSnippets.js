@@ -1,69 +1,37 @@
-export const FIGURE_SNIPPET = `
+export const FIGURE_SNIPPET = () => `
   <fig xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
-    <label></label>
-    <caption>
-      <title></title>
-      <p></p>
-    </caption>
+    <caption></caption>
     <graphic mime-subtype="" mimetype="image" xlink:href="" />
-    <permissions>
-      <copyright-statement></copyright-statement>
-      <copyright-year></copyright-year>
-      <copyright-holder></copyright-holder>
-      <license>
-        <ali:license_ref></ali:license_ref>
-        <license-p></license-p>
-      </license>
-    </permissions>
   </fig>
 `
 
-export const FOOTNOTE_SNIPPET = `
-  <fn>
-    <p></p>
-  </fn>
+export const FOOTNOTE_SNIPPET = () => `
+  <fn></fn>
 `
 
-export const PERSON_SNIPPET = `
+export const PERSON_SNIPPET = () => `
   <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
     <name>
       <surname></surname>
       <given-names></given-names>
       <suffix></suffix>
     </name>
-    <bio>
-      <p></p>
-    </bio>
+    <bio></bio>
   </contrib>
 `
 
-export const TABLE_SNIPPET = `
-  <table-wrap id="table1">
-    <label></label>
+export const TABLE_SNIPPET = (nrows, ncols) => `
+  <table-wrap>
     <caption>
-      <title></title>
-      <p></p>
     </caption>  
     <table>
       <tbody>
         <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
+          ${Array(ncols).fill().map(() => '<th></th>').join('')}
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
+        ${Array(nrows).fill().map(() => `<tr>
+          ${Array(ncols).fill().map(() => '<td></td>').join('')}
+        </tr>`).join('')}
       </tbody>
     </table>
   </table-wrap>

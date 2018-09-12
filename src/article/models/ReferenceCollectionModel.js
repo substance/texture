@@ -20,4 +20,8 @@ export default class ReferenceCollectionModel extends DefaultCollectionModel {
   removeItem (item) {
     this._api.deleteReference(item, this)
   }
+
+  get isRemovable () {
+    return true
+  }
 }

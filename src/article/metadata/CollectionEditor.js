@@ -48,7 +48,7 @@ export default class CollectionEditor extends ModelComponent {
   }
 
   _removeCollectionItem (item) {
-    const model = this.props.model
-    model.removeItem(item)
+    const collection = this.props.model
+    collection.removeItem(item)
   }
 }

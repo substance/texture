@@ -12,6 +12,10 @@ export default class FootnoteCollectionModel extends DefaultCollectionModel {
     return this._api._insertFootnote(this._prepareItem(item), this)
   }
 
+  get isRemovable () {
+    return true
+  }
+
   _getItemType () {
     return 'fn'
   }

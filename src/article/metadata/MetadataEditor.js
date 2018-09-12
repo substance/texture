@@ -12,7 +12,9 @@ export default class MetadataEditor extends EditorPanel {
     this.articleValidator = new ExperimentalArticleValidator(this.editorSession, this.editorSession.editorState)
     this.model = new MetadataModel(this.api)
 
+    // ATTENTION/HACK: this is making all properties dirty, so we have to reset the appState after that
     this.articleValidator.initialize()
+    this.appState._reset()
   }
 
   dispose () {

@@ -14,7 +14,7 @@ export default class EditorState extends AppState {
     let doc = initialState.document
     let impl = this._getImpl()
     // EXPERIMENTAL:
-    // one observer for all slots that looks watches for document changes and marks paths as dirty
+    // one observer for all slots that watches for document changes and marks paths as dirty
     // this is also used to broadcast other node based changes such as node state updates
     let documentObserver = new DocumentObserver(doc)
     impl.documentObserver = documentObserver

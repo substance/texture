@@ -1,11 +1,28 @@
+import { isArray } from 'substance'
 import ValueComponent from './ValueComponent'
 import MultiSelectInput from '../ui/MultiSelectInput'
 
 export default class ManyRelationshipComponent extends ValueComponent {
+  didMount () {
+    // TODO: in case of relationships it is unfortunately not that simple to detect
+    // a change that is relevant to rerendering
+    // 1. a target id has been added / set
+    // 2. one of the target ids has changed
+    // 3. one of the target ids has been deleted
+    // 4. a new available target has been added
+    // the last is pretty much impossible to detect in a general way
+    // but we can live with that as long this is queried everytime the
+    // component is rendered
+    this.context.appState.addObserver(['document'], this._rerenderOnModelChangeIfNecessary, this, { stage: 'render' })
+  }
+
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
   render ($$) {
-    // TODO: we need a label for the dropdown here
-    const label = this.props.label
-    let options = this.props.model.getAvailableTargets()
+    const label = this.getLabel('select-item') + ' ' + this.props.label
+    const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)
     let el = $$('div').addClass('sc-many-relationship')
     if (this.context.editable) {
@@ -13,11 +30,18 @@ export default class ManyRelationshipComponent extends ValueComponent {
         $$(MultiSelectInput, {
           label,
           selected,
-          options
+          overlayId: this.props.model.id
         }).ref('select')
       )
     } else {
-      const selectedLabels = selected.map(item => item.toString())
+      const selectedLabels = []
+      // ATTENTION: doing this with a for loop as it can happen
+      // that an item is undefined (if id is not avaiable)
+      for (let item of selected) {
+        if (item) {
+          selectedLabels.push(item.toString())
+        }
+      }
       let label = selectedLabels.join('; ')
       el.addClass('sm-readonly').append(label)
     }
@@ -28,6 +52,11 @@ export default class ManyRelationshipComponent extends ValueComponent {
     return {
       toggleOption: this._toggleTarget
     }
+  }
+
+  getAvailableOptions () {
+    let model = this.props.model
+    return model.getAvailableTargets()
   }
 
   _getSelectedOptions (options) {
@@ -42,5 +71,31 @@ export default class ManyRelationshipComponent extends ValueComponent {
     if (this.context.editable) {
       this.props.model.toggleTarget(target)
     }
+  }
+
+  _rerenderOnModelChangeIfNecessary (change) {
+    let updateNeeded = Boolean(change.updated[this._getPath()])
+    if (!updateNeeded) {
+      let ids = this.props.model.getValue()
+      if (ids) {
+        if (!isArray(ids)) {
+          ids = [ids]
+        }
+        for (let id of ids) {
+          if (change.deleted[id] || change.updated[id]) {
+            updateNeeded = true
+            break
+          }
+        }
+      }
+    }
+    if (updateNeeded) {
+      this._rerenderOnModelChange()
+    }
+  }
+
+  _rerenderOnModelChange () {
+    // console.log('Rerendering RelationshipComponent because model has changed', this._getPath())
+    this.rerender()
   }
 }

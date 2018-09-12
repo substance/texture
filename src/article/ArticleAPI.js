@@ -25,6 +25,7 @@ export default class ArticleAPI extends EditorAPI {
     this.article = articleSession.getDocument()
     this.archive = archive
     this._tableApi = new TableEditingAPI(articleSession)
+    this._modelCache = new Map()
   }
 
   /*
@@ -46,6 +47,9 @@ export default class ArticleAPI extends EditorAPI {
   getModelById (id) {
     let node = this.article.get(id)
     if (node) {
+      // caching the model for a node so that we provide the same instance every time
+      if (this._modelCache.has(node.id)) return this._modelCache.get(node.id)
+
       // now check if there is a custom model for this type
       let ModelClass = this.modelRegistry[node.type]
       // TODO: we could go and check if there is a component
@@ -62,6 +66,7 @@ export default class ArticleAPI extends EditorAPI {
       }
       let model = this._getModelForNode(node)
       if (model) {
+        this._modelCache.set(node.id, model)
         return model
       }
     }
@@ -114,10 +119,20 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   removeItemFromCollection (item, collection) {
+    const collectionId = collection.id
     this.articleSession.transaction(tx => {
-      tx.get(collection._node.id).removeChild(tx.get(item.id))
+      tx.get(collectionId).removeChild(tx.get(item.id))
       tx.delete(item.id)
       tx.selection = null
+    })
+  }
+
+  moveCollectionItem (collection, from, to) {
+    this.articleSession.transaction(tx => {
+      let colNode = tx.get(collection._node.id)
+      let item = colNode.getChildAt(from)
+      colNode.removeAt(from)
+      colNode.insertAt(to, item)
     })
   }
 

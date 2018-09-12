@@ -1,3 +1,5 @@
+import { getMountPoint } from 'substance-test'
+
 export { test, spy, wait, getMountPoint, testAsync } from 'substance-test'
 
 export function _async (fn) {
@@ -38,4 +40,9 @@ export function diff (actual, expected) {
     }
     return color(str)
   }).join('')
+}
+
+export function injectStyle (t, style) {
+  let sandbox = getMountPoint(t)
+  sandbox.insertAt(0, sandbox.createElement('style').text(style))
 }

@@ -4,4 +4,8 @@ export default class SubjectCollectionModel extends DefaultCollectionModel {
   _getItemType () {
     return 'subject'
   }
+
+  get isRemovable () {
+    return true
+  }
 }

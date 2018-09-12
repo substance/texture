@@ -102,8 +102,7 @@ npm test
 Debugging NodeJS tests:
 
 ```
-node make test-nodejs
-node --inspect-brk --require esm test/index.js
+node make test-nodejs && node --inspect-brk --require esm test/index.js
 ```
 Then open `chrome://inspect`. It should show a `Remove Target` for the test script. Clicking on `inspect` opens a new window with Chrome Developer Tools.
 

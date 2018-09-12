@@ -61,12 +61,13 @@
 
 .sc-table .se-selection-overlay > .se-selection-anchor {
   position: absolute;
-  border: solid 2px #2684FC;
+  border: var(--input-focus-border);
 }
 
 .sc-table .se-selection-overlay > .se-selection-range {
   position: absolute;
-  border: solid 1px #2684FC;
+  border: var(--input-focus-border);
+  border-width: 1px;
   background: rgba(38, 132, 252, 0.1)
 }
 

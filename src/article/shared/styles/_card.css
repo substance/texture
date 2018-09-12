@@ -21,11 +21,8 @@
   font-size: var(--label-font-size);
   font-weight: var(--label-font-weight);
   line-height: var(--label-line-height);
+  cursor: default;
 }
-
-/* .sc-card > .sm-warning {
-  border: 1px solid var(--warning-color);
-} */
 
 .sc-card > * {
   padding: 20px;
@@ -36,10 +33,10 @@
   margin-bottom: 15px;
 }
 
-
 .sc-card > * > .se-header {
   font-size: 17px;
   margin-bottom: 20px;
+  cursor: default;
 }
 
 .sc-card > * > .se-footer {

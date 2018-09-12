@@ -2,6 +2,10 @@
   display: none;
 }
 
+.sc-authors-list {
+  cursor: default;
+}
+
 .sc-authors-list .se-contrib.sm-empty {
   color: #999;
 }

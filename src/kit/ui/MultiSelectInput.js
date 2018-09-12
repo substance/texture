@@ -18,9 +18,12 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
 
     if (this._canShowOverlay()) {
       el.addClass('sm-active')
+      el.addClass('sm-expanded')
       el.append(
         this.renderValues($$)
       )
+    } else {
+      el.addClass('sm-collapsed')
     }
     el.on('click', this._toggleOverlay)
 
@@ -41,7 +44,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
       const isSelected = selected.indexOf(option) > -1
       const icon = isSelected ? 'fa-check-square-o' : 'fa-square-o'
       editorEl.append(
-        $$('div').addClass('se-select-item').append(
+        $$('div').addClass('se-select-item').addClass(isSelected ? 'sm-selected' : '').append(
           // FIXME: use icon provider
           $$(FontAwesomeIcon, { icon: icon }).addClass('se-icon'),
           $$('div').addClass('se-item-label')

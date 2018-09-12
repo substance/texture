@@ -1,6 +1,8 @@
 import { DefaultDOMElement, importNodeIntoDocument, selectionHelpers } from 'substance'
 import createJatsImporter from './converter/r2t/createJatsImporter'
 import { FIGURE_SNIPPET, FOOTNOTE_SNIPPET, PERSON_SNIPPET, TABLE_SNIPPET } from './ArticleSnippets'
+import { generateTable } from './shared/tableHelpers'
+
 const elementSpippetsMap = {
   'figure': FIGURE_SNIPPET,
   'footnote': FOOTNOTE_SNIPPET,
@@ -8,12 +10,12 @@ const elementSpippetsMap = {
   'table-figure': TABLE_SNIPPET
 }
 
-export function createEmptyElement (tx, elName) {
+export function createEmptyElement (tx, elName, ...snippetParams) {
   const snippet = elementSpippetsMap[elName]
   if (!snippet) {
     throw new Error('There is no snippet for element', elName)
   }
-  let snippetEl = DefaultDOMElement.parseSnippet(snippet.trim(), 'xml')
+  let snippetEl = DefaultDOMElement.parseSnippet(snippet(...snippetParams).trim(), 'xml')
   let docSnippet = tx.getDocument().createSnippet()
   let jatsImporter = createJatsImporter(docSnippet)
   let node = jatsImporter.convertElement(snippetEl)
@@ -52,4 +54,8 @@ export function importFigure (tx, sel, files, paths) {
       selectionHelpers.selectNode(tx, figure.id, containerId)
     }
   })
+}
+
+export function insertTableFigure (tx, rows, columns) {
+  return createEmptyElement(tx, 'table-figure', rows, columns)
 }

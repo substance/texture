@@ -222,7 +222,7 @@ function _populateAwards (doc, jats) {
 function _populateArticleRecord (doc, jats, jatsImporter) {
   let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
-  Object.assign(articleRecord, {
+  _assign(articleRecord, {
     elocationId: getText(articleMetaEl, 'elocation-id'),
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),
@@ -232,20 +232,26 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
   })
   // Import permission if present
   const permissionsEl = articleMetaEl.find('permissions')
-  let permission
   // An empty permission is already there, but will be replaced if <permission> element is there
   if (permissionsEl) {
     doc.delete(articleRecord.permission)
-    permission = jatsImporter.convertElement(permissionsEl)
-  } else {
-    permission = doc.get(articleRecord.permission)
+    let permission = jatsImporter.convertElement(permissionsEl)
+    // ATTENTION: so that the document model is correct we need to use
+    // the Document API  to set the permission id
+    _assign(articleRecord, {
+      permission: permission.id
+    })
   }
-  articleRecord.permission = permission.id
+
   const articleDateEls = articleMetaEl.findAll('history > date, pub-date')
-  articleDateEls.forEach(dateEl => {
-    const date = _extractDate(dateEl)
-    articleRecord[date.type] = date.value
-  })
+  if (articleDateEls.length > 0) {
+    let dates = {}
+    articleDateEls.forEach(dateEl => {
+      const date = _extractDate(dateEl)
+      dates[date.type] = date.value
+    })
+    _assign(articleRecord, dates)
+  }
 }
 
 const DATE_TYPES_MAP = {
@@ -270,13 +276,12 @@ function _populateKeywords (doc, jats) {
   let keywords = doc.get('keywords')
   let kwdEls = jats.findAll('article > front > article-meta > kwd-group > kwd')
   kwdEls.forEach(kwdEl => {
-    const kwd = {
+    keywords.append(doc.create({
       type: 'keyword',
       name: kwdEl.textContent,
       category: kwdEl.getAttribute('content-type'),
       language: kwdEl.getParent().getAttribute('xml:lang')
-    }
-    keywords.append(doc.create(kwd))
+    }))
   })
 }
 
@@ -293,13 +298,12 @@ function _populateSubjects (doc, jats) {
     let language = subjGroup.attr('xml:lang') || DEFAULT_LANG
     let subjectEls = subjGroup.findAll('subject')
     for (let subjectEl of subjectEls) {
-      const subject = {
+      subjects.append(doc.create({
         type: 'subject',
         name: subjectEl.textContent,
         category: subjectEl.getAttribute('content-type'),
         language
-      }
-      subjects.append(doc.create(subject))
+      }))
     }
   }
 }
@@ -319,7 +323,9 @@ function _populateTitle (doc, jats, jatsImporter) {
     _convertAnnotatedText(jatsImporter, transTitleEl, translation)
     return translation.id
   })
-  doc.set(['title', 'translations'], translationIds)
+  _assign(title, {
+    translations: translationIds
+  })
 }
 
 function _populateAbstract (doc, jats, jatsImporter) {
@@ -410,4 +416,13 @@ function _convertAnnotatedText (jatsImporter, el, textNode) {
   textNode.content = jatsImporter.annotatedText(el, textNode.getPath())
   let context = jatsImporter.state.popContext()
   context.annos.forEach(nodeData => doc.create(nodeData))
+}
+
+// would be good to have this as a general Node API
+function _assign (node, obj) {
+  let doc = node.getDocument()
+  let props = Object.keys(obj)
+  for (let prop of props) {
+    doc.set([node.id, prop], obj[prop])
+  }
 }

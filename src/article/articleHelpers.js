@@ -35,7 +35,7 @@ export function setContainerSelection (tx, node) {
   }
 }
 
-export function importFigure (tx, sel, files, paths) {
+export function importFigures (tx, sel, files, paths) {
   let LAST = files.length - 1
   let containerId = sel.containerId
   files.map((file, idx) => {

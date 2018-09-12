@@ -9,7 +9,7 @@ import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import {
-  createEmptyElement, importFigure,
+  createEmptyElement, importFigures,
   insertTableFigure, setContainerSelection
 } from './articleHelpers'
 
@@ -418,7 +418,7 @@ export default class ArticleAPI extends EditorAPI {
     let sel = articleSession.getSelection()
     if (!sel || !sel.containerId) return
     articleSession.transaction(tx => {
-      importFigure(tx, sel, files, paths)
+      importFigures(tx, sel, files, paths)
     })
   }
 

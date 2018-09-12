@@ -6,24 +6,21 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     const selected = this.props.selected
     const isEmpty = selected.length === 0
     const selectedLabels = selected.map(item => item.toString())
+    const isExpanded = this._canShowOverlay()
+    const label = isEmpty ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
 
     const el = $$('div').addClass('sc-multi-select-input')
     if (isEmpty) el.addClass('sm-empty')
-
-    // TODO: How can this be generalized?
-    let label = isEmpty ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
+    el.addClass(isExpanded ? 'sm-expanded' : 'sm-collapsed')
     el.append(
       $$('div').addClass('se-label').text(label)
     )
 
-    if (this._canShowOverlay()) {
+    if (isExpanded) {
       el.addClass('sm-active')
-      el.addClass('sm-expanded')
       el.append(
         this.renderValues($$)
       )
-    } else {
-      el.addClass('sm-collapsed')
     }
     el.on('click', this._toggleOverlay)
 
@@ -53,6 +50,10 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
       )
     })
     return editorEl
+  }
+
+  _getOverlayId () {
+    return this.props.overlayId || this.getId()
   }
 
   _getOptions () {

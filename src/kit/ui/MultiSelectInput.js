@@ -44,7 +44,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
       const isSelected = selectedIdx.indexOf(option.id) > -1
       const icon = isSelected ? 'checked-item' : 'unchecked-item'
       editorEl.append(
-        $$('div').addClass('se-select-item')..addClass(isSelected ? 'sm-selected' : '')append(
+        $$('div').addClass('se-select-item').addClass(isSelected ? 'sm-selected' : '').append(
           this.context.iconProvider.renderIcon($$, icon).addClass('se-icon'),
           $$('div').addClass('se-item-label')
             // TODO: I would like to have this implementation more agnostic of a specific data structure

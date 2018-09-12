@@ -23,12 +23,16 @@ export default class PersonCollectionModel extends DefaultCollectionModel {
 
   moveDown (item) {
     const pos = this._getModelPosition(item)
-    this.moveItem(pos, pos + 1)
+    if (pos < this._node.getChildCount()) {
+      this.moveItem(pos, pos + 1)
+    }
   }
 
   moveUp (item) {
     const pos = this._getModelPosition(item)
-    this.moveItem(pos, pos - 1)
+    if (pos > 0) {
+      this.moveItem(pos, pos - 1)
+    }
   }
 
   moveItem (from, to) {

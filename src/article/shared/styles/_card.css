@@ -11,6 +11,10 @@
   --warning-color: #ffaf46;
 }
 
+.sc-card.sm-selected {
+  outline: var(--input-focus-border)
+}
+
 .sc-card > .se-label {
   position: absolute;
   top: -10px;

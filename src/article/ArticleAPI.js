@@ -8,8 +8,10 @@ import renderEntity from './shared/renderEntity'
 import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
-import { generateTable } from './shared/tableHelpers'
-import { createEmptyElement, importFigure, setContainerSelection } from './articleHelpers'
+import {
+  createEmptyElement, importFigure,
+  insertTableFigure, setContainerSelection
+} from './articleHelpers'
 
 // TODO: this should come from configuration
 const COLLECTIONS = {
@@ -420,23 +422,8 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
-  // TODO: Use JATS snippet for table creation
   _createTableFigure (tx, params) {
-    let caption = tx.createElement('caption').append(
-      tx.createElement('p')
-    )
-    let permission = tx.create({
-      type: 'permission'
-    })
-    let table = generateTable(tx, params.rows, params.columns)
-    let tableFigure = tx.create({
-      type: 'table-figure',
-      caption: caption.id,
-      content: table.id,
-      permission: permission.id
-    })
-
-    return tableFigure
+    return insertTableFigure(tx, params.rows, params.columns)
   }
 
   _insertFootnote (item, footnotes) {

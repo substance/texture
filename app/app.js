@@ -1,3 +1,5 @@
+import FSStorageClient from '../src/dar/FSStorageClient'
+
 const {
   getQueryStringParam,
   substanceGlobals,
@@ -9,8 +11,6 @@ const {
 } = window.texture
 
 const ipc = require('electron').ipcRenderer
-const darServer = require('dar-server')
-const { FSStorageClient } = darServer
 const url = require('url')
 const path = require('path')
 const remote = require('electron').remote

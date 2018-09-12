@@ -3,7 +3,7 @@
   --negative-input-padding: -4px;
   --input-border-radius: 5px;
   --input-default-border: 2px solid transparent;
-  --input-focus-border: 2px solid #A8D0FF;
+  --input-focus-border: 2px solid rgb(145, 189, 240);
 }
   
 .sc-texture {

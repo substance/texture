@@ -96,6 +96,7 @@
   margin: 30px 0px;
   border-radius: 4px;
   font-size: var(--h1-font-size);
+  cursor: default;
 }
 
 

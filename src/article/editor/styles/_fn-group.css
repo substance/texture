@@ -11,6 +11,7 @@
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 15px;
+  cursor: default;
 }
 
 .sc-fn-group > .se-empty-list {
@@ -57,6 +58,7 @@
   font-size: 12px;
   font-weight: var(--strong-font-weight);
   text-align: center;
+  cursor: default;
 }
 
 .sc-fn-item .se-fn-container .se-remove-ref {

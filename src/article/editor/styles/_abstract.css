@@ -7,6 +7,10 @@
   display: none;
 }
 
+.sc-abstract .sc-heading {
+  cursor: default;
+}
+
 .sc-abstract .sc-abstract-content .container-node {
   border: 1px solid transparent;
   border-radius: 5px;

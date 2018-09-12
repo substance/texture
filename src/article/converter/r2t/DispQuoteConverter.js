@@ -11,7 +11,11 @@ export default class DispQuoteConverter {
   get tagName () { return 'disp-quote' }
 
   import (el, node, importer) {
+    let $$ = el.createElement.bind(el.getOwnerDocument())
     let pEls = findAllChildren(el, 'p')
+    if (pEls.length === 0) {
+      pEls.push($$('p'))
+    }
     let attrib = findChild(el, 'attrib')
     if (attrib) {
       node.attrib = importer.annotatedText(attrib, [node.id, 'attrib'])

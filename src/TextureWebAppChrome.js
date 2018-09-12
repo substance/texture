@@ -26,7 +26,9 @@ export default class TextureWebAppChrome extends TextureAppChrome {
     let handled = false
     // CommandOrControl+S
     if (key === 'META+83' || key === 'CTRL+83') {
-      this._save()
+      this._save(err => {
+        if (err) console.error(err)
+      })
       handled = true
     }
     if (!handled) {

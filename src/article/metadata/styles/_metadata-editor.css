@@ -85,6 +85,10 @@
   text-decoration: underline;
 }
 
+.sc-metadata-editor .se-toc a {
+  text-decoration: none;
+}
+
 .sc-metadata-section > .se-heading {
   display: flex;
   justify-content: space-between;

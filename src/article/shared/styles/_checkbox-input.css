@@ -1,4 +1,6 @@
 .sc-checkbox {
   width: 100%;
   cursor: pointer;
+  padding: 4px;
+  margin: -4px -2px;
 }

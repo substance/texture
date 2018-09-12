@@ -14,7 +14,7 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
-  async _loadArchive (archiveId, context) {
+  _loadArchive (archiveId, context, cb) {
     const ArchiveClass = this._getArchiveClass()
     let storage = new this.props.FSStorageClient()
     let buffer = new InMemoryDarBuffer()
@@ -24,12 +24,17 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     // the app lives as a singleton atm.
     // NOTE: _archiveChanged is implemented by DesktopAppChrome
     archive.on('archive:changed', this._archiveChanged, this)
-    return archive.load(archiveId)
+    archive.load(archiveId, cb)
   }
 
-  _saveAs (newArchiveDir) {
+  _saveAs (newArchiveDir, cb) {
     console.info('saving as', newArchiveDir)
-    this.state.archive.saveAs(newArchiveDir).then(() => {
+    this.state.archive.saveAs(newArchiveDir, err => {
+      if (err) {
+        console.error(err)
+        return cb(err)
+      }
+
       this._updateTitle(false)
       this.props.ipc.send('document:save-as:successful')
       // Update the browser url, so on reload, we get the contents from the
@@ -43,8 +48,6 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
         slashes: true
       })
       window.history.replaceState({}, 'After Save As', newUrl)
-    }).catch(err => {
-      console.error(err)
     })
   }
 

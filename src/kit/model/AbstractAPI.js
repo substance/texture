@@ -114,6 +114,7 @@ function _customSelection (path) {
     type: 'custom',
     customType: 'value',
     data: {
+      path,
       propertyName: path[1]
     },
     surfaceId: path[0]

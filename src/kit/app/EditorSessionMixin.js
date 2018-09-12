@@ -130,6 +130,9 @@ export default function (DocumentSession) {
 
     transaction (fn, info) {
       const editorState = this.editorState
+      // NOTE: using this to reveal problems with propagation of document changes
+      // if (editorState.isDirty('document')) throw new Error('FIXME: the previous change has not been propagated yet', editorState.getUpdate('document'))
+
       let tx = this._transaction.tx
       // HACK: setting the state of 'tx' here
       // TODO: find out a way to pass a tx state for the transaction
@@ -268,7 +271,17 @@ export default function (DocumentSession) {
     }
 
     _resetOverlayId () {
-      if (this.editorState.overlayId !== null) {
+      const overlayId = this.editorState.overlayId
+      // overlayId === path.join('.') => if selection is value &&
+      // Overlays of value components (ManyRelationshipComponent, SingleRelationship)
+      // need to remain open if the selection is a value selection
+      let sel = this.getSelection()
+      if (sel && sel.customType === 'value') {
+        let valueId = String(sel.data.path)
+        if (overlayId !== valueId) {
+          this.editorState.set('overlayId', valueId)
+        }
+      } else {
         this.editorState.set('overlayId', null)
       }
     }

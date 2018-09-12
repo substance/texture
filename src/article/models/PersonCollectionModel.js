@@ -8,7 +8,7 @@ export default class PersonCollectionModel extends DefaultCollectionModel {
   addItem (item = {}) {
     return this._api._insertPerson(this._prepareItem(item), this)
   }
-  
+
   get length () {
     return this._node.children.length
   }

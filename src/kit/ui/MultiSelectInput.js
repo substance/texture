@@ -33,7 +33,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
   renderValues ($$) {
     const label = this.props.label
     const selected = this.props.selected
-    const options = this.props.options
+    const options = this._getOptions()
     const editorEl = $$('div').addClass('se-select-editor').append(
       $$('div').addClass('se-arrow'),
       $$('div').addClass('se-select-label')
@@ -54,6 +54,10 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
       )
     })
     return editorEl
+  }
+
+  _getOptions () {
+    return this.getParent().getAvailableOptions()
   }
 
   _toggleItem (option, event) {

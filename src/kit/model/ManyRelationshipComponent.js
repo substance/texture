@@ -5,15 +5,14 @@ export default class ManyRelationshipComponent extends ValueComponent {
   render ($$) {
     // TODO: we need a label for the dropdown here
     const label = this.props.label
-    let options = this.props.model.getAvailableTargets()
+    const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)
     let el = $$('div').addClass('sc-many-relationship')
     if (this.context.editable) {
       el.append(
         $$(MultiSelectInput, {
           label,
-          selected,
-          options
+          selected
         }).ref('select')
       )
     } else {
@@ -28,6 +27,11 @@ export default class ManyRelationshipComponent extends ValueComponent {
     return {
       toggleOption: this._toggleTarget
     }
+  }
+
+  getAvailableOptions () {
+    let model = this.props.model
+    return model.getAvailableTargets()
   }
 
   _getSelectedOptions (options) {

@@ -8,6 +8,7 @@
   
 .sc-texture {
   height: 100%;
+  position: relative;
 }
 
 .sc-texture .emphasis, .sc-texture em, .sc-texture i:not(.fa) {

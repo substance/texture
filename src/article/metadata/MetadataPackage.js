@@ -8,8 +8,7 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
-import MoveCardCommand from './MoveCardCommand'
-import RemoveCardCommand from './RemoveCardCommand'
+import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -66,12 +65,12 @@ export default {
         ]
       },
       {
-        name: 'card-tools',
+        name: 'collection-tools',
         type: 'tool-group',
         showDisabled: false,
         style: 'minimal',
         items: [
-          { type: 'command-group', name: 'card' }
+          { type: 'command-group', name: 'collection' }
         ]
       },
       {
@@ -341,32 +340,32 @@ export default {
     })
 
     // Card tools
-    config.addCommand('move-up-card', MoveCardCommand, {
+    config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
       direction: 'up',
-      commandGroup: 'card'
+      commandGroup: 'collection'
     })
-    config.addIcon('move-up-card', { 'fontawesome': 'fa-caret-square-o-up' })
-    config.addLabel('move-up-card', {
-      en: 'Move card up'
+    config.addIcon('move-up-col-item', { 'fontawesome': 'fa-caret-square-o-up' })
+    config.addLabel('move-up-col-item', {
+      en: 'Move item up'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-card' })
-    config.addCommand('move-down-card', MoveCardCommand, {
+    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
+    config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',
-      commandGroup: 'card'
+      commandGroup: 'collection'
     })
-    config.addIcon('move-down-card', { 'fontawesome': 'fa-caret-square-o-down' })
-    config.addLabel('move-down-card', {
-      en: 'Move card down'
+    config.addIcon('move-down-col-item', { 'fontawesome': 'fa-caret-square-o-down' })
+    config.addLabel('move-down-col-item', {
+      en: 'Move item down'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-card' })
-    config.addCommand('remove-card', RemoveCardCommand, {
-      commandGroup: 'card'
+    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
+    config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
+      commandGroup: 'collection'
     })
-    config.addIcon('remove-card', { 'fontawesome': 'fa-trash' })
-    config.addLabel('remove-card', {
-      en: 'Remove card'
+    config.addIcon('remove-col-item', { 'fontawesome': 'fa-trash' })
+    config.addLabel('remove-col-item', {
+      en: 'Remove item'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-card' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
 
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
     config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })

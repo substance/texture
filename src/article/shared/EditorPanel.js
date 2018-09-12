@@ -52,6 +52,12 @@ export default class EditorPanel extends Component {
     this.appState._reset()
   }
 
+  _restoreViewport () {
+    if (this.props.viewport) {
+      this.refs.contentPanel.setScrollPosition(this.props.viewport.x)
+    }
+  }
+
   dispose () {
     const appState = this.context.appState
     const articleSession = this.props.articleSession

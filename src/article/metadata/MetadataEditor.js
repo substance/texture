@@ -17,9 +17,25 @@ export default class MetadataEditor extends EditorPanel {
     this.appState._reset()
   }
 
+  didMount () {
+    super.didMount()
+    this._restoreViewport()
+  }
+
+  didUpdate () {
+    super.didUpdate()
+    this._restoreViewport()
+  }
+
   dispose () {
     super.dispose()
     this.articleValidator.dispose()
+  }
+
+  getViewport () {
+    return {
+      x: this.refs.contentPanel.getScrollPosition()
+    }
   }
 
   render ($$) {

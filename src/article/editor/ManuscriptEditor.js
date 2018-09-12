@@ -174,23 +174,6 @@ export default class ManuscriptEditor extends EditorPanel {
     }
   }
 
-  _restoreViewport () {
-    const editorSession = this._getEditorSession()
-    if (this.props.viewport) {
-      this.refs.contentPanel.setScrollPosition(this.props.viewport.x)
-    }
-    // HACK: This should work without a timeout, however it seems that
-    // Editor.didMount is called earlier than the didMounts of the different
-    // surfaces which do the surface registering, required here.
-    setTimeout(() => {
-      // We also use this place to rerender the selection
-      let focusedSurface = editorSession.getFocusedSurface()
-      if (focusedSurface) {
-        focusedSurface.rerenderDOMSelection()
-      }
-    })
-  }
-
   _tocEntrySelected (nodeId) {
     const node = this._getDocument().get(nodeId)
     const editorSession = this._getEditorSession()

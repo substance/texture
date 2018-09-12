@@ -24,6 +24,19 @@ export const FOOTNOTE_SNIPPET = `
   </fn>
 `
 
+export const PERSON_SNIPPET = `
+  <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+    <name>
+      <surname></surname>
+      <given-names></given-names>
+      <suffix></suffix>
+    </name>
+    <bio>
+      <p></p>
+    </bio>
+  </contrib>
+`
+
 export const TABLE_SNIPPET = `
   <table-wrap id="table1">
     <label></label>

@@ -1,9 +1,10 @@
 import { DefaultDOMElement, importNodeIntoDocument, selectionHelpers } from 'substance'
 import createJatsImporter from './converter/r2t/createJatsImporter'
-import { FIGURE_SNIPPET, FOOTNOTE_SNIPPET, TABLE_SNIPPET } from './ArticleSnippets'
+import { FIGURE_SNIPPET, FOOTNOTE_SNIPPET, PERSON_SNIPPET, TABLE_SNIPPET } from './ArticleSnippets'
 const elementSpippetsMap = {
   'figure': FIGURE_SNIPPET,
   'footnote': FOOTNOTE_SNIPPET,
+  'person': PERSON_SNIPPET,
   'table-figure': TABLE_SNIPPET
 }
 

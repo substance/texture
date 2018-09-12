@@ -440,9 +440,10 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   _insertFootnote (item, footnotes) {
+    const collectionId = footnotes.id
     this.articleSession.transaction(tx => {
       const node = createEmptyElement(tx, 'footnote')
-      tx.get(footnotes._node.id).appendChild(
+      tx.get(collectionId).appendChild(
         node
       )
       setContainerSelection(tx, node)
@@ -461,6 +462,19 @@ export default class ArticleAPI extends EditorAPI {
       let newSelection = this._selectFirstRequiredProperty(node)
       tx.setSelection(newSelection)
     })
+
+    // TODO: for snippet importing we need to register a contrib converter
+    // and take care of groups
+
+    // const collectionId = collection.id
+    // this.articleSession.transaction(tx => {
+    //   const node = createEmptyElement(tx, 'person')
+    //   tx.get(collectionId).appendChild(
+    //     node
+    //   )
+    //   let newSelection = this._selectFirstRequiredProperty(node)
+    //   tx.setSelection(newSelection)
+    // })
   }
 
   _getSelection () {

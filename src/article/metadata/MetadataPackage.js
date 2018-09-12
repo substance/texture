@@ -67,7 +67,7 @@ export default {
       {
         name: 'collection-tools',
         type: 'tool-group',
-        showDisabled: false,
+        showDisabled: true,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'collection' }

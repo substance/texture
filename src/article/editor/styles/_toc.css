@@ -9,8 +9,8 @@
   font-weight: 500;
   font-family: 'Avenir Next', Helvetica;
   display: block;
-  padding: 2px 0px;
-  line-height: 30px;
+  padding: 6px 0px;
+  line-height: 20px;
   position: relative;
 }
 .sc-toc .se-toc-entries .se-toc-entry.sm-active { color: #111; /*text-decoration: underline;*/ }

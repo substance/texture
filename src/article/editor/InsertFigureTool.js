@@ -3,7 +3,10 @@ import { ToggleTool } from '../../kit'
 export default class InsertFigureTool extends ToggleTool {
   renderButton ($$) {
     let button = super.renderButton($$)
-    let input = $$('input').attr('type', 'file').ref('input')
+    let input = $$('input').attr({
+      'type': 'file',
+      'multiple': 'multiple'
+    }).ref('input')
       .on('change', this.onFileSelect)
     return [button, input]
   }

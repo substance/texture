@@ -33,7 +33,7 @@ export default class TextureWebAppChrome extends TextureAppChrome {
       handled = this.refs.texture._handleKeydown(event)
     }
     if (handled) {
-      event.prevendDefault()
+      event.preventDefault()
       event.stopPropagation()
     }
   }

@@ -5,20 +5,19 @@
 
 .sc-text-input .se-input {
   width: 100%;
-  border: 2px solid transparent;
   height: var(--input-height);
   font-family: 'Avenir Next', Helvetica;
   font-size: var(--input-font-size);
   border-radius: 5px;
   font-weight: 500;
-  padding: 4px;
-  /* padding-left: 4px;
-  margin-left: -4px; */
+  padding: var(--input-padding);
+  border: var(--input-default-border);
+  margin: var(--negative-input-padding);
 }
 
 /*.sc-text-input.sm-editable .se-input:hover*/
 .sc-text-input:focus .se-input {
-  border: 2px solid #A8D0FF;
+  border: var(--input-focus-border);
 }
 
 /* TODO: use variables! */

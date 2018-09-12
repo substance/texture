@@ -434,7 +434,20 @@ ArticleRef.schema = {
 }
 
 /*
-  TODO: provide sample
+  <element-citation publication-type="magazine">
+    <person-group person-group-type="author">
+      <name>
+        <surname>Craig</surname>
+        <given-names>DJ</given-names>
+      </name>
+    </person-group>
+    <year>2017</year>
+    <article-title>A voice for women and girls</article-title>
+    <source>Columbia Magazine</source>
+    <volume>Fall 2017</volume>
+    <fpage>36</fpage>
+    <lpage>38</lpage>
+  </element-citation>
 */
 class MagazineArticleRef extends BibliographicEntry {}
 MagazineArticleRef.schema = {

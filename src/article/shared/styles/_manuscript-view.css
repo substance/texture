@@ -14,6 +14,17 @@
   line-height: 1.7em;
 }
 
+.sc-manuscript-view .sc-abstract .sc-container-editor {
+  border: var(--input-default-border);
+  border-radius: var(--input-border-radius);
+  padding: var(--input-padding);
+  margin: var(--negative-input-padding);
+}
+
+.sc-manuscript-view .sc-abstract .sc-container-editor:focus {
+  border: var(--input-focus-border);
+}
+
 .sc-manuscript-view .se-toolbar-wrapper {
   z-index: 1000;
   padding: 3px;

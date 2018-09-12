@@ -66,6 +66,7 @@ export default function (DocumentSession) {
     dispose () {
       this.getDocument().off(this)
       this.editorState.off(this)
+      this.editorState.dispose()
     }
 
     initialize () {

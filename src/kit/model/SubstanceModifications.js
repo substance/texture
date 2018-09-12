@@ -243,6 +243,13 @@ function ModifiedSurface (Surface) {
       // TODO: allow to force plain-text paste
       this.clipboard.paste(clipboardData, this.context)
     }
+
+    onMouseDown (event) {
+      let res = super.onMouseDown(event)
+      if (res !== false) {
+        event.stopPropagation()
+      }
+    }
   }
   return _ModifiedSurface
 }

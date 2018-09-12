@@ -4,7 +4,7 @@ export default class DefaultMovableCollectionModel extends DefaultCollectionMode
   get length () {
     return this._node.children.length
   }
-  
+
   get isMovable () {
     return true
   }

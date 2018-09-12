@@ -426,6 +426,10 @@ export default class ArticleAPI extends EditorAPI {
     return insertTableFigure(tx, params.rows, params.columns)
   }
 
+  _createDispQuote (tx) {
+    return createEmptyElement(tx, 'disp-quote')
+  }
+
   _insertFootnote (item, footnotes) {
     const collectionId = footnotes.id
     this.articleSession.transaction(tx => {

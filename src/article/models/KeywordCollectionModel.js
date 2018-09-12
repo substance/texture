@@ -1,6 +1,6 @@
-import DefaultCollectionModel from './DefaultCollectionModel'
+import DefaultMovableCollectionModel from './DefaultMovableCollectionModel'
 
-export default class KeywordCollectionModel extends DefaultCollectionModel {
+export default class KeywordCollectionModel extends DefaultMovableCollectionModel {
   _getItemType () {
     return 'keyword'
   }

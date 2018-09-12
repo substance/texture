@@ -1,6 +1,6 @@
-import DefaultCollectionModel from './DefaultCollectionModel'
+import DefaultMovableCollectionModel from './DefaultMovableCollectionModel'
 
-export default class SubjectCollectionModel extends DefaultCollectionModel {
+export default class SubjectCollectionModel extends DefaultMovableCollectionModel {
   _getItemType () {
     return 'subject'
   }

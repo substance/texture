@@ -25,6 +25,7 @@ export default class ArticleAPI extends EditorAPI {
     this.article = articleSession.getDocument()
     this.archive = archive
     this._tableApi = new TableEditingAPI(articleSession)
+    this._modelCache = new Map()
   }
 
   /*
@@ -46,9 +47,8 @@ export default class ArticleAPI extends EditorAPI {
   getModelById (id) {
     let node = this.article.get(id)
     if (node) {
-      // As an optimization, we keep the model once created on the node
-      // which is ok, as model and node are 1-to-1.
-      if (node._model) return node._model
+      // caching the model for a node so that we provide the same instance every time
+      if (this._modelCache.has(node.id)) return this._modelCache.get(node.id)
 
       // now check if there is a custom model for this type
       let ModelClass = this.modelRegistry[node.type]
@@ -66,7 +66,7 @@ export default class ArticleAPI extends EditorAPI {
       }
       let model = this._getModelForNode(node)
       if (model) {
-        node._model = model
+        this._modelCache.set(node.id, model)
         return model
       }
     }

@@ -40,12 +40,13 @@ class BasicCollectionCommand extends Command {
 
   _getParentCollection (node, context) {
     const parent = node.getParent()
-    let collection = context.api.getModel(parent.type)
-    if (!collection) {
+    if (!parent) return
+    let model = context.api.getModelById(parent.id)
+    if (!model.isCollection) {
       // NOTE: we are bubling up until we found a registered collection
-      collection = this._getParentCollection(parent, context)
+      model = this._getParentCollection(parent, context)
     }
-    return collection
+    return model
   }
 }
 
@@ -57,7 +58,10 @@ export class RemoveCollectionItemCommand extends BasicCollectionCommand {
   }
 
   isDisabled (params, context) {
-    return params.selection.getType() !== 'property' || !this._getCollectionForNode(params, context).isRemovable
+    if (params.selection.getType() !== 'property') return true
+    const collection = this._getCollectionForNode(params, context)
+    if (!collection || !collection.isRemovable) return true
+    return false
   }
 }
 
@@ -76,7 +80,7 @@ export class MoveCollectionItemCommand extends BasicCollectionCommand {
   isDisabled (params, context) {
     if (params.selection.getType() !== 'property') return true
     const collection = this._getCollectionForNode(params, context)
-    if (!collection.isMovable) return true
+    if (!collection || !collection.isMovable) return true
     const direction = this.config.direction
     const model = this._getCardModel(params, context)
     const pos = collection._getModelPosition(model)

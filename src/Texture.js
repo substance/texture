@@ -1,6 +1,7 @@
-import { Component } from 'substance'
+import { Component, platform } from 'substance'
 import TextureConfigurator from './TextureConfigurator'
 import ArticlePackage from './article/ArticlePackage'
+import { PinnedMessage } from './kit/ui'
 
 // TODO: this should incoporate the 'Project' stuff that we have in Stencila
 export default class Texture extends Component {
@@ -27,6 +28,11 @@ export default class Texture extends Component {
     el.append(
       $$(ResourceComponent, props).ref('resource')
     )
+    if (platform.inBrowser && !platform.isChromium) {
+      el.append(
+        $$(PinnedMessage, {icon: 'fa-warning', label: 'Attention! Current version of Texture supports only Chrome browser.'})
+      )
+    }
     return el
   }
 

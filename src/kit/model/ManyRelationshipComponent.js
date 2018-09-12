@@ -3,8 +3,7 @@ import MultiSelectInput from '../ui/MultiSelectInput'
 
 export default class ManyRelationshipComponent extends ValueComponent {
   render ($$) {
-    // TODO: we need a label for the dropdown here
-    const label = this.props.label
+    const label = this.getLabel('select-item') + ' ' + this.props.label
     const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)
     let el = $$('div').addClass('sc-many-relationship')

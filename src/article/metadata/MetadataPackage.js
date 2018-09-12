@@ -367,5 +367,11 @@ export default {
       en: 'Remove card'
     })
     config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-card' })
+
+    config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
+    config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })
+    config.addLabel('select-item', {
+      en: 'Choose'
+    })
   }
 }

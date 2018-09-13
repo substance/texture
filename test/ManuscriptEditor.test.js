@@ -1,4 +1,6 @@
 import { test } from 'substance-test'
+import { tableHelpers } from '../index'
+import { DOMEvent } from './testHelpers'
 import { setCursor, openManuscriptEditor, PseudoFileEvent } from './integrationTestHelpers'
 import setupTestApp from './setupTestApp'
 
@@ -50,5 +52,31 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   // ATTENTION: we do not change id, which might be confusing for others
   let h1El = editor.find('.sc-surface.body > h1')
   t.notNil(h1El, 'there should be a <h1> element now')
+  t.end()
+})
+
+test('ManuscriptEditor: selecting a table', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let editorSession = editor.context.editorSession
+  editorSession.transaction(tx => {
+    let body = tx.get('body')
+    let table = tableHelpers.generateTable(tx, 10, 5, 'test-table')
+    body.append(table)
+  })
+  // a click (somewhere) on the isolated node should select the node
+  let isolatedNode = editor.find('[data-id="test-table"]')
+  isolatedNode.el.click()
+  let sel = editorSession.getSelection()
+  t.equal(sel.type, 'node', 'the selection should be a node selection')
+  t.equal(sel.nodeId, 'test-table', '.. pointing to the inserted table should be selected')
+  // but a click inside the table, e.g. on a cell should select the table cell
+  let table = isolatedNode.find('.sc-table')
+  let td = isolatedNode.find('td')
+  table._onMousedown(new DOMEvent({ target: td.el }))
+
+  td.el.click()
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'the selection should be a table selection')
   t.end()
 })

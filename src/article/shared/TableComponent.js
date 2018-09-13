@@ -53,6 +53,7 @@ export default class TableComponent extends CustomSurface {
     let el = $$('div').addClass('sc-table')
     el.on('mousedown', this._onMousedown)
       .on('mouseup', this._onMouseup)
+      .on('click', this._prevent)
     el.append(this._renderTable($$))
     el.append(this._renderKeyTrap($$))
     el.append(this._renderUnclickableOverlays($$))
@@ -563,5 +564,10 @@ export default class TableComponent extends CustomSurface {
 
   _getTableApi () {
     return this.context.api.getTableAPI()
+  }
+
+  _prevent (event) {
+    event.stopPropagation()
+    event.preventDefault()
   }
 }

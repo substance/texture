@@ -36,5 +36,5 @@ export default function setupTestArticleSession (docInitializer) {
   // ... after the context is ready we can store it into the provider
   contextProvider.context = context
 
-  return { context, editorSession, doc, archive }
+  return { context, editorSession, doc, archive, api }
 }

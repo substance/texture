@@ -8,6 +8,7 @@ import {
 // new model based components
 import AbstractComponent from './AbstractComponent'
 import AuthorsListComponent from './AuthorsListComponent'
+import BodyComponent from './BodyComponent'
 import FigureComponent from './FigureComponent'
 import FrontMatterComponent from './FrontMatterComponent'
 import HeadingComponent from './HeadingComponent'
@@ -52,6 +53,7 @@ export default {
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('back-matter', CompositeComponent)
     config.addComponent('bibr', ReferenceComponent)
+    config.addComponent('body', BodyComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('front-matter', FrontMatterComponent)
     config.addComponent('heading', HeadingComponent)

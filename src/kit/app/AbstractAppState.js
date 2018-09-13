@@ -1,4 +1,4 @@
-import { uuid } from 'substance'
+import { uuid, isObject } from 'substance'
 
 const IMPL = Symbol('__AppStateImpl__')
 
@@ -27,7 +27,13 @@ export default class AbstractAppState {
   set (name, value, propagateImmediately) {
     const impl = this._getImpl()
     let oldVal = impl.get(name)
-    if (oldVal !== value) {
+    let hasChanged
+    if (isObject(value)) {
+      hasChanged = true
+    } else {
+      hasChanged = oldVal !== value
+    }
+    if (hasChanged) {
       impl.set(name, value)
       impl.setDirty(name)
       if (propagateImmediately) {

@@ -7,9 +7,7 @@
 }
 
 .sc-ref-list > .se-title {
-  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 22px;
-  font-weight: 500;
   margin-bottom: 15px;
   cursor: default;
 }

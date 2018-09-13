@@ -45,7 +45,6 @@
 .sc-table > table th {
   background-color: #f7f7f7;
   border: 1px solid #e0e0e0;
-  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 13px;
   font-weight: 700;
   padding: 6px;
@@ -53,9 +52,7 @@
 
 .sc-table > table td {
   border: 1px solid #e0e0e0;
-  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 13px;
-  font-weight: 500;
   padding: 6px;
 }
 

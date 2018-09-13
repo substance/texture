@@ -1,7 +1,6 @@
 .sc-translations .se-translation-header {
   padding: 5px 10px;
   background: #4e4e4e;
-  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 12px;
   color: #fff;
 }
@@ -53,7 +52,6 @@
 .sc-translations .se-add-translation {
   width: 100%;
   padding: 10px;
-  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-size: 14px;
   color: #2079DC;
 }

@@ -50,7 +50,8 @@ export default class ManyRelationshipComponent extends ValueComponent {
 
   getActionHandlers () {
     return {
-      toggleOption: this._toggleTarget
+      toggleOption: this._toggleTarget,
+      toggleOverlay: this._toggleOverlay
     }
   }
 
@@ -70,6 +71,23 @@ export default class ManyRelationshipComponent extends ValueComponent {
   _toggleTarget (target) {
     if (this.context.editable) {
       this.props.model.toggleTarget(target)
+    }
+  }
+
+  _toggleOverlay () {
+    const appState = this.context.appState
+    let overlayId = appState.overlayId
+    let modelId = this.props.model.id
+    if (overlayId === modelId) {
+      this.getParent().send('toggleOverlay')
+    } else {
+      // ATTENTION: At the moment a reducer maps value selections to appState.overlayId
+      // i.e. we must not call toggleOverlay
+      // But if we decided to disable the reducer this would break if
+      // we used the common implementation.
+      // TODO: rethink this approach in general
+      this.context.api.selectValue(this._getPath())
+      appState.set('overlayId', modelId, 'propagateImmediately')
     }
   }
 

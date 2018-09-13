@@ -364,6 +364,18 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  selectValue (path) {
+    this._setSelection({
+      type: 'custom',
+      customType: 'value',
+      data: {
+        path,
+        propertyName: path[1]
+      },
+      surfaceId: path[0]
+    })
+  }
+
   /*
     TODO: In the future it should be necessary to expose those managers, instead
     API's should be used to access information.

@@ -29,7 +29,6 @@ import CaptionComponent from './CaptionComponent'
 import ContainerNodeComponent from './ContainerNodeComponent'
 import DispQuoteComponent from './DispQuoteComponent'
 import FootnoteComponent from './FootnoteComponent'
-import FnGroupComponent from './FnGroupComponent'
 import GraphicComponent from './GraphicComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
 import ListComponent from './ListComponent'
@@ -77,7 +76,6 @@ export default {
     config.addComponent('colgroup', ElementNodeComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
     config.addComponent('fn', FootnoteComponent)
-    config.addComponent('fn-group', FnGroupComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('list', ListComponent)

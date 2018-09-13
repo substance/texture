@@ -101,7 +101,7 @@ export default class SchemaDrivenCommandManager extends CommandManager {
 function _getNodeProp (node, path) {
   let propName = last(path)
   let prop = node.getSchema().getProperty(propName)
-  if (!prop) console.error('Could not find property for path %s', path, node)
+  if (!prop) console.error('Could not find property for path', path, node)
   return prop
 }
 

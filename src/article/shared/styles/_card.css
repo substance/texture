@@ -29,6 +29,11 @@
   cursor: default;
 }
 
+.sc-card.sm-selected > .se-label {
+  background: var(--focus-color);
+  color: #fff;
+}
+
 .sc-card > * {
   overflow: hidden;
   padding: 20px;

@@ -7,6 +7,7 @@ export default class MetaSectionTOCEntry extends ModelComponent {
     const model = this.props.model
     let el = $$('a').addClass('sc-meta-section-toc-entry')
       .attr({ href: '#' + id })
+      .on('click', this.handleClick)
 
     let label = this.getLabel(name)
     if (model.isCollection) {
@@ -20,5 +21,12 @@ export default class MetaSectionTOCEntry extends ModelComponent {
     }
 
     return el
+  }
+
+  handleClick (e) {
+    // NOTE: currently we are using link anchors for metadata panel navigation
+    // this way we are preventing Electron from opening links in a new window
+    // later we want to introduce different routing mechanism
+    e.stopPropagation()
   }
 }

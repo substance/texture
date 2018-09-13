@@ -15,6 +15,7 @@
   position: absolute;
   top: -10px;
   left: 40px;
+  overflow: visible;
   padding: 0px 20px;
   background: #fff;
   color: var(--label-color);
@@ -25,6 +26,7 @@
 }
 
 .sc-card > * {
+  overflow: hidden;
   padding: 20px;
   border: 1px solid transparent;
 }

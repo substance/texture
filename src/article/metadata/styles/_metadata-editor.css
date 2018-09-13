@@ -15,19 +15,36 @@
   overflow: hidden;
 }
 
-.sc-metadata-editor > .se-main-section > .se-toolbar-wrapper {
-  flex: 0 0 40px;
+.sc-metadata-editor .se-toolbar-wrapper {
   z-index: 1000;
-  padding: 3px;
+  padding: 4px;
   padding-bottom: 4px;
   padding-left: 270px;
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
+}
+
+.sc-metadata-editor.sm-compact .se-toolbar-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.sc-metadata-editor .se-toolbar-wrapper .sc-toolbar {
+  max-width: 710px; /* 760 - 50 for padding */
+}
+
+.sc-metadata-editor.sm-compact .se-toolbar-wrapper .sc-toolbar {
+  margin: 0 auto;
 }
 
 .sc-metadata-editor > .se-main-section > .se-content-section {
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
+}
+
+/* Do not display in compact mode to make more space for the rest */
+.sc-metadata-editor.sm-compact > .se-main-section > .se-content-section > .se-toc-pane {
+  display: none;
 }
 
 .sc-metadata-editor > .se-main-section > .se-content-section > .se-toc-pane {
@@ -62,6 +79,10 @@
 .sc-metadata-editor .se-sections {
   max-width: 760px;
   padding: 30px;
+}
+
+.sc-metadata-editor.sm-compact .se-sections {
+  margin: 0 auto;
 }
 
 .sc-metadata-editor .se-workflow-modal.sm-hidden {

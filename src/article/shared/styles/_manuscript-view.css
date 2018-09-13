@@ -27,7 +27,7 @@
 
 .sc-manuscript-view .se-toolbar-wrapper {
   z-index: 1000;
-  padding: 3px;
+  padding: 4px;
   padding-bottom: 4px;
   padding-left: 270px;
   box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
@@ -35,10 +35,14 @@
 
 .sc-manuscript-view.sm-compact .se-toolbar-wrapper {
   padding-left: 20px;
+  padding-right: 20px;
+}
+
+.sc-manuscript-view .se-toolbar-wrapper .sc-toolbar {
+  max-width: 710px; /* 760 - 50 for padding */
 }
 
 .sc-manuscript-view.sm-compact .se-toolbar-wrapper .sc-toolbar {
-  max-width: 730px; /* 760 - 30 for padding */
   margin: 0 auto;
 }
 

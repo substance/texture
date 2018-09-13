@@ -1,0 +1,7 @@
+/* TODO: use variables! */
+.sc-container-editor .sc-text-node:only-child .sc-text-property.sm-empty:before,
+.sc-text-input .sc-text-property.sm-empty:before {
+  content: attr(data-placeholder);
+  color: #ccc;
+  font-weight: 400;
+}

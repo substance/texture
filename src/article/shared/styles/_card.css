@@ -11,6 +11,10 @@
   --warning-color: #ffaf46;
 }
 
+.sc-card.sm-selected {
+  outline: var(--input-focus-border)
+}
+
 .sc-card > .se-label {
   position: absolute;
   top: -10px;
@@ -23,6 +27,11 @@
   font-weight: var(--label-font-weight);
   line-height: var(--label-line-height);
   cursor: default;
+}
+
+.sc-card.sm-selected > .se-label {
+  background: var(--focus-color);
+  color: #fff;
 }
 
 .sc-card > * {

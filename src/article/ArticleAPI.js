@@ -351,6 +351,31 @@ export default class ArticleAPI extends EditorAPI {
     return this._tableApi
   }
 
+  // EXPERIMENTAL: in the MetadataEditor we want to be able to select a full card
+  // I do not want to introduce a 'card' selection as this is not an internal concept
+  // and instead opting for 'model' selection.
+  selectModel (modelId) {
+    this._setSelection({
+      type: 'custom',
+      customType: 'model',
+      data: {
+        modelId
+      }
+    })
+  }
+
+  selectValue (path) {
+    this._setSelection({
+      type: 'custom',
+      customType: 'value',
+      data: {
+        path,
+        propertyName: path[1]
+      },
+      surfaceId: path[0]
+    })
+  }
+
   /*
     TODO: In the future it should be necessary to expose those managers, instead
     API's should be used to access information.

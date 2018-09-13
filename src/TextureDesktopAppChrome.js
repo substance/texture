@@ -9,7 +9,11 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
       this._save()
     })
     this.props.ipc.on('document:save-as', (event, newArchiveDir) => {
-      this._saveAs(newArchiveDir)
+      this._saveAs(newArchiveDir, (err) => {
+        if (err) {
+          console.error(err)
+        }
+      })
     })
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }

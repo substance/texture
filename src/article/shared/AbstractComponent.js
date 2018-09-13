@@ -4,18 +4,16 @@ export default class AbstractComponent extends Component {
   render ($$) {
     const model = this.props.model
     const ModelComponent = this.getComponent(model.type)
+    const SectionLabel = this.getComponent('section-label')
     let el = $$('div')
       .addClass('sc-abstract')
       .attr('data-id', model.id)
 
     el.append(
-      // TODO use label provider
-      $$('h1').addClass('sc-heading').append('Abstract')
-    )
-    el.append(
+      $$(SectionLabel, {label: 'abstract-label'}),
       $$(ModelComponent, {
         model: model,
-        placeholder: 'Enter Abstract',
+        placeholder: this.getLabel('abstract-placeholder'),
         name: 'abstractEditor'
       })
     )

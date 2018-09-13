@@ -196,20 +196,14 @@ export class IsolatedNodeComponentNew extends SubstanceIsolatedNodeComponent {
     this.blockingMode = 'open'
   }
 
-  // overriding the default implementation to allow selecting the node by an otherwise unhandled click
-  render ($$) {
-    let el = super.render($$)
-    el.on('click', this._onClick)
-    return el
-  }
-
   _getContentProps () {
     let props = super._getContentProps()
     props.model = this.props.model
     return props
   }
 
-  _onClick (event) {
+  // overriding the core implementation to select the node on all unhandled clicks.
+  onClick (event) {
     event.stopPropagation()
     event.preventDefault()
     this.selectNode()
@@ -276,7 +270,7 @@ function ModifiedSurface (Surface) {
       if (!this.isDisabled()) {
         if (!this.isReadonly()) {
           // Mouse Events
-          el.on('click', this._onClick)
+          el.on('click', this.onClick)
         }
       }
       return el
@@ -315,7 +309,7 @@ function ModifiedSurface (Surface) {
       }
     }
 
-    _onClick (event) {
+    onClick (event) {
       if (!this._shouldConsumeEvent(event)) {
         // console.log('skipping mousedown', this.id)
         return false

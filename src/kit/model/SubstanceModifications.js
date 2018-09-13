@@ -196,10 +196,23 @@ export class IsolatedNodeComponentNew extends SubstanceIsolatedNodeComponent {
     this.blockingMode = 'open'
   }
 
+  // overriding the default implementation to allow selecting the node by an otherwise unhandled click
+  render ($$) {
+    let el = super.render($$)
+    el.on('click', this._onClick)
+    return el
+  }
+
   _getContentProps () {
     let props = super._getContentProps()
     props.model = this.props.model
     return props
+  }
+
+  _onClick (event) {
+    event.stopPropagation()
+    event.preventDefault()
+    this.selectNode()
   }
 }
 /*

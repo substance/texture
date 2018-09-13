@@ -28,7 +28,7 @@ export default class Texture extends Component {
     el.append(
       $$(ResourceComponent, props).ref('resource')
     )
-    if (platform.inBrowser && !platform.isChromium) {
+    if (platform.inBrowser && !platform.isChromium && !platform.inElectron) {
       el.append(
         $$(PinnedMessage, {icon: 'fa-warning', label: 'Attention! Current version of Texture supports only Chrome browser.'})
       )

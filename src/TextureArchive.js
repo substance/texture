@@ -134,7 +134,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     let title = 'Untitled'
     if (editorSession) {
       let doc = editorSession.getDocument()
-      let articleTitle = doc.find('article-title').textContent
+      let articleTitle = doc.getTitle()
       if (articleTitle) {
         title = articleTitle
       }

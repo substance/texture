@@ -151,7 +151,10 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   historyEl.append(_exportDate($$, articleRecord, 'receivedDate', 'received'))
   historyEl.append(_exportDate($$, articleRecord, 'revReceivedDate', 'rev-recd'))
   historyEl.append(_exportDate($$, articleRecord, 'revRequestedDate', 'rev-request'))
-  articleMeta.append(historyEl)
+  // do not export and <history>
+  if (historyEl.getChildCount() > 0) {
+    articleMeta.append(historyEl)
+  }
 
   // permissions?,
   if (permission && !permission.isEmpty()) {
@@ -222,7 +225,10 @@ function _exportSubjects (jats, doc) {
     )
     articleCategories.append(groupEl)
   })
-  return articleCategories
+  // only return if there have been converted subjects
+  if (articleCategories.getChildCount() > 0) {
+    return articleCategories
+  }
 }
 
 function _exportTitleGroup (jats, doc, jatsExporter) {
@@ -269,7 +275,9 @@ function _exportContribGroup (jats, doc, exporter, personCollection, type) {
       contribGroupEl.append(_exportGroup($$, exporter, group, persons))
     }
   }
-  return contribGroupEl
+  if (contribGroupEl.getChildCount() > 0) {
+    return contribGroupEl
+  }
 }
 
 /*
@@ -419,6 +427,9 @@ function _exportAffiliations (jats, doc) {
 
 function _exportDate ($$, node, prop, dateType, tag) {
   const date = node[prop]
+  // Do not export a date without value
+  if (!date) return
+
   const tagName = tag || 'date'
   const el = $$(tagName).attr('date-type', dateType)
     .attr('iso-8601-date', date)
@@ -481,17 +492,30 @@ function _createTextElement ($$, text, tagName, attrs) {
 function _exportAbstract (jats, doc, jatsExporter) {
   const $$ = jats.$$
   let abstract = doc.get('abstract')
+  let els = []
+
+  // <abstract>
   let abstractEl = $$('abstract')
-  abstract.getChildren().forEach(p => {
-    abstractEl.append(jatsExporter.convertNode(p))
+  // the abstract element itself is required
+  // but we skip empty content
+  if (!_isContainerEmpty(abstract)) {
+    abstract.getChildren().forEach(p => {
+      abstractEl.append(jatsExporter.convertNode(p))
+    })
+  }
+  els.push(abstractEl)
+
+  // translations
+  abstract.getTranslations().forEach(translation => {
+    if (!_isContainerEmpty(translation)) {
+      let transAbstractEl = $$('trans-abstract').attr({ id: translation.id, 'xml:lang': translation.language })
+        .append(
+          translation.getChildren().map(child => jatsExporter.convertNode(child))
+        )
+      els.push(transAbstractEl)
+    }
   })
-  let transAbstractEls = abstract.getTranslations().map(translation => {
-    return $$('trans-abstract').attr({ id: translation.id, 'xml:lang': translation.language })
-      .append(
-        translation.getChildren().map(child => jatsExporter.convertNode(child))
-      )
-  })
-  return [abstractEl].concat(transAbstractEls)
+  return els
 }
 
 function _exportKeywords (jats, doc) {
@@ -541,9 +565,11 @@ function _exportAwards (jats, doc) {
 
 function _populateBody (jats, doc, jatsExporter) {
   let body = doc.get('body')
-  let bodyEl = jatsExporter.convertNode(body)
-  let oldBody = jats.find('article > body')
-  oldBody.parentNode.replaceChild(oldBody, bodyEl)
+  if (!_isContainerEmpty(body)) {
+    let bodyEl = jatsExporter.convertNode(body)
+    let oldBody = jats.find('article > body')
+    oldBody.parentNode.replaceChild(oldBody, bodyEl)
+  }
 }
 
 function _populateBack (jats, doc, jatsExporter) {
@@ -557,24 +583,35 @@ function _populateBack (jats, doc, jatsExporter) {
     )
   */
   let footnotes = doc.get('footnotes').getChildren()
-  backEl.append(
-    $$('fn-group').append(
-      footnotes.map(footnote => {
-        return jatsExporter.convertNode(footnote)
-      })
+  if (footnotes.length > 0) {
+    backEl.append(
+      $$('fn-group').append(
+        footnotes.map(footnote => {
+          return jatsExporter.convertNode(footnote)
+        })
+      )
     )
-  )
+  }
 
   let references = doc.get('references').getChildren()
-  backEl.append(
-    $$('ref-list').append(
-      references.map(ref => {
-        return jatsExporter.convertNode(ref)
-      })
+  if (references.length > 0) {
+    backEl.append(
+      $$('ref-list').append(
+        references.map(ref => {
+          return jatsExporter.convertNode(ref)
+        })
+      )
     )
-  )
+  }
 }
 
 function _exportAnnotatedText (jatsExporter, path, el) {
   el.append(jatsExporter.annotatedText(path))
+}
+
+function _isContainerEmpty (container) {
+  if (container.getChildCount() === 0) return true
+  if (container.getChildCount() > 1) return false
+  let first = container.getChildAt(0)
+  return first && first.isText() && !first.getText()
 }

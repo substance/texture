@@ -24,10 +24,16 @@ export default class AbstractAppState {
     return this._getImpl().get(name)
   }
 
-  set (name, value) {
+  set (name, value, propagateImmediately) {
     const impl = this._getImpl()
-    impl.set(name, value)
-    impl.setDirty(name)
+    let oldVal = impl.get(name)
+    if (oldVal !== value) {
+      impl.set(name, value)
+      impl.setDirty(name)
+      if (propagateImmediately) {
+        this.propagateUpdates()
+      }
+    }
   }
 
   getUpdate (name) {

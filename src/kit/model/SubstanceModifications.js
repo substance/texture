@@ -218,6 +218,19 @@ function ModifiedSurface (Surface) {
       return super.setProps(_monkeyPatchSurfaceProps(this.parent, newProps))
     }
 
+    render ($$) {
+      // NOTE: experimenting with additional event handlers
+      // After we are sure that we want this we should add this to the core implementation
+      let el = super.render($$)
+      if (!this.isDisabled()) {
+        if (!this.isReadonly()) {
+          // Mouse Events
+          el.on('click', this._onClick)
+        }
+      }
+      return el
+    }
+
     _initializeClipboard () {
       return new ClipboardNew()
     }
@@ -249,6 +262,15 @@ function ModifiedSurface (Surface) {
       if (res !== false) {
         event.stopPropagation()
       }
+    }
+
+    _onClick (event) {
+      if (!this._shouldConsumeEvent(event)) {
+        // console.log('skipping mousedown', this.id)
+        return false
+      }
+      // stop bubbling up here
+      event.stopPropagation()
     }
   }
   return _ModifiedSurface

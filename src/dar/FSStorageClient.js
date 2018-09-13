@@ -39,7 +39,10 @@ export default class FSStorageClient {
 
   clone (archiveDir, newArchiveDir, cb) {
     darServer.cloneArchive(archiveDir, newArchiveDir)
-      .then(cb)
+      .then((success) => {
+        if (success) cb()
+        else cb(new Error('Could not clone archive'))
+      })
       .catch(cb)
   }
 }

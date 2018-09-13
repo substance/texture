@@ -95,11 +95,14 @@ export default class TOCProvider extends EventEmitter {
       })
     }
 
-    entries.push({
-      id: 'ref-list',
-      name: 'References',
-      level: 1
-    })
+    const refNumber = doc.get('references').getChildCount()
+    if (refNumber > 0) {
+      entries.push({
+        id: 'ref-list',
+        name: 'References',
+        level: 1
+      })
+    }
 
     return entries
   }

@@ -15,7 +15,7 @@ export default class BodyComponent extends Component {
         model: model,
         placeholder: this.getLabel('body-placeholder'),
         label: 'body'
-      })
+      }).addClass('sm-body')
     )
     return el
   }

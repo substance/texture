@@ -106,6 +106,15 @@ node make test-nodejs && node --inspect-brk --require esm test/index.js
 ```
 Then open `chrome://inspect`. It should show a `Remove Target` for the test script. Clicking on `inspect` opens a new window with Chrome Developer Tools.
 
+Running a some NodeJS tests:
+
+```
+TEST="Model" npm test
+```
+
+The environment variable `TEST` is used as a filter to select test that have that pattern in their name.
+
+
 Running tests in the browser:
 ```
 node make test-browser -w -s

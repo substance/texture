@@ -537,7 +537,7 @@ function _createClipboardData () {
 }
 
 function _setup (t, seed) {
-  let { context, editorSession, doc } = setupTestArticleSession(seed)
+  let { context, editorSession, doc } = setupTestArticleSession({ seed })
   let clipboard = new ClipboardNew()
   return { context, editorSession, doc, clipboard }
 }

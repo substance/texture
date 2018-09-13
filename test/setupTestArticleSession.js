@@ -6,7 +6,7 @@ import {
   VfsStorageClient, TextureArchive, InMemoryDarBuffer
 } from '../index'
 
-export default function setupTestArticleSession (docInitializer) {
+export default function setupTestArticleSession (opts = {}) {
   let configurator = new TextureConfigurator()
   configurator.import(ArticlePackage)
   // TODO: this could be a little easier
@@ -17,16 +17,15 @@ export default function setupTestArticleSession (docInitializer) {
   let archive = new TextureArchive(storage, new InMemoryDarBuffer())
   // ATTENTION: in case of the VFS loading is synchronous
   // TODO: make sure that this is always the case
-  archive.load('blank', () => {})
+  let archiveId = opts.archiveId || 'blank'
+  archive.load(archiveId, () => {})
   let session = archive.getEditorSession('manuscript')
   let doc = session.getDocument()
-  if (docInitializer) {
+  if (opts.seed) {
     // clear the body
     let body = doc.get('body')
     body.removeAt(0)
-  }
-  if (docInitializer) {
-    docInitializer(doc)
+    opts.seed(doc)
   }
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context
   let contextProvider = {}
@@ -36,5 +35,5 @@ export default function setupTestArticleSession (docInitializer) {
   // ... after the context is ready we can store it into the provider
   contextProvider.context = context
 
-  return { context, editorSession, doc, archive }
+  return { context, editorSession, doc, archive, api }
 }

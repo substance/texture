@@ -1,3 +1,4 @@
+import { DefaultDOMElement } from 'substance'
 import { Managed } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
 import MetadataModel from '../models/MetadataModel'
@@ -19,7 +20,9 @@ export default class MetadataEditor extends EditorPanel {
 
   didMount () {
     super.didMount()
+    this._showHideTOC()
     this._restoreViewport()
+    DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
   }
 
   didUpdate () {
@@ -56,7 +59,7 @@ export default class MetadataEditor extends EditorPanel {
         this._renderTOCPane($$),
         this._renderContentPanel($$),
         this._renderFooterPane($$)
-      )
+      ).ref('contentSection')
     )
     if (appState.workflowId) {
       let Modal = this.getComponent('modal')
@@ -139,5 +142,14 @@ export default class MetadataEditor extends EditorPanel {
 
   _getContentPanel () {
     return this.refs.contentPanel
+  }
+
+  _showHideTOC () {
+    let contentSectionWidth = this.refs.contentSection.el.width
+    if (contentSectionWidth < 960) {
+      this.el.addClass('sm-compact')
+    } else {
+      this.el.removeClass('sm-compact')
+    }
   }
 }

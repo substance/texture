@@ -25,7 +25,7 @@ export default class CardComponent extends Component {
   }
 
   _toggleCardSelection () {
-    this.context.api.selectCard(this.props.modelId)
+    this.context.api.selectModel(this.props.modelId)
   }
 
   _onSelectionChange (sel) {

@@ -15,4 +15,9 @@ export default class ChildModel extends ValueModel {
       return this._api.getModelById(id)
     }
   }
+
+  isEmpty () {
+    let child = this.getChild()
+    return (!child || child.isEmpty())
+  }
 }

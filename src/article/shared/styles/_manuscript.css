@@ -7,9 +7,8 @@
   margin: 0 auto;
 }
 
-.sc-manuscript .sc-text.sm-title {
+.sc-manuscript .sc-title .sc-text {
   line-height: 1.3em;
   font-size: var(--title-font-size);
-  font-family: 'Avenir Next', 'Lato', Helvetica;
   font-weight: 600;
 }

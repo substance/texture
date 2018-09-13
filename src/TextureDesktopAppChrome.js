@@ -1,4 +1,4 @@
-import { DefaultDOMElement, parseKeyEvent } from 'substance'
+import { DefaultDOMElement } from 'substance'
 import { InMemoryDarBuffer } from './dar'
 import TextureAppChrome from './TextureAppChrome'
 
@@ -18,16 +18,16 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
   // move as much as possible into TextureAppChrome
   // and only add browser specific overrides here
   _handleKeydown (event) {
-    let key = parseKeyEvent(event)
+    // let key = parseKeyEvent(event)
     // console.log('Texture received keydown for combo', key)
     let handled = false
     // CommandOrControl+S
-    if (key === 'META+83' || key === 'CTRL+83') {
-      this._save(err => {
-        if (err) console.error(err)
-      })
-      handled = true
-    }
+    // if (key === 'META+83' || key === 'CTRL+83') {
+    //   this._save(err => {
+    //     if (err) console.error(err)
+    //   })
+    //   handled = true
+    // }
     if (!handled) {
       handled = this.refs.texture._handleKeydown(event)
     }
@@ -57,7 +57,7 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
         console.error(err)
         return cb(err)
       }
-
+      debugger
       this._updateTitle(false)
       this.props.ipc.send('document:save-as:successful')
       // Update the browser url, so on reload, we get the contents from the

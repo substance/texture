@@ -1,4 +1,5 @@
 import NodeModelProperty from './NodeModelProperty'
+import { isFlowContentEmpty } from './modelHelpers'
 
 export default class NodeModel {
   constructor (api, node) {
@@ -21,10 +22,13 @@ export default class NodeModel {
   }
 
   isEmpty () {
+    const node = this._node
     // TODO: what does isEmpty() mean on a general node?
-    // ATM we assume that this only makes sense for TextNodes
-    if (this._node.isText()) {
-      return this._node.isEmpty()
+    // ATM we assume that this only makes sense for TextNodes and Containers
+    if (node.isText()) {
+      return node.isEmpty()
+    } else if (node.isContainer()) {
+      return isFlowContentEmpty(this._api, node.getContentPath())
     }
     return false
   }

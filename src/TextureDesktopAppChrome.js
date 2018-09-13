@@ -61,7 +61,6 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
         console.error(err)
         return cb(err)
       }
-      debugger
       this._updateTitle(false)
       this.props.ipc.send('document:save-as:successful')
       // Update the browser url, so on reload, we get the contents from the

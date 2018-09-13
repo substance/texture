@@ -23,6 +23,10 @@ export default class InternalArticleDocument extends Document {
     return articleEl.findAll('xref')
   }
 
+  getTitle () {
+    return this.get('front').find('title').getText()
+  }
+
   createEditingInterface () {
     return new TextureEditingInterface(this, { editing: new TextureEditing() })
   }

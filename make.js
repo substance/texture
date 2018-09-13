@@ -107,6 +107,7 @@ b.task('schema:debug', () => {
 
 b.task('build:assets', function () {
   b.copy('./node_modules/font-awesome', DIST + 'font-awesome')
+  b.copy('./node_modules/inter-ui', DIST + 'inter-ui')
   b.copy('./node_modules/katex/dist', DIST + 'katex')
   b.copy('./node_modules/substance/dist', DIST + 'substance/dist')
   b.css('texture.css', DIST + 'texture.css')

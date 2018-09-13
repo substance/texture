@@ -20,6 +20,9 @@ export default class TextureWebAppChrome extends TextureAppChrome {
     }
   }
 
+  // TODO: try to share implementation with TextureDesktopAppChrome
+  // move as much as possible into TextureAppChrome
+  // and only add browser specific overrides here
   _handleKeydown (event) {
     let key = parseKeyEvent(event)
     // console.log('Texture received keydown for combo', key)

@@ -130,9 +130,11 @@ test('TableComponent: keyboard interactions', t => {
 
 function _setup (t) {
   let table
-  let res = setupTestArticleSession(doc => {
-    table = tableHelpers.generateTable(doc, 10, 5, 't')
-    doc.find('body').append(table)
+  let res = setupTestArticleSession({
+    seed: doc => {
+      table = tableHelpers.generateTable(doc, 10, 5, 't')
+      doc.find('body').append(table)
+    }
   })
   return {
     context: res.context,

@@ -3,7 +3,7 @@ import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
   Component, DefaultDOMElement
 } from 'substance'
-import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../index'
+import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
 import TestVfs from './TestVfs'
 
 export function setCursor (editor, path, pos) {

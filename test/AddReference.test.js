@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
-import setupTestApp from './setupTestApp'
+import setupTestApp from './shared/setupTestApp'
 import { JATS_BIBR_TYPES_TO_INTERNAL } from '../index'
-import { openMetadataEditor } from './integrationTestHelpers'
+import { openMetadataEditor } from './shared/integrationTestHelpers'
 
 test('Add Reference: open and closing workflow', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })

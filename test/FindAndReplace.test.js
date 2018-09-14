@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
-import { setCursor, LOREM_IPSUM } from './integrationTestHelpers'
-import setupTestApp from './setupTestApp'
+import { setCursor, LOREM_IPSUM } from './shared/integrationTestHelpers'
+import setupTestApp from './shared/setupTestApp'
 
 // TODO: instead of the kitchen-sink we should use a fixture that has a defined content
 // so that we can write proper test assertions

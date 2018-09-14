@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
-import setupTestApp from './setupTestApp'
-import { openMetadataEditor, findParent, getEditorSession } from './integrationTestHelpers'
-import { injectStyle, getMountPoint } from './testHelpers'
+import setupTestApp from './shared/setupTestApp'
+import { openMetadataEditor, findParent, getEditorSession } from './shared/integrationTestHelpers'
+import { injectStyle, getMountPoint } from './shared/testHelpers'
 
 test('Card: select the underlying model when clicking on a card', t => {
   // TODO: try to use a smaller fixture

@@ -2,9 +2,9 @@
 import { platform } from 'substance'
 import { test } from 'substance-test'
 import { TextureArchive, checkArchive } from '../index'
-import { getMountPoint, diff } from './testHelpers'
-import { applyNOP, toUnix, setupTestVfs } from './integrationTestHelpers'
-import setupTestApp from './setupTestApp'
+import { getMountPoint, diff } from './shared/testHelpers'
+import { applyNOP, toUnix, setupTestVfs } from './shared/integrationTestHelpers'
+import setupTestApp from './shared/setupTestApp'
 
 PersistenceTest('blank')
 

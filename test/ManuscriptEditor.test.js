@@ -1,8 +1,8 @@
 import { test } from 'substance-test'
 import { tableHelpers } from '../index'
-import { DOMEvent } from './testHelpers'
-import { setCursor, openManuscriptEditor, PseudoFileEvent } from './integrationTestHelpers'
-import setupTestApp from './setupTestApp'
+import { DOMEvent } from './shared/testHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent } from './shared/integrationTestHelpers'
+import setupTestApp from './shared/setupTestApp'
 
 test('ManuscriptEditor: add figure', t => {
   let { app } = setupTestApp(t)

@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import setupTestArticleSession from './setupTestArticleSession'
+import setupTestArticleSession from './shared/setupTestArticleSession'
 
 test('Model: model.isEmpty() for empty containers', t => {
   let { api } = setupTestArticleSession()

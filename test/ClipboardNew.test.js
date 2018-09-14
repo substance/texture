@@ -3,7 +3,7 @@ import {
   DefaultDOMElement, platform, find
 } from 'substance'
 import { ClipboardNew } from '../index'
-import setupTestArticleSession from './setupTestArticleSession'
+import setupTestArticleSession from './shared/setupTestArticleSession'
 
 import simple from './clipboard/simple'
 import BrowserLinuxPLainTextFixture from './clipboard/browser-linux-plain-text'

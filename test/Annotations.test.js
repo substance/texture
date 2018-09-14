@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
-import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture } from './integrationTestHelpers'
-import setupTestApp from './setupTestApp'
+import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture } from './shared/integrationTestHelpers'
+import setupTestApp from './shared/setupTestApp'
 
 const annotationTypes = {
   'bold': 'Strong',

@@ -1,5 +1,5 @@
 import { platform } from 'substance'
-import './testGlobals'
+import './shared/testGlobals'
 // tests
 import './ArticlePanel.test'
 import './Annotations.test'

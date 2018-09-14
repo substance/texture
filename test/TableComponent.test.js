@@ -3,8 +3,8 @@ import { test } from 'substance-test'
 import {
   TableComponent, tableHelpers, TableEditing
 } from '../index'
-import { getMountPoint, DOMEvent } from './testHelpers'
-import setupTestArticleSession from './setupTestArticleSession'
+import { getMountPoint, DOMEvent } from './shared/testHelpers'
+import setupTestArticleSession from './shared/setupTestArticleSession'
 
 test('TableComponent: mounting a table component', t => {
   let { table, context } = _setup(t)

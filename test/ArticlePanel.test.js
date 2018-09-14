@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import setupTestApp from './setupTestApp'
+import setupTestApp from './shared/setupTestApp'
 
 test('ArticlePanel: open every view', t => {
   let { app } = setupTestApp(t)

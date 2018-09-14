@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
-import setupTestApp from './setupTestApp'
-import { openMetadataEditor } from './integrationTestHelpers'
-import { injectStyle, getMountPoint } from './testHelpers'
+import setupTestApp from './shared/setupTestApp'
+import { openMetadataEditor } from './shared/integrationTestHelpers'
+import { injectStyle, getMountPoint } from './shared/testHelpers'
 
 test('Input: ManyRelationship dropdown', t => {
   showOnlyRelevant(t)

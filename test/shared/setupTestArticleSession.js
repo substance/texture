@@ -4,7 +4,7 @@ import {
   ArticleEditorSession,
   ArticleAPI, createEditorContext,
   VfsStorageClient, TextureArchive, InMemoryDarBuffer
-} from '../index'
+} from '../../index'
 
 export default function setupTestArticleSession (opts = {}) {
   let configurator = new TextureConfigurator()

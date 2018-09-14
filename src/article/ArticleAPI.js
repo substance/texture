@@ -322,6 +322,8 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   paste (content, options) {
+    // TODO: to achieve a schema compliant paste we need
+    // to detect the target element and 'filter' the content accordingly
     if (this._tableApi.isTableSelected()) {
       return this._tableApi.paste(content, options)
     } else {

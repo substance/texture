@@ -107,6 +107,12 @@ export default class EditorAPI extends AbstractAPI {
   paste (content, options) {
     const sel = this._getSelection()
     if (sel && !sel.isNull() && !sel.isCustomSelection()) {
+      // TODO: here we need to transform the content
+      // so that a paste is compliant with the schema
+      // First: detect the target context (container vs text)
+      // let targetType = sel.containerId ? 'container' : 'text'
+      // if snippet contains more than one node it is 'container'
+      // if it contains only one textitsh node it is 'text
       this._getEditorSession().transaction(tx => {
         return this._impl.paste(tx, content, options)
       }, { action: 'paste' })

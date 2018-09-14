@@ -4,6 +4,7 @@
 
 .sc-authors-list {
   cursor: default;
+  margin-top: 20px;
 }
 
 .sc-authors-list .se-contrib.sm-empty {
@@ -11,10 +12,8 @@
 }
 
 .sc-authors-list > .se-content {
-  padding: 30px 0px 15px;
-  font-family: 'Avenir Next', 'Lato', Helvetica;
+  padding: 0px;
   font-size: 19px;
-  font-weight: 500;
   color: #000;
 }
 

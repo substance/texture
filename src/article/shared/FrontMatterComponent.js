@@ -9,6 +9,8 @@ export default class FrontMatterComponent extends CompositeComponent {
     // don't use the regular card based collection component for authors
     // only a display
     switch (property.name) {
+      case 'title':
+        return this.getComponent('title')
       case 'authors':
         return this.getComponent('authors-list')
       case 'abstract':

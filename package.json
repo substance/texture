@@ -6,6 +6,7 @@
   "jsnext:main": "index.js",
   "dependencies": {
     "dar-server": "0.6.0",
+    "inter-ui": "^2.5.1",
     "katex": "^0.10.0-rc.1",
     "lodash": "^4.14.1"
   },

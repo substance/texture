@@ -1,6 +1,5 @@
 .sc-abstract {
-  margin-top: 30px;
-  /* font-size: 20px; */
+  margin-top: 20px;
 }
 
 .sc-abstract.sm-hidden {
@@ -14,45 +13,4 @@
 .sc-abstract .sc-abstract-content .container-node {
   border: 1px solid transparent;
   border-radius: 5px;
-  /* padding: 10px;
-  margin: 0 -10px; */
 }
-
-/* .sc-abstract .sc-abstract-content .container-node:hover {
-  position: relative;
-  border: 1px solid #e1e4e8;
-} */
-
-/* .sc-abstract .sc-abstract-content .container-node:hover::before {
-  content: "Abstract";
-  position: absolute;
-  display: block;
-  top: -14px;
-  left: 50%;
-  width: 100px;
-  padding: 0px 10px;
-  margin-left: -50px;
-  background: #fff;
-  text-align: center;
-} */
-
-/* .sc-abstract .sc-abstract-content .container-node:focus {
-  position: relative;
-  border: 1px solid var(--link-color);
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.sc-abstract .sc-abstract-content .container-node:focus::before {
-  content: "Abstract";
-  position: absolute;
-  display: block;
-  top: -14px;
-  left: 50%;
-  width: 100px;
-  padding: 0px 10px;
-  margin-left: -50px;
-  background: #fff;
-  text-align: center;
-  color: var(--link-color);
-} */

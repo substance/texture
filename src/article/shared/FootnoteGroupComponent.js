@@ -18,6 +18,7 @@ export default class FootnoteGroupComponent extends Component {
 
   render ($$) {
     const FootnoteComponent = this.getComponent('fn')
+    const SectionLabel = this.getComponent('section-label')
     const footnotes = this._getFootnotes()
 
     let el = $$('div').addClass('sc-fn-group')
@@ -30,9 +31,7 @@ export default class FootnoteGroupComponent extends Component {
 
     if (footnotes.length > 0) {
       el.append(
-        $$('div').addClass('se-title').append(
-          this.getLabel('footnotes')
-        )
+        $$(SectionLabel, {label: 'footnotes-label'})
       )
     }
 

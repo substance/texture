@@ -1,7 +1,6 @@
 .sc-section-label {
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 10px;
-  color: #777;
+  font-weight: var(--t-bold-font-weight);
+  font-size: var(--t-tiny-font-size);
+  color: var(--t-light-text-color);
   cursor: default;
 }

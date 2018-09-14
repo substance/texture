@@ -1,0 +1,15 @@
+.sc-footnote-group.sm-hidden {
+  display: none;
+}
+
+.sc-footnote-group .sc-footnote  {
+  margin: var(--t-text-spacing) 0;
+}
+
+.sc-footnote-group .sc-footnote:first-child {
+  margin-top: 0 !important;
+}
+
+.sc-footnote-group .sc-footnote:last-child {
+  margin-bottom: 0 !important;
+}

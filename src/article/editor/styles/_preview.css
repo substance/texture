@@ -1,7 +1,6 @@
 .sc-preview {
   display: flex;
-  font-size: 12px;
-  line-height: 1.5em;
+  font-size: var(--t-small-font-size);
 }
 
 .sc-preview .se-thumbnail {
@@ -10,11 +9,11 @@
 
 .sc-preview .se-label {
   white-space: nowrap;
-  flex: 0 0 40px;
-  padding-left: 10px;
+  flex: 0 0 var(--t-double-spacing);
+  padding-left: var(--t-half-spacing);
 }
 
 .sc-preview a {
   text-decoration: none;
-  color: var(--default-text-color);
+  color: var(--t-text-color);
 }

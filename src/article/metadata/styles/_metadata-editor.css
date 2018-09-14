@@ -112,7 +112,7 @@
   max-width: 800px;
   margin: 30px 0px;
   border-radius: 4px;
-  font-size: var(--h1-font-size);
+  font-size: var(--t-h1-font-size);
   cursor: default;
 }
 

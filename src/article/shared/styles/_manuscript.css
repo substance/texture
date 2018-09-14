@@ -8,6 +8,6 @@
 }
 
 .sc-manuscript .sc-title .sc-text {
-  line-height: 1.3em;
-  font-size: var(--title-font-size);
+  font-size: var(--t-title-font-size);
+  font-weight: var(--t-bold-font-weight);
 }

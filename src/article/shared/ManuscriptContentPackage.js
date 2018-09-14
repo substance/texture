@@ -6,11 +6,9 @@ import {
 } from '../../kit'
 
 // new model based components
-import AbstractComponent from './AbstractComponent'
 import AuthorsListComponent from './AuthorsListComponent'
 import BodyComponent from './BodyComponent'
 import FigureComponent from './FigureComponent'
-import FrontMatterComponent from './FrontMatterComponent'
 import HeadingComponent from './HeadingComponent'
 import ManuscriptComponent from './ManuscriptComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
@@ -45,13 +43,11 @@ import SectionLabel from './SectionLabel'
 export default {
   name: 'manuscript-content',
   configure (config) {
-    config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('back-matter', CompositeComponent)
     config.addComponent('bibr', ReferenceComponent)
     config.addComponent('body', BodyComponent)
     config.addComponent('figure', FigureComponent)
-    config.addComponent('front-matter', FrontMatterComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('table-figure', FigureComponent)
@@ -98,7 +94,7 @@ export default {
     config.addLabel('abstract-label', 'Abstract')
     config.addLabel('abstract-placeholder', 'Please provide a short description of your article.')
     config.addLabel('body-label', 'Main text')
-    config.addLabel('body-placeholder', 'Write your article here')
+    config.addLabel('body-placeholder', 'Write your article here.')
     config.addLabel('authors-label', 'Authors')
     config.addLabel('references-label', 'References')
     config.addLabel('footnotes-label', 'Footnotes')

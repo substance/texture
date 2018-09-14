@@ -1,19 +1,18 @@
 .sc-figure.sm-manuscript {
-  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
-  padding: 20px;
+  box-shadow: var(--t-default-box-shadow);
+  padding: var(--t-default-spacing);
 }
 
 .sc-figure > .se-label {
-  font-weight: 600;
-  font-size: 18px;
-  padding-bottom: 10px;
+  padding-bottom: var(--t-half-spacing);
+  font-weight: var(--t-bold-font-weight);
 }
 
 .sc-figure .se-title {
-  padding-top: 30px;
-  font-weight: 600;
+  padding: var(--t-default-spacing) 0;
+  font-weight: var(--t-bold-font-weight);
 }
 
-.sc-figure .se-title .sc-bold {
-  font-weight: 900;
+.sc-figure .sc-caption {
+  font-size: var(--t-small-font-size);
 }

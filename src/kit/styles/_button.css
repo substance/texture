@@ -21,12 +21,12 @@
 }
 
 .sc-button.sm-theme-light.sm-active {
-  background: var(--active-color);
+  background: var(--t-action-color);
   color: white;
 }
 
 .sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),
 .sc-button.sm-theme-light:focus {
-  background: var(--light-bg-color);
-  color: var(--text-action-color);
+  background: var(--t-light-bg-color);
+  color: var(--t-action-color);
 }

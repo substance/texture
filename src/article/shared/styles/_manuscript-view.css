@@ -6,21 +6,6 @@
   display: flex;
   flex-direction: row;
   height: 100%;
-  font-size: 17px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.8);
-  line-height: 1.7em;
-}
-
-.sc-manuscript-view .sc-container-editor:not(.sm-body) {
-  border: var(--t-input-default-border);
-  border-radius: var(--t-border-radius);
-  padding: var(--t-input-padding);
-  margin: var(--t-negative-input-padding);
-}
-
-.sc-manuscript-view .sc-container-editor:focus:not(.sm-body) {
-  border: var(--t-input-focus-border);
 }
 
 .sc-manuscript-view .se-toolbar-wrapper {
@@ -28,7 +13,7 @@
   padding: 4px;
   padding-bottom: 4px;
   padding-left: 270px;
-  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
+  box-shadow: var(--t-default-box-shadow);
 }
 
 .sc-manuscript-view.sm-compact .se-toolbar-wrapper {
@@ -46,27 +31,13 @@
 
 .sc-manuscript-view > .se-context-pane {
   flex: 0 2 300px;
-  background: #fafbfc;
-  border-left: 1px solid #e1e4e8;
+  border-left: var(--t-default-border);
   position: relative;
 }
 
 .sc-manuscript-view .sc-body-content > .sc-container-editor {
   padding: 0;
   margin: 0 auto;
-}
-
-/* Add padding to each child except last one */
-.sc-manuscript-view .sc-container-editor > * {
-  margin: 15px 0;
-}
-
-.sc-manuscript-view .sc-container-editor > *:first-child {
-  margin-top: 0 !important;
-}
-
-.sc-manuscript-view .sc-container-editor > *:last-child {
-  margin-bottom: 0 !important;
 }
 
 .sc-manuscript-view .se-context-pane > .se-context-pane-content {
@@ -117,46 +88,27 @@
   position: relative;
 }
 
-.sc-context-menu .sc-tool-separator {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #eee;
+.sc-manuscript-view .sc-container-editor:not(.sm-body) {
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+  margin: var(--t-negative-input-padding);
 }
 
-/* content specific style overrides*/
-/* TODO: shouldn't these go into _manuscript.css ? */
-
-.sc-heading {
-  font-weight: 400;
-  padding-top: 10px;
+.sc-manuscript-view .sc-container-editor:focus:not(.sm-body) {
+  border: var(--t-input-focus-border);
 }
 
-h1.sc-heading {
-  font-size: var(--t-h1-font-size);
+
+/* Add padding to each child except last one */
+.sc-manuscript-view .sc-container-editor > * {
+  margin: var(--t-text-spacing) 0;
 }
 
-h2.sc-heading {
-  font-size: var(--t-h2-font-size);
+.sc-manuscript-view .sc-container-editor > *:first-child {
+  margin-top: 0 !important;
 }
 
-h3.sc-heading {
-  font-size: var(--t-h3-font-size);
-}
-
-.sc-caption {
-  font-size: 14px;
-  line-height: 1.8em;
-}
-
-.sc-manuscript-view .sc-caption .sc-p .sc-italic,
-.sc-manuscript-view em {
-  font-weight: 600;
-}
-
-.sc-fig .se-title .sc-italic {
-  font-weight: 700;
-}
-
-.sc-ref-list {
-  font-size: 15px;
+.sc-manuscript-view .sc-container-editor > *:last-child {
+  margin-bottom: 0 !important;
 }

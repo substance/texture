@@ -1,0 +1,16 @@
+.sc-heading {
+  /* padding-top: var(--t-half-spacing); */
+  font-weight: var(--t-bold-font-weight);
+}
+
+h1.sc-heading {
+  font-size: var(--t-h1-font-size);
+}
+
+h2.sc-heading {
+  font-size: var(--t-h2-font-size);
+}
+
+h3.sc-heading {
+  font-size: var(--t-h3-font-size);
+}

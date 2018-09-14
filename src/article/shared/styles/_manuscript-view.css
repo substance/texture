@@ -1,5 +1,4 @@
-/* TODO: why is this selector prefixed with .sc-article-panel? */
-.sc-article-panel .sc-manuscript-view {
+.sc-manuscript-view {
   flex-grow: 1;
 }
 
@@ -62,9 +61,13 @@
   margin: 15px 0;
 }
 
-/* .sc-manuscript-view .sc-container-editor > .sc-p {
-  font-family: Georgia;
-} */
+.sc-manuscript-view .sc-container-editor > *:first-child {
+  margin-top: 0 !important;
+}
+
+.sc-manuscript-view .sc-container-editor > *:last-child {
+  margin-bottom: 0 !important;
+}
 
 .sc-manuscript-view .se-context-pane > .se-context-pane-content {
   position: absolute;
@@ -144,9 +147,6 @@ h3.sc-heading {
 .sc-caption {
   font-size: 14px;
   line-height: 1.8em;
-}
-
-.sc-ref-list, .sc-fig, .sc-table-wrap, .sc-edit-xref-tool, .sc-manuscript-view .sc-caption .sc-p {
 }
 
 .sc-manuscript-view .sc-caption .sc-p .sc-italic,

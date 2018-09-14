@@ -1,6 +1,7 @@
 :root {
+  --default-content-padding: 4px;
   --input-padding: 4px;
-  --negative-input-padding: -4px;
+  --negative-input-padding: -6px;
   --input-border-radius: 5px;
   --input-default-border: 2px solid transparent;
   --input-focus-border: 2px solid rgb(145, 189, 240);

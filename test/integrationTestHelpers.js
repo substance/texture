@@ -3,7 +3,7 @@ import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
   Component, DefaultDOMElement
 } from 'substance'
-import { TextureWebApp, VfsStorageClient,createJatsImporter } from '../index'
+import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../index'
 import TestVfs from './TestVfs'
 
 export function setCursor (editor, path, pos) {
@@ -100,6 +100,15 @@ export function setupTestVfs (mainVfs, archiveId) {
   return new TestVfs(data)
 }
 
+// creates a vfs instance that contains a standard manifest
+export function createTestVfs (seedXML) {
+  let data = {
+    "test/manifest.xml": "<dar>\n  <documents>\n    <document id=\"manuscript\" type=\"article\" path=\"manuscript.xml\" />\n  </documents>\n  <assets>\n  </assets>\n</dar>\n", //eslint-disable-line
+    "test/manuscript.xml": seedXML, //eslint-disable-line
+  }
+  return new TestVfs(data)
+}
+
 export function openManuscriptEditor (app) {
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'manuscript')
@@ -118,6 +127,10 @@ export function getApi (editor) {
 
 export function getEditorSession (editor) {
   return editor.context.api.getArticleSession()
+}
+
+export function getSelection (editor) {
+  return editor.context.appState.selection
 }
 
 export function loadBodyFixture (editor, xml) {

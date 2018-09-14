@@ -35,10 +35,11 @@ export default class FootnoteGroupComponent extends Component {
       )
     }
 
-    footnotes.forEach(fnModel => {
+    footnotes.forEach(model => {
+      let node = model._node
       el.append(
         $$('div').addClass('se-fn-item').append(
-          $$(FootnoteComponent, { model: fnModel, node: fnModel._node })
+          $$(FootnoteComponent, { model, node }).ref(model.id)
         )
       )
     })

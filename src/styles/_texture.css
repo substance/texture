@@ -87,9 +87,9 @@
    /* ----------------------------------------------------------------------*/
 
    /* Used for interface elements */
-   --t-interface-font: 'Inter UI';
+   --t-interface-font: 'Inter UI', system-ui, sans-serif;
    /* Used for flowing text, such as paragraphs */ 
-   --t-text-font: 'Inter UI';
+   --t-text-font: 'Inter UI', system-ui, sans-serif;
 
    /* Font sizes */
    /* ----------------------------------------------------------------------*/
@@ -168,7 +168,7 @@
 .sc-texture {
   height: 100%;
   position: relative;
-  font-family: 'Inter UI', system-ui, sans-serif;
+  font-family: var(--t-interface-font)
 }
 
 .sc-texture .emphasis, .sc-texture em, .sc-texture i:not(.fa) {

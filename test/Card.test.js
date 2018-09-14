@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './setupTestApp'
-import { openMetadataEditor, findParent } from './integrationTestHelpers'
+import { openMetadataEditor, findParent, getEditorSession } from './integrationTestHelpers'
 import { injectStyle, getMountPoint } from './testHelpers'
 
 test('Card: select the underlying model when clicking on a card', t => {
@@ -26,8 +26,7 @@ test('Issue #841: regression with model selections', t => {
   let metadataEditor = openMetadataEditor(app)
   let fnSurface = metadataEditor.find('.sc-surface[data-id="fn1"]')
   let textProperty = fnSurface.find('.sc-text-property')
-  // TODO: use helper to retrieve the editor session
-  let editorSession = metadataEditor.context.editorSession
+  let editorSession = getEditorSession(metadataEditor)
   editorSession.setSelection({
     type: 'property',
     path: textProperty.getPath(),

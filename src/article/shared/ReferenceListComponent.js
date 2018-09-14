@@ -21,10 +21,9 @@ export default class ReferenceListComponent extends Component {
 
   render ($$) {
     const ReferenceComponent = this.getComponent('bibr')
-    const SectionLabel = this.getComponent('section-label')
     const bibliography = this._getBibliography()
 
-    let el = $$('div').addClass('sc-ref-list')
+    let el = $$('div').addClass('sc-reference-list')
       .attr('data-id', 'ref-list')
 
     if (this.state.hidden) {
@@ -32,19 +31,11 @@ export default class ReferenceListComponent extends Component {
       return el
     }
 
-    if (bibliography.length > 0) {
-      el.append(
-        $$(SectionLabel, {label: 'references-label'})
-      )
-    }
-
     // ATTENTION: bibliography still works with document nodes
     bibliography.forEach(refNode => {
       let model = NodeModelFactory.create(this.context.api, refNode)
       el.append(
-        $$('div').addClass('se-ref-item').append(
-          $$(ReferenceComponent, { model })
-        )
+        $$(ReferenceComponent, { model })
       )
     })
 

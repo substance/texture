@@ -18,7 +18,6 @@ export default class FootnoteGroupComponent extends Component {
 
   render ($$) {
     const FootnoteComponent = this.getComponent('fn')
-    const SectionLabel = this.getComponent('section-label')
     const footnotes = this._getFootnotes()
 
     let el = $$('div').addClass('sc-footnote-group')
@@ -29,19 +28,12 @@ export default class FootnoteGroupComponent extends Component {
       return el
     }
 
-    if (footnotes.length > 0) {
-      el.append(
-        $$(SectionLabel, {label: 'footnotes-label'})
-      )
-    }
-
     footnotes.forEach(model => {
       let node = model._node
       el.append(
         $$(FootnoteComponent, { model, node }).ref(model.id)
       )
     })
-
     return el
   }
 

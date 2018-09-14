@@ -1,0 +1,15 @@
+.sc-reference-list.sm-hidden {
+  display: none;
+}
+
+.sc-reference-list .sc-reference  {
+  margin: var(--t-text-spacing) 0;
+}
+
+.sc-reference-list .sc-reference:first-child {
+  margin-top: 0 !important;
+}
+
+.sc-reference-list .sc-reference:last-child {
+  margin-bottom: 0 !important;
+}

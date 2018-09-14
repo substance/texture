@@ -1,15 +1,6 @@
-.sc-footnote-group {
-  margin-top: 30px;
-}
-
 .sc-footnote-group.sm-hidden {
   display: none;
 }
-
-.sc-footnote-group .sc-button > .se-tooltip {
-  top: inherit;
-}
-
 
 .sc-footnote-group .sc-footnote  {
   margin: var(--t-text-spacing) 0;

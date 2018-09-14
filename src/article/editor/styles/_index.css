@@ -11,7 +11,8 @@
 @import './_math.css';
 @import './_footnote-group.css';
 @import './_footnote.css';
-@import './_ref-list.css';
+@import './_reference-list.css';
+@import './_reference.css';
 @import './_xref';
 @import './_figure.css';
 @import './_insert-fig-tool.css';

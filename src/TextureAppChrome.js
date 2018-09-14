@@ -13,9 +13,12 @@ export default class TextureAppChrome extends Component {
     } else {
       this._init()
     }
-    DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
-    DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
-    DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
+    // Note: adding global handlers causes problems in the test suite
+    if (!platform.test) {
+      DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
+      DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
+      DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
+    }
   }
 
   dispose () {

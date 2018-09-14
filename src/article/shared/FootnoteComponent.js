@@ -8,24 +8,24 @@ export default class FootnoteComponent extends Component {
     const node = this.props.node
     const mode = this.props.mode
     const model = this.props.model
+    const Container = this.getComponent('container')
+
     let el = $$('div')
       .addClass('sc-fn-item')
       .attr('data-id', node.id)
 
     let label = getLabel(node) || '?'
 
-    let contentEl = $$(this.getComponent('container'), {
-      placeholder: 'Enter Footnote',
-      node: node,
-      disabled: this.props.disabled
-    }).ref('editor')
-
     if (mode === PREVIEW_MODE) {
       el.append(
         $$(PreviewComponent, {
           id: model.id,
           label: label,
-          description: contentEl
+          description: $$(Container, {
+            node: node,
+            disabled: true,
+            editable: false
+          })
         })
       )
     } else {
@@ -35,7 +35,11 @@ export default class FootnoteComponent extends Component {
           $$('div').addClass('se-label').append(
             label
           ),
-          contentEl
+          $$(Container, {
+            placeholder: 'Enter Footnote',
+            node: node,
+            disabled: this.props.disabled
+          }).ref('editor')
         )
       )
     }

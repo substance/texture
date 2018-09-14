@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from 'substance'
-import { FormRowComponent, ModelComponent } from '../../kit'
+import { FormRowComponent, ModelComponent, stopAndPreventEvent, stopEvent } from '../../kit'
 
 export default class TranslateableEditor extends ModelComponent {
   render ($$) {
@@ -77,6 +77,7 @@ export default class TranslateableEditor extends ModelComponent {
 
     const el = $$('select').addClass('se-select')
       .on('change', this._addTranslation)
+      .on('click', stopEvent)
 
     el.append(
       $$('option').append(this.getLabel('select-language'))
@@ -95,7 +96,6 @@ export default class TranslateableEditor extends ModelComponent {
     const value = e.target.value
     const model = this.props.model
     model.addTranslation(value)
-
     this._toggleDropdown()
   }
 
@@ -104,7 +104,8 @@ export default class TranslateableEditor extends ModelComponent {
     model.removeTranslation(translationModel)
   }
 
-  _toggleDropdown () {
+  _toggleDropdown (e) {
+    stopAndPreventEvent(e)
     const dropdown = this.state.dropdown
     this.extendState({dropdown: !dropdown})
   }

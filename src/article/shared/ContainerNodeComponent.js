@@ -5,7 +5,9 @@ export default class ContainerNodeComponent extends Component {
   render ($$) {
     const node = this.props.node
     const ContainerEditor = this.getComponent('container-editor')
-    let el = $$('div').addClass('sc-' + node.type)
+    let el = $$('div')
+      // TODO: don't violate the 'sc-' contract
+      .addClass('sc-' + node.type)
       .attr('data-id', node.id)
     el.append($$(ContainerEditor, {
       placeholder: this.props.placeholder,

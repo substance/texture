@@ -26,6 +26,7 @@ export default class SurfaceManager {
 
   registerSurface (surface) {
     const id = surface.getId()
+    // console.log(`Registering surface ${id}.`, surface.__id__)
     if (this.surfaces[id]) {
       console.error(`A surface with id ${id} has already been registered.`)
     }
@@ -33,10 +34,11 @@ export default class SurfaceManager {
   }
 
   unregisterSurface (surface) {
-    let surfaceId = surface.getId()
-    let registeredSurface = this.surfaces[surfaceId]
+    let id = surface.getId()
+    // console.log(`Unregistering surface ${id}.`, surface.__id__)
+    let registeredSurface = this.surfaces[id]
     if (registeredSurface === surface) {
-      delete this.surfaces[surfaceId]
+      delete this.surfaces[id]
     }
   }
 

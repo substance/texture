@@ -35,6 +35,7 @@ export default class TextNodeComponent extends Component {
   }
 
   getClassNames () {
+    // TODO: don't violate the 'sc-' contract
     return 'sc-text-node sc-' + this.props.node.type
   }
 }

@@ -121,8 +121,14 @@ export default function (DocumentSession) {
           }
         }
       }
-      _addSurfaceId(sel, this)
-      _addContainerId(sel, this)
+      if (!sel.isCustomSelection()) {
+        if (!sel.surfaceId) {
+          _addSurfaceId(sel, this)
+        }
+        if (!sel.containerId) {
+          _addContainerId(sel, this)
+        }
+      }
       this.editorState.selection = sel
       this.editorState.propagateUpdates()
       return sel
@@ -306,6 +312,7 @@ function _addContainerId (sel, editorSession) {
     if (surface) {
       let containerId = surface.getContainerId()
       if (containerId) {
+        console.log('Adding containerId', containerId)
         sel.containerId = containerId
       }
     }

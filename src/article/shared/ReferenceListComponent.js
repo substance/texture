@@ -34,7 +34,7 @@ export default class ReferenceListComponent extends Component {
 
     if (bibliography.length > 0) {
       el.append(
-        $$(SectionLabel, {label: 'references-label'}),
+        $$(SectionLabel, {label: 'references-label'})
       )
     }
 

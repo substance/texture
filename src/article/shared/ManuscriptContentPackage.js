@@ -94,9 +94,9 @@ export default {
     // Manuscript sections config
     config.addComponent('section-label', SectionLabel)
     config.addLabel('title-label', 'Title')
-    config.addLabel('title-placeholder', 'Enter a title for your manuscript')
+    config.addLabel('title-placeholder', 'Enter a title for your article')
     config.addLabel('abstract-label', 'Abstract')
-    config.addLabel('abstract-placeholder', 'Please provide a short description of your article')
+    config.addLabel('abstract-placeholder', 'Please provide a short description of your article.')
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here')
     config.addLabel('authors-label', 'Authors')

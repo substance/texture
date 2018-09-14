@@ -5,7 +5,7 @@ export default class EditExtLinkTool extends ToggleTool {
     let Input = this.getComponent('input')
     let Button = this.getComponent('button')
     let commandState = this.props.commandState
-    let el = $$('div').addClass('sc-edit-link-tool')
+    let el = $$('div').addClass('sc-edit-ext-link-tool')
 
     // GUARD: Return if tool is disabled
     if (commandState.disabled) {
@@ -26,14 +26,7 @@ export default class EditExtLinkTool extends ToggleTool {
         theme: this.props.theme
       }).addClass('sm-open')
         .attr('title', this.getLabel('open-link'))
-        .on('click', this._openLink),
-
-      $$(Button, {
-        icon: 'delete',
-        theme: this.props.theme
-      }).addClass('sm-delete')
-        .attr('title', this.getLabel('delete-link'))
-        .on('click', this._onDelete)
+        .on('click', this._openLink)
     )
     return el
   }
@@ -60,23 +53,5 @@ export default class EditExtLinkTool extends ToggleTool {
 
   _getDocument () {
     return this.context.editorSession.getDocument()
-  }
-
-  _onDelete (e) { // eslint-disable-line no-unused-vars
-    // TODO: don't manipulate here but use API for that
-    // e.preventDefault()
-    // let nodeId = this._getNodeId()
-    // let sm = this.context.surfaceManager
-    // let surface = sm.getFocusedSurface()
-    // if (!surface) {
-    //   console.warn('No focused surface. Stopping command execution.')
-    //   return
-    // }
-    // let editorSession = this.context.editorSession
-    // editorSession.transaction(function (tx, args) {
-    //   tx.delete(nodeId)
-    //   return args
-    // })
-    console.error('FIXME: use API to delete ext-link')
   }
 }

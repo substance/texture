@@ -27,21 +27,6 @@
   display: flex;
 }
 
-.sc-fn-item .se-fn-container .container-node {
-  border: 2px solid transparent;
-  border-radius: 5px;
-  padding: 0px 10px;
-}
-
-
-
-.sc-fn-item .se-fn-container .container-node:focus {
-  /* border: 1px solid var(--border-action-color); */
-  border: 2px solid #A8D0FF;
-  border-radius: 5px;
-  padding: 0px 10px;
-}
-
 .sc-fn-item .se-fn-container .se-label {
   position: relative;
   top: 14px;

@@ -38,15 +38,12 @@
 
 .sc-table .se-selection-overlay > .se-selection-anchor {
   position: absolute;
-  border: var(--input-focus-border);
+  border: var(--t-input-focus-border);
 }
 
 .sc-table .se-selection-overlay > .se-selection-range {
   position: absolute;
-  border: var(--input-focus-border);
+  border: var(--t-input-focus-border);
   border-width: 1px;
   background: rgba(38, 132, 252, 0.1)
-}
-
-.sc-table .sc-table-context-menu {
 }

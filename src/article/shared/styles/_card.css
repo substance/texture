@@ -12,7 +12,7 @@
 }
 
 .sc-card.sm-selected {
-  outline: var(--input-focus-border)
+  outline: var(--t-input-focus-border)
 }
 
 .sc-card > .se-label {

@@ -118,7 +118,7 @@
 }
 
 .se-add-reference > .se-import > .se-drop-import > .se-select-trigger {
-  color: var(--link-color);
+  color: var(--t-text-action-color);
   cursor: pointer;
 }
 

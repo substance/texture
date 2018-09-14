@@ -2,9 +2,9 @@
   position: absolute;
   background: #fff;
   border-radius: 5px;
-  font-size: var(--small-font-size);
+  font-size: var(--t-small-font-size);
   z-index: 1000;
-  box-shadow: var(--default-box-shadow);
+  box-shadow: var(--t-default-box-shadow);
 }
 
 .sc-context-menu.sm-hidden {

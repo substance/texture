@@ -27,7 +27,7 @@
 .sc-ref-list > .se-ref-item > .sc-reference > .se-label {
   min-width: 20px;
   margin: 0px 20px;
-  font-weight: var(--strong-font-weight);
+  font-weight: var(--t-bold-font-weight);
   text-align: center;
 }
 

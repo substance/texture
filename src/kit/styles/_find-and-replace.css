@@ -1,5 +1,5 @@
 .sc-find-and-replace-dialog {
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--t-default-block-border);
   padding: 5px;
 }
 

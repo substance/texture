@@ -9,7 +9,7 @@
   background: #fff;
   display: flex;
   flex-wrap: nowrap;
-  box-shadow: var(--default-box-shadow);
+  box-shadow: var(--t-default-box-shadow);
 }
 
 .sc-overlay > .se-active-tools .sc-tool-group {

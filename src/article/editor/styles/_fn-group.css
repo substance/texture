@@ -33,7 +33,7 @@
   min-width: 20px;
   margin: 0px 20px;
   font-size: 12px;
-  font-weight: var(--strong-font-weight);
+  font-weight: var(--t-bold-font-weight);
   text-align: center;
   cursor: default;
 }

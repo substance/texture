@@ -1,6 +1,6 @@
 .sc-fig-preview {
   font-size: 12px;
-  border-bottom: 1px solid var(--separator-color);
+  border-bottom: 1px solid var(--t-separator-color);
   padding: 5px 10px;
   cursor: pointer;
   position: relative;
@@ -20,9 +20,9 @@
 }
 
 .sc-fig-preview.sm-selected {
-  border-left: 3px solid var(--border-action-color);
-  color: var(--default-text-color);
-  background: var(--active-light-bg-color);
+  border-left: 3px solid var(--t-focus-color);
+  color: var(--t-text-color);
+  background: var(--t-active-light-bg-color);
 }
 
 .sc-fig-preview a {

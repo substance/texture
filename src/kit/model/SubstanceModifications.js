@@ -21,30 +21,18 @@ export class SurfaceNew extends ModifiedSurface(SubstanceSurface) {}
 export class TextPropertyEditorNew extends ModifiedSurface(SubstanceTextPropertyEditor) {
   // overriding event registration
   didMount () {
+    super.didMount()
+
     let appState = this.context.appState
     appState.addObserver(['selection'], this._onSelectionChanged, this, {
       stage: 'render'
     })
-    const surfaceManager = this.getSurfaceManager()
-    if (surfaceManager) {
-      surfaceManager.registerSurface(this)
-    }
-    const globalEventHandler = this.getGlobalEventHandler()
-    if (globalEventHandler) {
-      globalEventHandler.addEventListener('keydown', this._muteNativeHandlers, this)
-    }
   }
 
   dispose () {
+    super.dispose()
+
     this.context.appState.off(this)
-    const surfaceManager = this.getSurfaceManager()
-    if (surfaceManager) {
-      surfaceManager.unregisterSurface(this)
-    }
-    const globalEventHandler = this.getGlobalEventHandler()
-    if (globalEventHandler) {
-      globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)
-    }
   }
 
   render ($$) {
@@ -70,6 +58,8 @@ export class TextPropertyEditorNew extends ModifiedSurface(SubstanceTextProperty
 export class ContainerEditorNew extends ModifiedSurface(SubstanceContainerEditor) {
   // overriding event registration
   didMount () {
+    super.didMount()
+
     let appState = this.context.appState
     appState.addObserver(['selection'], this._onSelectionChanged, this, {
       stage: 'render'
@@ -80,37 +70,24 @@ export class ContainerEditorNew extends ModifiedSurface(SubstanceContainerEditor
         path: this.container.getContentPath()
       }
     })
-
-    const surfaceManager = this.getSurfaceManager()
-    if (surfaceManager) {
-      surfaceManager.registerSurface(this)
-    }
-    const globalEventHandler = this.getGlobalEventHandler()
-    if (globalEventHandler) {
-      globalEventHandler.addEventListener('keydown', this._muteNativeHandlers, this)
-    }
-    this._attachPlaceholder()
   }
 
   dispose () {
+    super.dispose()
+
     this.context.appState.off(this)
-    const surfaceManager = this.getSurfaceManager()
-    if (surfaceManager) {
-      surfaceManager.unregisterSurface(this)
-    }
-    const globalEventHandler = this.getGlobalEventHandler()
-    if (globalEventHandler) {
-      globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)
-    }
   }
 
   // overriding this to control editability
   render ($$) {
     let el = super.render($$)
 
-    // HACK: removing contenteditable if not editable
-    // TODO: we should fix substance.ContainerEditor to be consistent with props used in substance.Surface
-    if (!this.isEditable()) {
+    if (this.isEditable()) {
+      el.addClass('sm-editable')
+    } else {
+      el.addClass('sm-readonly')
+      // HACK: removing contenteditable if not editable
+      // TODO: we should fix substance.TextPropertyEditor to be consistent with props used in substance.Surface
       el.setAttribute('contenteditable', false)
     }
 
@@ -163,7 +140,7 @@ function _monkeyPatchSurfaceProps (parent, props) {
     }
   }
   // TODO: we should revisit this in Substance
-  if (!parent.context.editable) {
+  if (props.editable === false || !parent.context.editable) {
     newProps.editing = 'readonly'
   }
   return newProps
@@ -257,6 +234,28 @@ function ModifiedSurface (Surface) {
   class _ModifiedSurface extends Surface {
     constructor (parent, props, options) {
       super(parent, _monkeyPatchSurfaceProps(parent, props), options)
+    }
+
+    didMount () {
+      const surfaceManager = this.getSurfaceManager()
+      if (surfaceManager && this.isEditable()) {
+        surfaceManager.registerSurface(this)
+      }
+      const globalEventHandler = this.getGlobalEventHandler()
+      if (globalEventHandler) {
+        globalEventHandler.addEventListener('keydown', this._muteNativeHandlers, this)
+      }
+    }
+
+    dispose () {
+      const surfaceManager = this.getSurfaceManager()
+      if (surfaceManager && this.isEditable()) {
+        surfaceManager.unregisterSurface(this)
+      }
+      const globalEventHandler = this.getGlobalEventHandler()
+      if (globalEventHandler) {
+        globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)
+      }
     }
 
     setProps (newProps) {

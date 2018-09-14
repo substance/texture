@@ -12,7 +12,7 @@
 }
 
 .sc-edit-xref-tool .se-option.sm-selected {
-  border-left: 3px solid var(--t-focus-color);
+  border-left: 3px solid var(--t-action-color);
   color: var(--t-text-color);
-  background: var(--t-active-light-bg-color);
+  background: var(--t-light-background-color);
 }

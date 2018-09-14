@@ -1,7 +1,6 @@
 @import './_editor.css';
 @import './_abstract.css';
 @import './_unsupported.css';
-@import './_annotations.css';
 @import './_affiliations-list.css';
 @import './_authors-list.css';
 @import './_toc.css';
@@ -10,7 +9,8 @@
 @import './_edit-xref-tool.css';
 @import './_edit-math-tool.css';
 @import './_math.css';
-@import './_fn-group.css';
+@import './_footnote-group.css';
+@import './_footnote.css';
 @import './_ref-list.css';
 @import './_xref';
 @import './_figure.css';

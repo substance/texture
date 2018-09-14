@@ -22,3 +22,9 @@
 .sc-context-menu > .sc-tool-group:not(:last-child) {
   border-bottom: 1px solid #111;
 }
+
+.sc-context-menu .sc-tool-separator {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}

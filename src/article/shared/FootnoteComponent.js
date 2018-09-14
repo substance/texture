@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import { getLabel } from './nodeHelpers'
-import { METADATA_MODE, PREVIEW_MODE } from '../ArticleConstants'
+import { PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
 
 export default class FootnoteComponent extends Component {
@@ -11,7 +11,7 @@ export default class FootnoteComponent extends Component {
     const Container = this.getComponent('container')
 
     let el = $$('div')
-      .addClass('sc-fn-item')
+      .addClass('sc-footnote')
       .attr('data-id', node.id)
 
     let label = getLabel(node) || '?'
@@ -29,7 +29,7 @@ export default class FootnoteComponent extends Component {
         })
       )
     } else {
-      let fnContainer = $$('div').addClass('se-fn-container')
+      let fnContainer = $$('div').addClass('se-container')
       el.append(
         fnContainer.append(
           $$('div').addClass('se-label').append(
@@ -43,20 +43,6 @@ export default class FootnoteComponent extends Component {
         )
       )
     }
-
-    if (mode === METADATA_MODE) {
-      const Button = this.getComponent('button')
-      const footer = $$('div').addClass('se-footer').append(
-        $$(Button, {label: 'remove', icon: 'remove'}).addClass('se-remove-item')
-          .on('click', this._removeFootnote)
-      )
-      el.append(footer)
-    }
     return el
-  }
-
-  _removeFootnote () {
-    const model = this.props.model
-    this.send('remove-item', model)
   }
 }

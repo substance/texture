@@ -1,4 +1,4 @@
-:root {
+/* :root { */
   /* Layout */
   /* --small-layout-width: 300px;
   --medium-layout-width: 620px;
@@ -80,7 +80,7 @@
 
   /* RGB #A3CDFD = HSB 209,29,80 */
   /* --local-selection-color: #2A8CFF; */
-}
+/* } */
 
 :root {
    /* Font families */
@@ -121,13 +121,15 @@
    /* ----------------------------------------------------------------------*/
 
    /* Used in main text */
-   --t-default-line-height: 1.5; 
+   --t-default-line-height: 1.5;
 
    /* Colors */
    /* ----------------------------------------------------------------------*/
 
   /* Default background color, used when we need to cover content, e.g. in overlays */
   --t-background-color: #fff;
+  /* Light (greyish) background color */
+  --t-light-background-color: #2E72EA0a;
   /* Main text color, used in the article */
   --t-text-color: #111;
   /* Inverted text color, to put on dark elements */
@@ -137,19 +139,24 @@
   /* Used for focus border, e.g. selected card, or text input */
   --t-focus-color: rgb(145, 189, 240);
   /* E.g. citations of references, figures, etc. */
-  --t-text-action-color: #2e72ea;
+  --t-action-color: #2e72ea;
   /* Used to display warning icons */
   --t-warning-color: #ffaf46;
+  /* Default light border color */
+  --t-border-color: #ddd;
 
    /* Paddings */
    /* ----------------------------------------------------------------------*/
+  --t-half-spacing: 10px; /* Half of the default spacing */
   --t-default-spacing: 20px; /* Default padding to create some whitespace, e.g. in figure */
+  --t-text-spacing: 15px; /* Used as the margin between content elements */
+  --t-double-spacing: 40px; /* Double of the default spacing */
   --t-input-padding: 4px; /* Padding used input boxes */
 
    /* Margins */
    /* ----------------------------------------------------------------------*/
 
-  --t-flowing-content-margin: 15px 0; /* Space between content elements, e.g. between two paragraphs */
+  --t-flowing-content-margin: 20px 0; /* Space between content elements, e.g. between two paragraphs */
 
    /* Borders */
    /* ----------------------------------------------------------------------*/
@@ -158,6 +165,7 @@
   --t-input-focus-border: 2px solid rgb(145, 189, 240);
   --t-negative-input-padding: -6px; /* This must be the negative of input padding + default border width */
   --t-border-radius: 5px; /* Default border radius for rounded corners */
+  --t-default-border: 1px solid var(--t-border-color);
 
    /* Box shadows */
    /* ----------------------------------------------------------------------*/
@@ -170,22 +178,41 @@
   --t-medium-layout-width: 620px;
   --t-large-layout-width: 960px;
 
-  --t-default-block-border: #888;
   --t-light-bg-color: #F7F7F9;
-  --t-active-light-bg-color: #2E72EA0a;
   --t-separator-color: rgba(0,0,0,0.05);
 }
 
 .sc-texture {
+  line-height: var(--t-default-line-height);
   height: 100%;
   position: relative;
   font-family: var(--t-interface-font)
 }
 
-.sc-texture .emphasis, .sc-texture em, .sc-texture i:not(.fa) {
+.sc-texture i:not(.fa), .sc-texture .sc-italic {
   font-style: italic;
 }
 
-.sc-texture .strong, .sc-texture strong, .sc-texture b {
+.sc-texture b, .sc-texture .sc-bold {
   font-weight: bold;
+}
+
+.sc-texture sub, .sc-texture .sc-sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.sc-texture sup, .sc-texture .sc-sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.sc-texture code, .sc-texture .sc-monospace {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+/* Can we get rid of underline from the Dar format */
+.sc-texture .sc-underline {
+  text-decoration: underline;
 }

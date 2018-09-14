@@ -17,7 +17,6 @@ export default class AuthorsListComponent extends Component {
 
   render ($$) {
     const items = this._getItems()
-    const SectionLabel = this.getComponent('section-label')
     let el = $$('div').addClass(this.getClassNames())
 
     if (this.state.hidden) {
@@ -55,7 +54,6 @@ export default class AuthorsListComponent extends Component {
     }
 
     el.append(
-      $$(SectionLabel, {label: 'authors-label'}),
       contentEl
     )
 

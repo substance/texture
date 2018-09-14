@@ -33,6 +33,7 @@ export default class MetadataEditor extends EditorPanel {
   dispose () {
     super.dispose()
     this.articleValidator.dispose()
+    DefaultDOMElement.getBrowserWindow().off(this)
   }
 
   getViewport () {

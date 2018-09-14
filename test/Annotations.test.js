@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, setSelection } from './integrationTestHelpers'
+import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture } from './integrationTestHelpers'
 import setupTestApp from './setupTestApp'
 
 const annotationTypes = {
@@ -11,27 +11,30 @@ const annotationTypes = {
   'monospace': 'Monospace'
 }
 
+const fixture = `<p id="p1">
+Lorem <bold>ipsum</bold> dolor <italic>sit</italic> amet, ea <ext-link href="foo">ludus</ext-link>
+intellegat his, <sub>graece</sub> fastidii <sup>phaedrum</sup> ea mea, ne duo esse <monospace>omnium</monospace>.
+</p>`
+
 Object.keys(annotationTypes).forEach(annoType => {
-  test(annotationTypes[annoType] + ': toggle annotation', t => {
+  test(`Annotations:  toggle ${annotationTypes[annoType]} annotation`, t => {
     testAnnotationToggle(t, annoType)
   })
 })
 
 function testAnnotationToggle (t, annoType) {
-  let { app } = setupTestApp(t)
-  let articlePanel = app.find('.sc-article-panel')
-  let annoToogle = articlePanel.find('.sc-toggle-tool.sm-' + annoType)
-  let editor = articlePanel.find('.sc-manuscript-editor')
+  let { editor } = _setup(t)
+  let annoToogle = editor.find('.sc-toggle-tool.sm-' + annoType)
 
   // Set the cursor and check if tool is active
-  setCursor(editor, 'p-2.content', 3)
-  t.equal(isToolActive(articlePanel, annoType), false, 'Tool must be disabled')
+  setCursor(editor, 'p1.content', 3)
+  t.equal(isToolActive(editor, annoType), false, 'Tool must be disabled')
   // Set the selection and check if tool is active
-  setSelection(editor, 'p-2.content', 2, 4)
-  t.equal(isToolActive(articlePanel, annoType), true, 'Tool must be active')
+  setSelection(editor, 'p1.content', 2, 4)
+  t.equal(isToolActive(editor, annoType), true, 'Tool must be active')
   // Toggle the tool and check if an annotation appeared
   annoToogle.find('button').click()
-  let anno = editor.find('[data-path="p-2.content"] .sc-' + annoType)
+  let anno = editor.find('[data-path="p1.content"] .sc-' + annoType)
   let annoId = anno.getAttribute('data-id')
   t.notNil(anno, 'There should be an annotation')
   let offset = anno.el.getAttribute('data-offset')
@@ -41,12 +44,19 @@ function testAnnotationToggle (t, annoType) {
   let text = anno.text()
   t.equal(text.length, parseInt(length), 'The number of annotated symbols must be equal to length of the selection')
   // Set the cursor, toggle the tool and check if an annotation disappeared
-  setCursor(editor, 'p-2.content', 3)
-  t.equal(isToolActive(articlePanel, annoType), true, 'Tool must be active')
+  setCursor(editor, 'p1.content', 3)
+  t.equal(isToolActive(editor, annoType), true, 'Tool must be active')
   annoToogle.find('button').click()
-  let removedAnno = editor.find('[data-path="p-2.content"] [data-id="' + annoId + '"]')
+  let removedAnno = editor.find('[data-path="p1.content"] [data-id="' + annoId + '"]')
   t.isNil(removedAnno, 'There should be no annotation')
   t.end()
+}
+
+function _setup (t) {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, fixture)
+  return { editor }
 }
 
 function isToolActive (el, annoType) {

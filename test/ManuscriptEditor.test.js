@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import { tableHelpers } from '../index'
 import { DOMEvent } from './shared/testHelpers'
-import { setCursor, openManuscriptEditor, PseudoFileEvent } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 test('ManuscriptEditor: add figure', t => {
@@ -24,7 +24,8 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
   let { app } = setupTestApp(t)
   let editor = openManuscriptEditor(app)
   let toc = editor.find('.sc-toc')
-  editor.context.editorSession.transaction(tx => {
+  let editorSession = getEditorSession(editor)
+  editorSession.transaction(tx => {
     tx.set(['sec-1', 'content'], 'TEST')
   })
   let h1 = toc.find('*[data-id="sec-1"]')
@@ -35,7 +36,8 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
 test('ManuscriptEditor: Switch paragraph to heading', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  editor.context.editorSession.transaction(tx => {
+  let editorSession = getEditorSession(editor)
+  editorSession.transaction(tx => {
     let body = tx.get('body')
     body.append(tx.create({
       type: 'p',
@@ -58,7 +60,7 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
 test('ManuscriptEditor: selecting a table', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = editor.context.editorSession
+  let editorSession = getEditorSession(editor)
   editorSession.transaction(tx => {
     let body = tx.get('body')
     let table = tableHelpers.generateTable(tx, 10, 5, 'test-table')

@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, findParent, getEditorSession } from './shared/integrationTestHelpers'
+import { openMetadataEditor, findParent, getEditorSession, getSelection } from './shared/integrationTestHelpers'
 import { injectStyle, getMountPoint } from './shared/testHelpers'
 
 test('Card: select the underlying model when clicking on a card', t => {
@@ -11,7 +11,7 @@ test('Card: select the underlying model when clicking on a card', t => {
   let card = metadataEditor.find('.sc-card')
   let modelId = card.props.modelId
   card.el.click()
-  let sel = metadataEditor.context.appState.selection
+  let sel = getSelection(metadataEditor)
   t.deepEqual({ type: sel.type, customType: sel.customType, data: sel.data }, { type: 'custom', customType: 'model', data: { modelId } }, 'model should be selected')
   t.ok(card.el.is('.sm-selected'), 'the card component should have been updated')
   t.end()
@@ -36,7 +36,7 @@ test('Issue #841: regression with model selections', t => {
   let card = findParent(fnSurface, '.sc-card')
   let modelId = card.props.modelId
   card.el.click()
-  let sel = metadataEditor.context.appState.selection
+  let sel = getSelection(metadataEditor)
   t.deepEqual({ type: sel.type, customType: sel.customType, data: sel.data }, { type: 'custom', customType: 'model', data: { modelId } }, 'model should be selected')
   t.ok(card.el.is('.sm-selected'), 'the card component should have been updated')
   t.end()

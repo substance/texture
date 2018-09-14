@@ -34,7 +34,6 @@ import InlineFormulaComponent from './InlineFormulaComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
 import ReferenceComponent from './ReferenceComponent'
-import SeparatorComponent from './SeparatorComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
 import XrefComponent from './XrefComponent'
@@ -78,7 +77,6 @@ export default {
     config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
-    config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('xref', XrefComponent)

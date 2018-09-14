@@ -12,3 +12,7 @@
   padding: var(--t-default-spacing) 0;
   font-weight: var(--t-bold-font-weight);
 }
+
+.sc-figure .sc-caption {
+  font-size: var(--t-small-font-size);
+}

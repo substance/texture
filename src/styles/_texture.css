@@ -41,9 +41,9 @@
   /* --text-action-color: #2E72EA; */
   /* --border-action-color: #2E72EA; */
   /* --light-bg-color: #F7F7F9; light grey */
-  --active-color: #2E72EA;
-  --active-light-bg-color: #2E72EA0a;
-  --separator-color: rgba(0,0,0,0.05);
+  /* --active-color: #2E72EA; */
+  /* --active-light-bg-color: #2E72EA0a;
+  --separator-color: rgba(0,0,0,0.05); */
 
   /* We disable this for now, as accessibility needs more discussion */
   /* --focus-outline-color: transparent; /* #1795CD;/* #5BE3FF; */
@@ -172,6 +172,8 @@
 
   --t-default-block-border: #888;
   --t-light-bg-color: #F7F7F9;
+  --t-active-light-bg-color: #2E72EA0a;
+  --t-separator-color: rgba(0,0,0,0.05);
 }
 
 .sc-texture {

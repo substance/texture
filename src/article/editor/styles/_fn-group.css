@@ -6,12 +6,6 @@
   display: none;
 }
 
-.sc-fn-group > .se-title {
-  font-size: 22px;
-  margin-bottom: 15px;
-  cursor: default;
-}
-
 .sc-fn-group > .se-empty-list {
   color: #afafaf;
   text-align: center;

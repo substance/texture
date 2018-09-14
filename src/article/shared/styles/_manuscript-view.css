@@ -13,14 +13,14 @@
 }
 
 .sc-manuscript-view .sc-container-editor:not(.sm-body) {
-  border: var(--input-default-border);
-  border-radius: var(--input-border-radius);
-  padding: var(--input-padding);
-  margin: var(--negative-input-padding);
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+  margin: var(--t-negative-input-padding);
 }
 
 .sc-manuscript-view .sc-container-editor:focus:not(.sm-body) {
-  border: var(--input-focus-border);
+  border: var(--t-input-focus-border);
 }
 
 .sc-manuscript-view .se-toolbar-wrapper {
@@ -132,17 +132,16 @@
 }
 
 h1.sc-heading {
-  font-size: 20px;
+  font-size: var(--t-h1-font-size);
 }
 
 h2.sc-heading {
-  font-size: 18px;
+  font-size: var(--t-h2-font-size);
 }
 
 h3.sc-heading {
-  font-size: 16px;
+  font-size: var(--t-h3-font-size);
 }
-
 
 .sc-caption {
   font-size: 14px;

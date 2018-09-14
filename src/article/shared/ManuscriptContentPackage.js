@@ -56,9 +56,6 @@ export default {
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('table-figure', FigureComponent)
     config.addComponent('title', TitleComponent)
-    // TODO: remove this if sure that we don't need to support table-wrap anymore
-    // config.addComponent('table-wrap', FigureComponent)
-    // config.addComponent('table-wrap-preview', TableFigPreview)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 

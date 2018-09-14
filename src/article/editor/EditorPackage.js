@@ -163,7 +163,6 @@ export default {
     })
 
     config.addLabel('cite', 'Cite')
-    config.addLabel('insert', 'Insert')
     config.addLabel('insert-xref-bibr', 'Reference')
     config.addLabel('insert-xref-fig', 'Figure')
     config.addLabel('insert-xref-table', 'Table')
@@ -405,10 +404,10 @@ export default {
         ]
       },
       {
-        name: 'insert',
-        type: 'tool-dropdown',
-        showDisabled: false,
-        style: 'descriptive',
+        name: 'additinal-tools',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
         items: [
           { type: 'command-group', name: 'insert' }
         ]

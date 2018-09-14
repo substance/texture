@@ -96,7 +96,7 @@ export default class TranslateableEditor extends ModelComponent {
     const value = e.target.value
     const model = this.props.model
     model.addTranslation(value)
-    this._toggleDropdown()
+    this._toggleDropdown(e)
   }
 
   _removeTranslation (translationModel) {

@@ -98,7 +98,7 @@ export default {
     config.addLabel('abstract-label', 'Abstract')
     config.addLabel('abstract-placeholder', 'Please provide a short description of your article.')
     config.addLabel('body-label', 'Main text')
-    config.addLabel('body-placeholder', 'Write your article here')
+    config.addLabel('body-placeholder', 'Write your article here.')
     config.addLabel('authors-label', 'Authors')
     config.addLabel('references-label', 'References')
     config.addLabel('footnotes-label', 'Footnotes')

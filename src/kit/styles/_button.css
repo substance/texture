@@ -1,39 +1,32 @@
-.sc-button {
+.sc-button.sm-theme-light {
   position: relative;
-}
-
-/* Position tooltip */
-.sc-button > .se-tooltip {
-  display: none;
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translate(-50%);
-  background: #fff;
-  color: var(--default-text-color);
-  padding: 2px 7px;
-  border-radius: 3px;
-  font-size: 14px;
-  white-space: nowrap;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  z-index: 99;
-}
-
-.sc-button:hover > .se-tooltip {
-  display: block;
-}
-
-/*
-  Big Button style
-*/
-.sc-button.sm-style-big {
+  height: 24px;
+  min-width: 24px;
+  line-height: 24px;
+  text-align: center;
   font-size: 12px;
-  background: #2A8CFF;
-  padding: 5px 20px;
-  color: white;
-  border-radius: 20px;
+  font-weight: 600;
+  border-radius: 3px;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
-.sc-button.sm-style-big:focus {
-  background: #277ce0;
+.sc-button.sm-theme-light > .se-dropdown {
+  padding-left: 5px;
+}
+
+.sc-button.sm-theme-light[disabled=true] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.sc-button.sm-theme-light.sm-active {
+  background: var(--active-color);
+  color: white;
+}
+
+.sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),
+.sc-button.sm-theme-light:focus {
+  background: var(--light-bg-color);
+  color: var(--text-action-color);
 }

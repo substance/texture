@@ -1,10 +1,7 @@
 @import './_editor.css';
-@import './_title-group.css';
 @import './_abstract.css';
-@import './_separator.css';
 @import './_unsupported.css';
 @import './_annotations.css';
-@import './_text-input.css';
 @import './_affiliations-list.css';
 @import './_authors-list.css';
 @import './_toc.css';
@@ -21,9 +18,5 @@
 @import './_graphic.css';
 @import './_table.css';
 @import './_fig-preview.css';
-@import './_table-fig-preview.css';
-@import './_fn-preview.css';
-@import './_translations.css';
 @import './_context-section.css';
 @import './_edit-reference-workflow.css';
-@import './_globals.css';

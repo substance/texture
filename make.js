@@ -111,8 +111,7 @@ b.task('build:assets', function () {
   b.copy('./node_modules/katex/dist', DIST + 'katex')
   b.copy('./node_modules/substance/dist', DIST + 'substance/dist')
   b.css('texture.css', DIST + 'texture.css')
-  b.css('./node_modules/substance/substance-pagestyle.css', DIST + 'texture-pagestyle.css')
-  b.css('./node_modules/substance/substance-reset.css', DIST + 'texture-reset.css')
+  b.css('texture-reset.css', DIST + 'texture-reset.css')
 })
 
 b.task('build:schema', ['schema:jats', 'schema:dar-article', 'schema:texture-article', 'schema:dar-manifest'])

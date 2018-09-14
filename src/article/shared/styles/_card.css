@@ -1,50 +1,42 @@
 .sc-card {
   position: relative;
   max-width: 800px;
-  box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
-  margin: 30px 0;
-  --label-font-size: 12px;
-  --input-font-size: 14px;
-  --label-font-weight: 400;
-  --label-line-height: 14px;
-  --label-color: #9e9e9e;
-  --warning-color: #ffaf46;
+  box-shadow: var(--t-default-box-shadow);
+  margin: var(--t-default-spacing) 0;
+  font-size: var(--t-small-font-size);
 }
 
 .sc-card.sm-selected {
-  outline: var(--input-focus-border)
+  outline: var(--t-input-focus-border)
 }
 
 .sc-card > .se-label {
   position: absolute;
   top: -10px;
   left: 40px;
-  padding: 0px 20px;
-  background: #fff;
-  color: var(--label-color);
-  font-size: var(--label-font-size);
-  font-weight: var(--label-font-weight);
-  line-height: var(--label-line-height);
+  padding: 0px var(--t-default-spacing);
+  background: var(--t-background-color);
+  color: var(--t-light-text-color);
   cursor: default;
 }
 
 .sc-card.sm-selected > .se-label {
-  background: var(--focus-color);
-  color: #fff;
+  background: var(--t-focus-color);
+  color: var(--t-inverted-text-color);
 }
 
 .sc-card > * {
-  padding: 20px;
-  border: 1px solid transparent;
+  padding: var(--t-default-spacing);
 }
 
 .sc-card > * > * {
-  margin-bottom: 15px;
+  margin: var(--t-flowing-content-margin);
 }
 
 .sc-card > * > .se-header {
-  font-size: 17px;
-  margin-bottom: 20px;
+  /* font-size: 17px; */
+  font-size: var(--t-text-font-size);
+  margin-bottom: var(--t-default-spacing);
   cursor: default;
 }
 
@@ -56,7 +48,7 @@
 
 .sc-card > * > .se-footer > .se-control {
   font-size: 12px;
-  color: #499aff;
+  color: var(--t-text-action-color);
   cursor: pointer;
   margin-bottom: 0px;
 }

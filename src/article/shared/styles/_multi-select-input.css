@@ -1,6 +1,5 @@
 .sc-multi-select-input {
   width: 100%;
-  font-size: var(--t-input-font-size);
   line-height: var(--t-input-line-height);
   cursor: pointer;
   padding: var(--t-input-padding);
@@ -10,7 +9,7 @@
 }
 
 .sc-multi-select-input.sm-active {
-  border: var(--input-focus-border);
+  border: var(--t-input-focus-border);
   background: #218df312;
 }
 

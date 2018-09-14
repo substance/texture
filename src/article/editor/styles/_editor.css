@@ -3,7 +3,7 @@
 }
 
 .sc-manuscript-editor .sc-isolated-node.sm-default-style.sm-selected {
-  outline: var(--input-focus-border);
+  outline: var(--t-input-focus-border);
 }
 
 .sc-manuscript-editor .sc-container-editor .sc-isolated-node.sm-focused,

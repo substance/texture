@@ -34,12 +34,10 @@ import InlineFormulaComponent from './InlineFormulaComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
 import ReferenceComponent from './ReferenceComponent'
-import SeparatorComponent from './SeparatorComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
 import XrefComponent from './XrefComponent'
 
-import FnPreview from './FnPreview'
 import ModelPreviewComponent from './ModelPreviewComponent'
 
 import SectionLabel from './SectionLabel'
@@ -58,9 +56,6 @@ export default {
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('table-figure', FigureComponent)
     config.addComponent('title', TitleComponent)
-    // TODO: remove this if sure that we don't need to support table-wrap anymore
-    // config.addComponent('table-wrap', FigureComponent)
-    // config.addComponent('table-wrap-preview', TableFigPreview)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
@@ -79,13 +74,11 @@ export default {
     config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
-    config.addComponent('separator', SeparatorComponent)
     config.addComponent('sig-block', SigBlockComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('xref', XrefComponent)
 
     config.addComponent('model-preview', ModelPreviewComponent)
-    config.addComponent('fn-preview', FnPreview)
 
     // ATTENTION: I have changed the behavior so that
     // unregistered annotations or inline-nodes are
@@ -101,9 +94,9 @@ export default {
     // Manuscript sections config
     config.addComponent('section-label', SectionLabel)
     config.addLabel('title-label', 'Title')
-    config.addLabel('title-placeholder', 'Enter a title for your manuscript')
+    config.addLabel('title-placeholder', 'Enter a title for your article')
     config.addLabel('abstract-label', 'Abstract')
-    config.addLabel('abstract-placeholder', 'Please provide a short description of your article')
+    config.addLabel('abstract-placeholder', 'Please provide a short description of your article.')
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here')
     config.addLabel('authors-label', 'Authors')

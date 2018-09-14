@@ -1,21 +1,19 @@
 .sc-text-input {
-  font-size: var(--input-font-size);
-  line-height: var(--input-line-height);
+  line-height: var(--t-input-line-height);
 }
 
 .sc-text-input .se-input {
   width: 100%;
-  height: var(--input-height);
-  font-size: var(--input-font-size);
+  height: var(--t-input-height);
   border-radius: 5px;
-  padding: var(--input-padding);
-  border: var(--input-default-border);
-  margin: var(--negative-input-padding);
+  padding: var(--t-input-padding);
+  border: var(--t-input-default-border);
+  margin: var(--t-negative-input-padding);
 }
 
 /*.sc-text-input.sm-editable .se-input:hover*/
 .sc-text-input:focus .se-input {
-  border: var(--input-focus-border);
+  border: var(--t-input-focus-border);
 }
 
 /* TODO: use variables! */

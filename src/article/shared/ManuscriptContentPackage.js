@@ -39,7 +39,6 @@ import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
 import XrefComponent from './XrefComponent'
 
-import FnPreview from './FnPreview'
 import ModelPreviewComponent from './ModelPreviewComponent'
 
 import SectionLabel from './SectionLabel'
@@ -85,7 +84,6 @@ export default {
     config.addComponent('xref', XrefComponent)
 
     config.addComponent('model-preview', ModelPreviewComponent)
-    config.addComponent('fn-preview', FnPreview)
 
     // ATTENTION: I have changed the behavior so that
     // unregistered annotations or inline-nodes are

@@ -15,6 +15,7 @@ export default class FigureComponent extends Component {
     }
 
     let el = $$('div')
+      // TODO: don't violate the 'sc-' contract
       .addClass('sc-' + model.type)
       .attr('data-id', model.id)
     el.addClass(`sm-${mode}`)

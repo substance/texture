@@ -1,13 +1,81 @@
 :root {
-  --default-content-padding: 4px;
-  --input-padding: 4px;
-  --negative-input-padding: -6px;
-  --input-border-radius: 5px;
-  --input-default-border: 2px solid transparent;
-  --input-focus-border: 2px solid rgb(145, 189, 240);
-  --focus-color: rgb(145, 189, 240);
+   /* Font families */
+   /* ----------------------------------------------------------------------*/
+
+   /* Used for interface elements */
+   --t-interface-font: 'Inter UI';
+   /* Used for flowing text, such as paragraphs */ 
+   --t-text-font: 'Inter UI';
+
+   /* Font sizes */
+   /* ----------------------------------------------------------------------*/
+   
+   /* Used for main text */
+   --t-text-font-size: 17px; 
+   /* Table of contents */
+   --t-small-font-size: 15px; 
+   /* Used in toolbars and dropdown menus and section labels */
+   --t-tiny-font-size: 12px;
+   /* E.g. article title */
+   --t-title-font-size: 36px;
+   /* Heading level 1 */
+   --t-h1-font-size: 23px;
+   /* Heading level 2 */
+   --t-h2-font-size: 21px;
+   /* Heading level 3 */
+   --t-h3-font-size: 19px;
+   /* Heading level 4 */
+   --t-h4-font-size: 17px;
+
+   /* Font weights */
+   /* ----------------------------------------------------------------------*/
+
+   --t-normal-font-weight: 400; /* Normal text weight */
+   --t-bold-font-weight: 500; /* Strong emphasis */
+
+   /* Line heights */
+   /* ----------------------------------------------------------------------*/
+
+   /* Used in main text */
+   --t-default-line-height: 1.5; 
+
+   /* Colors */
+   /* ----------------------------------------------------------------------*/
+
+   /* Main text color, used in the article */
+  --t-text-color: #111;
+  /* Used for section labels, card labels etc. */
+  --t-light-text-color: #555;
+  /* Used for focus border, e.g. selected card, or text input */
+  --t-focus-color: rgb(145, 189, 240);
+  /* E.g. citations of references, figures, etc. */
+  --t-text-action-color: #2e72ea;
+
+   /* Paddings */
+   /* ----------------------------------------------------------------------*/
+
+  --t-padding: 20px; /* Default padding to create some whitespace, e.g. in figure */
+  --t-input-padding: 4px; /* Padding used input boxes */
+
+   /* Margins */
+   /* ----------------------------------------------------------------------*/
+
+  --t-flowing-content-margin: 15px 0; /* Space between content elements, e.g. between two paragraphs */
+
+   /* Borders */
+   /* ----------------------------------------------------------------------*/
+
+  --t-input-default-border: 2px solid transparent;
+  --t-input-focus-border: 2px solid rgb(145, 189, 240);
+  --t-negative-input-padding: -6px; /* This must be the negative of input padding + default border width */
+  --t-border-radius: 5px; /* Default border radius for rounded corners */
+
+   /* Box shadows */
+   /* ----------------------------------------------------------------------*/
+
+  --t-default-box-shadow: 0 0 0 0.75pt #d1d1d1, 0 0 3pt 0.75pt #ccc;
 }
-  
+
 .sc-texture {
   height: 100%;
   position: relative;

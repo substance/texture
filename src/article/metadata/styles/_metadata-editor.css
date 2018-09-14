@@ -118,10 +118,10 @@
 
 
 .sc-metadata-editor .sc-container-editor {
-  border: var(--input-default-border);
-  border-radius: var(--input-border-radius);
-  padding: var(--input-padding);
-  margin: var(--negative-input-padding);
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+  margin: var(--t-negative-input-padding);
 }
 
 .sc-metadata-editor .sc-container-editor > * {
@@ -129,5 +129,5 @@
 }
 
 .sc-metadata-editor .sc-container-editor:focus {
-  border: var(--input-focus-border);
+  border: var(--t-input-focus-border);
 }

@@ -1,3 +1,4 @@
+import { documentHelpers } from 'substance'
 import ModelFactory from './NodeModelFactory'
 
 export default class AbstractAPI {
@@ -106,6 +107,18 @@ export default class AbstractAPI {
       tx.setSelection(_customSelection(path))
     })
     return this._getModelForNode(node)
+  }
+
+  _clearFlowContent (tx, path) {
+    let ids = tx.get(path)
+    if (ids && ids.length > 0) {
+      // first clear the content
+      for (let idx = ids.length - 1; idx >= 0; idx--) {
+        let id = ids[idx]
+        tx.update(path, { type: 'delete', pos: idx, value: id })
+        documentHelpers.deleteNode(tx, tx.get(id))
+      }
+    }
   }
 }
 

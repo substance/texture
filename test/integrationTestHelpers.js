@@ -1,6 +1,6 @@
 /* global vfs, TEST_VFS, Blob */
-import { ObjectOperation, DocumentChange, isString, isArray, platform } from 'substance'
-import { TextureWebApp, VfsStorageClient } from '../index'
+import { ObjectOperation, DocumentChange, isString, isArray, platform, DefaultDOMElement } from 'substance'
+import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../index'
 import TestVfs from './TestVfs'
 
 export function setCursor (editor, path, pos) {
@@ -107,6 +107,29 @@ export function openMetadataEditor (app) {
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'metadata')
   return articlePanel.find('.sc-metadata-editor')
+}
+
+export function getApi (editor) {
+  return editor.context.api
+}
+
+export function getEditorSession (editor) {
+  return editor.context.api.getArticleSession()
+}
+
+export function loadBodyFixture (editor, xml) {
+  let api = getApi(editor)
+  let editorSession = getEditorSession(editor)
+  let els = DefaultDOMElement.parseSnippet(xml, 'xml')
+  if (!isArray(els)) els = [els]
+  editorSession.transaction(tx => {
+    let body = tx.get('body')
+    api._clearFlowContent(tx, body.getContentPath())
+    let importer = createJatsImporter(tx)
+    body.append(
+      els.map(el => importer.convertElement(el))
+    )
+  })
 }
 
 export class PseudoFileEvent {

@@ -133,10 +133,14 @@ export function getSelection (editor) {
   return editor.context.appState.selection
 }
 
+export function getDocument (editor) {
+  return editor.context.appState.document
+}
+
 export function loadBodyFixture (editor, xml) {
   let api = getApi(editor)
   let editorSession = getEditorSession(editor)
-  let els = DefaultDOMElement.parseSnippet(xml, 'xml')
+  let els = DefaultDOMElement.parseSnippet(xml, 'xml').filter(el => el.isElementNode())
   if (!isArray(els)) els = [els]
   editorSession.transaction(tx => {
     let body = tx.get('body')

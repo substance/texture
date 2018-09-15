@@ -2,5 +2,7 @@
   font-weight: var(--t-bold-font-weight);
   font-size: var(--t-tiny-font-size);
   color: var(--t-light-text-color);
+  margin-top: var(--t-default-spacing);
+  margin-bottom: var(--t-half-spacing);
   cursor: default;
 }

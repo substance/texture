@@ -127,5 +127,15 @@ test('ManuscriptEditor: inserting and deleting a table', t => {
   t2ref = p2.find('xref')
   t.equal(t2ref.state.label, 'Table 1', 'citation of t2 should have correct label')
 
+  // now assing the broken xref to t2
+  let t1refComp = editor.find(`[data-id="${t1ref.id}"]`)
+  t1refComp.el.click()
+
+  let option = editor.find('.sc-edit-xref-tool .se-option')
+  option.el.click()
+
+  t1ref = p1.find('xref')
+  t.equal(t1ref.state.label, 'Table 1', 'citation should now point to t2')
+
   t.end()
 })

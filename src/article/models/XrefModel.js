@@ -25,13 +25,7 @@ export default class XrefModel {
   }
 
   toggleTarget (nodeId) {
-    let targetIds = getXrefTargets(this._node)
-    let idx = targetIds.indexOf(nodeId)
-    if (idx > -1) {
-      this._api.removeXrefTarget(nodeId, this)
-    } else {
-      this._api.addXrefTarget(nodeId, this)
-    }
+    this._api.toggleXrefTarget(nodeId, this)
     return this.getAvailableTargets()
   }
 }

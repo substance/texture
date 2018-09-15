@@ -140,8 +140,10 @@ export function getDocument (editor) {
 export function loadBodyFixture (editor, xml) {
   let api = getApi(editor)
   let editorSession = getEditorSession(editor)
-  let els = DefaultDOMElement.parseSnippet(xml, 'xml').filter(el => el.isElementNode())
+  let els = DefaultDOMElement.parseSnippet(xml, 'xml')
   if (!isArray(els)) els = [els]
+  // make sure we only have elements here
+  if (isArray(els)) els = els.filter(el => el.isElementNode())
   editorSession.transaction(tx => {
     let body = tx.get('body')
     api._clearFlowContent(tx, body.getContentPath())

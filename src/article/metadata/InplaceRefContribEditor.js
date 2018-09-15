@@ -11,8 +11,7 @@ export default class InplaceRefContribEditor extends ValueComponent {
       $$('button').addClass('se-add-value')
         // TODO: use icon provider
         .append(
-          $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon'),
-          'Add contributor'
+          $$(FontAwesomeIcon, {icon: 'fa-plus'}).addClass('se-icon')
         )
         .on('click', this._addContrib)
     )

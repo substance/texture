@@ -7,14 +7,12 @@ import {
 
 // new model based components
 import AuthorsListComponent from './AuthorsListComponent'
-import BodyComponent from './BodyComponent'
 import FigureComponent from './FigureComponent'
 import HeadingComponent from './HeadingComponent'
 import ManuscriptComponent from './ManuscriptComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
 import NodeModelComponent from './NodeModelComponent'
-import TitleComponent from './TitleComponent'
 
 // TODO: these needs to be revisited
 import AffiliationsListComponent from './AffiliationsListComponent'
@@ -46,12 +44,10 @@ export default {
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('back-matter', CompositeComponent)
     config.addComponent('bibr', ReferenceComponent)
-    config.addComponent('body', BodyComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('table-figure', FigureComponent)
-    config.addComponent('title', TitleComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 

@@ -24,6 +24,10 @@ export default class DefaultCollectionModel {
     return false
   }
 
+  get length () {
+    return this._node.children.length
+  }
+
   getItems () {
     return this._node._childNodes.map(id => this._api.getModelById(id))
   }

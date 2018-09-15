@@ -29,6 +29,8 @@ export default class CitableContentManager extends AbstractCitationManager {
     3. xref targets are updated
   */
   _onDocumentChange (change) {
+    // HACK: do not react on node state updates
+    if (change.info.action === 'node-state-update') return
     const doc = this._getDocument()
     const TARGET_TYPES = this._targetTypes
     const contentPath = this._getContentPath()

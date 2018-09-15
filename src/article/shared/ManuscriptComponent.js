@@ -24,7 +24,7 @@ export default class ManuscriptComponent extends Component {
       $$(TitleComponent, {
         model: titleModel,
         placeholder: this.getLabel('title-placeholder')
-      })
+      }).addClass('sm-title')
     )
 
     if (authorsModel.length > 0) {
@@ -42,12 +42,12 @@ export default class ManuscriptComponent extends Component {
       $$(AbstractComponent, {
         model: abstractModel,
         placeholder: this.getLabel('abstract-placeholder')
-      }),
+      }).addClass('sm-abstract'),
       $$(SectionLabel, {label: 'body-label'}),
       $$(BodyComponent, {
         model: bodyModel,
         placeholder: this.getLabel('body-placeholder')
-      })
+      }).addClass('sm-body')
     )
 
     if (footnotesModel.length > 0) {

@@ -4,24 +4,16 @@
 
 .sc-authors-list {
   cursor: default;
-  margin-top: 20px;
 }
 
 .sc-authors-list .se-contrib.sm-empty {
-  color: #999;
+  color: var(--t-light-text-color);
 }
 
 .sc-authors-list > .se-content {
-  padding: 0px;
-  font-size: 19px;
-  color: #000;
+  font-size: var(--t-large-font-size);
 }
 
 .sc-authors-list > .se-content > .se-empty-list {
-  color: #afafaf;
-}
-
-.sc-authors-list button {
-  display: inline;
-  padding-left: 10px;
+  color: var(--t-light-text-color);
 }

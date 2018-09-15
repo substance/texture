@@ -12,6 +12,8 @@
    
    /* Used for main text */
    --t-text-font-size: 17px; 
+   /* Used for authors list */
+   --t-large-font-size: 19px; 
    /* Table of contents */
    --t-small-font-size: 14px; 
    /* Used in toolbars and dropdown menus and section labels */

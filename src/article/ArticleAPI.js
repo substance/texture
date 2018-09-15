@@ -282,24 +282,28 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
-  addXrefTarget (targetId, model) {
+  // TODO: we should use a better internal model for xref
+  // instead of an attribute we should use an array property instead
+  toggleXrefTarget (targetId, model) {
     const articleSession = this.articleSession
     articleSession.transaction(tx => {
       const xref = tx.get(model.id)
-      let targets = xref.getAttribute('rid').split(' ')
-      targets.push(targetId)
-      xref.setAttribute('rid', targets.join(' '))
-    })
-  }
-
-  removeXrefTarget (targetId, model) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      const xref = tx.get(model.id)
-      let targets = xref.getAttribute('rid').split(' ')
-      let idx = targets.indexOf(targetId)
-      targets.splice(idx, 1)
-      xref.setAttribute('rid', targets.join(' '))
+      let targetIds = xref.getAttribute('rid').split(' ')
+      let found = false
+      for (let idx = targetIds.length - 1; idx >= 0; idx--) {
+        let id = targetIds[idx]
+        if (!tx.get(id)) {
+          targetIds.splice(idx)
+        }
+        if (id === targetId) {
+          targetIds.splice(idx)
+          found = true
+        }
+      }
+      if (!found) {
+        targetIds.push(targetId)
+      }
+      xref.setAttribute('rid', targetIds.join(' '))
     })
   }
 

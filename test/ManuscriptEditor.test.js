@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import { tableHelpers } from '../index'
 import { DOMEvent } from './shared/testHelpers'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, getApi } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 test('ManuscriptEditor: add figure', t => {
@@ -80,5 +80,52 @@ test('ManuscriptEditor: selecting a table', t => {
   td.el.click()
   sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'the selection should be a table selection')
+  t.end()
+})
+
+const TABLES_AND_REFS = `<p />
+<p id="p1">Foo Bar <xref ref-type="table" rid="t1"></xref></p>
+<table-wrap id="t1">
+<table />
+</table-wrap>
+<p id="p2">Lorem ipsum <xref ref-type="table" rid="t2"></xref></p>
+<table-wrap id="t2">
+<table />
+</table-wrap>
+<p>Bla bla</p>`
+
+// testing the general ability to insert tables but also look into table citations
+test('ManuscriptEditor: inserting and deleting a table', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let api = getApi(editor)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, TABLES_AND_REFS)
+
+  let t1 = doc.get('t1')
+  t.equal(t1.state.label, 'Table 1', 't1 should have correct label')
+  let t2 = doc.get('t2')
+  t.equal(t2.state.label, 'Table 2', 't2 should have correct label')
+
+  let p1 = doc.get('p1')
+  let t1ref = p1.find('xref')
+  t.equal(t1ref.state.label, 'Table 1', 'citation of t1 should have correct label')
+  let p2 = doc.get('p2')
+  let t2ref = p2.find('xref')
+  t.equal(t2ref.state.label, 'Table 2', 'citation of t2 should have correct label')
+
+  api._setSelection({
+    type: 'node',
+    nodeId: 't1',
+    containerId: 'body'
+  })
+  api.deleteSelection()
+
+  t.equal(t2.state.label, 'Table 1', 'citation of t2 should have correct label')
+  t1ref = p1.find('xref')
+  t.equal(t1ref.state.label, '???', 'citation of t1 should have correct label')
+  t2ref = p2.find('xref')
+  t.equal(t2ref.state.label, 'Table 1', 'citation of t2 should have correct label')
+
   t.end()
 })

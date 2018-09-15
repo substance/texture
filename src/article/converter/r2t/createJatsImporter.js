@@ -65,6 +65,17 @@ class _HybridJATSImporter extends XMLDocumentImporter {
     }
     return doc.create(nodeData)
   }
+
+  nextId (prefix) {
+    // ATTENTION: we gonna use '_' as a prefix for automatically created ids
+    // TODO: also do this for nodes created via Document
+    let doc = this.state.doc
+    let id = this.state.uuid('_' + prefix)
+    while (doc.get(id)) {
+      id = this.state.uuid('_' + prefix)
+    }
+    return id
+  }
 }
 
 const HeadingImporter = {

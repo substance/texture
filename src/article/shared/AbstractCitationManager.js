@@ -38,6 +38,9 @@ export default class AbstractCitationManager {
 
   // TODO: how could this be generalized so that it is less dependent on the internal model?
   _onDocumentChange (change) {
+    // HACK: do not react on node state updates
+    if (change.info.action === 'node-state-update') return
+
     const doc = this._getDocument()
 
     // updateCitationLabels whenever

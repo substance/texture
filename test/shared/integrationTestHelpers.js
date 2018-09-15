@@ -133,11 +133,17 @@ export function getSelection (editor) {
   return editor.context.appState.selection
 }
 
+export function getDocument (editor) {
+  return editor.context.appState.document
+}
+
 export function loadBodyFixture (editor, xml) {
   let api = getApi(editor)
   let editorSession = getEditorSession(editor)
   let els = DefaultDOMElement.parseSnippet(xml, 'xml')
   if (!isArray(els)) els = [els]
+  // make sure we only have elements here
+  if (isArray(els)) els = els.filter(el => el.isElementNode())
   editorSession.transaction(tx => {
     let body = tx.get('body')
     api._clearFlowContent(tx, body.getContentPath())

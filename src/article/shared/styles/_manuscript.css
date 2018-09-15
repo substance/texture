@@ -7,7 +7,7 @@
   margin: 0 auto;
 }
 
-.sc-manuscript .sc-title .sc-text {
+.sc-manuscript .sc-text.sm-title {
   font-size: var(--t-title-font-size);
   font-weight: var(--t-bold-font-weight);
 }

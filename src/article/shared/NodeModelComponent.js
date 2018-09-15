@@ -89,14 +89,6 @@ export default class NodeModelComponent extends Component {
       controlEl
     )
 
-    if (this.isRemovable) {
-      const Button = this.getComponent('button')
-      footer.append(
-        $$(Button, {label: 'remove', icon: 'remove'}).addClass('se-remove-item')
-          .on('click', this._removeEntity)
-      )
-    }
-
     el.append(footer)
 
     return el
@@ -142,11 +134,6 @@ export default class NodeModelComponent extends Component {
   _toggleMode () {
     const fullMode = this.state.fullMode
     this.extendState({fullMode: !fullMode})
-  }
-
-  _removeEntity () {
-    const model = this.props.model
-    this.send('remove-item', model)
   }
 
   _rerenderWhenIssueHaveChanged () {

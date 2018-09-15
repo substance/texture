@@ -56,15 +56,3 @@
 .sc-card > * > .se-footer > .se-control > .se-icon {
   margin-right: 10px;
 }
-
-.sc-card > * > .se-footer > .se-remove-item {
-  font-size: 12px;
-  background: #fff;
-  padding: 2px 4px;
-  border-radius: 2px;
-  border: 1px solid #dedede;
-}
-
-.sc-card > * > .se-footer > .se-remove-item > i {
-  margin-right: 5px;
-}

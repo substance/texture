@@ -79,12 +79,16 @@ export default class ExperimentalArticleValidator {
     // It would also be better to separate explicit updates (~op.path) from derived updates (node id, annotation updates)
     Object.keys(change.created).forEach(id => {
       let node = article.get(id)
-      CheckRequiredFields.onCreate(this, node)
+      if (node) {
+        CheckRequiredFields.onCreate(this, node)
+      }
     })
     Object.keys(change.updated).forEach(key => {
       let path = key.split(',')
       let node = article.get(path[0])
-      CheckRequiredFields.onUpdate(this, node, path, article.get(path))
+      if (node) {
+        CheckRequiredFields.onUpdate(this, node, path, article.get(path))
+      }
     })
   }
 

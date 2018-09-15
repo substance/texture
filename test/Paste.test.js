@@ -1,7 +1,7 @@
+import { DefaultDOMElement, isArray } from 'substance'
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import { openManuscriptEditor, getDocument, getApi, setCursor, loadBodyFixture } from './shared/integrationTestHelpers'
-import { DefaultDOMElement, isArray } from 'substance';
 
 /*
   container -> container:
@@ -43,9 +43,11 @@ test('Paste: pasting a container into figure caption', t => {
   setCursor(editor, 'p1.content', 0)
   api.paste(snippet)
   let caption = doc.get('f1-caption')
-  let expected = ['p', 'p', 'p']
+  // ATTENTION: for now substance does not transform unsupported nodes (e.g. heading -> paragraph)
+  // and instead drops the invalid node
+  let expected = ['p', 'p']
   let actual = caption.getChildren().map(el => el.type)
-  t.deepEqual(actual, expected, 'only <p>s should have been pasted')
+  t.deepEqual(actual, expected, 'only <p> elements should have been pasted')
   t.end()
 })
 

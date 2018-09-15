@@ -6,10 +6,11 @@ export default class ManuscriptComponent extends Component {
     const SectionLabel = this.getComponent('section-label')
     const model = this.props.model
     const frontModel = model.getPropertyValue('front')
+    const bodyModel = model.getPropertyValue('body')
     const backModel = model.getPropertyValue('back')
     const titleModel = frontModel.getPropertyValue('title')
+    const authorsModel = frontModel.getPropertyValue('authors')
     const abstractModel = frontModel.getPropertyValue('abstract')
-    const bodyModel = frontModel.getPropertyValue('abstract')
     const footnotesModel = backModel.getPropertyValue('footnotes')
     const referencesModel = backModel.getPropertyValue('references')
     const TitleComponent = this._getPropertyComponent(titleModel)
@@ -23,31 +24,49 @@ export default class ManuscriptComponent extends Component {
       $$(TitleComponent, {
         model: titleModel,
         placeholder: this.getLabel('title-placeholder')
-      }),
-      $$(SectionLabel, {label: 'authors-label'}),
-      $$(AuthorsListComponent, {
-        model: frontModel.getPropertyValue('authors'),
-        placeholder: this.getLabel('authors-placeholder')
-      }),
+      })
+    )
+
+    if (authorsModel.length > 0) {
+      el.append(
+        $$(SectionLabel, {label: 'authors-label'}),
+        $$(AuthorsListComponent, {
+          model: authorsModel,
+          placeholder: this.getLabel('authors-placeholder')
+        })
+      )
+    }
+
+    el.append(
       $$(SectionLabel, {label: 'abstract-label'}),
       $$(AbstractComponent, {
-        model: frontModel.getPropertyValue('abstract'),
+        model: abstractModel,
         placeholder: this.getLabel('abstract-placeholder')
       }),
       $$(SectionLabel, {label: 'body-label'}),
       $$(BodyComponent, {
-        model: model.getPropertyValue('body'),
+        model: bodyModel,
         placeholder: this.getLabel('body-placeholder')
-      }),
-      $$(SectionLabel, {label: 'footnotes-label'}),
-      $$(FootnotesListComponent, {
-        model: footnotesModel
-      }),
-      $$(SectionLabel, {label: 'references-label'}),
-      $$(ReferenceListComponent, {
-        model: referencesModel
       })
     )
+
+    if (footnotesModel.length > 0) {
+      el.append(
+        $$(SectionLabel, {label: 'footnotes-label'}),
+        $$(FootnotesListComponent, {
+          model: footnotesModel
+        })
+      )
+    }
+
+    if (referencesModel.length > 0) {
+      el.append(
+        $$(SectionLabel, {label: 'references-label'}),
+        $$(ReferenceListComponent, {
+          model: referencesModel
+        })
+      )
+    }
 
     return el
   }

@@ -52,6 +52,8 @@ export function importFigures (tx, sel, files, paths) {
       'xlink:href': path
     })
     tx.insertBlockNode(figure)
+    tx.break()
+
     if (idx === LAST) {
       selectionHelpers.selectNode(tx, figure.id, containerId)
     }

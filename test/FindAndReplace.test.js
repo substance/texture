@@ -81,6 +81,23 @@ test('FindAndReplace: replaceAll', t => {
   t.end()
 })
 
+test('FindAndReplace: replaceAll (replace pattern)', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let { editor, fnrManager } = _openFindAndReplaceDialog(app, true)
+  fnrManager.toggleCaseSensitivity()
+  fnrManager.toggleFullWordSearch()
+  fnrManager.toggleRegexSearch()
+  fnrManager.setSearchPattern('d(.+?)')
+  fnrManager.setReplacePattern('D$1')
+  fnrManager.replaceNext()
+  let doc = getDocument(editor)
+  let abstractP1 = doc.get('abstract-p-1')
+  let expected = 'Lorem Ipsum is simply Dummy'
+  let actual = abstractP1.getText().slice(0, expected.length)
+  t.equal(actual, expected, 'The first paragraph text should have been replaced correctly')
+  t.end()
+})
+
 function _openFindAndReplaceDialog (app, replace) {
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'manuscript')

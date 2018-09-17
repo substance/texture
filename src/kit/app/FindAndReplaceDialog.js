@@ -102,13 +102,15 @@ export default class FindAndReplaceDialog extends Component {
         $$('div').addClass('se-group sm-actions').append(
           $$(Button, {
             tooltip: this.getLabel('replace'),
-            theme: this.props.theme
+            theme: this.props.theme,
+            disabled: state.count < 1
           }).addClass('sm-replace')
             .append(this.getLabel('replace'))
             .on('click', this._replaceNext),
           $$(Button, {
             tooltip: this.getLabel('replace-all'),
-            theme: this.props.theme
+            theme: this.props.theme,
+            disabled: state.count < 1
           }).addClass('sm-replace-all')
             .append(this.getLabel('replace-all'))
             .on('click', this._replaceAll)
@@ -137,6 +139,7 @@ export default class FindAndReplaceDialog extends Component {
         'tabindex': 500
       })
       .val(state.replacePattern)
+      .on('keydown', this._onReplacePatternKeydown)
       .on('input', this._updateReplacePattern)
   }
 
@@ -179,11 +182,11 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _replaceNext () {
-    console.error('TODO: replaceNext()')
+    this._getManager().replaceNext()
   }
 
   _replaceAll () {
-    console.error('TODO: replaceAll()')
+    this._getManager().replaceAll()
   }
 
   _updatePattern () {
@@ -192,7 +195,7 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _updateReplacePattern () {
-    this._getManager().setSearchPattern(this.refs.replacePattern.val())
+    this._getManager().setReplacePattern(this.refs.replacePattern.val())
   }
 
   _toggleCaseSensitivity () {
@@ -231,6 +234,14 @@ export default class FindAndReplaceDialog extends Component {
       e.stopPropagation()
       e.preventDefault()
       this._findNext()
+    }
+  }
+
+  _onReplacePatternKeydown (e) {
+    if (e.keyCode === keys.ENTER) {
+      e.stopPropagation()
+      e.preventDefault()
+      this._replaceNext()
     }
   }
 }

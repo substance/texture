@@ -46,7 +46,7 @@ export default function (DocumentSession) {
         config.getCommands(),
         contextProvider
       )
-      let findAndReplaceManager = new FindAndReplaceManager(editorState, markersManager)
+      let findAndReplaceManager = new FindAndReplaceManager(this, editorState, markersManager)
 
       this.editorState = editorState
       this.surfaceManager = surfaceManager

@@ -1,12 +1,15 @@
-import { debounce, uuid, platform } from 'substance'
+import { debounce, uuid, platform, documentHelpers } from 'substance'
 
 const UPDATE_DELAY = 200
 
 export default class FindAndReplaceManager {
-  constructor (appState, markersManager) {
+  constructor (editorSession, appState, markersManager) {
+    this._editorSession = editorSession
     this._appState = appState
     this._markersManager = markersManager
     this._dirty = new Set()
+
+    this._updateSearchDebounced = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
 
     // EXPERIMENTAL: we use the MarkersManager to detect changes on text-properties
     markersManager.on('text-property:registered', this._onTextPropertyChanged, this)
@@ -14,10 +17,6 @@ export default class FindAndReplaceManager {
     markersManager.on('text-property:changed', this._onTextPropertyChanged, this)
 
     appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
-
-    if (!platform.test) {
-      this._updateSearch = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
-    }
   }
 
   openDialog (enableReplace) {
@@ -92,6 +91,61 @@ export default class FindAndReplaceManager {
     }
   }
 
+  replaceNext () {
+    let state = this._getState()
+    // ATTENTION: special handling after manual changes, while search dialog is open
+    // in this case we do a forced 'next()' when using 'replaceNext()'
+    if (state._forceNav) {
+      state._forceNav = false
+      this.next()
+      return
+    }
+    if (state.replacePattern) {
+      let hasReplaced = false
+      if (state.cursor >= 0) {
+        let m = this._getMatchAt(state.cursor)
+        if (m) {
+          // ATTENTION: we are not changing the search result on changes with action type: 'replace'
+          // Instead we are doing it here so that
+          this._editorSession.transaction(tx => {
+            this._replace(tx, m, state)
+          }, { action: 'replace' })
+          // updating the result for the current text property
+          // and propagating changes so that so that text properties are updated
+          this._updateSearchForProperty(String(m.path))
+          this._appState.propagateUpdates()
+          // set the cursor back and scroll to the next
+          state.cursor--
+          this._nav('forward')
+          this._updateState(state)
+          hasReplaced = true
+        }
+      }
+      if (!hasReplaced) {
+        // otherwise seek to the next match position first
+        this.next()
+      }
+    }
+  }
+
+  replaceAll () {
+    let state = this._getState()
+    if (!state.matches) return
+    let allMatches = []
+    state.matches.forEach(_matches => {
+      allMatches = allMatches.concat(_matches)
+    })
+    this._editorSession.transaction(tx => {
+      for (let idx = allMatches.length - 1; idx >= 0; idx--) {
+        this._replace(tx, allMatches[idx], state)
+      }
+    }, { action: 'replace-all' })
+    state.matches = new Map()
+    state.count = 0
+    state.cursor = -1
+    this._updateState(state)
+  }
+
   toggleCaseSensitivity () {
     this._toggleOption('caseSensitive')
   }
@@ -156,32 +210,39 @@ export default class FindAndReplaceManager {
     let state = this._getState()
     if (!state.enabled || !state.pattern || this._dirty.size === 0) return
 
-    let markersManager = this._markersManager
     let count = state.count
     let matches = state.matches
-    let opts = state
     for (let key of this._dirty) {
-      let path = key.split(',')
-      let _matches = matches.get(key)
-      if (_matches) {
-        count -= _matches.length
-      }
-      markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
-      let tp = this._getTextProperty(key)
-      if (tp) {
-        _matches = this._searchInProperty(tp, state.pattern, opts)
-        count += _matches.length
-        matches.set(key, _matches)
-        this._addHighlightsForProperty(path, _matches)
-      } else {
-        matches.delete(key)
-      }
+      this._updateSearchForProperty(key)
     }
     state.count = count
     state.matches = matches
     // HACK: need to make sure that the selection is recovered here
     this._updateState(state, 'recoverSelection')
     this._dirty = new Set()
+  }
+
+  _updateSearchForProperty (key) {
+    let markersManager = this._markersManager
+    let state = this._getState()
+    let matches = state.matches
+    let count = state.count
+    let _matches = matches.get(key)
+    if (_matches) {
+      count -= _matches.length
+    }
+    let path = key.split(',')
+    markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
+    let tp = this._getTextProperty(key)
+    if (tp) {
+      _matches = this._searchInProperty(tp, state.pattern, state)
+      count += _matches.length
+      matches.set(key, _matches)
+      this._addHighlightsForProperty(path, _matches)
+    } else {
+      matches.delete(key)
+    }
+    state.count = count
   }
 
   _searchInProperty (tp, pattern, opts) {
@@ -193,6 +254,35 @@ export default class FindAndReplaceManager {
       m.textProperty = tp
       return m
     })
+  }
+
+  /*
+    In case of a regexp search the replacement string allows for the following patterns
+    - "$$": Inserts a "$".
+    - "$&": Inserts the matched substring.
+    - "$`": Inserts the portion of the string that precedes the matched substring.
+    - "$'": Inserts the portion of the string that follows the matched substring.
+    - "$n": Where n is a positive integer less than 100, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object. Note that this is 1-indexed.
+  */
+  _replace (tx, m, options) {
+    tx.setSelection({
+      type: 'property',
+      path: m.path,
+      startOffset: m.start,
+      endOffset: m.end
+    })
+    let newText
+    // TODO: we should allow to use regex in replace string too
+    // for that we would take the string from the match
+    // and apply native String replace to g
+    if (options.regexSearch) {
+      let text = documentHelpers.getTextForSelection(tx, tx.selection)
+      let findRe = new RegExp(options.pattern)
+      newText = text.replace(findRe, options.replacePattern)
+    } else {
+      newText = options.replacePattern
+    }
+    tx.insertText(newText)
   }
 
   _clear () {
@@ -296,17 +386,33 @@ export default class FindAndReplaceManager {
     if (state.marker) state.marker.el.removeClass('sm-active')
     let tp = match.textProperty
     let marker = tp.find(`.sm-find-marker[data-id="${match.id}"]`)
-    marker.el.addClass('sm-active')
-    state.marker = marker
-    tp.send('scrollElementIntoView', marker.el)
+    // FIXME: when doing replace it seems that we are not good yet with navigating through the matches
+    // this guard should not be necessary if everything is working
+    if (marker) {
+      marker.el.addClass('sm-active')
+      state.marker = marker
+      tp.send('scrollElementIntoView', marker.el)
+    }
   }
 
   _onTextPropertyChanged (path) {
     this._dirty.add(String(path))
   }
 
-  _onDocumentChange () {
-    this._updateSearch()
+  _onDocumentChange (change) {
+    // skip changes caused by replaceNext() and replaceAll()
+    if (change.info.action === 'replace' || change.info.action === 'replace-all') return
+    // HACK: this is a bit hacky but should work. When the user has changed the text we leave a mark in the state
+    // so that we can force a 'next()' when 'replaceNext()' is called
+    let state = this._getState()
+    state._forceNav = true
+    // Note: when running tests updating the search result synchronously
+    if (platform.test) {
+      this._updateSearch()
+    } else {
+      // otherwise this is done debounced
+      this._updateSearchDebounced()
+    }
   }
 
   static defaultState () {
@@ -325,21 +431,27 @@ export default class FindAndReplaceManager {
   }
 }
 
+function _createRegExForPattern (pattern) {
+  return pattern.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&') // eslint-disable-line no-useless-escape
+}
+
 function _findInText (text, pattern, opts = {}) {
   if (!opts.regexSearch) {
-    pattern = pattern.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&') // eslint-disable-line no-useless-escape
+    pattern = _createRegExForPattern(pattern)
   }
   if (opts.fullWord) {
     pattern = '\\b' + pattern + '\\b'
   }
-  let matcher = new RegExp(pattern, opts.caseSensitive ? 'g' : 'gi')
   let matches = []
-  let match
-  while ((match = matcher.exec(text))) {
-    matches.push({
-      start: match.index,
-      end: matcher.lastIndex
-    })
-  }
+  try {
+    let matcher = new RegExp(pattern, opts.caseSensitive ? 'g' : 'gi')
+    let match
+    while ((match = matcher.exec(text))) {
+      matches.push({
+        start: match.index,
+        end: matcher.lastIndex
+      })
+    }
+  } catch (err) {}
   return matches
 }

@@ -145,7 +145,6 @@ b.task('build:app', () => {
   ;[
     'texture.js',
     'texture.css',
-    'texture-pagestyle.css',
     'texture-reset.css'
   ].forEach(f => {
     b.copy(`dist/${f}`, APPDIST + 'lib/')

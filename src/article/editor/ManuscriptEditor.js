@@ -175,26 +175,25 @@ export default class ManuscriptEditor extends EditorPanel {
   }
 
   _tocEntrySelected (nodeId) {
-    const node = this._getDocument().get(nodeId)
-    const editorSession = this._getEditorSession()
-    const nodeComponent = this._getContentPanel().find(`[data-id="${nodeId}"]`)
-    if (nodeComponent) {
-      // TODO: it needs to be easier to retrieve the surface
-      let surface = nodeComponent.context.surface
-      // There are cases when we can't set selection, e.g. for references
-      if (surface) {
-        // Note: in this case we do not need to scroll explicitly because this will be done by the SurfaceManager
-        editorSession.setSelection({
-          type: 'property',
-          path: node.getPath(),
-          startOffset: 0,
-          surfaceId: surface.id,
-          containerId: surface.getContainerId()
-        })
-      } else {
-        return this._scrollElementIntoView(nodeComponent.el)
+    let contentElement
+    switch (nodeId) {
+      // scroll to the section label for the all the higher-level sections
+      case 'title':
+      case 'abstract':
+      case 'body':
+      case 'footnotes':
+      case 'references': {
+        let sectionComponent = this._getContentPanel().find(`.sc-section-label.sm-${nodeId}`).el
+        contentElement = sectionComponent.el
+        break
+      }
+      default: {
+        let nodeComponent = this._getContentPanel().find(`[data-id="${nodeId}"]`)
+        contentElement = nodeComponent.el
       }
     }
+    // Note: doing a forced scroll, i.e. not only if target is not visible
+    return this._scrollElementIntoView(contentElement, true)
   }
 
   _showHideTOC () {

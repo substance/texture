@@ -54,7 +54,7 @@ export default class TextureEditing extends Editing {
   }
 
   createTextNode (tx, container, text) {
-    console.error('FIXME: bring back schema compliant tx.createTextNode()')
+    // FIXME: FIXME: bring back schema compliant tx.createTextNode()
     // let parentType = container.type
     // TODO: revisit on-the-fly schema check
     // let schema = InternalArticleSchema.getElementSchema(parentType)
@@ -67,7 +67,7 @@ export default class TextureEditing extends Editing {
   }
 
   createListNode (tx, container, params) {
-    console.error('FIXME: bring back schema compliant tx.createTextNode()')
+    // FIXME: bring back schema compliant tx.createTextNode()
     // let parentType = container.type
     // let schema = InternalArticleSchema.getElementSchema(parentType)
     // if (schema.isAllowed('list')) {

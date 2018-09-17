@@ -106,8 +106,8 @@ export default class EditorPanel extends Component {
     appState.propagateUpdates()
   }
 
-  _scrollElementIntoView (el) {
-    this._getContentPanel().scrollElementIntoView(el, 'onlyIfNotVisible')
+  _scrollElementIntoView (el, force) {
+    this._getContentPanel().scrollElementIntoView(el, !force)
   }
 
   _getContentPanel () {

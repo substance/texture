@@ -16,6 +16,7 @@ export default class InsertFigureTool extends ToggleTool {
   }
 
   onClick () {
+    this.refs.input.val(null)
     this.refs.input.click()
   }
 

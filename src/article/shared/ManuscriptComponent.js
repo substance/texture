@@ -20,7 +20,7 @@ export default class ManuscriptComponent extends Component {
     const ReferenceListComponent = this._getPropertyComponent(referencesModel)
 
     let el = $$('div').addClass('sc-manuscript').append(
-      $$(SectionLabel, {label: 'title-label'}),
+      $$(SectionLabel, {label: 'title-label'}).addClass('sm-title'),
       $$(TitleComponent, {
         model: titleModel,
         placeholder: this.getLabel('title-placeholder')
@@ -29,7 +29,7 @@ export default class ManuscriptComponent extends Component {
 
     if (authorsModel.length > 0) {
       el.append(
-        $$(SectionLabel, {label: 'authors-label'}),
+        $$(SectionLabel, {label: 'authors-label'}).addClass('sm-authors'),
         $$(AuthorsListComponent, {
           model: authorsModel,
           placeholder: this.getLabel('authors-placeholder')
@@ -38,12 +38,15 @@ export default class ManuscriptComponent extends Component {
     }
 
     el.append(
-      $$(SectionLabel, {label: 'abstract-label'}),
+      $$(SectionLabel, {label: 'abstract-label'}).addClass('sm-abstract'),
       $$(AbstractComponent, {
         model: abstractModel,
         placeholder: this.getLabel('abstract-placeholder')
-      }).addClass('sm-abstract'),
-      $$(SectionLabel, {label: 'body-label'}),
+      }).addClass('sm-abstract')
+    )
+
+    el.append(
+      $$(SectionLabel, {label: 'body-label'}).addClass('sm-body'),
       $$(BodyComponent, {
         model: bodyModel,
         placeholder: this.getLabel('body-placeholder')
@@ -52,7 +55,7 @@ export default class ManuscriptComponent extends Component {
 
     if (footnotesModel.length > 0) {
       el.append(
-        $$(SectionLabel, {label: 'footnotes-label'}),
+        $$(SectionLabel, {label: 'footnotes-label'}).addClass('sm-footnotes'),
         $$(FootnotesListComponent, {
           model: footnotesModel
         })
@@ -61,7 +64,7 @@ export default class ManuscriptComponent extends Component {
 
     if (referencesModel.length > 0) {
       el.append(
-        $$(SectionLabel, {label: 'references-label'}),
+        $$(SectionLabel, {label: 'references-label'}).addClass('sm-references'),
         $$(ReferenceListComponent, {
           model: referencesModel
         })

@@ -62,16 +62,27 @@ export default class TOCProvider extends EventEmitter {
     const config = this.config
     let entries = []
 
+    // Title is always there
+    entries.push({
+      id: 'title',
+      name: 'Title',
+      level: 1,
+      node: doc.get('title')
+    })
+
     // Note: For abstract we need to find first text node
     // inside container to set selection there
-    const abstract = doc.find('abstract p')
-    if (abstract && abstract.textContent !== '') {
-      entries.push({
-        id: abstract.id,
-        name: 'Abstract',
-        level: 1,
-        node: abstract
-      })
+    const abstract = doc.find('abstract')
+    if (abstract.getChildCount() > 0) {
+      let first = abstract.find('p')
+      if (first.getText()) {
+        entries.push({
+          id: abstract.id,
+          name: 'Abstract',
+          level: 1,
+          node: abstract
+        })
+      }
     }
 
     const contentNodes = doc.get(config.containerId).getChildren()
@@ -86,19 +97,19 @@ export default class TOCProvider extends EventEmitter {
       }
     })
 
-    const fnNumber = doc.get('footnotes').getChildCount()
-    if (fnNumber > 0) {
+    const footnotes = doc.get('footnotes')
+    if (footnotes.getChildCount() > 0) {
       entries.push({
-        id: 'fn-group',
+        id: 'footnotes',
         name: 'Footnotes',
         level: 1
       })
     }
 
-    const refNumber = doc.get('references').getChildCount()
-    if (refNumber > 0) {
+    const references = doc.get('references')
+    if (references.getChildCount() > 0) {
       entries.push({
-        id: 'ref-list',
+        id: 'references',
         name: 'References',
         level: 1
       })

@@ -1,4 +1,4 @@
-import { debounce, uuid, platform, documentHelpers, deleteFromArray } from 'substance'
+import { debounce, uuid, platform, documentHelpers } from 'substance'
 
 const UPDATE_DELAY = 200
 
@@ -256,6 +256,14 @@ export default class FindAndReplaceManager {
     })
   }
 
+  /*
+    In case of a regexp search the replacement string allows for the following patterns
+    - "$$": Inserts a "$".
+    - "$&": Inserts the matched substring.
+    - "$`": Inserts the portion of the string that precedes the matched substring.
+    - "$'": Inserts the portion of the string that follows the matched substring.
+    - "$n": Where n is a positive integer less than 100, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object. Note that this is 1-indexed.
+  */
   _replace (tx, m, options) {
     tx.setSelection({
       type: 'property',
@@ -263,15 +271,16 @@ export default class FindAndReplaceManager {
       startOffset: m.start,
       endOffset: m.end
     })
-    let newText = options.replacePattern
+    let newText
     // TODO: we should allow to use regex in replace string too
     // for that we would take the string from the match
     // and apply native String replace to g
     if (options.regexSearch) {
       let text = documentHelpers.getTextForSelection(tx, tx.selection)
-      let findRe = new RegExp(_createRegExForPattern(options.pattern))
-      let replRe = new RegExp(_createRegExForPattern(options.replacePattern))
-      newText = text.replace(findRe, replRe)
+      let findRe = new RegExp(options.pattern)
+      newText = text.replace(findRe, options.replacePattern)
+    } else {
+      newText = options.replacePattern
     }
     tx.insertText(newText)
   }
@@ -433,14 +442,16 @@ function _findInText (text, pattern, opts = {}) {
   if (opts.fullWord) {
     pattern = '\\b' + pattern + '\\b'
   }
-  let matcher = new RegExp(pattern, opts.caseSensitive ? 'g' : 'gi')
   let matches = []
-  let match
-  while ((match = matcher.exec(text))) {
-    matches.push({
-      start: match.index,
-      end: matcher.lastIndex
-    })
-  }
+  try {
+    let matcher = new RegExp(pattern, opts.caseSensitive ? 'g' : 'gi')
+    let match
+    while ((match = matcher.exec(text))) {
+      matches.push({
+        start: match.index,
+        end: matcher.lastIndex
+      })
+    }
+  } catch (err) {}
   return matches
 }

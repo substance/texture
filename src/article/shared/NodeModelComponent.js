@@ -44,7 +44,7 @@ export default class NodeModelComponent extends Component {
     const properties = this._getProperties()
     const propsLength = Object.keys(properties).length
     const hiddenPropsLength = Object.keys(properties).reduce((total, key) => {
-      if (properties[key].isHidden()) {
+      if (!properties[key].isRequired() && properties[key].isEmpty()) {
         total++
       }
       return total
@@ -52,7 +52,7 @@ export default class NodeModelComponent extends Component {
     const exposedPropsLength = propsLength - hiddenPropsLength
     let fieldsLeft = CARD_MINIMUM_FIELDS - exposedPropsLength
     for (let property of properties) {
-      let hidden = property.isHidden()
+      let hidden = !property.isRequired() && property.isEmpty()
       if (hidden && fieldsLeft > 0) {
         hidden = false
         fieldsLeft--

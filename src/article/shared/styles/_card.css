@@ -13,7 +13,7 @@
 .sc-card > .se-label {
   position: absolute;
   top: -10px;
-  left: 40px;
+  left: var(--t-double-spacing);
   padding: 0px var(--t-default-spacing);
   background: var(--t-background-color);
   color: var(--t-light-text-color);
@@ -43,7 +43,7 @@
 .sc-card > * > .se-footer {
   display: flex;
   justify-content: space-between;
-  margin: 0px;
+  margin: 0 var(--t-default-spacing);
 }
 
 .sc-card > * > .se-footer > .se-control {

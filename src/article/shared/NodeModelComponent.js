@@ -1,5 +1,6 @@
 import { FontAwesomeIcon, Component } from 'substance'
 import { FormRowComponent } from '../../kit'
+import { CARD_MINIMUM_FIELDS } from '../ArticleConstants'
 
 export default class NodeModelComponent extends Component {
   didMount () {
@@ -41,8 +42,21 @@ export default class NodeModelComponent extends Component {
 
     let hasHiddenProps = false
     const properties = this._getProperties()
+    const propsLength = Object.keys(properties).length
+    const hiddenPropsLength = Object.keys(properties).reduce((total, key) => {
+      if (properties[key].isHidden()) {
+        total++
+      }
+      return total
+    }, 0)
+    const exposedPropsLength = propsLength - hiddenPropsLength
+    let fieldsLeft = CARD_MINIMUM_FIELDS - exposedPropsLength
     for (let property of properties) {
-      let hidden = !property.isRequired() && property.isEmpty()
+      let hidden = property.isHidden()
+      if (hidden && fieldsLeft > 0) {
+        hidden = false
+        fieldsLeft--
+      }
       if (hidden) hasHiddenProps = true
       if (fullMode || !hidden) {
         const PropertyEditor = this._getPropertyEditorClass(property)

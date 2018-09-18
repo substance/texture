@@ -22,6 +22,9 @@ export default class NodeModelProperty {
   isEmpty () {
     return this._valueModel.isEmpty()
   }
+  isHidden () {
+    return !this.isRequired() && this.isEmpty()
+  }
   _createValueModel () {
     const api = this._api
     const nodeProperty = this._nodeProperty

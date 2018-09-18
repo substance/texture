@@ -1,5 +1,6 @@
 import { FontAwesomeIcon, Component } from 'substance'
 import { FormRowComponent } from '../../kit'
+const MINIMUM_FIELDS = 3
 
 export default class NodeModelComponent extends Component {
   didMount () {
@@ -40,10 +41,20 @@ export default class NodeModelComponent extends Component {
     el.append(this._renderHeader($$))
 
     let hasHiddenProps = false
+    let propertyIndex = 0
     const properties = this._getProperties()
+    const propsLength = Object.keys(properties).length
+    const hiddenPropsLength = Object.keys(properties).reduce((total, key) => {
+      if (properties[key].isHidden()) {
+        total++
+      }
+      return total
+    }, 0)
+    const exposedPropsLength = propsLength - hiddenPropsLength
     for (let property of properties) {
-      let hidden = !property.isRequired() && property.isEmpty()
+      let hidden = property.isHidden() && propertyIndex >= MINIMUM_FIELDS - exposedPropsLength
       if (hidden) hasHiddenProps = true
+      propertyIndex++
       if (fullMode || !hidden) {
         const PropertyEditor = this._getPropertyEditorClass(property)
         // skip this property if the editor implementation produces nil

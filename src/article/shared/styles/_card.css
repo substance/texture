@@ -30,20 +30,20 @@
 }
 
 .sc-card > * > * {
-  margin: var(--t-default-spacing);
+  margin: var(--t-default-spacing) 0;
 }
 
 .sc-card > * > .se-header {
-  /* font-size: 17px; */
   font-size: var(--t-text-font-size);
   margin-bottom: var(--t-default-spacing);
+  margin-top: 0px;
   cursor: default;
 }
 
 .sc-card > * > .se-footer {
   display: flex;
   justify-content: space-between;
-  margin: 0 var(--t-default-spacing);
+  margin: 0;
 }
 
 .sc-card > * > .se-footer > .se-control {

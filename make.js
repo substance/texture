@@ -141,6 +141,7 @@ b.task('build:app', () => {
   // b.copy('dist', APPDIST+'lib/')
   b.copy('dist/font-awesome', APPDIST + 'lib/')
   b.copy('dist/katex', APPDIST + 'lib/')
+  b.copy('dist/inter-ui', APPDIST + 'lib/')
   b.copy('dist/substance', APPDIST + 'lib/')
   ;[
     'texture.js',

@@ -14,7 +14,9 @@ export default class MetaSectionTOCEntry extends ModelComponent {
       const items = model.getItems()
       if (items.length > 0) {
         label = label + ' (' + items.length + ')'
-        el.append(label)
+        el.setStyle('display', 'block').append(label)
+      } else {
+        el.setStyle('display', 'none')
       }
     } else {
       el.append(label)

@@ -65,7 +65,6 @@ export default class SchemaDrivenCommandManager extends CommandManager {
       // to a non existing node
       // If really needed we should document why, and in which case.
       if (!node) {
-        // FIXME: explain when this happens.'
         throw new Error('FIXME: explain when this happens')
       }
 
@@ -99,10 +98,12 @@ export default class SchemaDrivenCommandManager extends CommandManager {
 }
 
 function _getNodeProp (node, path) {
-  let propName = last(path)
-  let prop = node.getSchema().getProperty(propName)
-  if (!prop) console.error('Could not find property for path', path, node)
-  return prop
+  if (path.length === 2) {
+    let propName = last(path)
+    let prop = node.getSchema().getProperty(propName)
+    if (!prop) console.error('Could not find property for path', path, node)
+    return prop
+  }
 }
 
 function _disabled (commands) {

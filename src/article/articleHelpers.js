@@ -39,7 +39,7 @@ export function setContainerSelection (tx, node) {
 }
 
 export function importFigures (tx, sel, files, paths) {
-  let LAST = files.length - 1
+  const LAST = files.length - 1
   let containerId = sel.containerId
   files.map((file, idx) => {
     let path = paths[idx]
@@ -51,7 +51,12 @@ export function importFigures (tx, sel, files, paths) {
       'mimetype': mimeData[0],
       'xlink:href': path
     })
+    if (idx !== 0) {
+      tx.break()
+    }
+
     tx.insertBlockNode(figure)
+
     if (idx === LAST) {
       selectionHelpers.selectNode(tx, figure.id, containerId)
     }

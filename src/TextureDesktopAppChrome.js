@@ -6,10 +6,14 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
   didMount () {
     super.didMount()
     this.props.ipc.on('document:save', () => {
-      this._save()
+      this._save(err => {
+        if (err) {
+          console.error(err)
+        }
+      })
     })
     this.props.ipc.on('document:save-as', (event, newArchiveDir) => {
-      this._saveAs(newArchiveDir, (err) => {
+      this._saveAs(newArchiveDir, err => {
         if (err) {
           console.error(err)
         }

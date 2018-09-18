@@ -78,3 +78,5 @@ export const LICENSES = [
     name: 'CC BY-SA 2.0'
   }
 ]
+
+export const CARD_MINIMUM_FIELDS = 3

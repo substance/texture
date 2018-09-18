@@ -1,6 +1,6 @@
 import { FontAwesomeIcon, Component } from 'substance'
 import { FormRowComponent } from '../../kit'
-const MINIMUM_FIELDS = 3
+import { CARD_MINIMUM_FIELDS } from '../ArticleConstants'
 
 export default class NodeModelComponent extends Component {
   didMount () {
@@ -50,7 +50,7 @@ export default class NodeModelComponent extends Component {
       return total
     }, 0)
     const exposedPropsLength = propsLength - hiddenPropsLength
-    let fieldsLeft = MINIMUM_FIELDS - exposedPropsLength
+    let fieldsLeft = CARD_MINIMUM_FIELDS - exposedPropsLength
     for (let property of properties) {
       let hidden = property.isHidden()
       if (hidden && fieldsLeft > 0) {

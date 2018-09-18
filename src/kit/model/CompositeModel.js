@@ -1,8 +1,9 @@
 import ModelProperty from './ModelProperty'
+import AbstractModel from './AbstractModel'
 
-export default class CompositeModel {
+export default class CompositeModel extends AbstractModel {
   constructor (api, ...properties) {
-    this._api = api
+    super(api)
     this._properties = properties
   }
 
@@ -10,20 +11,20 @@ export default class CompositeModel {
 
   get _isCompositeModel () { return true }
 
-  getProperties () {
-    return this._properties
-  }
+  // getProperties () {
+  //   return this._properties
+  // }
 
-  getProperty (propName) {
-    return this._properties.find(prop => {
-      return prop.name === propName
-    })
-  }
+  // getProperty (propName) {
+  //   return this._properties.find(prop => {
+  //     return prop.name === propName
+  //   })
+  // }
 
-  getPropertyValue (propName) {
-    const prop = this.getProperty(propName)
-    return prop.valueModel
-  }
+  // getPropertyValue (propName) {
+  //   const prop = this.getProperty(propName)
+  //   return prop.valueModel
+  // }
 
   setProperties (...properties) {
     this._properties = properties.map(p => {

@@ -1,25 +1,21 @@
 import NodeModelProperty from './NodeModelProperty'
 import { isFlowContentEmpty } from './modelHelpers'
+// import ModelProperty from './ModelProperty'
+import AbstractModel from './AbstractModel'
 
-export default class NodeModel {
+export default class NodeModel extends AbstractModel {
   constructor (api, node) {
+    super(api)
     if (!node) throw new Error("'node' is required")
-    this._api = api
     this._node = node
-
     this._properties = []
     this._propertiesByName = new Map()
-
     this._initialize()
   }
 
   get type () { return this._node.type }
 
   get id () { return this._node.id }
-
-  getProperties () {
-    return this._properties
-  }
 
   isEmpty () {
     const node = this._node

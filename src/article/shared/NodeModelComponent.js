@@ -41,7 +41,6 @@ export default class NodeModelComponent extends Component {
     el.append(this._renderHeader($$))
 
     let hasHiddenProps = false
-    let propertyIndex = 0
     const properties = this._getProperties()
     const propsLength = Object.keys(properties).length
     const hiddenPropsLength = Object.keys(properties).reduce((total, key) => {
@@ -51,10 +50,14 @@ export default class NodeModelComponent extends Component {
       return total
     }, 0)
     const exposedPropsLength = propsLength - hiddenPropsLength
+    let fieldsLeft = MINIMUM_FIELDS - exposedPropsLength
     for (let property of properties) {
-      let hidden = property.isHidden() && propertyIndex >= MINIMUM_FIELDS - exposedPropsLength
+      let hidden = property.isHidden()
+      if (hidden && fieldsLeft > 0) {
+        hidden = false
+        fieldsLeft--
+      }
       if (hidden) hasHiddenProps = true
-      propertyIndex++
       if (fullMode || !hidden) {
         const PropertyEditor = this._getPropertyEditorClass(property)
         // skip this property if the editor implementation produces nil

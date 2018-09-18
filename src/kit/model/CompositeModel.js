@@ -11,21 +11,6 @@ export default class CompositeModel extends AbstractModel {
 
   get _isCompositeModel () { return true }
 
-  // getProperties () {
-  //   return this._properties
-  // }
-
-  // getProperty (propName) {
-  //   return this._properties.find(prop => {
-  //     return prop.name === propName
-  //   })
-  // }
-
-  // getPropertyValue (propName) {
-  //   const prop = this.getProperty(propName)
-  //   return prop.valueModel
-  // }
-
   setProperties (...properties) {
     this._properties = properties.map(p => {
       if (p._isModelProperty) {

@@ -17,7 +17,8 @@ export default class TableCellComponent extends NodeComponent {
     el.append(
       $$(TableCellEditor, {
         path: cell.getPath(),
-        disabled: this.props.disabled
+        disabled: this.props.disabled,
+        multiLine: true
       }).ref(cell.id)
     )
     return el

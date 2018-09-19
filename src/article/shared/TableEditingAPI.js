@@ -231,6 +231,12 @@ export default class TableEditingAPI {
     }, { action: 'insertText' })
   }
 
+  insertSoftBreak () {
+    this.editorSession.transaction(tx => {
+      tx.insertText('\n')
+    }, { action: 'soft-break' })
+  }
+
   _getDocument () {
     return this.editorSession.getDocument()
   }

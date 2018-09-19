@@ -41,7 +41,7 @@ import {
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from './TableCommands'
 import InsertTableTool from './InsertTableTool'
-import SchemaAwareToggleListCommand from './SchemaAwareToggleListCommand'
+import ToggleListCommand from './ToggleListCommand'
 import ArticleNavPackage from '../ArticleNavPackage'
 // Workflows
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
@@ -333,7 +333,7 @@ export default {
     config.addLabel('open-link', 'Open Link')
 
     // Lists
-    config.addCommand('toggle-unordered-list', SchemaAwareToggleListCommand, {
+    config.addCommand('toggle-unordered-list', ToggleListCommand, {
       spec: { listType: 'bullet' },
       commandGroup: 'list'
     })
@@ -344,7 +344,7 @@ export default {
     })
     config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
 
-    config.addCommand('toggle-ordered-list', SchemaAwareToggleListCommand, {
+    config.addCommand('toggle-ordered-list', ToggleListCommand, {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })

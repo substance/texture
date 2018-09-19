@@ -487,7 +487,7 @@ export default class TableComponent extends CustomSurface {
     this._positionSelection(this._getSelectionData())
     // // put the native focus into the keytrap so that we
     // // receive keyboard events
-    this.refs.keytrap.el.focus()
+    this.refs.keytrap.el.focus({ preventScroll: true })
   }
 
   _positionSelection (selData, focused) {

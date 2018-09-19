@@ -79,9 +79,9 @@ export default class SchemaDrivenCommandManager extends CommandManager {
       }
 
       // for InsertCommands the selection must be inside a ContainerEditor
-      let parentNode = node.parentNode
-      if (parentNode && parentNode.isContainer()) {
-        let contentProp = _getNodeProp(parentNode, parentNode.getContentPath())
+      let container = _getContainer(node)
+      if (container && container.isContainer()) {
+        let contentProp = _getNodeProp(container, container.getContentPath())
         if (contentProp) {
           let targetTypes = contentProp.targetTypes || []
           Object.assign(commandStates, _disabledIfDisallowedTargetType(this._insertCommands, targetTypes, params, context))
@@ -94,6 +94,13 @@ export default class SchemaDrivenCommandManager extends CommandManager {
     Object.assign(commandStates, _getCommandStates(this._otherCommands, params, context))
 
     return commandStates
+  }
+}
+
+function _getContainer (node) {
+  let containerRoot = node.getContainerRoot()
+  if (containerRoot) {
+    return containerRoot.getParent()
   }
 }
 

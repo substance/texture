@@ -200,6 +200,7 @@ export default class TableComponent extends CustomSurface {
   }
 
   _onMousedown (e) {
+    // console.log('TableComponent._onMousedown()')
     e.stopPropagation()
     // TODO: do not update the selection if right-clicked and already having a selection
     if (platform.inBrowser) {

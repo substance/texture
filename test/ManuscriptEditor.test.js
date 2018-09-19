@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import { tableHelpers } from '../index'
 import { DOMEvent } from './shared/testHelpers'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, getApi } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, getApi, setSelection } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 test('ManuscriptEditor: add figure', t => {
@@ -94,6 +94,11 @@ const TABLES_AND_REFS = `<p />
 </table-wrap>
 <p>Bla bla</p>`
 
+const SOME_PS = `<p id="p1">abcdef</p>
+<p id="p2">ghijkl</p>
+<p id="p3">mnopqr</p>
+<p id="p4">stuvwx</p>`
+
 // testing the general ability to insert tables but also look into table citations
 test('ManuscriptEditor: inserting and deleting a table', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -136,6 +141,38 @@ test('ManuscriptEditor: inserting and deleting a table', t => {
 
   t1ref = p1.find('xref')
   t.equal(t1ref.state.label, 'Table 1', 'citation should now point to t2')
+
+  t.end()
+})
+
+test('ManuscriptEditor: toggling a list', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, SOME_PS)
+
+  let p1Text = doc.get(['p1', 'content'])
+
+  setSelection(editor, 'p1.content', 0)
+  let ulTool = editor.find('.sc-toggle-tool.sm-toggle-unordered-list')
+  t.notNil(ulTool, 'the unordered-list tool should be visible')
+
+  // click on list tool to turn "p1" into a list
+  ulTool.find('button').el.click()
+  let listNode = doc.get('body').getChildAt(0)
+  t.equal(listNode.type, 'list', 'first node should now be a list')
+  t.equal(listNode.getChildCount(), 1, '.. with one item')
+  let listItem = listNode.getChildAt(0)
+  t.equal(listItem.getText(), p1Text, '.. with the text of the former paragraph')
+
+  // now there should be contextual list tools be visible
+  t.notNil(editor.find('.sc-toggle-tool.sm-indent-list'), 'now there should be the indent tool be visible')
+  t.notNil(editor.find('.sc-toggle-tool.sm-dedent-list'), '.. and the dedent tool')
+
+  // click on list tool to turn it into a paragraph again
+  editor.find('.sc-toggle-tool.sm-toggle-unordered-list > button').click()
+  let pNode = doc.get('body').getChildAt(0)
+  t.equal(pNode.type, 'p', 'first node should now be a paragraph again')
 
   t.end()
 })

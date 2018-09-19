@@ -188,6 +188,7 @@ export default class ScrollPane extends AbstractScrollPane {
   }
 
   setScrollPosition (scrollPos) {
+    // console.log('ScrollPane.setScrollPosition()')
     let scrollableEl = this.getScrollableElement()
     scrollableEl.setProperty('scrollTop', scrollPos)
   }

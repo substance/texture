@@ -54,6 +54,7 @@ export default class EditorPanel extends Component {
 
   _restoreViewport () {
     if (this.props.viewport) {
+      // console.log('Restoring viewport', this.props.viewport)
       this.refs.contentPanel.setScrollPosition(this.props.viewport.x)
     }
   }

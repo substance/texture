@@ -57,5 +57,20 @@ export default {
     config.addLabel('previous', {
       en: 'Previous'
     })
+    config.addLabel('find-title', {
+      en: 'Find in document'
+    })
+    config.addLabel('find-replace-title', {
+      en: 'Find and replace in document'
+    })
+    config.addLabel('case-sensitive-title', {
+      en: 'Case Sensitive'
+    })
+    config.addLabel('whole-word-title', {
+      en: 'Whole Word'
+    })
+    config.addLabel('regex-title', {
+      en: 'Regex'
+    })
   }
 }

@@ -25,6 +25,7 @@ export default class FindAndReplaceDialog extends Component {
     let state = this._getState()
     let el = $$('div').addClass('sc-find-and-replace-dialog')
     el.append(
+      this._renderTitle($$),
       this._renderFindSection($$),
       this._renderReplaceSection($$)
     )
@@ -35,12 +36,22 @@ export default class FindAndReplaceDialog extends Component {
     return el
   }
 
+  _renderTitle ($$) {
+    const state = this._getState()
+    let title = state.showReplace ? this.getLabel('find-replace-title') : this.getLabel('find-title')
+    let options = []
+    if (state.caseSensitive) options.push('case-sensitive-title')
+    if (state.fullWord) options.push('whole-word-title')
+    if (state.regexSearch) options.push('regex-title')
+    if (options.length > 0) title += ' (' + options.map(o => this.getLabel(o)).join(', ') + ')'
+    return $$('div').addClass('se-title').append(title)
+  }
+
   _renderFindSection ($$) {
     const state = this._getState()
     const Button = this.getComponent('button')
     return $$('div').addClass('se-section').addClass('sm-find').append(
       $$('div').addClass('se-group sm-input').append(
-        $$('div').addClass('se-label').append(this.getLabel('find')),
         this._renderPatternInput($$)
       ),
       $$('div').addClass('se-group sm-options').append(
@@ -95,7 +106,6 @@ export default class FindAndReplaceDialog extends Component {
       const Button = this.getComponent('button')
       return $$('div').addClass('se-section').addClass('sm-replace').append(
         $$('div').addClass('se-group sm-input').append(
-          $$('div').addClass('se-label').append(this.getLabel('replace')),
           this._renderReplacePatternInput($$)
         ),
         $$('div').addClass('se-group sm-options').append(),
@@ -124,6 +134,7 @@ export default class FindAndReplaceDialog extends Component {
     return $$('input').ref('pattern')
       .attr({
         type: 'text',
+        placeholder: this.getLabel('find'),
         'tabindex': 500
       })
       .val(state.pattern)
@@ -136,6 +147,7 @@ export default class FindAndReplaceDialog extends Component {
     return $$('input').ref('replacePattern')
       .attr({
         type: 'text',
+        placeholder: this.getLabel('replace'),
         'tabindex': 500
       })
       .val(state.replacePattern)

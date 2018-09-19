@@ -3,14 +3,16 @@ import { platform } from 'substance'
 import { test } from 'substance-test'
 import { TextureArchive, checkArchive } from '../index'
 import { getMountPoint, diff } from './shared/testHelpers'
-import { applyNOP, toUnix, setupTestVfs } from './shared/integrationTestHelpers'
+import { applyNOP, toUnix, setupTestVfs, openManuscriptEditor, PseudoFileEvent, getEditorSession, setSelection } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-PersistenceTest('blank')
+InvariantLoadSaveTest('blank')
 
-PersistenceTest('kitchen-sink')
+InvariantLoadSaveTest('kitchen-sink')
 
-function PersistenceTest (archiveId) {
+LoadSaveShouldNotThrow('blank', 'saving and loading an article after inserting a figure', _INSERT_FIGURE)
+
+function InvariantLoadSaveTest (archiveId) {
   test(`Persistence: loading and saving article ${archiveId}`, t => {
     // create a vfs where we can store the data during save without harming the global vfs instance
     let testVfs = setupTestVfs(vfs, archiveId)
@@ -26,7 +28,8 @@ function PersistenceTest (archiveId) {
     })
 
     // trigger a save
-    applyNOP(manuscriptSession)
+    _NOP({manuscriptSession})
+
     // Note: with VFS these calls are actually not asynchronous, i.e. calling back instantly
     app._save(err => {
       if (err) throw new Error(err)
@@ -79,5 +82,49 @@ function PersistenceTest (archiveId) {
     }, 'The persisted file should be loaded and rendered without problems')
 
     t.end()
+  })
+}
+
+function LoadSaveShouldNotThrow (archiveId, title, change) {
+  test(`Persistence: ${title}`, t => {
+    // create a vfs where we can store the data during save without harming the global vfs instance
+    let testVfs = setupTestVfs(vfs, archiveId)
+    let {app, archive, manuscriptSession} = setupTestApp(t, {
+      vfs: testVfs,
+      archiveId
+    })
+    // change the content
+    change({app, archive, manuscriptSession})
+    // trigger a save
+    // Note: with VFS these calls are actually not asynchronous, i.e. calling back instantly
+    app._save(err => {
+      if (err) throw new Error(err)
+    })
+    // let the app load the new archive
+    getMountPoint(t).empty()
+    t.doesNotThrow(() => {
+      setupTestApp(t, {
+        vfs: testVfs,
+        archiveId
+      })
+    }, 'The persisted file should be loaded and rendered without problems')
+    t.end()
+  })
+}
+
+function _NOP ({manuscriptSession}) {
+  applyNOP(manuscriptSession)
+}
+
+function _INSERT_FIGURE ({app}) {
+  let editor = openManuscriptEditor(app)
+  let editorSession = getEditorSession(editor)
+  let doc = editorSession.getDocument()
+  let p = doc.get('body').getChildAt(0)
+  setSelection(editor, p.getPath(), 0)
+  // TODO: more 'transparent' way to create 'files'
+  let fe = new PseudoFileEvent()
+  editor.send('executeCommand', 'insert-fig', {
+    files: fe.currentTarget.files
   })
 }

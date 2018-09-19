@@ -4,7 +4,6 @@ import { Component } from 'substance'
 export default class CaptionComponent extends Component {
   render ($$) {
     const node = this.props.node
-
     let el = $$('div')
       .addClass('sc-caption')
       .attr('data-id', node.id)

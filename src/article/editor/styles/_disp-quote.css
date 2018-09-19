@@ -1,16 +1,9 @@
 .sc-disp-quote {
-  padding-left: 20px;
-  padding: 20px;
-  padding-top: 0px;
-  margin-left: 20px;
-}
-
-.sc-disp-quote .sc-disp-quote-content {
   border-left: 3px solid #444;
-  padding-left: 20px;
+  padding-left: var(--t-default-spacing);
 }
 
-.sc-disp-quote .se-attribution {
-  text-align: right;
-  font-size: 16px;
+.sc-disp-quote .sc-text {
+  padding-top: var(--t-default-spacing);
+  font-size: var(--t-small-font-size);
 }

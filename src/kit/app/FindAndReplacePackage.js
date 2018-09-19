@@ -52,13 +52,16 @@ export default {
       en: 'Replace All'
     })
     config.addLabel('next', {
-      en: 'Next'
+      en: 'Find Next'
     })
     config.addLabel('previous', {
       en: 'Previous'
     })
     config.addLabel('find-title', {
       en: 'Find in document'
+    })
+    config.addLabel('no-result', {
+      en: 'No results'
     })
     config.addLabel('find-replace-title', {
       en: 'Find and replace in document'

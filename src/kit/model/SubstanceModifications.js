@@ -304,8 +304,14 @@ function ModifiedSurface (Surface) {
     onMouseDown (event) {
       let res = super.onMouseDown(event)
       if (res !== false) {
+        // console.log('Surface.onMouseDown() stopping propagation.')
         event.stopPropagation()
       }
+    }
+
+    onMouseUp (e) {
+      // console.log('Surface.onMouseUp', this.id)
+      return super.onMouseUp(e)
     }
 
     onClick (event) {

@@ -48,3 +48,16 @@
 .sc-article-panel .sc-toolbar .sc-menu-item .se-keyboard-shortcut {
   color: rgba(0, 0, 0, 0.4);
 }
+
+.sc-article-panel > * > .se-main-section > .se-content-section > .se-footer-pane {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  right: 0;
+  background: white;
+  border-top: var(--t-default-border);
+}
+
+.sc-article-panel > .sm-compact .sc-find-and-replace-dialog {
+  margin: 0 auto;
+}

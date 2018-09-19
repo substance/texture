@@ -1,6 +1,7 @@
 .sc-find-and-replace-dialog {
-  border-top: var(--t-default-border);
   padding: var(--t-half-spacing);
+  margin-left: 270px;
+  max-width: 710px;
 }
 
 .sc-find-and-replace-dialog.sm-hidden {

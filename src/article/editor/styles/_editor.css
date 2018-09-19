@@ -14,12 +14,3 @@
 .sc-manuscript-editor > .se-main-section > .sc-workflow-pane {
   flex: 0 0 0;
 }
-
-/* TODO: pls rework this. And try to share CSS with sc-metadata-editor, e.g. via sc-editor-panel */
-.sc-manuscript-editor > .se-main-section > .se-content-section > .se-footer-pane {
-  position: absolute;
-  bottom: 0;
-  left:0;
-  right: 0;
-  background: white;
-}

@@ -149,3 +149,4 @@ The following people make Texture possible (in random order):
 - Philipp Zumstein (dev)
 - Fabio Batalha Cunha dos Santos (leadership, concept)
 - Oliver Buchtala (dev)
+- Daniel Beilinson (dev)

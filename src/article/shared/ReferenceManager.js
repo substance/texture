@@ -4,7 +4,7 @@ export default class ReferenceManager extends AbstractCitationManager {
   constructor (documentSession, labelGenerator) {
     super(documentSession, 'bibr', labelGenerator)
     // compute initial labels
-    this._updateLabels()
+    this._updateLabels('initial')
   }
 
   getBibliography () {

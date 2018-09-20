@@ -48,6 +48,17 @@ export default class EditorPanel extends Component {
     this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
 
+    // HACK: ATM there is no better way than to listen to an archive
+    // event and forcing the CommandManager to update commandStates
+    // and propagating the changes
+    archive.on('archive:saved', () => {
+      // HACK: alternatively we could trigger the commandManager directly
+      // but setting the selection dirty, also makes sure the DOM selection gets rerendered
+      // this.editorSession.commandManager.reduce()
+      this.appState._setDirty('selection')
+      this.appState.propagateUpdates()
+    })
+
     // HACK: resetting the app state here, because things might get 'dirty' during initialization
     // TODO: find out if there is a better way to do this
     this.appState._reset()
@@ -67,6 +78,7 @@ export default class EditorPanel extends Component {
     articleSession.off(this)
     editorSession.dispose()
     appState.removeObserver(this)
+    this.props.archive.off(this)
     // TODO: do we really need to clear here?
     this.empty()
   }

@@ -89,7 +89,6 @@ export default class TextureAppChrome extends Component {
 
   _afterInit () {}
 
-  // TODO: need to rethink
   _save (cb) {
     this.state.archive.save(err => {
       if (err) return cb(err)

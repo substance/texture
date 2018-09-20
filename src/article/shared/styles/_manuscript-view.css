@@ -88,17 +88,16 @@
   position: relative;
 }
 
-.sc-manuscript-view .sc-container-editor:not(.sm-body) {
+.sc-manuscript-view .sc-container-editor:not(.sm-body,.sm-readonly) {
   border: var(--t-input-default-border);
   border-radius: var(--t-border-radius);
   padding: var(--t-input-padding);
   margin: var(--t-negative-input-padding);
 }
 
-.sc-manuscript-view .sc-container-editor:focus:not(.sm-body) {
+.sc-manuscript-view .sc-container-editor:focus:not(.sm-body,.sm-readonly) {
   border: var(--t-input-focus-border);
 }
-
 
 /* Add padding to each child except last one */
 .sc-manuscript-view .sc-container-editor > * {

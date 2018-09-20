@@ -25,6 +25,7 @@ export default class FindAndReplaceDialog extends Component {
     let state = this._getState()
     let el = $$('div').addClass('sc-find-and-replace-dialog')
     el.append(
+      this._renderHeader($$),
       this._renderFindSection($$),
       this._renderReplaceSection($$)
     )
@@ -35,14 +36,22 @@ export default class FindAndReplaceDialog extends Component {
     return el
   }
 
-  _renderFindSection ($$) {
+  _renderTitle ($$) {
+    const state = this._getState()
+    let title = state.showReplace ? this.getLabel(`find-replace-title-${this.props.viewName}`) : this.getLabel(`find-title-${this.props.viewName}`)
+    let options = []
+    if (state.caseSensitive) options.push('case-sensitive-title')
+    if (state.fullWord) options.push('whole-word-title')
+    if (state.regexSearch) options.push('regex-title')
+    if (options.length > 0) title += ' (' + options.map(o => this.getLabel(o)).join(', ') + ')'
+    return $$('div').addClass('se-title').append(title)
+  }
+
+  _renderHeader ($$) {
     const state = this._getState()
     const Button = this.getComponent('button')
-    return $$('div').addClass('se-section').addClass('sm-find').append(
-      $$('div').addClass('se-group sm-input').append(
-        $$('div').addClass('se-label').append(this.getLabel('find')),
-        this._renderPatternInput($$)
-      ),
+    return $$('div').addClass('se-header').append(
+      this._renderTitle($$),
       $$('div').addClass('se-group sm-options').append(
         $$(Button, {
           tooltip: this.getLabel('find-case-sensitive'),
@@ -61,10 +70,28 @@ export default class FindAndReplaceDialog extends Component {
           active: state.regexSearch,
           theme: this.props.theme
         }).addClass('sm-regex-search').append('.*')
-          .on('click', this._toggleRegexSearch)
+          .on('click', this._toggleRegexSearch),
+        $$(Button, {
+          tooltip: this.getLabel('close'),
+          theme: this.props.theme
+        }).addClass('sm-close')
+          .append(
+            this.context.iconProvider.renderIcon($$, 'close')
+          )
+          .on('click', this._close)
+      )
+    )
+  }
+
+  _renderFindSection ($$) {
+    const state = this._getState()
+    const Button = this.getComponent('button')
+    return $$('div').addClass('se-section').addClass('sm-find').append(
+      $$('div').addClass('se-group sm-input').append(
+        this._renderPatternInput($$),
+        this._renderStatus($$)
       ),
       $$('div').addClass('se-group sm-actions').append(
-        this._renderStatus($$),
         $$(Button, {
           tooltip: this.getLabel('find-next'),
           theme: this.props.theme,
@@ -78,13 +105,7 @@ export default class FindAndReplaceDialog extends Component {
           disabled: state.count < 1
         }).addClass('sm-previous')
           .append(this.getLabel('previous'))
-          .on('click', this._findPrevious),
-        $$(Button, {
-          tooltip: this.getLabel('close'),
-          theme: this.props.theme
-        }).addClass('sm-close')
-          .append('x')
-          .on('click', this._close)
+          .on('click', this._findPrevious)
       )
     )
   }
@@ -95,10 +116,8 @@ export default class FindAndReplaceDialog extends Component {
       const Button = this.getComponent('button')
       return $$('div').addClass('se-section').addClass('sm-replace').append(
         $$('div').addClass('se-group sm-input').append(
-          $$('div').addClass('se-label').append(this.getLabel('replace')),
           this._renderReplacePatternInput($$)
         ),
-        $$('div').addClass('se-group sm-options').append(),
         $$('div').addClass('se-group sm-actions').append(
           $$(Button, {
             tooltip: this.getLabel('replace'),
@@ -124,6 +143,7 @@ export default class FindAndReplaceDialog extends Component {
     return $$('input').ref('pattern')
       .attr({
         type: 'text',
+        placeholder: this.getLabel('find'),
         'tabindex': 500
       })
       .val(state.pattern)
@@ -136,6 +156,7 @@ export default class FindAndReplaceDialog extends Component {
     return $$('input').ref('replacePattern')
       .attr({
         type: 'text',
+        placeholder: this.getLabel('replace'),
         'tabindex': 500
       })
       .val(state.replacePattern)
@@ -148,7 +169,7 @@ export default class FindAndReplaceDialog extends Component {
     let el = $$('span').addClass('se-status')
     if (state.count > 0) {
       let current = state.cursor === -1 ? '?' : String(state.cursor + 1)
-      el.append(`${current} / ${state.count}`)
+      el.append(`${current} of ${state.count}`)
     } else if (state.pattern) {
       el.append(this.getLabel('no-result'))
     }

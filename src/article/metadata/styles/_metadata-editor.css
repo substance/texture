@@ -85,15 +85,6 @@
   display: none;
 }
 
-/* TODO: pls rework this. And try to share CSS with sc-manuscript-editor, e.g. via sc-editor-panel */
-.sc-metadata-editor > .se-main-section > .se-content-section > .se-footer-pane {
-  position: absolute;
-  bottom: 0;
-  left:0;
-  right: 0;
-  background: white;
-}
-
 /* HACK: Overrides */
 .sc-metadata-editor a {
   color: inherit;
@@ -135,4 +126,9 @@
 
 .sc-metadata-editor .sc-container-editor:focus {
   border: var(--t-input-focus-border);
+}
+
+.sc-metadata-editor .se-footer-pane {
+  background: white;
+  border-top: var(--t-default-border);
 }

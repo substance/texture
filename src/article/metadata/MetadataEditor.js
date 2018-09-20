@@ -58,9 +58,9 @@ export default class MetadataEditor extends EditorPanel {
       this._renderToolbar($$),
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
-        this._renderContentPanel($$),
-        this._renderFooterPane($$)
-      ).ref('contentSection')
+        this._renderContentPanel($$)
+      ).ref('contentSection'),
+      this._renderFooterPane($$)
     )
     if (appState.workflowId) {
       let Modal = this.getComponent('modal')
@@ -137,7 +137,8 @@ export default class MetadataEditor extends EditorPanel {
     let el = $$('div').addClass('se-footer-pane')
     el.append(
       $$(FindAndReplaceDialog, {
-        theme: this._getTheme()
+        theme: this._getTheme(),
+        viewName: 'metadata'
       }).ref('findAndReplace')
     )
     return el

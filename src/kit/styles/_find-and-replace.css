@@ -1,10 +1,21 @@
 .sc-find-and-replace-dialog {
-  border-top: var(--t-default-border);
+  position: relative;
   padding: var(--t-half-spacing);
+  margin-left: 270px;
+  max-width: 710px;
 }
 
 .sc-find-and-replace-dialog.sm-hidden {
   display: none;
+}
+
+.sc-find-and-replace-dialog > .se-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sc-find-and-replace-dialog > .se-header > .se-title {
+  font-size: var(--t-small-font-size);
 }
 
 /* because we place the dialog at the bottom of the screen we must place tooltips above */
@@ -13,9 +24,51 @@
   left: 30px;
 }
 
-.sc-find-and-replace-dialog .se-section {
-  flex: 0 0 40px;
-  flex-wrap: nowrap;
+.sc-find-and-replace-dialog > .se-section {
+  display: flex;
+  margin-top: 5px;
+}
+
+.sc-find-and-replace-dialog > .se-section > .sm-input {
+  position: relative;
+  flex-grow: 1;
+}
+
+.sc-find-and-replace-dialog > .se-section > .sm-input > .se-status {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  font-size: var(--t-tiny-font-size);
+}
+
+.sc-find-and-replace-dialog > .se-section > .sm-input > input {
+  width: 100%;
+  height: 100%;
+  border: var(--t-input-outline-border);
+  border-radius: var(--t-border-radius);
+  padding: 2px 80px 2px 10px;
+  color: var(--t-text-color);
+}
+
+.sc-find-and-replace-dialog > .se-section > .sm-input > input:focus {
+  border: var(--t-input-focus-border);
+}
+
+.sc-find-and-replace-dialog > .se-section > .sm-actions {
+  flex-grow: 0;
+}
+.sc-find-and-replace-dialog > .se-section > .sm-actions > .sc-button {
+  width: 80px;
+  height: 100%;
+  /* border: var(--t-default-border); */
+  border-radius: var(--t-border-radius);
+  background: var(--t-border-color);
+}
+
+.sc-find-and-replace-dialog > .se-section > .sm-actions > .sc-button:not([disabled=true]):hover,
+.sc-find-and-replace-dialog > .se-section > .sm-actions > .sc-button:not([disabled=true]):focus {
+  background: var(--t-action-color);
+  color: white;
 }
 
 .sc-find-and-replace-dialog .se-group {
@@ -24,14 +77,20 @@
 
 .sc-find-and-replace-dialog .se-group > * {
   display: inline-block;
+  color: var(--t-light-text-color);
+}
+
+.sc-find-and-replace-dialog .se-group > .sm-active {
+  background: var(--t-action-color);
+  color: white;
 }
 
 .sc-find-and-replace-dialog .se-group + .se-group {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .sc-find-and-replace-dialog .se-group > * + * {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .sc-find-and-replace-dialog .se-group.sm-input > .se-label::after {
@@ -39,7 +98,7 @@
 }
 
 .sc-annotation.sm-find-marker {
-  background-color: yellow;
+  background-color: rgb(255, 255, 182);
 }
 
 .sc-annotation.sm-find-marker.sm-active {

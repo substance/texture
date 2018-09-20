@@ -48,3 +48,7 @@
 .sc-article-panel .sc-toolbar .sc-menu-item .se-keyboard-shortcut {
   color: rgba(0, 0, 0, 0.4);
 }
+
+.sc-article-panel > .sm-compact .sc-find-and-replace-dialog {
+  margin: 0 auto;
+}

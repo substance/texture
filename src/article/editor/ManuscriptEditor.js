@@ -63,9 +63,9 @@ export default class ManuscriptEditor extends EditorPanel {
       this._renderToolbar($$),
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
-        this._renderContentPanel($$),
-        this._renderFooterPane($$)
-      ).ref('contentSection')
+        this._renderContentPanel($$)
+      ).ref('contentSection'),
+      this._renderFooterPane($$)
     )
 
     if (appState.workflowId) {
@@ -142,7 +142,8 @@ export default class ManuscriptEditor extends EditorPanel {
     let el = $$('div').addClass('se-footer-pane')
     el.append(
       $$(FindAndReplaceDialog, {
-        theme: this._getTheme()
+        theme: this._getTheme(),
+        viewName: 'manuscript'
       }).ref('findAndReplace')
     )
     return el

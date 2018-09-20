@@ -52,19 +52,25 @@ export default {
       en: 'Replace All'
     })
     config.addLabel('next', {
-      en: 'Find Next'
+      en: 'Next'
     })
     config.addLabel('previous', {
       en: 'Previous'
     })
-    config.addLabel('find-title', {
-      en: 'Find in document'
+    config.addLabel('find-title-manuscript', {
+      en: 'Find in Article'
+    })
+    config.addLabel('find-title-metadata', {
+      en: 'Find in Metadata'
     })
     config.addLabel('no-result', {
       en: 'No results'
     })
-    config.addLabel('find-replace-title', {
-      en: 'Find and replace in document'
+    config.addLabel('find-replace-title-manuscript', {
+      en: 'Find and replace in article'
+    })
+    config.addLabel('find-replace-title-metadata', {
+      en: 'Find and replace in metadata'
     })
     config.addLabel('case-sensitive-title', {
       en: 'Case Sensitive'
@@ -75,5 +81,6 @@ export default {
     config.addLabel('regex-title', {
       en: 'Regex'
     })
+    config.addIcon('close', { 'fontawesome': 'fa-close' })
   }
 }

@@ -38,7 +38,7 @@ export default class FindAndReplaceDialog extends Component {
 
   _renderTitle ($$) {
     const state = this._getState()
-    let title = state.showReplace ? this.getLabel('find-replace-title') : this.getLabel('find-title')
+    let title = state.showReplace ? this.getLabel(`find-replace-title-${this.props.viewName}`) : this.getLabel(`find-title-${this.props.viewName}`)
     let options = []
     if (state.caseSensitive) options.push('case-sensitive-title')
     if (state.fullWord) options.push('whole-word-title')
@@ -75,7 +75,9 @@ export default class FindAndReplaceDialog extends Component {
           tooltip: this.getLabel('close'),
           theme: this.props.theme
         }).addClass('sm-close')
-          .append('x')
+          .append(
+            this.context.iconProvider.renderIcon($$, 'close')
+          )
           .on('click', this._close)
       )
     )

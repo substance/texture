@@ -11,6 +11,9 @@ export default class Button extends Component {
     if (this.props.label) {
       el.append(this.renderLabel($$))
     }
+    if (this.props.tooltip) {
+      el.attr('title', this.props.tooltip)
+    }
     if (this.props.dropdown) {
       el.append(this.renderDropdownIcon($$))
     }

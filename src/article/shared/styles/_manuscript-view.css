@@ -111,3 +111,8 @@
 .sc-manuscript-view .sc-container-editor > *:last-child {
   margin-bottom: 0 !important;
 }
+
+.sc-manuscript-view .se-footer-pane {
+  background: white;
+  border-top: var(--t-default-border);
+}

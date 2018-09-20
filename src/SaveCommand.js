@@ -4,9 +4,7 @@ export default class SaveCommand extends Command {
   getCommandState (params, context) {
     let archive = context.archive
     if (!archive || !archive.hasPendingChanges()) {
-      return {
-        disabled: true
-      }
+      return Command.DISABLED
     } else {
       return {
         disabled: false

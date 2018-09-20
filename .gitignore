@@ -8,6 +8,7 @@ node_modules
 .test
 .npm
 .DS_Store
+package-lock.json
 /tmp
 /coverage
 /.nyc_output

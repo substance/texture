@@ -17,6 +17,7 @@
 
 .sc-table > table {
   table-layout: fixed;
+  overflow-wrap: break-word;
   border-collapse: collapse;
   margin: 25px 0px;
   width: 100%;

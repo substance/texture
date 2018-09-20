@@ -323,7 +323,7 @@ function _addContainerId (sel, editorSession) {
     if (surface) {
       let containerId = surface.getContainerId()
       if (containerId) {
-        console.log('Adding containerId', containerId)
+        // console.log('Adding containerId', containerId)
         sel.containerId = containerId
       }
     }

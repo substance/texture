@@ -32,6 +32,7 @@ export default class EditorPanel extends Component {
     )
     const api = new ArticleAPI(editorSession, config, archive)
     const context = Object.assign(createEditorContext(config, editorSession), {
+      archive,
       editor: this,
       api,
       urlResolver: archive,

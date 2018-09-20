@@ -43,6 +43,7 @@ import {
 import InsertTableTool from './InsertTableTool'
 import ToggleListCommand from './ToggleListCommand'
 import ArticleNavPackage from '../ArticleNavPackage'
+import PersistencePackage from '../../PersistencePackage'
 // Workflows
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import EditReferenceWorkflow from './EditReferenceWorkflow'
@@ -59,6 +60,7 @@ export default {
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(ArticleNavPackage)
+    config.import(PersistencePackage)
     config.import(FindAndReplacePackage)
 
     // EXPERIMENTAL:
@@ -383,6 +385,15 @@ export default {
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'undo-redo' }
+        ]
+      },
+      {
+        name: 'persistence',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'persistence' }
         ]
       },
       {

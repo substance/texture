@@ -3,6 +3,7 @@ import {
 } from '../../kit'
 
 import ArticleNavPackage from '../ArticleNavPackage'
+import PersistencePackage from '../../PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
@@ -21,6 +22,7 @@ export default {
     config.import(BasePackage)
     config.import(EditorBasePackage)
     config.import(ArticleNavPackage)
+    config.import(PersistencePackage)
     config.import(ManuscriptContentPackage)
     config.import(ModelComponentPackage)
     config.import(EntityLabelsPackage)
@@ -44,6 +46,15 @@ export default {
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'undo-redo' }
+        ]
+      },
+      {
+        name: 'persistence',
+        type: 'tool-group',
+        showDisabled: true,
+        style: 'minimal',
+        items: [
+          { type: 'command-group', name: 'persistence' }
         ]
       },
       {

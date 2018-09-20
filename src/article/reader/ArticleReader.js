@@ -23,7 +23,7 @@ export default class ArticleReader extends Component {
 
   _initialize (props) {
     const { articleSession, config, archive } = props
-    const editorSession = new ArticleEditorSession(articleSession.getDocument(), config, this, {
+    const editorSession = new ArticleEditorSession(articleSession, config, this, {
       viewName: this.props.viewName
     })
     const api = new ArticleAPI(articleSession, config, archive)

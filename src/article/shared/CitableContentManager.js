@@ -87,7 +87,7 @@ export default class CitableContentManager extends AbstractCitationManager {
     return this._getDocument().get('body')
   }
 
-  _updateLabels () {
+  _updateLabels (silent) {
     const doc = this._getDocument()
 
     let stateUpdates = []
@@ -130,6 +130,7 @@ export default class CitableContentManager extends AbstractCitationManager {
       stateUpdates.push([xref.id, { label }])
     })
 
-    this.documentSession.updateNodeStates(stateUpdates)
+    // HACK: do not propagate change initially
+    this.documentSession.updateNodeStates(stateUpdates, silent)
   }
 }

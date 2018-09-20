@@ -19,6 +19,15 @@ export default class TextureAppChrome extends Component {
       DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
       DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
     }
+    this.handleActions({
+      'save': this._handleSave
+    })
+  }
+
+  _handleSave () {
+    this._save((err) => {
+      if (err) console.error(err)
+    })
   }
 
   dispose () {
@@ -80,7 +89,6 @@ export default class TextureAppChrome extends Component {
 
   _afterInit () {}
 
-  // TODO: need to rethink
   _save (cb) {
     this.state.archive.save(err => {
       if (err) return cb(err)

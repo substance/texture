@@ -253,7 +253,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId
-
+      this.emit('archive:saved')
       cb()
     })
   }

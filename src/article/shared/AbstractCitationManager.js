@@ -110,7 +110,7 @@ export default class AbstractCitationManager {
 
     @param {Array<Object>} a list of citation entries.
   */
-  _updateLabels () {
+  _updateLabels (silent) {
     let xrefs = this._getXrefs()
     let refs = this.getCitables()
     let bibEl = this._getCollectionElement()
@@ -184,7 +184,7 @@ export default class AbstractCitationManager {
       stateUpdates.push([bibEl.id, {}])
     }
 
-    this.documentSession.updateNodeStates(stateUpdates)
+    this.documentSession.updateNodeStates(stateUpdates, silent)
   }
 
   _getDocument () {

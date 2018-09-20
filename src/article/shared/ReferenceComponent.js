@@ -5,28 +5,26 @@ import PreviewComponent from './PreviewComponent'
 export default class ReferenceComponent extends NodeComponent {
   render ($$) {
     const refNode = this.getNode()
-    let el = $$('div').addClass('sc-reference')
     let label = _getReferenceLabel(refNode)
     let html = this.context.api.renderEntity(refNode)
     // TODO: do we want to display something like this
     // if so, use the label provider
     html = html || '<i>Not available</i>'
     if (this.props.mode === PREVIEW_MODE) {
-      el.append(
-        $$(PreviewComponent, {
-          id: this.props.model.id,
-          selected: this.props.selected,
-          label: label,
-          description: $$('div').html(html)
-        })
-      )
+      // NOTE: We return PreviewComponent directly, to prevent inheriting styles from .sc-reference
+      return $$(PreviewComponent, {
+        id: this.props.model.id,
+        label: label,
+        description: $$('div').html(html)
+      })
     } else {
+      let el = $$('div').addClass('sc-reference')
       el.append(
         $$('div').addClass('se-label').append(label),
         $$('div').addClass('se-text').html(html)
       ).attr('data-id', refNode.id)
+      return el
     }
-    return el
   }
 }
 

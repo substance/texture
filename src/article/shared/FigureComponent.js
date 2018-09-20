@@ -43,6 +43,8 @@ export default class FigureComponent extends Component {
     el.addClass(`sm-${contentModel.type}`)
 
     if (mode === PREVIEW_MODE) {
+      // TODO: We could return the PreviewComponent directly.
+      // However this yields an error we need to investigate.
       el.append(
         $$(PreviewComponent, {
           id: this.props.model.id,

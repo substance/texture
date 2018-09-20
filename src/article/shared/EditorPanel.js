@@ -25,7 +25,7 @@ export default class EditorPanel extends Component {
   _initialize (props) {
     const { articleSession, config, archive } = props
     const editorSession = new ArticleEditorSession(
-      articleSession.getDocument(), config, this, {
+      articleSession, config, this, {
         workflowId: null,
         viewName: this.props.viewName
       }

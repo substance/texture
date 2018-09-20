@@ -15,10 +15,15 @@ import FindAndReplaceManager from './FindAndReplaceManager'
 
 export default function (DocumentSession) {
   class EditorSession extends DocumentSession {
-    constructor (doc, config, contextProvider, initialState = {}) {
-      super(doc, config)
+    constructor (docSession, config, contextProvider, initialState = {}) {
+      super(docSession.getDocument(), config)
 
       if (!contextProvider) contextProvider = { context: { editorSession: this } }
+      let doc = docSession.getDocument()
+
+      // HACK: this is still not good. The problem is, that we create a DocumentSession very very early, when loading the archive
+      // an editor session is created on top of it, replacing the original document session in the child context, and forwarding events.
+      this._documentSession = docSession
 
       this.config = config
       this.contextProvider = contextProvider
@@ -73,6 +78,12 @@ export default function (DocumentSession) {
       // TODO: is this the right place?
       // initial reduce step
       this.commandManager.reduce()
+    }
+
+    // HACK: see above; we need to propagate events to the original document session too
+    emit (...args) {
+      this._documentSession.emit(...args)
+      super.emit(...args)
     }
 
     getConfigurator () {

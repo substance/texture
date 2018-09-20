@@ -102,7 +102,7 @@ function _openFindAndReplaceDialog (app, replace) {
   let articlePanel = app.find('.sc-article-panel')
   articlePanel.send('updateViewName', 'manuscript')
   let editor = articlePanel.find('.sc-manuscript-editor')
-  setCursor(editor, 'p-2.content', 290)
+  setCursor(editor, 'p-2.content', 5)
   // open findAndReplace dialog
   let fnrManager = editor.context.findAndReplaceManager
   fnrManager.openDialog(replace)

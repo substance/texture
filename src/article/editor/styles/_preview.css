@@ -1,6 +1,6 @@
 .sc-preview {
   display: flex;
-  font-size: var(--t-small-font-size);
+  font-size: var(--t-tiny-font-size);
 }
 
 .sc-preview .se-thumbnail {

@@ -94,9 +94,7 @@
   background: white;
 }
 
-
 /* HACK: Overrides */
-
 .sc-metadata-editor a {
   color: inherit;
   text-decoration: underline;
@@ -116,7 +114,6 @@
   cursor: default;
 }
 
-
 .sc-metadata-editor .sc-container-editor {
   border: var(--t-input-default-border);
   border-radius: var(--t-border-radius);
@@ -125,7 +122,15 @@
 }
 
 .sc-metadata-editor .sc-container-editor > * {
-  margin: 8px 0;
+  margin: var(--t-half-spacing) 0;
+}
+
+.sc-metadata-editor .sc-container-editor > *:first-child {
+  margin-top: 0 !important;
+}
+
+.sc-metadata-editor .sc-container-editor > *:last-child {
+  margin-bottom: 0 !important;
 }
 
 .sc-metadata-editor .sc-container-editor:focus {

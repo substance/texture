@@ -107,6 +107,10 @@
   font-family: var(--t-interface-font)
 }
 
+.sc-texture a {
+  color: var(--t-text-color);
+}
+
 .sc-texture i:not(.fa), .sc-texture .sc-italic {
   font-style: italic;
 }

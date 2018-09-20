@@ -7,7 +7,7 @@ import setupTestApp from './shared/setupTestApp'
 test('ManuscriptEditor: add figure', t => {
   let { app } = setupTestApp(t)
   let editor = openManuscriptEditor(app)
-  setCursor(editor, 'p-2.content', 290)
+  setCursor(editor, 'p-2.content', 5)
   // ATTENTION: it is not possible to trigger the file-dialog programmatically
   // instead we are just checking that this does not throw
   let insertFigureTool = editor.find('.sc-insert-figure-tool')

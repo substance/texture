@@ -1,4 +1,4 @@
-import FSStorageClient from '../src/dar/FSStorageClient'
+import FSStorage from '../src/dar/FSStorage'
 
 const {
   getQueryStringParam,
@@ -30,7 +30,7 @@ window.addEventListener('load', () => {
     url,
     path,
     shell,
-    FSStorageClient,
+    storage: new FSStorage(),
     __dirname
   }, window.document.body)
 })

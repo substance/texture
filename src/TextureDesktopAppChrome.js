@@ -47,7 +47,7 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
 
   _loadArchive (archiveId, context, cb) {
     const ArchiveClass = this._getArchiveClass()
-    let storage = new this.props.FSStorageClient()
+    let storage = this.props.storage
     let buffer = new InMemoryDarBuffer()
     let archive = new ArchiveClass(storage, buffer, context)
     // HACK: this should be done earlier in the lifecycle (after first didMount)

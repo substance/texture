@@ -11,7 +11,7 @@ const path = require('path')
   NOTE: No versioning is done atm, but users can do a git init in their Dar
   folders.
 */
-export default class FSStorageClient {
+export default class FSStorage {
   read (archiveDir, cb) {
     readArchive(archiveDir, { noBinaryContent: true, ignoreDotFiles: true })
       .then(rawArchive => {

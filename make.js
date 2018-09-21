@@ -27,10 +27,10 @@ b.yargs.option('d', {
 })
 let argv = b.yargs.argv
 if (argv.d) {
-  const darServer = require('dar-server')
+  const serve = require('./src/dar/serve')
   const rootDir = argv.d
   const archiveDir = path.resolve(path.join(__dirname, rootDir))
-  darServer.serve(b.server, {
+  serve(b.server, {
     port,
     serverUrl: 'http://localhost:' + port,
     rootDir: archiveDir,

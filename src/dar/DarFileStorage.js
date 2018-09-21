@@ -1,0 +1,139 @@
+import FSStorage from './FSStorage'
+import listDir from './_listDir'
+
+const fs = require('fs')
+const fsExtra = require('fs-extra')
+const path = require('path')
+var yazl = require('yazl')
+var yauzl = require('yauzl')
+
+/*
+  This storage is to store working copies of '.dar' files that are located somewhere else on the file-system.
+  Texture will first update the working copy, and then updates (rewrites) the `.dar` file.
+
+  The implementation will be done in three major iterations
+
+  Phase I: bare-metal file-system, without versioning etc.
+  - open: `dar` file is unpacked into the corresponding internal folder
+  - save: internal folder is packed replacing the 'dar' file
+  - new: internal folder is created and somehow seeded
+  - saveas: internal folder is updated first (like in the current implementation), then cloned into a new internal folder corresponding
+      to the new 'dar' file location, and packing the folder into the target 'dar'
+
+  Phase II: basic versioning
+  The idea is to have a `.dar` folder within a `dar` file that contains data used to implement versioning. We will use `hyperdrive` for that
+  TODO: flesh out the concept
+
+  Phase III: collaboration
+  In addition to `hyperdrive` data we will store Texture DAR changes in the `.dar` folder. E.g., this would allow to merge two `dar` files that have a common
+  version in their history.
+
+  Status: Phase I
+*/
+export default class DarFileStorage {
+  constructor (rootDir, baseUrl) {
+    this.rootDir = rootDir
+    this.baseUrl = baseUrl
+
+    this._internalStorage = new FSStorage()
+  }
+
+  read (darpath, cb) {
+    /*
+      - unpack `dar` file as it is into the corresponding folder replacing an existing one
+      - only bare-metal fs
+    */
+    let id = this._path2Id(darpath)
+    let wcDir = this._getWorkingCopyPath(id)
+    fsExtra.removeSync(wcDir)
+    fsExtra.mkdirpSync(wcDir)
+    this._unpack(darpath, wcDir, err => {
+      if (err) return cb(err)
+      this._internalStorage.read(wcDir, cb)
+    })
+  }
+
+  write (darpath, rawArchive, cb) { // eslint-disble-line
+    let id = this._path2Id(darpath)
+    let wcDir = this._getWorkingCopyPath(id)
+    this._internalStorage.write(wcDir, rawArchive, err => {
+      if (err) return cb(err)
+      this._pack(wcDir, darpath, cb)
+    })
+  }
+
+  clone (darpath, newDarpath, cb) { // eslint-disble-line
+    let id = this._path2Id(darpath)
+    let wcDir = this._getWorkingCopyPath(id)
+    let newId = this._path2Id(newDarpath)
+    let newWcDir = this._getWorkingCopyPath(newId)
+    this._internalStorage.clone(wcDir, newWcDir, err => {
+      if (err) return cb(err)
+      this._pack(newWcDir, newDarpath, cb)
+    })
+  }
+
+  _path2Id (path) {
+    path = String(path)
+    path = path.normalize(path)
+    // convert: '\\' to '/'
+    path = path.replace(/\\\\/g, '/')
+    // split path into fragments: dir, name, extension
+    let { dir, name } = path.parse(path)
+    // ATTENTION: it is probably possible to create collisions here if somebody uses '@' in a bad way
+    // for now, I accepting this because I don't think that this is realistic
+    // replace '/' with '@slash@'
+    dir = dir.replace(/\//g, '@slash@')
+    // replace ':' with '@colon@'
+    dir = dir.replace(/:/g, '@colon@')
+    return dir + name
+  }
+
+  _getWorkingCopyPath (id) {
+    return path.join(this.rootDir, id)
+  }
+
+  _unpack (darpath, wcDir, cb) {
+    yauzl.open(darpath, {lazyEntries: true}, (err, zipfile) => {
+      if (err) cb(err)
+      zipfile.on('entry', (entry) => {
+        // dir entry
+        if (/\/$/.test(entry.fileName)) {
+          zipfile.readEntry()
+        // file entry
+        } else {
+          zipfile.openReadStream(entry, (err, readStream) => {
+            if (err) throw err
+            readStream.on('end', () => {
+              zipfile.readEntry()
+            })
+            let absPath = path.join(wcDir, entry.fileName)
+            fsExtra.ensureDirSync(path.dirname(absPath))
+            readStream.pipe(fs.createWriteStream(absPath))
+          })
+        }
+      })
+      zipfile.on('error', err => {
+        cb(err)
+      })
+      zipfile.once('end', () => {
+        cb()
+      })
+    })
+  }
+
+  _pack (wcDir, darpath, cb) {
+    let zipfile = new yazl.ZipFile()
+    listDir(wcDir).then(entries => {
+      for (let entry of entries) {
+        let relPath = path.relative(wcDir, entry.path)
+        zipfile.addFile(entry.path, relPath)
+      }
+    }).catch(cb)
+    zipfile.outputStream.pipe(fs.createWriteStream(darpath)).on('close', () => {
+      cb()
+    })
+    // call end() after all the files have been added
+    zipfile.end()
+  }
+}

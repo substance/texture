@@ -145,6 +145,7 @@ The following people make Texture possible (in random order):
 - Philipp Zumstein (dev)
 - Fabio Batalha Cunha dos Santos (leadership, concept)
 - James Gilbert (UX, requirements)
+- Luciano Gabriel Panepucci (UX)
 - Michael Aufreiter (dev)
 - Oliver Buchtala (dev)
 - Daniel Beilinson (dev)

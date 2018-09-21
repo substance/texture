@@ -81,7 +81,7 @@ export default {
     config.addLabel('assignee', 'Assignee')
     config.addLabel('confLoc', 'Conference Location')
     config.addLabel('confName', 'Conference Name')
-    config.addLabel('containerTitle', 'Container Title')
+    config.addLabel('containerTitle', 'Source')
     config.addLabel('day', 'Day')
     config.addLabel('doi', 'DOI')
     config.addLabel('edition', 'Edition')

@@ -5,21 +5,13 @@ import TextureAppChrome from './TextureAppChrome'
 export default class TextureDesktopAppChrome extends TextureAppChrome {
   didMount () {
     super.didMount()
-    this.props.ipc.on('document:save', () => {
-      this._save(err => {
-        if (err) {
-          console.error(err)
-        }
-      })
-    })
-    this.props.ipc.on('document:save-as', (event, newArchiveDir) => {
-      this._saveAs(newArchiveDir, err => {
-        if (err) {
-          console.error(err)
-        }
-      })
-    })
+
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
+  }
+
+  // overridding the default to emit an event up and let the Electron bridge (app.js) handle it
+  _handleSave () {
+    this.el.emit('save')
   }
 
   // TODO: try to share implementation with TextureDesktopAppChrome
@@ -55,44 +47,59 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     // the app lives as a singleton atm.
     // NOTE: _archiveChanged is implemented by DesktopAppChrome
     archive.on('archive:changed', this._archiveChanged, this)
-    archive.load(archiveId, cb)
+    // ATTENTION: we want to treat new archives as 'read-only' in the
+    // sense that a new archive is essentially one of several dar templates.
+    archive.load(archiveId, (err, archive) => {
+      if (err) return cb(err)
+      if (this.props.isReadOnly) {
+        archive.isReadOnly = true
+      }
+      cb(null, archive)
+    })
   }
 
-  _saveAs (newArchiveDir, cb) {
-    console.info('saving as', newArchiveDir)
-    this.state.archive.saveAs(newArchiveDir, err => {
+  _saveAs (newDarPath, cb) {
+    console.info('saving as', newDarPath)
+    let archive = this.state.archive
+    archive.saveAs(newDarPath, err => {
       if (err) {
         console.error(err)
         return cb(err)
       }
-      this._updateTitle(false)
-      this.props.ipc.send('document:save-as:successful')
+      // HACK: this is kind of an optimization but formally it is not
+      // 100% correct to continue with the same archive instance
+      // Instead one would expect that cloning an archive returns
+      // a new archive instance
+      // Though, this would have other undesired implications
+      // such as loosing the scroll position or undo history
+      // Thus we move on with this solution, but we need to clear
+      // the isReadOnly flag now.
+      archive.isReadOnly = false
       // Update the browser url, so on reload, we get the contents from the
       // new location
       let newUrl = this.props.url.format({
         pathname: this.props.path.join(this.props.__dirname, 'index.html'),
         protocol: 'file:',
         query: {
-          archiveDir: newArchiveDir
+          darPath: newDarPath
         },
         slashes: true
       })
       window.history.replaceState({}, 'After Save As', newUrl)
+      this._updateTitle()
+      cb()
     })
   }
 
   _archiveChanged () {
-    if (!this.state.archive) return
-    const hasPendingChanges = this.state.archive.hasPendingChanges()
-    if (hasPendingChanges) {
-      this.props.ipc.send('document:unsaved')
-      this._updateTitle(hasPendingChanges)
-    }
+    this._updateTitle()
   }
 
-  _updateTitle (hasPendingChanges) {
-    let newTitle = this.state.archive.getTitle()
-    if (hasPendingChanges) {
+  _updateTitle () {
+    const archive = this.state.archive
+    if (!archive) return
+    let newTitle = archive.getTitle()
+    if (archive.hasPendingChanges()) {
       newTitle += ' *'
     }
     document.title = newTitle

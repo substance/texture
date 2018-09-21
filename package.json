@@ -34,7 +34,9 @@
     "substance-bundler": "0.25.5",
     "substance-test": "0.12.3",
     "tap-spec": "^4.1.1",
-    "yargs": "^11.0.0"
+    "yargs": "^11.0.0",
+    "yauzl": "^2.10.0",
+    "yazl": "^2.4.3"
   },
   "scripts": {
     "prepack": "npm install && node make publish",

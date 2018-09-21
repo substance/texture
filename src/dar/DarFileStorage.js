@@ -39,6 +39,7 @@ export default class DarFileStorage {
   }
 
   read (darpath, cb) {
+    // console.log('DarFileStorage::read', darpath)
     /*
       - unpack `dar` file as it is into the corresponding folder replacing an existing one
       - only bare-metal fs
@@ -73,13 +74,13 @@ export default class DarFileStorage {
     })
   }
 
-  _path2Id (path) {
-    path = String(path)
-    path = path.normalize(path)
+  _path2Id (darpath) {
+    darpath = String(darpath)
+    darpath = path.normalize(darpath)
     // convert: '\\' to '/'
-    path = path.replace(/\\\\/g, '/')
+    darpath = darpath.replace(/\\+/g, '/')
     // split path into fragments: dir, name, extension
-    let { dir, name } = path.parse(path)
+    let { dir, name } = path.parse(darpath)
     // ATTENTION: it is probably possible to create collisions here if somebody uses '@' in a bad way
     // for now, I accepting this because I don't think that this is realistic
     // replace '/' with '@slash@'
@@ -94,14 +95,17 @@ export default class DarFileStorage {
   }
 
   _unpack (darpath, wcDir, cb) {
+    // console.log('DarFileStorage::_unpack', darpath, wcDir)
     yauzl.open(darpath, {lazyEntries: true}, (err, zipfile) => {
       if (err) cb(err)
+      zipfile.readEntry()
       zipfile.on('entry', (entry) => {
         // dir entry
         if (/\/$/.test(entry.fileName)) {
           zipfile.readEntry()
         // file entry
         } else {
+          // console.log('... unpacking', entry.fileName)
           zipfile.openReadStream(entry, (err, readStream) => {
             if (err) throw err
             readStream.on('end', () => {
@@ -123,17 +127,19 @@ export default class DarFileStorage {
   }
 
   _pack (wcDir, darpath, cb) {
+    // console.log('DarFileStorage::_pack')
     let zipfile = new yazl.ZipFile()
     listDir(wcDir).then(entries => {
       for (let entry of entries) {
         let relPath = path.relative(wcDir, entry.path)
+        // console.log('... adding "%s" as %s', entry.path, relPath)
         zipfile.addFile(entry.path, relPath)
       }
+      zipfile.outputStream.pipe(fs.createWriteStream(darpath)).on('close', () => {
+        cb()
+      })
+      // call end() after all the files have been added
+      zipfile.end()
     }).catch(cb)
-    zipfile.outputStream.pipe(fs.createWriteStream(darpath)).on('close', () => {
-      cb()
-    })
-    // call end() after all the files have been added
-    zipfile.end()
   }
 }

@@ -15,7 +15,7 @@ export default function TextureAppMixin (ParentAppChrome) {
       } else if (error) {
         if (error.type === 'jats-import-error') {
           el.append(
-            $$(JATSImportDialog, { errors: error.detail })
+            $$(JATSImportDialog, { errors: error.detail._errors })
           )
         } else {
           el.append('ERROR:', error.message)

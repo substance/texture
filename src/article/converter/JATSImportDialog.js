@@ -3,14 +3,15 @@ import { printElement } from './util/domHelpers'
 
 export default class JATSImportDialog extends Component {
   render ($$) {
+    // debugger
     const errors = this.props.errors
     let el = $$('div').addClass('sc-jats-import-dialog')
     el.append($$('h1').addClass('se-title').text('Importing JATS'))
 
-    Object.keys(errors).forEach((stageName) => {
+    errors.forEach((error) => {
       el.append($$(ImportStage, {
-        stage: stageName,
-        errors: errors[stageName]
+        stage: error.name,
+        errors: error.errors
       }))
     })
 

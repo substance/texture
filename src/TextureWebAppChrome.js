@@ -15,7 +15,7 @@ export default class TextureWebAppChrome extends TextureAppChrome {
       this.setState({
         error: err
       })
-      console.log('LE ERROR', err)
+      console.error(err)
     }
   }
 

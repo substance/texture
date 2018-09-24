@@ -9,6 +9,7 @@
   "build": {
     "electronVersion": "3.0.0",
     "appId": "com.texture.texture-desktop",
+    "copyright": "Copyright © 2018 Substance",
     "files": [
       "data",
       "lib",

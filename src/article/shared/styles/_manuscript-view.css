@@ -88,14 +88,14 @@
   position: relative;
 }
 
-.sc-manuscript-view .sc-container-editor:not(.sm-body,.sm-readonly) {
+.sc-manuscript-view .sc-container-editor:not(.sm-body):not(.sm-readonly) {
   border: var(--t-input-default-border);
   border-radius: var(--t-border-radius);
   padding: var(--t-input-padding);
   margin: var(--t-negative-input-padding);
 }
 
-.sc-manuscript-view .sc-container-editor:focus:not(.sm-body,.sm-readonly) {
+.sc-manuscript-view .sc-container-editor:not(.sm-body):not(.sm-readonly):focus {
   border: var(--t-input-focus-border);
 }
 

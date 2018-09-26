@@ -158,9 +158,11 @@ b.task('build:app', () => {
     src: 'app/package.json.in',
     dest: APPDIST + 'package.json',
     execute () {
-      let { version } = require('./package.json')
+      let { version, dependencies, devDependencies } = require('./package.json')
       let tpl = fs.readFileSync('app/package.json.in', 'utf8')
-      let out = tpl.replace('${version}', version) // eslint-disable-line no-template-curly-in-string
+      let out = tpl.replace('${version}', version)
+        .replace('${electronVersion}', devDependencies.electron)
+        .replace('${dependencies}', JSON.stringify(dependencies))
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })

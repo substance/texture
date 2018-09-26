@@ -3,17 +3,16 @@
   "version": "${version}",
   "description": "A scientific word processor.",
   "main": "main.js",
-  "dependencies": {
-    "dar-server": "0.6.0"
-  },
+  "dependencies": ${dependencies},
   "build": {
-    "electronVersion": "3.0.0",
+    "electronVersion": "${electronVersion}",
     "appId": "com.texture.texture-desktop",
     "copyright": "Copyright © 2018 Substance",
     "files": [
       "data",
       "lib",
       "node_modules",
+      "templates",
       "*.html",
       "*.js",
       "package.json"
@@ -23,7 +22,12 @@
       "output": "build",
       "buildResources": "build-resources"
     },
-    "publish": null
+    "publish": null,
+    "fileAssociations": [{
+      "ext": "dar",
+      "name": "Document Archive",
+      "role": "Editor"
+    }]
   },
   "repository": {
     "type": "git",

@@ -75,17 +75,6 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
       // Thus we move on with this solution, but we need to clear
       // the isReadOnly flag now.
       archive.isReadOnly = false
-      // Update the browser url, so on reload, we get the contents from the
-      // new location
-      let newUrl = this.props.url.format({
-        pathname: this.props.path.join(this.props.__dirname, 'index.html'),
-        protocol: 'file:',
-        query: {
-          darPath: newDarPath
-        },
-        slashes: true
-      })
-      window.history.replaceState({}, 'After Save As', newUrl)
       this._updateTitle()
       cb()
     })
@@ -107,9 +96,10 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
 
   _click (event) {
     const target = DefaultDOMElement.wrapNativeElement(event.target)
-    if (target.is('a') && target.getAttribute('href') !== '#') {
+    let url = target.getAttribute('href')
+    if (target.is('a') && url !== '#') {
       event.preventDefault()
-      this.props.shell.openExternal(event.target.href)
+      this.emit('openExternal', url)
     }
   }
 }

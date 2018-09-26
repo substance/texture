@@ -35,20 +35,19 @@ window.addEventListener('load', () => {
   const isReadOnly = getQueryStringParam('readOnly') === 'true'
   _app = TextureDesktopApp.mount({
     archiveId,
+    // ATTENTION: we use this flag to open a dar as readOnly
+    // e.g., the blank.dar from the app folder is used as a template for new dars
+    // but must not be saved back to that file.
     isReadOnly,
-    storage: new DarFileStorage(darStorageFolder, 'dar://'),
-    // TODO: do we really need to pass these down
-    // I'd prefer to solve everything related to IPC comm here in this file
-    ipc,
-    url,
-    path,
-    shell,
-    // TODO: document why and where we need this
-    __dirname
+    storage: new DarFileStorage(darStorageFolder, 'dar://')
   }, window.document.body)
 
   _app.on('save', () => {
     _saveOrSaveAs(_handleSaveError)
+  })
+
+  _app.on('openExternal', url => {
+    shell.openExternal(url)
   })
 
   // ATTENTION: unfortunately it is very difficult to achieve a correct app closing behavior
@@ -103,13 +102,34 @@ function _saveAs (cb) {
       filters: [
         { name: 'Dar Files', extensions: ['dar'] }
       ]
-    }, (darPath) => {
-      if (darPath) {
-        _app._saveAs(darPath, cb)
+    }, (newDarPath) => {
+      if (newDarPath) {
+        _app._saveAs(newDarPath, err => {
+          if (err) {
+            cb(err)
+          } else {
+            _updateWindowUrl(newDarPath)
+            cb()
+          }
+        })
       } else {
         cb()
       }
     })
+}
+
+function _updateWindowUrl (newDarPath) {
+  // Update the browser url, so on reload, we get the contents from the
+  // new location
+  let newUrl = url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    query: {
+      darPath: newDarPath
+    },
+    slashes: true
+  })
+  window.history.replaceState({}, 'After Save As', newUrl)
 }
 
 function _handleSaveError (err) {

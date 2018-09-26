@@ -151,13 +151,17 @@ function openNew () {
 // used to dispatch save requests from the menu to the window
 function save () {
   let focusedWindow = BrowserWindow.getFocusedWindow()
-  focusedWindow.webContents.send('save')
+  if (focusedWindow) {
+    focusedWindow.webContents.send('save')
+  }
 }
 
 // used to dispatch save requests from the menu to the window
 function saveAs () {
   let focusedWindow = BrowserWindow.getFocusedWindow()
-  focusedWindow.webContents.send('saveAs')
+  if (focusedWindow) {
+    focusedWindow.webContents.send('saveAs')
+  }
 }
 
 // TODO: extract this into something more reusable/configurable

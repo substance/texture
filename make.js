@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 const b = require('substance-bundler')
 const fs = require('fs')
 const path = require('path')
@@ -135,7 +136,8 @@ b.task('build:cover', () => {
 b.task('build:app', () => {
   b.copy('app/index.html', APPDIST)
   b.copy('app/build-resources', APPDIST)
-  b.copy('app/blank.dar', APPDIST)
+  // TODO: we should pack folders from ./data
+  b.copy('app/templates', APPDIST)
   // FIXME: this command leads to an extra run when a  file is updated
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')

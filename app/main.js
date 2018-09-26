@@ -8,7 +8,7 @@ const {
   BrowserWindow, Menu, ipcMain
 } = electron
 const DEBUG = process.env.DEBUG
-const BLANK_DOCUMENT = path.join(__dirname, 'blank.dar')
+const BLANK_DOCUMENT = path.join(__dirname, 'templates', 'blank.dar')
 
 const tmpDir = app.getPath('temp')
 const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')

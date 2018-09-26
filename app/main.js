@@ -1,33 +1,89 @@
 const electron = require('electron')
+const fs = require('fs')
 const path = require('path')
 const url = require('url')
+const fsExtra = require('fs-extra')
 
 const {
-  app, ipcMain, dialog, shell,
-  BrowserWindow, Menu
+  app, dialog, shell, protocol,
+  BrowserWindow, Menu, ipcMain
 } = electron
-const DAR_FOLDER = process.env.DAR_FOLDER
 const DEBUG = process.env.DEBUG
-const BLANK_DOCUMENT_FOLDER = path.join(__dirname, 'data/blank')
+const BLANK_DOCUMENT = path.join(__dirname, 'templates', 'blank.dar')
 
-// Keep a global reference of all the open windows
-let windows = []
+const tmpDir = app.getPath('temp')
+const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')
+fsExtra.ensureDirSync(darStorageFolder)
+
+const windowStates = new Map()
+
+app.on('ready', () => {
+  protocol.registerFileProtocol('dar', (request, handler) => {
+    const resourcePath = path.normalize(request.url.substr(6))
+    // console.log('dar-protocol: resourcePath', resourcePath)
+    if (/\.\./.exec(resourcePath)) {
+      handler({ error: 500 })
+    } else {
+      handler({ path: path.join(darStorageFolder, resourcePath) })
+    }
+  }, (error) => {
+    if (error) console.error('Failed to register protocol')
+  })
+
+  createMenu()
+
+  // look if there is a 'dar' file in the args that does exist
+  let darFiles = process.argv.filter(arg => /.dar$/i.exec(arg))
+  darFiles = darFiles.map(f => {
+    if (!path.isAbsolute(f)) {
+      f = path.join(process.cwd(), f)
+    }
+    return f
+  })
+  darFiles = darFiles.filter(f => {
+    let stat = fs.statSync(f)
+    return (stat && stat.isFile())
+  })
+  console.log('darFiles', darFiles)
+  if (darFiles.length > 0) {
+    for (let darPath of darFiles) {
+      createEditorWindow(darPath)
+    }
+  } else {
+    openNew()
+  }
+})
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // console.log('### window-all-closed')
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', function () {
+  let windows = BrowserWindow.getAllWindows()
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (windows.length === 0) {
+    promptOpen()
+  }
+})
 
 // TODO: Make sure the same dar folder can't be opened multiple times
-function createEditorWindow (darFolder, isNew) {
+function createEditorWindow (darPath, isNew) {
   // Create the browser window.
   let editorWindow = new BrowserWindow({ width: 1024, height: 768 })
-
+  let windowId = editorWindow.id
+  windowStates.set(windowId, {
+    dirty: false
+  })
   let query = {
-    archiveDir: darFolder
-  }
-
-  editorWindow.isSaved = true
-  if (isNew) {
-    query.isNew = 'true'
-    // Remember on the window object, so on next save we can delegate
-    // to saveAs workflow
-    editorWindow.isNew = true
+    darPath,
+    readOnly: isNew ? 'true' : 'false'
   }
   // and load the index.html of the app.
   let mainUrl = url.format({
@@ -37,78 +93,99 @@ function createEditorWindow (darFolder, isNew) {
     slashes: true
   })
   editorWindow.loadURL(mainUrl)
-  windows.push(editorWindow)
 
   // Open the DevTools.
   if (DEBUG) {
     editorWindow.webContents.openDevTools()
   }
 
-  // Emitted when the window is closed.
-  editorWindow.on('closed', function () {
-    var index = windows.indexOf(editorWindow)
-    if (index >= 0) {
-      windows.splice(index, 1)
+  editorWindow.on('close', e => {
+    let state = windowStates.get(windowId)
+    if (state.dirty) {
+      promptUnsavedChanges(e, editorWindow)
     }
   })
 
-  editorWindow.on('close', function (e) {
-    // const focusedWindow = BrowserWindow.getFocusedWindow()
-    const isSaved = editorWindow.isSaved
-    if (!isSaved) {
-      dialog.showMessageBox({
-        type: 'question',
-        title: 'Unsaved changes',
-        message: 'Document has changes, do you want to save them?',
-        buttons: ["Don't save", 'Cancel', 'Save'],
-        defaultId: 2,
-        cancelId: 1
-      }, function (buttonId) {
-        if (buttonId === 0) {
-          // Just close, no saving
-        } else if (buttonId === 1) {
-          // Just stay
-          e.preventDefault()
-        } else if (buttonId === 2) {
-          // HACK: we don't have control over the save workflow (which is
-          // done in the window). So it could happen that the window closes
-          // before all changes are saved.
-          save()
-        }
-      })
+  editorWindow.on('closed', e => {
+    windowStates.delete(windowId)
+  })
+}
+
+ipcMain.on('updateState', (event, windowId, update) => {
+  let state = windowStates.get(windowId)
+  if (state) {
+    Object.assign(state, update)
+  }
+})
+
+function promptUnsavedChanges (event, editorWindow) {
+  let choice = dialog.showMessageBox(
+    editorWindow,
+    {
+      type: 'question',
+      title: 'Unsaved changes',
+      message: 'Document has changes, do you want to save them?',
+      buttons: ["Don't save", 'Cancel', 'Save'],
+      defaultId: 2,
+      cancelId: 1
+    }
+  )
+  if (choice === 1) {
+    // stop quitting
+    event.preventDefault()
+    event.returnValue = false
+  } else if (choice === 2) {
+    // TODO: saving the archive takes a but of time
+    // thus we need to prevent closing here too
+    // But we should try closing again after archive has been saved
+    event.preventDefault()
+    event.returnValue = false
+    let windowId = editorWindow.id
+    ipcMain.once(`save:finished:${windowId}`, () => {
+      // console.log('closing window', windowId)
+      editorWindow.close()
+    })
+    editorWindow.webContents.send('save')
+  }
+}
+
+function promptOpen () {
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      { name: 'Dar Files', extensions: ['dar'] }
+    ]
+  }, (fileNames) => {
+    if (fileNames && fileNames.length > 0) {
+      // not possible to select multiple DARs at once
+      let darPath = fileNames[0]
+      console.info('opening Dar: ', darPath)
+      createEditorWindow(darPath)
     }
   })
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', () => {
-  createMenu()
-  if (DAR_FOLDER) {
-    createEditorWindow(DAR_FOLDER)
-  } else {
-    openNew()
-  }
-})
+function openNew () {
+  createEditorWindow(BLANK_DOCUMENT, true)
+}
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
+// used to dispatch save requests from the menu to the window
+function save () {
+  let focusedWindow = BrowserWindow.getFocusedWindow()
+  if (focusedWindow) {
+    focusedWindow.webContents.send('save')
   }
-})
+}
 
-app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (windows.length === 0) {
-    promptOpen()
+// used to dispatch save requests from the menu to the window
+function saveAs () {
+  let focusedWindow = BrowserWindow.getFocusedWindow()
+  if (focusedWindow) {
+    focusedWindow.webContents.send('saveAs')
   }
-})
+}
 
+// TODO: extract this into something more reusable/configurable
 function createMenu () {
   // Set up the application menu1
   const template = [
@@ -148,34 +225,34 @@ function createMenu () {
     {
       label: 'Edit',
       submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
-        {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
-        {role: 'pasteandmatchstyle'},
-        {role: 'delete'},
-        {role: 'selectall'}
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteandmatchstyle' },
+        { role: 'delete' },
+        { role: 'selectall' }
       ]
     },
     {
       label: 'View',
       submenu: [
-        {role: 'toggledevtools'},
-        {type: 'separator'},
-        {role: 'resetzoom'},
-        {role: 'zoomin'},
-        {role: 'zoomout'},
-        {type: 'separator'},
-        {role: 'togglefullscreen'}
+        { role: 'toggledevtools' },
+        { type: 'separator' },
+        { role: 'resetzoom' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
       ]
     },
     {
       role: 'window',
       submenu: [
-        {role: 'minimize'},
-        {role: 'close'}
+        { role: 'minimize' },
+        { role: 'close' }
       ]
     },
     {
@@ -196,15 +273,15 @@ function createMenu () {
     template.unshift({
       label: app.getName(),
       submenu: [
-        {role: 'about'},
-        {type: 'separator'},
-        {role: 'services', submenu: []},
-        {type: 'separator'},
-        {role: 'hide'},
-        {role: 'hideothers'},
-        {role: 'unhide'},
-        {type: 'separator'},
-        {role: 'quit'}
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'services', submenu: [] },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideothers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' }
       ]
     })
   }
@@ -212,59 +289,3 @@ function createMenu () {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
-
-function promptOpen () {
-  dialog.showOpenDialog({
-    properties: ['openDirectory']
-  }, (dirPaths) => {
-    if (dirPaths) {
-      dirPaths.forEach(dirPath => {
-        console.info('opening Dar: ', dirPath)
-        createEditorWindow(dirPath)
-      })
-    }
-  })
-}
-
-function openNew () {
-  createEditorWindow(BLANK_DOCUMENT_FOLDER, true)
-}
-
-function save () {
-  let focusedWindow = BrowserWindow.getFocusedWindow()
-  if (focusedWindow.isNew) {
-    saveAs()
-  } else {
-    focusedWindow.webContents.send('document:save')
-  }
-}
-
-function saveAs () {
-  let focusedWindow = BrowserWindow.getFocusedWindow()
-  dialog.showOpenDialog({
-    title: 'Save archive as...',
-    buttonLabel: 'Save',
-    properties: ['openDirectory', 'createDirectory']
-  }, (dirPaths) => {
-    if (dirPaths) {
-      let newPath = dirPaths[0]
-      focusedWindow.webContents.send('document:save-as', newPath)
-    }
-  })
-}
-
-ipcMain.on('document:save-as:successful', (/* event */) => {
-  console.info('Save As was successful.')
-  let focusedWindow = BrowserWindow.getFocusedWindow()
-  focusedWindow.isNew = false
-  focusedWindow.isSaved = true
-})
-
-ipcMain.on('document:unsaved', () => {
-  let focusedWindow = BrowserWindow.getFocusedWindow()
-  if (focusedWindow) {
-    focusedWindow.isSaved = false
-  } else {
-    console.error('ERROR: Could not get focused window while receiving document:unsaved.')
-  }
-})

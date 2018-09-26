@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 const b = require('substance-bundler')
 const fs = require('fs')
 const path = require('path')
@@ -27,10 +28,10 @@ b.yargs.option('d', {
 })
 let argv = b.yargs.argv
 if (argv.d) {
-  const darServer = require('dar-server')
+  const serve = require('./src/dar/serve')
   const rootDir = argv.d
   const archiveDir = path.resolve(path.join(__dirname, rootDir))
-  darServer.serve(b.server, {
+  serve(b.server, {
     port,
     serverUrl: 'http://localhost:' + port,
     rootDir: archiveDir,
@@ -135,7 +136,8 @@ b.task('build:cover', () => {
 b.task('build:app', () => {
   b.copy('app/index.html', APPDIST)
   b.copy('app/build-resources', APPDIST)
-  b.copy('data', APPDIST)
+  // TODO: we should pack folders from ./data
+  b.copy('app/templates', APPDIST)
   // FIXME: this command leads to an extra run when a  file is updated
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
@@ -158,9 +160,11 @@ b.task('build:app', () => {
     src: 'app/package.json.in',
     dest: APPDIST + 'package.json',
     execute () {
-      let { version } = require('./package.json')
+      let { version, dependencies, devDependencies } = require('./package.json')
       let tpl = fs.readFileSync('app/package.json.in', 'utf8')
-      let out = tpl.replace('${version}', version) // eslint-disable-line no-template-curly-in-string
+      let out = tpl.replace('${version}', version)
+        .replace('${electronVersion}', devDependencies.electron)
+        .replace('${dependencies}', JSON.stringify(dependencies))
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })

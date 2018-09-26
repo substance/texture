@@ -1,4 +1,4 @@
-import { forEach, last, uuid, EventEmitter, platform } from 'substance'
+import { forEach, last, uuid, EventEmitter, platform, isString } from 'substance'
 import ManifestLoader from './ManifestLoader'
 
 /*
@@ -173,12 +173,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   save (cb) {
-    // HACK: we skip checking if there are pending changes,
-    // because of some restructuring buffer.hasPendingChanges() is not working atm
-    // if (!this.buffer.hasPendingChanges()) {
-    //   console.info('Save: no pending changes.')
-    //   return Promise.resolve()
-    // }
+    // FIXME: buffer.hasPendingChanges() is not working
     this.buffer._isDirty['manuscript'] = true
     this._save(this._archiveId, cb)
   }
@@ -247,9 +242,16 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
       // TODO: if successful we should receive the new version as response
       // and then we can reset the buffer
-      res = JSON.parse(res)
+      let _res = { version: '0' }
+      if (isString(res)) {
+        try {
+          _res = JSON.parse(res)
+        } catch (err) {
+          console.error('Invalid response from storage.write()')
+        }
+      }
       // console.log('Saved. New version:', res.version)
-      buffer.reset(res.version)
+      buffer.reset(_res.version)
 
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId

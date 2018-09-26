@@ -1,5 +1,8 @@
 /* global FileReader, Buffer */
-const darServer = require('dar-server')
+import readArchive from './readArchive'
+import writeArchive from './writeArchive'
+import cloneArchive from './cloneArchive'
+
 const path = require('path')
 
 /*
@@ -8,9 +11,9 @@ const path = require('path')
   NOTE: No versioning is done atm, but users can do a git init in their Dar
   folders.
 */
-export default class FSStorageClient {
+export default class FSStorage {
   read (archiveDir, cb) {
-    darServer.readArchive(archiveDir, { noBinaryContent: true, ignoreDotFiles: true })
+    readArchive(archiveDir, { noBinaryContent: true, ignoreDotFiles: true })
       .then(rawArchive => {
         // Turn binaries into urls
         Object.keys(rawArchive.resources).forEach(recordPath => {
@@ -29,7 +32,7 @@ export default class FSStorageClient {
   write (archiveDir, rawArchive, cb) {
     _convertBlobs(rawArchive)
       .then(() => {
-        return darServer.writeArchive(archiveDir, rawArchive)
+        return writeArchive(archiveDir, rawArchive)
       })
       .then((version) => {
         cb(null, JSON.stringify({ version }))
@@ -38,8 +41,8 @@ export default class FSStorageClient {
   }
 
   clone (archiveDir, newArchiveDir, cb) {
-    darServer.cloneArchive(archiveDir, newArchiveDir)
-      .then((success) => {
+    cloneArchive(archiveDir, newArchiveDir)
+      .then(success => {
         if (success) cb()
         else cb(new Error('Could not clone archive'))
       })

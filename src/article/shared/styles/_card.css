@@ -2,7 +2,7 @@
   position: relative;
   max-width: 800px;
   box-shadow: var(--t-default-box-shadow);
-  margin: var(--t-default-spacing) 0;
+  margin: var(--t-double-spacing) 0;
   font-size: var(--t-small-font-size);
 }
 

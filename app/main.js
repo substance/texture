@@ -1,4 +1,5 @@
 const electron = require('electron')
+const fs = require('fs')
 const path = require('path')
 const url = require('url')
 const fsExtra = require('fs-extra')
@@ -30,7 +31,27 @@ app.on('ready', () => {
   })
 
   createMenu()
-  openNew()
+
+  // look if there is a 'dar' file in the args that does exist
+  let darFiles = process.argv.filter(arg => /.dar$/i.exec(arg))
+  darFiles = darFiles.map(f => {
+    if (!path.isAbsolute(f)) {
+      f = path.join(process.cwd(), f)
+    }
+    return f
+  })
+  darFiles = darFiles.filter(f => {
+    let stat = fs.statSync(f)
+    return (stat && stat.isFile())
+  })
+  console.log('darFiles', darFiles)
+  if (darFiles.length > 0) {
+    for (let darPath of darFiles) {
+      createEditorWindow(darPath)
+    }
+  } else {
+    openNew()
+  }
 })
 
 // Quit when all windows are closed.

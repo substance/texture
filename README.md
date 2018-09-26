@@ -18,26 +18,24 @@ Feature                                 | Ready
 General editing                         | Beta
 Copy & Paste (from Word, etc.)          | Beta
 Find and Replace                        | Beta
-Auto-numbered labels (`xref`, `fig`, etc. ) | Beta
-Reference editing (`element-citation`)  | Beta
-Authors and Affiliations                | Beta
-[Dar](https://github.com/substance/dar) Storage | Beta
-Article Record (`issue`, `fpage`, etc.) | September 2018
-Translations                            | September 2018
-Track Changes                           | September 2018
-PubMed and CrossRef verification of references                           | September 2018
-Fundref verification                    | September 2018
-Group authors                           | September 2018
+Auto-numbered labels (`xref`, `fig`, etc. ) | ✓
+Reference editing (`element-citation`)  | ✓
+Authors and Affiliations                | ✓
+[Dar](https://github.com/substance/dar) Storage | ✓
+Article Record (`issue`, `fpage`, etc.) | ✓
+Translations                            | ✓
+Track Changes                           | 2.0
+Group authors                           | ✓
 Realtime Collaborative Editing          |
 **Supported Content**                   |
 Paragraph                               | ✓
 Heading                                 | ✓
 Inline Formula                          | ✓
-Display Formula                         | September 2018
+Display Formula                         | 2.0
 List                                    | ✓
 Blockquote                              | ✓
 Figure                                  | ✓
-Table                                   | Beta
+Table                                   | ✓
 Bold & Italic                           | ✓
 Ext-Link                                | ✓
 Subscript & Superscript                 | ✓

@@ -95,7 +95,7 @@ b.task('schema:texture-article', () => {
     src: './tmp/TextureArticle.schema.md',
     dest: './docs/TextureArticle.md',
     execute () {
-      return b.copy('./tmp/TextureArticle.schema.md', './docs/TextureArticle.md')
+      b.copy('./tmp/TextureArticle.schema.md', './docs/TextureArticle.md')
     }
   })
 })

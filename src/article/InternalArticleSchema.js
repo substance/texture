@@ -540,14 +540,13 @@ class Permission extends DocumentNode {
 
 Permission.schema = {
   type: 'permission',
-  copyrightStatement: 'text',
-  copyrightYear: 'text',
-  copyrightHolder: 'text',
-  // URL to license description
-  // used as a unique license identifier
-  license: 'text',
-  // Optional: A paragraph holding the license text if needed
-  licenseText: 'text'
+  copyrightStatement: STRING,
+  copyrightYear: STRING,
+  copyrightHolder: STRING,
+  // URL to license description  used as a unique license identifier
+  // FIXME: bad naming. Use url, or licenseUrl?
+  license: STRING,
+  licenseText: TEXT(...RICH_TEXT_ANNOS)
 }
 
 /*

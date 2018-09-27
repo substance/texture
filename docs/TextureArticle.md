@@ -1,4 +1,5 @@
-# `<abstract>`
+# Elements
+## `<abstract>`
 
 **Attributes**:
 <pre>
@@ -13,7 +14,7 @@ p*
 article-meta
 </pre>
 
-# `<addr-line>`
+## `<addr-line>`
 
 **Attributes**:
 <pre>
@@ -28,7 +29,7 @@ TEXT
 aff
 </pre>
 
-# `<aff>`
+## `<aff>`
 
 **Attributes**:
 <pre>
@@ -43,7 +44,7 @@ id, xml:base, content-type, rid, specific-use, xml:lang
 article-meta, person-group
 </pre>
 
-# `<ali:free_to_read>`
+## `<ali:free_to_read>`
 
 **Attributes**:
 <pre>
@@ -58,7 +59,7 @@ EMPTY
 permissions
 </pre>
 
-# `<ali:license_ref>`
+## `<ali:license_ref>`
 
 **Attributes**:
 <pre>
@@ -73,7 +74,7 @@ TEXT
 license
 </pre>
 
-# `<article>`
+## `<article>`
 
 **Attributes**:
 <pre>
@@ -83,12 +84,8 @@ id, xml:base, article-type, specific-use, xml:lang, dtd-version
 <pre>
 front,body?,back?
 </pre>
-**This element may be contained in:**
-<pre>
 
-</pre>
-
-# `<article-categories>`
+## `<article-categories>`
 
 **Attributes**:
 <pre>
@@ -96,14 +93,14 @@ id, xml:base
 </pre>
 **Contains**:
 <pre>
-subj-group*,series-title*,series-text*
+subj-group*
 </pre>
 **This element may be contained in:**
 <pre>
 article-meta
 </pre>
 
-# `<article-id>`
+## `<article-id>`
 
 **Attributes**:
 <pre>
@@ -118,7 +115,7 @@ TEXT
 article-meta
 </pre>
 
-# `<article-meta>`
+## `<article-meta>`
 
 **Attributes**:
 <pre>
@@ -126,14 +123,14 @@ id, xml:base
 </pre>
 **Contains**:
 <pre>
-article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,self-uri*,abstract?,trans-abstract*,kwd-group*,funding-group*,counts?
+article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract?,trans-abstract*,kwd-group*,funding-group*
 </pre>
 **This element may be contained in:**
 <pre>
 front
 </pre>
 
-# `<article-title>`
+## `<article-title>`
 
 **Attributes**:
 <pre>
@@ -141,14 +138,14 @@ id, xml:base, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation, title-group
 </pre>
 
-# `<attrib>`
+## `<attrib>`
 
 **Attributes**:
 <pre>
@@ -156,14 +153,14 @@ id, xml:base, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 disp-quote
 </pre>
 
-# `<award-group>`
+## `<award-group>`
 
 **Attributes**:
 <pre>
@@ -171,14 +168,14 @@ id, xml:base, rid, award-type, specific-use, xml:lang, xlink:type, xlink:href, x
 </pre>
 **Contains**:
 <pre>
-funding-source*,award-id*
+funding-source*,award-id*,principal-award-recipient*,principal-investigator*
 </pre>
 **This element may be contained in:**
 <pre>
 funding-group
 </pre>
 
-# `<award-id>`
+## `<award-id>`
 
 **Attributes**:
 <pre>
@@ -190,10 +187,10 @@ TEXT
 </pre>
 **This element may be contained in:**
 <pre>
-award-group, funding-statement
+award-group
 </pre>
 
-# `<back>`
+## `<back>`
 
 **Attributes**:
 <pre>
@@ -208,7 +205,7 @@ id, xml:base
 article
 </pre>
 
-# `<bio>`
+## `<bio>`
 
 **Attributes**:
 <pre>
@@ -223,7 +220,7 @@ p*
 contrib
 </pre>
 
-# `<body>`
+## `<body>`
 
 **Attributes**:
 <pre>
@@ -231,14 +228,14 @@ id, xml:base, specific-use
 </pre>
 **Contains**:
 <pre>
-(sec|code|fig|table-wrap|list|p|preformat|disp-quote|list|p|disp-quote)*
+(sec|boxed-text|chem-struct-wrap|code|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
 </pre>
 **This element may be contained in:**
 <pre>
 article
 </pre>
 
-# `<bold>`
+## `<bold>`
 
 **Attributes**:
 <pre>
@@ -246,14 +243,14 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<break>`
+## `<break>`
 
 **Attributes**:
 <pre>
@@ -265,10 +262,10 @@ EMPTY
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, chapter-title, institution, kwd, label, part-title, subject, subtitle, title, trans-subtitle, trans-title, xref
+article-title, chapter-title, institution, kwd, label, part-title, subject, title, trans-title, xref
 </pre>
 
-# `<caption>`
+## `<caption>`
 
 **Attributes**:
 <pre>
@@ -283,7 +280,7 @@ title?,p*
 fig, table-wrap
 </pre>
 
-# `<chapter-title>`
+## `<chapter-title>`
 
 **Attributes**:
 <pre>
@@ -291,14 +288,14 @@ id, xml:base, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<city>`
+## `<city>`
 
 **Attributes**:
 <pre>
@@ -313,7 +310,7 @@ TEXT
 aff
 </pre>
 
-# `<code>`
+## `<code>`
 
 **Attributes**:
 <pre>
@@ -328,7 +325,7 @@ TEXT
 body, sec
 </pre>
 
-# `<col>`
+## `<col>`
 
 **Attributes**:
 <pre>
@@ -343,7 +340,7 @@ EMPTY
 colgroup, table
 </pre>
 
-# `<colgroup>`
+## `<colgroup>`
 
 **Attributes**:
 <pre>
@@ -358,7 +355,7 @@ col*
 table
 </pre>
 
-# `<collab>`
+## `<collab>`
 
 **Attributes**:
 <pre>
@@ -373,7 +370,7 @@ id, xml:base, collab-type, symbol, specific-use, xml:lang, xlink:type, xlink:hre
 contrib, element-citation, person-group
 </pre>
 
-# `<conf-loc>`
+## `<conf-loc>`
 
 **Attributes**:
 <pre>
@@ -388,7 +385,7 @@ TEXT
 element-citation
 </pre>
 
-# `<conf-name>`
+## `<conf-name>`
 
 **Attributes**:
 <pre>
@@ -403,7 +400,7 @@ TEXT
 element-citation
 </pre>
 
-# `<contrib>`
+## `<contrib>`
 
 **Attributes**:
 <pre>
@@ -418,7 +415,7 @@ id, xml:base, contrib-type, corresp, equal-contrib, deceased, rid, specific-use,
 contrib-group
 </pre>
 
-# `<contrib-group>`
+## `<contrib-group>`
 
 **Attributes**:
 <pre>
@@ -433,7 +430,7 @@ contrib*
 article-meta, collab
 </pre>
 
-# `<contrib-id>`
+## `<contrib-id>`
 
 **Attributes**:
 <pre>
@@ -448,7 +445,7 @@ TEXT
 contrib
 </pre>
 
-# `<copyright-holder>`
+## `<copyright-holder>`
 
 **Attributes**:
 <pre>
@@ -463,7 +460,7 @@ TEXT
 permissions
 </pre>
 
-# `<copyright-statement>`
+## `<copyright-statement>`
 
 **Attributes**:
 <pre>
@@ -478,7 +475,7 @@ TEXT
 permissions
 </pre>
 
-# `<copyright-year>`
+## `<copyright-year>`
 
 **Attributes**:
 <pre>
@@ -493,22 +490,7 @@ TEXT
 permissions
 </pre>
 
-# `<count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count-type, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<country>`
+## `<country>`
 
 **Attributes**:
 <pre>
@@ -523,22 +505,7 @@ TEXT
 aff
 </pre>
 
-# `<counts>`
-
-**Attributes**:
-<pre>
-id, xml:base
-</pre>
-**Contains**:
-<pre>
-count*,fig-count?,table-count?,equation-count?,ref-count?,page-count?,word-count?
-</pre>
-**This element may be contained in:**
-<pre>
-article-meta
-</pre>
-
-# `<data-title>`
+## `<data-title>`
 
 **Attributes**:
 <pre>
@@ -546,14 +513,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|email|ext-link|uri|bold|fixed-case|italic|monospace|overline|sc|strike|underline|named-content|sub|sup)*
+(TEXT|email|ext-link|uri|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|named-content|styled-content|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<date>`
+## `<date>`
 
 **Attributes**:
 <pre>
@@ -568,7 +535,7 @@ id, xml:base, date-type, publication-format, iso-8601-date, calendar, specific-u
 history
 </pre>
 
-# `<date-in-citation>`
+## `<date-in-citation>`
 
 **Attributes**:
 <pre>
@@ -583,7 +550,7 @@ TEXT
 element-citation
 </pre>
 
-# `<day>`
+## `<day>`
 
 **Attributes**:
 <pre>
@@ -598,7 +565,7 @@ TEXT
 date, element-citation, pub-date
 </pre>
 
-# `<disp-quote>`
+## `<disp-quote>`
 
 **Attributes**:
 <pre>
@@ -613,7 +580,7 @@ p+,attrib?
 body, sec
 </pre>
 
-# `<edition>`
+## `<edition>`
 
 **Attributes**:
 <pre>
@@ -621,14 +588,14 @@ id, xml:base, designator, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<element-citation>`
+## `<element-citation>`
 
 **Attributes**:
 <pre>
@@ -636,14 +603,14 @@ id, xml:base, publication-type, publisher-type, publication-format, specific-use
 </pre>
 **Contains**:
 <pre>
-(article-title?, chapter-title?, collab?, edition?, elocation-id?, fpage?, issue?, lpage?, page-range?, person-group*, pub-id*, publisher-loc*, publisher-name*, source?, volume?, year?, month?, day?, conf-name?, conf-loc?, data-title?, part-title?, patent?, series?, version?, uri?, date-in-citation?)[unordered]
+(article-title?, chapter-title?, comment?, collab?, edition?, elocation-id?, fpage?, issue?, lpage?, page-range?, person-group*, pub-id*, publisher-loc*, publisher-name*, source?, volume?, year?, month?, day?, conf-name?, conf-loc?, data-title?, part-title?, patent?, series?, version?, uri?, date-in-citation?)[unordered]
 </pre>
 **This element may be contained in:**
 <pre>
 ref
 </pre>
 
-# `<elocation-id>`
+## `<elocation-id>`
 
 **Attributes**:
 <pre>
@@ -658,7 +625,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-# `<email>`
+## `<email>`
 
 **Attributes**:
 <pre>
@@ -666,29 +633,14 @@ id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 aff, collab, contrib, data-title
 </pre>
 
-# `<equation-count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<era>`
+## `<era>`
 
 **Attributes**:
 <pre>
@@ -703,7 +655,7 @@ TEXT
 date, pub-date
 </pre>
 
-# `<ext-link>`
+## `<ext-link>`
 
 **Attributes**:
 <pre>
@@ -711,14 +663,14 @@ id, xml:base, ext-link-type, assigning-authority, specific-use, xml:lang, xlink:
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-aff, article-title, chapter-title, data-title, edition, email, ext-link, funding-statement, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, self-uri, series, series-text, series-title, subject, subtitle, suffix, surname, td, th, title, trans-subtitle, trans-title, unstructured-kwd-group, uri, version, xref
+aff, article-title, chapter-title, data-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-# `<fax>`
+## `<fax>`
 
 **Attributes**:
 <pre>
@@ -733,7 +685,7 @@ TEXT
 aff
 </pre>
 
-# `<fig>`
+## `<fig>`
 
 **Attributes**:
 <pre>
@@ -741,29 +693,14 @@ id, xml:base, position, orientation, specific-use, xml:lang, fig-type
 </pre>
 **Contains**:
 <pre>
-object-id?,label?,caption?,graphic?,permissions?
+object-id?,label?,caption?,graphic,permissions?
 </pre>
 **This element may be contained in:**
 <pre>
 body, sec
 </pre>
 
-# `<fig-count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<fixed-case>`
+## `<fixed-case>`
 
 **Attributes**:
 <pre>
@@ -771,14 +708,14 @@ id, xml:base, content-type, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<fn>`
+## `<fn>`
 
 **Attributes**:
 <pre>
@@ -793,7 +730,7 @@ p+
 fn-group
 </pre>
 
-# `<fn-group>`
+## `<fn-group>`
 
 **Attributes**:
 <pre>
@@ -808,202 +745,7 @@ label?,title?,fn+
 back
 </pre>
 
-# `<fpage>`
-
-**Attributes**:
-<pre>
-
-</pre>
-**Contains**:
-<pre>
-TEXT
-</pre>
-**This element may be contained in:**
-<pre>
-article-meta, element-citation
-</pre>
-
-# `<front>`
-
-**Attributes**:
-<pre>
-id, xml:base
-</pre>
-**Contains**:
-<pre>
-article-meta
-</pre>
-**This element may be contained in:**
-<pre>
-article
-</pre>
-
-# `<funding-group>`
-
-**Attributes**:
-<pre>
-id, xml:base, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-award-group*,funding-statement*,open-access*
-</pre>
-**This element may be contained in:**
-<pre>
-article-meta
-</pre>
-
-# `<funding-source>`
-
-**Attributes**:
-<pre>
-id, xml:base, rid, source-type, country, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
-</pre>
-**Contains**:
-<pre>
-institution-wrap
-</pre>
-**This element may be contained in:**
-<pre>
-award-group, funding-statement
-</pre>
-
-# `<funding-statement>`
-
-**Attributes**:
-<pre>
-id, xml:base, rid, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|award-id|funding-source|open-access)*
-</pre>
-**This element may be contained in:**
-<pre>
-funding-group
-</pre>
-
-# `<given-names>`
-
-**Attributes**:
-<pre>
-id, xml:base, initials
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
-</pre>
-**This element may be contained in:**
-<pre>
-name
-</pre>
-
-# `<graphic>`
-
-**Attributes**:
-<pre>
-id, xml:base, position, orientation, specific-use, xml:lang, content-type, mime-subtype, mimetype, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-fig
-</pre>
-
-# `<history>`
-
-**Attributes**:
-<pre>
-id, xml:base
-</pre>
-**Contains**:
-<pre>
-date*
-</pre>
-**This element may be contained in:**
-<pre>
-article-meta
-</pre>
-
-# `<inline-formula>`
-
-**Attributes**:
-<pre>
-id, xml:base, content-type, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-tex-math
-</pre>
-**This element may be contained in:**
-<pre>
-article-title, chapter-title, edition, email, ext-link, funding-statement, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, self-uri, series, series-text, series-title, subject, subtitle, suffix, surname, td, th, title, trans-subtitle, trans-title, unstructured-kwd-group, uri, version, xref
-</pre>
-
-# `<institution>`
-
-**Attributes**:
-<pre>
-id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
-</pre>
-**This element may be contained in:**
-<pre>
-aff, institution-wrap
-</pre>
-
-# `<institution-id>`
-
-**Attributes**:
-<pre>
-id, xml:base, institution-id-type, content-type, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-TEXT
-</pre>
-**This element may be contained in:**
-<pre>
-institution-wrap
-</pre>
-
-# `<institution-wrap>`
-
-**Attributes**:
-<pre>
-id, xml:base
-</pre>
-**Contains**:
-<pre>
-(institution|institution-id)*
-</pre>
-**This element may be contained in:**
-<pre>
-aff, funding-source
-</pre>
-
-# `<isbn>`
-
-**Attributes**:
-<pre>
-id, xml:base, publication-format, content-type, specific-use
-</pre>
-**Contains**:
-<pre>
-TEXT
-</pre>
-**This element may be contained in:**
-<pre>
-article-meta
-</pre>
-
-# `<issue>`
+## `<fpage>`
 
 **Attributes**:
 <pre>
@@ -1018,7 +760,187 @@ TEXT
 article-meta, element-citation
 </pre>
 
-# `<italic>`
+## `<front>`
+
+**Attributes**:
+<pre>
+id, xml:base
+</pre>
+**Contains**:
+<pre>
+journal-meta?,article-meta
+</pre>
+**This element may be contained in:**
+<pre>
+article
+</pre>
+
+## `<funding-group>`
+
+**Attributes**:
+<pre>
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre>
+award-group*
+</pre>
+**This element may be contained in:**
+<pre>
+article-meta
+</pre>
+
+## `<funding-source>`
+
+**Attributes**:
+<pre>
+id, xml:base, rid, source-type, country, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre>
+institution-wrap
+</pre>
+**This element may be contained in:**
+<pre>
+award-group
+</pre>
+
+## `<given-names>`
+
+**Attributes**:
+<pre>
+id, xml:base, initials
+</pre>
+**Contains**:
+<pre>
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre>
+name
+</pre>
+
+## `<graphic>`
+
+**Attributes**:
+<pre>
+id, xml:base, position, orientation, specific-use, xml:lang, content-type, mime-subtype, mimetype, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre>
+EMPTY
+</pre>
+**This element may be contained in:**
+<pre>
+fig
+</pre>
+
+## `<history>`
+
+**Attributes**:
+<pre>
+id, xml:base
+</pre>
+**Contains**:
+<pre>
+date*
+</pre>
+**This element may be contained in:**
+<pre>
+article-meta
+</pre>
+
+## `<inline-formula>`
+
+**Attributes**:
+<pre>
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre>
+tex-math
+</pre>
+**This element may be contained in:**
+<pre>
+article-title, chapter-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
+</pre>
+
+## `<institution>`
+
+**Attributes**:
+<pre>
+id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre>
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre>
+aff, institution-wrap
+</pre>
+
+## `<institution-id>`
+
+**Attributes**:
+<pre>
+id, xml:base, institution-id-type, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre>
+TEXT
+</pre>
+**This element may be contained in:**
+<pre>
+institution-wrap
+</pre>
+
+## `<institution-wrap>`
+
+**Attributes**:
+<pre>
+id, xml:base
+</pre>
+**Contains**:
+<pre>
+(institution|institution-id)*
+</pre>
+**This element may be contained in:**
+<pre>
+aff, funding-source
+</pre>
+
+## `<isbn>`
+
+**Attributes**:
+<pre>
+id, xml:base, publication-format, content-type, specific-use
+</pre>
+**Contains**:
+<pre>
+TEXT
+</pre>
+**This element may be contained in:**
+<pre>
+article-meta
+</pre>
+
+## `<issue>`
+
+**Attributes**:
+<pre>
+id, xml:base, content-type, seq, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre>
+TEXT
+</pre>
+**This element may be contained in:**
+<pre>
+article-meta, element-citation
+</pre>
+
+## `<italic>`
 
 **Attributes**:
 <pre>
@@ -1026,14 +948,14 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<kwd>`
+## `<kwd>`
 
 **Attributes**:
 <pre>
@@ -1041,14 +963,14 @@ id, xml:base, content-type
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 kwd-group
 </pre>
 
-# `<kwd-group>`
+## `<kwd-group>`
 
 **Attributes**:
 <pre>
@@ -1056,14 +978,14 @@ id, xml:base, kwd-group-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-label?,title?,(kwd+|unstructured-kwd-group*)
+label?,title?,((kwd|compound-kwd|nested-kwd)+|unstructured-kwd-group*)
 </pre>
 **This element may be contained in:**
 <pre>
 article-meta
 </pre>
 
-# `<label>`
+## `<label>`
 
 **Attributes**:
 <pre>
@@ -1071,14 +993,14 @@ id, xml:base, alt, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 aff, fig, fn-group, kwd-group, table-wrap
 </pre>
 
-# `<license>`
+## `<license>`
 
 **Attributes**:
 <pre>
@@ -1093,7 +1015,7 @@ id, xml:base, license-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 permissions
 </pre>
 
-# `<license-p>`
+## `<license-p>`
 
 **Attributes**:
 <pre>
@@ -1101,14 +1023,14 @@ id, xml:base, content-type, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|price)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|price)*
 </pre>
 **This element may be contained in:**
 <pre>
 license
 </pre>
 
-# `<list>`
+## `<list>`
 
 **Attributes**:
 <pre>
@@ -1123,7 +1045,7 @@ list-item+
 body, list-item, sec
 </pre>
 
-# `<list-item>`
+## `<list-item>`
 
 **Attributes**:
 <pre>
@@ -1138,7 +1060,7 @@ id, xml:base, specific-use, xml:lang
 list
 </pre>
 
-# `<lpage>`
+## `<lpage>`
 
 **Attributes**:
 <pre>
@@ -1153,7 +1075,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-# `<monospace>`
+## `<monospace>`
 
 **Attributes**:
 <pre>
@@ -1161,14 +1083,14 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<month>`
+## `<month>`
 
 **Attributes**:
 <pre>
@@ -1183,7 +1105,7 @@ TEXT
 date, element-citation, pub-date
 </pre>
 
-# `<name>`
+## `<name>`
 
 **Attributes**:
 <pre>
@@ -1198,7 +1120,7 @@ id, xml:base, content-type, name-style, specific-use, xml:lang
 contrib, name-alternatives, person-group
 </pre>
 
-# `<name-alternatives>`
+## `<name-alternatives>`
 
 **Attributes**:
 <pre>
@@ -1213,7 +1135,7 @@ id, xml:base
 person-group
 </pre>
 
-# `<named-content>`
+## `<named-content>`
 
 **Attributes**:
 <pre>
@@ -1225,10 +1147,10 @@ TEXT
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, chapter-title, collab, data-title, edition, email, ext-link, funding-statement, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, preformat, role, self-uri, series, series-text, series-title, subject, subtitle, suffix, surname, td, th, title, trans-subtitle, trans-title, unstructured-kwd-group, uri, version, xref
+article-title, chapter-title, collab, data-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, preformat, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-# `<object-id>`
+## `<object-id>`
 
 **Attributes**:
 <pre>
@@ -1243,22 +1165,7 @@ TEXT
 fig, table-wrap
 </pre>
 
-# `<open-access>`
-
-**Attributes**:
-<pre>
-id, xml:base, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-p+
-</pre>
-**This element may be contained in:**
-<pre>
-funding-group, funding-statement
-</pre>
-
-# `<overline>`
+## `<overline>`
 
 **Attributes**:
 <pre>
@@ -1266,14 +1173,14 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<p>`
+## `<p>`
 
 **Attributes**:
 <pre>
@@ -1281,29 +1188,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-abstract, bio, body, caption, disp-quote, fn, list-item, open-access, sec, trans-abstract
+abstract, bio, body, caption, disp-quote, fn, list-item, sec, trans-abstract
 </pre>
 
-# `<page-count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<page-range>`
+## `<page-range>`
 
 **Attributes**:
 <pre>
@@ -1318,7 +1210,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-# `<part-title>`
+## `<part-title>`
 
 **Attributes**:
 <pre>
@@ -1326,14 +1218,14 @@ id, xml:base, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<patent>`
+## `<patent>`
 
 **Attributes**:
 <pre>
@@ -1341,14 +1233,14 @@ id, xml:base, content-type, country, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<permissions>`
+## `<permissions>`
 
 **Attributes**:
 <pre>
@@ -1363,7 +1255,7 @@ copyright-statement*,copyright-year*,copyright-holder*,(ali:free_to_read|license
 article-meta, fig, table-wrap
 </pre>
 
-# `<person-group>`
+## `<person-group>`
 
 **Attributes**:
 <pre>
@@ -1371,14 +1263,14 @@ id, xml:base, person-group-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(collab|name|name-alternatives|string-name|aff|role)*
+(anonymous|collab|collab-alternatives|name|name-alternatives|string-name|aff|aff-alternatives|etal|role)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<phone>`
+## `<phone>`
 
 **Attributes**:
 <pre>
@@ -1386,14 +1278,14 @@ id, xml:base, content-type, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 aff
 </pre>
 
-# `<postal-code>`
+## `<postal-code>`
 
 **Attributes**:
 <pre>
@@ -1408,7 +1300,7 @@ TEXT
 aff
 </pre>
 
-# `<prefix>`
+## `<prefix>`
 
 **Attributes**:
 <pre>
@@ -1416,14 +1308,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 name
 </pre>
 
-# `<preformat>`
+## `<preformat>`
 
 **Attributes**:
 <pre>
@@ -1431,14 +1323,14 @@ id, xml:base, position, orientation, specific-use, xml:lang, preformat-type, xml
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|named-content|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|abbrev|milestone-end|milestone-start|named-content|styled-content|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 body, sec
 </pre>
 
-# `<price>`
+## `<price>`
 
 **Attributes**:
 <pre>
@@ -1446,14 +1338,14 @@ id, xml:base, currency, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby)*
 </pre>
 **This element may be contained in:**
 <pre>
 license-p
 </pre>
 
-# `<pub-date>`
+## `<pub-date>`
 
 **Attributes**:
 <pre>
@@ -1468,7 +1360,7 @@ id, xml:base, pub-type, publication-format, date-type, iso-8601-date, calendar, 
 article-meta
 </pre>
 
-# `<pub-id>`
+## `<pub-id>`
 
 **Attributes**:
 <pre>
@@ -1483,7 +1375,7 @@ TEXT
 element-citation
 </pre>
 
-# `<publisher-loc>`
+## `<publisher-loc>`
 
 **Attributes**:
 <pre>
@@ -1498,7 +1390,7 @@ TEXT
 element-citation
 </pre>
 
-# `<publisher-name>`
+## `<publisher-name>`
 
 **Attributes**:
 <pre>
@@ -1513,7 +1405,7 @@ TEXT
 element-citation
 </pre>
 
-# `<ref>`
+## `<ref>`
 
 **Attributes**:
 <pre>
@@ -1528,22 +1420,7 @@ element-citation
 ref-list
 </pre>
 
-# `<ref-count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<ref-list>`
+## `<ref-list>`
 
 **Attributes**:
 <pre>
@@ -1558,7 +1435,7 @@ ref*
 back
 </pre>
 
-# `<role>`
+## `<role>`
 
 **Attributes**:
 <pre>
@@ -1566,14 +1443,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 contrib, person-group
 </pre>
 
-# `<sc>`
+## `<sc>`
 
 **Attributes**:
 <pre>
@@ -1581,14 +1458,14 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<season>`
+## `<season>`
 
 **Attributes**:
 <pre>
@@ -1603,7 +1480,7 @@ TEXT
 date, pub-date
 </pre>
 
-# `<sec>`
+## `<sec>`
 
 **Attributes**:
 <pre>
@@ -1611,29 +1488,14 @@ id, xml:base, xml:lang, sec-type, disp-level, specific-use
 </pre>
 **Contains**:
 <pre>
-title?,(code|fig|table-wrap|list|p|preformat|disp-quote|list|p|disp-quote)*,sec*
+title?,(boxed-text|chem-struct-wrap|code|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
 </pre>
 **This element may be contained in:**
 <pre>
 body, sec
 </pre>
 
-# `<self-uri>`
-
-**Attributes**:
-<pre>
-id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
-</pre>
-**This element may be contained in:**
-<pre>
-article-meta
-</pre>
-
-# `<series>`
+## `<series>`
 
 **Attributes**:
 <pre>
@@ -1641,14 +1503,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<series-text>`
+## `<source>`
 
 **Attributes**:
 <pre>
@@ -1656,44 +1518,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
-</pre>
-**This element may be contained in:**
-<pre>
-article-categories
-</pre>
-
-# `<series-title>`
-
-**Attributes**:
-<pre>
-id, xml:base, content-type, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
-</pre>
-**This element may be contained in:**
-<pre>
-article-categories
-</pre>
-
-# `<source>`
-
-**Attributes**:
-<pre>
-id, xml:base, content-type, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<state>`
+## `<state>`
 
 **Attributes**:
 <pre>
@@ -1708,7 +1540,7 @@ TEXT
 aff
 </pre>
 
-# `<strike>`
+## `<strike>`
 
 **Attributes**:
 <pre>
@@ -1716,14 +1548,14 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<string-date>`
+## `<string-date>`
 
 **Attributes**:
 <pre>
@@ -1738,7 +1570,7 @@ TEXT
 date, pub-date
 </pre>
 
-# `<string-name>`
+## `<string-name>`
 
 **Attributes**:
 <pre>
@@ -1746,14 +1578,14 @@ id, xml:base, content-type, name-style, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 contrib, name-alternatives, person-group
 </pre>
 
-# `<sub>`
+## `<sub>`
 
 **Attributes**:
 <pre>
@@ -1761,14 +1593,14 @@ id, xml:base, arrange, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<subj-group>`
+## `<subj-group>`
 
 **Attributes**:
 <pre>
@@ -1776,14 +1608,14 @@ id, xml:base, subj-group-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-subject+,subj-group*
+(subject|compound-subject)+,subj-group*
 </pre>
 **This element may be contained in:**
 <pre>
 article-categories, subj-group
 </pre>
 
-# `<subject>`
+## `<subject>`
 
 **Attributes**:
 <pre>
@@ -1791,14 +1623,14 @@ id, xml:base, content-type
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 subj-group
 </pre>
 
-# `<subtitle>`
+## `<suffix>`
 
 **Attributes**:
 <pre>
@@ -1806,29 +1638,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
-</pre>
-**This element may be contained in:**
-<pre>
-title-group
-</pre>
-
-# `<suffix>`
-
-**Attributes**:
-<pre>
-id, xml:base, content-type, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 name
 </pre>
 
-# `<sup>`
+## `<sup>`
 
 **Attributes**:
 <pre>
@@ -1836,14 +1653,14 @@ id, xml:base, arrange, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<surname>`
+## `<surname>`
 
 **Attributes**:
 <pre>
@@ -1851,14 +1668,14 @@ id, xml:base, initials
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 name
 </pre>
 
-# `<table>`
+## `<table>`
 
 **Attributes**:
 <pre>
@@ -1873,22 +1690,7 @@ id, xml:base, content-type, style, summary, width, border, frame, rules, cellspa
 table-wrap
 </pre>
 
-# `<table-count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<table-wrap>`
+## `<table-wrap>`
 
 **Attributes**:
 <pre>
@@ -1903,7 +1705,7 @@ object-id?,label?,caption?,table,permissions?
 body, sec
 </pre>
 
-# `<tbody>`
+## `<tbody>`
 
 **Attributes**:
 <pre>
@@ -1918,7 +1720,7 @@ tr+
 table
 </pre>
 
-# `<td>`
+## `<td>`
 
 **Attributes**:
 <pre>
@@ -1926,14 +1728,14 @@ id, xml:base, content-type, style, abbr, axis, headers, scope, rowspan, colspan,
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 tr
 </pre>
 
-# `<tex-math>`
+## `<tex-math>`
 
 **Attributes**:
 <pre>
@@ -1948,7 +1750,7 @@ TEXT
 inline-formula
 </pre>
 
-# `<tfoot>`
+## `<tfoot>`
 
 **Attributes**:
 <pre>
@@ -1963,7 +1765,7 @@ tr+
 table
 </pre>
 
-# `<th>`
+## `<th>`
 
 **Attributes**:
 <pre>
@@ -1971,14 +1773,14 @@ id, xml:base, content-type, style, abbr, axis, headers, scope, rowspan, colspan,
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 tr
 </pre>
 
-# `<thead>`
+## `<thead>`
 
 **Attributes**:
 <pre>
@@ -1993,7 +1795,7 @@ tr+
 table
 </pre>
 
-# `<title>`
+## `<title>`
 
 **Attributes**:
 <pre>
@@ -2001,14 +1803,14 @@ id, xml:base, content-type, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 caption, fn-group, kwd-group, sec
 </pre>
 
-# `<title-group>`
+## `<title-group>`
 
 **Attributes**:
 <pre>
@@ -2016,14 +1818,14 @@ id, xml:base
 </pre>
 **Contains**:
 <pre>
-article-title,subtitle*,trans-title-group*
+article-title,trans-title-group*
 </pre>
 **This element may be contained in:**
 <pre>
 article-meta
 </pre>
 
-# `<tr>`
+## `<tr>`
 
 **Attributes**:
 <pre>
@@ -2038,7 +1840,7 @@ id, xml:base, content-type, style, align, char, charoff, valign
 table, tbody, tfoot, thead
 </pre>
 
-# `<trans-abstract>`
+## `<trans-abstract>`
 
 **Attributes**:
 <pre>
@@ -2053,22 +1855,7 @@ p*
 article-meta
 </pre>
 
-# `<trans-subtitle>`
-
-**Attributes**:
-<pre>
-id, xml:base, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
-</pre>
-**This element may be contained in:**
-<pre>
-trans-title-group
-</pre>
-
-# `<trans-title>`
+## `<trans-title>`
 
 **Attributes**:
 <pre>
@@ -2076,14 +1863,14 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
 trans-title-group
 </pre>
 
-# `<trans-title-group>`
+## `<trans-title-group>`
 
 **Attributes**:
 <pre>
@@ -2098,7 +1885,7 @@ trans-title,trans-subtitle*
 title-group
 </pre>
 
-# `<underline>`
+## `<underline>`
 
 **Attributes**:
 <pre>
@@ -2106,29 +1893,14 @@ id, xml:base, toggle, underline-style, specific-use
 </pre>
 **Contains**:
 <pre>
-(TEXT|bold|fixed-case|italic|monospace|overline|sc|strike|underline|sub|sup)*
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, funding-statement, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, self-uri, series, series-text, series-title, source, strike, string-name, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-subtitle, trans-title, underline, unstructured-kwd-group, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-# `<unstructured-kwd-group>`
-
-**Attributes**:
-<pre>
-id, xml:base, kwd-group-type, specific-use, xml:lang
-</pre>
-**Contains**:
-<pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
-</pre>
-**This element may be contained in:**
-<pre>
-kwd-group
-</pre>
-
-# `<uri>`
+## `<uri>`
 
 **Attributes**:
 <pre>
@@ -2136,14 +1908,14 @@ id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 aff, data-title, element-citation
 </pre>
 
-# `<version>`
+## `<version>`
 
 **Attributes**:
 <pre>
@@ -2151,14 +1923,14 @@ id, xml:base, designator, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre>
 element-citation
 </pre>
 
-# `<volume>`
+## `<volume>`
 
 **Attributes**:
 <pre>
@@ -2173,22 +1945,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-# `<word-count>`
-
-**Attributes**:
-<pre>
-id, xml:base, count
-</pre>
-**Contains**:
-<pre>
-EMPTY
-</pre>
-**This element may be contained in:**
-<pre>
-counts
-</pre>
-
-# `<xref>`
+## `<xref>`
 
 **Attributes**:
 <pre>
@@ -2196,14 +1953,14 @@ id, xml:base, ref-type, alt, rid, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre>
-(TEXT|ext-link|bold|fixed-case|italic|monospace|overline|sc|strike|underline|inline-formula|named-content|xref|sub|sup|break)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre>
-article-title, chapter-title, collab, contrib, edition, email, ext-link, funding-statement, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, self-uri, series, series-text, series-title, subject, subtitle, suffix, surname, td, th, title, trans-subtitle, trans-title, unstructured-kwd-group, uri, version, xref
+article-title, chapter-title, collab, contrib, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-# `<year>`
+## `<year>`
 
 **Attributes**:
 <pre>
@@ -2217,3 +1974,140 @@ TEXT
 <pre>
 date, element-citation, pub-date
 </pre>
+
+# Not Implemented
+
+- abbrev
+- abbrev-journal-title
+- ack
+- address
+- aff-alternatives
+- alt-text
+- alt-title
+- alternatives
+- annotation
+- anonymous
+- app
+- app-group
+- array
+- author-comment
+- author-notes
+- boxed-text
+- chem-struct
+- chem-struct-wrap
+- citation-alternatives
+- collab-alternatives
+- comment
+- compound-kwd
+- compound-kwd-part
+- compound-subject
+- compound-subject-part
+- conf-acronym
+- conf-date
+- conf-num
+- conf-sponsor
+- conf-theme
+- conference
+- corresp
+- count
+- counts
+- custom-meta
+- custom-meta-group
+- def
+- def-head
+- def-item
+- def-list
+- degrees
+- disp-formula
+- disp-formula-group
+- equation-count
+- etal
+- fig-count
+- fig-group
+- floats-group
+- front-stub
+- funding-statement
+- glossary
+- glyph-data
+- glyph-ref
+- gov
+- hr
+- inline-graphic
+- inline-supplementary-material
+- issn
+- issn-l
+- issue-id
+- issue-part
+- issue-sponsor
+- issue-title
+- journal-id
+- journal-meta
+- journal-subtitle
+- journal-title
+- journal-title-group
+- long-desc
+- media
+- meta-name
+- meta-value
+- milestone-end
+- milestone-start
+- mixed-citation
+- nested-kwd
+- note
+- notes
+- on-behalf-of
+- open-access
+- overline-end
+- overline-start
+- page-count
+- principal-award-recipient
+- principal-investigator
+- private-char
+- product
+- publisher
+- rb
+- ref-count
+- related-article
+- related-object
+- response
+- roman
+- rp
+- rt
+- ruby
+- sans-serif
+- sec-meta
+- self-uri
+- series-text
+- series-title
+- sig
+- sig-block
+- size
+- speaker
+- speech
+- statement
+- std
+- std-organization
+- string-conf
+- styled-content
+- sub-article
+- subtitle
+- supplement
+- supplementary-material
+- table-count
+- table-wrap-foot
+- table-wrap-group
+- target
+- term
+- term-head
+- textual-form
+- trans-source
+- trans-subtitle
+- underline-end
+- underline-start
+- unstructured-kwd-group
+- verse-group
+- verse-line
+- volume-id
+- volume-issue-group
+- volume-series
+- word-count

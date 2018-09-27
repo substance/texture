@@ -1,4 +1,4 @@
-import { forEach } from 'substance'
+import { forEach, platform, getQueryStringParam } from 'substance'
 import JATSImporter from './converter/JATSImporter'
 import ArticleConfigurator from './ArticleConfigurator'
 import ArticleModelPackage from './ArticleModelPackage'
@@ -9,8 +9,14 @@ export default {
     let configurator = new ArticleConfigurator()
     configurator.import(ArticleModelPackage)
     let jatsImporter = new JATSImporter()
-    // TODO: find a more consistent notion of 'context'
-    let result = jatsImporter.import(xml)
+    // TODO: we should allow to override this via
+    let importOptions = {
+      allowNotImplemented: false
+    }
+    if (platform.inBrowser) {
+      importOptions.allowNotImplemented = getQueryStringParam('notImplemented') === 'true'
+    }
+    let result = jatsImporter.import(xml, importOptions)
     if (result.hasErrored) {
       let err = new Error('JATS import failed')
       err.type = 'jats-import-error'

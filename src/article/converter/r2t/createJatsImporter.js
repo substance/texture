@@ -1,5 +1,5 @@
 import { XMLDocumentImporter } from 'substance'
-import JATSSchema from '../../TextureArticle'
+import TextureArticleSchema from '../../TextureArticle'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
@@ -17,9 +17,9 @@ import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 export default function createJatsImporter (doc) {
   // Note: we are applying a hybrid approach, i.e. we create XML importers for the JATS schema
   // but only for those elements which are supported by our internal article schema.
-  let jatsSchema = JATSSchema.xmlSchema
+  let jatsSchema = TextureArticleSchema.xmlSchema
   let tagNames = jatsSchema.getTagNames().filter(name => Boolean(InternalArticleSchema.getNodeClass(name)))
-  let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
+  let jatsConverters = createXMLConverters(TextureArticleSchema.xmlSchema, tagNames)
   let converters = [
     new BodyConverter(),
     // this is only used for import, because BodyConverter does an on-the-fly DOM transformation

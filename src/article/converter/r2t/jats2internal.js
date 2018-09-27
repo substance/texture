@@ -56,10 +56,10 @@ import createJatsImporter from './createJatsImporter'
     Allow only one place for '<ack>', '<bio>', '<fn-group>', '<glossary>', '<notes>'
 */
 
-export default function jats2internal (jats) {
+export default function jats2internal (jats, options) {
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
   // this is used to for parts of the DOM where we use JATS in the internal model
-  let jatsImporter = createJatsImporter(doc)
+  let jatsImporter = createJatsImporter(doc, options)
 
   // metadata
   _populateOrganisations(doc, jats)

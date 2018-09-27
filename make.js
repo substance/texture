@@ -359,14 +359,18 @@ function xmlSchemaToMD (xmlSchema) {
 
   elementNames.sort()
   let notImplemented = []
-  result.push('# Elements')
+  result.push('# Texture Article')
+  result.push('')
+  result.push('This schema defines a strict sub-set of JATS archiving.')
+  result.push('## Supported Elements')
+  result.push('')
   elementNames.forEach(name => {
     let elementSchema = elementSchemas[name]
     if (elementSchema.type === 'not-implemented') {
       notImplemented.push(elementSchema)
       return
     }
-    result.push('## `<' + elementSchema.name + '>`')
+    result.push('### `<' + elementSchema.name + '>`')
     if (elementSchema.type === 'not-implemented') {
       result.push('Not implemented.')
     } else {
@@ -401,8 +405,13 @@ function xmlSchemaToMD (xmlSchema) {
     }
   })
   if (notImplemented.length > 0) {
-    result.push('# Not Implemented')
-    result.push('')
+    result.push('## Not Implemented')
+    result.push(`
+These elements have not been implemented yet and need go through the recommendation process.
+If you want to contribute, go to [https://github.com/substance/texture/issues](https://github.com/substance/texture/issues)
+and open a request if it does not exist yet. Please provide one ore multiple XML examples
+and explanations that help understanding the use-case.
+`)
     notImplemented.forEach(elementSchema => {
       result.push('- ' + elementSchema.name)
     })

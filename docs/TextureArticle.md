@@ -1,5 +1,9 @@
-# Elements
-## `<abstract>`
+# Texture Article
+
+This schema defines a strict sub-set of JATS archiving.
+## Supported Elements
+
+### `<abstract>`
 
 **Attributes**:
 <pre>
@@ -14,7 +18,7 @@ p*
 article-meta
 </pre>
 
-## `<addr-line>`
+### `<addr-line>`
 
 **Attributes**:
 <pre>
@@ -29,7 +33,7 @@ TEXT
 aff
 </pre>
 
-## `<aff>`
+### `<aff>`
 
 **Attributes**:
 <pre>
@@ -44,7 +48,7 @@ id, xml:base, content-type, rid, specific-use, xml:lang
 article-meta, person-group
 </pre>
 
-## `<ali:free_to_read>`
+### `<ali:free_to_read>`
 
 **Attributes**:
 <pre>
@@ -59,7 +63,7 @@ EMPTY
 permissions
 </pre>
 
-## `<ali:license_ref>`
+### `<ali:license_ref>`
 
 **Attributes**:
 <pre>
@@ -74,7 +78,7 @@ TEXT
 license
 </pre>
 
-## `<article>`
+### `<article>`
 
 **Attributes**:
 <pre>
@@ -85,7 +89,7 @@ id, xml:base, article-type, specific-use, xml:lang, dtd-version
 front,body?,back?
 </pre>
 
-## `<article-categories>`
+### `<article-categories>`
 
 **Attributes**:
 <pre>
@@ -100,7 +104,7 @@ subj-group*
 article-meta
 </pre>
 
-## `<article-id>`
+### `<article-id>`
 
 **Attributes**:
 <pre>
@@ -115,7 +119,7 @@ TEXT
 article-meta
 </pre>
 
-## `<article-meta>`
+### `<article-meta>`
 
 **Attributes**:
 <pre>
@@ -130,7 +134,7 @@ article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volum
 front
 </pre>
 
-## `<article-title>`
+### `<article-title>`
 
 **Attributes**:
 <pre>
@@ -145,7 +149,7 @@ id, xml:base, xml:lang
 element-citation, title-group
 </pre>
 
-## `<attrib>`
+### `<attrib>`
 
 **Attributes**:
 <pre>
@@ -160,7 +164,7 @@ id, xml:base, specific-use, xml:lang
 disp-quote
 </pre>
 
-## `<award-group>`
+### `<award-group>`
 
 **Attributes**:
 <pre>
@@ -175,7 +179,7 @@ funding-source*,award-id*,principal-award-recipient*,principal-investigator*
 funding-group
 </pre>
 
-## `<award-id>`
+### `<award-id>`
 
 **Attributes**:
 <pre>
@@ -190,7 +194,7 @@ TEXT
 award-group
 </pre>
 
-## `<back>`
+### `<back>`
 
 **Attributes**:
 <pre>
@@ -205,7 +209,7 @@ id, xml:base
 article
 </pre>
 
-## `<bio>`
+### `<bio>`
 
 **Attributes**:
 <pre>
@@ -220,7 +224,7 @@ p*
 contrib
 </pre>
 
-## `<body>`
+### `<body>`
 
 **Attributes**:
 <pre>
@@ -235,7 +239,7 @@ id, xml:base, specific-use
 article
 </pre>
 
-## `<bold>`
+### `<bold>`
 
 **Attributes**:
 <pre>
@@ -250,7 +254,7 @@ id, xml:base, toggle, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<break>`
+### `<break>`
 
 **Attributes**:
 <pre>
@@ -265,7 +269,7 @@ EMPTY
 article-title, chapter-title, institution, kwd, label, part-title, subject, title, trans-title, xref
 </pre>
 
-## `<caption>`
+### `<caption>`
 
 **Attributes**:
 <pre>
@@ -280,7 +284,7 @@ title?,p*
 fig, table-wrap
 </pre>
 
-## `<chapter-title>`
+### `<chapter-title>`
 
 **Attributes**:
 <pre>
@@ -295,7 +299,7 @@ id, xml:base, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<city>`
+### `<city>`
 
 **Attributes**:
 <pre>
@@ -310,7 +314,7 @@ TEXT
 aff
 </pre>
 
-## `<code>`
+### `<code>`
 
 **Attributes**:
 <pre>
@@ -325,7 +329,7 @@ TEXT
 body, sec
 </pre>
 
-## `<col>`
+### `<col>`
 
 **Attributes**:
 <pre>
@@ -340,7 +344,7 @@ EMPTY
 colgroup, table
 </pre>
 
-## `<colgroup>`
+### `<colgroup>`
 
 **Attributes**:
 <pre>
@@ -355,7 +359,7 @@ col*
 table
 </pre>
 
-## `<collab>`
+### `<collab>`
 
 **Attributes**:
 <pre>
@@ -370,7 +374,7 @@ id, xml:base, collab-type, symbol, specific-use, xml:lang, xlink:type, xlink:hre
 contrib, element-citation, person-group
 </pre>
 
-## `<conf-loc>`
+### `<conf-loc>`
 
 **Attributes**:
 <pre>
@@ -385,7 +389,7 @@ TEXT
 element-citation
 </pre>
 
-## `<conf-name>`
+### `<conf-name>`
 
 **Attributes**:
 <pre>
@@ -400,7 +404,7 @@ TEXT
 element-citation
 </pre>
 
-## `<contrib>`
+### `<contrib>`
 
 **Attributes**:
 <pre>
@@ -415,7 +419,7 @@ id, xml:base, contrib-type, corresp, equal-contrib, deceased, rid, specific-use,
 contrib-group
 </pre>
 
-## `<contrib-group>`
+### `<contrib-group>`
 
 **Attributes**:
 <pre>
@@ -430,7 +434,7 @@ contrib*
 article-meta, collab
 </pre>
 
-## `<contrib-id>`
+### `<contrib-id>`
 
 **Attributes**:
 <pre>
@@ -445,7 +449,7 @@ TEXT
 contrib
 </pre>
 
-## `<copyright-holder>`
+### `<copyright-holder>`
 
 **Attributes**:
 <pre>
@@ -460,7 +464,7 @@ TEXT
 permissions
 </pre>
 
-## `<copyright-statement>`
+### `<copyright-statement>`
 
 **Attributes**:
 <pre>
@@ -475,7 +479,7 @@ TEXT
 permissions
 </pre>
 
-## `<copyright-year>`
+### `<copyright-year>`
 
 **Attributes**:
 <pre>
@@ -490,7 +494,7 @@ TEXT
 permissions
 </pre>
 
-## `<country>`
+### `<country>`
 
 **Attributes**:
 <pre>
@@ -505,7 +509,7 @@ TEXT
 aff
 </pre>
 
-## `<data-title>`
+### `<data-title>`
 
 **Attributes**:
 <pre>
@@ -520,7 +524,7 @@ id, xml:base, content-type, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<date>`
+### `<date>`
 
 **Attributes**:
 <pre>
@@ -535,7 +539,7 @@ id, xml:base, date-type, publication-format, iso-8601-date, calendar, specific-u
 history
 </pre>
 
-## `<date-in-citation>`
+### `<date-in-citation>`
 
 **Attributes**:
 <pre>
@@ -550,7 +554,7 @@ TEXT
 element-citation
 </pre>
 
-## `<day>`
+### `<day>`
 
 **Attributes**:
 <pre>
@@ -565,7 +569,7 @@ TEXT
 date, element-citation, pub-date
 </pre>
 
-## `<disp-quote>`
+### `<disp-quote>`
 
 **Attributes**:
 <pre>
@@ -580,7 +584,7 @@ p+,attrib?
 body, sec
 </pre>
 
-## `<edition>`
+### `<edition>`
 
 **Attributes**:
 <pre>
@@ -595,7 +599,7 @@ id, xml:base, designator, content-type, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<element-citation>`
+### `<element-citation>`
 
 **Attributes**:
 <pre>
@@ -610,7 +614,7 @@ id, xml:base, publication-type, publisher-type, publication-format, specific-use
 ref
 </pre>
 
-## `<elocation-id>`
+### `<elocation-id>`
 
 **Attributes**:
 <pre>
@@ -625,7 +629,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-## `<email>`
+### `<email>`
 
 **Attributes**:
 <pre>
@@ -640,7 +644,7 @@ id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 aff, collab, contrib, data-title
 </pre>
 
-## `<era>`
+### `<era>`
 
 **Attributes**:
 <pre>
@@ -655,7 +659,7 @@ TEXT
 date, pub-date
 </pre>
 
-## `<ext-link>`
+### `<ext-link>`
 
 **Attributes**:
 <pre>
@@ -670,7 +674,7 @@ id, xml:base, ext-link-type, assigning-authority, specific-use, xml:lang, xlink:
 aff, article-title, chapter-title, data-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-## `<fax>`
+### `<fax>`
 
 **Attributes**:
 <pre>
@@ -685,7 +689,7 @@ TEXT
 aff
 </pre>
 
-## `<fig>`
+### `<fig>`
 
 **Attributes**:
 <pre>
@@ -700,7 +704,7 @@ object-id?,label?,caption?,graphic,permissions?
 body, sec
 </pre>
 
-## `<fixed-case>`
+### `<fixed-case>`
 
 **Attributes**:
 <pre>
@@ -715,7 +719,7 @@ id, xml:base, content-type, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<fn>`
+### `<fn>`
 
 **Attributes**:
 <pre>
@@ -730,7 +734,7 @@ p+
 fn-group
 </pre>
 
-## `<fn-group>`
+### `<fn-group>`
 
 **Attributes**:
 <pre>
@@ -745,7 +749,7 @@ label?,title?,fn+
 back
 </pre>
 
-## `<fpage>`
+### `<fpage>`
 
 **Attributes**:
 <pre>
@@ -760,7 +764,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-## `<front>`
+### `<front>`
 
 **Attributes**:
 <pre>
@@ -775,7 +779,7 @@ journal-meta?,article-meta
 article
 </pre>
 
-## `<funding-group>`
+### `<funding-group>`
 
 **Attributes**:
 <pre>
@@ -790,7 +794,7 @@ award-group*
 article-meta
 </pre>
 
-## `<funding-source>`
+### `<funding-source>`
 
 **Attributes**:
 <pre>
@@ -805,7 +809,7 @@ institution-wrap
 award-group
 </pre>
 
-## `<given-names>`
+### `<given-names>`
 
 **Attributes**:
 <pre>
@@ -820,7 +824,7 @@ id, xml:base, initials
 name
 </pre>
 
-## `<graphic>`
+### `<graphic>`
 
 **Attributes**:
 <pre>
@@ -835,7 +839,7 @@ EMPTY
 fig
 </pre>
 
-## `<history>`
+### `<history>`
 
 **Attributes**:
 <pre>
@@ -850,7 +854,7 @@ date*
 article-meta
 </pre>
 
-## `<inline-formula>`
+### `<inline-formula>`
 
 **Attributes**:
 <pre>
@@ -865,7 +869,7 @@ tex-math
 article-title, chapter-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-## `<institution>`
+### `<institution>`
 
 **Attributes**:
 <pre>
@@ -880,7 +884,7 @@ id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 aff, institution-wrap
 </pre>
 
-## `<institution-id>`
+### `<institution-id>`
 
 **Attributes**:
 <pre>
@@ -895,7 +899,7 @@ TEXT
 institution-wrap
 </pre>
 
-## `<institution-wrap>`
+### `<institution-wrap>`
 
 **Attributes**:
 <pre>
@@ -910,7 +914,7 @@ id, xml:base
 aff, funding-source
 </pre>
 
-## `<isbn>`
+### `<isbn>`
 
 **Attributes**:
 <pre>
@@ -925,7 +929,7 @@ TEXT
 article-meta
 </pre>
 
-## `<issue>`
+### `<issue>`
 
 **Attributes**:
 <pre>
@@ -940,7 +944,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-## `<italic>`
+### `<italic>`
 
 **Attributes**:
 <pre>
@@ -955,7 +959,7 @@ id, xml:base, toggle, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<kwd>`
+### `<kwd>`
 
 **Attributes**:
 <pre>
@@ -970,7 +974,7 @@ id, xml:base, content-type
 kwd-group
 </pre>
 
-## `<kwd-group>`
+### `<kwd-group>`
 
 **Attributes**:
 <pre>
@@ -985,7 +989,7 @@ label?,title?,((kwd|compound-kwd|nested-kwd)+|unstructured-kwd-group*)
 article-meta
 </pre>
 
-## `<label>`
+### `<label>`
 
 **Attributes**:
 <pre>
@@ -1000,7 +1004,7 @@ id, xml:base, alt, xml:lang
 aff, fig, fn-group, kwd-group, table-wrap
 </pre>
 
-## `<license>`
+### `<license>`
 
 **Attributes**:
 <pre>
@@ -1015,7 +1019,7 @@ id, xml:base, license-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 permissions
 </pre>
 
-## `<license-p>`
+### `<license-p>`
 
 **Attributes**:
 <pre>
@@ -1030,7 +1034,7 @@ id, xml:base, content-type, specific-use
 license
 </pre>
 
-## `<list>`
+### `<list>`
 
 **Attributes**:
 <pre>
@@ -1045,7 +1049,7 @@ list-item+
 body, list-item, sec
 </pre>
 
-## `<list-item>`
+### `<list-item>`
 
 **Attributes**:
 <pre>
@@ -1060,7 +1064,7 @@ id, xml:base, specific-use, xml:lang
 list
 </pre>
 
-## `<lpage>`
+### `<lpage>`
 
 **Attributes**:
 <pre>
@@ -1075,7 +1079,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-## `<monospace>`
+### `<monospace>`
 
 **Attributes**:
 <pre>
@@ -1090,7 +1094,7 @@ id, xml:base, toggle, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<month>`
+### `<month>`
 
 **Attributes**:
 <pre>
@@ -1105,7 +1109,7 @@ TEXT
 date, element-citation, pub-date
 </pre>
 
-## `<name>`
+### `<name>`
 
 **Attributes**:
 <pre>
@@ -1120,7 +1124,7 @@ id, xml:base, content-type, name-style, specific-use, xml:lang
 contrib, name-alternatives, person-group
 </pre>
 
-## `<name-alternatives>`
+### `<name-alternatives>`
 
 **Attributes**:
 <pre>
@@ -1135,7 +1139,7 @@ id, xml:base
 person-group
 </pre>
 
-## `<named-content>`
+### `<named-content>`
 
 **Attributes**:
 <pre>
@@ -1150,7 +1154,7 @@ TEXT
 article-title, chapter-title, collab, data-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, preformat, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-## `<object-id>`
+### `<object-id>`
 
 **Attributes**:
 <pre>
@@ -1165,7 +1169,7 @@ TEXT
 fig, table-wrap
 </pre>
 
-## `<overline>`
+### `<overline>`
 
 **Attributes**:
 <pre>
@@ -1180,7 +1184,7 @@ id, xml:base, toggle, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<p>`
+### `<p>`
 
 **Attributes**:
 <pre>
@@ -1195,7 +1199,7 @@ id, xml:base, content-type, specific-use, xml:lang
 abstract, bio, body, caption, disp-quote, fn, list-item, sec, trans-abstract
 </pre>
 
-## `<page-range>`
+### `<page-range>`
 
 **Attributes**:
 <pre>
@@ -1210,7 +1214,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-## `<part-title>`
+### `<part-title>`
 
 **Attributes**:
 <pre>
@@ -1225,7 +1229,7 @@ id, xml:base, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<patent>`
+### `<patent>`
 
 **Attributes**:
 <pre>
@@ -1240,7 +1244,7 @@ id, xml:base, content-type, country, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<permissions>`
+### `<permissions>`
 
 **Attributes**:
 <pre>
@@ -1255,7 +1259,7 @@ copyright-statement*,copyright-year*,copyright-holder*,(ali:free_to_read|license
 article-meta, fig, table-wrap
 </pre>
 
-## `<person-group>`
+### `<person-group>`
 
 **Attributes**:
 <pre>
@@ -1270,7 +1274,7 @@ id, xml:base, person-group-type, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<phone>`
+### `<phone>`
 
 **Attributes**:
 <pre>
@@ -1285,7 +1289,7 @@ id, xml:base, content-type, specific-use
 aff
 </pre>
 
-## `<postal-code>`
+### `<postal-code>`
 
 **Attributes**:
 <pre>
@@ -1300,7 +1304,7 @@ TEXT
 aff
 </pre>
 
-## `<prefix>`
+### `<prefix>`
 
 **Attributes**:
 <pre>
@@ -1315,7 +1319,7 @@ id, xml:base, content-type, specific-use, xml:lang
 name
 </pre>
 
-## `<preformat>`
+### `<preformat>`
 
 **Attributes**:
 <pre>
@@ -1330,7 +1334,7 @@ id, xml:base, position, orientation, specific-use, xml:lang, preformat-type, xml
 body, sec
 </pre>
 
-## `<price>`
+### `<price>`
 
 **Attributes**:
 <pre>
@@ -1345,7 +1349,7 @@ id, xml:base, currency, content-type, specific-use, xml:lang
 license-p
 </pre>
 
-## `<pub-date>`
+### `<pub-date>`
 
 **Attributes**:
 <pre>
@@ -1360,7 +1364,7 @@ id, xml:base, pub-type, publication-format, date-type, iso-8601-date, calendar, 
 article-meta
 </pre>
 
-## `<pub-id>`
+### `<pub-id>`
 
 **Attributes**:
 <pre>
@@ -1375,7 +1379,7 @@ TEXT
 element-citation
 </pre>
 
-## `<publisher-loc>`
+### `<publisher-loc>`
 
 **Attributes**:
 <pre>
@@ -1390,7 +1394,7 @@ TEXT
 element-citation
 </pre>
 
-## `<publisher-name>`
+### `<publisher-name>`
 
 **Attributes**:
 <pre>
@@ -1405,7 +1409,7 @@ TEXT
 element-citation
 </pre>
 
-## `<ref>`
+### `<ref>`
 
 **Attributes**:
 <pre>
@@ -1420,7 +1424,7 @@ element-citation
 ref-list
 </pre>
 
-## `<ref-list>`
+### `<ref-list>`
 
 **Attributes**:
 <pre>
@@ -1435,7 +1439,7 @@ ref*
 back
 </pre>
 
-## `<role>`
+### `<role>`
 
 **Attributes**:
 <pre>
@@ -1450,7 +1454,7 @@ id, xml:base, content-type, specific-use, xml:lang
 contrib, person-group
 </pre>
 
-## `<sc>`
+### `<sc>`
 
 **Attributes**:
 <pre>
@@ -1465,7 +1469,7 @@ id, xml:base, toggle, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<season>`
+### `<season>`
 
 **Attributes**:
 <pre>
@@ -1480,7 +1484,7 @@ TEXT
 date, pub-date
 </pre>
 
-## `<sec>`
+### `<sec>`
 
 **Attributes**:
 <pre>
@@ -1495,7 +1499,7 @@ title?,(boxed-text|chem-struct-wrap|code|fig|fig-group|table-wrap|disp-formula|d
 body, sec
 </pre>
 
-## `<series>`
+### `<series>`
 
 **Attributes**:
 <pre>
@@ -1510,7 +1514,7 @@ id, xml:base, content-type, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<source>`
+### `<source>`
 
 **Attributes**:
 <pre>
@@ -1525,7 +1529,7 @@ id, xml:base, content-type, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<state>`
+### `<state>`
 
 **Attributes**:
 <pre>
@@ -1540,7 +1544,7 @@ TEXT
 aff
 </pre>
 
-## `<strike>`
+### `<strike>`
 
 **Attributes**:
 <pre>
@@ -1555,7 +1559,7 @@ id, xml:base, toggle, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<string-date>`
+### `<string-date>`
 
 **Attributes**:
 <pre>
@@ -1570,7 +1574,7 @@ TEXT
 date, pub-date
 </pre>
 
-## `<string-name>`
+### `<string-name>`
 
 **Attributes**:
 <pre>
@@ -1585,7 +1589,7 @@ id, xml:base, content-type, name-style, specific-use, xml:lang
 contrib, name-alternatives, person-group
 </pre>
 
-## `<sub>`
+### `<sub>`
 
 **Attributes**:
 <pre>
@@ -1600,7 +1604,7 @@ id, xml:base, arrange, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<subj-group>`
+### `<subj-group>`
 
 **Attributes**:
 <pre>
@@ -1615,7 +1619,7 @@ id, xml:base, subj-group-type, specific-use, xml:lang
 article-categories, subj-group
 </pre>
 
-## `<subject>`
+### `<subject>`
 
 **Attributes**:
 <pre>
@@ -1630,7 +1634,7 @@ id, xml:base, content-type
 subj-group
 </pre>
 
-## `<suffix>`
+### `<suffix>`
 
 **Attributes**:
 <pre>
@@ -1645,7 +1649,7 @@ id, xml:base, content-type, specific-use, xml:lang
 name
 </pre>
 
-## `<sup>`
+### `<sup>`
 
 **Attributes**:
 <pre>
@@ -1660,7 +1664,7 @@ id, xml:base, arrange, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<surname>`
+### `<surname>`
 
 **Attributes**:
 <pre>
@@ -1675,7 +1679,7 @@ id, xml:base, initials
 name
 </pre>
 
-## `<table>`
+### `<table>`
 
 **Attributes**:
 <pre>
@@ -1690,7 +1694,7 @@ id, xml:base, content-type, style, summary, width, border, frame, rules, cellspa
 table-wrap
 </pre>
 
-## `<table-wrap>`
+### `<table-wrap>`
 
 **Attributes**:
 <pre>
@@ -1705,7 +1709,7 @@ object-id?,label?,caption?,table,permissions?
 body, sec
 </pre>
 
-## `<tbody>`
+### `<tbody>`
 
 **Attributes**:
 <pre>
@@ -1720,7 +1724,7 @@ tr+
 table
 </pre>
 
-## `<td>`
+### `<td>`
 
 **Attributes**:
 <pre>
@@ -1735,7 +1739,7 @@ id, xml:base, content-type, style, abbr, axis, headers, scope, rowspan, colspan,
 tr
 </pre>
 
-## `<tex-math>`
+### `<tex-math>`
 
 **Attributes**:
 <pre>
@@ -1750,7 +1754,7 @@ TEXT
 inline-formula
 </pre>
 
-## `<tfoot>`
+### `<tfoot>`
 
 **Attributes**:
 <pre>
@@ -1765,7 +1769,7 @@ tr+
 table
 </pre>
 
-## `<th>`
+### `<th>`
 
 **Attributes**:
 <pre>
@@ -1780,7 +1784,7 @@ id, xml:base, content-type, style, abbr, axis, headers, scope, rowspan, colspan,
 tr
 </pre>
 
-## `<thead>`
+### `<thead>`
 
 **Attributes**:
 <pre>
@@ -1795,7 +1799,7 @@ tr+
 table
 </pre>
 
-## `<title>`
+### `<title>`
 
 **Attributes**:
 <pre>
@@ -1810,7 +1814,7 @@ id, xml:base, content-type, specific-use
 caption, fn-group, kwd-group, sec
 </pre>
 
-## `<title-group>`
+### `<title-group>`
 
 **Attributes**:
 <pre>
@@ -1825,7 +1829,7 @@ article-title,trans-title-group*
 article-meta
 </pre>
 
-## `<tr>`
+### `<tr>`
 
 **Attributes**:
 <pre>
@@ -1840,7 +1844,7 @@ id, xml:base, content-type, style, align, char, charoff, valign
 table, tbody, tfoot, thead
 </pre>
 
-## `<trans-abstract>`
+### `<trans-abstract>`
 
 **Attributes**:
 <pre>
@@ -1855,7 +1859,7 @@ p*
 article-meta
 </pre>
 
-## `<trans-title>`
+### `<trans-title>`
 
 **Attributes**:
 <pre>
@@ -1870,7 +1874,7 @@ id, xml:base, content-type, specific-use, xml:lang
 trans-title-group
 </pre>
 
-## `<trans-title-group>`
+### `<trans-title-group>`
 
 **Attributes**:
 <pre>
@@ -1885,7 +1889,7 @@ trans-title,trans-subtitle*
 title-group
 </pre>
 
-## `<underline>`
+### `<underline>`
 
 **Attributes**:
 <pre>
@@ -1900,7 +1904,7 @@ id, xml:base, toggle, underline-style, specific-use
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
-## `<uri>`
+### `<uri>`
 
 **Attributes**:
 <pre>
@@ -1915,7 +1919,7 @@ id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlin
 aff, data-title, element-citation
 </pre>
 
-## `<version>`
+### `<version>`
 
 **Attributes**:
 <pre>
@@ -1930,7 +1934,7 @@ id, xml:base, designator, content-type, specific-use, xml:lang
 element-citation
 </pre>
 
-## `<volume>`
+### `<volume>`
 
 **Attributes**:
 <pre>
@@ -1945,7 +1949,7 @@ TEXT
 article-meta, element-citation
 </pre>
 
-## `<xref>`
+### `<xref>`
 
 **Attributes**:
 <pre>
@@ -1960,7 +1964,7 @@ id, xml:base, ref-type, alt, rid, specific-use, xml:lang
 article-title, chapter-title, collab, contrib, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
-## `<year>`
+### `<year>`
 
 **Attributes**:
 <pre>
@@ -1975,7 +1979,12 @@ TEXT
 date, element-citation, pub-date
 </pre>
 
-# Not Implemented
+## Not Implemented
+
+These elements have not been implemented yet and need go through the recommendation process.
+If you want to contribute, go to [https://github.com/substance/texture/issues](https://github.com/substance/texture/issues)
+and open a request if it does not exist yet. Please provide one ore multiple XML examples
+and explanations that help understanding the use-case.
 
 - abbrev
 - abbrev-journal-title

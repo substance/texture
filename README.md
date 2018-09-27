@@ -24,7 +24,6 @@ Authors and Affiliations                | ✓
 [Dar](https://github.com/substance/dar) Storage | ✓
 Article Record (`issue`, `fpage`, etc.) | ✓
 Translations                            | ✓
-Track Changes                           | 2.0
 Group authors                           | ✓
 Realtime Collaborative Editing          |
 **Supported Content**                   |
@@ -32,6 +31,7 @@ Paragraph                               | ✓
 Heading                                 | ✓
 Inline Formula                          | ✓
 Display Formula                         | 2.0
+Definition List                         | 2.0
 List                                    | ✓
 Blockquote                              | ✓
 Figure                                  | ✓

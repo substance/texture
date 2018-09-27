@@ -91,7 +91,13 @@ b.task('schema:jats', () => {
 
 b.task('schema:texture-article', () => {
   _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2))
-  b.copy('./tmp/TextureArticle.schema.md', './docs/TextureArticle.md')
+  b.custom(`Copy schema documentation...`, {
+    src: './tmp/TextureArticle.schema.md',
+    dest: './docs/TextureArticle.md',
+    execute () {
+      return b.copy('./tmp/TextureArticle.schema.md', './docs/TextureArticle.md')
+    }
+  })
 })
 
 b.task('schema:dar-manifest', () => {
@@ -326,15 +332,20 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
     src: [src].concat(deps),
     dest: DEST,
     execute () {
-      const { compileRNG, checkSchema } = require('substance')
-      const xmlSchema = compileRNG(fs, searchDirs, entry)
-      b.writeFileSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
-      b.writeFileSync(SCHEMA, xmlSchemaToMD(xmlSchema))
-      if (options.debug) {
-        const issues = checkSchema(xmlSchema)
-        const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
-        b.writeFileSync(ISSUES, issuesData)
-      }
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const { compileRNG, checkSchema } = require('substance')
+          const xmlSchema = compileRNG(fs, searchDirs, entry)
+          b.writeFileSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
+          b.writeFileSync(SCHEMA, xmlSchemaToMD(xmlSchema))
+          if (options.debug) {
+            const issues = checkSchema(xmlSchema)
+            const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
+            b.writeFileSync(ISSUES, issuesData)
+          }
+          resolve()
+        }, 250)
+      })
     }
   })
 }
@@ -347,9 +358,15 @@ function xmlSchemaToMD (xmlSchema) {
   _analyzeElementSchemas(elementSchemas)
 
   elementNames.sort()
+  let notImplemented = []
+  result.push('# Elements')
   elementNames.forEach(name => {
     let elementSchema = elementSchemas[name]
-    result.push('# `<' + elementSchema.name + '>`')
+    if (elementSchema.type === 'not-implemented') {
+      notImplemented.push(elementSchema)
+      return
+    }
+    result.push('## `<' + elementSchema.name + '>`')
     if (elementSchema.type === 'not-implemented') {
       result.push('Not implemented.')
     } else {
@@ -374,12 +391,22 @@ function xmlSchemaToMD (xmlSchema) {
       result.push('<pre>')
       result.push(elementSpec)
       result.push('</pre>')
-      result.push('**This element may be contained in:**')
-      result.push('<pre>')
-      result.push(parents.join(', '))
-      result.push('</pre>')
+      if (parents.length > 0) {
+        result.push('**This element may be contained in:**')
+        result.push('<pre>')
+        result.push(parents.join(', '))
+        result.push('</pre>')
+      }
       result.push('')
     }
   })
+  if (notImplemented.length > 0) {
+    result.push('# Not Implemented')
+    result.push('')
+    notImplemented.forEach(elementSchema => {
+      result.push('- ' + elementSchema.name)
+    })
+  }
+
   return result.join('\n')
 }

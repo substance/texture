@@ -883,31 +883,19 @@ InternalArticleSchema.addNodes([
   'label',
   'p',
   'tex-math',
-  // formatting
   'bold',
-  'fixed-case',
   'italic',
   'monospace',
   'overline',
-  'roman',
-  'sans-serif',
   'sc',
   'strike',
   'sub',
   'sup',
   'underline',
-  'ruby',
   // annos and inline-nodes
-  'abbrev',
   'break',
-  'chem-struct',
   'ext-link',
-  'hr',
-  'named-content',
   'inline-formula',
-  'inline-graphic',
-  'styled-content',
-  'x',
   'xref'
 ].map(name => TextureArticleSchema.getNodeClass(name, 'strict')))
 

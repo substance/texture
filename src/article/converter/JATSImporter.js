@@ -3,7 +3,7 @@ import {
   validateXMLSchema, isString
 } from 'substance'
 
-import JATS from '../JATSArchiving'
+import JATS from '../JATS'
 import TextureArticle from '../TextureArticle'
 import { jats2restrictedJats } from './j2r'
 import { jats2internal } from './r2t'

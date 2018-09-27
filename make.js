@@ -12,8 +12,9 @@ const RNG_SEARCH_DIRS = [
   path.join(__dirname, 'src', 'article')
 ]
 
+const JATS = 'JATS-archiving'
 const RNG_FILES = [
-  'src/article/JATS-archiving.rng',
+  `src/article/${JATS}.rng`,
   'src/article/TextureArticle.rng'
 ]
 
@@ -84,13 +85,11 @@ b.task('run-app', ['app'], () => {
 
 // low-level make targets
 
-b.task('schema:single-jats-file', _singleJATSFile)
-
 b.task('schema:jats', () => {
-  _compileSchema('JATS-archiving', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 1))
+  _compileSchema(JATS, RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 1))
 })
 
-b.task('schema:dar-article', () => {
+b.task('schema:texture-article', () => {
   _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2))
 })
 
@@ -98,11 +97,8 @@ b.task('schema:dar-manifest', () => {
   _compileSchema('Manifest', 'src/dar/Manifest.rng', [path.join(__dirname, 'src', 'dar')], [])
 })
 
-b.task('schema:texture-article', () => {
-})
-
 b.task('schema:debug', () => {
-  _compileSchema('JATS-archiving', RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 1), { debug: true })
+  _compileSchema(JATS, RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 1), { debug: true })
   _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2), { debug: true })
 })
 
@@ -115,7 +111,7 @@ b.task('build:assets', function () {
   b.css('texture-reset.css', DIST + 'texture-reset.css')
 })
 
-b.task('build:schema', ['schema:jats', 'schema:dar-article', 'schema:texture-article', 'schema:dar-manifest'])
+b.task('build:schema', ['schema:jats', 'schema:texture-article', 'schema:dar-manifest'])
 
 b.task('build:browser', () => {
   _buildLib(DIST, 'browser')

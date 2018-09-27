@@ -91,6 +91,7 @@ b.task('schema:jats', () => {
 
 b.task('schema:texture-article', () => {
   _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2))
+  b.copy('./tmp/TextureArticle.schema.md', './docs/TextureArticle.md')
 })
 
 b.task('schema:dar-manifest', () => {
@@ -328,7 +329,7 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
       const { compileRNG, checkSchema } = require('substance')
       const xmlSchema = compileRNG(fs, searchDirs, entry)
       b.writeFileSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
-      b.writeFileSync(SCHEMA, xmlSchema.toMD())
+      b.writeFileSync(SCHEMA, xmlSchemaToMD(xmlSchema))
       if (options.debug) {
         const issues = checkSchema(xmlSchema)
         const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
@@ -338,46 +339,47 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
   })
 }
 
-// we used this internally just to get a single-file version of
-// the offficial JATS 1.1 rng data set
-function _singleJATSFile () {
-  [{
-    RNG_DIR: 'data/jats/archiving',
-    ENTRY: 'JATS-archive-oasis-article1-mathml3.rng',
-    DEST: 'src/article/JATS-archiving.rng'
-  }].forEach(({ RNG_DIR, ENTRY, DEST }) => {
-    b.custom(`Pulling JATS spec into a single file...`, {
-      src: [RNG_DIR + '/*.rng'],
-      dest: DEST,
-      execute () {
-        const { loadRNG } = require('substance')
-        let rng = loadRNG(fs, [RNG_DIR], ENTRY)
-        // sort definitions by name
-        let grammar = rng.find('grammar')
-        let others = []
-        let defines = []
-        grammar.getChildren().forEach((child) => {
-          if (child.tagName === 'define') {
-            defines.push(child)
-          } else {
-            others.push(child)
-          }
-        })
-        defines.sort((a, b) => {
-          const aname = a.getAttribute('name').toLowerCase()
-          const bname = b.getAttribute('name').toLowerCase()
-          if (aname < bname) return -1
-          if (bname < aname) return 1
-          return 0
-        })
-        grammar.empty()
-        defines.concat(others).forEach((el) => {
-          grammar.appendChild('\n  ')
-          grammar.appendChild(el)
-        })
-        let xml = rng.serialize()
-        b.writeFileSync(DEST, xml)
+function xmlSchemaToMD (xmlSchema) {
+  const { _analyzeElementSchemas } = require('substance')
+  let result = []
+  let elementSchemas = xmlSchema._elementSchemas
+  let elementNames = Object.keys(elementSchemas)
+  _analyzeElementSchemas(elementSchemas)
+
+  elementNames.sort()
+  elementNames.forEach(name => {
+    let elementSchema = elementSchemas[name]
+    result.push('# `<' + elementSchema.name + '>`')
+    if (elementSchema.type === 'not-implemented') {
+      result.push('Not implemented.')
+    } else {
+      let attributes = elementSchema.attributes
+      let elementSpec = elementSchema.expr.toString()
+      if (elementSpec.startsWith('(') && elementSpec.endsWith(')')) {
+        elementSpec = elementSpec.slice(1, -1)
       }
-    })
+      if (/^\s*$/.exec(elementSpec)) elementSpec = 'EMPTY'
+
+      let parents = Object.keys(elementSchema.parents)
+      if (parents.length === 0 && xmlSchema.getStartElement() !== name) {
+        console.error('FIXME: element <%s> is not used anymore, we should remove it for now.', name)
+      }
+
+      result.push('')
+      result.push('**Attributes**:')
+      result.push('<pre>')
+      result.push(Object.keys(attributes).join(', '))
+      result.push('</pre>')
+      result.push('**Contains**:')
+      result.push('<pre>')
+      result.push(elementSpec)
+      result.push('</pre>')
+      result.push('**This element may be contained in:**')
+      result.push('<pre>')
+      result.push(parents.join(', '))
+      result.push('</pre>')
+      result.push('')
+    }
   })
+  return result.join('\n')
 }

@@ -681,55 +681,12 @@
     </element>
   </define>
 
-  <define name="corresp">
-    <element name="corresp">
-      <ref name="corresp-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text />
-          <ref name="all-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
   <define name="date-in-citation">
     <element name="date-in-citation">
       <ref name="date-in-citation-attlist"/>
       <optional>
         <text />
       </optional>
-    </element>
-  </define>
-
-  <define name="disp-formula">
-    <element name="disp-formula">
-      <ref name="disp-formula-attlist"/>
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="abstract"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="access.class"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="kwd-group"/>
-      </optional>
-      <optional>
-        <ref name="attrib"/>
-      </optional>
-      <optional>
-        <ref name="permissions"/>
-      </optional>
-      <choice>
-        <ref name="alternatives"/>
-        <ref name="code"/>
-        <ref name="math.class"/>
-        <ref name="graphic"/>
-        <ref name="preformat"/>
-      </choice>
     </element>
   </define>
 
@@ -888,18 +845,6 @@
     </element>
   </define>
 
-  <define name="inline-supplementary-material">
-    <element name="inline-supplementary-material">
-      <ref name="inline-supplementary-material-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
   <define name="issue">
     <element name="issue">
       <ref name="issue-attlist"/>
@@ -946,31 +891,6 @@
           <ref name="list"/>
         </choice>
       </oneOrMore>
-    </element>
-  </define>
-
-  <define name="media">
-    <element name="media">
-      <ref name="media-attlist"/>
-      <optional><ref name="object-id"/></optional>
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="caption"/>
-      </optional>
-    </element>
-  </define>
-
-  <define name="mixed-citation">
-    <element name="mixed-citation">
-      <ref name="mixed-citation-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-text"/>
-        </choice>
-      </zeroOrMore>
     </element>
   </define>
 
@@ -1031,23 +951,6 @@
       <ref name="emphasis.class"/>
       <ref name="phrase.class"/>
       <ref name="subsup.class"/>
-    </choice>
-  </define>
-
-  <define name="product">
-    <element name="product">
-      <ref name="product-attlist"/>
-      <zeroOrMore>
-        <ref name="product-elements"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="product-elements">
-    <choice>
-      <ref name="price.class"/>
-      <ref name="references.class"/>
-      <ref name="xref"/>
     </choice>
   </define>
 
@@ -1152,39 +1055,6 @@
     </choice>
   </define>
 
-  <define name="related-article">
-    <element name="related-article">
-      <ref name="related-article-attlist"/>
-      <zeroOrMore>
-        <ref name="related-article-elements"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="related-article-elements">
-    <choice>
-      <ref name="journal-id.class"/>
-      <ref name="references.class"/>
-    </choice>
-  </define>
-
-  <define name="related-object">
-    <element name="related-object">
-      <ref name="related-object-attlist"/>
-      <zeroOrMore>
-        <ref name="related-object-elements"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="related-object-elements">
-    <choice>
-      <ref name="citation-additions.class"/>
-      <ref name="label.class"/>
-      <ref name="references.class"/>
-    </choice>
-  </define>
-
   <define name="rich-text">
     <choice>
       <ref name="emphasis.class"/>
@@ -1203,28 +1073,6 @@
       </zeroOrMore>
       <zeroOrMore>
         <ref name="sec-level"/>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="sig-block">
-    <element name="sig-block">
-      <ref name="sig-block-attlist"/>
-      <oneOrMore>
-        <ref name="sig"/>
-      </oneOrMore>
-    </element>
-  </define>
-
-  <define name="sig">
-    <element name="sig">
-      <ref name="sig-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="simple-phrase"/>
-          <ref name="break"/>
-        </choice>
       </zeroOrMore>
     </element>
   </define>
@@ -1260,23 +1108,6 @@
         <choice>
           <text/>
           <ref name="rich-text"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="speaker-elements">
-    <choice>
-      <ref name="simple-phrase"/>
-    </choice>
-  </define>
-
-  <define name="string-conf">
-    <element name="string-conf">
-      <ref name="string-conf-attlist"/>
-      <zeroOrMore>
-        <choice>
-          <text/>
         </choice>
       </zeroOrMore>
     </element>

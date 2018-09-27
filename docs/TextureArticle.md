@@ -1,6 +1,7 @@
 # Texture Article
 
-This schema defines a strict sub-set of JATS archiving.
+This schema defines a strict sub-set of JATS-archiving 1.1 .
+
 ## Supported Elements
 
 ### `<abstract>`

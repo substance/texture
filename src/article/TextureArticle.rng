@@ -30,128 +30,148 @@
   <s:elementType name="fn" s:type="container"/>
 
   <!--
-    ATTENTION: for the time-being we remove anything which is not supprted yet
-    which is harsh, but better to understand where we are right now.
+    for these we need to figure out if we want to support at all,
+    come up with a guide-line, and decide when to implement it
   -->
-  <s:removed name="abbrev"/>
-  <s:removed name="abbrev-journal-title"/>
-  <s:removed name="aff-alternatives"/>
-  <s:removed name="ack"/>
-  <s:removed name="address"/>
-  <s:removed name="alt-text"/>
-  <s:removed name="alt-title"/>
-  <s:removed name="alternatives"/>
-  <s:removed name="annotation"/>
-  <s:removed name="anonymous"/>
-  <s:removed name="app"/>
-  <s:removed name="app-group"/>
-  <s:removed name="array"/>
-  <s:removed name="author-comment"/>
-  <s:removed name="author-notes"/>
-  <s:removed name="boxed-text"/>
-  <s:removed name="chem-struct"/>
-  <s:removed name="chem-struct-wrap"/>
-  <s:removed name="citation-alternatives"/>
-  <s:removed name="collab-alternatives"/>
-  <s:removed name="comment"/>
-  <s:removed name="compound-kwd"/>
-  <s:removed name="compound-kwd-part"/>
-  <s:removed name="compound-subject"/>
-  <s:removed name="compound-subject-part"/>
-  <s:removed name="conference"/>
-  <s:removed name="conf-acronym"/>
-  <s:removed name="conf-date"/>
-  <s:removed name="conf-num"/>
-  <s:removed name="conf-theme"/>
-  <s:removed name="conf-sponsor"/>
-  <s:removed name="corresp"/>
-  <s:removed name="custom-meta"/>
-  <s:removed name="custom-meta-group"/>
-  <s:removed name="def"/>
-  <s:removed name="def-head"/>
-  <s:removed name="def-item"/>
-  <s:removed name="def-list"/>
-  <s:removed name="degrees"/>
-  <s:removed name="disp-formula"/>
-  <s:removed name="disp-formula-group"/>
-  <s:removed name="etal"/>
-  <s:removed name="fig-group"/>
-  <s:removed name="floats-group"/>
-  <s:removed name="front-stub"/>
-  <s:removed name="glossary"/>
-  <s:removed name="glyph-data"/>
-  <s:removed name="glyph-ref"/>
-  <s:removed name="gov"/>
-  <s:removed name="hr"/>
-  <s:removed name="inline-graphic"/>
-  <s:removed name="inline-supplementary-material"/>
-  <s:removed name="issue-sponsor"/>
-  <s:removed name="issn"/>
-  <s:removed name="issn-l"/>
-  <s:removed name="issue-id"/>
-  <s:removed name="issue-part"/>
-  <s:removed name="issue-title"/>
-  <s:removed name="journal-id"/>
-  <s:removed name="journal-meta"/>
-  <s:removed name="journal-subtitle"/>
-  <s:removed name="journal-title"/>
-  <s:removed name="journal-title-group"/>
-  <s:removed name="long-desc"/>
-  <s:removed name="media"/>
-  <s:removed name="meta-name"/>
-  <s:removed name="meta-value"/>
-  <s:removed name="milestone-start"/>
-  <s:removed name="milestone-end"/>
-  <s:removed name="mixed-citation"/>
-  <s:removed name="nested-kwd"/>
-  <s:removed name="note"/>
-  <s:removed name="notes"/>
-  <s:removed name="on-behalf"/>
-  <s:removed name="on-behalf-of"/>
-  <s:removed name="overline-start"/>
-  <s:removed name="overline-end"/>
-  <s:removed name="private-char"/>
-  <s:removed name="principal-award-recipient"/>
-  <s:removed name="principal-investigator"/>
-  <s:removed name="product"/>
-  <s:removed name="publisher"/>
-  <s:removed name="rb"/>
-  <s:removed name="related-article"/>
-  <s:removed name="related-object"/>
-  <s:removed name="response"/>
-  <s:removed name="roman"/>
-  <s:removed name="rp"/>
-  <s:removed name="rt"/>
-  <s:removed name="ruby"/>
-  <s:removed name="sans-serif"/>
-  <s:removed name="sec-meta"/>
-  <s:removed name="sig"/>
-  <s:removed name="sig-block"/>
-  <s:removed name="size"/>
-  <s:removed name="speaker"/>
-  <s:removed name="speech"/>
-  <s:removed name="statement"/>
-  <s:removed name="std"/>
-  <s:removed name="std-organization"/>
-  <s:removed name="string-conf"/>
-  <s:removed name="styled-content"/>
-  <s:removed name="sub-article"/>
-  <s:removed name="supplement"/>
-  <s:removed name="supplementary-material"/>
-  <s:removed name="table-wrap-foot"/>
-  <s:removed name="table-wrap-group"/>
-  <s:removed name="target"/>
-  <s:removed name="term"/>
-  <s:removed name="term-head"/>
-  <s:removed name="textual-form"/>
-  <s:removed name="trans-source"/>
-  <s:removed name="underline-start"/>
-  <s:removed name="underline-end"/>
-  <s:removed name="verse-group"/>
-  <s:removed name="verse-line"/>
-  <s:removed name="volume-id"/>
-  <s:removed name="volume-issue-group"/>
-  <s:removed name="volume-series"/>
+  <s:not-implemented name="abbrev"/>
+  <s:not-implemented name="abbrev-journal-title"/>
+  <s:not-implemented name="aff-alternatives"/>
+  <s:not-implemented name="ack"/>
+  <s:not-implemented name="address"/>
+  <s:not-implemented name="alt-text"/>
+  <s:not-implemented name="alt-title"/>
+  <s:not-implemented name="alternatives"/>
+  <s:not-implemented name="annotation"/>
+  <s:not-implemented name="anonymous"/>
+  <s:not-implemented name="app"/>
+  <s:not-implemented name="app-group"/>
+  <s:not-implemented name="array"/>
+  <s:not-implemented name="author-comment"/>
+  <s:not-implemented name="author-notes"/>
+  <s:not-implemented name="boxed-text"/>
+  <s:not-implemented name="chem-struct"/>
+  <s:not-implemented name="chem-struct-wrap"/>
+  <s:not-implemented name="citation-alternatives"/>
+  <s:not-implemented name="collab-alternatives"/>
+  <s:not-implemented name="comment"/>
+  <s:not-implemented name="compound-kwd"/>
+  <s:not-implemented name="compound-kwd-part"/>
+  <s:not-implemented name="compound-subject"/>
+  <s:not-implemented name="compound-subject-part"/>
+  <s:not-implemented name="conference"/>
+  <s:not-implemented name="conf-acronym"/>
+  <s:not-implemented name="conf-date"/>
+  <s:not-implemented name="conf-num"/>
+  <s:not-implemented name="conf-theme"/>
+  <s:not-implemented name="conf-sponsor"/>
+  <s:not-implemented name="corresp"/>
+  <s:not-implemented name="count"/>
+  <s:not-implemented name="counts"/>
+  <s:not-implemented name="custom-meta"/>
+  <s:not-implemented name="custom-meta-group"/>
+  <s:not-implemented name="def"/>
+  <s:not-implemented name="def-head"/>
+  <s:not-implemented name="def-item"/>
+  <s:not-implemented name="def-list"/>
+  <s:not-implemented name="degrees"/>
+  <s:not-implemented name="disp-formula"/>
+  <s:not-implemented name="disp-formula-group"/>
+  <s:not-implemented name="equation-count"/>
+  <s:not-implemented name="etal"/>
+  <s:not-implemented name="fig-count"/>
+  <s:not-implemented name="fig-group"/>
+  <s:not-implemented name="floats-group"/>
+  <s:not-implemented name="front-stub"/>
+  <s:not-implemented name="funding-statement"/>
+  <s:not-implemented name="glossary"/>
+  <s:not-implemented name="glyph-data"/>
+  <s:not-implemented name="glyph-ref"/>
+  <s:not-implemented name="gov"/>
+  <s:not-implemented name="hr"/>
+  <s:not-implemented name="inline-graphic"/>
+  <s:not-implemented name="inline-supplementary-material"/>
+  <s:not-implemented name="issue-sponsor"/>
+  <s:not-implemented name="issn"/>
+  <s:not-implemented name="issn-l"/>
+  <s:not-implemented name="issue-id"/>
+  <s:not-implemented name="issue-part"/>
+  <s:not-implemented name="issue-title"/>
+  <s:not-implemented name="journal-id"/>
+  <s:not-implemented name="journal-meta"/>
+  <s:not-implemented name="journal-subtitle"/>
+  <s:not-implemented name="journal-title"/>
+  <s:not-implemented name="journal-title-group"/>
+  <s:not-implemented name="long-desc"/>
+  <s:not-implemented name="media"/>
+  <s:not-implemented name="meta-name"/>
+  <s:not-implemented name="meta-value"/>
+  <s:not-implemented name="milestone-start"/>
+  <s:not-implemented name="milestone-end"/>
+  <s:not-implemented name="mixed-citation"/>
+  <s:not-implemented name="nested-kwd"/>
+  <s:not-implemented name="note"/>
+  <s:not-implemented name="notes"/>
+  <s:not-implemented name="on-behalf"/>
+  <s:not-implemented name="on-behalf-of"/>
+  <s:not-implemented name="open-access"/>
+  <s:not-implemented name="overline-start"/>
+  <s:not-implemented name="overline-end"/>
+  <s:not-implemented name="page-count"/>
+  <s:not-implemented name="private-char"/>
+  <s:not-implemented name="principal-award-recipient"/>
+  <s:not-implemented name="principal-investigator"/>
+  <s:not-implemented name="product"/>
+  <s:not-implemented name="publisher"/>
+  <s:not-implemented name="rb"/>
+  <s:not-implemented name="ref-count"/>
+  <s:not-implemented name="related-article"/>
+  <s:not-implemented name="related-object"/>
+  <s:not-implemented name="response"/>
+  <s:not-implemented name="roman"/>
+  <s:not-implemented name="rp"/>
+  <s:not-implemented name="rt"/>
+  <s:not-implemented name="ruby"/>
+  <s:not-implemented name="sans-serif"/>
+  <s:not-implemented name="sec-meta"/>
+  <s:not-implemented name="self-uri"/>
+  <s:not-implemented name="series-text"/>
+  <s:not-implemented name="series-title"/>
+  <s:not-implemented name="sig"/>
+  <s:not-implemented name="sig-block"/>
+  <s:not-implemented name="size"/>
+  <s:not-implemented name="speaker"/>
+  <s:not-implemented name="speech"/>
+  <s:not-implemented name="statement"/>
+  <s:not-implemented name="std"/>
+  <s:not-implemented name="std-organization"/>
+  <s:not-implemented name="string-conf"/>
+  <s:not-implemented name="styled-content"/>
+  <s:not-implemented name="subtitle"/>
+  <s:not-implemented name="sub-article"/>
+  <s:not-implemented name="supplement"/>
+  <s:not-implemented name="supplementary-material"/>
+  <s:not-implemented name="table-count"/>
+  <s:not-implemented name="table-wrap-foot"/>
+  <s:not-implemented name="table-wrap-group"/>
+  <s:not-implemented name="target"/>
+  <s:not-implemented name="term"/>
+  <s:not-implemented name="term-head"/>
+  <s:not-implemented name="textual-form"/>
+  <s:not-implemented name="trans-source"/>
+  <s:not-implemented name="trans-subtitle"/>
+  <s:not-implemented name="underline-start"/>
+  <s:not-implemented name="underline-end"/>
+  <s:not-implemented name="unstructured-kwd-group"/>
+  <s:not-implemented name="verse-group"/>
+  <s:not-implemented name="verse-line"/>
+  <s:not-implemented name="volume-id"/>
+  <s:not-implemented name="volume-issue-group"/>
+  <s:not-implemented name="volume-series"/>
+  <s:not-implemented name="word-count"/>
+
+  <!-- removed until we can use these, i.e. we add a parent-element that has them -->
+
+  <!-- elements we do not want to support -->
   <s:removed name="x"/>
 
   <!-- deprecated ones -->
@@ -398,9 +418,6 @@
       <zeroOrMore>
         <ref name="aff"/>
       </zeroOrMore>
-      <optional>
-        <ref name="author-notes"/>
-      </optional>
       <zeroOrMore>
         <ref name="pub-date"/>
       </zeroOrMore>
@@ -435,13 +452,6 @@
       <optional>
         <ref name="permissions"/>
       </optional>
-      <zeroOrMore>
-        <ref name="self-uri"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="related-article"/>
-        <ref name="related-object"/>
-      </zeroOrMore>
       <optional>
         <ref name="abstract"/>
       </optional>
@@ -454,15 +464,6 @@
       <zeroOrMore>
         <ref name="funding-group"/>
       </zeroOrMore>
-      <zeroOrMore>
-        <ref name="conference"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="counts"/>
-      </optional>
-      <optional>
-        <ref name="custom-meta-group"/>
-      </optional>
     </element>
   </define>
 
@@ -502,6 +503,15 @@
       <ref name="simple-phrase"/>
       <ref name="x.class"/>
     </choice>
+  </define>
+
+  <define name="article-categories">
+    <element name="article-categories">
+      <ref name="article-categories-attlist"/>
+      <zeroOrMore>
+        <ref name="subj-group"/>
+      </zeroOrMore>
+    </element>
   </define>
 
   <define name="award-id">
@@ -807,14 +817,7 @@
       <optional>
         <ref name="caption"/>
       </optional>
-      <!-- Only used to carry source code for reproducible figures -->
-      <optional>
-        <ref name="alternatives"/>
-      </optional>
-      <!-- Only optional to allow repro figs without graphic element -->
-      <optional>
-        <ref name="graphic"/>
-      </optional>
+      <ref name="graphic"/>
       <optional>
         <ref name="permissions"/>
       </optional>
@@ -832,7 +835,8 @@
 
   <define name="fpage">
     <element name="fpage">
-      <optional><text/></optional>
+      <ref name="fpage-attlist"/>
+      <text/>
     </element>
   </define>
 
@@ -843,6 +847,15 @@
         <ref name="journal-meta"/>
       </optional>
       <ref name="article-meta"/>
+    </element>
+  </define>
+
+  <define name="funding-group">
+    <element name="funding-group">
+      <ref name="funding-group-attlist"/>
+      <zeroOrMore>
+        <ref name="award-group"/>
+      </zeroOrMore>
     </element>
   </define>
 
@@ -1292,35 +1305,6 @@
     </element>
   </define>
 
-  <define name="styled-content">
-    <element name="styled-content">
-      <ref name="styled-content-attlist"/>
-      <choice>
-        <zeroOrMore>
-          <choice>
-            <text/>
-            <ref name="emphasis.class"/>
-            <ref name="inline-display-noalt.class"/>
-            <ref name="inline-math.class"/>
-            <ref name="phrase.class"/>
-            <ref name="simple-link.class"/>
-            <ref name="subsup.class"/>
-            <ref name="inline-supplementary-material"/>
-          </choice>
-        </zeroOrMore>
-        <zeroOrMore>
-          <choice>
-            <ref name="address-link.class"/>
-            <ref name="block-display.class"/>
-            <ref name="block-math.class"/>
-            <ref name="list.class"/>
-            <ref name="rest-of-para.class"/>
-          </choice>
-        </zeroOrMore>
-      </choice>
-    </element>
-  </define>
-
   <define name="table-wrap">
     <element name="table-wrap">
       <ref name="table-wrap-attlist"/>
@@ -1368,9 +1352,6 @@
     <element name="title-group">
       <ref name="title-group-attlist"/>
       <ref name="article-title"/>
-      <zeroOrMore>
-        <ref name="subtitle"/>
-       </zeroOrMore>
       <zeroOrMore>
         <ref name="trans-title-group"/>
       </zeroOrMore>

@@ -1,28 +1,22 @@
 import {
-  EventEmitter, DefaultDOMElement,
-  validateXMLSchema, isString
+  EventEmitter, DefaultDOMElement, isString
 } from 'substance'
 
-import JATS from '../JATSArchiving'
+import JATS from '../JATS'
 import TextureArticle from '../TextureArticle'
 import { jats2restrictedJats } from './j2r'
 import { jats2internal } from './r2t'
+import validateXML from './util/validateXML'
 
-/*
-  Goal:
-  - make it very transparent, what exactly gets transformed
-  - show what goes wrong
-
-*/
 export default class JATSImporter extends EventEmitter {
-  import (xml) {
+  import (xml, options = {}) {
     let state = {
       dom: null,
       errors: {
         'parse': [],
         'validate-jats': [],
         'jats2restrictedJats': [],
-        'validate-dar-article': [],
+        'validate-texture-article': [],
         'jats2internal': []
       },
       hasErrored: false
@@ -44,10 +38,10 @@ export default class JATSImporter extends EventEmitter {
 
     if (!this._validate(JATS, state)) return state
 
-    // JATS -> restricted JATS
+    // JATS -> restricted JATS (= TextureArticle)
     if (!this._transform('jats2restrictedJats', state)) return state
 
-    if (!this._validate(TextureArticle, state)) return state
+    if (!this._validate(TextureArticle, state, options)) return state
 
     // restrictedJATS -> InternalArticle
     if (!this._transform('jats2internal', state)) return state
@@ -55,10 +49,10 @@ export default class JATSImporter extends EventEmitter {
     return state
   }
 
-  _validate (schema, state) {
+  _validate (schema, state, options) {
     const name = schema.getName()
     const channel = `validate-${name}`
-    let res = validateXMLSchema(schema, state.dom)
+    let res = validateXML(schema, state.dom, options)
     if (!res.ok) {
       res.errors.forEach((err) => {
         this._error(state, channel, err)

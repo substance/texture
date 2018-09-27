@@ -540,14 +540,13 @@ class Permission extends DocumentNode {
 
 Permission.schema = {
   type: 'permission',
-  copyrightStatement: 'text',
-  copyrightYear: 'text',
-  copyrightHolder: 'text',
-  // URL to license description
-  // used as a unique license identifier
-  license: 'text',
-  // Optional: A paragraph holding the license text if needed
-  licenseText: 'text'
+  copyrightStatement: STRING,
+  copyrightYear: STRING,
+  copyrightHolder: STRING,
+  // URL to license description  used as a unique license identifier
+  // FIXME: bad naming. Use url, or licenseUrl?
+  license: STRING,
+  licenseText: TEXT(...RICH_TEXT_ANNOS)
 }
 
 /*
@@ -884,31 +883,19 @@ InternalArticleSchema.addNodes([
   'label',
   'p',
   'tex-math',
-  // formatting
   'bold',
-  'fixed-case',
   'italic',
   'monospace',
   'overline',
-  'roman',
-  'sans-serif',
   'sc',
   'strike',
   'sub',
   'sup',
   'underline',
-  'ruby',
   // annos and inline-nodes
-  'abbrev',
   'break',
-  'chem-struct',
   'ext-link',
-  'hr',
-  'named-content',
   'inline-formula',
-  'inline-graphic',
-  'styled-content',
-  'x',
   'xref'
 ].map(name => TextureArticleSchema.getNodeClass(name, 'strict')))
 

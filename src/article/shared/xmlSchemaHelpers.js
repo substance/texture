@@ -55,7 +55,8 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
         }
         break
       }
-      case 'external': {
+      case 'external':
+      case 'not-implemented': {
         NodeClass = class _XMLExternalNode extends XMLExternalNode {}
         break
       }
@@ -129,7 +130,8 @@ export function createXMLConverters (xmlSchema, tagNames) {
         ConverterClass = XMLElementNodeConverter
         break
       }
-      case 'external': {
+      case 'external':
+      case 'not-implemented': {
         ConverterClass = XMLExternalNodeConverter
         break
       }

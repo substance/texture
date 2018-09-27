@@ -352,6 +352,9 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
 
 function xmlSchemaToMD (xmlSchema) {
   const { _analyzeElementSchemas } = require('substance')
+  const PRE_START = '<pre style="white-space:pre-wrap;">'
+  const PRE_END = '</pre>'
+
   let result = []
   let elementSchemas = xmlSchema._elementSchemas
   let elementNames = Object.keys(elementSchemas)
@@ -361,7 +364,8 @@ function xmlSchemaToMD (xmlSchema) {
   let notImplemented = []
   result.push('# Texture Article')
   result.push('')
-  result.push('This schema defines a strict sub-set of JATS archiving.')
+  result.push('This schema defines a strict sub-set of JATS-archiving 1.1 .')
+  result.push('')
   result.push('## Supported Elements')
   result.push('')
   elementNames.forEach(name => {
@@ -388,18 +392,18 @@ function xmlSchemaToMD (xmlSchema) {
 
       result.push('')
       result.push('**Attributes**:')
-      result.push('<pre>')
+      result.push(PRE_START)
       result.push(Object.keys(attributes).join(', '))
-      result.push('</pre>')
+      result.push(PRE_END)
       result.push('**Contains**:')
-      result.push('<pre>')
+      result.push(PRE_START)
       result.push(elementSpec)
-      result.push('</pre>')
+      result.push(PRE_END)
       if (parents.length > 0) {
         result.push('**This element may be contained in:**')
-        result.push('<pre>')
+        result.push(PRE_START)
         result.push(parents.join(', '))
-        result.push('</pre>')
+        result.push(PRE_END)
       }
       result.push('')
     }

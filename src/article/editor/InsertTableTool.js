@@ -2,7 +2,7 @@ import { ToggleTool } from '../../kit'
 
 export default class InsertTableTool extends ToggleTool {
   getClassNames () {
-    return 'sc-insert-table-tool'
+    return 'sc-insert-table-tool sm-insert-table-wrap'
   }
 
   onClick () {

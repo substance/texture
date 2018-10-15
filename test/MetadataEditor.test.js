@@ -35,8 +35,16 @@ test(`MetadataEditor: clicking on "Add Translation" should not select card (#838
   t.end()
 })
 
+test(`MetadataEditor: putting a cursor inside a newly created footnote (#947)`, t => {
+  t.end()
+})
+
+test(`MetadataEditor: after adding a new footnote it should be selected (#948)`, t => {
+  t.end()
+})
+
 function _setup (t, seedXML) {
-  let testVfs = createTestVfs(TRANSLATED_TITLE)
+  let testVfs = createTestVfs(seedXML)
   let {app} = setupTestApp(t, {
     vfs: testVfs,
     archiveId: 'test'

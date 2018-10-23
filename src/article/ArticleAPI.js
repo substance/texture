@@ -464,7 +464,9 @@ export default class ArticleAPI extends EditorAPI {
   _insertFootnote (item, footnotes) {
     const collectionId = footnotes.id
     this.articleSession.transaction(tx => {
-      const node = createEmptyElement(tx, 'footnote')
+      const node = createEmptyElement(tx, 'footnote').append(
+        tx.create({type: 'p'})
+      )
       tx.get(collectionId).appendChild(
         node
       )

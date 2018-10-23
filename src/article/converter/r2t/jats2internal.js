@@ -386,9 +386,14 @@ function _populateBody (doc, jats, jatsImporter) {
 }
 
 function _populateFootnotes (doc, jats, jatsImporter) {
+  let $$ = jats.createElement.bind(jats)
   let fnEls = jats.findAll('article > back > fn-group > fn')
   let footnotes = doc.get('footnotes')
   fnEls.forEach(fnEl => {
+    // there must be at least one paragraph
+    if (!fnEl.find('p')) {
+      fnEl.append($$('p'))
+    }
     footnotes.append(jatsImporter.convertElement(fnEl))
   })
 }

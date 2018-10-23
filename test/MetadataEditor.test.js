@@ -23,6 +23,22 @@ const TRANSLATED_TITLE = `<?xml version="1.0" encoding="UTF-8"?>
   </back>
 </article>`
 
+const EMPTY_ARTICLE = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title></article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+  </body>
+  <back>
+  </back>
+</article>`
+
 test(`MetadataEditor: clicking on "Add Translation" should not select card (#838)`, t => {
   let { editor } = _setup(t, TRANSLATED_TITLE)
   let translatableEditor = editor.find('.sc-translatable-editor')
@@ -35,11 +51,21 @@ test(`MetadataEditor: clicking on "Add Translation" should not select card (#838
   t.end()
 })
 
-test(`MetadataEditor: putting a cursor inside a newly created footnote (#947)`, t => {
+test(`MetadataEditor: a newly created footnote should contain at least one parapgraph (#947)`, t => {
+  let { editor } = _setup(t, EMPTY_ARTICLE)
+  _addItem(editor, 'footnote')
+  let fnEditor = editor.find('.sc-footnote .sc-fn')
+  let paragraphs = fnEditor.findAll('.sc-p')
+  t.ok(paragraphs.length > 0, 'There should be some paragraphs')
   t.end()
 })
 
-test(`MetadataEditor: after adding a new footnote it should be selected (#948)`, t => {
+test(`MetadataEditor: after adding a new footnote cursor should be inside (#948)`, t => {
+  let { editor } = _setup(t, EMPTY_ARTICLE)
+  _addItem(editor, 'footnote')
+  let sel = getSelection(editor)
+  let isContentPropertySelection = sel && sel.isPropertySelection() && sel.getPath()[1] === 'content'
+  t.ok(isContentPropertySelection, 'The footnote content should be selected')
   t.end()
 })
 
@@ -51,4 +77,11 @@ function _setup (t, seedXML) {
   })
   let editor = openMetadataEditor(app)
   return { editor }
+}
+
+function _addItem (metadataEditor, modelName) {
+  // open the add drop down
+  let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-add')
+  addDropDown.find('button').click()
+  addDropDown.find('.sc-menu-item.sm-add-' + modelName).click()
 }

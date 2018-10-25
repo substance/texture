@@ -17,7 +17,7 @@ intellegat his, <sub>graece</sub> fastidii <sup>phaedrum</sup> ea mea, ne duo es
 </p>`
 
 Object.keys(annotationTypes).forEach(annoType => {
-  test(`Annotations:  toggle ${annotationTypes[annoType]} annotation`, t => {
+  test(`Annotations: toggle ${annotationTypes[annoType]} annotation`, t => {
     testAnnotationToggle(t, annoType)
   })
 })

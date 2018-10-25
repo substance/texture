@@ -293,10 +293,10 @@ export default class ArticleAPI extends EditorAPI {
       for (let idx = targetIds.length - 1; idx >= 0; idx--) {
         let id = targetIds[idx]
         if (!tx.get(id)) {
-          targetIds.splice(idx)
+          targetIds.splice(idx, 1)
         }
         if (id === targetId) {
-          targetIds.splice(idx)
+          targetIds.splice(idx, 1)
           found = true
         }
       }

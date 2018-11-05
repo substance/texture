@@ -127,6 +127,11 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
     articleMeta.append($$('issue').append(articleRecord.issue))
   }
 
+  // issue-title?,
+  if (articleRecord['issue-title']) {
+    articleMeta.append($$('issue-title').append(articleRecord['issue-title']))
+  }
+
   // isbn?, // not supported yet
 
   // (((fpage,lpage?)?,page-range?)|elocation-id)?,

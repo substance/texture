@@ -26,6 +26,7 @@ ArticleRecord.schema = {
   type: 'article-record',
   volume: STRING,
   issue: STRING,
+  'issue-title': STRING,
   fpage: STRING,
   lpage: STRING,
   pageRange: STRING,

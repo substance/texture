@@ -31,6 +31,7 @@ import createJatsImporter from './createJatsImporter'
       pub-date*,        // -> article-record
       volume?,          // -> article-record
       issue?,           // -> article-record
+      issue-title?,           // -> article-record
       isbn?,            // -> article-record
       (((fpage,lpage?)?,page-range?)|elocation-id)?,  // -> article-record
       history?,         // -> article-record
@@ -227,6 +228,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),
     issue: getText(articleMetaEl, 'issue'),
+    'issue-title': getText(articleMetaEl, 'issue-title'),
     volume: getText(articleMetaEl, 'volume'),
     pageRange: getText(articleMetaEl, 'page-range')
   })

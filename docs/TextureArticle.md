@@ -128,7 +128,7 @@ id, xml:base
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract?,trans-abstract*,kwd-group*,funding-group*
+article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,issue-title?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract?,trans-abstract*,kwd-group*,funding-group*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -958,6 +958,21 @@ TEXT
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
 article-meta, element-citation
+</pre>
+
+### `<issue-title>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
 </pre>
 
 ### `<italic>`
@@ -2062,7 +2077,6 @@ and explanations that help understanding the use-case.
 - issue-id
 - issue-part
 - issue-sponsor
-- issue-title
 - journal-id
 - journal-meta
 - journal-subtitle

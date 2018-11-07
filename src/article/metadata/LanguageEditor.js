@@ -40,7 +40,7 @@ export default class LanguageEditor extends ValueComponent {
     const configurator = this.context.configurator
     return configurator.getAvailableLanguages()
   }
-  
+
   _supressClickPropagation (e) {
     e.stopPropagation()
   }

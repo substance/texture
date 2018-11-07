@@ -11,6 +11,7 @@ export default class LanguageEditor extends ValueComponent {
 
     const languageSelector = $$('select').addClass('se-select')
       .ref('input')
+      .on('click', this._supressClickPropagation)
       .on('change', this._setLanguage)
 
     languageSelector.append(
@@ -38,5 +39,9 @@ export default class LanguageEditor extends ValueComponent {
   _getArticleLanguages () {
     const configurator = this.context.configurator
     return configurator.getAvailableLanguages()
+  }
+  
+  _supressClickPropagation (e) {
+    e.stopPropagation()
   }
 }

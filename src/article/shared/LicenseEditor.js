@@ -11,6 +11,7 @@ export default class LicenseEditor extends ValueComponent {
 
     const licenseSelector = $$('select').addClass('se-select')
       .ref('input')
+      .on('click', this._suppressClickPropagation)
       .on('change', this._setLicense)
 
     licenseSelector.append(
@@ -33,5 +34,9 @@ export default class LicenseEditor extends ValueComponent {
     const input = this.refs.input
     const value = input.getValue()
     model.setValue(value)
+  }
+
+  _suppressClickPropagation (e) {
+    e.stopPropagation()
   }
 }

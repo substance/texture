@@ -131,8 +131,9 @@
 }
 
 .sc-texture code, .sc-texture .sc-monospace {
-  vertical-align: super;
-  font-size: smaller;
+  /* Attention: double monospace here for correcting the inheritance 
+  and scaling of font size in all browsers */
+  font-family: monospace, monospace;
 }
 
 /* Can we get rid of underline from the Dar format */

@@ -1,5 +1,7 @@
 .sc-footnote .se-container {
+  position: relative;
   display: flex;
+  align-items: baseline;
 }
 
 .sc-footnote .se-container .se-label {
@@ -9,4 +11,8 @@
   font-weight: var(--t-bold-font-weight);
   text-align: center;
   cursor: default;
+}
+
+.sc-footnote .se-container .sc-fn {
+  width: 100%;
 }

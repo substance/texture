@@ -17,9 +17,10 @@
 .se-add-reference > .se-doi-input > .se-input-group > .se-input {
   width: 100%;
   background: #f1f1f1;
-  padding: 7px 80px 7px 10px;
+  padding: 10px 80px 10px 10px;
   border: none;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 .se-add-reference > .se-doi-input > .se-input-group > .se-action {

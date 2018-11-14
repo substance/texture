@@ -88,7 +88,7 @@ class DispFormula extends DocumentNode {}
 DispFormula.schema = {
   type: 'disp-formula',
   label: STRING,
-  content: CHILD('tex-math')
+  content: STRING
 }
 
 class DispQuote extends XMLContainerNode {}

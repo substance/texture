@@ -1,3 +1,4 @@
+import { DefaultDOMElement } from 'substance'
 import { findChild } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 
@@ -14,7 +15,7 @@ export default class DispFormulaConverter {
       node.label = labelEl.text()
     }
     if (contentEl) {
-      node.content = importer.convertElement(contentEl).id
+      node.content = DefaultDOMElement.parseSnippet(contentEl.getInnerXML(), 'xml').getTextContent()
     }
   }
 

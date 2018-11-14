@@ -246,6 +246,17 @@ class Reader(fname: String) {
         <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
         <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
         <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math id="tex-math-1">\sqrt(13)</tex-math></inline-formula>.</p>
+        <disp-formula id="disp-formula-1">
+          <label>(1)</label>
+          <tex-math id="tex-math-2"><![CDATA[\documentclass[12pt]{minimal}
+          \usepackage{tex4ht}
+          \begin{document}
+          $$
+          U(S,V,n)=\left(\frac{\partial U}{\partial(\lambda S)}\right)_{V,n}\frac{\partial(\lambda S)}{\partial\lambda} +\left(\frac{\partial U}{\partial(\lambda V)}\right)_{S,n}\frac{\partial(\lambda V)}{\partial\lambda} +\left(\frac{\partial U}{\partial(\lambda n)}\right)_{S,V}\frac{\partial(\lambda n)}{\partial\lambda}\
+          $$
+          \end{document}]]>
+          </tex-math>
+        </disp-formula>
         <list list-type="bullet" id="list-1">
           <list-item>
             <p>Item 1</p>

@@ -84,6 +84,13 @@ Editors.schema = {
   _childNodes: CHILDREN('person')
 }
 
+class DispFormula extends DocumentNode {}
+DispFormula.schema = {
+  type: 'disp-formula',
+  lable: STRING,
+  content: CHILD('tex-math')
+}
+
 class DispQuote extends XMLContainerNode {}
 DispQuote.schema = {
   type: 'disp-quote',
@@ -841,6 +848,7 @@ InternalArticleSchema.addNodes([
   Article,
   Back,
   Content,
+  DispFormula,
   DispQuote,
   Figure,
   Footnotes,

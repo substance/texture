@@ -75,7 +75,6 @@
   <s:not-implemented name="def-item"/>
   <s:not-implemented name="def-list"/>
   <s:not-implemented name="degrees"/>
-  <s:not-implemented name="disp-formula"/>
   <s:not-implemented name="disp-formula-group"/>
   <s:not-implemented name="equation-count"/>
   <s:not-implemented name="etal"/>
@@ -680,6 +679,16 @@
       <optional>
         <text />
       </optional>
+    </element>
+  </define>
+
+  <define name="disp-formula">
+    <element name="disp-formula">
+      <ref name="disp-formula-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <ref name="tex-math"/>
     </element>
   </define>
 

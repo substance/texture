@@ -87,7 +87,7 @@ Editors.schema = {
 class DispFormula extends DocumentNode {}
 DispFormula.schema = {
   type: 'disp-formula',
-  lable: STRING,
+  label: STRING,
   content: CHILD('tex-math')
 }
 

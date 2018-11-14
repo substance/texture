@@ -4,6 +4,7 @@ import InternalArticleSchema from '../../InternalArticleSchema'
 import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 // TODO: rename to XML helpers
 import BodyConverter from './BodyConverter'
+import DispFormulaConverter from './DispFormulaConverter'
 import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ElementCitationConverter from './ElementCitationConverter'
@@ -26,6 +27,7 @@ export default function createJatsImporter (doc) {
     // this is only used for import, because BodyConverter does an on-the-fly DOM transformation
     // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
     HeadingImporter,
+    new DispFormulaConverter(),
     new DispQuoteConverter(),
     new FigConverter(),
     new ListConverter(),

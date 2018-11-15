@@ -25,15 +25,16 @@ export default class DispFormulaConverter {
 
   export (node, el, exporter) {
     let $$ = exporter.$$
-    let doc = exporter.getDocument()
-    // ATTENTION: this helper retrieves the label from the state
+
     let label = getLabel(node)
     if (label) {
       el.append($$('label').text(label))
     }
     if (node.content) {
+      const texMath = $$('tex-math')
+      texMath.append(texMath.createCDATASection(node.content))
       el.append(
-        exporter.convertNode(doc.get(node.content))
+        texMath
       )
     }
   }

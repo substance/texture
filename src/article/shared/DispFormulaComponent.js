@@ -1,5 +1,4 @@
 import { Component } from 'substance'
-import TexMathComponent from './TexMathComponent'
 import katex from 'katex'
 
 export default class DispFormulaComponent extends Component {
@@ -8,9 +7,6 @@ export default class DispFormulaComponent extends Component {
     const label = model.getLabel()
     const texMath = model.getContent()
     const el = $$('div').addClass('sc-disp-formula')
-    el.append(
-      $$('div').addClass('se-label').append(label)
-    )
     if (!texMath) {
       el.append('???')
     } else {
@@ -25,6 +21,9 @@ export default class DispFormulaComponent extends Component {
           .text(error.message)
       }
     }
+    el.append(
+      $$('div').addClass('se-label').append(label)
+    )
     return el
   }
 }

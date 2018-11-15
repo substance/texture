@@ -1,0 +1,9 @@
+.sc-disp-formula {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sc-disp-formula .se-label {
+  padding-left: 10px;
+}

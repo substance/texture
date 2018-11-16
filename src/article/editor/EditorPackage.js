@@ -29,6 +29,7 @@ import ReferenceComponent from '../shared/ReferenceComponent'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
+import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertXrefCommand from './InsertXrefCommand'
 import InsertFigureCommand from './InsertFigureCommand'
@@ -37,6 +38,8 @@ import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
 import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
+import EditDispFormulaCommand from './EditDispFormulaCommand'
+import EditDispFormulaTool from './EditDispFormulaTool'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
@@ -88,6 +91,10 @@ export default {
       nodeType: 'xref',
       commandGroup: 'prompt'
     })
+    // config.addCommand('edit-block-formula', EditInlineNodeCommand, {
+    //   nodeType: 'disp-formula',
+    //   commandGroup: 'prompt'
+    // })
     config.addCommand('insert-xref-bibr', InsertXrefCommand, {
       refType: 'bibr',
       commandGroup: 'insert-xref'
@@ -103,6 +110,10 @@ export default {
     config.addCommand('insert-xref-fn', InsertXrefCommand, {
       refType: 'fn',
       commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-disp-formula', InsertDispFormulaCommand, {
+      nodeType: 'disp-formula',
+      commandGroup: 'insert'
     })
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
       nodeType: 'disp-quote',
@@ -122,6 +133,10 @@ export default {
     })
     config.addCommand('insert-formula', InsertInlineFormulaCommand, {
       commandGroup: 'insert'
+    })
+    config.addCommand('edit-block-formula', EditDispFormulaCommand, {
+      nodeType: 'disp-formula',
+      commandGroup: 'prompt'
     })
     config.addCommand('edit-formula', EditInlineNodeCommand, {
       nodeType: 'inline-formula',
@@ -176,6 +191,7 @@ export default {
     config.addLabel('insert-xref-fig', 'Figure')
     config.addLabel('insert-xref-table', 'Table')
     config.addLabel('insert-xref-fn', 'Footnote')
+    config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
 
     config.addLabel('manuscript-start', 'Article starts here')
@@ -224,10 +240,12 @@ export default {
     config.addLabel('insert-table', 'Table')
     config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
 
+    config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
     config.addLabel('insert-formula', 'Formula')
     config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
 
+    config.addIcon('insert-disp-formula', { 'fontawesome': 'fa-asterisk' })
     config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
 
     config.addIcon('toggle-cell-merge', {

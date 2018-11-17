@@ -877,7 +877,6 @@ InternalArticleSchema.addNodes([
 InternalArticleSchema.addNodes([
   'bio',
   'caption',
-  'code',
   'fn',
   'graphic',
   'label',
@@ -887,6 +886,7 @@ InternalArticleSchema.addNodes([
   'italic',
   'monospace',
   'overline',
+  'preformat',
   'sc',
   'strike',
   'sub',

@@ -768,6 +768,13 @@ Subject.schema = {
   language: STRING
 }
 
+class Preformat extends XMLTextElement {}
+Preformat.schema = {
+  type: 'preformat',
+  content: STRING,
+  preformatType: STRING
+}
+
 class ContainerTranslation extends XMLContainerNode {}
 ContainerTranslation.schema = {
   type: 'container-translation',
@@ -841,6 +848,7 @@ InternalArticleSchema.addNodes([
   Heading,
   ListNode,
   ListItemNode,
+  Preformat,
   References,
   TableNode,
   TableFigure,
@@ -886,7 +894,6 @@ InternalArticleSchema.addNodes([
   'italic',
   'monospace',
   'overline',
-  'preformat',
   'sc',
   'strike',
   'sub',

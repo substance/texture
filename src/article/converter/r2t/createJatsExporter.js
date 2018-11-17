@@ -8,6 +8,7 @@ import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ListConverter from './ListConverter'
 import PermissionsConverter from './PermissionsConverter'
+import PreformatConverter from './PreformatConverter'
 import TableConverter from './TableConverter'
 import TableWrapConverter from './TableWrapConverter'
 import ElementCitationConverter from './ElementCitationConverter'
@@ -30,6 +31,7 @@ export default function createJatsExporter (jatsDom, doc) {
     new FigConverter(),
     new ListConverter(),
     new PermissionsConverter(),
+    new PreformatConverter(),
     new TableWrapConverter(),
     new TableConverter(),
     new ElementCitationConverter(),

@@ -21,8 +21,10 @@ export default class ReferenceUploadComponent extends Component {
         .append('select')
         .on('click', this._onClick),
       ' file',
-      $$('input').attr('type', 'file')
-        .on('click', this._supressClickPropagation)
+      $$('input').attr({
+        type: 'file',
+        accept: 'application/json'
+      }).on('click', this._supressClickPropagation)
         .on('change', this._selectFile)
         .ref('input')
     ).on('drop', this._handleDrop)
@@ -69,12 +71,9 @@ export default class ReferenceUploadComponent extends Component {
 
   _handleUploadedFiles (files) {
     Object.values(files).forEach(file => {
-      const isJSON = file.type.indexOf('application/json') === 0
-      if (isJSON) {
-        const reader = new window.FileReader()
-        reader.onload = this._onFileLoad.bind(this)
-        reader.readAsText(file)
-      }
+      const reader = new window.FileReader()
+      reader.onload = this._onFileLoad.bind(this)
+      reader.readAsText(file)
     })
   }
 

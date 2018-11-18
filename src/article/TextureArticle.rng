@@ -20,6 +20,7 @@
   <!-- Inline-Elements -->
   <s:elementType name="break" s:type="inline-element"/>
   <s:elementType name="inline-formula" s:type="inline-element"/>
+  <s:elementType name="inline-graphic" s:type="inline-element"/>
   <s:elementType name="xref" s:type="inline-element"/>
   <!-- Containers -->
   <s:elementType name="abstract" s:type="container"/>
@@ -88,7 +89,6 @@
   <s:not-implemented name="glyph-ref"/>
   <s:not-implemented name="gov"/>
   <s:not-implemented name="hr"/>
-  <s:not-implemented name="inline-graphic"/>
   <s:not-implemented name="inline-supplementary-material"/>
   <s:not-implemented name="issue-sponsor"/>
   <s:not-implemented name="issn"/>

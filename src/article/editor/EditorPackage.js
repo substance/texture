@@ -33,6 +33,8 @@ import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertXrefCommand from './InsertXrefCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
+import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
+import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
 import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
@@ -108,6 +110,10 @@ export default {
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
+      commandGroup: 'insert'
+    })
+    config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
+      nodeType: 'inline-graphic',
       commandGroup: 'insert'
     })
     config.addCommand('insert-table', InsertTableCommand, {
@@ -208,6 +214,10 @@ export default {
     config.addDropHandler(DropFigure)
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
+    config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
+    config.addLabel('insert-inline-graphic', 'Inline Graphic')
+    config.addIcon('insert-inline-graphic', { 'fontawesome': 'fa-file-photo-o' })
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')

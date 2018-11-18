@@ -27,6 +27,7 @@ import DispQuoteComponent from './DispQuoteComponent'
 import FootnoteComponent from './FootnoteComponent'
 import GraphicComponent from './GraphicComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
+import InlineGraphicComponent from './InlineGraphicComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
 import ReferenceComponent from './ReferenceComponent'
@@ -64,6 +65,7 @@ export default {
     config.addComponent('fn', FootnoteComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
+    config.addComponent('inline-graphic', InlineGraphicComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('sig-block', SigBlockComponent)

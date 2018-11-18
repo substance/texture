@@ -1,30 +1,15 @@
-import { ToggleTool } from '../../kit'
+import UploadTool from './UploadTool'
 
-export default class InsertFigureTool extends ToggleTool {
-  renderButton ($$) {
-    let button = super.renderButton($$)
-    let input = $$('input').attr({
-      'type': 'file',
-      'multiple': 'multiple',
-      'accept': 'image/*'
-    }).ref('input')
-      .on('change', this.onFileSelect)
-    return [button, input]
-  }
-
+export default class InsertFigureTool extends UploadTool {
   getClassNames () {
-    return 'sc-insert-figure-tool sm-insert-fig'
+    return 'sc-insert-figure-tool sm-upload-tool'
   }
 
-  onClick () {
-    this.refs.input.val(null)
-    this.refs.input.click()
+  getFileType () {
+    return 'image/*'
   }
 
-  onFileSelect (e) {
-    let files = e.currentTarget.files
-    this.executeCommand({
-      files: Array.prototype.slice.call(files)
-    })
+  uploadMultiple () {
+    return true
   }
 }

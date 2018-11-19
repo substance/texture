@@ -111,6 +111,10 @@ export default {
       refType: 'fn',
       commandGroup: 'insert-xref'
     })
+    config.addCommand('insert-xref-disp-formula', InsertXrefCommand, {
+      refType: 'disp-formula',
+      commandGroup: 'insert-xref'
+    })
     config.addCommand('insert-disp-formula', InsertDispFormulaCommand, {
       nodeType: 'disp-formula',
       commandGroup: 'insert'
@@ -191,6 +195,7 @@ export default {
     config.addLabel('insert-xref-fig', 'Figure')
     config.addLabel('insert-xref-table', 'Table')
     config.addLabel('insert-xref-fn', 'Footnote')
+    config.addLabel('insert-xref-disp-formula', 'Formula')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
 

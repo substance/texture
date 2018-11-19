@@ -80,5 +80,10 @@ export default {
       and: ',',
       to: '-'
     })
+    config.setLabelGenerator('formulas', {
+      template: '($)',
+      and: ',',
+      to: '-'
+    })
   }
 }

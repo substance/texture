@@ -245,13 +245,13 @@ class Reader(fname: String) {
 }]]></preformat>
         <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
         <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
-        <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math id="tex-math-1">\sqrt(13)</tex-math></inline-formula>.</p>
+        <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math id="tex-math-1">\sqrt(13)</tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
         <disp-formula id="disp-formula-1">
           <label>1</label>
           <tex-math id="tex-math-2"><![CDATA[
-            1 +  \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots = 
-            \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, 
-            \quad\quad \text{for }\lvert q\rvert<1.]]>
+1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
+\prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, 
+\quad\quad \text{for }\lvert q\rvert<1.]]>
           </tex-math>
         </disp-formula>
         <list list-type="bullet" id="list-1">

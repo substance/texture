@@ -3,7 +3,7 @@ import { orderBy, includes, without } from 'substance'
 // left side: node type
 // right side: ref-type
 export const REF_TYPES = {
-  'disp-formula': 'disp-formula',
+  'disp-formula': 'formula',
   'figure': 'fig',
   'repro-fig': 'fig',
   'fig-group': 'fig',
@@ -16,7 +16,7 @@ export const REF_TYPES = {
 // TODO: how could this be configured?
 const RefTypeToManager = {
   'bibr': 'referenceManager',
-  'disp-formula': 'formulaManager',
+  'formula': 'formulaManager',
   'fig': 'figureManager',
   'table': 'tableManager',
   'fn': 'footnoteManager'

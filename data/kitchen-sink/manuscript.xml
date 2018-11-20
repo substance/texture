@@ -289,6 +289,17 @@ class Reader(fname: String) {
             <p>Item 9</p>
           </list-item>
         </list>
+        <disp-formula id="disp-formula-2">
+          <label>2</label>
+          <tex-math id="tex-math-3"><![CDATA[
+\sum_{i = 1}^{ \left[ \frac{n}{2} \right] }
+\binom{ x_{i, i + 1}^{i^{2}} }
+{ \left[ \frac{i + 3}{3} \right] }
+\frac{ \sqrt{ \mu(i)^{ \frac{3}{2}} (i^{2} - 1) } }
+{ \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }
+]]>
+          </tex-math>
+        </disp-formula>
       </sec>
     </sec>
   </body>

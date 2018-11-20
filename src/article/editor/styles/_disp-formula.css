@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.sc-disp-formula .se-formula {
+  margin: 0px auto;
+}
+
 .sc-disp-formula .se-label {
   padding-left: 10px;
 }

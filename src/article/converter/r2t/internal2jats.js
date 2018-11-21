@@ -406,7 +406,7 @@ function _exportAffiliations (jats, doc) {
   let organisations = doc.get('organisations')
   let orgEls = organisations.getChildren().map(node => {
     let el = $$('aff').attr('id', node.id)
-    el.append(_createTextElement($$, node.name, 'institution', {'content-type': 'orgname'}))
+    el.append(_createTextElement($$, node.institution, 'institution', {'content-type': 'orgname'}))
     el.append(_createTextElement($$, node.division1, 'institution', {'content-type': 'orgdiv1'}))
     el.append(_createTextElement($$, node.division2, 'institution', {'content-type': 'orgdiv2'}))
     el.append(_createTextElement($$, node.division3, 'institution', {'content-type': 'orgdiv3'}))

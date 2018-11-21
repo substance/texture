@@ -360,6 +360,15 @@ function dataPublicationRenderer ($$, entityId, entityDb, exporter) {
       _renderDOI($$, entity.doi)
     )
   }
+  if (entity.arkId) {
+    fragments.push(' ', entity.arkId)
+  }
+  if (entity.archiveId) {
+    fragments.push(' ', entity.archiveId)
+  }
+  if (entity.accessionId) {
+    fragments.push(' ', entity.accessionId)
+  }
   return fragments
 }
 

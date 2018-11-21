@@ -4,7 +4,6 @@ class EditDispFormulaCommand extends Command {
   getCommandState (params) {
     let doc = params.editorSession.getDocument()
     let sel = params.selection
-    console.log(sel)
     let commandState = {
       disabled: true
     }

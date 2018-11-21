@@ -92,6 +92,7 @@ export default {
     config.addLabel('issue', 'Issue')
     config.addLabel('lpage', 'Last Page')
     config.addLabel('month', 'Month')
+    config.addLabel('name', 'Name')
     config.addLabel('pageCount', 'Page Count')
     config.addLabel('pageRange', 'Page Range')
     config.addLabel('patentCountry', 'Patent Country')
@@ -138,7 +139,6 @@ export default {
     config.addLabel('add-organisation', 'Add Organisation')
     config.addLabel('edit-organisation', 'Edit Organisation')
     config.addLabel('create-organisation', 'Create Organisation')
-    config.addLabel('name', 'Name')
     config.addLabel('division1', 'Division 1 (Department)')
     config.addLabel('division2', 'Division 2')
     config.addLabel('division3', 'Division 2')
@@ -157,7 +157,7 @@ export default {
 
     // award labels
     config.addLabel('award', 'Award')
-    config.addLabel('institution', 'Institution Name')
+    config.addLabel('institution', 'Institution')
     config.addLabel('fundRefId', 'Institution Identifier')
     config.addLabel('awardId', 'Award Identifier')
 

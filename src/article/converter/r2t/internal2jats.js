@@ -151,7 +151,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
   historyEl.append(_exportDate($$, articleRecord, 'receivedDate', 'received'))
   historyEl.append(_exportDate($$, articleRecord, 'revReceivedDate', 'rev-recd'))
   historyEl.append(_exportDate($$, articleRecord, 'revRequestedDate', 'rev-request'))
-  // do not export and <history>
+  // do not export <history> tag if there is no dates inside
   if (historyEl.getChildCount() > 0) {
     articleMeta.append(historyEl)
   }

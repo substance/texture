@@ -80,8 +80,7 @@ export default class FlowContentComponent extends ContainerEditorNew {
     let props = super._getNodeProps(node)
     let model = this.context.api.getModelById(node.id)
     props.model = model
-    // TODO: get placeholder message using this.getLabel()
-    props.placeholder = `Enter ${this.props.label}`
+    props.placeholder = this.props.placeholder || this.getLabel(this.props.name + '-placeholder')
     return props
   }
 }

@@ -13,7 +13,7 @@ export default class InsertFigureTool extends ToggleTool {
   }
 
   getClassNames () {
-    return 'sc-insert-figure-tool'
+    return 'sc-insert-figure-tool sm-insert-fig'
   }
 
   onClick () {

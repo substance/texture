@@ -129,6 +129,9 @@ export class ContainerEditorNew extends ModifiedSurface(SubstanceContainerEditor
     props.model = model
     return props
   }
+
+  // HACK: overriding the original implementation which we do not want to use anymore
+  _attachPlaceholder () {}
 }
 
 function _monkeyPatchSurfaceProps (parent, props) {

@@ -3,7 +3,7 @@ import TableConverter from '../r2t/TableConverter'
 
 import BoldConverter from './BoldConverter'
 import ExtLinkConverter from './ExtLinkConverter'
-import CodeblockConverter from './CodeblockConverter'
+import PreformatConverter from './PreformatConverter'
 import HeadingConverter from './HeadingConverter'
 import ItalicConverter from './ItalicConverter'
 import ListConverter from './ListConverter'
@@ -15,7 +15,7 @@ import UnderlineConverter from './UnderlineConverter'
 
 export default [
   BoldConverter,
-  CodeblockConverter,
+  PreformatConverter,
   ExtLinkConverter,
   HeadingConverter,
   ItalicConverter,

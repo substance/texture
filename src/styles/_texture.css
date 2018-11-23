@@ -130,7 +130,7 @@
   font-size: smaller;
 }
 
-.sc-texture code, .sc-texture .sc-monospace {
+.sc-texture code, .sc-texture .sc-monospace, .sc-texture .sc-preformat {
   /* Attention: double monospace here for correcting the inheritance 
   and scaling of font size in all browsers */
   font-family: monospace, monospace;

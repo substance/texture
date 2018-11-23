@@ -324,6 +324,17 @@ export default {
       accelerator: 'CommandOrControl+Alt+0'
     })
 
+    config.addTextTypeTool({
+      name: 'preformat',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'preformat'
+      },
+      icon: 'fa-font',
+      label: 'Preformat',
+      accelerator: 'CommandOrControl+E'
+    })
+
     config.addCommand('edit-ext-link', EditAnnotationCommand, {
       nodeType: 'ext-link',
       commandGroup: 'prompt'

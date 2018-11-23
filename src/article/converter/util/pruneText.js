@@ -1,8 +1,7 @@
 import { last } from 'substance'
 
 const PRESERVE_WHITESPACE = {
-  'preformat': true,
-  'code': true
+  'preformat': true
 }
 
 export default function pruneText (el, xmlSchema) {

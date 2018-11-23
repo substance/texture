@@ -235,6 +235,14 @@
         <disp-quote id="disp-quote-1">
           <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
         </disp-quote>
+        <preformat id="_preformat-1" preformat-type="code"><![CDATA[import java.io._
+class Reader(fname: String) {
+  private val in =
+    new BufferedReader(new FileReader(fname))
+
+  @throws(classOf[IOException])
+  def read() = in.read()
+}]]></preformat>
         <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
         <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math id="tex-math-1">\sqrt(13)</tex-math></inline-formula>.</p>
         <list list-type="bullet" id="list-1">

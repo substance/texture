@@ -173,6 +173,7 @@
 
   <!-- elements we do not want to support -->
   <s:removed name="x"/>
+  <s:removed name="code"/>
 
   <!-- deprecated ones -->
   <s:removed name="access-date"/>
@@ -548,7 +549,6 @@
     <choice>
       <ref name="boxed-text"/>
       <ref name="chem-struct-wrap"/>
-      <ref name="code"/>
       <ref name="fig"/>
       <ref name="fig-group"/>
       <ref name="table-wrap"/>
@@ -583,13 +583,6 @@
       <zeroOrMore>
         <ref name="p"/>
       </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="code">
-    <element name="code">
-      <ref name="code-attlist"/>
-      <text/>
     </element>
   </define>
 

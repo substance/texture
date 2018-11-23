@@ -48,7 +48,7 @@ const EMPHASIS_TYPE = 'italic'
 const STRONG_TYPE = 'bold'
 const SUPERSCRIPT_TYPE = 'sup'
 const SUBSCRIPT_TYPE = 'sub'
-const CODEBLOCK_TYPE = 'code'
+const CODEBLOCK_TYPE = 'preformat'
 
 ClipboardTests()
 

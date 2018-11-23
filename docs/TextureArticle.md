@@ -233,7 +233,7 @@ id, xml:base, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(sec|boxed-text|chem-struct-wrap|code|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
+(sec|boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -313,21 +313,6 @@ TEXT
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
 aff
-</pre>
-
-### `<code>`
-
-**Attributes**:
-<pre style="white-space:pre-wrap;">
-id, xml:base, code-type, code-version, executable, language, language-version, platforms, position, orientation, specific-use, xml:lang, xml:space
-</pre>
-**Contains**:
-<pre style="white-space:pre-wrap;">
-TEXT
-</pre>
-**This element may be contained in:**
-<pre style="white-space:pre-wrap;">
-body, sec
 </pre>
 
 ### `<col>`
@@ -1493,7 +1478,7 @@ id, xml:base, xml:lang, sec-type, disp-level, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-title?,(boxed-text|chem-struct-wrap|code|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
+title?,(boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">

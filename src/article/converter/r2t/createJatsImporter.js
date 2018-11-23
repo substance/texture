@@ -9,6 +9,7 @@ import FigConverter from './FigConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import ListConverter from './ListConverter'
 import PermissionsConverter from './PermissionsConverter'
+import PreformatConverter from './PreformatConverter'
 import TableConverter from './TableConverter'
 import TableWrapConverter from './TableWrapConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
@@ -29,6 +30,7 @@ export default function createJatsImporter (doc) {
     new FigConverter(),
     new ListConverter(),
     new PermissionsConverter(),
+    new PreformatConverter(),
     new TableWrapConverter(),
     new TableConverter(),
     new ElementCitationConverter()

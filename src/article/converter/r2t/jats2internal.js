@@ -87,7 +87,7 @@ function _populateOrganisations (doc, jats) {
     let org = {
       id: el.id,
       type: 'organisation',
-      name: getText(el, 'institution[content-type=orgname]'),
+      institution: getText(el, 'institution[content-type=orgname]'),
       division1: getText(el, 'institution[content-type=orgdiv1]'),
       division2: getText(el, 'institution[content-type=orgdiv2]'),
       division3: getText(el, 'institution[content-type=orgdiv3]'),

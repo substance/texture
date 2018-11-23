@@ -743,7 +743,7 @@ Keyword.schema = {
 export class Organisation extends DocumentNode {}
 Organisation.schema = {
   type: 'organisation',
-  name: STRING,
+  institution: STRING,
   division1: STRING,
   division2: STRING,
   division3: STRING,

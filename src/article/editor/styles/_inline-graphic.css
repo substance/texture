@@ -1,0 +1,3 @@
+.sc-inline-graphic img {
+  max-height: var(--t-text-font-size);
+}

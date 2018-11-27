@@ -247,12 +247,11 @@ class Reader(fname: String) {
         <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
         <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math id="tex-math-1">\sqrt(13)</tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
         <disp-formula id="disp-formula-1">
-          <label>1</label>
-          <tex-math id="tex-math-2"><![CDATA[
+          <label>(1)</label>
+          <tex-math><![CDATA[
 1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
 \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, 
-\quad\quad \text{for }\lvert q\rvert<1.]]>
-          </tex-math>
+\quad\quad \text{for }\lvert q\rvert<1.]]></tex-math>
         </disp-formula>
         <list list-type="bullet" id="list-1">
           <list-item>
@@ -290,15 +289,14 @@ class Reader(fname: String) {
           </list-item>
         </list>
         <disp-formula id="disp-formula-2">
-          <label>2</label>
-          <tex-math id="tex-math-3"><![CDATA[
+          <label>(2)</label>
+          <tex-math><![CDATA[
 \sum_{i = 1}^{ \left[ \frac{n}{2} \right] }
 \binom{ x_{i, i + 1}^{i^{2}} }
 { \left[ \frac{i + 3}{3} \right] }
 \frac{ \sqrt{ \mu(i)^{ \frac{3}{2}} (i^{2} - 1) } }
 { \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }
-]]>
-          </tex-math>
+]]></tex-math>
         </disp-formula>
       </sec>
     </sec>

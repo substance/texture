@@ -3,7 +3,7 @@ import {
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
-import { Managed, ClipboardNew } from '../../kit'
+import { Managed, Clipboard } from '../../kit'
 import { getCellRange, computeUpdatedSelection, createTableSelection } from '../shared/tableHelpers'
 import TableCellComponent from './TableCellComponent'
 import TableContextMenu from './TableContextMenu'
@@ -13,7 +13,7 @@ export default class TableComponent extends CustomSurface {
     super(...args)
 
     this._selectionData = {}
-    this._clipboard = new ClipboardNew()
+    this._clipboard = new Clipboard()
   }
 
   getChildContext () {

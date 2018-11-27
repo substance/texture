@@ -1,9 +1,9 @@
 import {
-  DocumentSchema, DocumentNode, InlineNode,
+  DocumentSchema,
   XMLContainerNode, XMLElementNode, XMLTextElement,
   without
 } from 'substance'
-import { BOOLEAN, STRING, TEXT, MANY, ONE, CHILDREN, CHILD } from '../kit'
+import { BOOLEAN, STRING, TEXT, MANY, ONE, CHILDREN, CHILD, DocumentNode, InlineNode } from '../kit'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
 import InternalArticleDocument from './InternalArticleDocument'
 // TODO: rename this to *Schema

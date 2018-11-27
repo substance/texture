@@ -6,15 +6,16 @@ export { default as ChildModel } from './ChildModel'
 export { default as ChildComponent } from './ChildComponent'
 export { default as ChildrenModel } from './ChildrenModel'
 export { default as ChildrenComponent } from './ChildrenComponent'
-export { default as ClipboardNew } from './ClipboardNew'
 export { default as CompositeModel } from './CompositeModel'
 export { default as CompositeComponent } from './CompositeComponent'
 export { default as createValueModel } from './createValueModel'
+export { default as DocumentNode } from './_DocumentNode'
 export { default as DynamicCollection } from './DynamicCollection'
 export { default as EditorAPI } from './EditorAPI'
 export { default as FlowContentModel } from './FlowContentModel'
 export { default as FlowContentComponent } from './FlowContentComponent'
 export { default as getComponentForModel } from './getComponentForModel'
+export { default as InlineNode } from './_InlineNode'
 export { default as InternalEditingAPI } from './InternalEditingAPI'
 export { default as JSONConverterNew } from './JSONConverterNew'
 export { default as ManyRelationshipModel } from './ManyRelationshipModel'
@@ -39,13 +40,4 @@ export { default as TextComponent } from './TextComponent'
 export { default as TextNodeComponent } from './TextNodeComponent'
 export { default as ValueComponent } from './ValueComponent'
 export { default as ValueModel } from './ValueModel'
-
 export * from './schemaHelpers'
-
-export {
-  ContainerEditorNew as ContainerEditor,
-  IsolatedInlineNodeComponentNew as IsolatedInlineNodeComponent,
-  IsolatedNodeComponentNew as IsolatedNodeComponent,
-  TextPropertyComponentNew as TextPropertyComponent,
-  TextPropertyEditorNew as TextPropertyEditor
-} from './SubstanceModifications'

@@ -4,21 +4,21 @@ import {
   TabbedPanePackage, ToolPanelPackage
 } from 'substance'
 
-import {
-  IsolatedNodeComponentNew, IsolatedInlineNodeComponentNew, ContainerEditorNew,
-  TextPropertyComponentNew, TextPropertyEditorNew
-} from './model/SubstanceModifications'
-
 import AnnotationComponent from './ui/AnnotationComponent'
-import ScrollPane from './ui/ScrollPane'
 import BodyScrollPane from './ui/BodyScrollPane'
+import Button from './ui/Button'
+import ContainerEditor from './ui/_ContainerEditor'
+import ContextMenu from './ui/ContextMenu'
+import IsolatedNodeComponent from './ui/_IsolatedNodeComponent'
+import IsolatedInlineNodeComponent from './ui/_IsolatedInlineNodeComponent'
 import Menu from './ui/Menu'
 import MenuGroup from './ui/MenuGroup'
 import MenuItem from './ui/MenuItem'
 import ModalDialog from './ui/ModalDialog'
-import Button from './ui/Button'
-import ContextMenu from './ui/ContextMenu'
 import Overlay from './ui/Overlay'
+import ScrollPane from './ui/ScrollPane'
+import TextPropertyComponent from './ui/_TextPropertyComponent'
+import TextPropertyEditor from './ui/_TextPropertyEditor'
 import ToggleTool from './ui/ToggleTool'
 import Toolbar from './ui/Toolbar'
 import ToolDropdown from './ui/ToolDropdown'
@@ -41,11 +41,11 @@ export default {
 
     configurator.addComponent('annotation', AnnotationComponent)
     // customized built-ins
-    configurator.addComponent('container-editor', ContainerEditorNew)
-    configurator.addComponent('isolated-node', IsolatedNodeComponentNew)
-    configurator.addComponent('inline-node', IsolatedInlineNodeComponentNew)
-    configurator.addComponent('text-property', TextPropertyComponentNew)
-    configurator.addComponent('text-property-editor', TextPropertyEditorNew)
+    configurator.addComponent('container-editor', ContainerEditor)
+    configurator.addComponent('isolated-node', IsolatedNodeComponent)
+    configurator.addComponent('inline-node', IsolatedInlineNodeComponent)
+    configurator.addComponent('text-property', TextPropertyComponent)
+    configurator.addComponent('text-property-editor', TextPropertyEditor)
 
     // replacing Substance components with custom ones
     configurator.addComponent('scroll-pane', ScrollPane, true)

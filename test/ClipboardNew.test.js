@@ -2,7 +2,7 @@ import { test as _test } from 'substance-test'
 import {
   DefaultDOMElement, platform, find
 } from 'substance'
-import { ClipboardNew } from '../index'
+import { Clipboard } from '../index'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 
 import simple from './clipboard/simple'
@@ -538,7 +538,7 @@ function _createClipboardData () {
 
 function _setup (t, seed) {
   let { context, editorSession, doc } = setupTestArticleSession({ seed })
-  let clipboard = new ClipboardNew()
+  let clipboard = new Clipboard()
   return { context, editorSession, doc, clipboard }
 }
 

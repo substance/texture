@@ -1,13 +1,13 @@
-import { SurfaceNew } from './SubstanceModifications'
+import Surface from './_Surface'
 
-export default class TextInput extends SurfaceNew {
+export default class TextInput extends Surface {
   render ($$) {
     const TextPropertyComponent = this.getComponent('text-property')
     const placeholder = this.props.placeholder
     const path = this.props.path
     const isEditable = this.isEditable()
     // TODO: we should refactor Substance.TextPropertyEditor so that it can be used more easily
-    let el = SurfaceNew.prototype.render.apply(this, arguments)
+    let el = Surface.prototype.render.apply(this, arguments)
     el.addClass('sc-text-input')
     // Attention: being disabled does not necessarily mean not-editable, whereas non-editable is always disabled
     // A Surface can also be disabled because it is blurred, for instance.

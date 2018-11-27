@@ -453,6 +453,29 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _insertInlineGraphic (file) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    const sel = articleSession.getSelection()
+    if (!sel || !sel.containerId) return
+    articleSession.transaction(tx => {
+      const mimeData = file.type.split('/')
+      const node = tx.create({ type: 'inline-graphic' })
+      const inlineGraphic = tx.insertInlineNode(node)
+      inlineGraphic.attr({
+        'mime-subtype': mimeData[1],
+        'mimetype': mimeData[0],
+        'xlink:href': path
+      })
+      tx.setSelection({
+        type: 'property',
+        path: node.getPath(),
+        startOffset: node.start.offset,
+        endOffset: node.end.offset
+      })
+    })
+  }
+
   _createTableFigure (tx, params) {
     return insertTableFigure(tx, params.rows, params.columns)
   }

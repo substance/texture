@@ -15,8 +15,9 @@
 @import './_reference.css';
 @import './_xref';
 @import './_figure.css';
-@import './_insert-fig-tool.css';
 @import './_graphic.css';
+@import './_inline-graphic.css';
+@import './_upload-tool.css';
 @import './_table.css';
 @import './_fig-preview.css';
 @import './_context-section.css';

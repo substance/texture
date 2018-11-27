@@ -64,6 +64,7 @@ export default {
     config.addComponent('fn', FootnoteComponent)
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
+    config.addComponent('inline-graphic', GraphicComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('sig-block', SigBlockComponent)

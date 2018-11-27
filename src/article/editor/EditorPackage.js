@@ -33,6 +33,8 @@ import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertXrefCommand from './InsertXrefCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
+import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
+import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
 import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
@@ -108,7 +110,11 @@ export default {
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
-      commandGroup: 'insert'
+      commandGroup: 'additional'
+    })
+    config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
+      nodeType: 'inline-graphic',
+      commandGroup: 'additional'
     })
     config.addCommand('insert-table', InsertTableCommand, {
       nodeType: 'table-wrap',
@@ -165,6 +171,7 @@ export default {
     })
 
     config.addLabel('cite', 'Cite')
+    config.addLabel('insert', 'Insert')
     config.addLabel('insert-xref-bibr', 'Reference')
     config.addLabel('insert-xref-fig', 'Figure')
     config.addLabel('insert-xref-table', 'Table')
@@ -208,6 +215,10 @@ export default {
     config.addDropHandler(DropFigure)
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
+    config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
+    config.addLabel('insert-inline-graphic', 'Inline Graphic')
+    config.addIcon('insert-inline-graphic', { 'fontawesome': 'fa-line-chart' })
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
@@ -429,9 +440,9 @@ export default {
         name: 'additinal-tools',
         type: 'tool-group',
         showDisabled: true,
-        style: 'minimal',
+        style: 'menu',
         items: [
-          { type: 'command-group', name: 'insert' }
+          { type: 'command-group', name: 'additional' }
         ]
       },
       {
@@ -450,6 +461,15 @@ export default {
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'table' }
+        ]
+      },
+      {
+        name: 'insert',
+        type: 'tool-dropdown',
+        showDisabled: true,
+        style: 'descriptive',
+        items: [
+          { type: 'command-group', name: 'insert' }
         ]
       },
       {

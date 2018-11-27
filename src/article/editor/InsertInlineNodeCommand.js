@@ -29,6 +29,10 @@ import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand } from 'sub
 */
 
 export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCommand {
+  getType () {
+    throw new Error('This method is abstract')
+  }
+
   /**
     Insert new inline node at the current selection
   */
@@ -57,5 +61,9 @@ export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCo
         endOffset: node.endOffset
       }
     }
+  }
+
+  isDisabled (params) {
+    throw new Error('This method is abstract')
   }
 }

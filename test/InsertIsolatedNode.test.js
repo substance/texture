@@ -7,12 +7,7 @@ const tools = {
     'label': 'Blockquote',
     'nodeType': 'disp-quote'
   },
-  // TODO: how to select file?
-  // 'fig': {
-  //   'label': 'Figure',
-  //   'nodeType': 'fig'
-  // },
-  'table-wrap': {
+  'table': {
     'label': 'Table',
     'nodeType': 'table-figure'
   }
@@ -34,7 +29,8 @@ function testEmptyBodyIsolationNodeInsertion (t, tool, toolId) {
   t.equal(doc.get('body').length, 1, 'Body should be not empty')
   let firstEl = doc.get('body').getChildAt(0)
   t.equal(firstEl.type, 'p', 'First element should be paragraph')
-  let insertBtn = editor.find('.sc-toggle-tool.sm-insert-' + toolId + ' button')
+  openInsertMenu(editor)
+  let insertBtn = editor.find('.sc-menu-item.sm-insert-' + toolId)
   insertBtn.click()
   t.equal(doc.get('body').length, 1, 'Body should be not empty')
   let inserrtedEl = doc.get('body').getChildAt(0)
@@ -54,7 +50,16 @@ function _setupEmptyEditor (t) {
 }
 
 function isToolActive (el, toolId) {
-  let tool = el.find('.sc-toggle-tool.sm-insert-' + toolId)
-  let btn = tool.find('button')
-  return !btn.getAttribute('disabled')
+  openInsertMenu(el)
+  const toolBtn = el.find('.sc-menu-item.sm-insert-' + toolId)
+  return !toolBtn.getAttribute('disabled')
+}
+
+function openInsertMenu (el) {
+  const insertDropdown = el.find('.sc-tool-dropdown.sm-insert .sc-button')
+  // Check if dropdown is already active
+  const isDropDownOpened = insertDropdown.hasClass('sm-active')
+  if (!isDropDownOpened) {
+    insertDropdown.click()
+  }
 }

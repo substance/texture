@@ -903,6 +903,7 @@ InternalArticleSchema.addNodes([
   'break',
   'ext-link',
   'inline-formula',
+  'inline-graphic',
   'xref'
 ].map(name => TextureArticleSchema.getNodeClass(name, 'strict')))
 

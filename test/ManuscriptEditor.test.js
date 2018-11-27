@@ -20,6 +20,32 @@ test('ManuscriptEditor: add figure', t => {
   t.end()
 })
 
+test('ManuscriptEditor: add inline graphic', t => {
+  let { app } = setupTestApp(t)
+  let editor = openManuscriptEditor(app)
+  setCursor(editor, 'p-2.content', 3)
+  // Check that file-dialog does not throw
+  let insertInlineGraphicTool = editor.find('.sc-insert-inline-graphic-tool')
+  t.ok(insertInlineGraphicTool.find('button').click(), 'clicking on the insert inline graphic button should not throw')
+  let firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
+  t.notOk(firstInlineNode.hasClass('sm-inline-graphic'), 'first inline node in p-2 paragraph should not be inline graphic')
+  // Trigger onFileSelect() directly
+  insertInlineGraphicTool.onFileSelect(new PseudoFileEvent())
+  firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
+  t.ok(firstInlineNode.hasClass('sm-inline-graphic'), 'first inline node in p-2 paragraph should be inline graphic')
+  let editorSession = getEditorSession(editor)
+  editorSession.setSelection({
+    type: 'property',
+    path: ['p-2', 'content'],
+    startOffset: 3,
+    surfaceId: 'body'
+  })
+  let selectionState = editorSession.getSelectionState()
+  let selectedInlineGraphics = selectionState.annosByType['inline-graphic']
+  t.equal(selectedInlineGraphics.length, 1, 'inline graphic should be selected')
+  t.end()
+})
+
 test('ManuscriptEditor: TOC should be updated on change', t => {
   let { app } = setupTestApp(t)
   let editor = openManuscriptEditor(app)

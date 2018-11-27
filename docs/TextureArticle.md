@@ -855,6 +855,21 @@ tex-math
 article-title, chapter-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
 </pre>
 
+### `<inline-graphic>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, baseline-shift, mimetype, mime-subtype, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+alt-text?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-title, chapter-title, edition, email, ext-link, given-names, institution, kwd, label, license-p, p, part-title, patent, phone, prefix, role, series, subject, suffix, surname, td, th, title, trans-title, uri, version, xref
+</pre>
+
 ### `<institution>`
 
 **Attributes**:
@@ -2027,7 +2042,6 @@ and explanations that help understanding the use-case.
 - glyph-ref
 - gov
 - hr
-- inline-graphic
 - inline-supplementary-material
 - issn
 - issn-l

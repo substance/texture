@@ -38,12 +38,11 @@ export default class SelectionStateReducer {
         state.previousNode = container.getNodeAt(startPos - 1)
       }
       state.isFirst = selectionHelpers.isFirst(doc, sel.start)
-      let endNode, endPos
+      let endPos
       if (endId === startId) {
-        endNode = startNode
         endPos = startPos
       } else {
-        endNode = doc.get(endId).getContainerRoot()
+        let endNode = doc.get(endId).getContainerRoot()
         endPos = container.getPosition(endNode)
       }
       if (endPos < container.getLength() - 1) {

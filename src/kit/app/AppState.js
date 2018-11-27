@@ -157,11 +157,17 @@ class Slot {
   }
 
   _getEntryForObserver (observer) {
-    return observer[this._id].get(this.id)
+    let map = observer[this._id]
+    if (map) {
+      return map.get(this.id)
+    }
   }
 
   _deleteEntry (observer) {
-    delete observer[this._id].get(this.id)
+    let map = observer[this._id]
+    if (map) {
+      map.delete(this.id)
+    }
   }
 
   _notifyObserver (entry) {

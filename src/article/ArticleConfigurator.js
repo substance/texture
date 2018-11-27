@@ -103,7 +103,7 @@ export default class ArticleConfigurator extends TextureConfigurator {
     switch (type) {
       case 'text': {
         if (!this._textExporter) {
-          this._textExporter = new ArticlePlainTextExporter(this)
+          this._textExporter = new ArticlePlainTextExporter()
         }
         return this._textExporter
       }
@@ -115,7 +115,7 @@ export default class ArticleConfigurator extends TextureConfigurator {
       }
       case 'jats': {
         if (!this._jatsExporter) {
-          this._jatsExporter = new JATSExporter(this)
+          this._jatsExporter = new JATSExporter()
         }
         return this._jatsExporter
       }

@@ -59,7 +59,7 @@ import createJatsImporter from './createJatsImporter'
 export default function jats2internal (jats, options) {
   let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
   // this is used to for parts of the DOM where we use JATS in the internal model
-  let jatsImporter = createJatsImporter(doc, options)
+  let jatsImporter = createJatsImporter(doc)
 
   // metadata
   _populateOrganisations(doc, jats)

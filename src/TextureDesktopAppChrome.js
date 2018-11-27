@@ -28,9 +28,9 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     //   })
     //   handled = true
     // }
-    if (!handled) {
-      handled = this.refs.texture._handleKeydown(event)
-    }
+    // if (!handled) {
+    handled = this.refs.texture._handleKeydown(event)
+    // }
     if (handled) {
       event.preventDefault()
       event.stopPropagation()

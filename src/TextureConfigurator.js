@@ -80,7 +80,7 @@ export default class TextureConfigurator extends Configurator {
     if (!ToolClass) {
       throw new Error('Provided nil for tool ' + name)
     }
-    if (!ToolClass || !ToolClass.prototype._isTool) {
+    if (!ToolClass.prototype._isTool) {
       throw new Error("Expecting 'ToolClass' to be of type Tool. name:", name)
     }
 

@@ -178,12 +178,12 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
 
   // kwd-group*,
   articleMeta.append(
-    _exportKeywords(jats, doc, jatsExporter)
+    _exportKeywords(jats, doc)
   )
 
   // funding-group*,
   articleMeta.append(
-    _exportAwards(jats, doc, jatsExporter)
+    _exportAwards(jats, doc)
   )
 
   // conference*,      // not supported yet

@@ -39,10 +39,9 @@ export default class TextureEditing extends Editing {
     2.0 API suggestion (pass only id, not data)
   */
   insertInlineNode (tx, node) {
-    let sel = tx.selection
     let text = '\uFEFF'
     this.insertText(tx, text)
-    sel = tx.selection
+    let sel = tx.selection
     let endOffset = tx.selection.end.offset
     let startOffset = endOffset - text.length
     // TODO: introduce a coordinate operation for that

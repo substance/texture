@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import TextInput from './TextInput'
+import TextInput from '../ui/TextInput'
 
 export default class StringComponent extends Component {
   render ($$) {

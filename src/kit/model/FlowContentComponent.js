@@ -1,9 +1,9 @@
-import { ContainerEditorNew } from './SubstanceModifications'
+import ContainerEditor from '../ui/_ContainerEditor'
 
 /*
   Customized ContainerEditor for FlowContentModels.
 */
-export default class FlowContentComponent extends ContainerEditorNew {
+export default class FlowContentComponent extends ContainerEditor {
   // overriding event registration
   didMount () {
     // ATTENTION: we are not calling super here, because we want to deviate from the default implementation

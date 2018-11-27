@@ -73,7 +73,7 @@ export default class NumberedLabelGenerator {
         str = String(g[0]) + this.to + String(last(g))
       }
       if (this.groupTemplate) {
-        str = this.groupTemplate.slice(0).replace('$', str)
+        str = this.groupTemplate.slice(0).replace(/[$]/g, str)
       }
       groups.push(str)
     }
@@ -96,7 +96,7 @@ export default class NumberedLabelGenerator {
 
     let res = frags.join('')
     if (this.template) {
-      res = this.template.slice(0).replace('$', res)
+      res = this.template.slice(0).replace(/[$]/g, res)
     }
     return res
   }

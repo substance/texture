@@ -1,8 +1,12 @@
 import { platform, DefaultDOMElement, documentHelpers } from 'substance'
-import JSONConverterNew from './JSONConverterNew'
+import JSONConverterNew from '../model/JSONConverterNew'
 
 const INLINENODES = ['a', 'b', 'big', 'i', 'small', 'tt', 'abbr', 'acronym', 'cite', 'code', 'dfn', 'em', 'kbd', 'strong', 'samp', 'time', 'var', 'bdo', 'br', 'img', 'map', 'object', 'q', 'script', 'span', 'sub', 'sup', 'button', 'input', 'label', 'select', 'textarea'].reduce((m, n) => { m[n] = true; return m }, {})
 
+/*
+  A rewrite of the original Substance.Clipboard, which uses a better JSONConverter implementation.
+  Note: this should eventually moved back into Substance core.
+*/
 export default class ClipboardNew {
   copy (clipboardData, context) {
     // content specific manipulation API

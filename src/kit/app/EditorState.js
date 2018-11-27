@@ -21,7 +21,7 @@ export default class EditorState extends AppState {
 
     let selectionStateReducer = new SelectionStateReducer(this)
     selectionStateReducer.update()
-    impl._selectionStateReducer = impl._selectionStateReducer
+    impl._selectionStateReducer = selectionStateReducer
   }
 
   dispose () {

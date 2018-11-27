@@ -1,3 +1,13 @@
+.sc-inline-graphic {
+  display: inline-block;
+}
+
 .sc-inline-graphic img {
   max-height: var(--t-text-font-size);
+}
+
+.sc-inline-graphic .se-error { 
+  border: 1px solid #d95859;
+  padding: 2px 4px;
+  color: #d95859;
 }

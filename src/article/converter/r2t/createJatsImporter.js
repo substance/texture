@@ -8,6 +8,7 @@ import DispFormulaConverter from './DispFormulaConverter'
 import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
 import ElementCitationConverter from './ElementCitationConverter'
+import TexMathConverter from './TexMathConverter'
 import ListConverter from './ListConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
@@ -30,6 +31,7 @@ export default function createJatsImporter (doc) {
     new DispFormulaConverter(),
     new DispQuoteConverter(),
     new FigConverter(),
+    new TexMathConverter(),
     new ListConverter(),
     new PermissionsConverter(),
     new PreformatConverter(),

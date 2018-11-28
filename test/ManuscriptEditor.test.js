@@ -11,7 +11,7 @@ test('ManuscriptEditor: add figure', t => {
   // ATTENTION: it is not possible to trigger the file-dialog programmatically
   // instead we are just checking that this does not throw
   let insertFigureTool = editor.find('.sc-insert-figure-tool')
-  t.ok(insertFigureTool.find('button').click(), 'clicking on the insert figure button should not throw')
+  t.ok(insertFigureTool.find('button').click(), 'clicking on the insert figure button should not throw error')
   // ... and then triggering onFileSelect() directly
   insertFigureTool.onFileSelect(new PseudoFileEvent())
   let afterP2 = editor.find('*[data-id=p-2] + *')
@@ -26,7 +26,7 @@ test('ManuscriptEditor: add inline graphic', t => {
   setCursor(editor, 'p-2.content', 3)
   // Check that file-dialog does not throw
   let insertInlineGraphicTool = editor.find('.sc-insert-inline-graphic-tool')
-  t.ok(insertInlineGraphicTool.find('button').click(), 'clicking on the insert inline graphic button should not throw')
+  t.ok(insertInlineGraphicTool.find('button').click(), 'clicking on the insert inline graphic button should not throw error')
   let firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
   t.notOk(firstInlineNode.hasClass('sm-inline-graphic'), 'first inline node in p-2 paragraph should not be inline graphic')
   // Trigger onFileSelect() directly
@@ -43,6 +43,49 @@ test('ManuscriptEditor: add inline graphic', t => {
   let selectionState = editorSession.getSelectionState()
   let selectedInlineGraphics = selectionState.annosByType['inline-graphic']
   t.equal(selectedInlineGraphics.length, 1, 'inline graphic should be selected')
+  t.end()
+})
+
+test('ManuscriptEditor: add inline formula', t => {
+  let { app } = setupTestApp(t)
+  let editor = openManuscriptEditor(app)
+  setCursor(editor, 'p-2.content', 5)
+
+  // Open insert dropdown
+  const insertDropdown = editor.find('.sc-tool-dropdown.sm-insert .sc-button')
+  insertDropdown.click()
+
+  let firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
+  t.notOk(firstInlineNode.hasClass('sm-inline-formula'), 'first inline node in p-2 paragraph should not be inline formula')
+  let insertInlineFormulaTool = editor.find('.sc-menu-item.sm-insert-formula')
+  t.ok(insertInlineFormulaTool.click(), 'clicking on the insert inline formula button should not throw error')
+  let editorSession = getEditorSession(editor)
+  editorSession.setSelection({
+    type: 'property',
+    path: ['p-2', 'content'],
+    startOffset: 5,
+    surfaceId: 'body'
+  })
+  let selectionState = editorSession.getSelectionState()
+  let selectedInlineGraphics = selectionState.annosByType['inline-formula']
+  t.equal(selectedInlineGraphics.length, 1, 'inline formula should be selected')
+  t.end()
+})
+
+test('ManuscriptEditor: add disp formula', t => {
+  let { app } = setupTestApp(t)
+  let editor = openManuscriptEditor(app)
+  setCursor(editor, 'p-2.content', 5)
+
+  // Open insert dropdown
+  const insertDropdown = editor.find('.sc-tool-dropdown.sm-insert .sc-button')
+  insertDropdown.click()
+
+  let insertDispFormulaTool = editor.find('.sc-menu-item.sm-insert-disp-formula')
+  t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
+  let afterP2 = editor.find('*[data-id=p-2] + *')
+  t.ok(afterP2.hasClass('sm-disp-formula'), 'element after p-2 should be a disp formula now')
+  // TODO: we should test the automatic labeling here as well
   t.end()
 })
 

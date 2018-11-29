@@ -228,10 +228,13 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),
     issue: getText(articleMetaEl, 'issue'),
-    'issue-title': getText(articleMetaEl, 'issue-title'),
     volume: getText(articleMetaEl, 'volume'),
     pageRange: getText(articleMetaEl, 'page-range')
   })
+  let issueTitleEl = findChild(articleMetaEl, 'issue-title')
+  if (issueTitleEl) {
+    articleRecord['issue-title'] = jatsImporter.annotatedText(issueTitleEl, [articleRecord.id, 'issue-title'])
+  }
   // Import permission if present
   const permissionsEl = articleMetaEl.find('permissions')
   // An empty permission is already there, but will be replaced if <permission> element is there

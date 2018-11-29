@@ -24,9 +24,9 @@
 
 .sc-inline-formula.sm-selected .sc-math .katex,
 .sc-inline-formula.sm-co-selected .sc-math .katex  {
-  background: rgba(163,205,253, 0.6);
+  background: var(--t-focus-color);
 }
 
 .sc-math .sm-error {
-  background: rgba(200, 0, 0 , 0.25);
+  background: var(--t-error-color);
 }

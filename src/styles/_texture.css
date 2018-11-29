@@ -60,6 +60,8 @@
   --t-action-color: #2e72ea;
   /* Used to display warning icons */
   --t-warning-color: #ffaf46;
+  /* Used to display error message */
+  --t-error-color: rgba(200, 0, 0, 0.25);
   /* Default light border color */
   --t-border-color: #ddd;
 

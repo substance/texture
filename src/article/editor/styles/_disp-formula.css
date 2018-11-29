@@ -11,3 +11,7 @@
 .sc-disp-formula .se-label {
   padding-left: 10px;
 }
+
+.sc-disp-formula.sm-error {
+  background: var(--t-error-color);
+}

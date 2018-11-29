@@ -129,7 +129,11 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
 
   // issue-title?,
   if (articleRecord['issue-title']) {
-    articleMeta.append($$('issue-title').append(articleRecord['issue-title']))
+    articleMeta.append(
+      $$('issue-title').append(
+        jatsExporter.annotatedText([articleRecord.id, 'issue-title'])
+      )
+    )
   }
 
   // isbn?, // not supported yet

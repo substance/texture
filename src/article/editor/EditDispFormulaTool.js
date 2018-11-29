@@ -21,7 +21,7 @@ export default class EditDispFormulaTool extends ToggleTool {
         type: 'text',
         path: [nodeId, 'content'],
         placeholder: 'Enter TeX'
-      })
+      }).addClass('sm-big-input')
         // ATTNETION have a ref on it, otherwise the input will get rerendered on every change
         .ref('input')
         // stopping keydown events so that the input field is not distracted by other editor keyboard handler

@@ -24,15 +24,19 @@ export default class DispFormulaComponent extends Component {
         })
       )
     } else {
-      try {
-        el.append(
-          $$('span').addClass('se-formula').html(katex.renderToString(texMath))
-        )
-        let blockerEl = $$('div').addClass('se-blocker')
-        el.append(blockerEl)
-      } catch (error) {
-        el.addClass('sm-error')
-          .text(error.message)
+      if (!texMath) {
+        el.append('???')
+      } else {
+        try {
+          el.append(
+            $$('span').addClass('se-formula').html(katex.renderToString(texMath))
+          )
+          let blockerEl = $$('div').addClass('se-blocker')
+          el.append(blockerEl)
+        } catch (error) {
+          el.addClass('sm-error')
+            .text(error.message)
+        }
       }
       el.append(
         $$('div').addClass('se-label').append(label)

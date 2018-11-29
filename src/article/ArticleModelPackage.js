@@ -2,20 +2,21 @@ import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import LanguagesPackage from './LanguagesPackage'
 
-import FigureModel from './models/FigureModel'
-import DispQuoteModel from './models/DispQuoteModel'
-import ArticleRecordModel from './models/ArticleRecordModel'
-import FigureCollectionModel from './models/FigureCollectionModel'
-import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import AwardCollectionModel from './models/AwardCollectionModel'
-import PersonCollectionModel from './models/PersonCollectionModel'
+import ArticleRecordModel from './models/ArticleRecordModel'
+import DispFormulaModel from './models/DispFormulaModel'
+import DispQuoteModel from './models/DispQuoteModel'
+import FigureCollectionModel from './models/FigureCollectionModel'
+import FigureModel from './models/FigureModel'
+import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
-import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
+import OrganisationCollectionModel from './models/OrganisationCollectionModel'
+import PersonCollectionModel from './models/PersonCollectionModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
-import TranslationCollectionModel from './models/TranslationCollectionModel'
 import TranslateableModel from './models/TranslateableModel'
+import TranslationCollectionModel from './models/TranslationCollectionModel'
 import TranslationModel from './models/TranslationModel'
 import XrefModel from './models/XrefModel'
 
@@ -50,6 +51,7 @@ export default {
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)
     config.addModel('figure', FigureModel)
+    config.addModel('disp-formula', DispFormulaModel)
     config.addModel('disp-quote', DispQuoteModel)
     config.addModel('article-record', ArticleRecordModel)
     config.addModel('table-figure', FigureModel)
@@ -75,6 +77,11 @@ export default {
     })
     config.setLabelGenerator('footnotes', {
       template: '$',
+      and: ',',
+      to: '-'
+    })
+    config.setLabelGenerator('formulas', {
+      template: '($)',
       and: ',',
       to: '-'
     })

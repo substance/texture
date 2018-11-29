@@ -3,6 +3,10 @@ import { getDocument, loadBodyFixture, setCursor, openManuscriptEditor } from '.
 import setupTestApp from './shared/setupTestApp'
 
 const tools = {
+  'disp-formula': {
+    'label': 'Formula',
+    'nodeType': 'disp-formula'
+  },
   'disp-quote': {
     'label': 'Blockquote',
     'nodeType': 'disp-quote'

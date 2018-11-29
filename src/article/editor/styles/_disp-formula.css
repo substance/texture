@@ -1,0 +1,17 @@
+.sc-disp-formula {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sc-disp-formula .se-formula {
+  margin: 0px auto;
+}
+
+.sc-disp-formula .se-label {
+  padding-left: 10px;
+}
+
+.sc-disp-formula.sm-error {
+  background: var(--t-error-color);
+}

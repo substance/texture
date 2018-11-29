@@ -4,8 +4,10 @@ import JATSSchema from '../../TextureArticle'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import BodyConverter from './BodyConverter'
+import DispFormulaConverter from './DispFormulaConverter'
 import DispQuoteConverter from './DispQuoteConverter'
 import FigConverter from './FigConverter'
+import TexMathConverter from './TexMathConverter'
 import ListConverter from './ListConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
@@ -27,8 +29,10 @@ export default function createJatsExporter (jatsDom, doc) {
   // registered for a specific nody type, i.e. a later converter overrides a previous one
   let converters = jatsConverters.concat([
     new BodyConverter(),
+    new DispFormulaConverter(),
     new DispQuoteConverter(),
     new FigConverter(),
+    new TexMathConverter(),
     new ListConverter(),
     new PermissionsConverter(),
     new PreformatConverter(),

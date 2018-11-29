@@ -480,6 +480,10 @@ export default class ArticleAPI extends EditorAPI {
     return insertTableFigure(tx, params.rows, params.columns)
   }
 
+  _createDispFormula (tx) {
+    return createEmptyElement(tx, 'disp-formula')
+  }
+
   _createDispQuote (tx) {
     return createEmptyElement(tx, 'disp-quote')
   }

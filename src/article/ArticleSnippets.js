@@ -1,3 +1,7 @@
+export const DISP_FORMULA = () => `
+  <disp-formula><tex-math></tex-math></disp-formula>
+`
+
 export const DISP_QUOTE = () => `
   <disp-quote></disp-quote>
 `

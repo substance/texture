@@ -1,5 +1,5 @@
 import {
-  Component, DefaultDOMElement, platform, getSelectionRect, getRelativeMouseBounds
+  Component, DefaultDOMElement, platform, getSelectionRect, getRelativeMouseBounds, getRelativeRect
 } from 'substance'
 
 export default class AbstractScrollPane extends Component {
@@ -176,7 +176,22 @@ export default class AbstractScrollPane extends Component {
     Get selection rectangle relative to panel content element
   */
   _getSelectionRect () {
-    return getSelectionRect(this._getContentRect())
+    let appState = this.context.appState
+    let sel = appState.selection
+    let selectionRect
+    if (platform.inBrowser && sel && !sel.isNull()) {
+      let contentEl = this.getContentElement()
+      let contentRect = contentEl.getNativeElement().getBoundingClientRect()
+      if (sel.isNodeSelection()) {
+        let nodeId = sel.nodeId
+        let nodeEl = contentEl.find(`*[data-id="${nodeId}"]`)
+        let nodeRect = nodeEl.getNativeElement().getBoundingClientRect()
+        selectionRect = getRelativeRect(contentRect, nodeRect)
+      } else {
+        selectionRect = getSelectionRect(contentRect)
+      }
+    }
+    return selectionRect
   }
 
   _getMouseBounds (e) {

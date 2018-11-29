@@ -555,6 +555,21 @@ TEXT
 date, element-citation, pub-date
 </pre>
 
+### `<disp-formula>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,tex-math
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+body, sec
+</pre>
+
 ### `<disp-quote>`
 
 **Attributes**:
@@ -1002,7 +1017,7 @@ id, xml:base, alt, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, fig, fn-group, kwd-group, table-wrap
+aff, disp-formula, fig, fn-group, kwd-group, table-wrap
 </pre>
 
 ### `<license>`
@@ -1752,7 +1767,7 @@ TEXT
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-inline-formula
+disp-formula, inline-formula
 </pre>
 
 ### `<tfoot>`
@@ -2028,7 +2043,6 @@ and explanations that help understanding the use-case.
 - def-item
 - def-list
 - degrees
-- disp-formula
 - disp-formula-group
 - equation-count
 - etal

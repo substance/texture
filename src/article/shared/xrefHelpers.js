@@ -3,6 +3,7 @@ import { orderBy, includes, without } from 'substance'
 // left side: node type
 // right side: ref-type
 export const REF_TYPES = {
+  'disp-formula': 'formula',
   'figure': 'fig',
   'repro-fig': 'fig',
   'fig-group': 'fig',
@@ -15,6 +16,7 @@ export const REF_TYPES = {
 // TODO: how could this be configured?
 const RefTypeToManager = {
   'bibr': 'referenceManager',
+  'formula': 'formulaManager',
   'fig': 'figureManager',
   'table': 'tableManager',
   'fn': 'footnoteManager'
@@ -57,6 +59,8 @@ function _getManagerByRefType (refType, context) {
   let managerName = RefTypeToManager[refType]
   if (managerName) {
     switch (managerName) {
+      case 'formulaManager':
+        return articleSession.getFormulaManager()
       case 'figureManager':
         return articleSession.getFigureManager()
       case 'footnoteManager':

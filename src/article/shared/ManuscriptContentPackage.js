@@ -24,6 +24,7 @@ import ExtLinkComponent from './ExtLinkComponent'
 import CaptionComponent from './CaptionComponent'
 import ContainerNodeComponent from './ContainerNodeComponent'
 import DispQuoteComponent from './DispQuoteComponent'
+import DispFormulaComponent from './DispFormulaComponent'
 import FootnoteComponent from './FootnoteComponent'
 import GraphicComponent from './GraphicComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
@@ -60,6 +61,7 @@ export default {
     config.addComponent('container', ContainerNodeComponent)
     config.addComponent('col', ElementNodeComponent)
     config.addComponent('colgroup', ElementNodeComponent)
+    config.addComponent('disp-formula', DispFormulaComponent)
     config.addComponent('disp-quote', DispQuoteComponent)
     config.addComponent('fn', FootnoteComponent)
     config.addComponent('graphic', GraphicComponent)

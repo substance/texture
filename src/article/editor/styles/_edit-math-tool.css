@@ -17,3 +17,7 @@
   border: none;
   margin: 2px;
 }
+
+.sc-edit-math-tool .sc-input.sm-big-input {
+  min-width: 500px;
+}

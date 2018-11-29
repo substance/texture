@@ -1,4 +1,8 @@
 import { getMountPoint } from 'substance-test'
+import {
+  InternalArticleDocument, InternalArticleSchema,
+  createJatsImporter, createJatsExporter, createEmptyJATS
+} from '../../index'
 
 export { test, spy, wait, getMountPoint, testAsync } from 'substance-test'
 
@@ -45,4 +49,16 @@ export function diff (actual, expected) {
 export function injectStyle (t, style) {
   let sandbox = getMountPoint(t)
   sandbox.insertAt(0, sandbox.createElement('style').text(style))
+}
+
+export function importElement (el) {
+  let doc = InternalArticleDocument.createEmptyArticle(InternalArticleSchema)
+  let importer = createJatsImporter(doc)
+  return importer.convertElement(el)
+}
+
+export function exportElement (el) {
+  let jats = createEmptyJATS()
+  let exporter = createJatsExporter(jats, el.getDocument())
+  return exporter.convertNode(el)
 }

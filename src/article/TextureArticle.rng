@@ -859,7 +859,12 @@
   <define name="issue-title">
     <element name="issue-title">
       <ref name="issue-title-attlist"/>
-      <text/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="rich-text"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
 

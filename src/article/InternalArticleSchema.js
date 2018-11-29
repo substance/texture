@@ -26,7 +26,7 @@ ArticleRecord.schema = {
   type: 'article-record',
   volume: STRING,
   issue: STRING,
-  'issue-title': STRING,
+  'issue-title': TEXT(...RICH_TEXT_ANNOS),
   fpage: STRING,
   lpage: STRING,
   pageRange: STRING,

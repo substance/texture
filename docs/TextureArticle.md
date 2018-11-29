@@ -252,7 +252,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<break>`
@@ -717,7 +717,7 @@ id, xml:base, content-type, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<fn>`
@@ -968,7 +968,7 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-TEXT
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -987,7 +987,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<kwd>`
@@ -1122,7 +1122,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<month>`
@@ -1212,7 +1212,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<p>`
@@ -1497,7 +1497,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<season>`
@@ -1587,7 +1587,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<string-date>`
@@ -1632,7 +1632,7 @@ id, xml:base, arrange, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<subj-group>`
@@ -1692,7 +1692,7 @@ id, xml:base, arrange, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<surname>`
@@ -1932,7 +1932,7 @@ id, xml:base, toggle, underline-style, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, price, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<uri>`

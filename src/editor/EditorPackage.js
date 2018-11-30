@@ -51,6 +51,7 @@ import SeparatorComponent from './components/SeparatorComponent'
 import SigBlockComponent from './components/SigBlockComponent'
 import TitleGroupComponent from './components/TitleGroupComponent'
 import XrefComponent from './components/XrefComponent'
+import ExtLinkComponent from './components/ExtLinkComponent'
 
 import RefPreview from './components/RefPreview'
 import FnPreview from './components/FnPreview'
@@ -160,6 +161,8 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
+    console.log('YOYO')
+    config.addComponent('ext-link', ExtLinkComponent)
 
     // Panels and other displays
     config.addComponent('manuscript', ManuscriptComponent)

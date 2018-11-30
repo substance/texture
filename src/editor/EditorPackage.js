@@ -161,7 +161,6 @@ export default {
     config.addComponent('toc', TOC)
     config.addComponent('tr', ElementNodeComponent)
     config.addComponent('xref', XrefComponent)
-    console.log('YOYO')
     config.addComponent('ext-link', ExtLinkComponent)
 
     // Panels and other displays

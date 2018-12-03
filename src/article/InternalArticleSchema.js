@@ -895,6 +895,7 @@ InternalArticleSchema.addNodes([
   'bio',
   'caption',
   'fn',
+  'table-wrap-foot',
   'graphic',
   'label',
   'p',

@@ -149,7 +149,6 @@
   <s:not-implemented name="supplement"/>
   <s:not-implemented name="supplementary-material"/>
   <s:not-implemented name="table-count"/>
-  <s:not-implemented name="table-wrap-foot"/>
   <s:not-implemented name="table-wrap-group"/>
   <s:not-implemented name="target"/>
   <s:not-implemented name="term"/>
@@ -1167,6 +1166,9 @@
       <ref name="table"/>
       <optional>
         <ref name="permissions"/>
+      </optional>
+      <optional>
+        <ref name="table-wrap-foot"/>
       </optional>
     </element>
   </define>

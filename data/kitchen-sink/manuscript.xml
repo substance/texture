@@ -183,9 +183,9 @@
         <table id="t1">
           <tbody>
             <tr id="t1_1">
-              <th id="t1_1_1">A</th>
-              <th id="t1_1_2">B</th>
-              <th id="t1_1_3">C</th>
+              <th id="t1_1_1">A<xref ref-type="table-fn" rid="tfn1">*</xref></th>
+              <th id="t1_1_2">B<xref ref-type="table-fn" rid="tfn2">†</xref></th>
+              <th id="t1_1_3">C<xref ref-type="table-fn" rid="tfn1,tfn2">*,†</xref></th>
               <th id="t1_1_4">D</th>
             </tr>
             <tr id="t1_2">
@@ -203,6 +203,16 @@
             </tr>
           </tbody>
         </table>
+        <table-wrap-foot>
+          <fn id="tfn1">
+            <label>*</label>
+            <p>This is a table-footnote.</p>
+          </fn>
+          <fn id="tablefn2">
+            <label>†</label>
+            <p>Another table-footnote.</p>
+          </fn>
+        </table-wrap-foot>
       </table-wrap>
       <sec id="sec-2">
         <title>Orci varius natoque penatibus et magnis</title>

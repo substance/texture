@@ -787,6 +787,9 @@
   <define name="fn">
     <element name="fn">
       <ref name="fn-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
       <oneOrMore>
         <ref name="p"/>
       </oneOrMore>

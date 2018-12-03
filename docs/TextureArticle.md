@@ -162,7 +162,7 @@ id, xml:base, specific-use, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-disp-quote
+disp-quote, table-wrap-foot
 </pre>
 
 ### `<award-group>`
@@ -728,11 +728,11 @@ id, xml:base, symbol, fn-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-p+
+label?,p+
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-fn-group
+fn-group, table-wrap-foot
 </pre>
 
 ### `<fn-group>`
@@ -747,7 +747,7 @@ label?,title?,fn+
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-back
+back, table-wrap-foot
 </pre>
 
 ### `<fpage>`
@@ -1032,7 +1032,7 @@ id, xml:base, alt, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, disp-formula, fig, fn-group, kwd-group, table-wrap
+aff, disp-formula, fig, fn, fn-group, kwd-group, table-wrap, table-wrap-foot
 </pre>
 
 ### `<license>`
@@ -1227,7 +1227,7 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-abstract, bio, body, caption, disp-quote, fn, list-item, sec, trans-abstract
+abstract, bio, body, caption, disp-quote, fn, list-item, sec, table-wrap-foot, trans-abstract
 </pre>
 
 ### `<page-range>`
@@ -1287,7 +1287,7 @@ copyright-statement*,copyright-year*,copyright-holder*,(ali:free_to_read|license
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-meta, fig, table-wrap
+article-meta, fig, table-wrap, table-wrap-foot
 </pre>
 
 ### `<person-group>`
@@ -1733,11 +1733,26 @@ id, xml:base, position, orientation, specific-use, xml:lang, content-type
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-object-id?,label?,caption?,table,permissions?
+object-id?,label?,caption?,table,permissions?,table-wrap-foot?
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
 body, sec
+</pre>
+
+### `<table-wrap-foot>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,title?,(p|fn-group|fn|attrib|permissions)+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table-wrap
 </pre>
 
 ### `<tbody>`
@@ -1842,7 +1857,7 @@ id, xml:base, content-type, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-caption, fn-group, kwd-group, sec
+caption, fn-group, kwd-group, sec, table-wrap-foot
 </pre>
 
 ### `<title-group>`
@@ -2131,7 +2146,6 @@ and explanations that help understanding the use-case.
 - supplement
 - supplementary-material
 - table-count
-- table-wrap-foot
 - table-wrap-group
 - target
 - term

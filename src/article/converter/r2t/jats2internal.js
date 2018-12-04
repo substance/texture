@@ -317,7 +317,7 @@ function _populateTitle (doc, jats, jatsImporter) {
   let title = doc.get('title')
   let titleEl = jats.find('article > front > article-meta > title-group > article-title')
   if (titleEl) {
-    _convertAnnotatedText(jatsImporter, titleEl, title)
+    doc.set(title.getPath(), jatsImporter.annotatedText(titleEl, title.getPath()))
   }
   // translations
   let titleTranslations = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
@@ -325,7 +325,7 @@ function _populateTitle (doc, jats, jatsImporter) {
     let group = transTitleEl.parentNode
     let language = group.attr('xml:lang')
     let translation = doc.create({ type: 'text-translation', id: transTitleEl.id, language })
-    _convertAnnotatedText(jatsImporter, transTitleEl, translation)
+    doc.set(translation.getPath(), jatsImporter.annotatedText(transTitleEl, translation.getPath()))
     return translation.id
   })
   title.assign({
@@ -414,17 +414,3 @@ function _populateReferences (doc, jats, jatsImporter) {
     })
   }
 }
-
-// Helpers
-
-function _convertAnnotatedText (jatsImporter, el, textNode) {
-  const doc = jatsImporter.state.doc
-  // NOTE: this is a bit difficult but necessary
-  // The importer maintains a stack of 'scopes' to deal with recursive calls
-  // triggered by converters for nesteded element (annotations and inline nodes)
-  jatsImporter.state.pushContext(el.tagName)
-  textNode.content = jatsImporter.annotatedText(el, textNode.getPath())
-  let context = jatsImporter.state.popContext()
-  context.annos.forEach(nodeData => doc.create(nodeData))
-}
-

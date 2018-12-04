@@ -223,7 +223,7 @@ function _populateAwards (doc, jats) {
 function _populateArticleRecord (doc, jats, jatsImporter) {
   let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
-  articleRecord.assign({
+  Object.assign(articleRecord, {
     elocationId: getText(articleMetaEl, 'elocation-id'),
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),
@@ -233,7 +233,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
   })
   let issueTitleEl = findChild(articleMetaEl, 'issue-title')
   if (issueTitleEl) {
-    articleRecord.set('issue-title', jatsImporter.annotatedText(issueTitleEl, [articleRecord.id, 'issue-title']))
+    articleRecord['issue-title'] = jatsImporter.annotatedText(issueTitleEl, [articleRecord.id, 'issue-title'])
   }
   // Import permission if present
   const permissionsEl = articleMetaEl.find('permissions')
@@ -243,9 +243,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
     let permission = jatsImporter.convertElement(permissionsEl)
     // ATTENTION: so that the document model is correct we need to use
     // the Document API  to set the permission id
-    articleRecord.assign({
-      permission: permission.id
-    })
+    articleRecord.permission = permission.id
   }
 
   const articleDateEls = articleMetaEl.findAll('history > date, pub-date')
@@ -255,7 +253,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
       const date = _extractDate(dateEl)
       dates[date.type] = date.value
     })
-    articleRecord.assign(dates)
+    Object.assign(articleRecord, dates)
   }
 }
 
@@ -317,7 +315,7 @@ function _populateTitle (doc, jats, jatsImporter) {
   let title = doc.get('title')
   let titleEl = jats.find('article > front > article-meta > title-group > article-title')
   if (titleEl) {
-    doc.set(title.getPath(), jatsImporter.annotatedText(titleEl, title.getPath()))
+    title.content = jatsImporter.annotatedText(titleEl, title.getPath())
   }
   // translations
   let titleTranslations = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
@@ -325,16 +323,15 @@ function _populateTitle (doc, jats, jatsImporter) {
     let group = transTitleEl.parentNode
     let language = group.attr('xml:lang')
     let translation = doc.create({ type: 'text-translation', id: transTitleEl.id, language })
-    doc.set(translation.getPath(), jatsImporter.annotatedText(transTitleEl, translation.getPath()))
+    translation.content = jatsImporter.annotatedText(transTitleEl, translation.getPath())
     return translation.id
   })
-  title.assign({
-    translations: translationIds
-  })
+  title.translations = translationIds
 }
 
 function _populateAbstract (doc, jats, jatsImporter) {
   let $$ = jats.createElement.bind(jats)
+  let abstract = doc.get('abstract')
   // ATTENTION: JATS can have multiple abstracts
   // ATM we only take the first, loosing the others
   let abstractEls = jats.findAll('article > front > article-meta > abstract')
@@ -347,7 +344,6 @@ function _populateAbstract (doc, jats, jatsImporter) {
     if (abstractEl.getChildCount() === 0) {
       abstractEl.append($$('p'))
     }
-    let abstract = doc.get('abstract')
     abstractEl.children.forEach(el => {
       abstract.append(jatsImporter.convertElement(el))
     })
@@ -367,7 +363,7 @@ function _populateAbstract (doc, jats, jatsImporter) {
     })
     return translation.id
   })
-  doc.set(['abstract', 'translations'], translationIds)
+  abstract.translations = translationIds
 }
 
 function _populateBody (doc, jats, jatsImporter) {

@@ -13,6 +13,8 @@ export default class TableConverter {
         children: []
       }
     })
+    // ATTENTION: this code is not 'idiomatic' as it does not delegate to converters for children elements
+    // and instead creates document nodes on the fly
     for (let i = 0; i < rows.length; i++) {
       let tr = rows[i]
       let newRow = newRows[i]
@@ -42,7 +44,11 @@ export default class TableConverter {
         _fillSpanned($$, newRows, i, k, rowspan, colspan)
         let cell = $$('table-cell', { id: c.id })
         cell.attr(attributes)
-        cell.content = importer.annotatedText(c, cell.getPath())
+        // ATTENTION: do not use 'cell.content = ...' here
+        // because this does not trigger an operation
+        // when this converter is used inside a transaction, the assigment does not have an effect
+        // TODO: In importers we should never assign directly but use a node.set('name', value)
+        cell.setText(importer.annotatedText(c, cell.getPath()))
         newRows[i].children[k] = cell
       }
     }
@@ -82,7 +88,7 @@ export default class TableConverter {
           }
         }
         el.attr(attributes)
-        el.setInnerXML(cell.getInnerXML())
+        el.append(exporter.annotatedText(cell.getPath()))
         tr.append(el)
       }
       tbody.append(tr)

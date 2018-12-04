@@ -23,6 +23,10 @@ export default class TextPropertyEditorNew extends ModifiedSurface(SubstanceText
 
   render ($$) {
     let el = super.render($$)
+
+    // We have added these improvements:
+    // - editable vs read-only
+    // - disabling contenteditable in read-only mode
     if (this.isEditable()) {
       el.addClass('sm-editable')
     } else {

@@ -268,3 +268,81 @@ test('ManuscriptEditor: toggling a list', t => {
 
   t.end()
 })
+
+const SIMPLE_TABLE = `<table-wrap>
+  <table>
+    <tbody>
+      <tr>
+        <td id="t11">aaa</td>
+        <td id="t12">bbb</td>
+        <td id="t13">ccc</td>
+      </tr>
+      <tr>
+        <td id="t21">ddd</td>
+        <td id="t22">eee</td>
+        <td id="t23">fff</td>
+      </tr>
+      <tr>
+        <td id="t31">ggg</td>
+        <td id="t32">hhh</td>
+        <td id="t33">iii</td>
+      </tr>
+    </tbody>
+  </table>
+</table-wrap>`
+
+test('ManuscriptEditor: formatting in table cells', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+
+  // use bold tool
+  setSelection(editor, 't11.content', 1, 2)
+  let boldTool = editor.find('.sc-toggle-tool.sm-bold')
+  // click on list tool to turn "p1" into a list
+  boldTool.find('button').el.click()
+  let annos = doc.getAnnotations(['t11', 'content'])
+  t.deepEqual(annos.map(a => a.type), ['bold'], 'there should be one bold annotation on t11')
+
+  // use italic tool
+  setSelection(editor, 't12.content', 1, 2)
+  let italicTool = editor.find('.sc-toggle-tool.sm-italic')
+  // click on list tool to turn "p1" into a list
+  italicTool.find('button').el.click()
+  annos = doc.getAnnotations(['t12', 'content'])
+  t.deepEqual(annos.map(a => a.type), ['italic'], 'there should be one italic annotation on t12')
+
+  // use sup tool
+  setSelection(editor, 't13.content', 1, 2)
+  let supTool = editor.find('.sc-toggle-tool.sm-sup')
+  // click on list tool to turn "p1" into a list
+  supTool.find('button').el.click()
+  annos = doc.getAnnotations(['t13', 'content'])
+  t.deepEqual(annos.map(a => a.type), ['sup'], 'there should be one sup annotation on t13')
+
+  // use sub tool
+  setSelection(editor, 't21.content', 1, 2)
+  let subTool = editor.find('.sc-toggle-tool.sm-sub')
+  // click on list tool to turn "p1" into a list
+  subTool.find('button').el.click()
+  annos = doc.getAnnotations(['t21', 'content'])
+  t.deepEqual(annos.map(a => a.type), ['sub'], 'there should be one sub annotation on t21')
+
+  // use monospace tool
+  setSelection(editor, 't22.content', 1, 2)
+  let monospaceTool = editor.find('.sc-toggle-tool.sm-monospace')
+  // click on list tool to turn "p1" into a list
+  monospaceTool.find('button').el.click()
+  annos = doc.getAnnotations(['t22', 'content'])
+  t.deepEqual(annos.map(a => a.type), ['monospace'], 'there should be one monospace annotation on t22')
+
+  t.end()
+})
+
+// TODO: add tests for table cells
+// - add ext-link
+// - cite figure
+// - cite table
+// - cite table-footnotes
+// - cite reference

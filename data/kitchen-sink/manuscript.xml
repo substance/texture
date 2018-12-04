@@ -170,7 +170,7 @@
     </article-meta>
   </front>
   <body id="body">
-    <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Integer eget augue consequat, rhoncus velit nec, vehicula purus.</p>
+    <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>.</p>
     <sec id="sec-1">
       <title>Quisque malesuada</title>
       <table-wrap id="table1">
@@ -193,26 +193,26 @@
             </tr>
             <tr id="t1_3">
               <td id="t1_3_1">5</td>
-              <td id="t1_3_2" rowspan="2">6</td>
+              <td id="t1_3_2" rowspan="2">Formatting in table cell <bold id="t1-bold-1">bold</bold>,<italic id="t1-italic-1">italic</italic>, <sub id="t1-sub-1">sub</sub>,<sup id="t1-sup-1">sup</sup>, <monospace id="t1-monospace-1">monospace</monospace></td>
             </tr>
             <tr id="t1_4">
               <td id="t1_4_1">9</td>
-              <td id="t1_4_3">11</td>
-              <td id="t1_4_4">12</td>
+              <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
+              <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
             </tr>
           </tbody>
         </table>
       </table-wrap>
       <sec id="sec-2">
         <title>Orci varius natoque penatibus et magnis</title>
-        <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>. Integer eget augue consequat, rhoncus velit nec, vehicula purus.</p>
+        <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
         <fig id="fig1">
           <label>Figure 1</label>
           <caption id="fig1-caption">
             <title>Behavioural design and implantation details.</title>
             <p id="fig1-caption-p1">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium.</p>
           </caption>
-          <graphic id="graphic-1" xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
+          <graphic id="graphic-1" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
           <permissions id="permission-2">
             <copyright-statement>© 2014 Surname et al.</copyright-statement>
             <copyright-year>2014</copyright-year>
@@ -230,7 +230,7 @@
             <title>Visual object processing in area AIP.</title>
             <p id="fig2-caption-p1" />
           </caption>
-          <graphic id="graphic-2" xmlns:xlink="http://www.w3.org/1999/xlink" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
+          <graphic id="graphic-2" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
         </fig>
         <disp-quote id="disp-quote-1">
           <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -250,7 +250,7 @@ class Reader(fname: String) {
           <label>(1)</label>
           <tex-math><![CDATA[
 1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
-\prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, 
+\prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},
 \quad\quad \text{for }\lvert q\rvert<1.]]></tex-math>
         </disp-formula>
         <list list-type="bullet" id="list-1">

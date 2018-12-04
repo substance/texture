@@ -22,6 +22,7 @@ import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import TOC from './TOC'
 import FigureComponent from '../shared/FigureComponent'
+import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
 
@@ -79,7 +80,7 @@ export default {
 
     // overriding the default components for preview
     config.addComponent('figure', FigureComponent, true)
-    config.addComponent('table-figure', FigureComponent, true)
+    config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('fn', FootnoteComponent, true)
     config.addComponent('bibr', ReferenceComponent, true)
 

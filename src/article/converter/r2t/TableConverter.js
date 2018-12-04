@@ -82,7 +82,7 @@ export default class TableConverter {
           }
         }
         el.attr(attributes)
-        el.setInnerXML(cell.getInnerXML())
+        el.append(exporter.annotatedText(cell.getPath()))
         tr.append(el)
       }
       tbody.append(tr)

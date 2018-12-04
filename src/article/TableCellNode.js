@@ -29,7 +29,7 @@ export default class TableCellNode extends XMLTextElement {
 TableCellNode.type = 'table-cell'
 
 TableCellNode.schema = {
-  content: TEXT('bold', 'italic', 'sup', 'sub', 'monospace', 'ext-link', 'xref', 'inline-formula')
+  content: TEXT('bold', 'italic', 'sup', 'sub', 'monospace', 'ext-link', 'xref', 'inline-formula', 'inline-graphic')
 }
 
 function _parseSpan (str) {

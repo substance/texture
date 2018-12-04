@@ -1176,6 +1176,15 @@
     </element>
   </define>
 
+  <define name="table-wrap-foot">
+    <element name="table-wrap-foot">
+      <ref name="table-wrap-foot-attlist"/>
+      <optional>
+        <ref name="fn-group"/>
+      </optional>
+    </element>
+  </define>
+
   <define name="textual-form-elements">
     <choice>
       <ref name="emphasis.class"/>

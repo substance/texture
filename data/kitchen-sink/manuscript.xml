@@ -204,14 +204,16 @@
           </tbody>
         </table>
         <table-wrap-foot>
-          <fn id="tfn1">
-            <label>*</label>
-            <p>This is a table-footnote.</p>
-          </fn>
-          <fn id="tablefn2">
-            <label>†</label>
-            <p>Another table-footnote.</p>
-          </fn>
+          <fn-group>
+            <fn id="tfn1">
+              <label>*</label>
+              <p>This is a table-footnote.</p>
+            </fn>
+            <fn id="tablefn2">
+              <label>†</label>
+              <p>Another table-footnote.</p>
+            </fn>
+          </fn-group>
         </table-wrap-foot>
       </table-wrap>
       <sec id="sec-2">

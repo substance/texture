@@ -1,6 +1,6 @@
 import { forEach } from 'substance'
 import CitableContentManager from './CitableContentManager'
-import TableFootnotesManager from './TableFootnoteManager'
+import TableFootnoteManager from './TableFootnoteManager'
 
 export default class TableManager extends CitableContentManager {
   constructor (documentSession, labelGenerator) {
@@ -26,18 +26,18 @@ export default class TableManager extends CitableContentManager {
     let doc = this._getDocument()
     let tableFigures = doc.getIndex('type').get('table-figure')
     forEach(tableFigures, tableFigure => {
-      tableFigure._tableFootnoteManager = new TableFootnotesManager(this.documentSession, tableFigure)
+      tableFigure._tableFootnoteManager = new TableFootnoteManager(this.documentSession, tableFigure)
     })
   }
 
   _checkForNewTableFigures (change) {
     let doc = this._getDocument()
-    // whenever a table-figure is created we attach a TableFootnotesManager
+    // whenever a table-figure is created we attach a TableFootnoteManager
     for (let op of change.ops) {
       if (op.isCreate()) {
         let node = doc.get(op.getValue().id)
         if (node && node.type === 'table-figure') {
-          node._tableFootnoteManager = new TableFootnotesManager(this.documentSession, node)
+          node._tableFootnoteManager = new TableFootnoteManager(this.documentSession, node)
         }
       }
     }

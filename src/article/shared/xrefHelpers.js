@@ -29,7 +29,9 @@ export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {
   if (!m[refType]) m[refType] = []
   m[refType].push(type)
   return m
-}, {})
+}, {
+  'table-fn': ['fn']
+})
 
 export function getXrefTargets (xref) {
   let idrefs = xref.getAttribute('rid')

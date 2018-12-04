@@ -1,10 +1,11 @@
-import { DocumentNode as SubstanceDocumentNode, forEach } from 'substance'
+import { DocumentNode as SubstanceDocumentNode, forEach, cssSelect, cssSelectAdapter } from 'substance'
 
 /*
  ATTENTION: this is a preliminary extension of the Substance.DocumentNode
  After consolidation this will be merged into Substance.
 */
 export default class DocumentNode extends SubstanceDocumentNode {
+  // EXPERIMENTAL: this helps mix regular DocumentNodes with XMLDocumentNode e.g. for node.findAll()
   getChildren () {
     const doc = this.getDocument()
     const id = this.id
@@ -27,5 +28,13 @@ export default class DocumentNode extends SubstanceDocumentNode {
       }
     }
     return result
+  }
+
+  find (cssSelector) {
+    return cssSelect.selectOne(cssSelector, this, { xmlMode: true, adapter: cssSelectAdapter })
+  }
+
+  findAll (cssSelector) {
+    return cssSelect.selectAll(cssSelector, this, { xmlMode: true, adapter: cssSelectAdapter })
   }
 }

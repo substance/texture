@@ -183,9 +183,9 @@
         <table id="t1">
           <tbody>
             <tr id="t1_1">
-              <th id="t1_1_1">A<xref ref-type="table-fn" rid="tfn1">*</xref></th>
-              <th id="t1_1_2">B<xref ref-type="table-fn" rid="tfn2">†</xref></th>
-              <th id="t1_1_3">C<xref ref-type="table-fn" rid="tfn1,tfn2">*,†</xref></th>
+              <th id="t1_1_1">A</th>
+              <th id="t1_1_2">B</th>
+              <th id="t1_1_3">C</th>
               <th id="t1_1_4">D</th>
             </tr>
             <tr id="t1_2">
@@ -201,6 +201,12 @@
               <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
               <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
             </tr>
+            <tr id="t1_5">
+              <td id="t1_5_1">Table footnote<xref ref-type="table-fn" rid="tfn1">*</xref></td>
+              <td id="t1_5_2">Another table footnote<xref ref-type="table-fn" rid="tfn2">†</xref></td>
+              <td id="t1_5_3">Table footnote with multiple targets<xref ref-type="table-fn" rid="tfn1,tfn2">*,†</xref></td>
+              <td id="t1_5_4">16</td>
+            </tr>
           </tbody>
         </table>
         <table-wrap-foot>
@@ -209,7 +215,7 @@
               <label>*</label>
               <p>This is a table-footnote.</p>
             </fn>
-            <fn id="tablefn2">
+            <fn id="tfn2">
               <label>†</label>
               <p>Another table-footnote.</p>
             </fn>

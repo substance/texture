@@ -223,7 +223,7 @@ function _populateAwards (doc, jats) {
 function _populateArticleRecord (doc, jats, jatsImporter) {
   let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
-  _assign(articleRecord, {
+  articleRecord.assign({
     elocationId: getText(articleMetaEl, 'elocation-id'),
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),
@@ -233,7 +233,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
   })
   let issueTitleEl = findChild(articleMetaEl, 'issue-title')
   if (issueTitleEl) {
-    articleRecord['issue-title'] = jatsImporter.annotatedText(issueTitleEl, [articleRecord.id, 'issue-title'])
+    articleRecord.set('issue-title', jatsImporter.annotatedText(issueTitleEl, [articleRecord.id, 'issue-title']))
   }
   // Import permission if present
   const permissionsEl = articleMetaEl.find('permissions')
@@ -243,7 +243,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
     let permission = jatsImporter.convertElement(permissionsEl)
     // ATTENTION: so that the document model is correct we need to use
     // the Document API  to set the permission id
-    _assign(articleRecord, {
+    articleRecord.assign({
       permission: permission.id
     })
   }
@@ -255,7 +255,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
       const date = _extractDate(dateEl)
       dates[date.type] = date.value
     })
-    _assign(articleRecord, dates)
+    articleRecord.assign(dates)
   }
 }
 
@@ -328,7 +328,7 @@ function _populateTitle (doc, jats, jatsImporter) {
     _convertAnnotatedText(jatsImporter, transTitleEl, translation)
     return translation.id
   })
-  _assign(title, {
+  title.assign({
     translations: translationIds
   })
 }
@@ -428,11 +428,3 @@ function _convertAnnotatedText (jatsImporter, el, textNode) {
   context.annos.forEach(nodeData => doc.create(nodeData))
 }
 
-// would be good to have this as a general Node API
-function _assign (node, obj) {
-  let doc = node.getDocument()
-  let props = Object.keys(obj)
-  for (let prop of props) {
-    doc.set([node.id, prop], obj[prop])
-  }
-}

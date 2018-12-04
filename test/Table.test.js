@@ -6,7 +6,7 @@ import {
 import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 
-test('TableComponent: mounting a table component', t => {
+test('Table: mounting a table component', t => {
   let { table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -15,7 +15,7 @@ test('TableComponent: mounting a table component', t => {
   t.end()
 })
 
-test('TableComponent: setting table selections', t => {
+test('Table: setting table selections', t => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -50,7 +50,7 @@ test('TableComponent: setting table selections', t => {
   t.end()
 })
 
-test('TableComponent: mouse interactions', t => {
+test('Table: mouse interactions', t => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -82,7 +82,7 @@ test('TableComponent: mouse interactions', t => {
   t.end()
 })
 
-test('TableComponent: keyboard interactions', t => {
+test('Table: keyboard interactions', t => {
   let { editorSession, table, context } = _setup(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })

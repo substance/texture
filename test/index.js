@@ -17,7 +17,7 @@ import './ManuscriptEditor.test'
 import './MetadataEditor.test'
 import './Paste.test'
 import './Persistence.test'
-import './TableComponent.test'
+import './Table.test'
 import './TableConverter.test'
 import './BodyConverter.test'
 

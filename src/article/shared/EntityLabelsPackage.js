@@ -90,6 +90,7 @@ export default {
     config.addLabel('inventors', 'Inventors')
     config.addLabel('isbn', 'ISBN')
     config.addLabel('issue', 'Issue')
+    config.addLabel('issue-title', 'Issue Title')
     config.addLabel('lpage', 'Last Page')
     config.addLabel('month', 'Month')
     config.addLabel('name', 'Name')

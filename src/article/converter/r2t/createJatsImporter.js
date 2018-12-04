@@ -1,4 +1,4 @@
-import { XMLDocumentImporter } from 'substance'
+import { XMLDocumentImporter, last } from 'substance'
 import TextureArticleSchema from '../../TextureArticle'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
@@ -51,6 +51,22 @@ export default function createJatsImporter (doc) {
 }
 
 class _HybridJATSImporter extends XMLDocumentImporter {
+  annotatedText (el, path, options = {}) {
+    const state = this.state
+    let context = last(state.contexts)
+    // In contrast to the core implementation we want to allow that this is method is used to convert properties
+    // with annotated text, outside of a recursive import call
+    if (!context) {
+      state.pushContext(el.tagName)
+    }
+    let text = super.annotatedText(el, path, options)
+    if (!context) {
+      context = state.popContext()
+      context.annos.forEach(nodeData => state.doc.create(nodeData))
+    }
+    return text
+  }
+
   _getConverterForElement (el, mode) {
     let converter = super._getConverterForElement(el, mode)
     if (!converter) {

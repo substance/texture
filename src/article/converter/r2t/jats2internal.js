@@ -31,6 +31,7 @@ import createJatsImporter from './createJatsImporter'
       pub-date*,        // -> article-record
       volume?,          // -> article-record
       issue?,           // -> article-record
+      issue-title?,           // -> article-record
       isbn?,            // -> article-record
       (((fpage,lpage?)?,page-range?)|elocation-id)?,  // -> article-record
       history?,         // -> article-record
@@ -222,7 +223,7 @@ function _populateAwards (doc, jats) {
 function _populateArticleRecord (doc, jats, jatsImporter) {
   let articleMetaEl = jats.find('article > front > article-meta')
   let articleRecord = doc.get('article-record')
-  _assign(articleRecord, {
+  articleRecord.assign({
     elocationId: getText(articleMetaEl, 'elocation-id'),
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),
@@ -230,6 +231,10 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
     volume: getText(articleMetaEl, 'volume'),
     pageRange: getText(articleMetaEl, 'page-range')
   })
+  let issueTitleEl = findChild(articleMetaEl, 'issue-title')
+  if (issueTitleEl) {
+    articleRecord.set('issue-title', jatsImporter.annotatedText(issueTitleEl, [articleRecord.id, 'issue-title']))
+  }
   // Import permission if present
   const permissionsEl = articleMetaEl.find('permissions')
   // An empty permission is already there, but will be replaced if <permission> element is there
@@ -238,7 +243,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
     let permission = jatsImporter.convertElement(permissionsEl)
     // ATTENTION: so that the document model is correct we need to use
     // the Document API  to set the permission id
-    _assign(articleRecord, {
+    articleRecord.assign({
       permission: permission.id
     })
   }
@@ -250,7 +255,7 @@ function _populateArticleRecord (doc, jats, jatsImporter) {
       const date = _extractDate(dateEl)
       dates[date.type] = date.value
     })
-    _assign(articleRecord, dates)
+    articleRecord.assign(dates)
   }
 }
 
@@ -312,7 +317,7 @@ function _populateTitle (doc, jats, jatsImporter) {
   let title = doc.get('title')
   let titleEl = jats.find('article > front > article-meta > title-group > article-title')
   if (titleEl) {
-    _convertAnnotatedText(jatsImporter, titleEl, title)
+    doc.set(title.getPath(), jatsImporter.annotatedText(titleEl, title.getPath()))
   }
   // translations
   let titleTranslations = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
@@ -320,10 +325,10 @@ function _populateTitle (doc, jats, jatsImporter) {
     let group = transTitleEl.parentNode
     let language = group.attr('xml:lang')
     let translation = doc.create({ type: 'text-translation', id: transTitleEl.id, language })
-    _convertAnnotatedText(jatsImporter, transTitleEl, translation)
+    doc.set(translation.getPath(), jatsImporter.annotatedText(transTitleEl, translation.getPath()))
     return translation.id
   })
-  _assign(title, {
+  title.assign({
     translations: translationIds
   })
 }
@@ -407,27 +412,5 @@ function _populateReferences (doc, jats, jatsImporter) {
     refEls.forEach(refEl => {
       references.append(jatsImporter.convertElement(refEl))
     })
-  }
-}
-
-// Helpers
-
-function _convertAnnotatedText (jatsImporter, el, textNode) {
-  const doc = jatsImporter.state.doc
-  // NOTE: this is a bit difficult but necessary
-  // The importer maintains a stack of 'scopes' to deal with recursive calls
-  // triggered by converters for nesteded element (annotations and inline nodes)
-  jatsImporter.state.pushContext(el.tagName)
-  textNode.content = jatsImporter.annotatedText(el, textNode.getPath())
-  let context = jatsImporter.state.popContext()
-  context.annos.forEach(nodeData => doc.create(nodeData))
-}
-
-// would be good to have this as a general Node API
-function _assign (node, obj) {
-  let doc = node.getDocument()
-  let props = Object.keys(obj)
-  for (let prop of props) {
-    doc.set([node.id, prop], obj[prop])
   }
 }

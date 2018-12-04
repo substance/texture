@@ -94,7 +94,6 @@
   <s:not-implemented name="issn-l"/>
   <s:not-implemented name="issue-id"/>
   <s:not-implemented name="issue-part"/>
-  <s:not-implemented name="issue-title"/>
   <s:not-implemented name="journal-id"/>
   <s:not-implemented name="journal-meta"/>
   <s:not-implemented name="journal-subtitle"/>
@@ -426,6 +425,9 @@
       </optional>
       <optional>
         <ref name="issue"/>
+      </optional>
+      <optional>
+        <ref name="issue-title"/>
       </optional>
       <optional>
         <ref name="isbn"/>
@@ -851,6 +853,18 @@
     <element name="issue">
       <ref name="issue-attlist"/>
       <text/>
+    </element>
+  </define>
+
+  <define name="issue-title">
+    <element name="issue-title">
+      <ref name="issue-title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="rich-text"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
 

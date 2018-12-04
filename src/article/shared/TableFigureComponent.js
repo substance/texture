@@ -75,6 +75,6 @@ export default class TableFigureComponent extends FigureComponent {
   _getFootnotes () {
     let model = this.props.model
     let footnotes = model.getFootnotes()
-    return footnotes
+    return footnotes.getItems()
   }
 }

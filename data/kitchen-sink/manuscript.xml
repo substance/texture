@@ -197,7 +197,7 @@
             </tr>
             <tr id="t1_4">
               <td id="t1_4_1">9</td>
-              <td id="t1_4_3">Hyper <ext-link  id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
+              <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
               <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
             </tr>
           </tbody>

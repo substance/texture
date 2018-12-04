@@ -8,6 +8,7 @@ import DispFormulaModel from './models/DispFormulaModel'
 import DispQuoteModel from './models/DispQuoteModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
 import FigureModel from './models/FigureModel'
+import TableFigureModel from './models/TableFigureModel'
 import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
 import KeywordCollectionModel from './models/KeywordCollectionModel'
@@ -54,7 +55,7 @@ export default {
     config.addModel('disp-formula', DispFormulaModel)
     config.addModel('disp-quote', DispQuoteModel)
     config.addModel('article-record', ArticleRecordModel)
-    config.addModel('table-figure', FigureModel)
+    config.addModel('table-figure', TableFigureModel)
     config.addModel('xref', XrefModel)
 
     // Experimental

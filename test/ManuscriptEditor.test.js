@@ -126,6 +126,29 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   t.end()
 })
 
+test('ManuscriptEditor: Switch paragraph to preformat', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let editorSession = getEditorSession(editor)
+  editorSession.transaction(tx => {
+    let body = tx.get('body')
+    body.append(tx.create({
+      type: 'p',
+      id: 'p1'
+    }))
+  })
+  setCursor(editor, 'p1.content', 0)
+  // open the switch type dropdown
+  let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
+  switchTypeDropdown.find('button').click()
+  let preformatButton = switchTypeDropdown.find('.sc-menu-item.sm-preformat')
+  t.notNil(preformatButton, 'there should be an option to switch to preformat')
+  preformatButton.click()
+  let preformatEl = editor.find('.sc-surface.body > .sc-preformat')
+  t.notNil(preformatEl, 'there should be a div with preformat component class now')
+  t.end()
+})
+
 test('ManuscriptEditor: selecting a table', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)

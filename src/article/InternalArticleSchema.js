@@ -120,7 +120,8 @@ Figure.schema = {
 class TableFigure extends Figure {}
 TableFigure.schema = {
   type: 'table-figure',
-  content: CHILD('table')
+  content: CHILD('table'),
+  footnotes: CHILDREN('fn')
 }
 
 class Groups extends XMLElementNode {}

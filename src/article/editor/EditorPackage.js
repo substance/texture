@@ -33,6 +33,7 @@ import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertXrefCommand from './InsertXrefCommand'
+import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
@@ -108,8 +109,12 @@ export default {
       refType: 'table',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-fn', InsertXrefCommand, {
+    config.addCommand('insert-xref-fn', InsertFootnoteCrossReferenceCommand, {
       refType: 'fn',
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-table-fn', InsertFootnoteCrossReferenceCommand, {
+      refType: 'table-fn',
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-formula', InsertXrefCommand, {

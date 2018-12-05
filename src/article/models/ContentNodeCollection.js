@@ -10,6 +10,7 @@ export default class ContentNodeCollectionModel {
   getItems () {
     const api = this._api
     let article = api.getArticle()
+    // TODO: 'body' is hard coded, instead the 'content model' should be passed via ctor
     let nodes = article.get('body').findAll(this._getSelector())
     return nodes.map(node => api.getModelById(node.id))
   }

@@ -18,6 +18,13 @@ import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 import XrefConverter from './XrefConverter'
 
+/**
+ * A factory the creates an exporter instance that can be used to convert a full document to JATS
+ * but also for converting single nodes.
+ *
+ * @param {DOMElement} jatsDom
+ * @param {InternalArticleDocument} doc
+ */
 export default function createJatsExporter (jatsDom, doc) {
   // Note: we are applying a hybrid approach, i.e. we create XML importers for the JATS schema
   // but only for those elements which are supported by our internal article schema.

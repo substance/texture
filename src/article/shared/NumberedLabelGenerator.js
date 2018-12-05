@@ -44,7 +44,8 @@ export default class NumberedLabelGenerator {
     if (numbers.length === 0) return this.invalid
 
     const L = numbers.length
-    numbers.sort()
+    // ATTENTION: Array.sort() is sorting lexically!
+    numbers.sort((a, b) => a - b)
 
     let frags = []
     if (this.name) {

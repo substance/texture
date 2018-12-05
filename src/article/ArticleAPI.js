@@ -457,7 +457,7 @@ export default class ArticleAPI extends EditorAPI {
     const articleSession = this.articleSession
     const path = this.archive.createFile(file)
     const sel = articleSession.getSelection()
-    if (!sel || !sel.containerId) return
+    if (!sel) return
     articleSession.transaction(tx => {
       const mimeData = file.type.split('/')
       const node = tx.create({ type: 'inline-graphic' })

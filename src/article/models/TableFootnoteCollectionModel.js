@@ -1,9 +1,8 @@
-import FootnoteCollectionModel from './FootnoteCollectionModel'
+import DefaultCollectionModel from './DefaultCollectionModel'
 
-export default class TableFootnoteCollectionModel extends FootnoteCollectionModel {
+export default class TableFootnoteCollectionModel extends DefaultCollectionModel {
   getItems () {
-    let fns = this.getFootnoteManager().getCitables()
-    let result = fns.map(fn => this._api.getModelById(fn.id))
+    let result = this._node.footnotes.map(id => this._api.getModelById(id))
     return result
   }
 

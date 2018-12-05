@@ -74,7 +74,7 @@ function _getManagerByRefType (refType, context, xref) {
       default:
         //
     }
-  } else {
+  } else if (xref) {
     // HACK/EXPERIMENTAL:
     // the above mechanism does not work for table-footnotes
     // there we need access to the current TableFigure and get its TableFootnoteManager

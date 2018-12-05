@@ -202,9 +202,9 @@
               <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
             </tr>
             <tr id="t1_5">
-              <td id="t1_5_1">Table footnote<xref ref-type="table-fn" rid="tfn1">*</xref></td>
-              <td id="t1_5_2">Another table footnote<xref ref-type="table-fn" rid="tfn2">†</xref></td>
-              <td id="t1_5_3">Table footnote with multiple targets<xref ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
+              <td id="t1_5_1">Table footnote<xref id="t1-xref-2" ref-type="table-fn" rid="tfn1">*</xref></td>
+              <td id="t1_5_2">Another table footnote<xref id="t1-xref-3" ref-type="table-fn" rid="tfn2">†</xref></td>
+              <td id="t1_5_3">Table footnote with multiple targets<xref id="t1-xref-4" ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
               <td id="t1_5_4">16</td>
             </tr>
           </tbody>

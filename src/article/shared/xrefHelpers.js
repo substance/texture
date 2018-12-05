@@ -53,10 +53,10 @@ export function getXrefLabel (xref) {
 }
 
 function _getCitationManagerForXref (xref, context) {
-  return _getManagerByRefType(xref.getAttribute('ref-type'), context)
+  return _getManagerByRefType(xref.getAttribute('ref-type'), context, xref)
 }
 
-function _getManagerByRefType (refType, context) {
+function _getManagerByRefType (refType, context, xref) {
   const articleSession = context.api.getArticleSession()
   let managerName = RefTypeToManager[refType]
   if (managerName) {
@@ -74,6 +74,25 @@ function _getManagerByRefType (refType, context) {
       default:
         //
     }
+  } else {
+    // HACK/EXPERIMENTAL:
+    // the above mechanism does not work for table-footnotes
+    // there we need access to the current TableFigure and get its TableFootnoteManager
+    let tableFigure = _findParentByType(xref, 'table-figure')
+    if (tableFigure) {
+      return tableFigure._tableFootnoteManager
+    }
+  }
+}
+
+// TODO: this is a node helper
+function _findParentByType (node, type) {
+  let parent = node.getParent()
+  while (parent) {
+    if (parent.isInstanceOf(type)) {
+      return parent
+    }
+    parent = parent.getParent()
   }
 }
 

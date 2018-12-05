@@ -1,4 +1,3 @@
-import { findParentByType } from '../shared/nodeHelpers'
 import { hasAvailableXrefTargets } from '../shared/xrefHelpers'
 import InsertXrefCommand from './InsertXrefCommand'
 
@@ -14,22 +13,24 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertXrefComma
     return newState
   }
 
-  detectScope (params) {
-    const parentTable = this._getParentTable(params)
-    return parentTable ? 'table-figure' : 'manuscript'
+  detectScope (params, context) {
+    const xpath = params.selectionState.xpath
+    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : false
   }
 
   isDisabled (params, context) {
     const sel = params.selection
     const refType = this.config.refType
     const scope = this.config.scope
-    const parentTable = this._getParentTable(params)
+    const currentScope = this.detectScope(params)
     let hasTargets = false
-    if (parentTable) {
-      const footnoteManager = parentTable._tableFootnoteManager
-      hasTargets = footnoteManager.hasCitables() && scope === 'table-figure'
+    if (!currentScope) {
+      hasTargets = hasAvailableXrefTargets(refType, context) && !scope
     } else {
-      hasTargets = hasAvailableXrefTargets(refType, context) && scope === 'manuscript'
+      const doc = params.editorSession.getDocument()
+      const nodeId = params.selection.getNodeId()
+      const node = doc.get(nodeId)
+      hasTargets = hasAvailableXrefTargets(refType, context, node) && scope === currentScope
     }
 
     // don't xref insertion
@@ -39,13 +40,5 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertXrefComma
       return true
     }
     return false
-  }
-
-  _getParentTable (params) {
-    const doc = params.editorSession.getDocument()
-    const nodeId = params.selection.getNodeId()
-    const node = doc.get(nodeId)
-    const parentTable = findParentByType(node, 'table-figure')
-    return parentTable
   }
 }

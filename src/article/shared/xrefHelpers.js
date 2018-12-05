@@ -96,8 +96,8 @@ function _findParentByType (node, type) {
   }
 }
 
-export function hasAvailableXrefTargets (refType, context) {
-  const manager = _getManagerByRefType(refType, context)
+export function hasAvailableXrefTargets (refType, context, el) {
+  const manager = _getManagerByRefType(refType, context, el)
   if (manager) {
     return manager.hasCitables()
   }

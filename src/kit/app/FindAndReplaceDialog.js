@@ -251,16 +251,16 @@ export default class FindAndReplaceDialog extends Component {
   }
 
   _onPatternKeydown (e) {
+    e.stopPropagation()
     if (e.keyCode === keys.ENTER) {
-      e.stopPropagation()
       e.preventDefault()
       this._findNext()
     }
   }
 
   _onReplacePatternKeydown (e) {
+    e.stopPropagation()
     if (e.keyCode === keys.ENTER) {
-      e.stopPropagation()
       e.preventDefault()
       this._replaceNext()
     }

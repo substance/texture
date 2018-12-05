@@ -202,6 +202,7 @@ export default {
     config.addLabel('insert-xref-fig', 'Figure')
     config.addLabel('insert-xref-table', 'Table')
     config.addLabel('insert-xref-fn', 'Footnote')
+    config.addLabel('insert-xref-table-fn', 'Table Footnote')
     config.addLabel('insert-xref-formula', 'Formula')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')

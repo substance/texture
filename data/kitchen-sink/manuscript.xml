@@ -323,6 +323,7 @@ class Reader(fname: String) {
   <back>
     <fn-group>
       <fn id="fn1">
+        <label>1</label>
         <p id="p-10">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium.</p>
       </fn>
       <fn id="fn2">

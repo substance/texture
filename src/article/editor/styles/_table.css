@@ -14,12 +14,16 @@
 }
 
 .sc-table-figure > .sc-caption {
-  padding-bottom: var(--t-half-spacing);
+  padding-bottom: var(--t-default-spacing);
   font-size: var(--t-small-font-size);
 }
 
 .sc-table-figure > .se-table-figure-footnotes {
   font-size: var(--t-small-font-size);
+}
+
+.sc-table-figure > .se-table-figure-footnotes > .sc-footnote {
+  padding-bottom: var(--t-half-spacing);
 }
 
 .sc-table-figure > .se-table-figure-footnotes > .sc-footnote .se-label {

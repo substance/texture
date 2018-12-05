@@ -18,12 +18,30 @@ export default class SelectionStateReducer {
 
   deriveState (doc, sel) {
     let state = this.createState(sel)
+    this.deriveContext(state, doc, sel)
     this.deriveContainerSelectionState(state, doc, sel)
     this.deriveAnnoState(state, doc, sel)
     if (doc.getIndex('markers')) {
       this.deriveMarkerState(state, doc, sel)
     }
     return state
+  }
+
+  deriveContext (state, doc, sel) {
+    if (!sel || sel.isNull()) return
+    if (sel.isPropertySelection() || sel.isNodeSelection()) {
+      let nodeId = sel.getNodeId()
+      let node = doc.get(nodeId)
+      if (node) {
+        let xpath = [node.type]
+        let parent = node.getParent()
+        while (parent) {
+          xpath.unshift(parent.type)
+          parent = parent.getParent()
+        }
+        state.xpath = xpath
+      }
+    }
   }
 
   deriveContainerSelectionState (state, doc, sel) {
@@ -103,7 +121,9 @@ class SelectionState {
       // if the previous node is one char away
       isFirst: false,
       // if the next node is one char away
-      isLast: false
+      isLast: false,
+      // current context
+      xpath: null
     })
   }
 }

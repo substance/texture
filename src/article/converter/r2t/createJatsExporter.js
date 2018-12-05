@@ -7,6 +7,7 @@ import BodyConverter from './BodyConverter'
 import DispFormulaConverter from './DispFormulaConverter'
 import DispQuoteConverter from './DispQuoteConverter'
 import FigureConverter from './FigureConverter'
+import FootnoteConverter from './FootnoteConverter'
 import TexMathConverter from './TexMathConverter'
 import ListConverter from './ListConverter'
 import PermissionsConverter from './PermissionsConverter'
@@ -39,6 +40,7 @@ export default function createJatsExporter (jatsDom, doc) {
     new DispFormulaConverter(),
     new DispQuoteConverter(),
     new FigureConverter(),
+    new FootnoteConverter(),
     new TexMathConverter(),
     new ListConverter(),
     new PermissionsConverter(),

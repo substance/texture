@@ -16,19 +16,20 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertXrefComma
 
   detectScope (params) {
     const parentTable = this._getParentTable(params)
-    return parentTable ? 'table' : 'manuscript'
+    return parentTable ? 'table-figure' : 'manuscript'
   }
 
   isDisabled (params, context) {
     const sel = params.selection
     const refType = this.config.refType
+    const scope = this.config.scope
     const parentTable = this._getParentTable(params)
     let hasTargets = false
     if (parentTable) {
       const footnoteManager = parentTable._tableFootnoteManager
-      hasTargets = footnoteManager.hasCitables()
+      hasTargets = footnoteManager.hasCitables() && scope === 'table-figure'
     } else {
-      hasTargets = hasAvailableXrefTargets(refType, context)
+      hasTargets = hasAvailableXrefTargets(refType, context) && scope === 'manuscript'
     }
 
     // don't xref insertion

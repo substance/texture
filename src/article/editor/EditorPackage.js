@@ -111,10 +111,12 @@ export default {
     })
     config.addCommand('insert-xref-fn', InsertFootnoteCrossReferenceCommand, {
       refType: 'fn',
+      scope: 'manuscript',
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-table-fn', InsertFootnoteCrossReferenceCommand, {
       refType: 'table-fn',
+      scope: 'table-figure',
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-formula', InsertXrefCommand, {

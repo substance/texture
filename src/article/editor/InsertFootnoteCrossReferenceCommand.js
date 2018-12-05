@@ -1,42 +1,28 @@
-import { hasAvailableXrefTargets } from '../shared/xrefHelpers'
 import InsertXrefCommand from './InsertXrefCommand'
 
 export default class InsertFootnoteCrossReferenceCommand extends InsertXrefCommand {
   getCommandState (params, context) {
     let sel = params.selection
+    let scope = this.detectScope(params, context)
     let newState = {
-      disabled: this.isDisabled(params, context),
+      disabled: this.isDisabled(params, scope),
       active: false,
       showInContext: this.showInContext(sel, params, context),
-      scope: this.detectScope(params, context)
+      scope: scope
     }
     return newState
   }
 
   detectScope (params, context) {
     const xpath = params.selectionState.xpath
-    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : false
+    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : undefined
   }
 
-  isDisabled (params, context) {
+  isDisabled (params, currentScope) {
     const sel = params.selection
-    const refType = this.config.refType
     const scope = this.config.scope
-    const currentScope = this.detectScope(params)
-    let hasTargets = false
-    if (!currentScope) {
-      hasTargets = hasAvailableXrefTargets(refType, context) && !scope
-    } else {
-      const doc = params.editorSession.getDocument()
-      const nodeId = params.selection.getNodeId()
-      const node = doc.get(nodeId)
-      hasTargets = hasAvailableXrefTargets(refType, context, node) && scope === currentScope
-    }
 
-    // don't xref insertion
-    // 1. if the selections is not a collapsed property selection
-    // 2. if there are no citable targets available
-    if (!sel.isPropertySelection() || !sel.isCollapsed() || !hasTargets) {
+    if (!sel.isPropertySelection() || !sel.isCollapsed() || scope !== currentScope) {
       return true
     }
     return false

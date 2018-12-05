@@ -42,5 +42,4 @@ export default class TableManager extends CitableContentManager {
       }
     }
   }
-
 }

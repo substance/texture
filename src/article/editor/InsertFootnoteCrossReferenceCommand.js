@@ -8,7 +8,7 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertXrefComma
       disabled: this.isDisabled(params, scope),
       active: false,
       showInContext: this.showInContext(sel, params, context),
-      scope: scope
+      scope
     }
     return newState
   }

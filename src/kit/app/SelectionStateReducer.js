@@ -123,7 +123,7 @@ class SelectionState {
       // if the next node is one char away
       isLast: false,
       // current context
-      xpath: null
+      xpath: []
     })
   }
 }

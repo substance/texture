@@ -1,7 +1,7 @@
 import { isArray } from 'substance'
 import AbstractCitationManager from './AbstractCitationManager'
 
-const SYMBOLS = ['*', '†', '‡', '§', '‖', '¶']
+const SYMBOLS = ['*', '†', '‡', '¶', '§', '‖', '#', '**', '††', '‡‡', '¶¶', '§§', '‖‖', '##']
 const UNDEFINED = '?'
 
 export default class TableFootnoteManager extends AbstractCitationManager {

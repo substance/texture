@@ -69,6 +69,34 @@ test('Footnotes: reference a footnote from a table-cell', t => {
   t.end()
 })
 
+test('Footnotes: reference a footnote from a table caption', t => {
+  let { app } = setupTestApp(t, fixture('cross-references'))
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  setSelection(editor, 'table-1-caption-p-1.content', 1)
+  _insertCrossRef(editor, 'fn', 'table-1-fn-1')
+  let p = doc.get('table-1-caption-p-1')
+  let annos = p.getAnnotations()
+  let xref = annos[0]
+  if (xref) {
+    let actual = {
+      type: xref.type,
+      refType: xref.getAttribute('ref-type'),
+      rid: xref.getAttribute('rid')
+    }
+    let expected = {
+      type: 'xref',
+      refType: 'table-fn',
+      rid: 'table-1-fn-1'
+    }
+    t.deepEqual(actual, expected, 'a xref to table-1-fn-1 should have been created')
+    t.equal(getLabel(xref), '*', 'label should be correct')
+  } else {
+    t.fail('xref has not been created')
+  }
+  t.end()
+})
+
 function _insertCrossRef (editor, refType, rid) {
   let citeMenu = editor.find('.sc-tool-dropdown.sm-cite')
   // open cite menu

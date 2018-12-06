@@ -32,6 +32,7 @@ import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
+import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
@@ -130,6 +131,9 @@ export default {
       nodeType: 'fig',
       commandGroup: 'additional'
     })
+    config.addCommand('insert-footnote', InsertFootnoteCommand, {
+      commandGroup: 'insert'
+    })
     config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
       nodeType: 'inline-graphic',
       commandGroup: 'additional'
@@ -201,6 +205,7 @@ export default {
     config.addLabel('insert-xref-formula', 'Formula')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
+    config.addLabel('insert-footnote', 'Footnote')
 
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
@@ -255,6 +260,7 @@ export default {
 
     config.addIcon('insert-disp-formula', { 'fontawesome': 'fa-asterisk' })
     config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
+    config.addIcon('insert-footnote', { 'fontawesome': 'fa-info' })
 
     config.addIcon('toggle-cell-merge', {
       'fontawesome': 'fa-arrows-h'

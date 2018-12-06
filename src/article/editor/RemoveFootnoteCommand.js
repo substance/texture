@@ -1,6 +1,6 @@
 import RemoveItemCommand from './RemoveItemCommand'
 
-export default class RemoveCollectionItemCommand extends RemoveItemCommand {
+export default class RemoveFootnoteCommand extends RemoveItemCommand {
   _getCollectionForModel (context, model) {
     const api = context.api
     const node = model._node

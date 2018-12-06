@@ -5,12 +5,12 @@ import setupTestApp from './shared/setupTestApp'
 test('Footnotes: add a footnote in the manuscript', t => {
   t.fail('Implement this when there is a "Insert Footnote" in manuscript view')
   t.end()
-}).skip()
+})
 
-test.skip('Footnotes: add a footnote in a table-figure', t => {
+test('Footnotes: add a footnote in a table-figure', t => {
   t.fail('Implement this when there is a "Insert Footnote" in manuscript view')
   t.end()
-}).skip()
+})
 
 test('Footnotes: reference a footnote from a paragraph in the manuscript body', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))

@@ -249,7 +249,8 @@ export default class TableEditingAPI {
     let doc = this._getDocument()
     let sel = this._getSelection()
     if (sel && sel.customType === 'table') {
-      let { nodeId, anchorCellId, focusCellId } = sel.data
+      let nodeId = sel.nodeId
+      let { anchorCellId, focusCellId } = sel.data
       let table = doc.get(nodeId)
       let anchorCell = doc.get(anchorCellId)
       let focusCell = doc.get(focusCellId)

@@ -15,6 +15,35 @@
     <sec id="sec-1">
       <p id="p-0">This is a plain paragraph.</p>
       <p id="p-1">This is a cross-reference to a footnote <xref id="p1-xref-1" ref-type="fn" rid="fn-1">1</xref>.</p>
+      <table-wrap id="table-1">
+        <label>Table 1</label>
+        <caption id="table-1-caption">
+          <title>This is table title</title>
+          <p id="table-1-caption-p-1">This is table caption.</p>
+        </caption>
+        <table id="t-1">
+          <tbody>
+            <tr id="t-1_1">
+              <td id="t-1_1_1">This is a table footnote <xref id="t-1-xref-1" ref-type="table-fn" rid="table-1-fn-1">*</xref></td>
+              <td id="t-1_1_2">This is another table footnote <xref id="t-1-xref-2" ref-type="table-fn" rid="table-1-fn-2">†</xref></td>
+              <td id="t-1_1_3">This is a table footnote with multiple targets <xref id="t-1-xref-3" ref-type="table-fn" rid="table-1-fn-1 table-1-fn-2">*, †</xref></td>
+              <td id="t-1_1_4">16</td>
+            </tr>
+          </tbody>
+        </table>
+        <table-wrap-foot>
+          <fn-group>
+            <fn id="table-1-fn-1">
+              <label>*</label>
+              <p>This is a table-footnote.</p>
+            </fn>
+            <fn id="table-1-fn-2">
+              <label>†</label>
+              <p>Another table-footnote.</p>
+            </fn>
+          </fn-group>
+        </table-wrap-foot>
+      </table-wrap>
     </sec>
   </body>
   <back>

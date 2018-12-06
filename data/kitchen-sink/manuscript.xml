@@ -213,11 +213,11 @@
           <fn-group>
             <fn id="tfn1">
               <label>*</label>
-              <p>This is a table-footnote.</p>
+              <p id="tfn1-p1">This is a table-footnote.</p>
             </fn>
             <fn id="tfn2">
               <label>†</label>
-              <p>Another table-footnote.</p>
+              <p id="tfn2-p1">Another table-footnote.</p>
             </fn>
           </fn-group>
         </table-wrap-foot>

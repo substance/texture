@@ -126,6 +126,10 @@ class TableFigure extends Figure {
   setFootnoteManager (footnoteManager) {
     this._tableFootnoteManager = footnoteManager
   }
+
+  hasFootnotes () {
+    return this.footnotes && this.footnotes.length > 0
+  }
 }
 TableFigure.schema = {
   type: 'table-figure',

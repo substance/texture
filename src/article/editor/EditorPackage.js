@@ -33,6 +33,7 @@ import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import RemoveFootnoteCommand from './RemoveFootnoteCommand'
 import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
@@ -134,6 +135,10 @@ export default {
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
     })
+    config.addCommand('remove-footnote', RemoveFootnoteCommand, {
+      nodeType: 'fn',
+      commandGroup: 'context'
+    })
     config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
       nodeType: 'inline-graphic',
       commandGroup: 'additional'
@@ -206,6 +211,7 @@ export default {
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
     config.addLabel('insert-footnote', 'Footnote')
+    config.addLabel('remove-footnote', 'Remove Footnote')
 
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
@@ -251,6 +257,8 @@ export default {
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
+
+    config.addIcon('remove-footnote', { 'fontawesome': 'fa-trash' })
 
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
@@ -469,6 +477,15 @@ export default {
         style: 'menu',
         items: [
           { type: 'command-group', name: 'additional' }
+        ]
+      },
+      {
+        name: 'context-tools',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'menu',
+        items: [
+          { type: 'command-group', name: 'context' }
         ]
       },
       {

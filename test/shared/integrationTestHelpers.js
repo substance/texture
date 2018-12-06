@@ -89,6 +89,14 @@ export const LOREM_IPSUM = {
   archiveId: 'lorem-ipsum'
 }
 
+export function fixture (archiveId) {
+  return {
+    vfs: TEST_VFS,
+    rootDir: './tests/fixture/',
+    archiveId
+  }
+}
+
 export function setupTestVfs (mainVfs, archiveId) {
   let data = {}
   let paths = Object.keys(mainVfs._data)

@@ -501,6 +501,17 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _insertTableFootnote (item, collection) {
+    this.articleSession.transaction(tx => {
+      const node = createEmptyElement(tx, 'footnote').append(
+        tx.create({type: 'p'})
+      )
+      let length = tx.get([collection.id, 'footnotes']).length
+      tx.update([collection.id, 'footnotes'], { type: 'insert', pos: length, value: node.id })
+      setContainerSelection(tx, node)
+    })
+  }
+
   _insertPerson (person, collection) {
     const collectionId = collection.id
     this.articleSession.transaction(tx => {

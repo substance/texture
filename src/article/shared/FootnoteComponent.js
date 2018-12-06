@@ -1,9 +1,9 @@
-import { NodeComponent } from '../../kit'
+import { Component } from 'substance'
 import { getLabel } from './nodeHelpers'
 import { PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
 
-export default class FootnoteComponent extends NodeComponent {
+export default class FootnoteComponent extends Component {
   render ($$) {
     const node = this.props.node
     const mode = this.props.mode

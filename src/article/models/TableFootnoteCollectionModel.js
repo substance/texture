@@ -10,6 +10,10 @@ export default class TableFootnoteCollectionModel extends DefaultCollectionModel
     return this._api._insertTableFootnote(this._prepareItem(item), this)
   }
 
+  removeItem (item) {
+    this._api._removeTableFootnote(item, this)
+  }
+
   getFootnoteManager () {
     return this._node.getFootnoteManager()
   }

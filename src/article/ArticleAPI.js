@@ -516,6 +516,18 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _removeTableFootnote (item, collection) {
+    this.articleSession.transaction(tx => {
+      const footnotes = tx.get([collection.id, 'footnotes'])
+      let pos = footnotes.indexOf(item.id)
+      if (pos !== -1) {
+        tx.update([collection.id, 'footnotes'], { type: 'delete', pos: pos })
+      }
+      tx.delete(item.id)
+      tx.selection = null
+    })
+  }
+
   _insertPerson (person, collection) {
     const collectionId = collection.id
     this.articleSession.transaction(tx => {

@@ -80,7 +80,7 @@ function _getManagerByRefType (refType, context, xref) {
     // there we need access to the current TableFigure and get its TableFootnoteManager
     let tableFigure = _findParentByType(xref, 'table-figure')
     if (tableFigure) {
-      return tableFigure._tableFootnoteManager
+      return tableFigure.getFootnoteManager()
     }
   }
 }

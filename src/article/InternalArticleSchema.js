@@ -117,7 +117,16 @@ Figure.schema = {
   permission: CHILD('permission')
 }
 
-class TableFigure extends Figure {}
+class TableFigure extends Figure {
+  // NOTE: this will
+  getFootnoteManager () {
+    return this._tableFootnoteManager
+  }
+
+  setFootnoteManager (footnoteManager) {
+    this._tableFootnoteManager = footnoteManager
+  }
+}
 TableFigure.schema = {
   type: 'table-figure',
   content: CHILD('table'),

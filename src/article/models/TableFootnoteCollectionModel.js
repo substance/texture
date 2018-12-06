@@ -2,7 +2,7 @@ import DefaultCollectionModel from './DefaultCollectionModel'
 
 export default class TableFootnoteCollectionModel extends DefaultCollectionModel {
   getItems () {
-    let result = this._node.footnotes.map(id => this._api.getModelById(id))
+    let result = this.getFootnoteManager().getSortedCitables().map(fn => this._api.getModelById(fn.id))
     return result
   }
 
@@ -11,7 +11,7 @@ export default class TableFootnoteCollectionModel extends DefaultCollectionModel
   }
 
   getFootnoteManager () {
-    return this._node._tableFootnoteManager
+    return this._node.getFootnoteManager()
   }
 
   get length () {

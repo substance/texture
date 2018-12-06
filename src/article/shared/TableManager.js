@@ -26,7 +26,7 @@ export default class TableManager extends CitableContentManager {
     let doc = this._getDocument()
     let tableFigures = doc.getIndex('type').get('table-figure')
     forEach(tableFigures, tableFigure => {
-      tableFigure._tableFootnoteManager = new TableFootnoteManager(this.documentSession, tableFigure)
+      tableFigure.setFootnoteManager(new TableFootnoteManager(this.documentSession, tableFigure))
     })
   }
 
@@ -37,7 +37,7 @@ export default class TableManager extends CitableContentManager {
       if (op.isCreate()) {
         let node = doc.get(op.getValue().id)
         if (node && node.type === 'table-figure') {
-          node._tableFootnoteManager = new TableFootnoteManager(this.documentSession, node)
+          node.setFootnoteManager(new TableFootnoteManager(this.documentSession, node))
         }
       }
     }

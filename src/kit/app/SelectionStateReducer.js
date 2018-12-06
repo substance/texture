@@ -29,7 +29,7 @@ export default class SelectionStateReducer {
 
   deriveContext (state, doc, sel) {
     if (!sel || sel.isNull()) return
-    if (sel.isPropertySelection() || sel.isNodeSelection()) {
+    if (sel.isPropertySelection() || sel.isNodeSelection() || sel.isCustomSelection()) {
       let nodeId = sel.getNodeId()
       let node = doc.get(nodeId)
       if (node) {

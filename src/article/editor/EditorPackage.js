@@ -251,16 +251,10 @@ export default {
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
-    config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
 
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
     config.addLabel('insert-formula', 'Formula')
-    config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
-
-    config.addIcon('insert-disp-formula', { 'fontawesome': 'fa-asterisk' })
-    config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
-    config.addIcon('insert-footnote', { 'fontawesome': 'fa-info' })
 
     config.addIcon('toggle-cell-merge', {
       'fontawesome': 'fa-arrows-h'

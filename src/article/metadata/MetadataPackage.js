@@ -9,6 +9,7 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
+import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
@@ -174,9 +175,7 @@ export default {
       commandGroup: 'add-entity'
     })
 
-    config.addCommand('add-footnote', AddEntityCommand, {
-      type: 'fn',
-      collection: 'footnotes',
+    config.addCommand('add-footnote', InsertFootnoteCommand, {
       commandGroup: 'add-entity'
     })
 

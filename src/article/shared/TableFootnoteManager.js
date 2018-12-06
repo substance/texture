@@ -16,7 +16,7 @@ export default class TableFootnoteManager extends AbstractCitationManager {
   }
 
   _getContentElement () {
-    return this.tableFigure.getContent()
+    return this.tableFigure
   }
 
   hasCitables () {

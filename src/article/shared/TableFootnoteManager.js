@@ -47,6 +47,7 @@ class SymbolSetLabelGenerator {
 
   getLabel (pos) {
     if (isArray(pos)) {
+      pos.sort((a, b) => a - b)
       return pos.map(p => this._getSymbolForPos(p)).join(', ')
     } else {
       return this._getSymbolForPos(pos)

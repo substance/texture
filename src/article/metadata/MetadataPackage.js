@@ -17,6 +17,8 @@ import BibliographicEntryEditor from './BibliographicEntryEditor'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
 import TranslateableEditor from './TranslateableEditor'
 
+import TableFigureComponent from '../shared/TableFigureComponent'
+
 export default {
   name: 'ArticleMetadata',
   configure (config) {
@@ -33,6 +35,7 @@ export default {
     config.addComponent('collection', CollectionEditor)
     config.addComponent('article-record', ArticleRecordEditor)
     config.addComponent('bibr', BibliographicEntryEditor, true)
+    config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)

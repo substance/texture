@@ -1,5 +1,5 @@
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
-import FigureMetadataComponent from './FigureMetadataComponent'
+import TableFigureMetadataComponent from './TableFigureMetadataComponent'
 import PreviewComponent from './PreviewComponent'
 import renderModelComponent from './renderModelComponent'
 
@@ -12,7 +12,7 @@ export default class TableFigureComponent extends FigureComponent {
 
     // delegating to a implementation in case of 'metadata'
     if (mode === METADATA_MODE) {
-      return $$(FigureMetadataComponent, { model }).ref('metadata')
+      return $$(TableFigureMetadataComponent, { model }).ref('metadata')
     }
 
     let el = $$('div')

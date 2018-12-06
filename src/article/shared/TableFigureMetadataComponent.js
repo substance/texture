@@ -3,7 +3,10 @@ import FootnoteEditor from './FootnoteEditor'
 import LicenseEditor from './LicenseEditor'
 
 export default class TableFigureMetadataComponent extends FigureMetadataComponent {
-  // overriding this to get spawn a special editor for the content
+  _getClassNames () {
+    return `sc-table-figure-metadata sc-node-model`
+  }
+
   _getPropertyEditorClass (property) {
     // skip 'label' here, as it is shown 'read-only' in the header instead
     if (property.name === 'label') {

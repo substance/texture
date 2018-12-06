@@ -180,6 +180,9 @@ export default {
     config.addLabel('license', 'License')
     config.addLabel('licenseText', 'License Text (optional)')
 
+    // table figure labels
+    config.addLabel('table-figure', 'Table')
+
     // translatable labels
     config.addLabel('translatable', 'Translation')
 

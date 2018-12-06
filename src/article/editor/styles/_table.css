@@ -1,78 +1,46 @@
-.sc-table-figure {
-  box-shadow: var(--t-default-box-shadow);
-  padding: var(--t-default-spacing);
-}
-
-.sc-table-figure > .se-label {
-  padding-bottom: var(--t-half-spacing);
-  font-weight: var(--t-bold-font-weight);
-}
-
-.sc-table-figure > .se-title {
-  padding: var(--t-default-spacing) 0;
-  font-weight: var(--t-bold-font-weight);
-}
-
-.sc-table-figure > .sc-caption {
-  padding-bottom: var(--t-default-spacing);
-  font-size: var(--t-small-font-size);
-}
-
-.sc-table-figure > .se-table-figure-footnotes {
-  font-size: var(--t-small-font-size);
-}
-
-.sc-table-figure > .se-table-figure-footnotes > .sc-footnote {
-  padding-bottom: var(--t-half-spacing);
-}
-
-.sc-table-figure > .se-table-figure-footnotes > .sc-footnote .se-label {
-  margin: 0 var(--t-half-spacing) 0 0;
-}
-
-.sc-table-figure > .sc-table {
+.sc-table {
   position: relative;
 }
 
-.sc-table-figure > .sc-table > .se-unclickable-overlays {
+.sc-table > .se-unclickable-overlays {
   height: 0;
   overflow: visible;
   pointer-events: none;
   background: none !important;
 }
 
-.sc-table-figure > .sc-table > .se-clickable-overlays {
+.sc-table > .se-clickable-overlays {
   height: 0;
   overflow: visible;
   background: none !important;
 }
 
-.sc-table-figure > .sc-table > table {
+.sc-table > table {
   table-layout: fixed;
   overflow-wrap: break-word;
   border-collapse: collapse;
   width: 100%;
 }
 
-.sc-table-figure > .sc-table > table th {
+.sc-table > table th {
   background-color: var(--t-light-background-color);
   border: var(--t-default-border);
   font-weight: var(--t-bold-font-weight);
   padding: var(--t-cell-padding);
 }
 
-.sc-table-figure > .sc-table > table td {
+.sc-table > table td {
   border: var(--t-default-border);
   font-size: var(--t-small-font-size);
   padding: var(--t-cell-padding);
 }
 
-.sc-table-figure > .sc-table .se-selection-overlay > .se-selection-anchor {
+.sc-table .se-selection-overlay > .se-selection-anchor {
   position: absolute;
   border: var(--t-input-focus-border);
 }
 
-.sc-table-figure > .sc-table .se-selection-overlay > .se-selection-range {
+.sc-table .se-selection-overlay > .se-selection-range {
   position: absolute;
   border: var(--t-input-focus-border);
   border-width: 1px;

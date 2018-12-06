@@ -130,6 +130,7 @@ function _customSelection (path) {
       path,
       propertyName: path[1]
     },
+    nodeId: path[0],
     surfaceId: path[0]
   }
 }

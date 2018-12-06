@@ -219,10 +219,7 @@ export default class TableEditing {
   }
 
   createTableSelection (data) {
-    let sel = createTableSelection(data)
-    sel.data.nodeId = this.tableId
-    sel.surfaceId = this.surfaceId
-    return sel
+    return createTableSelection(this.tableId, data, this.surfaceId)
   }
 
   selectAll () {

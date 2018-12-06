@@ -364,6 +364,7 @@ export default class ArticleAPI extends EditorAPI {
     this._setSelection({
       type: 'custom',
       customType: 'model',
+      nodeId: modelId,
       data: {
         modelId
       }
@@ -374,6 +375,7 @@ export default class ArticleAPI extends EditorAPI {
     this._setSelection({
       type: 'custom',
       customType: 'value',
+      nodeId: path[0],
       data: {
         path,
         propertyName: path[1]

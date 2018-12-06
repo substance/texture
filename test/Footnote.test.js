@@ -3,15 +3,20 @@ import { openManuscriptEditor, getDocument, setSelection, fixture } from './shar
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
-test('Footnotes: add a footnote in the manuscript', t => {
-  t.fail('Implement this when there is a "Insert Footnote" in manuscript view')
-  t.end()
-})
+// TODO
+// test('Footnotes: add a footnote in the manuscript', t => {
+//   t.fail('Implement this when there is a "Insert Footnote" in manuscript view')
+//   t.end()
+// })
 
-test('Footnotes: add a footnote in a table-figure', t => {
-  t.fail('Implement this when there is a "Insert Footnote" in manuscript view')
-  t.end()
-})
+// TODO
+// test('Footnotes: add a footnote in a table-figure', t => {
+//   t.fail('Implement this when there is a "Insert Footnote" in manuscript view')
+//   t.end()
+// })
+
+// TODO: @daniel add more tests which make sense from the user point of view.
+// In addition let's look at the code coverage of the code we have added in this PR, and add tests needed to cover everything.
 
 test('Footnotes: reference a footnote from a paragraph in the manuscript body', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))

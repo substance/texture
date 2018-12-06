@@ -27,7 +27,13 @@
               <td id="t-1_1_1">This is a table footnote <xref id="t-1-xref-1" ref-type="table-fn" rid="table-1-fn-1">*</xref></td>
               <td id="t-1_1_2">This is another table footnote <xref id="t-1-xref-2" ref-type="table-fn" rid="table-1-fn-2">†</xref></td>
               <td id="t-1_1_3">This is a table footnote with multiple targets <xref id="t-1-xref-3" ref-type="table-fn" rid="table-1-fn-1 table-1-fn-2">*, †</xref></td>
-              <td id="t-1_1_4">16</td>
+              <td id="t-1_1_4"></td>
+            </tr>
+            <tr id="t-1_2">
+              <td id="t-1_2_1">aaa</td>
+              <td id="t-1_2_2">bbb</td>
+              <td id="t-1_2_3">ccc</td>
+              <td id="t-1_2_4">ddd</td>
             </tr>
           </tbody>
         </table>

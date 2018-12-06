@@ -32,7 +32,7 @@ import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
-import InsertXrefCommand from './InsertXrefCommand'
+import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
@@ -97,28 +97,24 @@ export default {
     //   nodeType: 'disp-formula',
     //   commandGroup: 'prompt'
     // })
-    config.addCommand('insert-xref-bibr', InsertXrefCommand, {
+    config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
       refType: 'bibr',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-fig', InsertXrefCommand, {
+    config.addCommand('insert-xref-fig', InsertCrossReferenceCommand, {
       refType: 'fig',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-table', InsertXrefCommand, {
+    config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
       refType: 'table',
       commandGroup: 'insert-xref'
     })
+    // Note: footnote cross-references are special, because they take the current scope into account
+    // i.e. whether to create a footnote on article level, or inside a table-figure
     config.addCommand('insert-xref-fn', InsertFootnoteCrossReferenceCommand, {
-      refType: 'fn',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-table-fn', InsertFootnoteCrossReferenceCommand, {
-      refType: 'table-fn',
-      scope: 'table-figure',
-      commandGroup: 'insert-xref'
-    })
-    config.addCommand('insert-xref-formula', InsertXrefCommand, {
+    config.addCommand('insert-xref-formula', InsertCrossReferenceCommand, {
       refType: 'formula',
       commandGroup: 'insert-xref'
     })
@@ -202,7 +198,6 @@ export default {
     config.addLabel('insert-xref-fig', 'Figure')
     config.addLabel('insert-xref-table', 'Table')
     config.addLabel('insert-xref-fn', 'Footnote')
-    config.addLabel('insert-xref-table-fn', 'Table Footnote')
     config.addLabel('insert-xref-formula', 'Formula')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')

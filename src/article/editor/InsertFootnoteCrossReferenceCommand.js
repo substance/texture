@@ -1,12 +1,11 @@
-import InsertXrefCommand from './InsertXrefCommand'
+import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 
-export default class InsertFootnoteCrossReferenceCommand extends InsertXrefCommand {
+export default class InsertFootnoteCrossReferenceCommand extends InsertCrossReferenceCommand {
   getCommandState (params, context) {
     let sel = params.selection
     let scope = this.detectScope(params, context)
     let newState = {
       disabled: this.isDisabled(params, scope),
-      active: false,
       showInContext: this.showInContext(sel, params, context),
       scope
     }
@@ -14,17 +13,14 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertXrefComma
   }
 
   detectScope (params, context) {
+    // Note: ATM we only consider two scopes: 'default', 'table-figure'
+    // In table-figures we will only allow to cross-reference to table-footnotes
     const xpath = params.selectionState.xpath
-    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : undefined
+    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : 'default'
   }
 
   isDisabled (params, currentScope) {
     const sel = params.selection
-    const scope = this.config.scope
-
-    if (!sel.isPropertySelection() || !sel.isCollapsed() || scope !== currentScope) {
-      return true
-    }
-    return false
+    return (!sel.isPropertySelection() || !sel.isCollapsed())
   }
 }

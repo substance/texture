@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "TextureArticle 0.1.0" "http://substance.io/TextureArticle-1.0.0.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Cross-References</article-title>
+      </title-group>
+      <abstract>
+        <p id="abstract-p-1">This article contains content related to cross-references (Footnots, References, etc.).</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <p id="p-0">This is a plain paragraph.</p>
+      <p id="p-1">This is a cross-reference to a footnote <xref id="p1-xref-1" ref-type="fn" rid="fn-1">1</xref>.</p>
+    </sec>
+  </body>
+  <back>
+    <fn-group>
+      <fn id="fn-1">
+        <label>1</label>
+        <p id="fn-1-p-1">Lorem ipsum dolor sit amet.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>

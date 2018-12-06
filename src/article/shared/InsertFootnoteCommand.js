@@ -14,11 +14,16 @@ export default class InsertFootnoteCommand extends AddEntityCommand {
       const collectionName = 'footnotes'
       return context.api.getModelById(collectionName)
     } else {
-      const doc = params.editorSession.getDocument()	
-      const nodeId = params.selection.getNodeId()	
-      const node = doc.get(nodeId)	
-      const parentTable = findParentByType(node, 'table-figure')
-      const tableModel = context.api.getModelById(parentTable.id)
+      const doc = params.editorSession.getDocument()
+      const nodeId = params.selection.getNodeId()
+      const node = doc.get(nodeId)
+      let tableNodeId = node.id
+      // check if we are already selected table-figure
+      if (node.type !== 'table-figure') {
+        const parentTable = findParentByType(node, 'table-figure')
+        tableNodeId = parentTable.id
+      }
+      const tableModel = context.api.getModelById(tableNodeId)
       return tableModel.getFootnotes()
     }
   }

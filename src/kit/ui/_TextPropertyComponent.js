@@ -6,6 +6,28 @@ import { TextPropertyComponent as SubstanceTextPropertyComponent } from 'substan
   - 2. to change the way how place-holders are rendered
 */
 export default class TextPropertyComponentNew extends SubstanceTextPropertyComponent {
+  // ATTENTION: need to override this because we need to change the behavior of registration.
+  // In the current implementation in MarkersManager, it is only allowed to register one TextPropertComponent per path
+  // without registration, there are no updates.
+  didMount () {
+    const markersManager = this.context.markersManager
+    if (markersManager) {
+      this._isRegistered = markersManager.register(this)
+    }
+    // if not managed by the MarkersManager we let the component be updated directly
+    if (!this._isRegistered) {
+      this.context.appState.addObserver(['document'], this.rerender, this, { document: { path: this.getPath() } })
+    }
+  }
+
+  dispose () {
+    if (this._isRegistered) {
+      this.context.markersManager.deregister(this)
+    } else {
+      this.context.appState.off(this)
+    }
+  }
+
   render ($$) {
     let path = this.getPath()
 

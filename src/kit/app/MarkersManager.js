@@ -54,12 +54,21 @@ export default class MarkersManager extends EventEmitter {
   }
 
   register (textPropertyComponent) {
-    this._textProperties.registerTextProperty(textPropertyComponent)
-    // ATTENTION: see note about events above
-    this.emit('text-property:registered', textPropertyComponent.getPath())
+    let index = this._textProperties
+    let path = textPropertyComponent.getPath()
+    if (index.isPathRegistered(path)) {
+      return false
+    } else {
+      // console.log('Registering text-property', path)
+      this._textProperties.registerTextProperty(textPropertyComponent)
+      // ATTENTION: see note about events above
+      this.emit('text-property:registered', textPropertyComponent.getPath())
+      return true
+    }
   }
 
   deregister (textPropertyComponent) {
+    // console.log('Deregistering text-property', textPropertyComponent.getPath())
     this._textProperties.unregisterTextProperty(textPropertyComponent)
     // ATTENTION: see note about events above
     this.emit('text-property:deregistered', textPropertyComponent.getPath())

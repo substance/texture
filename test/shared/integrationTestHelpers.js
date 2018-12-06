@@ -141,6 +141,10 @@ export function getSelection (editor) {
   return editor.context.appState.selection
 }
 
+export function getSelectionState (editor) {
+  return editor.context.appState.selectionState
+}
+
 export function getDocument (editor) {
   return editor.context.appState.document
 }

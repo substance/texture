@@ -19,8 +19,12 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertCrossRefe
     return xpath.indexOf('table-figure') > -1 ? 'table-figure' : 'default'
   }
 
-  isDisabled (params, currentScope) {
-    const sel = params.selection
-    return (!sel.isPropertySelection() || !sel.isCollapsed())
+  _getRefType (params, context) {
+    let commandState = params.commandState
+    if (commandState.scope === 'table-figure') {
+      return 'table-fn'
+    } else {
+      return 'fn'
+    }
   }
 }

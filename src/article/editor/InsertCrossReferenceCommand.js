@@ -11,12 +11,12 @@ export default class InsertCrossReferenceCommand extends InsertInlineNodeCommand
     return (super.isDisabled(params, context) || !sel.isCollapsed())
   }
 
-  _getRefType () {
+  _getRefType (params, context) { // eslint-disable-line
     return this.config.refType
   }
 
-  _createNode (tx) {
-    const refType = this._getRefType()
+  _createNode (tx, params, context) {
+    const refType = this._getRefType(params, context)
     let xref = tx.createElement('xref')
     xref.attr('ref-type', refType)
     xref.attr('rid', '')

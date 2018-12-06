@@ -510,7 +510,9 @@ export default class ArticleAPI extends EditorAPI {
       )
       let length = tx.get([collection.id, 'footnotes']).length
       tx.update([collection.id, 'footnotes'], { type: 'insert', pos: length, value: node.id })
-      setContainerSelection(tx, node)
+      // HACK: in future we want to get surfaceId properly rather then stitching it
+      const surfaceId = `body/${collection.id}/${node.id}`
+      setContainerSelection(tx, node, surfaceId)
     })
   }
 

@@ -25,7 +25,8 @@ export function createEmptyElement (tx, elName, ...snippetParams) {
   return importNodeIntoDocument(tx, node)
 }
 
-export function setContainerSelection (tx, node) {
+export function setContainerSelection (tx, node, surfaceId) {
+  if (!surfaceId) surfaceId = node.id
   const p = node.find('p')
   if (p) {
     let path = [p.id, 'content']
@@ -33,7 +34,7 @@ export function setContainerSelection (tx, node) {
       type: 'property',
       path,
       startOffset: 0,
-      surfaceId: node.id
+      surfaceId
     }
     tx.setSelection(newSelection)
   }

@@ -3,13 +3,15 @@
   padding: var(--t-default-spacing);
 }
 
+.sc-figure > .sc-section-label:first-child {
+  margin-top: 0;
+}
+
 .sc-figure > .se-label {
-  padding-bottom: var(--t-half-spacing);
   font-weight: var(--t-bold-font-weight);
 }
 
 .sc-figure .se-title {
-  padding: var(--t-default-spacing) 0;
   font-weight: var(--t-bold-font-weight);
 }
 

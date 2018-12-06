@@ -40,17 +40,21 @@ export default class TableFigureComponent extends FigureComponent {
         })
       )
     } else {
+      const SectionLabel = this.getComponent('section-label')
       const FootnoteComponent = this.getComponent('fn')
       const footnotes = this._getFootnotes()
 
       let labelEl = $$('div').addClass('se-label').text(label)
       el.append(
+        $$(SectionLabel, {label: 'label-label'}),
         labelEl,
         figureContent,
+        $$(SectionLabel, {label: 'title-label'}),
         renderModelComponent(this.context, $$, {
           model: model.getTitle(),
           label: this.getLabel('title')
         }).ref('title').addClass('se-title'),
+        $$(SectionLabel, {label: 'caption-label'}),
         renderModelComponent(this.context, $$, {
           model: model.getCaption(),
           label: this.getLabel('caption')
@@ -65,7 +69,10 @@ export default class TableFigureComponent extends FigureComponent {
             $$(FootnoteComponent, { model, node }).ref(model.id)
           )
         })
-        el.append(footnotesEl)
+        el.append(
+          $$(SectionLabel, {label: 'footnotes-label'}),
+          footnotesEl
+        )
       }
     }
 

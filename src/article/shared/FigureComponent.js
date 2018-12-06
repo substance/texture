@@ -53,16 +53,19 @@ export default class FigureComponent extends Component {
         })
       )
     } else {
+      const SectionLabel = this.getComponent('section-label')
+
       let labelEl = $$('div').addClass('se-label').text(label)
-      el.append(labelEl)
-      el.append(figureContent)
       el.append(
+        $$(SectionLabel, {label: 'label-label'}),
+        labelEl,
+        figureContent,
+        $$(SectionLabel, {label: 'title-label'}),
         renderModelComponent(this.context, $$, {
           model: model.getTitle(),
           label: this.getLabel('title')
-        }).ref('title').addClass('se-title')
-      )
-      el.append(
+        }).ref('title').addClass('se-title'),
+        $$(SectionLabel, {label: 'caption-label'}),
         renderModelComponent(this.context, $$, {
           model: model.getCaption(),
           label: this.getLabel('caption')

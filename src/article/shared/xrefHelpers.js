@@ -1,4 +1,5 @@
 import { orderBy, includes, without } from 'substance'
+import { findParentByType } from './nodeHelpers'
 
 // left side: node type
 // right side: ref-type
@@ -78,30 +79,11 @@ function _getManagerByRefType (refType, context, xref) {
     // HACK/EXPERIMENTAL:
     // the above mechanism does not work for table-footnotes
     // there we need access to the current TableFigure and get its TableFootnoteManager
-    let tableFigure = _findParentByType(xref, 'table-figure')
+    let tableFigure = findParentByType(xref, 'table-figure')
     if (tableFigure) {
       return tableFigure.getFootnoteManager()
     }
   }
-}
-
-// TODO: this is a node helper
-function _findParentByType (node, type) {
-  let parent = node.getParent()
-  while (parent) {
-    if (parent.isInstanceOf(type)) {
-      return parent
-    }
-    parent = parent.getParent()
-  }
-}
-
-export function hasAvailableXrefTargets (refType, context, el) {
-  const manager = _getManagerByRefType(refType, context, el)
-  if (manager) {
-    return manager.hasCitables()
-  }
-  return false
 }
 
 /*

@@ -111,7 +111,7 @@ class Figure extends DocumentNode {
 Figure.schema = {
   type: 'figure',
   content: CHILD('graphic'),
-  title: TEXT(...RICH_TEXT_ANNOS),
+  title: TEXT(...RICH_TEXT_ANNOS, 'xref'),
   label: STRING,
   caption: CHILD('caption'),
   permission: CHILD('permission')

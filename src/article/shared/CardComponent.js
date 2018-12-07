@@ -15,7 +15,7 @@ export default class CardComponent extends Component {
   render ($$) {
     const children = this.props.children
     const label = this.getLabel(this.props.label)
-    const el = $$('div').addClass('sc-card')
+    const el = $$('div').addClass('sc-card').addClass(`sm-${this.props.model.type}`)
       .append(
         $$('div').addClass('se-label').append(label)
       )
@@ -25,12 +25,12 @@ export default class CardComponent extends Component {
   }
 
   _toggleCardSelection () {
-    this.context.api.selectModel(this.props.modelId)
+    this.context.api.selectModel(this.props.model.id)
   }
 
   _onSelectionChange (sel) {
     if (sel && sel.customType === 'model') {
-      if (sel.data.modelId === this.props.modelId) {
+      if (sel.data.modelId === this.props.model.id) {
         this.el.addClass('sm-selected')
       } else {
         this.el.removeClass('sm-selected')

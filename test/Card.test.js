@@ -4,15 +4,25 @@ import { openMetadataEditor, findParent, getEditorSession, getSelection } from '
 import { injectStyle, getMountPoint } from './shared/testHelpers'
 
 test('Card: select the underlying model when clicking on a card', t => {
-  // TODO: try to use a smaller fixture
+  // TODO: use a smaller fixture, then we know the exact model id, too
   showOnlyRelevant(t)
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let metadataEditor = openMetadataEditor(app)
   let card = metadataEditor.find('.sc-card')
-  let modelId = card.props.modelId
+  let modelId = card.props.model.id
   card.el.click()
   let sel = getSelection(metadataEditor)
-  t.deepEqual({ type: sel.type, customType: sel.customType, data: sel.data }, { type: 'custom', customType: 'model', data: { modelId } }, 'model should be selected')
+  let actual = {
+    type: sel.type,
+    customType: sel.customType,
+    data: sel.data
+  }
+  let expected = {
+    type: 'custom',
+    customType: 'model',
+    data: { modelId }
+  }
+  t.deepEqual(actual, expected, 'model should be selected')
   t.ok(card.el.is('.sm-selected'), 'the card component should have been updated')
   t.end()
 })
@@ -34,7 +44,7 @@ test('Issue #841: regression with model selections', t => {
     surfaceId: fnSurface.getSurfaceId()
   })
   let card = findParent(fnSurface, '.sc-card')
-  let modelId = card.props.modelId
+  let modelId = card.props.model.id
   card.el.click()
   let sel = getSelection(metadataEditor)
   t.deepEqual({ type: sel.type, customType: sel.customType, data: sel.data }, { type: 'custom', customType: 'model', data: { modelId } }, 'model should be selected')

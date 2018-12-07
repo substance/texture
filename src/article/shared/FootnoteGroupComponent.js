@@ -1,5 +1,7 @@
 import { Component } from 'substance'
 
+// ATTENTION: this component is used in Editor and Reader
+// TODO: try to consolidate, i.e. try to use components from the kit
 export default class FootnoteGroupComponent extends Component {
   didMount () {
     this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: ['footnotes'] } })

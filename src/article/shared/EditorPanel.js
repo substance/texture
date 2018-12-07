@@ -81,6 +81,7 @@ export default class EditorPanel extends Component {
     this.props.archive.off(this)
     // TODO: do we really need to clear here?
     this.empty()
+    this.api.dispose()
   }
 
   getComponentRegistry () {

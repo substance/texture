@@ -13,9 +13,13 @@ export default class CardComponent extends Component {
   }
 
   render ($$) {
+    const modelId = this.props.model.id
     const children = this.props.children
     const label = this.getLabel(this.props.label)
-    const el = $$('div').addClass('sc-card').addClass(`sm-${this.props.model.type}`)
+    const el = $$('div')
+      .addClass('sc-card')
+      .addClass(`sm-${this.props.model.type}`)
+      .attr('data-id', modelId)
       .append(
         $$('div').addClass('se-label').append(label)
       )

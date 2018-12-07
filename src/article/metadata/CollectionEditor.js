@@ -3,10 +3,22 @@ import { METADATA_MODE } from '../ArticleConstants'
 import CardComponent from '../shared/CardComponent'
 
 export default class CollectionEditor extends ModelComponent {
+  didMount () {
+    super.didMount()
+  }
+
+  dispose () {
+    super.dispose()
+  }
+
   getActionHandlers () {
     return {
       'remove-item': this._removeCollectionItem
     }
+  }
+
+  rerender () {
+    super.rerender()
   }
 
   render ($$) {

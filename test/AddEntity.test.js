@@ -52,7 +52,24 @@ function _testAddEntity (t, toolName, entityType) {
   t.doesNotThrow(() => {
     _addEntity(editor, toolName)
   })
-  t.notNil(editor.find(`.sc-card.sm-${entityType}`), 'there should be a card for the new entitiy')
+  const cardSelector = `.sc-card.sm-${entityType}`
+  let card = editor.find(cardSelector)
+  t.notNil(card, 'there should be a card for the new entitiy')
+  if (card) {
+    // in addition to the plain 'Add Entity' we also test 'Remove+Undo'
+    let modelId = card.el.getAttribute('data-id')
+    editor.api.selectModel(modelId)
+    t.doesNotThrow(() => {
+      // remove the entity via remove button
+      editor.find('.sc-toggle-tool.sm-remove-col-item > button').el.click()
+    }, 'using "Remove" should not throw')
+    t.nil(editor.find(cardSelector), 'card should have been removed')
+    // now undo this change and then the card should be there again
+    t.doesNotThrow(() => {
+      editor.find('.sc-toggle-tool.sm-undo > button').el.click()
+    }, 'using "Undo" should not throw')
+    t.notNil(editor.find(cardSelector), 'card should be back again')
+  }
   t.end()
 }
 

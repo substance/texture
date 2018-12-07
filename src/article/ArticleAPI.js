@@ -1,4 +1,4 @@
-import { without } from 'substance'
+import { without, documentHelpers } from 'substance'
 import {
   DynamicCollection,
   StringModel, TextModel, FlowContentModel,
@@ -29,6 +29,12 @@ export default class ArticleAPI extends EditorAPI {
     this.archive = archive
     this._tableApi = new TableEditingAPI(articleSession)
     this._modelCache = new Map()
+    // hook to invalidate cache
+    articleSession.on('change', this._invalidateDeletedModels, this)
+  }
+
+  dispose () {
+    this._modelCache.clear()
   }
 
   /*
@@ -50,8 +56,9 @@ export default class ArticleAPI extends EditorAPI {
   getModelById (id) {
     let node = this.article.get(id)
     if (node) {
-      // caching the model for a node so that we provide the same instance every time
-      if (this._modelCache.has(node.id)) return this._modelCache.get(node.id)
+      let cachedModel = this._modelCache.get(node.id)
+      // ATTENTION: making sure that the node is
+      if (cachedModel) return cachedModel
 
       // now check if there is a custom model for this type
       let ModelClass = this.modelRegistry[node.type]
@@ -64,13 +71,23 @@ export default class ArticleAPI extends EditorAPI {
           if (ModelClass) break
         }
       }
+      let model
       if (ModelClass) {
-        return new ModelClass(this, node)
+        model = new ModelClass(this, node)
+      } else {
+        model = this._getModelForNode(node)
       }
-      let model = this._getModelForNode(node)
       if (model) {
         this._modelCache.set(node.id, model)
-        return model
+      }
+      return model
+    }
+  }
+
+  _invalidateDeletedModels (change) {
+    for (let op of change.ops) {
+      if (op.isDelete()) {
+        this._modelCache.delete(op.getValue().id)
       }
     }
   }
@@ -122,10 +139,11 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   removeItemFromCollection (item, collection) {
-    const collectionId = collection.id
     this.articleSession.transaction(tx => {
-      tx.get(collectionId).removeChild(tx.get(item.id))
-      tx.delete(item.id)
+      let _item = tx.get(item.id)
+      _item.getParent().removeChild(_item)
+      // TODO: this is actually 'deepDeleteNode()' deleting owned children too
+      documentHelpers.deleteNode(tx, _item)
       tx.selection = null
     })
   }

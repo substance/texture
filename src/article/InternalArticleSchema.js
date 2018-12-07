@@ -70,7 +70,7 @@ Metadata.schema = {
 class Organisations extends XMLElementNode {}
 Organisations.schema = {
   type: 'organisations',
-  _childNodes: CHILDREN(...INTERNAL_BIBR_TYPES)
+  _childNodes: CHILDREN('organisation')
 }
 
 class Authors extends XMLElementNode {}

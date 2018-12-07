@@ -16,7 +16,10 @@ export default class CollectionEditor extends ModelComponent {
     items.forEach(item => {
       let ItemEditor = this._getItemComponentClass(item)
       el.append(
-        $$(CardComponent, {label: item.type, modelId: item.id}).append(
+        $$(CardComponent, {
+          model: item,
+          label: item.type
+        }).append(
           $$(ItemEditor, {
             model: item,
             mode: METADATA_MODE,

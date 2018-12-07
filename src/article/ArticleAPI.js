@@ -99,7 +99,7 @@ export default class ArticleAPI extends EditorAPI {
     this.articleSession.transaction(tx => {
       let node = tx.create(item)
       tx.get(collection._node.id).appendChild(node)
-      let newSelection = this._selectFirstRequiredProperty(node)
+      let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
       tx.setSelection(newSelection)
     })
   }
@@ -114,7 +114,7 @@ export default class ArticleAPI extends EditorAPI {
         // put the cursor into the first item
         // TODO: or should it be the last one?
         if (i === 0) {
-          let newSelection = this._selectFirstRequiredProperty(node)
+          let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
           tx.setSelection(newSelection)
         }
       }
@@ -163,7 +163,7 @@ export default class ArticleAPI extends EditorAPI {
         let node = tx.create(item)
         refs.appendChild(tx.get(node.id))
         if (i === 0) {
-          let newSelection = this._selectFirstRequiredProperty(node)
+          let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
           tx.setSelection(newSelection)
         }
       })
@@ -361,18 +361,26 @@ export default class ArticleAPI extends EditorAPI {
   // I do not want to introduce a 'card' selection as this is not an internal concept
   // and instead opting for 'model' selection.
   selectModel (modelId) {
-    this._setSelection({
+    this._setSelection(this._createModelSelection(modelId))
+  }
+
+  _createModelSelection (modelId) {
+    return {
       type: 'custom',
       customType: 'model',
       nodeId: modelId,
       data: {
         modelId
       }
-    })
+    }
   }
 
   selectValue (path) {
-    this._setSelection({
+    this._setSelection(this._createValueSelection(path))
+  }
+
+  _createValueSelection (path) {
+    return {
       type: 'custom',
       customType: 'value',
       nodeId: path[0],
@@ -381,7 +389,7 @@ export default class ArticleAPI extends EditorAPI {
         propertyName: path[1]
       },
       surfaceId: path[0]
-    })
+    }
   }
 
   /*
@@ -427,17 +435,43 @@ export default class ArticleAPI extends EditorAPI {
     return false
   }
 
-  _selectFirstRequiredProperty (node) {
+  // ATTENTION: this only works for meta-data cards, thus the special naming
+  _selectFirstRequiredPropertyOfMetadataCard (node) {
+    // TODO: the current way to describe required properties will not hold
+    // This will most probably be very customer specific
+    // To use this for selection is thus problematic
+    let schema = node.getSchema()
     let requiredProps = REQUIRED_PROPERTIES[node.type]
-    if (requiredProps) {
-      let propName = Array.from(requiredProps)[0]
+    let propName = null
+    if (requiredProps && requiredProps.size > 0) {
+      // ... also this is very 'dangerous' because the defined required property might not even exist in the schema
+      let _propName = Array.from(requiredProps)[0]
+      // double-checking that the property actually exists
+      if (!schema.getProperty(_propName)) {
+        throw new Error(`property "${_propName}" does not exist for node type "${node.type}"`)
+      } else {
+        propName = _propName
+      }
+    } else {
+      // take the first 'text' property from the schema
+      for (let prop of schema) {
+        if (prop.isText()) {
+          propName = prop.name
+          break
+        }
+      }
+    }
+    if (propName) {
       let path = [node.id, propName]
       return {
         type: 'property',
         path,
         startOffset: 0,
+        // HACK: this does only work within the meta-data
         surfaceId: `${path.join('.')}`
       }
+    } else {
+      return this._createModelSelection(node.id)
     }
   }
 
@@ -537,22 +571,9 @@ export default class ArticleAPI extends EditorAPI {
       person.bio = bio.id
       let node = tx.create(person)
       tx.get(collectionId).appendChild(node)
-      let newSelection = this._selectFirstRequiredProperty(node)
+      let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
       tx.setSelection(newSelection)
     })
-
-    // TODO: for snippet importing we need to register a contrib converter
-    // and take care of groups
-
-    // const collectionId = collection.id
-    // this.articleSession.transaction(tx => {
-    //   const node = createEmptyElement(tx, 'person')
-    //   tx.get(collectionId).appendChild(
-    //     node
-    //   )
-    //   let newSelection = this._selectFirstRequiredProperty(node)
-    //   tx.setSelection(newSelection)
-    // })
   }
 
   _getSelection () {

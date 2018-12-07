@@ -15,7 +15,7 @@ export default class EditReferenceWorkflow extends Component {
     const ItemEditor = this.getComponent(model.type, true) || NodeModelComponent
 
     let el = $$('div').addClass('se-edit-reference').append(
-      $$(CardComponent, { modeId: model.id }).append(
+      $$(CardComponent, { model }).append(
         $$(ItemEditor, {
           model: model
         })

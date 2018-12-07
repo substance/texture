@@ -1,6 +1,7 @@
 import { platform } from 'substance'
 import './shared/testGlobals'
 // tests
+import './AddEntity.test'
 import './ArticlePanel.test'
 import './Annotations.test'
 import './AddReference.test'

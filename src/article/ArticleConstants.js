@@ -62,7 +62,8 @@ export const REQUIRED_PROPERTIES = {
   'person': new Set(['surname', 'givenNames']),
   'ref-contrib': new Set(['name', 'givenNames']),
   'group': new Set(['name']),
-  'organisation': new Set(['name']),
+  // FIXME: what is required for organisation?
+  'organisation': new Set([]),
   'award': new Set(['institution']),
   'keyword': new Set(['name']),
   'subject': new Set(['name']),

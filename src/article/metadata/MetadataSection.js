@@ -27,7 +27,7 @@ export default class MetadataSection extends ModelComponent {
         $$('div').addClass('se-heading').append(
           $$('div').addClass('se-header').append(label)
         ),
-        $$(CardComponent, {modelId: model.id}).append(modelEl)
+        $$(CardComponent, { model }).append(modelEl)
       )
     }
     return el

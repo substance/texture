@@ -59,5 +59,56 @@
         <p id="fn-1-p-1">Lorem ipsum dolor sit amet.</p>
       </fn>
     </fn-group>
+    <ref-list>
+      <ref id="r-1">
+        <element-citation publication-type="article">
+          <year>2017</year>
+          <pub-id pub-id-type="doi">10.1101/102392</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Alasoo</surname>
+              <given-names>K</given-names>
+            </name>
+            <name>
+              <surname>Rodrigues</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Mukhopadhyay</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Knights</surname>
+              <given-names>AJ</given-names>
+            </name>
+            <name>
+              <surname>Mann</surname>
+              <given-names>AL</given-names>
+            </name>
+            <name>
+              <surname>Kundu</surname>
+              <given-names>K</given-names>
+            </name>
+            <collab>
+              <named-content content-type="name">HIPSCI Consortium</named-content>
+            </collab>
+            <name>
+              <surname>Hale</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Dougan</surname>
+              <given-names>G</given-names>
+            </name>
+            <name>
+              <surname>Gaffney</surname>
+              <given-names>DJ</given-names>
+            </name>
+          </person-group>
+          <source>bioRxiv</source>
+          <article-title>Shared genetic effects on chromatin and gene expression reveal widespread enhancer priming in immune response</article-title>
+        </element-citation>
+      </ref>
+    </ref-list>
   </back>
 </article>

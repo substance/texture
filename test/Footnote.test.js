@@ -200,69 +200,40 @@ test('Footnotes: remove a table footnote', t => {
 })
 
 test('Footnotes: reference a footnote from a paragraph in the manuscript body', t => {
-  let { app } = setupTestApp(t, fixture('cross-references'))
-  let editor = openManuscriptEditor(app)
-  let doc = getDocument(editor)
-  setSelection(editor, 'p-0.content', 1)
-  _insertCrossRef(editor, 'fn', 'fn-1')
-  let p0 = doc.get('p-0')
-  let annos = p0.getAnnotations()
-  let xref = annos[0]
-  if (xref) {
-    let actual = {
-      type: xref.type,
-      refType: xref.getAttribute('ref-type'),
-      rid: xref.getAttribute('rid')
-    }
-    let expected = {
-      type: 'xref',
-      refType: 'fn',
-      rid: 'fn-1'
-    }
-    t.deepEqual(actual, expected, 'a xref to fn-1 should have been created')
-    t.equal(getLabel(xref), '1', 'label should be correct')
-  } else {
-    t.fail('xref has not been created')
-  }
-  t.end()
+  _testInsertXref(t, ['p-0', 'content'], 'fn', 'fn', 'fn-1', '1')
 })
 
 test('Footnotes: reference a footnote from a table-cell', t => {
-  let { app } = setupTestApp(t, fixture('cross-references'))
-  let editor = openManuscriptEditor(app)
-  let doc = getDocument(editor)
-  setSelection(editor, 't-1_2_1.content', 1)
-  _insertCrossRef(editor, 'fn', 'table-1-fn-1')
-  let td = doc.get('t-1_2_1')
-  let annos = td.getAnnotations()
-  let xref = annos[0]
-  if (xref) {
-    let actual = {
-      type: xref.type,
-      refType: xref.getAttribute('ref-type'),
-      rid: xref.getAttribute('rid')
-    }
-    let expected = {
-      type: 'xref',
-      refType: 'table-fn',
-      rid: 'table-1-fn-1'
-    }
-    t.deepEqual(actual, expected, 'a xref to table-1-fn-1 should have been created')
-    t.equal(getLabel(xref), '*', 'label should be correct')
-  } else {
-    t.fail('xref has not been created')
-  }
-  t.end()
+  _testInsertXref(t, ['t-1_2_1', 'content'], 'fn', 'table-fn', 'table-1-fn-1', '*')
 })
 
 test('Footnotes: reference a footnote from a table caption', t => {
+  _testInsertXref(t, ['table-1-caption-p-1', 'content'], 'fn', 'table-fn', 'table-1-fn-1', '*')
+})
+
+test('Footnotes: add a reference citation to a paragraph in the body', t => {
+  _testInsertXref(t, ['p-0', 'content'], 'bibr', 'bibr', 'r-1', '[1]')
+})
+
+test('Footnotes: add a reference citation into a table title', t => {
+  _testInsertXref(t, ['table-1', 'title'], 'bibr', 'bibr', 'r-1', '[1]')
+})
+
+test('Footnotes: add a reference citation into a table caption', t => {
+  _testInsertXref(t, ['table-1-caption-p-1', 'content'], 'bibr', 'bibr', 'r-1', '[1]')
+})
+
+test('Footnotes: add a reference citation into a table cell', t => {
+  _testInsertXref(t, ['t-1_2_1', 'content'], 'bibr', 'bibr', 'r-1', '[1]')
+})
+
+function _testInsertXref (t, path, refTool, refType, rid, label) {
   let { app } = setupTestApp(t, fixture('cross-references'))
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
-  setSelection(editor, 'table-1-caption-p-1.content', 1)
-  _insertCrossRef(editor, 'fn', 'table-1-fn-1')
-  let p = doc.get('table-1-caption-p-1')
-  let annos = p.getAnnotations()
+  setSelection(editor, path, 1)
+  _insertCrossRef(editor, refTool, rid)
+  let annos = doc.getAnnotations(path)
   let xref = annos[0]
   if (xref) {
     let actual = {
@@ -272,16 +243,16 @@ test('Footnotes: reference a footnote from a table caption', t => {
     }
     let expected = {
       type: 'xref',
-      refType: 'table-fn',
-      rid: 'table-1-fn-1'
+      refType,
+      rid
     }
-    t.deepEqual(actual, expected, 'a xref to table-1-fn-1 should have been created')
-    t.equal(getLabel(xref), '*', 'label should be correct')
+    t.deepEqual(actual, expected, 'a xref should have been created')
+    t.equal(getLabel(xref), label, 'label should be correct')
   } else {
     t.fail('xref has not been created')
   }
   t.end()
-})
+}
 
 function _insertCrossRef (editor, refType, rid) {
   let citeMenu = editor.find('.sc-tool-dropdown.sm-cite')

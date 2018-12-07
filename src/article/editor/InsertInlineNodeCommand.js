@@ -3,15 +3,13 @@ import { InsertInlineNodeCommand as SubstanceInsertInlineNodeCommand } from 'sub
 /**
   Reusable command implementation for inserting inline nodes.
 
-  @class InsertInlineNodeCommand
-
   @example
 
   Define a custom command.
 
   ```
   class AddXRefCommand extends InsertInlineNodeCommand {
-    createNode(tx) {
+    _createNode(tx) {
       let refType = this.config.refType
       let xref = tx.createElement('xref').attr('publication-type', 'journal')
       xref.attr('ref-type', refType)
@@ -39,31 +37,46 @@ export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCo
   execute (params, context) {
     // TODO: use ArticleAPI
     let state = this.getCommandState(params, context)
-    if (state.disabled) return
-    let editorSession = context.editorSession
-    editorSession.transaction((tx) => {
-      let node = this.createNode(tx, params, context)
-      tx.insertInlineNode(node)
-      this.setSelection(tx, node)
-    })
-  }
-
-  createNode (tx, context) { // eslint-disable-line no-unused-vars
-    throw new Error('This method is abstract')
-  }
-
-  setSelection (tx, node) {
-    if (node.isPropertyAnnotation()) {
-      tx.selection = {
-        type: 'property',
-        path: node.getPath(),
-        startOffset: node.startOffset,
-        endOffset: node.endOffset
-      }
+    if (!state.disabled) {
+      this._execute(params, context)
     }
   }
 
   isDisabled (params) {
+    const sel = params.selection
+    const selectionState = params.editorSession.getSelectionState()
+    // We allow inserting an inline node only if
+    // 1. the selection is a property selection
+    // 2. and there is no inline node already
+    // Note: if a child command should only be active if collapsed, then it should
+    // override isDisabled() and return super.isDisabled || sel.isCollapsed()
+    return (!sel || !sel.isPropertySelection() || selectionState.isInlineNodeSelection)
+  }
+
+  /*
+    Default implementation starts a transaction, and let's the command implementation create a node.
+    This node gets inserted at the current cursor position and after that the inline node gets selected.
+  */
+  _execute (params, context) {
+    let editorSession = context.editorSession
+    editorSession.transaction(tx => {
+      let node = this._createNode(tx, params, context)
+      tx.insertInlineNode(node)
+      this._setSelection(tx, node)
+    })
+  }
+
+  _setSelection (tx, inlineNode) {
+    // Note: selecting the inlineNode will typically result in opening a popup for editing
+    tx.selection = {
+      type: 'property',
+      path: inlineNode.getPath(),
+      startOffset: inlineNode.startOffset,
+      endOffset: inlineNode.endOffset
+    }
+  }
+
+  _createNode (tx, params, context) { // eslint-disable-line no-unused-vars
     throw new Error('This method is abstract')
   }
 }

@@ -364,6 +364,7 @@ export default class ArticleAPI extends EditorAPI {
     this._setSelection({
       type: 'custom',
       customType: 'model',
+      nodeId: modelId,
       data: {
         modelId
       }
@@ -374,6 +375,7 @@ export default class ArticleAPI extends EditorAPI {
     this._setSelection({
       type: 'custom',
       customType: 'value',
+      nodeId: path[0],
       data: {
         path,
         propertyName: path[1]
@@ -498,6 +500,31 @@ export default class ArticleAPI extends EditorAPI {
         node
       )
       setContainerSelection(tx, node)
+    })
+  }
+
+  _insertTableFootnote (item, collection) {
+    this.articleSession.transaction(tx => {
+      const node = createEmptyElement(tx, 'footnote').append(
+        tx.create({type: 'p'})
+      )
+      let length = tx.get([collection.id, 'footnotes']).length
+      tx.update([collection.id, 'footnotes'], { type: 'insert', pos: length, value: node.id })
+      // HACK: in future we want to get surfaceId properly rather then stitching it
+      const surfaceId = `body/${collection.id}/${node.id}`
+      setContainerSelection(tx, node, surfaceId)
+    })
+  }
+
+  _removeTableFootnote (item, collection) {
+    this.articleSession.transaction(tx => {
+      const footnotes = tx.get([collection.id, 'footnotes'])
+      let pos = footnotes.indexOf(item.id)
+      if (pos !== -1) {
+        tx.update([collection.id, 'footnotes'], { type: 'delete', pos: pos })
+      }
+      tx.delete(item.id)
+      tx.selection = null
     })
   }
 

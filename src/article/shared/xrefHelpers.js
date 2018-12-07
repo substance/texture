@@ -1,4 +1,5 @@
 import { orderBy, includes, without } from 'substance'
+import { findParentByType } from './nodeHelpers'
 
 // left side: node type
 // right side: ref-type
@@ -29,7 +30,9 @@ export const XREF_TARGET_TYPES = Object.keys(REF_TYPES).reduce((m, type) => {
   if (!m[refType]) m[refType] = []
   m[refType].push(type)
   return m
-}, {})
+}, {
+  'table-fn': ['fn']
+})
 
 export function getXrefTargets (xref) {
   let idrefs = xref.getAttribute('rid')
@@ -51,10 +54,10 @@ export function getXrefLabel (xref) {
 }
 
 function _getCitationManagerForXref (xref, context) {
-  return _getManagerByRefType(xref.getAttribute('ref-type'), context)
+  return _getManagerByRefType(xref.getAttribute('ref-type'), context, xref)
 }
 
-function _getManagerByRefType (refType, context) {
+function _getManagerByRefType (refType, context, xref) {
   const articleSession = context.api.getArticleSession()
   let managerName = RefTypeToManager[refType]
   if (managerName) {
@@ -72,15 +75,15 @@ function _getManagerByRefType (refType, context) {
       default:
         //
     }
+  } else if (xref) {
+    // HACK/EXPERIMENTAL:
+    // the above mechanism does not work for table-footnotes
+    // there we need access to the current TableFigure and get its TableFootnoteManager
+    let tableFigure = findParentByType(xref, 'table-figure')
+    if (tableFigure) {
+      return tableFigure.getFootnoteManager()
+    }
   }
-}
-
-export function hasAvailableXrefTargets (refType, context) {
-  const manager = _getManagerByRefType(refType, context)
-  if (manager) {
-    return manager.hasCitables()
-  }
-  return false
 }
 
 /*

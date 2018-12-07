@@ -149,7 +149,6 @@
   <s:not-implemented name="supplement"/>
   <s:not-implemented name="supplementary-material"/>
   <s:not-implemented name="table-count"/>
-  <s:not-implemented name="table-wrap-foot"/>
   <s:not-implemented name="table-wrap-group"/>
   <s:not-implemented name="target"/>
   <s:not-implemented name="term"/>
@@ -788,6 +787,9 @@
   <define name="fn">
     <element name="fn">
       <ref name="fn-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
       <oneOrMore>
         <ref name="p"/>
       </oneOrMore>
@@ -1167,6 +1169,18 @@
       <ref name="table"/>
       <optional>
         <ref name="permissions"/>
+      </optional>
+      <optional>
+        <ref name="table-wrap-foot"/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="table-wrap-foot">
+    <element name="table-wrap-foot">
+      <ref name="table-wrap-foot-attlist"/>
+      <optional>
+        <ref name="fn-group"/>
       </optional>
     </element>
   </define>

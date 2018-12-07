@@ -11,11 +11,13 @@ export default class StringComponent extends Component {
     // TODO: use label provider for this
     placeholder = placeholder || 'Enter ' + label
     let el = $$('div').addClass(this.getClassNames())
-    el.append($$(TextInput, {
-      name,
-      path,
-      placeholder
-    }))
+    el.append(
+      $$(TextInput, {
+        name,
+        path,
+        placeholder
+      }).ref('input')
+    )
     return el
   }
 

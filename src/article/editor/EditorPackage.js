@@ -22,6 +22,7 @@ import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import TOC from './TOC'
 import FigureComponent from '../shared/FigureComponent'
+import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
 
@@ -31,7 +32,10 @@ import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
-import InsertXrefCommand from './InsertXrefCommand'
+import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import RemoveFootnoteCommand from './RemoveFootnoteCommand'
+import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
+import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
@@ -79,7 +83,7 @@ export default {
 
     // overriding the default components for preview
     config.addComponent('figure', FigureComponent, true)
-    config.addComponent('table-figure', FigureComponent, true)
+    config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('fn', FootnoteComponent, true)
     config.addComponent('bibr', ReferenceComponent, true)
 
@@ -95,23 +99,24 @@ export default {
     //   nodeType: 'disp-formula',
     //   commandGroup: 'prompt'
     // })
-    config.addCommand('insert-xref-bibr', InsertXrefCommand, {
+    config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
       refType: 'bibr',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-fig', InsertXrefCommand, {
+    config.addCommand('insert-xref-fig', InsertCrossReferenceCommand, {
       refType: 'fig',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-table', InsertXrefCommand, {
+    config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
       refType: 'table',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-fn', InsertXrefCommand, {
-      refType: 'fn',
+    // Note: footnote cross-references are special, because they take the current scope into account
+    // i.e. whether to create a footnote on article level, or inside a table-figure
+    config.addCommand('insert-xref-fn', InsertFootnoteCrossReferenceCommand, {
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-formula', InsertXrefCommand, {
+    config.addCommand('insert-xref-formula', InsertCrossReferenceCommand, {
       refType: 'formula',
       commandGroup: 'insert-xref'
     })
@@ -126,6 +131,13 @@ export default {
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
       commandGroup: 'additional'
+    })
+    config.addCommand('insert-footnote', InsertFootnoteCommand, {
+      commandGroup: 'insert'
+    })
+    config.addCommand('remove-footnote', RemoveFootnoteCommand, {
+      nodeType: 'fn',
+      commandGroup: 'context'
     })
     config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
       nodeType: 'inline-graphic',
@@ -198,6 +210,8 @@ export default {
     config.addLabel('insert-xref-formula', 'Formula')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
+    config.addLabel('insert-footnote', 'Footnote')
+    config.addLabel('remove-footnote', 'Remove Footnote')
 
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
@@ -243,15 +257,12 @@ export default {
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
-    config.addIcon('insert-table', { 'fontawesome': 'fa-table' })
+
+    config.addIcon('remove-footnote', { 'fontawesome': 'fa-trash' })
 
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
     config.addLabel('insert-formula', 'Formula')
-    config.addIcon('insert-formula', { 'fontawesome': 'fa-dollar' })
-
-    config.addIcon('insert-disp-formula', { 'fontawesome': 'fa-asterisk' })
-    config.addIcon('insert-disp-quote', { 'fontawesome': 'fa-quote-right' })
 
     config.addIcon('toggle-cell-merge', {
       'fontawesome': 'fa-arrows-h'
@@ -466,6 +477,15 @@ export default {
         style: 'menu',
         items: [
           { type: 'command-group', name: 'additional' }
+        ]
+      },
+      {
+        name: 'context-tools',
+        type: 'tool-group',
+        showDisabled: false,
+        style: 'menu',
+        items: [
+          { type: 'command-group', name: 'context' }
         ]
       },
       {

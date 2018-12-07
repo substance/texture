@@ -1,7 +1,7 @@
 import { findChild } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 
-export default class FigConverter {
+export default class FigureConverter {
   get type () { return 'figure' }
 
   get tagName () { return 'fig' }

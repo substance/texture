@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "TextureArticle 0.1.0" "http://substance.io/TextureArticle-1.0.0.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Cross-References</article-title>
+      </title-group>
+      <abstract>
+        <p id="abstract-p-1">This article contains content related to cross-references (Footnots, References, etc.).</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <p id="p-0">This is a plain paragraph.</p>
+      <p id="p-1">This is a cross-reference to a footnote <xref id="p1-xref-1" ref-type="fn" rid="fn-1">1</xref>.</p>
+      <table-wrap id="table-1">
+        <label>Table 1</label>
+        <caption id="table-1-caption">
+          <title>This is table title</title>
+          <p id="table-1-caption-p-1">This is table caption.</p>
+        </caption>
+        <table id="t-1">
+          <tbody>
+            <tr id="t-1_1">
+              <td id="t-1_1_1">This is a table footnote <xref id="t-1-xref-1" ref-type="table-fn" rid="table-1-fn-1">*</xref></td>
+              <td id="t-1_1_2">This is another table footnote <xref id="t-1-xref-2" ref-type="table-fn" rid="table-1-fn-2">†</xref></td>
+              <td id="t-1_1_3">This is a table footnote with multiple targets <xref id="t-1-xref-3" ref-type="table-fn" rid="table-1-fn-1 table-1-fn-2">*, †</xref></td>
+              <td id="t-1_1_4"></td>
+            </tr>
+            <tr id="t-1_2">
+              <td id="t-1_2_1">aaa</td>
+              <td id="t-1_2_2">bbb</td>
+              <td id="t-1_2_3">ccc</td>
+              <td id="t-1_2_4">ddd</td>
+            </tr>
+          </tbody>
+        </table>
+        <table-wrap-foot>
+          <fn-group>
+            <fn id="table-1-fn-1">
+              <label>*</label>
+              <p id="table-1-fn-1-p-1">This is a table-footnote.</p>
+            </fn>
+            <fn id="table-1-fn-2">
+              <label>†</label>
+              <p id="table-1-fn-2-p-1">Another table-footnote.</p>
+            </fn>
+          </fn-group>
+        </table-wrap-foot>
+      </table-wrap>
+    </sec>
+  </body>
+  <back>
+    <fn-group>
+      <fn id="fn-1">
+        <label>1</label>
+        <p id="fn-1-p-1">Lorem ipsum dolor sit amet.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>

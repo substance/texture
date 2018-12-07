@@ -117,10 +117,24 @@ Figure.schema = {
   permission: CHILD('permission')
 }
 
-class TableFigure extends Figure {}
+class TableFigure extends Figure {
+  // NOTE: this will
+  getFootnoteManager () {
+    return this._tableFootnoteManager
+  }
+
+  setFootnoteManager (footnoteManager) {
+    this._tableFootnoteManager = footnoteManager
+  }
+
+  hasFootnotes () {
+    return this.footnotes && this.footnotes.length > 0
+  }
+}
 TableFigure.schema = {
   type: 'table-figure',
-  content: CHILD('table')
+  content: CHILD('table'),
+  footnotes: CHILDREN('fn')
 }
 
 class Groups extends XMLElementNode {}
@@ -206,6 +220,19 @@ class References extends XMLElementNode {}
 References.schema = {
   type: 'references',
   _childNodes: CHILDREN(...INTERNAL_BIBR_TYPES)
+}
+
+class Footnote extends XMLContainerNode {
+  set label (val) {
+    // TODO: at some point we have to distinguish generated from custom labels
+    // for custom labels we need to track ops, for generated labels not.
+    this._set('label', val)
+  }
+}
+Footnote.schema = {
+  type: 'fn',
+  label: 'text',
+  _childNodes: CHILDREN('p')
 }
 
 class Footnotes extends XMLElementNode {}
@@ -852,6 +879,7 @@ InternalArticleSchema.addNodes([
   DispFormula,
   DispQuote,
   Figure,
+  Footnote,
   Footnotes,
   Front,
   Heading,
@@ -894,7 +922,7 @@ InternalArticleSchema.addNodes([
 InternalArticleSchema.addNodes([
   'bio',
   'caption',
-  'fn',
+  'table-wrap-foot',
   'graphic',
   'label',
   'p',

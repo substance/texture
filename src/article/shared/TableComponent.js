@@ -557,9 +557,9 @@ export default class TableComponent extends CustomSurface {
   }
 
   _createTableSelection (selData) {
-    let sel = createTableSelection(selData)
-    sel.data.nodeId = this.props.node.id
-    sel.surfaceId = this.getId()
+    let tableId = this.props.node.id
+    let surfaceId = this.getId()
+    let sel = createTableSelection(tableId, selData, surfaceId)
     return sel
   }
 

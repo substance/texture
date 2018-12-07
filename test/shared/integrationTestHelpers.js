@@ -89,6 +89,14 @@ export const LOREM_IPSUM = {
   archiveId: 'lorem-ipsum'
 }
 
+export function fixture (archiveId) {
+  return {
+    vfs: TEST_VFS,
+    rootDir: './tests/fixture/',
+    archiveId
+  }
+}
+
 export function setupTestVfs (mainVfs, archiveId) {
   let data = {}
   let paths = Object.keys(mainVfs._data)
@@ -131,6 +139,10 @@ export function getEditorSession (editor) {
 
 export function getSelection (editor) {
   return editor.context.appState.selection
+}
+
+export function getSelectionState (editor) {
+  return editor.context.appState.selectionState
 }
 
 export function getDocument (editor) {

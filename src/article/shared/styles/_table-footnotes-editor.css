@@ -1,0 +1,12 @@
+.sc-table-footnotes-editor {
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+}
+
+.sc-table-footnotes-editor > .sc-footnote {
+  padding-bottom: var(--t-half-spacing);
+}
+
+.sc-table-footnotes-editor > .sc-footnote .se-label {
+  margin: 0 var(--t-half-spacing) 0 0;
+}

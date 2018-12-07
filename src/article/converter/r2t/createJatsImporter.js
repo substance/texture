@@ -6,14 +6,15 @@ import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
 import BodyConverter from './BodyConverter'
 import DispFormulaConverter from './DispFormulaConverter'
 import DispQuoteConverter from './DispQuoteConverter'
-import FigConverter from './FigConverter'
+import FigureConverter from './FigureConverter'
+import FootnoteConverter from './FootnoteConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import TexMathConverter from './TexMathConverter'
 import ListConverter from './ListConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
 import TableConverter from './TableConverter'
-import TableWrapConverter from './TableWrapConverter'
+import TableFigureConverter from './TableFigureConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
@@ -30,12 +31,13 @@ export default function createJatsImporter (doc) {
     HeadingImporter,
     new DispFormulaConverter(),
     new DispQuoteConverter(),
-    new FigConverter(),
+    new FigureConverter(),
+    new FootnoteConverter(),
     new TexMathConverter(),
     new ListConverter(),
     new PermissionsConverter(),
     new PreformatConverter(),
-    new TableWrapConverter(),
+    new TableFigureConverter(),
     new TableConverter(),
     new ElementCitationConverter()
   ].concat(jatsConverters)

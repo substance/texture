@@ -728,7 +728,7 @@ id, xml:base, symbol, fn-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-p+
+label?,p+
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -747,7 +747,7 @@ label?,title?,fn+
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-back
+back, table-wrap-foot
 </pre>
 
 ### `<fpage>`
@@ -1032,7 +1032,7 @@ id, xml:base, alt, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, disp-formula, fig, fn-group, kwd-group, table-wrap
+aff, disp-formula, fig, fn, fn-group, kwd-group, table-wrap
 </pre>
 
 ### `<license>`
@@ -1733,11 +1733,26 @@ id, xml:base, position, orientation, specific-use, xml:lang, content-type
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-object-id?,label?,caption?,table,permissions?
+object-id?,label?,caption?,table,permissions?,table-wrap-foot?
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
 body, sec
+</pre>
+
+### `<table-wrap-foot>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+fn-group?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table-wrap
 </pre>
 
 ### `<tbody>`
@@ -2131,7 +2146,6 @@ and explanations that help understanding the use-case.
 - supplement
 - supplementary-material
 - table-count
-- table-wrap-foot
 - table-wrap-group
 - target
 - term

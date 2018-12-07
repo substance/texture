@@ -20,14 +20,20 @@ export default class AbstractCitationManager {
     // TODO: we should assimilate 'ContainerNode' and 'XMLElementNode' interface
     // I.e. an XMLElementNode could per se act as a classical container node
     // ATM only XMLContainerNode has this interface
-    return this._getCollectionElement().getChildCount() > 0
+    let collection = this._getCollectionElement()
+    return (collection && collection.getChildCount() > 0)
   }
 
   getCitables () {
     // TODO: we should assimilate 'ContainerNode' and 'XMLElementNode' interface
     // I.e. an XMLElementNode could per se act as a classical container node
     // ATM only XMLContainerNode has this interface
-    return this._getCollectionElement().getChildren()
+    let collection = this._getCollectionElement()
+    if (collection) {
+      return collection.getChildren()
+    } else {
+      return []
+    }
   }
 
   getSortedCitables () {
@@ -113,7 +119,7 @@ export default class AbstractCitationManager {
   _updateLabels (silent) {
     let xrefs = this._getXrefs()
     let refs = this.getCitables()
-    let bibEl = this._getCollectionElement()
+    let collectionEl = this._getCollectionElement()
     let refsById = refs.reduce((m, ref) => {
       m[ref.id] = ref
       return m
@@ -178,10 +184,10 @@ export default class AbstractCitationManager {
     // TODO: solve this properly
     // e.g. we could implement this manager as a reducer on the application
     // state, and let the bibliography component react to updates of that
-    if (bibEl) {
+    if (collectionEl) {
       // Note: mimicking a state update on the bibliography element itself
       // so that it rerenders, e.g. because the order might have changed
-      stateUpdates.push([bibEl.id, {}])
+      stateUpdates.push([collectionEl.id, {}])
     }
 
     this.documentSession.updateNodeStates(stateUpdates, silent)
@@ -193,8 +199,12 @@ export default class AbstractCitationManager {
 
   _getXrefs () {
     const content = this._getContentElement()
-    let refs = content.findAll(`xref[ref-type='${this.type}']`)
-    return refs
+    if (content) {
+      let refs = content.findAll(`xref[ref-type='${this.type}']`)
+      return refs
+    } else {
+      return []
+    }
   }
 
   _getContentElement () {
@@ -206,5 +216,9 @@ export default class AbstractCitationManager {
 
   _getCollectionElement () {
     throw new Error('This method is abstract.')
+  }
+
+  _getLabelGenerator () {
+    return this.labelGenerator
   }
 }

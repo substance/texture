@@ -1,11 +1,13 @@
 import { tableHelpers, uuid } from 'substance'
 
-export function createTableSelection (data) {
+export function createTableSelection (tableId, data, surfaceId) {
   if (!data.anchorCellId || !data.focusCellId) throw new Error('Invalid selection data')
   return {
     type: 'custom',
     customType: 'table',
-    data: data
+    nodeId: tableId,
+    data: data,
+    surfaceId
   }
 }
 

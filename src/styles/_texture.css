@@ -72,6 +72,7 @@
   --t-text-spacing: 15px; /* Used as the margin between content elements */
   --t-double-spacing: 40px; /* Double of the default spacing */
   --t-input-padding: 4px; /* Padding used input boxes */
+  --t-cell-padding: 6px; /* Padding used table cells */
 
    /* Margins */
    /* ----------------------------------------------------------------------*/

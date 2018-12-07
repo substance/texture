@@ -9,12 +9,15 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
+import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
 import TranslateableEditor from './TranslateableEditor'
+
+import TableFigureComponent from '../shared/TableFigureComponent'
 
 export default {
   name: 'ArticleMetadata',
@@ -32,6 +35,7 @@ export default {
     config.addComponent('collection', CollectionEditor)
     config.addComponent('article-record', ArticleRecordEditor)
     config.addComponent('bibr', BibliographicEntryEditor, true)
+    config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
@@ -174,9 +178,7 @@ export default {
       commandGroup: 'add-entity'
     })
 
-    config.addCommand('add-footnote', AddEntityCommand, {
-      type: 'fn',
-      collection: 'footnotes',
+    config.addCommand('add-footnote', InsertFootnoteCommand, {
       commandGroup: 'add-entity'
     })
 

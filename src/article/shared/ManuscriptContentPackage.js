@@ -98,6 +98,10 @@ export default {
     config.addLabel('references-label', 'References')
     config.addLabel('footnotes-label', 'Footnotes')
 
+    // Figure sections config
+    config.addLabel('label-label', 'Label')
+    config.addLabel('caption-label', 'Caption')
+
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })
     config.addLabel('graphic-load-error', 'We couldn\'t load an image, sorry.')

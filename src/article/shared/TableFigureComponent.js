@@ -1,31 +1,18 @@
-import { Component } from 'substance'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
-import FigureMetadataComponent from './FigureMetadataComponent'
+import TableFigureMetadataComponent from './TableFigureMetadataComponent'
 import PreviewComponent from './PreviewComponent'
 import renderModelComponent from './renderModelComponent'
 
-export default class FigureComponent extends Component {
-  didMount () {
-    // HACK: while this is an idiomatic approach to updating, I don't like it because we just need this to receive updates for labels
-    // which are propagated via node state
-    // TODO: instead we should use a Component for the label which is binding itself to the state update
-    let mode = this._getMode()
-    if (mode !== METADATA_MODE) {
-      this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: [this.props.model.id] } })
-    }
-  }
+import FigureComponent from './FigureComponent'
 
-  dispose () {
-    this.context.appState.removeObserver(this)
-  }
-
+export default class TableFigureComponent extends FigureComponent {
   render ($$) {
     const model = this.props.model
     let mode = this._getMode()
 
     // delegating to a implementation in case of 'metadata'
     if (mode === METADATA_MODE) {
-      return $$(FigureMetadataComponent, { model }).ref('metadata')
+      return $$(TableFigureMetadataComponent, { model }).ref('metadata')
     }
 
     let el = $$('div')
@@ -54,6 +41,8 @@ export default class FigureComponent extends Component {
       )
     } else {
       const SectionLabel = this.getComponent('section-label')
+      const FootnoteComponent = this.getComponent('fn')
+      const footnotes = this._getFootnotes()
 
       let labelEl = $$('div').addClass('se-label').text(label)
       el.append(
@@ -71,12 +60,28 @@ export default class FigureComponent extends Component {
           label: this.getLabel('caption')
         }).ref('caption').addClass('se-caption')
       )
+
+      if (footnotes.length > 0) {
+        const footnotesEl = $$('div').addClass('se-table-figure-footnotes')
+        footnotes.forEach(model => {
+          let node = model._node
+          footnotesEl.append(
+            $$(FootnoteComponent, { model, node }).ref(model.id)
+          )
+        })
+        el.append(
+          $$(SectionLabel, {label: 'footnotes-label'}),
+          footnotesEl
+        )
+      }
     }
 
     return el
   }
 
-  _getMode () {
-    return this.props.mode || 'manuscript'
+  _getFootnotes () {
+    let model = this.props.model
+    let footnotes = model.getFootnotes()
+    return footnotes.getItems()
   }
 }

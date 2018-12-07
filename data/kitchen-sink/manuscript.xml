@@ -201,8 +201,26 @@
               <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
               <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
             </tr>
+            <tr id="t1_5">
+              <td id="t1_5_1">Table footnote<xref id="t1-xref-2" ref-type="table-fn" rid="tfn1">*</xref></td>
+              <td id="t1_5_2">Another table footnote<xref id="t1-xref-3" ref-type="table-fn" rid="tfn2">†</xref></td>
+              <td id="t1_5_3">Table footnote with multiple targets<xref id="t1-xref-4" ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
+              <td id="t1_5_4">16</td>
+            </tr>
           </tbody>
         </table>
+        <table-wrap-foot>
+          <fn-group>
+            <fn id="tfn1">
+              <label>*</label>
+              <p id="tfn1-p1">This is a table-footnote.</p>
+            </fn>
+            <fn id="tfn2">
+              <label>†</label>
+              <p id="tfn2-p1">Another table-footnote.</p>
+            </fn>
+          </fn-group>
+        </table-wrap-foot>
       </table-wrap>
       <sec id="sec-2">
         <title>Orci varius natoque penatibus et magnis</title>
@@ -305,6 +323,7 @@ class Reader(fname: String) {
   <back>
     <fn-group>
       <fn id="fn1">
+        <label>1</label>
         <p id="p-10">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium.</p>
       </fn>
       <fn id="fn2">

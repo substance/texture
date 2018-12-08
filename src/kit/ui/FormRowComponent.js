@@ -12,7 +12,6 @@ export default class FormRowComponent extends Component {
 
     if (label) {
       const labelEl = $$('div').addClass('se-label').append(label)
-
       if (hasIssues) {
         // TODO: use issue.key and labelProvider here
         let tooltipText = issues.map(issue => issue.message).join(', ')
@@ -23,18 +22,14 @@ export default class FormRowComponent extends Component {
           )
         )
       }
-
       el.append(labelEl)
     }
-
     if (hasIssues) {
       el.addClass('sm-warning')
     }
-
     el.append(
       $$('div').addClass('se-editor').append(children)
     )
-
     return el
   }
 }

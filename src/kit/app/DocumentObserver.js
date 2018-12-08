@@ -29,18 +29,9 @@ export default class DocumentObserver {
   // DocumentChange. We could try to consolidate and have just
   // one place where this information is derived
   _onDocumentChanged (change) {
-    const doc = this.doc
-    const index = doc.getIndex('relationships')
     let dirty = this.dirty
     Object.keys(change.updated).forEach(id => {
       dirty.add(id)
-      let related = index.get(id)
-      if (related) {
-        // console.log('Capturing change via relationship', related)
-        related.forEach(id => {
-          dirty.add(id)
-        })
-      }
     })
   }
 }

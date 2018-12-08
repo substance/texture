@@ -28,16 +28,16 @@ export default class InplaceRefContribEditor extends ValueComponent {
     let id = refContrib.id
     let givenNames = refContrib.getGivenNames()
     let name = refContrib.getName()
-    return $$(FormRowComponent).append(
+    return $$(FormRowComponent).attr('data-id', id).addClass('sm-ref-contrib').append(
       // TODO: it would be good to have a default factory for property editors
       $$(StringComponent, {
         label: this.getLabel(name.name),
         model: name.model
-      }),
+      }).addClass('sm-name'),
       $$(StringComponent, {
         label: this.getLabel(givenNames.name),
         model: givenNames.model
-      }),
+      }).addClass('sm-given-names'),
       // TODO: use icon provider
       $$('button').addClass('se-remove-value')
         .append($$(FontAwesomeIcon, {icon: 'fa-trash'}))

@@ -72,7 +72,7 @@ export default class NodeModelComponent extends Component {
           $$(FormRowComponent, {
             label,
             issues
-          }).append(
+          }).addClass(`sm-${property.name}`).append(
             $$(PropertyEditor, {
               label,
               model

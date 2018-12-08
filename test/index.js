@@ -1,4 +1,4 @@
-import { platform } from 'substance'
+import { platform, substanceGlobals } from 'substance'
 import './shared/testGlobals'
 // tests
 import './AddEntity.test'
@@ -9,6 +9,7 @@ import './BodyConverter.test'
 import './Card.test'
 import './Citations.test'
 import './ClipboardNew.test'
+import './EditReference.test'
 import './Footnote.test'
 import './FormulaConverter.test'
 import './FindAndReplace.test'
@@ -27,6 +28,8 @@ import './TableConverter.test'
 platform.test = true
 
 if (platform.inNodeJS) {
+  substanceGlobals.DEBUG_RENDERING = false
+
   if (process.env.TEST) {
     const { test } = require('substance-test')
     let harness = test.getHarness()

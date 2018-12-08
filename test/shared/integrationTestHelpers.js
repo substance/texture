@@ -50,7 +50,8 @@ export function setSelection (editor, path, from, to) {
   })
 }
 
-export function insertText (editorSession, text) {
+export function insertText (editor, text) {
+  let editorSession = editor.context.editorSession
   editorSession.transaction(tx => {
     tx.insertText(text)
   })

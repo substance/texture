@@ -10,12 +10,12 @@
   "jsnext:main": "index.js",
   "dependencies": {
     "fs-extra": "^5.0.0",
-    "substance": "1.0.0-preview.110",
+    "substance": "1.0.0-preview-111",
     "yauzl": "^2.10.0",
     "yazl": "^2.4.3"
   },
   "peerDependency": {
-    "substance": "^1.0.0-preview.110"
+    "substance": "^1.0.0-preview-111"
   },
   "devDependencies": {
     "colors": "^1.3.2",

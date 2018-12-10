@@ -79,7 +79,6 @@
   <s:not-implemented name="equation-count"/>
   <s:not-implemented name="etal"/>
   <s:not-implemented name="fig-count"/>
-  <s:not-implemented name="fig-group"/>
   <s:not-implemented name="floats-group"/>
   <s:not-implemented name="front-stub"/>
   <s:not-implemented name="funding-statement"/>
@@ -781,6 +780,18 @@
       <optional>
         <ref name="permissions"/>
       </optional>
+    </element>
+  </define>
+
+  <define name="fig-group">
+    <element name="fig-group">
+      <ref name="fig-group-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <oneOrMore>
+        <ref name="fig"/>
+      </oneOrMore>
     </element>
   </define>
 

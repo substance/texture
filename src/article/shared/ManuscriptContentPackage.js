@@ -8,6 +8,7 @@ import {
 // new model based components
 import AuthorsListComponent from './AuthorsListComponent'
 import FigureComponent from './FigureComponent'
+import FigurePanelComponent from './FigurePanelComponent'
 import HeadingComponent from './HeadingComponent'
 import ManuscriptComponent from './ManuscriptComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
@@ -33,6 +34,7 @@ import ListItemComponent from './ListItemComponent'
 import ReferenceComponent from './ReferenceComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
+import TableFigureComponent from './TableFigureComponent';
 import XrefComponent from './XrefComponent'
 
 import ModelPreviewComponent from './ModelPreviewComponent'
@@ -46,9 +48,10 @@ export default {
     config.addComponent('back-matter', CompositeComponent)
     config.addComponent('bibr', ReferenceComponent)
     config.addComponent('figure', FigureComponent)
+    config.addComponent('figure-panel', FigurePanelComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('manuscript', ManuscriptComponent)
-    config.addComponent('table-figure', FigureComponent)
+    config.addComponent('table-figure', TableFigureComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 

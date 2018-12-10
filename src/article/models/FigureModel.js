@@ -1,34 +1,7 @@
-import { createValueModel } from '../../kit'
-import { getLabel } from '../shared/nodeHelpers'
-import NodeModel from '../../kit/model/NodeModel'
+import { NodeModel } from '../../kit'
 
 export default class FigureModel extends NodeModel {
-  constructor (api, node) {
-    super(api, node)
-    this._title = createValueModel(api, 'text', [node.id, 'title'])
-  }
-
-  get type () { return 'figure' }
-
-  get id () { return this._node.id }
-
-  getTitle () {
-    return this._title
-  }
-
-  getContent () {
-    return this._api.getModelById(this._node.content)
-  }
-
-  getPermission () {
-    return this._api.getModelById(this._node.permission)
-  }
-
-  getLabel () {
-    return getLabel(this._node)
-  }
-
-  getCaption () {
-    return this._api.getModelById(this._node.caption)
+  getPanels () {
+    return this._node.panels.map(id => this._api.getModelById(id))
   }
 }

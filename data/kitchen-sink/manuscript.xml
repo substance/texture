@@ -243,39 +243,21 @@
           </permissions>
         </fig>
         <fig-group id="fig2-group">
-          <fig id="fig2">
-            <label>Figure 2</label>
-            <caption id="fig2-caption">
-              <title>Figure with supplement</title>
-              <p>Caption of main figure</p>
-            </caption>
-            <graphic id="fig2-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
-          </fig>
-          <fig id="fig2s1" specific-use="supplement">
-            <label>Figure 2–figure supplement 1</label>
-            <caption id="fig2-caption">
-              <title>Figure supplement title</title>
-              <p id="fig2-caption-p1">Caption of figure supplement</p>
-            </caption>
-            <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig2s1.jpg" />
-          </fig>
-        </fig-group>
-        <fig-group id="fig3-group">
-          <fig id="fig3a">
-            <label>Figure 3A</label>
+          <fig id="fig2a">
+            <label>Figure 2A</label>
             <caption>
               <title>First panel</title>
-              <p>First panel caption</p>
+              <p id="fig2a-caption-p1">First panel caption</p>
             </caption>
-            <graphic id="fig3a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1a.jpg" />
+            <graphic id="fig2a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1a.jpg" />
           </fig>
-          <fig id="fig3b">
-            <label>Figure 1B</label>
+          <fig id="fig2b">
+            <label>Figure 2B</label>
             <caption>
               <title>Second panel</title>
-              <p>Second panel caption</p>
+              <p id="fig2b-caption-p1">Second panel caption</p>
             </caption>
-            <graphic id="fig3-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
+            <graphic id="fig2b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
           </fig>
         </fig-group>
         <disp-quote id="disp-quote-1">

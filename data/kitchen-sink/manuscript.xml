@@ -231,7 +231,7 @@
             <title>Figure with permissions.</title>
             <p id="fig1-caption-p1">Caption.</p>
           </caption>
-          <graphic id="graphic-1" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
+          <graphic id="graphic-1" mime-subtype="jpeg" mimetype="image" xlink:href="placeholder.png" />
           <permissions id="permission-2">
             <copyright-statement>© 2014 Surname et al.</copyright-statement>
             <copyright-year>2014</copyright-year>
@@ -249,7 +249,7 @@
               <title>First panel</title>
               <p id="fig2a-caption-p1">First panel caption</p>
             </caption>
-            <graphic id="fig2a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1a.jpg" />
+            <graphic id="fig2a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="placeholder.png" />
           </fig>
           <fig id="fig2b">
             <label>Figure 2B</label>
@@ -257,7 +257,7 @@
               <title>Second panel</title>
               <p id="fig2b-caption-p1">Second panel caption</p>
             </caption>
-            <graphic id="fig2b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
+            <graphic id="fig2b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="placeholder.png" />
           </fig>
         </fig-group>
         <disp-quote id="disp-quote-1">

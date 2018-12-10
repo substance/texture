@@ -4,6 +4,8 @@ This document shows examples for Texture JATS usage. The premise of TextureJATS 
 
 `<aff>` records are used to encode affiliations of authors and editors, as well as present addresses.
 
+Status: Implemented
+
 ```xml
 <aff id="aff1">
   <institution content-type="orgname">Example Organisation</institution>
@@ -13,4 +15,47 @@ This document shows examples for Texture JATS usage. The premise of TextureJATS 
   <city>Göttingen</city>
   <country>Germany</country>
 </aff>
+```
+
+## Figure Groups
+
+```xml
+<fig-group>
+  <fig id="fig1a">
+    <label>Figure 1A</label>
+    <caption>
+      <title>First panel</title>
+      <p>First panel caption</p>
+    </caption>
+    <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig1a.jpg" />
+  </fig>
+  <fig id="fig1b">
+    <label>Figure 1B</label>
+    <caption>
+      <title>Second panel</title>
+      <p>Second panel caption</p>
+    </caption>
+    <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
+  </fig>
+</fig-group>
+
+<!-- Use Case 2: 1 Main Figure + 1 Supplement -->
+<fig-group>
+  <fig id="fig1">
+    <label>Figure 1</label>
+    <caption id="fig1-caption">
+      <title>Main figure title</title>
+      <p>Main figure title</p>
+    </caption>
+    <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
+  </fig>
+  <fig id="fig1s1" specific-use="supplement">
+    <label>Figure 1–figure supplement 1</label>
+    <caption id="fig1-caption">
+      <title>First figure supplement title</title>
+      <p>First figure supplement caption</p>
+    </caption>
+    <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig1s1.jpg" />
+  </fig>
+</fig-group>
 ```

@@ -7,6 +7,7 @@ import BodyConverter from './BodyConverter'
 import DispFormulaConverter from './DispFormulaConverter'
 import DispQuoteConverter from './DispQuoteConverter'
 import FigureConverter from './FigureConverter'
+import FigurePanelConverter from './FigurePanelConverter'
 import FootnoteConverter from './FootnoteConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import TexMathConverter from './TexMathConverter'
@@ -32,6 +33,7 @@ export default function createJatsImporter (doc) {
     new DispFormulaConverter(),
     new DispQuoteConverter(),
     new FigureConverter(),
+    new FigurePanelConverter(),
     new FootnoteConverter(),
     new TexMathConverter(),
     new ListConverter(),

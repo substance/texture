@@ -5,7 +5,7 @@ export default class _ContainerModel extends ValueModel {
   constructor (api, path, targetTypes) {
     super(api, path)
 
-    this._targetTypes = targetTypes
+    this._targetTypes = targetTypes || []
   }
 
   get length () { return this.getValue().length }

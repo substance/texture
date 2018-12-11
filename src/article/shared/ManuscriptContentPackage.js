@@ -34,7 +34,7 @@ import ListItemComponent from './ListItemComponent'
 import ReferenceComponent from './ReferenceComponent'
 import SigBlockComponent from './SigBlockComponent'
 import TableComponent from './TableComponent'
-import TableFigureComponent from './TableFigureComponent';
+import TableFigureComponent from './TableFigureComponent'
 import XrefComponent from './XrefComponent'
 
 import ModelPreviewComponent from './ModelPreviewComponent'

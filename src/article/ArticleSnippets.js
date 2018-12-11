@@ -7,7 +7,7 @@ export const DISP_QUOTE = () => `
 `
 
 export const FIGURE_SNIPPET = () => `
-  <fig xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
+  <fig xmlns:xlink="http://www.w3.org/1999/xlink">
     <caption></caption>
     <graphic mime-subtype="" mimetype="image" xlink:href="" />
   </fig>
@@ -31,7 +31,7 @@ export const PERSON_SNIPPET = () => `
 export const TABLE_SNIPPET = (nrows, ncols) => `
   <table-wrap>
     <caption>
-    </caption>  
+    </caption>
     <table>
       <tbody>
         <tr>

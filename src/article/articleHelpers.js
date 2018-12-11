@@ -47,7 +47,8 @@ export function importFigures (tx, sel, files, paths) {
     let path = paths[idx]
     let mimeData = file.type.split('/')
     let figure = createEmptyElement(tx, 'figure')
-    let graphic = tx.get(figure.content)
+    let panel = tx.get(figure.panels[0])
+    let graphic = panel.getContent()
     graphic.attr({
       'mime-subtype': mimeData[1],
       'mimetype': mimeData[0],

@@ -39,6 +39,8 @@ import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
+import AddFigurePanelCommand from '../shared/AddFigurePanelCommand'
+import AddFigurePanelTool from '../shared/AddFigurePanelTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
@@ -133,6 +135,9 @@ export default {
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
       commandGroup: 'additional'
+    })
+    config.addCommand('add-panel-figure', AddFigurePanelCommand, {
+      commandGroup: 'context'
     })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
@@ -252,6 +257,10 @@ export default {
     config.addDropHandler(DropFigure)
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
+    config.addTool('add-panel-figure', AddFigurePanelTool)
+    config.addLabel('add-panel-figure', 'Add Panel Figure')
+    config.addIcon('add-panel-figure', { 'fontawesome': 'fa-upload' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

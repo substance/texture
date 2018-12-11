@@ -118,6 +118,13 @@ FigurePanel.schema = {
 }
 
 class Figure extends DocumentNode {
+  _initialize (...args) {
+    super._initialize(...args)
+
+    this.state = {
+      currentPanelIndex: 0
+    }
+  }
 }
 
 Figure.schema = {

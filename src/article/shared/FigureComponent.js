@@ -37,7 +37,7 @@ export default class FigureComponent extends NodeComponent {
   _renderAllPanels ($$) {
     let model = this.props.model
     let panels = model.getPanels()
-    let els = panels.map(panel => renderModelComponent(this.context, $$, {
+    let els = panels.getItems().map(panel => renderModelComponent(this.context, $$, {
       model: panel,
       mode: this.props.mode
     }))
@@ -55,8 +55,8 @@ export default class FigureComponent extends NodeComponent {
   _getCurrentPanel () {
     let model = this.props.model
     let currentPanelIndex = this._getCurrentPanelIndex()
-    let panel = model.getPanels()[currentPanelIndex]
-    return panel
+    let panels = model.getPanels()
+    return panels.getItemAt(currentPanelIndex)
   }
 
   _getCurrentPanelIndex () {

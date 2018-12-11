@@ -1,4 +1,4 @@
-import { NodeModel } from '../../kit'
+import { NodeModel, CollectionValueModel } from '../../kit'
 
 export default class FigureModel extends NodeModel {
   hasPanels () {
@@ -6,6 +6,6 @@ export default class FigureModel extends NodeModel {
   }
 
   getPanels () {
-    return this._node.panels.map(id => this._api.getModelById(id))
+    return new CollectionValueModel(this._api, [this._node.id, 'panels'], 'figure-panel')
   }
 }

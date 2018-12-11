@@ -3,13 +3,13 @@ export default class FigureConverter {
 
   // ATTENTION: this converter will create either a <fig> or a <fig-group>
   // element depending on the number of Figure panels
-  get tagName () { return 'fig' }
+  get tagName () { return 'figure' }
 
   matchElement (el, importer) {
     if (el.is('fig') || el.is('fig-group')) {
       // Note: do not use this converter if we are already converting a figure
       let context = importer.state.getCurrentContext()
-      return context && context.tagName !== 'fig'
+      return context && context.converter !== this
     } else {
       return false
     }

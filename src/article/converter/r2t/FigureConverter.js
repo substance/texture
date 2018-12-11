@@ -1,3 +1,5 @@
+import FigurePanelConverter from './FigurePanelConverter'
+
 export default class FigureConverter {
   get type () { return 'figure' }
 
@@ -9,7 +11,8 @@ export default class FigureConverter {
     if (el.is('fig') || el.is('fig-group')) {
       // Note: do not use this converter if we are already converting a figure
       let context = importer.state.getCurrentContext()
-      return context && context.converter !== this
+      // Note: no context is given if the importer is used stand-alone
+      return !context || context.converter !== this
     } else {
       return false
     }
@@ -19,8 +22,17 @@ export default class FigureConverter {
     // single panel figure
     let panelIds = []
     if (el.is('fig')) {
-      let panel = importer.convertElement(el)
-      panelIds.push(panel.id)
+      // HACK: unfortunately the importer reserves the original id
+      // but we would like to use it for the first panel
+      let figPanelConverter = new FigurePanelConverter()
+      let figPanelData = { type: 'figure-panel', id: node.id }
+      figPanelConverter.import(el, figPanelData, importer)
+      importer._createNode(figPanelData)
+      return {
+        type: 'figure',
+        id: importer.nextId('fig'),
+        panels: [figPanelData.id]
+      }
     // multi-panel figure
     } else if (el.is('fig-group')) {
       panelIds = el.findAll('fig').map(child => importer.convertElement(child).id)

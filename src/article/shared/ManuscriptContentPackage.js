@@ -52,7 +52,10 @@ export default {
     config.addComponent('heading', HeadingComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('table-figure', TableFigureComponent)
+    // TODO: find out why we need both, 'unsupported' and 'unsupported-node'
+    // latter is defined in schema, while first is only used in the context of models (FlowContentComponent)
     config.addComponent('unsupported', UnsupportedNodeComponent)
+    config.addComponent('unsupported-node', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
 
     config.addComponent('entity', NodeModelComponent)

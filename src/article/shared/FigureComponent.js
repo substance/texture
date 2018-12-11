@@ -29,16 +29,23 @@ export default class FigureComponent extends NodeComponent {
   _renderCurrentPanel ($$) {
     let panel = this._getCurrentPanel()
     return renderModelComponent(this.context, $$, {
-      model: panel
+      model: panel,
+      mode: this.props.mode
     })
   }
 
   _renderAllPanels ($$) {
     let model = this.props.model
     let panels = model.getPanels()
-    return panels.map(panel => renderModelComponent(this.context, $$, {
-      model: panel
+    let els = panels.map(panel => renderModelComponent(this.context, $$, {
+      model: panel,
+      mode: this.props.mode
     }))
+    if (panels.length > 1) {
+      let currentPanelIndex = this._getCurrentPanelIndex()
+      els[currentPanelIndex].addClass('sm-current-panel')
+    }
+    return els
   }
 
   _getMode () {
@@ -47,18 +54,23 @@ export default class FigureComponent extends NodeComponent {
 
   _getCurrentPanel () {
     let model = this.props.model
+    let currentPanelIndex = this._getCurrentPanelIndex()
+    let panel = model.getPanels()[currentPanelIndex]
+    return panel
+  }
+
+  _getCurrentPanelIndex () {
+    let model = this.props.model
     let node = model._node
     let currentPanelIndex = 0
     if (node.state) {
       currentPanelIndex = node.state.currentPanelIndex
     }
-    let panel = model.getPanels()[currentPanelIndex]
     // FIXME: node state is corrupt
-    if (!panel) {
+    if (!node.panels[currentPanelIndex]) {
       console.error('figurePanel.state.currentPanelIndex is corrupt')
-      node.state.currentPanelIndex = 0
-      panel = model.getPanels()[0]
+      node.state.currentPanelIndex = currentPanelIndex = 0
     }
-    return panel
+    return currentPanelIndex
   }
 }

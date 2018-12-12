@@ -25,26 +25,14 @@ class BasicFigurePanelCommand extends Command {
     }
     return api.getModelById(nodeId)
   }
-
-  _getCurrentPanelIndex (figureModel) {
-    const node = figureModel._node
-    let currentPanelIndex = 0
-    if (node.state) {
-      currentPanelIndex = node.state.currentPanelIndex
-    }
-    return currentPanelIndex
-  }
 }
 
 export class AddFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
     const figureModel = this._getFigureModel(params, context)
-    const panels = figureModel.getPanels()
-    const index = this._getCurrentPanelIndex(figureModel)
     const files = params.files
-    let api = context.api
     if (files.length > 0) {
-      api._insertFigurePanel(files[0], panels, index)
+      figureModel.addPanel(files[0])
     }
   }
 }
@@ -52,10 +40,6 @@ export class AddFigurePanelCommand extends BasicFigurePanelCommand {
 export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
     const figureModel = this._getFigureModel(params, context)
-    const panels = figureModel.getPanels()
-    const index = this._getCurrentPanelIndex(figureModel)
-    const panel = panels.getItemAt(index)
-    let api = context.api
-    api._removeFigurePanel(panel, panels)
+    figureModel.removePanel()
   }
 }

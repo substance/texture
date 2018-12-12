@@ -1,0 +1,9 @@
+<kwd-group kwd-group-type="category-a">
+  <label>Category A</label>
+  <kwd>Term A1</kwd>
+  <kwd>Term A2</kwd>
+</kwd-group>
+<kwd-group kwd-group-type="category-b">
+  <label>Category B</label>
+  <kwd>Term B1</kwd>
+</kwd-group>

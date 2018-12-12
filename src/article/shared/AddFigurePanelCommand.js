@@ -11,10 +11,9 @@ export default class AddFigurePanelCommand extends Command {
   execute (params, context) {
     const collection = this._getCollection(params, context)
     const files = params.files
-    collection.addItem({})
     let api = context.api
     if (files.length > 0) {
-      api._insertFigurePanel(files)
+      api._insertFigurePanel(files, collection)
     }
   }
 

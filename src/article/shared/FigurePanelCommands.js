@@ -1,21 +1,10 @@
 import { Command } from 'substance'
 import { findParentByType } from './nodeHelpers'
 
-export default class AddFigurePanelCommand extends Command {
+class BasicFigurePanelCommand extends Command {
   getCommandState (params, context) {
     return {
       disabled: this.isDisabled(params)
-    }
-  }
-
-  execute (params, context) {
-    const figureModel = this._getFigureModel(params, context)
-    const panels = figureModel.getPanels()
-    const index = this._getCurrentPanelIndex(figureModel)
-    const files = params.files
-    let api = context.api
-    if (files.length > 0) {
-      api._insertFigurePanel(files[0], panels, index)
     }
   }
 
@@ -44,5 +33,29 @@ export default class AddFigurePanelCommand extends Command {
       currentPanelIndex = node.state.currentPanelIndex
     }
     return currentPanelIndex
+  }
+}
+
+export class AddFigurePanelCommand extends BasicFigurePanelCommand {
+  execute (params, context) {
+    const figureModel = this._getFigureModel(params, context)
+    const panels = figureModel.getPanels()
+    const index = this._getCurrentPanelIndex(figureModel)
+    const files = params.files
+    let api = context.api
+    if (files.length > 0) {
+      api._insertFigurePanel(files[0], panels, index)
+    }
+  }
+}
+
+export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
+  execute (params, context) {
+    const figureModel = this._getFigureModel(params, context)
+    const panels = figureModel.getPanels()
+    const index = this._getCurrentPanelIndex(figureModel)
+    const panel = panels[index]
+    let api = context.api
+    api._insertFigurePanel(panel, panels)
   }
 }

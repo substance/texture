@@ -516,6 +516,17 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _removeFigurePanel (item, collection) {
+    this.articleSession.transaction(tx => {
+      let pos = collection.indexOf(item.id)
+      if (pos !== -1) {
+        tx.update(collection._path, { type: 'delete', pos: pos })
+      }
+      tx.delete(item.id)
+      tx.selection = null
+    })
+  }
+
   _insertInlineGraphic (file) {
     const articleSession = this.articleSession
     const path = this.archive.createFile(file)

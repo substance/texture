@@ -52,7 +52,7 @@ export default class FigureLabelGenerator {
       if (
         (last.length !== def.length) ||
         (def.length === 1 && def[0].pos > last[0].pos + 1) ||
-        (def.length === 2 && (def[1].type !== def[2].type || def[1].pos > last[1].pos + 1))
+        (def.length === 2 && (def[1].type !== last[1].type || def[1].pos > last[1].pos + 1))
       ) {
         groups.push(group)
         group = [def]

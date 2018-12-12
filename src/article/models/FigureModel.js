@@ -2,7 +2,12 @@ import { NodeModel, CollectionValueModel } from '../../kit'
 
 export default class FigureModel extends NodeModel {
   hasPanels () {
-    return this._node.panels.length > 0
+    const length = this.getPanelsLength()
+    return length > 0
+  }
+
+  getPanelsLength () {
+    return this._node.panels.length
   }
 
   getPanels () {

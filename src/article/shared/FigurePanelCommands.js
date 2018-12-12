@@ -4,7 +4,7 @@ import { findParentByType } from './nodeHelpers'
 class BasicFigurePanelCommand extends Command {
   getCommandState (params, context) {
     return {
-      disabled: this.isDisabled(params)
+      disabled: this.isDisabled(params, context)
     }
   }
 
@@ -41,5 +41,17 @@ export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
     const figureModel = this._getFigureModel(params, context)
     figureModel.removePanel()
+  }
+
+  isDisabled (params, context) {
+    const xpath = params.selectionState.xpath
+    if (xpath.indexOf('figure') > -1) {
+      const figureModel = this._getFigureModel(params, context)
+      const panelsLength = figureModel.getPanelsLength()
+      if (panelsLength > 1) {
+        return false
+      }
+    }
+    return true
   }
 }

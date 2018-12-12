@@ -136,7 +136,7 @@ export default {
       nodeType: 'fig',
       commandGroup: 'additional'
     })
-    config.addCommand('add-panel-figure', AddFigurePanelCommand, {
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'context'
     })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
@@ -258,9 +258,9 @@ export default {
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
 
-    config.addTool('add-panel-figure', AddFigurePanelTool)
-    config.addLabel('add-panel-figure', 'Add Panel Figure')
-    config.addIcon('add-panel-figure', { 'fontawesome': 'fa-upload' })
+    config.addTool('add-figure-panel', AddFigurePanelTool)
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

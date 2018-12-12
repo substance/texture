@@ -1,8 +1,9 @@
 import AbstractCitationManager from './AbstractCitationManager'
+import NumberedLabelGenerator from './NumberedLabelGenerator'
 
 export default class ReferenceManager extends AbstractCitationManager {
-  constructor (documentSession, labelGenerator) {
-    super(documentSession, 'bibr', labelGenerator)
+  constructor (documentSession, config) {
+    super(documentSession, 'bibr', ['ref'], new NumberedLabelGenerator(config))
     // compute initial labels
     this._updateLabels('initial')
   }

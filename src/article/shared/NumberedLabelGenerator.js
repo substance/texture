@@ -38,9 +38,14 @@ export default class NumberedLabelGenerator {
     this.invalid = config.invalid || '???'
   }
 
+  // TODO: consolidate label generator interface
   getLabel (numbers) {
     if (!numbers) return this.invalid
     if (!isArray(numbers)) numbers = [numbers]
+    return this.getCombinedLabel(numbers)
+  }
+
+  getCombinedLabel (numbers) {
     if (numbers.length === 0) return this.invalid
 
     const L = numbers.length

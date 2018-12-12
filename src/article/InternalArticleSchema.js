@@ -125,6 +125,11 @@ class Figure extends DocumentNode {
       currentPanelIndex: 0
     }
   }
+
+  getPanels () {
+    const doc = this.getDocument()
+    return this.panels.map(id => doc.get(id))
+  }
 }
 
 Figure.schema = {

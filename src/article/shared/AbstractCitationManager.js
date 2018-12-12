@@ -1,13 +1,11 @@
-import { array2table } from 'substance'
-import { XREF_TARGET_TYPES } from './xrefHelpers'
 import { getPos } from './nodeHelpers'
 
 export default class AbstractCitationManager {
-  constructor (documentSession, type, labelGenerator) {
+  constructor (documentSession, refType, targetTypes, labelGenerator) {
     this.documentSession = documentSession
-    this.type = type
+    this.refType = refType
+    this.targetTypes = new Set(targetTypes)
     this.labelGenerator = labelGenerator
-    this._targetTypes = array2table(XREF_TARGET_TYPES[type])
 
     documentSession.on('change', this._onDocumentChange, this)
   }
@@ -47,57 +45,43 @@ export default class AbstractCitationManager {
     // HACK: do not react on node state updates
     if (change.info.action === 'node-state-update') return
 
-    const doc = this._getDocument()
-
-    // updateCitationLabels whenever
-    // I.   an xref[ref-type='bibr'] is created or deleted
-    // II.  the ref-type attribute of an xref is set to 'bibr' (creation)
-    // II. the rid attribute of an xref with ref-type bibr is updated
     const ops = change.ops
-    let needsUpdate = false
     for (var i = 0; i < ops.length; i++) {
       let op = ops[i]
-
-      switch (op.type) {
-        // I. citation is created or deleted
-        case 'delete':
-        case 'create': {
-          if (op.val.type === 'xref' && op.val.attributes && op.val.attributes['ref-type'] === this.type) {
-            needsUpdate = true
-          }
-          if (op.val.type === 'ref') {
-            needsUpdate = true
-          }
-          if (op.val.type === 'fn') {
-            needsUpdate = true
-          }
-          break
+      // 1. xref has been added or removed
+      // 2. citable has been add or removed
+      if (this._detectAddRemoveXref(op) || this._detectAddRemoveCitable(op, change)) {
+        return this._updateLabels()
+      // 3. xref targets have been changed
+      // 4. refType of an xref has been changed (TODO: do we really need this?)
+      } else if (op.isSet() && op.path[1] === 'attributes') {
+        if (this._detectChangeRefTarget(op) || this._detectChangeRefType(op)) {
+          return this._updateLabels()
         }
-        case 'set': {
-          if (op.path[1] === 'attributes') {
-            // II. citation has been created, i.e. ref-type has been set to 'bibr' (or vice versa)
-            if (op.path[2] === 'ref-type' && (op.val === this.type || op.original === this.type)) {
-              needsUpdate = true
-
-            // III. the references of a citation have been updated
-            } else if (op.path[2] === 'rid') {
-              let node = doc.get(op.path[0])
-              if (node && node.getAttribute('ref-type') === this.type) {
-                needsUpdate = true
-              }
-            }
-          }
-
-          break
-        }
-        default:
-          //
       }
-      if (needsUpdate) break
     }
-    if (needsUpdate) {
-      this._updateLabels()
+  }
+
+  _detectAddRemoveXref (op) {
+    return (op.val && op.val.type === 'xref' && op.val.attributes && op.val.attributes['ref-type'] === this.refType)
+  }
+
+  _detectAddRemoveCitable (op, change) {
+    return (op.val && this.targetTypes.has(op.val.type))
+  }
+
+  _detectChangeRefTarget (op) {
+    if (op.path[2] === 'rid') {
+      const doc = this._getDocument()
+      let node = doc.get(op.path[0])
+      return (node && node.getAttribute('ref-type') === this.refType)
+    } else {
+      return false
     }
+  }
+
+  _detectChangeRefType (op) {
+    return (op.path[2] === 'ref-type' && (op.val === this.refType || op.original === this.refType))
   }
 
   /*
@@ -200,7 +184,7 @@ export default class AbstractCitationManager {
   _getXrefs () {
     const content = this._getContentElement()
     if (content) {
-      let refs = content.findAll(`xref[ref-type='${this.type}']`)
+      let refs = content.findAll(`xref[ref-type='${this.refType}']`)
       return refs
     } else {
       return []

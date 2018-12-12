@@ -4,7 +4,7 @@ import TableFootnoteManager from './TableFootnoteManager'
 
 export default class TableManager extends CitableContentManager {
   constructor (documentSession, labelGenerator) {
-    super(documentSession, 'table', labelGenerator)
+    super(documentSession, 'table', ['table-figure'], labelGenerator)
 
     this._updateLabels('initial')
 

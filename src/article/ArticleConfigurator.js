@@ -1,6 +1,5 @@
 import { AnnotationCommand, platform, SwitchTextTypeCommand } from 'substance'
 import TextureConfigurator from '../TextureConfigurator'
-import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
 import InternalArticleSchema from './InternalArticleSchema'
 import ArticleHTMLExporter from './converter/html/ArticleHTMLExporter'
 import ArticleHTMLImporter from './converter/html/ArticleHTMLImporter'
@@ -53,20 +52,21 @@ export default class ArticleConfigurator extends TextureConfigurator {
     return this.config.panelsSpec
   }
 
-  // see NumberedLabelGenerator
-  setLabelGenerator (type, spec) {
+  setLabelGenerator (resourceType, LabelGeneratorClass, config) {
     if (!this.config.labelGenerator) {
       this.config.labelGenerator = {}
     }
-    this.config.labelGenerator[type] = spec
+    this.config.labelGenerator[resourceType] = {
+      LabelGeneratorClass,
+      config
+    }
   }
 
-  getLabelGenerator (type) {
-    let config
-    if (this.config.labelGenerator) {
-      config = this.config.labelGenerator[type] || {}
-    }
-    return new NumberedLabelGenerator(config)
+  getLabelGenerator (resourceType) {
+    let spec = this.config.labelGenerator[resourceType]
+    if (!spec) throw new Error(`No LabelGenerator specified for resource type ${resourceType}`)
+    const LabelGenerator = spec.LabelGeneratorClass
+    return new LabelGenerator(spec.config)
   }
 
   getKeyboardShortcuts () {

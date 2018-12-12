@@ -1,5 +1,26 @@
 This document shows examples for Texture JATS usage. The premise of TextureJATS is to have exactly one tagging style per use-case. E.g. there is only one way to tag a reference, author or affiliation. Additionally we define a set of optional extensions to model reproducible elements (cells) in JATS. This work is inspired but not related to JATS4R, a similar effort to make JATS more reusable.
 
+## Abstract
+
+Use Case: Regular abstract
+
+```xml
+<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
+<abstract>
+  <p>Optional abstract can contain</p>
+</abstract>
+```
+
+Use Case: Custom abstract
+
+```xml
+<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
+<abstract abstract-type="executive-summary">
+  <title>Digest<title>
+  <p>An executive summary.</p>
+</abstract>
+```
+
 ## Affiliations
 
 `<aff>` records are used to encode affiliations of authors and editors, as well as present addresses.
@@ -48,27 +69,6 @@ This document shows examples for Texture JATS usage. The premise of TextureJATS 
 </article-meta>
 ```
 
-## Abstract
-
-Use Case: Regular abstract
-
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<abstract>
-  <p>Optional abstract can contain</p>
-</abstract>
-```
-
-Use Case: Custom abstract
-
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<abstract abstract-type="executive-summary">
-  <title>Digest<title>
-  <p>An executive summary.</p>
-</abstract>
-```
-
 ## Article Title
 
 ```xml
@@ -79,6 +79,23 @@ Use Case: Custom abstract
     <trans-title id="trans-title-1">Objeto de visión a acción manual en <italic id="italic-1">cortezas parietales</italic>, premotoras y motoras de macaco</trans-title>
   </trans-title-group>
 </title-group>
+```
+
+## Chapters
+
+Chapters are used to model appendices, acknowledgements, author response, decision letter, data availability section.
+
+```xml
+<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
+<sub-article article-type="decision-letter" id="chapter-1">
+  <front-stub>
+  <title-group>
+    <article-title>Decision letter</article-title>
+  </title-group>
+  <contrib-group>...</contrib-group>
+  </front-stub>
+  <body>...</body>
+</sub-article>
 ```
 
 ## Figures
@@ -144,19 +161,130 @@ Use Case: Main Figure + Figure supplement
 </fig-group>
 ```
 
-## Chapters
-
-Chapters are used to model appendices, acknowledgements, author response, decision letter, data availability section.
+Use Case: Custom fields
 
 ```xml
 <!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<sub-article article-type="decision-letter" id="chapter-1">
-  <front-stub>
-  <title-group>
-    <article-title>Decision letter</article-title>
-  </title-group>
-  <contrib-group>...</contrib-group>
-  </front-stub>
-  <body>...</body>
-</sub-article>
+<fig id="fig2">
+  <label>Figure 2</label>
+  <caption id="fig2-caption">
+    <title>Figure 2</title>
+    <p>Caption of main figure</p>
+  </caption>
+  <kwd-group kwd-group-type="exp-system">
+    <label>Exp. System</label>
+    <kwd>immunostaining</kwd>
+    <kwd>confocal microscopy</kwd>
+  </kwd-group>
+  <kwd-group kwd-group-type="measured-variables">
+    <label>Measured-Variables</label>
+    <kwd>immunostaining</kwd>
+    <kwd>confocal microscopy</kwd>
+  </kwd-group>
+  <graphic id="fig2-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
+</fig>
+```
+
+## Formula
+
+```xml
+<disp-formula id="disp-formula-1">
+  <label>(1)</label>
+  <tex-math><![CDATA[1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
+\prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},
+\quad\quad \text{for }\lvert q\rvert<1.]]></tex-math>
+</disp-formula>
+```
+
+## Inline Formula
+
+```xml
+<p>Some text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math>\sqrt(13)</tex-math></inline-formula> and more text</p>
+```
+
+## Inline Graphic
+
+```xml
+<p>Some text <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/> and more text.</p>
+```
+
+## Preformatted Text
+
+```xml
+<preformat id="_preformat-1" preformat-type="code"><![CDATA[import java.io._
+class Reader(fname: String) {
+  private val in =
+    new BufferedReader(new FileReader(fname))
+  @throws(classOf[IOException])
+  def read() = in.read()
+}]]></preformat>
+```
+
+## Supplementary File
+
+Use Case: Stand-alone supplemntary file
+
+```xml
+<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
+<supplementary-material id="source-data-1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="source-data-1.zip">
+  <label>Source data 1.</label><!-- auto-generated, based on counter grouped by content-type -->
+  <caption>
+    <title>
+      Orthogroup clustering analysis
+    </title>
+  </caption>
+</supplementary-material>
+```
+
+## Table
+
+```xml
+<table-wrap id="table1">
+  <label>Table 1</label>
+  <caption id="table1_caption">
+    <title>Example Table</title>
+    <p id="table1_caption_p1">This is a table example.</p>
+  </caption>
+  <table id="t1">
+    <tbody>
+      <tr id="t1_1">
+        <th id="t1_1_1">A</th>
+        <th id="t1_1_2">B</th>
+        <th id="t1_1_3">C</th>
+        <th id="t1_1_4">D</th>
+      </tr>
+      <tr id="t1_2">
+        <td id="t1_2_1" colspan="2">1</td>
+        <td id="t1_2_3" rowspan="2" colspan="2">3</td>
+      </tr>
+      <tr id="t1_3">
+        <td id="t1_3_1">5</td>
+        <td id="t1_3_2" rowspan="2">Formatting in table cell <bold id="t1-bold-1">bold</bold>,<italic id="t1-italic-1">italic</italic>, <sub id="t1-sub-1">sub</sub>,<sup id="t1-sup-1">sup</sup>, <monospace id="t1-monospace-1">monospace</monospace></td>
+      </tr>
+      <tr id="t1_4">
+        <td id="t1_4_1">9</td>
+        <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
+        <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
+      </tr>
+      <tr id="t1_5">
+        <td id="t1_5_1">Table footnote<xref id="t1-xref-2" ref-type="table-fn" rid="tfn1">*</xref></td>
+        <td id="t1_5_2">Another table footnote<xref id="t1-xref-3" ref-type="table-fn" rid="tfn2">†</xref></td>
+        <td id="t1_5_3">Table footnote with multiple targets<xref id="t1-xref-4" ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
+        <td id="t1_5_4">16</td>
+      </tr>
+    </tbody>
+  </table>
+  <table-wrap-foot>
+    <fn-group>
+      <fn id="tfn1">
+        <label>*</label>
+        <p id="tfn1-p1">This is a table-footnote.</p>
+      </fn>
+      <fn id="tfn2">
+        <label>†</label>
+        <p id="tfn2-p1">Another table-footnote.</p>
+      </fn>
+    </fn-group>
+  </table-wrap-foot>
+</table-wrap>
 ```

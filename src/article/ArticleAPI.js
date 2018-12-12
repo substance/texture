@@ -9,7 +9,7 @@ import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import {
-  createEmptyElement, importFigures,
+  createEmptyElement, importFigurePanel, importFigures,
   insertTableFigure, setContainerSelection
 } from './articleHelpers'
 
@@ -504,6 +504,15 @@ export default class ArticleAPI extends EditorAPI {
     if (!sel || !sel.containerId) return
     articleSession.transaction(tx => {
       importFigures(tx, sel, files, paths)
+    })
+  }
+
+  _insertFigurePanel (file, collection, index) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      const figurePanel = importFigurePanel(tx, file, path)
+      tx.update(collection._path, { type: 'insert', pos: index + 1, value: figurePanel.id })
     })
   }
 

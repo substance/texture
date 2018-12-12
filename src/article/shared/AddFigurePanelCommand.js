@@ -9,11 +9,13 @@ export default class AddFigurePanelCommand extends Command {
   }
 
   execute (params, context) {
-    const collection = this._getCollection(params, context)
+    const figureModel = this._getFigureModel(params, context)
+    const panels = figureModel.getPanels()
+    const index = this._getCurrentPanelIndex(figureModel)
     const files = params.files
     let api = context.api
     if (files.length > 0) {
-      api._insertFigurePanel(files, collection)
+      api._insertFigurePanel(files[0], panels, index)
     }
   }
 
@@ -22,7 +24,7 @@ export default class AddFigurePanelCommand extends Command {
     return xpath.indexOf('figure') === -1
   }
 
-  _getCollection (params, context) {
+  _getFigureModel (params, context) {
     const api = context.api
     const sel = params.selection
     const doc = params.editorSession.getDocument()
@@ -32,7 +34,15 @@ export default class AddFigurePanelCommand extends Command {
       const node = findParentByType(selectedNode, 'figure')
       nodeId = node.id
     }
-    const figureModel = api.getModelById(nodeId)
-    return figureModel.getPanels()
+    return api.getModelById(nodeId)
+  }
+
+  _getCurrentPanelIndex (figureModel) {
+    const node = figureModel._node
+    let currentPanelIndex = 0
+    if (node.state) {
+      currentPanelIndex = node.state.currentPanelIndex
+    }
+    return currentPanelIndex
   }
 }

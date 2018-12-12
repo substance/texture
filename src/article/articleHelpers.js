@@ -40,6 +40,31 @@ export function setContainerSelection (tx, node, surfaceId) {
   }
 }
 
+export function importFigurePanel (tx, file, path) {
+  const mimeData = file.type.split('/')
+  const graphic = tx.create({
+    'type': 'graphic'
+  })
+  graphic.attr({
+    'mime-subtype': mimeData[1],
+    'mimetype': mimeData[0],
+    'xlink:href': path
+  })
+  const permission = tx.create({
+    'type': 'permission'
+  })
+  const caption = tx.create({
+    'type': 'caption'
+  })
+  const figurePanel = tx.create({
+    'type': 'figure-panel',
+    'content': graphic.id,
+    'caption': caption.id,
+    'permission': permission.id
+  })
+  return figurePanel
+}
+
 export function importFigures (tx, sel, files, paths) {
   const LAST = files.length - 1
   let containerId = sel.containerId

@@ -32,7 +32,7 @@ export default class AddFigurePanelCommand extends Command {
       const node = findParentByType(selectedNode, 'figure')
       nodeId = node.id
     }
-    const figureModel = api.getModelById(nodeId)    
+    const figureModel = api.getModelById(nodeId)
     return figureModel.getPanels()
   }
 }

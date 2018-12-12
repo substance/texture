@@ -7,7 +7,7 @@ Use Case: Regular abstract
 ```xml
 <!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
 <abstract>
-  <p>Optional abstract can contain</p>
+  <p>Optional abstract.</p>
 </abstract>
 ```
 

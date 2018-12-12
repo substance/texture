@@ -518,7 +518,7 @@ export default class ArticleAPI extends EditorAPI {
 
   _removeFigurePanel (item, collection) {
     this.articleSession.transaction(tx => {
-      let pos = collection.indexOf(item.id)
+      let pos = collection._value.indexOf(item.id)
       if (pos !== -1) {
         tx.update(collection._path, { type: 'delete', pos: pos })
       }

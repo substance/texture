@@ -55,7 +55,9 @@ export function importFigurePanel (tx, file, path) {
   })
   const caption = tx.create({
     'type': 'caption'
-  })
+  }).append(
+    tx.create({type: 'p'})
+  )
   const figurePanel = tx.create({
     'type': 'figure-panel',
     'content': graphic.id,

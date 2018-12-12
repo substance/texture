@@ -54,8 +54,8 @@ export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
     const figureModel = this._getFigureModel(params, context)
     const panels = figureModel.getPanels()
     const index = this._getCurrentPanelIndex(figureModel)
-    const panel = panels[index]
+    const panel = panels.getItemAt(index)
     let api = context.api
-    api._insertFigurePanel(panel, panels)
+    api._removeFigurePanel(panel, panels)
   }
 }

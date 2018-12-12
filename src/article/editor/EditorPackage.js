@@ -39,7 +39,7 @@ import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
-import { AddFigurePanelCommand } from '../shared/FigurePanelCommands'
+import { AddFigurePanelCommand, RemoveFigurePanelCommand } from '../shared/FigurePanelCommands'
 import AddFigurePanelTool from '../shared/AddFigurePanelTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
@@ -137,6 +137,9 @@ export default {
       commandGroup: 'additional'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'context'
+    })
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'context'
     })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
@@ -261,6 +264,9 @@ export default {
     config.addTool('add-figure-panel', AddFigurePanelTool)
     config.addLabel('add-figure-panel', 'Add Sub-Figure')
     config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
+
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

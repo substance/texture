@@ -229,9 +229,7 @@ Use Case: Stand-alone supplemntary file
 <supplementary-material id="source-data-1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="source-data-1.zip">
   <label>Source data 1.</label><!-- auto-generated, based on counter grouped by content-type -->
   <caption>
-    <title>
-      Orthogroup clustering analysis
-    </title>
+    <title>Orthogroup clustering analysis</title>
   </caption>
 </supplementary-material>
 ```

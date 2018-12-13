@@ -41,7 +41,7 @@ export default {
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
     config.addComponent('figures', FigurePanelsComponent)
-    
+
     // workflows
     config.addComponent('add-reference', AddReferenceWorkflow)
 

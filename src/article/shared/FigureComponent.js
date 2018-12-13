@@ -1,5 +1,6 @@
 import { NodeComponent } from '../../kit'
 import renderModelComponent from './renderModelComponent'
+import { PREVIEW_MODE } from '../../article/ArticleConstants'
 
 export default class FigureComponent extends NodeComponent {
   /*
@@ -9,7 +10,7 @@ export default class FigureComponent extends NodeComponent {
     let mode = this._getMode()
     let model = this.props.model
 
-    let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`).addClass('foo')
+    let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`)
 
     if (model.hasPanels()) {
       let content
@@ -18,7 +19,7 @@ export default class FigureComponent extends NodeComponent {
           content = this._renderAllPanels($$)
           break
         default:
-          content = this._renderCurrentPanel($$)
+          content = this._renderCarousel($$)
       }
       el.append(content)
     }
@@ -26,11 +27,45 @@ export default class FigureComponent extends NodeComponent {
     return el
   }
 
+  _renderCarousel ($$) {
+    let model = this.props.model
+    const panelsLength = model.getPanelsLength()
+    if (panelsLength === 1) {
+      return this._renderCurrentPanel($$)
+    }
+    return $$('div').addClass('se-carousel').append(
+      $$('div').addClass('se-current-panel').append(
+        this._renderCurrentPanel($$)
+      ),
+      $$('div').addClass('se-thumbnails').append(
+        this._renderThumbnails($$)
+      )
+    )
+  }
+
   _renderCurrentPanel ($$) {
     let panel = this._getCurrentPanel()
     return renderModelComponent(this.context, $$, {
       model: panel,
       mode: this.props.mode
+    })
+  }
+
+  _renderThumbnails ($$) {
+    const model = this.props.model
+    const panels = model.getPanels()
+    const currentIndex = this._getCurrentPanelIndex()
+    return panels.getItems().map((panel, idx) => {
+      const thumbnail = renderModelComponent(this.context, $$, {
+        model: panel,
+        mode: PREVIEW_MODE
+      })
+      if (currentIndex === idx) {
+        thumbnail.addClass('sm-current-panel')
+      } else {
+        thumbnail.on('click', this._handleThumbnailClick)
+      }
+      return thumbnail
     })
   }
 
@@ -72,5 +107,16 @@ export default class FigureComponent extends NodeComponent {
       node.state.currentPanelIndex = currentPanelIndex = 0
     }
     return currentPanelIndex
+  }
+
+  _handleThumbnailClick (e) {
+    const model = this.props.model
+    const node = model._node
+    const panels = model.getPanels()
+    const panelIds = panels.getValue()
+    const panelId = e.currentTarget.dataset.id
+    if (panelId) {
+      node.state.currentPanelIndex = panelIds.indexOf(panelId)
+    }
   }
 }

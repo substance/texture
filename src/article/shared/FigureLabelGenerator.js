@@ -1,4 +1,4 @@
-import { last as _last } from 'substance'
+import { last } from 'substance'
 import { LATIN_LETTERS_UPPER_CASE } from '../ArticleConstants'
 
 export default class FigureLabelGenerator {
@@ -12,13 +12,15 @@ export default class FigureLabelGenerator {
     this.config = Object.assign({
       singular: 'Figure $',
       plural: 'Figures $',
+      join: ',',
       and: ',',
-      to: '‒'
+      to: '‒',
+      invalid: '???'
     }, config)
   }
 
   getSingleLabel (def) {
-    if (!def) return null
+    if (!def) return this.config.invalid
     return this._replaceAll(this.config.singular, this._getSingleCounter(def))
   }
 
@@ -48,11 +50,11 @@ export default class FigureLabelGenerator {
       // - an item on the first level has pos larger than +1 of the previous one
       // - an item on the second level has different type, or a pos larger +1 of the previous one
       let def = defs[idx]
-      let last = defs[idx - 1]
+      let prev = defs[idx - 1]
       if (
-        (last.length !== def.length) ||
-        (def.length === 1 && def[0].pos > last[0].pos + 1) ||
-        (def.length === 2 && (def[1].type !== last[1].type || def[1].pos > last[1].pos + 1))
+        (prev.length !== def.length) ||
+        (def.length === 1 && def[0].pos > prev[0].pos + 1) ||
+        (def.length === 2 && (def[1].type !== prev[1].type || def[1].pos > prev[1].pos + 1))
       ) {
         groups.push(group)
         group = [def]
@@ -68,11 +70,15 @@ export default class FigureLabelGenerator {
       if (group.length === 1) {
         fragments.push(this._getSingleCounter(group[0]))
       } else {
-        fragments.push(this._getGroupCounter(group[0], _last(group)))
+        fragments.push(this._getGroupCounter(group[0], last(group)))
       }
     }
 
+    // join the fragments
+    let combined = fragments.slice(0, fragments.length - 1).join(this.config.join) + this.config.and + last(fragments)
+
     // and return a combined label
+    return this._replaceAll(this.config.plural, combined)
   }
 
   _getSingleCounter (def) {

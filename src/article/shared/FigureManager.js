@@ -3,8 +3,13 @@ import FigureLabelGenerator from './FigureLabelGenerator'
 
 export default class FigureManager extends CitableContentManager {
   constructor (documentSession, config) {
-    super(documentSession, 'fig', ['figure', 'figure-panel'], new FigureLabelGenerator(config))
+    super(documentSession, 'fig', ['figure'], new FigureLabelGenerator(config))
     this._updateLabels('initial')
+  }
+
+  _detectAddRemoveCitable (op, change) {
+    // in addition to figure add/remove the labels are affected when panels are added/removed or reordered
+    return super._detectAddRemoveCitable(op, change) || (op.val && op.val.type === 'figure-panel') || op.path[1] === 'panels'
   }
 
   _getItemSelector () {

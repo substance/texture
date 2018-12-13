@@ -12,8 +12,8 @@ export default class FigureLabelGenerator {
     this.config = Object.assign({
       singular: 'Figure $',
       plural: 'Figures $',
-      join: ',',
-      and: ',',
+      join: ', ',
+      and: ' and ',
       to: '‒',
       invalid: '???'
     }, config)

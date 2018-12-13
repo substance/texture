@@ -111,12 +111,12 @@ export default class FigureComponent extends NodeComponent {
 
   _handleThumbnailClick (e) {
     const model = this.props.model
-    const node = model._node
     const panels = model.getPanels()
     const panelIds = panels.getValue()
     const panelId = e.currentTarget.dataset.id
     if (panelId) {
-      node.state.currentPanelIndex = panelIds.indexOf(panelId)
+      const editorSession = this.context.editorSession
+      editorSession.updateNodeStates([[model.id, {currentPanelIndex: panelIds.indexOf(panelId)}]])
     }
   }
 }

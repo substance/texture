@@ -54,7 +54,7 @@ export default class FigureLabelGenerator {
       if (
         (prev.length !== def.length) ||
         (def.length === 1 && def[0].pos > prev[0].pos + 1) ||
-        (def.length === 2 && (def[1].type !== prev[1].type || def[1].pos > prev[1].pos + 1))
+        (def.length === 2 && (def[1].type !== prev[1].type || def[0].pos !== prev[0].pos || def[1].pos > prev[1].pos + 1))
       ) {
         groups.push(group)
         group = [def]

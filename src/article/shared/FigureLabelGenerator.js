@@ -91,14 +91,22 @@ export default class FigureLabelGenerator {
       return String(def[0].pos)
     } else {
       let figCounter = def[0].pos
-      let panelCounter = def[1].pos
       // TODO: we should think about some way to make this configurable
-      return `${figCounter}${LATIN_LETTERS_UPPER_CASE[panelCounter - 1]}`
+      return `${figCounter}${this._getPanelLabel(def)}`
     }
+  }
+
+  _getPanelLabel (def) {
+    let panelCounter = def[1].pos
+    return `${LATIN_LETTERS_UPPER_CASE[panelCounter - 1]}`
   }
 
   _getGroupCounter (first, last) {
     // ATTENTION: assuming that first and last have the same level (according to our implementation)
-    return `${this._getSingleCounter(first)}${this.config.to}${this._getSingleCounter(last)}`
+    if (first.length === 1) {
+      return `${this._getSingleCounter(first)}${this.config.to}${this._getSingleCounter(last)}`
+    } else {
+      return `${this._getSingleCounter(first)}${this.config.to}${this._getPanelLabel(last)}`
+    }
   }
 }

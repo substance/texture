@@ -75,7 +75,12 @@ export default class FigureLabelGenerator {
     }
 
     // join the fragments
-    let combined = fragments.slice(0, fragments.length - 1).join(this.config.join) + this.config.and + last(fragments)
+    let combined
+    if (fragments.length > 1) {
+      combined = fragments.slice(0, fragments.length - 1).join(this.config.join) + this.config.and + last(fragments)
+    } else {
+      combined = fragments[0]
+    }
 
     // and return a combined label
     return this._replaceAll(this.config.plural, combined)

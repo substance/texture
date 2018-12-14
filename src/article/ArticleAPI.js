@@ -157,15 +157,6 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
-  moveFigurePanel (collection, from, to) {
-    const collectionId = collection.id
-    this.articleSession.transaction(tx => {
-      const panel = collection.getPanels().getItemAt(from)
-      tx.update([collectionId, 'panels'], { type: 'delete', pos: from })
-      tx.update([collectionId, 'panels'], { type: 'insert', pos: to, value: panel.id })
-    })
-  }
-
   getAuthorsModel () {
     return this.getModel('authors')
   }
@@ -534,6 +525,17 @@ export default class ArticleAPI extends EditorAPI {
       }
       tx.delete(item.id)
       tx.selection = null
+    })
+  }
+
+  _moveFigurePanel (collection, from, to) {
+    const collectionId = collection.id
+    this.articleSession.transaction(tx => {
+      const panel = collection.getPanels().getItemAt(from)
+      tx.update([collectionId, 'panels'], { type: 'delete', pos: from })
+      tx.update([collectionId, 'panels'], { type: 'insert', pos: to, value: panel.id })
+      // TODO: do it properly when we will have transaction level state manipulation
+      tx.set([collectionId, 'state', 'currentPanelIndex'], to)
     })
   }
 

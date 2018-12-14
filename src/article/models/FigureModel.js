@@ -53,6 +53,6 @@ export default class FigureModel extends NodeModel {
   }
 
   movePanel (from, to) {
-    return this._api.moveFigurePanel(this, from, to)
+    return this._api._moveFigurePanel(this, from, to)
   }
 }

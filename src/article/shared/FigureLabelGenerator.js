@@ -1,4 +1,4 @@
-import { last } from 'substance'
+import { last, isArray } from 'substance'
 import { LATIN_LETTERS_UPPER_CASE } from '../ArticleConstants'
 
 export default class FigureLabelGenerator {
@@ -13,19 +13,26 @@ export default class FigureLabelGenerator {
       singular: 'Figure $',
       plural: 'Figures $',
       join: ', ',
-      and: ' and ',
+      and: ', and ',
       to: '‒',
       invalid: '???'
     }, config)
   }
 
+  getLabel (...defs) {
+    if (!defs || defs.length === 0) return this.config.invalid
+    // Note: normalizing args so that every def is a tuple
+    defs = defs.map(d => {
+      if (!isArray(d)) return [d]
+      else return d
+    })
+    if (defs.length === 1) return this.getSingleLabel(defs[0])
+    return this.getCombinedLabel(defs)
+  }
+
   getSingleLabel (def) {
     if (!def) return this.config.invalid
     return this._replaceAll(this.config.singular, this._getSingleCounter(def))
-  }
-
-  _replaceAll (t, $) {
-    return t.slice(0).replace(/[$]/g, $)
   }
 
   getCombinedLabel (defs) {
@@ -108,5 +115,9 @@ export default class FigureLabelGenerator {
     } else {
       return `${this._getSingleCounter(first)}${this.config.to}${this._getPanelLabel(last)}`
     }
+  }
+
+  _replaceAll (t, $) {
+    return t.slice(0).replace(/[$]/g, $)
   }
 }

@@ -1,3 +1,4 @@
+import { DefaultDOMElement } from 'substance'
 import { NodeComponent } from '../../kit'
 import renderModelComponent from './renderModelComponent'
 import { PREVIEW_MODE } from '../../article/ArticleConstants'
@@ -113,7 +114,10 @@ export default class FigureComponent extends NodeComponent {
     const model = this.props.model
     const panels = model.getPanels()
     const panelIds = panels.getValue()
-    const panelId = e.currentTarget.dataset.id
+    // HACK: MemoryDOMElement.click() does not set e.currentTarget
+    // TODO: this should get fixed in substance
+    let target = DefaultDOMElement.wrap(e.currentTarget || e.target)
+    const panelId = target.getAttribute('data-id')
     if (panelId) {
       const editorSession = this.context.editorSession
       editorSession.updateNodeStates([[model.id, {currentPanelIndex: panelIds.indexOf(panelId)}]])

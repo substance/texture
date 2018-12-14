@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { importElement, exportElement } from './shared/testHelpers'
+import { importElement, exportNode } from './shared/testHelpers'
 
 const PREFORMAT_EXAMPLE = `
 <preformat id="preformat-1" preformat-type="code">
@@ -26,8 +26,8 @@ test('PreformatConverter: import and export tag without type and cdata', t => {
   let preformatNode = importElement(el)
   t.equal(preformatNode.preformatType, 'code', 'preformat type should be code')
   t.equal(preformatNode.content, 'alert()', 'content should contain preformat')
-  let preformatEl = exportElement(el)
-  t.equal(preformatEl.getAttribute('preformat-type'), 'preformat-type should be code')
+  let preformatEl = exportNode(preformatNode)
+  t.equal(preformatEl.getAttribute('preformat-type'), 'code', 'preformat-type should be code')
   t.equal(preformatEl.getFirstChild().nodeType, 'cdata', 'preformat should contain cdata element')
   t.end()
 })

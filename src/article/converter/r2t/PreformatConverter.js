@@ -1,4 +1,4 @@
-import { DefaultDOMElement } from 'substance'
+import { DefaultDOMElement, isArray } from 'substance'
 
 export default class PreformatConverter {
   get type () { return 'preformat' }
@@ -6,12 +6,20 @@ export default class PreformatConverter {
   get tagName () { return 'preformat' }
 
   import (el, node, importer) {
-    const content = el.getInnerXML()
+    let xml = el.getInnerXML()
     node.preformatType = el.getAttribute('preformat-type') || 'code'
-    let parsedContent = DefaultDOMElement.parseSnippet(content, 'xml')
-    // In case of CDATA we will have an array of two elements
-    if (parsedContent.constructor === Array) parsedContent = parsedContent[0]
-    node.content = parsedContent.getTextContent() || ''
+    // ATTENTION: trimming the content to avoid extra TEXTNODES
+    xml = xml.trim()
+    let els = DefaultDOMElement.parseSnippet(xml, 'xml')
+    // NOTE: trying to find the math source robustly
+    // often the content is wrapped with CDATA but is also allowed without
+    let content
+    if (isArray(els)) {
+      content = els.map(el => el.getTextContent()).join('')
+    } else {
+      content = els.getTextContent()
+    }
+    node.content = content || ''
   }
 
   export (node, el, exporter) {
@@ -20,6 +28,8 @@ export default class PreformatConverter {
     }
 
     if (node.content) {
+      // ATTENTION: on export we always create CDATA for sake of simplicity
+      // otherwise we woul need to detect if the content contained certain characters (such as '<>')
       el.append(el.createCDATASection(node.content))
     }
   }

@@ -11,17 +11,10 @@ export default class FigureComponent extends NodeComponent {
     let mode = this._getMode()
     let model = this.props.model
 
-    let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`)
+    let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`).attr('data-id', model.id)
 
     if (model.hasPanels()) {
-      let content
-      switch (mode) {
-        case 'metadata':
-          content = this._renderAllPanels($$)
-          break
-        default:
-          content = this._renderCarousel($$)
-      }
+      let content = this._renderCarousel($$)
       el.append(content)
     }
 
@@ -68,20 +61,6 @@ export default class FigureComponent extends NodeComponent {
       }
       return thumbnail
     })
-  }
-
-  _renderAllPanels ($$) {
-    let model = this.props.model
-    let panels = model.getPanels()
-    let els = panels.getItems().map(panel => renderModelComponent(this.context, $$, {
-      model: panel,
-      mode: this.props.mode
-    }))
-    if (panels.length > 1) {
-      let currentPanelIndex = this._getCurrentPanelIndex()
-      els[currentPanelIndex].addClass('sm-current-panel')
-    }
-    return els
   }
 
   _getMode () {

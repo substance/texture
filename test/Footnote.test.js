@@ -16,10 +16,10 @@ test('Footnotes: add a footnote in the manuscript while selection is outside the
   t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(tableFootnoteSelector).length, 2, 'there should be two table footnotes')
   setSelection(editor, 'p-0.content', 1)
-  insertFootnoteIntoManuscript(editor)
+  _insertFootnoteIntoManuscript(editor)
   t.equal(editor.findAll(manuscriptFootnoteSelector).length, 2, 'there should be two manuscript footnotes')
   t.equal(editor.findAll(tableFootnoteSelector).length, 2, 'there should be two table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, footnoteContentXpath, 'selection should be inside manuscript footnote')
   t.end()
 })
@@ -35,10 +35,10 @@ test('Footnotes: add a footnote in the manuscript while selection is on isolated
     surfaceId: 'body',
     containerId: 'body'
   })
-  insertFootnoteIntoManuscript(editor)
+  _insertFootnoteIntoManuscript(editor)
   t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(tableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -48,10 +48,10 @@ test('Footnotes: add a footnote in the manuscript while selection is inside a ta
   let editor = openManuscriptEditor(app)
   // set selection inside table cell
   setSelection(editor, 't-1_2_1.content', 1)
-  insertFootnoteIntoManuscript(editor)
+  _insertFootnoteIntoManuscript(editor)
   t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(tableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -71,10 +71,10 @@ test('Footnotes: add a footnote in the manuscript while selection is on table ce
       focusCellId: 't-1_2_2'
     }
   })
-  insertFootnoteIntoManuscript(editor)
+  _insertFootnoteIntoManuscript(editor)
   t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(tableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -84,10 +84,10 @@ test('Footnotes: add a footnote in the manuscript while selection is inside a ta
   let editor = openManuscriptEditor(app)
   // set selection inside table figure caption
   setSelection(editor, 'table-1-caption-p-1.content', 1)
-  insertFootnoteIntoManuscript(editor)
+  _insertFootnoteIntoManuscript(editor)
   t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(tableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -99,10 +99,10 @@ test('Footnotes: add a footnote in the metadata while selection is outside the t
   t.equal(editor.findAll(metadataEditorFootnoteSelector).length, 1, 'there should be one footnote')
   t.equal(editor.findAll(metadataEditorTableFootnoteSelector).length, 2, 'there should be two footnotes')
   api.selectModel('article-record')
-  insertFootnoteIntoMetadataEditor(editor)
+  _insertFootnoteIntoMetadataEditor(editor)
   t.equal(editor.findAll(metadataEditorFootnoteSelector).length, 2, 'there should be two footnotes')
   t.equal(editor.findAll(metadataEditorTableFootnoteSelector).length, 2, 'there should be two footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, footnoteContentXpath, 'selection should be inside manuscript footnote')
   t.end()
 })
@@ -112,10 +112,10 @@ test('Footnotes: add a footnote in the metadata while selection is on card with 
   let editor = openMetadataEditor(app)
   let api = editor.context.api
   api.selectModel('table-1')
-  insertFootnoteIntoMetadataEditor(editor)
+  _insertFootnoteIntoMetadataEditor(editor)
   t.equal(editor.findAll(metadataEditorFootnoteSelector).length, 1, 'there should be one footnote')
   t.equal(editor.findAll(metadataEditorTableFootnoteSelector).length, 3, 'there should be three footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside manuscript footnote')
   t.end()
 })
@@ -125,10 +125,10 @@ test('Footnotes: add a footnote in the metadata while selection is inside a tabl
   let editor = openMetadataEditor(app)
   // set selection inside table cell
   setSelection(editor, 't-1_2_1.content', 1)
-  insertFootnoteIntoMetadataEditor(editor)
+  _insertFootnoteIntoMetadataEditor(editor)
   t.equal(editor.findAll(metadataEditorFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(metadataEditorTableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -148,10 +148,10 @@ test('Footnotes: add a footnote in the metadata while selection is on table cell
       focusCellId: 't-1_2_2'
     }
   })
-  insertFootnoteIntoMetadataEditor(editor)
+  _insertFootnoteIntoMetadataEditor(editor)
   t.equal(editor.findAll(metadataEditorFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(metadataEditorTableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -161,10 +161,10 @@ test('Footnotes: add a footnote in the metadata while selection is inside a tabl
   let editor = openMetadataEditor(app)
   // set selection inside table cell
   setSelection(editor, 'table-1-caption-p-1.content', 1)
-  insertFootnoteIntoMetadataEditor(editor)
+  _insertFootnoteIntoMetadataEditor(editor)
   t.equal(editor.findAll(metadataEditorFootnoteSelector).length, 1, 'there should be one manuscript footnote')
   t.equal(editor.findAll(metadataEditorTableFootnoteSelector).length, 3, 'there should be three table footnotes')
-  const xpath = getCurrentXpath(editor)
+  const xpath = _getCurrentXpath(editor)
   t.deepEqual(xpath, tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
@@ -172,30 +172,28 @@ test('Footnotes: add a footnote in the metadata while selection is inside a tabl
 test('Footnotes: remove a manuscript footnote', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))
   let editor = openManuscriptEditor(app)
-  t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
-  t.equal(editor.findAll(tableFootnoteSelector).length, 2, 'there should be two table footnotes')
-  t.isNil(selectRemoveButton(editor), 'there should be no visible remove button')
+  let doc = getDocument(editor)
+  t.notNil(editor.find('[data-id=fn-1]'), 'the footnote should be visible')
   setSelection(editor, 'fn-1-p-1.content', 1)
-  const removeBtn = selectRemoveButton(editor)
-  t.ok(removeBtn, 'there should be visible remove button')
+  const removeBtn = _selectRemoveButton(editor)
+  t.ok(removeBtn, 'there should be a remove button')
   removeBtn.click()
-  t.equal(editor.findAll(manuscriptFootnoteSelector).length, 0, 'there should be one manuscript footnote')
-  t.equal(editor.findAll(tableFootnoteSelector).length, 2, 'there should be two table footnotes')
+  t.isNil(doc.get('fn-1'), 'the footnote should have been removed from the model')
+  t.isNil(editor.find('[data-id=fn-1]'), '.. and should not be visible anymore')
   t.end()
 })
 
 test('Footnotes: remove a table footnote', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))
   let editor = openManuscriptEditor(app)
-  t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
-  t.equal(editor.findAll(tableFootnoteSelector).length, 2, 'there should be two table footnotes')
-  t.isNil(selectRemoveButton(editor), 'there should be no visible remove button')
+  let doc = getDocument(editor)
+  t.notNil(editor.find('[data-id=table-1-fn-1]'), 'the table footnote should be visible')
   setSelection(editor, 'table-1-fn-1-p-1.content', 1)
-  const removeBtn = selectRemoveButton(editor)
-  t.ok(removeBtn, 'there should be visible remove button')
+  const removeBtn = _selectRemoveButton(editor)
+  t.ok(removeBtn, 'there should be a remove button')
   removeBtn.click()
-  t.equal(editor.findAll(manuscriptFootnoteSelector).length, 1, 'there should be one manuscript footnote')
-  t.equal(editor.findAll(tableFootnoteSelector).length, 1, 'there should be two table footnotes')
+  t.isNil(doc.get('table-1-fn-1'), 'the table footnote should have been removed from the model')
+  t.isNil(editor.find('[data-id=table-1-fn-1]'), '.. and should not be visible anymore')
   t.end()
 })
 
@@ -265,7 +263,7 @@ function _insertCrossRef (editor, refType, rid) {
   editor.find(`.sc-edit-xref-tool > .se-option > *[data-id=${rid}]`).click()
 }
 
-function insertFootnoteIntoManuscript (el) {
+function _insertFootnoteIntoManuscript (el) {
   const insertDropdown = el.find('.sc-tool-dropdown.sm-insert .sc-button')
   // Check if dropdown is already active
   const isDropDownOpened = insertDropdown.hasClass('sm-active')
@@ -276,7 +274,7 @@ function insertFootnoteIntoManuscript (el) {
   insertFootnoteBtn.click()
 }
 
-function insertFootnoteIntoMetadataEditor (el) {
+function _insertFootnoteIntoMetadataEditor (el) {
   const addDropdown = el.find('.sc-tool-dropdown.sm-add .sc-button')
   // Check if dropdown is already active
   const isDropDownOpened = addDropdown.hasClass('sm-active')
@@ -287,12 +285,12 @@ function insertFootnoteIntoMetadataEditor (el) {
   addFootnoteBtn.click()
 }
 
-function getCurrentXpath (el) {
+function _getCurrentXpath (el) {
   const selectionState = getSelectionState(el)
   return selectionState.xpath
 }
 
-function selectRemoveButton (el) {
+function _selectRemoveButton (el) {
   const removeBtn = el.find('.sm-remove-footnote .sc-button')
   return removeBtn
 }

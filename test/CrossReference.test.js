@@ -2,7 +2,7 @@ import { test } from 'substance-test'
 import { createTestVfs, openManuscriptEditor } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-const citationTypes = {
+const xrefTypes = {
   'bibr': 'Reference',
   'fig': 'Figure',
   'table': 'Table',
@@ -42,28 +42,28 @@ const DOUBLE_CITATIONS = `<?xml version="1.0" encoding="UTF-8"?>
 </article>
 `
 
-Object.keys(citationTypes).forEach(annoType => {
-  test(`Citations: untoggle ${citationTypes[annoType]} citation (#959)`, t => {
+Object.keys(xrefTypes).forEach(annoType => {
+  test(`Cross reference: untoggle ${xrefTypes[annoType]} cross-reference (#959)`, t => {
     testCitationUntoggle(t, annoType)
   })
 })
 
-function testCitationUntoggle (t, citationType) {
+function testCitationUntoggle (t, xrefType) {
   let { editor } = _setup(t, DOUBLE_CITATIONS)
-  const selector = '[data-id="xref-' + citationType + '"]'
+  const selector = '[data-id="xref-' + xrefType + '"]'
 
   // Toggle edit citation dialog
-  const citationAnno = editor.find(selector)
-  const citationLabelBefore = _getText(editor, selector)
-  citationAnno.click()
+  const xref = editor.find(selector)
+  const xrefLabelBefore = _getText(editor, selector)
+  xref.click()
 
   // Toggle first citation in list
-  const firstCitation = editor.find('.sc-edit-xref-tool .se-option.sm-selected .sc-preview')
-  firstCitation.click()
-  const citationLabelAfter = _getText(editor, selector)
+  const firstXref = editor.find('.sc-edit-xref-tool .se-option.sm-selected .sc-preview')
+  firstXref.click()
+  const xrefLabelAfter = _getText(editor, selector)
 
-  t.notEqual(citationLabelBefore, citationLabelAfter, 'Label should change')
-  t.notEqual(citationLabelAfter, '???', 'Label should not disappear')
+  t.notEqual(xrefLabelBefore, xrefLabelAfter, 'Label should change')
+  t.notEqual(xrefLabelAfter, '???', 'Label should not disappear')
   t.end()
 }
 

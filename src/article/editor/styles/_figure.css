@@ -34,7 +34,7 @@
 
 .sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel.sm-preview {
   padding: var(--t-half-spacing);
-  border: var(--t-default-border);
+  border: var(--t-input-outline-border);
   width: 110px;
   height: 110px;
   margin-bottom: var(--t-default-spacing);

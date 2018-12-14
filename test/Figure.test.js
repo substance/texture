@@ -1,7 +1,35 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, loadBodyFixture, getDocument } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, loadBodyFixture, getDocument, openMetadataEditor } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
+
+const FIGURE_WITH_TWO_PANELS = `
+<fig-group id="fig1">
+  <fig id="fig1a">
+    <graphic />
+    <caption>
+      <p id="fig1a-caption-p1"></p>
+    </caption>
+  </fig>
+  <fig id="fig1b">
+    <graphic />
+    <caption>
+      <p id="fig1b-caption-p1"></p>
+    </caption>
+  </fig>
+</fig-group>
+`
+
+test('Figure: open figure with sub-figures in manuscript and metadata view', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
+  t.notNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should be displayed in manuscript view')
+  editor = openMetadataEditor(app)
+  let subFigureCards = editor.findAll('.sc-card.sm-figure-panel')
+  t.equal(subFigureCards.length, 2, 'there should be a card for each panel in metadata view')
+  t.end()
+})
 
 test('Figure: add figure into manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -44,23 +72,6 @@ test('Figure: add a sub-figure to a figure', t => {
   t.deepEqual(panels.map(getLabel), ['Figure 1A', 'Figure 1B'], '.. with correct labels')
   t.end()
 })
-
-const FIGURE_WITH_TWO_PANELS = `
-<fig-group id="fig1">
-  <fig id="fig1a">
-    <graphic />
-    <caption>
-      <p id="fig1a-caption-p1"></p>
-    </caption>
-  </fig>
-  <fig id="fig1b">
-    <graphic />
-    <caption>
-      <p id="fig1b-caption-p1"></p>
-    </caption>
-  </fig>
-</fig-group>
-`
 
 test('Figure: remove a sub-figure from a figure', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })

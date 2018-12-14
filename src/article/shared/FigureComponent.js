@@ -114,9 +114,8 @@ export default class FigureComponent extends NodeComponent {
     const model = this.props.model
     const panels = model.getPanels()
     const panelIds = panels.getValue()
-    // HACK: MemoryDOMElement.click() does not set e.currentTarget
-    // TODO: this should get fixed in substance
-    let target = DefaultDOMElement.wrap(e.currentTarget || e.target)
+    // ATTENTION: wrap the native element here so that this works for testing too
+    let target = DefaultDOMElement.wrap(e.currentTarget)
     const panelId = target.getAttribute('data-id')
     if (panelId) {
       const editorSession = this.context.editorSession

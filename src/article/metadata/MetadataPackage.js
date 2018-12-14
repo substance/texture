@@ -11,6 +11,9 @@ import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
+import {
+  MoveFigurePanelCommand, RemoveFigurePanelCommand
+} from '../shared/FigurePanelCommands'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -85,7 +88,7 @@ export default {
       {
         name: 'collection-tools',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'collection' }
@@ -184,6 +187,26 @@ export default {
     config.addCommand('add-footnote', InsertFootnoteCommand, {
       commandGroup: 'add-entity'
     })
+
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'collection'
+    })
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
+
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'collection'
+    })
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
+
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
+      commandGroup: 'collection'
+    })
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addLabel('add-reference', {
       en: 'Reference'

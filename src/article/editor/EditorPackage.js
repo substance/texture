@@ -39,7 +39,9 @@ import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
-import { AddFigurePanelCommand, RemoveFigurePanelCommand } from '../shared/FigurePanelCommands'
+import {
+  AddFigurePanelCommand, MoveFigurePanelCommand, RemoveFigurePanelCommand
+} from '../shared/FigurePanelCommands'
 import AddFigurePanelTool from '../shared/AddFigurePanelTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
@@ -140,6 +142,14 @@ export default {
       commandGroup: 'context'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'context'
+    })
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'context'
+    })
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
       commandGroup: 'context'
     })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
@@ -267,6 +277,12 @@ export default {
 
     config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
     config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
+
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
+
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

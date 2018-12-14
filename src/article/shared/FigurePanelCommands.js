@@ -55,3 +55,30 @@ export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
     return true
   }
 }
+
+export class MoveFigurePanelCommand extends BasicFigurePanelCommand {
+  execute (params, context) {
+    const direction = this.config.direction
+    const figureModel = this._getFigureModel(params, context)
+    if (direction === 'up') {
+      figureModel.movePanelUp()
+    } else if (direction === 'down') {
+      figureModel.movePanelDown()
+    }
+  }
+  isDisabled (params, context) {
+    const xpath = params.selectionState.xpath
+    if (xpath.indexOf('figure') > -1) {
+      const figureModel = this._getFigureModel(params, context)
+      const currentIndex = figureModel.getCurrentPanelIndex()
+      const panelsLength = figureModel.getPanelsLength()
+      const direction = this.config.direction
+      if (panelsLength > 1) {
+        if ((direction === 'up' && currentIndex > 0) || (direction === 'down' && currentIndex < panelsLength - 1)) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+}

@@ -37,4 +37,22 @@ export default class FigureModel extends NodeModel {
     const panel = panels.getItemAt(index)
     api._removeFigurePanel(panel, panels)
   }
+
+  movePanelDown () {
+    const pos = this.getCurrentPanelIndex()
+    if (pos < this.getPanelsLength()) {
+      this.movePanel(pos, pos + 1)
+    }
+  }
+
+  movePanelUp () {
+    const pos = this.getCurrentPanelIndex()
+    if (pos > 0) {
+      this.movePanel(pos, pos - 1)
+    }
+  }
+
+  movePanel (from, to) {
+    return this._api.moveFigurePanel(this, from, to)
+  }
 }

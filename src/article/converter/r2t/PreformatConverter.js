@@ -1,4 +1,4 @@
-import { DefaultDOMElement, isArray } from 'substance'
+import { DefaultDOMElement } from 'substance'
 
 export default class PreformatConverter {
   get type () { return 'preformat' }
@@ -10,15 +10,10 @@ export default class PreformatConverter {
     node.preformatType = el.getAttribute('preformat-type') || 'code'
     // ATTENTION: trimming the content to avoid extra TEXTNODES
     xml = xml.trim()
-    let els = DefaultDOMElement.parseSnippet(xml, 'xml')
+    let snippet = DefaultDOMElement.parseSnippet(xml, 'xml')
     // NOTE: trying to find the math source robustly
     // often the content is wrapped with CDATA but is also allowed without
-    let content
-    if (isArray(els)) {
-      content = els.map(el => el.getTextContent()).join('')
-    } else {
-      content = els.getTextContent()
-    }
+    let content = snippet.getTextContent()
     node.content = content || ''
   }
 

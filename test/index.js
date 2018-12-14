@@ -22,6 +22,7 @@ import './ManuscriptEditor.test'
 import './MetadataEditor.test'
 import './Paste.test'
 import './Persistence.test'
+import './PreformatConverter.test'
 import './Table.test'
 import './TableConverter.test'
 

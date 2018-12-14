@@ -3,7 +3,7 @@
   padding: var(--t-default-spacing);
 }
 
-.sc-figure > .sc-section-label:first-child {
+.sc-figure .sc-section-label:first-child {
   margin-top: 0;
 }
 

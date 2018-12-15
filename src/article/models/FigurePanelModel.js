@@ -28,4 +28,9 @@ export default class FigurePanelModel extends NodeModel {
   getCaption () {
     return this._api.getModelById(this._node.caption)
   }
+
+  replaceImage (file) {
+    const api = this._api
+    api._replaceFigurePanelImage(file, this)
+  }
 }

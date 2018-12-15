@@ -45,6 +45,29 @@ export class AddFigurePanelCommand extends BasicFigurePanelCommand {
   }
 }
 
+export class ReplaceFigurePanelImageCommand extends BasicFigurePanelCommand {
+  execute (params, context) {
+    const figurePanelModel = this._getFigurePanelModel(params, context)
+    const files = params.files
+    if (files.length > 0) {
+      figurePanelModel.replaceImage(files[0])
+    }
+  }
+
+  isDisabled (params, context) {
+    const matchSelection = this._matchSelection(params, context)
+    if (matchSelection) return false
+    return true
+  }
+
+  _getFigurePanelModel (params, context) {
+    const figureModel = this._getFigureModel(params, context)
+    const currentIndex = figureModel.getCurrentPanelIndex()
+    const panels = figureModel.getPanels()
+    return panels.getItemAt(currentIndex)
+  }
+}
+
 export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
     const figureModel = this._getFigureModel(params, context)

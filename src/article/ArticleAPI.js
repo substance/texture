@@ -516,6 +516,23 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _replaceFigurePanelImage (file, panel) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      const mimeData = file.type.split('/')
+      const graphic = tx.create({
+        'type': 'graphic'
+      })
+      graphic.attr({
+        'mime-subtype': mimeData[1],
+        'mimetype': mimeData[0],
+        'xlink:href': path
+      })
+      tx.set([panel.id, 'content'], graphic.id)
+    })
+  }
+
   _removeFigurePanel (item, collection) {
     this.articleSession.transaction(tx => {
       const value = collection.getValue()

@@ -25,6 +25,14 @@ class BasicFigurePanelCommand extends Command {
     }
     return api.getModelById(nodeId)
   }
+
+  _matchSelection (params, context) {
+    const xpath = params.selectionState.xpath
+    const isFigurePanel = xpath[xpath.length - 1] === 'figure-panel'
+    const isInFigure = xpath.indexOf('figure') > -1
+    const viewName = context.appState.viewName
+    return viewName === 'metadata' ? isFigurePanel : isInFigure
+  }
 }
 
 export class AddFigurePanelCommand extends BasicFigurePanelCommand {
@@ -44,8 +52,8 @@ export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
   }
 
   isDisabled (params, context) {
-    const xpath = params.selectionState.xpath
-    if (xpath.indexOf('figure') > -1) {
+    const matchSelection = this._matchSelection(params, context)
+    if (matchSelection) {
       const figureModel = this._getFigureModel(params, context)
       const panelsLength = figureModel.getPanelsLength()
       if (panelsLength > 1) {
@@ -66,9 +74,10 @@ export class MoveFigurePanelCommand extends BasicFigurePanelCommand {
       figureModel.movePanelDown()
     }
   }
+
   isDisabled (params, context) {
-    const xpath = params.selectionState.xpath
-    if (xpath.indexOf('figure') > -1) {
+    const matchSelection = this._matchSelection(params, context)
+    if (matchSelection) {
       const figureModel = this._getFigureModel(params, context)
       const currentIndex = figureModel.getCurrentPanelIndex()
       const panelsLength = figureModel.getPanelsLength()

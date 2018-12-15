@@ -12,8 +12,9 @@ import AddEntityCommand from './AddEntityCommand'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
-  MoveFigurePanelCommand, RemoveFigurePanelCommand
+  AddFigurePanelCommand, MoveFigurePanelCommand, RemoveFigurePanelCommand
 } from '../shared/FigurePanelCommands'
+import AddFigurePanelTool from '../shared/AddFigurePanelTool'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -188,6 +189,14 @@ export default {
       commandGroup: 'add-entity'
     })
 
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'collection'
+    })
+    config.addTool('add-figure-panel', AddFigurePanelTool)
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'collection'
     })

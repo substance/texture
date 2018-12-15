@@ -1,8 +1,8 @@
 import UploadTool from './UploadTool'
 
-export default class AddFigurePanelTool extends UploadTool {
+export default class UploadFigurePanelTool extends UploadTool {
   getClassNames () {
-    return 'sc-add-figure-panel-tool sm-upload-tool'
+    return 'sc-upload-figure-panel-tool sm-upload-tool'
   }
 
   getFileType () {

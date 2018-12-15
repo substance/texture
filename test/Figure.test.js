@@ -64,7 +64,7 @@ test('Figure: add a sub-figure to a figure', t => {
   let doc = getDocument(editor)
   let figure = doc.find('body figure')
   setCursor(editor, 'fig1-caption-p1.content', 0)
-  let insertFigurePanelTool = editor.find('.sc-add-figure-panel-tool')
+  let insertFigurePanelTool = editor.find('.sc-upload-figure-panel-tool')
   t.ok(insertFigurePanelTool.find('button').click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   let panels = figure.getPanels()

@@ -43,7 +43,7 @@ import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
-import AddFigurePanelTool from '../shared/AddFigurePanelTool'
+import UploadFigurePanelTool from '../shared/UploadFigurePanelTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
@@ -275,11 +275,11 @@ export default {
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
 
-    config.addTool('add-figure-panel', AddFigurePanelTool)
+    config.addTool('add-figure-panel', UploadFigurePanelTool)
     config.addLabel('add-figure-panel', 'Add Sub-Figure')
     config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
 
-    config.addTool('replace-figure-panel-image', AddFigurePanelTool)
+    config.addTool('replace-figure-panel-image', UploadFigurePanelTool)
     config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
     config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
 

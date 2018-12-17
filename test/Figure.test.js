@@ -1,5 +1,8 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, loadBodyFixture, getDocument, openMetadataEditor } from './shared/integrationTestHelpers'
+import {
+  setCursor, openManuscriptEditor, PseudoFileEvent,
+  loadBodyFixture, getDocument, openMetadataEditor
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
@@ -90,5 +93,26 @@ test('Figure: remove a sub-figure from a figure', t => {
   let panels = figure.getPanels()
   t.equal(panels.length, 1, 'figure should have only one panel left')
   t.deepEqual(panels.map(getLabel), ['Figure 1'], '.. with correct label')
+  t.end()
+})
+
+test('Remove a figure with multiple panels', t => {
+  let { app, editorSession } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
+  t.notNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should be displayed in manuscript view')
+  t.notNil(doc.get('fig1'), 'there should be fig-1 node in document')
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'fig1',
+    surfaceId: 'body',
+    containerId: 'body'
+  })
+  editorSession.transaction((tx) => {
+    tx.deleteSelection()
+  })
+  t.isNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should noe be displayed in manuscript view anymore')
+  t.isNil(doc.get('fig1'), 'there should be no node with fig-1 id in document')
   t.end()
 })

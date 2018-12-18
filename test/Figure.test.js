@@ -93,6 +93,7 @@ test('Figure: remove a sub-figure from a figure', t => {
   let panels = figure.getPanels()
   t.equal(panels.length, 1, 'figure should have only one panel left')
   t.deepEqual(panels.map(getLabel), ['Figure 1'], '.. with correct label')
+  // TODO: test a selection, it should be on the other sub-figure
   t.end()
 })
 
@@ -207,5 +208,72 @@ test('Figure: change the order of panels in manuscript', t => {
   t.equal(getSubFigures()[2].getAttribute('data-id'), subFigure2Id, 'after undo third sub-figure id should be again equals to second one')
   t.equal(getSelectedSubFigureId(), subFigure3Id, 'selection should stay the same')
   t.isNotNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be again available')
+  t.end()
+})
+
+const PARAGRAPH_WITH_MULTIPANELFIGURE = `
+<p id="p1">ABC</p>
+${FIGURE_WITH_TWO_PANELS}
+`
+
+test('Figure: reference a sub-figure', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, PARAGRAPH_WITH_MULTIPANELFIGURE)
+  setCursor(editor, 'p1.content', 2)
+  const xrefSelector = '.sc-inline-node .sm-fig'
+  const removeSubFigureToolSelector = '.sc-toggle-tool.sm-remove-figure-panel button'
+  const emptyLabel = '???'
+
+  t.isNil(editor.find(xrefSelector), 'there should be no references in manuscript')
+  let citeMenu = editor.find('.sc-tool-dropdown.sm-cite button')
+  citeMenu.click()
+  let insertFigureRef = editor.find('.sc-menu-item.sm-insert-xref-fig')
+  insertFigureRef.click()
+
+  const getXref = () => editor.find(xrefSelector)
+  t.isNotNil(getXref(), 'there should be reference in manuscript')
+  t.equal(getXref().text(), emptyLabel, 'xref label should not contain reference')
+
+  editor.find(xrefSelector).click()
+  const firstXref = editor.find('.sc-edit-xref-tool .se-option .sc-preview')
+  firstXref.click()
+  t.equal(getXref().text(), 'Figure 1A', 'xref label should be equal to xref label')
+
+  const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
+  firstThumbnail.click()
+  const removeSubFigureTool = editor.find(removeSubFigureToolSelector)
+  removeSubFigureTool.click()
+  t.equal(getXref().text(), emptyLabel, 'xref label should not contain reference again')
+  t.end()
+})
+
+test('Figure: reference multiple sub-figures', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, PARAGRAPH_WITH_MULTIPANELFIGURE)
+  setCursor(editor, 'p1.content', 2)
+  const xrefSelector = '.sc-inline-node .sm-fig'
+  const getXref = () => editor.find(xrefSelector)
+  const xrefListItem = '.sc-edit-xref-tool .se-option .sc-preview'
+  const removeSubFigureToolSelector = '.sc-toggle-tool.sm-remove-figure-panel button'
+  const getXrefListItems = () => editor.findAll(xrefListItem)
+
+  let citeMenu = editor.find('.sc-tool-dropdown.sm-cite button')
+  citeMenu.click()
+  let insertFigureRef = editor.find('.sc-menu-item.sm-insert-xref-fig')
+  insertFigureRef.click()
+
+  editor.find(xrefSelector).click()
+  getXrefListItems()[0].click()
+  getXrefListItems()[1].click()
+  t.equal(getXref().text(), 'Figures 1A‒B', 'xref label should be Figure 1A-B')
+
+  const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
+  firstThumbnail.click()
+  const removeSubFigureTool = editor.find(removeSubFigureToolSelector)
+  removeSubFigureTool.click()
+  t.equal(getXref().text(), 'Figure 1A', 'xref label should be equal to xref label')
+
   t.end()
 })

@@ -29,17 +29,16 @@ import DispFormulaComponent from './DispFormulaComponent'
 import FootnoteComponent from './FootnoteComponent'
 import GraphicComponent from './GraphicComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
+import ModelPreviewComponent from './ModelPreviewComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
 import ReferenceComponent from './ReferenceComponent'
+import SectionLabel from './SectionLabel'
 import SigBlockComponent from './SigBlockComponent'
+import SupplementaryFileComponent from './SupplementaryFileComponent'
 import TableComponent from './TableComponent'
 import TableFigureComponent from './TableFigureComponent'
 import XrefComponent from './XrefComponent'
-
-import ModelPreviewComponent from './ModelPreviewComponent'
-
-import SectionLabel from './SectionLabel'
 
 export default {
   name: 'manuscript-content',
@@ -76,6 +75,7 @@ export default {
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('sig-block', SigBlockComponent)
+    config.addComponent('supplementary-file', SupplementaryFileComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('xref', XrefComponent)
 

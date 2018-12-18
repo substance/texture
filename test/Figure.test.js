@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoFileEvent,
-  loadBodyFixture, getDocument, openMetadataEditor
+  loadBodyFixture, getDocument, openMetadataEditor, getEditorSession
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
@@ -97,9 +97,10 @@ test('Figure: remove a sub-figure from a figure', t => {
 })
 
 test('Remove a figure with multiple panels', t => {
-  let { app, editorSession } = setupTestApp(t, { archiveId: 'blank' })
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
+  let editorSession = getEditorSession(editor)
   loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
   t.notNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should be displayed in manuscript view')
   t.notNil(doc.get('fig1'), 'there should be fig-1 node in document')

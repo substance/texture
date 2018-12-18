@@ -31,8 +31,8 @@ export default class SupplementaryFileConverter {
     if (labelEl) {
       node.label = labelEl.text()
     }
-    node.href = el.getAttribute('href')
-    node.legend = captionEl.children.map(child => importer.convertElement(child).id)
+    node.href = el.getAttribute('xlink:href')
+    node.legend = importer.convertElement(captionEl).id
   }
 
   _getContent (el) {
@@ -42,14 +42,15 @@ export default class SupplementaryFileConverter {
   export (node, el, exporter) {
     let $$ = exporter.$$
     let doc = node.getDocument()
+    el.attr('xlink:href', node.href)
     let label = getLabel(node)
     if (label) {
       el.append($$('label').text(label))
     }
     if (node.legend && node.legend.length > 0) {
-      el.append($$('caption').append(
-        node.legend.map(id => exporter.convertNode(doc.get(id)))
-      ))
+      el.append(
+        exporter.convertElement(doc.get(el.legend))
+      )
     }
   }
 }

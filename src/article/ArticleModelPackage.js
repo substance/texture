@@ -17,6 +17,7 @@ import OrganisationCollectionModel from './models/OrganisationCollectionModel'
 import PersonCollectionModel from './models/PersonCollectionModel'
 import ReferenceCollectionModel from './models/ReferenceCollectionModel'
 import SubjectCollectionModel from './models/SubjectCollectionModel'
+import SupplementaryFileModel from './models/SupplementaryFileModel'
 import TranslateableModel from './models/TranslateableModel'
 import TranslationCollectionModel from './models/TranslationCollectionModel'
 import TranslationModel from './models/TranslationModel'
@@ -37,7 +38,6 @@ export default {
     // Registry of available languages
     config.import(LanguagesPackage)
 
-    // Collection Models
     config.addModel('authors', PersonCollectionModel)
     config.addModel('awards', AwardCollectionModel)
     config.addModel('editors', PersonCollectionModel)
@@ -48,9 +48,8 @@ export default {
     config.addModel('organisations', OrganisationCollectionModel)
     config.addModel('references', ReferenceCollectionModel)
     config.addModel('subjects', SubjectCollectionModel)
+    config.addModel('supplementary-file', SupplementaryFileModel)
     config.addModel('translations', TranslationCollectionModel)
-
-    // Other special models
     config.addModel('translatable', TranslateableModel)
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)

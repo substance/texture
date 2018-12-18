@@ -16,6 +16,7 @@ import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
 import TableConverter from './TableConverter'
 import TableFigureConverter from './TableFigureConverter'
+import SupplementaryFileConverter from './SupplementaryFileConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 
@@ -39,6 +40,7 @@ export default function createJatsImporter (doc) {
     new ListConverter(),
     new PermissionsConverter(),
     new PreformatConverter(),
+    new SupplementaryFileConverter(),
     new TableFigureConverter(),
     new TableConverter(),
     new ElementCitationConverter()

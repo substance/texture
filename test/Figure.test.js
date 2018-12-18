@@ -96,7 +96,7 @@ test('Figure: remove a sub-figure from a figure', t => {
   t.end()
 })
 
-test('Remove a figure with multiple panels', t => {
+test('Figure: remove a figure with multiple panels', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
@@ -115,5 +115,13 @@ test('Remove a figure with multiple panels', t => {
   })
   t.isNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should noe be displayed in manuscript view anymore')
   t.isNil(doc.get('fig1'), 'there should be no node with fig-1 id in document')
+  // undo a multipanel figure removing
+  t.doesNotThrow(() => {
+    editor.find('.sc-toggle-tool.sm-undo > button').el.click()
+  }, 'using "Undo" should not throw')
+  t.notNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should be again in manuscript view')
+  const figureNode = doc.get('fig1')
+  t.notNil(figureNode, 'figure should be again in document')
+  t.equal(figureNode.getPanels().length, 2, 'figure should have 2 sub-figures')
   t.end()
 })

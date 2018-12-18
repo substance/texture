@@ -540,7 +540,7 @@ export default class ArticleAPI extends EditorAPI {
       if (pos !== -1) {
         tx.update(collection._path, { type: 'delete', pos: pos })
       }
-      tx.delete(item.id)
+      documentHelpers.deleteNode(tx, tx.get(item.id))
       tx.selection = null
     })
   }

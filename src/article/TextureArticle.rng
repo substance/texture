@@ -146,7 +146,6 @@
   <s:not-implemented name="subtitle"/>
   <s:not-implemented name="sub-article"/>
   <s:not-implemented name="supplement"/>
-  <s:not-implemented name="supplementary-material"/>
   <s:not-implemented name="table-count"/>
   <s:not-implemented name="table-wrap-group"/>
   <s:not-implemented name="target"/>
@@ -558,6 +557,7 @@
       <ref name="p"/>
       <ref name="preformat"/>
       <ref name="disp-quote"/>
+      <ref name="supplementary-material"/>
     </choice>
   </define>
 
@@ -1162,6 +1162,18 @@
           <ref name="simple-text"/>
         </choice>
       </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="supplementary-material">
+    <element name="supplementary-material">
+      <ref name="supplementary-material-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
     </element>
   </define>
 

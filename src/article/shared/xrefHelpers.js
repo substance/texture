@@ -9,7 +9,8 @@ export const REF_TYPES = {
   'fig-group': 'fig',
   'fn': 'fn',
   'ref': 'bibr',
-  'table-figure': 'table'
+  'table-figure': 'table',
+  'supplementary-file': 'file'
 }
 
 // TODO: how could this be configured?
@@ -18,7 +19,8 @@ const RefTypeToManager = {
   'formula': 'formulaManager',
   'fig': 'figureManager',
   'table': 'tableManager',
-  'fn': 'footnoteManager'
+  'fn': 'footnoteManager',
+  'file': 'supplementaryManager'
 }
 
 // left side: ref-type
@@ -70,6 +72,8 @@ function _getManagerByRefType (refType, context, xref) {
         return articleSession.getReferenceManager()
       case 'tableManager':
         return articleSession.getTableManager()
+      case 'supplementaryManager':
+        return articleSession.getSupplementaryManager()
       default:
         //
     }

@@ -61,15 +61,12 @@ export default {
     config.addModel('table-figure', TableFigureModel)
     config.addModel('xref', XrefModel)
 
-    // Experimental
-    config.setLabelGenerator('references', NumberedLabelGenerator, {
-      template: '[$]',
-      and: ',',
-      to: '-'
-    })
-    config.setLabelGenerator('tables', NumberedLabelGenerator, {
-      name: 'Table',
-      plural: 'Tables',
+    // ATTENTION: FigureLabelGenerator works a bit differently
+    // TODO: consolidate LabelGenerators and configuration
+    // e.g. it does not make sense to say 'setLabelGenerator' but then only provide a configuration for 'NumberedLabelGenerator'
+    config.setLabelGenerator('figures', FigureLabelGenerator, {
+      singular: 'Figure $',
+      plural: 'Figures $',
       and: ',',
       to: '-'
     })
@@ -83,12 +80,20 @@ export default {
       and: ',',
       to: '-'
     })
-    // ATTENTION: FigureLabelGenerator works a bit differently
-    // TODO: consolidate LabelGenerators and configuration
-    // e.g. it does not make sense to say 'setLabelGenerator' but then only provide a configuration for 'NumberedLabelGenerator'
-    config.setLabelGenerator('figures', FigureLabelGenerator, {
-      singular: 'Figure $',
-      plural: 'Figures $',
+    config.setLabelGenerator('references', NumberedLabelGenerator, {
+      template: '[$]',
+      and: ',',
+      to: '-'
+    })
+    config.setLabelGenerator('supplementaries', {
+      name: 'Supplementary Files',
+      plural: 'Supplementary Files',
+      and: ',',
+      to: '-'
+    })
+    config.setLabelGenerator('tables', NumberedLabelGenerator, {
+      name: 'Table',
+      plural: 'Tables',
       and: ',',
       to: '-'
     })

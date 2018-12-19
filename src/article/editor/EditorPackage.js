@@ -127,6 +127,10 @@ export default {
       refType: 'formula',
       commandGroup: 'insert-xref'
     })
+    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
+      refType: 'file',
+      commandGroup: 'insert-xref'
+    })
     config.addCommand('insert-disp-formula', InsertDispFormulaCommand, {
       nodeType: 'disp-formula',
       commandGroup: 'insert'
@@ -232,6 +236,7 @@ export default {
     config.addLabel('insert-xref-table', 'Table')
     config.addLabel('insert-xref-fn', 'Footnote')
     config.addLabel('insert-xref-formula', 'Formula')
+    config.addLabel('insert-xref-file', 'Supplementary File')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
     config.addLabel('insert-footnote', 'Footnote')

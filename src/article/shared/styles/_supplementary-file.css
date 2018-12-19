@@ -1,4 +1,4 @@
-.sc-supplementary-file {
+.sc-supplementary-file.sm-manuscript {
   box-shadow: var(--t-default-box-shadow);
   padding: var(--t-default-spacing);
 }
@@ -19,4 +19,13 @@
 
 .sc-supplementary-file > .sc-caption {
   font-size: var(--t-small-font-size);
+}
+
+.sc-supplementary-file.sm-preview > .sc-preview {
+  display: block;
+  padding-left: var(--t-half-spacing);
+}
+
+.sc-supplementary-file.sm-preview > .sc-preview > * {
+  padding-left: 0;
 }

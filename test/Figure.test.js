@@ -297,3 +297,35 @@ test('Figure: replace image in figure panel', t => {
   t.ok(replaceSubFigureImageTool.click(), 'clicking on the replace sub-figure button should not throw error')
   t.end()
 })
+
+test('Figure: remove and move figure panels in metadata view', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openMetadataEditor(app)
+  loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
+  editor = openMetadataEditor(app)
+  const subFigureCardSelector = '.sc-card.sm-figure-panel'
+  const moveUpToolSelector = '.sc-toggle-tool.sm-move-up-figure-panel'
+  const removeToolSelector = '.sc-toggle-tool.sm-remove-figure-panel button'
+  const getSubFigureCards = () => editor.findAll(subFigureCardSelector)
+  t.equal(getSubFigureCards().length, 3, 'there should be three cards in metadata view')
+  t.isNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be unavailable by default')
+  t.isNil(editor.find(removeToolSelector), 'remove sub-figure tool shoold be unavailable by default')
+  t.doesNotThrow(() => {
+    getSubFigureCards()[1].click()
+  }, 'clicking on card should not throw')
+  t.isNotNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be available')
+  t.isNotNil(editor.find(removeToolSelector), 'remove sub-figure tool shoold be available')
+  t.doesNotThrow(() => {
+    editor.find(removeToolSelector).click()
+  }, 'using remove should not throw')
+  t.equal(getSubFigureCards().length, 2, 'there should be two cards in metadata view')
+  t.doesNotThrow(() => {
+    getSubFigureCards()[1].click()
+  }, 'clicking on card should not throw')
+  t.isNotNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be available')
+  t.doesNotThrow(() => {
+    editor.find(moveUpToolSelector).click()
+  }, 'using move up should not throw')
+  t.isNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be unavailable')
+  t.end()
+})

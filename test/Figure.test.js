@@ -273,7 +273,8 @@ test('Figure: reference multiple sub-figures', t => {
   firstThumbnail.click()
   const removeSubFigureTool = editor.find(removeSubFigureToolSelector)
   removeSubFigureTool.click()
-  t.equal(getXref().text(), 'Figure 1A', 'xref label should be equal to xref label')
-
+  // Note: that now the xref contains two target ids, one of them is broken
+  // TODO: in future we might want to change this, e.g. instead mark the broken xref as error and show an issue in an issue panel.
+  t.equal(getXref().text(), '???', 'xref label should be equal to xref label')
   t.end()
 })

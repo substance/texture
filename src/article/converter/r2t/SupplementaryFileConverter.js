@@ -35,10 +35,6 @@ export default class SupplementaryFileConverter {
     node.legend = importer.convertElement(captionEl).id
   }
 
-  _getContent (el) {
-    return findChild(el, 'tex-math')
-  }
-
   export (node, el, exporter) {
     let $$ = exporter.$$
     let doc = node.getDocument()
@@ -49,7 +45,7 @@ export default class SupplementaryFileConverter {
     }
     if (node.legend && node.legend.length > 0) {
       el.append(
-        exporter.convertElement(doc.get(el.legend))
+        exporter.convertNode(doc.get(node.legend))
       )
     }
   }

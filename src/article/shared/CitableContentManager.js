@@ -81,24 +81,22 @@ export default class CitableContentManager extends AbstractCitationManager {
     let xrefs = this._getXrefs()
     let xrefUpdates = {}
     for (let xref of xrefs) {
-      let isInvalid = false
       // ATTENTION: this might not always be numbers, but could also be something like this: [{pos: 1}, {pos: 2}]
       // if citables are nested
       // TODO: find a better name
       let numbers = []
+      // NOTE: if there are rids that can not be resolved as a valid target these will be ignored
+      // TODO: in future there should be a IssueManager checking for the validity of these refs
       let rids = xref.getAttribute('rid') || ''
       rids = rids.split(' ')
       for (let i = 0; i < rids.length; i++) {
         const targetId = rids[i]
         if (!targetId) continue
-        if (!targetIds.has(targetId)) {
-          isInvalid = true
-        } else {
+        if (targetIds.has(targetId)) {
           numbers.push(targetUpdates[targetId].pos)
         }
       }
       // invalid labels shall be the same as empty ones
-      if (isInvalid) numbers = []
       let id = xref.id
       let label = this.labelGenerator.getCombinedLabel(numbers)
       xrefUpdates[id] = { id, label }

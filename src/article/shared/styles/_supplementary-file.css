@@ -1,0 +1,22 @@
+.sc-supplementary-file {
+  box-shadow: var(--t-default-box-shadow);
+  padding: var(--t-default-spacing);
+}
+
+.sc-supplementary-file > .se-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sc-supplementary-file > .se-header > .se-label {
+  font-weight: var(--t-bold-font-weight);
+}
+
+.sc-supplementary-file > .se-header > .se-href {
+  font-weight: var(--t-bold-font-weight);
+  font-family: monospace, monospace;
+}
+
+.sc-supplementary-file > .sc-caption {
+  font-size: var(--t-small-font-size);
+}

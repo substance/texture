@@ -281,3 +281,19 @@ test('Figure: reference multiple sub-figures', t => {
   t.equal(getXref().text(), 'Figure 1', 'xref label should be equal to xref label')
   t.end()
 })
+
+test('Figure: replace image in figure panel', t => {
+  // TODO: we should test image upload better in the future with inspecting an asset
+  // that requires some improvements on archive level
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
+  const uploadSubFigureToolSelector = '.sc-upload-figure-panel-tool.sm-upload-tool button'
+  const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
+  firstThumbnail.click()
+  // Note: we have the same tool for replace as for add a new sub-figure
+  const replaceSubFigureImageTool = editor.findAll(uploadSubFigureToolSelector)[1]
+  t.isNotNil(replaceSubFigureImageTool, 'replace sub-figure image tool shoold be available')
+  t.ok(replaceSubFigureImageTool.click(), 'clicking on the replace sub-figure button should not throw error')
+  t.end()
+})

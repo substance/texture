@@ -187,7 +187,7 @@ test('Figure: change the order of panels in manuscript', t => {
   t.equal(getSubFigures()[2].find('.se-label').text(), subFigure3Label, 'sub-figure label should match')
   t.doesNotThrow(() => {
     editor.find(moveUpToolSelector + ' button').el.click()
-  }, 'using move down should not throw')
+  }, 'using move up should not throw')
   t.equal(getSelectedSubFigureId(), subFigure3Id, 'selection should move, with sub-figure')
   t.isNotNil(editor.find(moveUpToolSelector), 'move down sub-figure tool shoold be available now')
   // id should change, labels should stay, selection should move
@@ -197,7 +197,7 @@ test('Figure: change the order of panels in manuscript', t => {
   t.equal(getSubFigures()[1].find('.se-label').text(), subFigure2Label, 'second sub-figure label should not change')
   t.doesNotThrow(() => {
     editor.find(moveUpToolSelector + ' button').el.click()
-  }, 'using move down should not throw')
+  }, 'using move up should not throw')
   t.isNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be unavailable now')
   t.equal(getSubFigures()[1].getAttribute('data-id'), subFigure1Id, 'second sub-figure id should change to first one')
   t.equal(getSubFigures()[0].getAttribute('data-id'), subFigure3Id, 'first sub-figure id should change to third one')
@@ -208,6 +208,11 @@ test('Figure: change the order of panels in manuscript', t => {
   t.equal(getSubFigures()[2].getAttribute('data-id'), subFigure2Id, 'after undo third sub-figure id should be again equals to second one')
   t.equal(getSelectedSubFigureId(), subFigure3Id, 'selection should stay the same')
   t.isNotNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be again available')
+  t.doesNotThrow(() => {
+    editor.find(moveDownToolSelector + ' button').el.click()
+  }, 'using move down should not throw')
+  t.isNil(editor.find(moveDownToolSelector), 'move down sub-figure tool shoold not be available now')
+  t.equal(getSubFigures()[2].getAttribute('data-id'), subFigure3Id, 'after moving down third sub-figure id should be original again')
   t.end()
 })
 

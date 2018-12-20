@@ -300,7 +300,11 @@ test('Figure: replace image in figure panel', t => {
 
 test('Figure: remove and move figure panels in metadata view', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openMetadataEditor(app)
+  // TODO: MetadataEditor is not updating when loading the fixture
+  // after opening the view. It would be better to have an 'editorSession' just for
+  // the loading, and then open the Metadata view. But the editor session is currently
+  // bound to the views.
+  let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
   loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
 
@@ -316,6 +320,8 @@ test('Figure: remove and move figure panels in metadata view', t => {
   const removeCard = () => editor.find(removeToolSelector).click()
   const isMoveUpPossible = () => Boolean(editor.find(moveUpToolSelector))
   const isRemovePossible = () => Boolean(editor.find(removeToolSelector))
+
+  editor = openMetadataEditor(app)
 
   // checking that there is a card for every panel
   let expectedNumberOfCards = doc.findAll('figure').reduce((n, fig) => n + fig.panels.length, 0)

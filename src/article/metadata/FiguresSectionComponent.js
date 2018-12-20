@@ -2,7 +2,6 @@ import { Component } from 'substance'
 import CollectionEditor from './CollectionEditor'
 import { METADATA_MODE } from '../ArticleConstants'
 import CardComponent from '../shared/CardComponent'
-import { ifNodeOrRelatedHasChanged } from '../shared/nodeHelpers'
 
 // NOTE: We use a special component to render Figures in the Metadata view.
 // Every Figure can be seen as a collection of figures, and
@@ -18,12 +17,6 @@ export default class FiguresSectionComponent extends Component {
       )
     }
     return el
-  }
-
-  _onDocumentChange (change) {
-    ifNodeOrRelatedHasChanged(this.props.model._node, change, () => {
-      this.rerender()
-    })
   }
 }
 

@@ -233,7 +233,7 @@ id, xml:base, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(sec|boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
+(sec|boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -282,7 +282,7 @@ title?,p*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-fig, table-wrap
+fig, supplementary-material, table-wrap
 </pre>
 
 ### `<chapter-title>`
@@ -1047,7 +1047,7 @@ id, xml:base, alt, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, disp-formula, fig, fig-group, fn, fn-group, kwd-group, table-wrap
+aff, disp-formula, fig, fig-group, fn, fn-group, kwd-group, supplementary-material, table-wrap
 </pre>
 
 ### `<license>`
@@ -1538,7 +1538,7 @@ id, xml:base, xml:lang, sec-type, disp-level, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-title?,(boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
+title?,(boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1708,6 +1708,21 @@ id, xml:base, arrange, specific-use
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
 article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, issue-title, italic, kwd, label, license-p, monospace, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, source, strike, string-name, sub, subject, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
+</pre>
+
+### `<supplementary-material>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, content-type, mimetype, mime-subtype, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,caption?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+body, sec
 </pre>
 
 ### `<surname>`
@@ -2158,7 +2173,6 @@ and explanations that help understanding the use-case.
 - sub-article
 - subtitle
 - supplement
-- supplementary-material
 - table-count
 - table-wrap-group
 - target

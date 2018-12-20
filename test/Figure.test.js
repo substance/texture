@@ -288,13 +288,20 @@ test('Figure: replace image in figure panel', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
-  const uploadSubFigureToolSelector = '.sc-upload-figure-panel-tool.sm-upload-tool button'
+
+  const uploadSubFigureToolSelector = '.sc-upload-figure-panel-tool.sm-upload-tool'
   const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
   firstThumbnail.click()
   // Note: we have the same tool for replace as for add a new sub-figure
   const replaceSubFigureImageTool = editor.findAll(uploadSubFigureToolSelector)[1]
   t.isNotNil(replaceSubFigureImageTool, 'replace sub-figure image tool shoold be available')
-  t.ok(replaceSubFigureImageTool.click(), 'clicking on the replace sub-figure button should not throw error')
+  t.ok(replaceSubFigureImageTool.find('button').click(), 'clicking on the replace sub-figure button should not throw error')
+  // triggering onFileSelect() so that the figure replace logic gets called
+  // TODO: if we had a way to retrieve stats for the assets, we could improve this test
+  t.doesNotThrow(() => {
+    replaceSubFigureImageTool.onFileSelect(new PseudoFileEvent())
+  }, 'triggering file upload for replace sub-figure should not throw')
+
   t.end()
 })
 

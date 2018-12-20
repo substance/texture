@@ -132,19 +132,19 @@ const FIGURE_WITH_THREE_PANELS = `
   <fig id="fig1a">
     <graphic />
     <caption>
-      <p id="fig1a-caption-p1"></p>
+      <p id="fig1a-caption-p1">A</p>
     </caption>
   </fig>
   <fig id="fig1b">
     <graphic />
     <caption>
-      <p id="fig1b-caption-p1"></p>
+      <p id="fig1b-caption-p1">B</p>
     </caption>
   </fig>
   <fig id="fig1c">
     <graphic />
     <caption>
-      <p id="fig1c-caption-p1"></p>
+      <p id="fig1c-caption-p1">C</p>
     </caption>
   </fig>
 </fig-group>
@@ -301,36 +301,46 @@ test('Figure: replace image in figure panel', t => {
 test('Figure: remove and move figure panels in metadata view', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
+  const doc = getDocument(editor)
+
+  // Helpers
   loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
   editor = openMetadataEditor(app)
   const subFigureCardSelector = '.sc-card.sm-figure-panel'
-  const moveUpToolSelector = '.sc-toggle-tool.sm-move-up-figure-panel'
+  const moveUpToolSelector = '.sc-toggle-tool.sm-move-up-figure-panel button'
   const removeToolSelector = '.sc-toggle-tool.sm-remove-figure-panel button'
   const getSubFigureCards = () => editor.findAll(subFigureCardSelector)
-  t.equal(getSubFigureCards().length, 3, 'there should be three cards in metadata view')
-  t.isNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be unavailable by default')
-  t.isNil(editor.find(removeToolSelector), 'remove sub-figure tool shoold be unavailable by default')
-  t.doesNotThrow(() => {
-    getSubFigureCards()[1].click()
-  }, 'clicking on card should not throw')
-  t.isNotNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be available')
-  t.isNotNil(editor.find(removeToolSelector), 'remove sub-figure tool shoold be available')
-  t.doesNotThrow(() => {
-    editor.find(removeToolSelector).click()
-  }, 'using remove should not throw')
-  t.equal(getSubFigureCards().length, 2, 'there should be two cards in metadata view')
-  t.doesNotThrow(() => {
-    getSubFigureCards()[1].click()
-  }, 'clicking on card should not throw')
-  t.isNotNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be available')
-  t.equal(getSubFigureCards()[1].getAttribute('data-id'), 'fig1b', 'second sub-figure id should match')
-  t.equal(getSubFigureCards()[1].find('.se-label').text(), 'Figure 1B', 'second sub-figure label should match')
-  t.doesNotThrow(() => {
-    editor.find(moveUpToolSelector).click()
-  }, 'using move up should not throw')
-  t.isNil(editor.find(moveUpToolSelector), 'move up sub-figure tool shoold be unavailable')
-  t.equal(getSubFigureCards()[1].getAttribute('data-id'), 'fig1a', 'second sub-figure id should change')
-  t.equal(getSubFigureCards()[1].find('.se-label').text(), 'Figure 1B', 'second sub-figure label should be the same')
-  t.equal(getSubFigureCards()[0].getAttribute('data-id'), 'fig1b', 'fisrt sub-figure id should be equal to second one')
+  const getSubFigureLabel = (card) => card.find(`.sc-figure-metadata .se-label`).text()
+  const getSubFigureId = (card) => card.getAttribute('data-id')
+  const selectCard = (card) => card.click()
+  const moveUpCard = () => editor.find(moveUpToolSelector).click()
+  const removeCard = () => editor.find(removeToolSelector).click()
+  const isMoveUpPossible = () => Boolean(editor.find(moveUpToolSelector))
+  const isRemovePossible = () => Boolean(editor.find(removeToolSelector))
+
+  // checking that there is a card for every panel
+  let expectedNumberOfCards = doc.findAll('figure').reduce((n, fig) => n + fig.panels.length, 0)
+  let cards = getSubFigureCards()
+  t.equal(cards.length, expectedNumberOfCards, 'there should a card for each panel in the metadata view')
+  // ... contextual tools should be disabled without selecting panel
+  t.notOk(isMoveUpPossible(), 'move up sub-figure tool shoold be unavailable by default')
+  t.notOk(isRemovePossible(), 'remove sub-figure tool shoold be unavailable by default')
+  // selecting a card should activate contextual tools
+  selectCard(cards[1])
+  t.ok(isMoveUpPossible(), 'move up sub-figure tool shoold be available when panel card is selected')
+  t.ok(isRemovePossible(), 'remove sub-figure tool shoold be available when panel card is selected')
+  // removing selected panel
+  removeCard()
+  cards = getSubFigureCards()
+  t.equal(cards.length, expectedNumberOfCards - 1, 'one panel card should have been removed')
+  t.equal(getSubFigureId(cards[1]), 'fig1c', 'second sub-figure id should match')
+  // ATTENTION: the label has changed, so data-id and label do not fit together well anymore
+  t.equal(getSubFigureLabel(cards[1]), 'Figure 1B', 'second sub-figure label should match')
+  // // moving up a sub-figure
+  selectCard(cards[1])
+  moveUpCard()
+  cards = getSubFigureCards()
+  t.notOk(isMoveUpPossible(), 'move up sub-figure tool shoold be unavailable')
+  t.equal(getSubFigureId(cards[0]), 'fig1c', 'first card should be the moved one')
   t.end()
 })

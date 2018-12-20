@@ -1,5 +1,5 @@
 /* global vfs */
-import { parseKeyEvent } from 'substance'
+import { parseKeyEvent, platform } from 'substance'
 import TextureAppChrome from './TextureAppChrome'
 import { VfsStorageClient, HttpStorageClient, InMemoryDarBuffer } from './dar'
 
@@ -9,13 +9,18 @@ export default class TextureWebAppChrome extends TextureAppChrome {
     let buffer = new InMemoryDarBuffer()
     let ArchiveClass = this._getArchiveClass()
     let archive = new ArchiveClass(storage, buffer, context)
-    try {
+    // Don't catch exception if developer console is open
+    if (platform.devtools) {
       archive.load(archiveId, cb)
-    } catch (err) {
-      this.setState({
-        error: err
-      })
-      console.error(err)
+    } else {
+      try {
+        archive.load(archiveId, cb)
+      } catch (err) {
+        this.setState({
+          error: err
+        })
+        console.error(err)
+      }
     }
   }
 

@@ -6,12 +6,10 @@ import { findParentByType } from './nodeHelpers'
 export const REF_TYPES = {
   'disp-formula': 'formula',
   'figure': 'fig',
-  'repro-fig': 'fig',
   'fig-group': 'fig',
   'fn': 'fn',
   'ref': 'bibr',
-  'table-figure': 'table',
-  'table-wrap-group': 'table'
+  'table-figure': 'table'
 }
 
 // TODO: how could this be configured?

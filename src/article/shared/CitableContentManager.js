@@ -1,4 +1,4 @@
-import { isArrayEqual } from 'substance'
+import { isArrayEqual, map } from 'substance'
 import { XREF_TARGET_TYPES } from './xrefHelpers'
 import AbstractCitationManager from './AbstractCitationManager'
 
@@ -10,73 +10,36 @@ import AbstractCitationManager from './AbstractCitationManager'
 */
 export default class CitableContentManager extends AbstractCitationManager {
   hasCitables () {
-    return Boolean(this._getContentElement().find(XREF_TARGET_TYPES[this.type].join(',')))
+    return Boolean(this._getContentElement().find(this._getItemSelector()))
   }
 
   getCitables () {
-    return this._getContentElement().findAll(XREF_TARGET_TYPES[this.type].join(','))
+    return this._getContentElement().findAll(this._getItemSelector())
   }
 
   getSortedCitables () {
     return this.getCitables()
   }
 
-  /*
-    Detection of changes that have an impact on the labeling is different to references.
-    Labels change if
-    1. Citable content is inserted or removed
-    2. an xref ref-type is changed (TODO: this does not affect the other labels)
-    3. xref targets are updated
-  */
-  _onDocumentChange (change) {
-    // HACK: do not react on node state updates
-    if (change.info.action === 'node-state-update') return
-    const doc = this._getDocument()
-    const TARGET_TYPES = this._targetTypes
-    const contentPath = this._getContentPath()
+  _getItemSelector () {
+    return XREF_TARGET_TYPES[this.refType].join(',')
+  }
 
-    // update labels whenever
-    // I.   a <target-type> node is inserted into the body
-    const ops = change.ops
-    let needsUpdate = false
-    for (var i = 0; i < ops.length; i++) {
-      let op = ops[i]
-      switch (op.type) {
-        // I. citable content is inserted or removed
-        case 'update': {
-          if (isArrayEqual(op.path, contentPath)) {
-            let id = op.diff.val
-            let node = doc.get(id) || change.deleted[id]
-            if (node && TARGET_TYPES[node.type]) {
-              needsUpdate = true
-            }
-          }
-          break
-        }
-        case 'set': {
-          if (op.path[1] === 'attributes') {
-            // II. a ref-type has been updated
-            if (op.path[2] === 'ref-type' && (op.val === this.type || op.original === this.type)) {
-              needsUpdate = true
-            // III. cited targets have been updated
-            } else if (op.path[2] === 'rid') {
-              let node = doc.get(op.path[0])
-              if (node && node.getAttribute('ref-type') === this.type) {
-                needsUpdate = true
-              }
-            }
-          }
+  _getXrefs () {
+    return this._getDocument().findAll(`xref[ref-type='${this.refType}']`)
+  }
 
-          break
-        }
-        default:
-          //
+  _detectAddRemoveCitable (op, change) {
+    if (op.isUpdate()) {
+      const contentPath = this._getContentPath()
+      if (isArrayEqual(op.path, contentPath)) {
+        const doc = this._getDocument()
+        let id = op.diff.val
+        let node = doc.get(id) || change.deleted[id]
+        return (node && this.targetTypes.has(node.type))
       }
-      if (needsUpdate) break
     }
-    if (needsUpdate) {
-      this._updateLabels()
-    }
+    return false
   }
 
   _getContentPath () {
@@ -88,49 +51,56 @@ export default class CitableContentManager extends AbstractCitationManager {
   }
 
   _updateLabels (silent) {
-    const doc = this._getDocument()
+    let targetUpdates = this._computeTargetUpdates()
+    let xrefUpdates = this._computeXrefUpdates(targetUpdates)
+    let stateUpdates = map(targetUpdates, this._stateUpdate).concat(map(xrefUpdates, this._stateUpdate))
+    // HACK: do not propagate change initially
+    this.documentSession.updateNodeStates(stateUpdates, silent)
+  }
 
-    let stateUpdates = []
+  _stateUpdate (record) {
+    return [record.id, {label: record.label}]
+  }
 
+  _computeTargetUpdates () {
     let resources = this.getCitables()
-    let resourcesById = {}
-    let order = {}
     let pos = 1
-    resources.forEach((res) => {
-      resourcesById[res.id] = res
-      order[res.id] = pos
+    let targetUpdates = {}
+    for (let res of resources) {
+      let id = res.id
       let label = this.labelGenerator.getLabel([pos])
-      stateUpdates.push([res.id, { label, pos }])
+      // Note: pos is needed to create order specific labels
+      targetUpdates[id] = { id, label, pos }
       pos++
-    })
+    }
+    return targetUpdates
+  }
 
-    let xrefs = doc.findAll(`xref[ref-type='${this.type}']`)
-    let xrefLabels = {}
-    xrefs.forEach((xref) => {
-      let isInvalid = false
+  _computeXrefUpdates (targetUpdates) {
+    const targetIds = new Set(Object.keys(targetUpdates))
+    let xrefs = this._getXrefs()
+    let xrefUpdates = {}
+    for (let xref of xrefs) {
+      // ATTENTION: this might not always be numbers, but could also be something like this: [{pos: 1}, {pos: 2}]
+      // if citables are nested
+      // TODO: find a better name
       let numbers = []
+      // NOTE: if there are rids that can not be resolved as a valid target these will be ignored
+      // TODO: in future there should be a IssueManager checking for the validity of these refs
       let rids = xref.getAttribute('rid') || ''
       rids = rids.split(' ')
       for (let i = 0; i < rids.length; i++) {
-        const id = rids[i]
-        if (!id) continue
-        if (!resourcesById[id]) {
-          isInvalid = true
-        } else {
-          numbers.push(order[id])
+        const targetId = rids[i]
+        if (!targetId) continue
+        if (targetIds.has(targetId)) {
+          numbers.push(targetUpdates[targetId].pos)
         }
       }
       // invalid labels shall be the same as empty ones
-      if (isInvalid) numbers = []
-      xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
-    })
-    // also update the state of the xrefs
-    xrefs.forEach((xref) => {
-      const label = xrefLabels[xref.id]
-      stateUpdates.push([xref.id, { label }])
-    })
-
-    // HACK: do not propagate change initially
-    this.documentSession.updateNodeStates(stateUpdates, silent)
+      let id = xref.id
+      let label = this.labelGenerator.getCombinedLabel(numbers)
+      xrefUpdates[id] = { id, label }
+    }
+    return xrefUpdates
   }
 }

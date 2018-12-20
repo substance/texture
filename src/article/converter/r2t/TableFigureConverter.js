@@ -1,7 +1,7 @@
 import { findChild } from '../util/domHelpers'
-import FigureConverter from './FigureConverter'
+import FigurePanelConverter from './FigurePanelConverter'
 
-export default class TableFigureConverter extends FigureConverter {
+export default class TableFigureConverter extends FigurePanelConverter {
   get type () { return 'table-figure' }
 
   get tagName () { return 'table-wrap' }

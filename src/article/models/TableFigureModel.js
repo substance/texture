@@ -1,7 +1,7 @@
-import FigureModel from './FigureModel'
+import FigurePanelModel from './FigurePanelModel'
 import TableFootnoteCollectionModel from './TableFootnoteCollectionModel'
 
-export default class TableFigureModel extends FigureModel {
+export default class TableFigureModel extends FigurePanelModel {
   get type () { return 'table-figure' }
 
   getFootnotes () {

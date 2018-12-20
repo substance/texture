@@ -1,34 +1,58 @@
-import { createValueModel } from '../../kit'
-import { getLabel } from '../shared/nodeHelpers'
-import NodeModel from '../../kit/model/NodeModel'
+import { NodeModel, CollectionValueModel } from '../../kit'
 
 export default class FigureModel extends NodeModel {
-  constructor (api, node) {
-    super(api, node)
-    this._title = createValueModel(api, 'text', [node.id, 'title'])
+  hasPanels () {
+    const length = this.getPanelsLength()
+    return length > 0
   }
 
-  get type () { return 'figure' }
-
-  get id () { return this._node.id }
-
-  getTitle () {
-    return this._title
+  getPanelsLength () {
+    return this._node.panels.length
   }
 
-  getContent () {
-    return this._api.getModelById(this._node.content)
+  getPanels () {
+    return new CollectionValueModel(this._api, [this._node.id, 'panels'], 'figure-panel')
   }
 
-  getPermission () {
-    return this._api.getModelById(this._node.permission)
+  getCurrentPanelIndex () {
+    const node = this._node
+    let currentPanelIndex = 0
+    if (node.state) {
+      currentPanelIndex = node.state.currentPanelIndex
+    }
+    return currentPanelIndex
   }
 
-  getLabel () {
-    return getLabel(this._node)
+  addPanel (file) {
+    const api = this._api
+    const panels = this.getPanels()
+    const index = this.getCurrentPanelIndex()
+    api._insertFigurePanel(file, panels, index)
   }
 
-  getCaption () {
-    return this._api.getModelById(this._node.caption)
+  removePanel () {
+    const api = this._api
+    const panels = this.getPanels()
+    const index = this.getCurrentPanelIndex()
+    const panel = panels.getItemAt(index)
+    api._removeFigurePanel(panel, panels)
+  }
+
+  movePanelDown () {
+    const pos = this.getCurrentPanelIndex()
+    if (pos < this.getPanelsLength()) {
+      this.movePanel(pos, pos + 1)
+    }
+  }
+
+  movePanelUp () {
+    const pos = this.getCurrentPanelIndex()
+    if (pos > 0) {
+      this.movePanel(pos, pos - 1)
+    }
+  }
+
+  movePanel (from, to) {
+    return this._api._moveFigurePanel(this, from, to)
   }
 }

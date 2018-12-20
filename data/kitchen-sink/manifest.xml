@@ -6,5 +6,6 @@
     <asset id="fig1" type="image/jpg" path="fig1.jpg"/>
     <asset id="fig2" type="image/jpg" path="fig2.jpg"/>
     <asset id="fig3" type="image/svg+xml" path="fig3.svg"/>
+    <asset id="placeholder" type="image/png" path="placeholder.png"/>
   </assets>
 </dar>

@@ -702,6 +702,21 @@ object-id?,label?,caption?,graphic,permissions?
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
+body, fig-group, sec
+</pre>
+
+### `<fig-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, content-type
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,fig+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
 body, sec
 </pre>
 
@@ -1032,7 +1047,7 @@ id, xml:base, alt, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, disp-formula, fig, fn, fn-group, kwd-group, table-wrap
+aff, disp-formula, fig, fig-group, fn, fn-group, kwd-group, table-wrap
 </pre>
 
 ### `<license>`
@@ -2077,7 +2092,6 @@ and explanations that help understanding the use-case.
 - equation-count
 - etal
 - fig-count
-- fig-group
 - floats-group
 - front-stub
 - funding-statement

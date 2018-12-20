@@ -223,13 +223,13 @@
         </table-wrap-foot>
       </table-wrap>
       <sec id="sec-2">
-        <title>Orci varius natoque penatibus et magnis</title>
-        <p id="p-3">Lorem <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref> ipsum dolor<xref id="xref-4" ref-type="fn" rid="fn1">1</xref> sit amet <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
+        <title>Figures</title>
+        <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
         <fig id="fig1">
           <label>Figure 1</label>
           <caption id="fig1-caption">
-            <title>Behavioural design and implantation details.</title>
-            <p id="fig1-caption-p1">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium.</p>
+            <title>Figure with permissions.</title>
+            <p id="fig1-caption-p1">Caption.</p>
           </caption>
           <graphic id="graphic-1" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
           <permissions id="permission-2">
@@ -238,19 +238,28 @@
             <copyright-holder>Surname et al.</copyright-holder>
             <license>
               <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
-              <license-p>This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, reproduction and adaptation in any medium and for any purpose provided that it is properly attributed. For attribution, the original author(s), title, publication source (PeerJ) and either DOI or URL of the article must be cited.</license-p>
+              <license-p>License text.</license-p>
             </license>
           </permissions>
         </fig>
-        <p id="p-5">Integer eget augue consequat, rhoncus velit nec, vehicula purus. Quisque malesuada feugiat tempus.</p>
-        <fig id="fig2">
-          <label>Figure 2</label>
-          <caption id="fig2-caption">
-            <title>Visual object processing in area AIP.</title>
-            <p id="fig2-caption-p1" />
-          </caption>
-          <graphic id="graphic-2" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
-        </fig>
+        <fig-group id="fig2">
+          <fig id="fig2a">
+            <label>Figure 2A</label>
+            <caption id="fig2a-caption">
+              <title>First panel</title>
+              <p id="fig2a-caption-p1">First panel caption</p>
+            </caption>
+            <graphic id="fig2a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
+          </fig>
+          <fig id="fig2b">
+            <label>Figure 2B</label>
+            <caption id="fig2b-caption">
+              <title>Second panel</title>
+              <p id="fig2b-caption-p1">Second panel caption</p>
+            </caption>
+            <graphic id="fig2b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
+          </fig>
+        </fig-group>
         <disp-quote id="disp-quote-1">
           <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
         </disp-quote>

@@ -9,7 +9,7 @@ import TranslateableModel from './models/TranslateableModel'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import {
-  createEmptyElement, importFigures,
+  createEmptyElement, importFigurePanel, importFigures,
   insertTableFigure, setContainerSelection
 } from './articleHelpers'
 
@@ -504,6 +504,55 @@ export default class ArticleAPI extends EditorAPI {
     if (!sel || !sel.containerId) return
     articleSession.transaction(tx => {
       importFigures(tx, sel, files, paths)
+    })
+  }
+
+  _insertFigurePanel (file, collection, index) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      const figurePanel = importFigurePanel(tx, file, path)
+      tx.update(collection._path, { type: 'insert', pos: index + 1, value: figurePanel.id })
+    })
+  }
+
+  _replaceFigurePanelImage (file, panel) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      const mimeData = file.type.split('/')
+      const graphic = tx.create({
+        'type': 'graphic'
+      })
+      graphic.attr({
+        'mime-subtype': mimeData[1],
+        'mimetype': mimeData[0],
+        'xlink:href': path
+      })
+      tx.set([panel.id, 'content'], graphic.id)
+    })
+  }
+
+  _removeFigurePanel (item, collection) {
+    this.articleSession.transaction(tx => {
+      const value = collection.getValue()
+      let pos = value.indexOf(item.id)
+      if (pos !== -1) {
+        tx.update(collection._path, { type: 'delete', pos: pos })
+      }
+      documentHelpers.deleteNode(tx, tx.get(item.id))
+      tx.selection = null
+    })
+  }
+
+  _moveFigurePanel (collection, from, to) {
+    const collectionId = collection.id
+    this.articleSession.transaction(tx => {
+      const panel = collection.getPanels().getItemAt(from)
+      tx.update([collectionId, 'panels'], { type: 'delete', pos: from })
+      tx.update([collectionId, 'panels'], { type: 'insert', pos: to, value: panel.id })
+      // TODO: do it properly when we will have transaction level state manipulation
+      tx.set([collectionId, 'state', 'currentPanelIndex'], to)
     })
   }
 

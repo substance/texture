@@ -99,7 +99,7 @@ DispQuote.schema = {
   _childNodes: CHILDREN('p')
 }
 
-class Figure extends DocumentNode {
+class FigurePanel extends DocumentNode {
   getContent () {
     return this.getDocument().get(this.content)
   }
@@ -108,8 +108,8 @@ class Figure extends DocumentNode {
   }
 }
 
-Figure.schema = {
-  type: 'figure',
+FigurePanel.schema = {
+  type: 'figure-panel',
   content: CHILD('graphic'),
   title: TEXT(...RICH_TEXT_ANNOS, 'xref'),
   label: STRING,
@@ -117,7 +117,27 @@ Figure.schema = {
   permission: CHILD('permission')
 }
 
-class TableFigure extends Figure {
+class Figure extends DocumentNode {
+  _initialize (...args) {
+    super._initialize(...args)
+
+    this.state = {
+      currentPanelIndex: 0
+    }
+  }
+
+  getPanels () {
+    const doc = this.getDocument()
+    return this.panels.map(id => doc.get(id))
+  }
+}
+
+Figure.schema = {
+  type: 'figure',
+  panels: CHILDREN('figure-panel')
+}
+
+class TableFigure extends FigurePanel {
   // NOTE: this will
   getFootnoteManager () {
     return this._tableFootnoteManager
@@ -879,6 +899,7 @@ InternalArticleSchema.addNodes([
   DispFormula,
   DispQuote,
   Figure,
+  FigurePanel,
   Footnote,
   Footnotes,
   Front,

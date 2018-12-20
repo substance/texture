@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { importElement, exportElement } from './shared/testHelpers'
+import { importElement, exportNode } from './shared/testHelpers'
 
 const DispFormula = `
 <disp-formula id="disp-formula-3">
@@ -29,26 +29,26 @@ test('DispFormulaConverter: importing', t => {
 
 test('DispFormulaConverter: exporting', function (t) {
   let el = DefaultDOMElement.parseSnippet(DispFormula.trim(), 'xml')
-  let DispFormulaNode = importElement(el)
-  let DispFormulaEl = exportElement(DispFormulaNode)
-  t.equal(DispFormulaEl.getOuterHTML(), DispFormula.replace(/\n|\r/g, ''), 'exported element should be equal to imported')
+  let dispFormulaNode = importElement(el)
+  let dispFormulaEl = exportNode(dispFormulaNode)
+  t.equal(dispFormulaEl.getOuterHTML(), DispFormula.replace(/\n|\r/g, ''), 'exported element should be equal to imported')
   t.end()
 })
 
 test('DispFormulaConverter: exported tex-math should always contain CDATA', function (t) {
   let el = DefaultDOMElement.parseSnippet(DispFormulaWithoutCDATA.trim(), 'xml')
-  let DispFormulaNode = importElement(el)
-  let DispFormulaEl = exportElement(DispFormulaNode)
-  let TexMathEl = DispFormulaEl.find('tex-math')
-  t.equal(TexMathEl.getChildCount(), 1, 'tex-math should contain one element')
-  t.equal(TexMathEl.getFirstChild().nodeType, 'cdata', 'tex-math should contain cdata element')
+  let dispFormulaNode = importElement(el)
+  let dispFormulaEl = exportNode(dispFormulaNode)
+  let texMathEl = dispFormulaEl.find('tex-math')
+  t.equal(texMathEl.getChildCount(), 1, 'tex-math should contain one element')
+  t.equal(texMathEl.getFirstChild().nodeType, 'cdata', 'tex-math should contain cdata element')
   t.end()
 })
 
 test('TexMathConverter: exported element should not have id', function (t) {
   let el = DefaultDOMElement.parseSnippet(TexMathWithId.trim(), 'xml')
-  let TexMathNode = importElement(el)
-  let TexMathEl = exportElement(TexMathNode)
-  t.isNil(TexMathEl.getAttribute('id'), 'tex-math should not contain id attribute')
+  let texMathNode = importElement(el)
+  let texMathEl = exportNode(texMathNode)
+  t.isNil(texMathEl.getAttribute('id'), 'tex-math should not contain id attribute')
   t.end()
 })

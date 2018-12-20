@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, DefaultDOMElement } from 'substance'
 
 export default class TOC extends Component {
   didMount () {
@@ -58,7 +58,9 @@ export default class TOC extends Component {
 
   handleClick (e) {
     e.preventDefault()
-    let nodeId = e.currentTarget.dataset.id
+    // ATTENTION: wrap the native element here so that this works for testing too
+    let target = DefaultDOMElement.wrap(e.currentTarget)
+    const nodeId = target.getAttribute('data-id')
     this.send('tocEntrySelected', nodeId)
   }
 }

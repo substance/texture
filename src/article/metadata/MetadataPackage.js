@@ -11,6 +11,11 @@ import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
+import {
+  AddFigurePanelCommand, MoveFigurePanelCommand,
+  ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand
+} from '../shared/FigurePanelCommands'
+import UploadFigurePanelTool from '../shared/UploadFigurePanelTool'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -18,6 +23,7 @@ import TranslatableEntryEditor from './TranslatableEntryEditor'
 import TranslateableEditor from './TranslateableEditor'
 
 import TableFigureComponent from '../shared/TableFigureComponent'
+import FiguresSectionComponent from './FiguresSectionComponent'
 
 export default {
   name: 'ArticleMetadata',
@@ -39,6 +45,8 @@ export default {
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
+    config.addComponent('figures', FiguresSectionComponent)
+
     // workflows
     config.addComponent('add-reference', AddReferenceWorkflow)
 
@@ -82,7 +90,7 @@ export default {
       {
         name: 'collection-tools',
         type: 'tool-group',
-        showDisabled: true,
+        showDisabled: false,
         style: 'minimal',
         items: [
           { type: 'command-group', name: 'collection' }
@@ -181,6 +189,40 @@ export default {
     config.addCommand('add-footnote', InsertFootnoteCommand, {
       commandGroup: 'add-entity'
     })
+
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'collection'
+    })
+    config.addTool('add-figure-panel', UploadFigurePanelTool)
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
+
+    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
+      commandGroup: 'collection'
+    })
+    config.addTool('replace-figure-panel-image', UploadFigurePanelTool)
+    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
+    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
+
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'collection'
+    })
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
+
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'collection'
+    })
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
+
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
+      commandGroup: 'collection'
+    })
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addLabel('add-reference', {
       en: 'Reference'

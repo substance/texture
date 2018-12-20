@@ -1,96 +1,54 @@
-import { findChild } from '../util/domHelpers'
-import { getLabel } from '../../shared/nodeHelpers'
+import FigurePanelConverter from './FigurePanelConverter'
 
 export default class FigureConverter {
   get type () { return 'figure' }
 
-  get tagName () { return 'fig' }
+  // ATTENTION: this converter will create either a <fig> or a <fig-group>
+  // element depending on the number of Figure panels
+  get tagName () { return 'figure' }
 
-  import (el, node, importer) {
-    let $$ = el.createElement.bind(el.getOwnerDocument())
-    let labelEl = findChild(el, 'label')
-    let contentEl = this._getContent(el)
-    let permissionsEl = findChild(el, 'permissions')
-    let captionEl = findChild(el, 'caption')
-    let doc = importer.getDocument()
-    // Preparations
-    if (!captionEl) {
-      captionEl = $$('caption')
-    }
-    let titleEl = findChild(captionEl, 'title')
-    if (!titleEl) {
-      titleEl = $$('title')
-    }
-    // drop everything than 'p' from caption
-    let captionContent = captionEl.children
-    for (let idx = captionContent.length - 1; idx >= 0; idx--) {
-      let child = captionContent[idx]
-      if (child.tagName !== 'p') {
-        captionEl.removeAt(idx)
-      }
-    }
-    // there must be at least one paragraph
-    if (!captionEl.find('p')) {
-      captionEl.append($$('p'))
-    }
-    // Conversion
-    if (labelEl) {
-      node.label = labelEl.text()
-    }
-    node.title = importer.annotatedText(titleEl, [node.id, 'title'])
-    // content is optional
-    // TODO: really?
-    if (contentEl) {
-      node.content = importer.convertElement(contentEl).id
-    }
-    node.caption = importer.convertElement(captionEl).id
-    if (permissionsEl) {
-      node.permission = importer.convertElement(permissionsEl).id
+  matchElement (el, importer) {
+    if (el.is('fig') || el.is('fig-group')) {
+      // Note: do not use this converter if we are already converting a figure
+      let context = importer.state.getCurrentContext()
+      // Note: no context is given if the importer is used stand-alone
+      return !context || context.converter !== this
     } else {
-      node.permission = doc.create({ type: 'permission' }).id
+      return false
     }
   }
 
-  _getContent (el) {
-    return findChild(el, 'graphic')
+  import (el, node, importer) {
+    // single panel figure
+    let panelIds = []
+    if (el.is('fig')) {
+      // HACK: unfortunately the importer reserves the original id
+      // but we would like to use it for the first panel
+      let figPanelConverter = new FigurePanelConverter()
+      let figPanelData = { type: 'figure-panel', id: node.id }
+      figPanelConverter.import(el, figPanelData, importer)
+      importer._createNode(figPanelData)
+      return {
+        type: 'figure',
+        id: importer.nextId('fig'),
+        panels: [figPanelData.id]
+      }
+    // multi-panel figure
+    } else if (el.is('fig-group')) {
+      panelIds = el.findAll('fig').map(child => importer.convertElement(child).id)
+    }
+    node.panels = panelIds
   }
 
   export (node, el, exporter) {
-    let $$ = exporter.$$
     let doc = exporter.getDocument()
-    let permission = doc.get(node.permission)
-    // ATTENTION: this helper retrieves the label from the state
-    let label = getLabel(node)
-    if (label) {
-      el.append($$('label').text(label))
-    }
-    // Attention: <title> is part of the <caption>
-    if (node.title || node.caption) {
-      let caption = node.getCaption()
-      let captionEl
-      if (caption) {
-        captionEl = exporter.convertNode(caption)
-      }
-      if (node.title) {
-        // Note: this would happen if title is set, but no caption
-        if (!captionEl) captionEl = $$('caption')
-        captionEl.insertAt(0,
-          $$('title').append(
-            exporter.annotatedText([node.id, 'title'])
-          )
-        )
-      }
-      el.append(captionEl)
-    }
-    if (node.content) {
-      el.append(
-        exporter.convertNode(doc.get(node.content))
-      )
-    }
-    if (permission && !permission.isEmpty()) {
-      el.append(
-        exporter.convertNode(permission)
-      )
+    if (node.panels.length === 1) {
+      return exporter.convertNode(doc.get(node.panels[0]))
+    } else {
+      el.tagName = 'fig-group'
+      el.attr('id', node.id)
+      el.append(node.panels.map(id => exporter.convertNode(doc.get(id))))
+      return el
     }
   }
 }

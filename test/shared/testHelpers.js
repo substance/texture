@@ -57,8 +57,8 @@ export function importElement (el) {
   return importer.convertElement(el)
 }
 
-export function exportElement (el) {
+export function exportNode (node) {
   let jats = createEmptyJATS()
-  let exporter = createJatsExporter(jats, el.getDocument())
-  return exporter.convertNode(el)
+  let exporter = createJatsExporter(jats, node.getDocument())
+  return exporter.convertNode(node)
 }

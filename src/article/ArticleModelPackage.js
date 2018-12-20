@@ -8,6 +8,7 @@ import DispFormulaModel from './models/DispFormulaModel'
 import DispQuoteModel from './models/DispQuoteModel'
 import FigureCollectionModel from './models/FigureCollectionModel'
 import FigureModel from './models/FigureModel'
+import FigurePanelModel from './models/FigurePanelModel'
 import TableFigureModel from './models/TableFigureModel'
 import FootnoteCollectionModel from './models/FootnoteCollectionModel'
 import GroupCollectionModel from './models/GroupCollectionModel'
@@ -20,6 +21,8 @@ import TranslateableModel from './models/TranslateableModel'
 import TranslationCollectionModel from './models/TranslationCollectionModel'
 import TranslationModel from './models/TranslationModel'
 import XrefModel from './models/XrefModel'
+import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
+import FigureLabelGenerator from './shared/FigureLabelGenerator'
 
 export default {
   name: 'TextureArticle',
@@ -52,6 +55,7 @@ export default {
     config.addModel('text-translation', TranslationModel)
     config.addModel('container-translation', TranslationModel)
     config.addModel('figure', FigureModel)
+    config.addModel('figure-panel', FigurePanelModel)
     config.addModel('disp-formula', DispFormulaModel)
     config.addModel('disp-quote', DispQuoteModel)
     config.addModel('article-record', ArticleRecordModel)
@@ -59,30 +63,33 @@ export default {
     config.addModel('xref', XrefModel)
 
     // Experimental
-    config.setLabelGenerator('references', {
+    config.setLabelGenerator('references', NumberedLabelGenerator, {
       template: '[$]',
       and: ',',
       to: '-'
     })
-    config.setLabelGenerator('figures', {
-      name: 'Figure',
-      plural: 'Figures',
-      and: ',',
-      to: '-'
-    })
-    config.setLabelGenerator('tables', {
+    config.setLabelGenerator('tables', NumberedLabelGenerator, {
       name: 'Table',
       plural: 'Tables',
       and: ',',
       to: '-'
     })
-    config.setLabelGenerator('footnotes', {
+    config.setLabelGenerator('footnotes', NumberedLabelGenerator, {
       template: '$',
       and: ',',
       to: '-'
     })
-    config.setLabelGenerator('formulas', {
+    config.setLabelGenerator('formulas', NumberedLabelGenerator, {
       template: '($)',
+      and: ',',
+      to: '-'
+    })
+    // ATTENTION: FigureLabelGenerator works a bit differently
+    // TODO: consolidate LabelGenerators and configuration
+    // e.g. it does not make sense to say 'setLabelGenerator' but then only provide a configuration for 'NumberedLabelGenerator'
+    config.setLabelGenerator('figures', FigureLabelGenerator, {
+      singular: 'Figure $',
+      plural: 'Figures $',
       and: ',',
       to: '-'
     })

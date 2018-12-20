@@ -22,6 +22,7 @@ import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import TOC from './TOC'
 import FigureComponent from '../shared/FigureComponent'
+import FigurePanelComponent from '../shared/FigurePanelComponent'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
@@ -38,6 +39,11 @@ import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
+import {
+  AddFigurePanelCommand, MoveFigurePanelCommand,
+  RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
+} from '../shared/FigurePanelCommands'
+import UploadFigurePanelTool from '../shared/UploadFigurePanelTool'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
@@ -83,6 +89,7 @@ export default {
 
     // overriding the default components for preview
     config.addComponent('figure', FigureComponent, true)
+    config.addComponent('figure-panel', FigurePanelComponent, true)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('fn', FootnoteComponent, true)
     config.addComponent('bibr', ReferenceComponent, true)
@@ -131,6 +138,23 @@ export default {
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
       commandGroup: 'additional'
+    })
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'context'
+    })
+    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
+      commandGroup: 'context'
+    })
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'context'
+    })
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'context'
+    })
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
+      commandGroup: 'context'
     })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
@@ -250,6 +274,23 @@ export default {
     config.addDropHandler(DropFigure)
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+
+    config.addTool('add-figure-panel', UploadFigurePanelTool)
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
+
+    config.addTool('replace-figure-panel-image', UploadFigurePanelTool)
+    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
+    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
+
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
+
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
+
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

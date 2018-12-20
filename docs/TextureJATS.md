@@ -1,8 +1,10 @@
+# Texture JATS
+
 This document shows examples for Texture JATS usage. The premise of TextureJATS is to have exactly one tagging style per use-case. E.g. there is only one way to tag a reference, author or affiliation. Additionally we define a set of optional extensions to model reproducible elements (cells) in JATS. This work is inspired but not related to JATS4R, a similar effort to make JATS more reusable.
 
 ## Abstract
 
-Use Case: Regular abstract
+### Regular abstract
 
 ```xml
 <!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
@@ -11,7 +13,7 @@ Use Case: Regular abstract
 </abstract>
 ```
 
-Use Case: Custom abstract
+### Custom abstract
 
 ```xml
 <!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
@@ -21,7 +23,7 @@ Use Case: Custom abstract
 </abstract>
 ```
 
-## Affiliations
+## Affiliation
 
 `<aff>` records are used to encode affiliations of authors and editors, as well as present addresses.
 
@@ -81,7 +83,7 @@ Use Case: Custom abstract
 </title-group>
 ```
 
-## Chapters
+## Chapter
 
 Chapters are used to model appendices, acknowledgements, author response, decision letter, data availability section.
 
@@ -98,7 +100,41 @@ Chapters are used to model appendices, acknowledgements, author response, decisi
 </sub-article>
 ```
 
-## Figures
+## Contributor
+
+The are different types of contributors. Each of them are collected in a separate `<contrib-group>` element.
+
+### Author
+
+```xml
+<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
+<!-- content-type="authors" or content-type="author"? -->
+<!-- role (with free form text) should be implemented but vocab-* attributes awaiting JATS4R confirmation -->
+<!-- present address is realised with a reference to an affiliation. eLife would like to use free-form footnote instead -->
+<contrib-group content-type="authors">
+  <contrib contrib-type="author" equal-contrib="yes" corresp="no" deceased="no">
+    <name>
+      <surname>Schaffelhofer</surname>
+      <given-names>Stefan</given-names>
+    </name>
+    <xref ref-type="aff" rid="aff1" />
+    <xref ref-type="aff" rid="aff2" />
+    <xref ref-type="present-address" rid="aff1" />
+    <xref ref-type="fn" rid="conf1"/>
+    <xref ref-type="award" rid="fund1" />
+    <role vocab="CRediT" vocab-identifier="http://dictionary.casrai.org/Contributor_Roles" vocab-term="Conceptualization" vocab-term-identifier="http://dictionary.casrai.org/Contributor_Roles/Conceptualization">study designer</role>
+    <role vocab="CRediT" vocab-identifier="http://dictionary.casrai.org/Contributor_Roles" vocab-term="Data_curation" vocab-term-identifier="http://dictionary.casrai.org/Contributor_Roles/Data_curation">data curator</role>
+  </contrib>
+</contrib-group>
+```
+
+## Group Author
+
+```xml
+TODO
+```
+
+## Figure
 
 Use Case: Single figure
 
@@ -226,7 +262,7 @@ Use Case: Stand-alone supplemntary file
 
 ```xml
 <!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<supplementary-material id="source-data-1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="source-data-1.zip">
+<supplementary-material id="source-data-1" content-type="sdata" mimetype="application" mime-sub-type="zip" xlink:href="source-data-1.zip">
   <label>Source data 1.</label><!-- auto-generated, based on counter grouped by content-type -->
   <caption>
     <title>Orthogroup clustering analysis</title>

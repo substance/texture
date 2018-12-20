@@ -301,11 +301,10 @@ test('Figure: replace image in figure panel', t => {
 test('Figure: remove and move figure panels in metadata view', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
-  const doc = getDocument(editor)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
 
   // Helpers
-  loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
-  editor = openMetadataEditor(app)
   const subFigureCardSelector = '.sc-card.sm-figure-panel'
   const moveUpToolSelector = '.sc-toggle-tool.sm-move-up-figure-panel button'
   const removeToolSelector = '.sc-toggle-tool.sm-remove-figure-panel button'
@@ -325,22 +324,26 @@ test('Figure: remove and move figure panels in metadata view', t => {
   // ... contextual tools should be disabled without selecting panel
   t.notOk(isMoveUpPossible(), 'move up sub-figure tool shoold be unavailable by default')
   t.notOk(isRemovePossible(), 'remove sub-figure tool shoold be unavailable by default')
+
   // selecting a card should activate contextual tools
   selectCard(cards[1])
   t.ok(isMoveUpPossible(), 'move up sub-figure tool shoold be available when panel card is selected')
   t.ok(isRemovePossible(), 'remove sub-figure tool shoold be available when panel card is selected')
-  // removing selected panel
+
+  // removing selected panel should remove card and update label
   removeCard()
   cards = getSubFigureCards()
   t.equal(cards.length, expectedNumberOfCards - 1, 'one panel card should have been removed')
   t.equal(getSubFigureId(cards[1]), 'fig1c', 'second sub-figure id should match')
   // ATTENTION: the label has changed, so data-id and label do not fit together well anymore
   t.equal(getSubFigureLabel(cards[1]), 'Figure 1B', 'second sub-figure label should match')
-  // // moving up a sub-figure
+
+  // moving up a sub-figure to the top should move the panel, update the label, and disable move-up tool
   selectCard(cards[1])
   moveUpCard()
   cards = getSubFigureCards()
-  t.notOk(isMoveUpPossible(), 'move up sub-figure tool shoold be unavailable')
   t.equal(getSubFigureId(cards[0]), 'fig1c', 'first card should be the moved one')
+  t.equal(getSubFigureLabel(cards[0]), 'Figure 1A', 'sub-figure label should have been updated')
+  t.notOk(isMoveUpPossible(), 'move up sub-figure tool shoold be unavailable')
   t.end()
 })

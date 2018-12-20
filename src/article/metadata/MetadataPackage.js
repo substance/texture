@@ -23,7 +23,7 @@ import TranslatableEntryEditor from './TranslatableEntryEditor'
 import TranslateableEditor from './TranslateableEditor'
 
 import TableFigureComponent from '../shared/TableFigureComponent'
-import FigurePanelsComponent from './FigurePanelsComponent'
+import FiguresSectionComponent from './FiguresSectionComponent'
 
 export default {
   name: 'ArticleMetadata',
@@ -45,7 +45,7 @@ export default {
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
-    config.addComponent('figures', FigurePanelsComponent)
+    config.addComponent('figures', FiguresSectionComponent)
 
     // workflows
     config.addComponent('add-reference', AddReferenceWorkflow)

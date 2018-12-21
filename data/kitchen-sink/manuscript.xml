@@ -329,10 +329,10 @@ class Reader(fname: String) {
       </sec>
       <sec id="sec-3">
         <title>Supplementary Files</title>
-        <supplementary-material id="sm-1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="example.zip">
-          <label>Supplementary File 1.</label>
-          <caption>
-            <p>Description of Supplementary File</p>
+        <supplementary-material id="sm1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="example.zip">
+          <label>Supplementary File 1</label>
+          <caption id="sm1-caption">
+            <p id="sm1-caption-p1">Description of Supplementary File</p>
           </caption>
         </supplementary-material>
       </sec>

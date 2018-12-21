@@ -19,8 +19,7 @@ const RNG_FILES = [
 ]
 
 // Server configuration
-
-const port = 4000 // TODO: make this configurable
+let port = process.env['PORT'] || 4000
 b.setServerPort(port)
 b.yargs.option('d', {
   type: 'string',

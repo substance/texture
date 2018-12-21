@@ -29,7 +29,7 @@ export default class SupplementaryFileComponent extends NodeComponent {
     } else {
       el.append(
         $$('div').addClass('se-header').append(
-          $$('div').addClass('se-label').text(node.label),
+          $$('div').addClass('se-label').text(label),
           $$('div').addClass('se-href').text(node.href)
         ),
         $$(SectionLabel, {label: 'caption-label'}),

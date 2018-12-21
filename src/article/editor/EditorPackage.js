@@ -34,6 +34,7 @@ import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
+import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import UploadSupplementaryFileTool from './UploadSupplementaryFileTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import RemoveFootnoteCommand from './RemoveFootnoteCommand'
@@ -144,6 +145,9 @@ export default {
     config.addCommand('insert-supplementary-file', InsertSupplementaryFileCommand, {
       nodeType: 'supplementary-material',
       commandGroup: 'additional'
+    })
+    config.addCommand('replace-supplementary-file', ReplaceSupplementaryFileCommand, {
+      commandGroup: 'context'
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
@@ -306,6 +310,10 @@ export default {
     config.addTool('insert-supplementary-file', UploadSupplementaryFileTool)
     config.addLabel('insert-supplementary-file', 'Supplementary File')
     config.addIcon('insert-supplementary-file', { 'fontawesome': 'fa-file-o' })
+
+    config.addTool('replace-supplementary-file', UploadSupplementaryFileTool)
+    config.addLabel('replace-supplementary-file', 'Replace Supplementary File')
+    config.addIcon('replace-supplementary-file', { 'fontawesome': 'fa-file-text' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

@@ -566,6 +566,17 @@ export default class ArticleAPI extends EditorAPI {
     })
   }
 
+  _replaceSupplementaryFile (file, supplementaryFile) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      const mimeData = file.type.split('/')
+      tx.set([supplementaryFile.id, 'mime-subtype'], mimeData[1])
+      tx.set([supplementaryFile.id, 'mimetype'], mimeData[0])
+      tx.set([supplementaryFile.id, 'href'], path)
+    })
+  }
+
   _insertInlineGraphic (file) {
     const articleSession = this.articleSession
     const path = this.archive.createFile(file)

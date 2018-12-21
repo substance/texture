@@ -3,6 +3,7 @@ import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loa
 import setupTestApp from './shared/setupTestApp'
 
 const SUPPLEMENT_FILE = `
+  <p id="p1">ABC</p>
   <supplementary-material id="sm1">
     <label>Supplementary File 1</label>
     <caption id="sm1-caption">
@@ -60,5 +61,59 @@ test('Supplementary File: remove from a manuscript', t => {
   t.notNil(editor.find('.sm-supplementary-file[data-id=sm1]'), 'supplementary file should be again in manuscript view')
   const supplementartyFileNode = doc.get('sm1')
   t.notNil(supplementartyFileNode, 'supplementary file should be again in document')
+  t.end()
+})
+
+test('Supplementary File: reference a file', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let editorSession = getEditorSession(editor)
+  const supplementaryFileSelector = '.sc-isolated-node.sm-supplementary-file'
+  const xrefSelector = '.sc-inline-node .sm-file'
+  const emptyLabel = '???'
+  const getXref = () => editor.find(xrefSelector)
+  const insertSupplementaryFileToolSelector = '.sc-upload-supplementary-file-tool'
+  const getInsertSupplementaryFileTool = () => editor.find(insertSupplementaryFileToolSelector + ' > button')
+
+  loadBodyFixture(editor, SUPPLEMENT_FILE)
+  t.equal(editor.findAll(supplementaryFileSelector).length, 1, 'there should be only one supplementary file in document')
+  t.isNil(getXref(), 'there should be no references in manuscript')
+
+  setCursor(editor, 'p1.content', 2)
+  let citeMenu = editor.find('.sc-tool-dropdown.sm-cite button')
+  citeMenu.click()
+  let insertFileRef = editor.find('.sc-menu-item.sm-insert-xref-file')
+  t.doesNotThrow(() => {
+    insertFileRef.click()
+  }, 'ref insertion should not throw')
+
+  t.isNotNil(getXref(), 'there should be reference in manuscript')
+  t.equal(getXref().text(), emptyLabel, 'xref label should not contain reference')
+
+  getXref().click()
+  const firstXref = editor.find('.sc-edit-xref-tool .se-option .sc-preview')
+  firstXref.click()
+  t.equal(getXref().text(), 'Supplementary File 1', 'xref label should be equal to supplementary file label')
+
+  // insert another supplement before
+  setCursor(editor, 'p1.content', 1)
+  t.doesNotThrow(() => {
+    getInsertSupplementaryFileTool().el.click()
+  }, 'using tool should not throw')
+  t.doesNotThrow(() => {
+    editor.find(insertSupplementaryFileToolSelector).onFileSelect(new PseudoFileEvent())
+  }, 'triggering file upload should not throw')
+  t.equal(getXref().text(), 'Supplementary File 2', 'xref label should be equal to second supplementary file label')
+  // remove the referenced supplement
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'sm1',
+    surfaceId: 'body',
+    containerId: 'body'
+  })
+  editorSession.transaction((tx) => {
+    tx.deleteSelection()
+  })
+  t.equal(getXref().text(), emptyLabel, 'xref should be broken and contain empty label')
   t.end()
 })

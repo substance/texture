@@ -32,13 +32,20 @@ export default class SupplementaryFileConverter {
       node.label = labelEl.text()
     }
     node.href = el.getAttribute('xlink:href')
+    node.mimetype = el.getAttribute('mimetype')
+    node['mime-sub-type'] = el.getAttribute('mime-sub-type')
     node.legend = importer.convertElement(captionEl).id
   }
 
   export (node, el, exporter) {
     let $$ = exporter.$$
     let doc = node.getDocument()
-    el.attr('xlink:href', node.href)
+    el.attr({
+      'content-type': 'source-data',
+      'mimetype': node.mimetype,
+      'mime-sub-type': node['mime-sub-type'],
+      'xlink:href': node.href
+    })
     let label = getLabel(node)
     if (label) {
       el.append($$('label').text(label))

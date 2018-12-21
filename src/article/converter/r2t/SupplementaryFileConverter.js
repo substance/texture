@@ -7,7 +7,7 @@ export default class SupplementaryFileConverter {
   get tagName () { return 'supplementary-material' }
 
   import (el, node, importer) {
-    let $$ = importer.$$
+    let $$ = el.createElement.bind(el.getOwnerDocument())
     let labelEl = findChild(el, 'label')
     let captionEl = findChild(el, 'caption')
     // create a new caption element

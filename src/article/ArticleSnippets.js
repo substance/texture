@@ -29,7 +29,7 @@ export const PERSON_SNIPPET = () => `
 `
 
 export const SUPPLEMENTARY_FILE = () => `
-  <supplementary-material content-type="source-data" mimetype="" mime-sub-type="" xlink:href="">
+  <supplementary-material xmlns:xlink="http://www.w3.org/1999/xlink" mimetype="" mime-sub-type="" xlink:href="">
     <caption></caption>
   </supplementary-material>
 `

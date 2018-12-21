@@ -103,12 +103,9 @@ export function importSupplementaryFile (tx, sel, file, path) {
   let containerId = sel.containerId
   let mimeData = file.type.split('/')
   let supplementaryFile = createEmptyElement(tx, 'supplementary-file')
-
-  supplementaryFile.attr({
-    'mime-subtype': mimeData[1],
-    'mimetype': mimeData[0],
-    'xlink:href': path
-  })
+  supplementaryFile['mimetype'] = mimeData[0]
+  supplementaryFile['mime-subtype'] = mimeData[1]
+  supplementaryFile.href = path
 
   tx.insertBlockNode(supplementaryFile)
   selectionHelpers.selectNode(tx, supplementaryFile.id, containerId)

@@ -33,6 +33,8 @@ import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
+import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
+import UploadSupplementaryFileTool from './UploadSupplementaryFileTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import RemoveFootnoteCommand from './RemoveFootnoteCommand'
 import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
@@ -138,6 +140,10 @@ export default {
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
       nodeType: 'disp-quote',
       commandGroup: 'insert'
+    })
+    config.addCommand('insert-supplementary-file', InsertSupplementaryFileCommand, {
+      nodeType: 'supplementary-material',
+      commandGroup: 'additional'
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
@@ -296,6 +302,10 @@ export default {
 
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
+
+    config.addTool('insert-supplementary-file', UploadSupplementaryFileTool)
+    config.addLabel('insert-supplementary-file', 'Supplementary File')
+    config.addIcon('insert-supplementary-file', { 'fontawesome': 'fa-file-o' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

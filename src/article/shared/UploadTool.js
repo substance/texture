@@ -3,13 +3,16 @@ import { ToggleTool } from '../../kit'
 export default class UploadTool extends ToggleTool {
   renderButton ($$) {
     const button = super.renderButton($$)
-    const fileType = this.getFileType()
     const isMultiple = this.uploadMultiple()
     const input = $$('input').attr({
-      'type': 'file',
-      'accept': fileType
+      'type': 'file'
     }).ref('input')
       .on('change', this.onFileSelect)
+
+    if (!this.acceptAllFileTypes) {
+      const fileType = this.getFileType()
+      input.attr({'accept': fileType})
+    }
 
     if (isMultiple) {
       input.attr({
@@ -29,6 +32,10 @@ export default class UploadTool extends ToggleTool {
   }
 
   uploadMultiple () {
+    return false
+  }
+
+  acceptAllFileTypes () {
     return false
   }
 

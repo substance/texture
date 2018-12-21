@@ -26,6 +26,7 @@ import './Persistence.test'
 import './PreformatConverter.test'
 import './Table.test'
 import './TableConverter.test'
+import './SupplementaryFile.test'
 
 platform.test = true
 

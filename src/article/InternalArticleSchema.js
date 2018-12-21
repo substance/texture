@@ -268,6 +268,8 @@ class SupplementaryFile extends DocumentNode {
 }
 SupplementaryFile.schema = {
   type: 'supplementary-file',
+  mimetype: STRING,
+  'mime-sub-type': STRING,
   href: STRING,
   label: STRING,
   legend: CHILD('caption')

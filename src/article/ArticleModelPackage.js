@@ -86,7 +86,7 @@ export default {
       to: '-'
     })
     config.setLabelGenerator('supplementaries', NumberedLabelGenerator, {
-      name: 'Supplementary Files',
+      name: 'Supplementary File',
       plural: 'Supplementary Files',
       and: ',',
       to: '-'

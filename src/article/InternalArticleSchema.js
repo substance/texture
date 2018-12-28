@@ -261,11 +261,7 @@ Footnotes.schema = {
   _childNodes: CHILDREN('fn')
 }
 
-class SupplementaryFile extends DocumentNode {
-  getLegend () {
-    return this.getDocument().get(this.legend)
-  }
-}
+class SupplementaryFile extends DocumentNode {}
 SupplementaryFile.schema = {
   type: 'supplementary-file',
   mimetype: STRING,

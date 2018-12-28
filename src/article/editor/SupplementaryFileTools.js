@@ -1,11 +1,11 @@
 import UploadTool from '../shared/UploadTool'
 
 class SupplementaryFileTool extends UploadTool {
-  get acceptAllFileTypes () {
+  get doesAcceptAllFileTypes () {
     return true
   }
 
-  get uploadMultiple () {
+  get canUploadMultiple () {
     return false
   }
 }

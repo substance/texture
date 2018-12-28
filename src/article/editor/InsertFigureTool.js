@@ -9,7 +9,7 @@ export default class InsertFigureTool extends UploadTool {
     return 'image/*'
   }
 
-  get uploadMultiple () {
+  get canUploadMultiple () {
     return true
   }
 }

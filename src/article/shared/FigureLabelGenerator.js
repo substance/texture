@@ -20,7 +20,7 @@ export default class FigureLabelGenerator {
   }
 
   getLabel (...defs) {
-    if (!defs || defs.length === 0) return this.config.invalid
+    if (defs.length === 0) return this.config.invalid
     // Note: normalizing args so that every def is a tuple
     defs = defs.map(d => {
       if (!isArray(d)) return [d]

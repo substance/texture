@@ -5,7 +5,7 @@ class FigurePanelTool extends UploadTool {
     return 'image/*'
   }
 
-  uploadMultiple () {
+  get uploadMultiple () {
     return false
   }
 }

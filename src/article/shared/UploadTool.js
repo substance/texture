@@ -3,7 +3,7 @@ import { ToggleTool } from '../../kit'
 export default class UploadTool extends ToggleTool {
   renderButton ($$) {
     const button = super.renderButton($$)
-    const isMultiple = this.uploadMultiple()
+    const isMultiple = this.uploadMultiple
     const input = $$('input').attr({
       'type': 'file'
     }).ref('input')
@@ -31,11 +31,11 @@ export default class UploadTool extends ToggleTool {
     throw new Error('This method is abstract')
   }
 
-  uploadMultiple () {
+  get uploadMultiple () {
     return false
   }
 
-  acceptAllFileTypes () {
+  get acceptAllFileTypes () {
     return false
   }
 

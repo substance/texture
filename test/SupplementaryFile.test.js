@@ -16,7 +16,7 @@ test('Supplemetary File: insert to a manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
-  const insertSupplementaryFileToolSelector = '.sc-upload-supplementary-file-tool'
+  const insertSupplementaryFileToolSelector = '.sc-insert-supplementary-file-tool'
   const getInsertSupplementaryFileTool = () => editor.find(insertSupplementaryFileToolSelector + ' > button')
 
   loadBodyFixture(editor, '<p id="p1">ABC</p>')
@@ -72,7 +72,7 @@ test('Supplementary File: reference a file', t => {
   const xrefSelector = '.sc-inline-node .sm-file'
   const emptyLabel = '???'
   const getXref = () => editor.find(xrefSelector)
-  const insertSupplementaryFileToolSelector = '.sc-upload-supplementary-file-tool'
+  const insertSupplementaryFileToolSelector = '.sc-insert-supplementary-file-tool'
   const getInsertSupplementaryFileTool = () => editor.find(insertSupplementaryFileToolSelector + ' > button')
 
   loadBodyFixture(editor, SUPPLEMENT_FILE)
@@ -124,7 +124,7 @@ test('Supplementary File: replace a file', t => {
   let editorSession = getEditorSession(editor)
   loadBodyFixture(editor, SUPPLEMENT_FILE)
 
-  const replaceSupplementaryFileToolSelector = '.sc-upload-supplementary-file-tool.sm-upload-tool'
+  const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-tool'
   editorSession.setSelection({
     type: 'node',
     nodeId: 'sm1',
@@ -132,7 +132,7 @@ test('Supplementary File: replace a file', t => {
     containerId: 'body'
   })
   // Note: we have the same tool for replace and for insertion
-  const replaceSupplementaryFileTool = editor.findAll(replaceSupplementaryFileToolSelector)[1]
+  const replaceSupplementaryFileTool = editor.find(replaceSupplementaryFileToolSelector)
   t.isNotNil(replaceSupplementaryFileTool, 'replace supplementary file tool shoold be available')
   t.ok(replaceSupplementaryFileTool.find('button').click(), 'clicking on the replace supplementary file button should not throw error')
   t.doesNotThrow(() => {

@@ -35,7 +35,7 @@ import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
-import UploadSupplementaryFileTool from './UploadSupplementaryFileTool'
+import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import RemoveFootnoteCommand from './RemoveFootnoteCommand'
 import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
@@ -307,11 +307,11 @@ export default {
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
-    config.addTool('insert-supplementary-file', UploadSupplementaryFileTool)
+    config.addTool('insert-supplementary-file', InsertSupplementaryFileTool)
     config.addLabel('insert-supplementary-file', 'Supplementary File')
     config.addIcon('insert-supplementary-file', { 'fontawesome': 'fa-file-o' })
 
-    config.addTool('replace-supplementary-file', UploadSupplementaryFileTool)
+    config.addTool('replace-supplementary-file', ReplaceSupplementaryFileTool)
     config.addLabel('replace-supplementary-file', 'Replace Supplementary File')
     config.addIcon('replace-supplementary-file', { 'fontawesome': 'fa-file-text' })
 

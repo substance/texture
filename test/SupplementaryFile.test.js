@@ -117,3 +117,26 @@ test('Supplementary File: reference a file', t => {
   t.equal(getXref().text(), emptyLabel, 'xref should be broken and contain empty label')
   t.end()
 })
+
+test('Supplementary File: replace a file', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let editorSession = getEditorSession(editor)
+  loadBodyFixture(editor, SUPPLEMENT_FILE)
+
+  const replaceSupplementaryFileToolSelector = '.sc-upload-supplementary-file-tool.sm-upload-tool'
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'sm1',
+    surfaceId: 'body',
+    containerId: 'body'
+  })
+  const replaceSubFigureImageTool = editor.find(replaceSupplementaryFileToolSelector)
+  t.isNotNil(replaceSubFigureImageTool, 'replace supplementary file tool shoold be available')
+  t.ok(replaceSubFigureImageTool.find('button').click(), 'clicking on the replace supplementary file button should not throw error')
+  t.doesNotThrow(() => {
+    replaceSubFigureImageTool.onFileSelect(new PseudoFileEvent())
+  }, 'triggering file upload for replace supplementary file should not throw')
+
+  t.end()
+})

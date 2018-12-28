@@ -131,11 +131,11 @@ test('Supplementary File: replace a file', t => {
     surfaceId: 'body',
     containerId: 'body'
   })
-  const replaceSubFigureImageTool = editor.find(replaceSupplementaryFileToolSelector)
-  t.isNotNil(replaceSubFigureImageTool, 'replace supplementary file tool shoold be available')
-  t.ok(replaceSubFigureImageTool.find('button').click(), 'clicking on the replace supplementary file button should not throw error')
+  const replaceSupplementaryFileTool = editor.find(replaceSupplementaryFileToolSelector)
+  t.isNotNil(replaceSupplementaryFileTool, 'replace supplementary file tool shoold be available')
+  t.ok(replaceSupplementaryFileTool.find('button').click(), 'clicking on the replace supplementary file button should not throw error')
   t.doesNotThrow(() => {
-    replaceSubFigureImageTool.onFileSelect(new PseudoFileEvent())
+    replaceSupplementaryFileTool.onFileSelect(new PseudoFileEvent())
   }, 'triggering file upload for replace supplementary file should not throw')
 
   t.end()

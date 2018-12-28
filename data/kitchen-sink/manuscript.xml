@@ -327,16 +327,25 @@ class Reader(fname: String) {
 ]]></tex-math>
         </disp-formula>
       </sec>
+      <sec id="sec-3">
+        <title>Supplementary Files</title>
+        <supplementary-material id="sm1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="example.zip">
+          <label>Supplementary File 1</label>
+          <caption id="sm1-caption">
+            <p id="sm1-caption-p1">Description of Supplementary File</p>
+          </caption>
+        </supplementary-material>
+      </sec>
     </sec>
   </body>
   <back>
     <fn-group>
       <fn id="fn1">
         <label>1</label>
-        <p id="p-10">Lorem ipsum dolor sit amet, ea ludus intellegat his, graece fastidii phaedrum ea mea, ne duo esse omnium.</p>
+        <p id="p-10">This is the first footnote.</p>
       </fn>
       <fn id="fn2">
-        <p id="p-11">Phasellus ex nulla, interdum condimentum pretium ac, auctor et tellus. Maecenas eu est a neque vestibulum laoreet.</p>
+        <p id="p-11">This. is the second footnote.</p>
       </fn>
     </fn-group>
     <ref-list>

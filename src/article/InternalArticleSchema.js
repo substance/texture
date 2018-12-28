@@ -261,7 +261,15 @@ Footnotes.schema = {
   _childNodes: CHILDREN('fn')
 }
 
-// TODO: move all of this into InternalArticleSchema
+class SupplementaryFile extends DocumentNode {}
+SupplementaryFile.schema = {
+  type: 'supplementary-file',
+  mimetype: STRING,
+  'mime-sub-type': STRING,
+  href: STRING,
+  label: STRING,
+  legend: CHILD('caption')
+}
 
 class BibliographicEntry extends DocumentNode {}
 BibliographicEntry.schema = {
@@ -908,6 +916,7 @@ InternalArticleSchema.addNodes([
   ListItemNode,
   Preformat,
   References,
+  SupplementaryFile,
   TableNode,
   TableFigure,
   TableRow,

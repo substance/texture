@@ -28,6 +28,12 @@ export const PERSON_SNIPPET = () => `
   </contrib>
 `
 
+export const SUPPLEMENTARY_FILE = () => `
+  <supplementary-material xmlns:xlink="http://www.w3.org/1999/xlink" mimetype="" mime-sub-type="" xlink:href="">
+    <caption></caption>
+  </supplementary-material>
+`
+
 export const TABLE_SNIPPET = (nrows, ncols) => `
   <table-wrap>
     <caption>

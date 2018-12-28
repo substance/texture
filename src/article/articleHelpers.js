@@ -1,7 +1,8 @@
 import { DefaultDOMElement, importNodeIntoDocument, selectionHelpers } from 'substance'
 import createJatsImporter from './converter/r2t/createJatsImporter'
-import { DISP_FORMULA, DISP_QUOTE, FIGURE_SNIPPET,
-  FOOTNOTE_SNIPPET, PERSON_SNIPPET, TABLE_SNIPPET
+import {
+  DISP_FORMULA, DISP_QUOTE, FIGURE_SNIPPET, FOOTNOTE_SNIPPET,
+  PERSON_SNIPPET, SUPPLEMENTARY_FILE, TABLE_SNIPPET
 } from './ArticleSnippets'
 
 const elementSpippetsMap = {
@@ -10,7 +11,8 @@ const elementSpippetsMap = {
   'figure': FIGURE_SNIPPET,
   'footnote': FOOTNOTE_SNIPPET,
   'person': PERSON_SNIPPET,
-  'table-figure': TABLE_SNIPPET
+  'table-figure': TABLE_SNIPPET,
+  'supplementary-file': SUPPLEMENTARY_FILE
 }
 
 export function createEmptyElement (tx, elName, ...snippetParams) {
@@ -95,4 +97,16 @@ export function importFigures (tx, sel, files, paths) {
 
 export function insertTableFigure (tx, rows, columns) {
   return createEmptyElement(tx, 'table-figure', rows, columns)
+}
+
+export function importSupplementaryFile (tx, sel, file, path) {
+  let containerId = sel.containerId
+  let mimeData = file.type.split('/')
+  let supplementaryFile = createEmptyElement(tx, 'supplementary-file')
+  supplementaryFile['mimetype'] = mimeData[0]
+  supplementaryFile['mime-subtype'] = mimeData[1]
+  supplementaryFile.href = path
+
+  tx.insertBlockNode(supplementaryFile)
+  selectionHelpers.selectNode(tx, supplementaryFile.id, containerId)
 }

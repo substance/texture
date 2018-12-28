@@ -15,7 +15,7 @@ import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand
 } from '../shared/FigurePanelCommands'
-import UploadFigurePanelTool from '../shared/UploadFigurePanelTool'
+import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
 import CollectionEditor from './CollectionEditor'
 import ArticleRecordEditor from './ArticleRecordEditor'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -193,14 +193,14 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'collection'
     })
-    config.addTool('add-figure-panel', UploadFigurePanelTool)
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
     config.addLabel('add-figure-panel', 'Add Sub-Figure')
     config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
 
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'collection'
     })
-    config.addTool('replace-figure-panel-image', UploadFigurePanelTool)
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
     config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
 

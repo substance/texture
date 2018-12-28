@@ -10,7 +10,7 @@ import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import {
   createEmptyElement, importFigurePanel, importFigures,
-  insertTableFigure, setContainerSelection
+  importSupplementaryFile, insertTableFigure, setContainerSelection
 } from './articleHelpers'
 
 // TODO: this should come from configuration
@@ -553,6 +553,27 @@ export default class ArticleAPI extends EditorAPI {
       tx.update([collectionId, 'panels'], { type: 'insert', pos: to, value: panel.id })
       // TODO: do it properly when we will have transaction level state manipulation
       tx.set([collectionId, 'state', 'currentPanelIndex'], to)
+    })
+  }
+
+  _insertSupplementaryFile (file) {
+    const articleSession = this.articleSession
+    let path = this.archive.createFile(file)
+    let sel = articleSession.getSelection()
+    if (!sel || !sel.containerId) return
+    articleSession.transaction(tx => {
+      importSupplementaryFile(tx, sel, file, path)
+    })
+  }
+
+  _replaceSupplementaryFile (file, supplementaryFile) {
+    const articleSession = this.articleSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      const mimeData = file.type.split('/')
+      tx.set([supplementaryFile.id, 'mime-subtype'], mimeData[1])
+      tx.set([supplementaryFile.id, 'mimetype'], mimeData[0])
+      tx.set([supplementaryFile.id, 'href'], path)
     })
   }
 

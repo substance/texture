@@ -33,6 +33,9 @@ import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
+import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
+import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
+import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import RemoveFootnoteCommand from './RemoveFootnoteCommand'
 import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
@@ -43,7 +46,7 @@ import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
-import UploadFigurePanelTool from '../shared/UploadFigurePanelTool'
+import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import DropFigure from './DropFigure'
@@ -127,6 +130,10 @@ export default {
       refType: 'formula',
       commandGroup: 'insert-xref'
     })
+    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
+      refType: 'file',
+      commandGroup: 'insert-xref'
+    })
     config.addCommand('insert-disp-formula', InsertDispFormulaCommand, {
       nodeType: 'disp-formula',
       commandGroup: 'insert'
@@ -134,6 +141,13 @@ export default {
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
       nodeType: 'disp-quote',
       commandGroup: 'insert'
+    })
+    config.addCommand('insert-supplementary-file', InsertSupplementaryFileCommand, {
+      nodeType: 'supplementary-material',
+      commandGroup: 'additional'
+    })
+    config.addCommand('replace-supplementary-file', ReplaceSupplementaryFileCommand, {
+      commandGroup: 'context'
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
       nodeType: 'fig',
@@ -232,6 +246,7 @@ export default {
     config.addLabel('insert-xref-table', 'Table')
     config.addLabel('insert-xref-fn', 'Footnote')
     config.addLabel('insert-xref-formula', 'Formula')
+    config.addLabel('insert-xref-file', 'Supplementary File')
     config.addLabel('insert-disp-formula', 'Block Formula')
     config.addLabel('insert-disp-quote', 'Blockquote')
     config.addLabel('insert-footnote', 'Footnote')
@@ -275,11 +290,11 @@ export default {
     config.addLabel('insert-fig', 'Figure')
     config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
 
-    config.addTool('add-figure-panel', UploadFigurePanelTool)
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
     config.addLabel('add-figure-panel', 'Add Sub-Figure')
     config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
 
-    config.addTool('replace-figure-panel-image', UploadFigurePanelTool)
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
     config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
 
@@ -291,6 +306,14 @@ export default {
 
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
+
+    config.addTool('insert-supplementary-file', InsertSupplementaryFileTool)
+    config.addLabel('insert-supplementary-file', 'Supplementary File')
+    config.addIcon('insert-supplementary-file', { 'fontawesome': 'fa-file-o' })
+
+    config.addTool('replace-supplementary-file', ReplaceSupplementaryFileTool)
+    config.addLabel('replace-supplementary-file', 'Replace Supplementary File')
+    config.addIcon('replace-supplementary-file', { 'fontawesome': 'fa-file-text' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addLabel('insert-inline-graphic', 'Inline Graphic')

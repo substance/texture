@@ -67,7 +67,7 @@ test('Figure: add a sub-figure to a figure', t => {
   let doc = getDocument(editor)
   let figure = doc.find('body figure')
   setCursor(editor, 'fig1-caption-p1.content', 0)
-  let insertFigurePanelTool = editor.find('.sc-upload-figure-panel-tool')
+  let insertFigurePanelTool = editor.find('.sc-insert-figure-panel-tool')
   t.ok(insertFigurePanelTool.find('button').click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   let panels = figure.getPanels()
@@ -289,11 +289,11 @@ test('Figure: replace image in figure panel', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
 
-  const uploadSubFigureToolSelector = '.sc-upload-figure-panel-tool.sm-upload-tool'
+  const replaceSubFigureToolSelector = '.sc-replace-figure-panel-tool'
   const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
   firstThumbnail.click()
   // Note: we have the same tool for replace as for add a new sub-figure
-  const replaceSubFigureImageTool = editor.findAll(uploadSubFigureToolSelector)[1]
+  const replaceSubFigureImageTool = editor.find(replaceSubFigureToolSelector)
   t.isNotNil(replaceSubFigureImageTool, 'replace sub-figure image tool shoold be available')
   t.ok(replaceSubFigureImageTool.find('button').click(), 'clicking on the replace sub-figure button should not throw error')
   // triggering onFileSelect() so that the figure replace logic gets called

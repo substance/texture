@@ -131,7 +131,8 @@ test('Supplementary File: replace a file', t => {
     surfaceId: 'body',
     containerId: 'body'
   })
-  const replaceSupplementaryFileTool = editor.find(replaceSupplementaryFileToolSelector)
+  // Note: we have the same tool for replace and for insertion
+  const replaceSupplementaryFileTool = editor.findAll(replaceSupplementaryFileToolSelector)[1]
   t.isNotNil(replaceSupplementaryFileTool, 'replace supplementary file tool shoold be available')
   t.ok(replaceSupplementaryFileTool.find('button').click(), 'clicking on the replace supplementary file button should not throw error')
   t.doesNotThrow(() => {

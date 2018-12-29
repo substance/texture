@@ -3,6 +3,7 @@ import {
 } from '../../kit'
 
 import ArticleNavPackage from '../ArticleNavPackage'
+import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import PersistencePackage from '../../PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
@@ -28,6 +29,7 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
+    config.import(ArticleToolbarPackage)
     config.import(ArticleNavPackage)
     config.import(PersistencePackage)
     config.import(ManuscriptContentPackage)
@@ -48,62 +50,6 @@ export default {
     // workflows
     config.addComponent('add-reference', AddReferenceWorkflow)
 
-    config.addToolPanel('toolbar', [
-      {
-        name: 'undo-redo',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'undo-redo' }
-        ]
-      },
-      {
-        name: 'persistence',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'persistence' }
-        ]
-      },
-      {
-        name: 'add',
-        type: 'tool-dropdown',
-        showDisabled: true,
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'add-entity' }
-        ]
-      },
-      {
-        name: 'annotations',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'formatting' }
-        ]
-      },
-      {
-        name: 'collection-tools',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'collection' }
-        ]
-      },
-      {
-        name: 'mode',
-        type: 'tool-dropdown',
-        showDisabled: false,
-        style: 'full',
-        items: [
-          { type: 'command-group', name: 'switch-view' }
-        ]
-      }
-    ])
     config.addLabel('article-record', {
       en: 'Article Information'
     })
@@ -124,6 +70,92 @@ export default {
     config.addIcon('remove', {
       'fontawesome': 'fa-trash'
     })
+
+    config.addCommand('add-author', AddEntityCommand, {
+      type: 'author',
+      collection: 'authors',
+      commandGroup: 'add-entity'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+A', { command: 'add-author' })
+
+    config.addCommand('add-editor', AddEntityCommand, {
+      type: 'editor',
+      collection: 'editors',
+      commandGroup: 'add-entity'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+E', { command: 'add-editor' })
+
+    config.addCommand('add-group', AddEntityCommand, {
+      type: 'group',
+      collection: 'groups',
+      commandGroup: 'add-entity'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-group' })
+
+    config.addCommand('add-organisation', AddEntityCommand, {
+      type: 'organisation',
+      collection: 'organisations',
+      commandGroup: 'add-entity'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+O', { command: 'add-organisation' })
+
+    config.addCommand('add-award', AddEntityCommand, {
+      type: 'award',
+      collection: 'awards',
+      commandGroup: 'add-entity'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Y', { command: 'add-award' })
+
+    config.addCommand('add-keyword', AddEntityCommand, {
+      type: 'keyword',
+      collection: 'keywords',
+      commandGroup: 'add-entity'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+K', { command: 'add-keyword' })
+
+    config.addCommand('add-subject', AddEntityCommand, {
+      type: 'subject',
+      collection: 'subjects',
+      commandGroup: 'add-entity'
+    })
+
+    config.addCommand('add-footnote', InsertFootnoteCommand, {
+      commandGroup: 'add-entity'
+    })
+
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'contextual'
+    })
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
+
+    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
+      commandGroup: 'contextual'
+    })
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
+    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
+
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'contextual'
+    })
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
+
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'contextual'
+    })
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
+
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
+      commandGroup: 'contextual'
+    })
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addLabel('add-reference', {
       en: 'Reference'
@@ -174,7 +206,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'bold',
+      name: 'annotate-bold',
       nodeType: 'bold',
       commandGroup: 'formatting',
       icon: 'fa-bold',
@@ -183,7 +215,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'italic',
+      name: 'annotate-italic',
       nodeType: 'italic',
       commandGroup: 'formatting',
       icon: 'fa-italic',
@@ -192,7 +224,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'sub',
+      name: 'annotate-sub',
       nodeType: 'sub',
       commandGroup: 'formatting',
       icon: 'fa-subscript',
@@ -200,7 +232,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'sup',
+      name: 'annotate-sup',
       nodeType: 'sup',
       commandGroup: 'formatting',
       icon: 'fa-superscript',
@@ -208,7 +240,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'monospace',
+      name: 'annotate-monospace',
       nodeType: 'monospace',
       commandGroup: 'formatting',
       icon: 'fa-code',
@@ -294,10 +326,10 @@ export default {
       en: 'Supported formats'
     })
 
-    config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
-    config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })
-    config.addLabel('select-item', {
-      en: 'Choose'
+    // Card tools
+    config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
+      direction: 'up',
+      commandGroup: 'contextual'
     })
 
     // Collections:
@@ -315,12 +347,10 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'collection'
     })
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addLabel('add-figure-panel', 'Add Sub-Figure')
-    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
-
-    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
-      commandGroup: 'collection'
+    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
+    config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
+      direction: 'down',
+      commandGroup: 'contextual'
     })
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
@@ -329,12 +359,9 @@ export default {
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'collection'
     })
-    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
-    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
-
-    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
-      direction: 'up',
-      commandGroup: 'collection'
+    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
+    config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
+      commandGroup: 'contextual'
     })
     config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
     config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })

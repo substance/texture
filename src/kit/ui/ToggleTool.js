@@ -1,13 +1,13 @@
-import { Component } from 'substance'
+import AbstractCommandTool from './AbstractCommandTool'
 import Tooltip from './Tooltip'
 
 /**
-  @param {string} props.commandName
-  @param {object} props.commandState
-  @param {string} props.theme
-  @param {string} props.keyboardShortcut
-*/
-export default class ToggleTool extends Component {
+ * @param {string} props.style
+ * @param {string} props.theme
+ * @param {object} props.item
+ * @param {object} props.commandState
+ */
+export default class ToggleTool extends AbstractCommandTool {
   render ($$) {
     let el = $$('div')
       .addClass('sc-toggle-tool')
@@ -31,50 +31,22 @@ export default class ToggleTool extends Component {
       active,
       disabled,
       theme: this.props.theme
-    }).on('click', this.onClick)
+    }).on('click', this._onClick)
     return btn
   }
 
   getClassNames () {
-    return `sm-${this._getName()}`
-  }
-
-  onClick (e) {
-    e.preventDefault()
-    e.stopPropagation()
-    if (!this.props.commandState.disabled) {
-      // no props by default
-      this.executeCommand()
-    }
-  }
-
-  executeCommand (params) {
-    this.send('executeCommand', this.props.commandName, params)
+    return `sm-${this.props.item.name}`
   }
 
   _getTooltipText () {
     const label = this._getLabel()
-    const name = this._getName()
-    // TODO: instead of letting this tool lookup keyboard shortcutm it should
-    const config = this.context.config
-    const keyboardShortcut = config.getKeyboardShortcutsByCommandName(name)
+    const keyboardShortcut = this._getKeyboardShortcut()
     if (keyboardShortcut) {
       return [label, ' (', keyboardShortcut, ')'].join('')
     } else {
       return label
     }
-  }
-
-  _getName () {
-    return this.props.commandName
-  }
-
-  _getLabel () {
-    return this.context.labelProvider.getLabel(this._getName())
-  }
-
-  _getIconName () {
-    return this._getName()
   }
 
   // Used by Configurator to detect that only Tool classes are registered

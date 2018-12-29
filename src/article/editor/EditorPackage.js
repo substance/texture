@@ -3,7 +3,8 @@ import {
   EditAnnotationCommand,
   ListPackage,
   SchemaDrivenCommandManager,
-  MultiSelectPackage
+  MultiSelectPackage,
+  AnnotationCommand
 } from 'substance'
 
 import {
@@ -73,6 +74,7 @@ export default {
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
     config.import(ArticleNavPackage)
+    config.import(ArticleToolbarPackage)
     config.import(PersistencePackage)
     config.import(FindAndReplacePackage)
 
@@ -323,17 +325,14 @@ export default {
     config.addIcon('toggle-cell-heading', { 'fontawesome': 'fa-th-large' })
 
     // Annotation tools
-    config.addAnnotationTool({
-      name: 'bold',
+    config.addCommand('annotate-bold', AnnotationCommand, {
       nodeType: 'bold',
-      commandGroup: 'formatting',
-      icon: 'fa-bold',
-      label: 'Strong',
-      accelerator: 'CommandOrControl+B'
+      accelerator: 'CommandOrControl+B',
+      commandGroup: 'formatting'
     })
 
     config.addAnnotationTool({
-      name: 'italic',
+      name: 'annotate-italic',
       nodeType: 'italic',
       commandGroup: 'formatting',
       icon: 'fa-italic',
@@ -368,7 +367,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'monospace',
+      name: 'annotate-monospace',
       nodeType: 'monospace',
       commandGroup: 'formatting',
       icon: 'fa-code',
@@ -486,122 +485,10 @@ export default {
     })
     config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
-    config.addToolPanel('toolbar', [
-      {
-        name: 'undo-redo',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'undo-redo' }
-        ]
-      },
-      {
-        name: 'persistence',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'persistence' }
-        ]
-      },
-      {
-        name: 'text-types',
-        type: 'tool-dropdown',
-        showDisabled: false,
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'text-types' }
-        ]
-      },
-      {
-        name: 'annotations',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'formatting' }
-        ]
-      },
-      {
-        name: 'additinal-tools',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'menu',
-        items: [
-          { type: 'command-group', name: 'additional' }
-        ]
-      },
-      {
-        name: 'context-tools',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'menu',
-        items: [
-          { type: 'command-group', name: 'context' }
-        ]
-      },
-      {
-        name: 'list',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'list' }
-        ]
-      },
-      {
-        name: 'table',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'table' }
-        ]
-      },
-      {
-        name: 'insert',
-        type: 'tool-dropdown',
-        showDisabled: true,
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'insert' }
-        ]
-      },
-      {
-        name: 'cite',
-        type: 'tool-dropdown',
-        showDisabled: true,
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'insert-xref' }
-        ]
-      },
-      {
-        name: 'view',
-        type: 'tool-dropdown',
-        showDisabled: false,
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'toggle-content-section' },
-          { type: 'command-group', name: 'view' }
-        ]
-      },
-      {
-        name: 'mode',
-        type: 'tool-dropdown',
-        showDisabled: false,
-        style: 'full',
-        items: [
-          { type: 'command-group', name: 'switch-view' }
-        ]
-      }
-    ])
-
     config.addToolPanel('main-overlay', [
       {
         name: 'prompt',
-        type: 'tool-prompt',
+        type: 'prompt',
         showDisabled: false,
         items: [
           { type: 'command-group', name: 'prompt' }
@@ -612,7 +499,7 @@ export default {
     config.addToolPanel('context-menu', [
       {
         name: 'context-menu',
-        type: 'tool-group',
+        type: 'group',
         showDisabled: false,
         style: 'descriptive',
         items: [
@@ -624,27 +511,27 @@ export default {
     config.addToolPanel('table-context-menu', [
       {
         name: 'table-tools',
-        type: 'tool-group',
+        type: 'group',
         showDisabled: false,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table' }
         ]
       },
-      { type: 'tool-separator' },
+      { type: 'separator' },
       {
         name: 'table-insert',
-        type: 'tool-group',
+        type: 'group',
         showDisabled: false,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table-insert' }
         ]
       },
-      { type: 'tool-separator' },
+      { type: 'separator' },
       {
         name: 'table-delete',
-        type: 'tool-group',
+        type: 'group',
         showDisabled: false,
         style: 'descriptive',
         items: [
@@ -656,7 +543,7 @@ export default {
     config.addToolPanel('workflow', [
       {
         name: 'workflow',
-        type: 'tool-group',
+        type: 'group',
         items: [
           { type: 'command-group', name: 'workflows' }
         ]

@@ -20,3 +20,7 @@
 .sc-tool-dropdown:hover > .sc-tooltip {
   display: block;
 }
+
+.sc-tool-dropdown.sm-disabled > .se-toggle {
+  opacity: 0.3;
+}

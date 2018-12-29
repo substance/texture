@@ -48,6 +48,27 @@ export default class TextureConfigurator extends Configurator {
     return this.getComponentRegistry().get(name, 'strict')
   }
 
+  addCommand (name, CommandClass, opts = {}) {
+    super.addCommand(name, CommandClass, opts)
+    if (opts.accelerator) {
+      this.addKeyboardShortcut(opts.accelerator, { command: name })
+    }
+  }
+
+  /*
+    Map an XML node type to a model
+  */
+  addModel (modelType, ModelClass) {
+    if (this.config.models[modelType]) {
+      throw new Error(`model type ${modelType} already registered.`)
+    }
+    this.config.models[modelType] = ModelClass
+  }
+
+  getModelRegistry () {
+    return this.config.models
+  }
+
   addPropertyEditor (PropertyEditorClass) {
     if (includes(this.config.propertyEditors, PropertyEditorClass)) {
       throw new Error('Already registered')
@@ -153,16 +174,23 @@ export default class TextureConfigurator extends Configurator {
     let item = Object.assign({}, itemSpec)
     let type = itemSpec.type
     switch (type) {
+      case 'command': {
+        if (!itemSpec.name) throw new Error("'name' is required for type 'command'")
+        break
+      }
       case 'command-group':
         return this.getCommandGroup(itemSpec.name).map(commandName => {
-          return { commandName }
+          return {
+            type: 'command',
+            name: commandName
+          }
         })
-      case 'tool-prompt':
-      case 'tool-group':
-      case 'tool-dropdown':
+      case 'prompt':
+      case 'group':
+      case 'dropdown':
         item.items = flatten(itemSpec.items.map(itemSpec => this._compileToolPanelItem(itemSpec)))
         break
-      case 'tool-separator':
+      case 'separator':
         break
       default:
         throw new Error('Unsupported tool panel item type: ' + type)

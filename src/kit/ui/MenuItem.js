@@ -1,27 +1,34 @@
-import { Component } from 'substance'
+import AbstractCommandTool from './AbstractCommandTool'
 
-/**
-  @param {boolean} props.label whether to render a label
-  @param {string} props.commandName the associated command
-  @param {object} props.commandState the current state of the associated command
-  @param {string} props.keyboardShortcut the associated keyboard shortcut
-*/
-export default class MenuItem extends Component {
+export default class MenuItem extends AbstractCommandTool {
   render ($$) {
-    let commandState = this.props.commandState
+    const { style, item, commandState } = this.props
     let el = $$('button')
       .addClass('sc-menu-item')
-      .addClass('sm-' + this.props.commandName)
-      .append(
-        this._renderIcon($$),
-        this._renderLabel($$),
-        this._renderKeyboardShortcut($$)
-      )
-      .on('click', this._onClick)
+      .addClass('sm-' + item.name)
 
-    if (this.props.label) {
-      el.append(this.renderLabel($$))
+    switch (style) {
+      case 'minimal': {
+        el.append(this._renderIcon($$))
+        break
+      }
+      case 'descriptive': {
+        el.append(
+          this._renderLabel($$),
+          this._renderKeyboardShortcut($$)
+        )
+        break
+      }
+      default: {
+        el.append(
+          this._renderIcon($$),
+          this._renderLabel($$),
+          this._renderKeyboardShortcut($$)
+        )
+      }
     }
+    el.on('click', this._onClick)
+
     if (commandState.active) {
       el.addClass('sm-active')
     }
@@ -33,6 +40,7 @@ export default class MenuItem extends Component {
       // make button accessible for tab-navigation
       el.attr('tabindex', 1)
     }
+
     return el
   }
 
@@ -43,34 +51,16 @@ export default class MenuItem extends Component {
   }
 
   _renderIcon ($$) {
+    const iconName = this._getIconName()
     return $$('div').addClass('se-icon').append(
-      this.context.iconProvider.renderIcon($$, this.props.commandName)
+      this.context.iconProvider.renderIcon($$, iconName)
     )
   }
 
   _renderKeyboardShortcut ($$) {
-    const name = this.props.commandName
-    const config = this.context.config
-    const keyboardShortcut = config.getKeyboardShortcutsByCommandName(name)
+    const keyboardShortcut = this._getKeyboardShortcut()
     return $$('div').addClass('se-keyboard-shortcut').append(
       keyboardShortcut || ''
     )
-  }
-
-  executeCommand (params) {
-    if (!this.props.commandState.disabled) {
-      this.send('executeCommand', this.props.commandName, this.props.commandState, params)
-    }
-  }
-
-  _getLabel () {
-    let labelProvider = this.context.labelProvider
-    return labelProvider.getLabel(this.props.commandName, this.props.commandState)
-  }
-
-  _onClick (e) {
-    e.preventDefault()
-    e.stopPropagation()
-    this.executeCommand()
   }
 }

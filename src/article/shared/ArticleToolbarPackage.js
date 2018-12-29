@@ -17,8 +17,8 @@ export default {
         type: 'group',
         style: 'minimal',
         items: [
-          { type: 'command', name: 'annotate-bold', label: 'bold', icon: 'bold' },
-          { type: 'command', name: 'annotate-italic', label: 'italic' },
+          { type: 'command', name: 'toggle-bold', label: 'bold', icon: 'bold' },
+          { type: 'command', name: 'toggle-italic', label: 'italic' },
           { type: 'command', name: 'create-ext-link', label: 'link' }
         ]
       },
@@ -60,15 +60,15 @@ export default {
         type: 'dropdown',
         style: 'descriptive',
         items: [
-          { type: 'command', name: 'annotate-bold', label: 'bold' },
-          { type: 'command', name: 'annotate-italic', label: 'italic' },
-          { type: 'command', name: 'annotate-subscript', label: 'subscript' },
-          { type: 'command', name: 'annotate-superscript', label: 'superscript' },
-          { type: 'command', name: 'annotate-monospace', label: 'monospace' },
-          { type: 'command', name: 'annotate-small-caps', label: 'small-caps' },
-          { type: 'command', name: 'annotate-underline', label: 'underline' },
-          { type: 'command', name: 'annotate-overline', label: 'overline' },
-          { type: 'command', name: 'annotate-strike-through', label: 'strike-through' }
+          { type: 'command', name: 'toggle-bold', label: 'bold' },
+          { type: 'command', name: 'toggle-italic', label: 'italic' },
+          { type: 'command', name: 'toggle-subscript', label: 'subscript' },
+          { type: 'command', name: 'toggle-superscript', label: 'superscript' },
+          { type: 'command', name: 'toggle-monospace', label: 'monospace' },
+          { type: 'command', name: 'toggle-small-caps', label: 'small-caps' },
+          { type: 'command', name: 'toggle-underline', label: 'underline' },
+          { type: 'command', name: 'toggle-overline', label: 'overline' },
+          { type: 'command', name: 'toggle-strike-through', label: 'strike-through' }
         ]
       },
       // Contextual stuff

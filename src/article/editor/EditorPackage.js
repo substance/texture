@@ -12,6 +12,7 @@ import {
 } from '../../kit'
 
 import ArticleNavPackage from '../ArticleNavPackage'
+import ArticleToolbarPackage from '../ArticleToolbarPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import PersistencePackage from '../../PersistencePackage'
@@ -325,14 +326,14 @@ export default {
     config.addIcon('toggle-cell-heading', { 'fontawesome': 'fa-th-large' })
 
     // Annotation tools
-    config.addCommand('annotate-bold', AnnotationCommand, {
+    config.addCommand('toggle-bold', AnnotationCommand, {
       nodeType: 'bold',
       accelerator: 'CommandOrControl+B',
       commandGroup: 'formatting'
     })
 
     config.addAnnotationTool({
-      name: 'annotate-italic',
+      name: 'toggle-italic',
       nodeType: 'italic',
       commandGroup: 'formatting',
       icon: 'fa-italic',
@@ -351,7 +352,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'subscript',
+      name: 'toggle-subscript',
       nodeType: 'subscript',
       commandGroup: 'formatting',
       icon: 'fa-subscript',
@@ -359,7 +360,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'superscript',
+      name: 'toggle-superscript',
       nodeType: 'superscript',
       commandGroup: 'formatting',
       icon: 'fa-superscript',
@@ -367,7 +368,7 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'annotate-monospace',
+      name: 'toggle-monospace',
       nodeType: 'monospace',
       commandGroup: 'formatting',
       icon: 'fa-code',

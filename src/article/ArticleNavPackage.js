@@ -9,7 +9,6 @@ export default {
       icon: 'fa-align-left',
       label: 'Manuscript'
     })
-
     config.addViewMode({
       name: 'open-metadata',
       viewName: 'metadata',
@@ -17,16 +16,5 @@ export default {
       icon: 'fa-th-list',
       label: 'Metadata'
     })
-
-    // TODO: make reader great again
-    /*
-    config.addViewMode({
-      name: 'open-reader',
-      viewName: 'reader',
-      commandGroup: 'switch-view',
-      icon: 'fa-th-list',
-      label: 'Reader'
-    })
-    */
   }
 }

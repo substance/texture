@@ -1,6 +1,10 @@
+import { AnnotationCommand } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
+
+// Commands
+import InsertExtLinkCommand from '../editor/InsertExtLinkCommand'
 
 import ArticleNavPackage from '../ArticleNavPackage'
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
@@ -205,46 +209,38 @@ export default {
       en: 'Select license'
     })
 
-    config.addAnnotationTool({
-      name: 'annotate-bold',
+    // Annotation tools
+    config.addCommand('toggle-bold', AnnotationCommand, {
       nodeType: 'bold',
-      commandGroup: 'formatting',
-      icon: 'fa-bold',
-      label: 'Strong',
-      accelerator: 'CommandOrControl+B'
+      accelerator: 'CommandOrControl+B',
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'annotate-italic',
+    config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',
-      commandGroup: 'formatting',
-      icon: 'fa-italic',
-      label: 'Emphasize',
-      accelerator: 'CommandOrControl+I'
+      accelerator: 'CommandOrControl+I',
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'annotate-sub',
+    config.addCommand('create-ext-link', InsertExtLinkCommand, {
+      nodeType: 'ext-link',
+      accelerator: 'CommandOrControl+K',
+      commandGroup: 'formatting'
+    })
+
+    config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'sub',
-      commandGroup: 'formatting',
-      icon: 'fa-subscript',
-      label: 'Subscript'
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'annotate-sup',
+    config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'sup',
-      commandGroup: 'formatting',
-      icon: 'fa-superscript',
-      label: 'Superscript'
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'annotate-monospace',
+    config.addCommand('toggle-monospace', AnnotationCommand, {
       nodeType: 'monospace',
-      commandGroup: 'formatting',
-      icon: 'fa-code',
-      label: 'Monospace'
+      commandGroup: 'formatting'
     })
 
     // Section labels

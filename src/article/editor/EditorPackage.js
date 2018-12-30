@@ -332,47 +332,31 @@ export default {
       commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'toggle-italic',
+    config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',
-      commandGroup: 'formatting',
-      icon: 'fa-italic',
-      label: 'Emphasize',
-      accelerator: 'CommandOrControl+I'
+      accelerator: 'CommandOrControl+I',
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'external-link',
-      nodeType: 'external-link',
-      commandGroup: 'formatting',
-      command: InsertExtLinkCommand,
-      icon: 'fa-link',
-      label: 'Link',
-      accelerator: 'CommandOrControl+K'
+    config.addCommand('create-ext-link', InsertExtLinkCommand, {
+      nodeType: 'ext-link',
+      accelerator: 'CommandOrControl+K',
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'toggle-subscript',
-      nodeType: 'subscript',
-      commandGroup: 'formatting',
-      icon: 'fa-subscript',
-      label: 'Subscript'
+    config.addCommand('toggle-subscript', AnnotationCommand, {
+      nodeType: 'sub',
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'toggle-superscript',
-      nodeType: 'superscript',
-      commandGroup: 'formatting',
-      icon: 'fa-superscript',
-      label: 'Superscript'
+    config.addCommand('toggle-superscript', AnnotationCommand, {
+      nodeType: 'sup',
+      commandGroup: 'formatting'
     })
 
-    config.addAnnotationTool({
-      name: 'toggle-monospace',
+    config.addCommand('toggle-monospace', AnnotationCommand, {
       nodeType: 'monospace',
-      commandGroup: 'formatting',
-      icon: 'fa-code',
-      label: 'Monospace'
+      commandGroup: 'formatting'
     })
 
     config.addTextTypeTool({

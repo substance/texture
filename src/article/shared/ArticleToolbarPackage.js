@@ -18,8 +18,8 @@ export default {
         style: 'minimal',
         items: [
           { type: 'command', name: 'toggle-bold', label: 'bold', icon: 'bold' },
-          { type: 'command', name: 'toggle-italic', label: 'italic' },
-          { type: 'command', name: 'create-ext-link', label: 'link' }
+          { type: 'command', name: 'toggle-italic', label: 'italic', icon: 'italic' },
+          { type: 'command', name: 'create-ext-link', label: 'link', icon: 'link' }
         ]
       },
       {
@@ -120,10 +120,16 @@ export default {
 
     // Icons
     config.addIcon('bold', { 'fontawesome': 'fa-bold' })
+    config.addIcon('italic', { 'fontawesome': 'fa-italic' })
+    config.addIcon('link', { 'fontawesome': 'fa-link' })
 
     // Labels
     config.addLabel('bold', 'Bold')
     config.addLabel('italic', 'Italic')
+    config.addLabel('link', 'Link')
+    config.addLabel('subscript', 'Subscript')
+    config.addLabel('superscript', 'Superscript')
+    config.addLabel('monospace', 'Monospace')
     config.addLabel('format', 'Format')
     config.addLabel('list-tools', 'List')
     config.addLabel('table', 'Table')

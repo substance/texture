@@ -110,7 +110,7 @@ export default {
         ]
       },
       {
-        name: 'figure-panel-tools',
+        name: 'figure-tools',
         type: 'dropdown',
         style: 'descriptive',
         hideDisabled: true,
@@ -224,8 +224,8 @@ export default {
     // File tools
     config.addLabel('file-tools', 'File')
     config.addLabel('replace-file', 'Replace File')
-    // Figure panel tools
-    config.addLabel('figure-panel-tools', 'Figure Panel')
+    // Figure tools
+    config.addLabel('figure-tools', 'Figure')
     config.addLabel('add-figure-panel', 'Add Sub-Figure')
     config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
     config.addLabel('remove-figure-panel', 'Remove Sub-Figure')

@@ -101,6 +101,33 @@ export default {
         ]
       },
       {
+        name: 'file-tools',
+        type: 'dropdown',
+        style: 'descriptive',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'file' }
+        ]
+      },
+      {
+        name: 'figure-panel-tools',
+        type: 'dropdown',
+        style: 'descriptive',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'figure-panel' }
+        ]
+      },
+      {
+        name: 'footnote-tools',
+        type: 'dropdown',
+        style: 'descriptive',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'footnote' }
+        ]
+      },
+      {
         name: 'list-tools',
         type: 'dropdown',
         style: 'descriptive',
@@ -136,6 +163,22 @@ export default {
     config.addLabel('monospace', 'Monospace')
     // List tools labels
     config.addLabel('list-tools', 'List')
+    config.addLabel('toggle-unordered-list', {
+      en: 'Bulleted list',
+      de: 'Liste'
+    })
+    config.addLabel('toggle-ordered-list', {
+      en: 'Numbered list',
+      de: 'Aufzählung'
+    })
+    config.addLabel('indent-list', {
+      en: 'Increase indentation',
+      de: 'Einrückung vergrößern'
+    })
+    config.addLabel('dedent-list', {
+      en: 'Decrease indentation',
+      de: 'Einrückung verringern'
+    })
     // Insert tools labels
     config.addLabel('insert', 'Insert')
     config.addLabel('figure', 'Figure')
@@ -178,5 +221,18 @@ export default {
     config.addLabel('toggle-cell-merge', {
       en: 'Merge cell'
     })
+    // File tools
+    config.addLabel('file-tools', 'File')
+    config.addLabel('replace-file', 'Replace File')
+    // Figure panel tools
+    config.addLabel('figure-panel-tools', 'Figure Panel')
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    // Footnote tools
+    config.addLabel('footnote-tools', 'Footnote')
+    config.addLabel('remove-footnote', 'Remove Footnote')
   }
 }

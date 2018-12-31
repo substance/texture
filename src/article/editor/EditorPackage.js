@@ -136,42 +136,42 @@ export default {
     })
     config.addCommand('insert-file', InsertSupplementaryFileCommand, {
       nodeType: 'supplementary-material',
-      commandGroup: 'additional'
+      commandGroup: 'insert'
     })
-    config.addCommand('replace-supplementary-file', ReplaceSupplementaryFileCommand, {
-      commandGroup: 'context'
+    config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
+      commandGroup: 'file'
     })
     config.addCommand('insert-figure', InsertFigureCommand, {
       nodeType: 'fig',
-      commandGroup: 'additional'
+      commandGroup: 'insert'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
-      commandGroup: 'context'
+      commandGroup: 'figure-panel'
     })
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
-      commandGroup: 'context'
+      commandGroup: 'figure-panel'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
-      commandGroup: 'context'
+      commandGroup: 'figure-panel'
     })
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
-      commandGroup: 'context'
+      commandGroup: 'figure-panel'
     })
     config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
       direction: 'down',
-      commandGroup: 'context'
+      commandGroup: 'figure-panel'
     })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
     })
     config.addCommand('remove-footnote', RemoveItemCommand, {
       nodeType: 'footnote',
-      commandGroup: 'context'
+      commandGroup: 'footnote'
     })
     config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
       nodeType: 'inline-graphic',
-      commandGroup: 'additional'
+      commandGroup: 'insert'
     })
     config.addCommand('insert-table', InsertTableCommand, {
       nodeType: 'table-figure',
@@ -231,8 +231,6 @@ export default {
       commandGroup: 'table-delete'
     })
 
-    config.addLabel('remove-footnote', 'Remove Footnote')
-
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
@@ -243,48 +241,17 @@ export default {
 
     config.addTool('insert-figure', InsertFigureTool)
     config.addDropHandler(DropFigure)
-    config.addLabel('insert-figure', 'Figure')
-    config.addIcon('insert-figure', { 'fontawesome': 'fa-image' })
 
     config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addLabel('add-figure-panel', 'Add Sub-Figure')
-    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
-
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
-    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
-
-    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
-    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
-
-    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
-    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
-
-    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
-    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addTool('insert-file', InsertSupplementaryFileTool)
-    config.addLabel('insert-file', 'Supplementary File')
-    config.addIcon('insert-file', { 'fontawesome': 'fa-file-o' })
-
-    config.addTool('replace-supplementary-file', ReplaceSupplementaryFileTool)
-    config.addLabel('replace-supplementary-file', 'Replace Supplementary File')
-    config.addIcon('replace-supplementary-file', { 'fontawesome': 'fa-file-text' })
-
+    config.addTool('replace-file', ReplaceSupplementaryFileTool)
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-
     config.addTool('insert-table', InsertTableTool)
-    config.addLabel('insert-table', 'Table')
-
-    config.addIcon('remove-footnote', { 'fontawesome': 'fa-trash' })
 
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
-
-    config.addIcon('toggle-cell-merge', {
-      'fontawesome': 'fa-arrows-h'
-    })
-    config.addIcon('toggle-cell-heading', { 'fontawesome': 'fa-th-large' })
 
     // Annotation tools
     config.addCommand('toggle-bold', AnnotationCommand, {
@@ -292,34 +259,30 @@ export default {
       accelerator: 'CommandOrControl+B',
       commandGroup: 'formatting'
     })
-
     config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',
       accelerator: 'CommandOrControl+I',
       commandGroup: 'formatting'
     })
-
     config.addCommand('create-ext-link', InsertExtLinkCommand, {
       nodeType: 'ext-link',
       accelerator: 'CommandOrControl+K',
       commandGroup: 'formatting'
     })
-
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'sub',
       commandGroup: 'formatting'
     })
-
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'sup',
       commandGroup: 'formatting'
     })
-
     config.addCommand('toggle-monospace', AnnotationCommand, {
       nodeType: 'monospace',
       commandGroup: 'formatting'
     })
 
+    // Text type tools
     config.addTextTypeTool({
       name: 'heading1',
       commandGroup: 'text-types',
@@ -331,7 +294,6 @@ export default {
       label: 'Heading 1',
       accelerator: 'CommandOrControl+Alt+1'
     })
-
     config.addTextTypeTool({
       name: 'heading2',
       commandGroup: 'text-types',
@@ -343,7 +305,6 @@ export default {
       label: 'Heading 2',
       accelerator: 'CommandOrControl+Alt+2'
     })
-
     config.addTextTypeTool({
       name: 'heading3',
       commandGroup: 'text-types',
@@ -355,7 +316,6 @@ export default {
       label: 'Heading 3',
       accelerator: 'CommandOrControl+Alt+3'
     })
-
     config.addTextTypeTool({
       name: 'paragraph',
       commandGroup: 'text-types',
@@ -366,7 +326,6 @@ export default {
       label: 'Paragraph',
       accelerator: 'CommandOrControl+Alt+0'
     })
-
     config.addTextTypeTool({
       name: 'preformat',
       commandGroup: 'text-types',
@@ -394,42 +353,19 @@ export default {
       commandGroup: 'list'
     })
     config.addKeyboardShortcut('CommandOrControl+Shift+8', { command: 'toggle-unordered-list' })
-    config.addLabel('toggle-unordered-list', {
-      en: 'Bulleted list',
-      de: 'Liste'
-    })
-    config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
-
     config.addCommand('toggle-ordered-list', ToggleListCommand, {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
     config.addKeyboardShortcut('CommandOrControl+Shift+7', { command: 'toggle-ordered-list' })
-    config.addLabel('toggle-ordered-list', {
-      en: 'Numbered list',
-      de: 'Aufzählung'
-    })
-    config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
-
     config.addCommand('indent-list', ListPackage.IndentListCommand, {
       spec: { action: 'indent' },
       commandGroup: 'list'
     })
-    config.addLabel('indent-list', {
-      en: 'Increase indentation',
-      de: 'Einrückung vergrößern'
-    })
-    config.addIcon('indent-list', { 'fontawesome': 'fa-indent' })
-
     config.addCommand('dedent-list', ListPackage.IndentListCommand, {
       spec: { action: 'dedent' },
       commandGroup: 'list'
     })
-    config.addLabel('dedent-list', {
-      en: 'Decrease indentation',
-      de: 'Einrückung verringern'
-    })
-    config.addIcon('dedent-list', { 'fontawesome': 'fa-dedent' })
 
     config.addToolPanel('main-overlay', [
       {
@@ -450,35 +386,6 @@ export default {
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table-structure' }
-        ]
-      }
-    ])
-
-    config.addToolPanel('table-context-menu', [
-      {
-        name: 'table-tools',
-        type: 'group',
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'table' }
-        ]
-      },
-      { type: 'separator' },
-      {
-        name: 'table-insert',
-        type: 'group',
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'table-insert' }
-        ]
-      },
-      { type: 'separator' },
-      {
-        name: 'table-delete',
-        type: 'group',
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'table-delete' }
         ]
       }
     ])

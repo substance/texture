@@ -241,10 +241,10 @@ export default {
     // Tools
     config.addTool('edit-xref', EditXrefTool)
 
-    config.addTool('insert-fig', InsertFigureTool)
+    config.addTool('insert-figure', InsertFigureTool)
     config.addDropHandler(DropFigure)
-    config.addLabel('insert-fig', 'Figure')
-    config.addIcon('insert-fig', { 'fontawesome': 'fa-image' })
+    config.addLabel('insert-figure', 'Figure')
+    config.addIcon('insert-figure', { 'fontawesome': 'fa-image' })
 
     config.addTool('add-figure-panel', InsertFigurePanelTool)
     config.addLabel('add-figure-panel', 'Add Sub-Figure')

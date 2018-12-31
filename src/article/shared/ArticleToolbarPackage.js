@@ -187,6 +187,7 @@ export default {
     config.addLabel('equation', 'Equation')
     config.addLabel('file', 'File')
     config.addLabel('footnote', 'Footnote')
+    config.addLabel('inline', 'Inline')
     config.addLabel('math', 'Math')
     config.addLabel('inline-graphic', 'Inline Graphic')
     config.addLabel('citation', 'Citation')
@@ -195,6 +196,7 @@ export default {
     config.addLabel('footnote-reference', 'Footnote Reference')
     config.addLabel('equation-reference', 'Equation Reference')
     config.addLabel('file-reference', 'File Reference')
+    config.addLabel('metadata', 'Metadata')
     // Table tools labels
     config.addLabel('table-tools', 'Table')
     config.addLabel('insert-rows-above', {

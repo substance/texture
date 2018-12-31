@@ -474,7 +474,8 @@ export default {
       {
         name: 'prompt',
         type: 'prompt',
-        showDisabled: false,
+        style: 'minimal',
+        hideDisabled: true,
         items: [
           { type: 'command-group', name: 'prompt' }
         ]
@@ -485,7 +486,6 @@ export default {
       {
         name: 'context-menu',
         type: 'group',
-        showDisabled: false,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table-structure' }
@@ -497,7 +497,6 @@ export default {
       {
         name: 'table-tools',
         type: 'group',
-        showDisabled: false,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table' }
@@ -507,7 +506,6 @@ export default {
       {
         name: 'table-insert',
         type: 'group',
-        showDisabled: false,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table-insert' }
@@ -517,7 +515,6 @@ export default {
       {
         name: 'table-delete',
         type: 'group',
-        showDisabled: false,
         style: 'descriptive',
         items: [
           { type: 'command-group', name: 'table-delete' }

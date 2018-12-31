@@ -31,7 +31,7 @@ export default class ToolGroup extends Component {
         let commandState = commandStates[commandName] || DISABLED
         // TODO: why is it necessary to override isToolEnabled()?
         if (!hideDisabled || this.isToolEnabled(commandState, item)) {
-          let ToolClass = this._getToolClass(type)
+          let ToolClass = this._getToolClass(item)
           el.append(
             $$(ToolClass, {
               item,
@@ -63,7 +63,7 @@ export default class ToolGroup extends Component {
     }
     let items = this.props.items
     for (let item of items) {
-      let commandState = commandStates[item.commandName]
+      let commandState = commandStates[item.name]
       if (this.isToolEnabled(commandState, item)) return true
     }
     return false

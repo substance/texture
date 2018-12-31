@@ -1,4 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
+
 export default {
   name: 'article-toolbar',
   configure (config) {

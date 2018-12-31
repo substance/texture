@@ -1,3 +1,4 @@
+.sc-menu > .se-item,
 .sc-menu-item {
   display: flex;
   flex-wrap: nowrap;
@@ -14,32 +15,37 @@
   padding: 0px 5px;
 }
 
+.sc-menu > .se-item,
 .sc-menu-item:hover {
   background: #F7F7F9;
 }
-
+.sc-menu > .se-item[disabled=true],
 .sc-menu-item[disabled=true] {
   opacity: 0.3;
 }
-
+.sc-menu > .se-item.sm-active,
 .sc-menu-item.sm-active {
   background: #eee;
   color: inherit;
 }
 
+.sc-menu > .se-item.sm-active .se-keyboard-shortcut,
 .sc-menu-item.sm-active .se-keyboard-shortcut {
   color: rgba(0,0,0,0.4);
 }
 
+.sc-menu > .se-item .se-icon,
 .sc-menu-item .se-icon {
   flex: 0 0 0;
   padding-right: 7px;
 }
 
+.sc-menu > .se-item .se-label,
 .sc-menu-item .se-label {
   flex: 0 0 0;
 }
 
+.sc-menu > .se-item .se-keyboard-shortcut,
 .sc-menu-item .se-keyboard-shortcut {
   flex: 100 0 0;
   font-weight: normal;

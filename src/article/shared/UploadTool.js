@@ -1,30 +1,31 @@
-import { ToggleTool } from '../../kit'
+import { Tool } from '../../kit'
 
-export default class UploadTool extends ToggleTool {
-  renderButton ($$) {
-    const button = super.renderButton($$)
+export default class UploadTool extends Tool {
+  // In addition to the regular button a file input is rendered
+  // which is used to trigger the browser's file dialog.
+  render ($$) {
+    let el = super.render($$)
+
     const isMultiple = this.canUploadMultiple
     const input = $$('input').attr({
       'type': 'file'
     }).ref('input')
       .on('change', this.onFileSelect)
-
     if (!this.doesAcceptAllFileTypes) {
       const fileType = this.getFileType()
       input.attr({'accept': fileType})
     }
-
     if (isMultiple) {
       input.attr({
         'multiple': 'multiple'
       })
     }
-
-    return [button, input]
+    el.append(input)
+    return el
   }
 
   getClassNames () {
-    throw new Error('This method is abstract')
+    return 'sc-upload-tool'
   }
 
   getFileType () {
@@ -39,7 +40,7 @@ export default class UploadTool extends ToggleTool {
     return false
   }
 
-  onClick () {
+  _onClick () {
     this.refs.input.val(null)
     this.refs.input.click()
   }

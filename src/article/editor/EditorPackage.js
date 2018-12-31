@@ -263,9 +263,9 @@ export default {
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
-    config.addTool('insert-supplementary-file', InsertSupplementaryFileTool)
-    config.addLabel('insert-supplementary-file', 'Supplementary File')
-    config.addIcon('insert-supplementary-file', { 'fontawesome': 'fa-file-o' })
+    config.addTool('insert-file', InsertSupplementaryFileTool)
+    config.addLabel('insert-file', 'Supplementary File')
+    config.addIcon('insert-file', { 'fontawesome': 'fa-file-o' })
 
     config.addTool('replace-supplementary-file', ReplaceSupplementaryFileTool)
     config.addLabel('replace-supplementary-file', 'Replace Supplementary File')

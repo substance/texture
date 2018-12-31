@@ -34,10 +34,6 @@ import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
-import {
-  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
-  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
-} from './TableCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import DropFigure from './DropFigure'
 import EditDispFormulaCommand from './EditDispFormulaCommand'
@@ -58,12 +54,17 @@ import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceC
 import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
-import InsertTableTool from './InsertTableTool'
+import { CreateListCommand, ChangeListTypeCommand } from './ListCommands'
 import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
-import ToggleListCommand from './ToggleListCommand'
+import InsertSupplementaryFileTool from './InsertSupplementaryFileTool'
+import {
+  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
+} from './TableCommands'
+import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
-import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
+import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'
 
 export default {
   name: 'ManscruptEditor',
@@ -348,16 +349,46 @@ export default {
     config.addLabel('open-link', 'Open Link')
 
     // Lists
-    config.addCommand('toggle-unordered-list', ToggleListCommand, {
+    config.addCommand('create-unordered-list', CreateListCommand, {
+      spec: { listType: 'bullet' },
+      commandGroup: 'text-types'
+    })
+    config.addLabel('create-unordered-list', {
+      en: 'Bulleted list',
+      de: 'Liste'
+    })
+    config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
+
+    config.addCommand('create-ordered-list', CreateListCommand, {
+      spec: { listType: 'order' },
+      commandGroup: 'text-types'
+    })
+    config.addLabel('create-ordered-list', {
+      en: 'Numbered list',
+      de: 'Aufzählung'
+    })
+    config.addIcon('create-ordered-list', { 'fontawesome': 'fa-list-ol' })
+
+    config.addCommand('switch-unordered-list', ChangeListTypeCommand, {
       spec: { listType: 'bullet' },
       commandGroup: 'list'
     })
-    config.addKeyboardShortcut('CommandOrControl+Shift+8', { command: 'toggle-unordered-list' })
-    config.addCommand('toggle-ordered-list', ToggleListCommand, {
+    config.addLabel('switch-unordered-list', {
+      en: 'Bulleted list',
+      de: 'Liste'
+    })
+    config.addIcon('switch-unordered-list', { 'fontawesome': 'fa-list-ul' })
+
+    config.addCommand('switch-ordered-list', ChangeListTypeCommand, {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
-    config.addKeyboardShortcut('CommandOrControl+Shift+7', { command: 'toggle-ordered-list' })
+    config.addLabel('switch-ordered-list', {
+      en: 'Numbered list',
+      de: 'Aufzählung'
+    })
+    config.addIcon('switch-ordered-list', { 'fontawesome': 'fa-list-ol' })
+
     config.addCommand('indent-list', ListPackage.IndentListCommand, {
       spec: { action: 'indent' },
       commandGroup: 'list'

@@ -105,7 +105,7 @@ export default {
       refType: 'bibr',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-fig', InsertCrossReferenceCommand, {
+    config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
       refType: 'fig',
       commandGroup: 'insert-xref'
     })
@@ -115,7 +115,7 @@ export default {
     })
     // Note: footnote cross-references are special, because they take the current scope into account
     // i.e. whether to create a footnote on article level, or inside a table-figure
-    config.addCommand('insert-xref-fn', InsertFootnoteCrossReferenceCommand, {
+    config.addCommand('insert-xref-footnote', InsertFootnoteCrossReferenceCommand, {
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-formula', InsertCrossReferenceCommand, {
@@ -177,7 +177,7 @@ export default {
       nodeType: 'table-figure',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-formula', InsertInlineFormulaCommand, {
+    config.addCommand('insert-inline-formula', InsertInlineFormulaCommand, {
       commandGroup: 'insert'
     })
     config.addCommand('edit-block-formula', EditDispFormulaCommand, {
@@ -231,48 +231,12 @@ export default {
       commandGroup: 'table-delete'
     })
 
-    config.addLabel('cite', 'Cite')
-    config.addLabel('insert', 'Insert')
-    config.addLabel('insert-xref-bibr', 'Reference')
-    config.addLabel('insert-xref-fig', 'Figure')
-    config.addLabel('insert-xref-table', 'Table')
-    config.addLabel('insert-xref-fn', 'Footnote')
-    config.addLabel('insert-xref-formula', 'Formula')
-    config.addLabel('insert-xref-file', 'Supplementary File')
-    config.addLabel('insert-disp-formula', 'Block Formula')
-    config.addLabel('insert-disp-quote', 'Blockquote')
-    config.addLabel('insert-footnote', 'Footnote')
     config.addLabel('remove-footnote', 'Remove Footnote')
 
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('sig-block-start', 'Signature Block starts here')
     config.addLabel('sig-block-end', 'Signature Block ends here')
-
-    config.addLabel('insert-rows-above', {
-      en: 'Insert ${nrows} rows above'
-    })
-    config.addLabel('insert-rows-below', {
-      en: 'Insert ${nrows} rows below'
-    })
-    config.addLabel('insert-columns-left', {
-      en: 'Insert ${ncols} columns left'
-    })
-    config.addLabel('insert-columns-right', {
-      en: 'Insert ${ncols} columns right'
-    })
-    config.addLabel('delete-rows', {
-      en: 'Delete ${nrows} rows'
-    })
-    config.addLabel('delete-columns', {
-      en: 'Delete ${ncols} columns'
-    })
-    config.addLabel('toggle-cell-heading', {
-      en: 'Cell heading'
-    })
-    config.addLabel('toggle-cell-merge', {
-      en: 'Merge cell'
-    })
 
     // Tools
     config.addTool('edit-xref', EditXrefTool)
@@ -308,8 +272,6 @@ export default {
     config.addIcon('replace-supplementary-file', { 'fontawesome': 'fa-file-text' })
 
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addLabel('insert-inline-graphic', 'Inline Graphic')
-    config.addIcon('insert-inline-graphic', { 'fontawesome': 'fa-line-chart' })
 
     config.addTool('insert-table', InsertTableTool)
     config.addLabel('insert-table', 'Table')
@@ -318,7 +280,6 @@ export default {
 
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
-    config.addLabel('insert-formula', 'Formula')
 
     config.addIcon('toggle-cell-merge', {
       'fontawesome': 'fa-arrows-h'

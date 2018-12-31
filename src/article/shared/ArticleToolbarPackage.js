@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 export default {
   name: 'article-toolbar',
   configure (config) {
@@ -27,22 +28,23 @@ export default {
         type: 'dropdown',
         style: 'descriptive',
         items: [
-          { type: 'command', name: 'insert-figure', label: 'insert-figure' },
-          { type: 'command', name: 'insert-image', label: 'insert-image' },
-          { type: 'command', name: 'insert-table', label: 'insert-table' },
-          { type: 'command', name: 'insert-block-quote', label: 'insert-block-quote' },
-          { type: 'command', name: 'insert-block-formula', label: 'insert-equation' },
-          { type: 'command', name: 'insert-file', label: 'insert-file' },
-          { type: 'command', name: 'insert-footnote', label: 'insert-footnote' },
-          { type: 'command', name: 'insert-reference', label: 'insert-reference' },
+          { type: 'command', name: 'insert-figure', label: 'figure' },
+          { type: 'command', name: 'insert-image', label: 'image' },
+          { type: 'command', name: 'insert-table', label: 'table' },
+          { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
+          { type: 'command', name: 'insert-block-formula', label: 'equation' },
+          { type: 'command', name: 'insert-file', label: 'file' },
+          { type: 'command', name: 'insert-footnote', label: 'footnote' },
+          { type: 'command', name: 'insert-reference', label: 'reference' },
           { type: 'separator', label: 'inline' },
           { type: 'command', name: 'insert-inline-formula', label: 'math' },
           { type: 'command', name: 'insert-inline-graphic', label: 'inline-graphic' },
-          { type: 'command', name: 'create-link', label: 'external-link' },
+          { type: 'command', name: 'create-ext-link', label: 'link', icon: 'link' },
           { type: 'command', name: 'insert-xref-bibr', label: 'citation' },
           { type: 'command', name: 'insert-xref-figure', label: 'figure-reference' },
           { type: 'command', name: 'insert-xref-table', label: 'table-reference' },
           { type: 'command', name: 'insert-xref-footnote', label: 'footnote-reference' },
+          { type: 'command', name: 'insert-xref-formula', label: 'equation-reference' },
           { type: 'command', name: 'insert-xref-file', label: 'file-reference' },
           { type: 'separator', label: 'metadata' },
           { type: 'command', name: 'add-author', label: 'author' },
@@ -123,21 +125,57 @@ export default {
     config.addIcon('italic', { 'fontawesome': 'fa-italic' })
     config.addIcon('link', { 'fontawesome': 'fa-link' })
 
-    // Labels
+    // Format tools labels
+    config.addLabel('format', 'Format')
     config.addLabel('bold', 'Bold')
     config.addLabel('italic', 'Italic')
     config.addLabel('link', 'Link')
     config.addLabel('subscript', 'Subscript')
     config.addLabel('superscript', 'Superscript')
     config.addLabel('monospace', 'Monospace')
-    config.addLabel('format', 'Format')
+    // List tools labels
     config.addLabel('list-tools', 'List')
-    config.addLabel('insert-figure', 'Figure')
-    config.addLabel('insert-table', 'Table')
-    config.addLabel('insert-block-quote', 'Block Quote')
-    config.addLabel('insert-equation', 'Equation')
-    config.addLabel('insert-file', 'File')
-    config.addLabel('insert-footnote', 'Footnote')
+    // Insert tools labels
+    config.addLabel('insert', 'Insert')
+    config.addLabel('figure', 'Figure')
+    config.addLabel('table', 'Table')
+    config.addLabel('block-quote', 'Block Quote')
+    config.addLabel('equation', 'Equation')
+    config.addLabel('file', 'File')
+    config.addLabel('footnote', 'Footnote')
+    config.addLabel('math', 'Math')
+    config.addLabel('inline-graphic', 'Inline Graphic')
+    config.addLabel('citation', 'Citation')
+    config.addLabel('figure-reference', 'Figure Reference')
+    config.addLabel('table-reference', 'Table Reference')
+    config.addLabel('footnote-reference', 'Footnote Reference')
+    config.addLabel('equation-reference', 'Equation Reference')
+    config.addLabel('file-reference', 'File Reference')
+    // Table tools labels
     config.addLabel('table-tools', 'Table')
+    config.addLabel('insert-rows-above', {
+      en: 'Insert ${nrows} rows above'
+    })
+    config.addLabel('insert-rows-below', {
+      en: 'Insert ${nrows} rows below'
+    })
+    config.addLabel('insert-columns-left', {
+      en: 'Insert ${ncols} columns left'
+    })
+    config.addLabel('insert-columns-right', {
+      en: 'Insert ${ncols} columns right'
+    })
+    config.addLabel('delete-rows', {
+      en: 'Delete ${nrows} rows'
+    })
+    config.addLabel('delete-columns', {
+      en: 'Delete ${ncols} columns'
+    })
+    config.addLabel('toggle-cell-heading', {
+      en: 'Cell heading'
+    })
+    config.addLabel('toggle-cell-merge', {
+      en: 'Merge cell'
+    })
   }
 }

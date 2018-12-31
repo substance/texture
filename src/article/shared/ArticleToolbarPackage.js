@@ -27,14 +27,14 @@ export default {
         type: 'dropdown',
         style: 'descriptive',
         items: [
-          { type: 'command', name: 'insert-figure', label: 'figure' },
-          { type: 'command', name: 'insert-image', label: 'image' },
-          { type: 'command', name: 'insert-table', label: 'table' },
-          { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
-          { type: 'command', name: 'insert-block-formula', label: 'equation' },
-          { type: 'command', name: 'insert-file', label: 'file' },
-          { type: 'command', name: 'insert-footnote', label: 'footnote' },
-          { type: 'command', name: 'insert-reference', label: 'reference' },
+          { type: 'command', name: 'insert-figure', label: 'insert-figure' },
+          { type: 'command', name: 'insert-image', label: 'insert-image' },
+          { type: 'command', name: 'insert-table', label: 'insert-table' },
+          { type: 'command', name: 'insert-block-quote', label: 'insert-block-quote' },
+          { type: 'command', name: 'insert-block-formula', label: 'insert-equation' },
+          { type: 'command', name: 'insert-file', label: 'insert-file' },
+          { type: 'command', name: 'insert-footnote', label: 'insert-footnote' },
+          { type: 'command', name: 'insert-reference', label: 'insert-reference' },
           { type: 'separator', label: 'inline' },
           { type: 'command', name: 'insert-inline-formula', label: 'math' },
           { type: 'command', name: 'insert-inline-graphic', label: 'inline-graphic' },
@@ -132,7 +132,12 @@ export default {
     config.addLabel('monospace', 'Monospace')
     config.addLabel('format', 'Format')
     config.addLabel('list-tools', 'List')
-    config.addLabel('table', 'Table')
+    config.addLabel('insert-figure', 'Figure')
+    config.addLabel('insert-table', 'Table')
+    config.addLabel('insert-block-quote', 'Block Quote')
+    config.addLabel('insert-equation', 'Equation')
+    config.addLabel('insert-file', 'File')
+    config.addLabel('insert-footnote', 'Footnote')
     config.addLabel('table-tools', 'Table')
   }
 }

@@ -126,23 +126,23 @@ export default {
       refType: 'file',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-disp-formula', InsertDispFormulaCommand, {
-      nodeType: 'block-formula',
+    config.addCommand('insert-block-formula', InsertDispFormulaCommand, {
+      nodeType: 'disp-formula',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
-      nodeType: 'block-quote',
+    config.addCommand('insert-block-quote', InsertDispQuoteCommand, {
+      nodeType: 'disp-quote',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-supplementary-file', InsertSupplementaryFileCommand, {
-      nodeType: 'supplementary-file',
+    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
+      nodeType: 'supplementary-material',
       commandGroup: 'additional'
     })
     config.addCommand('replace-supplementary-file', ReplaceSupplementaryFileCommand, {
       commandGroup: 'context'
     })
-    config.addCommand('insert-fig', InsertFigureCommand, {
-      nodeType: 'figure',
+    config.addCommand('insert-figure', InsertFigureCommand, {
+      nodeType: 'fig',
       commandGroup: 'additional'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {

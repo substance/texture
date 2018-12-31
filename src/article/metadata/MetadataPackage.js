@@ -3,9 +3,6 @@ import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
-// Commands
-import InsertExtLinkCommand from '../editor/InsertExtLinkCommand'
-
 import ArticleNavPackage from '../ArticleNavPackage'
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import PersistencePackage from '../../PersistencePackage'
@@ -219,12 +216,6 @@ export default {
     config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',
       accelerator: 'CommandOrControl+I',
-      commandGroup: 'formatting'
-    })
-
-    config.addCommand('create-ext-link', InsertExtLinkCommand, {
-      nodeType: 'ext-link',
-      accelerator: 'CommandOrControl+K',
       commandGroup: 'formatting'
     })
 

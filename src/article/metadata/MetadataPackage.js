@@ -124,39 +124,27 @@ export default {
       commandGroup: 'add-entity'
     })
 
+    // Figure tools
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
-      commandGroup: 'contextual'
+      commandGroup: 'figure-panel'
     })
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addLabel('add-figure-panel', 'Add Sub-Figure')
-    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
-
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
-      commandGroup: 'contextual'
+      commandGroup: 'figure-panel'
     })
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
-    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
-
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
-      commandGroup: 'contextual'
+      commandGroup: 'figure-panel'
     })
-    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
-    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
-
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
-      commandGroup: 'contextual'
+      commandGroup: 'figure-panel'
     })
-    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
-    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
-
     config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
       direction: 'down',
-      commandGroup: 'contextual'
+      commandGroup: 'figure-panel'
     })
-    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
-    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
+
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
 
     config.addLabel('add-reference', {
       en: 'Reference'
@@ -316,10 +304,8 @@ export default {
     // Card tools
     config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
       direction: 'up',
-      commandGroup: 'contextual'
+      commandGroup: 'collection'
     })
-
-    // Collections:
 
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
     registerCollectionCommand(config, 'award', ['metadata', 'awards'], { keyboardShortcut: 'CommandOrControl+Alt+Y' })
@@ -330,31 +316,13 @@ export default {
     registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
 
-    // FigurePanels work a little different than other collections, e.g. one can replace an image
-    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
-      commandGroup: 'collection'
-    })
     config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
     config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',
-      commandGroup: 'contextual'
-    })
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
-    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
-
-    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'collection'
     })
     config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
-      commandGroup: 'contextual'
-    })
-    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
-    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
-
-    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
-      direction: 'down',
       commandGroup: 'collection'
     })
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')

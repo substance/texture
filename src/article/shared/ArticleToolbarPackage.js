@@ -128,6 +128,15 @@ export default {
         ]
       },
       {
+        name: 'collection-tools',
+        type: 'dropdown',
+        style: 'descriptive',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'collection' }
+        ]
+      },
+      {
         name: 'list-tools',
         type: 'dropdown',
         style: 'descriptive',
@@ -236,5 +245,10 @@ export default {
     // Footnote tools
     config.addLabel('footnote-tools', 'Footnote')
     config.addLabel('remove-footnote', 'Remove Footnote')
+    // Collection tools
+    config.addLabel('collection-tools', 'Collection')
+    config.addLabel('move-up-col-item', 'Move Item Up')
+    config.addLabel('move-down-col-item', 'Move Item Down')
+    config.addLabel('remove-col-item', 'Remove Item')
   }
 }

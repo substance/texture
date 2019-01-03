@@ -100,6 +100,20 @@ Chapters are used to model appendices, acknowledgements, author response, decisi
 </sub-article>
 ```
 
+## Custom text fields
+
+Arbitrary custom text fields with id, name and value can be defined to capture publisher-specific metadata.
+
+```xml
+<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
+<custom-meta-group>
+    <custom-meta id="author-impact-statement" specific-use="meta-only">
+        <meta-name>Author impact statement</meta-name>
+        <meta-value>How to tag an eLife article using JATS XML.</meta-value>
+    </custom-meta>
+</custom-meta-group>
+```
+
 ## Contributor
 
 The are different types of contributors. Each of them are collected in a separate `<contrib-group>` element.

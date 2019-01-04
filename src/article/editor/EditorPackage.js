@@ -27,8 +27,6 @@ import FigurePanelComponent from '../shared/FigurePanelComponent'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
-import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-import EditReferenceWorkflow from './EditReferenceWorkflow'
 
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
@@ -93,7 +91,6 @@ export default {
     config.addComponent('reference-list', ReferenceListComponent, true)
     config.addComponent('toc', TOC, true)
 
-    // Commands
     config.addCommand('edit-xref', EditXrefCommand, {
       nodeType: 'xref',
       commandGroup: 'prompt'
@@ -127,21 +124,42 @@ export default {
       refType: 'file',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-block-formula', InsertDispFormulaCommand, {
-      nodeType: 'disp-formula',
-      commandGroup: 'insert'
+    config.addTool('edit-xref', EditXrefTool)
+    config.addCommand('edit-xref', EditInlineNodeCommand, {
+      nodeType: 'xref',
+      commandGroup: 'prompt'
     })
+
+    // Other insert tools
     config.addCommand('insert-block-quote', InsertDispQuoteCommand, {
       nodeType: 'disp-quote',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
-      nodeType: 'supplementary-material',
+    config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
+      nodeType: 'inline-graphic',
       commandGroup: 'insert'
     })
-    config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
-      commandGroup: 'file'
+
+    // Heading tools
+    config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
+      commandGroup: 'text-level'
     })
+    config.addCommand('increase-heading-level', IncreaseHeadingLevelCommand, {
+      commandGroup: 'text-level'
+    })
+    config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
+    config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
+
+    // Footnote tools
+    config.addCommand('insert-footnote', InsertFootnoteCommand, {
+      commandGroup: 'insert'
+    })
+    config.addCommand('remove-footnote', RemoveFootnoteCommand, {
+      nodeType: 'fn',
+      commandGroup: 'footnote'
+    })
+
+    // Figure tools
     config.addCommand('insert-figure', InsertFigureCommand, {
       nodeType: 'fig',
       commandGroup: 'insert'
@@ -163,7 +181,14 @@ export default {
       direction: 'down',
       commandGroup: 'figure-panel'
     })
-    config.addCommand('insert-footnote', InsertFootnoteCommand, {
+    config.addTool('insert-figure', InsertFigureTool)
+    config.addDropHandler(DropFigure)
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+
+    // File tools
+    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
+      nodeType: 'supplementary-material',
       commandGroup: 'insert'
     })
     config.addCommand('remove-footnote', RemoveItemCommand, {
@@ -174,6 +199,14 @@ export default {
       nodeType: 'inline-graphic',
       commandGroup: 'insert'
     })
+    config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
+      commandGroup: 'file'
+    })
+    config.addTool('insert-file', InsertSupplementaryFileTool)
+    config.addTool('replace-file', ReplaceSupplementaryFileTool)
+
+    // Table tools
+    config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
     config.addCommand('insert-table', InsertTableCommand, {
       nodeType: 'table-figure',
       commandGroup: 'insert'
@@ -198,9 +231,9 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
 
+    config.addTool('insert-table', InsertTableTool)
     config.addCommand('table:select-all', TableSelectAllCommand)
     config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
-
     config.addCommand('toggle-cell-heading', ToggleCellHeadingCommand, {
       commandGroup: 'table'
     })
@@ -232,26 +265,23 @@ export default {
       commandGroup: 'table-delete'
     })
 
-    config.addLabel('manuscript-start', 'Article starts here')
-    config.addLabel('manuscript-end', 'Article ends here')
-    config.addLabel('sig-block-start', 'Signature Block starts here')
-    config.addLabel('sig-block-end', 'Signature Block ends here')
-
-    // Tools
-    config.addTool('edit-xref', EditXrefTool)
-
-    config.addTool('insert-figure', InsertFigureTool)
-    config.addDropHandler(DropFigure)
-
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-
-    config.addTool('insert-file', InsertSupplementaryFileTool)
-    config.addTool('replace-file', ReplaceSupplementaryFileTool)
-    config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addTool('insert-table', InsertTableTool)
-
+    // Formula tools
+    config.addCommand('insert-block-formula', InsertDispFormulaCommand, {
+      nodeType: 'disp-formula',
+      commandGroup: 'insert'
+    })
+    config.addCommand('insert-inline-formula', InsertInlineFormulaCommand, {
+      commandGroup: 'insert'
+    })
+    config.addCommand('edit-block-formula', EditDispFormulaCommand, {
+      nodeType: 'disp-formula',
+      commandGroup: 'prompt'
+    })
     config.addTool('edit-block-formula', EditDispFormulaTool)
+    config.addCommand('edit-formula', EditInlineNodeCommand, {
+      nodeType: 'inline-formula',
+      commandGroup: 'prompt'
+    })
     config.addTool('edit-formula', EditInlineFormulaTool)
 
     // Annotation tools
@@ -353,42 +383,18 @@ export default {
       spec: { listType: 'bullet' },
       commandGroup: 'text-types'
     })
-    config.addLabel('create-unordered-list', {
-      en: 'Bulleted list',
-      de: 'Liste'
-    })
-    config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
-
     config.addCommand('create-ordered-list', CreateListCommand, {
       spec: { listType: 'order' },
       commandGroup: 'text-types'
     })
-    config.addLabel('create-ordered-list', {
-      en: 'Numbered list',
-      de: 'Aufzählung'
-    })
-    config.addIcon('create-ordered-list', { 'fontawesome': 'fa-list-ol' })
-
     config.addCommand('switch-unordered-list', ChangeListTypeCommand, {
       spec: { listType: 'bullet' },
       commandGroup: 'list'
     })
-    config.addLabel('switch-unordered-list', {
-      en: 'Bulleted list',
-      de: 'Liste'
-    })
-    config.addIcon('switch-unordered-list', { 'fontawesome': 'fa-list-ul' })
-
     config.addCommand('switch-ordered-list', ChangeListTypeCommand, {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
-    config.addLabel('switch-ordered-list', {
-      en: 'Numbered list',
-      de: 'Aufzählung'
-    })
-    config.addIcon('switch-ordered-list', { 'fontawesome': 'fa-list-ol' })
-
     config.addCommand('indent-list', ListPackage.IndentListCommand, {
       spec: { action: 'indent' },
       commandGroup: 'list'
@@ -454,24 +460,41 @@ export default {
     config.addLabel('edit-ref', 'Edit')
     config.addLabel('remove-ref', 'Remove')
 
-    // Workflows
-    config.addComponent('add-reference', AddReferenceWorkflow)
-    config.addLabel('add-reference-title', 'Add Reference(s)')
-    config.addLabel('add-ref-manually', 'Or create manually')
-    config.addLabel('fetch-datacite', 'Fetch from DataCite')
-    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
-    config.addLabel('doi-fetch-action', 'Add')
-    config.addLabel('import-refs', 'Import')
-    config.addLabel('supported-ref-formats', 'Supported formats')
-    config.addComponent('edit-reference', EditReferenceWorkflow)
+    // Extlink tool
+    config.addLabel('open-link', 'Open Link')
 
-    config.addIcon('pencil', {
-      'fontawesome': 'fa-pencil'
+    // List tool
+    config.addLabel('create-unordered-list', {
+      en: 'Bulleted list',
+      de: 'Liste'
+    })
+    config.addLabel('create-ordered-list', {
+      en: 'Numbered list',
+      de: 'Aufzählung'
+    })
+    config.addLabel('switch-unordered-list', {
+      en: 'Bulleted list',
+      de: 'Liste'
+    })
+    config.addLabel('switch-ordered-list', {
+      en: 'Numbered list',
+      de: 'Aufzählung'
     })
 
-    config.addIcon('trash', {
-      'fontawesome': 'fa-trash'
-    })
+    // Other labels
+    config.addLabel('manuscript-start', 'Article starts here')
+    config.addLabel('manuscript-end', 'Article ends here')
+    config.addLabel('sig-block-start', 'Signature Block starts here')
+    config.addLabel('sig-block-end', 'Signature Block ends here')
+
+    // Icons
+    config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
+    config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
+    config.addIcon('create-ordered-list', { 'fontawesome': 'fa-list-ol' })
+    config.addIcon('switch-unordered-list', { 'fontawesome': 'fa-list-ul' })
+    config.addIcon('switch-ordered-list', { 'fontawesome': 'fa-list-ol' })
+    config.addIcon('pencil', { 'fontawesome': 'fa-pencil' })
+    config.addIcon('trash', { 'fontawesome': 'fa-trash' })
   },
   ManuscriptEditor,
   // legacy

@@ -206,6 +206,14 @@ export default {
     config.addLabel('equation-reference', 'Equation Reference')
     config.addLabel('file-reference', 'File Reference')
     config.addLabel('metadata', 'Metadata')
+    config.addLabel('reference', 'Reference')
+    config.addLabel('author', 'Author')
+    config.addLabel('editor', 'Editor')
+    config.addLabel('group', 'Group')
+    config.addLabel('affiliation', 'Affiliation')
+    config.addLabel('award', 'Award')
+    config.addLabel('keyword', 'Keyword')
+    config.addLabel('subject', 'Subject')
     // Table tools labels
     config.addLabel('table-tools', 'Table')
     config.addLabel('insert-rows-above', {
@@ -250,5 +258,7 @@ export default {
     config.addLabel('move-up-col-item', 'Move Item Up')
     config.addLabel('move-down-col-item', 'Move Item Down')
     config.addLabel('remove-col-item', 'Remove Item')
+    // Mode
+    config.addLabel('manuscript', 'Manuscript')
   }
 }

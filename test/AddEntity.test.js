@@ -16,8 +16,8 @@ test(`AddEntity: add group`, t => {
   _testAddEntity(t, 'group', 'group')
 })
 
-test(`AddEntity: add organisation`, t => {
-  _testAddEntity(t, 'organisation', 'organisation')
+test(`AddEntity: add affiliation`, t => {
+  _testAddEntity(t, 'affiliation', 'organisation')
 })
 
 test(`AddEntity: add award`, t => {
@@ -45,7 +45,7 @@ INTERNAL_BIBR_TYPES.forEach(bibrType => {
   })
 })
 
-function _testAddEntity (t, toolName, entityType) {
+function _testAddEntity (t, toolName, entityType, action) {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
   // NOTE: this will only fail in the nodejs test suite, because browser runs the click
@@ -83,7 +83,7 @@ function _testAddReference (t, bibrType) {
   doesNotThrowInNodejs(t, () => {
     let menu = editor.find('.sc-tool-dropdown.sm-add')
     menu.find('button').el.click()
-    menu.find(`.sc-menu-item.sm-add-reference`).el.click()
+    menu.find(`.sc-menu-item.sm-insert-reference`).el.click()
     // ... this opens a modal
     editor.find(`.sc-modal-dialog .se-add-reference .se-type.sm-${bibrType}`).click()
   })
@@ -91,10 +91,11 @@ function _testAddReference (t, bibrType) {
   t.end()
 }
 
-function _addEntity (editor, toolName) {
+function _addEntity (editor, toolName, action) {
+  action = action || 'add'
   // open the corresponding dropdown
-  let menu = editor.find('.sc-tool-dropdown.sm-add')
+  let menu = editor.find('.sc-tool-dropdown.sm-insert')
   menu.find('button').el.click()
-  let addButton = menu.find(`.sc-menu-item.sm-add-${toolName}`).el
+  let addButton = menu.find(`.sc-menu-item.sm-${action}-${toolName}`).el
   return addButton.click()
 }

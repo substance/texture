@@ -48,10 +48,10 @@ function testRefCreationForType (t, refType) {
 
 function _openWorkflow (metadataEditor) {
   // open the add drop down
-  let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-add')
+  let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-insert')
   addDropDown.find('button').click()
   // click on the add-reference button
-  addDropDown.find('.sc-menu-item.sm-add-reference').click()
+  addDropDown.find('.sc-menu-item.sm-insert-reference').click()
   let workflow = metadataEditor.find('.se-workflow-modal')
   return workflow
 }

@@ -4,7 +4,8 @@ import {
   ListPackage,
   SchemaDrivenCommandManager,
   MultiSelectPackage,
-  AnnotationCommand
+  AnnotationCommand,
+  EditInlineNodeCommand
 } from 'substance'
 
 import {

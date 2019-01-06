@@ -22,8 +22,8 @@ test(`EditReference: add and edit authors`, t => {
 })
 
 function _addReference (editor, bibrType) {
-  let menu = editor.find('.sc-tool-dropdown.sm-add')
+  let menu = editor.find('.sc-tool-dropdown.sm-insert')
   menu.find('button').el.click()
-  menu.find(`.sc-menu-item.sm-add-reference`).el.click()
+  menu.find(`.sc-menu-item.sm-insert-reference`).el.click()
   editor.find(`.sc-modal-dialog .se-add-reference .se-type.sm-${bibrType}`).click()
 }

@@ -41,9 +41,9 @@ const annotations = [
   }
 ]
 
-const ANNO_SELECTOR = {
-  'external-link': '.sc-external-link'
-}
+// const ANNO_SELECTOR = {
+//   'external-link': '.sc-external-link'
+// }
 
 const fixture = `<p id="p1">
 Lorem <bold>ipsum</bold> dolor <italic>sit</italic> amet, ea <ext-link href="foo">ludus</ext-link>

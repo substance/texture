@@ -155,14 +155,14 @@ export default {
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
     })
-    config.addCommand('remove-footnote', RemoveFootnoteCommand, {
-      nodeType: 'fn',
+    config.addCommand('remove-footnote', RemoveItemCommand, {
+      nodeType: 'footnote',
       commandGroup: 'footnote'
     })
 
     // Figure tools
     config.addCommand('insert-figure', InsertFigureCommand, {
-      nodeType: 'fig',
+      nodeType: 'figure',
       commandGroup: 'insert'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {

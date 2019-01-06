@@ -62,10 +62,10 @@ function testAnnotationToggle (t, anno) {
 
   // Set the cursor and check if tool is active
   setCursor(editor, 'p1.content', 3)
-  t.equal(isToolActive(editor, anno), false, 'Tool must be disabled')
+  t.equal(_isToolActive(editor, anno), false, 'Tool must be disabled')
   // Set the selection and check if tool is active
   setSelection(editor, 'p1.content', 2, 4)
-  t.equal(isToolActive(editor, anno), true, 'Tool must be active')
+  t.equal(_isToolActive(editor, anno), true, 'Tool must be active')
   // Toggle the tool and check if an annotation appeared
   toggleTool(t, editor, anno)
   let annoEl = editor.find('[data-path="p1.content"] .sc-' + anno.type)
@@ -79,7 +79,7 @@ function testAnnotationToggle (t, anno) {
   t.equal(text.length, parseInt(length), 'The number of annotated symbols must be equal to length of the selection')
   // Set the cursor, toggle the tool and check if an annotation disappeared
   setCursor(editor, 'p1.content', 3)
-  t.equal(isToolActive(editor, anno), true, 'Tool must be active')
+  t.equal(_isToolActive(editor, anno), true, 'Tool must be active')
   toggleTool(t, editor, anno)
   let removedAnno = editor.find('[data-path="p1.content"] [data-id="' + annoId + '"]')
   t.isNil(removedAnno, 'There should be no annotation')
@@ -93,20 +93,20 @@ function _setup (t) {
   return { editor }
 }
 
-function isToolActive (el, anno) {
-  let menu = openMenu(el, anno.menu)
+function _isToolActive (el, anno) {
+  let menu = _openMenu(el, anno.menu)
   let toolEl = menu.find(`.sc-menu-item.sm-${anno.tool}`)
   return !toolEl.getAttribute('disabled')
 }
 
 function toggleTool (t, editor, anno) {
   t.doesNotThrow(() => {
-    let menu = openMenu(editor, anno.menu)
+    let menu = _openMenu(editor, anno.menu)
     menu.find(`.sc-menu-item.sm-${anno.tool}`).el.click()
   })
 }
 
-function openMenu (el, menuName) {
+function _openMenu (el, menuName) {
   const menu = el.find(`.sc-tool-dropdown.sm-${menuName}`)
   const isActive = menu.find('button').hasClass('sm-active')
   if (!isActive) {

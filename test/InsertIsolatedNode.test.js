@@ -9,17 +9,18 @@ import setupTestApp from './shared/setupTestApp'
 // this looks like a 'SPECS' maybe
 // constants should be written in capitals
 const tools = {
-  'disp-formula': {
-    label: 'Formula',
-    nodeType: 'block-formula'
+  'block-formula': {
+    'label': 'Formula',
+    'nodeType': 'disp-formula'
   },
-  'disp-quote': {
-    label: 'Blockquote',
-    nodeType: 'block-quote'
+  'block-quote': {
+    'label': 'Blockquote',
+    'nodeType': 'disp-quote'
   },
   'table': {
-    label: 'Table',
-    nodeType: 'table-figure'
+    'label': 'Table',
+    'nodeType': 'table-figure',
+    'customToolSelector': '.sc-insert-table-tool'
   }
 }
 
@@ -37,14 +38,15 @@ function testEmptyBodyIsolationNodeInsertion (t, tool, toolId) {
   // TODO: the tests/checks could be more targeted. We should not check for everything everywhere.
   // A test should focus on a certain aspect and test only that.
   let { doc, editor } = _setupEmptyEditor(t)
-  t.equal(isToolActive(editor, toolId), false, 'Tool must be disabled')
+  t.equal(isToolActive(editor, toolId, tool.customToolSelector), false, 'Tool must be disabled')
   setCursor(editor, 'p1.content', 0)
-  t.equal(isToolActive(editor, toolId), true, 'Tool must be active')
+  t.equal(isToolActive(editor, toolId, tool.customToolSelector), true, 'Tool must be active')
   t.equal(doc.get('body').length, 1, 'Body should be not empty')
   let firstEl = doc.get('body').getNodeAt(0)
   t.equal(firstEl.type, 'paragraph', 'First element should be paragraph')
   openInsertMenu(editor)
-  let insertBtn = editor.find('.sc-menu-item.sm-insert-' + toolId)
+  const toolSelector = tool.customToolSelector || '.sc-menu-item.sm-insert-' + toolId
+  let insertBtn = editor.find(toolSelector)
   insertBtn.click()
   t.equal(doc.get('body').length, 1, 'Body should be not empty')
   let inserrtedEl = doc.get('body').getNodeAt(0)
@@ -63,9 +65,10 @@ function _setupEmptyEditor (t) {
   return { doc, editor }
 }
 
-function isToolActive (el, toolId) {
+function isToolActive (el, toolId, customToolSelector) {
   openInsertMenu(el)
-  const toolBtn = el.find('.sc-menu-item.sm-insert-' + toolId)
+  const toolSelector = customToolSelector || '.sc-menu-item.sm-insert-' + toolId
+  const toolBtn = el.find(toolSelector)
   return !toolBtn.getAttribute('disabled')
 }
 

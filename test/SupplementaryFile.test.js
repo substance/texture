@@ -18,8 +18,8 @@ test('Supplementary File: insert to a manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
-  const insertSupplementaryFileToolSelector = '.sc-insert-supplementary-file-tool'
-  const getInsertSupplementaryFileTool = () => editor.find(insertSupplementaryFileToolSelector + ' > button')
+  const insertSupplementaryFileToolClass = 'sc-insert-supplementary-file-tool'
+  const getInsertSupplementaryFileTool = () => _openMenuAndFindTool(editor, 'insert', insertSupplementaryFileToolClass)
 
   loadBodyFixture(editor, '<p id="p1">ABC</p>')
   t.equal(getInsertSupplementaryFileTool().getAttribute('disabled'), 'true', 'tool shoud be disabled by default')
@@ -32,7 +32,7 @@ test('Supplementary File: insert to a manuscript', t => {
     }, 'using tool should not throw')
   }
   doesNotThrowInNodejs(t, () => {
-    editor.find(insertSupplementaryFileToolSelector).onFileSelect(new PseudoFileEvent())
+    editor.find(insertSupplementaryFileToolClass).onFileSelect(new PseudoFileEvent())
   }, 'triggering file upload should not throw')
   let afterP = editor.find('*[data-id=p1] + *')
   t.ok(afterP.hasClass('sm-supplementary-file'), 'element after p-1 should be a supplementary file now')
@@ -76,17 +76,15 @@ test('Supplementary File: reference a file', t => {
   const xrefSelector = '.sc-inline-node .sm-file'
   const emptyLabel = '???'
   const getXref = () => editor.find(xrefSelector)
-  const insertSupplementaryFileToolSelector = '.sc-insert-supplementary-file-tool'
-  const getInsertSupplementaryFileTool = () => editor.find(insertSupplementaryFileToolSelector + ' > button')
+  const insertSupplementaryFileToolClass = 'sc-insert-supplementary-file-tool'
+  const getInsertSupplementaryFileTool = () => _openMenuAndFindTool(editor, 'insert', insertSupplementaryFileToolClass)
 
   loadBodyFixture(editor, SUPPLEMENT_FILE)
   t.equal(editor.findAll(supplementaryFileSelector).length, 1, 'there should be only one supplementary file in document')
   t.isNil(getXref(), 'there should be no references in manuscript')
 
   setCursor(editor, 'p1.content', 2)
-  let citeMenu = editor.find('.sc-tool-dropdown.sm-cite button')
-  citeMenu.click()
-  let insertFileRef = editor.find('.sc-menu-item.sm-insert-xref-file')
+  let insertFileRef = _openMenuAndFindTool(editor, 'insert', 'sm-insert-xref-file')
   t.doesNotThrow(() => {
     insertFileRef.click()
   }, 'ref insertion should not throw')
@@ -105,7 +103,7 @@ test('Supplementary File: reference a file', t => {
     getInsertSupplementaryFileTool().el.click()
   }, 'using tool should not throw')
   t.doesNotThrow(() => {
-    editor.find(insertSupplementaryFileToolSelector).onFileSelect(new PseudoFileEvent())
+    getInsertSupplementaryFileTool().onFileSelect(new PseudoFileEvent())
   }, 'triggering file upload should not throw')
   t.equal(getXref().text(), 'Supplementary File 2', 'xref label should be equal to second supplementary file label')
   // remove the referenced supplement
@@ -128,7 +126,7 @@ test('Supplementary File: replace a file', t => {
   let editorSession = getEditorSession(editor)
   loadBodyFixture(editor, SUPPLEMENT_FILE)
 
-  const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-tool'
+  const replaceSupplementaryFileToolClass = 'sc-replace-supplementary-file-tool'
   editorSession.setSelection({
     type: 'node',
     nodeId: 'sm1',
@@ -136,12 +134,22 @@ test('Supplementary File: replace a file', t => {
     containerPath: ['body', 'content']
   })
   // Note: we have the same tool for replace and for insertion
-  const replaceSupplementaryFileTool = editor.find(replaceSupplementaryFileToolSelector)
-  t.isNotNil(replaceSupplementaryFileTool, 'replace supplementary file tool shoold be available')
-  t.ok(replaceSupplementaryFileTool.find('button').click(), 'clicking on the replace supplementary file button should not throw error')
+  const replaceSupplementaryFileTool = _openMenuAndFindTool(editor, 'file-tools', replaceSupplementaryFileToolClass)
+  t.notOk(replaceSupplementaryFileTool.getAttribute('disabled'), 'replace supplementary file tool shoold be available')
+  t.ok(replaceSupplementaryFileTool.click(), 'clicking on the replace supplementary file button should not throw error')
   t.doesNotThrow(() => {
     replaceSupplementaryFileTool.onFileSelect(new PseudoFileEvent())
   }, 'triggering file upload for replace supplementary file should not throw')
 
   t.end()
 })
+
+function _openMenuAndFindTool (el, menuName, toolClass) {
+  const menu = el.find(`.sc-tool-dropdown.sm-${menuName}`)
+  if (menu.hasClass('sm-disabled')) return false
+  const isActive = menu.find('button').hasClass('sm-active')
+  if (!isActive) {
+    menu.find('button').el.click()
+  }
+  return menu.find('button.' + toolClass)
+}

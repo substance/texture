@@ -123,8 +123,8 @@ test('ManuscriptEditor: toggling a list', t => {
   let p1Text = doc.get(['p1', 'content'])
 
   setSelection(editor, 'p1.content', 0)
-  let ulTool = editor.find('.sc-toggle-tool.sm-toggle-unordered-list')
-  t.notNil(ulTool, 'the unordered-list tool should be visible')
+  let ulTool = _openMenuAndFindTool(editor, 'text-types', 'sm-create-unordered-list')
+  t.ok(ulTool, 'the unordered-list tool should be visible')
 
   // click on list tool to turn "p1" into a list
   ulTool.find('button').el.click()
@@ -135,8 +135,8 @@ test('ManuscriptEditor: toggling a list', t => {
   t.equal(listItem.getText(), p1Text, '.. with the text of the former paragraph')
 
   // now there should be contextual list tools be visible
-  t.notNil(editor.find('.sc-toggle-tool.sm-indent-list'), 'now there should be the indent tool be visible')
-  t.notNil(editor.find('.sc-toggle-tool.sm-dedent-list'), '.. and the dedent tool')
+  t.ok(_openMenuAndFindTool(editor, 'list-tools', 'sm-indent-list'), 'now there should be the indent tool be visible')
+  t.ok(_openMenuAndFindTool(editor, 'list-tools', 'sm-dedent-list'), '.. and the dedent tool')
 
   // click on list tool to turn it into a paragraph again
   editor.find('.sc-toggle-tool.sm-toggle-unordered-list > button').click()
@@ -169,3 +169,13 @@ test('ManuscriptEditor: editing an external link', t => {
   t.equal(link.href, 'foo', '.. and the link should have been updated')
   t.end()
 })
+
+function _openMenuAndFindTool (el, menuName, toolClass) {
+  const menu = el.find(`.sc-tool-dropdown.sm-${menuName}`)
+  if (menu.hasClass('sm-disabled')) return false
+  const isActive = menu.find('button').hasClass('sm-active')
+  if (!isActive) {
+    menu.find('button').el.click()
+  }
+  return menu.find('button.' + toolClass)
+}

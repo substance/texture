@@ -68,6 +68,10 @@ export default class Tool extends Component {
     }
   }
 
+  click () {
+    return this.el.click()
+  }
+
   _getLabel () {
     const { item, commandState } = this.props
     const labelName = item.label || item.name

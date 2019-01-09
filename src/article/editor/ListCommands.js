@@ -17,7 +17,7 @@ export class CreateListCommand extends Command {
       let path = sel.path
       let node = doc.get(path[0])
       if (node) {
-        if (node.isText() && node.isBlock()) {
+        if (node.isText()) {
           return {
             disabled: false
           }

@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
-import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture } from './shared/integrationTestHelpers'
+import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture, isToolEnabled, openMenu } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { doesNotThrowInNodejs } from './shared/testHelpers';
+import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 const ANNOS = [
   {
@@ -61,15 +61,15 @@ function testAnnotationToggle (t, spec) {
   }
   // Set the cursor and check if tool is active
   setCursor(editor, 'p1.content', 3)
-  t.equal(_isToolActive(editor, spec), false, 'Tool must be disabled')
+  t.equal(_isToolEnabled(editor, spec), false, 'Tool must be disabled')
   // Set the selection and check if tool is active
   setSelection(editor, 'p1.content', 2, 4)
-  t.equal(_isToolActive(editor, spec), true, 'Tool must be active')
+  t.equal(_isToolEnabled(editor, spec), true, 'Tool must be active')
   // Toggle the annotation
   _toggleAnnotation(t, editor, spec)
   t.ok(_hasAnno(), 'There should be an annotation')
   // then toggle the annotation again to remove it
-  t.equal(_isToolActive(editor, spec), true, 'Tool must be active')
+  t.equal(_isToolEnabled(editor, spec), true, 'Tool must be active')
   _toggleAnnotation(t, editor, spec)
   t.notOk(_hasAnno(), 'There should be no annotation')
   t.end()
@@ -82,25 +82,13 @@ function _setup (t) {
   return { editor }
 }
 
-function _isToolActive (editor, spec) {
-  let menu = _openMenu(editor, spec.menu)
-  let toolEl = menu.find(`.sc-menu-item.sm-${spec.tool}`)
-  let isActive = toolEl && !toolEl.getAttribute('disabled')
-  return isActive
+function _isToolEnabled (editor, spec) {
+  return isToolEnabled(editor, spec.menu, `.sc-menu-item.sm-${spec.tool}`)
 }
 
 function _toggleAnnotation (t, editor, spec) {
   doesNotThrowInNodejs(t, () => {
-    let menu = _openMenu(editor, spec.menu)
+    let menu = openMenu(editor, spec.menu)
     menu.find(`.sc-menu-item.sm-${spec.tool}`).el.click()
   })
-}
-
-function _openMenu (editor, menuName) {
-  let menu = editor.find(`.sc-tool-dropdown.sm-${menuName}`)
-  let toggle = menu.refs.toggle
-  if (!toggle.hasClass('sm-active')) {
-    toggle.el.click()
-  }
-  return menu
 }

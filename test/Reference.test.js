@@ -1,14 +1,14 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES } from '../index'
-import { openMetadataEditor, setSelection, insertText } from './shared/integrationTestHelpers'
+import { openMetadataEditor, setSelection, insertText, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 // addding reference is done in a workflow, where the user can choose to import, or select a specific type
 // TODO: we should also test the other ways to create reference (actually we should cover all cases)
 // For now, I have added only the following tests for adding manually
 INTERNAL_BIBR_TYPES.forEach(bibrType => {
-  test(`Entity: add reference [type=${bibrType}]`, t => {
+  test(`Reference: add reference [type=${bibrType}]`, t => {
     _testAddReference(t, bibrType)
   })
 })
@@ -103,9 +103,7 @@ function _openWorkflow (metadataEditor) {
 }
 
 function _insertReference (editor, bibrType) {
-  let menu = editor.find('.sc-tool-dropdown.sm-insert')
-  menu.find('button').el.click()
-  menu.find(`.sc-menu-item.sm-insert-reference`).el.click()
+  openMenuAndFindTool(editor, 'insert', '.sm-insert-reference').click()
   // ... this opens a modal where we click on the button for creating the particular bibr type
   editor.find(`.sc-modal-dialog .se-add-reference .se-type.sm-${bibrType}`).click()
 }

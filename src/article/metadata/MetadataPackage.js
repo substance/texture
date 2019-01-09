@@ -41,6 +41,7 @@ export default {
     config.addComponent('add-reference', AddReferenceWorkflow)
     config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
+    config.addComponent('insert-reference', AddReferenceWorkflow)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
@@ -152,6 +153,11 @@ export default {
     registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
     registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
+    config.addCommand('insert-reference', AddEntityCommand, {
+      workflow: 'add-reference',
+      commandGroup: 'add-entity',
+      type: 'bibr'
+    })
   }
 }
 

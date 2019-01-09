@@ -61,6 +61,7 @@ import {
 import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
+import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
 
 export default {
   name: 'ManscruptEditor',
@@ -97,14 +98,6 @@ export default {
       accelerator: 'CommandOrControl+K',
       commandGroup: 'formatting'
     })
-    config.addCommand('create-unordered-list', CreateListCommand, {
-      spec: { listType: 'bullet' },
-      commandGroup: 'text-types'
-    })
-    config.addCommand('create-ordered-list', CreateListCommand, {
-      spec: { listType: 'order' },
-      commandGroup: 'text-types'
-    })
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text-level'
     })
@@ -121,7 +114,7 @@ export default {
       commandGroup: 'table-delete'
     })
     config.addCommand('insert-file', InsertSupplementaryFileCommand, {
-      nodeType: 'supplementary-material',
+      nodeType: 'supplementary-file',
       commandGroup: 'insert'
     })
     config.addCommand('insert-table', InsertTableCommand, {
@@ -152,11 +145,11 @@ export default {
       commandGroup: 'list'
     })
     config.addCommand('insert-block-formula', InsertDispFormulaCommand, {
-      nodeType: 'disp-formula',
+      nodeType: 'block-formula',
       commandGroup: 'insert'
     })
     config.addCommand('insert-block-quote', InsertDispQuoteCommand, {
-      nodeType: 'disp-quote',
+      nodeType: 'block-quote',
       commandGroup: 'insert'
     })
     config.addCommand('insert-columns-left', InsertCellsCommand, {
@@ -235,11 +228,11 @@ export default {
     config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
       commandGroup: 'file'
     })
-    config.addCommand('switch-ordered-list', ChangeListTypeCommand, {
+    config.addCommand('toggle-ordered-list', ChangeListTypeCommand, {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
-    config.addCommand('switch-unordered-list', ChangeListTypeCommand, {
+    config.addCommand('toggle-unordered-list', ChangeListTypeCommand, {
       spec: { listType: 'bullet' },
       commandGroup: 'list'
     })
@@ -296,16 +289,16 @@ export default {
     config.addLabel('translations', 'Translations')
     config.addLabel('edit-ref', 'Edit')
     config.addLabel('remove-ref', 'Remove')
-    config.addLabel('switch-unordered-list', 'Bulleted list')
-    config.addLabel('switch-ordered-list', 'Numbered list')
+    config.addLabel('toggle-unordered-list', 'Bulleted list')
+    config.addLabel('toggle-ordered-list', 'Numbered list')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
     config.addIcon('create-ordered-list', { 'fontawesome': 'fa-list-ol' })
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
     config.addIcon('pencil', { 'fontawesome': 'fa-pencil' })
-    config.addIcon('switch-unordered-list', { 'fontawesome': 'fa-list-ul' })
-    config.addIcon('switch-ordered-list', { 'fontawesome': 'fa-list-ol' })
+    config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
+    config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
     config.addIcon('trash', { 'fontawesome': 'fa-trash' })
 
     // Tools
@@ -316,7 +309,9 @@ export default {
     config.addTool('edit-xref', EditXrefTool)
     config.addTool('insert-figure', InsertFigureTool)
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
+    config.addTool('insert-file', InsertSupplementaryFileTool)
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addTool('replace-file', ReplaceSupplementaryFileTool)
 
     config.addTool('insert-table', InsertTableTool)
 
@@ -366,6 +361,14 @@ export default {
       icon: 'fa-paragraph',
       label: 'Paragraph',
       accelerator: 'CommandOrControl+Alt+0'
+    })
+    config.addCommand('create-unordered-list', CreateListCommand, {
+      spec: { listType: 'bullet' },
+      commandGroup: 'text-types'
+    })
+    config.addCommand('create-ordered-list', CreateListCommand, {
+      spec: { listType: 'order' },
+      commandGroup: 'text-types'
     })
     config.addTextTypeTool({
       name: 'preformat',

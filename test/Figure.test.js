@@ -2,11 +2,22 @@ import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoFileEvent,
   loadBodyFixture, getDocument, openMetadataEditor, getEditorSession, clickUndo,
-  deleteSelection, openMenuAndFindTool
+  deleteSelection, openMenuAndFindTool, isToolEnabled
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
+
+// TODO: test automatic labelling
+
+const insertFigureSelector = '.sc-insert-figure-tool'
+const insertFigureXrefSelector = '.sm-insert-xref-figure'
+const insertFigurePanelSelector = '.sc-insert-figure-panel-tool'
+const moveUpToolSelector = '.sm-move-up-figure-panel'
+const moveDownToolSelector = '.sm-move-down-figure-panel'
+const removePanelToolSelector = '.sm-remove-figure-panel'
+const replacePanelToolSelector = '.sc-replace-figure-panel-tool'
+const subFigureCardSelector = '.sc-card.sm-figure-panel'
 
 const FIGURE_WITH_TWO_PANELS = `
 <fig-group id="fig1">
@@ -43,13 +54,12 @@ test('Figure: add figure into manuscript', t => {
   setCursor(editor, 'p1.content', 3)
   // ATTENTION: it is not possible to trigger the file-dialog programmatically
   // instead we are just checking that this does not throw
-  const insertFigureTool = openMenuAndFindTool(editor, 'insert', 'sc-insert-figure-tool')
+  const insertFigureTool = openMenuAndFindTool(editor, 'insert', insertFigureSelector)
   t.ok(insertFigureTool.el.click(), 'clicking on the insert figure button should not throw error')
   // ... and then triggering onFileSelect() directly
   insertFigureTool.onFileSelect(new PseudoFileEvent())
   let afterP = editor.find('*[data-id=p1] + *')
   t.ok(afterP.hasClass('sm-figure'), 'element after p-2 should be a figure now')
-  // TODO: we should test the automatic labeling
   t.end()
 })
 
@@ -69,7 +79,7 @@ test('Figure: add a sub-figure to a figure', t => {
   let doc = getDocument(editor)
   let figure = doc.find('body figure')
   setCursor(editor, 'fig1-caption-p1.content', 0)
-  const insertFigurePanelTool = openMenuAndFindTool(editor, 'figure-tools', 'sc-insert-figure-panel-tool')
+  const insertFigurePanelTool = openMenuAndFindTool(editor, 'figure-tools', insertFigurePanelSelector)
   t.ok(insertFigurePanelTool.el.click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   let panels = figure.panels.map(id => doc.get(id))
@@ -173,10 +183,10 @@ test('Figure: change the order of panels in manuscript', t => {
   const _getSubFigureLabels = () => _getSubFigures().map(f => f.find('.se-label').text())
   const _getSelectedSubFigureId = () => editor.find(activeSubFigureSelector).getAttribute('data-id')
   const _selectSubFigure = (idx) => _getSubFigures()[idx].el.click()
-  const _canMoveUp = () => _isToolActive(editor, 'sm-move-up-figure-panel')
-  const _canMoveDown = () => _isToolActive(editor, 'sm-move-down-figure-panel')
-  const _moveUp = () => openMenuAndFindTool(editor, 'figure-tools', 'sm-move-up-figure-panel').click()
-  const _moveDown = () => openMenuAndFindTool(editor, 'figure-tools', 'sm-move-down-figure-panel').click()
+  const _canMoveUp = () => _isToolEnabled(editor, moveUpToolSelector)
+  const _canMoveDown = () => _isToolEnabled(editor, moveDownToolSelector)
+  const _moveUp = () => openMenuAndFindTool(editor, 'figure-tools', moveUpToolSelector).click()
+  const _moveDown = () => openMenuAndFindTool(editor, 'figure-tools', moveDownToolSelector).click()
 
   t.equal(_getSubFigures().length, 3, 'figure with three sub-figures should be displayed in manuscript view')
   t.notOk(_canMoveUp(), 'move up tool shoold not be available')
@@ -236,7 +246,7 @@ test('Figure: reference a sub-figure', t => {
   loadBodyFixture(editor, PARAGRAPH_WITH_MULTIPANELFIGURE)
   const xrefSelector = '.sc-xref.sm-fig'
   const emptyLabel = '???'
-  const _createFigureRef = () => openMenuAndFindTool(editor, 'insert', 'sm-insert-xref-figure').click()
+  const _createFigureRef = () => openMenuAndFindTool(editor, 'insert', insertFigureXrefSelector).click()
   const _getXref = () => editor.find(xrefSelector)
   const _selectXref = (xref) => xref.el.click()
   const _selectFirstTarget = () => {
@@ -247,7 +257,7 @@ test('Figure: reference a sub-figure', t => {
     const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
     firstThumbnail.click()
   }
-  const _removePanel = () => openMenuAndFindTool(editor, 'figure-tools', 'sm-remove-figure-panel').click()
+  const _removePanel = () => openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector).click()
 
   setCursor(editor, 'p1.content', 2)
   t.isNil(editor.find(xrefSelector), 'there should be no references in manuscript')
@@ -268,15 +278,17 @@ test('Figure: reference a sub-figure', t => {
 test('Figure: reference multiple sub-figures', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  loadBodyFixture(editor, PARAGRAPH_WITH_MULTIPANELFIGURE)
-  setCursor(editor, 'p1.content', 2)
+
   const xrefSelector = '.sc-inline-node .sm-fig'
   const getXref = () => editor.find(xrefSelector)
   const xrefListItem = '.sc-edit-xref-tool .se-option .sc-preview'
-  const removeSubFigureToolClass = 'sm-remove-figure-panel'
   const getXrefListItems = () => editor.findAll(xrefListItem)
 
-  let insertFigureReferenceTool = openMenuAndFindTool(editor, 'insert', 'sm-insert-xref-figure')
+  loadBodyFixture(editor, PARAGRAPH_WITH_MULTIPANELFIGURE)
+
+  setCursor(editor, 'p1.content', 2)
+
+  let insertFigureReferenceTool = openMenuAndFindTool(editor, 'insert', insertFigureXrefSelector)
   insertFigureReferenceTool.click()
 
   editor.find(xrefSelector).click()
@@ -286,8 +298,8 @@ test('Figure: reference multiple sub-figures', t => {
 
   const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
   firstThumbnail.click()
-  const removeSubFigureTool = openMenuAndFindTool(editor, 'figure-tools', removeSubFigureToolClass)
-  t.ok(removeSubFigureTool.click(), 'clicking on remove sub-figure tool 00000should not throw error')
+  const removePanelTool = openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector)
+  t.ok(removePanelTool.click(), 'clicking on remove sub-figure tool 00000should not throw error')
   t.equal(getXref().text(), 'Figure 1', 'xref label should be equal to xref label')
   t.end()
 })
@@ -299,12 +311,11 @@ test('Figure: replace image in figure panel', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
 
-  const replaceSubFigureToolClass = 'sc-replace-figure-panel-tool'
-  const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
+  let firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
   firstThumbnail.click()
   // Note: we have the same tool for replace as for add a new sub-figure
-  const replaceSubFigureImageTool = openMenuAndFindTool(editor, 'figure-tools', replaceSubFigureToolClass)
-  t.ok(_isToolActive(editor, replaceSubFigureToolClass), 'replace sub-figure image tool should be available')
+  let replaceSubFigureImageTool = openMenuAndFindTool(editor, 'figure-tools', replacePanelToolSelector)
+  t.ok(_isToolEnabled(editor, replacePanelToolSelector), 'replace sub-figure image tool should be available')
   t.ok(replaceSubFigureImageTool.click(), 'clicking on the replace sub-figure button should not throw error')
   // triggering onFileSelect() so that the figure replace logic gets called
   // TODO: if we had a way to retrieve stats for the assets, we could improve this test
@@ -326,17 +337,14 @@ test('Figure: remove and move figure panels in metadata view', t => {
   loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
 
   // Helpers
-  const subFigureCardSelector = '.sc-card.sm-figure-panel'
-  const moveUpToolClass = 'sm-move-up-figure-panel'
-  const removeToolClass = 'sm-remove-figure-panel'
   const getSubFigureCards = () => editor.findAll(subFigureCardSelector)
   const getSubFigureLabel = (card) => card.find(`.sc-figure-metadata .se-label`).text()
   const getSubFigureId = (card) => card.getAttribute('data-id')
   const selectCard = (card) => card.click()
-  const moveUpCard = () => openMenuAndFindTool(editor, 'figure-tools', moveUpToolClass).click()
-  const removeCard = () => openMenuAndFindTool(editor, 'figure-tools', removeToolClass).click()
-  const isMoveUpPossible = () => _isToolActive(editor, moveUpToolClass)
-  const isRemovePossible = () => _isToolActive(editor, removeToolClass)
+  const moveUpCard = () => openMenuAndFindTool(editor, 'figure-tools', moveUpToolSelector).click()
+  const removeCard = () => openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector).click()
+  const isMoveUpPossible = () => _isToolEnabled(editor, moveUpToolSelector)
+  const isRemovePossible = () => _isToolEnabled(editor, removePanelToolSelector)
 
   editor = openMetadataEditor(app)
 
@@ -379,12 +387,10 @@ function _selectFigurePanel (editor, panel) {
 }
 
 function _removeFigurePanel (editor) {
-  let tool = openMenuAndFindTool(editor, 'figure-tools', 'sm-remove-figure-panel')
+  let tool = openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector)
   return tool.click()
 }
 
-function _isToolActive (editor, toolClass) {
-  const tool = openMenuAndFindTool(editor, 'figure-tools', toolClass)
-  if (!tool) return false
-  return !tool.getAttribute('disabled')
+function _isToolEnabled (editor, toolClass) {
+  return isToolEnabled(editor, 'figure-tools', toolClass)
 }

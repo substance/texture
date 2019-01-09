@@ -11,7 +11,6 @@ const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
   path.join(__dirname, 'src', 'article')
 ]
-
 const JATS = 'JATS-archiving'
 const RNG_FILES = [
   `src/article/${JATS}.rng`,

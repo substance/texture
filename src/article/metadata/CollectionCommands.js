@@ -1,69 +1,88 @@
-import { Command } from 'substance'
+import { Command, documentHelpers } from 'substance'
+
+// TODO: consolidate AddEntityCommand and RemoveItemCommand etc.
 
 class BasicCollectionCommand extends Command {
+  constructor (...args) {
+    super(...args)
+
+    // EXPERIMENTAL: 'pre-compiling' a selector for the current xpath
+    // later this selector will be compiled by the CommandManager, and commands be inhibited if the selector does not match current xpath
+    // for now we only support '<type>.<property>' as selector format. Later this will be extended as we need it.
+    let xpathSelector = this.config.xpathSelector
+    if (xpathSelector) {
+      // ATTENTION: this is not ready for any other format than '<type>.<property>'
+      let [type, property] = xpathSelector.split('.')
+      this._contextSelector = { type, property }
+    }
+  }
+
   getCommandState (params, context) {
-    return { disabled: this.isDisabled(params, context) }
+    let { collectionPath, item, position } = this._detectCollection(params, context)
+    return { disabled: (!collectionPath || !item), collectionPath, item, position }
   }
 
-  isDisabled (params, context) {
-    const sel = params.selection
-    return sel && sel.isCustomSelection() && sel.getCustomType() !== 'model'
-  }
-
-  _getModelForSelection (params, context) {
-    const sel = params.selection
-    const api = context.api
-    const modelId = sel.data.modelId
-    return api.getModelById(modelId)
-  }
-
-  _getCollectionForModel (context, model) {
-    const api = context.api
-    const node = model._node
-    const parent = node.getParent()
-    return api.getModelById(parent.id)
+  _detectCollection (params, context) {
+    let doc = context.editorSession.getDocument()
+    let selectionState = params.selectionState
+    let xpath = selectionState.xpath
+    if (this._contextSelector && xpath.length > 0) {
+      let idx = xpath.findIndex(x => x.type === this._contextSelector.type)
+      let first = xpath[idx]
+      let second = xpath[idx + 1]
+      if (first && second.property === this._contextSelector.property) {
+        let collectionPath = [first.id, second.property]
+        let item = doc.get(second.id)
+        let position = -1
+        if (item) {
+          position = item.getPosition()
+        }
+        return { collectionPath, item, position }
+      }
+    }
+    return {}
   }
 }
 
 export class RemoveCollectionItemCommand extends BasicCollectionCommand {
   execute (params, context) {
-    const model = this._getModelForSelection(params, context)
-    const collection = this._getCollectionForModel(context, model)
-    collection.removeItem(model)
-  }
-
-  isDisabled (params, context) {
-    const sel = params.selection
-    if (!sel || !sel.isCustomSelection() || sel.getCustomType() !== 'model') return true
-    const model = this._getModelForSelection(params, context)
-    const collection = this._getCollectionForModel(context, model)
-    if (!collection || !collection.isRemovable) return true
-    return false
+    const { collectionPath, item } = params.commandState
+    let editorSession = context.editorSession
+    editorSession.transaction(tx => {
+      documentHelpers.remove(tx, collectionPath, item.id)
+      tx.selection = null
+    })
   }
 }
 
 export class MoveCollectionItemCommand extends BasicCollectionCommand {
-  execute (params, context) {
-    const direction = this.config.direction
-    const model = this._getModelForSelection(params, context)
-    const collection = this._getCollectionForModel(context, model)
-    if (direction === 'up') {
-      collection.moveUp(model)
-    } else if (direction === 'down') {
-      collection.moveDown(model)
+  getCommandState (params, context) {
+    let commandState = super.getCommandState(params, context)
+    if (!commandState.disabled) {
+      // check the posision
+      const direction = this.config.direction
+      const { collectionPath, position } = commandState
+      let ids = context.editorSession.getDocument().get(collectionPath)
+      if (
+        (direction === 'up' && position === 0) ||
+        (direction === 'down' && position === ids.length - 1)
+      ) {
+        commandState.disabled = true
+      }
     }
+    return commandState
   }
 
-  isDisabled (params, context) {
-    const sel = params.selection
-    if (!sel || !sel.isCustomSelection() || sel.getCustomType() !== 'model') return true
-    const model = this._getModelForSelection(params, context)
-    const collection = this._getCollectionForModel(context, model)
-    if (!collection || !collection.isMovable) return true
+  execute (params, context) {
     const direction = this.config.direction
-    const pos = collection._getModelPosition(model)
-    if (direction === 'up' && pos === 0) return true
-    if (direction === 'down' && pos === collection.length - 1) return true
-    return false
+    const { collectionPath, item, position } = params.commandState
+    // TODO: should we really trust the commandState?
+    let newPosition = direction === 'up' ? position - 1 : position + 1
+    let editorSession = context.editorSession
+    editorSession.transaction(tx => {
+      documentHelpers.removeAt(tx, collectionPath, position)
+      documentHelpers.insertAt(tx, collectionPath, newPosition, item.id)
+      // TODO: what about the selection?
+    })
   }
 }

@@ -54,11 +54,8 @@ export default class TextPropertyComponentNew extends SubstanceTextPropertyCompo
     return el
   }
 
-  _getFragmentProps (node) {
-    let props = super._getFragmentProps(node)
-    let model = this.context.api.getModelById(node.id)
-    props.model = model
-    return props
+  _getFragmentComponentClass (node, noDefault) {
+    return super._getFragmentComponentClass(node, noDefault)
   }
 
   _getUnsupportedInlineNodeComponentClass () {

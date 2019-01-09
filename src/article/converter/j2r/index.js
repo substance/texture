@@ -2,14 +2,12 @@ import PruneText from './PruneText'
 import NormalizeFn from './NormalizeFn'
 import NormalizeContribGroup from './NormalizeContribGroup'
 import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
-import RefList from './RefList'
-import WrapSig from './WrapSig'
+import NormalizeRefList from './NormalizeRefList'
 
 const trafos = [
-  WrapSig,
   NormalizeContribGroup,
   NormalizeFn,
-  RefList,
+  NormalizeRefList,
   UnwrapBlockLevelElements,
   PruneText
 ].map(C => new C())

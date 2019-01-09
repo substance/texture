@@ -1,19 +1,18 @@
-import { Command, getRangeFromMatrix, flatten } from 'substance'
+import { Command, getRangeFromMatrix, flatten, documentHelpers } from 'substance'
 import InsertNodeCommand from './InsertNodeCommand'
+import TableFigure from '../models/TableFigure'
 
 const DISABLED = { disabled: true }
 
 export class InsertTableCommand extends InsertNodeCommand {
   createNode (tx, params, context) {
-    const api = context.api
-    let tableFigure = api._createTableFigure(tx, params)
-    return tableFigure
+    return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
   }
 }
 
 class BasicTableCommand extends Command {
   getCommandState (params, context) { // eslint-disable-line no-unused-vars
-    const tableApi = context.api.getTableAPI()
+    const tableApi = context.api._getTableAPI()
     if (!tableApi.isTableSelected()) return DISABLED
     const selData = tableApi._getSelectionData()
     return Object.assign({ disabled: false }, selData)
@@ -23,7 +22,7 @@ class BasicTableCommand extends Command {
     const commandState = params.commandState
     if (commandState.disabled) return
 
-    const tableApi = context.api.getTableAPI()
+    const tableApi = context.api._getTableAPI()
     return this._execute(tableApi, commandState)
   }
 }
@@ -70,7 +69,7 @@ export class ToggleCellHeadingCommand extends BasicTableCommand {
     cells = flatten(cells).filter(c => !c.shadowed)
     let onlyHeadings = true
     for (let i = 0; i < cells.length; i++) {
-      if (!cells[i].getAttribute('heading')) {
+      if (!cells[i].heading) {
         onlyHeadings = false
         break
       }

@@ -35,7 +35,6 @@ export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCo
     Insert new inline node at the current selection
   */
   execute (params, context) {
-    // TODO: use ArticleAPI
     let state = this.getCommandState(params, context)
     if (!state.disabled) {
       this._execute(params, context)
@@ -58,6 +57,7 @@ export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCo
     This node gets inserted at the current cursor position and after that the inline node gets selected.
   */
   _execute (params, context) {
+    // TODO: use API
     let editorSession = context.editorSession
     editorSession.transaction(tx => {
       let node = this._createNode(tx, params, context)
@@ -71,8 +71,8 @@ export default class InsertInlineNodeCommand extends SubstanceInsertInlineNodeCo
     tx.selection = {
       type: 'property',
       path: inlineNode.getPath(),
-      startOffset: inlineNode.startOffset,
-      endOffset: inlineNode.endOffset
+      startOffset: inlineNode.start.offset,
+      endOffset: inlineNode.end.offset
     }
   }
 

@@ -1,13 +1,13 @@
-.sc-edit-ext-link-tool {
+.sc-edit-external-link-tool {
   display: flex;
   align-items: center;
 }
 
-.sc-edit-ext-link-tool > * {
+.sc-edit-external-link-tool > * {
   flex: 0 0 0;
 }
 
-.sc-edit-ext-link-tool .sc-input {
+.sc-edit-external-link-tool .sc-input {
   height: 24px;
   font-size: 11px;
   min-width: 200px;

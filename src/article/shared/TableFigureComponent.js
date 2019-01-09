@@ -1,87 +1,44 @@
-import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
-import TableFigureMetadataComponent from './TableFigureMetadataComponent'
-import PreviewComponent from './PreviewComponent'
-import renderModelComponent from './renderModelComponent'
-
 import FigurePanelComponent from './FigurePanelComponent'
+import LabelComponent from './LabelComponent'
 
+/**
+ * A TableFigure is similar to a figure but has only one panel, and a table as content.
+ * Additionally it can contain footnotes.
+ */
 export default class TableFigureComponent extends FigurePanelComponent {
-  render ($$) {
-    const model = this.props.model
-    let mode = this._getMode()
+  _getClassNames () {
+    return `sc-table-figure`
+  }
 
-    // delegating to a implementation in case of 'metadata'
-    if (mode === METADATA_MODE) {
-      return $$(TableFigureMetadataComponent, { model }).ref('metadata')
-    }
+  _renderManuscriptVersion ($$) {
+    const mode = this._getMode()
+    const node = this.props.node
+    const SectionLabel = this.getComponent('section-label')
 
     let el = $$('div')
-      // TODO: don't violate the 'sc-' contract
-      .addClass('sc-' + model.type)
-      .attr('data-id', model.id)
-    el.addClass(`sm-${mode}`)
+      .addClass(this._getClassNames())
+      .attr('data-id', node.id)
+      .addClass(`sm-${mode}`)
+      .addClass()
 
-    // TODO: this component should listen to label updates
-    let label = model.getLabel()
-    let contentModel = model.getContent()
-    let figureContent = renderModelComponent(this.context, $$, {
-      model: contentModel
-    }).ref('content').addClass('se-content')
-    el.addClass(`sm-${contentModel.type}`)
+    el.append(
+      $$(SectionLabel, {label: 'label-label'}),
+      $$(LabelComponent, { node }),
+      // no label for the graphic
+      this._renderContent($$),
+      $$(SectionLabel, {label: 'title-label'}),
+      this._renderValue($$, 'title').ref('title').addClass('se-title'),
+      $$(SectionLabel, {label: 'caption-label'}),
+      this._renderValue($$, 'caption', { name: 'caption', container: true }).ref('caption').addClass('se-caption')
+    )
 
-    if (mode === PREVIEW_MODE) {
-      // TODO: We could return the PreviewComponent directly.
-      // However this yields an error we need to investigate.
+    if (node.footnotes.length > 0) {
       el.append(
-        $$(PreviewComponent, {
-          id: this.props.model.id,
-          thumbnail: contentModel.type === 'graphic' ? figureContent : undefined,
-          label
-        })
+        $$(SectionLabel, {label: 'footnotes-label'}),
+        this._renderValue($$, 'footnotes').ref('footnotes').addClass('se-footnotes')
       )
-    } else {
-      const SectionLabel = this.getComponent('section-label')
-      const FootnoteComponent = this.getComponent('fn')
-      const footnotes = this._getFootnotes()
-
-      let labelEl = $$('div').addClass('se-label').text(label)
-      el.append(
-        $$(SectionLabel, {label: 'label-label'}),
-        labelEl,
-        figureContent,
-        $$(SectionLabel, {label: 'title-label'}),
-        renderModelComponent(this.context, $$, {
-          model: model.getTitle(),
-          label: this.getLabel('title')
-        }).ref('title').addClass('se-title'),
-        $$(SectionLabel, {label: 'caption-label'}),
-        renderModelComponent(this.context, $$, {
-          model: model.getCaption(),
-          label: this.getLabel('caption')
-        }).ref('caption').addClass('se-caption')
-      )
-
-      if (footnotes.length > 0) {
-        const footnotesEl = $$('div').addClass('se-table-figure-footnotes')
-        footnotes.forEach(model => {
-          let node = model._node
-          footnotesEl.append(
-            $$(FootnoteComponent, { model, node }).ref(model.id)
-          )
-        })
-        el.append(
-          $$(SectionLabel, {label: 'footnotes-label'}),
-          footnotesEl
-        )
-      }
     }
 
     return el
-  }
-
-  _getFootnotes () {
-    let model = this.props.model
-    let footnotes = model.getFootnotes()
-    return footnotes.getItems()
   }
 }

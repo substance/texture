@@ -46,7 +46,7 @@ export default class FigurePanelConverter {
     if (contentEl) {
       node.content = importer.convertElement(contentEl).id
     }
-    node.caption = importer.convertElement(captionEl).id
+    node.caption = captionEl.children.map(child => importer.convertElement(child).id)
     if (permissionsEl) {
       node.permission = importer.convertElement(permissionsEl).id
     } else {
@@ -60,8 +60,6 @@ export default class FigurePanelConverter {
 
   export (node, el, exporter) {
     let $$ = exporter.$$
-    let doc = exporter.getDocument()
-    let permission = doc.get(node.permission)
     // ATTENTION: this helper retrieves the label from the state
     let label = getLabel(node)
     if (label) {
@@ -69,10 +67,12 @@ export default class FigurePanelConverter {
     }
     // Attention: <title> is part of the <caption>
     if (node.title || node.caption) {
-      let caption = node.getCaption()
-      let captionEl
-      if (caption) {
-        captionEl = exporter.convertNode(caption)
+      let content = node.resolve('caption')
+      let captionEl = $$('caption')
+      if (content.length > 0) {
+        captionEl.append(
+          content.map(p => exporter.convertNode(p))
+        )
       }
       if (node.title) {
         // Note: this would happen if title is set, but no caption
@@ -87,9 +87,10 @@ export default class FigurePanelConverter {
     }
     if (node.content) {
       el.append(
-        exporter.convertNode(doc.get(node.content))
+        exporter.convertNode(node.resolve('content'))
       )
     }
+    let permission = node.resolve('permission')
     if (permission && !permission.isEmpty()) {
       el.append(
         exporter.convertNode(permission)

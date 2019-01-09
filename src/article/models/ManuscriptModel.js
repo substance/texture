@@ -1,17 +1,51 @@
-import { CompositeModel } from '../../kit'
-import FrontMatterModel from './FrontMatterModel'
-import BackMatterModel from './BackMatterModel'
+import { createValueModel } from '../../kit'
 
-export default class ManuscriptModel extends CompositeModel {
-  constructor (api) {
-    super(api)
-
-    this.setProperties(
-      { name: 'front', model: new FrontMatterModel(api) },
-      { name: 'body', model: api.getArticleBody() },
-      { name: 'back', model: new BackMatterModel(api) }
-    )
+/**
+ * A view on parts of an Article used for the manuscript view.
+ */
+export default class ManuscriptModel {
+  constructor (api, doc) {
+    this._title = createValueModel(api, ['article', 'title'])
+    this._abstract = createValueModel(api, ['article', 'abstract'])
+    this._authors = createValueModel(api, ['metadata', 'authors'])
+    this._body = createValueModel(api, ['body', 'content'])
+    this._footnotes = createValueModel(api, ['article', 'footnotes'])
+    this._references = createValueModel(api, ['article', 'references'])
   }
 
-  get type () { return 'manuscript' }
+  getAbstract () {
+    return this._abstract
+  }
+
+  getAuthors () {
+    return this._authors
+  }
+
+  hasAuthors () {
+    return this._authors.length > 0
+  }
+
+  getBody () {
+    return this._body
+  }
+
+  getFootnotes () {
+    return this._footnotes
+  }
+
+  hasFootnotes () {
+    return this._footnotes.length > 0
+  }
+
+  getReferences () {
+    return this._references
+  }
+
+  hasReferences () {
+    return this._references.length > 0
+  }
+
+  getTitle () {
+    return this._title
+  }
 }

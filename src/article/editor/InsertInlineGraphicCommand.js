@@ -5,6 +5,11 @@ export default class InsertInlineGraphicCommand extends InsertInlineNodeCommand 
     return 'inline-graphic'
   }
 
+  getCommandState (...args) {
+    let commandState = super.getCommandState(...args)
+    return commandState
+  }
+
   // Overridden as we are using API code here
   _execute (params, context) {
     const files = params.files

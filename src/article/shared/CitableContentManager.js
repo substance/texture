@@ -26,7 +26,7 @@ export default class CitableContentManager extends AbstractCitationManager {
   }
 
   _getXrefs () {
-    return this._getDocument().findAll(`xref[ref-type='${this.refType}']`)
+    return this._getDocument().findAll(`xref[refType='${this.refType}']`)
   }
 
   _detectAddRemoveCitable (op, change) {
@@ -87,11 +87,7 @@ export default class CitableContentManager extends AbstractCitationManager {
       let numbers = []
       // NOTE: if there are rids that can not be resolved as a valid target these will be ignored
       // TODO: in future there should be a IssueManager checking for the validity of these refs
-      let rids = xref.getAttribute('rid') || ''
-      rids = rids.split(' ')
-      for (let i = 0; i < rids.length; i++) {
-        const targetId = rids[i]
-        if (!targetId) continue
+      for (let targetId of xref.refTargets) {
         if (targetIds.has(targetId)) {
           numbers.push(targetUpdates[targetId].pos)
         }

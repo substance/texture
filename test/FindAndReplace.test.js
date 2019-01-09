@@ -20,7 +20,7 @@ test('FindAndReplace: simple search', t => {
   input.val('Lorem')
   input.el.emit('input')
   let state = fnrManager._getState()
-  t.equal(state.count, 19, 'The number of case-insensitive matches should be correct')
+  t.equal(state.count, 20, 'The number of case-insensitive matches should be correct')
   t.end()
 })
 

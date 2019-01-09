@@ -1,40 +1,48 @@
-import NodeModelComponent from './NodeModelComponent'
+import { createNodePropertyModels } from '../../kit'
+import DefaultModelComponent from './DefaultModelComponent'
 import LicenseEditor from './LicenseEditor'
+import { getLabel } from './nodeHelpers'
 
-export default class FigureMetadataComponent extends NodeModelComponent {
+export default class FigurePanelMetadataComponent extends DefaultModelComponent {
   _getClassNames () {
-    return `sc-figure-metadata sc-node-model`
+    return `sc-figure-metadata`
   }
 
   _renderHeader ($$) {
-    const model = this.props.model
+    const node = this.props.node
     let header = $$('div').addClass('se-header')
     header.append(
-      $$('div').addClass('se-label').text(model.getLabel())
+      $$('div').addClass('se-label').text(getLabel(node))
     )
     return header
   }
 
   // overriding this to get spawn a special editor for the content
-  _getPropertyEditorClass (property) {
+  _getPropertyEditorClass (name, value) {
     // skip 'label' here, as it is shown 'read-only' in the header instead
-    if (property.name === 'label') {
+    if (name === 'label') {
       return null
     // special editor to pick license type
-    } else if (property.name === 'license') {
+    } else if (name === 'license') {
       return LicenseEditor
     } else {
-      return super._getPropertyEditorClass(property)
+      return super._getPropertyEditorClass(name, value)
     }
   }
 
-  _getProperties () {
-    let model = this.props.model
-    let permission = model.getPermission()
-    let properties = model.getProperties()
-    properties = properties.filter(p => p.name !== 'permission')
-    properties = properties.concat(permission.getProperties())
-    return properties
+  _createPropertyModels () {
+    const api = this.context.api
+    const node = this.props.node
+    const doc = node.getDocument()
+    // ATTENTION: we want to show permission properties like they were fields of the panel itself
+    // for that reason we are creating a property map where the permission fields are merged in
+    return createNodePropertyModels(api, this.props.node, {
+      // EXPERIMENTAL: trying to allow
+      'permission': () => {
+        let permission = doc.get(node.permission)
+        return createNodePropertyModels(api, permission)
+      }
+    })
   }
 
   _showLabelForProperty (prop) {
@@ -43,9 +51,5 @@ export default class FigureMetadataComponent extends NodeModelComponent {
       return false
     }
     return true
-  }
-
-  get isRemovable () {
-    return false
   }
 }

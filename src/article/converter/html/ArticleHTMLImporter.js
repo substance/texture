@@ -35,7 +35,7 @@ function _getConverters (configurator) {
 }
 
 const UnsupportedElementImporter = {
-  type: 'p',
+  type: 'paragraph',
   import (el, node, converter) {
     node.content = converter.annotatedText(el, [node.id, 'content'], { preserveWhitespace: true })
   }

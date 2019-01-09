@@ -31,12 +31,6 @@ export default class TableFootnoteManager extends AbstractCitationManager {
     }
   }
 
-  _getCollectionElement () {
-    // HACK: the base implementation assumes that the collection is dedicated node, not just a property
-    // FIXME: find a way to make this path based, instead of node based.
-    return null
-  }
-
   _detectAddRemoveCitable (op, change) {
     const contentPath = [this.tableFigure.id, 'footnotes']
     if (isArrayEqual(op.path, contentPath)) {

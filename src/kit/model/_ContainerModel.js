@@ -1,3 +1,4 @@
+import { documentHelpers } from 'substance'
 import ValueModel from './ValueModel'
 import { isFlowContentEmpty } from './modelHelpers'
 
@@ -5,7 +6,7 @@ export default class _ContainerModel extends ValueModel {
   constructor (api, path, targetTypes) {
     super(api, path)
 
-    this._targetTypes = targetTypes || []
+    this._targetTypes = new Set(targetTypes)
   }
 
   get length () { return this.getValue().length }
@@ -18,7 +19,12 @@ export default class _ContainerModel extends ValueModel {
     return isFlowContentEmpty(this._api, this._path)
   }
 
+  hasTargetType (type) {
+    return this._targetTypes.has(type)
+  }
+
   _getItems () {
-    return this.getValue().map(id => this._api.getModelById(id))
+    const doc = this._api.getDocument()
+    return documentHelpers.getNodesForIds(doc, this.getValue())
   }
 }

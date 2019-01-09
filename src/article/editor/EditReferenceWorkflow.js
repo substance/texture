@@ -1,5 +1,5 @@
-import { Component } from 'substance'
-import NodeModelComponent from '../shared/NodeModelComponent'
+import { Component, documentHelpers } from 'substance'
+import DefaultModelComponent from '../shared/DefaultModelComponent'
 import CardComponent from '../shared/CardComponent'
 
 export default class EditReferenceWorkflow extends Component {
@@ -11,24 +11,25 @@ export default class EditReferenceWorkflow extends Component {
   }
 
   render ($$) {
-    const model = this.props.model
-    const ItemEditor = this.getComponent(model.type, true) || NodeModelComponent
+    const node = this.props.node
+    const ItemEditor = this.getComponent(node.type, true) || DefaultModelComponent
 
     let el = $$('div').addClass('se-edit-reference').append(
-      $$(CardComponent, { model }).append(
-        $$(ItemEditor, {
-          model: model
-        })
+      $$(CardComponent, { node }).append(
+        $$(ItemEditor, { node })
       )
     )
 
     return el
   }
 
-  _removeReference (model) {
-    const api = this.context.api
-    const references = api.getModelById('references')
-    references.removeItem(model)
+  _removeReference (reference) {
+    let editorSession = this.context.editor
+    let collectionPath = [reference.getParent().id, reference.xpath.property]
+    editorSession.transaction(tx => {
+      // TODO: shouldn't the reference be deleted?
+      documentHelpers.remove(tx, collectionPath, reference.id)
+    })
     this.send('closeModal')
   }
 }

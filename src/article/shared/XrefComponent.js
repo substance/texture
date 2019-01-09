@@ -4,8 +4,15 @@ import { getXrefLabel } from './xrefHelpers'
 export default class XrefComponent extends NodeComponent {
   render ($$) {
     let node = this.props.node
-    let refType = node.getAttribute('ref-type')
+    let refType = node.refType
     let label = getXrefLabel(node)
-    return $$('span').addClass('sc-xref sm-' + refType).append(label)
+    let el = $$('span').addClass('sc-xref sm-' + refType)
+    if (!label) {
+      el.addClass('sm-no-label')
+      el.append('?')
+    } else {
+      el.append(label)
+    }
+    return el
   }
 }

@@ -4,20 +4,20 @@ import LicenseEditor from './LicenseEditor'
 
 export default class TableFigureMetadataComponent extends FigureMetadataComponent {
   _getClassNames () {
-    return `sc-table-figure-metadata sc-node-model`
+    return `sc-table-figure-metadata`
   }
 
-  _getPropertyEditorClass (property) {
+  _getPropertyEditorClass (name, value) {
     // skip 'label' here, as it is shown 'read-only' in the header instead
-    if (property.name === 'label') {
+    if (name === 'label') {
       return null
     // special editor to pick license type
-    } else if (property.name === 'license') {
+    } else if (name === 'license') {
       return LicenseEditor
-    } else if (property.name === 'footnotes') {
+    } else if (name === 'footnotes') {
       return FootnoteEditor
     } else {
-      return super._getPropertyEditorClass(property)
+      return super._getPropertyEditorClass(name, value)
     }
   }
 }

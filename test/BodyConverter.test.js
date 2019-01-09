@@ -14,7 +14,7 @@ const FLAT = `
 test('BodyConverter: import flat body', t => {
   let el = DefaultDOMElement.parseSnippet(FLAT.trim(), 'xml')
   let body = _importBody(el)
-  t.equal(body.children.length, 2, 'body should have 2 children')
+  t.equal(body.content.length, 2, 'body should have 2 children')
   t.end()
 })
 
@@ -22,7 +22,7 @@ test('BodyConverter: export flat body', function (t) {
   let el = DefaultDOMElement.parseSnippet(FLAT.trim(), 'xml')
   let body = _importBody(el)
   let bodyEl = _exportBody(body)
-  t.equal(bodyEl.children.length, 2, 'body should have 2 children')
+  t.equal(bodyEl.getChildCount(), 2, 'body should have 2 children')
   t.end()
 })
 
@@ -42,15 +42,15 @@ const TWO_SECTIONS = `
 test('BodyConverter: import two sections', t => {
   let el = DefaultDOMElement.parseSnippet(TWO_SECTIONS.trim(), 'xml')
   let body = _importBody(el)
-  t.equal(body.children.length, 4, 'body should have 4 children')
+  t.equal(body.content.length, 4, 'body should have 4 children')
   let s1 = body.find('#s1')
-  t.equal(s1.tagName, 'heading', 'section1 should be converted into a heading')
-  t.equal(s1.attr('level'), '1', '.. of level 1')
-  t.equal(s1.textContent, '1', '.. and the section title transferred')
+  t.equal(s1.type, 'heading', 'section1 should be converted into a heading')
+  t.equal(s1.level, 1, '.. of level 1')
+  t.equal(s1.getText(), '1', '.. and the section title transferred')
   let s2 = body.find('#s2')
-  t.equal(s2.tagName, 'heading', 'section2 should be converted into a heading')
-  t.equal(s2.attr('level'), '1', '.. of level 1')
-  t.equal(s2.textContent, '2', '.. and the section title transferred')
+  t.equal(s2.type, 'heading', 'section2 should be converted into a heading')
+  t.equal(s2.level, 1, '.. of level 1')
+  t.equal(s2.getText(), '2', '.. and the section title transferred')
   t.end()
 })
 
@@ -94,19 +94,19 @@ const NESTED_SECTIONS = `
 test('BodyConverter: import nested sections', t => {
   let el = DefaultDOMElement.parseSnippet(NESTED_SECTIONS.trim(), 'xml')
   let body = _importBody(el)
-  t.equal(body.children.length, 6, 'body should have 6 children')
+  t.equal(body.content.length, 6, 'body should have 6 children')
   let s1 = body.find('#s1')
-  t.equal(s1.tagName, 'heading', 's1 should be converted into a heading')
-  t.equal(s1.attr('level'), '1', '.. of level 1')
-  t.equal(s1.textContent, '1', '.. and the section title transferred')
+  t.equal(s1.type, 'heading', 's1 should be converted into a heading')
+  t.equal(s1.level, 1, '.. of level 1')
+  t.equal(s1.getText(), '1', '.. and the section title transferred')
   let s12 = body.find('#s1_2')
-  t.equal(s12.tagName, 'heading', 's1_2 should be converted into a heading')
-  t.equal(s12.attr('level'), '2', '.. of level 2')
-  t.equal(s12.textContent, '1.2', '.. and the section title transferred')
+  t.equal(s12.type, 'heading', 's1_2 should be converted into a heading')
+  t.equal(s12.level, 2, '.. of level 2')
+  t.equal(s12.getText(), '1.2', '.. and the section title transferred')
   let s2 = body.find('#s2')
-  t.equal(s2.tagName, 'heading', 's2 should be converted into a heading')
-  t.equal(s2.attr('level'), '1', '.. of level 1')
-  t.equal(s2.textContent, '2', '.. and the section title transferred')
+  t.equal(s2.type, 'heading', 's2 should be converted into a heading')
+  t.equal(s2.level, 1, '.. of level 1')
+  t.equal(s2.getText(), '2', '.. and the section title transferred')
   t.end()
 })
 
@@ -135,17 +135,17 @@ test('BodyConverter: export nested sections', t => {
   t.end()
 })
 
-function _importBody (el) {
+function _importBody (bodyEl) {
   // TODO: create a minimal document, and the JATS importer
   // then run the converter and see if the body node has the proper content
   let doc = InternalArticleDocument.createEmptyArticle(InternalArticleSchema)
   let importer = createJatsImporter(doc)
   // ATTENTION: same as in the real jats2internal converter we must use a temporary id
   // here, because the body node already exists
-  el.id = uuid()
-  let tmp = importer.convertElement(el)
+  bodyEl.id = uuid()
+  let tmpBody = importer.convertElement(bodyEl)
   let body = doc.get('body')
-  body.append(tmp.children)
+  doc.set(['body', 'content'], tmpBody.content)
   return body
 }
 

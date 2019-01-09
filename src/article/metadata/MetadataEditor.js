@@ -1,7 +1,7 @@
 import { DefaultDOMElement } from 'substance'
 import { Managed } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
-import MetadataModel from '../models/MetadataModel'
+import MetadataModel from './MetadataModel'
 import MetadataSection from './MetadataSection'
 import MetadataSectionTOCEntry from './MetadataSectionTOCEntry'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
@@ -11,7 +11,7 @@ export default class MetadataEditor extends EditorPanel {
     super._initialize(props)
 
     this.articleValidator = new ExperimentalArticleValidator(this.editorSession, this.editorSession.editorState)
-    this.model = new MetadataModel(this.api)
+    this.model = new MetadataModel(this.editorSession)
 
     // ATTENTION/HACK: this is making all properties dirty, so we have to reset the appState after that
     this.articleValidator.initialize()
@@ -51,6 +51,22 @@ export default class MetadataEditor extends EditorPanel {
     return el
   }
 
+  setSelection (sel) {
+    let editorSession = this.editorSession
+    editorSession.setSelection(sel)
+  }
+
+  _createModelSelection (modelId) {
+    return {
+      type: 'custom',
+      customType: 'model',
+      nodeId: modelId,
+      data: {
+        modelId
+      }
+    }
+  }
+
   _renderMainSection ($$) {
     const appState = this.context.appState
     let mainSection = $$('div').addClass('se-main-section')
@@ -87,20 +103,18 @@ export default class MetadataEditor extends EditorPanel {
   }
 
   _renderTOCPane ($$) {
-    const model = this.model
-    const properties = model.getProperties()
+    const sections = this.model.getSections()
 
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
 
-    properties.forEach(property => {
-      let valueModel = property.valueModel
-      let id = valueModel.id || property.type
+    sections.forEach(({name, model}) => {
+      let id = model.id
       tocEl.append(
         $$(MetadataSectionTOCEntry, {
           id,
-          name: property.name,
-          model: valueModel
+          name,
+          model
         })
       )
     })
@@ -110,8 +124,7 @@ export default class MetadataEditor extends EditorPanel {
   }
 
   _renderContentPanel ($$) {
-    const model = this.model
-    const properties = model.getProperties()
+    const sections = this.model.getSections()
     const ScrollPane = this.getComponent('scroll-pane')
 
     let contentPanel = $$(ScrollPane, {
@@ -120,16 +133,19 @@ export default class MetadataEditor extends EditorPanel {
 
     let sectionsEl = $$('div').addClass('se-sections')
 
-    properties.forEach(property => {
-      let valueModel = property.valueModel
-      let id = valueModel.id || property.type
-      let content = $$(MetadataSection, { model: valueModel }).attr({id}).ref(property.name)
+    sections.forEach(({name, model}) => {
+      let SectionComponent = this._getSectionComponent(name, model)
+      let content = $$(SectionComponent, { name, model }).ref(name)
       sectionsEl.append(content)
     })
 
     contentPanel.append(sectionsEl)
 
     return contentPanel
+  }
+
+  _getSectionComponent (name, model) {
+    return MetadataSection
   }
 
   _renderFooterPane ($$) {

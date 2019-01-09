@@ -178,10 +178,17 @@ function _monkeyPatchSurfaceProps (parent, props) {
   let newProps = Object.assign({}, props)
   if (props.model && !props.node) {
     const model = props.model
-    if (model.type === 'flow-content-model') {
-      newProps.containerId = model.id
-    } else {
-      newProps.node = model._node
+    switch (model.type) {
+      case 'collection': {
+        newProps.containerPath = model._path
+        break
+      }
+      default: {
+        // TODO: do we really need this anymore?
+        if (model._node) {
+          newProps.node = model._node
+        }
+      }
     }
   }
   // TODO: we should revisit this in Substance

@@ -1,4 +1,4 @@
-import { Command } from 'substance'
+import { Command, documentHelpers } from 'substance'
 
 export default class AddEntityCommand extends Command {
   getCommandState () {
@@ -10,16 +10,22 @@ export default class AddEntityCommand extends Command {
     if (workflow) {
       context.editor.send('startWorkflow', workflow)
     } else {
-      const collection = this._getCollection(params, context)
-      // adding an empty item
-      collection.addItem({})
+      this._addItemToCollection(params, context)
       context.editor.send('toggleOverlay')
     }
   }
 
-  // Default implementation takes the collection via configuration.
-  _getCollection (params, context) {
-    const collectionName = this.config.collection
-    return context.api.getModelById(collectionName)
+  _addItemToCollection (params, context) {
+    const collectionPath = this.config.collection
+    let editorSession = context.editorSession
+    editorSession.transaction(tx => {
+      let node = this._createNode(tx)
+      documentHelpers.append(tx, collectionPath, node.id)
+      // TODO: set selection
+    })
+  }
+
+  _createNode (tx) {
+    return tx.create({ type: this.config.type })
   }
 }

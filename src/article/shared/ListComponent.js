@@ -5,7 +5,8 @@ export default class ListComponent extends NodeComponent {
   render ($$) {
     const ListItemComponent = this.getComponent('list-item')
     let node = this.props.node
-    let el = renderListNode(node, (item) => {
+    // TODO: is it ok to rely on Node API here?
+    let el = renderListNode(node, item => {
       // item is either a list item node, or a tagName
       if (isString(item)) {
         return $$(item)

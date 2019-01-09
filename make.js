@@ -11,7 +11,6 @@ const TMP = 'tmp/'
 const RNG_SEARCH_DIRS = [
   path.join(__dirname, 'src', 'article')
 ]
-
 const JATS = 'JATS-archiving'
 const RNG_FILES = [
   `src/article/${JATS}.rng`,
@@ -248,6 +247,7 @@ b.task('build:test-assets', ['build:vfs'], () => {
 
 b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
   b.copy('test/index.html', 'dist/test/index.html')
+  b.copy('test/_test.css', 'dist/test/_test.css')
   b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
 

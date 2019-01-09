@@ -32,18 +32,16 @@ export default class SupplementaryFileConverter {
       node.label = labelEl.text()
     }
     node.href = el.getAttribute('xlink:href')
-    node.mimetype = el.getAttribute('mimetype')
-    node['mime-sub-type'] = el.getAttribute('mime-sub-type')
-    node.legend = importer.convertElement(captionEl).id
+    node.mimetype = [el.getAttribute('mimetype'), el.getAttribute('mime-subtype')].join('/')
+    node.legend = captionEl.children.map(child => importer.convertElement(child).id)
   }
 
   export (node, el, exporter) {
     let $$ = exporter.$$
-    let doc = node.getDocument()
+    let mimeData = node.mimetype.split('/')
     el.attr({
-      'content-type': 'source-data',
-      'mimetype': node.mimetype,
-      'mime-sub-type': node['mime-sub-type'],
+      'mimetype': mimeData[0],
+      'mime-subtype': mimeData[1] || '',
       'xlink:href': node.href
     })
     let label = getLabel(node)
@@ -52,7 +50,11 @@ export default class SupplementaryFileConverter {
     }
     if (node.legend && node.legend.length > 0) {
       el.append(
-        exporter.convertNode(doc.get(node.legend))
+        $$('caption').append(
+          node.resolve('legend').map(p => {
+            return exporter.convertNode(p)
+          })
+        )
       )
     }
   }

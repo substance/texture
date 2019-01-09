@@ -3,7 +3,7 @@ import {
 } from 'substance'
 
 import JATS from '../JATS'
-import TextureArticle from '../TextureArticle'
+import TextureArticleSchema from '../TextureArticleSchema'
 import { jats2restrictedJats } from './j2r'
 import { jats2internal } from './r2t'
 import validateXML from './util/validateXML'
@@ -38,10 +38,10 @@ export default class JATSImporter extends EventEmitter {
 
     if (!this._validate(JATS, state)) return state
 
-    // JATS -> restricted JATS (= TextureArticle)
+    // JATS -> restricted JATS (= TextureArticleSchema)
     if (!this._transform('jats2restrictedJats', state)) return state
 
-    if (!this._validate(TextureArticle, state, options)) return state
+    if (!this._validate(TextureArticleSchema, state, options)) return state
 
     // restrictedJATS -> InternalArticle
     if (!this._transform('jats2internal', state)) return state

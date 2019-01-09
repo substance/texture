@@ -1,10 +1,10 @@
 import { Component } from 'substance'
-import { NodeModelFactory } from '../../kit'
+import { renderNode } from '../../kit'
+import { getPos } from './nodeHelpers'
 
 export default class ReferenceListComponent extends Component {
   didMount () {
-    // TODO: as we have a node for references now, we should turn this into a NodeComponent instead
-    this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: ['references'] } })
+    this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: ['article', 'references'] } })
   }
 
   dispose () {
@@ -20,7 +20,6 @@ export default class ReferenceListComponent extends Component {
   }
 
   render ($$) {
-    const ReferenceComponent = this.getComponent('bibr')
     const bibliography = this._getBibliography()
 
     let el = $$('div').addClass('sc-reference-list')
@@ -31,11 +30,9 @@ export default class ReferenceListComponent extends Component {
       return el
     }
 
-    // ATTENTION: bibliography still works with document nodes
-    bibliography.forEach(refNode => {
-      let model = NodeModelFactory.create(this.context.api, refNode)
+    bibliography.forEach(ref => {
       el.append(
-        $$(ReferenceComponent, { model })
+        renderNode($$, this, ref)
       )
     })
 
@@ -43,8 +40,10 @@ export default class ReferenceListComponent extends Component {
   }
 
   _getBibliography () {
-    const api = this.context.api
-    const referenceManager = api.getReferenceManager()
-    return referenceManager.getBibliography()
+    let references = this.props.model.getItems()
+    references.sort((a, b) => {
+      return getPos(a) - getPos(b)
+    })
+    return references
   }
 }

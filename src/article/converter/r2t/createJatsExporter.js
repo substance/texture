@@ -1,25 +1,6 @@
 
-import { XMLExporter } from 'substance'
-import JATSSchema from '../../TextureArticle'
-import InternalArticleSchema from '../../InternalArticleSchema'
-import { createXMLConverters } from '../../shared/xmlSchemaHelpers'
-import BodyConverter from './BodyConverter'
-import DispFormulaConverter from './DispFormulaConverter'
-import DispQuoteConverter from './DispQuoteConverter'
-import FigureConverter from './FigureConverter'
-import FigurePanelConverter from './FigurePanelConverter'
-import FootnoteConverter from './FootnoteConverter'
-import TexMathConverter from './TexMathConverter'
-import ListConverter from './ListConverter'
-import PermissionsConverter from './PermissionsConverter'
-import PreformatConverter from './PreformatConverter'
-import TableConverter from './TableConverter'
-import TableFigureConverter from './TableFigureConverter'
-import SupplementaryFileConverter from './SupplementaryFileConverter'
-import ElementCitationConverter from './ElementCitationConverter'
-import UnsupportedNodeConverter from './UnsupportedNodeConverter'
-import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
-import XrefConverter from './XrefConverter'
+import { XMLExporter, isString } from 'substance'
+import converters from './_converters'
 
 /**
  * A factory the creates an exporter instance that can be used to convert a full document to JATS
@@ -29,33 +10,9 @@ import XrefConverter from './XrefConverter'
  * @param {InternalArticleDocument} doc
  */
 export default function createJatsExporter (jatsDom, doc) {
-  // Note: we are applying a hybrid approach, i.e. we create XML importers for the JATS schema
-  // but only for those elements which are supported by our internal article schema.
-  let jatsSchema = JATSSchema.xmlSchema
-  let tagNames = jatsSchema.getTagNames().filter(name => Boolean(InternalArticleSchema.getNodeClass(name)))
-  let jatsConverters = createXMLConverters(JATSSchema.xmlSchema, tagNames)
   // ATTENTION: in this case it is different to the importer
   // not the first matching converter is used, but the last one which is
   // registered for a specific nody type, i.e. a later converter overrides a previous one
-  let converters = jatsConverters.concat([
-    new BodyConverter(),
-    new DispFormulaConverter(),
-    new DispQuoteConverter(),
-    new FigureConverter(),
-    new FigurePanelConverter(),
-    new FootnoteConverter(),
-    new TexMathConverter(),
-    new ListConverter(),
-    new PermissionsConverter(),
-    new PreformatConverter(),
-    new SupplementaryFileConverter(),
-    new TableFigureConverter(),
-    new TableConverter(),
-    new ElementCitationConverter(),
-    UnsupportedNodeConverter,
-    UnsupportedInlineNodeConverter,
-    new XrefConverter()
-  ])
   let exporter = new Internal2JATSExporter({
     converters,
     elementFactory: {
@@ -69,9 +26,41 @@ export default function createJatsExporter (jatsDom, doc) {
 class Internal2JATSExporter extends XMLExporter {
   getNodeConverter (node) {
     let type = node.type
-    if (node.isInstanceOf('bibr')) {
-      type = 'bibr'
+    if (node.isInstanceOf('reference')) {
+      type = 'reference'
     }
     return this.converters.get(type)
+  }
+
+  // TODO: try to improve the core implementation to allow disabling of defaultBlockConverter
+  convertNode (node) {
+    if (isString(node)) {
+      // Assuming this.state.doc has been set by convertDocument
+      node = this.state.doc.get(node)
+    } else {
+      this.state.doc = node.getDocument()
+    }
+    var converter = this.getNodeConverter(node)
+    // special treatment for annotations, i.e. if someone calls
+    // `exporter.convertNode(anno)`
+    if (node.isPropertyAnnotation() && (!converter || !converter.export)) {
+      return this._convertPropertyAnnotation(node)
+    }
+    if (!converter) {
+      throw new Error(`No converter found for node type '${node.type}'`)
+    }
+    var el
+    if (converter.tagName) {
+      el = this.$$(converter.tagName)
+    } else {
+      el = this.$$('div')
+    }
+    el.attr(this.config.idAttribute, node.id)
+    if (converter.export) {
+      el = converter.export(node, el, this) || el
+    } else {
+      throw new Error('Converter must define a function export(node, el, exporter)')
+    }
+    return el
   }
 }

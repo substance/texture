@@ -1,0 +1,30 @@
+.sc-toolbar > .se-active-tools > * {
+  display: inline;
+}
+.sc-toggle-tool {
+  display: inline;
+}
+.sc-tool-group {
+  display: inline;
+}
+/* hide tooltips */
+.sc-tooltip {
+  display: none;
+}
+/* hide file upload inputs*/
+input[type=file] {
+  display: none;
+}
+.sm-hidden {
+  display:none;
+}
+/* tool button labels */
+.sc-isolated-node {
+  border-left: 1px solid gray;
+  padding-left: 5px;
+}
+.sc-isolated-node .se-bracket {
+  visibility: hidden;
+  height: 1px;
+  width: 1px;
+}

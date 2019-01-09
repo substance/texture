@@ -1,84 +1,64 @@
 import { Component } from 'substance'
+import { renderModel } from '../../kit'
 
 export default class ManuscriptComponent extends Component {
   render ($$) {
-    const AuthorsListComponent = this.getComponent('authors-list')
+    const manuscript = this.props.model
+
     const SectionLabel = this.getComponent('section-label')
-    const model = this.props.model
-    const frontModel = model.getPropertyValue('front')
-    const bodyModel = model.getPropertyValue('body')
-    const backModel = model.getPropertyValue('back')
-    const titleModel = frontModel.getPropertyValue('title')
-    const authorsModel = frontModel.getPropertyValue('authors')
-    const abstractModel = frontModel.getPropertyValue('abstract')
-    const footnotesModel = backModel.getPropertyValue('footnotes')
-    const referencesModel = backModel.getPropertyValue('references')
-    const TitleComponent = this._getPropertyComponent(titleModel)
-    const AbstractComponent = this._getPropertyComponent(abstractModel)
-    const BodyComponent = this._getPropertyComponent(bodyModel)
-    const FootnotesListComponent = this._getPropertyComponent(footnotesModel)
-    const ReferenceListComponent = this._getPropertyComponent(referencesModel)
+    const AuthorsListComponent = this.getComponent('authors-list')
+    const ReferenceListComponent = this.getComponent('reference-list')
 
     let el = $$('div').addClass('sc-manuscript').append(
-      $$(SectionLabel, {label: 'title-label'}).addClass('sm-title'),
-      $$(TitleComponent, {
-        model: titleModel,
-        placeholder: this.getLabel('title-placeholder')
-      }).addClass('sm-title')
+      $$(SectionLabel, { label: 'title-label' }).addClass('sm-title'),
+      renderModel($$, this, manuscript.getTitle()).addClass('sm-title').ref('title')
     )
 
-    if (authorsModel.length > 0) {
+    // TODO: we need to think about a way to configure what should be displayed
+    if (manuscript.hasAuthors()) {
       el.append(
         $$(SectionLabel, {label: 'authors-label'}).addClass('sm-authors'),
         $$(AuthorsListComponent, {
-          model: authorsModel,
+          model: manuscript.getAuthors(),
           placeholder: this.getLabel('authors-placeholder')
-        })
+        }).ref('authors').addClass('sm-authors')
       )
     }
 
     el.append(
       $$(SectionLabel, {label: 'abstract-label'}).addClass('sm-abstract'),
-      $$(AbstractComponent, {
-        model: abstractModel,
+      renderModel($$, this, manuscript.getAbstract(), {
+        container: true,
+        name: 'abstract',
         placeholder: this.getLabel('abstract-placeholder')
-      }).addClass('sm-abstract')
+      }).addClass('sm-abstract').ref('abstract')
     )
 
     el.append(
       $$(SectionLabel, {label: 'body-label'}).addClass('sm-body'),
-      $$(BodyComponent, {
-        model: bodyModel,
+      renderModel($$, this, manuscript.getBody(), {
+        container: true,
+        name: 'body',
         placeholder: this.getLabel('body-placeholder')
-      }).addClass('sm-body')
+      }).addClass('sm-body').ref('body')
     )
 
-    if (footnotesModel.length > 0) {
+    if (manuscript.hasFootnotes()) {
       el.append(
         $$(SectionLabel, {label: 'footnotes-label'}).addClass('sm-footnotes'),
-        $$(FootnotesListComponent, {
-          model: footnotesModel
-        })
+        renderModel($$, this, manuscript.getFootnotes()).ref('footnotes').addClass('sm-footnotes')
       )
     }
 
-    if (referencesModel.length > 0) {
+    if (manuscript.hasReferences()) {
       el.append(
         $$(SectionLabel, {label: 'references-label'}).addClass('sm-references'),
         $$(ReferenceListComponent, {
-          model: referencesModel
-        })
+          model: manuscript.getReferences()
+        }).ref('references').addClass('sm-references')
       )
     }
 
     return el
-  }
-
-  getClassNames () {
-    return 'sc-manuscript'
-  }
-
-  _getPropertyComponent (property) {
-    return this.getComponent(property.type)
   }
 }

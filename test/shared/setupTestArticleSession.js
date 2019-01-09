@@ -24,7 +24,7 @@ export default function setupTestArticleSession (opts = {}) {
   if (opts.seed) {
     // clear the body
     let body = doc.get('body')
-    body.removeAt(0)
+    body.set('content', [])
     opts.seed(doc)
   }
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context

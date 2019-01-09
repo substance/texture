@@ -1,6 +1,5 @@
 import { Component } from 'substance'
 import { ModalDialog } from '../../kit'
-import renderEntity from './renderEntity'
 
 export default class AuthorsListComponent extends Component {
   getInitialState () {
@@ -9,10 +8,6 @@ export default class AuthorsListComponent extends Component {
       hidden: items.length === 0,
       edit: false
     }
-  }
-
-  _getItems () {
-    return this.props.model.getItems()
   }
 
   render ($$) {
@@ -40,7 +35,7 @@ export default class AuthorsListComponent extends Component {
           $$('span').addClass('se-contrib').html(
             // HACK: renderEntity needs a Node
             // TODO: we should have a model based helper instead
-            renderEntity(item._node, { short })
+            this.context.api._renderEntity(item, { short })
           )
         )
         if (index < items.length - 1) {
@@ -57,12 +52,6 @@ export default class AuthorsListComponent extends Component {
       contentEl
     )
 
-    // FIXME: display affiliations
-    // el.append(
-    //   $$(AffiliationsListComponent, {
-    //     node: this.props.node
-    //   })
-    // )
     return el
   }
 
@@ -72,5 +61,9 @@ export default class AuthorsListComponent extends Component {
 
   getEmptyMessage () {
     return this.getLabel('no-authors')
+  }
+
+  _getItems () {
+    return this.props.model.getItems()
   }
 }

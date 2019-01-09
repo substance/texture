@@ -53,7 +53,7 @@ export default class ClipboardNew {
 
   _createClipboardHtml (context, snippet) {
     let htmlExporter = context.configurator.getExporter('html')
-    let elements = htmlExporter.convertContainer(snippet.getContainer())
+    let elements = htmlExporter.convertContainer(snippet, snippet.getContainer().getPath())
     // special treatment for a text snippet
     let snippetHtml
     if (elements.length === 1 && elements[0].attr('data-id') === documentHelpers.TEXT_SNIPPET_ID) {
@@ -119,21 +119,21 @@ export default class ClipboardNew {
       // and there will always be a <body>
       // In case, the clipboard HTML is just a snippet
       // the body will contain the parsed snippet
-      let body = htmlDoc.find('body')
-      body = this._sanitizeBody(state, body)
-      if (!body) {
+      let bodyEl = htmlDoc.find('body')
+      bodyEl = this._sanitizeBody(state, bodyEl)
+      if (!bodyEl) {
         console.error('Invalid HTML.')
         return false
       }
-      body = this._wrapIntoParagraph(body)
+      bodyEl = this._wrapIntoParagraph(bodyEl)
       snippet = context.appState.document.createSnippet()
       let htmlImporter = context.configurator.getImporter('html')
       htmlImporter.setDocument(snippet)
       let container = snippet.get(documentHelpers.SNIPPET_ID)
-      body.getChildren().forEach(el => {
+      bodyEl.getChildren().forEach(el => {
         let node = htmlImporter.convertElement(el)
         if (node) {
-          container.show(node.id)
+          container.append(node.id)
         }
       })
     }
@@ -265,8 +265,8 @@ export default class ClipboardNew {
   }
 
   // if the content only
-  _wrapIntoParagraph (body) {
-    let childNodes = body.getChildNodes()
+  _wrapIntoParagraph (bodyEl) {
+    let childNodes = bodyEl.getChildNodes()
     let shouldWrap = false
     for (let i = 0; i < childNodes.length; i++) {
       const c = childNodes[i]
@@ -281,10 +281,10 @@ export default class ClipboardNew {
       }
     }
     if (shouldWrap) {
-      let p = body.createElement('p')
+      let p = bodyEl.createElement('p')
       p.append(childNodes)
-      body.append(p)
+      bodyEl.append(p)
     }
-    return body
+    return bodyEl
   }
 }

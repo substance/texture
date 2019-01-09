@@ -136,8 +136,8 @@ export default function (DocumentSession) {
         if (!sel.surfaceId) {
           _addSurfaceId(sel, this)
         }
-        if (!sel.containerId) {
-          _addContainerId(sel, this)
+        if (!sel.containerPath) {
+          _addContainerPath(sel, this)
         }
       }
       this.editorState.selection = sel
@@ -317,14 +317,14 @@ function _addSurfaceId (sel, editorSession) {
   }
 }
 
-function _addContainerId (sel, editorSession) {
-  if (sel && !sel.isNull() && sel.surfaceId && !sel.containerId) {
+function _addContainerPath (sel, editorSession) {
+  if (sel && !sel.isNull() && sel.surfaceId && !sel.containerPath) {
     let surface = editorSession.surfaceManager.getSurface(sel.surfaceId)
     if (surface) {
-      let containerId = surface.getContainerId()
-      if (containerId) {
-        // console.log('Adding containerId', containerId)
-        sel.containerId = containerId
+      let containerPath = surface.getContainerPath()
+      if (containerPath) {
+        // console.log('Adding containerPath', containerPath)
+        sel.containerPath = containerPath
       }
     }
   }

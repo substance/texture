@@ -1,10 +1,8 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import { openMetadataEditor } from './shared/integrationTestHelpers'
-import { injectStyle, getMountPoint } from './shared/testHelpers'
 
 test('Input: ManyRelationship dropdown', t => {
-  showOnlyRelevant(t)
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let metadataEditor = openMetadataEditor(app)
   // ATTENTION: just taking the first ManyRelationshipInput we find
@@ -27,18 +25,3 @@ test('Input: ManyRelationship dropdown', t => {
   t.equal(isSelected, !wasSelected, 'the item selection should have changed')
   t.end()
 })
-
-// using this to hide everything we do not want to see
-
-let STYLE = `
-.sc-manyrelationship-test .sc-metadata-editor .se-main-section > * { display: none; }
-.sc-manyrelationship-test .sc-metadata-editor .se-main-section > .se-content-section { display: block; }
-.sc-manyrelationship-test .sc-metadata-editor .se-main-section > .se-content-section .se-sections > * { display: none; }
-.sc-manyrelationship-test .sc-metadata-editor .se-main-section > .se-content-section .se-sections > #authors { display: block; }
-/* .sc-manyrelationship-test { background: blue; } */
-`
-function showOnlyRelevant (t) {
-  let el = getMountPoint(t)
-  el.addClass('sc-manyrelationship-test')
-  injectStyle(t, STYLE)
-}

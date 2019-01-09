@@ -48,20 +48,6 @@ export default class TextureConfigurator extends Configurator {
     return this.getComponentRegistry().get(name, 'strict')
   }
 
-  /*
-    Map an XML node type to a model
-  */
-  addModel (modelType, ModelClass) {
-    if (this.config.models[modelType]) {
-      throw new Error(`model type ${modelType} already registered.`)
-    }
-    this.config.models[modelType] = ModelClass
-  }
-
-  getModelRegistry () {
-    return this.config.models
-  }
-
   addPropertyEditor (PropertyEditorClass) {
     if (includes(this.config.propertyEditors, PropertyEditorClass)) {
       throw new Error('Already registered')

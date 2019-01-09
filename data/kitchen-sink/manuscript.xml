@@ -57,7 +57,7 @@
                   <suffix>Jr.</suffix>
                 </name>
                 <string-name content-type="alias">Dan Randall</string-name>
-                <bio id="bio1">
+                <bio>
                   <p id="bio1_p1">This is a bio example.</p>
                   <p id="bio1_p2">With multiparagraphs.</p>
                 </bio>
@@ -176,7 +176,7 @@
       <title>Quisque malesuada</title>
       <table-wrap id="table1">
         <label>Table 1</label>
-        <caption id="table1_caption">
+        <caption>
           <title>Example Table</title>
           <p id="table1_caption_p1">This is a table example.</p>
         </caption>
@@ -227,11 +227,11 @@
         <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
         <fig id="fig1">
           <label>Figure 1</label>
-          <caption id="fig1-caption">
+          <caption>
             <title>Figure with permissions.</title>
             <p id="fig1-caption-p1">Caption.</p>
           </caption>
-          <graphic id="graphic-1" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
+          <graphic id="graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
           <permissions id="permission-2">
             <copyright-statement>© 2014 Surname et al.</copyright-statement>
             <copyright-year>2014</copyright-year>
@@ -245,19 +245,19 @@
         <fig-group id="fig2">
           <fig id="fig2a">
             <label>Figure 2A</label>
-            <caption id="fig2a-caption">
+            <caption>
               <title>First panel</title>
               <p id="fig2a-caption-p1">First panel caption</p>
             </caption>
-            <graphic id="fig2a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
+            <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
           </fig>
           <fig id="fig2b">
             <label>Figure 2B</label>
-            <caption id="fig2b-caption">
+            <caption>
               <title>Second panel</title>
               <p id="fig2b-caption-p1">Second panel caption</p>
             </caption>
-            <graphic id="fig2b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
+            <graphic id="fig2b-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
           </fig>
         </fig-group>
         <disp-quote id="disp-quote-1">
@@ -273,8 +273,8 @@ class Reader(fname: String) {
 }]]></preformat>
         <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
         <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
-        <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math>\sqrt(13)</tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
-        <disp-formula id="disp-formula-1">
+        <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
+        <disp-formula id="disp-formula-1" content-type="math/tex">
           <label>(1)</label>
           <tex-math><![CDATA[
 1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
@@ -316,7 +316,7 @@ class Reader(fname: String) {
             <p>Item 9</p>
           </list-item>
         </list>
-        <disp-formula id="disp-formula-2">
+        <disp-formula id="disp-formula-2" content-type="math/tex">
           <label>(2)</label>
           <tex-math><![CDATA[
 \sum_{i = 1}^{ \left[ \frac{n}{2} \right] }
@@ -329,9 +329,9 @@ class Reader(fname: String) {
       </sec>
       <sec id="sec-3">
         <title>Supplementary Files</title>
-        <supplementary-material id="sm1" content-type="source-data" mimetype="application" mime-sub-type="zip" xlink:href="example.zip">
+        <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip">
           <label>Supplementary File 1</label>
-          <caption id="sm1-caption">
+          <caption>
             <p id="sm1-caption-p1">Description of Supplementary File</p>
           </caption>
         </supplementary-material>

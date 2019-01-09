@@ -16,10 +16,9 @@ export default class InsertCrossReferenceCommand extends InsertInlineNodeCommand
   }
 
   _createNode (tx, params, context) {
-    const refType = this._getRefType(params, context)
-    let xref = tx.createElement('xref')
-    xref.attr('ref-type', refType)
-    xref.attr('rid', '')
-    return xref
+    return tx.create({
+      type: 'xref',
+      refType: this._getRefType(params, context)
+    })
   }
 }

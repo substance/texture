@@ -10,11 +10,10 @@ class BasicFigurePanelCommand extends Command {
 
   isDisabled (params) {
     const xpath = params.selectionState.xpath
-    return xpath.indexOf('figure') === -1
+    return !xpath.find(n => n.type === 'figure')
   }
 
-  _getFigureModel (params, context) {
-    const api = context.api
+  _getFigure (params, context) {
     const sel = params.selection
     const doc = params.editorSession.getDocument()
     let nodeId = sel.getNodeId()
@@ -23,34 +22,42 @@ class BasicFigurePanelCommand extends Command {
       const node = findParentByType(selectedNode, 'figure')
       nodeId = node.id
     }
-    return api.getModelById(nodeId)
+    return doc.get(nodeId)
+  }
+
+  _getFigurePanel (params, context) {
+    const figure = this._getFigure(params, context)
+    const currentIndex = figure.getCurrentPanelIndex()
+    const doc = figure.getDocument()
+    return doc.get(figure.panels[currentIndex])
   }
 
   _matchSelection (params, context) {
     const xpath = params.selectionState.xpath
-    const isFigurePanel = xpath[xpath.length - 1] === 'figure-panel'
-    const isInFigure = xpath.indexOf('figure') > -1
-    const viewName = context.appState.viewName
-    return viewName === 'metadata' ? isFigurePanel : isInFigure
+    const isInFigure = xpath.find(n => n.type === 'figure')
+    return isInFigure
   }
 }
 
 export class AddFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
-    const figureModel = this._getFigureModel(params, context)
     const files = params.files
+    // TODO: why only one file? we could also add multiple panels at once
     if (files.length > 0) {
-      figureModel.addPanel(files[0])
+      const file = files[0]
+      const figure = this._getFigure(params, context)
+      context.api._addFigurePanel(figure.id, file)
     }
   }
 }
 
 export class ReplaceFigurePanelImageCommand extends BasicFigurePanelCommand {
   execute (params, context) {
-    const figurePanelModel = this._getFigurePanelModel(params, context)
+    const figurePanel = this._getFigurePanel(params, context)
     const files = params.files
     if (files.length > 0) {
-      figurePanelModel.replaceImage(files[0])
+      let graphic = figurePanel.getContent()
+      context.api._replaceFile([graphic.id, 'href'], files[0])
     }
   }
 
@@ -59,27 +66,24 @@ export class ReplaceFigurePanelImageCommand extends BasicFigurePanelCommand {
     if (matchSelection) return false
     return true
   }
-
-  _getFigurePanelModel (params, context) {
-    const figureModel = this._getFigureModel(params, context)
-    const currentIndex = figureModel.getCurrentPanelIndex()
-    const panels = figureModel.getPanels()
-    return panels.getItemAt(currentIndex)
-  }
 }
 
 export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
-    const figureModel = this._getFigureModel(params, context)
-    figureModel.removePanel()
+    const api = context.api
+    const figure = this._getFigure(params, context)
+    const figurePanel = this._getFigurePanel(params, context)
+    // TODO: this shows that generic API does not work without additional steps
+    api._deleteChild([figure.id, 'panels'], figurePanel, tx => {
+      tx.selection = null
+    })
   }
 
   isDisabled (params, context) {
     const matchSelection = this._matchSelection(params, context)
     if (matchSelection) {
-      const figureModel = this._getFigureModel(params, context)
-      const panelsLength = figureModel.getPanelsLength()
-      if (panelsLength > 1) {
+      const figure = this._getFigure(params, context)
+      if (figure.panels.length > 1) {
         return false
       }
     }
@@ -90,23 +94,23 @@ export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
 export class MoveFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
     const direction = this.config.direction
-    const figureModel = this._getFigureModel(params, context)
-    if (direction === 'up') {
-      figureModel.movePanelUp()
-    } else if (direction === 'down') {
-      figureModel.movePanelDown()
-    }
+    const figure = this._getFigure(params, context)
+    const figurePanel = this._getFigurePanel(params, context)
+    const pos = figurePanel.getPosition()
+    const shift = direction === 'up' ? -1 : 1
+    context.api._moveChild([figure.id, 'panels'], figurePanel, shift, tx => {
+      tx.set([figure.id, 'state', 'currentPanelIndex'], pos + shift)
+    })
   }
 
   isDisabled (params, context) {
     const matchSelection = this._matchSelection(params, context)
     if (matchSelection) {
-      const figureModel = this._getFigureModel(params, context)
-      const currentIndex = figureModel.getCurrentPanelIndex()
-      const panelsLength = figureModel.getPanelsLength()
+      const figure = this._getFigure(params, context)
+      const currentIndex = figure.getCurrentPanelIndex()
       const direction = this.config.direction
-      if (panelsLength > 1) {
-        if ((direction === 'up' && currentIndex > 0) || (direction === 'down' && currentIndex < panelsLength - 1)) {
+      if (figure.panels.length > 1) {
+        if ((direction === 'up' && currentIndex > 0) || (direction === 'down' && currentIndex < figure.panels.length - 1)) {
           return false
         }
       }

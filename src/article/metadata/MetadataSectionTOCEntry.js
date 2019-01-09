@@ -1,6 +1,6 @@
 import { ModelComponent } from '../../kit'
 
-export default class MetaSectionTOCEntry extends ModelComponent {
+export default class MetadataSectionTOCEntry extends ModelComponent {
   render ($$) {
     const id = this.props.id
     const name = this.props.name

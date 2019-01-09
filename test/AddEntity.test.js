@@ -2,6 +2,7 @@ import { test } from 'substance-test'
 import { INTERNAL_BIBR_TYPES } from '../index'
 import setupTestApp from './shared/setupTestApp'
 import { openMetadataEditor } from './shared/integrationTestHelpers'
+import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 test(`AddEntity: add author`, t => {
   _testAddEntity(t, 'author', 'person')
@@ -32,7 +33,7 @@ test(`AddEntity: add subject`, t => {
 })
 
 test(`AddEntity: add footnote`, t => {
-  _testAddEntity(t, 'footnote', 'fn')
+  _testAddEntity(t, 'footnote', 'footnote')
 })
 
 // addding reference is done in a workflow, where the user can choose to import, or select a specific type
@@ -49,7 +50,7 @@ function _testAddEntity (t, toolName, entityType) {
   let editor = openMetadataEditor(app)
   // NOTE: this will only fail in the nodejs test suite, because browser runs the click
   // in a try-catch block (or so)
-  t.doesNotThrow(() => {
+  doesNotThrowInNodejs(t, () => {
     _addEntity(editor, toolName)
   })
   const cardSelector = `.sc-card.sm-${entityType}`
@@ -58,16 +59,19 @@ function _testAddEntity (t, toolName, entityType) {
   if (card) {
     // in addition to the plain 'Add Entity' we also test 'Remove+Undo'
     let modelId = card.el.getAttribute('data-id')
-    editor.api.selectModel(modelId)
-    t.doesNotThrow(() => {
-      // remove the entity via remove button
-      editor.find('.sc-toggle-tool.sm-remove-col-item > button').el.click()
-    }, 'using "Remove" should not throw')
+    editor.setSelection({
+      type: 'custom',
+      customType: 'model',
+      nodeId: modelId,
+      data: {
+        modelId
+      }
+    })
+    // remove the entity via remove button
+    editor.find(`.sc-toggle-tool.sm-remove-${toolName} > button`).el.click()
     t.nil(editor.find(cardSelector), 'card should have been removed')
     // now undo this change and then the card should be there again
-    t.doesNotThrow(() => {
-      editor.find('.sc-toggle-tool.sm-undo > button').el.click()
-    }, 'using "Undo" should not throw')
+    editor.find('.sc-toggle-tool.sm-undo > button').el.click()
     t.notNil(editor.find(cardSelector), 'card should be back again')
   }
   t.end()
@@ -76,7 +80,7 @@ function _testAddEntity (t, toolName, entityType) {
 function _testAddReference (t, bibrType) {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
-  t.doesNotThrow(() => {
+  doesNotThrowInNodejs(t, () => {
     let menu = editor.find('.sc-tool-dropdown.sm-add')
     menu.find('button').el.click()
     menu.find(`.sc-menu-item.sm-add-reference`).el.click()

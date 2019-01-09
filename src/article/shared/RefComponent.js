@@ -1,13 +1,12 @@
 import NodeComponent from '../shared/NodeComponent'
-import { renderEntity } from '../shared/entityHelpers'
 
+// TODO: dead code?
 export default class RefComponent extends NodeComponent {
   render ($$) {
     const api = this.context.api
-    const article = api.getArticle()
     const ref = this.props.node
     let label = _getReferenceLabel(ref)
-    let entityHtml = renderEntity(_getEntity(ref, article))
+    let entityHtml = api._renderEntity(ref)
 
     // TODO: do we want to display something like this
     // if so, use the label provider
@@ -25,11 +24,4 @@ function _getReferenceLabel (ref) {
     return ref.state.label
   }
   return '?'
-}
-
-function _getEntity (ref, article) {
-  if (ref.state && ref.state.entity) {
-    return ref.state.entity
-  }
-  return article.get(ref.id)
 }

@@ -5,7 +5,7 @@ export default class TableConverter {
 
   import (el, node, importer) {
     const doc = importer.state.doc
-    const $$ = doc.createElement.bind(doc)
+    const $$ = (type, props = {}) => doc.create(Object.assign(props, { type }))
     let rows = el.findAll('tr')
     let newRows = rows.map(tr => {
       return {
@@ -30,40 +30,43 @@ export default class TableConverter {
         if (rowspan) {
           rowspan = Math.max(1, parseInt(rowspan, 10))
           if (rowspan > 1) {
-            attributes.rowspan = String(rowspan)
+            attributes.rowspan = rowspan
           }
         }
         let colspan = c.attr('colspan')
         if (colspan) {
           colspan = Math.max(1, parseInt(colspan, 10))
           if (colspan > 1) {
-            attributes.colspan = String(colspan)
+            attributes.colspan = colspan
           }
         }
         // flag all spanned cells so that we can skip them
         _fillSpanned($$, newRows, i, k, rowspan, colspan)
-        let cell = $$('table-cell', { id: c.id })
-        cell.attr(attributes)
-        // ATTENTION: do not use 'cell.content = ...' here
-        // because this does not trigger an operation
-        // when this converter is used inside a transaction, the assigment does not have an effect
-        // TODO: In importers we should never assign directly but use a node.set('name', value)
-        cell.setText(importer.annotatedText(c, cell.getPath()))
+        let cell = $$('table-cell', {
+          id: c.id,
+          heading: attributes['heading'],
+          rowspan: attributes['rowspan'],
+          colspan: attributes['colspan'],
+          content: importer.annotatedText(c, [c.id, 'content'])
+        })
         newRows[i].children[k] = cell
       }
     }
-    node._childNodes = newRows.map(data => {
-      let row = $$('table-row', { id: data.id }).append(data.children)
+    node.rows = newRows.map(data => {
+      let row = $$('table-row', {
+        id: data.id,
+        cells: data.children.map(cell => cell.id)
+      })
       return row.id
     })
   }
 
-  export (node, el, exporter) {
+  export (table, el, exporter) {
     const $$ = exporter.$$
-    let htmlTable = $$('table').attr('id', node.id)
+    let htmlTable = $$('table').attr('id', table.id)
     let tbody = $$('tbody')
-    let rows = node.findAll('table-row')
-    let matrix = node.getCellMatrix()
+    let rows = table.resolve('rows')
+    let matrix = table.getCellMatrix()
     for (let i = 0; i < rows.length; i++) {
       let row = rows[i]
       let cells = matrix[i]
@@ -71,20 +74,18 @@ export default class TableConverter {
       for (let j = 0; j < cells.length; j++) {
         let cell = cells[j]
         if (cell.shadowed) continue
-        let el = $$(cell.attr('heading') ? 'th' : 'td')
+        let el = $$(cell.heading ? 'th' : 'td')
         let attributes = { id: cell.id }
-        let rowspan = cell.attr('rowspan')
+        let rowspan = cell.rowspan
         if (rowspan) {
-          rowspan = Math.max(1, parseInt(rowspan, 10))
           if (rowspan > 1) {
-            attributes.rowspan = rowspan
+            attributes.rowspan = String(rowspan)
           }
         }
-        let colspan = cell.attr('colspan')
+        let colspan = cell.colspan
         if (colspan) {
-          colspan = Math.max(1, parseInt(colspan, 10))
           if (colspan > 1) {
-            attributes.colspan = colspan
+            attributes.colspan = String(colspan)
           }
         }
         el.attr(attributes)

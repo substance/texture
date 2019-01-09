@@ -20,7 +20,7 @@ test('TableConverter: import simple table', t => {
   t.deepEqual(table.getDimensions(), [4, 3], 'table should have correct dimensions')
   let cellMatrix = table.getCellMatrix()
   let textContent = cellMatrix.map(row => {
-    return row.map(cell => cell.textContent)
+    return row.map(cell => cell.getText())
   })
   let expectedContent = [
     ['A', 'B', 'C'],
@@ -29,7 +29,7 @@ test('TableConverter: import simple table', t => {
     ['7', '8', '9']
   ]
   t.deepEqual(textContent, expectedContent, 'cell content should have been converted correctly')
-  t.ok(cellMatrix[0].every(cell => cell.getAttribute('heading')), 'all cells in first row should be heading')
+  t.ok(cellMatrix[0].every(cell => cell.heading), 'all cells in first row should be heading')
   t.end()
 })
 
@@ -79,7 +79,7 @@ test('TableConverter: import table with col span (1)', t => {
   let el = DefaultDOMElement.parseSnippet(COL_SPAN_1.trim(), 'xml')
   let table = _importTable(el)
   t.deepEqual(table.getDimensions(), [5, 4], 'table should have correct dimensions')
-  t.ok(table.getChildren().every(row => row.getChildCount() === 4), 'internally every row should have 4 cells')
+  t.ok(table.resolve('rows').every(row => row.cells.length === 4), 'internally every row should have 4 cells')
   let cellMatrix = table.getCellMatrix()
   let masterCell = cellMatrix[3][0]
   let spannedCell = cellMatrix[3][1]
@@ -113,7 +113,7 @@ test('TableConverter: import table with col span (2)', t => {
   let el = DefaultDOMElement.parseSnippet(COL_SPAN_2.trim(), 'xml')
   let table = _importTable(el)
   t.deepEqual(table.getDimensions(), [5, 4], 'table should have correct dimensions')
-  t.ok(table.getChildren().every(row => row.getChildCount() === 4), 'internally every row should have 4 cells')
+  t.ok(table.resolve('rows').every(row => row.cells.length === 4), 'internally every row should have 4 cells')
   let cellMatrix = table.getCellMatrix()
   let masterCell = cellMatrix[4][0]
   let spannedCell = cellMatrix[4][1]
@@ -147,7 +147,7 @@ test('TableConverter: import table with col span (3)', t => {
   let el = DefaultDOMElement.parseSnippet(COL_SPAN_3.trim(), 'xml')
   let table = _importTable(el)
   t.deepEqual(table.getDimensions(), [5, 4], 'table should have correct dimensions')
-  t.ok(table.getChildren().every(row => row.getChildCount() === 4), 'internally every row should have 4 cells')
+  t.ok(table.resolve('rows').every(row => row.cells.length === 4), 'internally every row should have 4 cells')
   let cellMatrix = table.getCellMatrix()
   let row4 = cellMatrix[3]
   let masterCell = cellMatrix[3][0]
@@ -182,7 +182,7 @@ test('TableConverter: import table with row span (1)', t => {
   let el = DefaultDOMElement.parseSnippet(ROW_SPAN_1.trim(), 'xml')
   let table = _importTable(el)
   t.deepEqual(table.getDimensions(), [5, 4], 'table should have correct dimensions')
-  t.ok(table.getChildren().every(row => row.getChildCount() === 4), 'internally every row should have 4 cells')
+  t.ok(table.resolve('rows').every(row => row.cells.length === 4), 'internally every row should have 4 cells')
   let cellMatrix = table.getCellMatrix()
   let row4 = cellMatrix[3]
   let row5 = cellMatrix[4]

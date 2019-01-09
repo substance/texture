@@ -20,14 +20,15 @@ export default class SelectAllCommand extends Command {
 
   execute (params, context) {
     let editorSession = context.editorSession
+    let doc = editorSession.getDocument()
     let appState = context.appState
     let focusedSurface = appState.focusedSurface
     if (focusedSurface) {
       let sel = null
       let surfaceId = focusedSurface.id
       if (focusedSurface._isContainerEditor) {
-        let container = focusedSurface.getContainer()
-        let nodeIds = container.getContent()
+        let containerPath = focusedSurface.getContainerPath()
+        let nodeIds = doc.get(containerPath)
         if (nodeIds.length === 0) return false
         let firstNodeId = nodeIds[0]
         let lastNodeId = last(nodeIds)
@@ -37,12 +38,11 @@ export default class SelectAllCommand extends Command {
           startOffset: 0,
           endPath: [lastNodeId],
           endOffset: 1,
-          containerId: container.id,
+          containerPath,
           surfaceId
         })
       } else if (focusedSurface._isTextPropertyEditor) {
         let path = focusedSurface.getPath()
-        let doc = editorSession.getDocument()
         let text = doc.get(path)
         sel = editorSession.createSelection({
           type: 'property',

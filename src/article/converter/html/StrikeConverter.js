@@ -1,5 +1,5 @@
 export default {
-  type: 'strike',
+  type: 'strike-through',
   tagName: 'span',
   matchElement (el) {
     return el.getStyle('text-decoration') === 'line-through'

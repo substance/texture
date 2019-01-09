@@ -62,6 +62,7 @@ import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
+import { AddCustomMetadataFieldCommand } from '../shared/CustomMetadataFieldCommands'
 
 export default {
   name: 'ManscruptEditor',
@@ -264,6 +265,9 @@ export default {
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'superscript',
       commandGroup: 'formatting'
+    })
+    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
     })
 
     // Labels

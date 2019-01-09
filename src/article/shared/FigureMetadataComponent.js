@@ -1,55 +1,17 @@
-import { createNodePropertyModels } from '../../kit'
-import DefaultModelComponent from './DefaultModelComponent'
-import LicenseEditor from './LicenseEditor'
-import { getLabel } from './nodeHelpers'
+import { ValueComponent } from '../../kit'
 
-export default class FigurePanelMetadataComponent extends DefaultModelComponent {
-  _getClassNames () {
-    return `sc-figure-metadata`
-  }
-
-  _renderHeader ($$) {
-    const node = this.props.node
-    let header = $$('div').addClass('se-header')
-    header.append(
-      $$('div').addClass('se-label').text(getLabel(node))
+export default class FigureMetadataComponent extends ValueComponent {
+  render ($$) {
+    let items = this.props.model.getItems()
+    let el = $$('div').addClass('sc-figure-metadata')
+    el.append(
+      items.map(field => this._renderMetadataField($$, field))
     )
-    return header
+    return el
   }
 
-  // overriding this to get spawn a special editor for the content
-  _getPropertyEditorClass (name, value) {
-    // skip 'label' here, as it is shown 'read-only' in the header instead
-    if (name === 'label') {
-      return null
-    // special editor to pick license type
-    } else if (name === 'license') {
-      return LicenseEditor
-    } else {
-      return super._getPropertyEditorClass(name, value)
-    }
-  }
-
-  _createPropertyModels () {
-    const api = this.context.api
-    const node = this.props.node
-    const doc = node.getDocument()
-    // ATTENTION: we want to show permission properties like they were fields of the panel itself
-    // for that reason we are creating a property map where the permission fields are merged in
-    return createNodePropertyModels(api, this.props.node, {
-      // EXPERIMENTAL: trying to allow
-      'permission': () => {
-        let permission = doc.get(node.permission)
-        return createNodePropertyModels(api, permission)
-      }
-    })
-  }
-
-  _showLabelForProperty (prop) {
-    // Don't render a label for content property to use up the full width
-    if (prop === 'content') {
-      return false
-    }
-    return true
+  _renderMetadataField ($$, metadataField) {
+    let MetdataFieldComponent = this.getComponent(metadataField.type)
+    return $$(MetdataFieldComponent, { node: metadataField }).ref(metadataField.id)
   }
 }

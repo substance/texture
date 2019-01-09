@@ -6,6 +6,7 @@ import BreakComponent from './BreakComponent'
 import BlockFormulaComponent from './BlockFormulaComponent'
 import BlockQuoteComponent from './BlockQuoteComponent'
 import BodyComponent from './BodyComponent'
+import CustomMetadataFieldComponent from './CustomMetadataFieldComponent'
 import ExternalLinkComponent from './ExternalLinkComponent'
 import FigureComponent from './FigureComponent'
 import FigurePanelComponent from './FigurePanelComponent'
@@ -39,8 +40,8 @@ export default {
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
-    config.addComponent('reference', ReferenceComponent)
     config.addComponent('body', BodyComponent)
+    config.addComponent('custom-metadata-field', CustomMetadataFieldComponent)
     config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('figure-panel', FigurePanelComponent)
@@ -54,6 +55,7 @@ export default {
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('monospace', AnnotationComponent)
     config.addComponent('paragraph', ParagraphComponent)
+    config.addComponent('reference', ReferenceComponent)
     config.addComponent('reference-list', ReferenceListComponent)
     config.addComponent('section-label', SectionLabel)
     config.addComponent('subscript', AnnotationComponent)

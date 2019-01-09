@@ -1,4 +1,4 @@
-import { NodeComponent } from '../../kit'
+import { NodeComponent, createValueModel } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata'
 import FigureMetadataComponent from './FigureMetadataComponent'
@@ -43,6 +43,13 @@ export default class FigurePanelComponent extends NodeComponent {
       $$(SectionLabel, {label: 'caption-label'}),
       this._renderValue($$, 'caption', { container: true }).ref('caption').addClass('se-caption')
     )
+
+    if (node.metadata.length > 0) {
+      el.append(
+        $$(SectionLabel, {label: 'metadata-label'}),
+        $$(FigureMetadataComponent, { model: createValueModel(this.context.api, [node.id, 'metadata']) })
+      )
+    }
 
     return el
   }

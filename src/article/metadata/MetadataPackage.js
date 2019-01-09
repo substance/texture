@@ -24,6 +24,7 @@ import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import MetadataSection from './MetadataSection'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
+import { AddCustomMetadataFieldCommand } from '../shared/CustomMetadataFieldCommands'
 
 export default {
   name: 'ArticleMetadata',
@@ -99,6 +100,9 @@ export default {
     })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'
+    })
+    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
     })
 
     // Tools

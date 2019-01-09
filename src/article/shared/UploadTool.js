@@ -1,3 +1,4 @@
+import { domHelpers } from 'substance'
 import { Tool } from '../../kit'
 
 export default class UploadTool extends Tool {
@@ -11,6 +12,7 @@ export default class UploadTool extends Tool {
       'type': 'file'
     }).ref('input')
       .on('change', this.onFileSelect)
+      .on('click', domHelpers.stop)
     if (!this.doesAcceptAllFileTypes) {
       const fileType = this.getFileType()
       input.attr({'accept': fileType})
@@ -40,9 +42,11 @@ export default class UploadTool extends Tool {
     return false
   }
 
-  _onClick () {
-    this.refs.input.val(null)
-    this.refs.input.click()
+  _onClick (e) {
+    e.stopPropagation()
+    e.preventDefault()
+    this.refs.input.el.val(null)
+    this.refs.input.el.click()
   }
 
   onFileSelect (e) {

@@ -1,8 +1,8 @@
-import FigureMetadataComponent from './FigureMetadataComponent'
+import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata'
 import FootnoteEditor from './FootnoteEditor'
 import LicenseEditor from './LicenseEditor'
 
-export default class TableFigureMetadataComponent extends FigureMetadataComponent {
+export default class TableFigureComponentWithMetadata extends FigurePanelComponentWithMetadata {
   _getClassNames () {
     return `sc-table-figure-metadata`
   }

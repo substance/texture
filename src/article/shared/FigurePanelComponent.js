@@ -1,5 +1,6 @@
 import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
+import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata'
 import FigureMetadataComponent from './FigureMetadataComponent'
 import PreviewComponent from './PreviewComponent'
 import LabelComponent from './LabelComponent'
@@ -73,7 +74,7 @@ export default class FigurePanelComponent extends NodeComponent {
   }
 
   _renderMetadataVersion ($$) {
-    return $$(FigureMetadataComponent, { node: this.props.node }).ref('metadata')
+    return $$(FigurePanelComponentWithMetadata, { node: this.props.node }).ref('metadata')
   }
 
   _getMode () {

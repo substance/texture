@@ -52,6 +52,20 @@ export default class FigurePanelConverter {
     } else {
       node.permission = doc.create({ type: 'permission' }).id
     }
+
+    // Custom Metadata Fields
+    let kwdGroupEls = el.findAll('kwd-group')
+    node.metadata = kwdGroupEls.map(kwdGroupEl => {
+      let kwdEls = kwdGroupEl.findAll('kwd')
+      let labelEl = kwdGroupEl.find('label')
+      let name = labelEl ? labelEl.textContent : ''
+      let value = kwdEls.map(kwdEl => kwdEl.textContent).join(', ')
+      return doc.create({
+        type: 'custom-metadata-field',
+        name,
+        value
+      }).id
+    })
   }
 
   _getContent (el) {
@@ -84,6 +98,20 @@ export default class FigurePanelConverter {
         )
       }
       el.append(captionEl)
+    }
+    // Custom Metadata Fields
+    if (node.metadata.length > 0) {
+      el.append(
+        node.resolve('metadata').map(field => {
+          return $$('kwd-group').append(
+            $$('label').text(field.name)
+          ).append(
+            field.name.split(',').map(str => {
+              return $$('kwd').text(str.trim())
+            })
+          )
+        })
+      )
     }
     if (node.content) {
       el.append(

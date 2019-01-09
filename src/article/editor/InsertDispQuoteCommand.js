@@ -1,7 +1,9 @@
+import { documentHelpers } from 'substance'
+import { BlockQuote } from '../models'
 import InsertNodeCommand from './InsertNodeCommand'
 
-export default class InsertDispQuoteCommand extends InsertNodeCommand {
+export default class InsertBlockQuoteCommand extends InsertNodeCommand {
   createNode (tx, params, context) {
-    return context.api._createDispQuote(tx)
+    return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
   }
 }

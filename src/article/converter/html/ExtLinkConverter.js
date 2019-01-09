@@ -1,15 +1,13 @@
 export default {
-  type: 'ext-link',
+  type: 'external-link',
   tagName: 'a',
   import (el, node) {
     let href = el.getAttribute('href')
     if (href) {
-      node.attributes = {
-        'xlink:href': href
-      }
+      node.href = href
     }
   },
   export (node, el) {
-    el.setAttribute('href', node.attributes['xlink:href'])
+    el.setAttribute('href', node.href)
   }
 }

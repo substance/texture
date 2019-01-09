@@ -108,9 +108,11 @@ export default class ArticlePanel extends Component {
 
   _updateViewName (viewName) {
     let oldViewName = this.context.appState.viewName
-    this.context.appState.viewName = viewName
-    this._viewports[oldViewName] = this.refs.content.getViewport()
-    this.rerender()
+    if (oldViewName !== viewName) {
+      this.context.appState.viewName = viewName
+      this._viewports[oldViewName] = this.refs.content.getViewport()
+      this.rerender()
+    }
   }
 
   _handleKeydown (e) {

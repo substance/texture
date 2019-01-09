@@ -8,7 +8,7 @@ import { getText, getSeparatedText, getAttr } from '../util/domHelpers'
 
 export default class ElementCitationConverter {
   // Note: this will create different types according to the attributes in the JATS element
-  get type () { return 'bibr' }
+  get type () { return 'reference' }
 
   matchElement (el) {
     return el.is('ref')

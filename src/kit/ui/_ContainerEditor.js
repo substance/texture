@@ -18,7 +18,7 @@ export default class ContainerEditorNew extends ModifiedSurface(SubstanceContain
     appState.addObserver(['document'], this._onContainerChanged, this, {
       stage: 'render',
       document: {
-        path: this.container.getContentPath()
+        path: this.containerPath
       }
     })
   }
@@ -67,18 +67,14 @@ export default class ContainerEditorNew extends ModifiedSurface(SubstanceContain
         return this.getComponent('text-node')
       // otherwise component for unsupported nodes
       } else {
-        return this.getComponent('unsupported')
+        return this.getComponent('unsupported-node')
       }
     }
   }
 
-  _getNodeProps (node) {
-    let props = super._getNodeProps(node)
-    let model = this.context.api.getModelById(node.id)
-    props.model = model
+  _getNodeProps (model) {
+    let props = super._getNodeProps(model)
+    props.placeholder = this.props.placeholder || this.getLabel(this.props.name + '-placeholder')
     return props
   }
-
-  // HACK: overriding the original implementation which we do not want to use anymore
-  _attachPlaceholder () {}
 }

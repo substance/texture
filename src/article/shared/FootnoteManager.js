@@ -1,13 +1,15 @@
+import { documentHelpers } from 'substance'
 import AbstractCitationManager from './AbstractCitationManager'
 
 export default class FootnoteManager extends AbstractCitationManager {
   constructor (documentSession, labelGenerator) {
-    super(documentSession, 'fn', ['fn'], labelGenerator)
+    super(documentSession, 'fn', ['footnote'], labelGenerator)
     // compute initial labels
     this._updateLabels('initial')
   }
 
-  _getCollectionElement () {
-    return this._getDocument().get('footnotes')
+  getCitables () {
+    let doc = this._getDocument()
+    return documentHelpers.getNodesForPath(doc, ['article', 'footnotes'])
   }
 }

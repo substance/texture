@@ -1,112 +1,89 @@
-import {
-  AnnotationComponent
-} from 'substance'
-import {
-  CompositeComponent
-} from '../../kit'
+import { AnnotationComponent } from '../../kit'
 
-// new model based components
+import AbstractComponent from './AbstractComponent'
 import AuthorsListComponent from './AuthorsListComponent'
+import BreakComponent from './BreakComponent'
+import BlockFormulaComponent from './BlockFormulaComponent'
+import BlockQuoteComponent from './BlockQuoteComponent'
+import BodyComponent from './BodyComponent'
+import ExternalLinkComponent from './ExternalLinkComponent'
 import FigureComponent from './FigureComponent'
 import FigurePanelComponent from './FigurePanelComponent'
-import HeadingComponent from './HeadingComponent'
-import ManuscriptComponent from './ManuscriptComponent'
-import UnsupportedNodeComponent from './UnsupportedNodeComponent'
-import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
-import NodeModelComponent from './NodeModelComponent'
-
-// TODO: these needs to be revisited
-import AffiliationsListComponent from './AffiliationsListComponent'
-import BioComponent from './BioComponent'
-import BreakComponent from './BreakComponent'
-import EditorsListComponent from './EditorsListComponent'
-import ElementNodeComponent from './ElementNodeComponent'
-import ExtLinkComponent from './ExtLinkComponent'
-import CaptionComponent from './CaptionComponent'
-import ContainerNodeComponent from './ContainerNodeComponent'
-import DispQuoteComponent from './DispQuoteComponent'
-import DispFormulaComponent from './DispFormulaComponent'
 import FootnoteComponent from './FootnoteComponent'
-import GraphicComponent from './GraphicComponent'
+import HeadingComponent from './HeadingComponent'
 import InlineFormulaComponent from './InlineFormulaComponent'
-import ModelPreviewComponent from './ModelPreviewComponent'
+import InlineGraphicComponent from './InlineGraphicComponent'
 import ListComponent from './ListComponent'
 import ListItemComponent from './ListItemComponent'
+import ManuscriptComponent from './ManuscriptComponent'
+import ModelPreviewComponent from './ModelPreviewComponent'
+import ParagraphComponent from './ParagraphComponent'
 import ReferenceComponent from './ReferenceComponent'
+import ReferenceListComponent from './ReferenceListComponent'
 import SectionLabel from './SectionLabel'
-import SigBlockComponent from './SigBlockComponent'
-import SupplementaryFileComponent from './SupplementaryFileComponent'
 import TableComponent from './TableComponent'
 import TableFigureComponent from './TableFigureComponent'
+import UnsupportedNodeComponent from './UnsupportedNodeComponent'
+import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
 import XrefComponent from './XrefComponent'
+import DefaultModelComponent from './DefaultModelComponent'
+import GraphicComponent from './GraphicComponent'
+import SupplementaryFileComponent from './SupplementaryFileComponent'
 
 export default {
   name: 'manuscript-content',
   configure (config) {
+    config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
-    config.addComponent('back-matter', CompositeComponent)
-    config.addComponent('bibr', ReferenceComponent)
+    config.addComponent('bold', AnnotationComponent)
+    config.addComponent('block-formula', BlockFormulaComponent)
+    config.addComponent('block-quote', BlockQuoteComponent)
+    config.addComponent('break', BreakComponent)
+    config.addComponent('reference', ReferenceComponent)
+    config.addComponent('body', BodyComponent)
+    config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('figure-panel', FigurePanelComponent)
+    config.addComponent('footnote', FootnoteComponent)
     config.addComponent('heading', HeadingComponent)
-    config.addComponent('manuscript', ManuscriptComponent)
-    config.addComponent('table-figure', TableFigureComponent)
-    // TODO: find out why we need both, 'unsupported' and 'unsupported-node'
-    // latter is defined in schema, while first is only used in the context of models (FlowContentComponent)
-    config.addComponent('unsupported', UnsupportedNodeComponent)
-    config.addComponent('unsupported-node', UnsupportedNodeComponent)
-    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
-
-    config.addComponent('entity', NodeModelComponent)
-    config.addComponent('affiliations-list', AffiliationsListComponent)
-    config.addComponent('editors-list', EditorsListComponent)
-    config.addComponent('bio', BioComponent)
-    config.addComponent('break', BreakComponent)
-    config.addComponent('caption', CaptionComponent)
-    config.addComponent('container', ContainerNodeComponent)
-    config.addComponent('col', ElementNodeComponent)
-    config.addComponent('colgroup', ElementNodeComponent)
-    config.addComponent('disp-formula', DispFormulaComponent)
-    config.addComponent('disp-quote', DispQuoteComponent)
-    config.addComponent('fn', FootnoteComponent)
-    config.addComponent('graphic', GraphicComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
-    config.addComponent('inline-graphic', GraphicComponent)
+    config.addComponent('inline-graphic', InlineGraphicComponent)
+    config.addComponent('italic', AnnotationComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
-    config.addComponent('sig-block', SigBlockComponent)
-    config.addComponent('supplementary-file', SupplementaryFileComponent)
+    config.addComponent('manuscript', ManuscriptComponent)
+    config.addComponent('monospace', AnnotationComponent)
+    config.addComponent('paragraph', ParagraphComponent)
+    config.addComponent('reference-list', ReferenceListComponent)
+    config.addComponent('section-label', SectionLabel)
+    config.addComponent('subscript', AnnotationComponent)
+    config.addComponent('superscript', AnnotationComponent)
     config.addComponent('table', TableComponent)
+    config.addComponent('table-figure', TableFigureComponent)
+    config.addComponent('unsupported-node', UnsupportedNodeComponent)
+    config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
     config.addComponent('xref', XrefComponent)
 
+    config.addComponent('graphic', GraphicComponent)
+    config.addComponent('supplementary-file', SupplementaryFileComponent)
+
+    // TODO: either we use DefaultModelComponent generally, but with better control over the look-and-feel
+    // or we use it only in Metadata Editor, or in popups.
+    // binding to 'entity' sounds no appropriate anymore, because we do not have the concept of 'Entity' anymore
+    config.addComponent('entity', DefaultModelComponent)
     config.addComponent('model-preview', ModelPreviewComponent)
 
-    // ATTENTION: I have changed the behavior so that
-    // unregistered annotations or inline-nodes are
-    // rendered using the UnsupportedInlineNodeComponent
-    // instead of rendering all by default with AnnotationComponent
-    config.addComponent('bold', AnnotationComponent)
-    config.addComponent('italic', AnnotationComponent)
-    config.addComponent('sub', AnnotationComponent)
-    config.addComponent('sup', AnnotationComponent)
-    config.addComponent('monospace', AnnotationComponent)
-    config.addComponent('ext-link', ExtLinkComponent)
-
-    // Manuscript sections config
-    config.addComponent('section-label', SectionLabel)
-    config.addLabel('title-label', 'Title')
-    config.addLabel('title-placeholder', 'Enter a title for your article')
     config.addLabel('abstract-label', 'Abstract')
     config.addLabel('abstract-placeholder', 'Please provide a short description of your article.')
+    config.addLabel('authors-label', 'Authors')
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here.')
-    config.addLabel('authors-label', 'Authors')
-    config.addLabel('references-label', 'References')
-    config.addLabel('footnotes-label', 'Footnotes')
-
-    // Figure sections config
-    config.addLabel('label-label', 'Label')
     config.addLabel('caption-label', 'Caption')
+    config.addLabel('footnotes-label', 'Footnotes')
+    config.addLabel('label-label', 'Label')
+    config.addLabel('references-label', 'References')
+    config.addLabel('title-label', 'Title')
+    config.addLabel('title-placeholder', 'Enter a title for your article')
 
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })

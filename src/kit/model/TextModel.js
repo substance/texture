@@ -1,5 +1,5 @@
 import StringModel from './StringModel'
 
 export default class TextModel extends StringModel {
-  get type () { return 'text-model' }
+  get type () { return 'text' }
 }

@@ -13,6 +13,7 @@
   </front>
   <body>
     <sec id="sec-1">
+      <title>Cross-References</title>
       <p id="p-0">This is a plain paragraph.</p>
       <p id="p-1">This is a cross-reference to a footnote <xref id="p1-xref-1" ref-type="fn" rid="fn-1">1</xref>.</p>
       <table-wrap id="table-1">

@@ -1,6 +1,5 @@
 import { DefaultDOMElement } from 'substance'
 import { NodeComponent } from '../../kit'
-import renderModelComponent from './renderModelComponent'
 import { PREVIEW_MODE } from '../../article/ArticleConstants'
 
 export default class FigureComponent extends NodeComponent {
@@ -9,51 +8,53 @@ export default class FigureComponent extends NodeComponent {
   */
   render ($$) {
     let mode = this._getMode()
-    let model = this.props.model
+    let node = this.props.node
+    let panels = node.panels
 
-    let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`).attr('data-id', model.id)
+    let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`).attr('data-id', node.id)
 
-    if (model.hasPanels()) {
-      let content = this._renderCarousel($$)
+    if (panels.length > 0) {
+      let content = this._renderCarousel($$, panels)
       el.append(content)
     }
 
     return el
   }
 
-  _renderCarousel ($$) {
-    let model = this.props.model
-    const panelsLength = model.getPanelsLength()
-    if (panelsLength === 1) {
+  _renderCarousel ($$, panels) {
+    if (panels.length === 1) {
       return this._renderCurrentPanel($$)
-    }
-    return $$('div').addClass('se-carousel').append(
-      $$('div').addClass('se-current-panel').append(
-        this._renderCurrentPanel($$)
-      ),
-      $$('div').addClass('se-thumbnails').append(
-        this._renderThumbnails($$)
+    } else {
+      return $$('div').addClass('se-carousel').append(
+        $$('div').addClass('se-current-panel').append(
+          this._renderCurrentPanel($$)
+        ),
+        $$('div').addClass('se-thumbnails').append(
+          this._renderThumbnails($$)
+        )
       )
-    )
+    }
   }
 
   _renderCurrentPanel ($$) {
     let panel = this._getCurrentPanel()
-    return renderModelComponent(this.context, $$, {
-      model: panel,
+    let PanelComponent = this.getComponent(panel.type)
+    return $$(PanelComponent, {
+      node: panel,
       mode: this.props.mode
-    })
+    }).ref(panel.id)
   }
 
   _renderThumbnails ($$) {
-    const model = this.props.model
-    const panels = model.getPanels()
+    const node = this.props.node
+    const panels = node.getPanels()
     const currentIndex = this._getCurrentPanelIndex()
-    return panels.getItems().map((panel, idx) => {
-      const thumbnail = renderModelComponent(this.context, $$, {
-        model: panel,
+    return panels.map((panel, idx) => {
+      let PanelComponent = this.getComponent(panel.type)
+      const thumbnail = $$(PanelComponent, {
+        node: panel,
         mode: PREVIEW_MODE
-      })
+      }).ref(`${panel.id}@thumbnail`)
       if (currentIndex === idx) {
         thumbnail.addClass('sm-current-panel')
       } else {
@@ -68,37 +69,38 @@ export default class FigureComponent extends NodeComponent {
   }
 
   _getCurrentPanel () {
-    let model = this.props.model
+    let node = this.props.node
+    let doc = node.getDocument()
     let currentPanelIndex = this._getCurrentPanelIndex()
-    let panels = model.getPanels()
-    return panels.getItemAt(currentPanelIndex)
+    let ids = node.panels
+    return doc.get(ids[currentPanelIndex])
   }
 
   _getCurrentPanelIndex () {
-    let model = this.props.model
-    let node = model._node
+    let node = this.props.node
+    let state = node.state
+    let panels = node.panels
     let currentPanelIndex = 0
-    if (node.state) {
-      currentPanelIndex = node.state.currentPanelIndex
+    if (state) {
+      currentPanelIndex = state.currentPanelIndex
     }
-    // FIXME: node state is corrupt
-    if (!node.panels[currentPanelIndex]) {
+    // FIXME: state is corrupt
+    if (currentPanelIndex < 0 || currentPanelIndex >= panels.length) {
       console.error('figurePanel.state.currentPanelIndex is corrupt')
-      node.state.currentPanelIndex = currentPanelIndex = 0
+      state.currentPanelIndex = currentPanelIndex = 0
     }
     return currentPanelIndex
   }
 
   _handleThumbnailClick (e) {
-    const model = this.props.model
-    const panels = model.getPanels()
-    const panelIds = panels.getValue()
+    const node = this.props.node
+    const panelIds = node.panels
     // ATTENTION: wrap the native element here so that this works for testing too
     let target = DefaultDOMElement.wrap(e.currentTarget)
     const panelId = target.getAttribute('data-id')
     if (panelId) {
       const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[model.id, {currentPanelIndex: panelIds.indexOf(panelId)}]])
+      editorSession.updateNodeStates([[node.id, {currentPanelIndex: panelIds.indexOf(panelId)}]])
     }
   }
 }

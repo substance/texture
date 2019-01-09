@@ -1,5 +1,5 @@
 export default {
-  type: 'p',
+  type: 'paragraph',
   tagName: 'p',
   import (el, node, converter) {
     node.content = converter.annotatedText(el, [node.id, 'content'])

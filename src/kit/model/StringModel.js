@@ -2,7 +2,7 @@ import { isNil } from 'substance'
 import ValueModel from './ValueModel'
 
 export default class StringModel extends ValueModel {
-  get type () { return 'string-model' }
+  get type () { return 'string' }
 
   isEmpty () {
     let value = this.getValue()

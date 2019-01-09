@@ -1,0 +1,5 @@
+/* TODO: this is not solved yet. Would be nice to have something that popsup when hovering over
+   an errored inline-formula */
+.sc-inline-formula.sm-error .se-message {
+  display: none;
+}

@@ -1,18 +1,18 @@
+import { documentHelpers } from 'substance'
 import { findParentByType } from './nodeHelpers'
-// TODO: move AddEntityCommand into shared
 import AddEntityCommand from '../metadata/AddEntityCommand'
+import Footnote from '../models/Footnote'
 
 export default class InsertFootnoteCommand extends AddEntityCommand {
   detectScope (params) {
     const xpath = params.selectionState.xpath
-    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : 'default'
+    return xpath.find(n => n.type === 'table-figure') ? 'table-figure' : 'default'
   }
 
-  _getCollection (params, context) {
+  _getCollectionPath (params, context) {
     const scope = this.detectScope(params)
     if (scope === 'default') {
-      const collectionName = 'footnotes'
-      return context.api.getModelById(collectionName)
+      return ['article', 'footnotes']
     } else {
       const doc = params.editorSession.getDocument()
       const nodeId = params.selection.getNodeId()
@@ -23,8 +23,23 @@ export default class InsertFootnoteCommand extends AddEntityCommand {
         const parentTable = findParentByType(node, 'table-figure')
         tableNodeId = parentTable.id
       }
-      const tableModel = context.api.getModelById(tableNodeId)
-      return tableModel.getFootnotes()
+      return [tableNodeId, 'footnotes']
     }
+  }
+
+  // TODO: rethink this. Struggling with trying to generalize this collection stuff
+  // probably it is better to go with a bare metal implementation instead
+  _addItemToCollection (params, context) {
+    let collectionPath = this._getCollectionPath(params, context)
+    context.editorSession.transaction(tx => {
+      let node = documentHelpers.createNodeFromJson(tx, Footnote.getTemplate())
+      documentHelpers.append(tx, collectionPath, node.id)
+      let p = tx.get(node.content[0])
+      tx.setSelection({
+        type: 'property',
+        path: p.getPath(),
+        startOffset: 0
+      })
+    })
   }
 }

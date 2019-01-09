@@ -26,7 +26,7 @@ export function setCursorIntoProperty (property, pos) {
     path,
     startOffset: pos,
     surfaceId: surface.id,
-    containerId: surface.containerId
+    containerPath: surface.getContainerPath()
   })
 }
 
@@ -46,7 +46,7 @@ export function setSelection (editor, path, from, to) {
     startOffset: from,
     endOffset: to,
     surfaceId: surface.id,
-    containerId: surface.containerId
+    containerPath: surface.getContainerPath()
   })
 }
 
@@ -135,7 +135,7 @@ export function getApi (editor) {
 }
 
 export function getEditorSession (editor) {
-  return editor.context.api.getArticleSession()
+  return editor.context.api.getEditorSession()
 }
 
 export function getSelection (editor) {
@@ -151,7 +151,6 @@ export function getDocument (editor) {
 }
 
 export function loadBodyFixture (editor, xml) {
-  let api = getApi(editor)
   let editorSession = getEditorSession(editor)
   let els = DefaultDOMElement.parseSnippet(xml, 'xml')
   if (!isArray(els)) els = [els]
@@ -159,11 +158,10 @@ export function loadBodyFixture (editor, xml) {
   if (isArray(els)) els = els.filter(el => el.isElementNode())
   editorSession.transaction(tx => {
     let body = tx.get('body')
-    api._clearFlowContent(tx, body.getContentPath())
+    tx.set(body.getContentPath(), [])
     let importer = createJatsImporter(tx)
-    body.append(
-      els.map(el => importer.convertElement(el))
-    )
+    let contentIds = els.map(el => importer.convertElement(el).id)
+    tx.set(['body', 'content'], contentIds)
   })
 }
 

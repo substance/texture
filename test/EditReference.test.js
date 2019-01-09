@@ -6,9 +6,7 @@ test(`EditReference: add and edit authors`, t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
   _addReference(editor, 'journal-article-ref')
-  // get the  reference card
   let card = editor.find('.sc-card.sm-journal-article-ref')
-  // add an author
   card.find('.sm-authors .se-add-value').el.click()
   let refContribEl = card.find('.sm-authors .sm-ref-contrib')
   let refContribId = refContribEl.attr('data-id')
@@ -16,7 +14,8 @@ test(`EditReference: add and edit authors`, t => {
   insertText(editor, 'Doe')
   setSelection(editor, [refContribId, 'givenNames'], 0)
   insertText(editor, 'John')
-  // TODO: this is very style
+  // this is very style specific
+  // TODO: is there a better way to test the effect of editing?
   let previewText = card.find('.sc-model-preview').text()
   t.ok(previewText.search('Doe') > -1, 'preview should display surname of author')
   t.end()

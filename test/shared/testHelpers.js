@@ -1,4 +1,5 @@
 import { getMountPoint } from 'substance-test'
+import { platform } from 'substance'
 import {
   InternalArticleDocument, InternalArticleSchema,
   createJatsImporter, createJatsExporter, createEmptyJATS
@@ -61,4 +62,12 @@ export function exportNode (node) {
   let jats = createEmptyJATS()
   let exporter = createJatsExporter(jats, node.getDocument())
   return exporter.convertNode(node)
+}
+
+export function doesNotThrowInNodejs (t, fn, descr) {
+  if (platform.inNodeJS) {
+    t.doesNotThrow(fn, descr)
+  } else {
+    fn()
+  }
 }

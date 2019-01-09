@@ -1,17 +1,19 @@
 import BooleanModel from './BooleanModel'
+import ChildModel from './ChildModel'
+import CollectionModel from './CollectionModel'
+import ManyRelationshipModel from './ManyRelationshipModel'
 import NumberModel from './NumberModel'
+import ObjectModel from './ObjectModel'
+import SingleRelationshipModel from './SingleRelationshipModel'
 import StringModel from './StringModel'
 import TextModel from './TextModel'
-import ObjectModel from './ObjectModel'
-import ChildModel from './ChildModel'
-import ChildrenModel from './ChildrenModel'
-import SingleRelationshipModel from './SingleRelationshipModel'
-import ManyRelationshipModel from './ManyRelationshipModel'
-import AnyModel from './AnyModel'
 
-export default function createValueModel (api, type, path, targetTypes) {
+export default function createValueModel (api, path, property) {
+  let doc = api.getDocument()
+  if (!property) property = doc.getProperty(path)
+  let targetTypes = property.targetTypes
   let valueModel
-  switch (type) {
+  switch (property.type) {
     case 'boolean': {
       valueModel = new BooleanModel(api, path)
       break
@@ -32,24 +34,23 @@ export default function createValueModel (api, type, path, targetTypes) {
       valueModel = new ObjectModel(api, path)
       break
     }
-    case 'child': {
-      valueModel = new ChildModel(api, path, targetTypes)
-      break
+    default: {
+      if (property.isReference()) {
+        if (property.isOwned()) {
+          if (property.isArray()) {
+            valueModel = new CollectionModel(api, path, targetTypes)
+          } else {
+            valueModel = new ChildModel(api, path, targetTypes)
+          }
+        } else {
+          if (property.isArray()) {
+            valueModel = new ManyRelationshipModel(api, path, targetTypes)
+          } else {
+            valueModel = new SingleRelationshipModel(api, path, targetTypes)
+          }
+        }
+      }
     }
-    case 'children': {
-      valueModel = new ChildrenModel(api, path, targetTypes)
-      break
-    }
-    case 'many-relationship': {
-      valueModel = new ManyRelationshipModel(api, path, targetTypes)
-      break
-    }
-    case 'single-relationship': {
-      valueModel = new SingleRelationshipModel(api, path, targetTypes)
-      break
-    }
-    default:
-      valueModel = new AnyModel(api, path)
   }
   return valueModel
 }

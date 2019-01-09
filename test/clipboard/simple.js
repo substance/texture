@@ -12,27 +12,24 @@
 export default function simple (doc) {
   let body = doc.get('body')
   doc.create({
-    type: 'p',
+    type: 'paragraph',
     id: 'p1',
     content: '0123456789'
   })
-  body.show('p1')
   doc.create({
-    type: 'p',
+    type: 'paragraph',
     id: 'p2',
     content: '0123456789'
   })
-  body.show('p2')
   doc.create({
-    type: 'p',
+    type: 'paragraph',
     id: 'p3',
     content: '0123456789'
   })
-  body.show('p3')
   doc.create({
-    type: 'p',
+    type: 'paragraph',
     id: 'p4',
     content: '0123456789'
   })
-  body.show('p4')
+  body.set('content', ['p1', 'p2', 'p3', 'p4'])
 }

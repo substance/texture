@@ -1,4 +1,4 @@
-import { Command } from 'substance'
+import { Command, documentHelpers } from 'substance'
 import { findParentByType } from '../shared/nodeHelpers'
 
 // TODO: We already have collection commands for metadata,
@@ -9,32 +9,34 @@ export default class RemoveItemCommand extends Command {
   }
 
   execute (params, context) {
-    const model = this._getModelForSelection(params, context)
-    const collection = this._getCollectionForModel(context, model)
-    collection.removeItem(model)
+    const node = this._getNodeForSelection(params, context)
+    const path = this._getPath(context, node)
+    let editorSession = context.editorSession
+    editorSession.transaction(tx => {
+      documentHelpers.remove(tx, path, node.id)
+      documentHelpers.deepDeleteNode(tx, node.id)
+      tx.selection = null
+    })
   }
 
   isDisabled (params, context) {
     const nodeType = this.config.nodeType
     const xpath = params.selectionState.xpath
-    return xpath.indexOf(nodeType) === -1
+    return !xpath.find(n => n.type === nodeType)
   }
 
-  _getModelForSelection (params, context) {
+  _getNodeForSelection (params, context) {
     const nodeType = this.config.nodeType
-    const api = context.api
     const sel = params.selection
     const doc = params.editorSession.getDocument()
     const nodeId = sel.getNodeId()
     const selectedNode = doc.get(nodeId)
-    const node = findParentByType(selectedNode, nodeType)
-    return api.getModelById(node.id)
+    return findParentByType(selectedNode, nodeType)
   }
 
-  _getCollectionForModel (context, model) {
-    const api = context.api
-    const node = model._node
+  _getPath (context, node) {
     const parent = node.getParent()
-    return api.getModelById(parent.id)
+    const propName = node.getXpath().property
+    return [parent.id, propName]
   }
 }

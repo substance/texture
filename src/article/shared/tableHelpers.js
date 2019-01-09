@@ -1,4 +1,5 @@
-import { tableHelpers, uuid } from 'substance'
+import { tableHelpers, documentHelpers } from 'substance'
+import Table from '../models/Table'
 
 export function createTableSelection (tableId, data, surfaceId) {
   if (!data.anchorCellId || !data.focusCellId) throw new Error('Invalid selection data')
@@ -79,26 +80,12 @@ export function computeUpdatedSelection (table, selData, dr, dc, expand) {
 }
 
 export function generateTable (doc, nrows, ncols, tableId) {
-  let $$ = doc.createElement.bind(doc)
-  tableId = tableId || uuid('table')
-  let table = $$('table', { id: tableId })
-  let headRow = $$('table-row', { id: `${tableId}-h` })
-  for (let j = 0; j < ncols; j++) {
-    headRow.append(
-      $$('table-cell', { id: `${tableId}-h-${j + 1}` })
-        .attr('heading', true)
-        .text(tableHelpers.getColumnLabel(j))
-    )
-  }
-  table.append(headRow)
-  for (let i = 0; i < nrows; i++) {
-    let row = $$('table-row', { id: `${tableId}-${i + 1}` })
-    for (let j = 0; j < ncols; j++) {
-      row.append($$('table-cell', { id: `${tableId}-${i + 1}-${j + 1}` }).text(''))
-    }
-    table.append(row)
-  }
-  return table
+  return documentHelpers.createNodeFromJson(doc, Table.getTemplate({
+    id: tableId,
+    headerRows: 1,
+    rows: nrows,
+    cols: ncols
+  }))
 }
 
 const { getRangeFromMatrix } = tableHelpers

@@ -183,19 +183,19 @@ test('Table: formatting in table cells', t => {
 
   // use sup tool
   setSelection(editor, 't13.content', 1, 2)
-  let supTool = editor.find('.sc-toggle-tool.sm-sup')
+  let supTool = editor.find('.sc-toggle-tool.sm-superscript')
   // click on list tool to turn "p1" into a list
   supTool.find('button').el.click()
   annos = doc.getAnnotations(['t13', 'content'])
-  t.deepEqual(annos.map(a => a.type), ['sup'], 'there should be one sup annotation on t13')
+  t.deepEqual(annos.map(a => a.type), ['superscript'], 'there should be one sup annotation on t13')
 
   // use sub tool
   setSelection(editor, 't21.content', 1, 2)
-  let subTool = editor.find('.sc-toggle-tool.sm-sub')
+  let subTool = editor.find('.sc-toggle-tool.sm-subscript')
   // click on list tool to turn "p1" into a list
   subTool.find('button').el.click()
   annos = doc.getAnnotations(['t21', 'content'])
-  t.deepEqual(annos.map(a => a.type), ['sub'], 'there should be one sub annotation on t21')
+  t.deepEqual(annos.map(a => a.type), ['subscript'], 'there should be one sub annotation on t21')
 
   // use monospace tool
   setSelection(editor, 't22.content', 1, 2)
@@ -239,10 +239,11 @@ test('Table: inserting and deleting a table into manuscript', t => {
   let t2ref = p2.find('xref')
   t.equal(t2ref.state.label, 'Table 2', 'citation of t2 should have correct label')
 
+  // TODO: use test helper
   api._setSelection({
     type: 'node',
     nodeId: 't1',
-    containerId: 'body'
+    containerPath: ['body', 'content']
   })
   api.deleteSelection()
 
@@ -272,7 +273,7 @@ test('Table: selecting a table', t => {
   editorSession.transaction(tx => {
     let body = tx.get('body')
     let table = tableHelpers.generateTable(tx, 10, 5, 'test-table')
-    body.append(table)
+    body.set('content', [table.id])
   })
   // a click (somewhere) on the isolated node should select the node
   let isolatedNode = editor.find('[data-id="test-table"]')

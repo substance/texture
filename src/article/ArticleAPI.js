@@ -1,351 +1,65 @@
-import { without, documentHelpers } from 'substance'
-import {
-  DynamicCollection,
-  StringModel, TextModel, FlowContentModel,
-  EditorAPI, InternalEditingAPI
-} from '../kit'
-import renderEntity from './shared/renderEntity'
-import TranslateableModel from './models/TranslateableModel'
+import { documentHelpers, includes, orderBy, without, copySelection, selectionHelpers } from 'substance'
 import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
-import {
-  createEmptyElement, importFigurePanel, importFigures,
-  importSupplementaryFile, insertTableFigure, setContainerSelection
-} from './articleHelpers'
+import { importFigures } from './articleHelpers'
+import { findParentByType } from './shared/nodeHelpers'
+import renderEntity from './shared/renderEntity'
+import FigurePanel from './models/FigurePanel'
+import SupplementaryFile from './models/SupplementaryFile'
 
-// TODO: this should come from configuration
-const COLLECTIONS = {
-  'author': 'authors',
-  'editor': 'editors'
-}
-
-export default class ArticleAPI extends EditorAPI {
-  constructor (articleSession, config, archive) {
-    super()
+export default class ArticleAPI {
+  constructor (editorSession, archive, config, articleSession) {
+    this.editorSession = editorSession
     this.config = config
-    this.modelRegistry = config.getModelRegistry()
-    this.articleSession = articleSession
-    this.article = articleSession.getDocument()
     this.archive = archive
-    this._tableApi = new TableEditingAPI(articleSession)
-    this._modelCache = new Map()
-    // hook to invalidate cache
-    articleSession.on('change', this._invalidateDeletedModels, this)
+    this._document = editorSession.getDocument()
+    // TODO: do we really need this?
+    this._articleSession = articleSession
+    // TODO: rethink this
+    this._tableApi = new TableEditingAPI(editorSession)
   }
 
-  dispose () {
-    this._modelCache.clear()
+  getDocument () {
+    return this._document
   }
 
-  /*
-    Get corresponding model for a given node. This used for most block content types (e.g. Figure, Heading etc.)
-  */
-  getModel (type, node) {
-    let ModelClass = this.modelRegistry[type]
-    // HACK: trying to retrieve the node if it is not given
-    if (!node) {
-      node = this.article.get(type)
-    }
-    if (ModelClass) {
-      return new ModelClass(this, node)
-    } else if (node) {
-      return this._getModelForNode(node)
-    }
+  getEditorSession () {
+    return this.editorSession
   }
 
-  getModelById (id) {
-    let node = this.article.get(id)
-    if (node) {
-      let cachedModel = this._modelCache.get(node.id)
-      // ATTENTION: making sure that the node is
-      if (cachedModel) return cachedModel
-
-      // now check if there is a custom model for this type
-      let ModelClass = this.modelRegistry[node.type]
-      // TODO: we could go and check if there is a component
-      // registered for any of the parent types
-      if (!ModelClass) {
-        let superTypes = node.getSchema().getSuperTypes()
-        for (let superType of superTypes) {
-          ModelClass = this.modelRegistry[superType]
-          if (ModelClass) break
-        }
-      }
-      let model
-      if (ModelClass) {
-        model = new ModelClass(this, node)
-      } else {
-        model = this._getModelForNode(node)
-      }
-      if (model) {
-        this._modelCache.set(node.id, model)
-      }
-      return model
-    }
+  getSelection () {
+    return this.editorSession.getSelection()
   }
 
-  _invalidateDeletedModels (change) {
-    for (let op of change.ops) {
-      if (op.isDelete()) {
-        this._modelCache.delete(op.getValue().id)
-      }
-    }
-  }
-
-  _getNode (nodeId) {
-    return this.article.get(nodeId)
-  }
-
-  // TODO: this should be configurable. As it is similar to HTML conversion
-  // we could use the converter registry for this
-  renderEntity (model) {
-    let entity = this.getArticle().get(model.id)
-    let exporter = this.config.getExporter('html')
-    return renderEntity(entity, exporter)
-  }
-
-  getArticle () {
-    return this.article
-  }
-
-  getArticleSession () {
-    return this.articleSession
-  }
-
-  addItemToCollection (item, collection) {
-    this.articleSession.transaction(tx => {
-      let node = tx.create(item)
-      tx.get(collection._node.id).appendChild(node)
-      let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
-      tx.setSelection(newSelection)
-    })
-  }
-
-  addItemsToCollection (items, collection) {
-    if (items.length === 0) return
-    this.articleSession.transaction(tx => {
-      for (let i = 0; i < items.length; i++) {
-        let item = items[i]
-        let node = tx.create(item)
-        tx.get(collection._node.id).appendChild(node)
-        // put the cursor into the first item
-        // TODO: or should it be the last one?
-        if (i === 0) {
-          let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
-          tx.setSelection(newSelection)
-        }
-      }
-    })
-  }
-
-  removeItemFromCollection (item, collection) {
-    this.articleSession.transaction(tx => {
-      let _item = tx.get(item.id)
-      _item.getParent().removeChild(_item)
-      // TODO: this is actually 'deepDeleteNode()' deleting owned children too
-      documentHelpers.deleteNode(tx, _item)
-      tx.selection = null
-    })
-  }
-
-  moveCollectionItem (collection, from, to) {
-    this.articleSession.transaction(tx => {
-      let colNode = tx.get(collection._node.id)
-      let item = colNode.getChildAt(from)
-      colNode.removeAt(from)
-      colNode.insertAt(to, item)
-    })
-  }
-
-  getAuthorsModel () {
-    return this.getModel('authors')
-  }
-
-  addReferences (items, collection) {
-    const refContribProps = ['authors', 'editors', 'inventors', 'sponsors', 'translators']
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      let refs = tx.get(collection._node.id)
-      items.forEach((item, i) => {
-        refContribProps.forEach(propName => {
-          if (item[propName]) {
-            let refContribs = item[propName].map(contrib => {
-              contrib.type = 'ref-contrib'
-              const node = tx.create(contrib)
-              return node.id
-            })
-            item[propName] = refContribs
-          }
-        })
-
-        let node = tx.create(item)
-        refs.appendChild(tx.get(node.id))
-        if (i === 0) {
-          let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
-          tx.setSelection(newSelection)
-        }
-      })
-    })
-  }
-
-  deleteReference (item, collection) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      const xrefIndex = tx.getIndex('xrefs')
-      const xrefs = xrefIndex.get(item.id)
-      tx.get(collection._node.id).removeChild(tx.get(item.id))
-      xrefs.forEach(xrefId => {
-        let xref = tx.get(xrefId)
-        let idrefs = xref.attr('rid').split(' ')
-        idrefs = without(idrefs, item.id)
-        xref.setAttribute('rid', idrefs.join(' '))
-      })
-      tx.delete(item.id)
-      tx.selection = null
-    })
-  }
-
-  /*
-    @return {StringModel} Model for the language code of article's main language
-  */
-  getOriginalLanguageCode () {
-    let article = this.getArticle().getRootNode()
-    return new StringModel(this, [article.id, 'attributes', 'xml:lang'])
-  }
-
-  getCollectionForType (type) {
-    // TODO: need to rethink this.
-    // ATM we are registering special model classes for collections,
-    // which are named after the single entity they contain,
-    // e.g. 'authors' is a the collection of author nodes (which are person nodes essentially).
-    // This is currently pretty confusing. It would be better to have
-    // specific node in the model for that.
-    // Still, we would need a mechanism to specify which node is acting as the parent
-    // collection for which node.
-    let collectionType = COLLECTIONS[type]
-    // I don't like this implicit mapping.
-    if (!collectionType) {
-      collectionType = type + 's'
-    }
-    let model = this.getModel(collectionType)
-    if (!model) {
-      console.error(`No collection specified for type '${type}'. Using DynamicCollection. You should register a collection for this type explicitly.`)
-      model = new DynamicCollection(this, type)
-    }
-    return model
-  }
-
-  getSchema (type) {
-    return this.article.getSchema().getNodeSchema(type)
-  }
-
-  getArticleTitle () {
-    let titleNode = this.getArticle().get('title')
-    return new TextModel(this, titleNode.getPath())
-  }
-
-  getArticleAbstract () {
-    let abstract = this.getArticle().get('abstract')
-    return new FlowContentModel(this, abstract.getContentPath())
-  }
-
-  getArticleBody () {
-    let body = this.getArticle().get('body')
-    return new FlowContentModel(this, body.getContentPath())
-  }
-
-  getFigures () {
-    let figs = this.getArticle().get('body').findAll('fig')
-    return figs.map(fig => this.getModel(fig.type, fig))
-  }
-
-  getTranslatables () {
-    const translatableItems = ['title', 'abstract']
-    const article = this.getArticle()
-    const models = translatableItems.map(item => new TranslateableModel(this, article.get(item)))
-    return models
-  }
-
-  addTranslation (model, languageCode) {
-    const isText = model._node.isText()
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      let item = {
-        language: languageCode
-      }
-      if (isText) {
-        item.type = 'text-translation'
-      } else {
-        item.type = 'container-translation'
-      }
-      let node = tx.create(item)
-      // HACK: trying to avoid selection errors of empty container
-      if (!isText) node.append(tx.create({type: 'p'}))
-      let length = tx.get([model.id, 'translations']).length
-      tx.update([model.id, 'translations'], { type: 'insert', pos: length, value: node.id })
-      tx.selection = null
-    })
-  }
-
-  deleteTranslation (translatableModel, translationModel) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      let translatable = tx.get(translatableModel.id)
-      let pos = translatable.translations.indexOf(translationModel.id)
-      if (pos !== -1) {
-        tx.update([translatableModel.id, 'translations'], { type: 'delete', pos: pos })
-      }
-      tx.delete(translationModel.id)
-      tx.selection = null
-    })
-  }
-
-  // TODO: we should use a better internal model for xref
-  // instead of an attribute we should use an array property instead
-  toggleXrefTarget (targetId, model) {
-    const articleSession = this.articleSession
-    articleSession.transaction(tx => {
-      const xref = tx.get(model.id)
-      let targetIds = xref.getAttribute('rid').split(' ')
-      let found = false
-      for (let idx = targetIds.length - 1; idx >= 0; idx--) {
-        let id = targetIds[idx]
-        if (!tx.get(id)) {
-          targetIds.splice(idx, 1)
-        }
-        if (id === targetId) {
-          targetIds.splice(idx, 1)
-          found = true
-        }
-      }
-      if (!found) {
-        targetIds.push(targetId)
-      }
-      xref.setAttribute('rid', targetIds.join(' '))
-    })
-  }
-
-  _getContext () {
-    return this._context
-  }
-
-  /* Low-level content editing API */
-
+  // TODO: how are we using this?
+  // This could be part of an Editor API
   copy () {
     if (this._tableApi.isTableSelected()) {
       return this._tableApi.copySelection()
     } else {
-      return super.copy()
+      const sel = this.getSelection()
+      const doc = this.getDocument()
+      if (sel && !sel.isNull() && !sel.isCollapsed()) {
+        return copySelection(doc, sel)
+      }
     }
   }
 
-  paste (content, options) {
-    // TODO: to achieve a schema compliant paste we need
-    // to detect the target element and 'filter' the content accordingly
-    if (this._tableApi.isTableSelected()) {
-      return this._tableApi.paste(content, options)
-    } else {
-      return super.paste(content, options)
+  cut () {
+    const sel = this.getSelection()
+    if (sel && !sel.isNull() && !sel.isCollapsed()) {
+      let snippet = this.copy()
+      this.deleteSelection()
+      return snippet
+    }
+  }
+
+  deleteSelection (options) {
+    const sel = this.getSelection()
+    if (sel && !sel.isNull() && !sel.isCollapsed()) {
+      this.editorSession.transaction(tx => {
+        tx.deleteSelection(options)
+      }, { action: 'deleteSelection' })
     }
   }
 
@@ -353,33 +67,93 @@ export default class ArticleAPI extends EditorAPI {
     if (this._tableApi.isTableSelected()) {
       this._tableApi.insertText(text)
     } else {
-      return super.insertText(text)
+      const sel = this.getSelection()
+      if (sel && !sel.isNull()) {
+        this.editorSession.transaction(tx => {
+          tx.insertText(text)
+        }, { action: 'insertText' })
+      }
     }
   }
 
-  _createTextNode (tx, container, text) {
-    // TODO: for Container nodes we should define the default text type
-    // maybe even via a schema attribute
-    return tx.create({ type: 'p', content: text })
-  }
-
-  _createListNode (tx, container, params) {
-    let el = tx.create({ type: 'list' })
-    if (params.listType) {
-      el.attr('list-type', params.listType)
+  paste (content, options) {
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.paste(content, options)
+    } else {
+      this.editorSession.transaction(tx => {
+        tx.paste(content, options)
+      }, { action: 'paste' })
+      return true
     }
-    return el
-  }
-
-  getTableAPI () {
-    return this._tableApi
   }
 
   // EXPERIMENTAL: in the MetadataEditor we want to be able to select a full card
   // I do not want to introduce a 'card' selection as this is not an internal concept
   // and instead opting for 'model' selection.
-  selectModel (modelId) {
-    this._setSelection(this._createModelSelection(modelId))
+  // TODO: could we use NodeSelection instead?
+  selectModel (nodeId) {
+    this._setSelection(this._createModelSelection(nodeId))
+  }
+
+  // EXPERIMENTAL need to figure out if we really need this
+  // This is used by ManyRelationshipComponent (which is kind of weird)
+  selectValue (path) {
+    this._setSelection(this._createValueSelection(path))
+  }
+
+  _appendChild (collectionPath, data) {
+    this.editorSession.transaction(tx => {
+      let node = tx.create(data)
+      documentHelpers.append(tx, collectionPath, node.id)
+    })
+  }
+
+  _deleteChild (collectionPath, child, txHook) {
+    this.editorSession.transaction(tx => {
+      documentHelpers.remove(tx, collectionPath, child.id)
+      documentHelpers.deepDeleteNode(tx, child)
+      if (txHook) {
+        txHook(tx)
+      }
+    })
+  }
+
+  _moveChild (collectionPath, child, shift, txHook) {
+    this.editorSession.transaction(tx => {
+      let ids = tx.get(collectionPath)
+      let pos = ids.indexOf(child.id)
+      if (pos === -1) return
+      documentHelpers.removeAt(tx, collectionPath, pos)
+      documentHelpers.insertAt(tx, collectionPath, pos + shift, child.id)
+      if (txHook) {
+        txHook(tx)
+      }
+    })
+  }
+
+  _replaceFile (hrefPath, file) {
+    const articleSession = this.editorSession
+    const path = this.archive.createFile(file)
+    articleSession.transaction(tx => {
+      tx.set(hrefPath, path)
+    })
+  }
+
+  _addReference (refData) {
+    this._addReferences([refData])
+  }
+
+  _addReferences (refsData) {
+    this.editorSession.transaction(tx => {
+      let refNodes = refsData.map(refData => documentHelpers.createNodeFromJson(tx, refData))
+      refNodes.forEach(ref => {
+        documentHelpers.append(tx, ['article', 'references'], ref.id)
+      })
+      if (refNodes.length > 0) {
+        let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(refNodes[0])
+        tx.setSelection(newSelection)
+      }
+    })
   }
 
   _createModelSelection (modelId) {
@@ -391,10 +165,6 @@ export default class ArticleAPI extends EditorAPI {
         modelId
       }
     }
-  }
-
-  selectValue (path) {
-    this._setSelection(this._createValueSelection(path))
   }
 
   _createValueSelection (path) {
@@ -410,47 +180,136 @@ export default class ArticleAPI extends EditorAPI {
     }
   }
 
-  /*
-    TODO: In the future it should be necessary to expose those managers, instead
-    API's should be used to access information.
-  */
-  getFigureManager () {
-    return this.getArticleSession().getFigureManager()
+  // TODO: how could we make this extensible via plugins?
+  _getAvailableXrefTargets (xref) {
+    let refType = xref.refType
+    let manager
+    switch (refType) {
+      case 'formula': {
+        manager = this._articleSession.getFootnoteManager()
+        break
+      }
+      case 'fig': {
+        manager = this._articleSession.getFigureManager()
+        break
+      }
+      case 'fn': {
+        // FIXME: bring back table-footnotes
+        // EXPERIMENTAL:
+        // the above mechanism does not work for table-footnotes
+        // there we need access to the current TableFigure and get its TableFootnoteManager
+        let tableFigure = findParentByType(xref, 'table-figure')
+        if (tableFigure) {
+          manager = tableFigure.getFootnoteManager()
+        } else {
+          manager = this._articleSession.getFootnoteManager()
+        }
+        break
+      }
+      case 'table-fn': {
+        let tableFigure = findParentByType(xref, 'table-figure')
+        if (tableFigure) {
+          manager = tableFigure.getFootnoteManager()
+        }
+        break
+      }
+      case 'bibr': {
+        manager = this._articleSession.getReferenceManager()
+        break
+      }
+      case 'table': {
+        manager = this._articleSession.getTableManager()
+        break
+      }
+      case 'file': {
+        manager = this._articleSession.getSupplementaryManager()
+        break
+      }
+      default:
+        throw new Error('Unsupported xref type: ' + refType)
+    }
+    if (!manager) return []
+
+    let selectedTargets = xref.resolve('refTargets')
+    // retrieve all possible nodes that this
+    // xref could potentially point to,
+    // so that we can let the user select from a list.
+    let availableTargets = manager.getSortedCitables()
+    let targets = availableTargets.map(target => {
+      // ATTENTION: targets are not just nodes
+      // but entries with some information
+      return {
+        selected: includes(selectedTargets, target),
+        node: target,
+        id: target.id
+      }
+    })
+    // Determine broken targets (such that don't exist in the document)
+    let brokenTargets = without(selectedTargets, ...availableTargets)
+    if (brokenTargets.length > 0) {
+      targets = targets.concat(brokenTargets.map(id => {
+        return { selected: true, id }
+      }))
+    }
+    // Makes the selected targets go to top
+    targets = orderBy(targets, ['selected'], ['desc'])
+    return targets
   }
 
-  getFootnoteManager () {
-    return this.getArticleSession().getFootnoteManager()
+  // EXPERIMENTAL
+  // this is called by ManyRelationshipComponent and SingleRelationshipComponent to get
+  // options for the selection
+  // TODO: I am not sure if it is the right approach, trying to generalize this
+  // Instead we could use dedicated Components derived from the ones from the kit
+  // and use specific API to accomplish this
+  _getAvailableOptions (model) {
+    // HACK only suppor
+    let targetTypes = Array.from(model._targetTypes)
+    if (targetTypes.length !== 1) {
+      throw new Error('Unsupported relationship. Expected to find one targetType')
+    }
+    let doc = this.getDocument()
+    let targetType = targetTypes[0]
+    switch (targetType) {
+      case 'award': {
+        return doc.get('metadata').resolve('awards')
+      }
+      case 'organisation': {
+        return doc.get('metadata').resolve('organisations')
+      }
+      case 'group': {
+        return doc.get('metadata').resolve('groups')
+      }
+      default:
+        throw new Error('Unsupported relationship: ' + targetType)
+    }
   }
 
-  getReferenceManager () {
-    return this.getArticleSession().getReferenceManager()
+  _toggleRelationship (path, id) {
+    this.editorSession.transaction(tx => {
+      let ids = tx.get(path)
+      let idx = ids.indexOf(id)
+      if (idx === -1) {
+        tx.update(path, {type: 'insert', pos: ids.length, value: id})
+      } else {
+        tx.update(path, {type: 'delete', pos: idx, value: id})
+      }
+      tx.setSelection(this._createValueSelection(path))
+    })
   }
 
-  getTableManager () {
-    return this.getArticleSession().getTableManager()
-  }
-
-  get doc () {
-    console.error('DEPRECATED: use api.getArticle() instead.')
-    return this.getArticle()
-  }
-
-  _getDocument () {
-    return this.getArticleSession().getDocument()
-  }
-
-  _getDocumentSession () {
-    return this.getArticleSession()
-  }
-
-  _getEditorSession () {
-    return this.articleSession
-  }
-
-  _isPropertyRequired (type, propertyName) {
-    let REQUIRED = REQUIRED_PROPERTIES[type]
-    if (REQUIRED) return REQUIRED.has(propertyName)
-    return false
+  _toggleXrefTarget (xref, targetId) {
+    let targetIds = xref.refTargets
+    let index = targetIds.indexOf(targetId)
+    if (index >= 0) {
+      this.editorSession.transaction(tx => {
+        tx.update([xref.id, 'refTargets'], { type: 'delete', pos: index })
+      })
+    } else {
+      this.editorSession.transaction(tx => {
+        tx.update([xref.id, 'refTargets'], { type: 'insert', pos: targetIds.length, value: targetId })
+      })
+    }
   }
 
   // ATTENTION: this only works for meta-data cards, thus the special naming
@@ -485,7 +344,7 @@ export default class ArticleAPI extends EditorAPI {
         type: 'property',
         path,
         startOffset: 0,
-        // HACK: this does only work within the meta-data
+        // HACK: this does only work within the meta-data view
         surfaceId: `${path.join('.')}`
       }
     } else {
@@ -493,81 +352,41 @@ export default class ArticleAPI extends EditorAPI {
     }
   }
 
+  _setSelection (sel) {
+    this.editorSession.setSelection(sel)
+  }
+
   // TODO: can we improve this?
   // Here we would need a transaction on archive level, creating assets, plus placing them inside the article body.
   _insertFigures (files) {
-    const articleSession = this.articleSession
+    const articleSession = this.editorSession
     let paths = files.map(file => {
       return this.archive.createFile(file)
     })
     let sel = articleSession.getSelection()
-    if (!sel || !sel.containerId) return
+    if (!sel || !sel.containerPath) return
     articleSession.transaction(tx => {
       importFigures(tx, sel, files, paths)
     })
   }
 
-  _insertFigurePanel (file, collection, index) {
-    const articleSession = this.articleSession
-    const path = this.archive.createFile(file)
-    articleSession.transaction(tx => {
-      const figurePanel = importFigurePanel(tx, file, path)
-      tx.update(collection._path, { type: 'insert', pos: index + 1, value: figurePanel.id })
-    })
-  }
-
-  _replaceFigurePanelImage (file, panel) {
-    const articleSession = this.articleSession
-    const path = this.archive.createFile(file)
-    articleSession.transaction(tx => {
-      const mimeData = file.type.split('/')
-      const graphic = tx.create({
-        'type': 'graphic'
-      })
-      graphic.attr({
-        'mime-subtype': mimeData[1],
-        'mimetype': mimeData[0],
-        'xlink:href': path
-      })
-      tx.set([panel.id, 'content'], graphic.id)
-    })
-  }
-
-  _removeFigurePanel (item, collection) {
-    this.articleSession.transaction(tx => {
-      const value = collection.getValue()
-      let pos = value.indexOf(item.id)
-      if (pos !== -1) {
-        tx.update(collection._path, { type: 'delete', pos: pos })
-      }
-      documentHelpers.deleteNode(tx, tx.get(item.id))
-      tx.selection = null
-    })
-  }
-
-  _moveFigurePanel (collection, from, to) {
-    const collectionId = collection.id
-    this.articleSession.transaction(tx => {
-      const panel = collection.getPanels().getItemAt(from)
-      tx.update([collectionId, 'panels'], { type: 'delete', pos: from })
-      tx.update([collectionId, 'panels'], { type: 'insert', pos: to, value: panel.id })
-      // TODO: do it properly when we will have transaction level state manipulation
-      tx.set([collectionId, 'state', 'currentPanelIndex'], to)
-    })
-  }
-
   _insertSupplementaryFile (file) {
-    const articleSession = this.articleSession
+    const articleSession = this.editorSession
     let path = this.archive.createFile(file)
     let sel = articleSession.getSelection()
-    if (!sel || !sel.containerId) return
     articleSession.transaction(tx => {
-      importSupplementaryFile(tx, sel, file, path)
+      let containerPath = sel.containerPath
+      let nodeData = SupplementaryFile.getTemplate()
+      nodeData.mimeType = file.type
+      nodeData.href = path
+      let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
+      tx.insertBlockNode(supplementaryFile)
+      selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)
     })
   }
 
   _replaceSupplementaryFile (file, supplementaryFile) {
-    const articleSession = this.articleSession
+    const articleSession = this.editorSession
     const path = this.archive.createFile(file)
     articleSession.transaction(tx => {
       const mimeData = file.type.split('/')
@@ -578,117 +397,44 @@ export default class ArticleAPI extends EditorAPI {
   }
 
   _insertInlineGraphic (file) {
-    const articleSession = this.articleSession
-    const path = this.archive.createFile(file)
+    const articleSession = this.editorSession
+    const href = this.archive.createFile(file)
+    const mimeType = file.type
     const sel = articleSession.getSelection()
     if (!sel) return
     articleSession.transaction(tx => {
-      const mimeData = file.type.split('/')
-      const node = tx.create({ type: 'inline-graphic' })
-      const inlineGraphic = tx.insertInlineNode(node)
-      inlineGraphic.attr({
-        'mime-subtype': mimeData[1],
-        'mimetype': mimeData[0],
-        'xlink:href': path
+      const node = tx.create({
+        type: 'inline-graphic',
+        mimeType,
+        href
       })
-      tx.setSelection({
-        type: 'property',
-        path: node.getPath(),
-        startOffset: node.start.offset,
-        endOffset: node.end.offset
-      })
+      tx.insertInlineNode(node)
+      tx.setSelection(node.getSelection())
     })
   }
 
-  _createTableFigure (tx, params) {
-    return insertTableFigure(tx, params.rows, params.columns)
+  _renderEntity (entity, options) {
+    let exporter = this.config.getExporter('html')
+    return renderEntity(entity, exporter)
   }
 
-  _createDispFormula (tx) {
-    return createEmptyElement(tx, 'disp-formula')
+  _getTableAPI () {
+    return this._tableApi
   }
 
-  _createDispQuote (tx) {
-    return createEmptyElement(tx, 'disp-quote')
-  }
+  // Internal API where I do not have a better solution yet
 
-  _insertFootnote (item, footnotes) {
-    const collectionId = footnotes.id
-    this.articleSession.transaction(tx => {
-      const node = createEmptyElement(tx, 'footnote').append(
-        tx.create({type: 'p'})
-      )
-      tx.get(collectionId).appendChild(
-        node
-      )
-      setContainerSelection(tx, node)
+  _addFigurePanel (figureId, file) {
+    const doc = this.getDocument()
+    const figure = doc.get(figureId)
+    const pos = figure.getCurrentPanelIndex()
+    const href = this.archive.createFile(file)
+    this.editorSession.transaction(tx => {
+      let template = FigurePanel.getTemplate()
+      template.content.href = href
+      template.content.mimeType = file.type
+      let node = documentHelpers.createNodeFromJson(tx, template)
+      documentHelpers.insertAt(tx, [figure.id, 'panels'], pos, node.id)
     })
-  }
-
-  _insertTableFootnote (item, collection) {
-    this.articleSession.transaction(tx => {
-      const node = createEmptyElement(tx, 'footnote').append(
-        tx.create({type: 'p'})
-      )
-      let length = tx.get([collection.id, 'footnotes']).length
-      tx.update([collection.id, 'footnotes'], { type: 'insert', pos: length, value: node.id })
-      // HACK: in future we want to get surfaceId properly rather then stitching it
-      const surfaceId = `body/${collection.id}/${node.id}`
-      setContainerSelection(tx, node, surfaceId)
-    })
-  }
-
-  _removeTableFootnote (item, collection) {
-    this.articleSession.transaction(tx => {
-      const footnotes = tx.get([collection.id, 'footnotes'])
-      let pos = footnotes.indexOf(item.id)
-      if (pos !== -1) {
-        tx.update([collection.id, 'footnotes'], { type: 'delete', pos: pos })
-      }
-      tx.delete(item.id)
-      tx.selection = null
-    })
-  }
-
-  _insertPerson (person, collection) {
-    const collectionId = collection.id
-    this.articleSession.transaction(tx => {
-      let bio = tx.create({type: 'bio'}).append(
-        tx.create({type: 'p'})
-      )
-      person.bio = bio.id
-      let node = tx.create(person)
-      tx.get(collectionId).appendChild(node)
-      let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(node)
-      tx.setSelection(newSelection)
-    })
-  }
-
-  _getSelection () {
-    return this.articleSession.editorState.selection
-  }
-
-  _setSelection (selData) {
-    this.articleSession.setSelection(selData)
-  }
-
-  _createInternalEditorAPI () {
-    return new InternalArticleEditingAPI()
-  }
-}
-
-class InternalArticleEditingAPI extends InternalEditingAPI {
-  createTextNode (tx, container, text) {
-    // TODO: for Container nodes we should define the default text type
-    // maybe even via a schema attribute
-    return tx.create({ type: 'p', content: text })
-  }
-
-  createListNode (tx, container, params) {
-    let el = tx.create({ type: 'list' })
-    if (params.listType) {
-      el.attr('list-type', params.listType)
-    }
-    return el
   }
 }

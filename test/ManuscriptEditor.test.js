@@ -1,78 +1,68 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
+// TODO: add a test demonstrating that the TOC is working as expected
+// TODO: test editing of block-quote
+// TODO: test editing of inline-formula
+// TODO: test editing of block-formula
+// TODO: test editing of supplementary file description
+// TODO: test open link in EditExtLinkTool
+// TODO: test IncreaseHeadingLevel
+// TODO: test insert table
+// TODO: test key-handling of table cell editor
+// TODO: test key-handling of table component
+// TODO: test TableEditing
+// TODO: test save button
+// TODO: find out why Footnote.getTemplate() is not covered -> insert footnote?
+// TODO: test changin level of list item
+// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
+// TODO: BreakComponent not used
+// TODO: error case for GraphicComponent and InlineGraphicCOmponent not tested
+
 test('ManuscriptEditor: add inline graphic', t => {
-  let { app } = setupTestApp(t)
+  let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 3)
-  // Check that file-dialog does not throw
   let insertInlineGraphicTool = editor.find('.sc-insert-inline-graphic-tool')
-  t.ok(insertInlineGraphicTool.find('button').click(), 'clicking on the insert inline graphic button should not throw error')
-  let firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
-  t.notOk(firstInlineNode.hasClass('sm-inline-graphic'), 'first inline node in p-2 paragraph should not be inline graphic')
   // Trigger onFileSelect() directly
   insertInlineGraphicTool.onFileSelect(new PseudoFileEvent())
-  firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
-  t.ok(firstInlineNode.hasClass('sm-inline-graphic'), 'first inline node in p-2 paragraph should be inline graphic')
-  let editorSession = getEditorSession(editor)
-  editorSession.setSelection({
-    type: 'property',
-    path: ['p-2', 'content'],
-    startOffset: 3,
-    surfaceId: 'body'
-  })
-  let selectionState = editorSession.getSelectionState()
-  let selectedInlineGraphics = selectionState.annosByType['inline-graphic']
-  t.equal(selectedInlineGraphics.length, 1, 'inline graphic should be selected')
+  let inlineGraphic = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-graphic')
+  t.notNil(inlineGraphic, 'there should be an inline-graphic now')
   t.end()
 })
 
 test('ManuscriptEditor: add inline formula', t => {
-  let { app } = setupTestApp(t)
+  let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
-  setCursor(editor, 'p-2.content', 5)
-
+  setCursor(editor, 'p-2.content', 3)
   // Open insert dropdown
   const insertDropdown = editor.find('.sc-tool-dropdown.sm-insert .sc-button')
   insertDropdown.click()
-
-  let firstInlineNode = editor.find('[data-id=p-2] .sc-inline-node')
-  t.notOk(firstInlineNode.hasClass('sm-inline-formula'), 'first inline node in p-2 paragraph should not be inline formula')
   let insertInlineFormulaTool = editor.find('.sc-menu-item.sm-insert-formula')
   t.ok(insertInlineFormulaTool.click(), 'clicking on the insert inline formula button should not throw error')
-  let editorSession = getEditorSession(editor)
-  editorSession.setSelection({
-    type: 'property',
-    path: ['p-2', 'content'],
-    startOffset: 5,
-    surfaceId: 'body'
-  })
-  let selectionState = editorSession.getSelectionState()
-  let selectedInlineGraphics = selectionState.annosByType['inline-formula']
-  t.equal(selectedInlineGraphics.length, 1, 'inline formula should be selected')
+  let inlineFormula = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-formula')
+  t.notNil(inlineFormula, 'there should be an inline-formula now')
   t.end()
 })
 
-test('ManuscriptEditor: add disp formula', t => {
-  let { app } = setupTestApp(t)
+test('ManuscriptEditor: add block formula', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
-
   // Open insert dropdown
   const insertDropdown = editor.find('.sc-tool-dropdown.sm-insert .sc-button')
   insertDropdown.click()
-
   let insertDispFormulaTool = editor.find('.sc-menu-item.sm-insert-disp-formula')
   t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
-  let afterP2 = editor.find('*[data-id=p-2] + *')
-  t.ok(afterP2.hasClass('sm-disp-formula'), 'element after p-2 should be a disp formula now')
-  // TODO: we should test the automatic labeling here as well
+  let blockFormula = editor.find('*[data-id=p-2] + .sm-block-formula')
+  t.notNil(blockFormula, 'there should be a block-formula now')
+  // TODO: we should test automatic labeling
   t.end()
 })
 
 test('ManuscriptEditor: TOC should be updated on change', t => {
-  let { app } = setupTestApp(t)
+  let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   let toc = editor.find('.sc-toc')
   let editorSession = getEditorSession(editor)
@@ -84,17 +74,12 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
   t.end()
 })
 
+const ONE_PARAGRAPH = '<p id="p1">ABC</p>'
+
 test('ManuscriptEditor: Switch paragraph to heading', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
-  editorSession.transaction(tx => {
-    let body = tx.get('body')
-    body.append(tx.create({
-      type: 'p',
-      id: 'p1'
-    }))
-  })
+  loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
   // open the switch type dropdown
   let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
@@ -103,7 +88,7 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   t.notNil(h1button, 'there should be an option to switch to heading level 1')
   h1button.click()
   // ATTENTION: we do not change id, which might be confusing for others
-  let h1El = editor.find('.sc-surface.body > h1')
+  let h1El = editor.find('.sc-surface.sm-body > h1')
   t.notNil(h1El, 'there should be a <h1> element now')
   t.end()
 })
@@ -111,14 +96,7 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
 test('ManuscriptEditor: Switch paragraph to preformat', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
-  editorSession.transaction(tx => {
-    let body = tx.get('body')
-    body.append(tx.create({
-      type: 'p',
-      id: 'p1'
-    }))
-  })
+  loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
   // open the switch type dropdown
   let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
@@ -126,7 +104,7 @@ test('ManuscriptEditor: Switch paragraph to preformat', t => {
   let preformatButton = switchTypeDropdown.find('.sc-menu-item.sm-preformat')
   t.notNil(preformatButton, 'there should be an option to switch to preformat')
   preformatButton.click()
-  let preformatEl = editor.find('.sc-surface.body > .sc-preformat')
+  let preformatEl = editor.find('.sc-surface.sm-body > .sc-text-node.sm-preformat')
   t.notNil(preformatEl, 'there should be a div with preformat component class now')
   t.end()
 })
@@ -150,10 +128,10 @@ test('ManuscriptEditor: toggling a list', t => {
 
   // click on list tool to turn "p1" into a list
   ulTool.find('button').el.click()
-  let listNode = doc.get('body').getChildAt(0)
+  let listNode = doc.get('body').getNodeAt(0)
   t.equal(listNode.type, 'list', 'first node should now be a list')
-  t.equal(listNode.getChildCount(), 1, '.. with one item')
-  let listItem = listNode.getChildAt(0)
+  t.equal(listNode.items.length, 1, '.. with one item')
+  let listItem = listNode.getItemAt(0)
   t.equal(listItem.getText(), p1Text, '.. with the text of the former paragraph')
 
   // now there should be contextual list tools be visible
@@ -162,8 +140,32 @@ test('ManuscriptEditor: toggling a list', t => {
 
   // click on list tool to turn it into a paragraph again
   editor.find('.sc-toggle-tool.sm-toggle-unordered-list > button').click()
-  let pNode = doc.get('body').getChildAt(0)
-  t.equal(pNode.type, 'p', 'first node should now be a paragraph again')
+  let pNode = doc.get('body').getNodeAt(0)
+  t.equal(pNode.type, 'paragraph', 'first node should now be a paragraph again')
 
+  t.end()
+})
+
+const P_WITH_EXTERNAL_LINK = `<p id="p1">This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" id="link" xlink:href="substance.io">link</ext-link></p>`
+
+test('ManuscriptEditor: editing an external link', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, P_WITH_EXTERNAL_LINK)
+
+  function _getUrlInput () { return editor.find('.sc-edit-external-link-tool > input') }
+  function _getUrlInputValue () { return _getUrlInput().el.val() }
+  function _setUrlInputValue (val) { return _getUrlInput().el.val(val) }
+
+  let link = doc.get('link')
+  setCursor(editor, 'p1.content', link.start.offset + 1)
+
+  t.equal(_getUrlInputValue(), link.href, 'url input field should show current href value')
+  _setUrlInputValue('foo')
+  t.doesNotThrow(() => {
+    _getUrlInput()._onChange()
+  }, 'triggering href update should not throw')
+  t.equal(link.href, 'foo', '.. and the link should have been updated')
   t.end()
 })

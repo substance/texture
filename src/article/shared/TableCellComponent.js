@@ -4,16 +4,15 @@ import TableCellEditor from './TableCellEditor'
 export default class TableCellComponent extends NodeComponent {
   render ($$) {
     const cell = this.props.node
-    let el = $$(cell.attr('heading') ? 'th' : 'td')
+    let el = $$(cell.heading ? 'th' : 'td')
     el.addClass('sc-table-cell')
-    let attributes = {
+    el.attr({
       id: cell.id,
       'data-row-idx': cell.rowIdx,
       'data-col-idx': cell.colIdx,
       rowspan: cell.rowspan,
       colspan: cell.colspan
-    }
-    el.attr(attributes)
+    })
     el.append(
       $$(TableCellEditor, {
         path: cell.getPath(),

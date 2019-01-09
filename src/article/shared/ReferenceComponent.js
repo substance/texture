@@ -1,36 +1,53 @@
 import { NodeComponent } from '../../kit'
-import { PREVIEW_MODE } from '../ArticleConstants'
+import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
+import { getLabel } from './nodeHelpers'
 import PreviewComponent from './PreviewComponent'
+import DefaultModelComponent from './DefaultModelComponent'
+import InplaceRefContribsEditor from '../metadata/InplaceRefContribsEditor'
 
 export default class ReferenceComponent extends NodeComponent {
   render ($$) {
-    const refNode = this.getNode()
-    let label = _getReferenceLabel(refNode)
-    let html = this.context.api.renderEntity(refNode)
-    // TODO: do we want to display something like this
-    // if so, use the label provider
+    let mode = this.props.mode
+    let node = this.props.node
+    let label = this._getReferenceLabel()
+    // TODO: this should also use model
+    let html = this.context.api._renderEntity(node)
+    // TODO: use the label provider
     html = html || '<i>Not available</i>'
-    if (this.props.mode === PREVIEW_MODE) {
+    if (mode === PREVIEW_MODE) {
       // NOTE: We return PreviewComponent directly, to prevent inheriting styles from .sc-reference
       return $$(PreviewComponent, {
-        id: this.props.model.id,
-        label: label,
+        id: node.id,
+        label,
         description: $$('div').html(html)
       })
+    } else if (mode === METADATA_MODE) {
+      return $$(ReferenceMetadataComponent, { node })
     } else {
       let el = $$('div').addClass('sc-reference')
       el.append(
         $$('div').addClass('se-label').append(label),
         $$('div').addClass('se-text').html(html)
-      ).attr('data-id', refNode.id)
+      ).attr('data-id', node.id)
       return el
     }
   }
+
+  _getReferenceLabel () {
+    return getLabel(this.props.node) || '?'
+  }
 }
 
-function _getReferenceLabel (refNode) {
-  if (refNode.state && refNode.state.label) {
-    return refNode.state.label
+class ReferenceMetadataComponent extends DefaultModelComponent {
+  _getClassNames () {
+    return 'sc-reference'
   }
-  return '?'
+  // using a special inplace property editor for 'ref-contrib's
+  _getPropertyEditorClass (name, value) {
+    if (value.hasTargetType('ref-contrib')) {
+      return InplaceRefContribsEditor
+    } else {
+      return super._getPropertyEditorClass(name, value)
+    }
+  }
 }

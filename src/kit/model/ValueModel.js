@@ -1,4 +1,5 @@
 import { isNil } from 'substance'
+import { throwMethodIsAbstract } from '../shared'
 
 export default class ValueModel {
   constructor (api, path) {
@@ -10,17 +11,37 @@ export default class ValueModel {
     return String(this._path)
   }
 
+  get type () {
+    throwMethodIsAbstract()
+  }
+
+  getPath () {
+    return this._path
+  }
+
+  hasTargetType (name) {
+    return false
+  }
+
   getValue () {
-    return this._api._getValue(this._path)
+    return this._api.getDocument().get(this._path)
   }
 
   setValue (val) {
-    this._api._setValue(this._path, val)
+    this._api.getEditorSession().transaction(tx => {
+      tx.set(this._path, val)
+    })
   }
 
   isEmpty () {
     return isNil(this.getValue())
   }
 
+  _resolveId (id) {
+    return this._api.getDocument().get(id)
+  }
+
   get _value () { return this.getValue() }
+
+  get _isValue () { return true }
 }

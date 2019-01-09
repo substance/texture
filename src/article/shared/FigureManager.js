@@ -1,9 +1,10 @@
+import { documentHelpers } from 'substance'
 import CitableContentManager from './CitableContentManager'
 import FigureLabelGenerator from './FigureLabelGenerator'
 
 export default class FigureManager extends CitableContentManager {
   constructor (documentSession, config) {
-    super(documentSession, 'fig', ['figure'], new FigureLabelGenerator(config))
+    super(documentSession, 'fig', ['figure-panel'], new FigureLabelGenerator(config))
     this._updateLabels('initial')
   }
 
@@ -17,6 +18,7 @@ export default class FigureManager extends CitableContentManager {
   }
 
   _computeTargetUpdates () {
+    let doc = this._getDocument()
     let figures = this._getContentElement().findAll('figure')
     let records = {}
     // Iterate through all figures and their panels
@@ -31,7 +33,7 @@ export default class FigureManager extends CitableContentManager {
       // ATTENTION: ATM we do not support any special label generation, such as Figure 1-figure supplement 2, which is controlled via attributes (@specific-use)
       // TODO: to support eLife's 'Figure Supplement' labeling scheme we would use a different counter and some type of encoding
       // e.g. [1, { pos: 1, type: 'supplement' }], we would then
-      let panels = figure.getPanels()
+      let panels = documentHelpers.getNodesForIds(doc, figure.panels)
       let panelCounter = 1
       // processing sub-figures
       if (panels.length > 1) {

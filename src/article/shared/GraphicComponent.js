@@ -3,31 +3,19 @@ import { NodeComponent } from '../../kit'
 export default class GraphicComponent extends NodeComponent {
   render ($$) {
     const node = this.props.node
-    const mode = node.type === 'inline-graphic' ? 'inline' : 'block'
-    let url = node.getAttribute('xlink:href')
-    let urlResolver = this.context.urlResolver
+    const urlResolver = this.context.urlResolver
+    let url = node.href
     if (urlResolver) {
       url = urlResolver.resolveUrl(url)
     }
-    let elClass = mode === 'inline' ? 'sc-inline-graphic' : 'sc-graphic'
-    let tagName = mode === 'inline' ? 'span' : 'div'
 
-    let el = $$(tagName).addClass(elClass)
+    let el = $$(this.tagName).addClass(this._getClassNames())
       .attr('data-id', node.id)
-
     if (this.state.errored) {
-      let errorEl = $$(tagName).addClass('se-error').append(
+      let errorEl = $$(this.tagName).addClass('se-error').append(
         this.context.iconProvider.renderIcon($$, 'graphic-load-error').addClass('se-icon')
       )
-
-      if (mode === 'block') {
-        errorEl.append(
-          this.getLabel('graphic-load-error')
-        )
-      } else {
-        errorEl.attr('title', this.getLabel('graphic-load-error'))
-      }
-
+      this._renderError($$, errorEl)
       el.append(errorEl)
     } else {
       el.append(
@@ -35,8 +23,21 @@ export default class GraphicComponent extends NodeComponent {
           .on('error', this._onLoadError)
       )
     }
-
     return el
+  }
+
+  _renderError ($$, errorEl) {
+    errorEl.append(
+      this.getLabel('graphic-load-error')
+    )
+  }
+
+  _getClassNames () {
+    return 'sc-graphic'
+  }
+
+  get tagName () {
+    return 'div'
   }
 
   _onLoadError () {

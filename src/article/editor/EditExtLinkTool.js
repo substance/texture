@@ -5,7 +5,7 @@ export default class EditExtLinkTool extends ToggleTool {
     let Input = this.getComponent('input')
     let Button = this.getComponent('button')
     let commandState = this.props.commandState
-    let el = $$('div').addClass('sc-edit-ext-link-tool')
+    let el = $$('div').addClass('sc-edit-external-link-tool')
 
     // GUARD: Return if tool is disabled
     if (commandState.disabled) {
@@ -31,27 +31,22 @@ export default class EditExtLinkTool extends ToggleTool {
     return el
   }
 
-  _getPropPath () {
-    return ['attributes', 'xlink:href']
+  _getNodeId () {
+    return this.props.commandState.nodeId
   }
 
   _getUrlPath () {
     const nodeId = this._getNodeId()
-    let propPath = this._getPropPath()
-    return [nodeId].concat(propPath)
+    return [nodeId, 'href']
   }
 
-  _getNodeId () {
-    return this.props.commandState.nodeId
+  _getDocument () {
+    return this.context.editorSession.getDocument()
   }
 
   _openLink () {
     let doc = this._getDocument()
     let url = doc.get(this._getUrlPath())
     window.open(url, '_blank')
-  }
-
-  _getDocument () {
-    return this.context.editorSession.getDocument()
   }
 }

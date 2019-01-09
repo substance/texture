@@ -12,7 +12,7 @@ import './CrossReference.test'
 import './EditReference.test'
 import './Figure.test'
 import './FindAndReplace.test'
-import './Footnote.test'
+import './Footnotes.test'
 import './FormulaConverter.test'
 import './Input.test'
 import './InsertIsolatedNode.test'
@@ -20,7 +20,6 @@ import './JATSImporter.test'
 import './LabelGenerator.test'
 import './ManuscriptEditor.test'
 import './MetadataEditor.test'
-import './Model.test'
 import './Paste.test'
 import './Persistence.test'
 import './PreformatConverter.test'
@@ -28,7 +27,14 @@ import './Table.test'
 import './TableConverter.test'
 import './SupplementaryFile.test'
 
+// TODO: there are some tests in ./converter/. Either fix them and include here
+// or remove them
+
 platform.test = true
+
+if (platform.devtools) {
+  substanceGlobals.DEBUG_RENDERING = true
+}
 
 if (platform.inNodeJS) {
   substanceGlobals.DEBUG_RENDERING = false

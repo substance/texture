@@ -1,5 +1,8 @@
 import entityRenderers from './entityRenderers'
 
+// TODO: rethink this.
+// The fact that it needs an exporter makes it not very useful.
+// In general I think that these renderers should not depend on an HTML exporter
 export default function renderEntity (entity, exporter, options = {}) {
   if (entity) {
     const type = entity.type

@@ -78,7 +78,7 @@ export default class MarkersManager extends EventEmitter {
     opts = opts || {}
     let doc = this.editorState.document
     let annos = doc.getAnnotations(path) || []
-    let markers = this._markers.get(path, opts.surfaceId, opts.containerId)
+    let markers = this._markers.get(path, opts.surfaceId, opts.containerPath)
     return annos.concat(markers)
   }
 
@@ -121,7 +121,7 @@ export default class MarkersManager extends EventEmitter {
     let path = textPropertyComponent.getPath()
     let markers = this.getMarkers(path, {
       surfaceId: textPropertyComponent.getSurfaceId(),
-      containerId: textPropertyComponent.getContainerId()
+      containerPath: textPropertyComponent.getContainerPath()
     })
     // console.log('## providing %s markers for %s', markers.length, path)
     textPropertyComponent.setState({

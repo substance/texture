@@ -19,20 +19,20 @@ export default class ListConverter {
       let { el, level } = item
       let li = doc.create({
         type: 'list-item',
-        id: el.id
+        id: el.id,
+        level: parseInt(level, 10)
       })
-      li.attr('level', level)
       let p = el.find('p')
       if (p) {
-        li.content = importer.annotatedText(p, li.getPath())
+        li.content = importer.annotatedText(p, [li.id, 'content'])
         return li.id
       }
       return false
     }).filter(Boolean)
     // populate list
     node.id = el.id
-    node.attributes = { 'list-type': config.join(',') }
-    node._childNodes = itemIds
+    node.listType = config.join(',')
+    node.items = itemIds
   }
 
   _extractItems (el, config, items, level, visited) {
@@ -57,8 +57,11 @@ export default class ListConverter {
       } else if (arg === 'li') {
         return $$('list-item')
       } else {
+        let listItem = arg
         return $$('list-item', {id: arg.id}).append(
-          $$('p').setInnerXML(arg.getInnerXML())
+          $$('p').append(
+            exporter.annotatedText(listItem.getPath())
+          )
         )
       }
     })

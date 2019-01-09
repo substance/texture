@@ -24,23 +24,27 @@ export default class EditorPanel extends Component {
   // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
     const { articleSession, config, archive } = props
+
+    // TODO: I want to refactor how EditorSessions are created
+    // particularly I want to work on the multi-view/user sessions
     const editorSession = new ArticleEditorSession(
       articleSession, config, this, {
         workflowId: null,
         viewName: this.props.viewName
       }
     )
-    const api = new ArticleAPI(editorSession, config, archive)
+    const api = new ArticleAPI(editorSession, archive, config, articleSession)
+
     const context = Object.assign(createEditorContext(config, editorSession), {
+      api,
       archive,
       editor: this,
-      api,
       urlResolver: archive,
       editable: true
     })
 
-    this.appState = context.appState
     this.api = api
+    this.appState = context.appState
     this.context = context
     this.editorSession = editorSession
 
@@ -81,7 +85,6 @@ export default class EditorPanel extends Component {
     this.props.archive.off(this)
     // TODO: do we really need to clear here?
     this.empty()
-    this.api.dispose()
   }
 
   getComponentRegistry () {

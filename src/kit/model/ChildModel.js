@@ -4,20 +4,22 @@ export default class ChildModel extends ValueModel {
   constructor (api, path, targetTypes) {
     super(api, path)
 
-    this._targetTypes = targetTypes
+    this._targetTypes = new Set(targetTypes)
   }
 
-  get type () { return 'child-model' }
+  get type () { return 'child' }
 
   getChild () {
-    let id = this.getValue()
-    if (id) {
-      return this._api.getModelById(id)
-    }
+    return this._resolveId(this.getValue())
+  }
+
+  hasTargetType (type) {
+    return this._targetTypes.has(type)
   }
 
   isEmpty () {
+    // FIXME: formerly we have delegated to a child model (but, when is a node / composite model empty?)
     let child = this.getChild()
-    return (!child || child.isEmpty())
+    return !child
   }
 }

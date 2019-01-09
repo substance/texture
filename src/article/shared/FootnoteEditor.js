@@ -3,16 +3,17 @@ import {
 } from '../../kit'
 import FootnoteComponent from './FootnoteComponent'
 
+// TODO: do we need this anymore?
 export default class FootnoteEditor extends ValueComponent {
   render ($$) {
     return $$('div').addClass('sc-table-footnotes-editor').append(
-      this._renderChildren($$)
+      this._renderFootnotes($$)
     )
   }
 
-  _renderChildren ($$) {
+  _renderFootnotes ($$) {
     const model = this.props.model
-    let children = model.getChildren()
-    return children.map(child => $$(FootnoteComponent, { model: child, node: child._node }).ref(child.id))
+    let items = model.getItems()
+    return items.map(item => $$(FootnoteComponent, { node: item }).ref(item.id))
   }
 }

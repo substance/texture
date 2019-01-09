@@ -40,7 +40,7 @@ export default class TableEditingAPI {
       }
       tableCopy.appendChild(trow)
     }
-    snippet.getContainer().show(tableCopy.id)
+    snippet.getContainer().append(tableCopy.id)
     return snippet
   }
 
@@ -285,7 +285,7 @@ export default class TableEditingAPI {
   _createRowsAt (table, rowIdx, n) {
     let $$ = this._getCreateElement(table)
     const M = table.getColumnCount()
-    let rowAfter = table.getChildAt(rowIdx)
+    let rowAfter = table.getRowAt(rowIdx)
     for (let i = 0; i < n; i++) {
       let row = $$('table-row')
       for (let j = 0; j < M; j++) {
@@ -298,20 +298,20 @@ export default class TableEditingAPI {
 
   _deleteRows (table, startRow, endRow) {
     for (let rowIdx = endRow; rowIdx >= startRow; rowIdx--) {
-      let row = table.getChildAt(rowIdx)
+      let row = table.getRowAt(rowIdx)
       table.removeChild(row)
-      documentHelpers.deleteNode(table.getDocument(), row)
+      documentHelpers.deepDeleteNode(table.getDocument(), row)
     }
   }
 
   _deleteCols (table, startCol, endCol) {
     let N = table.getRowCount()
     for (let rowIdx = N - 1; rowIdx >= 0; rowIdx--) {
-      let row = table.getChildAt(rowIdx)
+      let row = table.getRowAt(rowIdx)
       for (let colIdx = endCol; colIdx >= startCol; colIdx--) {
-        let cell = row.getChildAt(colIdx)
+        let cell = row.getCellAt(colIdx)
         row.removeAt(colIdx)
-        documentHelpers.deleteNode(table.getDocument(), cell)
+        documentHelpers.deepDeleteNode(table.getDocument(), cell)
       }
     }
   }
@@ -321,7 +321,7 @@ export default class TableEditingAPI {
     let rowIt = table.getChildNodeIterator()
     while (rowIt.hasNext()) {
       let row = rowIt.next()
-      let cellAfter = row.getChildAt(colIdx)
+      let cellAfter = row.getCellAt(colIdx)
       for (let j = 0; j < n; j++) {
         let cell = $$('table-cell')
         row.insertBefore(cell, cellAfter)

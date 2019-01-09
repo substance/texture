@@ -1,7 +1,7 @@
 import _RelationshipModel from './_RelationshipModel'
 
 export default class ManyRelationshipModel extends _RelationshipModel {
-  get type () { return 'many-relationship-model' }
+  get type () { return 'many-relationship' }
 
   getValue () {
     return super.getValue() || []

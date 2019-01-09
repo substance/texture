@@ -33,40 +33,41 @@ export default class SelectionStateReducer {
       let nodeId = sel.getNodeId()
       let node = doc.get(nodeId)
       if (node) {
-        let xpath = [node.type]
-        let parent = node.getParent()
-        while (parent) {
-          xpath.unshift(parent.type)
-          parent = parent.getParent()
-        }
-        state.xpath = xpath
+        state.xpath = node.getXpath().toArray()
       }
     }
   }
 
   deriveContainerSelectionState (state, doc, sel) {
-    if (sel.containerId) {
-      let container = doc.get(sel.containerId)
-      state.container = container
+    let containerPath = sel.containerPath
+    if (containerPath) {
+      state.containerPath = containerPath
+      let nodeIds = doc.get(containerPath)
       let startId = sel.start.getNodeId()
       let endId = sel.end.getNodeId()
-      let startNode = doc.get(startId).getContainerRoot()
-      let startPos = container.getPosition(startNode)
-      if (startPos > 0) {
-        state.previousNode = container.getNodeAt(startPos - 1)
+      let startNode = documentHelpers.getContainerRoot(doc, containerPath, startId)
+      // FIXME: it happened that we have set the containerPath incorrectly
+      // e.g. body.content for a selection in abstract
+      if (!startNode) {
+        console.error('FIXME: invalid ContainerSelection')
+        return
       }
-      state.isFirst = selectionHelpers.isFirst(doc, sel.start)
+      let startPos = startNode.getPosition()
+      if (startPos > 0) {
+        state.previousNode = documentHelpers.getPreviousNode(doc, containerPath, startPos)
+      }
+      state.isFirst = selectionHelpers.isFirst(doc, containerPath, sel.start)
       let endPos
       if (endId === startId) {
         endPos = startPos
       } else {
-        let endNode = doc.get(endId).getContainerRoot()
-        endPos = container.getPosition(endNode)
+        let endNode = documentHelpers.getContainerRoot(doc, containerPath, endId)
+        endPos = endNode.getPosition()
       }
-      if (endPos < container.getLength() - 1) {
-        state.nextNode = container.getNodeAt(endPos + 1)
+      if (endPos < nodeIds.length - 1) {
+        state.nextNode = documentHelpers.getNextNode(doc, containerPath, endPos)
       }
-      state.isLast = selectionHelpers.isLast(doc, sel.end)
+      state.isLast = selectionHelpers.isLast(doc, containerPath, sel.end)
     }
   }
 
@@ -85,9 +86,9 @@ export default class SelectionStateReducer {
     if (propAnnos.length === 1 && propAnnos[0].isInlineNode()) {
       state.isInlineNodeSelection = propAnnos[0].getSelection().equals(sel)
     }
-    const containerId = sel.containerId
-    if (containerId) {
-      const containerAnnos = documentHelpers.getContainerAnnotationsForSelection(doc, sel, containerId)
+    const containerPath = sel.containerPath
+    if (containerPath) {
+      const containerAnnos = documentHelpers.getContainerAnnotationsForSelection(doc, sel, containerPath)
       containerAnnos.forEach(_add)
     }
     state.annosByType = annosByType
@@ -115,7 +116,7 @@ class SelectionState {
       // flags for inline nodes
       isInlineNodeSelection: false,
       // container information (only for ContainerSelection)
-      container: null,
+      containerPath: null,
       previousNode: null,
       nextNode: null,
       // if the previous node is one char away

@@ -1,6 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
 import {
-  EditInlineNodeCommand,
   EditAnnotationCommand,
   ListPackage,
   SchemaDrivenCommandManager,
@@ -11,12 +10,12 @@ import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
+import ArticleNavPackage from '../ArticleNavPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
-// FIXME: adding this to ManuscriptContentPackage causes troubles
-import ReferenceListComponent from '../shared/ReferenceListComponent'
-import FootnoteGroupComponent from '../shared/FootnoteGroupComponent'
+import PersistencePackage from '../../PersistencePackage'
 
+import ReferenceListComponent from '../shared/ReferenceListComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
@@ -26,47 +25,43 @@ import FigurePanelComponent from '../shared/FigurePanelComponent'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
+import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
+import EditReferenceWorkflow from './EditReferenceWorkflow'
 
-// Commands
-import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
-import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
-import InsertExtLinkCommand from './InsertExtLinkCommand'
-import InsertDispFormulaCommand from './InsertDispFormulaCommand'
-import InsertDispQuoteCommand from './InsertDispQuoteCommand'
-import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
-import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
-import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
-import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
-import RemoveFootnoteCommand from './RemoveFootnoteCommand'
-import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
-import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
-import InsertFigureCommand from './InsertFigureCommand'
-import InsertFigureTool from './InsertFigureTool'
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
-import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
-import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
-import InsertInlineGraphicTool from './InsertInlineGraphicTool'
-import DropFigure from './DropFigure'
-import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
-import EditDispFormulaCommand from './EditDispFormulaCommand'
-import EditDispFormulaTool from './EditDispFormulaTool'
-import EditInlineFormulaTool from './EditInlineFormulaTool'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from './TableCommands'
+import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
+import DropFigure from './DropFigure'
+import EditDispFormulaCommand from './EditDispFormulaCommand'
+import EditDispFormulaTool from './EditDispFormulaTool'
+import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
+import EditInlineFormulaTool from './EditInlineFormulaTool'
+import EditXrefCommand from '../shared/EditXrefCommand'
+import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
+import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
+import InsertDispFormulaCommand from './InsertDispFormulaCommand'
+import InsertDispQuoteCommand from './InsertDispQuoteCommand'
+import InsertExtLinkCommand from './InsertExtLinkCommand'
+import InsertFigureCommand from './InsertFigureCommand'
+import InsertFigureTool from './InsertFigureTool'
+import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
+import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
+import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
+import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
+import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import InsertTableTool from './InsertTableTool'
+import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
 import ToggleListCommand from './ToggleListCommand'
-import ArticleNavPackage from '../ArticleNavPackage'
-import PersistencePackage from '../../PersistencePackage'
-// Workflows
-import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-import EditReferenceWorkflow from './EditReferenceWorkflow'
-
-import CollectionEditor from '../metadata/CollectionEditor'
+import RemoveItemCommand from './RemoveItemCommand'
+import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
+import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
 
 export default {
   name: 'ManscruptEditor',
@@ -86,22 +81,16 @@ export default {
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
 
-    config.addComponent('toc', TOC)
-    config.addComponent('references', ReferenceListComponent)
-    config.addComponent('footnotes', FootnoteGroupComponent)
-
-    // overriding the default components for preview
     config.addComponent('figure', FigureComponent, true)
     config.addComponent('figure-panel', FigurePanelComponent, true)
     config.addComponent('table-figure', TableFigureComponent, true)
-    config.addComponent('fn', FootnoteComponent, true)
-    config.addComponent('bibr', ReferenceComponent, true)
-
-    // TODO: try to get rid of this one
-    config.addComponent('collection', CollectionEditor)
+    config.addComponent('footnote', FootnoteComponent, true)
+    config.addComponent('reference', ReferenceComponent, true)
+    config.addComponent('reference-list', ReferenceListComponent, true)
+    config.addComponent('toc', TOC, true)
 
     // Commands
-    config.addCommand('edit-xref', EditInlineNodeCommand, {
+    config.addCommand('edit-xref', EditXrefCommand, {
       nodeType: 'xref',
       commandGroup: 'prompt'
     })
@@ -135,22 +124,22 @@ export default {
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-disp-formula', InsertDispFormulaCommand, {
-      nodeType: 'disp-formula',
+      nodeType: 'block-formula',
       commandGroup: 'insert'
     })
     config.addCommand('insert-disp-quote', InsertDispQuoteCommand, {
-      nodeType: 'disp-quote',
+      nodeType: 'block-quote',
       commandGroup: 'insert'
     })
     config.addCommand('insert-supplementary-file', InsertSupplementaryFileCommand, {
-      nodeType: 'supplementary-material',
+      nodeType: 'supplementary-file',
       commandGroup: 'additional'
     })
     config.addCommand('replace-supplementary-file', ReplaceSupplementaryFileCommand, {
       commandGroup: 'context'
     })
     config.addCommand('insert-fig', InsertFigureCommand, {
-      nodeType: 'fig',
+      nodeType: 'figure',
       commandGroup: 'additional'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
@@ -173,8 +162,8 @@ export default {
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
     })
-    config.addCommand('remove-footnote', RemoveFootnoteCommand, {
-      nodeType: 'fn',
+    config.addCommand('remove-footnote', RemoveItemCommand, {
+      nodeType: 'footnote',
       commandGroup: 'context'
     })
     config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
@@ -182,7 +171,7 @@ export default {
       commandGroup: 'additional'
     })
     config.addCommand('insert-table', InsertTableCommand, {
-      nodeType: 'table-wrap',
+      nodeType: 'table-figure',
       commandGroup: 'insert'
     })
     config.addCommand('insert-formula', InsertInlineFormulaCommand, {
@@ -192,7 +181,7 @@ export default {
       nodeType: 'disp-formula',
       commandGroup: 'prompt'
     })
-    config.addCommand('edit-formula', EditInlineNodeCommand, {
+    config.addCommand('edit-formula', EditInlineFormulaCommand, {
       nodeType: 'inline-formula',
       commandGroup: 'prompt'
     })
@@ -353,8 +342,8 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'ext-link',
-      nodeType: 'ext-link',
+      name: 'external-link',
+      nodeType: 'external-link',
       commandGroup: 'formatting',
       command: InsertExtLinkCommand,
       icon: 'fa-link',
@@ -363,16 +352,16 @@ export default {
     })
 
     config.addAnnotationTool({
-      name: 'sub',
-      nodeType: 'sub',
+      name: 'subscript',
+      nodeType: 'subscript',
       commandGroup: 'formatting',
       icon: 'fa-subscript',
       label: 'Subscript'
     })
 
     config.addAnnotationTool({
-      name: 'sup',
-      nodeType: 'sup',
+      name: 'superscript',
+      nodeType: 'superscript',
       commandGroup: 'formatting',
       icon: 'fa-superscript',
       label: 'Superscript'
@@ -426,7 +415,7 @@ export default {
       name: 'paragraph',
       commandGroup: 'text-types',
       nodeSpec: {
-        type: 'p'
+        type: 'paragraph'
       },
       icon: 'fa-paragraph',
       label: 'Paragraph',
@@ -444,13 +433,13 @@ export default {
       accelerator: 'CommandOrControl+E'
     })
 
-    config.addCommand('edit-ext-link', EditAnnotationCommand, {
-      nodeType: 'ext-link',
+    config.addCommand('edit-external-link', EditAnnotationCommand, {
+      nodeType: 'external-link',
       commandGroup: 'prompt'
     })
 
     // ExtLink
-    config.addTool('edit-ext-link', EditExtLinkTool)
+    config.addTool('edit-external-link', EditExtLinkTool)
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
     config.addLabel('open-link', 'Open Link')
 

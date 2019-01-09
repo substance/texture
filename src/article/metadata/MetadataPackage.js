@@ -9,21 +9,19 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
-import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import ArticleRecordComponent from './ArticleRecordComponent'
+import BibliographicEntryEditor from './BibliographicEntryEditor'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand
 } from '../shared/FigurePanelCommands'
 import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
-import CollectionEditor from './CollectionEditor'
-import ArticleRecordEditor from './ArticleRecordEditor'
-import BibliographicEntryEditor from './BibliographicEntryEditor'
-import TranslatableEntryEditor from './TranslatableEntryEditor'
-import TranslateableEditor from './TranslateableEditor'
-
-import TableFigureComponent from '../shared/TableFigureComponent'
 import FiguresSectionComponent from './FiguresSectionComponent'
+import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import MetadataSection from './MetadataSection'
+import TableFigureComponent from '../shared/TableFigureComponent'
+import TranslatableEntryEditor from './TranslatableEntryEditor'
 
 export default {
   name: 'ArticleMetadata',
@@ -38,14 +36,14 @@ export default {
     config.import(FindAndReplacePackage)
 
     // sections and editors
-    config.addComponent('collection', CollectionEditor)
-    config.addComponent('article-record', ArticleRecordEditor)
+    config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
-    config.addComponent('translatable', TranslateableEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
-    config.addComponent('figures', FiguresSectionComponent)
+    // Note: @figures and @tables are (dynamic) collections derived from the article's content
+    config.addComponent('@figures', FiguresSectionComponent)
+    config.addComponent('@tables', MetadataSection)
 
     // workflows
     config.addComponent('add-reference', AddReferenceWorkflow)
@@ -105,17 +103,6 @@ export default {
           { type: 'command-group', name: 'switch-view' }
         ]
       }
-      // TODO: enable this when we have a first workflow
-      // which does not belong to the add-entity group
-      // {
-      //   name: 'workflows',
-      //   type: 'tool-dropdown',
-      //   showDisabled: true,
-      //   style: 'descriptive',
-      //   items: [
-      //     { type: 'command-group', name: 'workflows' }
-      //   ]
-      // }
     ])
     config.addLabel('article-record', {
       en: 'Article Information'
@@ -137,92 +124,6 @@ export default {
     config.addIcon('remove', {
       'fontawesome': 'fa-trash'
     })
-
-    config.addCommand('add-author', AddEntityCommand, {
-      type: 'author',
-      collection: 'authors',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+A', { command: 'add-author' })
-
-    config.addCommand('add-editor', AddEntityCommand, {
-      type: 'editor',
-      collection: 'editors',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+E', { command: 'add-editor' })
-
-    config.addCommand('add-group', AddEntityCommand, {
-      type: 'group',
-      collection: 'groups',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-group' })
-
-    config.addCommand('add-organisation', AddEntityCommand, {
-      type: 'organisation',
-      collection: 'organisations',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+O', { command: 'add-organisation' })
-
-    config.addCommand('add-award', AddEntityCommand, {
-      type: 'award',
-      collection: 'awards',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Y', { command: 'add-award' })
-
-    config.addCommand('add-keyword', AddEntityCommand, {
-      type: 'keyword',
-      collection: 'keywords',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+K', { command: 'add-keyword' })
-
-    config.addCommand('add-subject', AddEntityCommand, {
-      type: 'subject',
-      collection: 'subjects',
-      commandGroup: 'add-entity'
-    })
-
-    config.addCommand('add-footnote', InsertFootnoteCommand, {
-      commandGroup: 'add-entity'
-    })
-
-    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
-      commandGroup: 'collection'
-    })
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addLabel('add-figure-panel', 'Add Sub-Figure')
-    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
-
-    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
-      commandGroup: 'collection'
-    })
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
-    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
-
-    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
-      commandGroup: 'collection'
-    })
-    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
-    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
-
-    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
-      direction: 'up',
-      commandGroup: 'collection'
-    })
-    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
-    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
-
-    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
-      direction: 'down',
-      commandGroup: 'collection'
-    })
-    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
-    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
     config.addLabel('add-reference', {
       en: 'Reference'
@@ -272,7 +173,6 @@ export default {
       en: 'Select license'
     })
 
-    // TODO: we should try to extract these into a package and share with ManuscriptEditor
     config.addAnnotationTool({
       name: 'bold',
       nodeType: 'bold',
@@ -394,38 +294,101 @@ export default {
       en: 'Supported formats'
     })
 
-    // Card tools
-    config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
-      direction: 'up',
-      commandGroup: 'collection'
-    })
-    config.addIcon('move-up-col-item', { 'fontawesome': 'fa-caret-square-o-up' })
-    config.addLabel('move-up-col-item', {
-      en: 'Move item up'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
-    config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
-      direction: 'down',
-      commandGroup: 'collection'
-    })
-    config.addIcon('move-down-col-item', { 'fontawesome': 'fa-caret-square-o-down' })
-    config.addLabel('move-down-col-item', {
-      en: 'Move item down'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
-    config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
-      commandGroup: 'collection'
-    })
-    config.addIcon('remove-col-item', { 'fontawesome': 'fa-trash' })
-    config.addLabel('remove-col-item', {
-      en: 'Remove item'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
-
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
     config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })
     config.addLabel('select-item', {
       en: 'Choose'
     })
+
+    // Collections:
+
+    registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
+    registerCollectionCommand(config, 'award', ['metadata', 'awards'], { keyboardShortcut: 'CommandOrControl+Alt+Y' })
+    registerCollectionCommand(config, 'editor', ['metadata', 'editors'], { keyboardShortcut: 'CommandOrControl+Alt+E', nodeType: 'person' })
+    registerCollectionCommand(config, 'footnote', ['article', 'footnotes'], { automaticOrder: true, Command: InsertFootnoteCommand })
+    registerCollectionCommand(config, 'group', ['metadata', 'groups'], { keyboardShortcut: 'CommandOrControl+Alt+G' })
+    registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
+    registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
+    registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
+
+    // FigurePanels work a little different than other collections, e.g. one can replace an image
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'collection'
+    })
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addLabel('add-figure-panel', 'Add Sub-Figure')
+    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
+
+    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
+      commandGroup: 'collection'
+    })
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
+    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
+
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'collection'
+    })
+    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
+    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
+
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'collection'
+    })
+    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
+    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
+
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
+      commandGroup: 'collection'
+    })
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
   }
+}
+
+function registerCollectionCommand (config, itemType, collectionPath, options = {}) {
+  let nodeType = options.nodeType || itemType
+  let xpathSelector = collectionPath.join('.')
+  let Command = options.Command || AddEntityCommand
+  config.addCommand(`add-${itemType}`, Command, {
+    type: nodeType,
+    collection: collectionPath,
+    commandGroup: 'add-entity'
+  })
+  if (options.keyboardShortcut) {
+    config.addKeyboardShortcut(options.keyboardShortcut, { command: 'add-author' })
+  }
+  if (!config.automaticOrder) {
+    config.addCommand(`move-up-${itemType}`, MoveCollectionItemCommand, {
+      direction: 'up',
+      commandGroup: 'collection',
+      xpathSelector
+    })
+    config.addIcon(`move-up-${itemType}`, { 'fontawesome': 'fa-caret-square-o-up' })
+    config.addLabel(`move-up-${itemType}`, {
+      en: 'Move item up'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: `move-up-${itemType}` })
+    config.addCommand(`move-down-${itemType}`, MoveCollectionItemCommand, {
+      direction: 'down',
+      commandGroup: 'collection',
+      xpathSelector
+    })
+    config.addIcon(`move-down-${itemType}`, { 'fontawesome': 'fa-caret-square-o-down' })
+    config.addLabel(`move-down-${itemType}`, {
+      en: 'Move item down'
+    })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: `move-down-${itemType}` })
+    config.addCommand(`remove-${itemType}`, RemoveCollectionItemCommand, {
+      commandGroup: 'collection',
+      xpathSelector
+    })
+  }
+  config.addIcon(`remove-${itemType}`, { 'fontawesome': 'fa-trash' })
+  config.addLabel(`remove-${itemType}`, {
+    en: 'Remove item'
+  })
+  config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: `remove-${itemType}` })
 }

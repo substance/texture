@@ -13,13 +13,13 @@ export default class CardComponent extends Component {
   }
 
   render ($$) {
-    const modelId = this.props.model.id
+    const node = this.props.node
+    const nodeId = node.id
     const children = this.props.children
     const label = this.getLabel(this.props.label)
     const el = $$('div')
-      .addClass('sc-card')
-      .addClass(`sm-${this.props.model.type}`)
-      .attr('data-id', modelId)
+      .addClass(this._getClassNames())
+      .attr('data-id', nodeId)
       .append(
         $$('div').addClass('se-label').append(label)
       )
@@ -28,24 +28,25 @@ export default class CardComponent extends Component {
     return el
   }
 
+  _getClassNames () {
+    return `sc-card sm-${this.props.node.type}`
+  }
+
   _toggleCardSelection () {
-    const model = this.props.model
+    const node = this.props.node
     const api = this.context.api
-    if (model.type === 'figure-panel') {
-      const node = model._node
-      const figureId = node.getParent().id
-      const figureModel = api.getModelById(figureId)
-      const panels = figureModel.getPanels()
-      const panelIds = panels.getValue()
+    if (node.type === 'figure-panel') {
+      const figure = node.getParent()
+      const panelIds = figure.panels
       const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[figureId, {currentPanelIndex: panelIds.indexOf(model.id)}]])
+      editorSession.updateNodeStates([[figure.id, {currentPanelIndex: panelIds.indexOf(node.id)}]])
     }
-    api.selectModel(model.id)
+    api.selectModel(node.id)
   }
 
   _onSelectionChange (sel) {
     if (sel && sel.customType === 'model') {
-      if (sel.data.modelId === this.props.model.id) {
+      if (sel.data.modelId === this.props.node.id) {
         this.el.addClass('sm-selected')
       } else {
         this.el.removeClass('sm-selected')

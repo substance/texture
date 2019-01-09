@@ -2,17 +2,17 @@ import { Component, DefaultDOMElement } from 'substance'
 
 export default class TOC extends Component {
   didMount () {
-    let tocProvider = this.context.tocProvider
+    let tocProvider = this.props.tocProvider
     tocProvider.on('toc:updated', this.onTOCUpdated, this)
   }
 
   dispose () {
-    let tocProvider = this.context.tocProvider
+    let tocProvider = this.props.tocProvider
     tocProvider.off(this)
   }
 
   render ($$) {
-    let tocProvider = this.context.tocProvider
+    let tocProvider = this.props.tocProvider
     let activeEntry = tocProvider.activeEntry
     let tocEntries = $$('div')
       .addClass('se-toc-entries')
@@ -46,10 +46,6 @@ export default class TOC extends Component {
       tocEntries
     )
     return el
-  }
-
-  getDocument () {
-    return this.context.doc
   }
 
   onTOCUpdated () {

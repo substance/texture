@@ -2,14 +2,17 @@ import { NodeComponent } from '../../kit'
 
 export default class ListItemComponent extends NodeComponent {
   render ($$) {
-    const TextPropertyComponent = this.getComponent('text-property')
     const node = this.props.node
+    const doc = node.getDocument()
     const path = node.getPath()
+    const TextPropertyComponent = this.getComponent('text-property')
+
     let el = $$('li').addClass('sc-list-item')
     el.append(
       $$(TextPropertyComponent, {
-        path,
-        doc: node.getDocument()
+        doc,
+        name: path.join('.'),
+        path
       }).ref('text')
     )
     // for nested lists

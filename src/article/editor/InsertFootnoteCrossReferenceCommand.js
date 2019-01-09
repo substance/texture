@@ -16,7 +16,7 @@ export default class InsertFootnoteCrossReferenceCommand extends InsertCrossRefe
     // Note: ATM we only consider two scopes: 'default', 'table-figure'
     // In table-figures we will only allow to cross-reference to table-footnotes
     const xpath = params.selectionState.xpath
-    return xpath.indexOf('table-figure') > -1 ? 'table-figure' : 'default'
+    return xpath.find(n => n.type === 'table-figure') ? 'table-figure' : 'default'
   }
 
   _getRefType (params, context) {

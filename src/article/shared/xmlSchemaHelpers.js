@@ -1,13 +1,11 @@
 import {
   XMLTextElement, XMLElementNode, XMLAnnotationNode,
   XMLAnchorNode, XMLInlineElementNode, XMLExternalNode,
-  XMLContainerNode, XMLSchema, DocumentSchema,
-  XMLTextElementConverter, XMLElementNodeConverter, XMLExternalNodeConverter, XMLNodeConverter,
-  XMLDocumentImporter
+  XMLContainerNode, XMLSchema, DocumentSchema
 } from 'substance'
 
-// TODO: this should go into SubstanceLand
-
+// TODO: do we really need this anymore?
+// we use XML stuff only for validation
 export function createSchema (XMLSchemaData, name, version, DocumentClass, docTypeParams) {
   let xmlSchema = XMLSchema.fromJSON(XMLSchemaData)
   const tagNames = xmlSchema.getTagNames()
@@ -96,68 +94,4 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
   schema.xmlSchema = xmlSchema
 
   return schema
-}
-
-export function createXMLConverters (xmlSchema, tagNames) {
-  const converters = []
-  if (!tagNames) tagNames = xmlSchema.getTagNames()
-  tagNames.forEach((tagName) => {
-    const elementSchema = xmlSchema.getElementSchema(tagName)
-    const name = elementSchema.name
-    let ConverterClass
-    switch (elementSchema.type) {
-      case 'element': {
-        ConverterClass = XMLElementNodeConverter
-        break
-      }
-      case 'hybrid': {
-        throw new Error('Mixed element types are not supported yet.')
-      }
-      case 'text': {
-        ConverterClass = XMLTextElementConverter
-        break
-      }
-      case 'annotation': {
-        ConverterClass = XMLNodeConverter
-        break
-      }
-      case 'anchor': {
-        ConverterClass = XMLNodeConverter
-        break
-      }
-      case 'inline-element': {
-        // NOTE: Inline nodes can have children too
-        ConverterClass = XMLElementNodeConverter
-        break
-      }
-      case 'external':
-      case 'not-implemented': {
-        ConverterClass = XMLExternalNodeConverter
-        break
-      }
-      case 'container': {
-        ConverterClass = XMLElementNodeConverter
-        break
-      }
-      default:
-        throw new Error('Illegal state')
-    }
-    let converter = new ConverterClass(name)
-    converters.push(converter)
-  })
-  return converters
-}
-
-export function createImporter (documentSchema, xmlSchema, customConverters = []) {
-  // EXPERIMENTAL: we are using this in a hybrid scenario, where the actual document schema
-  // is only partially using the xmlSchema
-  let tagNames = xmlSchema.getTagNames()
-    .filter(name => Boolean(documentSchema.getNodeClass(name)))
-  let converters = customConverters.concat(createXMLConverters(xmlSchema, tagNames))
-  return new XMLDocumentImporter({
-    schema: documentSchema,
-    xmlSchema: xmlSchema,
-    idAttribute: 'id',
-    converters
-  })
 }

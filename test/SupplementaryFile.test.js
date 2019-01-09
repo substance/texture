@@ -1,5 +1,7 @@
+import { platform } from 'substance'
 import { test } from 'substance-test'
 import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument } from './shared/integrationTestHelpers'
+import { doesNotThrowInNodejs } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 const SUPPLEMENT_FILE = `
@@ -12,7 +14,7 @@ const SUPPLEMENT_FILE = `
   </supplementary-material>
 `
 
-test('Supplemetary File: insert to a manuscript', t => {
+test('Supplementary File: insert to a manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
@@ -23,11 +25,13 @@ test('Supplemetary File: insert to a manuscript', t => {
   t.equal(getInsertSupplementaryFileTool().getAttribute('disabled'), 'true', 'tool shoud be disabled by default')
   setCursor(editor, 'p1.content', 2)
   t.isNil(getInsertSupplementaryFileTool().getAttribute('disabled'), 'tool shoud be enabled')
-
-  t.doesNotThrow(() => {
-    getInsertSupplementaryFileTool().el.click()
-  }, 'using tool should not throw')
-  t.doesNotThrow(() => {
+  // Note: testing this only in nodejs because in Browser it is annoying as it opens the file dialog
+  if (platform.inNodeJS) {
+    t.doesNotThrow(() => {
+      getInsertSupplementaryFileTool().el.click()
+    }, 'using tool should not throw')
+  }
+  doesNotThrowInNodejs(t, () => {
     editor.find(insertSupplementaryFileToolSelector).onFileSelect(new PseudoFileEvent())
   }, 'triggering file upload should not throw')
   let afterP = editor.find('*[data-id=p1] + *')
@@ -47,7 +51,7 @@ test('Supplementary File: remove from a manuscript', t => {
     type: 'node',
     nodeId: 'sm1',
     surfaceId: 'body',
-    containerId: 'body'
+    containerPath: ['body', 'content']
   })
   editorSession.transaction((tx) => {
     tx.deleteSelection()
@@ -109,7 +113,7 @@ test('Supplementary File: reference a file', t => {
     type: 'node',
     nodeId: 'sm1',
     surfaceId: 'body',
-    containerId: 'body'
+    containerPath: ['body', 'content']
   })
   editorSession.transaction((tx) => {
     tx.deleteSelection()
@@ -129,7 +133,7 @@ test('Supplementary File: replace a file', t => {
     type: 'node',
     nodeId: 'sm1',
     surfaceId: 'body',
-    containerId: 'body'
+    containerPath: ['body', 'content']
   })
   // Note: we have the same tool for replace and for insertion
   const replaceSupplementaryFileTool = editor.find(replaceSupplementaryFileToolSelector)

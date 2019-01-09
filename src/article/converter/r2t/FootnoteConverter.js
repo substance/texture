@@ -4,7 +4,7 @@ import { getLabel } from '../../shared/nodeHelpers'
 // TODO: at some point we want to retain the label and determine if the label should be treated as custom
 // or be generated.
 export default class FootnoteConverter {
-  get type () { return 'fn' }
+  get type () { return 'footnote' }
 
   get tagName () { return 'fn' }
 
@@ -14,7 +14,7 @@ export default class FootnoteConverter {
     if (labelEl) {
       node.label = labelEl.text()
     }
-    node._childNodes = pEls.map(el => importer.convertElement(el).id)
+    node.content = pEls.map(el => importer.convertElement(el).id)
   }
 
   export (node, el, exporter) {
@@ -26,8 +26,12 @@ export default class FootnoteConverter {
     // or used for collaborative editing.
     let label = getLabel(node)
     if (label) {
-      el.append($$('label').text(label))
+      el.append(
+        $$('label').text(label)
+      )
     }
-    el.append(node.getChildren().map(p => exporter.convertNode(p)))
+    el.append(
+      node.resolve('content').map(p => exporter.convertNode(p))
+    )
   }
 }

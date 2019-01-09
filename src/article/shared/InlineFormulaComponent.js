@@ -1,19 +1,28 @@
 import { NodeComponent } from '../../kit'
-import TexMathComponent from './TexMathComponent'
+import katex from 'katex'
 
-// TODO: introduce an InlineFormulaModel
 export default class InlineFormulaComponent extends NodeComponent {
+  // ATTENTION: this is very similar to BlockFormulaComponent
+  // but unfortunately also substantially different
+  // e.g. has no blocker, elements are spans, error message as tooltip
   render ($$) {
     const node = this.props.node
-    const texMath = node.find('tex-math')
-    const el = $$('span').addClass('sc-inline-formula')
-    el.append(
-      $$(TexMathComponent, {
-        node: texMath
-      }).ref('math')
-    )
-    if (this.props.isolatedNodeState) {
-      el.addClass('sm-' + this.props.isolatedNodeState)
+    let el = $$('span')
+      .addClass('sc-inline-formula')
+      .attr('data-id', node.id)
+    let source = node.content
+    if (!source) {
+      el.append('?')
+    } else {
+      try {
+        el.append(
+          $$('span').addClass('se-formula').html(katex.renderToString(source))
+        )
+      } catch (error) {
+        el.addClass('sm-error')
+          .append('\u26A0')
+          .append($$('span').addClass('se-message').text(error.message))
+      }
     }
     return el
   }

@@ -34,7 +34,7 @@ export default class ToggleListCommand extends Command {
             listId,
             level
           }
-        } else if (node.isText() && node.isBlock()) {
+        } else if (node.isText()) {
           return {
             disabled: false,
             action: 'switchTextType'

@@ -1,14 +1,13 @@
-import NodeModelComponent from '../shared/NodeModelComponent'
+import DefaultModelComponent from '../shared/DefaultModelComponent'
 import LanguageEditor from './LanguageEditor'
 
-export default class TranslatableEntryEditor extends NodeModelComponent {
+export default class TranslatableEntryEditor extends DefaultModelComponent {
   // using a special translatable property editor for entries with language picker
-  _getPropertyEditorClass (property) {
-    let propertyName = property.name
-    if (propertyName === 'language') {
+  _getPropertyEditorClass (name, value) {
+    if (name === 'language') {
       return LanguageEditor
     } else {
-      return super._getPropertyEditorClass(property)
+      return super._getPropertyEditorClass(name, value)
     }
   }
 }

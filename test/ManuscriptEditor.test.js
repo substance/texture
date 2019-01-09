@@ -1,6 +1,7 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
+import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 // TODO: add a test demonstrating that the TOC is working as expected
 // TODO: test editing of block-quote
@@ -18,13 +19,14 @@ import setupTestApp from './shared/setupTestApp'
 // TODO: test changin level of list item
 // TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
 // TODO: BreakComponent not used
-// TODO: error case for GraphicComponent and InlineGraphicCOmponent not tested
+// TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
+// TODO: test automatic label generation for block-formulas
 
 test('ManuscriptEditor: add inline graphic', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 3)
-  let insertInlineGraphicTool = editor.find('.sc-insert-inline-graphic-tool')
+  let insertInlineGraphicTool = openMenuAndFindTool(editor, 'insert', '.sc-insert-inline-graphic-tool')
   // Trigger onFileSelect() directly
   insertInlineGraphicTool.onFileSelect(new PseudoFileEvent())
   let inlineGraphic = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-graphic')
@@ -36,10 +38,7 @@ test('ManuscriptEditor: add inline formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 3)
-  // Open insert dropdown
-  const insertDropdown = editor.find('.sc-tool-dropdown.sm-insert .sc-button')
-  insertDropdown.click()
-  let insertInlineFormulaTool = editor.find('.sc-menu-item.sm-insert-formula')
+  let insertInlineFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-inline-formula')
   t.ok(insertInlineFormulaTool.click(), 'clicking on the insert inline formula button should not throw error')
   let inlineFormula = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-formula')
   t.notNil(inlineFormula, 'there should be an inline-formula now')
@@ -50,14 +49,10 @@ test('ManuscriptEditor: add block formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
-  // Open insert dropdown
-  const insertDropdown = editor.find('.sc-tool-dropdown.sm-insert .sc-button')
-  insertDropdown.click()
-  let insertDispFormulaTool = editor.find('.sc-menu-item.sm-insert-disp-formula')
+  let insertDispFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-formula')
   t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
   let blockFormula = editor.find('*[data-id=p-2] + .sm-block-formula')
   t.notNil(blockFormula, 'there should be a block-formula now')
-  // TODO: we should test automatic labeling
   t.end()
 })
 
@@ -121,13 +116,11 @@ test('ManuscriptEditor: toggling a list', t => {
   loadBodyFixture(editor, SOME_PS)
 
   let p1Text = doc.get(['p1', 'content'])
-
   setSelection(editor, 'p1.content', 0)
-  let ulTool = editor.find('.sc-toggle-tool.sm-toggle-unordered-list')
-  t.notNil(ulTool, 'the unordered-list tool should be visible')
-
   // click on list tool to turn "p1" into a list
-  ulTool.find('button').el.click()
+  let ulTool = openMenuAndFindTool(editor, 'text-types', '.sm-create-unordered-list')
+  t.ok(ulTool, 'the unordered-list tool should be visible')
+  ulTool.click()
   let listNode = doc.get('body').getNodeAt(0)
   t.equal(listNode.type, 'list', 'first node should now be a list')
   t.equal(listNode.items.length, 1, '.. with one item')
@@ -135,11 +128,12 @@ test('ManuscriptEditor: toggling a list', t => {
   t.equal(listItem.getText(), p1Text, '.. with the text of the former paragraph')
 
   // now there should be contextual list tools be visible
-  t.notNil(editor.find('.sc-toggle-tool.sm-indent-list'), 'now there should be the indent tool be visible')
-  t.notNil(editor.find('.sc-toggle-tool.sm-dedent-list'), '.. and the dedent tool')
+  t.ok(openMenuAndFindTool(editor, 'list-tools', '.sm-indent-list'), 'now there should be the indent tool be visible')
+  t.ok(openMenuAndFindTool(editor, 'list-tools', '.sm-dedent-list'), '.. and the dedent tool')
 
   // click on list tool to turn it into a paragraph again
-  editor.find('.sc-toggle-tool.sm-toggle-unordered-list > button').click()
+  openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-unordered-list').click()
+
   let pNode = doc.get('body').getNodeAt(0)
   t.equal(pNode.type, 'paragraph', 'first node should now be a paragraph again')
 
@@ -169,3 +163,58 @@ test('ManuscriptEditor: editing an external link', t => {
   t.equal(link.href, 'foo', '.. and the link should have been updated')
   t.end()
 })
+
+// TODO: explain why this test was added? Is it about general insertion of certain nodes?
+// IMO this should be moved into ManuscriptEditor.test
+
+const SPECS = [
+  {
+    'type': 'block-formula',
+    'tool': '.sc-menu-item.sm-insert-block-formula',
+    'label': 'Formula'
+  },
+  {
+    'type': 'block-quote',
+    'tool': '.sc-menu-item.sm-insert-block-quote',
+    'label': 'Blockquote'
+  },
+  {
+    'type': 'table-figure',
+    'tool': '.sc-insert-table-tool',
+    'label': 'Table'
+  }
+]
+
+const EMPTY_P = `<p id="p1"></p>`
+
+SPECS.forEach(spec => {
+  // TODO: the title could be better. IsoloatedNode is an internal concept.
+  // What is actually done here, is inserting certain node types into an otherwise empty body
+  test(`ManuscriptEditor: inserting a '${spec.label}' into an empty document`, t => {
+    testEmptyBodyIsolationNodeInsertion(t, spec)
+  })
+})
+
+function testEmptyBodyIsolationNodeInsertion (t, spec) {
+  // TODO: the tests/checks could be more targeted. We should not check for everything everywhere.
+  // A test should focus on a certain aspect and test only that.
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+
+  const _canInsert = () => isToolEnabled(editor, 'insert', spec.tool)
+  const _insert = () => openMenuAndFindTool(editor, 'insert', spec.tool).click()
+  const _getFirstElement = () => doc.get('body').getNodeAt(0)
+
+  loadBodyFixture(editor, EMPTY_P)
+
+  t.notOk(_canInsert(), 'insert should be disabled wihtout selection')
+  setCursor(editor, 'p1.content', 0)
+  t.ok(_canInsert(), 'insert should be enabled')
+  _insert()
+  t.equal(_getFirstElement().type, spec.type, 'element should be ' + spec.type)
+  doesNotThrowInNodejs(t, () => {
+    clickUndo(editor)
+  }, 'undoing should not throw')
+  t.end()
+}

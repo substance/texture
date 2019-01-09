@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture } from './shared/integrationTestHelpers'
+import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
@@ -84,9 +84,9 @@ test('Footnotes: remove a manuscript footnote', t => {
   let doc = getDocument(editor)
   t.notNil(editor.find('[data-id=fn-1]'), 'the footnote should be visible')
   setSelection(editor, 'fn-1-p-1.content', 1)
-  const removeBtn = _selectRemoveButton(editor)
-  t.ok(removeBtn, 'there should be a remove button')
-  removeBtn.click()
+  const removeTool = openMenuAndFindTool(editor, 'footnote-tools', '.sm-remove-footnote')
+  t.ok(removeTool, 'there should be a remove button')
+  removeTool.click()
   t.isNil(doc.get('fn-1'), 'the footnote should have been removed from the model')
   t.isNil(editor.find('[data-id=fn-1]'), '.. and should not be visible anymore')
   t.end()
@@ -98,24 +98,24 @@ test('Footnotes: remove a table footnote', t => {
   let doc = getDocument(editor)
   t.notNil(editor.find('[data-id=table-1-fn-1]'), 'the table footnote should be visible')
   setSelection(editor, 'table-1-fn-1-p-1.content', 1)
-  const removeBtn = _selectRemoveButton(editor)
-  t.ok(removeBtn, 'there should be a remove button')
-  removeBtn.click()
+  const removeTool = openMenuAndFindTool(editor, 'footnote-tools', '.sm-remove-footnote')
+  t.ok(removeTool, 'there should be a remove button')
+  removeTool.click()
   t.isNil(doc.get('table-1-fn-1'), 'the table footnote should have been removed from the model')
   t.isNil(editor.find('[data-id=table-1-fn-1]'), '.. and should not be visible anymore')
   t.end()
 })
 
 test('Footnotes: reference a footnote from a paragraph in the manuscript body', t => {
-  _testInsertXref(t, ['p-0', 'content'], 'fn', 'fn', 'fn-1', '1')
+  _testInsertXref(t, ['p-0', 'content'], 'footnote', 'fn', 'fn-1', '1')
 })
 
 test('Footnotes: reference a footnote from a table-cell', t => {
-  _testInsertXref(t, ['t-1_2_1', 'content'], 'fn', 'table-fn', 'table-1-fn-1', '*')
+  _testInsertXref(t, ['t-1_2_1', 'content'], 'footnote', 'table-fn', 'table-1-fn-1', '*')
 })
 
 test('Footnotes: reference a footnote from a table caption', t => {
-  _testInsertXref(t, ['table-1-caption-p-1', 'content'], 'fn', 'table-fn', 'table-1-fn-1', '*')
+  _testInsertXref(t, ['table-1-caption-p-1', 'content'], 'footnote', 'table-fn', 'table-1-fn-1', '*')
 })
 
 test('Footnotes: add a reference citation to a paragraph in the body', t => {
@@ -162,12 +162,9 @@ function _testInsertXref (t, path, refTool, refType, rid, label) {
 }
 
 function _insertCrossRef (editor, refType, rid) {
-  let citeMenu = editor.find('.sc-tool-dropdown.sm-cite')
-  // open cite menu
-  citeMenu.find('button').el.click()
-  // click respective tool
-  citeMenu.find(`.sm-insert-xref-${refType}`).el.click()
-  // ..then the xref should be inserted with empty content
+  let tool = openMenuAndFindTool(editor, 'insert', `.sm-insert-xref-${refType}`)
+  tool.click()
+  // an empty xref should have been inserted
   // click on the target option with the given node id
   editor.find(`.sc-edit-xref-tool > .se-option > *[data-id=${rid}]`).click()
 }
@@ -187,11 +184,6 @@ function _getCurrentXpath (el) {
   const selectionState = getSelectionState(el)
   const xpath = selectionState.xpath
   return xpath.map(p => p.type)
-}
-
-function _selectRemoveButton (el) {
-  const removeBtn = el.find('.sm-remove-footnote .sc-button')
-  return removeBtn
 }
 
 function _getManuscriptFootnotes (editor) {

@@ -1,4 +1,4 @@
-import { AnnotationCommand, platform, isFunction } from 'substance'
+import { AnnotationCommand, platform } from 'substance'
 import { SwitchTextTypeCommand } from '../kit'
 import TextureConfigurator from '../TextureConfigurator'
 import InternalArticleSchema from './InternalArticleSchema'
@@ -16,23 +16,9 @@ export default class ArticleConfigurator extends TextureConfigurator {
     this.schema = InternalArticleSchema
   }
 
-  // TODO: nope. We gonna have plugins that will add nodes
+  // TODO: We gonna have plugins that will add nodes
   addNode () {
     throw new Error('Texture Article Schema is final and can no be extended.')
-  }
-
-  /**
-   * Register a custom Model API extension that is applied to the
-   * model for a given type.
-   */
-  addModel (modelType, ModelClassExtension) {
-    if (this.config.models.has(modelType)) {
-      throw new Error(`model type ${modelType} already registered.`)
-    }
-    if (!isFunction(ModelClassExtension)) {
-      throw new Error('ModelClassExtension must be a mixin function.')
-    }
-    this.config.models.set(modelType, ModelClassExtension)
   }
 
   getModelRegistry () {

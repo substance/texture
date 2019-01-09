@@ -1,8 +1,10 @@
+import { AnnotationCommand } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
 import ArticleNavPackage from '../ArticleNavPackage'
+import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import PersistencePackage from '../../PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
@@ -28,6 +30,7 @@ export default {
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
+    config.import(ArticleToolbarPackage)
     config.import(ArticleNavPackage)
     config.import(PersistencePackage)
     config.import(ManuscriptContentPackage)
@@ -35,9 +38,10 @@ export default {
     config.import(EntityLabelsPackage)
     config.import(FindAndReplacePackage)
 
-    // sections and editors
+    config.addComponent('add-reference', AddReferenceWorkflow)
     config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
+    config.addComponent('insert-reference', AddReferenceWorkflow)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
@@ -45,263 +49,102 @@ export default {
     config.addComponent('@figures', FiguresSectionComponent)
     config.addComponent('@tables', MetadataSection)
 
-    // workflows
-    config.addComponent('add-reference', AddReferenceWorkflow)
-
-    config.addToolPanel('toolbar', [
-      {
-        name: 'undo-redo',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'undo-redo' }
-        ]
-      },
-      {
-        name: 'persistence',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'persistence' }
-        ]
-      },
-      {
-        name: 'add',
-        type: 'tool-dropdown',
-        showDisabled: true,
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'add-entity' }
-        ]
-      },
-      {
-        name: 'annotations',
-        type: 'tool-group',
-        showDisabled: true,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'formatting' }
-        ]
-      },
-      {
-        name: 'collection-tools',
-        type: 'tool-group',
-        showDisabled: false,
-        style: 'minimal',
-        items: [
-          { type: 'command-group', name: 'collection' }
-        ]
-      },
-      {
-        name: 'mode',
-        type: 'tool-dropdown',
-        showDisabled: false,
-        style: 'full',
-        items: [
-          { type: 'command-group', name: 'switch-view' }
-        ]
-      }
-    ])
-    config.addLabel('article-record', {
-      en: 'Article Information'
+    // Commands
+    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
+      commandGroup: 'figure-panel'
     })
-
-    config.addLabel('add', {
-      en: 'Add'
+    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
+      commandGroup: 'figure-panel'
     })
-    config.addLabel('edit', {
-      en: 'Edit'
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'figure-panel'
     })
-    config.addLabel('remove', {
-      en: 'Remove'
+    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
+      direction: 'up',
+      commandGroup: 'figure-panel'
     })
-    config.addLabel('workflows', {
-      en: 'Workflows'
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
+      commandGroup: 'figure-panel'
     })
-
-    config.addIcon('remove', {
-      'fontawesome': 'fa-trash'
-    })
-
-    config.addLabel('add-reference', {
-      en: 'Reference'
-    })
-    config.addLabel('add-author', {
-      en: 'Author'
-    })
-    config.addLabel('add-editor', {
-      en: 'Editor'
-    })
-    config.addLabel('add-group', {
-      en: 'Group'
-    })
-    config.addLabel('add-organisation', {
-      en: 'Affiliation'
-    })
-    config.addLabel('add-award', {
-      en: 'Award'
-    })
-    config.addLabel('add-keyword', {
-      en: 'Keyword'
-    })
-    config.addLabel('add-subject', {
-      en: 'Subject'
-    })
-    config.addLabel('add-footnote', {
-      en: 'Footnote'
-    })
-    config.addLabel('original-translation', {
-      en: 'Original'
-    })
-    config.addLabel('add-translation', {
-      en: 'Add Translation'
-    })
-    config.addLabel('select-language', {
-      en: 'Select language'
-    })
-
-    config.addLabel('title-trans', {
-      en: 'Title'
-    })
-    config.addLabel('abstract-trans', {
-      en: 'Abstract'
-    })
-
-    config.addLabel('select-license', {
-      en: 'Select license'
-    })
-
-    config.addAnnotationTool({
-      name: 'bold',
+    config.addCommand('toggle-bold', AnnotationCommand, {
       nodeType: 'bold',
-      commandGroup: 'formatting',
-      icon: 'fa-bold',
-      label: 'Strong',
-      accelerator: 'CommandOrControl+B'
+      accelerator: 'CommandOrControl+B',
+      commandGroup: 'formatting'
     })
-
-    config.addAnnotationTool({
-      name: 'italic',
+    config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',
-      commandGroup: 'formatting',
-      icon: 'fa-italic',
-      label: 'Emphasize',
-      accelerator: 'CommandOrControl+I'
+      accelerator: 'CommandOrControl+I',
+      commandGroup: 'formatting'
     })
-
-    config.addAnnotationTool({
-      name: 'sub',
+    config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'sub',
-      commandGroup: 'formatting',
-      icon: 'fa-subscript',
-      label: 'Subscript'
+      commandGroup: 'formatting'
     })
-
-    config.addAnnotationTool({
-      name: 'sup',
+    config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'sup',
-      commandGroup: 'formatting',
-      icon: 'fa-superscript',
-      label: 'Superscript'
+      commandGroup: 'formatting'
     })
-
-    config.addAnnotationTool({
-      name: 'monospace',
+    config.addCommand('toggle-monospace', AnnotationCommand, {
       nodeType: 'monospace',
-      commandGroup: 'formatting',
-      icon: 'fa-code',
-      label: 'Monospace'
+      commandGroup: 'formatting'
+    })
+    config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
+      direction: 'up',
+      commandGroup: 'collection'
+    })
+    config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
+      direction: 'down',
+      commandGroup: 'collection'
+    })
+    config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
+      commandGroup: 'collection'
     })
 
-    // Section labels
-    config.addLabel('article', {
-      en: 'Article Information'
-    })
-    config.addLabel('authors', {
-      en: 'Authors'
-    })
-    config.addLabel('figures', {
-      en: 'Figures'
-    })
-    config.addLabel('footnotes', {
-      en: 'Footnotes'
-    })
-    config.addLabel('groups', {
-      en: 'Groups'
-    })
-    config.addLabel('keywords', {
-      en: 'Keywords'
-    })
-    config.addLabel('subjects', {
-      en: 'Subjects'
-    })
-    config.addLabel('organisations', {
-      en: 'Affiliations'
-    })
-    config.addLabel('references', {
-      en: 'References'
-    })
-    config.addLabel('tables', {
-      en: 'Tables'
-    })
-    config.addLabel('translateables', {
-      en: 'Translations'
-    })
-    config.addLabel('translations', {
-      en: 'Translations'
-    })
-    config.addLabel('title-trans', {
-      en: 'Title'
-    })
-    config.addLabel('abstract-trans', {
-      en: 'Abstract'
-    })
+    // Tools
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
 
-    // Workflows
-    config.addCommand('add-reference', AddEntityCommand, {
-      workflow: 'add-reference',
-      commandGroup: 'add-entity',
-      type: 'bibr',
-      collection: 'references'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Shift+L', { command: 'add-reference' })
-    config.addLabel('add-reference', {
-      en: 'Reference'
-    })
+    // KeyboardShortcuts
+    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
 
-    // Add reference workflow
-    config.addLabel('add-reference-title', {
-      en: 'Add Reference(s)'
-    })
-    config.addLabel('add-ref-manually', {
-      en: 'Or create manually'
-    })
-    config.addLabel('fetch-datacite', {
-      en: 'Fetch from DataCite'
-    })
-    config.addLabel('enter-doi-placeholder', {
-      en: 'Enter one or more DOIs'
-    })
-    config.addLabel('doi-fetch-action', {
-      en: 'Add'
-    })
-    config.addLabel('import-refs', {
-      en: 'Import'
-    })
-    config.addLabel('supported-ref-formats', {
-      en: 'Supported formats'
-    })
+    // Labels
+    config.addLabel('article', 'Article Information')
+    config.addLabel('article-record', 'Article Information')
+    config.addLabel('authors', 'Authors')
+    config.addLabel('figures', 'Figures')
+    config.addLabel('footnotes', 'Footnotes')
+    config.addLabel('groups', 'Groups')
+    config.addLabel('keywords', 'Keywords')
+    config.addLabel('subjects', 'Subjects')
+    config.addLabel('organisations', 'Affiliations')
+    config.addLabel('references', 'References')
+    config.addLabel('tables', 'Tables')
+    config.addLabel('translations', 'Translations')
+    config.addLabel('add-reference-title', 'Add Reference(s)')
+    config.addLabel('add-ref-manually', 'Or create manually')
+    config.addLabel('fetch-datacite', 'Fetch from DataCite')
+    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
+    config.addLabel('doi-fetch-action', 'Add')
+    config.addLabel('import-refs', 'Import')
+    config.addLabel('supported-ref-formats', 'Supported formats')
+    config.addLabel('original-translation', 'Original')
+    config.addLabel('add-translation', 'Add Translation')
+    config.addLabel('select-language', 'Select language')
+    config.addLabel('add', 'Add')
+    config.addLabel('edit', 'Edit')
+    config.addLabel('remove', 'Remove')
+    config.addLabel('workflows', 'Workflows')
+    config.addLabel('select-license', 'Select license')
+    config.addLabel('select-item', 'Choose')
+    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
 
-    config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
-    config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })
-    config.addLabel('select-item', {
-      en: 'Choose'
-    })
+    // Icons
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
-    // Collections:
-
+    // TODO: need to rethink this a some point
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
     registerCollectionCommand(config, 'award', ['metadata', 'awards'], { keyboardShortcut: 'CommandOrControl+Alt+Y' })
     registerCollectionCommand(config, 'editor', ['metadata', 'editors'], { keyboardShortcut: 'CommandOrControl+Alt+E', nodeType: 'person' })
@@ -310,55 +153,31 @@ export default {
     registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
     registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
-
-    // FigurePanels work a little different than other collections, e.g. one can replace an image
-    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
-      commandGroup: 'collection'
+    config.addCommand('insert-reference', AddEntityCommand, {
+      workflow: 'add-reference',
+      commandGroup: 'add-entity',
+      type: 'bibr'
     })
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addLabel('add-figure-panel', 'Add Sub-Figure')
-    config.addIcon('add-figure-panel', { 'fontawesome': 'fa-upload' })
-
-    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
-      commandGroup: 'collection'
-    })
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
-    config.addIcon('replace-figure-panel-image', { 'fontawesome': 'fa-file-image-o' })
-
-    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
-      commandGroup: 'collection'
-    })
-    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
-    config.addIcon('remove-figure-panel', { 'fontawesome': 'fa-trash' })
-
-    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
-      direction: 'up',
-      commandGroup: 'collection'
-    })
-    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
-    config.addIcon('move-up-figure-panel', { 'fontawesome': 'fa-caret-square-o-up' })
-
-    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
-      direction: 'down',
-      commandGroup: 'collection'
-    })
-    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
-    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
   }
 }
 
+// TODO: this is like an overkill, registering one collection item command
+// for every collection type
+// it would be better to have just one set of commands
+// which is detecting the collection automagically
+// The challenge will then be how to control certain things,
+// such as disabling move up/down etc.
 function registerCollectionCommand (config, itemType, collectionPath, options = {}) {
   let nodeType = options.nodeType || itemType
   let xpathSelector = collectionPath.join('.')
   let Command = options.Command || AddEntityCommand
-  config.addCommand(`add-${itemType}`, Command, {
+  config.addCommand(`insert-${itemType}`, Command, {
     type: nodeType,
     collection: collectionPath,
     commandGroup: 'add-entity'
   })
   if (options.keyboardShortcut) {
-    config.addKeyboardShortcut(options.keyboardShortcut, { command: 'add-author' })
+    config.addKeyboardShortcut(options.keyboardShortcut, { command: `add-${itemType}` })
   }
   if (!config.automaticOrder) {
     config.addCommand(`move-up-${itemType}`, MoveCollectionItemCommand, {
@@ -385,6 +204,10 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
       commandGroup: 'collection',
       xpathSelector
     })
+
+    config.addIcon('remove', {'fontawesome': 'fa-trash'})
+    config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
+    config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })
   }
   config.addIcon(`remove-${itemType}`, { 'fontawesome': 'fa-trash' })
   config.addLabel(`remove-${itemType}`, {

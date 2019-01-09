@@ -30,7 +30,7 @@ class BasicCollectionCommand extends Command {
       let idx = xpath.findIndex(x => x.type === this._contextSelector.type)
       let first = xpath[idx]
       let second = xpath[idx + 1]
-      if (first && second.property === this._contextSelector.property) {
+      if (first && second && second.property === this._contextSelector.property) {
         let collectionPath = [first.id, second.property]
         let item = doc.get(second.id)
         let position = -1

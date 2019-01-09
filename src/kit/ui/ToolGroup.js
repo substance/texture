@@ -2,20 +2,20 @@ import { Component } from 'substance'
 
 const DISABLED = { disabled: true }
 
-/*
-  A component that renders a group of tools.
-
-  @param {string} props.name
-  @param {boolean} props.showDisabled
-  @param {string} props.style
-  @param {string} props.theme
-  @param {array} props.items array of item specifications
-  @param {object} props.commandStates
-*/
+/**
+ * A component that renders a group of tools.
+ *
+ * @param {string} props.name
+ * @param {string} props.style
+ * @param {string} props.theme
+ * @param {boolean} props.hideDisabled
+ * @param {array} props.items array of item specifications
+ * @param {object} props.commandStates command states by name
+ */
 export default class ToolGroup extends Component {
   render ($$) {
     const {
-      name, showDisabled, style, theme,
+      name, style, theme, hideDisabled,
       items, commandStates
     } = this.props
 
@@ -23,36 +23,35 @@ export default class ToolGroup extends Component {
       .addClass(this._getClassNames())
       .addClass('sm-' + name)
 
-    items.forEach(toolSpec => {
-      const commandName = toolSpec.commandName
-      let commandState = commandStates[commandName] || DISABLED
-      if (this.isToolEnabled(toolSpec, commandState) || showDisabled) {
-        let ToolClass = this._getToolClass(toolSpec)
-        el.append(
-          $$(ToolClass, {
-            commandName,
-            name: commandName,
-            commandState,
-            style,
-            theme
-          }).ref(commandName)
-        )
+    for (let item of items) {
+      // TODO: should we show separators?
+      let type = item.type
+      if (type === 'command') {
+        const commandName = item.name
+        let commandState = commandStates[commandName] || DISABLED
+        // TODO: why is it necessary to override isToolEnabled()?
+        if (!hideDisabled || this.isToolEnabled(commandState, item)) {
+          let ToolClass = this._getToolClass(item)
+          el.append(
+            $$(ToolClass, {
+              item,
+              commandState,
+              style,
+              theme
+            }).ref(commandName)
+          )
+        }
       }
-    })
+    }
 
     return el
   }
 
   /*
-    Determine wether a tool should be shown or not
+    Determine whether a tool should be shown or not
   */
-  isToolEnabled (toolSpec, commandState) {
-    let disabled = (
-      !commandState ||
-      commandState.disabled ||
-      (this.props.contextual && !toolSpec.showInContext)
-    )
-    return !disabled
+  isToolEnabled (commandState, opts = {}) {
+    return (commandState && !commandState.disabled)
   }
 
   /*
@@ -63,10 +62,9 @@ export default class ToolGroup extends Component {
       commandStates = this.props.commandStates
     }
     let items = this.props.items
-    for (let i = 0; i < items.length; i++) {
-      let itemSpec = items[i]
-      let commandState = commandStates[itemSpec.commandName]
-      if (this.isToolEnabled(itemSpec, commandState)) return true
+    for (let item of items) {
+      let commandState = commandStates[item.name]
+      if (this.isToolEnabled(commandState, item)) return true
     }
     return false
   }
@@ -75,12 +73,12 @@ export default class ToolGroup extends Component {
     return 'sc-tool-group'
   }
 
-  _getToolClass (toolSpec) {
+  _getToolClass (item) {
     // use an ToolClass from toolSpec if configured inline in ToolGroup spec
-    let ToolClass = toolSpec.ToolClass
+    let ToolClass = item.ToolClass
     // next try if there is a tool registered by the name
     if (!ToolClass) {
-      ToolClass = this.context.toolRegistry.get(toolSpec.commandName)
+      ToolClass = this.context.toolRegistry.get(item.name)
     }
     // after all fall back to default classes
     if (!ToolClass) {

@@ -88,7 +88,7 @@ function _setup (t, seedXML) {
 
 function _addItem (metadataEditor, modelName) {
   // open the add drop down
-  let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-add')
+  let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-insert')
   addDropDown.find('button').click()
-  addDropDown.find('.sc-menu-item.sm-add-' + modelName).click()
+  addDropDown.find('.sc-menu-item.sm-insert-' + modelName).click()
 }

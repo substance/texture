@@ -50,6 +50,17 @@ export function setSelection (editor, path, from, to) {
   })
 }
 
+export function selectCard (editor, id) {
+  getApi(editor).selectModel(id)
+}
+
+export function deleteSelection (editor) {
+  let editorSession = editor.context.editorSession
+  editorSession.transaction((tx) => {
+    tx.deleteSelection()
+  })
+}
+
 export function insertText (editor, text) {
   let editorSession = editor.context.editorSession
   editorSession.transaction(tx => {
@@ -197,4 +208,61 @@ export function findParent (el, selector) {
     }
     parent = parent.getParent()
   }
+}
+
+export function clickUndo (editor) {
+  editor.find('.sc-toggle-tool.sm-undo').el.click()
+}
+
+export function openMenu (editor, menuName) {
+  let menu = editor.find(`.sc-tool-dropdown.sm-${menuName}`)
+  let toggle = menu.refs.toggle
+  if (!toggle.hasClass('sm-active')) {
+    toggle.el.click()
+  }
+  return menu
+}
+
+export function openMenuAndFindTool (editor, menuName, toolSelector) {
+  const menu = editor.find(`.sc-tool-dropdown.sm-${menuName}`)
+  if (menu.hasClass('sm-disabled')) return false
+  let toggle = menu.refs.toggle
+  if (!toggle.hasClass('sm-active')) {
+    toggle.el.click()
+  }
+  return menu.find(toolSelector)
+}
+
+export function isToolEnabled (editor, menuName, toolSelector) {
+  let tool = openMenuAndFindTool(editor, menuName, toolSelector)
+  return tool && !tool.getAttribute('disabled')
+}
+
+const TOOL_SPECS = {
+  'bold': {
+    menu: 'format',
+    tool: '.sm-toggle-bold'
+  },
+  'italic': {
+    menu: 'format',
+    tool: '.sm-toggle-italic'
+  },
+  'monospace': {
+    menu: 'format',
+    tool: '.sm-toggle-monospace'
+  },
+  'subscript': {
+    menu: 'format',
+    tool: '.sm-toggle-subscript'
+  },
+  'superscript': {
+    menu: 'format',
+    tool: '.sm-toggle-superscript'
+  }
+}
+
+export function annotate (editor, type) {
+  let spec = TOOL_SPECS[type]
+  if (!spec) throw new Error('Unsupported type ' + type)
+  return openMenuAndFindTool(editor, spec.menu, spec.tool).click()
 }

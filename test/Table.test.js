@@ -5,7 +5,10 @@ import {
 } from '../index'
 import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
-import { openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi, getEditorSession } from './shared/integrationTestHelpers'
+import {
+  openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
+  getEditorSession, annotate
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: add tests for table cells
@@ -167,41 +170,31 @@ test('Table: formatting in table cells', t => {
 
   // use bold tool
   setSelection(editor, 't11.content', 1, 2)
-  let boldTool = editor.find('.sc-toggle-tool.sm-bold')
-  // click on list tool to turn "p1" into a list
-  boldTool.find('button').el.click()
+  annotate(editor, 'bold')
   let annos = doc.getAnnotations(['t11', 'content'])
   t.deepEqual(annos.map(a => a.type), ['bold'], 'there should be one bold annotation on t11')
 
   // use italic tool
   setSelection(editor, 't12.content', 1, 2)
-  let italicTool = editor.find('.sc-toggle-tool.sm-italic')
-  // click on list tool to turn "p1" into a list
-  italicTool.find('button').el.click()
+  annotate(editor, 'italic')
   annos = doc.getAnnotations(['t12', 'content'])
   t.deepEqual(annos.map(a => a.type), ['italic'], 'there should be one italic annotation on t12')
 
   // use sup tool
   setSelection(editor, 't13.content', 1, 2)
-  let supTool = editor.find('.sc-toggle-tool.sm-superscript')
-  // click on list tool to turn "p1" into a list
-  supTool.find('button').el.click()
+  annotate(editor, 'superscript')
   annos = doc.getAnnotations(['t13', 'content'])
   t.deepEqual(annos.map(a => a.type), ['superscript'], 'there should be one sup annotation on t13')
 
   // use sub tool
   setSelection(editor, 't21.content', 1, 2)
-  let subTool = editor.find('.sc-toggle-tool.sm-subscript')
-  // click on list tool to turn "p1" into a list
-  subTool.find('button').el.click()
+  annotate(editor, 'subscript')
   annos = doc.getAnnotations(['t21', 'content'])
   t.deepEqual(annos.map(a => a.type), ['subscript'], 'there should be one sub annotation on t21')
 
   // use monospace tool
   setSelection(editor, 't22.content', 1, 2)
-  let monospaceTool = editor.find('.sc-toggle-tool.sm-monospace')
-  // click on list tool to turn "p1" into a list
-  monospaceTool.find('button').el.click()
+  annotate(editor, 'monospace')
   annos = doc.getAnnotations(['t22', 'content'])
   t.deepEqual(annos.map(a => a.type), ['monospace'], 'there should be one monospace annotation on t22')
 

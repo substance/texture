@@ -22,47 +22,49 @@ export default class ToolDropdown extends ToolGroup {
   }
 
   render ($$) {
-    let el = $$('div').addClass('sc-tool-dropdown')
-    el.addClass('sm-' + this.props.name)
-
     const appState = this.context.appState
     const commandStates = this.props.commandStates
-    const toggleName = this._getToggleLabel()
-    const showDisabled = this.props.showDisabled
+    const toggleName = this._getToggleName()
+    const hideDisabled = this.props.hideDisabled
     const hasEnabledTools = this._hasEnabledTools
     const showChoices = appState.overlayId === this.getId()
     const style = this.props.style
     const theme = this.props.theme
 
-    // Only render this if there are enabled tools
-    // except if the user decided to show disabled commands
-    if (showDisabled || hasEnabledTools) {
+    let el = $$('div').addClass('sc-tool-dropdown')
+    el.addClass('sm-' + this.props.name)
+
+    if (!hasEnabledTools) {
+      el.addClass('sm-disabled')
+    }
+
+    if (!hideDisabled || hasEnabledTools) {
       const Button = this.getComponent('button')
       const Menu = this.getComponent('menu')
+
       let toggleButtonProps = {
         dropdown: true,
         active: showChoices,
         theme,
-        // Note: we are passing the command state allowing to render labels with template strings
+        // HACK: we are passing the command state allowing to render labels with template strings
         commandState: commandStates[toggleName]
       }
       if (style === 'minimal') {
         toggleButtonProps.icon = toggleName
-      } else if (style === 'descriptive') {
-        toggleButtonProps.label = toggleName
       } else {
-        toggleButtonProps.icon = toggleName
         toggleButtonProps.label = toggleName
       }
-      let toggleButton = $$(Button, toggleButtonProps).addClass('se-toggle')
-        .on('click', this._toggleChoices)
+      let toggleButton = $$(Button, toggleButtonProps).ref('toggle')
+        .addClass('se-toggle')
+        .on('click', this._onClick)
       el.append(toggleButton)
 
       if (showChoices) {
-        const items = this._getMenuItems()
+        const items = this._getItems()
         el.append(
           $$('div').addClass('se-choices').append(
             $$(Menu, {
+              style,
               items,
               commandStates
             })
@@ -90,44 +92,45 @@ export default class ToolDropdown extends ToolGroup {
     const items = props.items
     let activeCommandName
     let hasEnabledTools = false
-    this._items = items.map(toolSpec => {
-      const commandName = toolSpec.commandName
-      let commandState = commandStates[commandName] || { disabled: true }
-      if (!activeCommandName && commandState.active) activeCommandName = commandName
-      if (!commandState.disabled) hasEnabledTools = true
-      return {
-        name: commandName,
-        toolSpec,
-        commandState
+    for (let item of items) {
+      if (item.type === 'command') {
+        const commandName = item.name
+        let commandState = commandStates[commandName] || { disabled: true }
+        if (!activeCommandName && commandState.active) activeCommandName = commandName
+        if (!commandState.disabled) hasEnabledTools = true
       }
-    })
+    }
     this._activeCommandName = activeCommandName
     this._hasEnabledTools = hasEnabledTools
   }
 
-  /*
-    This can be overridden to control the label
-  */
-  _getToggleLabel () {
-    return this._activeCommandName || this.props.name
+  _getToggleName () {
+    if (this.props.displayActiveCommand) {
+      return this._activeCommandName || this.props.name
+    } else {
+      return this.props.name
+    }
   }
 
-  _getMenuItems () {
-    const showDisabled = this.props.showDisabled
-    let menuItems = []
-    this._items.forEach(item => {
-      // ATTENTION: not showing the disabled ones is violating the users choice
-      // given via configuration 'showDisabled'
-      if (showDisabled || this.isToolEnabled(item.toolSpec, item.commandState)) {
-        menuItems.push({
-          commandName: item.name
-        })
-      }
-    })
-    return menuItems
+  _getItems () {
+    const hideDisabled = this.props.hideDisabled
+    // TODO: this needs to be thought through
+    // what about separators, nested dropdows or groups?
+    let items
+    if (hideDisabled) {
+      const commandStates = this.props.commandStates
+      items = this.props.items.filter(item => {
+        // ATTENTION: ATM with hideDisabled=true we only show enabled commands
+        // i.e. no separatory, or nested groups or dropdowns
+        return (item.type !== 'command' || this.isToolEnabled(commandStates[item.name], item))
+      })
+    } else {
+      items = this.props.items
+    }
+    return items
   }
 
-  _toggleChoices (event) {
+  _onClick (event) {
     event.preventDefault()
     event.stopPropagation()
     this.send('toggleOverlay', this.getId())

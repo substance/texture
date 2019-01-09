@@ -5,7 +5,10 @@ import {
 } from '../index'
 import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
-import { openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi, getEditorSession, openMenuAndFindTool, annotate } from './shared/integrationTestHelpers'
+import {
+  openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
+  getEditorSession, annotate
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: add tests for table cells

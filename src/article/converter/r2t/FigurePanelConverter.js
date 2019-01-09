@@ -101,17 +101,17 @@ export default class FigurePanelConverter {
     }
     // Custom Metadata Fields
     if (node.metadata.length > 0) {
-      el.append(
-        node.resolve('metadata').map(field => {
-          return $$('kwd-group').append(
-            $$('label').text(field.name)
-          ).append(
-            field.name.split(',').map(str => {
-              return $$('kwd').text(str.trim())
-            })
-          )
+      let kwdGroupEls = node.resolve('metadata').map(field => {
+        let kwdGroupEl = $$('kwd-group').append(
+          $$('label').text(field.name)
+        )
+        let kwdEls = field.value.split(',').map(str => {
+          return $$('kwd').text(str.trim())
         })
-      )
+        kwdGroupEl.append(kwdEls)
+        return kwdGroupEl
+      })
+      el.append(kwdGroupEls)
     }
     if (node.content) {
       el.append(

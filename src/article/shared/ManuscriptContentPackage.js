@@ -81,6 +81,7 @@ export default {
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here.')
     config.addLabel('caption-label', 'Caption')
+    config.addLabel('metadata-label', 'Metadata')
     config.addLabel('footnotes-label', 'Footnotes')
     config.addLabel('label-label', 'Label')
     config.addLabel('references-label', 'References')

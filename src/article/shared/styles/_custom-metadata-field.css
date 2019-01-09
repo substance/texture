@@ -1,0 +1,12 @@
+.sc-custom-metadata-field {
+  display: flex;
+  margin: var(--t-half-spacing) 0;
+}
+
+.sc-custom-metadata-field > .sc-string {
+  flex: 1;
+}
+
+.sc-custom-metadata-field > .se-field-name {
+  font-weight: var(--t-bold-font-weight);
+}

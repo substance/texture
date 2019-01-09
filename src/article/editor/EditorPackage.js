@@ -92,8 +92,8 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
-    config.addCommand('create-ext-link', InsertExtLinkCommand, {
-      nodeType: 'ext-link',
+    config.addCommand('create-external-link', InsertExtLinkCommand, {
+      nodeType: 'external-link',
       accelerator: 'CommandOrControl+K',
       commandGroup: 'formatting'
     })
@@ -265,11 +265,11 @@ export default {
       commandGroup: 'formatting'
     })
     config.addCommand('toggle-subscript', AnnotationCommand, {
-      nodeType: 'sub',
+      nodeType: 'subscript',
       commandGroup: 'formatting'
     })
     config.addCommand('toggle-superscript', AnnotationCommand, {
-      nodeType: 'sup',
+      nodeType: 'superscript',
       commandGroup: 'formatting'
     })
 

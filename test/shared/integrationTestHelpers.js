@@ -50,6 +50,17 @@ export function setSelection (editor, path, from, to) {
   })
 }
 
+export function selectCard (editor, id) {
+  getApi(editor).selectModel(id)
+}
+
+export function deleteSelection (editor) {
+  let editorSession = editor.context.editorSession
+  editorSession.transaction((tx) => {
+    tx.deleteSelection()
+  })
+}
+
 export function insertText (editor, text) {
   let editorSession = editor.context.editorSession
   editorSession.transaction(tx => {
@@ -197,4 +208,18 @@ export function findParent (el, selector) {
     }
     parent = parent.getParent()
   }
+}
+
+export function clickUndo (editor) {
+  editor.find('.sc-toggle-tool.sm-undo').el.click()
+}
+
+export function openMenuAndFindTool (editor, menuName, toolClass) {
+  const menu = editor.find(`.sc-tool-dropdown.sm-${menuName}`)
+  if (menu.hasClass('sm-disabled')) return false
+  const isActive = menu.find('button').hasClass('sm-active')
+  if (!isActive) {
+    menu.find('button').el.click()
+  }
+  return menu.find('button.' + toolClass)
 }

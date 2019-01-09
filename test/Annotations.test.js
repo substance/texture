@@ -1,43 +1,44 @@
 import { test } from 'substance-test'
 import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
+import { doesNotThrowInNodejs } from './shared/testHelpers';
 
-const annotations = [
+const ANNOS = [
   {
     name: 'Strong',
-    type: 'bold',
     menu: 'format',
-    tool: 'toggle-bold'
+    tool: 'toggle-bold',
+    selector: '.sc-annotation.sm-bold'
   },
   {
     name: 'Emphasize',
-    type: 'italic',
     menu: 'format',
-    tool: 'toggle-italic'
+    tool: 'toggle-italic',
+    selector: '.sc-annotation.sm-italic'
   },
   {
     name: 'Link',
-    type: 'ext-link',
     menu: 'insert',
-    tool: 'create-ext-link'
+    tool: 'create-external-link',
+    selector: '.sc-external-link'
   },
   {
     name: 'Subscript',
-    type: 'sub',
     menu: 'format',
-    tool: 'toggle-subscript'
+    tool: 'toggle-subscript',
+    selector: '.sc-annotation.sm-subscript'
   },
   {
     name: 'Superscript',
-    type: 'sup',
     menu: 'format',
-    tool: 'toggle-superscript'
+    tool: 'toggle-superscript',
+    selector: '.sc-annotation.sm-superscript'
   },
   {
     name: 'Monospace',
-    type: 'monospace',
     menu: 'format',
-    tool: 'toggle-monospace'
+    tool: 'toggle-monospace',
+    selector: '.sc-annotation.sm-monospace'
   }
 ]
 
@@ -45,72 +46,61 @@ const annotations = [
 //   'external-link': '.sc-external-link'
 // }
 
-const fixture = `<p id="p1">
-Lorem <bold>ipsum</bold> dolor <italic>sit</italic> amet, ea <ext-link href="foo">ludus</ext-link>
-intellegat his, <sub>graece</sub> fastidii <sup>phaedrum</sup> ea mea, ne duo esse <monospace>omnium</monospace>.
-</p>`
+const FIXTURE = `<p id="p1">Lorem ipsum dolor sit amet.</p>`
 
-annotations.forEach(anno => {
-  test(`Annotations: toggle ${anno.name} annotation`, t => {
-    testAnnotationToggle(t, anno)
+ANNOS.forEach(spec => {
+  test(`Annotations: toggle ${spec.name} annotation`, t => {
+    testAnnotationToggle(t, spec)
   })
 })
 
-function testAnnotationToggle (t, anno) {
+function testAnnotationToggle (t, spec) {
   let { editor } = _setup(t)
-  toggleTool(t, editor, anno)
-
+  const _hasAnno = () => {
+    return Boolean(editor.find(`[data-path="p1.content"] ${spec.selector}`))
+  }
   // Set the cursor and check if tool is active
   setCursor(editor, 'p1.content', 3)
-  t.equal(_isToolActive(editor, anno), false, 'Tool must be disabled')
+  t.equal(_isToolActive(editor, spec), false, 'Tool must be disabled')
   // Set the selection and check if tool is active
   setSelection(editor, 'p1.content', 2, 4)
-  t.equal(_isToolActive(editor, anno), true, 'Tool must be active')
-  // Toggle the tool and check if an annotation appeared
-  toggleTool(t, editor, anno)
-  let annoEl = editor.find('[data-path="p1.content"] .sc-' + anno.type)
-  let annoId = annoEl.getAttribute('data-id')
-  t.notNil(annoEl, 'There should be an annotation')
-  let offset = annoEl.getAttribute('data-offset')
-  t.equal(offset, '2', 'The data-offset property must be equal to begining of the selection')
-  let length = annoEl.getAttribute('data-length')
-  t.equal(length, '2', 'The data-length property must be equal to the length of the selection')
-  let text = annoEl.text()
-  t.equal(text.length, parseInt(length), 'The number of annotated symbols must be equal to length of the selection')
-  // Set the cursor, toggle the tool and check if an annotation disappeared
-  setCursor(editor, 'p1.content', 3)
-  t.equal(_isToolActive(editor, anno), true, 'Tool must be active')
-  toggleTool(t, editor, anno)
-  let removedAnno = editor.find('[data-path="p1.content"] [data-id="' + annoId + '"]')
-  t.isNil(removedAnno, 'There should be no annotation')
+  t.equal(_isToolActive(editor, spec), true, 'Tool must be active')
+  // Toggle the annotation
+  _toggleAnnotation(t, editor, spec)
+  t.ok(_hasAnno(), 'There should be an annotation')
+  // then toggle the annotation again to remove it
+  t.equal(_isToolActive(editor, spec), true, 'Tool must be active')
+  _toggleAnnotation(t, editor, spec)
+  t.notOk(_hasAnno(), 'There should be no annotation')
   t.end()
 }
 
 function _setup (t) {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  loadBodyFixture(editor, fixture)
+  loadBodyFixture(editor, FIXTURE)
   return { editor }
 }
 
-function _isToolActive (el, anno) {
-  let menu = _openMenu(el, anno.menu)
-  let toolEl = menu.find(`.sc-menu-item.sm-${anno.tool}`)
-  return !toolEl.getAttribute('disabled')
+function _isToolActive (editor, spec) {
+  let menu = _openMenu(editor, spec.menu)
+  let toolEl = menu.find(`.sc-menu-item.sm-${spec.tool}`)
+  let isActive = toolEl && !toolEl.getAttribute('disabled')
+  return isActive
 }
 
-function toggleTool (t, editor, anno) {
-  t.doesNotThrow(() => {
-    let menu = _openMenu(editor, anno.menu)
-    menu.find(`.sc-menu-item.sm-${anno.tool}`).el.click()
+function _toggleAnnotation (t, editor, spec) {
+  doesNotThrowInNodejs(t, () => {
+    let menu = _openMenu(editor, spec.menu)
+    menu.find(`.sc-menu-item.sm-${spec.tool}`).el.click()
   })
 }
 
-function _openMenu (el, menuName) {
-  const menu = el.find(`.sc-tool-dropdown.sm-${menuName}`)
-  const isActive = menu.find('button').hasClass('sm-active')
-  if (!isActive) {
-    menu.find('button').el.click()
+function _openMenu (editor, menuName) {
+  let menu = editor.find(`.sc-tool-dropdown.sm-${menuName}`)
+  let toggle = menu.refs.toggle
+  if (!toggle.hasClass('sm-active')) {
+    toggle.el.click()
   }
   return menu
 }

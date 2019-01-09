@@ -41,6 +41,7 @@ export default class ToolDropdown extends ToolGroup {
     if (!hideDisabled || hasEnabledTools) {
       const Button = this.getComponent('button')
       const Menu = this.getComponent('menu')
+
       let toggleButtonProps = {
         dropdown: true,
         active: showChoices,
@@ -55,7 +56,7 @@ export default class ToolDropdown extends ToolGroup {
       }
       let toggleButton = $$(Button, toggleButtonProps).ref('toggle')
         .addClass('se-toggle')
-        .on('click', this._toggleChoices)
+        .on('click', this._onClick)
       el.append(toggleButton)
 
       if (showChoices) {
@@ -129,7 +130,7 @@ export default class ToolDropdown extends ToolGroup {
     return items
   }
 
-  _toggleChoices (event) {
+  _onClick (event) {
     event.preventDefault()
     event.stopPropagation()
     this.send('toggleOverlay', this.getId())

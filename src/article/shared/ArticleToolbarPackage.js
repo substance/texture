@@ -21,7 +21,7 @@ export default {
         items: [
           { type: 'command', name: 'toggle-bold', label: 'bold', icon: 'bold' },
           { type: 'command', name: 'toggle-italic', label: 'italic', icon: 'italic' },
-          { type: 'command', name: 'create-ext-link', label: 'link', icon: 'link' }
+          { type: 'command', name: 'create-external-link', label: 'link', icon: 'link' }
         ]
       },
       {
@@ -40,7 +40,7 @@ export default {
           { type: 'separator', label: 'inline' },
           { type: 'command', name: 'insert-inline-formula', label: 'math' },
           { type: 'command', name: 'insert-inline-graphic', label: 'inline-graphic' },
-          { type: 'command', name: 'create-ext-link', label: 'link', icon: 'link' },
+          { type: 'command', name: 'create-external-link', label: 'link', icon: 'link' },
           { type: 'command', name: 'insert-xref-bibr', label: 'citation' },
           { type: 'command', name: 'insert-xref-figure', label: 'figure-reference' },
           { type: 'command', name: 'insert-xref-table', label: 'table-reference' },
@@ -48,13 +48,13 @@ export default {
           { type: 'command', name: 'insert-xref-formula', label: 'equation-reference' },
           { type: 'command', name: 'insert-xref-file', label: 'file-reference' },
           { type: 'separator', label: 'metadata' },
-          { type: 'command', name: 'add-author', label: 'author' },
-          { type: 'command', name: 'add-editor', label: 'editor' },
-          { type: 'command', name: 'add-group', label: 'group' },
-          { type: 'command', name: 'add-affiliation', label: 'affiliation' },
-          { type: 'command', name: 'add-award', label: 'award' },
-          { type: 'command', name: 'add-keyword', label: 'keyword' },
-          { type: 'command', name: 'add-subject', label: 'subject' }
+          { type: 'command', name: 'insert-author', label: 'author' },
+          { type: 'command', name: 'insert-editor', label: 'editor' },
+          { type: 'command', name: 'insert-group', label: 'group' },
+          { type: 'command', name: 'insert-organisation', label: 'affiliation' },
+          { type: 'command', name: 'insert-award', label: 'award' },
+          { type: 'command', name: 'insert-keyword', label: 'keyword' },
+          { type: 'command', name: 'insert-subject', label: 'subject' }
         ]
       },
       // TODO: not sure yet. This could also be seen as a contextual thing

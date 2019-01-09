@@ -165,13 +165,13 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
   let nodeType = options.nodeType || itemType
   let xpathSelector = collectionPath.join('.')
   let Command = options.Command || AddEntityCommand
-  config.addCommand(`add-${itemType}`, Command, {
+  config.addCommand(`insert-${itemType}`, Command, {
     type: nodeType,
     collection: collectionPath,
     commandGroup: 'add-entity'
   })
   if (options.keyboardShortcut) {
-    config.addKeyboardShortcut(options.keyboardShortcut, { command:`add-${itemType}` })
+    config.addKeyboardShortcut(options.keyboardShortcut, { command: `add-${itemType}` })
   }
   if (!config.automaticOrder) {
     config.addCommand(`move-up-${itemType}`, MoveCollectionItemCommand, {

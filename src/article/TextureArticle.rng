@@ -776,6 +776,9 @@
       <optional>
         <ref name="caption"/>
       </optional>
+      <zeroOrMore>
+        <ref name="kwd-group"/>
+      </zeroOrMore>
       <ref name="graphic"/>
       <optional>
         <ref name="permissions"/>
@@ -877,6 +880,25 @@
           <text/>
           <ref name="rich-text"/>
         </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="kwd">
+    <element name="kwd">
+      <ref name="kwd-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="kwd-group">
+    <element name="kwd-group">
+      <ref name="kwd-group-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="kwd"/>
       </zeroOrMore>
     </element>
   </define>

@@ -56,24 +56,25 @@ function _testAddEntity (t, toolName, entityType, action) {
   const cardSelector = `.sc-card.sm-${entityType}`
   let card = editor.find(cardSelector)
   t.notNil(card, 'there should be a card for the new entitiy')
-  if (card) {
-    // in addition to the plain 'Add Entity' we also test 'Remove+Undo'
-    let modelId = card.el.getAttribute('data-id')
-    editor.setSelection({
-      type: 'custom',
-      customType: 'model',
-      nodeId: modelId,
-      data: {
-        modelId
-      }
-    })
-    // remove the entity via remove button
-    editor.find(`.sc-toggle-tool.sm-remove-${toolName} > button`).el.click()
-    t.nil(editor.find(cardSelector), 'card should have been removed')
-    // now undo this change and then the card should be there again
-    editor.find('.sc-toggle-tool.sm-undo > button').el.click()
-    t.notNil(editor.find(cardSelector), 'card should be back again')
-  }
+
+  // in addition to the plain 'Add Entity' we also test 'Remove+Undo'
+  let modelId = card.el.getAttribute('data-id')
+  editor.setSelection({
+    type: 'custom',
+    customType: 'model',
+    nodeId: modelId,
+    data: {
+      modelId
+    }
+  })
+  // remove the entity via remove button
+  _removeEntity(editor, toolName)
+
+  t.nil(editor.find(cardSelector), 'card should have been removed')
+  // now undo this change and then the card should be there again
+  editor.find('.sc-toggle-tool.sm-undo > button').el.click()
+  t.notNil(editor.find(cardSelector), 'card should be back again')
+
   t.end()
 }
 
@@ -98,4 +99,10 @@ function _addEntity (editor, toolName, action) {
   menu.find('button').el.click()
   let addButton = menu.find(`.sc-menu-item.sm-${action}-${toolName}`).el
   return addButton.click()
+}
+
+function _removeEntity (editor, toolName) {
+  let collectionTools = editor.find('.sc-tool-dropdown.sm-collection-tools')
+  collectionTools.refs.toggle.el.click()
+  editor.find(`.sc-menu-item.sm-remove-${toolName}`).el.click()
 }

@@ -53,7 +53,8 @@ export default class ToolDropdown extends ToolGroup {
       } else {
         toggleButtonProps.label = toggleName
       }
-      let toggleButton = $$(Button, toggleButtonProps).addClass('se-toggle')
+      let toggleButton = $$(Button, toggleButtonProps).ref('toggle')
+        .addClass('se-toggle')
         .on('click', this._toggleChoices)
       el.append(toggleButton)
 
@@ -116,10 +117,11 @@ export default class ToolDropdown extends ToolGroup {
     // what about separators, nested dropdows or groups?
     let items
     if (hideDisabled) {
+      const commandStates = this.props.commandStates
       items = this.props.items.filter(item => {
-        // ATTENTION: ATM with showDisabled=false we only show enabled commands
+        // ATTENTION: ATM with hideDisabled=true we only show enabled commands
         // i.e. no separatory, or nested groups or dropdowns
-        return (item.type !== 'command' || !this.isToolEnabled(item.commandState, item))
+        return (item.type !== 'command' || this.isToolEnabled(commandStates[item.name], item))
       })
     } else {
       items = this.props.items

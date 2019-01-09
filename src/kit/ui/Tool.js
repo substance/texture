@@ -11,22 +11,20 @@ import Button from './Button'
 export default class Tool extends Component {
   render ($$) {
     const { style, theme, commandState } = this.props
-    let el = $$('button')
-      .addClass(this.getClassNames())
-
+    let el
     switch (style) {
       case 'minimal': {
-        el.append(
-          $$(Button, {
-            style,
-            theme,
-            icon: this._getIconName(),
-            tooltip: this._getTooltipText()
-          })
-        )
+        el = $$(Button, {
+          style,
+          theme,
+          icon: this._getIconName(),
+          tooltip: this._getTooltipText()
+        })
         break
       }
       case 'descriptive': {
+        // TODO: try to use Button instead
+        el = $$('button')
         el.append(
           this._renderLabel($$),
           this._renderKeyboardShortcut($$)
@@ -34,6 +32,8 @@ export default class Tool extends Component {
         break
       }
       default: {
+        // TODO: try to use Button instead
+        el = $$('button')
         el.append(
           this._renderIcon($$),
           this._renderLabel($$),
@@ -41,6 +41,7 @@ export default class Tool extends Component {
         )
       }
     }
+    el.addClass(this.getClassNames())
     el.on('click', this._onClick)
 
     if (commandState.active) {

@@ -38,7 +38,7 @@ export default {
     config.import(EntityLabelsPackage)
     config.import(FindAndReplacePackage)
 
-    // sections and editors
+    config.addComponent('add-reference', AddReferenceWorkflow)
     config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('table-figure', TableFigureComponent, true)
@@ -48,65 +48,7 @@ export default {
     config.addComponent('@figures', FiguresSectionComponent)
     config.addComponent('@tables', MetadataSection)
 
-    // workflows
-    config.addComponent('add-reference', AddReferenceWorkflow)
-
-    // Add entity tools
-    config.addCommand('add-author', AddEntityCommand, {
-      type: 'author',
-      collection: 'authors',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+A', { command: 'add-author' })
-    config.addCommand('add-editor', AddEntityCommand, {
-      type: 'editor',
-      collection: 'editors',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+E', { command: 'add-editor' })
-    config.addCommand('add-group', AddEntityCommand, {
-      type: 'group',
-      collection: 'groups',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+G', { command: 'add-group' })
-    config.addCommand('add-affiliation', AddEntityCommand, {
-      type: 'organisation',
-      collection: 'organisations',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+O', { command: 'add-affiliation' })
-    config.addCommand('add-award', AddEntityCommand, {
-      type: 'award',
-      collection: 'awards',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Y', { command: 'add-award' })
-    config.addCommand('add-keyword', AddEntityCommand, {
-      type: 'keyword',
-      collection: 'keywords',
-      commandGroup: 'add-entity'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Alt+K', { command: 'add-keyword' })
-    config.addCommand('add-subject', AddEntityCommand, {
-      type: 'subject',
-      collection: 'subjects',
-      commandGroup: 'add-entity'
-    })
-    config.addCommand('insert-footnote', InsertFootnoteCommand, {
-      commandGroup: 'add-entity'
-    })
-    config.addCommand('insert-reference', AddEntityCommand, {
-      workflow: 'add-reference',
-      commandGroup: 'add-entity',
-      type: 'bibr',
-      collection: 'references'
-    })
-    config.addKeyboardShortcut('CommandOrControl+Shift+L', { command: 'insert-reference' })
-
-    // Figure tools
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+    // Commands
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
@@ -124,8 +66,6 @@ export default {
       direction: 'down',
       commandGroup: 'figure-panel'
     })
-
-    // Annotation tools
     config.addCommand('toggle-bold', AnnotationCommand, {
       nodeType: 'bold',
       accelerator: 'CommandOrControl+B',
@@ -148,130 +88,62 @@ export default {
       nodeType: 'monospace',
       commandGroup: 'formatting'
     })
-
-    // Card tools
     config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
       direction: 'up',
       commandGroup: 'collection'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
     config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',
       commandGroup: 'collection'
     })
-    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'
     })
+
+    // Tools
+    config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+
+    // KeyboardShortcuts
+    config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
+    config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
     config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
 
-    // Section labels
-    config.addLabel('article', {
-      en: 'Article Information'
-    })
-    config.addLabel('article-record', {
-      en: 'Article Information'
-    })
-    config.addLabel('authors', {
-      en: 'Authors'
-    })
-    config.addLabel('figures', {
-      en: 'Figures'
-    })
-    config.addLabel('footnotes', {
-      en: 'Footnotes'
-    })
-    config.addLabel('groups', {
-      en: 'Groups'
-    })
-    config.addLabel('keywords', {
-      en: 'Keywords'
-    })
-    config.addLabel('subjects', {
-      en: 'Subjects'
-    })
-    config.addLabel('organisations', {
-      en: 'Affiliations'
-    })
-    config.addLabel('references', {
-      en: 'References'
-    })
-    config.addLabel('tables', {
-      en: 'Tables'
-    })
-    config.addLabel('translateables', {
-      en: 'Translations'
-    })
-    config.addLabel('translations', {
-      en: 'Translations'
-    })
-    config.addLabel('title-trans', {
-      en: 'Title'
-    })
-    config.addLabel('abstract-trans', {
-      en: 'Abstract'
-    })
-
-    // Add reference workflow
-    config.addLabel('add-reference-title', {
-      en: 'Add Reference(s)'
-    })
-    config.addLabel('add-ref-manually', {
-      en: 'Or create manually'
-    })
-    config.addLabel('fetch-datacite', {
-      en: 'Fetch from DataCite'
-    })
-    config.addLabel('enter-doi-placeholder', {
-      en: 'Enter one or more DOIs'
-    })
-    config.addLabel('doi-fetch-action', {
-      en: 'Add'
-    })
-    config.addLabel('import-refs', {
-      en: 'Import'
-    })
-    config.addLabel('supported-ref-formats', {
-      en: 'Supported formats'
-    })
-
-    // Translation labels
-    config.addLabel('original-translation', {
-      en: 'Original'
-    })
-    config.addLabel('add-translation', {
-      en: 'Add Translation'
-    })
-    config.addLabel('select-language', {
-      en: 'Select language'
-    })
-    config.addLabel('title-trans', {
-      en: 'Title'
-    })
-    config.addLabel('abstract-trans', {
-      en: 'Abstract'
-    })
-    config.addLabel('add', {
-      en: 'Add'
-    })
-    config.addLabel('edit', {
-      en: 'Edit'
-    })
-    config.addLabel('remove', {
-      en: 'Remove'
-    })
-    config.addLabel('workflows', {
-      en: 'Workflows'
-    })
-    config.addLabel('select-license', {
-      en: 'Select license'
-    })
-    config.addLabel('select-item', {
-      en: 'Choose'
-    })
+    // Labels
+    config.addLabel('article', 'Article Information')
+    config.addLabel('article-record', 'Article Information')
+    config.addLabel('authors', 'Authors')
+    config.addLabel('figures', 'Figures')
+    config.addLabel('footnotes', 'Footnotes')
+    config.addLabel('groups', 'Groups')
+    config.addLabel('keywords', 'Keywords')
+    config.addLabel('subjects', 'Subjects')
+    config.addLabel('organisations', 'Affiliations')
+    config.addLabel('references', 'References')
+    config.addLabel('tables', 'Tables')
+    config.addLabel('translations', 'Translations')
+    config.addLabel('add-reference-title', 'Add Reference(s)')
+    config.addLabel('add-ref-manually', 'Or create manually')
+    config.addLabel('fetch-datacite', 'Fetch from DataCite')
+    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
+    config.addLabel('doi-fetch-action', 'Add')
+    config.addLabel('import-refs', 'Import')
+    config.addLabel('supported-ref-formats', 'Supported formats')
+    config.addLabel('original-translation', 'Original')
+    config.addLabel('add-translation', 'Add Translation')
+    config.addLabel('select-language', 'Select language')
+    config.addLabel('add', 'Add')
+    config.addLabel('edit', 'Edit')
+    config.addLabel('remove', 'Remove')
+    config.addLabel('workflows', 'Workflows')
+    config.addLabel('select-license', 'Select license')
+    config.addLabel('select-item', 'Choose')
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+
+    // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 
+    // TODO: need to rethink this a some point
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
     registerCollectionCommand(config, 'award', ['metadata', 'awards'], { keyboardShortcut: 'CommandOrControl+Alt+Y' })
     registerCollectionCommand(config, 'editor', ['metadata', 'editors'], { keyboardShortcut: 'CommandOrControl+Alt+E', nodeType: 'person' })
@@ -283,6 +155,12 @@ export default {
   }
 }
 
+// TODO: this is like an overkill, registering one collection item command
+// for every collection type
+// it would be better to have just one set of commands
+// which is detecting the collection automagically
+// The challenge will then be how to control certain things,
+// such as disabling move up/down etc.
 function registerCollectionCommand (config, itemType, collectionPath, options = {}) {
   let nodeType = options.nodeType || itemType
   let xpathSelector = collectionPath.join('.')
@@ -293,7 +171,7 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
     commandGroup: 'add-entity'
   })
   if (options.keyboardShortcut) {
-    config.addKeyboardShortcut(options.keyboardShortcut, { command: 'add-author' })
+    config.addKeyboardShortcut(options.keyboardShortcut, { command:`add-${itemType}` })
   }
   if (!config.automaticOrder) {
     config.addCommand(`move-up-${itemType}`, MoveCollectionItemCommand, {
@@ -321,7 +199,6 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
       xpathSelector
     })
 
-    // Icons
     config.addIcon('remove', {'fontawesome': 'fa-trash'})
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
     config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })

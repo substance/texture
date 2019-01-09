@@ -12,6 +12,8 @@ export default class UploadTool extends Tool {
       'type': 'file'
     }).ref('input')
       .on('change', this.onFileSelect)
+      // ATTENTION: it is important to stop click events on the input
+      // as otherwise Tools click handler will be triggered again
       .on('click', domHelpers.stop)
     if (!this.doesAcceptAllFileTypes) {
       const fileType = this.getFileType()

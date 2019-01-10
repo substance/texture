@@ -437,4 +437,37 @@ export default class ArticleAPI {
       documentHelpers.insertAt(tx, [figure.id, 'panels'], pos, node.id)
     })
   }
+
+  _getSurfaceId (node, path, viewName) {
+    const tpl = (strings, ...keys) => args => {
+      let result = [strings[0]]
+      keys.forEach((key, i) => {
+        result.push(args[key], strings[i + 1])
+      })
+      return result.join('')
+    }
+
+    const surfaceIdTypes = {
+      'custom-metadata-field': [{
+        ids: ['figure'],
+        parts: tpl`body/${'figure'}/${'path'}`,
+        view: 'manuscript'
+      }, {
+        ids: [],
+        parts: tpl`${'path'}`,
+        view: 'metadata'
+      }]
+    }
+
+    const nodeType = node.type
+    const selectedSpec = surfaceIdTypes[nodeType].find(s => s.view === viewName)
+    const args = selectedSpec.ids.reduce((args, type) => {
+      args[type] = findParentByType(node, type).id
+      return args
+    }, {
+      path: path.join('.')
+    })
+
+    return selectedSpec.parts.call(this, args)
+  }
 }

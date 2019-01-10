@@ -41,10 +41,13 @@ export class AddCustomMetadataFieldCommand extends BasicCustomMetadataFieldComma
     context.editorSession.transaction(tx => {
       let node = documentHelpers.createNodeFromJson(tx, CustomMetadataField.getTemplate())
       documentHelpers.append(tx, collectionPath, node.id)
-      // TODO: we need to pass surfaceId here
+      const path = [node.id, 'name']
+      const viewName = context.appState.viewName
+      const surfaceId = context.api._getSurfaceId(node, path, viewName)
       tx.setSelection({
         type: 'property',
-        path: [node.id, 'value'],
+        path,
+        surfaceId,
         startOffset: 0
       })
     })

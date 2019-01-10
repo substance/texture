@@ -119,14 +119,6 @@ export default {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
     })
-    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
-      nodeType: 'supplementary-file',
-      commandGroup: 'insert'
-    })
-    config.addCommand('insert-table', InsertTableCommand, {
-      nodeType: 'table-figure',
-      commandGroup: 'insert'
-    })
     config.addCommand('edit-block-formula', EditInlineNodeCommand, {
       nodeType: 'block-formula',
       commandGroup: 'prompt'
@@ -170,6 +162,10 @@ export default {
       nodeType: 'figure',
       commandGroup: 'insert'
     })
+    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
+      nodeType: 'supplementary-file',
+      commandGroup: 'insert'
+    })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
     })
@@ -188,12 +184,20 @@ export default {
       spec: { dim: 'row', pos: 'below' },
       commandGroup: 'table-insert'
     })
+    config.addCommand('insert-table', InsertTableCommand, {
+      nodeType: 'table-figure',
+      commandGroup: 'insert'
+    })
     config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
       refType: 'bibr',
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
       refType: 'fig',
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
+      refType: 'file',
       commandGroup: 'insert-xref'
     })
     // Note: footnote cross-references are special, because they take the current scope into account
@@ -205,10 +209,6 @@ export default {
       refType: 'formula',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
-      refType: 'file',
-      commandGroup: 'insert-xref'
-    })
     config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
       refType: 'table',
       commandGroup: 'insert-xref'
@@ -217,13 +217,13 @@ export default {
       direction: 'down',
       commandGroup: 'custom-metadata-fields'
     })
-    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
-      direction: 'up',
-      commandGroup: 'custom-metadata-fields'
-    })
     config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
       direction: 'down',
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'up',
+      commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
@@ -244,14 +244,6 @@ export default {
     })
     config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
       commandGroup: 'file'
-    })
-    config.addCommand('toggle-ordered-list', ChangeListTypeCommand, {
-      spec: { listType: 'order' },
-      commandGroup: 'list'
-    })
-    config.addCommand('toggle-unordered-list', ChangeListTypeCommand, {
-      spec: { listType: 'bullet' },
-      commandGroup: 'list'
     })
     config.addCommand('table:select-all', TableSelectAllCommand)
     config.addCommand('toggle-bold', AnnotationCommand, {
@@ -274,6 +266,10 @@ export default {
       nodeType: 'monospace',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-ordered-list', ChangeListTypeCommand, {
+      spec: { listType: 'order' },
+      commandGroup: 'list'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'subscript',
       commandGroup: 'formatting'
@@ -281,6 +277,10 @@ export default {
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'superscript',
       commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-unordered-list', ChangeListTypeCommand, {
+      spec: { listType: 'bullet' },
+      commandGroup: 'list'
     })
 
     // Labels

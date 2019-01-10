@@ -1,9 +1,9 @@
 import { createNodePropertyModels } from '../../kit'
 import { getLabel } from './nodeHelpers'
-import DefaultModelComponent from './DefaultModelComponent'
+import DefaultNodeComponent from './DefaultNodeComponent'
 import LicenseEditor from './LicenseEditor'
 
-export default class FigurePanelComponentWithMetadata extends DefaultModelComponent {
+export default class FigurePanelComponentWithMetadata extends DefaultNodeComponent {
   _getClassNames () {
     return `sc-figure-metadata`
   }

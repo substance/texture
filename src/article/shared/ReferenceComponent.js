@@ -2,7 +2,7 @@ import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import { getLabel } from './nodeHelpers'
 import PreviewComponent from './PreviewComponent'
-import DefaultModelComponent from './DefaultModelComponent'
+import DefaultNodeComponent from './DefaultNodeComponent'
 import InplaceRefContribsEditor from '../metadata/InplaceRefContribsEditor'
 
 export default class ReferenceComponent extends NodeComponent {
@@ -38,7 +38,7 @@ export default class ReferenceComponent extends NodeComponent {
   }
 }
 
-class ReferenceMetadataComponent extends DefaultModelComponent {
+class ReferenceMetadataComponent extends DefaultNodeComponent {
   _getClassNames () {
     return 'sc-reference'
   }

@@ -5,7 +5,7 @@ import { CARD_MINIMUM_FIELDS } from '../ArticleConstants'
 /**
  * A component that renders a node in a generic way iterating all properties.
  */
-export default class DefaultModelComponent extends Component {
+export default class DefaultNodeComponent extends Component {
   didMount () {
     // EXPERIMENTAL: ExperimentalArticleValidator updates `node.id, @issues`
     const node = this._getNode()

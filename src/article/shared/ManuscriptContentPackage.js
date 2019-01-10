@@ -27,7 +27,7 @@ import TableFigureComponent from './TableFigureComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
 import XrefComponent from './XrefComponent'
-import DefaultModelComponent from './DefaultModelComponent'
+import DefaultNodeComponent from './DefaultNodeComponent'
 import GraphicComponent from './GraphicComponent'
 import SupplementaryFileComponent from './SupplementaryFileComponent'
 
@@ -69,10 +69,10 @@ export default {
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('supplementary-file', SupplementaryFileComponent)
 
-    // TODO: either we use DefaultModelComponent generally, but with better control over the look-and-feel
+    // TODO: either we use DefaultNodeComponent generally, but with better control over the look-and-feel
     // or we use it only in Metadata Editor, or in popups.
     // binding to 'entity' sounds no appropriate anymore, because we do not have the concept of 'Entity' anymore
-    config.addComponent('entity', DefaultModelComponent)
+    config.addComponent('entity', DefaultNodeComponent)
     config.addComponent('model-preview', ModelPreviewComponent)
 
     config.addLabel('abstract-label', 'Abstract')

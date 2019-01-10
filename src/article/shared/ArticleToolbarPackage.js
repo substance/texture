@@ -270,6 +270,9 @@ export default {
     // Custom field tools
     config.addLabel('custom-field-tools', 'Metadata')
     config.addLabel('add-custom-metadata-field', 'Add Custom Field')
+    config.addLabel('move-down-custom-metadata-field', 'Move Down Custom Field')
+    config.addLabel('move-up-custom-metadata-field', 'Move Up Custom Field')
+    config.addLabel('remove-custom-metadata-field', 'Remove Custom Field')
     // Mode
     config.addLabel('manuscript', 'Manuscript')
   }

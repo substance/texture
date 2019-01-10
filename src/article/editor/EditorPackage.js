@@ -308,6 +308,8 @@ export default {
     config.addLabel('remove-ref', 'Remove')
     config.addLabel('toggle-unordered-list', 'Bulleted list')
     config.addLabel('toggle-ordered-list', 'Numbered list')
+    config.addLabel('enter-custom-field-name', 'Enter name')
+    config.addLabel('enter-custom-field-value', 'Enter value')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })

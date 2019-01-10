@@ -157,7 +157,8 @@ export default {
     config.addLabel('select-license', 'Select license')
     config.addLabel('select-item', 'Choose')
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
-
+    config.addLabel('enter-custom-field-name', 'Enter name')
+    config.addLabel('enter-custom-field-value', 'Enter value')
     // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 

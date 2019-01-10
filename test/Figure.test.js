@@ -299,7 +299,7 @@ test('Figure: reference multiple sub-figures', t => {
   const firstThumbnail = editor.find('.sc-figure .se-thumbnails > .sc-figure-panel')
   firstThumbnail.click()
   const removePanelTool = openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector)
-  t.ok(removePanelTool.click(), 'clicking on remove sub-figure tool 00000should not throw error')
+  t.ok(removePanelTool.click(), 'clicking on remove sub-figure tool should not throw error')
   t.equal(getXref().text(), 'Figure 1', 'xref label should be equal to xref label')
   t.end()
 })

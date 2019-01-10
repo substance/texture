@@ -62,7 +62,9 @@ import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
-import { AddCustomMetadataFieldCommand } from '../shared/CustomMetadataFieldCommands'
+import { 
+  AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
+} from '../shared/CustomMetadataFieldCommands'
 
 export default {
   name: 'ManscruptEditor',
@@ -211,6 +213,14 @@ export default {
       refType: 'table',
       commandGroup: 'insert-xref'
     })
+    config.addCommand('move-down-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'down',
+      commandGroup: 'custom-metadata-fields'
+    })
+    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'up',
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
       direction: 'down',
       commandGroup: 'figure-panel'
@@ -218,6 +228,9 @@ export default {
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('remove-custom-metadata-field', RemoveCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'

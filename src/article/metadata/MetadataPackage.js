@@ -51,6 +51,9 @@ export default {
     config.addComponent('@tables', MetadataSection)
 
     // Commands
+    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
@@ -100,9 +103,6 @@ export default {
     })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'
-    })
-    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
-      commandGroup: 'custom-metadata-fields'
     })
 
     // Tools

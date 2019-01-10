@@ -91,6 +91,9 @@ export default {
     config.addComponent('reference-list', ReferenceListComponent, true)
     config.addComponent('toc', TOC, true)
 
+    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
@@ -265,9 +268,6 @@ export default {
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'superscript',
       commandGroup: 'formatting'
-    })
-    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
-      commandGroup: 'custom-metadata-fields'
     })
 
     // Labels

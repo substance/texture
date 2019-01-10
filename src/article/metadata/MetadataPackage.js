@@ -24,7 +24,9 @@ import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import MetadataSection from './MetadataSection'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
-import { AddCustomMetadataFieldCommand } from '../shared/CustomMetadataFieldCommands'
+import {
+  AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
+} from '../shared/CustomMetadataFieldCommands'
 
 export default {
   name: 'ArticleMetadata',
@@ -57,18 +59,40 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
-    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
+    config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
+      direction: 'down',
+      commandGroup: 'collection'
+    })
+    config.addCommand('move-down-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'down',
+      commandGroup: 'custom-metadata-fields'
+    })
+    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
+      direction: 'down',
       commandGroup: 'figure-panel'
     })
-    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
-      commandGroup: 'figure-panel'
+    config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
+      direction: 'up',
+      commandGroup: 'collection'
+    })
+    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'up',
+      commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
       commandGroup: 'figure-panel'
     })
-    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
-      direction: 'down',
+    config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
+      commandGroup: 'collection'
+    })
+    config.addCommand('remove-custom-metadata-field', RemoveCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
+    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
+      commandGroup: 'figure-panel'
+    })
+    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
     })
     config.addCommand('toggle-bold', AnnotationCommand, {
@@ -81,6 +105,10 @@ export default {
       accelerator: 'CommandOrControl+I',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-monospace', AnnotationCommand, {
+      nodeType: 'monospace',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'sub',
       commandGroup: 'formatting'
@@ -88,21 +116,6 @@ export default {
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'sup',
       commandGroup: 'formatting'
-    })
-    config.addCommand('toggle-monospace', AnnotationCommand, {
-      nodeType: 'monospace',
-      commandGroup: 'formatting'
-    })
-    config.addCommand('move-up-col-item', MoveCollectionItemCommand, {
-      direction: 'up',
-      commandGroup: 'collection'
-    })
-    config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
-      direction: 'down',
-      commandGroup: 'collection'
-    })
-    config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
-      commandGroup: 'collection'
     })
 
     // Tools

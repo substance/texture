@@ -62,7 +62,7 @@ import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
-import { 
+import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
 

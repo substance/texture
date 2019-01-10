@@ -438,6 +438,9 @@ export default class ArticleAPI {
     })
   }
 
+  // HACK: determining proper surfaceId in a hard-coded way.
+  // Using templates for different node types and view modes,
+  // before template rendering computes ids of specified parent nodes.
   _getSurfaceId (node, path, viewName) {
     const tpl = (strings, ...keys) => args => {
       let result = [strings[0]]

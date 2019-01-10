@@ -56,7 +56,7 @@ export class RemoveCustomMetadataFieldCommand extends BasicCustomMetadataFieldCo
     const collectionPath = this._getCollectionPath(params, context)
     context.editorSession.transaction(tx => {
       const nodeId = tx.selection.getNodeId()
-      documentHelpers.append(tx, collectionPath, nodeId)
+      documentHelpers.remove(tx, collectionPath, nodeId)
       tx.selection = null
     })
   }

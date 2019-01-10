@@ -46,10 +46,23 @@ export function findAllChildren (el, cssSelector) {
   }
   return result
 }
+
 export function printElement (el, options = {}) {
   let maxLevel = options.maxLevel || 1000
   let res = _printElement(el, 1, maxLevel)
   return res
+}
+
+export function retainChildren (el, ...allowedTagNames) {
+  allowedTagNames = new Set(allowedTagNames)
+  let childNodes = el.getChildNodes()
+  for (let idx = childNodes.length - 1; idx >= 0; idx--) {
+    let child = childNodes[idx]
+    if (!allowedTagNames.has(child.tagName)) {
+      el.removeAt(idx)
+    }
+  }
+  return el
 }
 
 function _printElement (el, level, maxLevel) {

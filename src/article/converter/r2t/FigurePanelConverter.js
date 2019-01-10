@@ -1,4 +1,4 @@
-import { findChild } from '../util/domHelpers'
+import { findChild, retainChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 
 export default class FigurePanelConverter {
@@ -25,13 +25,7 @@ export default class FigurePanelConverter {
       titleEl = $$('title')
     }
     // drop everything than 'p' from caption
-    let captionContent = captionEl.children
-    for (let idx = captionContent.length - 1; idx >= 0; idx--) {
-      let child = captionContent[idx]
-      if (child.tagName !== 'p') {
-        captionEl.removeAt(idx)
-      }
-    }
+    retainChildren(captionEl, 'p')
     // there must be at least one paragraph
     if (!captionEl.find('p')) {
       captionEl.append($$('p'))

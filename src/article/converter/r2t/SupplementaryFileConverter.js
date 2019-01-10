@@ -1,4 +1,4 @@
-import { findChild } from '../util/domHelpers'
+import { findChild, retainChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 
 export default class SupplementaryFileConverter {
@@ -19,14 +19,11 @@ export default class SupplementaryFileConverter {
       captionEl.append($$('p'))
     }
     // drop everything than 'p' from caption
-    // TODO: use the node schema to decide which
-    // elements to drop
-    let captionContent = captionEl.children
-    for (let idx = captionContent.length - 1; idx >= 0; idx--) {
-      let child = captionContent[idx]
-      if (child.tagName !== 'p') {
-        captionEl.removeAt(idx)
-      }
+    // TODO: we need contextual RNG restriction for captions
+    // otherwise we do not know the exact content of a caption
+    retainChildren(captionEl, 'p')
+    if (captionEl.getChildCount() === 0) {
+      captionEl.append($$('p'))
     }
     if (labelEl) {
       node.label = labelEl.text()

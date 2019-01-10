@@ -23,7 +23,10 @@ class BasicCustomMetadataFieldCommand extends Command {
     const nodeId = params.selection.getNodeId()
     const node = doc.get(nodeId)
     let figurePanelId = node.id
-    if (node.type !== 'figure-panel') {
+    if (params.selection.type === 'node' && this.contextType === 'figure') {
+      const currentIndex = node.getCurrentPanelIndex()
+      figurePanelId = node.panels[currentIndex]
+    } else if (node.type !== 'figure-panel') {
       const parentFigurePanel = findParentByType(node, 'figure-panel')
       figurePanelId = parentFigurePanel.id
     }
@@ -33,7 +36,7 @@ class BasicCustomMetadataFieldCommand extends Command {
 
 export class AddCustomMetadataFieldCommand extends BasicCustomMetadataFieldCommand {
   get contextType () {
-    return 'figure-panel'
+    return 'figure'
   }
 
   execute (params, context) {

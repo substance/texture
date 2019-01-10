@@ -2,6 +2,7 @@ import { createNodePropertyModels } from '../../kit'
 import { getLabel } from './nodeHelpers'
 import DefaultNodeComponent from './DefaultNodeComponent'
 import LicenseEditor from './LicenseEditor'
+import FigureMetadataComponent from './FigureMetadataComponent'
 
 export default class FigurePanelComponentWithMetadata extends DefaultNodeComponent {
   _getClassNames () {
@@ -25,6 +26,8 @@ export default class FigurePanelComponentWithMetadata extends DefaultNodeCompone
     // special editor to pick license type
     } else if (name === 'license') {
       return LicenseEditor
+    } else if (name === 'metadata') {
+      return FigureMetadataComponent
     } else {
       return super._getPropertyEditorClass(name, value)
     }

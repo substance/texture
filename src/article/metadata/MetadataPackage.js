@@ -12,6 +12,7 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
 import ArticleRecordComponent from './ArticleRecordComponent'
+import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
@@ -42,6 +43,7 @@ export default {
     config.import(FindAndReplacePackage)
 
     config.addComponent('add-reference', AddReferenceWorkflow)
+    config.addComponent('article-metadata', ArticleMetadataComponent)
     config.addComponent('article-record', ArticleRecordComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('insert-reference', AddReferenceWorkflow)

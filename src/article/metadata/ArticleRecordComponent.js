@@ -1,56 +1,31 @@
 import { Component } from 'substance'
-import { createNodePropertyModels, createValueModel } from '../../kit'
+import { renderModel } from '../../kit'
 import CardComponent from '../shared/CardComponent'
-import DefaultNodeComponent from '../shared/DefaultNodeComponent'
-import LicenseEditor from '../shared/LicenseEditor'
 
 export default class ArticleRecordComponent extends Component {
   render ($$) {
-    const label = 'article-metadata'
-    const node = this.props.model.node
-    return $$('div').addClass('sc-article-record').append(
-      $$(CardComponent, { label, node }).append(
-        $$(ArticleMetadataComponent, { node })
-      )
-    )
-  }
-}
-
-class ArticleMetadataComponent extends DefaultNodeComponent {
-  _getClassNames () {
-    return `sc-article-record`
+    const model = this.props.model
+    const el = $$('div').addClass('sc-article-record')
+    const cards = model.cards.map(card => this._renderCardEditor($$, card))
+    return el.append(cards)
   }
 
-  _renderHeader () {
-    // no header
-  }
-
-  _getPropertyEditorClass (name, value) {
-    switch (name) {
-      case 'license': {
-        return LicenseEditor
-      }
-      default:
-        return super._getPropertyEditorClass(name, value)
+  // NOTE: we are looking for a fake models with node inside
+  // and retreiving components for those nodes,
+  // for real models we are rendering model editor.
+  _renderCardEditor ($$, card) {
+    const model = card.model
+    let editorEl, node
+    if (model.node) {
+      const EditorClass = this.getComponent(model.id)
+      editorEl = $$(EditorClass, {node: model.node})
+      node = model.node
+    } else {
+      const doc = this.context.editorSession.getDocument()
+      const path = card.model.getPath()
+      node = doc.get(path)
+      editorEl = renderModel($$, this, card.model)
     }
-  }
-
-  _createPropertyModels () {
-    const EXCLUDED_FIELDS = new Set(['authors', 'editors', 'groups', 'organisations', 'awards', 'keywords', 'subjects'])
-    const api = this.context.api
-    const node = this.props.node
-    const doc = node.getDocument()
-    return createNodePropertyModels(api, this.props.node, (p) => {
-      switch (p.name) {
-        case 'permission': {
-          let permission = doc.get(node.permission)
-          return createNodePropertyModels(api, permission)
-        }
-        default:
-          if (!EXCLUDED_FIELDS.has(p.name)) {
-            return createValueModel(api, [node.id, p.name], p)
-          }
-      }
-    })
+    return $$(CardComponent, { label: card.name, node: node }).append(editorEl)
   }
 }

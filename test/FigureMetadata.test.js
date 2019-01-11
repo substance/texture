@@ -30,7 +30,7 @@ const FIXTURE = `
   </fig-group>
 `
 
-test('Custom Fields: open figure with custom fields in manuscript and metadata view', t => {
+test('Figure Metadata: open figure with custom fields in manuscript and metadata view', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
@@ -44,7 +44,7 @@ test('Custom Fields: open figure with custom fields in manuscript and metadata v
   t.end()
 })
 
-test('Custom Fields: add a new custom field', t => {
+test('Figure Metadata: add a new custom field', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
@@ -56,19 +56,32 @@ test('Custom Fields: add a new custom field', t => {
   const selectedNodePath = getSelection(editor).path
   const secondCustomFieldInputPath = editor.findAll(figureCustomMetadataFieldNameSelector)[1].getPath()
   t.deepEqual(selectedNodePath, secondCustomFieldInputPath, 'selection path and second custom field path should match')
-  // Set selection on figure and check if tool is available
-  const editorSession = editor.editorSession
+  t.end()
+})
+
+test('Figure Metadata: add a new custom field when figure is selected', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, FIXTURE)
+  const editorSession = getEditorSession(editor)
+  t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   editorSession.setSelection({
     type: 'node',
     nodeId: 'fig1',
     surfaceId: 'body',
     containerPath: ['body', 'content']
   })
-  t.isNotNil(openMenuAndFindTool(editor, 'custom-field-tools', addCustomMetadataFieldToolSelector), 'add custom field tool should be available for a figure selection')
+  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'custom-field-tools', addCustomMetadataFieldToolSelector)
+  t.isNotNil(addCustomMetadataFieldTool, 'add custom field tool should be available for a figure selection')
+  t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
+  t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
+  const selectedNodePath = getSelection(editor).path
+  const secondCustomFieldInputPath = editor.findAll(figureCustomMetadataFieldNameSelector)[1].getPath()
+  t.deepEqual(selectedNodePath, secondCustomFieldInputPath, 'selection path and second custom field path should match')
   t.end()
 })
 
-test('Custom Fields: remove custom field', t => {
+test('Figure Metadata: remove custom field', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
@@ -80,7 +93,7 @@ test('Custom Fields: remove custom field', t => {
   t.end()
 })
 
-test('Custom Fields: move custom field', t => {
+test('Figure Metadata: move custom field', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 

@@ -11,7 +11,6 @@ import ArticleRecordModel from './ArticleRecordModel'
 export default class MetadataModel {
   constructor (api) {
     this._api = api
-    let doc = api.getDocument()
     this._sections = [
       { name: 'authors', model: createValueModel(api, ['metadata', 'authors']) },
       { name: 'editors', model: createValueModel(api, ['metadata', 'editors']) },

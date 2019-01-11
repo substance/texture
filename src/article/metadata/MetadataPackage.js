@@ -11,7 +11,7 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
-import ArticleRecordComponent from './ArticleRecordComponent'
+import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
@@ -44,7 +44,7 @@ export default {
 
     config.addComponent('add-reference', AddReferenceWorkflow)
     config.addComponent('article-metadata', ArticleMetadataComponent)
-    config.addComponent('article-record', ArticleRecordComponent)
+    config.addComponent('article-information', ArticleInformationSectionComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('insert-reference', AddReferenceWorkflow)
     config.addComponent('table-figure', TableFigureComponent, true)
@@ -131,7 +131,7 @@ export default {
 
     // Labels
     config.addLabel('article', 'Article Information')
-    config.addLabel('article-record', 'Article Information')
+    config.addLabel('article-information', 'Article Information')
     config.addLabel('authors', 'Authors')
     config.addLabel('figures', 'Figures')
     config.addLabel('footnotes', 'Footnotes')

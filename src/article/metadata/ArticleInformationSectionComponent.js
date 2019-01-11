@@ -2,10 +2,10 @@ import { Component } from 'substance'
 import { renderModel } from '../../kit'
 import CardComponent from '../shared/CardComponent'
 
-export default class ArticleRecordComponent extends Component {
+export default class ArticleInformationSectionComponent extends Component {
   render ($$) {
     const model = this.props.model
-    const el = $$('div').addClass('sc-article-record')
+    const el = $$('div').addClass('sc-article-information-section')
     const cards = model.cards.map(card => this._renderCardEditor($$, card))
     return el.append(cards)
   }
@@ -24,6 +24,7 @@ export default class ArticleRecordComponent extends Component {
       // HACK: for model editing (e.g. title, abstract) we are passing
       // model as node to avoid errors
       node = model
+      console.log(model)
       editorEl = renderModel($$, this, card.model)
     }
     return $$(CardComponent, { label: card.name, node: node }).append(editorEl)

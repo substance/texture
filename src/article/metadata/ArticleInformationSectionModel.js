@@ -1,6 +1,6 @@
 import { createValueModel } from '../../kit'
 
-export default class ArticleRecordModel {
+export default class ArticleInformationSectionModel {
   constructor (api) {
     this._api = api
     const doc = api.getDocument()
@@ -12,6 +12,6 @@ export default class ArticleRecordModel {
   }
 
   get id () {
-    return 'article-record'
+    return 'article-information'
   }
 }

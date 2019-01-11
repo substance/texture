@@ -40,7 +40,7 @@ export default class ReferenceComponent extends NodeComponent {
 
 class ReferenceMetadataComponent extends DefaultNodeComponent {
   _getClassNames () {
-    return 'sc-reference'
+    return 'sc-reference sm-metadata'
   }
   // using a special inplace property editor for 'ref-contrib's
   _getPropertyEditorClass (name, value) {

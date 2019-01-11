@@ -744,8 +744,8 @@ function refContribRenderer ($$, entityId, entityDb, options = {}) {
 }
 
 function organisationRenderer ($$, entityId, entityDb, options = {}) {
-  let { name, country } = entityDb.get(entityId)
-  let result = [ name ]
+  let { institution, country } = entityDb.get(entityId)
+  let result = [ institution ]
   if (!options.short) {
     if (country) {
       result.push(', ', country)

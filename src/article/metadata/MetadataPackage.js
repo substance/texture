@@ -11,7 +11,8 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from './AddEntityCommand'
-import ArticleRecordComponent from './ArticleRecordComponent'
+import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
+import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
@@ -42,7 +43,8 @@ export default {
     config.import(FindAndReplacePackage)
 
     config.addComponent('add-reference', AddReferenceWorkflow)
-    config.addComponent('article-record', ArticleRecordComponent)
+    config.addComponent('article-metadata', ArticleMetadataComponent)
+    config.addComponent('article-information', ArticleInformationSectionComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('insert-reference', AddReferenceWorkflow)
     config.addComponent('table-figure', TableFigureComponent, true)
@@ -129,7 +131,7 @@ export default {
 
     // Labels
     config.addLabel('article', 'Article Information')
-    config.addLabel('article-record', 'Article Information')
+    config.addLabel('article-information', 'Article Information')
     config.addLabel('authors', 'Authors')
     config.addLabel('figures', 'Figures')
     config.addLabel('footnotes', 'Footnotes')
@@ -159,6 +161,7 @@ export default {
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
     config.addLabel('enter-custom-field-name', 'Enter name')
     config.addLabel('enter-custom-field-value', 'Enter value')
+    config.addLabel('article-metadata', 'Article Metadata')
     // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 

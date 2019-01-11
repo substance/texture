@@ -1,21 +1,8 @@
-import { Component } from 'substance'
 import { createNodePropertyModels, createValueModel } from '../../kit'
-import CardComponent from '../shared/CardComponent'
 import DefaultNodeComponent from '../shared/DefaultNodeComponent'
 import LicenseEditor from '../shared/LicenseEditor'
 
-export default class ArticleRecordComponent extends Component {
-  render ($$) {
-    let node = this.props.model.node
-    return $$('div').addClass('sc-article-record').append(
-      $$(CardComponent, { node }).append(
-        $$(ArticleMetadataComponent, { node })
-      )
-    )
-  }
-}
-
-class ArticleMetadataComponent extends DefaultNodeComponent {
+export default class ArticleMetadataComponent extends DefaultNodeComponent {
   _getClassNames () {
     return `sc-article-record`
   }

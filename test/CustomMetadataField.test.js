@@ -56,6 +56,15 @@ test('Custom Fields: add a new custom field', t => {
   const selectedNodePath = getSelection(editor).path
   const secondCustomFieldInputPath = editor.findAll(figureCustomMetadataFieldNameSelector)[1].getPath()
   t.deepEqual(selectedNodePath, secondCustomFieldInputPath, 'selection path and second custom field path should match')
+  // Set selection on figure and check if tool is available
+  const editorSession = editor.editorSession
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'fig1',
+    surfaceId: 'body',
+    containerPath: ['body', 'content']
+  })
+  t.isNotNil(openMenuAndFindTool(editor, 'custom-field-tools', addCustomMetadataFieldToolSelector), 'add custom field tool should be available for a figure selection')
   t.end()
 })
 

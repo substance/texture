@@ -4,6 +4,11 @@
   cursor: default;
 }
 
+/* HACK: this is a quick-fix. Without references were broken when displayed in Metadata view */
+.sc-reference.sm-metadata {
+  display: block;
+}
+
 .sc-reference > .se-label {
   min-width: var(--t-default-spacing);
   margin: 0 var(--t-default-spacing);

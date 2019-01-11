@@ -1,12 +1,12 @@
 .sc-reference {
-  /* display: flex;
-  flex: 1 1 0; */
+  display: flex;
+  flex: 1 1 0;
   cursor: default;
 }
 
 .sc-reference > .se-label {
   min-width: var(--t-default-spacing);
-  margin: 0px var(--t-default-spacing);
+  margin: 0 var(--t-default-spacing);
   font-weight: var(--t-bold-font-weight);
   text-align: center;
 }

@@ -6,9 +6,10 @@ import LicenseEditor from '../shared/LicenseEditor'
 
 export default class ArticleRecordComponent extends Component {
   render ($$) {
-    let node = this.props.model.node
+    const label = 'article-metadata'
+    const node = this.props.model.node
     return $$('div').addClass('sc-article-record').append(
-      $$(CardComponent, { node }).append(
+      $$(CardComponent, { label, node }).append(
         $$(ArticleMetadataComponent, { node })
       )
     )

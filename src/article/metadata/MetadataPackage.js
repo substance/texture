@@ -159,6 +159,7 @@ export default {
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
     config.addLabel('enter-custom-field-name', 'Enter name')
     config.addLabel('enter-custom-field-value', 'Enter value')
+    config.addLabel('article-metadata', 'Article Metadata')
     // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 

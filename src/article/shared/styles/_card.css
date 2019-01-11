@@ -25,12 +25,12 @@
   color: var(--t-inverted-text-color);
 }
 
-.sc-card > * {
-  padding: var(--t-default-spacing);
+.sc-card .sc-form-row {
+  margin: var(--t-default-spacing) 0;
 }
 
-.sc-card > * > * {
-  margin: var(--t-default-spacing) 0;
+.sc-card > * {
+  padding: var(--t-default-spacing);
 }
 
 .sc-card > * > .se-header {

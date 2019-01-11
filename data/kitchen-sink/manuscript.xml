@@ -20,17 +20,18 @@
         </trans-title-group>
       </title-group>
       <contrib-group content-type="author">
-        <contrib contrib-type="person" equal-contrib="yes" corresp="no" deceased="no">
+        <contrib contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
           <name>
-            <surname>Schaffelhofer</surname>
-            <given-names>Stefan</given-names>
+            <surname>Doe</surname>
+            <given-names>John</given-names>
           </name>
+          <email>john.doe@university</email>
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff2" />
         </contrib>
         <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
-            <surname>Scherberger</surname>
+            <surname>Mustermann</surname>
             <given-names>Hansjörg</given-names>
           </name>
           <xref ref-type="aff" rid="aff1" />

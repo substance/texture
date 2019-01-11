@@ -21,9 +21,9 @@ export default class ArticleRecordComponent extends Component {
       editorEl = $$(EditorClass, {node: model.node})
       node = model.node
     } else {
-      const doc = this.context.editorSession.getDocument()
-      const path = card.model.getPath()
-      node = doc.get(path)
+      // HACK: for model editing (e.g. title, abstract) we are passing
+      // model as node to avoid errors
+      node = model
       editorEl = renderModel($$, this, card.model)
     }
     return $$(CardComponent, { label: card.name, node: node }).append(editorEl)

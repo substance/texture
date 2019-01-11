@@ -2,7 +2,7 @@ import { uuid, documentHelpers } from 'substance'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import InternalArticle from '../../InternalArticleDocument'
 // TODO: rename to XML helpers
-import { findChild, getText } from '../util/domHelpers'
+import { findChild, getText, retainChildren } from '../util/domHelpers'
 import createJatsImporter from './createJatsImporter'
 
 /*
@@ -170,13 +170,7 @@ function _getBioContent (el, importer) {
 
   // TODO: this code looks similar to what we have in abstract or and caption
   // drop everything other than 'p' from bio
-  let bioContent = bioEl.children
-  for (let idx = bioContent.length - 1; idx >= 0; idx--) {
-    let child = bioContent[idx]
-    if (child.tagName !== 'p') {
-      bioEl.removeAt(idx)
-    }
-  }
+  retainChildren(bioEl, 'p')
   // there must be at least one paragraph
   if (!bioEl.find('p')) {
     bioEl.append($$('p'))

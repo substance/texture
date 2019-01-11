@@ -7,7 +7,7 @@ import {
   JournalArticleRef, MagazineArticleRef, NewspaperArticleRef, ReportRef, PatentRef, Permission, SoftwareRef,
   ThesisRef, WebpageRef, RefContrib, UnsupportedNode, UnsupportedInlineNode, Graphic, InlineGraphic,
   Bold, Italic, Subscript, Superscript, Monospace, Overline, Underline, Smallcaps, StrikeThrough, Break,
-  ExternalLink, InlineFormula, Xref, SupplementaryFile,
+  ExternalLink, InlineFormula, Xref, SupplementaryFile, CustomMetadataField,
   ArticleTitleTranslation, ArticleAbstractTranslation
 } from './models'
 
@@ -35,6 +35,7 @@ export default new DocumentSchema({
     Break,
     ChapterRef,
     ConferencePaperRef,
+    CustomMetadataField,
     DataPublicationRef,
     ExternalLink,
     Figure,

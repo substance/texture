@@ -1,7 +1,7 @@
-import DefaultModelComponent from '../shared/DefaultModelComponent'
+import DefaultNodeComponent from '../shared/DefaultNodeComponent'
 import LanguageEditor from './LanguageEditor'
 
-export default class TranslatableEntryEditor extends DefaultModelComponent {
+export default class TranslatableEntryEditor extends DefaultNodeComponent {
   // using a special translatable property editor for entries with language picker
   _getPropertyEditorClass (name, value) {
     if (name === 'language') {

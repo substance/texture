@@ -1,7 +1,7 @@
 import { Component } from 'substance'
 import { createNodePropertyModels, createValueModel } from '../../kit'
 import CardComponent from '../shared/CardComponent'
-import DefaultModelComponent from '../shared/DefaultModelComponent'
+import DefaultNodeComponent from '../shared/DefaultNodeComponent'
 import LicenseEditor from '../shared/LicenseEditor'
 
 export default class ArticleRecordComponent extends Component {
@@ -15,7 +15,7 @@ export default class ArticleRecordComponent extends Component {
   }
 }
 
-class ArticleMetadataComponent extends DefaultModelComponent {
+class ArticleMetadataComponent extends DefaultNodeComponent {
   _getClassNames () {
     return `sc-article-record`
   }

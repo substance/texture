@@ -5,7 +5,7 @@ import { CARD_MINIMUM_FIELDS } from '../ArticleConstants'
 /**
  * A component that renders a node in a generic way iterating all properties.
  */
-export default class DefaultModelComponent extends Component {
+export default class DefaultNodeComponent extends Component {
   didMount () {
     // EXPERIMENTAL: ExperimentalArticleValidator updates `node.id, @issues`
     const node = this._getNode()
@@ -67,23 +67,16 @@ export default class DefaultModelComponent extends Component {
       if (hidden) hasHiddenProps = true
       if (fullMode || !hidden) {
         const PropertyEditor = this._getPropertyEditorClass(name, value)
+        const editorProps = this._getPropertyEditorProps(name, value)
         // skip this property if the editor implementation produces nil
         if (!PropertyEditor) continue
-        let label
-        if (this._showLabelForProperty(name)) {
-          label = this.getLabel(name)
-        }
         const issues = nodeIssues ? nodeIssues.get(name) : []
         el.append(
           $$(FormRowComponent, {
-            label,
+            label: editorProps.label,
             issues
           }).addClass(`sm-${name}`).append(
-            $$(PropertyEditor, {
-              label,
-              // TODO: rename to value
-              model: value
-            }).ref(name)
+            $$(PropertyEditor, editorProps).ref(name)
           )
         )
       }
@@ -161,6 +154,22 @@ export default class DefaultModelComponent extends Component {
 
   _getPropertyEditorClass (name, value) {
     return this.getComponent(value.type)
+  }
+
+  _getPropertyEditorProps (name, value) {
+    let props = {
+      // TODO: rename to value
+      model: value
+    }
+    if (this._showLabelForProperty(name)) {
+      props.label = this.getLabel(name)
+    }
+    // TODO: is this really what we want? i.e. every CHILDREN value
+    // is rendered as a container?
+    if (value.type === 'collection') {
+      props.container = true
+    }
+    return props
   }
 
   _toggleMode () {

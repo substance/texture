@@ -62,6 +62,9 @@ import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
+import {
+  AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
+} from '../shared/CustomMetadataFieldCommands'
 
 export default {
   name: 'ManscruptEditor',
@@ -90,6 +93,9 @@ export default {
     config.addComponent('reference-list', ReferenceListComponent, true)
     config.addComponent('toc', TOC, true)
 
+    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
@@ -112,14 +118,6 @@ export default {
     config.addCommand('delete-rows', DeleteCellsCommand, {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
-    })
-    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
-      nodeType: 'supplementary-file',
-      commandGroup: 'insert'
-    })
-    config.addCommand('insert-table', InsertTableCommand, {
-      nodeType: 'table-figure',
-      commandGroup: 'insert'
     })
     config.addCommand('edit-block-formula', EditInlineNodeCommand, {
       nodeType: 'block-formula',
@@ -164,6 +162,10 @@ export default {
       nodeType: 'figure',
       commandGroup: 'insert'
     })
+    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
+      nodeType: 'supplementary-file',
+      commandGroup: 'insert'
+    })
     config.addCommand('insert-footnote', InsertFootnoteCommand, {
       commandGroup: 'insert'
     })
@@ -182,12 +184,20 @@ export default {
       spec: { dim: 'row', pos: 'below' },
       commandGroup: 'table-insert'
     })
+    config.addCommand('insert-table', InsertTableCommand, {
+      nodeType: 'table-figure',
+      commandGroup: 'insert'
+    })
     config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
       refType: 'bibr',
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
       refType: 'fig',
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
+      refType: 'file',
       commandGroup: 'insert-xref'
     })
     // Note: footnote cross-references are special, because they take the current scope into account
@@ -199,21 +209,28 @@ export default {
       refType: 'formula',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
-      refType: 'file',
-      commandGroup: 'insert-xref'
-    })
     config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
       refType: 'table',
       commandGroup: 'insert-xref'
+    })
+    config.addCommand('move-down-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'down',
+      commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
       direction: 'down',
       commandGroup: 'figure-panel'
     })
+    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+      direction: 'up',
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('remove-custom-metadata-field', RemoveCustomMetadataFieldCommand, {
+      commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'
@@ -227,14 +244,6 @@ export default {
     })
     config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
       commandGroup: 'file'
-    })
-    config.addCommand('toggle-ordered-list', ChangeListTypeCommand, {
-      spec: { listType: 'order' },
-      commandGroup: 'list'
-    })
-    config.addCommand('toggle-unordered-list', ChangeListTypeCommand, {
-      spec: { listType: 'bullet' },
-      commandGroup: 'list'
     })
     config.addCommand('table:select-all', TableSelectAllCommand)
     config.addCommand('toggle-bold', AnnotationCommand, {
@@ -257,6 +266,10 @@ export default {
       nodeType: 'monospace',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-ordered-list', ChangeListTypeCommand, {
+      spec: { listType: 'order' },
+      commandGroup: 'list'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'subscript',
       commandGroup: 'formatting'
@@ -264,6 +277,10 @@ export default {
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'superscript',
       commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-unordered-list', ChangeListTypeCommand, {
+      spec: { listType: 'bullet' },
+      commandGroup: 'list'
     })
 
     // Labels
@@ -291,6 +308,8 @@ export default {
     config.addLabel('remove-ref', 'Remove')
     config.addLabel('toggle-unordered-list', 'Bulleted list')
     config.addLabel('toggle-ordered-list', 'Numbered list')
+    config.addLabel('enter-custom-field-name', 'Enter name')
+    config.addLabel('enter-custom-field-value', 'Enter value')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })

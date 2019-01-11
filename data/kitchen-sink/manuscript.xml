@@ -173,7 +173,7 @@
   <body id="body">
     <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>.</p>
     <sec id="sec-1">
-      <title>Quisque malesuada</title>
+      <title>Tables</title>
       <table-wrap id="table1">
         <label>Table 1</label>
         <caption>
@@ -222,120 +222,142 @@
           </fn-group>
         </table-wrap-foot>
       </table-wrap>
-      <sec id="sec-2">
-        <title>Figures</title>
-        <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
-        <fig id="fig1">
-          <label>Figure 1</label>
+    </sec>
+    <sec id="sec-2">
+      <title>Figures</title>
+      <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
+      <fig id="fig1">
+        <label>Figure 1</label>
+        <caption>
+          <title>Figure with permissions.</title>
+          <p id="fig1-caption-p1">Caption.</p>
+        </caption>
+        <graphic id="graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
+        <permissions id="permission-2">
+          <copyright-statement>© 2014 Surname et al.</copyright-statement>
+          <copyright-year>2014</copyright-year>
+          <copyright-holder>Surname et al.</copyright-holder>
+          <license>
+            <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
+            <license-p>License text.</license-p>
+          </license>
+        </permissions>
+      </fig>
+      <p id="p-4">Lorem ipsum.</p>
+      <fig-group id="fig2">
+        <fig id="fig2a">
+          <label>Figure 2A</label>
           <caption>
-            <title>Figure with permissions.</title>
-            <p id="fig1-caption-p1">Caption.</p>
+            <title>First panel</title>
+            <p id="fig2a-caption-p1">First panel caption</p>
           </caption>
-          <graphic id="graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
-          <permissions id="permission-2">
-            <copyright-statement>© 2014 Surname et al.</copyright-statement>
-            <copyright-year>2014</copyright-year>
-            <copyright-holder>Surname et al.</copyright-holder>
-            <license>
-              <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
-              <license-p>License text.</license-p>
-            </license>
-          </permissions>
+          <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
         </fig>
-        <fig-group id="fig2">
-          <fig id="fig2a">
-            <label>Figure 2A</label>
-            <caption>
-              <title>First panel</title>
-              <p id="fig2a-caption-p1">First panel caption</p>
-            </caption>
-            <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
-          </fig>
-          <fig id="fig2b">
-            <label>Figure 2B</label>
-            <caption>
-              <title>Second panel</title>
-              <p id="fig2b-caption-p1">Second panel caption</p>
-            </caption>
-            <graphic id="fig2b-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
-          </fig>
-        </fig-group>
-        <disp-quote id="disp-quote-1">
-          <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        </disp-quote>
-        <preformat id="_preformat-1" preformat-type="code"><![CDATA[import java.io._
+        <fig id="fig2b">
+          <label>Figure 2B</label>
+          <caption>
+            <title>Second panel</title>
+            <p id="fig2b-caption-p1">Second panel caption</p>
+          </caption>
+          <graphic id="fig2b-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
+        </fig>
+      </fig-group>
+      <p id="p-5">abc</p>
+      <fig id="fig3">
+        <label>Figure 3</label>
+        <caption>
+          <title>Figure with metadata.</title>
+          <p id="fig3-caption-p1">Caption.</p>
+        </caption>
+        <kwd-group>
+          <label>Field I</label>
+          <kwd>Value A</kwd>
+          <kwd>Value B</kwd>
+        </kwd-group>
+        <kwd-group>
+          <label>Field II</label>
+          <kwd>Value C</kwd>
+        </kwd-group>
+        <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.png" />
+      </fig>
+    </sec>
+    <sec id="sec-3">
+      <title>Block level content</title>
+      <disp-quote id="disp-quote-1">
+        <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+      </disp-quote>
+      <preformat id="_preformat-1" preformat-type="code"><![CDATA[import java.io._
 class Reader(fname: String) {
-  private val in =
-    new BufferedReader(new FileReader(fname))
+private val in =
+  new BufferedReader(new FileReader(fname))
 
-  @throws(classOf[IOException])
-  def read() = in.read()
+@throws(classOf[IOException])
+def read() = in.read()
 }]]></preformat>
-        <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
-        <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
-        <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
-        <disp-formula id="disp-formula-1" content-type="math/tex">
-          <label>(1)</label>
-          <tex-math><![CDATA[
+      <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
+      <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
+      <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
+      <disp-formula id="disp-formula-1" content-type="math/tex">
+        <label>(1)</label>
+        <tex-math><![CDATA[
 1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
 \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},
 \quad\quad \text{for }\lvert q\rvert<1.]]></tex-math>
-        </disp-formula>
-        <list list-type="bullet" id="list-1">
-          <list-item>
-            <p>Item 1</p>
-            <list list-type="order">
-              <list-item>
-                <p>Item 2</p>
-              </list-item>
-              <list-item>
-                <p>Item 3</p>
-              </list-item>
-            </list>
-          </list-item>
-          <list-item>
-            <p>Item 4</p>
-            <list list-type="order">
-              <list-item>
-                <p>Item 5</p>
-              </list-item>
-              <list-item>
-                <p>Item 6</p>
-                <list list-type="bullet">
-                  <list-item>
-                    <p>Item 7</p>
-                  </list-item>
-                  <list-item>
-                    <p>Item 8</p>
-                  </list-item>
-                </list>
-              </list-item>
-            </list>
-          </list-item>
-          <list-item>
-            <p>Item 9</p>
-          </list-item>
-        </list>
-        <disp-formula id="disp-formula-2" content-type="math/tex">
-          <label>(2)</label>
-          <tex-math><![CDATA[
+      </disp-formula>
+      <list list-type="bullet" id="list-1">
+        <list-item>
+          <p>Item 1</p>
+          <list list-type="order">
+            <list-item>
+              <p>Item 2</p>
+            </list-item>
+            <list-item>
+              <p>Item 3</p>
+            </list-item>
+          </list>
+        </list-item>
+        <list-item>
+          <p>Item 4</p>
+          <list list-type="order">
+            <list-item>
+              <p>Item 5</p>
+            </list-item>
+            <list-item>
+              <p>Item 6</p>
+              <list list-type="bullet">
+                <list-item>
+                  <p>Item 7</p>
+                </list-item>
+                <list-item>
+                  <p>Item 8</p>
+                </list-item>
+              </list>
+            </list-item>
+          </list>
+        </list-item>
+        <list-item>
+          <p>Item 9</p>
+        </list-item>
+      </list>
+      <disp-formula id="disp-formula-2" content-type="math/tex">
+        <label>(2)</label>
+        <tex-math><![CDATA[
 \sum_{i = 1}^{ \left[ \frac{n}{2} \right] }
 \binom{ x_{i, i + 1}^{i^{2}} }
 { \left[ \frac{i + 3}{3} \right] }
 \frac{ \sqrt{ \mu(i)^{ \frac{3}{2}} (i^{2} - 1) } }
 { \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }
 ]]></tex-math>
-        </disp-formula>
-      </sec>
-      <sec id="sec-3">
-        <title>Supplementary Files</title>
-        <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip">
-          <label>Supplementary File 1</label>
-          <caption>
-            <p id="sm1-caption-p1">Description of Supplementary File</p>
-          </caption>
-        </supplementary-material>
-      </sec>
+      </disp-formula>
+    </sec>
+    <sec id="sec-4">
+      <title>Supplementary Files</title>
+      <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip">
+        <label>Supplementary File 1</label>
+        <caption>
+          <p id="sm1-caption-p1">Description of Supplementary File</p>
+        </caption>
+      </supplementary-material>
     </sec>
   </body>
   <back>

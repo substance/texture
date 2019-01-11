@@ -28,5 +28,6 @@ FigurePanel.schema = {
   title: TEXT(...RICH_TEXT_ANNOS, 'xref'),
   label: STRING,
   caption: CHILDREN('paragraph'),
-  permission: CHILD('permission')
+  permission: CHILD('permission'),
+  metadata: CHILDREN('custom-metadata-field')
 }

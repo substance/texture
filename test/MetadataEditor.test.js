@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { openMetadataEditor, createTestVfs, getSelection } from './shared/integrationTestHelpers'
+import { openMetadataEditor, createTestVfs, getSelection, loadBodyFixture, openManuscriptEditor } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: test TOC
@@ -73,6 +73,28 @@ test(`MetadataEditor: after adding a new footnote cursor should be inside (#948)
   let sel = getSelection(editor)
   let isContentPropertySelection = sel && sel.isPropertySelection() && sel.getPath()[1] === 'content'
   t.ok(isContentPropertySelection, 'The footnote content should be selected')
+  t.end()
+})
+
+const ONE_FIG = `
+<fig id="fig1">
+  <caption>
+    <title>Test</title>
+    <p id="f1-caption-p1">Lorem Ipsum</p>
+  </caption>
+  <graphic />
+</fig>
+`
+test(`MetadataEditor: figure caption should be editable`, t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  // FIXME: MetadataEditor is not reacting properly on content changes
+  // i.e. loadBodyFixture must be done before the metadata view is opened
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, ONE_FIG)
+  editor = openMetadataEditor(app)
+  let figurePanel = editor.find('.sc-card.sm-figure-panel[data-id="fig1"]')
+  let captionEditor = figurePanel.find('.sc-form-row.sm-caption > .se-editor > .sc-container-editor')
+  t.notNil(captionEditor, 'figure panel should have a container editor for the caption')
   t.end()
 })
 

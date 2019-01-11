@@ -1,4 +1,4 @@
-import { findChild } from '../util/domHelpers'
+import { findChild, retainChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 
 export default class FigurePanelConverter {
@@ -25,13 +25,7 @@ export default class FigurePanelConverter {
       titleEl = $$('title')
     }
     // drop everything than 'p' from caption
-    let captionContent = captionEl.children
-    for (let idx = captionContent.length - 1; idx >= 0; idx--) {
-      let child = captionContent[idx]
-      if (child.tagName !== 'p') {
-        captionEl.removeAt(idx)
-      }
-    }
+    retainChildren(captionEl, 'p')
     // there must be at least one paragraph
     if (!captionEl.find('p')) {
       captionEl.append($$('p'))
@@ -52,6 +46,20 @@ export default class FigurePanelConverter {
     } else {
       node.permission = doc.create({ type: 'permission' }).id
     }
+
+    // Custom Metadata Fields
+    let kwdGroupEls = el.findAll('kwd-group')
+    node.metadata = kwdGroupEls.map(kwdGroupEl => {
+      let kwdEls = kwdGroupEl.findAll('kwd')
+      let labelEl = kwdGroupEl.find('label')
+      let name = labelEl ? labelEl.textContent : ''
+      let value = kwdEls.map(kwdEl => kwdEl.textContent).join(', ')
+      return doc.create({
+        type: 'custom-metadata-field',
+        name,
+        value
+      }).id
+    })
   }
 
   _getContent (el) {
@@ -84,6 +92,20 @@ export default class FigurePanelConverter {
         )
       }
       el.append(captionEl)
+    }
+    // Custom Metadata Fields
+    if (node.metadata.length > 0) {
+      let kwdGroupEls = node.resolve('metadata').map(field => {
+        let kwdGroupEl = $$('kwd-group').append(
+          $$('label').text(field.name)
+        )
+        let kwdEls = field.value.split(',').map(str => {
+          return $$('kwd').text(str.trim())
+        })
+        kwdGroupEl.append(kwdEls)
+        return kwdGroupEl
+      })
+      el.append(kwdGroupEls)
     }
     if (node.content) {
       el.append(

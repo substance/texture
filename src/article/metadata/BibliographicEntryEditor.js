@@ -1,7 +1,7 @@
-import DefaultModelComponent from '../shared/DefaultModelComponent'
+import DefaultNodeComponent from '../shared/DefaultNodeComponent'
 import InplaceRefContribsEditor from './InplaceRefContribsEditor'
 
-export default class BibliographicEntryEditor extends DefaultModelComponent {
+export default class BibliographicEntryEditor extends DefaultNodeComponent {
   // using a special inplace property editor for 'ref-contrib's
   _getPropertyEditorClass (name, value) {
     if (value.hasTargetType('ref-contrib')) {

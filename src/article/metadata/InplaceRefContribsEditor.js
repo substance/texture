@@ -16,7 +16,7 @@ export default class InplaceRefContribsEditor extends ValueComponent {
     el.append(this._renderRefContribs($$))
     el.append(
       $$(Button, {
-        icon: 'add'
+        icon: 'insert'
       }).addClass('se-add-value')
         .on('click', this._addContrib)
     )

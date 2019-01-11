@@ -6,6 +6,7 @@ import BreakComponent from './BreakComponent'
 import BlockFormulaComponent from './BlockFormulaComponent'
 import BlockQuoteComponent from './BlockQuoteComponent'
 import BodyComponent from './BodyComponent'
+import CustomMetadataFieldComponent from './CustomMetadataFieldComponent'
 import ExternalLinkComponent from './ExternalLinkComponent'
 import FigureComponent from './FigureComponent'
 import FigurePanelComponent from './FigurePanelComponent'
@@ -26,7 +27,7 @@ import TableFigureComponent from './TableFigureComponent'
 import UnsupportedNodeComponent from './UnsupportedNodeComponent'
 import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
 import XrefComponent from './XrefComponent'
-import DefaultModelComponent from './DefaultModelComponent'
+import DefaultNodeComponent from './DefaultNodeComponent'
 import GraphicComponent from './GraphicComponent'
 import SupplementaryFileComponent from './SupplementaryFileComponent'
 
@@ -39,8 +40,8 @@ export default {
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
-    config.addComponent('reference', ReferenceComponent)
     config.addComponent('body', BodyComponent)
+    config.addComponent('custom-metadata-field', CustomMetadataFieldComponent)
     config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('figure-panel', FigurePanelComponent)
@@ -54,6 +55,7 @@ export default {
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('monospace', AnnotationComponent)
     config.addComponent('paragraph', ParagraphComponent)
+    config.addComponent('reference', ReferenceComponent)
     config.addComponent('reference-list', ReferenceListComponent)
     config.addComponent('section-label', SectionLabel)
     config.addComponent('subscript', AnnotationComponent)
@@ -67,10 +69,10 @@ export default {
     config.addComponent('graphic', GraphicComponent)
     config.addComponent('supplementary-file', SupplementaryFileComponent)
 
-    // TODO: either we use DefaultModelComponent generally, but with better control over the look-and-feel
+    // TODO: either we use DefaultNodeComponent generally, but with better control over the look-and-feel
     // or we use it only in Metadata Editor, or in popups.
     // binding to 'entity' sounds no appropriate anymore, because we do not have the concept of 'Entity' anymore
-    config.addComponent('entity', DefaultModelComponent)
+    config.addComponent('entity', DefaultNodeComponent)
     config.addComponent('model-preview', ModelPreviewComponent)
 
     config.addLabel('abstract-label', 'Abstract')
@@ -79,6 +81,7 @@ export default {
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here.')
     config.addLabel('caption-label', 'Caption')
+    config.addLabel('metadata-label', 'Metadata')
     config.addLabel('footnotes-label', 'Footnotes')
     config.addLabel('label-label', 'Label')
     config.addLabel('references-label', 'References')

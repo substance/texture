@@ -1,5 +1,6 @@
 import * as tableHelpers from './tableHelpers'
 
+export { default as CustomMetadataFieldComponent } from './CustomMetadataFieldComponent'
 export { default as NumberedLabelGenerator } from './NumberedLabelGenerator'
 export { default as ReferenceManager } from './ReferenceManager'
 export { default as FigureLabelGenerator } from './FigureLabelGenerator'

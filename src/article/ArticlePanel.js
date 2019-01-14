@@ -6,6 +6,7 @@ const DEFAULT_VIEW = 'manuscript'
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
+    // TODO: should we really (ab-)use the regular Component state as AppState?
     this._initialize(this.props, this.state)
 
     // Store the viewports, so we can restore scroll positions
@@ -16,6 +17,9 @@ export default class ArticlePanel extends Component {
   }
 
   _initialize (props) {
+    // TODO: I want to move to a single-layer setup for all views in this panel,
+    // i.e. no extra configurations and if possible no extra editor session
+    // and instead contextualize commands tools etc.
     const archive = props.archive
     const config = props.config
 

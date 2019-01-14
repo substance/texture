@@ -43,32 +43,6 @@ export const JATS_BIBR_TYPES = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL)
 
 export const INTERNAL_BIBR_TYPES = Object.keys(INTERNAL_BIBR_TYPES_TO_JATS)
 
-// EXPERIMENTAL: properties that must not be empty
-// TODO: this should be configurable
-export const REQUIRED_PROPERTIES = {
-  'book-ref': new Set(['authors', 'title']),
-  'chapter-ref': new Set(['title', 'containerTitle', 'authors']),
-  'data-publication-ref': new Set(['title', 'containerTitle', 'authors']),
-  'magazine-article-ref': new Set(['title', 'containerTitle', 'authors']),
-  'newspaper-article-ref': new Set(['title', 'containerTitle', 'authors']),
-  'patent-ref': new Set(['title', 'containerTitle', 'inventors']),
-  'journal-article-ref': new Set(['title', 'containerTitle', 'authors']),
-  'article-ref': new Set(['title', 'containerTitle', 'authors']),
-  'conference-paper-ref': new Set(['title', 'authors']),
-  'report-ref': new Set(['title', 'authors']),
-  'software–ref': new Set(['title', 'authors']),
-  'thesis-ref': new Set(['title', 'authors', 'year']),
-  'webpage-ref': new Set(['title', 'containerTitle', 'authors']),
-  'person': new Set(['surname', 'givenNames']),
-  'ref-contrib': new Set(['name', 'givenNames']),
-  'group': new Set(['name']),
-  // FIXME: what is required for organisation?
-  'organisation': new Set([]),
-  'award': new Set(['institution']),
-  'keyword': new Set(['name']),
-  'subject': new Set(['name']),
-  'figure': new Set(['title', 'caption'])
-}
 export const LICENSES = [
   {
     id: 'http://creativecommons.org/licenses/by/4.0/',

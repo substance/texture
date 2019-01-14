@@ -1,5 +1,4 @@
 import { documentHelpers, includes, orderBy, without, copySelection, selectionHelpers } from 'substance'
-import { REQUIRED_PROPERTIES } from './ArticleConstants'
 import TableEditingAPI from './shared/TableEditingAPI'
 import { importFigures } from './articleHelpers'
 import { findParentByType } from './shared/nodeHelpers'
@@ -8,10 +7,11 @@ import FigurePanel from './models/FigurePanel'
 import SupplementaryFile from './models/SupplementaryFile'
 
 export default class ArticleAPI {
-  constructor (editorSession, archive, config, articleSession) {
+  constructor (editorSession, archive, config, articleSession, contextProvider) {
     this.editorSession = editorSession
     this.config = config
     this.archive = archive
+    this._contextProvider = contextProvider
     this._document = editorSession.getDocument()
     // TODO: do we really need this?
     this._articleSession = articleSession
@@ -116,6 +116,14 @@ export default class ArticleAPI {
         txHook(tx)
       }
     })
+  }
+
+  _getAppState () {
+    return this._getContext().appState
+  }
+
+  _getContext () {
+    return this._contextProvider.getContext()
   }
 
   _moveChild (collectionPath, child, shift, txHook) {
@@ -312,32 +320,39 @@ export default class ArticleAPI {
     }
   }
 
-  // ATTENTION: this only works for meta-data cards, thus the special naming
-  _selectFirstRequiredPropertyOfMetadataCard (node) {
-    // TODO: the current way to describe required properties will not hold
-    // This will most probably be very customer specific
-    // To use this for selection is thus problematic
+  _isFieldRequired (path) {
+    // ATTENTION: this API is experimental
+    let settings = this._getAppState().settings
+    let valueSettings = settings.getSettingsForValue(path)
+    return Boolean(valueSettings['required'])
+  }
+
+  _getFirstRequiredPropertyName (node) {
+    // NOTE: still not sure if this is the right approach
+    // For now, we find the first required text field, otherwise we take the first one
     let schema = node.getSchema()
-    let requiredProps = REQUIRED_PROPERTIES[node.type]
     let propName = null
-    if (requiredProps && requiredProps.size > 0) {
-      // ... also this is very 'dangerous' because the defined required property might not even exist in the schema
-      let _propName = Array.from(requiredProps)[0]
-      // double-checking that the property actually exists
-      if (!schema.getProperty(_propName)) {
-        throw new Error(`property "${_propName}" does not exist for node type "${node.type}"`)
-      } else {
-        propName = _propName
-      }
-    } else {
-      // take the first 'text' property from the schema
-      for (let prop of schema) {
-        if (prop.isText()) {
-          propName = prop.name
+    let firstText = null
+    for (let p of schema) {
+      if (p.isText()) {
+        if (!firstText) {
+          firstText = p
+        }
+        if (this._isFieldRequired([node.id, p.name])) {
+          propName = p.name
           break
         }
       }
     }
+    if (!propName && firstText) {
+      propName = firstText.name
+    }
+    return propName
+  }
+
+  // ATTENTION: this only works for meta-data cards, thus the special naming
+  _selectFirstRequiredPropertyOfMetadataCard (node) {
+    let propName = this._getFirstRequiredPropertyName(node)
     if (propName) {
       let path = [node.id, propName]
       return {

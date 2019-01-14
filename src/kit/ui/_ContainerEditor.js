@@ -74,7 +74,7 @@ export default class ContainerEditorNew extends ModifiedSurface(SubstanceContain
 
   _getNodeProps (model) {
     let props = super._getNodeProps(model)
-    props.placeholder = this.props.placeholder || this.getLabel(this.props.name + '-placeholder')
+    props.placeholder = this.props.placeholder
     return props
   }
 }

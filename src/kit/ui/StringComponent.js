@@ -3,13 +3,10 @@ import TextInput from './TextInput'
 
 export default class StringComponent extends Component {
   render ($$) {
-    let label = this.props.label
     let placeholder = this.props.placeholder
     let model = this.props.model
-    let path = model._path
+    let path = model.getPath()
     let name = path.join('.')
-    // TODO: use label provider for this
-    placeholder = placeholder || 'Enter ' + label
     let el = $$('div').addClass(this.getClassNames())
     el.append(
       $$(TextInput, {

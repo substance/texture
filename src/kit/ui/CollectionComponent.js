@@ -12,7 +12,6 @@ export default class CollectionComponent extends Component {
   render ($$) {
     const props = this.props
     const model = props.model
-    // TODO:
     let renderAsContainer
     if (props.hasOwnProperty('container')) {
       renderAsContainer = Boolean(props.container)
@@ -20,16 +19,11 @@ export default class CollectionComponent extends Component {
       renderAsContainer = model.getSchema().isContainer()
     }
     if (renderAsContainer) {
-      return $$(EditableCollection, {
-        name: props.name,
-        containerPath: props.model.getPath(),
-        disabled: props.disabled
-      }).ref('editor')
+      return $$(EditableCollection, Object.assign({}, props, {
+        containerPath: props.model.getPath()
+      })).ref('editor')
     } else {
-      return $$(ReadOnlyCollection, {
-        model: props.model,
-        disabled: props.disabled
-      }).ref('diplay')
+      return $$(ReadOnlyCollection, props).ref('diplay')
     }
   }
 }

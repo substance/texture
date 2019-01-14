@@ -5,10 +5,12 @@ export default class ChildComponent extends ValueComponent {
   render ($$) {
     const child = this.props.model.getChild()
     let ComponentClass = getComponentForModel(this.context, child)
-    return $$(ComponentClass, {
-      node: child
-    // FIXME: there seems to be an issue with forwarding components:
-    // it seems that in this case not all involved components get disposed correctly
-    }).ref('child')
+    let props = Object.assign({}, this.props)
+    props.node = child
+    delete props.model
+    return $$(ComponentClass, props)
+      // FIXME: there seems to be an issue with forwarding components:
+      // it seems that in this case not all involved components get disposed correctly
+      .ref('child')
   }
 }

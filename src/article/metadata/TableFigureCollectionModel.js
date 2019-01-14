@@ -18,4 +18,8 @@ export default class TableFigureCollectionModel {
     let doc = this._api.getDocument()
     return doc.get('body').findAll('table-figure')
   }
+
+  get length () {
+    return this.getItems().length
+  }
 }

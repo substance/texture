@@ -14,4 +14,8 @@ export default class CollectionModel extends _ContainerModel {
   removeItem (item) {
     this._api._removeChild(this._path, item)
   }
+
+  get isCollection () {
+    return true
+  }
 }

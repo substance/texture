@@ -68,6 +68,10 @@
   cursor: pointer;
 }
 
+.sc-metadata-editor .sc-meta-section-toc-entry.sm-empty {
+  display: none;
+}
+
 .sc-metadata-editor .sc-meta-section-toc-entry:hover {
   color: #111;
 }
@@ -93,6 +97,10 @@
 
 .sc-metadata-editor .se-toc a {
   text-decoration: none;
+}
+
+.sc-metadata-section.sm-empty {
+  display: none;
 }
 
 .sc-metadata-section > .se-heading {

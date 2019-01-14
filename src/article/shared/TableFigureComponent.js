@@ -30,7 +30,7 @@ export default class TableFigureComponent extends FigurePanelComponent {
       $$(SectionLabel, {label: 'title-label'}),
       this._renderValue($$, 'title').ref('title').addClass('se-title'),
       $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'caption', { name: 'caption', container: true }).ref('caption').addClass('se-caption')
+      this._renderValue($$, 'caption', { name: 'caption' }).ref('caption').addClass('se-caption')
     )
 
     if (node.footnotes.length > 0) {

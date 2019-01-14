@@ -33,6 +33,10 @@ export default class ValueModel {
     })
   }
 
+  getSchema () {
+    return this._api.getDocument().getProperty(this._path)
+  }
+
   isEmpty () {
     return isNil(this.getValue())
   }

@@ -11,8 +11,15 @@ import renderNode from './_renderNode'
 export default class CollectionComponent extends Component {
   render ($$) {
     const props = this.props
-    if (props.container) {
-      // FIXME: there is a bug with redirected components (they do not get disposed correctly)
+    const model = props.model
+    // TODO:
+    let renderAsContainer
+    if (props.hasOwnProperty('container')) {
+      renderAsContainer = Boolean(props.container)
+    } else {
+      renderAsContainer = model.getSchema().isContainer()
+    }
+    if (renderAsContainer) {
       return $$(EditableCollection, {
         name: props.name,
         containerPath: props.model.getPath(),

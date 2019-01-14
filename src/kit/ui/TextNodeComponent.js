@@ -9,7 +9,15 @@ export default class TextNodeComponent extends Component {
   didMount () {}
 
   render ($$) {
-    const TextPropertyComponent = this.getComponent('text-property')
+    let parentSurface = this.context.surface
+    let TextPropertyComponent
+    // render the TextNode as Surface if the parent is not a ContainerEditor
+    if (parentSurface && parentSurface.isContainerEditor()) {
+      // Note: when inside a ContainerEditor, then this is not a editor itself
+      TextPropertyComponent = this.getComponent('text-property')
+    } else {
+      TextPropertyComponent = this.getComponent('text-property-editor')
+    }
     const node = this.props.node
     const tagName = this.getTagName()
     const path = node.getPath()

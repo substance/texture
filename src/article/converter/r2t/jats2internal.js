@@ -73,6 +73,7 @@ export default function jats2internal (jats, options) {
 
   // content
   _populateTitle(doc, jats, jatsImporter)
+  _populateSubTitle(doc, jats, jatsImporter)
   _populateAbstract(doc, jats, jatsImporter)
   _populateBody(doc, jats, jatsImporter)
   _populateFootnotes(doc, jats, jatsImporter)
@@ -324,6 +325,14 @@ function _populateTitle (doc, jats, jatsImporter) {
     })
     translation.content = jatsImporter.annotatedText(transTitleEl, translation.getPath())
     documentHelpers.append(doc, ['article', 'translations'], translation.id)
+  }
+}
+
+function _populateSubTitle (doc, jats, jatsImporter) {
+  let article = doc.get('article')
+  let subTitleEl = jats.find('article > front > article-meta > title-group > subtitle')
+  if (subTitleEl) {
+    article.subTitle = jatsImporter.annotatedText(subTitleEl, ['article', 'subTitle'])
   }
 }
 

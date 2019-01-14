@@ -213,9 +213,11 @@ function _populateAwards (doc, jats) {
 
 // TODO: use doc API for manipulation, not a bare object
 function _populateArticleInfo (doc, jats, jatsImporter) {
-  let articleMetaEl = jats.find('article > front > article-meta')
+  let articleEl = jats.find('article')
+  let articleMetaEl = articleEl.find('front > article-meta')
   let metadata = doc.get('metadata')
   Object.assign(metadata, {
+    articleType: articleEl.getAttribute('article-type') || '',
     elocationId: getText(articleMetaEl, 'elocation-id'),
     fpage: getText(articleMetaEl, 'fpage'),
     lpage: getText(articleMetaEl, 'lpage'),

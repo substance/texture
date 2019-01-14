@@ -66,15 +66,22 @@ export default function internal2jats (doc) { // eslint-disable-line
   let jatsExporter = createJatsExporter(jats, doc)
 
   // metadata
-  _populateFront(jats, doc, jatsExporter)
+  _populateMeta(jats, doc, jatsExporter)
   _populateBody(jats, doc, jatsExporter)
   _populateBack(jats, doc, jatsExporter)
 
   return jats
 }
 
-function _populateFront (jats, doc, jatsExporter) {
+function _populateMeta (jats, doc, jatsExporter) {
   // TODO: journal-meta would go here, but is not supported yet
+
+  // @article-type
+  let articleEl = jats.find('article')
+  let metadata = doc.get('metadata')
+  if (metadata.articleType) {
+    articleEl.attr('article-type', metadata.articleType)
+  }
 
   _populateArticleMeta(jats, doc, jatsExporter)
 

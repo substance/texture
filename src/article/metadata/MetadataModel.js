@@ -12,6 +12,7 @@ export default class MetadataModel {
   constructor (api) {
     this._api = api
     this._sections = [
+      { name: 'article-information', model: new ArticleInformationSectionModel(api) },
       { name: 'authors', model: createValueModel(api, ['metadata', 'authors']) },
       { name: 'editors', model: createValueModel(api, ['metadata', 'editors']) },
       { name: 'groups', model: createValueModel(api, ['metadata', 'groups']) },
@@ -21,7 +22,6 @@ export default class MetadataModel {
       { name: 'subjects', model: createValueModel(api, ['metadata', 'subjects']) },
       // HACK: 'article-section' is a fake model
       // TODO: we should allow sections without model and create the section via name
-      { name: 'article-information', model: new ArticleInformationSectionModel(api) },
       { name: 'figures', model: new FigureCollectionModel(api) },
       { name: 'tables', model: new TableFigureCollectionModel(api) },
       { name: 'references', model: createValueModel(api, ['article', 'references']) },

@@ -143,7 +143,6 @@
   <s:not-implemented name="std-organization"/>
   <s:not-implemented name="string-conf"/>
   <s:not-implemented name="styled-content"/>
-  <s:not-implemented name="subtitle"/>
   <s:not-implemented name="sub-article"/>
   <s:not-implemented name="supplement"/>
   <s:not-implemented name="table-count"/>
@@ -1262,6 +1261,9 @@
     <element name="title-group">
       <ref name="title-group-attlist"/>
       <ref name="article-title"/>
+      <optional>
+        <ref name="subtitle"/>
+      </optional>
       <zeroOrMore>
         <ref name="trans-title-group"/>
       </zeroOrMore>

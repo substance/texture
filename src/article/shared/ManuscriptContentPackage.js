@@ -87,6 +87,8 @@ export default {
     config.addLabel('references-label', 'References')
     config.addLabel('title-label', 'Title')
     config.addLabel('title-placeholder', 'Enter title')
+    config.addLabel('subtitle-label', 'Subtitle')
+    config.addLabel('subtitle-placeholder', 'Enter subtitle')
 
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })

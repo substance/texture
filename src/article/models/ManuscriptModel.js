@@ -6,6 +6,7 @@ import { createValueModel } from '../../kit'
 export default class ManuscriptModel {
   constructor (api, doc) {
     this._title = createValueModel(api, ['article', 'title'])
+    this._subTitle = createValueModel(api, ['article', 'subTitle'])
     this._abstract = createValueModel(api, ['article', 'abstract'])
     this._authors = createValueModel(api, ['metadata', 'authors'])
     this._body = createValueModel(api, ['body', 'content'])
@@ -47,5 +48,9 @@ export default class ManuscriptModel {
 
   getTitle () {
     return this._title
+  }
+
+  getSubTitle () {
+    return this._subTitle
   }
 }

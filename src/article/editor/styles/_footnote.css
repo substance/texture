@@ -13,6 +13,6 @@
   cursor: default;
 }
 
-.sc-footnote .se-container .sc-fn {
+.sc-footnote > .se-container > .sc-container-editor {
   width: 100%;
 }

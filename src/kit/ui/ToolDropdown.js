@@ -36,6 +36,8 @@ export default class ToolDropdown extends ToolGroup {
 
     if (!hasEnabledTools) {
       el.addClass('sm-disabled')
+    } else if (showChoices) {
+      el.addClass('sm-open')
     }
 
     if (!hideDisabled || hasEnabledTools) {

@@ -128,15 +128,12 @@ export default class EditorPanel extends Component {
   }
 
   _getContentPanel () {
+    /* istanbul ignore next */
     throw new Error('This method is abstract')
   }
 
   _getDocument () {
     return this.props.articleSession.getDocument()
-  }
-
-  _getEditorSession () {
-    return this.editorSession
   }
 
   _getTheme () {

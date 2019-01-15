@@ -22,9 +22,10 @@ import './Paste.test'
 import './Persistence.test'
 import './PreformatConverter.test'
 import './Reference.test'
+import './Settings.test'
+import './SupplementaryFile.test'
 import './Table.test'
 import './TableConverter.test'
-import './SupplementaryFile.test'
 
 // TODO: there are some tests in ./converter/. Either fix them and include here
 // or remove them

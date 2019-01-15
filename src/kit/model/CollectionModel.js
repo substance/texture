@@ -11,9 +11,12 @@ export default class CollectionModel extends _ContainerModel {
     this._api._appendChild(this._path, item)
   }
 
-  removeItem (item) {
-    this._api._removeChild(this._path, item)
-  }
+  // TODO: this is not used ATM
+  // we should either remove both addItem() and removeItem()
+  // or use it consistently
+  // removeItem (item) {
+  //   this._api._removeChild(this._path, item)
+  // }
 
   get isCollection () {
     return true

@@ -5,7 +5,6 @@ import AuthorsListComponent from './AuthorsListComponent'
 import BreakComponent from './BreakComponent'
 import BlockFormulaComponent from './BlockFormulaComponent'
 import BlockQuoteComponent from './BlockQuoteComponent'
-import BodyComponent from './BodyComponent'
 import CustomMetadataFieldComponent from './CustomMetadataFieldComponent'
 import ExternalLinkComponent from './ExternalLinkComponent'
 import FigureComponent from './FigureComponent'
@@ -40,7 +39,6 @@ export default {
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
-    config.addComponent('body', BodyComponent)
     config.addComponent('custom-metadata-field', CustomMetadataFieldComponent)
     config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)

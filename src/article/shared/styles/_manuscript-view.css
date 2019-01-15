@@ -35,10 +35,13 @@
   position: relative;
 }
 
-.sc-manuscript-view .sc-body-content > .sc-container-editor {
+/* This seems to be obsolete
+TODO: remove this if so
+.sc-manuscript-view .sc-container-editor.sm-body {
   padding: 0;
   margin: 0 auto;
 }
+*/
 
 .sc-manuscript-view .se-context-pane > .se-context-pane-content {
   position: absolute;

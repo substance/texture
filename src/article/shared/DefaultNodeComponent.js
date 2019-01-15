@@ -150,7 +150,8 @@ export default class DefaultNodeComponent extends Component {
   _getPropertyEditorProps (name, value) {
     let props = {
       // TODO: rename to value
-      model: value
+      model: value,
+      placeholder: this._getPlaceHolder(name)
     }
     if (this._showLabelForProperty(name)) {
       props.label = this.getLabel(name)
@@ -161,6 +162,25 @@ export default class DefaultNodeComponent extends Component {
       props.container = true
     }
     return props
+  }
+
+  _getPlaceHolder (name) {
+    // ATTENTION: usually we avoid using automatically derived labels
+    // but this class is all about a automated rendereding
+    let placeHolder
+    // first try to get the canonical label
+    const canonicalLabel = `${name}-placeholder`
+    placeHolder = this.getLabel(canonicalLabel)
+    // next try to get a label using a template 'Enter ${something}'
+    if (placeHolder === canonicalLabel) {
+      let nameLabel = this.getLabel(name)
+      if (nameLabel) {
+        placeHolder = this.getLabel('enter-something', { something: nameLabel })
+      } else {
+        console.warn(`Please define a label for key "${name}"`)
+      }
+    }
+    return placeHolder
   }
 
   _getRequiredOrNonEmptyPropertyNames (properties) {

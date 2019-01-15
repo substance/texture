@@ -57,6 +57,7 @@ export default class EditorPanel extends Component {
     this.editorSession.initialize()
     this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
+    this.appState.addObserver(['settings'], this.rerender, this, { stage: 'render' })
 
     // HACK: ATM there is no better way than to listen to an archive
     // event and forcing the CommandManager to update commandStates

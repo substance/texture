@@ -32,8 +32,9 @@ class ReadOnlyCollection extends ValueComponent {
   // TODO: this is less efficient than ContainerEditor as it will always render the whole collection
   render ($$) {
     let props = this.props
-    let el = $$('div').addClass('sc-collection')
-    let items = props.model.getItems()
+    let model = props.model
+    let el = $$('div').addClass('sc-collection').attr('data-id', model.getPath().join('.'))
+    let items = model.getItems()
     el.append(
       items.map(item => renderNode($$, this, item, { disabled: props.disabled }).ref(item.id))
     )

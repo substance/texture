@@ -118,14 +118,14 @@ const CheckRequiredFields = {
     const api = validator._getApi()
     let data = node.toJSON()
     Object.keys(data).forEach(name => {
-      if (api._isFieldRequired([node.id, name])) {
+      if (api._isFieldRequired([node.type, name])) {
         this.onUpdate(validator, node, [node.id, name], data[name])
       }
     })
   },
   onUpdate (validator, node, path, value) {
     const api = validator._getApi()
-    if (api._isFieldRequired(path)) {
+    if (api._isFieldRequired([node.type].concat(path.slice(1)))) {
       validator.clearIssues(path, FIELD_IS_REQUIRED.type)
       // TODO: we probably want to use smarter validators than this
       if (isNil(value) || value === '') {

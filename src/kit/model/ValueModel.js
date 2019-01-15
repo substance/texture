@@ -19,6 +19,16 @@ export default class ValueModel {
     return this._path
   }
 
+  // EXPERIMENTAL: a third kind of path, which is [<type>, <prop-name>]
+  _getPropertySelector () {
+    if (!this._selector) {
+      let doc = this._api.getDocument()
+      let node = doc.get(this._path[0])
+      this._selector = [node.type].concat(this._path.slice(1))
+    }
+    return this._selector
+  }
+
   hasTargetType (name) {
     return false
   }

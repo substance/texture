@@ -346,7 +346,7 @@ export default class ArticleAPI {
         if (!firstText) {
           firstText = p
         }
-        if (this._isFieldRequired([node.id, p.name])) {
+        if (this._isFieldRequired([node.type, p.name])) {
           propName = p.name
           break
         }

@@ -28,13 +28,18 @@ export default class ExperimentalEditorSettings {
   }
 
   load (settings) {
+    this._settings.clear()
+    this.extend(settings)
+  }
+
+  extend (settings) {
     let selectors = Object.keys(settings)
     for (let selector of selectors) {
-      this._loadValueSettings(selector, settings[selector])
+      this._extendValueSettings(selector, settings[selector])
     }
   }
 
-  _loadValueSettings (selector, spec) {
+  _extendValueSettings (selector, spec) {
     if (selector.indexOf('<') !== -1) throw new Error('hierarchical selectors not supported yet')
     let path = selector.trim().split('.')
     let valueSettings = this._settings.get(path)

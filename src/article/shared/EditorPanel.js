@@ -115,7 +115,7 @@ export default class EditorPanel extends Component {
     settings.load(DefaultSettings)
     // Article type specific settings
     if (metadata.articleType === 'figure-package') {
-      settings.load(FigurePackageSettings)
+      settings.extend(FigurePackageSettings)
     }
     return settings
   }

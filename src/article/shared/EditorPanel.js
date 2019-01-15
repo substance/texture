@@ -57,7 +57,7 @@ export default class EditorPanel extends Component {
     this.editorSession.initialize()
     this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
-    this.appState.addObserver(['settings'], this.rerender, this, { stage: 'render' })
+    this.appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
 
     // HACK: ATM there is no better way than to listen to an archive
     // event and forcing the CommandManager to update commandStates
@@ -90,8 +90,6 @@ export default class EditorPanel extends Component {
     editorSession.dispose()
     appState.removeObserver(this)
     this.props.archive.off(this)
-    // TODO: do we really need to clear here?
-    this.empty()
   }
 
   getComponentRegistry () {
@@ -165,6 +163,14 @@ export default class EditorPanel extends Component {
       e.preventDefault()
     }
     return handled
+  }
+
+  _onSettingsUpdate () {
+    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
+    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
+    // ATTENTION: removing the following line leads to the BUG
+    this.empty()
+    this.rerender()
   }
 
   _startWorkflow (workflowId) {

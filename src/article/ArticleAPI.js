@@ -126,6 +126,14 @@ export default class ArticleAPI {
     return this._contextProvider.getContext()
   }
 
+  // TODO: we need a better way to update settings
+  _loadSettings (settings) {
+    let appState = this._getContext().appState
+    appState.settings.load(settings)
+    appState._setDirty('settings')
+    appState.propagateUpdates()
+  }
+
   _moveChild (collectionPath, child, shift, txHook) {
     this.editorSession.transaction(tx => {
       let ids = tx.get(collectionPath)

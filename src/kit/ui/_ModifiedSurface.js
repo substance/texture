@@ -20,9 +20,8 @@ export default function ModifiedSurface (Surface) {
 
     dispose () {
       const surfaceManager = this.getSurfaceManager()
-      if (surfaceManager && this.isEditable()) {
-        surfaceManager.unregisterSurface(this)
-      }
+      // ATTENTION: no matter if registered or not, we always try to unregister
+      surfaceManager.unregisterSurface(this)
       const globalEventHandler = this.getGlobalEventHandler()
       if (globalEventHandler) {
         globalEventHandler.removeEventListener('keydown', this._muteNativeHandlers)

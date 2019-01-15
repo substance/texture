@@ -248,13 +248,21 @@ function _exportSubjects (jats, doc) {
 
 function _exportTitleGroup (jats, doc, jatsExporter) {
   let $$ = jats.$$
-  // ATTENTION: ATM only one, *the* title is supported
-  // Potentially there are sub-titles, and JATS even supports more titles beyond this (e.g. for special purposes)
+  // ATTENTION: ATM only title and subtitle is supported
+  // JATS supports more titles beyond this (e.g. for special purposes)
   const TITLE_PATH = ['article', 'title']
+  const SUBTITLE_PATH = ['article', 'subTitle']
   let titleGroupEl = $$('title-group')
   let articleTitle = $$('article-title')
   _exportAnnotatedText(jatsExporter, TITLE_PATH, articleTitle)
   titleGroupEl.append(articleTitle)
+
+  // Export subtitle if it's not empty
+  if (doc.get(SUBTITLE_PATH)) {
+    let articleSubTitle = $$('subtitle')
+    _exportAnnotatedText(jatsExporter, SUBTITLE_PATH, articleSubTitle)
+    titleGroupEl.append(articleSubTitle)
+  }
 
   // translations
   doc.resolve(['article', 'translations']).filter(translation => {

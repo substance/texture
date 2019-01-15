@@ -11,7 +11,13 @@ export default class ManuscriptComponent extends Component {
 
     let el = $$('div').addClass('sc-manuscript').append(
       $$(SectionLabel, { label: 'title-label' }).addClass('sm-title'),
-      renderModel($$, this, manuscript.getTitle()).addClass('sm-title').ref('title')
+      renderModel($$, this, manuscript.getTitle(), {
+        placeholder: this.getLabel('title-placeholder')
+      }).addClass('sm-title').ref('title'),
+      $$(SectionLabel, { label: 'subtitle-label' }).addClass('sm-subtitle'),
+      renderModel($$, this, manuscript.getSubTitle(), {
+        placeholder: this.getLabel('subtitle-placeholder')
+      }).addClass('sm-subtitle').ref('subtitle')
     )
 
     // TODO: we need to think about a way to configure what should be displayed

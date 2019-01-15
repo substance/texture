@@ -6,6 +6,7 @@ Article.schema = {
   type: 'article',
   metadata: CHILD('metadata'),
   title: TEXT(RICH_TEXT_ANNOS),
+  subTitle: TEXT(RICH_TEXT_ANNOS),
   abstract: CHILD('abstract'),
   body: CHILD('body'),
   references: CHILDREN('reference'),

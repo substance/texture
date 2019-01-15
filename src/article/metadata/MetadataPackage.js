@@ -162,6 +162,7 @@ export default {
     config.addLabel('enter-custom-field-name', 'Enter name')
     config.addLabel('enter-custom-field-value', 'Enter value')
     config.addLabel('article-metadata', 'Article Metadata')
+    config.addLabel('subtitle', 'Subtitle')
     // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
 

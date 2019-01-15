@@ -38,3 +38,13 @@ test('ArticlePanel: using switch view', t => {
   t.equal(metadataEditor.context.appState.viewName, 'metadata', 'appState.viewName should be correct')
   t.end()
 })
+
+// this should trigger disposal code
+test('ArticlePanel: open and close every view', t => {
+  let { app } = setupTestApp(t)
+  openManuscriptEditor(app)
+  openMetadataEditor(app)
+  openManuscriptEditor(app)
+  t.pass('ArticlePanel should be able to open all views without errors.')
+  t.end()
+})

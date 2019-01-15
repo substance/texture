@@ -1,4 +1,4 @@
-import { ContainerMixin, DocumentNode } from 'substance'
+import { ContainerMixin, DocumentNode, CONTAINER } from 'substance'
 
 export default class Body extends ContainerMixin(DocumentNode) {
   getContent () {
@@ -10,11 +10,8 @@ export default class Body extends ContainerMixin(DocumentNode) {
 }
 Body.schema = {
   type: 'body',
-  content: {
-    type: ['array', 'id'],
-    owned: true,
-    default: [],
-    targetTypes: ['block-formula', 'block-quote', 'figure', 'heading', 'list', 'paragraph', 'preformat', 'supplementary-file', 'table-figure'],
+  content: CONTAINER({
+    nodeTypes: ['block-formula', 'block-quote', 'figure', 'heading', 'list', 'paragraph', 'preformat', 'supplementary-file', 'table-figure'],
     defaultTextType: 'paragraph'
-  }
+  })
 }

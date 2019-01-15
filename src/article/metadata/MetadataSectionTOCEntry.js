@@ -14,9 +14,9 @@ export default class MetadataSectionTOCEntry extends ModelComponent {
       const items = model.getItems()
       if (items.length > 0) {
         label = label + ' (' + items.length + ')'
-        el.setStyle('display', 'block').append(label)
+        el.append(label)
       } else {
-        el.setStyle('display', 'none')
+        el.addClass('sm-empty')
       }
     } else {
       el.append(label)

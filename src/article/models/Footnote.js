@@ -1,4 +1,4 @@
-import { DocumentNode, CHILDREN, PLAIN_TEXT } from 'substance'
+import { DocumentNode, CONTAINER, PLAIN_TEXT } from 'substance'
 
 export default class Footnote extends DocumentNode {
   static getTemplate () {
@@ -13,5 +13,5 @@ export default class Footnote extends DocumentNode {
 Footnote.schema = {
   type: 'footnote',
   label: PLAIN_TEXT,
-  content: CHILDREN('paragraph')
+  content: CONTAINER('paragraph')
 }

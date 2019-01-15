@@ -1,6 +1,12 @@
+/* eslint-disable no-template-curly-in-string */
 export default {
   name: 'entity-labels',
   configure (config) {
+    // EXPERIMENTAL: I want to move to more natural label specifications
+    config.addLabel('enter-something', 'Enter ${something}')
+
+    // TODO: at some point I want to refactor the configuration so that we have only one place for labels
+
     // general
     config.addLabel('edit-references', 'Edit References')
     config.addLabel('edit-affiliations', 'Edit Affiliations')

@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, LOREM_IPSUM, getDocument } from './shared/integrationTestHelpers'
+import { setCursor, LOREM_IPSUM, getDocument, openManuscriptEditor } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: instead of the kitchen-sink we should use a fixture that has a defined content
@@ -99,9 +99,7 @@ test('FindAndReplace: replaceAll (replace pattern)', t => {
 })
 
 function _openFindAndReplaceDialog (app, replace) {
-  let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'manuscript')
-  let editor = articlePanel.find('.sc-manuscript-editor')
+  let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
   // open findAndReplace dialog
   let fnrManager = editor.context.findAndReplaceManager

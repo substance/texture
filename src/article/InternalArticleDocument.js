@@ -77,7 +77,8 @@ export default class InternalArticleDocument extends Document {
       },
       abstract: {
         type: 'abstract',
-        id: 'abstract'
+        id: 'abstract',
+        content: [{ type: 'paragraph' }]
       },
       body: {
         type: 'body',

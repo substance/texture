@@ -39,9 +39,9 @@ export default class FigurePanelComponent extends NodeComponent {
       // no label for the graphic
       this._renderContent($$),
       $$(SectionLabel, {label: 'title-label'}),
-      this._renderValue($$, 'title').ref('title').addClass('se-title'),
+      this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).ref('title').addClass('se-title'),
       $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'caption', { container: true }).ref('caption').addClass('se-caption')
+      this._renderValue($$, 'caption', { placeholder: this.getLabel('caption-placeholder') }).ref('caption').addClass('se-caption')
     )
 
     if (node.metadata.length > 0) {

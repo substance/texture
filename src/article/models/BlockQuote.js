@@ -1,4 +1,4 @@
-import { DocumentNode, CHILDREN } from 'substance'
+import { DocumentNode, CONTAINER } from 'substance'
 
 export default class BlockQuote extends DocumentNode {
   // used to create an empty node
@@ -13,6 +13,6 @@ export default class BlockQuote extends DocumentNode {
 }
 BlockQuote.schema = {
   type: 'block-quote',
-  content: CHILDREN('paragraph'),
+  content: CONTAINER('paragraph'),
   attrib: 'text'
 }

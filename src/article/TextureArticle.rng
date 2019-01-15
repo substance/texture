@@ -969,6 +969,10 @@
       <ref name="phrase.class"/>
       <ref name="simple-link.class"/>
       <ref name="subsup.class"/>
+      <!-- HACK: allowing specifc display elements as they are requested as content in captions for instance which only allow (p*) -->
+      <!-- TODO: in Texture such elements shall be pulled up one level, treated as siblings -->
+      <!-- on the long run we want to introduce 'paragraph' continuation -->
+      <ref name="supplementary-material"/>
     </choice>
   </define>
 

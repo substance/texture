@@ -17,7 +17,7 @@ export default class FootnoteComponent extends NodeComponent {
     el.append(
       $$('div').addClass('se-container').append(
         $$('div').addClass('se-label').append(label),
-        this._renderValue($$, 'content', { container: true }).ref('editor')
+        this._renderValue($$, 'content', { placeholder: this.getLabel('footnote-placeholder') }).ref('editor')
       )
     )
     return el

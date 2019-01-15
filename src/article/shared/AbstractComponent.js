@@ -4,7 +4,9 @@ export default class AbstractComponent extends NodeComponent {
   render ($$) {
     let el = $$('div').addClass('sc-abstract')
     el.append(
-      this._renderValue($$, 'content', { container: true })
+      this._renderValue($$, 'content', {
+        placeholder: this.getLabel('abstract-placeholder')
+      })
     )
     return el
   }

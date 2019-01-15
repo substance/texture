@@ -2,6 +2,9 @@ import { Component, keys } from 'substance'
 import { createEditorContext } from '../../kit'
 import ArticleEditorSession from '../ArticleEditorSession'
 import ArticleAPI from '../ArticleAPI'
+import DefaultSettings from '../settings/DefaultSettings'
+import EditorSettings from '../settings/ExperimentalEditorSettings'
+import FigurePackageSettings from '../settings/FigurePackageSettings'
 
 // Base-class for Manuscript- and MetadataEditor to reduced code-redundancy
 export default class EditorPanel extends Component {
@@ -28,12 +31,15 @@ export default class EditorPanel extends Component {
     // TODO: I want to refactor how EditorSessions are created
     // particularly I want to work on the multi-view/user sessions
     const editorSession = new ArticleEditorSession(
-      articleSession, config, this, {
+      articleSession, config, this,
+      // initial editor state
+      {
         workflowId: null,
-        viewName: this.props.viewName
+        viewName: this.props.viewName,
+        settings: this._createSettings(articleSession.getDocument())
       }
     )
-    const api = new ArticleAPI(editorSession, archive, config, articleSession)
+    const api = new ArticleAPI(editorSession, archive, config, articleSession, { getContext: () => this.context })
 
     const context = Object.assign(createEditorContext(config, editorSession), {
       api,
@@ -51,6 +57,7 @@ export default class EditorPanel extends Component {
     this.editorSession.initialize()
     this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     this.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
+    this.appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
 
     // HACK: ATM there is no better way than to listen to an archive
     // event and forcing the CommandManager to update commandStates
@@ -83,38 +90,10 @@ export default class EditorPanel extends Component {
     editorSession.dispose()
     appState.removeObserver(this)
     this.props.archive.off(this)
-    // TODO: do we really need to clear here?
-    this.empty()
   }
 
   getComponentRegistry () {
     return this.props.config.getComponentRegistry()
-  }
-
-  _updateViewName () {
-    let appState = this.context.appState
-    this.send('updateViewName', appState.viewName)
-  }
-
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
-  }
-
-  _toggleOverlay (overlayId) {
-    const appState = this.context.appState
-    if (appState.overlayId === overlayId) {
-      appState.overlayId = null
-    } else {
-      appState.overlayId = overlayId
-    }
-    appState.propagateUpdates()
-  }
-
-  _startWorkflow (workflowId) {
-    const appState = this.context.appState
-    appState.workflowId = workflowId
-    appState.overlayId = workflowId
-    appState.propagateUpdates()
   }
 
   _closeModal () {
@@ -124,20 +103,32 @@ export default class EditorPanel extends Component {
     appState.propagateUpdates()
   }
 
-  _scrollElementIntoView (el, force) {
-    this._getContentPanel().scrollElementIntoView(el, !force)
+  // EXPERIMENTAL:
+  // this is a first prototype for settings used to control editability and required fields
+  // On the long run we need to understand better what different means of configuration we want to offer
+  _createSettings (doc) {
+    let settings = new EditorSettings()
+    let metadata = doc.get('metadata')
+    // Default settings
+    settings.load(DefaultSettings)
+    // Article type specific settings
+    if (metadata.articleType === 'figure-package') {
+      settings.extend(FigurePackageSettings)
+    }
+    return settings
   }
 
-  _getContentPanel () {
-    throw new Error('This method is abstract')
+  _executeCommand (name, params) {
+    this.editorSession.executeCommand(name, params)
   }
 
   _getConfigurator () {
     return this.props.config
   }
 
-  _getEditorSession () {
-    return this.editorSession
+  _getContentPanel () {
+    /* istanbul ignore next */
+    throw new Error('This method is abstract')
   }
 
   _getDocument () {
@@ -172,5 +163,39 @@ export default class EditorPanel extends Component {
       e.preventDefault()
     }
     return handled
+  }
+
+  _onSettingsUpdate () {
+    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
+    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
+    // ATTENTION: removing the following line leads to the BUG
+    this.empty()
+    this.rerender()
+  }
+
+  _startWorkflow (workflowId) {
+    const appState = this.context.appState
+    appState.workflowId = workflowId
+    appState.overlayId = workflowId
+    appState.propagateUpdates()
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this.context.appState
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
+  }
+
+  _scrollElementIntoView (el, force) {
+    this._getContentPanel().scrollElementIntoView(el, !force)
+  }
+
+  _updateViewName () {
+    let appState = this.context.appState
+    this.send('updateViewName', appState.viewName)
   }
 }

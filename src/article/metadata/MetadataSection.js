@@ -18,6 +18,9 @@ export default class MetadataSection extends ModelComponent {
       el.append(
         $$(MetadataCollectionComponent, { model })
       )
+      if (model.length === 0) {
+        el.addClass('sm-empty')
+      }
     } else {
       let CustomEditor = this.getComponent(model.id)
       let label = this.getLabel(name)

@@ -5,7 +5,6 @@ import AuthorsListComponent from './AuthorsListComponent'
 import BreakComponent from './BreakComponent'
 import BlockFormulaComponent from './BlockFormulaComponent'
 import BlockQuoteComponent from './BlockQuoteComponent'
-import BodyComponent from './BodyComponent'
 import CustomMetadataFieldComponent from './CustomMetadataFieldComponent'
 import ExternalLinkComponent from './ExternalLinkComponent'
 import FigureComponent from './FigureComponent'
@@ -40,7 +39,6 @@ export default {
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
-    config.addComponent('body', BodyComponent)
     config.addComponent('custom-metadata-field', CustomMetadataFieldComponent)
     config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)
@@ -76,17 +74,19 @@ export default {
     config.addComponent('model-preview', ModelPreviewComponent)
 
     config.addLabel('abstract-label', 'Abstract')
-    config.addLabel('abstract-placeholder', 'Please provide a short description of your article.')
+    config.addLabel('abstract-placeholder', 'Enter abstract')
     config.addLabel('authors-label', 'Authors')
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here.')
     config.addLabel('caption-label', 'Caption')
+    config.addLabel('caption-placeholder', 'Enter caption')
     config.addLabel('metadata-label', 'Metadata')
+    config.addLabel('footnote-placeholder', 'Enter footnote')
     config.addLabel('footnotes-label', 'Footnotes')
     config.addLabel('label-label', 'Label')
     config.addLabel('references-label', 'References')
     config.addLabel('title-label', 'Title')
-    config.addLabel('title-placeholder', 'Enter a title for your article')
+    config.addLabel('title-placeholder', 'Enter title')
 
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })

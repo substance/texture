@@ -1073,7 +1073,7 @@ id, xml:base, content-type, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|price)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|supplementary-material|price)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1238,7 +1238,7 @@ id, xml:base, content-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|supplementary-material)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1722,7 +1722,7 @@ label?,caption?
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-body, sec
+body, license-p, p, sec
 </pre>
 
 ### `<surname>`

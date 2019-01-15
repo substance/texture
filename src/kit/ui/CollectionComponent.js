@@ -11,18 +11,19 @@ import renderNode from './_renderNode'
 export default class CollectionComponent extends Component {
   render ($$) {
     const props = this.props
-    if (props.container) {
-      // FIXME: there is a bug with redirected components (they do not get disposed correctly)
-      return $$(EditableCollection, {
-        name: props.name,
-        containerPath: props.model.getPath(),
-        disabled: props.disabled
-      }).ref('editor')
+    const model = props.model
+    let renderAsContainer
+    if (props.hasOwnProperty('container')) {
+      renderAsContainer = Boolean(props.container)
     } else {
-      return $$(ReadOnlyCollection, {
-        model: props.model,
-        disabled: props.disabled
-      }).ref('diplay')
+      renderAsContainer = model.getSchema().isContainer()
+    }
+    if (renderAsContainer) {
+      return $$(EditableCollection, Object.assign({}, props, {
+        containerPath: props.model.getPath()
+      })).ref('editor')
+    } else {
+      return $$(ReadOnlyCollection, props).ref('diplay')
     }
   }
 }
@@ -31,8 +32,9 @@ class ReadOnlyCollection extends ValueComponent {
   // TODO: this is less efficient than ContainerEditor as it will always render the whole collection
   render ($$) {
     let props = this.props
-    let el = $$('div').addClass('sc-collection')
-    let items = props.model.getItems()
+    let model = props.model
+    let el = $$('div').addClass('sc-collection').attr('data-id', model.getPath().join('.'))
+    let items = model.getItems()
     el.append(
       items.map(item => renderNode($$, this, item, { disabled: props.disabled }).ref(item.id))
     )

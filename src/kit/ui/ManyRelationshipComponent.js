@@ -4,15 +4,13 @@ import MultiSelectInput from './MultiSelectInput'
 
 export default class ManyRelationshipComponent extends ValueComponent {
   didMount () {
-    // TODO: in case of relationships it is unfortunately not that simple to detect
-    // a change that is relevant to rerendering
-    // 1. a target id has been added / set
-    // 2. one of the target ids has changed
-    // 3. one of the target ids has been deleted
-    // 4. a new available target has been added
-    // the last is pretty much impossible to detect in a general way
-    // but we can live with that as long this is queried everytime the
-    // component is rendered
+    // ATTENTION: relationships are unfortunately tricky regarding updates
+    // obvious things are covered by the used helper, e.g., if the model is changed
+    // or a one of the used targets has been removed
+    // Other things are pretty much impossible to detect in a general way
+    // e.g. the creation of a new target, or the deletion of an existing one
+    // In this case the selection will be out of sync, and hopefully the implementation does react correctly
+    // TODO: make sure that this is the case
     this.context.appState.addObserver(['document'], this._rerenderOnModelChangeIfNecessary, this, { stage: 'render' })
   }
 

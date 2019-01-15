@@ -28,7 +28,6 @@ export default class ManuscriptComponent extends Component {
     el.append(
       $$(SectionLabel, {label: 'abstract-label'}).addClass('sm-abstract'),
       renderModel($$, this, manuscript.getAbstract(), {
-        container: true,
         name: 'abstract',
         placeholder: this.getLabel('abstract-placeholder')
       }).addClass('sm-abstract').ref('abstract')
@@ -37,7 +36,6 @@ export default class ManuscriptComponent extends Component {
     el.append(
       $$(SectionLabel, {label: 'body-label'}).addClass('sm-body'),
       renderModel($$, this, manuscript.getBody(), {
-        container: true,
         name: 'body',
         placeholder: this.getLabel('body-placeholder')
       }).addClass('sm-body').ref('body')

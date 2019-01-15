@@ -40,47 +40,23 @@ export default class DefaultNodeComponent extends Component {
     }
     el.append(this._renderHeader($$))
 
-    // TODO: this needs to be redesigned:
-    // 1. it should be configurable which properties are optional
-    // 2. the determination of hidden vs shown props should be extracted into a helper method
-    let hasHiddenProps = false
     const properties = this._getProperties()
-    const propsLength = properties.size
-    const hiddenPropsLength = Array.from(properties.keys()).reduce((total, key) => {
-      let property = properties.get(key)
-      // FIXME: hide properties that are not required
-      if (property.isEmpty()) {
-        total++
-      }
-      return total
-    }, 0)
-    const exposedPropsLength = propsLength - hiddenPropsLength
-    let fieldsLeft = CARD_MINIMUM_FIELDS - exposedPropsLength
-
-    for (let [name, value] of properties) {
-      // FIXME: hide properties that are not required
-      let hidden = value.isEmpty()
-      if (hidden && fieldsLeft > 0) {
-        hidden = false
-        fieldsLeft--
-      }
-      if (hidden) hasHiddenProps = true
-      if (fullMode || !hidden) {
-        const PropertyEditor = this._getPropertyEditorClass(name, value)
-        const editorProps = this._getPropertyEditorProps(name, value)
-        // skip this property if the editor implementation produces nil
-        if (!PropertyEditor) continue
-        const issues = nodeIssues ? nodeIssues.get(name) : []
-        el.append(
-          $$(FormRowComponent, {
-            label: editorProps.label,
-            issues
-          }).addClass(`sm-${name}`).append(
-            $$(PropertyEditor, editorProps).ref(name)
-          )
-        )
-      }
+    const propNames = Array.from(properties.keys())
+    // all required and non-empty properties are always displayed
+    let visiblePropNames = fullMode ? propNames : this._getRequiredOrNonEmptyPropertyNames(properties)
+    // show only the first k items
+    if (visiblePropNames.length === 0) {
+      visiblePropNames = propNames.slice(0, CARD_MINIMUM_FIELDS)
     }
+    let hasHiddenProps = visiblePropNames.length < propNames.length
+
+    for (let name of visiblePropNames) {
+      let value = properties.get(name)
+      el.append(
+        this._renderProperty($$, name, value, nodeIssues)
+      )
+    }
+
     const controlEl = $$('div').addClass('se-control')
       .on('click', this._toggleMode)
 
@@ -105,6 +81,21 @@ export default class DefaultNodeComponent extends Component {
     el.append(footer)
 
     return el
+  }
+
+  _renderProperty ($$, name, value, nodeIssues) {
+    const PropertyEditor = this._getPropertyEditorClass(name, value)
+    const editorProps = this._getPropertyEditorProps(name, value)
+    // skip this property if the editor implementation produces nil
+    if (PropertyEditor) {
+      const issues = nodeIssues ? nodeIssues.get(name) : []
+      return $$(FormRowComponent, {
+        label: editorProps.label,
+        issues
+      }).addClass(`sm-${name}`).append(
+        $$(PropertyEditor, editorProps).ref(name)
+      )
+    }
   }
 
   _getNode () {
@@ -159,7 +150,8 @@ export default class DefaultNodeComponent extends Component {
   _getPropertyEditorProps (name, value) {
     let props = {
       // TODO: rename to value
-      model: value
+      model: value,
+      placeholder: this._getPlaceHolder(name)
     }
     if (this._showLabelForProperty(name)) {
       props.label = this.getLabel(name)
@@ -170,6 +162,36 @@ export default class DefaultNodeComponent extends Component {
       props.container = true
     }
     return props
+  }
+
+  _getPlaceHolder (name) {
+    // ATTENTION: usually we avoid using automatically derived labels
+    // but this class is all about a automated rendereding
+    let placeHolder
+    // first try to get the canonical label
+    const canonicalLabel = `${name}-placeholder`
+    placeHolder = this.getLabel(canonicalLabel)
+    // next try to get a label using a template 'Enter ${something}'
+    if (placeHolder === canonicalLabel) {
+      let nameLabel = this.getLabel(name)
+      if (nameLabel) {
+        placeHolder = this.getLabel('enter-something', { something: nameLabel })
+      } else {
+        console.warn(`Please define a label for key "${name}"`)
+      }
+    }
+    return placeHolder
+  }
+
+  _getRequiredOrNonEmptyPropertyNames (properties) {
+    const api = this.context.api
+    let result = new Set()
+    for (let [name, value] of properties) {
+      if (!value.isEmpty() || api._isFieldRequired(value._getPropertySelector())) {
+        result.add(name)
+      }
+    }
+    return Array.from(result)
   }
 
   _toggleMode () {

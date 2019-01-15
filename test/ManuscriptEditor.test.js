@@ -5,8 +5,9 @@ import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 // TODO: add a test demonstrating that the TOC is working as expected
 // TODO: test editing of block-quote
-// TODO: test editing of inline-formula
 // TODO: test editing of block-formula
+
+// TODO: test editing of inline-formula
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
 // TODO: test IncreaseHeadingLevel

@@ -12,6 +12,12 @@ export default class ModelComponent extends Component {
     removeModelObserver(this)
   }
 
+  // EXPERIMENTAL:
+  // trying to avoid unnecessary rerenderings
+  shouldRerender (newProps) {
+    return newProps.model !== this.props.model
+  }
+
   getComponentForModel (model) {
     return getComponentForModel(this.context, model)
   }

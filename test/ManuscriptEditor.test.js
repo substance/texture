@@ -57,6 +57,17 @@ test('ManuscriptEditor: add block formula', t => {
   t.end()
 })
 
+test('ManuscriptEditor: add block quote', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let editor = openManuscriptEditor(app)
+  setCursor(editor, 'p-2.content', 5)
+  let insertBlockQuoteTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-quote')
+  t.ok(insertBlockQuoteTool.click(), 'clicking on the insert block quote button should not throw error')
+  let blockQuote = editor.find('*[data-id=p-2] + .sm-block-quote')
+  t.notNil(blockQuote, 'there should be a block quote now')
+  t.end()
+})
+
 test('ManuscriptEditor: TOC should be updated on change', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)

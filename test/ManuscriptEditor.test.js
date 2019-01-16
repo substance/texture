@@ -46,7 +46,7 @@ test('ManuscriptEditor: add inline formula', t => {
   t.end()
 })
 
-const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" content-type="math/tex"><tex-math><![CDATA[sqrt(13)]]></tex-math></inline-formula> def</p>`
+const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" content-type="math/tex"><tex-math><![CDATA[\\sqrt(13)]]></tex-math></inline-formula> def</p>`
 
 test('ManuscriptEditor: edit inline formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -86,7 +86,7 @@ test('ManuscriptEditor: add block formula', t => {
 const PARAGRAPH_AND_BLOCK_FORMULA = `<p id="p1">abcdef</p>
 <disp-formula id="df-1" content-type="math/tex">
   <label>(1)</label>
-  <tex-math><![CDATA[sqrt(13)]]></tex-math>
+  <tex-math><![CDATA[\\sqrt(13)]]></tex-math>
 </disp-formula>
 `
 

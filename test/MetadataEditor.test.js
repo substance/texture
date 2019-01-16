@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { openMetadataEditor, createTestVfs, getSelection, loadBodyFixture, openManuscriptEditor } from './shared/integrationTestHelpers'
+import { openMetadataEditor, createTestVfs, getSelection, loadBodyFixture, openManuscriptEditor, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: test TOC
@@ -57,6 +57,18 @@ const EMPTY_ARTICLE = `<?xml version="1.0" encoding="UTF-8"?>
 //   t.notOk(isCardSelected, 'The translation card should not be selected')
 //   t.end()
 // })
+
+test('MetadataEditor: TOC dynamic sections appear only if content is not empty', t => {
+  let { editor } = _setup(t, EMPTY_ARTICLE)
+  const affiliationsTOCSectionSelector = '.se-toc [href="#metadata,organisations"]'
+  const getAffiliationsTocSection = () => editor.find(affiliationsTOCSectionSelector)
+  t.ok(getAffiliationsTocSection().hasClass('sm-empty'), 'TOC should not have a reference to an affiliations section')
+  // click on insert affiliation tool
+  const insertAffiliationTool = openMenuAndFindTool(editor, 'insert', '.sm-insert-organisation')
+  insertAffiliationTool.click()
+  t.notOk(getAffiliationsTocSection().hasClass('sm-empty'), 'TOC should have a reference to an affiliations section')
+  t.end()
+})
 
 test(`MetadataEditor: a newly created footnote should contain at least one parapgraph (#947)`, t => {
   let { editor } = _setup(t, EMPTY_ARTICLE)

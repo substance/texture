@@ -52,8 +52,8 @@ test('ManuscriptEditor: edit inline formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
-  const formulaContent = 'sqrt(13)'
-  const changedFormulaContent = 'sqrt(14)'
+  const formulaContent = '\\sqrt(13)'
+  const changedFormulaContent = '\\sqrt(14)'
   const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-input')
   loadBodyFixture(editor, PARAGRAPH_WITH_INLINE_FORMULA)
   // Set selection to open prompt editor
@@ -94,8 +94,8 @@ test('ManuscriptEditor: edit block formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
-  const formulaContent = 'sqrt(13)'
-  const changedFormulaContent = 'sqrt(14)'
+  const formulaContent = '\\sqrt(13)'
+  const changedFormulaContent = '\\sqrt(14)'
   const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-text-area')
   loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)
   // Set selection to open prompt editor

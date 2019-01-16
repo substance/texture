@@ -16,7 +16,7 @@ export default class MetadataSection extends ModelComponent {
         )
       )
       el.append(
-        $$(MetadataCollectionComponent, { model })
+        $$(MetadataCollectionComponent, { model }).ref('collection')
       )
       if (model.length === 0) {
         el.addClass('sm-empty')

@@ -11,7 +11,7 @@ export default class FiguresSectionComponent extends Component {
   render ($$) {
     const model = this.props.model
     const figures = model.getItems()
-    let el = $$('div').addClass('sc-collection-editor')
+    let el = $$('div').addClass('sc-figures-section sc-collection-editor')
     for (let figure of figures) {
       el.append(
         $$(FigurePanelsComponent, { model: createValueModel(this.context.api, [figure.id, 'panels']) }).ref(figure.id)

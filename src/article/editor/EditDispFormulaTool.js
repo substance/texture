@@ -34,8 +34,4 @@ export default class EditDispFormulaTool extends ToggleTool {
   getNodeId () {
     return this.props.commandState.nodeId
   }
-
-  onDelete (e) { // eslint-disable-line no-unused-vars
-    console.error('FIXME: use ArticleAPI to delete formula')
-  }
 }

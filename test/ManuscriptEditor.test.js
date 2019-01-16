@@ -131,6 +131,20 @@ test('ManuscriptEditor: add block quote', t => {
   t.end()
 })
 
+test('ManuscriptEditor: TOC dynamic sections appear only if content is not empty', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, ONE_PARAGRAPH)
+  const footnotesTOCSectionSelector = '.se-toc-entries [data-id="footnotes"]'
+  const getFootnotesTocSection = () => editor.find(footnotesTOCSectionSelector)
+  t.isNil(getFootnotesTocSection(), 'TOC should not have a reference to a footnote section')
+  // click on insert footnote tool
+  const insertFootnoteTool = openMenuAndFindTool(editor, 'insert', '.sm-insert-footnote')
+  insertFootnoteTool.click()
+  t.notNil(getFootnotesTocSection(), 'TOC should have a reference to a footnote section')
+  t.end()
+})
+
 test('ManuscriptEditor: TOC should be updated on change', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)

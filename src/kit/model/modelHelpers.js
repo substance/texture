@@ -1,4 +1,4 @@
-export function isFlowContentEmpty (api, path) {
+export function isCollectionEmpty (api, path) {
   let doc = api.getDocument()
   let ids = doc.get(path)
   if (ids.length === 0) return true

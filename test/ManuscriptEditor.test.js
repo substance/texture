@@ -46,7 +46,7 @@ test('ManuscriptEditor: add inline formula', t => {
   t.end()
 })
 
-const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula> def</p>`
+const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" content-type="math/tex"><tex-math><![CDATA[sqrt(13)]]></tex-math></inline-formula> def</p>`
 
 test('ManuscriptEditor: edit inline formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -61,8 +61,10 @@ test('ManuscriptEditor: edit inline formula', t => {
   const formulaInput = getFormulaInput()
   t.notNil(formulaInput, 'there should be a math input inside popup')
   t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
+  // Change the value
   formulaInput.val(changedFormulaContent)
-  // Change selection to save the new value
+  formulaInput._onChange()
+  // Change selection to close editor
   setSelection(editor, 'p1.content', 2)
   t.isNil(getFormulaInput(), 'there should be no math input now')
   let inlineFormulaNode = doc.get('if-1')
@@ -84,7 +86,7 @@ test('ManuscriptEditor: add block formula', t => {
 const PARAGRAPH_AND_BLOCK_FORMULA = `<p id="p1">abcdef</p>
 <disp-formula id="df-1" content-type="math/tex">
   <label>(1)</label>
-  <tex-math><![CDATA[\sqrt(13)]]></tex-math>
+  <tex-math><![CDATA[sqrt(13)]]></tex-math>
 </disp-formula>
 `
 
@@ -107,8 +109,10 @@ test('ManuscriptEditor: edit block formula', t => {
   const formulaInput = getFormulaInput()
   t.notNil(formulaInput, 'there should be a math input inside popup')
   t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
+  // Change the value
   formulaInput.val(changedFormulaContent)
-  // Change selection to save the new value
+  formulaInput._onChange()
+  // Change selection to close editor
   setSelection(editor, 'p1.content', 2)
   t.isNil(getFormulaInput(), 'there should be no math input now')
   let blockFormulaNode = doc.get('df-1')

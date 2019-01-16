@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, selectCard, clickUndo, getSelection } from './shared/integrationTestHelpers'
+import { openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 test(`Entity: add author`, t => {
@@ -32,10 +32,13 @@ test(`Entity: add subject`, t => {
 })
 
 test(`Entity: add footnote`, t => {
-  _entityTest(t, 'footnote')
+  _entityTest(t, 'footnote', 'footnote', (t, sel, selState) => {
+    t.equal(sel.type, 'property', 'selection should be an property selection')
+    t.ok(Boolean(selState.xpath.find(e => e.type === 'paragraph')), '.. inside a paragraph')
+  })
 })
 
-function _entityTest (t, entityType, entityName) {
+function _entityTest (t, entityType, entityName, checkSelection) {
   entityName = entityName || entityType
 
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -44,6 +47,15 @@ function _entityTest (t, entityType, entityName) {
   const CARD_SELECTOR = `.sc-card.sm-${entityType}`
   const _hasCard = () => { return Boolean(editor.find(CARD_SELECTOR)) }
   const _getModelId = () => { return editor.find(CARD_SELECTOR).getAttribute('data-id') }
+  function _defaultCheckSelection (t, sel) {
+    t.deepEqual({
+      type: sel.type,
+      nodeId: sel.getNodeId()
+    }, {
+      type: 'property',
+      nodeId: _getModelId()
+    }, 'a field in the new entity should be selected')
+  }
 
   doesNotThrowInNodejs(t, () => {
     _insertEntity(editor, entityName)
@@ -52,13 +64,9 @@ function _entityTest (t, entityType, entityName) {
   // Note: checking the selection as good as we can. The selected field us derived from the node schema and settings
   // TODO: we could apply a specific configuration so that we know the field name
   let sel = getSelection(editor)
-  t.deepEqual({
-    type: sel.type,
-    nodeId: sel.getNodeId()
-  }, {
-    type: 'property',
-    nodeId: _getModelId()
-  }, 'a field in the new entity should be selected')
+  let selState = getSelectionState(editor)
+  let _checkSelection = checkSelection || _defaultCheckSelection
+  _checkSelection(t, sel, selState)
 
   // in addition to the plain 'Add Entity' we also test 'Remove+Undo'
   selectCard(editor, _getModelId())

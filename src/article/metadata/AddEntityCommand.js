@@ -16,12 +16,13 @@ export default class AddEntityCommand extends Command {
   }
 
   _addItemToCollection (params, context) {
+    const api = context.api
     const collectionPath = this.config.collection
     let editorSession = context.editorSession
     editorSession.transaction(tx => {
       let node = this._createNode(tx)
       documentHelpers.append(tx, collectionPath, node.id)
-      // TODO: set selection
+      tx.selection = api._selectFirstRequiredPropertyOfMetadataCard(node)
     })
   }
 

@@ -34,6 +34,7 @@ export default class SelectionStateReducer {
       let node = doc.get(nodeId)
       if (node) {
         state.xpath = node.getXpath().toArray()
+        state.node = node
       }
     }
   }

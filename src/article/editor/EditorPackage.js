@@ -4,8 +4,7 @@ import {
   ListPackage,
   SchemaDrivenCommandManager,
   MultiSelectPackage,
-  AnnotationCommand,
-  EditInlineNodeCommand
+  AnnotationCommand
 } from 'substance'
 
 import {
@@ -35,6 +34,7 @@ import {
 } from '../shared/FigurePanelCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import DropFigure from './DropFigure'
+import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
 import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
@@ -119,8 +119,7 @@ export default {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
     })
-    config.addCommand('edit-block-formula', EditInlineNodeCommand, {
-      nodeType: 'block-formula',
+    config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
       commandGroup: 'prompt'
     })
     config.addCommand('edit-external-link', EditAnnotationCommand, {

@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, selectCard, clickUndo } from './shared/integrationTestHelpers'
+import { openMetadataEditor, selectCard, clickUndo, getSelection } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 test(`Entity: add author`, t => {
@@ -49,6 +49,16 @@ function _entityTest (t, entityType, entityName) {
     _insertEntity(editor, entityName)
   })
   t.ok(_hasCard(), 'there should be a card for the new entitiy')
+  // Note: checking the selection as good as we can. The selected field us derived from the node schema and settings
+  // TODO: we could apply a specific configuration so that we know the field name
+  let sel = getSelection(editor)
+  t.deepEqual({
+    type: sel.type,
+    nodeId: sel.getNodeId()
+  }, {
+    type: 'property',
+    nodeId: _getModelId()
+  }, 'a field in the new entity should be selected')
 
   // in addition to the plain 'Add Entity' we also test 'Remove+Undo'
   selectCard(editor, _getModelId())

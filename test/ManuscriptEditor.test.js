@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
@@ -94,29 +94,39 @@ test('ManuscriptEditor: edit block formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
+  let editorSession = getEditorSession(editor)
   const formulaContent = '\\sqrt(13)'
-  const changedFormulaContent = '\\sqrt(14)'
+  const formulaContentV2 = '\\sqrt(14)'
+  const formulaContentV3 = '\\sqrt(14)'
+  const selectFormula = () => {
+    editorSession.setSelection({
+      type: 'node',
+      nodeId: 'df-1',
+      surfaceId: 'body',
+      containerPath: ['body', 'content']
+    })
+  }
   const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-text-area')
   loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)
   // Set selection to open prompt editor
-  let editorSession = editor.context.editorSession
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'df-1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
-  const formulaInput = getFormulaInput()
-  t.notNil(formulaInput, 'there should be a math input inside popup')
-  t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
+  selectFormula()
+  let formulaInput = getFormulaInput()
+  t.notNil(formulaInput, 'there should be an input inside popup')
+  t.equal(formulaInput.val(), formulaContent, 'input should show formula')
   // Change the value
-  formulaInput.val(changedFormulaContent)
+  formulaInput.val(formulaContentV2)
   formulaInput._onChange()
   // Change selection to close editor
   setSelection(editor, 'p1.content', 2)
   t.isNil(getFormulaInput(), 'there should be no math input now')
   let blockFormulaNode = doc.get('df-1')
-  t.equal(blockFormulaNode.content, changedFormulaContent, 'should equal to: ' + changedFormulaContent)
+  t.equal(blockFormulaNode.content, formulaContentV2, 'formula should have been updated')
+  // Submitting a change via CommandOrControl+Enter
+  selectFormula()
+  formulaInput = getFormulaInput()
+  formulaInput.val(formulaContentV3)
+  formulaInput.emit('keyevent', createKeyEvent('CommandOrControl+Enter'))
+  t.equal(blockFormulaNode.content, formulaContentV3, 'formula should have been updated')
   t.end()
 })
 

@@ -24,7 +24,7 @@ export default class ArticleInformationSectionComponent extends Component {
       // HACK: for model editing (e.g. title, abstract) we are passing
       // model as node to avoid errors
       node = model
-      editorEl = renderModel($$, this, card.model)
+      editorEl = renderModel($$, this, card.model, { placeholder: this.getLabel(card.placeholder) })
     }
     return $$(CardComponent, { label: card.name, node: node }).append(editorEl)
   }

@@ -46,6 +46,30 @@ test('ManuscriptEditor: add inline formula', t => {
   t.end()
 })
 
+const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula> def</p>`
+
+test('ManuscriptEditor: edit inline formula', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  const formulaContent = 'sqrt(13)'
+  const changedFormulaContent = 'sqrt(14)'
+  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-input')
+  loadBodyFixture(editor, PARAGRAPH_WITH_INLINE_FORMULA)
+  // Set selection to open prompt editor
+  setSelection(editor, 'p1.content', 4, 5)
+  const formulaInput = getFormulaInput()
+  t.notNil(formulaInput, 'there should be a math input inside popup')
+  t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
+  formulaInput.val(changedFormulaContent)
+  // Change selection to save the new value
+  setSelection(editor, 'p1.content', 2)
+  t.isNil(getFormulaInput(), 'there should be no math input now')
+  let inlineFormulaNode = doc.get('if-1')
+  t.equal(inlineFormulaNode.content, changedFormulaContent, 'should equal to: ' + changedFormulaContent)
+  t.end()
+})
+
 test('ManuscriptEditor: add block formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
@@ -54,6 +78,41 @@ test('ManuscriptEditor: add block formula', t => {
   t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
   let blockFormula = editor.find('*[data-id=p-2] + .sm-block-formula')
   t.notNil(blockFormula, 'there should be a block-formula now')
+  t.end()
+})
+
+const PARAGRAPH_AND_BLOCK_FORMULA = `<p id="p1">abcdef</p>
+<disp-formula id="df-1" content-type="math/tex">
+  <label>(1)</label>
+  <tex-math><![CDATA[\sqrt(13)]]></tex-math>
+</disp-formula>
+`
+
+test('ManuscriptEditor: edit block formula', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  const formulaContent = 'sqrt(13)'
+  const changedFormulaContent = 'sqrt(14)'
+  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-input')
+  loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)
+  // Set selection to open prompt editor
+  let editorSession = editor.context.editorSession
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'df-1',
+    surfaceId: 'body',
+    containerPath: ['body', 'content']
+  })
+  const formulaInput = getFormulaInput()
+  t.notNil(formulaInput, 'there should be a math input inside popup')
+  t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
+  formulaInput.val(changedFormulaContent)
+  // Change selection to save the new value
+  setSelection(editor, 'p1.content', 2)
+  t.isNil(getFormulaInput(), 'there should be no math input now')
+  let blockFormulaNode = doc.get('df-1')
+  t.equal(blockFormulaNode.content, changedFormulaContent, 'should equal to: ' + changedFormulaContent)
   t.end()
 })
 

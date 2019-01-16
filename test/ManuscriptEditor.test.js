@@ -96,7 +96,7 @@ test('ManuscriptEditor: edit block formula', t => {
   let doc = getDocument(editor)
   const formulaContent = 'sqrt(13)'
   const changedFormulaContent = 'sqrt(14)'
-  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-input')
+  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-text-area')
   loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)
   // Set selection to open prompt editor
   let editorSession = editor.context.editorSession

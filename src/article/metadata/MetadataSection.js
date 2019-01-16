@@ -26,9 +26,6 @@ export default class MetadataSection extends Component {
       el.append(
         $$(MetadataCollectionComponent, { model }).ref('collection')
       )
-      if (model.length === 0) {
-        el.addClass('sm-empty')
-      }
     } else {
       let CustomEditor = this.getComponent(model.id)
       let label = this.getLabel(name)
@@ -40,6 +37,9 @@ export default class MetadataSection extends Component {
       el.append(
         $$(CustomEditor, { model }).ref('editor')
       )
+    }
+    if (model.length === 0) {
+      el.addClass('sm-empty')
     }
     return el
   }

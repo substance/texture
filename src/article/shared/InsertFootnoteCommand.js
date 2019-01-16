@@ -27,8 +27,6 @@ export default class InsertFootnoteCommand extends AddEntityCommand {
     }
   }
 
-  // TODO: rethink this. Struggling with trying to generalize this collection stuff
-  // probably it is better to go with a bare metal implementation instead
   _addItemToCollection (params, context) {
     let collectionPath = this._getCollectionPath(params, context)
     context.editorSession.transaction(tx => {
@@ -38,7 +36,10 @@ export default class InsertFootnoteCommand extends AddEntityCommand {
       tx.setSelection({
         type: 'property',
         path: p.getPath(),
-        startOffset: 0
+        startOffset: 0,
+        // TODO: adapt ArticleAPI._getSurfaceId()
+        surfaceId: `${node.id}.content`,
+        containerPath: [node.id, 'content']
       })
     })
   }

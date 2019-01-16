@@ -342,7 +342,7 @@ export default class ArticleAPI {
     let propName = null
     let firstText = null
     for (let p of schema) {
-      if (p.isText()) {
+      if (p.type === 'text' || p.type === 'string') {
         if (!firstText) {
           firstText = p
         }

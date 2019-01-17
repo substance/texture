@@ -168,6 +168,19 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
   t.end()
 })
 
+test('ManuscriptEditor: all TOC items should be clickable', t => {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const tocItemSelector = '.se-toc-entries a'
+  const tocItems = editor.findAll(tocItemSelector)
+  tocItems.forEach(item => {
+    t.doesNotThrow(() => {
+      item.click()
+    }, 'clicking on TOC item should not throw: ' + item.textContent)
+  })
+  t.end()
+})
+
 const ONE_PARAGRAPH = '<p id="p1">ABC</p>'
 
 test('ManuscriptEditor: Switch paragraph to heading', t => {

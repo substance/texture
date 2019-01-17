@@ -21,7 +21,7 @@ import ReferenceListComponent from '../shared/ReferenceListComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
-import TOC from './TOC'
+import ManuscriptTOC from './ManuscriptTOC'
 import FigureComponent from '../shared/FigureComponent'
 import FigurePanelComponent from '../shared/FigurePanelComponent'
 import TableFigureComponent from '../shared/TableFigureComponent'
@@ -91,7 +91,7 @@ export default {
     config.addComponent('footnote', FootnoteComponent, true)
     config.addComponent('reference', ReferenceComponent, true)
     config.addComponent('reference-list', ReferenceListComponent, true)
-    config.addComponent('toc', TOC, true)
+    config.addComponent('toc', ManuscriptTOC, true)
 
     config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'

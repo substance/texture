@@ -1,8 +1,7 @@
 import { DefaultDOMElement } from 'substance'
 import { Managed } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
-import ManuscriptTOCProvider from './ManuscriptTOCProvider'
-import TOC from './TOC'
+import ManuscriptTOC from './ManuscriptTOC'
 import ManuscriptModel from '../models/ManuscriptModel'
 
 export default class ManuscriptEditor extends EditorPanel {
@@ -16,13 +15,11 @@ export default class ManuscriptEditor extends EditorPanel {
     super._initialize(props)
 
     this._model = new ManuscriptModel(this.context.api, this._getDocument())
-    this._tocProvider = new ManuscriptTOCProvider(this.editorSession)
   }
 
   didMount () {
     super.didMount()
 
-    this._tocProvider.on('toc:updated', this._showHideTOC, this)
     this._showHideTOC()
     this._restoreViewport()
 
@@ -83,7 +80,7 @@ export default class ManuscriptEditor extends EditorPanel {
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     el.append(
       $$('div').addClass('se-context-pane-content').append(
-        $$(TOC, { tocProvider: this._tocProvider })
+        $$(ManuscriptTOC, { model: this._model })
       )
     )
     return el
@@ -174,21 +171,22 @@ export default class ManuscriptEditor extends EditorPanel {
     }
   }
 
-  _tocEntrySelected (nodeId) {
+  _tocEntrySelected (id) {
     let contentElement
-    switch (nodeId) {
+    switch (id) {
       // scroll to the section label for the all the higher-level sections
       case 'title':
+      case 'subtitle':
       case 'abstract':
       case 'body':
       case 'footnotes':
       case 'references': {
-        let sectionComponent = this._getContentPanel().find(`.sc-section-label.sm-${nodeId}`).el
+        let sectionComponent = this._getContentPanel().find(`.sc-manuscript-section.sm-${id} > .sc-section-label`).el
         contentElement = sectionComponent.el
         break
       }
       default: {
-        let nodeComponent = this._getContentPanel().find(`[data-id="${nodeId}"]`)
+        let nodeComponent = this._getContentPanel().find(`[data-id="${id}"]`)
         contentElement = nodeComponent.el
       }
     }
@@ -198,16 +196,10 @@ export default class ManuscriptEditor extends EditorPanel {
 
   _showHideTOC () {
     let contentSectionWidth = this.refs.contentSection.el.width
-    if (!this._isTOCVisible() || contentSectionWidth < 960) {
+    if (contentSectionWidth < 960) {
       this.el.addClass('sm-compact')
     } else {
       this.el.removeClass('sm-compact')
     }
-  }
-
-  _isTOCVisible () {
-    // TODO: add a method to ManuscriptTocProvider which is helping to do this check
-    let entries = this._tocProvider.getEntries()
-    return entries.length >= 2
   }
 }

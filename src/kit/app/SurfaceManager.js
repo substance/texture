@@ -30,7 +30,7 @@ export default class SurfaceManager {
     const id = surface.getId()
     if (DEBUG) console.log(`Registering surface ${id}.`, surface.__id__)
     if (this.surfaces[id]) {
-      console.error(`A surface with id ${id} has already been registered.`)
+      throw new Error(`A surface with id ${id} has already been registered.`)
     }
     this.surfaces[id] = surface
   }

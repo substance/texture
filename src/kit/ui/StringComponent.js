@@ -8,13 +8,26 @@ export default class StringComponent extends Component {
     let path = model.getPath()
     let name = path.join('.')
     let el = $$('div').addClass(this.getClassNames())
-    el.append(
-      $$(TextInput, {
-        name,
-        path,
-        placeholder
-      }).ref('input')
-    )
+    if (this.props.readOnly) {
+      let doc = this.context.api.getDocument()
+      let TextPropertyComponent = this.getComponent('text-property')
+      el.append(
+        $$(TextPropertyComponent, {
+          doc,
+          tagName: 'div',
+          placeholder,
+          path
+        }).ref('display')
+      )
+    } else {
+      el.append(
+        $$(TextInput, {
+          name,
+          path,
+          placeholder
+        }).ref('input')
+      )
+    }
     return el
   }
 

@@ -105,8 +105,8 @@ test(`MetadataEditor: figure caption should be editable`, t => {
   loadBodyFixture(editor, ONE_FIG)
   editor = openMetadataEditor(app)
   let figurePanel = editor.find('.sc-card.sm-figure-panel[data-id="fig1"]')
-  let captionEditor = figurePanel.find('.sc-form-row.sm-caption > .se-editor > .sc-container-editor')
-  t.notNil(captionEditor, 'figure panel should have a container editor for the caption')
+  let legendEditor = figurePanel.find('.sc-form-row.sm-legend > .se-editor > .sc-container-editor')
+  t.notNil(legendEditor, 'figure panel should have a container editor for the legend')
   t.end()
 })
 

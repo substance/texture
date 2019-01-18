@@ -40,8 +40,8 @@ export default class FigurePanelComponent extends NodeComponent {
       this._renderContent($$),
       $$(SectionLabel, {label: 'title-label'}),
       this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
-      $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'caption', { placeholder: this.getLabel('caption-placeholder') }).addClass('se-caption')
+      $$(SectionLabel, {label: 'legend-label'}),
+      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend')
     )
 
     // TODO: this is problematic as this node does not necessarily rerender if node.metadata has changed

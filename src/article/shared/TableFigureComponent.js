@@ -29,8 +29,8 @@ export default class TableFigureComponent extends FigurePanelComponent {
       this._renderContent($$),
       $$(SectionLabel, {label: 'title-label'}),
       this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
-      $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'caption', { name: 'caption', placeholder: this.getLabel('caption-placeholder') }).addClass('se-caption')
+      $$(SectionLabel, {label: 'legend-label'}),
+      this._renderValue($$, 'legend', { name: 'legend', placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend')
     )
 
     // FIXME: does not react to node.footnotes changes

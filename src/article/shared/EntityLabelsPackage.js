@@ -179,7 +179,7 @@ export default {
     // figure labels
     config.addLabel('figure', 'Figure')
     config.addLabel('content', 'Content')
-    config.addLabel('caption', 'Caption')
+    config.addLabel('legend', 'Legend')
     config.addLabel('copyrightStatement', 'Copyright Statement')
     config.addLabel('copyrightYear', 'Copyright Year')
     config.addLabel('copyrightHolder', 'Copyright Holder')

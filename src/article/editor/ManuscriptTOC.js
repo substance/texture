@@ -1,5 +1,5 @@
 import { Component, DefaultDOMElement } from 'substance'
-import { ValueComponent } from '../../kit'
+import { ValueComponent, renderModel, createValueModel } from '../../kit'
 
 // TODO: this needs to be redesigned
 // TODO: we should follow the same approach as in Metadata, i.e. having a model which is a list of sections
@@ -84,17 +84,21 @@ class SimpleTOCEntry extends Component {
 
 class BodyTOCEntry extends ValueComponent {
   render ($$) {
+    const api = this.context.api
     let items = this.props.model.getItems()
     let headings = items.filter(node => node.type === 'heading')
     return $$('div').addClass('sc-body-toc-entry').append(
       headings.map(heading => {
-        return $$('a')
+        let el = $$('a').ref(heading.id)
           .addClass(`se-toc-entry sm-level-${heading.level}`)
           .attr({
             href: '#',
             'data-id': heading.id
           })
-          .append(heading.getText())
+        el.append(
+          renderModel($$, this, createValueModel(api, heading.getPath()), { readOnly: true })
+        )
+        return el
       })
     )
   }

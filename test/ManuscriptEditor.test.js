@@ -147,11 +147,11 @@ test('ManuscriptEditor: TOC dynamic sections appear only if content is not empty
   loadBodyFixture(editor, ONE_PARAGRAPH)
   const footnotesTOCSectionSelector = '.se-toc-entries [data-id="footnotes"]'
   const getFootnotesTocSection = () => editor.find(footnotesTOCSectionSelector)
-  t.isNil(getFootnotesTocSection(), 'TOC should not have a reference to a footnote section')
+  t.ok(getFootnotesTocSection().hasClass('sm-hidden'), 'footnotes entry should be hidden')
   // click on insert footnote tool
   const insertFootnoteTool = openMenuAndFindTool(editor, 'insert', '.sm-insert-footnote')
   insertFootnoteTool.click()
-  t.notNil(getFootnotesTocSection(), 'TOC should have a reference to a footnote section')
+  t.notOk(getFootnotesTocSection().hasClass('sm-hidden'), 'footnotes entry should be visible')
   t.end()
 })
 

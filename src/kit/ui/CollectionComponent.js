@@ -29,7 +29,7 @@ export default class CollectionComponent extends Component {
 }
 
 class ReadOnlyCollection extends ValueComponent {
-  // TODO: this is less efficient than ContainerEditor as it will always render the whole collection
+  // NOTE: this is less efficient than ContainerEditor as it will always render the whole collection
   render ($$) {
     let props = this.props
     let model = props.model

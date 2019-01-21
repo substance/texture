@@ -360,6 +360,12 @@ def read() = in.read()
           <p id="sm1-caption-p1">Description of Supplementary File</p>
         </caption>
       </supplementary-material>
+      <supplementary-material id="sm2" xlink:href="https://elifesciences.org/download/aHR0cHM6Ly9jZG4uZWxpZmVzY2llbmNlcy5vcmcvYXJ0aWNsZXMvNDExNjIvZWxpZmUtNDExNjItZmlnMi1kYXRhMS12MS54bHN4/elife-41162-fig2-data1-v1.xlsx?_hash=ft%2F74Gq%2FH3UikSNsi%2Fm1GbowiBFMCRqQ3c1bwBSK9ak%3D">
+        <label>Supplementary File 2</label>
+        <caption>
+          <p id="sm1-caption-p1">A remote file</p>
+        </caption>
+      </supplementary-material>
     </sec>
   </body>
   <back>

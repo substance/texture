@@ -30,16 +30,30 @@ export default class SupplementaryFileConverter {
     }
     node.href = el.getAttribute('xlink:href')
     node.remote = _isRemoteFile(node.href)
-    node.mimetype = [el.getAttribute('mimetype'), el.getAttribute('mime-subtype')].join('/')
+    let mimetype = el.getAttribute('mimetype')
+    let mimeSubtype = el.getAttribute('mime-subtype')
+    if (mimetype || mimeSubtype) {
+      node.mimetype = [mimetype, mimeSubtype].filter(Boolean).join('/')
+    }
     node.legend = captionEl.children.map(child => importer.convertElement(child).id)
   }
 
   export (node, el, exporter) {
     let $$ = exporter.$$
-    let mimeData = node.mimetype.split('/')
+    if (node.mimetype) {
+      let mimeData = node.mimetype.split('/')
+      if (mimeData[0]) {
+        el.attr({
+          'mimetype': mimeData[0]
+        })
+      }
+      if (mimeData[1]) {
+        el.attr({
+          'mime-subtype': mimeData[1]
+        })
+      }
+    }
     el.attr({
-      'mimetype': mimeData[0],
-      'mime-subtype': mimeData[1] || '',
       'xlink:href': node.href
     })
     let label = getLabel(node)

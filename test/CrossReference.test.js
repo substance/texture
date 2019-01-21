@@ -54,22 +54,23 @@ function testCitationUntoggle (t, xrefType) {
 
   // Toggle edit citation dialog
   const xref = editor.find(selector)
-  // const xrefLabelBefore = _getText(editor, selector)
+  const xrefLabelBefore = _getText(editor, selector)
   xref.click()
 
   // Toggle first citation in list
   const firstXref = editor.find('.sc-edit-xref-tool .se-option.sm-selected .sc-preview')
+  // Note: There is no way to detect exception in browser
   firstXref.click()
-  // const xrefLabelAfter = _getText(editor, selector)
+  const xrefLabelAfter = _getText(editor, selector)
 
-  // t.ok(xrefLabelBefore !== xrefLabelAfter, 'Label should change')
-  // t.notEqual(xrefLabelAfter, '???', 'Label should not disappear')
+  t.ok(xrefLabelBefore !== xrefLabelAfter, 'Label should change')
+  t.notEqual(xrefLabelAfter, '???', 'Label should not disappear')
   t.end()
 }
 
-// function _getText (editor, selector) {
-//   return editor.find(selector).text()
-// }
+function _getText (editor, selector) {
+  return editor.find(selector).text()
+}
 
 function _setup (t, seedXML) {
   let testVfs = createTestVfs(seedXML)

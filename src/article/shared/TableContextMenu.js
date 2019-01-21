@@ -10,7 +10,11 @@ export default class TableContextMenu extends ToolPanel {
 
   render ($$) {
     let el = $$('div').addClass('sc-table-context-menu sc-context-menu')
-    el.append(this.renderEntries($$))
+    el.append(
+      $$('div').append(
+        this._renderEntries($$)
+      ).ref('entriesContainer')
+    )
     return el
   }
 }

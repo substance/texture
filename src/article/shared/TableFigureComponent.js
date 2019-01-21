@@ -28,11 +28,12 @@ export default class TableFigureComponent extends FigurePanelComponent {
       // no label for the graphic
       this._renderContent($$),
       $$(SectionLabel, {label: 'title-label'}),
-      this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).ref('title').addClass('se-title'),
+      this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
       $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'caption', { name: 'caption', placeholder: this.getLabel('caption-placeholder') }).ref('caption').addClass('se-caption')
+      this._renderValue($$, 'caption', { name: 'caption', placeholder: this.getLabel('caption-placeholder') }).addClass('se-caption')
     )
 
+    // FIXME: does not react to node.footnotes changes
     if (node.footnotes.length > 0) {
       el.append(
         $$(SectionLabel, {label: 'footnotes-label'}),

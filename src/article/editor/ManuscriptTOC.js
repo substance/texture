@@ -17,7 +17,7 @@ export default class ManuscriptTOC extends Component {
       $$(SimpleTOCEntry, {
         label: this.getLabel('title'),
         id: 'title'
-      }).ref('title')
+      })
     )
 
     tocEntries.append(

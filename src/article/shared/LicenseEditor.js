@@ -9,8 +9,7 @@ export default class LicenseEditor extends ValueComponent {
     const value = model.getValue()
     let el = $$('div').addClass('sc-license-editor')
 
-    const licenseSelector = $$('select').addClass('se-select')
-      .ref('input')
+    const licenseSelector = $$('select').ref('input').addClass('se-select')
       .on('click', this._suppressClickPropagation)
       .on('change', this._setLicense)
 

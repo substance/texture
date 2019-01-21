@@ -22,7 +22,7 @@ export default class ToolPanel extends Component {
     }
   }
 
-  renderEntries ($$) {
+  _renderEntries ($$) {
     const toolPanelSpec = this.props.toolPanel
     const commandStates = this.props.commandStates
     const theme = this.getTheme()

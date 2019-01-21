@@ -75,6 +75,7 @@ export default class MetadataEditor extends EditorPanel {
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
+      // TODO: do we need this ref?
       ).ref('contentSection'),
       this._renderFooterPane($$)
     )
@@ -84,6 +85,7 @@ export default class MetadataEditor extends EditorPanel {
       let workflowModal = $$(Modal, {
         width: 'large'
       }).addClass('se-workflow-modal').append(
+        // TODO: do we need this ref?
         $$(WorkflowComponent).ref('workflow')
       )
       mainSection.append(workflowModal)
@@ -98,6 +100,7 @@ export default class MetadataEditor extends EditorPanel {
       $$(Managed(Toolbar), {
         toolPanel: config.getToolPanel('toolbar'),
         bindings: ['commandStates']
+      // TODO: do we need this ref?
       }).ref('toolbar')
     )
   }
@@ -129,6 +132,7 @@ export default class MetadataEditor extends EditorPanel {
 
     let contentPanel = $$(ScrollPane, {
       scrollbarPosition: 'right'
+    // TODO: do we need this ref?
     }).ref('contentPanel')
 
     let sectionsEl = $$('div').addClass('se-sections')
@@ -155,6 +159,7 @@ export default class MetadataEditor extends EditorPanel {
       $$(FindAndReplaceDialog, {
         theme: this._getTheme(),
         viewName: 'metadata'
+      // TODO: do we need this ref?
       }).ref('findAndReplace')
     )
     return el

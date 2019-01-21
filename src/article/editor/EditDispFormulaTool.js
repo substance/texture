@@ -26,7 +26,8 @@ export default class EditDispFormulaTool extends ToggleTool {
         cols: 80,
         retainFocus: true
       }).addClass('sm-big-input')
-        // ATTNETION have a ref on it, otherwise the input will get rerendered on every change
+        // ATTENTION have a ref on it, otherwise the input will get rerendered on every change
+        // TODO: this component has always the same structure and should preserve all elements, event without ref
         .ref('input')
         // stopping keydown events so that the input field is not distracted by other editor keyboard handler
         // TODO: maybe let 'Save' through...

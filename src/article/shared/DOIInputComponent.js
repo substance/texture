@@ -9,8 +9,8 @@ export default class DOIInputComponent extends Component {
       $$('input').addClass('se-input').attr({
         type: 'text',
         placeholder: labelProvider.getLabel('enter-doi-placeholder')
-      }).on('input', this._unblockUI).ref('DOIInput')
-    )
+      }).on('input', this._unblockUI)
+    ).ref('input')
 
     if (this.state.loading) {
       inputEl.append(
@@ -52,7 +52,7 @@ export default class DOIInputComponent extends Component {
   }
 
   _startImporting () {
-    const input = this.refs.DOIInput
+    const input = this.refs.input
     const val = input.val()
     const dois = val.split(' ').map(v => v.trim()).filter(v => Boolean(v))
     this.extendState({loading: true})

@@ -59,6 +59,7 @@ export default class ManuscriptEditor extends EditorPanel {
       $$('div').addClass('se-content-section').append(
         this._renderTOCPane($$),
         this._renderContentPanel($$)
+      // TODO: this component has always the same structure and should preserve all elements, event without ref
       ).ref('contentSection'),
       this._renderFooterPane($$)
     )

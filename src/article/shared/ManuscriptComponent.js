@@ -19,10 +19,10 @@ export default class ManuscriptComponent extends Component {
         name: 'title',
         label: this.getLabel('title-label'),
         model: titleModel
-      }).ref('titleSection').append(
+      }).append(
         renderModel($$, this, titleModel, {
           placeholder: this.getLabel('title-placeholder')
-        }).ref('title').addClass('sm-title')
+        }).addClass('sm-title')
       )
     )
     // Sub-title
@@ -32,10 +32,10 @@ export default class ManuscriptComponent extends Component {
         name: 'subtitle',
         label: this.getLabel('subtitle-label'),
         model: subTitleModel
-      }).ref('subtitleSection').append(
+      }).append(
         renderModel($$, this, subTitleModel, {
           placeholder: this.getLabel('subtitle-placeholder')
-        }).ref('subTitle').addClass('sm-subtitle')
+        }).addClass('sm-subtitle')
       )
     )
     // Authors
@@ -46,11 +46,11 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('authors-label'),
         model: authorsModel,
         hideWhenEmpty: true
-      }).ref('authorsSection').append(
+      }).append(
         $$(AuthorsListComponent, {
           model: authorsModel,
           placeholder: this.getLabel('authors-placeholder')
-        }).ref('authors').addClass('sm-authors')
+        }).addClass('sm-authors')
       )
     )
     // Abstract
@@ -60,11 +60,11 @@ export default class ManuscriptComponent extends Component {
         name: 'abstract',
         label: this.getLabel('abstract-label'),
         model: abstractModel
-      }).ref('abstractSection').append(
+      }).append(
         renderModel($$, this, abstractModel, {
           name: 'abstract',
           placeholder: this.getLabel('abstract-placeholder')
-        }).ref('abstract').addClass('sm-abstract')
+        }).addClass('sm-abstract')
       )
     )
     // Body
@@ -74,11 +74,11 @@ export default class ManuscriptComponent extends Component {
         name: 'body',
         label: this.getLabel('body-label'),
         model: bodyModel
-      }).ref('bodySection').append(
+      }).append(
         renderModel($$, this, bodyModel, {
           name: 'body',
           placeholder: this.getLabel('body-placeholder')
-        }).ref('body').addClass('sm-body')
+        }).addClass('sm-body')
       )
     )
     // Footnotes
@@ -89,8 +89,8 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('footnotes-label'),
         model: footnotesModel,
         hideWhenEmpty: true
-      }).ref('footnotesSection').append(
-        renderModel($$, this, footnotesModel).ref('footnotes').addClass('sm-footnotes')
+      }).append(
+        renderModel($$, this, footnotesModel).addClass('sm-footnotes')
       )
     )
     // References
@@ -101,10 +101,10 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('references-label'),
         model: referencesModel,
         hideWhenEmpty: true
-      }).ref('referencesSection').append(
+      }).append(
         $$(ReferenceListComponent, {
           model: referencesModel
-        }).ref('references').addClass('sm-references')
+        }).addClass('sm-references')
       )
     )
 

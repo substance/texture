@@ -24,7 +24,7 @@ export default class MetadataSection extends Component {
         )
       )
       el.append(
-        $$(MetadataCollectionComponent, { model }).ref('collection')
+        $$(MetadataCollectionComponent, { model })
       )
     } else {
       let CustomEditor = this.getComponent(model.id)
@@ -35,7 +35,7 @@ export default class MetadataSection extends Component {
         )
       )
       el.append(
-        $$(CustomEditor, { model }).ref('editor')
+        $$(CustomEditor, { model })
       )
     }
     if (model.length === 0) {

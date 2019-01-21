@@ -20,7 +20,8 @@ export default class ContextMenu extends ToolPanel {
     el.addClass('sm-theme-' + this.getTheme())
     el.append(
       $$('div').addClass('se-active-tools').append(
-        this.renderEntries($$)
+        this._renderEntries($$)
+      // TODO: do we need this ref?
       ).ref('entriesContainer')
     )
     return el

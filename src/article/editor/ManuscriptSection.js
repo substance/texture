@@ -18,7 +18,7 @@ export default class ManuscriptSection extends Component {
     if (hideWhenEmpty && model.length === 0) {
       el.addClass('sm-empty')
     } else {
-      el.append($$(SectionLabel, { label }).ref('label'))
+      el.append($$(SectionLabel, { label }))
       el.append(children)
     }
 

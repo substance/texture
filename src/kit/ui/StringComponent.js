@@ -17,7 +17,7 @@ export default class StringComponent extends Component {
           tagName: 'div',
           placeholder,
           path
-        }).ref('display')
+        })
       )
     } else {
       el.append(
@@ -25,7 +25,7 @@ export default class StringComponent extends Component {
           name,
           path,
           placeholder
-        }).ref('input')
+        })
       )
     }
     return el

@@ -12,12 +12,10 @@ export default class FigureComponent extends NodeComponent {
     let panels = node.panels
 
     let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`).attr('data-id', node.id)
-
     if (panels.length > 0) {
       let content = this._renderCarousel($$, panels)
       el.append(content)
     }
-
     return el
   }
 

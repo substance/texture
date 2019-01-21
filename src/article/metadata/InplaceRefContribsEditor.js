@@ -56,13 +56,13 @@ class InplaceRefContribEditor extends NodeComponent {
       $$(FormRowComponent).attr('data-id', node.id).addClass('sm-ref-contrib').append(
         this._renderValue($$, 'name', {
           label: this.getLabel('name')
-        }).ref('name').addClass('sm-name'),
+        }).addClass('sm-name'),
         this._renderValue($$, 'givenNames', {
           label: this.getLabel('given-names')
-        }).ref('givenNames').addClass('sm-given-names'),
-        // TODO: use icon provider
+        }).addClass('sm-given-names'),
         $$(Button, {
           icon: 'remove'
+        // TODO: do we need this ref?
         }).ref('remove-button').addClass('se-remove-value')
           .on('click', this._onRemove)
       )

@@ -22,7 +22,7 @@ export default class EditInlineFormulaTool extends ToggleTool {
         // TODO: use this.getLabel()
         placeholder: 'Enter TeX'
       })
-        // ATTNETION have a ref on it, otherwise the input will get rerendered on every change
+        // TODO: this component has always the same structure and should preserve all elements, event without ref
         .ref('input')
         // stopping keydown events so that the input field is not distracted by other editor keyboard handler
         // TODO: maybe let write through?

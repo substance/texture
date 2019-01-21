@@ -21,9 +21,9 @@ export default class CollectionComponent extends Component {
     if (renderAsContainer) {
       return $$(EditableCollection, Object.assign({}, props, {
         containerPath: props.model.getPath()
-      })).ref('editor')
+      }))
     } else {
-      return $$(ReadOnlyCollection, props).ref('diplay')
+      return $$(ReadOnlyCollection, props)
     }
   }
 }

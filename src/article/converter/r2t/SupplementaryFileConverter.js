@@ -29,6 +29,7 @@ export default class SupplementaryFileConverter {
       node.label = labelEl.text()
     }
     node.href = el.getAttribute('xlink:href')
+    node.remote = _isRemoteFile(node.href)
     node.mimetype = [el.getAttribute('mimetype'), el.getAttribute('mime-subtype')].join('/')
     node.legend = captionEl.children.map(child => importer.convertElement(child).id)
   }
@@ -55,4 +56,8 @@ export default class SupplementaryFileConverter {
       )
     }
   }
+}
+
+function _isRemoteFile (href) {
+  return Boolean(/^\w+:\/\//.exec(href))
 }

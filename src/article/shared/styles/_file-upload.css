@@ -1,0 +1,35 @@
+.sc-file-upload {
+  position: relative;
+  margin: 20px 0px 10px;
+}
+
+.sc-file-upload > .se-error-popup {
+  top: 90px;
+}
+
+.sc-file-upload > .se-description {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #ababab;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.sc-file-upload > .se-drop-import {
+  margin: 0px 20px;
+  border: 1px dotted #8d8d8d;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  color: #8d8d8d;
+}
+
+.sc-file-upload > .se-drop-import > input {
+  display: none;
+}
+
+.sc-file-upload > .se-drop-import > .se-select-trigger {
+  color: var(--t-action-color);
+  cursor: pointer;
+}

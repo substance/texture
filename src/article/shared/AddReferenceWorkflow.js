@@ -40,7 +40,7 @@ export default class AddReferenceWorkflow extends Component {
     el.append(
       title,
       $$(DOIInputComponent),
-      $$(ReferenceUploadComponent),
+      $$(ReferenceUploadComponent, {title: 'import-refs'}),
       manualAddEl
     )
 

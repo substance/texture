@@ -1,80 +1,27 @@
-import { Component } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
+import FileUploadComponent from './FileUploadComponent'
 
 const supportedFormats = ['CSL-JSON']
 
-export default class ReferenceUploadComponent extends Component {
-  render ($$) {
-    const labelProvider = this.context.labelProvider
-    const el = $$('div').addClass('se-import').append(
-      $$('div').addClass('se-section-title').append(
-        labelProvider.getLabel('import-refs')
-      ),
-      $$('div').addClass('se-description').append(
-        labelProvider.getLabel('supported-ref-formats') + ': ' + supportedFormats.join(', ')
-      )
+export default class ReferenceUploadComponent extends FileUploadComponent {
+  get description () {
+    return this.getLabel('supported-ref-formats') + ': ' + supportedFormats.join(', ')
+  }
+
+  get acceptedFiles () {
+    return 'application/json'
+  }
+
+  renderErrorsList ($$) {
+    const dois = this.state.error.dois
+    const errorsList = $$('ul').addClass('se-error-list')
+    errorsList.append(
+      $$('li').append(this.state.error.message)
     )
-
-    const dropZone = $$('div').addClass('se-drop-import').append(
-      'Drag and drop or ',
-      $$('span').addClass('se-select-trigger')
-        .append('select')
-        .on('click', this._onClick),
-      ' file',
-      $$('input').attr({
-        type: 'file',
-        accept: 'application/json'
-      }).ref('input')
-        .on('click', this._supressClickPropagation)
-        .on('change', this._selectFile)
-    ).on('drop', this._handleDrop)
-      .on('dragstart', this._onDrag)
-      .on('dragenter', this._onDrag)
-      .on('dragend', this._onDrag)
-
-    el.append(dropZone)
-
-    if (this.state.error) {
-      const dois = this.state.error.dois
-      const errorsList = $$('ul').addClass('se-error-list')
-      errorsList.append(
-        $$('li').append(this.state.error.message)
-      )
-      if (dois) {
-        errorsList.append(dois.map(d => $$('li').append('- ' + d)))
-      }
-      el.append(
-        $$('div').addClass('se-error-popup').append(errorsList)
-      )
+    if (dois) {
+      errorsList.append(dois.map(d => $$('li').append('- ' + d)))
     }
-
-    return el
-  }
-
-  _onClick () {
-    this.refs.input.click()
-  }
-
-  _supressClickPropagation (e) {
-    e.stopPropagation()
-  }
-
-  _selectFile (e) {
-    const files = e.currentTarget.files
-    this._handleUploadedFiles(files)
-  }
-
-  _handleDrop (e) {
-    const files = e.dataTransfer.files
-    this._handleUploadedFiles(files)
-  }
-
-  _handleUploadedFiles (files) {
-    Object.values(files).forEach(file => {
-      const reader = new window.FileReader()
-      reader.onload = this._onFileLoad.bind(this)
-      reader.readAsText(file)
-    })
+    return errorsList
   }
 
   _onFileLoad (e) {
@@ -101,11 +48,5 @@ export default class ReferenceUploadComponent extends Component {
         this.send('importBib', convertedEntries)
       }
     }
-  }
-
-  _onDrag (e) {
-    // Stop event propagation for the dragstart and dragenter
-    // events, to avoid editor drag manager errors
-    e.stopPropagation()
   }
 }

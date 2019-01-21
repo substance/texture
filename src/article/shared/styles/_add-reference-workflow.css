@@ -87,42 +87,6 @@
   font-size: 13px;
 }
 
-.se-add-reference > .se-import {
-  position: relative;
-  margin: 20px 0px 10px;
-}
-
-.se-add-reference > .se-import > .se-error-popup {
-  top: 90px;
-}
-
-.se-add-reference > .se-import > .se-description {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  color: #ababab;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.se-add-reference > .se-import > .se-drop-import {
-  margin: 0px 20px;
-  border: 1px dotted #8d8d8d;
-  border-radius: 4px;
-  padding: 10px;
-  text-align: center;
-  color: #8d8d8d;
-}
-
-.se-add-reference > .se-import > .se-drop-import > input {
-  display: none;
-}
-
-.se-add-reference > .se-import > .se-drop-import > .se-select-trigger {
-  color: var(--t-action-color);
-  cursor: pointer;
-}
-
 .se-add-reference > .se-manual-add {
   padding: 20px 0px;
 }

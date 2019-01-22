@@ -318,6 +318,22 @@ test('Table: insert rows', t => {
   t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
   // TODO: can we check that the row was inserted below?
 
+  // insert multiple rows above
+  previousRowCount = rowCount
+  _selectRange(tableComp, 1, 0, 2, 0)
+  contextMenu.find('.sm-insert-rows-above').click()
+  rowCount = _getRowCount(tableComp)
+  t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
+  // TODO: can we check that the row was inserted above?
+
+  // insert multiple rows below
+  previousRowCount = rowCount
+  _selectRange(tableComp, 1, 0, 2, 0)
+  contextMenu.find('.sm-insert-rows-below').click()
+  rowCount = _getRowCount(tableComp)
+  t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
+  // TODO: can we check that the row was inserted above?
+
   t.end()
 })
 
@@ -329,15 +345,16 @@ function _selectCell (tableComp, rowIdx = 1, colIdx = 0) {
   cell.el.click()
 }
 
-// function _selectRange (tableComp, startRowIdx, startColIdx, endRowIdx, endColIdx) {
-//   let rows = tableComp.findAll('tr')
-//   let startRow = rows[startRowIdx]
-//   let startCell = startRow.findAll('td, th')[startColIdx]
-//   let endRow = rows[endRowIdx]
-//   let endCell = endRow.findAll('td, th')[endColIdx]
-//   tableComp._onMousedown(new DOMEvent({ target: cell.el }))
-//   cell.el.click()
-// }
+function _selectRange (tableComp, startRowIdx, startColIdx, endRowIdx, endColIdx) {
+  let rows = tableComp.findAll('tr')
+  let startRow = rows[startRowIdx]
+  let startCell = startRow.findAll('td, th')[startColIdx]
+  let endRow = rows[endRowIdx]
+  let endCell = endRow.findAll('td, th')[endColIdx]
+  // HACK: using some private API here because I don't know how to emulate the
+  // mouse-move selection gesture
+  tableComp._requestSelectionChange(tableComp._createTableSelection({ anchorCellId: startCell.props.node.id, focusCellId: endCell.props.node.id }))
+}
 
 function _getTable (tableComp) {
   return tableComp.props.node

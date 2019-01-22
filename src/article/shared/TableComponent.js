@@ -85,7 +85,7 @@ export default class TableComponent extends CustomSurface {
     table.on('mousemove', this._onMousemove)
       .on('dblclick', this._onDblclick)
       .on('contextmenu', this._onContextMenu)
-      .on('contextmenuitemclick', this._onContextmenuitemclick)
+      .on('contextmenuitemclick', this._onContextMenuItemClick)
     return table
   }
 
@@ -389,7 +389,7 @@ export default class TableComponent extends CustomSurface {
     this._showContextMenu(e)
   }
 
-  _onContextmenuitemclick (e) {
+  _onContextMenuItemClick (e) {
     e.preventDefault()
     e.stopPropagation()
     this._hideContextMenu()

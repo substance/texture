@@ -1,0 +1,14 @@
+.se-workflow-modal .sm-workflow {
+  padding: var(--t-default-spacing);
+}
+
+.se-workflow-modal .sm-workflow > .se-title {
+  font-size: var(--t-large-font-size);
+  padding: 0 0 var(--t-default-spacing);
+}
+
+.se-workflow-modal .sm-workflow .se-section-title {
+  font-size: var(--t-text-font-size);
+  color: var(--t-light-text-color);
+  padding: var(--t-half-spacing) 0;
+}

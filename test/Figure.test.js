@@ -96,7 +96,7 @@ test('Figure: remove a sub-figure from a figure', t => {
 
   let figure = doc.get('fig1')
   let secondPanel = doc.get(figure.panels[1])
-  let p = doc.get(secondPanel.caption[0])
+  let p = doc.get(secondPanel.legend[0])
   _selectFigurePanel(editor, secondPanel)
   setCursor(editor, p.getPath(), 0)
   t.ok(_removeFigurePanel(editor), 'clicking on the tool should not throw error')

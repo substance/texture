@@ -13,7 +13,7 @@ export default class FigurePanel extends DocumentNode {
       content: {
         type: 'graphic'
       },
-      caption: [{
+      legend: [{
         type: 'paragraph'
       }],
       permission: {
@@ -27,7 +27,7 @@ FigurePanel.schema = {
   content: CHILD('graphic'),
   title: TEXT(...RICH_TEXT_ANNOS, 'xref'),
   label: STRING,
-  caption: CONTAINER({
+  legend: CONTAINER({
     nodeTypes: ['paragraph', 'supplementary-file'],
     defaultTextType: 'paragraph'
   }),

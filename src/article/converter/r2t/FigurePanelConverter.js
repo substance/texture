@@ -40,7 +40,8 @@ export default class FigurePanelConverter {
     if (contentEl) {
       node.content = importer.convertElement(contentEl).id
     }
-    node.caption = captionEl.children.map(child => importer.convertElement(child).id)
+    // Note: we are transforming capton content to legend property
+    node.legend = captionEl.children.map(child => importer.convertElement(child).id)
     if (permissionsEl) {
       node.permission = importer.convertElement(permissionsEl).id
     } else {
@@ -74,8 +75,9 @@ export default class FigurePanelConverter {
       el.append($$('label').text(label))
     }
     // Attention: <title> is part of the <caption>
-    if (node.title || node.caption) {
-      let content = node.resolve('caption')
+    // Note: we are transforming the content of legend to <caption>
+    if (node.title || node.legend) {
+      let content = node.resolve('legend')
       let captionEl = $$('caption')
       if (content.length > 0) {
         captionEl.append(

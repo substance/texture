@@ -38,14 +38,14 @@ test('Paste: pasting a container into body', t => {
   t.end()
 })
 
-test('Paste: pasting a container into figure caption', t => {
+test('Paste: pasting a container into figure legend', t => {
   let { editor, snippet, api, doc } = _setup(t, CONTAINER_SNIPPET, FIGURE)
   setCursor(editor, 'f1-caption-p1.content', 0)
   api.paste(snippet)
   // ATTENTION: for now substance does not transform unsupported nodes (e.g. heading -> paragraph)
   // and instead drops the invalid node
   let expected = ['paragraph', 'paragraph']
-  let actual = doc.resolve(['f1', 'caption']).map(el => el.type)
+  let actual = doc.resolve(['f1', 'legend']).map(el => el.type)
   t.deepEqual(actual, expected, 'only <p> elements should have been pasted')
   t.end()
 })

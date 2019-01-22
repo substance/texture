@@ -232,7 +232,7 @@
         <label>Figure 1</label>
         <caption>
           <title>Figure with permissions.</title>
-          <p id="fig1-caption-p1">Caption.</p>
+          <p id="fig1-caption-p1">Legend.</p>
         </caption>
         <graphic id="graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
         <permissions id="permission-2">
@@ -251,7 +251,7 @@
           <label>Figure 2A</label>
           <caption>
             <title>First panel</title>
-            <p id="fig2a-caption-p1">First panel caption</p>
+            <p id="fig2a-caption-p1">First panel legend</p>
           </caption>
           <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
         </fig>
@@ -269,7 +269,7 @@
         <label>Figure 3</label>
         <caption>
           <title>Figure with metadata.</title>
-          <p id="fig3-caption-p1">Caption.</p>
+          <p id="fig3-caption-p1">Legend.</p>
         </caption>
         <kwd-group>
           <label>Field I</label>

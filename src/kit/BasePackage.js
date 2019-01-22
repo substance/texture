@@ -9,6 +9,7 @@ import BodyScrollPane from './ui/BodyScrollPane'
 import Button from './ui/Button'
 import ContainerEditor from './ui/_ContainerEditor'
 import ContextMenu from './ui/ContextMenu'
+import Input from './ui/Input'
 import IsolatedNodeComponent from './ui/_IsolatedNodeComponent'
 import IsolatedInlineNodeComponent from './ui/_IsolatedInlineNodeComponent'
 import Menu from './ui/Menu'
@@ -24,6 +25,7 @@ import Toolbar from './ui/Toolbar'
 import ToolDropdown from './ui/ToolDropdown'
 import ToolGroup from './ui/ToolGroup'
 import ToolPrompt from './ui/ToolPrompt'
+import TextArea from './ui/TextArea'
 
 export default {
   name: 'TextureBase',
@@ -51,13 +53,15 @@ export default {
     configurator.addComponent('scroll-pane', ScrollPane, true)
     configurator.addComponent('body-scroll-pane', BodyScrollPane, true)
 
+    configurator.addComponent('button', Button, true)
+    configurator.addComponent('context-menu', ContextMenu, true)
+    configurator.addComponent('input', Input)
     configurator.addComponent('menu', Menu, true)
     configurator.addComponent('menu-group', MenuGroup, true)
     configurator.addComponent('menu-item', MenuItem, true)
     configurator.addComponent('modal', ModalDialog)
-    configurator.addComponent('button', Button, true)
-    configurator.addComponent('context-menu', ContextMenu, true)
     configurator.addComponent('overlay', Overlay, true)
+    configurator.addComponent('text-area', TextArea)
     configurator.addComponent('toggle-tool', ToggleTool, true)
     configurator.addComponent('toolbar', Toolbar, true)
     configurator.addComponent('tool-dropdown', ToolDropdown, true)

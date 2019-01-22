@@ -16,7 +16,7 @@ export default class TextPropertyComponentNew extends SubstanceTextPropertyCompo
     }
     // if not managed by the MarkersManager we let the component be updated directly
     if (!this._isRegistered) {
-      this.context.appState.addObserver(['document'], this.rerender, this, { document: { path: this.getPath() } })
+      this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: this.getPath() } })
     }
   }
 

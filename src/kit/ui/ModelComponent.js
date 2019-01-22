@@ -1,7 +1,6 @@
 import { Component } from 'substance'
 import addModelObserver from '../model/addModelObserver'
 import removeModelObserver from '../model/removeModelObserver'
-import getComponentForModel from './getComponentForModel'
 
 export default class ModelComponent extends Component {
   didMount () {
@@ -12,7 +11,9 @@ export default class ModelComponent extends Component {
     removeModelObserver(this)
   }
 
-  getComponentForModel (model) {
-    return getComponentForModel(this.context, model)
+  // EXPERIMENTAL:
+  // trying to avoid unnecessary rerenderings
+  shouldRerender (newProps) {
+    return newProps.model !== this.props.model
   }
 }

@@ -1,12 +1,13 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 // TODO: add a test demonstrating that the TOC is working as expected
 // TODO: test editing of block-quote
-// TODO: test editing of inline-formula
 // TODO: test editing of block-formula
+
+// TODO: test editing of inline-formula
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
 // TODO: test IncreaseHeadingLevel
@@ -45,6 +46,32 @@ test('ManuscriptEditor: add inline formula', t => {
   t.end()
 })
 
+const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" content-type="math/tex"><tex-math><![CDATA[\\sqrt(13)]]></tex-math></inline-formula> def</p>`
+
+test('ManuscriptEditor: edit inline formula', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  const formulaContent = '\\sqrt(13)'
+  const changedFormulaContent = '\\sqrt(14)'
+  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-input')
+  loadBodyFixture(editor, PARAGRAPH_WITH_INLINE_FORMULA)
+  // Set selection to open prompt editor
+  setSelection(editor, 'p1.content', 4, 5)
+  const formulaInput = getFormulaInput()
+  t.notNil(formulaInput, 'there should be a math input inside popup')
+  t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
+  // Change the value
+  formulaInput.val(changedFormulaContent)
+  formulaInput._onChange()
+  // Change selection to close editor
+  setSelection(editor, 'p1.content', 2)
+  t.isNil(getFormulaInput(), 'there should be no math input now')
+  let inlineFormulaNode = doc.get('if-1')
+  t.equal(inlineFormulaNode.content, changedFormulaContent, 'should equal to: ' + changedFormulaContent)
+  t.end()
+})
+
 test('ManuscriptEditor: add block formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
@@ -53,6 +80,78 @@ test('ManuscriptEditor: add block formula', t => {
   t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
   let blockFormula = editor.find('*[data-id=p-2] + .sm-block-formula')
   t.notNil(blockFormula, 'there should be a block-formula now')
+  t.end()
+})
+
+const PARAGRAPH_AND_BLOCK_FORMULA = `<p id="p1">abcdef</p>
+<disp-formula id="df-1" content-type="math/tex">
+  <label>(1)</label>
+  <tex-math><![CDATA[\\sqrt(13)]]></tex-math>
+</disp-formula>
+`
+
+test('ManuscriptEditor: edit block formula', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  let editorSession = getEditorSession(editor)
+  const formulaContent = '\\sqrt(13)'
+  const formulaContentV2 = '\\sqrt(14)'
+  const formulaContentV3 = '\\sqrt(14)'
+  const selectFormula = () => {
+    editorSession.setSelection({
+      type: 'node',
+      nodeId: 'df-1',
+      surfaceId: 'body',
+      containerPath: ['body', 'content']
+    })
+  }
+  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-text-area')
+  loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)
+  // Set selection to open prompt editor
+  selectFormula()
+  let formulaInput = getFormulaInput()
+  t.notNil(formulaInput, 'there should be an input inside popup')
+  t.equal(formulaInput.val(), formulaContent, 'input should show formula')
+  // Change the value
+  formulaInput.val(formulaContentV2)
+  formulaInput._onChange()
+  // Change selection to close editor
+  setSelection(editor, 'p1.content', 2)
+  t.isNil(getFormulaInput(), 'there should be no math input now')
+  let blockFormulaNode = doc.get('df-1')
+  t.equal(blockFormulaNode.content, formulaContentV2, 'formula should have been updated')
+  // Submitting a change via CommandOrControl+Enter
+  selectFormula()
+  formulaInput = getFormulaInput()
+  formulaInput.val(formulaContentV3)
+  formulaInput.emit('keyevent', createKeyEvent('CommandOrControl+Enter'))
+  t.equal(blockFormulaNode.content, formulaContentV3, 'formula should have been updated')
+  t.end()
+})
+
+test('ManuscriptEditor: add block quote', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let editor = openManuscriptEditor(app)
+  setCursor(editor, 'p-2.content', 5)
+  let insertBlockQuoteTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-quote')
+  t.ok(insertBlockQuoteTool.click(), 'clicking on the insert block quote button should not throw error')
+  let blockQuote = editor.find('*[data-id=p-2] + .sm-block-quote')
+  t.notNil(blockQuote, 'there should be a block quote now')
+  t.end()
+})
+
+test('ManuscriptEditor: TOC dynamic sections appear only if content is not empty', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, ONE_PARAGRAPH)
+  const footnotesTOCSectionSelector = '.se-toc-entries [data-id="footnotes"]'
+  const getFootnotesTocSection = () => editor.find(footnotesTOCSectionSelector)
+  t.ok(getFootnotesTocSection().hasClass('sm-hidden'), 'footnotes entry should be hidden')
+  // click on insert footnote tool
+  const insertFootnoteTool = openMenuAndFindTool(editor, 'insert', '.sm-insert-footnote')
+  insertFootnoteTool.click()
+  t.notOk(getFootnotesTocSection().hasClass('sm-hidden'), 'footnotes entry should be visible')
   t.end()
 })
 
@@ -66,6 +165,17 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
   })
   let h1 = toc.find('*[data-id="sec-1"]')
   t.equal(h1.el.text(), 'TEST', 'TOC entry should have been updated')
+  t.end()
+})
+
+test('ManuscriptEditor: all TOC items should be clickable', t => {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const tocItemSelector = '.se-toc-entries a'
+  const tocItems = editor.findAll(tocItemSelector)
+  tocItems.forEach(item => {
+    t.ok(item.click(), 'clicking on TOC item should not throw: ' + item.textContent)
+  })
   t.end()
 })
 

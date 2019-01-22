@@ -13,7 +13,7 @@ export default class ListItemComponent extends NodeComponent {
         doc,
         name: path.join('.'),
         path
-      }).ref('text')
+      })
     )
     // for nested lists
     if (this.props.children) {

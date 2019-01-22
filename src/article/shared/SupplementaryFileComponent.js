@@ -24,7 +24,7 @@ export default class SupplementaryFileComponent extends NodeComponent {
         $$('div').addClass('se-href').text(node.href)
       ),
       $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'legend').ref('legend')
+      this._renderValue($$, 'legend')
     )
     return el
   }
@@ -34,7 +34,7 @@ export default class SupplementaryFileComponent extends NodeComponent {
     // TODO: We could return the PreviewComponent directly.
     // However this yields an error we need to investigate.
     // TODO: we need a read-only version for this
-    let thumbnail = this._renderValue($$, 'legend').ref('legend')
+    let thumbnail = this._renderValue($$, 'legend')
     let label = getLabel(node)
     // TODO: PreviewComponent should work with a model
     // FIXME: there is problem with redirected components

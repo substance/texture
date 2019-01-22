@@ -29,7 +29,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
           label,
           selected,
           overlayId: this.props.model.id
-        }).ref('select')
+        })
       )
     } else {
       const selectedLabels = []

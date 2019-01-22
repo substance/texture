@@ -1,8 +1,16 @@
-import { ModelComponent } from '../../kit'
-// import CardComponent from '../shared/CardComponent'
+import { Component } from 'substance'
+import { addModelObserver, removeModelObserver } from '../../kit'
 import MetadataCollectionComponent from './MetadataCollectionComponent'
 
-export default class MetadataSection extends ModelComponent {
+export default class MetadataSection extends Component {
+  didMount () {
+    addModelObserver(this.props.model, this._onModelUpdate, this)
+  }
+
+  dispose () {
+    removeModelObserver(this)
+  }
+
   render ($$) {
     const model = this.props.model
     const name = this.props.name
@@ -18,9 +26,6 @@ export default class MetadataSection extends ModelComponent {
       el.append(
         $$(MetadataCollectionComponent, { model })
       )
-      if (model.length === 0) {
-        el.addClass('sm-empty')
-      }
     } else {
       let CustomEditor = this.getComponent(model.id)
       let label = this.getLabel(name)
@@ -30,9 +35,25 @@ export default class MetadataSection extends ModelComponent {
         )
       )
       el.append(
-        $$(CustomEditor, { model }).ref('editor')
+        $$(CustomEditor, { model })
       )
     }
+    if (model.length === 0) {
+      el.addClass('sm-empty')
+    }
     return el
+  }
+
+  // ATTENTION: doing incremental update manually to avoid double rerendering of child collection
+  // TODO: it would be good if Substance could avoid rerendering a component twice in one run
+  _onModelUpdate () {
+    let model = this.props.model
+    if (model.type === 'collection') {
+      if (model.length === 0) {
+        this.el.addClass('sm-empty')
+      } else {
+        this.el.removeClass('sm-empty')
+      }
+    }
   }
 }

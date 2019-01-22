@@ -134,7 +134,7 @@ export default class TextureConfigurator extends Configurator {
   getCommandGroup (name) {
     let commandGroup = this.config.commandGroups[name]
     if (!commandGroup) {
-      console.warn('No command group registered by this name: ' + name)
+      // console.warn('No command group registered by this name: ' + name)
       commandGroup = []
     }
     return commandGroup

@@ -27,7 +27,7 @@ export default class TextInput extends Surface {
       tagName: 'div',
       placeholder,
       path
-    }).ref('property').addClass('se-input')
+    }).addClass('se-input')
     el.append(content)
     return el
   }

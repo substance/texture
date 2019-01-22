@@ -30,7 +30,7 @@ export default class TextNodeComponent extends Component {
         name: path.join('.'),
         path,
         placeholder: this.props.placeholder
-      }).ref('text')
+      })
     )
     // TODO: ability to edit attributes
     return el

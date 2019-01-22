@@ -9,8 +9,5 @@ export default class ChildComponent extends ValueComponent {
     props.node = child
     delete props.model
     return $$(ComponentClass, props)
-      // FIXME: there seems to be an issue with forwarding components:
-      // it seems that in this case not all involved components get disposed correctly
-      .ref('child')
   }
 }

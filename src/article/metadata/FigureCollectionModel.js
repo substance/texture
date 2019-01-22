@@ -14,6 +14,10 @@ export default class FigureCollectionModel {
     return '@figures'
   }
 
+  get length () {
+    return this.getItems().length
+  }
+
   get isCollection () {
     return true
   }

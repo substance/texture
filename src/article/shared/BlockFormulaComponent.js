@@ -1,10 +1,10 @@
-import { Component } from 'substance'
+import { NodeComponent } from '../../kit'
 import katex from 'katex'
 import { PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
 import { getLabel } from './nodeHelpers'
 
-export default class BlockFormulaComponent extends Component {
+export default class BlockFormulaComponent extends NodeComponent {
   render ($$) {
     const mode = this.props.mode
     const node = this.props.node

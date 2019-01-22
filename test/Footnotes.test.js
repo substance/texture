@@ -1,11 +1,10 @@
 import { test } from 'substance-test'
-import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture, openMenuAndFindTool } from './shared/integrationTestHelpers'
+import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture, openMenuAndFindTool, getSelection } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
-const manuscriptFootnoteSelector = '.sc-manuscript > .sc-collection.sm-footnotes > .sc-footnote'
+const manuscriptFootnoteSelector = '.sc-manuscript > .sc-manuscript-section.sm-footnotes .sc-footnote'
 const tableFootnoteSelector = '.sc-table-figure > .se-footnotes > .sc-footnote'
-const footnoteContentXpath = ['article', 'footnote', 'paragraph']
 const tableFootnoteContentXpath = ['article', 'body', 'table-figure', 'footnote', 'paragraph']
 
 test('Footnotes: add a footnote while selection is in the manuscript body', t => {
@@ -14,7 +13,17 @@ test('Footnotes: add a footnote while selection is in the manuscript body', t =>
   setSelection(editor, 'p-0.content', 1)
   _insertFootnote(editor)
   t.equal(_getManuscriptFootnotes(editor).length, 2, 'there should be two manuscript footnotes')
-  t.deepEqual(_getCurrentXpath(editor), footnoteContentXpath, 'selection should be inside manuscript footnote')
+  let xpath = _getCurrentXpath(editor)
+  let footnoteEntry = xpath.find(e => e.type === 'footnote')
+  let sel = getSelection(editor)
+  t.notNil(footnoteEntry, 'selection should be inside manuscript footnote')
+  t.deepEqual({
+    surfaceId: sel.surfaceId,
+    containerPath: sel.containerPath
+  }, {
+    surfaceId: `${footnoteEntry.id}.content`,
+    containerPath: [footnoteEntry.id, 'content']
+  }, 'selection should have correct surfaceId and containerPath')
   t.end()
 })
 
@@ -31,7 +40,7 @@ test('Footnotes: add a footnote while selection is on a table figure', t => {
   })
   _insertFootnote(editor)
   t.equal(_getTableFootnotes(editor).length, 3, 'there should be three table footnotes')
-  t.deepEqual(_getCurrentXpath(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
+  t.deepEqual(_getCurrentXpathTypes(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
 
@@ -42,7 +51,7 @@ test('Footnotes: add a footnote while selection is inside a table cell', t => {
   setSelection(editor, 't-1_2_1.content', 1)
   _insertFootnote(editor)
   t.equal(_getTableFootnotes(editor).length, 3, 'there should be three table footnotes')
-  t.deepEqual(_getCurrentXpath(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
+  t.deepEqual(_getCurrentXpathTypes(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
 
@@ -63,7 +72,7 @@ test('Footnotes: add a footnote while selection is on a table cell', t => {
   })
   _insertFootnote(editor)
   t.equal(_getTableFootnotes(editor).length, 3, 'there should be three table footnotes')
-  t.deepEqual(_getCurrentXpath(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
+  t.deepEqual(_getCurrentXpathTypes(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
 
@@ -74,7 +83,7 @@ test('Footnotes: add a footnote in the manuscript while selection is inside a ta
   setSelection(editor, 'table-1-caption-p-1.content', 1)
   _insertFootnote(editor)
   t.equal(_getTableFootnotes(editor).length, 3, 'there should be three table footnotes')
-  t.deepEqual(_getCurrentXpath(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
+  t.deepEqual(_getCurrentXpathTypes(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')
   t.end()
 })
 
@@ -180,9 +189,13 @@ function _insertFootnote (el) {
   insertFootnoteBtn.click()
 }
 
-function _getCurrentXpath (el) {
-  const selectionState = getSelectionState(el)
-  const xpath = selectionState.xpath
+function _getCurrentXpath (editor) {
+  const selectionState = getSelectionState(editor)
+  return selectionState.xpath
+}
+
+function _getCurrentXpathTypes (editor) {
+  const xpath = _getCurrentXpath(editor)
   return xpath.map(p => p.type)
 }
 

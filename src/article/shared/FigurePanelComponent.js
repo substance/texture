@@ -39,11 +39,14 @@ export default class FigurePanelComponent extends NodeComponent {
       // no label for the graphic
       this._renderContent($$),
       $$(SectionLabel, {label: 'title-label'}),
-      this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).ref('title').addClass('se-title'),
+      this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
       $$(SectionLabel, {label: 'caption-label'}),
-      this._renderValue($$, 'caption', { placeholder: this.getLabel('caption-placeholder') }).ref('caption').addClass('se-caption')
+      this._renderValue($$, 'caption', { placeholder: this.getLabel('caption-placeholder') }).addClass('se-caption')
     )
 
+    // TODO: this is problematic as this node does not necessarily rerender if node.metadata has changed
+    // the right way is to use a ModelComponent or use an incremental updater
+    // rerender the whole component on metadata changes is not good, as it leads to double rerender, because FigureMetadataComponent reacts too
     if (node.metadata.length > 0) {
       el.append(
         $$(SectionLabel, {label: 'metadata-label'}),
@@ -55,7 +58,7 @@ export default class FigurePanelComponent extends NodeComponent {
   }
 
   _renderContent ($$) {
-    return this._renderValue($$, 'content').ref('content').addClass('se-content')
+    return this._renderValue($$, 'content').addClass('se-content')
   }
 
   _renderPreviewVersion ($$) {
@@ -68,7 +71,7 @@ export default class FigurePanelComponent extends NodeComponent {
       let ContentComponent = this.getComponent(content.type)
       thumbnail = $$(ContentComponent, {
         node: content
-      }).ref('content')
+      })
     }
     // TODO: PreviewComponent should work with a model
     // FIXME: there is problem with redirected components
@@ -81,7 +84,7 @@ export default class FigurePanelComponent extends NodeComponent {
   }
 
   _renderMetadataVersion ($$) {
-    return $$(FigurePanelComponentWithMetadata, { node: this.props.node }).ref('metadata')
+    return $$(FigurePanelComponentWithMetadata, { node: this.props.node })
   }
 
   _getMode () {

@@ -1,3 +1,7 @@
+.sc-footnote {
+  margin: var(--t-half-spacing) 0;
+}
+
 .sc-footnote .se-container {
   position: relative;
   display: flex;
@@ -7,7 +11,7 @@
 .sc-footnote .se-container .se-label {
   position: relative;
   min-width: var(--t-default-spacing);
-  margin: 0px var(--t-default-spacing);
+  margin: 0 var(--t-default-spacing);
   font-weight: var(--t-bold-font-weight);
   text-align: center;
   cursor: default;

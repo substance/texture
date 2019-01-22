@@ -21,15 +21,15 @@ export default class CollectionComponent extends Component {
     if (renderAsContainer) {
       return $$(EditableCollection, Object.assign({}, props, {
         containerPath: props.model.getPath()
-      })).ref('editor')
+      }))
     } else {
-      return $$(ReadOnlyCollection, props).ref('diplay')
+      return $$(ReadOnlyCollection, props)
     }
   }
 }
 
 class ReadOnlyCollection extends ValueComponent {
-  // TODO: this is less efficient than ContainerEditor as it will always render the whole collection
+  // NOTE: this is less efficient than ContainerEditor as it will always render the whole collection
   render ($$) {
     let props = this.props
     let model = props.model

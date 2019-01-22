@@ -24,9 +24,9 @@ export default class ReferenceUploadComponent extends Component {
       $$('input').attr({
         type: 'file',
         accept: 'application/json'
-      }).on('click', this._supressClickPropagation)
+      }).ref('input')
+        .on('click', this._supressClickPropagation)
         .on('change', this._selectFile)
-        .ref('input')
     ).on('drop', this._handleDrop)
       .on('dragstart', this._onDrag)
       .on('dragenter', this._onDrag)

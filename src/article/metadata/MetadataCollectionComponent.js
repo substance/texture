@@ -15,6 +15,7 @@ export default class MetadataCollectionComponent extends ModelComponent {
         $$(CardComponent, {
           node: item,
           label: item.type
+        // TODO: maybe it would be better to use an explicit prop, then the implicit one
         }).append(
           $$(ItemEditor, {
             node: item,

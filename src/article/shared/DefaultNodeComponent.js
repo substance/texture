@@ -43,12 +43,13 @@ export default class DefaultNodeComponent extends Component {
     const properties = this._getProperties()
     const propNames = Array.from(properties.keys())
     // all required and non-empty properties are always displayed
-    let visiblePropNames = fullMode ? propNames : this._getRequiredOrNonEmptyPropertyNames(properties)
+    let mandatoryPropNames = this._getRequiredOrNonEmptyPropertyNames(properties)
+    let visiblePropNames = fullMode ? propNames : mandatoryPropNames
     // show only the first k items
     if (visiblePropNames.length === 0) {
       visiblePropNames = propNames.slice(0, CARD_MINIMUM_FIELDS)
     }
-    let hasHiddenProps = visiblePropNames.length < propNames.length
+    let hasHiddenProps = mandatoryPropNames.length < propNames.length
 
     for (let name of visiblePropNames) {
       let value = properties.get(name)

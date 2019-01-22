@@ -20,6 +20,7 @@ export default class EditExtLinkTool extends ToggleTool {
         type: 'url',
         path: urlPath,
         placeholder: 'Paste or type a link url'
+      // TODO: this component has always the same structure and should preserve all elements, event without ref
       }).ref('input'),
       $$(Button, {
         icon: 'open-link',

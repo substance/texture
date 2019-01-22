@@ -1,12 +1,14 @@
-import { domHelpers } from 'substance'
+import { parseKeyCombo, parseKeyEvent } from 'substance'
 import { ToggleTool } from '../../kit'
+
+const COMMAND_OR_CONTROL_ENTER = parseKeyCombo('CommandOrControl+Enter')
 
 /*
   Tool to edit math markup.
 */
 export default class EditDispFormulaTool extends ToggleTool {
   render ($$) {
-    let Input = this.getComponent('input')
+    let TextArea = this.getComponent('text-area')
     let commandState = this.props.commandState
     let el = $$('div').addClass('sc-edit-math-tool')
 
@@ -17,16 +19,19 @@ export default class EditDispFormulaTool extends ToggleTool {
     }
     let nodeId = this.getNodeId()
     el.append(
-      $$(Input, {
-        type: 'text',
+      $$(TextArea, {
         path: [nodeId, 'content'],
-        placeholder: 'Enter TeX'
+        placeholder: 'Enter TeX',
+        rows: 10,
+        cols: 80,
+        retainFocus: true
       }).addClass('sm-big-input')
-        // ATTNETION have a ref on it, otherwise the input will get rerendered on every change
+        // ATTENTION have a ref on it, otherwise the input will get rerendered on every change
+        // TODO: this component has always the same structure and should preserve all elements, event without ref
         .ref('input')
         // stopping keydown events so that the input field is not distracted by other editor keyboard handler
         // TODO: maybe let 'Save' through...
-        .on('keydown', domHelpers.stop)
+        .on('keydown', this._onInputKeydown)
     )
     return el
   }
@@ -35,7 +40,18 @@ export default class EditDispFormulaTool extends ToggleTool {
     return this.props.commandState.nodeId
   }
 
-  onDelete (e) { // eslint-disable-line no-unused-vars
-    console.error('FIXME: use ArticleAPI to delete formula')
+  _onInputKeydown (event) {
+    // in any case we do not want to let any keydowns bubble up when the cursor is inside the input
+    // TODO: is that so?
+    event.stopPropagation()
+    let combo = parseKeyEvent(event)
+    switch (combo) {
+      case COMMAND_OR_CONTROL_ENTER: {
+        this.refs.input._onChange()
+        break
+      }
+      default:
+        // nothing
+    }
   }
 }

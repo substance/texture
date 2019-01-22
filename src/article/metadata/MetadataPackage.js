@@ -136,6 +136,7 @@ export default {
     config.addLabel('figures', 'Figures')
     config.addLabel('footnotes', 'Footnotes')
     config.addLabel('groups', 'Groups')
+    config.addLabel('issueTitle', 'Issue Title')
     config.addLabel('keywords', 'Keywords')
     config.addLabel('subjects', 'Subjects')
     config.addLabel('organisations', 'Affiliations')

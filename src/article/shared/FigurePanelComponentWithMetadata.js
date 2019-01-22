@@ -6,7 +6,7 @@ import FigureMetadataComponent from './FigureMetadataComponent'
 
 export default class FigurePanelComponentWithMetadata extends DefaultNodeComponent {
   _getClassNames () {
-    return `sc-figure-metadata`
+    return `sc-figure-metadata sc-default-node`
   }
 
   _renderHeader ($$) {

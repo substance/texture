@@ -4,8 +4,7 @@ import {
   ListPackage,
   SchemaDrivenCommandManager,
   MultiSelectPackage,
-  AnnotationCommand,
-  EditInlineNodeCommand
+  AnnotationCommand
 } from 'substance'
 
 import {
@@ -22,7 +21,7 @@ import ReferenceListComponent from '../shared/ReferenceListComponent'
 import EditXrefTool from './EditXrefTool'
 import EditExtLinkTool from './EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
-import TOC from './TOC'
+import ManuscriptTOC from './ManuscriptTOC'
 import FigureComponent from '../shared/FigureComponent'
 import FigurePanelComponent from '../shared/FigurePanelComponent'
 import TableFigureComponent from '../shared/TableFigureComponent'
@@ -35,6 +34,7 @@ import {
 } from '../shared/FigurePanelCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import DropFigure from './DropFigure'
+import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
 import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
@@ -91,7 +91,7 @@ export default {
     config.addComponent('footnote', FootnoteComponent, true)
     config.addComponent('reference', ReferenceComponent, true)
     config.addComponent('reference-list', ReferenceListComponent, true)
-    config.addComponent('toc', TOC, true)
+    config.addComponent('toc', ManuscriptTOC, true)
 
     config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'
@@ -119,8 +119,7 @@ export default {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
     })
-    config.addCommand('edit-block-formula', EditInlineNodeCommand, {
-      nodeType: 'block-formula',
+    config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
       commandGroup: 'prompt'
     })
     config.addCommand('edit-external-link', EditAnnotationCommand, {

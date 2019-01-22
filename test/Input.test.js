@@ -7,7 +7,7 @@ test('Input: ManyRelationship dropdown', t => {
   let metadataEditor = openMetadataEditor(app)
   // ATTENTION: just taking the first ManyRelationshipInput we find
   let manyRelationship = metadataEditor.find('.sc-many-relationship')
-  let selectInput = manyRelationship.refs.select
+  let selectInput = manyRelationship.find('.sc-multi-select-input')
   t.ok(selectInput.el.is('.sm-collapsed'), 'the dropdown should be collapsed in the beginning')
   // click on the input to open the dropdown
   selectInput.el.click()

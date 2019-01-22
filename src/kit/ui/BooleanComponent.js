@@ -16,7 +16,7 @@ export default class BooleanComponent extends ValueComponent {
       el.addclass('sm-readonly')
     }
     el.append(
-      $$(CheckboxInput, { value }).ref('checkbox')
+      $$(CheckboxInput, { value })
     )
     return el
   }

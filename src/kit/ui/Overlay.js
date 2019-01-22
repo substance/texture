@@ -31,14 +31,10 @@ export default class Overlay extends ToolPanel {
     el.addClass('sm-theme-' + this.getTheme())
     el.append(
       $$('div').addClass('se-active-tools').append(
-        this.renderEntries($$)
+        this._renderEntries($$)
       ).ref('entriesContainer')
     )
     return el
-  }
-
-  renderEntries (...args) {
-    return super.renderEntries(...args)
   }
 
   _positionOverlay () {

@@ -9,6 +9,9 @@ export default class ArticleHTMLImporter extends HTMLImporter {
       converters: _getConverters(configurator),
       idAttribute: 'data-id'
     })
+
+    // disabling warnings about default importers
+    this.IGNORE_DEFAULT_WARNINGS = true
   }
 
   // TODO: it is necessary to set the document instance so that the importer is creating nodes for this document

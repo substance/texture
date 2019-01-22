@@ -26,6 +26,7 @@ export default class ArticleInformationSectionComponent extends Component {
       node = model
       editorEl = renderModel($$, this, card.model, { placeholder: this.getLabel(card.placeholder) })
     }
+    editorEl.ref(node.id)
     return $$(CardComponent, { label: card.name, node: node }).append(editorEl)
   }
 }

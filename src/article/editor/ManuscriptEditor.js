@@ -36,7 +36,6 @@ export default class ManuscriptEditor extends EditorPanel {
   dispose () {
     super.dispose()
 
-    this._tocProvider.off(this)
     DefaultDOMElement.getBrowserWindow().off(this)
   }
 
@@ -107,7 +106,6 @@ export default class ManuscriptEditor extends EditorPanel {
     const Dropzones = this.getComponent('dropzones')
 
     let contentPanel = $$(ScrollPane, {
-      tocProvider: this._tocProvider,
       // scrollbarType: 'substance',
       contextMenu: 'custom',
       scrollbarPosition: 'right'

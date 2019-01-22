@@ -10,7 +10,6 @@ import AbstractScrollPane from './AbstractScrollPane'
   @prop {String} scrollbarType 'native' or 'substance' for a more advanced visual scrollbar. Defaults to 'native'
   @prop {String} [scrollbarPosition] 'left' or 'right' only relevant when scrollBarType: 'substance'. Defaults to 'right'
   @prop {ui/Highlights} [highlights] object that maintains highlights and can be manipulated from different sources
-  @prop {ui/TOCProvider} [tocProvider] object that maintains table of content entries
 
   @example
 

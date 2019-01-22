@@ -3,7 +3,7 @@ import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fix
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
-const manuscriptFootnoteSelector = '.sc-manuscript > .sc-collection.sm-footnotes > .sc-footnote'
+const manuscriptFootnoteSelector = '.sc-manuscript > .sc-manuscript-section.sm-footnotes .sc-footnote'
 const tableFootnoteSelector = '.sc-table-figure > .se-footnotes > .sc-footnote'
 const tableFootnoteContentXpath = ['article', 'body', 'table-figure', 'footnote', 'paragraph']
 

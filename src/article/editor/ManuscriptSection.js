@@ -15,7 +15,7 @@ export default class ManuscriptSection extends Component {
 
     let el = $$('div').addClass('sc-manuscript-section').addClass(`sm-${name}`)
     // only rendering content if
-    if (hideWhenEmpty && model.isEmpty()) {
+    if (hideWhenEmpty && model.length === 0) {
       el.addClass('sm-empty')
     } else {
       el.append($$(SectionLabel, { label }).ref('label'))

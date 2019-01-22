@@ -111,7 +111,7 @@ class DynamicTOCEntry extends ValueComponent {
         'data-id': id
       })
       .append(label)
-    if (model.isEmpty()) {
+    if (model.length === 0) {
       el.addClass('sm-hidden')
     }
     return el

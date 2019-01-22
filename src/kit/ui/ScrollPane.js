@@ -10,7 +10,6 @@ import AbstractScrollPane from './AbstractScrollPane'
   @prop {String} scrollbarType 'native' or 'substance' for a more advanced visual scrollbar. Defaults to 'native'
   @prop {String} [scrollbarPosition] 'left' or 'right' only relevant when scrollBarType: 'substance'. Defaults to 'right'
   @prop {ui/Highlights} [highlights] object that maintains highlights and can be manipulated from different sources
-  @prop {ui/TOCProvider} [tocProvider] object that maintains table of content entries
 
   @example
 
@@ -20,7 +19,6 @@ import AbstractScrollPane from './AbstractScrollPane'
     scrollbarPosition: 'left', // defaults to right
     onScroll: this.onScroll.bind(this),
     highlights: this.contentHighlights,
-    tocProvider: this.tocProvider
   })
   ```
 */
@@ -139,10 +137,10 @@ export default class ScrollPane extends AbstractScrollPane {
     if (this.props.onScroll) {
       this.props.onScroll(scrollPos, scrollable)
     }
-    // Update TOCProvider given
-    if (this.props.tocProvider) {
-      this.props.tocProvider.markActiveEntry(this)
-    }
+    // FIXME: bring back TOC activeEntry
+    // if (this.props.tocProvider) {
+    //   this.props.tocProvider.markActiveEntry(this)
+    // }
     this.emit('scroll', scrollPos, scrollable)
   }
 

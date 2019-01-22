@@ -19,7 +19,7 @@ export default class ManuscriptComponent extends Component {
         name: 'title',
         label: this.getLabel('title-label'),
         model: titleModel
-      }).append(
+      }).ref('titleSection').append(
         renderModel($$, this, titleModel, {
           placeholder: this.getLabel('title-placeholder')
         }).ref('title').addClass('sm-title')
@@ -32,7 +32,7 @@ export default class ManuscriptComponent extends Component {
         name: 'subtitle',
         label: this.getLabel('subtitle-label'),
         model: subTitleModel
-      }).append(
+      }).ref('subtitleSection').append(
         renderModel($$, this, subTitleModel, {
           placeholder: this.getLabel('subtitle-placeholder')
         }).ref('subTitle').addClass('sm-subtitle')
@@ -46,7 +46,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('authors-label'),
         model: authorsModel,
         hideWhenEmpty: true
-      }).append(
+      }).ref('authorsSection').append(
         $$(AuthorsListComponent, {
           model: authorsModel,
           placeholder: this.getLabel('authors-placeholder')
@@ -60,7 +60,7 @@ export default class ManuscriptComponent extends Component {
         name: 'abstract',
         label: this.getLabel('abstract-label'),
         model: abstractModel
-      }).append(
+      }).ref('abstractSection').append(
         renderModel($$, this, abstractModel, {
           name: 'abstract',
           placeholder: this.getLabel('abstract-placeholder')
@@ -74,7 +74,7 @@ export default class ManuscriptComponent extends Component {
         name: 'body',
         label: this.getLabel('body-label'),
         model: bodyModel
-      }).append(
+      }).ref('bodySection').append(
         renderModel($$, this, bodyModel, {
           name: 'body',
           placeholder: this.getLabel('body-placeholder')
@@ -89,7 +89,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('footnotes-label'),
         model: footnotesModel,
         hideWhenEmpty: true
-      }).append(
+      }).ref('footnotesSection').append(
         renderModel($$, this, footnotesModel).ref('footnotes').addClass('sm-footnotes')
       )
     )
@@ -101,7 +101,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('references-label'),
         model: referencesModel,
         hideWhenEmpty: true
-      }).append(
+      }).ref('referencesSection').append(
         $$(ReferenceListComponent, {
           model: referencesModel
         }).ref('references').addClass('sm-references')

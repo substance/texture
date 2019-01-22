@@ -141,27 +141,27 @@ export default class Table extends DocumentNode {
     return {
       type: 'table',
       id: options.id,
-      rows: Array(headerRowCount).fill().map(_ => {
-        return {
-          type: 'table-row',
-          cells: Array(colCount).fill().map(_ => {
-            return {
-              type: 'table-cell',
-              heading: true
-            }
-          })
-        }
-      }).concat(Array(rowCount).fill().map(_ => {
-        return {
-          type: 'table-row',
-          cells: Array(colCount).fill().map(_ => {
-            return {
-              type: 'table-cell'
-            }
-          })
-        }
-      }))
+      rows: Table.getRowsTemplate(headerRowCount, colCount, true)
+        .concat(Table.getRowsTemplate(rowCount, colCount))
     }
+  }
+
+  static getRowsTemplate (rowCount, colCount, heading) {
+    return Array(rowCount).fill().map(_ => {
+      return {
+        type: 'table-row',
+        cells: Table.getCellsTemplate(colCount, heading)
+      }
+    })
+  }
+
+  static getCellsTemplate (colCount, heading) {
+    return Array(colCount).fill().map(_ => {
+      return {
+        type: 'table-cell',
+        heading
+      }
+    })
   }
 }
 

@@ -5,7 +5,7 @@ import {
 } from 'substance'
 import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
 import TestVfs from './TestVfs'
-import { DOMEvent } from './testHelpers'
+import { DOMEvent } from './testHelpers'
 
 export function setCursor (editor, path, pos) {
   if (isArray(path)) {

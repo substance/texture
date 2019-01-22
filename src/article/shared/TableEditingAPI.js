@@ -1,5 +1,6 @@
 import { documentHelpers } from 'substance'
 import { getCellRange, getRangeFromMatrix } from '../shared/tableHelpers'
+import { Table } from '../models'
 
 export default class TableEditingAPI {
   constructor (editorSession) {
@@ -28,18 +29,18 @@ export default class TableEditingAPI {
     let selData = this._getSelectionData()
     let { table, startRow, endRow, startCol, endCol } = selData
     let doc = this._getDocument()
-    let cells = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
+    let matrix = getRangeFromMatrix(table.getCellMatrix(), startRow, startCol, endRow, endCol, true)
     let snippet = doc.createSnippet()
-    let tableCopy = snippet.create({ type: 'table' })
-    // TODO: consolidate inconsistent Node API (Container vs XMLElementNode)
-    for (let row of cells) {
-      let trow = snippet.create({ type: 'table-row' })
+    let tableData = { type: 'table', rows: [] }
+    for (let row of matrix) {
+      let rowData = { type: 'table-row', cells: [] }
       for (let cell of row) {
-        let _nodes = documentHelpers.copyNode(cell).map(_node => snippet.create(_node))
-        trow.appendChild(_nodes[0])
+        let ids = documentHelpers.copyNode(cell).map(_node => snippet.create(_node).ids)
+        rowData.cells.push(ids[0])
       }
-      tableCopy.appendChild(trow)
+      tableData.rows.push(snippet.create(rowData).id)
     }
+    let tableCopy = snippet.create(tableData)
     snippet.getContainer().append(tableCopy.id)
     return snippet
   }
@@ -75,16 +76,8 @@ export default class TableEditingAPI {
         for (let colIdx = 0; colIdx < ncols; colIdx++) {
           let copyCell = copyCellMatrix[rowIdx][colIdx]
           let cell = cellMatrix[startRow + rowIdx][startCol + colIdx]
-          if (copyCell.getAttribute('heading')) {
-            cell.setAttribute('heading', true)
-          } else {
-            cell.removeAttribute('heading')
-          }
-          // TODO: limit rowspan so that it does not exceed overall dims
-          cell.setAttribute('rowspan', copyCell.rowspan)
-          cell.setAttribute('colspan', copyCell.colspan)
           // TODO: copy annotations too
-          cell.textContent = copyCell.textContent
+          cell.assign(copyCell.toJSON())
         }
       }
     }, { action: 'paste' })
@@ -194,8 +187,8 @@ export default class TableEditingAPI {
       this.editorSession.transaction(tx => {
         cellIds.forEach(id => {
           let cell = tx.get(id)
-          cell.removeAttribute('rowspan')
-          cell.removeAttribute('colspan')
+          tx.set([cell.id, 'rowspan', 1])
+          tx.set([cell.id, 'colspan', 1])
         })
       }, { action: 'unmergeCells' })
     }
@@ -277,30 +270,22 @@ export default class TableEditingAPI {
     }
   }
 
-  _getCreateElement (table) {
-    const doc = table.getDocument()
-    return doc.createElement.bind(doc)
-  }
-
   _createRowsAt (table, rowIdx, n) {
-    let $$ = this._getCreateElement(table)
-    const M = table.getColumnCount()
-    let rowAfter = table.getRowAt(rowIdx)
+    let doc = table.getDocument()
+    let M = table.getColumnCount()
+    const path = [table.id, 'rows']
+    let rowIds = Table.getRowsTemplate(n, M).map(data => documentHelpers.createNodeFromJson(doc, data).id)
     for (let i = 0; i < n; i++) {
-      let row = $$('table-row')
-      for (let j = 0; j < M; j++) {
-        let cell = $$('table-cell')
-        row.append(cell)
-      }
-      table.insertBefore(row, rowAfter)
+      documentHelpers.insertAt(doc, path, rowIdx + i, rowIds[i])
     }
   }
 
   _deleteRows (table, startRow, endRow) {
+    let doc = table.getDocument()
+    const path = [table.id, 'rows']
     for (let rowIdx = endRow; rowIdx >= startRow; rowIdx--) {
-      let row = table.getRowAt(rowIdx)
-      table.removeChild(row)
-      documentHelpers.deepDeleteNode(table.getDocument(), row)
+      let row = documentHelpers.removeAt(doc, path, rowIdx)
+      documentHelpers.deepDeleteNode(table.getDocument(), row.id)
     }
   }
 
@@ -317,25 +302,23 @@ export default class TableEditingAPI {
   }
 
   _createColumnsAt (table, colIdx, n) {
-    let $$ = this._getCreateElement(table)
-    let rowIt = table.getChildNodeIterator()
-    while (rowIt.hasNext()) {
-      let row = rowIt.next()
-      let cellAfter = row.getCellAt(colIdx)
-      for (let j = 0; j < n; j++) {
-        let cell = $$('table-cell')
-        row.insertBefore(cell, cellAfter)
+    let doc = table.getDocument()
+    let rows = table.resolve('rows')
+    for (let row of rows) {
+      let path = [row.id, 'cells']
+      let cellIds = Table.getCellsTemplate(n).map(data => documentHelpers.createNodeFromJson(doc, data).id)
+      for (let i = 0; i < n; i++) {
+        documentHelpers.insertAt(doc, path, colIdx + i, cellIds[i])
       }
     }
   }
 
   _clearValues (table, startRow, startCol, endRow, endCol) {
+    let doc = table.getDocument()
     for (let rowIdx = startRow; rowIdx <= endRow; rowIdx++) {
       for (let colIdx = startCol; colIdx <= endCol; colIdx++) {
         let cell = table.getCell(rowIdx, colIdx)
-        // TODO: are we sure that annotations get deleted this way?
-        // Note that there is a delete logic behind this setText()
-        cell.setText('')
+        documentHelpers.deleteTextRange(doc, { path: cell.getPath(), offset: 0 })
       }
     }
   }

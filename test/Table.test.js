@@ -332,7 +332,48 @@ test('Table: insert rows', t => {
   contextMenu.find('.sm-insert-rows-below').click()
   rowCount = _getRowCount(tableComp)
   t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
-  // TODO: can we check that the row was inserted above?
+  // TODO: can we check that the row was inserted below?
+
+  t.end()
+})
+
+test('Table: insert columns', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let previousColCount = _getColumnCount(tableComp)
+
+  _selectCell(tableComp, 1, 0)
+  let contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-insert-columns-left').click()
+  let colCount = _getColumnCount(tableComp)
+  t.equal(colCount, previousColCount + 1, 'there should be one new col')
+  // TODO: can we check that the col was inserted before?
+
+  previousColCount = colCount
+  _selectCell(tableComp, 1, 0)
+  contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-insert-columns-right').click()
+  colCount = _getColumnCount(tableComp)
+  t.equal(colCount, previousColCount + 1, 'there should be one new col')
+  // TODO: can we check that the col was inserted after?
+
+  // insert multiple cols before
+  previousColCount = colCount
+  _selectRange(tableComp, 1, 0, 1, 1)
+  contextMenu.find('.sm-insert-columns-left').click()
+  colCount = _getColumnCount(tableComp)
+  t.equal(colCount, previousColCount + 2, 'there should be two more cols')
+  // TODO: can we check that the cols were inserted before?
+
+  // insert multiple cols after
+  previousColCount = colCount
+  _selectRange(tableComp, 1, 0, 1, 1)
+  contextMenu.find('.sm-insert-columns-right').click()
+  colCount = _getColumnCount(tableComp)
+  t.equal(colCount, previousColCount + 2, 'there should be two more cols')
+  // TODO: can we check that the cols were inserted after?
 
   t.end()
 })
@@ -362,6 +403,10 @@ function _getTable (tableComp) {
 
 function _getRowCount (tableComp) {
   return _getTable(tableComp).getRowCount()
+}
+
+function _getColumnCount (tableComp) {
+  return _getTable(tableComp).getColumnCount()
 }
 
 function _openContextMenu (tableComp) {

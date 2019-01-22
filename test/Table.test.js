@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, PseudoEvent
+  getEditorSession, annotate
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -296,14 +296,59 @@ test('Table: table context menu', t => {
   t.end()
 })
 
-function _selectCell (tableComp) {
-  let td = tableComp.find('td')
-  tableComp._onMousedown(new DOMEvent({ target: td.el }))
-  td.el.click()
+test('Table: insert rows', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let previousRowCount = _getRowCount(tableComp)
+
+  _selectCell(tableComp, 1, 0)
+  let contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-insert-rows-above').click()
+  let rowCount = _getRowCount(tableComp)
+  t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
+  // TODO: can we check that the row was inserted above?
+
+  previousRowCount = rowCount
+  _selectCell(tableComp, 1, 0)
+  contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-insert-rows-below').click()
+  rowCount = _getRowCount(tableComp)
+  t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
+  // TODO: can we check that the row was inserted below?
+
+  t.end()
+})
+
+function _selectCell (tableComp, rowIdx = 1, colIdx = 0) {
+  let rows = tableComp.findAll('tr')
+  let cells = rows[rowIdx].findAll('td, th')
+  let cell = cells[colIdx]
+  tableComp._onMousedown(new DOMEvent({ target: cell.el }))
+  cell.el.click()
+}
+
+// function _selectRange (tableComp, startRowIdx, startColIdx, endRowIdx, endColIdx) {
+//   let rows = tableComp.findAll('tr')
+//   let startRow = rows[startRowIdx]
+//   let startCell = startRow.findAll('td, th')[startColIdx]
+//   let endRow = rows[endRowIdx]
+//   let endCell = endRow.findAll('td, th')[endColIdx]
+//   tableComp._onMousedown(new DOMEvent({ target: cell.el }))
+//   cell.el.click()
+// }
+
+function _getTable (tableComp) {
+  return tableComp.props.node
+}
+
+function _getRowCount (tableComp) {
+  return _getTable(tableComp).getRowCount()
 }
 
 function _openContextMenu (tableComp) {
-  tableComp._onContextMenu(new PseudoEvent({ clientY: 0, clientX: 0 }))
+  tableComp._onContextMenu(new DOMEvent({ clientY: 0, clientX: 0 }))
   return tableComp.find('.sc-context-menu')
 }
 

@@ -28,6 +28,8 @@ import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
 
+import AddSupplementaryFileWorkflow from '../shared/AddSupplementaryFileWorkflow'
+
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
@@ -53,7 +55,7 @@ import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import { CreateListCommand, ChangeListTypeCommand } from './ListCommands'
-import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
+import InsertNodeFromWorkflowCommand from './InsertNodeFromWorkflowCommand'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
@@ -61,7 +63,7 @@ import {
 import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
-import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
+import { ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
@@ -85,6 +87,7 @@ export default {
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
 
+    config.addComponent('add-supplementary-file', AddSupplementaryFileWorkflow)
     config.addComponent('figure', FigureComponent, true)
     config.addComponent('figure-panel', FigurePanelComponent, true)
     config.addComponent('table-figure', TableFigureComponent, true)
@@ -161,7 +164,8 @@ export default {
       nodeType: 'figure',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
+    config.addCommand('insert-file', InsertNodeFromWorkflowCommand, {
+      workflow: 'add-supplementary-file',
       nodeType: 'supplementary-file',
       commandGroup: 'insert'
     })
@@ -327,7 +331,6 @@ export default {
     config.addTool('edit-xref', EditXrefTool)
     config.addTool('insert-figure', InsertFigureTool)
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addTool('insert-file', InsertSupplementaryFileTool)
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addTool('replace-file', ReplaceSupplementaryFileTool)
 

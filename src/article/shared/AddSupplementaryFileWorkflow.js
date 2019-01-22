@@ -33,7 +33,8 @@ export default class AddSupplementaryFileWorkflow extends Component {
   }
 
   _onFileImport (file) {
-    // TODO: Handle file upload
+    let api = this.context.api
+    api._insertSupplementaryFile(file)
     this.send('closeModal')
   }
 }

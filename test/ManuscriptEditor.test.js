@@ -3,18 +3,17 @@ import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loa
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
-// TODO: test insert table
+// TODO: test key-handling of table cell editor
+// TODO: test key-handling of table component
+// TODO: test TableEditing
+// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
 
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
 // TODO: test IncreaseHeadingLevel
-// TODO: test key-handling of table cell editor
-// TODO: test key-handling of table component
-// TODO: test TableEditing
 // TODO: test save button
 // TODO: find out why Footnote.getTemplate() is not covered -> insert footnote?
 // TODO: test changin level of list item
-// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
 // TODO: BreakComponent not used
 // TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
 // TODO: test automatic label generation for block-formulas

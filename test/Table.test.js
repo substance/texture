@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate
+  getEditorSession, annotate, PseudoEvent
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -17,6 +17,28 @@ import setupTestApp from './shared/setupTestApp'
 // - cite table
 // - cite table-footnotes
 // - cite reference
+
+const SIMPLE_TABLE = `<table-wrap>
+  <table>
+    <tbody>
+      <tr>
+        <td id="t11">aaa</td>
+        <td id="t12">bbb</td>
+        <td id="t13">ccc</td>
+      </tr>
+      <tr>
+        <td id="t21">ddd</td>
+        <td id="t22">eee</td>
+        <td id="t23">fff</td>
+      </tr>
+      <tr>
+        <td id="t31">ggg</td>
+        <td id="t32">hhh</td>
+        <td id="t33">iii</td>
+      </tr>
+    </tbody>
+  </table>
+</table-wrap>`
 
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
@@ -140,28 +162,6 @@ test('Table: keyboard interactions', t => {
   t.end()
 })
 
-const SIMPLE_TABLE = `<table-wrap>
-  <table>
-    <tbody>
-      <tr>
-        <td id="t11">aaa</td>
-        <td id="t12">bbb</td>
-        <td id="t13">ccc</td>
-      </tr>
-      <tr>
-        <td id="t21">ddd</td>
-        <td id="t22">eee</td>
-        <td id="t23">fff</td>
-      </tr>
-      <tr>
-        <td id="t31">ggg</td>
-        <td id="t32">hhh</td>
-        <td id="t33">iii</td>
-      </tr>
-    </tbody>
-  </table>
-</table-wrap>`
-
 test('Table: formatting in table cells', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
@@ -213,7 +213,7 @@ const TABLES_AND_REFS = `<p />
 <p>Bla bla</p>`
 
 // testing the general ability to insert tables but also look into table citations
-test('Table: inserting and deleting a table into manuscript', t => {
+test('Table: automatic updates of table and table-reference labels', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let api = getApi(editor)
@@ -278,13 +278,37 @@ test('Table: selecting a table', t => {
   let table = isolatedNode.find('.sc-table')
   let td = isolatedNode.find('td')
   table._onMousedown(new DOMEvent({ target: td.el }))
-
   td.el.click()
   sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'the selection should be a table selection')
   t.end()
 })
 
+test('Table: table context menu', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  _selectCell(tableComp)
+  let contextMenu = _openContextMenu(tableComp)
+  t.ok(contextMenu && contextMenu.css('display', 'block'), 'context menu should be visible')
+  t.ok(contextMenu.findAll('.sc-menu-item').length > 0, '.. and should not be empty')
+  t.end()
+})
+
+function _selectCell (tableComp) {
+  let td = tableComp.find('td')
+  tableComp._onMousedown(new DOMEvent({ target: td.el }))
+  td.el.click()
+}
+
+function _openContextMenu (tableComp) {
+  tableComp._onContextMenu(new PseudoEvent({ clientY: 0, clientX: 0 }))
+  return tableComp.find('.sc-context-menu')
+}
+
+// TODO: set this up as integration test
+// not unit testing the TableComponent testing the TableComponent used in the ManuscriptEditor
 function _setupEditorWithOneTable (t) {
   let table
   let res = setupTestArticleSession({

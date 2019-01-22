@@ -176,8 +176,19 @@ export function loadBodyFixture (editor, xml) {
   })
 }
 
-export class PseudoFileEvent {
+export class PseudoEvent {
+  constructor (data) {
+    if (data) {
+      Object.assign(this, data)
+    }
+  }
+  preventDefault () {}
+  stopPropagation () {}
+}
+
+export class PseudoFileEvent extends PseudoEvent {
   constructor () {
+    super()
     let blob
     if (platform.inBrowser) {
       blob = new Blob(['abc'], {type: 'image/png'})

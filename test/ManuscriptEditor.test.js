@@ -282,6 +282,10 @@ test('ManuscriptEditor: inserting a table figure', t => {
   t.ok(tool.click(), 'using the insert table tool should not throw')
   let tableFigure = editor.find('.sc-table-figure')
   t.notNil(tableFigure, 'a table figure should be visible')
+  // the legend should not be empty, otherwise not editable
+  let legendEditor = tableFigure.find('.sc-container-editor.se-legend')
+  t.notNil(legendEditor, 'the legend should be editable')
+  t.notNil(legendEditor.find('.sc-paragraph'), 'there should be a paragraph inside the legend editor')
   t.end()
 })
 

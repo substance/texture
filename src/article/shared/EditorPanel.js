@@ -180,6 +180,16 @@ export default class EditorPanel extends Component {
     appState.propagateUpdates()
   }
 
+  _renderWorkflow ($$, workflowId) {
+    let Modal = this.getComponent('modal')
+    let WorkflowComponent = this.getComponent(workflowId)
+    return $$(Modal, {
+      width: WorkflowComponent.desiredWidth
+    }).addClass('se-workflow-modal sm-workflow-' + workflowId).append(
+      $$(WorkflowComponent).ref('workflow')
+    )
+  }
+
   _toggleOverlay (overlayId) {
     const appState = this.context.appState
     if (appState.overlayId === overlayId) {

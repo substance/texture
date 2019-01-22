@@ -4,6 +4,10 @@ import ReferenceUploadComponent from './ReferenceUploadComponent'
 import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
 
 export default class AddReferenceWorkflow extends Component {
+  static get desiredWidth () {
+    return 'large'
+  }
+
   didMount () {
     super.didMount()
 

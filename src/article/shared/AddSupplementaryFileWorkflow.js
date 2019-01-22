@@ -2,6 +2,10 @@ import { Component } from 'substance'
 import SupplementaryFileUploadComponent from './SupplementaryFileUploadComponent'
 
 export default class AddSupplementaryFileWorkflow extends Component {
+  static get desiredWidth () {
+    return 'medium'
+  }
+
   didMount () {
     super.didMount()
 

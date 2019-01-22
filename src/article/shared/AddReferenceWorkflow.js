@@ -13,7 +13,7 @@ export default class AddReferenceWorkflow extends Component {
   }
 
   render ($$) {
-    let el = $$('div').addClass('se-add-reference')
+    let el = $$('div').addClass('sc-add-reference sm-workflow')
 
     const title = $$('div').addClass('se-title').append(
       this.getLabel('add-reference-title')

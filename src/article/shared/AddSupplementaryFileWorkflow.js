@@ -12,7 +12,7 @@ export default class AddSupplementaryFileWorkflow extends Component {
   }
 
   render ($$) {
-    let el = $$('div').addClass('se-add-supple')
+    let el = $$('div').addClass('sc-add-supplementary-file sm-workflow')
 
     const title = $$('div').addClass('se-title').append(
       this.getLabel('supplementary-file-workflow-title')

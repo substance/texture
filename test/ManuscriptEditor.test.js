@@ -174,9 +174,7 @@ test('ManuscriptEditor: all TOC items should be clickable', t => {
   const tocItemSelector = '.se-toc-entries a'
   const tocItems = editor.findAll(tocItemSelector)
   tocItems.forEach(item => {
-    t.doesNotThrow(() => {
-      item.click()
-    }, 'clicking on TOC item should not throw: ' + item.textContent)
+    t.ok(item.click(), 'clicking on TOC item should not throw: ' + item.textContent)
   })
   t.end()
 })

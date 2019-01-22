@@ -1,4 +1,4 @@
-import { Component, DefaultDOMElement } from 'substance'
+import { Component, DefaultDOMElement, domHelpers } from 'substance'
 import { ValueComponent, renderModel, createValueModel } from '../../kit'
 
 // TODO: this needs to be redesigned
@@ -63,8 +63,11 @@ export default class ManuscriptTOC extends Component {
     e.preventDefault()
     // ATTENTION: wrap the native element here so that this works for testing too
     let target = DefaultDOMElement.wrap(e.target)
-    const nodeId = target.getAttribute('data-id')
-    this.send('tocEntrySelected', nodeId)
+    let tocEntry = domHelpers.findParent(target, '.se-toc-entry')
+    if (tocEntry) {
+      const nodeId = tocEntry.getAttribute('data-id')
+      this.send('tocEntrySelected', nodeId)
+    }
   }
 }
 

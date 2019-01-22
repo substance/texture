@@ -180,7 +180,7 @@ export default class ManuscriptEditor extends EditorPanel {
       case 'body':
       case 'footnotes':
       case 'references': {
-        let sectionComponent = this._getContentPanel().find(`.sc-manuscript-section.sm-${id} > .sc-section-label`).el
+        let sectionComponent = this._getContentPanel().find(`.sc-manuscript-section.sm-${id} > .sc-section-label`)
         contentElement = sectionComponent.el
         break
       }

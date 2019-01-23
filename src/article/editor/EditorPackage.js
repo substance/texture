@@ -439,7 +439,8 @@ export default {
         type: 'group',
         style: 'descriptive',
         items: [
-          { type: 'command-group', name: 'table-insert' }
+          { type: 'command-group', name: 'table-insert' },
+          { type: 'command-group', name: 'table-delete' }
         ]
       }
     ])

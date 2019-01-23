@@ -19,7 +19,7 @@ export default class DOIInputComponent extends Component {
   render ($$) {
     const inputEl = $$(InputActionComponent, {
       placeholder: 'enter-doi-placeholder',
-      actionLabel: 'doi-fetch-action',
+      actionLabel: 'add-action',
       loading: this.state.loading,
       errors: this.state.errors
     })

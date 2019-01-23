@@ -313,7 +313,9 @@ export default {
     config.addLabel('toggle-ordered-list', 'Numbered list')
     config.addLabel('enter-custom-field-name', 'Enter name')
     config.addLabel('enter-custom-field-value', 'Enter value')
-
+    config.addLabel('add-action', 'Add')
+    config.addLabel('enter-url-placeholder', 'Enter url')
+    
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
     config.addIcon('create-ordered-list', { 'fontawesome': 'fa-list-ol' })

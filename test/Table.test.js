@@ -497,13 +497,21 @@ function _openContextMenu (tableComp) {
   return tableComp.find('.sc-context-menu')
 }
 
+const TABLE_DATA = []
+for (let i = 0, count = 1; i < 10; i++) {
+  TABLE_DATA[i] = []
+  for (let j = 0; j < 5; j++) {
+    TABLE_DATA[i][j] = count++
+  }
+}
+
 // TODO: set this up as integration test
 // not unit testing the TableComponent testing the TableComponent used in the ManuscriptEditor
 function _setupEditorWithOneTable (t) {
   let table
   let res = setupTestArticleSession({
     seed: doc => {
-      table = tableHelpers.generateTable(doc, 10, 5, 't')
+      table = tableHelpers.createTableFromTabularData(doc, TABLE_DATA, 't')
       doc.find('body').append(table)
     }
   })

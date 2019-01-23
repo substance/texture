@@ -31,6 +31,13 @@ export default class ArticleAPI {
     return this.editorSession.getSelection()
   }
 
+  /**
+   * Provides a sub-api for editing tables.
+   */
+  getTableAPI () {
+    return this._tableApi
+  }
+
   // TODO: how are we using this?
   // This could be part of an Editor API
   copy () {
@@ -439,10 +446,6 @@ export default class ArticleAPI {
   _renderEntity (entity, options) {
     let exporter = this.config.getExporter('html')
     return renderEntity(entity, exporter)
-  }
-
-  _getTableAPI () {
-    return this._tableApi
   }
 
   // Internal API where I do not have a better solution yet

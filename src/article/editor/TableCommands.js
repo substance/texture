@@ -12,7 +12,7 @@ export class InsertTableCommand extends InsertNodeCommand {
 
 class BasicTableCommand extends Command {
   getCommandState (params, context) { // eslint-disable-line no-unused-vars
-    const tableApi = context.api._getTableAPI()
+    const tableApi = context.api.getTableAPI()
     if (!tableApi.isTableSelected()) return DISABLED
     const selData = tableApi._getSelectionData()
     return Object.assign({ disabled: false }, selData)
@@ -22,7 +22,7 @@ class BasicTableCommand extends Command {
     const commandState = params.commandState
     if (commandState.disabled) return
 
-    const tableApi = context.api._getTableAPI()
+    const tableApi = context.api.getTableAPI()
     return this._execute(tableApi, commandState)
   }
 }

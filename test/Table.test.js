@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate
+  getEditorSession, annotate, getSelection
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -439,12 +439,34 @@ test('Table: delete columns', t => {
   t.end()
 })
 
+test('Table: double clicking a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let cell = _selectCell(tableComp, 1, 0)
+  cell.el.emit('dblclick', {})
+  let surface = cell.find('.sc-surface')
+  let sel = getSelection(editor)
+  t.deepEqual({
+    type: sel.type,
+    path: sel.path,
+    surfaceId: sel.surfaceId
+  }, {
+    type: 'property',
+    path: cell.props.node.getPath(),
+    surfaceId: surface.getId()
+  }, 'selection should be inside cell')
+  t.end()
+})
+
 function _selectCell (tableComp, rowIdx = 1, colIdx = 0) {
   let rows = tableComp.findAll('tr')
   let cells = rows[rowIdx].findAll('td, th')
   let cell = cells[colIdx]
   tableComp._onMousedown(new DOMEvent({ target: cell.el }))
   cell.el.click()
+  return cell
 }
 
 function _selectRange (tableComp, startRowIdx, startColIdx, endRowIdx, endColIdx) {

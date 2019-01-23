@@ -320,6 +320,32 @@ test('Table: ESCAPE from a cell', t => {
   t.end()
 })
 
+test('Table: typing over a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let cellComp = _selectCell(tableComp, 1, 0)
+  let cell = cellComp.props.node
+  tableComp.refs.keytrap.val('foo')
+  tableComp._onInput(new DOMEvent())
+  let sel = getSelection(editor)
+  let surface = cellComp.find('.sc-surface')
+  t.equal(cell.content, 'foo', 'cell content should have been overwritten')
+  t.deepEqual({
+    type: sel.type,
+    path: sel.path,
+    offset: sel.startOffset,
+    surfaceId: sel.surfaceId
+  }, {
+    type: 'property',
+    path: cell.getPath(),
+    offset: cell.content.length,
+    surfaceId: surface.getId()
+  }, "cursor should be at the end of the cell's content")
+  t.end()
+})
+
 test('Table: formatting in table cells', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)

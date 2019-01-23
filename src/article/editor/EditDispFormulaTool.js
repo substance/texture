@@ -1,7 +1,7 @@
 import { parseKeyCombo, parseKeyEvent } from 'substance'
 import { ToggleTool } from '../../kit'
 
-const COMMAND_OR_CONTROL_ENTER = parseKeyCombo('CommandOrControl+Enter')
+const COMMAND_OR_CONTROL_ENTER = parseKeyEvent(parseKeyCombo('CommandOrControl+Enter'))
 
 /*
   Tool to edit math markup.

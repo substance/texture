@@ -1,4 +1,4 @@
-import { AbstractKeyboardManager, parseKeyCombo } from 'substance'
+import { AbstractKeyboardManager, parseKeyCombo, parseKeyEvent } from 'substance'
 
 export default class KeyboardManager extends AbstractKeyboardManager {
   constructor (bindings, commandCallback, contextProvider) {
@@ -14,7 +14,7 @@ export default class KeyboardManager extends AbstractKeyboardManager {
       }
       const type = spec.type || 'keydown'
       if (type !== 'textinput') {
-        key = parseKeyCombo(key)
+        key = parseKeyEvent(parseKeyCombo(key))
       }
       // initializing on-the-fly
       if (!this.bindings[type]) { this.bindings[type] = {} }

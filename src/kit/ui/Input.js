@@ -1,6 +1,6 @@
 import { Component, parseKeyCombo, parseKeyEvent } from 'substance'
 
-const ESCAPE = parseKeyCombo('Escape')
+const ESCAPE = parseKeyEvent(parseKeyCombo('Escape'))
 
 export default class Input extends Component {
   render ($$) {

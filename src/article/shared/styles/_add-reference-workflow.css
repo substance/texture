@@ -1,76 +1,3 @@
-.sc-add-reference > .se-doi-input > .se-input-group > .se-input {
-  width: 100%;
-  background: #f1f1f1;
-  padding: 10px 80px 10px 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.sc-add-reference > .se-doi-input > .se-input-group > .se-action {
-  position: absolute;
-  top: 4px;
-  right: 24px;
-  height: 30px;
-  padding: 0px 10px;
-  color: #fff;
-  font-weight: 400;
-  background: #5a5a5a;
-  border-radius: 4px;
-}
-
-.sc-add-reference > .se-doi-input > .se-input-group > .se-input-sign {
-  position: absolute;
-  top: 6px;
-  right: 30px;
-}
-
-.sc-add-reference > .se-doi-input > .se-input-group > .se-input-sign.sm-error {
-  color: #d95859;
-}
-
-.sc-add-reference .se-error-popup {
-  position: absolute;
-  top: 32px;
-  right: 25px;
-  width: 300px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.8);
-  font-size: 12px;
-  text-align: center;
-  color: #d95859;
-  z-index: 10;
-}
-
-.sc-add-reference .se-error-popup > ul {
-  list-style: none;
-  margin: 0 0 0 10px;
-  padding: 0;
-  text-align: left;
-  line-height: 20px;
-}
-
-.sc-add-reference > .se-doi-input > .se-input-group> input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #acacac;
-  font-size: 13px;
-  font-weight: 400;
-}
-.sc-add-reference > .se-doi-input > .se-input-group > input::-moz-placeholder { /* Firefox 19+ */
-  color: #acacac;
-  font-size: 13px;
-  font-weight: 400;
-}
-.sc-add-reference > .se-doi-input > .se-input-group > input:-ms-input-placeholder { /* IE 10+ */
-  color: #acacac;
-  font-size: 13px;
-  font-weight: 400;
-}
-.sc-add-reference > .se-doi-input > .se-input-group > input:-moz-placeholder { /* Firefox 18- */
-  color: #ababab;
-  font-size: 13px;
-}
-
 .sc-add-reference > .se-manual-add {
   padding: 20px 0px;
 }
@@ -87,16 +14,16 @@
 .sc-add-reference > .se-manual-add > .se-reftypes-list > .se-type {
   flex-grow: 1;
   width: 30%;
-  height: 50px;
+  height: var(--t-double-spacing);
   margin: 5px;
-  padding: 10px 0px;
-  border: 1px solid #e1e1e1;
-  border-radius: 4px;
+  padding: var(--t-half-spacing) 0;
+  border: var(--t-default-border);
+	border-radius: var(--t-border-radius);
   text-align: center;
-  line-height: 30px;
+  line-height: 1.2;
   cursor: pointer;
 }
 
 .sc-add-reference > .se-manual-add > .se-reftypes-list > .se-type:hover {
-  background: #f7f7f7;
+  background: var(--t-light-bg-color);
 }

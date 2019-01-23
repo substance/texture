@@ -55,6 +55,8 @@ const UP = parseKeyCombo('Up')
 const DOWN = parseKeyCombo('Down')
 const ENTER = parseKeyCombo('Enter')
 const TAB = parseKeyCombo('Tab')
+const DELETE = parseKeyCombo('Delete')
+const BACKSPACE = parseKeyCombo('Backspace')
 
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
@@ -241,6 +243,30 @@ test('Table: TAB on a cell', t => {
     anchorCellId: expectedCellId,
     focusCellId: expectedCellId
   }, 'next cell should be selected')
+  t.end()
+})
+
+test('Table: DELETE a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let matrix = _getTable(tableComp).getCellMatrix()
+
+  // deleteting via DELETE
+  // select B2
+  _selectCell(tableComp, 1, 1)
+  // TAB should move the selection on cell to the right
+  tableComp._onKeydown(new DOMEvent(DELETE))
+  t.ok(matrix[1][1].isEmpty(), 'cell content should have been deleted')
+
+  // deleteting via BACKSPACE
+  // select B3
+  _selectCell(tableComp, 2, 1)
+  // TAB should move the selection on cell to the right
+  tableComp._onKeydown(new DOMEvent(BACKSPACE))
+  t.ok(matrix[2][1].isEmpty(), 'cell content should have been deleted')
+
   t.end()
 })
 

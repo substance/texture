@@ -1,6 +1,10 @@
 import { TextPropertyEditor } from '../../kit'
 
 export default class TableCellEditor extends TextPropertyEditor {
+  _getClassNames () {
+    return 'sc-table-cell-editor ' + super._getClassNames()
+  }
+
   _handleEscapeKey (event) {
     this.__handleKey(event, 'escape')
   }

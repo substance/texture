@@ -7,11 +7,11 @@ export default class TableCellComponent extends NodeComponent {
     let el = $$(cell.heading ? 'th' : 'td')
     el.addClass('sc-table-cell')
     el.attr({
-      id: cell.id,
-      'data-row-idx': cell.rowIdx,
-      'data-col-idx': cell.colIdx,
+      'data-id': cell.id,
       rowspan: cell.rowspan,
-      colspan: cell.colspan
+      colspan: cell.colspan,
+      'data-row-idx': cell.rowIdx,
+      'data-col-idx': cell.colIdx
     })
     el.append(
       $$(TableCellEditor, {
@@ -21,5 +21,9 @@ export default class TableCellComponent extends NodeComponent {
       }).ref(cell.id)
     )
     return el
+  }
+
+  getId () {
+    return this.getAttribute('data-id')
   }
 }

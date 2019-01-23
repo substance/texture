@@ -53,6 +53,7 @@ const LEFT = parseKeyCombo('Left')
 const RIGHT = parseKeyCombo('Right')
 const UP = parseKeyCombo('Up')
 const DOWN = parseKeyCombo('Down')
+const ENTER = parseKeyCombo('Enter')
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
   let el = getMountPoint(t)
@@ -172,6 +173,48 @@ test('Table: navigating cells with keyboard', t => {
   t.equal(sel.data.anchorCellId, cellB2.id, '.. with anchor on B2,')
   t.equal(sel.data.focusCellId, cellB2.id, '.. and focus on B2,')
 
+  t.end()
+})
+
+test('Table: double clicking a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let cell = _selectCell(tableComp, 1, 0)
+  cell.el.emit('dblclick', {})
+  let surface = cell.find('.sc-surface')
+  let sel = getSelection(editor)
+  t.deepEqual({
+    type: sel.type,
+    path: sel.path,
+    surfaceId: sel.surfaceId
+  }, {
+    type: 'property',
+    path: cell.props.node.getPath(),
+    surfaceId: surface.getId()
+  }, 'selection should be inside cell')
+  t.end()
+})
+
+test('Table: ENTER a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let cell = _selectCell(tableComp, 1, 0)
+  tableComp._onKeydown(new DOMEvent(ENTER))
+  let surface = cell.find('.sc-surface')
+  let sel = getSelection(editor)
+  t.deepEqual({
+    type: sel.type,
+    path: sel.path,
+    surfaceId: sel.surfaceId
+  }, {
+    type: 'property',
+    path: cell.props.node.getPath(),
+    surfaceId: surface.getId()
+  }, 'selection should be inside cell')
   t.end()
 })
 
@@ -440,27 +483,6 @@ test('Table: delete columns', t => {
   colCount = _getColumnCount(tableComp)
   t.equal(colCount, previousColCount - 2, 'there should be two cols less')
 
-  t.end()
-})
-
-test('Table: double clicking a cell', t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openManuscriptEditor(app)
-  loadBodyFixture(editor, SIMPLE_TABLE)
-  let tableComp = editor.find('.sc-table')
-  let cell = _selectCell(tableComp, 1, 0)
-  cell.el.emit('dblclick', {})
-  let surface = cell.find('.sc-surface')
-  let sel = getSelection(editor)
-  t.deepEqual({
-    type: sel.type,
-    path: sel.path,
-    surfaceId: sel.surfaceId
-  }, {
-    type: 'property',
-    path: cell.props.node.getPath(),
-    surfaceId: surface.getId()
-  }, 'selection should be inside cell')
   t.end()
 })
 

@@ -35,13 +35,21 @@ export default class TableEditingAPI {
     for (let row of matrix) {
       let rowData = { type: 'table-row', cells: [] }
       for (let cell of row) {
-        let ids = documentHelpers.copyNode(cell).map(_node => snippet.create(_node).ids)
+        let ids = documentHelpers.copyNode(cell).map(_node => snippet.create(_node).id)
+        let cellId = ids[0]
+        console.assert(cellId, 'cellId should not be nil')
         rowData.cells.push(ids[0])
       }
       tableData.rows.push(snippet.create(rowData).id)
     }
     let tableCopy = snippet.create(tableData)
     snippet.getContainer().append(tableCopy.id)
+    return snippet
+  }
+
+  cut () {
+    let snippet = this.copySelection()
+    this.deleteSelection()
     return snippet
   }
 

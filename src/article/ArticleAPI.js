@@ -53,11 +53,15 @@ export default class ArticleAPI {
   }
 
   cut () {
-    const sel = this.getSelection()
-    if (sel && !sel.isNull() && !sel.isCollapsed()) {
-      let snippet = this.copy()
-      this.deleteSelection()
-      return snippet
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.cut()
+    } else {
+      const sel = this.getSelection()
+      if (sel && !sel.isNull() && !sel.isCollapsed()) {
+        let snippet = this.copy()
+        this.deleteSelection()
+        return snippet
+      }
     }
   }
 

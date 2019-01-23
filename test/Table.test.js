@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, getSelection
+  getEditorSession, annotate, getSelection, setCursor
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -57,6 +57,7 @@ const ENTER = parseKeyCombo('Enter')
 const TAB = parseKeyCombo('Tab')
 const DELETE = parseKeyCombo('Delete')
 const BACKSPACE = parseKeyCombo('Backspace')
+const ESCAPE = parseKeyCombo('Escape')
 
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
@@ -64,6 +65,31 @@ test('Table: mounting a table component', t => {
   let comp = new TableComponent(null, { node: table }, { context })
   comp.mount(el)
   t.notNil(el.find('.sc-table'), 'there should be a rendered table element')
+  t.end()
+})
+
+test('Table: selecting a table', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let editorSession = getEditorSession(editor)
+  editorSession.transaction(tx => {
+    let body = tx.get('body')
+    let table = tableHelpers.generateTable(tx, 10, 5, 'test-table')
+    body.set('content', [table.id])
+  })
+  // a click (somewhere) on the isolated node should select the node
+  let isolatedNode = editor.find('[data-id="test-table"]')
+  isolatedNode.el.click()
+  let sel = editorSession.getSelection()
+  t.equal(sel.type, 'node', 'the selection should be a node selection')
+  t.equal(sel.nodeId, 'test-table', '.. pointing to the inserted table should be selected')
+  // but a click inside the table, e.g. on a cell should select the table cell
+  let table = isolatedNode.find('.sc-table')
+  let td = isolatedNode.find('td')
+  table._onMousedown(new DOMEvent({ target: td.getNativeElement() }))
+  td.el.click()
+  sel = editorSession.getSelection()
+  t.equal(sel.customType, 'table', 'the selection should be a table selection')
   t.end()
 })
 
@@ -270,6 +296,30 @@ test('Table: DELETE a cell', t => {
   t.end()
 })
 
+test('Table: ESCAPE from a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let matrix = _getTable(tableComp).getCellMatrix()
+  setCursor(editor, matrix[1][0].getPath(), 0)
+  let cell = _getCellComponent(tableComp, 1, 0)
+  let cellEditor = cell.find('.sc-table-cell-editor')
+  cellEditor._handleEscapeKey(new DOMEvent(ESCAPE))
+  let sel = getSelection(editor)
+  let expectedCellId = matrix[1][0].id
+  t.deepEqual({
+    customType: sel.customType,
+    anchorCellId: sel.data.anchorCellId,
+    focusCellId: sel.data.focusCellId
+  }, {
+    customType: 'table',
+    anchorCellId: expectedCellId,
+    focusCellId: expectedCellId
+  }, 'cell should be selected')
+  t.end()
+})
+
 test('Table: formatting in table cells', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
@@ -364,31 +414,6 @@ test('Table: automatic updates of table and table-reference labels', t => {
   t1ref = p1.find('xref')
   t.equal(t1ref.state.label, 'Table 1', 'citation should now point to t2')
 
-  t.end()
-})
-
-test('Table: selecting a table', t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
-  editorSession.transaction(tx => {
-    let body = tx.get('body')
-    let table = tableHelpers.generateTable(tx, 10, 5, 'test-table')
-    body.set('content', [table.id])
-  })
-  // a click (somewhere) on the isolated node should select the node
-  let isolatedNode = editor.find('[data-id="test-table"]')
-  isolatedNode.el.click()
-  let sel = editorSession.getSelection()
-  t.equal(sel.type, 'node', 'the selection should be a node selection')
-  t.equal(sel.nodeId, 'test-table', '.. pointing to the inserted table should be selected')
-  // but a click inside the table, e.g. on a cell should select the table cell
-  let table = isolatedNode.find('.sc-table')
-  let td = isolatedNode.find('td')
-  table._onMousedown(new DOMEvent({ target: td.el }))
-  td.el.click()
-  sel = editorSession.getSelection()
-  t.equal(sel.customType, 'table', 'the selection should be a table selection')
   t.end()
 })
 
@@ -538,11 +563,15 @@ test('Table: delete columns', t => {
   t.end()
 })
 
-function _selectCell (tableComp, rowIdx = 1, colIdx = 0) {
+function _getCellComponent (tableComp, rowIdx, colIdx) {
   let rows = tableComp.findAll('tr')
   let cells = rows[rowIdx].findAll('td, th')
-  let cell = cells[colIdx]
-  tableComp._onMousedown(new DOMEvent({ target: cell.el }))
+  return cells[colIdx]
+}
+
+function _selectCell (tableComp, rowIdx = 1, colIdx = 0) {
+  let cell = _getCellComponent(tableComp, rowIdx, colIdx)
+  tableComp._onMousedown(new DOMEvent({ target: cell.getNativeElement() }))
   cell.el.click()
   return cell
 }

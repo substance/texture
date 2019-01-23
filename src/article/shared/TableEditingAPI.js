@@ -290,13 +290,14 @@ export default class TableEditingAPI {
   }
 
   _deleteCols (table, startCol, endCol) {
+    let doc = table.getDocument()
     let N = table.getRowCount()
     for (let rowIdx = N - 1; rowIdx >= 0; rowIdx--) {
       let row = table.getRowAt(rowIdx)
+      let path = [row.id, 'cells']
       for (let colIdx = endCol; colIdx >= startCol; colIdx--) {
-        let cell = row.getCellAt(colIdx)
-        row.removeAt(colIdx)
-        documentHelpers.deepDeleteNode(table.getDocument(), cell)
+        let cellData = documentHelpers.removeAt(doc, path, colIdx)
+        documentHelpers.deepDeleteNode(table.getDocument(), cellData.id)
       }
     }
   }

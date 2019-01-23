@@ -33,7 +33,7 @@
     "source-map-support": "0.5.3",
     "standard": "^11.0.1",
     "substance-bundler": "0.25.5",
-    "substance-test": "0.13.0",
+    "substance-test": "0.13.1",
     "tap-spec": "^4.1.1",
     "yargs": "^11.0.0"
   },

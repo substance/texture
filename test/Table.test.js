@@ -25,16 +25,25 @@ const SIMPLE_TABLE = `<table-wrap>
         <td id="t11">aaa</td>
         <td id="t12">bbb</td>
         <td id="t13">ccc</td>
+        <td id="t14">ddd</td>
       </tr>
       <tr>
-        <td id="t21">ddd</td>
-        <td id="t22">eee</td>
-        <td id="t23">fff</td>
+        <td id="t21">eee</td>
+        <td id="t22">fff</td>
+        <td id="t23">ggg</td>
+        <td id="t24">hhh</td>
       </tr>
       <tr>
-        <td id="t31">ggg</td>
-        <td id="t32">hhh</td>
-        <td id="t33">iii</td>
+        <td id="t31">iii</td>
+        <td id="t32">jjj</td>
+        <td id="t33">kkk</td>
+        <td id="t34">lll</td>
+        </tr>
+      <tr>
+        <td id="t41">mmm</td>
+        <td id="t42">nnn</td>
+        <td id="t43">ooo</td>
+        <td id="t44">ppp</td>
       </tr>
     </tbody>
   </table>
@@ -374,6 +383,58 @@ test('Table: insert columns', t => {
   colCount = _getColumnCount(tableComp)
   t.equal(colCount, previousColCount + 2, 'there should be two more cols')
   // TODO: can we check that the cols were inserted after?
+
+  t.end()
+})
+
+test('Table: delete rows', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let previousRowCount = _getRowCount(tableComp)
+
+  // delete single row
+  _selectCell(tableComp, 1, 0)
+  let contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-delete-rows').click()
+  let rowCount = _getRowCount(tableComp)
+  t.equal(rowCount, previousRowCount - 1, 'there should be one row less')
+  // TODO: can we check that the correct row deleted?
+
+  // delete multiple rows
+  previousRowCount = rowCount
+  _selectRange(tableComp, 1, 0, 2, 0)
+  contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-delete-rows').click()
+  rowCount = _getRowCount(tableComp)
+  t.equal(rowCount, previousRowCount - 2, 'there should be two rows less')
+
+  t.end()
+})
+
+test('Table: delete columns', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let previousColCount = _getColumnCount(tableComp)
+
+  // delete single col
+  _selectCell(tableComp, 1, 0)
+  let contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-delete-columns').click()
+  let colCount = _getColumnCount(tableComp)
+  t.equal(colCount, previousColCount - 1, 'there should be one col less')
+  // TODO: can we check that the correct col deleted?
+
+  // delete multiple cols
+  previousColCount = colCount
+  _selectRange(tableComp, 1, 0, 1, 1)
+  contextMenu = _openContextMenu(tableComp)
+  contextMenu.find('.sm-delete-columns').click()
+  colCount = _getColumnCount(tableComp)
+  t.equal(colCount, previousColCount - 2, 'there should be two cols less')
 
   t.end()
 })

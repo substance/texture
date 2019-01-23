@@ -4,6 +4,7 @@ import {
 } from 'substance'
 import { Clipboard } from '../index'
 import setupTestArticleSession from './shared/setupTestArticleSession'
+import { ClipboardEventData } from './shared/testHelpers'
 
 import simple from './clipboard/simple'
 import BrowserLinuxPLainTextFixture from './clipboard/browser-linux-plain-text'
@@ -507,24 +508,6 @@ function _extendedTest (t, html, forceWindows) {
 
     t.end()
   }, forceWindows)
-}
-
-class ClipboardEventData {
-  constructor () {
-    this.data = {}
-  }
-
-  getData (format) {
-    return this.data[format]
-  }
-
-  setData (format, data) {
-    this.data[format] = data
-  }
-
-  get types () {
-    return Object.keys(this.data)
-  }
 }
 
 function _createClipboardData () {

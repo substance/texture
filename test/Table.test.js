@@ -1,4 +1,4 @@
-import { keys } from 'substance'
+import { parseKeyCombo } from 'substance'
 import { test } from 'substance-test'
 import {
   TableComponent, tableHelpers, TableEditing
@@ -49,6 +49,10 @@ const SIMPLE_TABLE = `<table-wrap>
   </table>
 </table-wrap>`
 
+const LEFT = parseKeyCombo('Left')
+const RIGHT = parseKeyCombo('Right')
+const UP = parseKeyCombo('Up')
+const DOWN = parseKeyCombo('Down')
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
   let el = getMountPoint(t)
@@ -125,7 +129,7 @@ test('Table: mouse interactions', t => {
   t.end()
 })
 
-test('Table: keyboard interactions', t => {
+test('Table: navigating cells with keyboard', t => {
   let { editorSession, table, context } = _setupEditorWithOneTable(t)
   let el = getMountPoint(t)
   let comp = new TableComponent(null, { node: table }, { context })
@@ -141,28 +145,28 @@ test('Table: keyboard interactions', t => {
   comp._onMousedown(new DOMEvent({ target: cellB2Comp.el }))
 
   // simulate LEFT key
-  comp._onKeydown(new DOMEvent({ keyCode: keys.LEFT }))
+  comp._onKeydown(new DOMEvent(LEFT))
   sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, cellA2.id, '.. with anchor on A2,')
   t.equal(sel.data.focusCellId, cellA2.id, '.. and focus on A2,')
 
   // simulate RIGHT key
-  comp._onKeydown(new DOMEvent({ keyCode: keys.RIGHT }))
+  comp._onKeydown(new DOMEvent(RIGHT))
   sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, cellB2.id, '.. with anchor on B2,')
   t.equal(sel.data.focusCellId, cellB2.id, '.. and focus on B2,')
 
   // simulate UP key
-  comp._onKeydown(new DOMEvent({ keyCode: keys.UP }))
+  comp._onKeydown(new DOMEvent(UP))
   sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, cellB1.id, '.. with anchor on B1,')
   t.equal(sel.data.focusCellId, cellB1.id, '.. and focus on B1,')
 
   // simulate DOWN key
-  comp._onKeydown(new DOMEvent({ keyCode: keys.DOWN }))
+  comp._onKeydown(new DOMEvent(DOWN))
   sel = editorSession.getSelection()
   t.equal(sel.customType, 'table', 'The table should be selected,')
   t.equal(sel.data.anchorCellId, cellB2.id, '.. with anchor on B2,')

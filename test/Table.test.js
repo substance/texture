@@ -114,8 +114,8 @@ test('Table: mouse interactions', t => {
   let secondCellComp = comp.refs[secondCell.id]
 
   // simulate a mouse down on the first cell
-  comp._onMousedown(new DOMEvent({ target: firstCellComp.el }))
-  comp._onMouseup(new DOMEvent({ target: firstCellComp.el }))
+  comp._onMousedown(new DOMEvent({ target: firstCellComp.getNativeElement() }))
+  comp._onMouseup(new DOMEvent({ target: firstCellComp.getNativeElement() }))
 
   let sel = editorSession.getSelection()
   t.comment('A click on the first cell ...')
@@ -124,7 +124,7 @@ test('Table: mouse interactions', t => {
   t.equal(sel.data.focusCellId, firstCell.id, '.. and focus on first cell,')
 
   // simulate a right mouse down on the second cell
-  comp._onMousedown(new DOMEvent({ target: secondCellComp.el, which: 3 }))
+  comp._onMousedown(new DOMEvent({ target: secondCellComp.getNativeElement(), which: 3 }))
   sel = editorSession.getSelection()
   t.comment('A right-click on the second cell ...')
   t.equal(sel.customType, 'table', 'the table should be selected,')
@@ -147,7 +147,7 @@ test('Table: navigating cells with keyboard', t => {
   let sel
 
   // simulate a mouse down on the first cell
-  comp._onMousedown(new DOMEvent({ target: cellB2Comp.el }))
+  comp._onMousedown(new DOMEvent({ target: cellB2Comp.getNativeElement() }))
 
   // simulate LEFT key
   comp._onKeydown(new DOMEvent(LEFT))

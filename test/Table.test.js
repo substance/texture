@@ -1,9 +1,9 @@
-import { parseKeyCombo } from 'substance'
+import { parseKeyCombo, DefaultDOMElement, getRangeFromMatrix, isArray, flattenOften } from 'substance'
 import { test } from 'substance-test'
 import {
   TableComponent, tableHelpers, TableEditing
 } from '../index'
-import { getMountPoint, DOMEvent } from './shared/testHelpers'
+import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
@@ -590,6 +590,52 @@ test('Table: delete columns', t => {
   t.end()
 })
 
+test('Table: cutting cells', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let matrix = _getTable(tableComp).getCellMatrix()
+
+  let cells, expectedContent, pasteEvent, dom, htmlTable, tds
+  // single cell
+  cells = _getCellRange(matrix, 0, 0, 0, 0)
+  expectedContent = cells.map(cell => cell.getText())
+  pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
+  t.comment('selecting a single cell')
+  _selectCell(tableComp, 0, 0)
+  tableComp._onCut(pasteEvent)
+  t.ok(matrix[0][0].isEmpty(), 'cell should be empty')
+  dom = DefaultDOMElement.parseHTML(pasteEvent.clipboardData.getData('text/html'))
+  htmlTable = dom.find('table')
+  t.notNil(htmlTable, 'there should be a <table> in the HTML')
+  if (htmlTable) {
+    t.equal(htmlTable.findAll('tr').length, 1, '.. with one <tr>')
+    tds = htmlTable.findAll('td')
+    t.equal(tds.length, 1, '.. and one <td>')
+    t.deepEqual(tds.map(td => td.text()), expectedContent, '<td> should have correc content')
+  }
+  // cell range
+  cells = _getCellRange(matrix, 1, 1, 2, 2)
+  expectedContent = cells.map(cell => cell.getText())
+  pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
+  t.comment('selecting a cell range')
+  _selectRange(tableComp, 1, 1, 2, 2)
+  tableComp._onCut(pasteEvent)
+  t.ok(cells.every(cell => cell.isEmpty()), 'cells should be empty')
+  dom = DefaultDOMElement.parseHTML(pasteEvent.clipboardData.getData('text/html'))
+  htmlTable = dom.find('table')
+  t.notNil(htmlTable, 'there should be a <table> in the HTML')
+  if (htmlTable) {
+    t.equal(htmlTable.findAll('tr').length, 2, '.. with two <tr>')
+    let tds = htmlTable.findAll('td')
+    t.equal(tds.length, 4, '.. and 4 <td>')
+    t.deepEqual(tds.map(td => td.text()), expectedContent, '<td> should have correct content')
+  }
+
+  t.end()
+})
+
 // various tests for inserting annos or inline-nodes into a table cell
 // TODO: this could be useful for all kinds of text properties with annos
 // we should at least share the specs
@@ -751,4 +797,11 @@ function _setupEditorWithOneTable (t) {
     doc: res.doc,
     table
   }
+}
+
+function _getCellRange (matrix, startRow, startCol, endRow, endCol) {
+  let range = getRangeFromMatrix(matrix, startRow, startCol, endRow, endCol)
+  if (!isArray(range)) range = [range]
+  else range = flattenOften(range, 2)
+  return range
 }

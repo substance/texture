@@ -7,43 +7,44 @@ import { getMountPoint, DOMEvent } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, getSelection, setCursor
+  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-// TODO: add tests for table cells
-// - add ext-link
-// - cite figure
-// - cite table
-// - cite table-footnotes
-// - cite reference
+// TODO: add tests for this content inside table cells
+// - external-link
+// - cross-reference
+// TODO: test key-handling of table cell editor
+// TODO: test key-handling of table component
+// TODO: test TableEditing
+// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
 
 const SIMPLE_TABLE = `<table-wrap>
   <table>
     <tbody>
       <tr>
-        <td id="t11">aaa</td>
-        <td id="t12">bbb</td>
-        <td id="t13">ccc</td>
-        <td id="t14">ddd</td>
+        <td id="t11">aaaa</td>
+        <td id="t12">bbbb</td>
+        <td id="t13">cccc</td>
+        <td id="t14">dddd</td>
       </tr>
       <tr>
-        <td id="t21">eee</td>
-        <td id="t22">fff</td>
-        <td id="t23">ggg</td>
-        <td id="t24">hhh</td>
+        <td id="t21">eeee</td>
+        <td id="t22">ffff</td>
+        <td id="t23">gggg</td>
+        <td id="t24">hhhh</td>
       </tr>
       <tr>
-        <td id="t31">iii</td>
-        <td id="t32">jjj</td>
-        <td id="t33">kkk</td>
-        <td id="t34">lll</td>
+        <td id="t31">iiii</td>
+        <td id="t32">jjjj</td>
+        <td id="t33">kkkk</td>
+        <td id="t34">llll</td>
         </tr>
       <tr>
-        <td id="t41">mmm</td>
-        <td id="t42">nnn</td>
-        <td id="t43">ooo</td>
-        <td id="t44">ppp</td>
+        <td id="t41">mmmm</td>
+        <td id="t42">nnnn</td>
+        <td id="t43">oooo</td>
+        <td id="t44">pppp</td>
       </tr>
     </tbody>
   </table>
@@ -587,6 +588,102 @@ test('Table: delete columns', t => {
   t.equal(colCount, previousColCount - 2, 'there should be two cols less')
 
   t.end()
+})
+
+// various tests for inserting annos or inline-nodes into a table cell
+// TODO: this could be useful for all kinds of text properties with annos
+// we should at least share the specs
+const INLINE_NODE_TESTS = [
+  {
+    name: 'External Link',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-create-external-link').click()
+    },
+    nodeSelector: '.sc-external-link'
+  },
+  {
+    name: 'Math',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-inline-formula').click()
+    },
+    nodeSelector: '.sc-inline-formula',
+    collapsed: true
+  },
+  {
+    name: 'Inline Graphic',
+    clickTool (editor) {
+      let tool = openMenuAndFindTool(editor, 'insert', '.sc-insert-inline-graphic-tool')
+      tool.onFileSelect(new PseudoFileEvent())
+      return true
+    },
+    nodeSelector: '.sc-inline-graphic',
+    collapsed: true
+  },
+  {
+    name: 'Citation',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-xref-bibr').click()
+    },
+    nodeSelector: '.sc-xref',
+    collapsed: true
+  },
+  {
+    name: 'Figure Reference',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-xref-figure').click()
+    },
+    nodeSelector: '.sc-xref',
+    collapsed: true
+  },
+  {
+    name: 'Table Reference',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-xref-table').click()
+    },
+    nodeSelector: '.sc-xref',
+    collapsed: true
+  },
+  {
+    name: 'Footnote Reference',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-xref-footnote').click()
+    },
+    nodeSelector: '.sc-xref',
+    collapsed: true
+  },
+  {
+    name: 'Equation Reference',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-xref-formula').click()
+    },
+    nodeSelector: '.sc-xref',
+    collapsed: true
+  },
+  {
+    name: 'File Reference',
+    clickTool (editor) {
+      return openMenuAndFindTool(editor, 'insert', '.sm-insert-xref-file').click()
+    },
+    nodeSelector: '.sc-xref',
+    collapsed: true
+  }
+]
+INLINE_NODE_TESTS.forEach(spec => {
+  test(`Table: inserting a ${spec.name} into a table cell`, t => {
+    let { app } = setupTestApp(t, { archiveId: 'blank' })
+    let editor = openManuscriptEditor(app)
+    loadBodyFixture(editor, SIMPLE_TABLE)
+    let tableComp = editor.find('.sc-table')
+    if (spec.collapsed) {
+      setCursor(editor, 't21.content', 1)
+    } else {
+      setSelection(editor, 't21.content', 1, 2)
+    }
+    let cellComp = _getCellComponent(tableComp, 1, 0)
+    t.ok(spec.clickTool(editor), 'clicking the insert tool should not throw')
+    t.ok(Boolean(cellComp.find(spec.nodeSelector)), 'inline node should have been inserted')
+    t.end()
+  })
 })
 
 function _getCellComponent (tableComp, rowIdx, colIdx) {

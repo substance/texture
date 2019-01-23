@@ -3,11 +3,6 @@ import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loa
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
-// TODO: test key-handling of table cell editor
-// TODO: test key-handling of table component
-// TODO: test TableEditing
-// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
-
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
 // TODO: test IncreaseHeadingLevel

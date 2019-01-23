@@ -54,6 +54,8 @@ const RIGHT = parseKeyCombo('Right')
 const UP = parseKeyCombo('Up')
 const DOWN = parseKeyCombo('Down')
 const ENTER = parseKeyCombo('Enter')
+const TAB = parseKeyCombo('Tab')
+
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
   let el = getMountPoint(t)
@@ -114,7 +116,7 @@ test('Table: mouse interactions', t => {
   comp._onMouseup(new DOMEvent({ target: firstCellComp.el }))
 
   let sel = editorSession.getSelection()
-  t.ok(true, 'After a click on the firstCell')
+  t.comment('A click on the first cell ...')
   t.equal(sel.customType, 'table', '... the table should be selected,')
   t.equal(sel.data.anchorCellId, firstCell.id, '.. with anchor on first cell,')
   t.equal(sel.data.focusCellId, firstCell.id, '.. and focus on first cell,')
@@ -122,8 +124,8 @@ test('Table: mouse interactions', t => {
   // simulate a right mouse down on the second cell
   comp._onMousedown(new DOMEvent({ target: secondCellComp.el, which: 3 }))
   sel = editorSession.getSelection()
-  t.ok(true, 'After a right-click on the secondCell')
-  t.equal(sel.customType, 'table', 'The table should be selected,')
+  t.comment('A right-click on the second cell ...')
+  t.equal(sel.customType, 'table', 'the table should be selected,')
   t.equal(sel.data.anchorCellId, secondCell.id, '.. with anchor on second cell,')
   t.equal(sel.data.focusCellId, secondCell.id, '.. and focus on second cell,')
 
@@ -215,6 +217,30 @@ test('Table: ENTER a cell', t => {
     path: cell.props.node.getPath(),
     surfaceId: surface.getId()
   }, 'selection should be inside cell')
+  t.end()
+})
+
+test('Table: TAB on a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let matrix = _getTable(tableComp).getCellMatrix()
+  // select B2
+  _selectCell(tableComp, 1, 1)
+  // TAB should move the selection on cell to the right
+  tableComp._onKeydown(new DOMEvent(TAB))
+  let expectedCellId = matrix[1][2].id
+  let sel = getSelection(editor)
+  t.deepEqual({
+    customType: sel.customType,
+    anchorCellId: sel.data.anchorCellId,
+    focusCellId: sel.data.focusCellId
+  }, {
+    customType: 'table',
+    anchorCellId: expectedCellId,
+    focusCellId: expectedCellId
+  }, 'next cell should be selected')
   t.end()
 })
 

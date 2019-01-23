@@ -214,7 +214,7 @@ export default class TableEditingAPI {
     this.editorSession.transaction(tx => {
       let cell = tx.get(cellId)
       let path = cell.getPath()
-      cell.textContent = newVal
+      cell.setText(newVal)
       tx.setSelection({
         type: 'property',
         path,
@@ -284,8 +284,8 @@ export default class TableEditingAPI {
     let doc = table.getDocument()
     const path = [table.id, 'rows']
     for (let rowIdx = endRow; rowIdx >= startRow; rowIdx--) {
-      let row = documentHelpers.removeAt(doc, path, rowIdx)
-      documentHelpers.deepDeleteNode(table.getDocument(), row.id)
+      let id = documentHelpers.removeAt(doc, path, rowIdx)
+      documentHelpers.deepDeleteNode(table.getDocument(), id)
     }
   }
 
@@ -296,8 +296,8 @@ export default class TableEditingAPI {
       let row = table.getRowAt(rowIdx)
       let path = [row.id, 'cells']
       for (let colIdx = endCol; colIdx >= startCol; colIdx--) {
-        let cellData = documentHelpers.removeAt(doc, path, colIdx)
-        documentHelpers.deepDeleteNode(table.getDocument(), cellData.id)
+        let id = documentHelpers.removeAt(doc, path, colIdx)
+        documentHelpers.deepDeleteNode(table.getDocument(), id)
       }
     }
   }

@@ -11,9 +11,7 @@ import {
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-// TODO: test key-handling of table cell editor
-// TODO: test key-handling of table component
-// TODO: test TableEditing
+// TODO: test SHIFT selection handling
 // TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
 // TODO: test merge and unmerge cells for selection with mixed cells
 // TODO: test toggling cell heading for selection with mixed cells
@@ -317,7 +315,7 @@ test('Table: leaving a cell with ENTER', t => {
   setCursor(editor, cell.getPath(), 0)
   let cellComp = _getCellComponentById(tableComp, cell.id)
   let cellEditor = cellComp.find('.sc-table-cell-editor')
-  cellEditor._handleEnterKey(new DOMEvent(ENTER))
+  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, ENTER))
   let sel = getSelection(editor)
   let expectedCellId = table.getCell(1, 0).id
   t.deepEqual({
@@ -344,6 +342,32 @@ test('Table: TAB on a cell', t => {
   tableComp._onKeydown(new DOMEvent(TAB))
   let expectedCellId = matrix[1][2].id
   let sel = getSelection(editor)
+  t.deepEqual({
+    customType: sel.customType,
+    anchorCellId: sel.data.anchorCellId,
+    focusCellId: sel.data.focusCellId
+  }, {
+    customType: 'table',
+    anchorCellId: expectedCellId,
+    focusCellId: expectedCellId
+  }, 'next cell should be selected')
+  t.end()
+})
+
+test('Table: leaving a cell with TAB', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+  let cell = table.getCell(0, 0)
+
+  setCursor(editor, cell.getPath(), 0)
+  let cellComp = _getCellComponentById(tableComp, cell.id)
+  let cellEditor = cellComp.find('.sc-table-cell-editor')
+  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, TAB))
+  let sel = getSelection(editor)
+  let expectedCellId = table.getCell(0, 1).id
   t.deepEqual({
     customType: sel.customType,
     anchorCellId: sel.data.anchorCellId,
@@ -389,7 +413,7 @@ test('Table: ESCAPE from a cell', t => {
   setCursor(editor, matrix[1][0].getPath(), 0)
   let cell = _getCellComponent(tableComp, 1, 0)
   let cellEditor = cell.find('.sc-table-cell-editor')
-  cellEditor._handleEscapeKey(new DOMEvent(ESCAPE))
+  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, ESCAPE))
   let sel = getSelection(editor)
   let expectedCellId = matrix[1][0].id
   t.deepEqual({
@@ -441,7 +465,7 @@ test('Table: inserting line break in a cell', t => {
   setCursor(editor, cell.getPath(), 1)
   let cellComp = _getCellComponentById(tableComp, cell.id)
   let cellEditor = cellComp.find('.sc-table-cell-editor')
-  cellEditor._handleEnterKey(new DOMEvent(SHIFT_ENTER))
+  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, SHIFT_ENTER))
   t.equal(cell.content, 'x\nxx', 'a line break should have been inserted')
   t.end()
 })
@@ -1063,4 +1087,8 @@ function _getCellRange (matrix, startRow, startCol, endRow, endCol) {
   if (!isArray(range)) range = [range]
   else range = flattenOften(range, 2)
   return range
+}
+
+function _createSurfaceEvent (surface, eventData) {
+  return new DOMEvent(Object.assign({ target: surface.getNativeElement() }, eventData))
 }

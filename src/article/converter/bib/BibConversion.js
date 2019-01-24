@@ -115,16 +115,16 @@ function _convertFromCSLJSON (source, type) {
   // Authors, editors, translators, inventors
   if (source.author) {
     if (type === 'patent') {
-      data.inventors = source.author.map(a => { return {name: a.family, givenNames: a.given} })
+      data.inventors = source.author.map(a => { return {name: a.family, givenNames: a.given, type: 'ref-contrib'} })
     } else {
-      data.authors = source.author.map(a => { return {name: a.family, givenNames: a.given} })
+      data.authors = source.author.map(a => { return {name: a.family, givenNames: a.given, type: 'ref-contrib'} })
     }
   }
   if (source.editor) {
-    data.editors = source.editor.map(a => { return {name: a.family, givenNames: a.given} })
+    data.editors = source.editor.map(a => { return {name: a.family, givenNames: a.given, type: 'ref-contrib'} })
   }
   if (source.translator) {
-    data.translators = source.translator.map(a => { return {name: a.family, givenNames: a.given} })
+    data.translators = source.translator.map(a => { return {name: a.family, givenNames: a.given, type: 'ref-contrib'} })
   }
 
   // Cleanup output to avoid any undefined values

@@ -1,0 +1,25 @@
+.sc-input-with-button {
+  display: flex;
+}
+
+.sc-input-with-button > .se-input {
+  border: var(--t-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-half-spacing);
+  margin-right: var(--t-half-spacing);
+  font-size: var(--t-small-font-size);
+  flex-grow: 1;
+}
+
+.sc-input-with-button > .se-input::placeholder,
+.sc-input-with-button > .se-input::-webkit-input-placeholder {
+	color: var(--t-placeholder-text-color);
+  font-weight: var(--t-normal-font-weight);
+}
+
+.sc-input-with-button > .se-button   {
+  background: var(--t-action-background-color);
+  color: var(--t-inverted-text-color);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding) var(--t-half-spacing);
+}

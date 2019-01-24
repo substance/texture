@@ -1,15 +1,9 @@
 import { Component } from 'substance'
+import { InputWithButton } from '../../kit'
 
 export default class QueryComponent extends Component {
   render ($$) {
     let Input = this.getComponent('input')
-
-    const el = $$('div').addClass('sc-query').append(
-      $$(Input).attr({
-        type: 'text',
-        placeholder: this.getLabel(this.props.placeholder)
-      }).ref('input').on('input', this._unblockUI)
-    )
 
     const btnEl = $$('button').addClass('se-action')
 
@@ -17,23 +11,33 @@ export default class QueryComponent extends Component {
       btnEl.append(
         this._renderIcon($$, 'input-loading')
       )
-      el.append(btnEl)
     } else if (this.props.errors) {
-      const errorsList = $$('ul').addClass('se-error-list')
-        .append(this.props.errors.map(err => $$('li').append(err)))
-
       btnEl.append(
         this._renderIcon($$, 'input-error')
-      )
-      el.addClass('sm-error').append(
-        btnEl,
-        $$('div').addClass('se-error-popup').append(errorsList)
       )
     } else {
       btnEl.append(
         this.getLabel(this.props.actionLabel)
       ).on('click', this._onSubmit)
-      el.append(btnEl)
+    }
+
+    let el = $$('div').addClass('sc-query').append(
+      $$(InputWithButton, {
+        input: $$(Input).attr({
+          type: 'text',
+          placeholder: this.getLabel(this.props.placeholder)
+        }).ref('input').on('input', this._unblockUI),
+        button: btnEl
+      })
+    )
+
+    if (this.props.errors) {
+      el.addClass('sm-error').append(
+        $$('div').addClass('se-error-popup').append(
+          $$('ul').addClass('se-error-list')
+            .append(this.props.errors.map(err => $$('li').append(err)))
+        )
+      )
     }
 
     return el

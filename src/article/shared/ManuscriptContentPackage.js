@@ -96,8 +96,9 @@ export default {
     config.addLabel('subtitle-label', 'Subtitle')
     config.addLabel('subtitle-placeholder', 'Enter subtitle')
     config.addLabel('supplementary-file-workflow-title', 'Add supplementary file')
-    config.addLabel('supplementary-file-upload-placeholder', 'Upload local file')
-    config.addLabel('supplementary-file-link-placeholder', 'Or use web link to downloadable file')
+    config.addLabel('supplementary-file-upload-label', 'Upload local file')
+    config.addLabel('supplementary-file-link-label', 'Or use web link to downloadable file')
+    config.addLabel('supplementary-file-link-placeholder', 'Enter url')
 
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })

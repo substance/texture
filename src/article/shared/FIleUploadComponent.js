@@ -1,14 +1,6 @@
 import { Component } from 'substance'
 
 export default class FileUploadComponent extends Component {
-  get title () {
-    return this.getLabel(this.props.title)
-  }
-
-  get description () {
-    return false
-  }
-
   get acceptedFiles () {
     return false
   }

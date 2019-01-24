@@ -18,7 +18,7 @@ export default class QueryComponent extends Component {
     } else {
       btnEl.append(
         this.getLabel(this.props.actionLabel)
-      ).on('click', this._onSubmit)
+      ).on('click', this._onQuery)
     }
 
     let el = $$('div').addClass('sc-query').append(
@@ -49,7 +49,7 @@ export default class QueryComponent extends Component {
     )
   }
 
-  _onSubmit () {
+  _onQuery () {
     const input = this.refs.input
     const val = input.val()
     if (val) this.send('query', val)

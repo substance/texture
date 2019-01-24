@@ -70,14 +70,6 @@ export default class FileUploadComponent extends Component {
   }
 
   _handleUploadedFiles (files) {
-    Object.values(files).forEach(file => {
-      const reader = new window.FileReader()
-      reader.onload = this._onFileLoad.bind(this)
-      reader.readAsText(file)
-    })
-  }
-
-  _onFileLoad (e) {
     throw new Error('This method is abstract')
   }
 

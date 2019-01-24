@@ -19,6 +19,14 @@ export default class ReferenceUploadComponent extends FileUploadComponent {
     return errorsList
   }
 
+  _handleUploadedFiles (files) {
+    Object.values(files).forEach(file => {
+      const reader = new window.FileReader()
+      reader.onload = this._onFileLoad.bind(this)
+      reader.readAsText(file)
+    })
+  }
+
   _onFileLoad (e) {
     const res = e.target.result
     if (res) {

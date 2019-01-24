@@ -1,4 +1,4 @@
-import { parseKeyCombo, DefaultDOMElement, getRangeFromMatrix, isArray, flattenOften } from 'substance'
+import { parseKeyCombo, DefaultDOMElement, getRangeFromMatrix, isArray, flattenOften, isNil } from 'substance'
 import { test } from 'substance-test'
 import {
   TableComponent, tableHelpers, TableEditing
@@ -15,6 +15,10 @@ import setupTestApp from './shared/setupTestApp'
 // TODO: test key-handling of table component
 // TODO: test TableEditing
 // TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
+// TODO: test merge and unmerge cells for selection with mixed cells
+// TODO: test toggling cell heading for selection with mixed cells
+// TODO: test pasting with resize with content containing merged cells and headings
+// TODO: test pasting of cells with annotations
 
 const SIMPLE_TABLE = `<table-wrap>
   <table>
@@ -66,6 +70,37 @@ const TABLE_WITH_MERGED_CELLS = `<table-wrap>
       <tr>
         <td id="t41">mmmm</td>
         <td id="t42">nnnn</td>
+      </tr>
+    </tbody>
+  </table>
+</table-wrap>`
+
+const TABLE_WITH_HEADINGS = `<table-wrap>
+  <table>
+    <tbody>
+      <tr>
+        <th id="t11">aaaa</th>
+        <th id="t12">bbbb</th>
+        <th id="t13">cccc</th>
+        <th id="t14">dddd</th>
+      </tr>
+      <tr>
+        <th id="t21">eeee</th>
+        <td id="t22">ffff</td>
+        <td id="t23">gggg</td>
+        <td id="t24">hhhh</td>
+      </tr>
+      <tr>
+        <th id="t31">iiii</th>
+        <td id="t32">jjjj</td>
+        <td id="t33">kkkk</td>
+        <td id="t34">llll</td>
+        </tr>
+      <tr>
+        <th id="t41">mmmm</th>
+        <td id="t42">nnnn</td>
+        <td id="t43">oooo</td>
+        <td id="t44">pppp</td>
       </tr>
     </tbody>
   </table>
@@ -762,14 +797,7 @@ test('Table: unmerging cells', t => {
   t.deepEqual({ rowspan: cell.rowspan, colspan: cell.colspan }, { rowspan: 1, colspan: 1 }, 'cell should not be spanning anymore')
   let cellComp = _getCellComponentById(tableComp, 't23')
   let lastCell = table.getCell(3, 3)
-  t.deepEqual({
-    rowspan: cellComp.attr('rowspan'),
-    colspan: cellComp.attr('colspan')
-  },
-  {
-    rowspan: null,
-    colspan: null
-  }, 'cell component should be rendered without row- and colspan')
+  t.ok([cellComp.attr('rowspan'), cellComp.attr('colspan')].every(isNil), 'cell component should be rendered without row- and colspan')
   let sel = getSelection(editor)
   t.deepEqual({
     anchorCellId: sel.data.anchorCellId,
@@ -779,6 +807,36 @@ test('Table: unmerging cells', t => {
     anchorCellId: cell.id,
     focusCellId: lastCell.id
   }, 'cell should be selected')
+
+  t.end()
+})
+
+test('Table: toggle cell heading', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, TABLE_WITH_HEADINGS)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+  let doc = table.getDocument()
+
+  let cell = doc.get('t11')
+  t.comment('initial cell is a heading')
+  t.equal(cell.heading, true, 'cell should be heading initially')
+
+  t.comment('toggling cell heading')
+  _selectCellWithId(tableComp, 't11')
+  let tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-heading')
+  t.ok(tool.click(), 'using heading toggle should not throw')
+  t.equal(cell.heading, false, 'cell should not be heading anymore')
+  let cellComp = _getCellComponentById(tableComp, 't11')
+  t.equal(cellComp.el.tagName, 'td', 'cell should be rendered as <td>')
+
+  t.comment('toggling cell heading back')
+  tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-heading')
+  t.ok(tool.click(), 'using heading toggle should not throw')
+  t.equal(cell.heading, true, 'cell should be heading again')
+  cellComp = _getCellComponentById(tableComp, 't11')
+  t.equal(cellComp.el.tagName, 'th', 'cell should be rendered as <th>')
 
   t.end()
 })

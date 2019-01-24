@@ -602,7 +602,7 @@ test('Table: cutting cells', t => {
   cells = _getCellRange(matrix, 0, 0, 0, 0)
   expectedContent = cells.map(cell => cell.getText())
   pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
-  t.comment('selecting a single cell')
+  t.comment('cutting a single cell')
   _selectCell(tableComp, 0, 0)
   tableComp._onCut(pasteEvent)
   t.ok(matrix[0][0].isEmpty(), 'cell should be empty')
@@ -613,13 +613,13 @@ test('Table: cutting cells', t => {
     t.equal(htmlTable.findAll('tr').length, 1, '.. with one <tr>')
     tds = htmlTable.findAll('td')
     t.equal(tds.length, 1, '.. and one <td>')
-    t.deepEqual(tds.map(td => td.text()), expectedContent, '<td> should have correc content')
+    t.deepEqual(tds.map(td => td.text()), expectedContent, '<td> should have correct content')
   }
   // cell range
   cells = _getCellRange(matrix, 1, 1, 2, 2)
   expectedContent = cells.map(cell => cell.getText())
   pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
-  t.comment('selecting a cell range')
+  t.comment('cutting a cell range')
   _selectRange(tableComp, 1, 1, 2, 2)
   tableComp._onCut(pasteEvent)
   t.ok(cells.every(cell => cell.isEmpty()), 'cells should be empty')
@@ -632,6 +632,41 @@ test('Table: cutting cells', t => {
     t.equal(tds.length, 4, '.. and 4 <td>')
     t.deepEqual(tds.map(td => td.text()), expectedContent, '<td> should have correct content')
   }
+
+  t.end()
+})
+
+test('Table: pasting cells', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let matrix = _getTable(tableComp).getCellMatrix()
+
+  let sourceCells, targetCells, expectedContent, pasteEvent
+  // single cell
+  sourceCells = _getCellRange(matrix, 0, 0, 0, 0)
+  targetCells = _getCellRange(matrix, 1, 1, 1, 1)
+  expectedContent = sourceCells.map(cell => cell.getText())
+  pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
+  t.comment('pasting a single cell')
+  _selectCell(tableComp, 0, 0)
+  tableComp._onCopy(pasteEvent)
+  _selectCell(tableComp, 1, 1)
+  tableComp._onPaste(pasteEvent)
+  t.deepEqual(targetCells.map(cell => cell.getText()), expectedContent, 'content should have been pasted')
+
+  // cell range
+  sourceCells = _getCellRange(matrix, 0, 0, 1, 1)
+  targetCells = _getCellRange(matrix, 2, 2, 3, 3)
+  expectedContent = sourceCells.map(cell => cell.getText())
+  pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
+  t.comment('pasting a cell range')
+  _selectRange(tableComp, 0, 0, 1, 1)
+  tableComp._onCopy(pasteEvent)
+  _selectCell(tableComp, 2, 2)
+  tableComp._onPaste(pasteEvent)
+  t.deepEqual(targetCells.map(cell => cell.getText()), expectedContent, 'content should have been pasted')
 
   t.end()
 })

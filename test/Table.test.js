@@ -306,6 +306,32 @@ test('Table: ENTER a cell', t => {
   t.end()
 })
 
+test('Table: leaving a cell with ENTER', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+  let cell = table.getCell(0, 0)
+
+  setCursor(editor, cell.getPath(), 0)
+  let cellComp = _getCellComponentById(tableComp, cell.id)
+  let cellEditor = cellComp.find('.sc-table-cell-editor')
+  cellEditor._handleEnterKey(new DOMEvent(ENTER))
+  let sel = getSelection(editor)
+  let expectedCellId = table.getCell(1, 0).id
+  t.deepEqual({
+    customType: sel.customType,
+    anchorCellId: sel.data.anchorCellId,
+    focusCellId: sel.data.focusCellId
+  }, {
+    customType: 'table',
+    anchorCellId: expectedCellId,
+    focusCellId: expectedCellId
+  }, 'next cell should be selected')
+  t.end()
+})
+
 test('Table: TAB on a cell', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)

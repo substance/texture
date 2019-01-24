@@ -1,13 +1,9 @@
-.sc-add-reference .se-manual-add {
-  padding: 20px 0px;
-}
-
 .sc-add-reference .se-manual-add > .se-reftypes-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   list-style: none;
-  margin: 0;
+  margin: 0 -5px;
   padding: 0;
 }
 

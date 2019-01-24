@@ -2,10 +2,6 @@
   position: relative;
 }
 
-.sc-file-upload > .se-error-popup {
-  top: 90px;
-}
-
 .sc-file-upload > .se-drop-import {
   border: 1px dotted var(--t-light-text-color);
   border-radius: var(--t-border-radius);

@@ -4,7 +4,11 @@
 
 .se-workflow-modal .sm-workflow > .se-title {
   font-size: var(--t-large-font-size);
-  padding: 0 0 var(--t-default-spacing);
+  margin: 0 0 var(--t-default-spacing);
+}
+
+.se-workflow-modal .sm-workflow .sc-dialog-section {
+  margin: var(--t-half-spacing) 0;
 }
 
 .se-workflow-modal .sm-workflow .se-dialog-section-title {
@@ -22,4 +26,29 @@
   align-self: center;
   color: var(--t-light-text-color);
   font-size: var(--t-small-font-size);
+}
+
+/*
+  TODO: When we will have a better understanding of 
+  validation UI we should tidyup error popups or 
+  replace them with something more general
+*/
+.se-workflow-modal .se-error-popup {
+  position: absolute;
+  top: var(--t-double-spacing);
+  right: var(--t-default-spacing);
+  width: var(--t-small-layout-width);
+  background: var(--t-background-color);
+  border-radius: var(--t-border-radius);
+  box-shadow: var(--t-popup-box-shadow);
+  font-size: var(--t-tiny-font-size);
+  text-align: center;
+  color: var(--t-error-text-color);
+  z-index: 10;
+}
+
+.se-workflow-modal .se-error-popup > ul {
+  list-style: none;
+  padding: var(--t-half-spacing);
+  text-align: left;
 }

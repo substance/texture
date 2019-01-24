@@ -29,23 +29,3 @@
 	background-color: var(--t-error-color);
   color: var(--t-error-text-color);
 }
-
-.sc-query .se-error-popup {
-  position: absolute;
-  top: var(--t-double-spacing);
-  right: var(--t-default-spacing);
-  width: var(--t-small-layout-width);
-  background: var(--t-background-color);
-  border-radius: var(--t-border-radius);
-  box-shadow: var(--t-popup-box-shadow);
-  font-size: var(--t-tiny-font-size);
-  text-align: center;
-  color: var(--t-error-text-color);
-  z-index: 10;
-}
-
-.sc-query .se-error-popup > ul {
-  list-style: none;
-  padding: var(--t-half-spacing);
-  text-align: left;
-}

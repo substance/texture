@@ -21,6 +21,7 @@ export default class TableFigure extends FigurePanel {
     return {
       type: 'table-figure',
       content: Table.getTemplate(options),
+      legend: [{ type: 'paragraph' }],
       permission: { type: 'permission' }
     }
   }

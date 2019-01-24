@@ -1,5 +1,5 @@
 import {
-  CustomSurface, platform,
+  Component, CustomSurface, platform,
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys
 } from 'substance'
@@ -85,7 +85,7 @@ export default class TableComponent extends CustomSurface {
     table.on('mousemove', this._onMousemove)
       .on('dblclick', this._onDblclick)
       .on('contextmenu', this._onContextMenu)
-      .on('contextmenuitemclick', this._onContextmenuitemclick)
+      .on('contextmenuitemclick', this._onContextMenuItemClick)
     return table
   }
 
@@ -211,16 +211,16 @@ export default class TableComponent extends CustomSurface {
     // console.log('_onMousedown', e)
     let selData = this._selectionData
     if (!selData) selData = this._selectionData = {}
-    let target = this._getClickTargetForEvent(e)
+    let targetInfo = this._getClickTargetForEvent(e)
     // console.log('target', target)
-    if (!target) return
+    if (!targetInfo) return
 
     let isRightButton = domHelpers.isRightButton(e)
     if (isRightButton) {
       // console.log('IS RIGHT BUTTON')
       // this will be handled by onContextMenu
-      if (target.type === 'cell') {
-        let targetCell = this.props.node.get(target.id)
+      if (targetInfo.type === 'cell') {
+        let targetCell = this.props.node.get(targetInfo.id)
         let _needSetSelection = true
         let _selData = this._getSelectionData()
         if (_selData && targetCell) {
@@ -232,18 +232,18 @@ export default class TableComponent extends CustomSurface {
         }
         if (_needSetSelection) {
           this._isSelecting = true
-          selData.anchorCellId = target.id
-          selData.focusCellId = target.id
+          selData.anchorCellId = targetInfo.id
+          selData.focusCellId = targetInfo.id
           this._requestSelectionChange(this._createTableSelection(selData))
         }
       }
       return
     }
-    if (target.type === 'cell') {
+    if (targetInfo.type === 'cell') {
       this._isSelecting = true
-      selData.focusCellId = target.id
+      selData.focusCellId = targetInfo.id
       if (!e.shiftKey) {
-        selData.anchorCellId = target.id
+        selData.anchorCellId = targetInfo.id
       }
       e.preventDefault()
       this._requestSelectionChange(this._createTableSelection(selData))
@@ -343,7 +343,8 @@ export default class TableComponent extends CustomSurface {
     if (e.detail.shiftKey) {
       this.context.api.getTableAPI().insertSoftBreak()
     } else {
-      this._nav(1, 0, false, { anchorCellId: cellEl.id, focusCellId: cellEl.id })
+      let cellId = _getCellId(cellEl)
+      this._nav(1, 0, false, { anchorCellId: cellId, focusCellId: cellId })
     }
   }
 
@@ -351,14 +352,16 @@ export default class TableComponent extends CustomSurface {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
-    this._nav(0, 1, false, { anchorCellId: cellEl.id, focusCellId: cellEl.id })
+    let cellId = _getCellId(cellEl)
+    this._nav(0, 1, false, { anchorCellId: cellId, focusCellId: cellId })
   }
 
   _onCellEscape (e) {
     e.stopPropagation()
     e.preventDefault()
     let cellEl = DOM.wrap(e.target).getParent()
-    this._requestSelectionChange(this._createTableSelection({ anchorCellId: cellEl.id, focusCellId: cellEl.id }))
+    let cellId = _getCellId(cellEl)
+    this._requestSelectionChange(this._createTableSelection({ anchorCellId: cellId, focusCellId: cellId }))
   }
 
   _onCopy (e) {
@@ -389,7 +392,7 @@ export default class TableComponent extends CustomSurface {
     this._showContextMenu(e)
   }
 
-  _onContextmenuitemclick (e) {
+  _onContextMenuItemClick (e) {
     e.preventDefault()
     e.stopPropagation()
     this._hideContextMenu()
@@ -441,7 +444,8 @@ export default class TableComponent extends CustomSurface {
     let target = DOM.wrap(e.target)
     let cellEl = domHelpers.findParent(target, 'td,th')
     if (cellEl) {
-      return { type: 'cell', id: cellEl.id }
+      let cellId = _getCellId(cellEl)
+      return { type: 'cell', id: cellId }
     }
   }
 
@@ -458,7 +462,7 @@ export default class TableComponent extends CustomSurface {
       let cellEl = cellEls[i]
       let rect = domHelpers.getBoundingRect(cellEl)
       if (domHelpers.isXInside(x, rect) && domHelpers.isYInside(y, rect)) {
-        return cellEl.id
+        return _getCellId(cellEl)
       }
     }
   }
@@ -571,4 +575,8 @@ export default class TableComponent extends CustomSurface {
     event.stopPropagation()
     event.preventDefault()
   }
+}
+
+function _getCellId (cellEl) {
+  return Component.unwrap(cellEl).getId()
 }

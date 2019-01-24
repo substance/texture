@@ -5,6 +5,7 @@ import {
 } from 'substance'
 import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
 import TestVfs from './TestVfs'
+import { DOMEvent } from './testHelpers'
 
 export function setCursor (editor, path, pos) {
   if (isArray(path)) {
@@ -176,8 +177,9 @@ export function loadBodyFixture (editor, xml) {
   })
 }
 
-export class PseudoFileEvent {
+export class PseudoFileEvent extends DOMEvent {
   constructor () {
+    super()
     let blob
     if (platform.inBrowser) {
       blob = new Blob(['abc'], {type: 'image/png'})

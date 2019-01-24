@@ -3,25 +3,17 @@ import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loa
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
-// TODO: add a test demonstrating that the TOC is working as expected
-// TODO: test editing of block-quote
-// TODO: test editing of block-formula
-
-// TODO: test editing of inline-formula
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
 // TODO: test IncreaseHeadingLevel
-// TODO: test insert table
-// TODO: test key-handling of table cell editor
-// TODO: test key-handling of table component
-// TODO: test TableEditing
 // TODO: test save button
 // TODO: find out why Footnote.getTemplate() is not covered -> insert footnote?
 // TODO: test changin level of list item
-// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
 // TODO: BreakComponent not used
 // TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
 // TODO: test automatic label generation for block-formulas
+
+const EMPTY_P = `<p id="p1"></p>`
 
 test('ManuscriptEditor: add inline graphic', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
@@ -274,8 +266,22 @@ test('ManuscriptEditor: editing an external link', t => {
   t.end()
 })
 
-// TODO: explain why this test was added? Is it about general insertion of certain nodes?
-// IMO this should be moved into ManuscriptEditor.test
+test('ManuscriptEditor: inserting a table figure', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, EMPTY_P)
+  setCursor(editor, 'p1.content', 0)
+
+  let tool = openMenuAndFindTool(editor, 'insert', '.sc-insert-table-tool')
+  t.ok(tool.click(), 'using the insert table tool should not throw')
+  let tableFigure = editor.find('.sc-table-figure')
+  t.notNil(tableFigure, 'a table figure should be visible')
+  // the legend should not be empty, otherwise not editable
+  let legendEditor = tableFigure.find('.sc-container-editor.se-legend')
+  t.notNil(legendEditor, 'the legend should be editable')
+  t.notNil(legendEditor.find('.sc-paragraph'), 'there should be a paragraph inside the legend editor')
+  t.end()
+})
 
 const SPECS = [
   {
@@ -294,12 +300,8 @@ const SPECS = [
     'label': 'Table'
   }
 ]
-
-const EMPTY_P = `<p id="p1"></p>`
-
 SPECS.forEach(spec => {
-  // TODO: the title could be better. IsoloatedNode is an internal concept.
-  // What is actually done here, is inserting certain node types into an otherwise empty body
+  // TODO: explain why this test was added? Is it about general insertion of certain nodes?
   test(`ManuscriptEditor: inserting a '${spec.label}' into an empty document`, t => {
     testEmptyBodyIsolationNodeInsertion(t, spec)
   })

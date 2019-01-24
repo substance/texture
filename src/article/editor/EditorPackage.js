@@ -418,7 +418,7 @@ export default {
         type: 'group',
         style: 'descriptive',
         items: [
-          { type: 'command-group', name: 'table-structure' }
+          // TODO: specify what should go into the context menu
         ]
       }
     ])
@@ -429,6 +429,18 @@ export default {
         type: 'group',
         items: [
           { type: 'command-group', name: 'workflows' }
+        ]
+      }
+    ])
+
+    config.addToolPanel('table-context-menu', [
+      {
+        name: 'table-context-menu',
+        type: 'group',
+        style: 'descriptive',
+        items: [
+          { type: 'command-group', name: 'table-insert' },
+          { type: 'command-group', name: 'table-delete' }
         ]
       }
     ])

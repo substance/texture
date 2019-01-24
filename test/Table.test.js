@@ -671,6 +671,27 @@ test('Table: pasting cells', t => {
   t.end()
 })
 
+test('Table: pasting cells with automatic resize', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+  let [N, M] = table.getDimensions()
+  let sourceCells, targetCells, expectedContent, pasteEvent
+  sourceCells = _getCellRange(table.getCellMatrix(), 0, 0, 1, 2)
+  expectedContent = sourceCells.map(cell => cell.getText())
+  pasteEvent = new DOMEvent({clipboardData: new ClipboardEventData()})
+  _selectRange(tableComp, 0, 0, 1, 2)
+  tableComp._onCopy(pasteEvent)
+  _selectCell(tableComp, N - 1, M - 1)
+  tableComp._onPaste(pasteEvent)
+  t.deepEqual(table.getDimensions(), [N + 1, M + 2], 'table should have been resized')
+  targetCells = _getCellRange(table.getCellMatrix(), N - 1, M - 1, N, M + 1)
+  t.deepEqual(targetCells.map(cell => cell.getText()), expectedContent, 'content should have been pasted')
+  t.end()
+})
+
 // various tests for inserting annos or inline-nodes into a table cell
 // TODO: this could be useful for all kinds of text properties with annos
 // we should at least share the specs

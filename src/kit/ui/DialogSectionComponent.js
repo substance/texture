@@ -23,7 +23,7 @@ export default class DialogSectionComponent extends Component {
       )
       if (description) {
         sectionTitleEl.append(
-          $$('div').addClass('se-label').append(description)
+          $$('div').addClass('se-description').append(description)
         )
       }
       el.append(sectionTitleEl)

@@ -186,24 +186,42 @@ export default class TableEditingAPI {
     // TODO: make sure that the selection allows to do that
     const tableId = selData.tableId
     let table = this._getDocument().get(tableId)
-    let { startRow, endRow, startCol, endCol } = selData
+    let [N, M] = table.getDimensions()
+    let { startRow, startCol, endRow, endCol } = selData
     let cellIds = []
+    // index of focus cell after unmerging
+    let newFocusRow = 0
+    let newFocusCol = 0
+    const _updateFocus = (row, col) => {
+      newFocusRow = Math.min(N, Math.max(row, newFocusRow))
+      newFocusCol = Math.min(M, Math.max(col, newFocusCol))
+    }
     for (let i = startRow; i <= endRow; i++) {
       for (let j = startCol; j <= endCol; j++) {
         let cell = table.getCell(i, j)
+        // TODO: do not umerge shadowed cells
         let rowspan = cell.rowspan
         let colspan = cell.colspan
         if (rowspan > 1 || colspan > 1) {
+          _updateFocus(i + rowspan - 1, j + colspan - 1)
           cellIds.push(cell.id)
         }
       }
     }
+    // TODO: selData is a little bit confusing
+    // at other places selData is used for the 'data' part of the CustomSelection
+    let newAnchorCell = selData.anchorCell
+    let newFocusCell = table.getCell(newFocusRow, newFocusCol)
     if (cellIds.length > 0) {
       this.editorSession.transaction(tx => {
-        cellIds.forEach(id => {
+        for (let id of cellIds) {
           let cell = tx.get(id)
-          tx.set([cell.id, 'rowspan', 1])
-          tx.set([cell.id, 'colspan', 1])
+          cell.rowspan = 1
+          cell.colspan = 1
+        }
+        tx.selection = createTableSelection(tableId, {
+          anchorCellId: newAnchorCell.id,
+          focusCellId: newFocusCell.id
         })
       }, { action: 'unmergeCells' })
     }

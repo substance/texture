@@ -232,9 +232,7 @@ export default class TableEditingAPI {
       this.editorSession.transaction(tx => {
         for (let id of cellIds) {
           let cell = tx.get(id)
-          let heading = cell.getAttribute('heading')
-          if (heading) cell.removeAttribute('heading')
-          else cell.setAttribute('heading', true)
+          cell.heading = !cell.heading
         }
       }, { action: 'toggleHeading' })
     }

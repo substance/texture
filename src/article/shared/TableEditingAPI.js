@@ -85,7 +85,10 @@ export default class TableEditingAPI {
           let copyCell = copyCellMatrix[rowIdx][colIdx]
           let cell = cellMatrix[startRow + rowIdx][startCol + colIdx]
           // TODO: copy annotations too
-          cell.assign(copyCell.toJSON())
+          let data = copyCell.toJSON()
+          delete data.id
+          delete data.type
+          cell.assign(data)
         }
       }
     }, { action: 'paste' })

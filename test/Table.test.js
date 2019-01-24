@@ -115,6 +115,7 @@ const TAB = parseKeyCombo('Tab')
 const DELETE = parseKeyCombo('Delete')
 const BACKSPACE = parseKeyCombo('Backspace')
 const ESCAPE = parseKeyCombo('Escape')
+const SHIFT_ENTER = parseKeyCombo('Shift+Enter')
 
 test('Table: mounting a table component', t => {
   let { table, context } = _setupEditorWithOneTable(t)
@@ -400,6 +401,22 @@ test('Table: typing over a cell', t => {
     offset: cell.content.length,
     surfaceId: surface.getId()
   }, "cursor should be at the end of the cell's content")
+  t.end()
+})
+
+test('Table: inserting line break in a cell', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+  let cell = table.getCell(0, 0)
+  cell.content = 'xxx'
+  setCursor(editor, cell.getPath(), 1)
+  let cellComp = _getCellComponentById(tableComp, cell.id)
+  let cellEditor = cellComp.find('.sc-table-cell-editor')
+  cellEditor._handleEnterKey(new DOMEvent(SHIFT_ENTER))
+  t.equal(cell.content, 'x\nxx', 'a line break should have been inserted')
   t.end()
 })
 

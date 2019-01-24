@@ -1,8 +1,8 @@
-.sc-add-reference > .se-manual-add {
+.sc-add-reference .se-manual-add {
   padding: 20px 0px;
 }
 
-.sc-add-reference > .se-manual-add > .se-reftypes-list {
+.sc-add-reference .se-manual-add > .se-reftypes-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -11,7 +11,7 @@
   padding: 0;
 }
 
-.sc-add-reference > .se-manual-add > .se-reftypes-list > .se-type {
+.sc-add-reference .se-manual-add > .se-reftypes-list > .se-type {
   flex-grow: 1;
   width: 30%;
   height: var(--t-double-spacing);
@@ -24,6 +24,6 @@
   cursor: pointer;
 }
 
-.sc-add-reference > .se-manual-add > .se-reftypes-list > .se-type:hover {
+.sc-add-reference .se-manual-add > .se-reftypes-list > .se-type:hover {
   background: var(--t-light-bg-color);
 }

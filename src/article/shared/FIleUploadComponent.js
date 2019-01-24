@@ -14,19 +14,7 @@ export default class FileUploadComponent extends Component {
   }
 
   render ($$) {
-    const el = $$('div').addClass('sc-file-upload').append(
-      $$('div').addClass('se-section-title').append(
-        this.getLabel(this.title)
-      )
-    )
-
-    if (this.description) {
-      el.append(
-        $$('div').addClass('se-description').append(
-          this.getLabel(this.description)
-        )
-      )
-    }
+    const el = $$('div').addClass('sc-file-upload')
 
     const selectInput = $$('input').attr({
       type: 'file'

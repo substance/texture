@@ -7,8 +7,19 @@
   padding: 0 0 var(--t-default-spacing);
 }
 
-.se-workflow-modal .sm-workflow .se-section-title {
+.se-workflow-modal .sm-workflow .se-dialog-section-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.se-workflow-modal .sm-workflow .se-dialog-section-title > .se-label {
   font-size: var(--t-text-font-size);
   color: var(--t-light-text-color);
   padding: var(--t-half-spacing) 0;
+}
+
+.se-workflow-modal .sm-workflow .se-dialog-section-title > .se-description {
+  align-self: center;
+  color: var(--t-light-text-color);
+  font-size: var(--t-small-font-size);
 }

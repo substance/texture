@@ -1,13 +1,8 @@
 import { convertCSLJSON } from '../converter/bib/BibConversion'
 import FileUploadComponent from './FileUploadComponent'
 
-const supportedFormats = ['CSL-JSON']
 
 export default class ReferenceUploadComponent extends FileUploadComponent {
-  get description () {
-    return this.getLabel('supported-ref-formats') + ': ' + supportedFormats.join(', ')
-  }
-
   get acceptedFiles () {
     return 'application/json'
   }

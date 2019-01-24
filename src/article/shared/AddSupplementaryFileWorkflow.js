@@ -22,10 +22,16 @@ export default class AddSupplementaryFileWorkflow extends Component {
       this.getLabel('supplementary-file-workflow-title')
     )
 
+    // const urlInput = $$(InputActionComponent, {
+    //   placeholder: 'enter-url-placeholder',
+    //   actionLabel: 'add-action'
+    // })
+
     // TODO: add url input
     el.append(
       title,
       $$(SupplementaryFileUploadComponent, {title: 'supplementary-file-upload-placeholder'})
+      //urlInput
     )
 
     return el

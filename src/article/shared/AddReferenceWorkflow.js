@@ -9,6 +9,10 @@ export default class AddReferenceWorkflow extends Component {
     return 'large'
   }
 
+  get supportedUploadFormats () {
+    return ['CSL-JSON']
+  }
+
   didMount () {
     super.didMount()
 
@@ -32,15 +36,18 @@ export default class AddReferenceWorkflow extends Component {
         ).on('click', this._onAdd.bind(this, item))
       )
     })
+    const manualAddEl = $$('div').addClass('se-manual-add').append(refTypesButtons)
 
     el.append(
       title,
       $$(DialogSectionComponent, {label: this.getLabel('fetch-datacite')})
         .append($$(DOIInputComponent)),
-      $$(DialogSectionComponent, {label: 'import-refs'})
-        .append($$(ReferenceUploadComponent)),
+      $$(DialogSectionComponent, {
+        label: this.getLabel('import-refs'),
+        description: this.getLabel('supported-ref-formats') + ': ' + this.supportedUploadFormats.join(', ')
+      }).append($$(ReferenceUploadComponent)),
       $$(DialogSectionComponent, {label: this.getLabel('add-ref-manually')})
-        .append(refTypesButtons)
+        .append(manualAddEl)
     )
 
     return el

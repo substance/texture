@@ -1,18 +1,9 @@
 .sc-file-upload {
   position: relative;
-  margin: var(--t-default-spacing) 0;
 }
 
 .sc-file-upload > .se-error-popup {
   top: 90px;
-}
-
-.sc-file-upload > .se-description {
-  position: absolute;
-  top: var(--t-half-spacing);
-  right: var(--t-default-spacing);
-  color: var(--t-light-text-color);
-  font-size: var(--t-small-font-size);
 }
 
 .sc-file-upload > .se-drop-import {

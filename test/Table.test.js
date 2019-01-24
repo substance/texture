@@ -1,7 +1,7 @@
 import { parseKeyCombo, DefaultDOMElement, getRangeFromMatrix, isArray, flattenOften, isNil } from 'substance'
 import { test } from 'substance-test'
 import {
-  TableComponent, tableHelpers, TableEditing
+  TableComponent, tableHelpers
 } from '../index'
 import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
@@ -12,7 +12,7 @@ import {
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: test SHIFT selection handling
-// TODO: find out why TableRow.getCellAt is not covered (isn't it used in TableEditing, and table editing is covered?)
+// TODO: find out why TableRow.getCellAt is not covered
 // TODO: test merge and unmerge cells for selection with mixed cells
 // TODO: test toggling cell heading for selection with mixed cells
 // TODO: test pasting with resize with content containing merged cells and headings
@@ -156,13 +156,11 @@ test('Table: setting table selections', t => {
   comp.mount(el)
   let matrix = table.getCellMatrix()
   let firstCell = matrix[0][0]
-  let tableEditing = new TableEditing(editorSession, table.id, comp.getSurfaceId())
   // setting the selection on the first cell
-  let sel = tableEditing.createTableSelection({
+  editorSession.setSelection(tableHelpers.createTableSelection(table.id, {
     anchorCellId: firstCell.id,
     focusCellId: firstCell.id
-  })
-  editorSession.setSelection(sel)
+  }, comp.getId()))
   t.equal(comp.refs.selAnchor.el.css('visibility'), 'visible', 'the selection overlay for the selection anchor should be visible')
   t.equal(comp.refs.selRange.el.css('visibility'), 'visible', 'the selection overlay for the selection range should be visible')
 

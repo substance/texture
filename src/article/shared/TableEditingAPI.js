@@ -1,5 +1,5 @@
 import { documentHelpers } from 'substance'
-import { getCellRange, getRangeFromMatrix } from '../shared/tableHelpers'
+import { getCellRange, getRangeFromMatrix, createTableSelection } from '../shared/tableHelpers'
 import { Table } from '../models'
 
 export default class TableEditingAPI {
@@ -170,8 +170,12 @@ export default class TableEditingAPI {
     if (bigOne.rowspan !== rowspan || bigOne.colspan !== colspan) {
       this.editorSession.transaction(tx => {
         let cell = tx.get(bigOne.id)
-        cell.setAttribute('rowspan', rowspan)
-        cell.setAttribute('colspan', colspan)
+        cell.rowspan = rowspan
+        cell.colspan = colspan
+        tx.selection = createTableSelection(tableId, {
+          anchorCellId: cell.id,
+          focusCellId: cell.id
+        }, selData.surfaceId)
       }, { action: 'mergeCells' })
     }
   }

@@ -47,6 +47,30 @@ const SIMPLE_TABLE = `<table-wrap>
   </table>
 </table-wrap>`
 
+const TABLE_WITH_MERGED_CELLS = `<table-wrap>
+  <table>
+    <tbody>
+      <tr>
+        <td id="t11" rowspan="2">aaaa</td>
+        <td id="t12" colspan="2">bbbb</td>
+        <td id="t14">dddd</td>
+      </tr>
+      <tr>
+        <td id="t22">ffff</td>
+        <td id="t23" rowspan="3" colspan="2">gggg</td>
+      </tr>
+      <tr>
+        <td id="t31">iiii</td>
+        <td id="t32">jjjj</td>
+        </tr>
+      <tr>
+        <td id="t41">mmmm</td>
+        <td id="t42">nnnn</td>
+      </tr>
+    </tbody>
+  </table>
+</table-wrap>`
+
 const LEFT = parseKeyCombo('Left')
 const RIGHT = parseKeyCombo('Right')
 const UP = parseKeyCombo('Up')
@@ -723,6 +747,42 @@ test('Table: merging cells', t => {
   t.end()
 })
 
+test('Table: unmerging cells', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, TABLE_WITH_MERGED_CELLS)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+  let doc = table.getDocument()
+
+  _selectCellWithId(tableComp, 't23')
+  let tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-merge')
+  t.ok(tool.click(), 'using merge toggle should not throw')
+  let cell = doc.get('t23')
+  t.deepEqual({ rowspan: cell.rowspan, colspan: cell.colspan }, { rowspan: 1, colspan: 1 }, 'cell should not be spanning anymore')
+  let cellComp = _getCellComponentById(tableComp, 't23')
+  let lastCell = table.getCell(3, 3)
+  t.deepEqual({
+    rowspan: cellComp.attr('rowspan'),
+    colspan: cellComp.attr('colspan')
+  },
+  {
+    rowspan: null,
+    colspan: null
+  }, 'cell component should be rendered without row- and colspan')
+  let sel = getSelection(editor)
+  t.deepEqual({
+    anchorCellId: sel.data.anchorCellId,
+    focusCellId: sel.data.focusCellId
+  },
+  {
+    anchorCellId: cell.id,
+    focusCellId: lastCell.id
+  }, 'cell should be selected')
+
+  t.end()
+})
+
 // various tests for inserting annos or inline-nodes into a table cell
 // TODO: this could be useful for all kinds of text properties with annos
 // we should at least share the specs
@@ -825,8 +885,19 @@ function _getCellComponent (tableComp, rowIdx, colIdx) {
   return cells[colIdx]
 }
 
+function _getCellComponentById (tableComp, id) {
+  return tableComp.find(`.sc-table-cell[data-id="${id}"]`)
+}
+
 function _selectCell (tableComp, rowIdx = 1, colIdx = 0) {
   let cell = _getCellComponent(tableComp, rowIdx, colIdx)
+  tableComp._onMousedown(new DOMEvent({ target: cell.getNativeElement() }))
+  cell.el.click()
+  return cell
+}
+
+function _selectCellWithId (tableComp, id) {
+  let cell = _getCellComponentById(tableComp, id)
   tableComp._onMousedown(new DOMEvent({ target: cell.getNativeElement() }))
   cell.el.click()
   return cell

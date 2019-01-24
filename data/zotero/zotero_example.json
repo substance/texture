@@ -1,0 +1,62 @@
+[
+	{
+		"id": "http://zotero.org/users/local/ZyMdGJ53/items/UI3FHNLY",
+		"type": "article-journal",
+		"title": "VivosX, a disulfide crosslinking method to capture site-specific, protein-protein interactions in yeast and human cells",
+		"container-title": "eLife",
+		"volume": "7",
+		"source": "Crossref",
+		"URL": "https://elifesciences.org/articles/36654",
+		"DOI": "10.7554/eLife.36654",
+		"ISSN": "2050-084X",
+		"language": "en",
+		"author": [
+			{
+				"family": "Mohan",
+				"given": "Chitra"
+			},
+			{
+				"family": "Kim",
+				"given": "Lisa M"
+			},
+			{
+				"family": "Hollar",
+				"given": "Nicole"
+			},
+			{
+				"family": "Li",
+				"given": "Tailai"
+			},
+			{
+				"family": "Paulissen",
+				"given": "Eric"
+			},
+			{
+				"family": "Leung",
+				"given": "Cheuk T"
+			},
+			{
+				"family": "Luk",
+				"given": "Ed"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2018",
+					8,
+					9
+				]
+			]
+		},
+		"accessed": {
+			"date-parts": [
+				[
+					"2018",
+					8,
+					28
+				]
+			]
+		}
+	}
+]

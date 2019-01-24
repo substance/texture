@@ -11,8 +11,7 @@ export default class AddSupplementaryFileWorkflow extends Component {
     super.didMount()
 
     this.handleActions({
-      'importFile': this._onFileImport,
-      'inputSubmit': this._onExternalFileImport
+      'importFile': this._onFileImport
     })
   }
 
@@ -27,8 +26,12 @@ export default class AddSupplementaryFileWorkflow extends Component {
     )
 
     const urlInput = $$(InputWithButton, {
-      input: $$(Input, {placeholder: this.getLabel('supplementary-file-link-placeholder')}),
-      button: $$(Button).append(this.getLabel('add-action'))
+      input: $$(Input, {
+        placeholder: this.getLabel('supplementary-file-link-placeholder')}
+      ).ref('urlInput'),
+      button: $$(Button).append(
+        this.getLabel('add-action')
+      ).on('click', this._onExternalFileImport)
     })
 
     el.append(
@@ -42,14 +45,16 @@ export default class AddSupplementaryFileWorkflow extends Component {
     return el
   }
 
-  _onExternalFileImport (url) {
-    // TODO: Handle file links
+  _onExternalFileImport () {
+    const url = this.refs.urlInput.val()
+    let api = this.context.api
+    api._insertSupplementaryFile(null, url)
     this.send('closeModal')
   }
 
-  _onFileImport (file) {
+  _onFileImport (files) {
     let api = this.context.api
-    api._insertSupplementaryFile(file)
+    api._insertSupplementaryFile(files[0])
     this.send('closeModal')
   }
 }

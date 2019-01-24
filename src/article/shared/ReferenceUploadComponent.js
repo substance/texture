@@ -1,7 +1,6 @@
 import { convertCSLJSON } from '../converter/bib/BibConversion'
 import FileUploadComponent from './FileUploadComponent'
 
-
 export default class ReferenceUploadComponent extends FileUploadComponent {
   get acceptedFiles () {
     return 'application/json'

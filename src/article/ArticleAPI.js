@@ -404,15 +404,16 @@ export default class ArticleAPI {
     })
   }
 
-  _insertSupplementaryFile (file) {
+  _insertSupplementaryFile (file, url) {
     const articleSession = this.editorSession
-    let path = this.archive.createFile(file)
+    if (file) url = this.archive.createFile(file)
     let sel = articleSession.getSelection()
     articleSession.transaction(tx => {
       let containerPath = sel.containerPath
       let nodeData = SupplementaryFile.getTemplate()
-      nodeData.mimeType = file.type
-      nodeData.href = path
+      nodeData.mimetype = file ? file.type : ''
+      nodeData.href = url
+      nodeData.remote = !file
       let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
       tx.insertBlockNode(supplementaryFile)
       selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)

@@ -11,9 +11,6 @@ import {
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-// TODO: add tests for this content inside table cells
-// - external-link
-// - cross-reference
 // TODO: test key-handling of table cell editor
 // TODO: test key-handling of table component
 // TODO: test TableEditing
@@ -689,6 +686,40 @@ test('Table: pasting cells with automatic resize', t => {
   t.deepEqual(table.getDimensions(), [N + 1, M + 2], 'table should have been resized')
   targetCells = _getCellRange(table.getCellMatrix(), N - 1, M - 1, N, M + 1)
   t.deepEqual(targetCells.map(cell => cell.getText()), expectedContent, 'content should have been pasted')
+  t.end()
+})
+
+test('Table: merging cells', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, SIMPLE_TABLE)
+  let tableComp = editor.find('.sc-table')
+  let table = _getTable(tableComp)
+
+  _selectRange(tableComp, 0, 0, 1, 1)
+  let tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-merge')
+  t.ok(tool.click(), 'using merge toggle should not throw')
+  let cell = table.getCell(0, 0)
+  t.deepEqual({ rowspan: cell.rowspan, colspan: cell.colspan }, { rowspan: 2, colspan: 2 }, 'cell should be spanning over two rows and two columns')
+  let cellComp = _getCellComponent(tableComp, 0, 0)
+  t.deepEqual({
+    rowspan: cellComp.attr('rowspan'),
+    colspan: cellComp.attr('colspan')
+  },
+  {
+    rowspan: '2',
+    colspan: '2'
+  }, 'cell component should be rendered with row- and colspan')
+  let sel = getSelection(editor)
+  t.deepEqual({
+    anchorCellId: sel.data.anchorCellId,
+    focusCellId: sel.data.focusCellId
+  },
+  {
+    anchorCellId: cell.id,
+    focusCellId: cell.id
+  }, 'cell should be selected')
+
   t.end()
 })
 

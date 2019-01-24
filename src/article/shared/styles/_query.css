@@ -1,9 +1,9 @@
-.sc-input-action {
+.sc-query {
 	display: flex;
 	position: relative;
 }
 
-.sc-input-action > .sc-input {
+.sc-query > .sc-input {
   border: var(--t-default-border);
 	border-radius: var(--t-border-radius);
 	padding: var(--t-half-spacing);
@@ -12,25 +12,25 @@
 	flex-grow: 1;
 }
 
-.sc-input-action > .se-action {
+.sc-query > .se-action {
 	background: var(--t-action-background-color);
 	color: var(--t-inverted-text-color);
 	border-radius: var(--t-border-radius);
 	padding: var(--t-input-padding) var(--t-half-spacing);
 }
 
-.sc-input-action .sc-input::placeholder,
-.sc-input-action .sc-input::-webkit-input-placeholder {
+.sc-query .sc-input::placeholder,
+.sc-query .sc-input::-webkit-input-placeholder {
 	color: var(--t-placeholder-text-color);
   font-weight: var(--t-normal-font-weight);
 }
 
-.sc-input-action.sm-error > .se-action {
+.sc-query.sm-error > .se-action {
 	background-color: var(--t-error-color);
   color: var(--t-error-text-color);
 }
 
-.sc-add-reference .se-error-popup {
+.sc-query .se-error-popup {
   position: absolute;
   top: var(--t-double-spacing);
   right: var(--t-default-spacing);
@@ -44,7 +44,7 @@
   z-index: 10;
 }
 
-.sc-add-reference .se-error-popup > ul {
+.sc-query .se-error-popup > ul {
   list-style: none;
   padding: var(--t-half-spacing);
   text-align: left;

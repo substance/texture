@@ -1,6 +1,5 @@
 import { Component } from 'substance'
 import SupplementaryFileUploadComponent from './SupplementaryFileUploadComponent'
-import InputActionComponent from './InputActionComponent'
 
 export default class AddSupplementaryFileWorkflow extends Component {
   static get desiredWidth () {
@@ -23,16 +22,10 @@ export default class AddSupplementaryFileWorkflow extends Component {
       this.getLabel('supplementary-file-workflow-title')
     )
 
-    const urlInput = $$(InputActionComponent, {
-      placeholder: 'enter-url-placeholder',
-      actionLabel: 'add-action'
-    })
-
     // TODO: add url input
     el.append(
       title,
-      $$(SupplementaryFileUploadComponent, {title: 'supplementary-file-upload-placeholder'}),
-      urlInput
+      $$(SupplementaryFileUploadComponent, {title: 'supplementary-file-upload-placeholder'})
     )
 
     return el

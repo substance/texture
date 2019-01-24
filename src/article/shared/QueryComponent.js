@@ -1,10 +1,10 @@
 import { Component } from 'substance'
 
-export default class InputActionComponent extends Component {
+export default class QueryComponent extends Component {
   render ($$) {
     let Input = this.getComponent('input')
 
-    const el = $$('div').addClass('sc-input-action').append(
+    const el = $$('div').addClass('sc-query').append(
       $$(Input).attr({
         type: 'text',
         placeholder: this.getLabel(this.props.placeholder)
@@ -48,7 +48,7 @@ export default class InputActionComponent extends Component {
   _onSubmit () {
     const input = this.refs.input
     const val = input.val()
-    if (val) this.send('inputSubmit', val)
+    if (val) this.send('query', val)
   }
 
   _unblockUI () {

@@ -1,12 +1,12 @@
 import { Component, sendRequest } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
-import InputActionComponent from './InputActionComponent'
+import QueryComponent from './QueryComponent'
 
 export default class DOIInputComponent extends Component {
   constructor (...args) {
     super(...args)
     this.handleActions({
-      'inputSubmit': this._startImporting
+      'query': this._startImporting
     })
   }
 
@@ -17,21 +17,14 @@ export default class DOIInputComponent extends Component {
   }
 
   render ($$) {
-    const inputEl = $$(InputActionComponent, {
-      placeholder: 'enter-doi-placeholder',
-      actionLabel: 'add-action',
-      loading: this.state.loading,
-      errors: this.state.errors
-    })
-
-    const el = $$('div').addClass('sc-doi-input').append(
-      $$('div').addClass('se-section-title').append(
-        this.getLabel('fetch-datacite')
-      ),
-      inputEl
+    return $$('div').addClass('sc-doi-input').append(
+      $$(QueryComponent, {
+        placeholder: 'enter-doi-placeholder',
+        actionLabel: 'add-action',
+        loading: this.state.loading,
+        errors: this.state.errors
+      })
     )
-
-    return el
   }
 
   _startImporting (input) {

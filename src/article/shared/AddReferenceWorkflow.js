@@ -2,6 +2,7 @@ import { Component } from 'substance'
 import DOIInputComponent from './DOIInputComponent'
 import ReferenceUploadComponent from './ReferenceUploadComponent'
 import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
+import { DialogSectionComponent } from '../../kit'
 
 export default class AddReferenceWorkflow extends Component {
   static get desiredWidth () {
@@ -23,12 +24,6 @@ export default class AddReferenceWorkflow extends Component {
       this.getLabel('add-reference-title')
     )
 
-    const manualAddEl = $$('div').addClass('se-manual-add').append(
-      $$('div').addClass('se-section-title').append(
-        this.getLabel('add-ref-manually')
-      )
-    )
-
     const refTypesButtons = $$('ul').addClass('se-reftypes-list')
     INTERNAL_BIBR_TYPES.forEach(item => {
       refTypesButtons.append(
@@ -37,13 +32,15 @@ export default class AddReferenceWorkflow extends Component {
         ).on('click', this._onAdd.bind(this, item))
       )
     })
-    manualAddEl.append(refTypesButtons)
 
     el.append(
       title,
-      $$(DOIInputComponent),
-      $$(ReferenceUploadComponent, {title: 'import-refs'}),
-      manualAddEl
+      $$(DialogSectionComponent, {label: this.getLabel('fetch-datacite')})
+        .append($$(DOIInputComponent)),
+      $$(DialogSectionComponent, {label: 'import-refs'})
+        .append($$(ReferenceUploadComponent)),
+      $$(DialogSectionComponent, {label: this.getLabel('add-ref-manually')})
+        .append(refTypesButtons)
     )
 
     return el

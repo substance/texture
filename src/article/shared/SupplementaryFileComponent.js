@@ -19,13 +19,12 @@ export default class SupplementaryFileComponent extends NodeComponent {
     el.append(
       $$('div').addClass('se-header').append(
         // FIXME: not using a dedicated component for the label means that this is not updated
-        $$('div').addClass('se-label').text(label),
-        // FIXME: not using a dedicated component for the href model means that this is not updated
-        // NOTE: we are using title attribute to left the oportunty to see long urls
-        $$('div').addClass('se-href').text(node.href).attr('title', node.href)
+        $$('div').addClass('se-label').text(label)
       ),
       $$(SectionLabel, {label: 'legend-label'}),
-      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') })
+      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }),
+      $$(SectionLabel, {label: node.remote ? 'file-location' : 'file-name'}),
+      $$('div').addClass('se-href').text(node.href).attr('title', node.href)
     )
     return el
   }

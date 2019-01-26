@@ -298,6 +298,8 @@ export default {
     config.addLabel('create-unordered-list', 'Bulleted list')
     config.addLabel('create-ordered-list', 'Numbered list')
     config.addLabel('edit-ref', 'Edit Reference')
+    config.addLabel('file-location', 'File location')
+    config.addLabel('file-name', 'File name')
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('no-authors', 'No Authors')

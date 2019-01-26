@@ -14,12 +14,9 @@
   font-weight: var(--t-bold-font-weight);
 }
 
-.sc-supplementary-file > .se-header > .se-href {
+.sc-supplementary-file > .se-href {
   font-weight: var(--t-bold-font-weight);
   font-family: monospace, monospace;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .sc-supplementary-file > .sc-caption {

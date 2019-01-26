@@ -5,7 +5,7 @@ import { doesNotThrowInNodejs } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 const insertFileRefToolSelector = '.sm-insert-xref-file'
-const insertSupplementaryFileToolSelector = '.sc-insert-supplementary-file-tool'
+const insertSupplementaryFileToolSelector = '.sm-insert-file'
 const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-tool'
 
 const FIXTURE = `
@@ -27,13 +27,14 @@ test('Supplementary File: insert to a manuscript', t => {
   setCursor(editor, 'p1.content', 2)
   t.ok(_isToolEnabled(editor), 'tool shoud be enabled')
   // Note: testing this only in nodejs because in Browser it is annoying as it opens the file dialog
+  const workflow = _openWorkflow(editor)
   if (platform.inNodeJS) {
     t.doesNotThrow(() => {
-      _getInsertSupplementaryFileTool(editor).click()
+      workflow.find('.sc-file-upload input').click()
     }, 'using tool should not throw')
   }
   doesNotThrowInNodejs(t, () => {
-    _getInsertSupplementaryFileTool(editor).onFileSelect(new PseudoFileEvent())
+    workflow.find('.sc-file-upload')._selectFile(new PseudoFileEvent())
   }, 'triggering file upload should not throw')
   let afterP = editor.find('*[data-id=p1] + *')
   t.ok(afterP.hasClass('sm-supplementary-file'), 'element after p-1 should be a supplementary file now')
@@ -100,11 +101,14 @@ test('Supplementary File: reference a file', t => {
 
   // insert another supplement before
   setCursor(editor, 'p1.content', 1)
+  const workflow = _openWorkflow(editor)
+  if (platform.inNodeJS) {
+    t.doesNotThrow(() => {
+      workflow.find('.sc-file-upload input').click()
+    }, 'using tool should not throw')
+  }
   doesNotThrowInNodejs(t, () => {
-    _getInsertSupplementaryFileTool(editor).click()
-  }, 'using tool should not throw')
-  doesNotThrowInNodejs(t, () => {
-    _getInsertSupplementaryFileTool(editor).onFileSelect(new PseudoFileEvent())
+    workflow.find('.sc-file-upload')._selectFile(new PseudoFileEvent())
   }, 'triggering file upload should not throw')
   t.equal(getXref().text(), 'Supplementary File 2', 'xref label should be equal to second supplementary file label')
   // remove the referenced supplement
@@ -151,5 +155,13 @@ function _getReplaceSupplementaryFileTool (editor) {
 }
 
 function _isToolEnabled (editor) {
-  return isToolEnabled(editor, 'insert', '.sc-insert-supplementary-file-tool')
+  return isToolEnabled(editor, 'insert', '.sm-insert-file')
+}
+
+function _openWorkflow (editor) {
+  // open the add drop down and find tool
+  const tool = _getInsertSupplementaryFileTool(editor)
+  tool.click()
+  let workflow = editor.find('.se-workflow-modal')
+  return workflow
 }

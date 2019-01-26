@@ -35,6 +35,7 @@ import {
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
+import DownloadSupplementaryFileCommand from './DownloadSupplementaryFileCommand'
 import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
@@ -121,6 +122,9 @@ export default {
     config.addCommand('delete-rows', DeleteCellsCommand, {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
+    })
+    config.addCommand('download-file', DownloadSupplementaryFileCommand, {
+      commandGroup: 'file'
     })
     config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
       commandGroup: 'prompt'

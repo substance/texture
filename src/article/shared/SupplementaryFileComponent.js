@@ -21,7 +21,8 @@ export default class SupplementaryFileComponent extends NodeComponent {
         // FIXME: not using a dedicated component for the label means that this is not updated
         $$('div').addClass('se-label').text(label),
         // FIXME: not using a dedicated component for the href model means that this is not updated
-        $$('div').addClass('se-href').text(node.href)
+        // NOTE: we are using title attribute to left the oportunty to see long urls
+        $$('div').addClass('se-href').text(node.href).attr('title', node.href)
       ),
       $$(SectionLabel, {label: 'legend-label'}),
       this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') })

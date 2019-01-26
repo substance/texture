@@ -5,21 +5,21 @@ export default class ReplaceSupplementaryFileCommand extends Command {
     const xpath = params.selectionState.xpath
     if (xpath.length > 0) {
       const selectedType = xpath[xpath.length - 1].type
-      return {
-        disabled: selectedType !== 'supplementary-file'
+      if (selectedType === 'supplementary-file') {
+        const node = params.selectionState.node
+        if (!node.remote) {
+          return { disabled: false }
+        }
       }
-    } else {
-      return { disabled: true }
     }
+    return { disabled: true }
   }
 
   execute (params, context) {
     const state = params.commandState
-    const files = params.files
-    const doc = params.editorSession.getDocument()
-    const supplementaryFileNodeId = params.selection.nodeId
-    const supplementaryFileNode = doc.get(supplementaryFileNodeId)
     if (state.disabled) return
+    const files = params.files
+    const supplementaryFileNode = params.selectionState.node
     let api = context.api
     if (files.length > 0) {
       api._replaceSupplementaryFile(files[0], supplementaryFileNode)

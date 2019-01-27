@@ -6,11 +6,22 @@ import setupTestApp from './shared/setupTestApp'
 
 const insertFileRefToolSelector = '.sm-insert-xref-file'
 const insertSupplementaryFileToolSelector = '.sm-insert-file'
+const downloadSupplementaryFileToolSelector = '.sc-download-supplementary-file-tool'
 const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-tool'
 
 const FIXTURE = `
   <p id="p1">ABC</p>
   <supplementary-material id="sm1">
+    <label>Supplementary File 1</label>
+    <caption id="sm1-caption">
+      <p id="sm1-caption-p1">Description of Supplementary File</p>
+    </caption>
+  </supplementary-material>
+`
+
+const FIXTURE_WITH_REMOTE_FILE = `
+  <p id="p1">ABC</p>
+  <supplementary-material id="sm1" xlink:href="https://substance.io/images/texture-1.0.png">
     <label>Supplementary File 1</label>
     <caption id="sm1-caption">
       <p id="sm1-caption-p1">Description of Supplementary File</p>
@@ -173,8 +184,32 @@ test('Supplementary File: replace a file', t => {
   t.end()
 })
 
+test('Supplementary File: download a file', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let editorSession = getEditorSession(editor)
+  loadBodyFixture(editor, FIXTURE_WITH_REMOTE_FILE)
+
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'sm1',
+    surfaceId: 'body',
+    containerPath: ['body', 'content']
+  })
+  t.ok(isToolEnabled(editor, 'file-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
+  doesNotThrowInNodejs(t, () => {
+    _getDownloadSupplementaryFileTool(editor).click()
+  }, 'clicking on the download supplementary file button should not throw error')
+
+  t.end()
+})
+
 function _getInsertSupplementaryFileTool (editor) {
   return openMenuAndFindTool(editor, 'insert', insertSupplementaryFileToolSelector)
+}
+
+function _getDownloadSupplementaryFileTool (editor) {
+  return openMenuAndFindTool(editor, 'file-tools', downloadSupplementaryFileToolSelector)
 }
 
 function _getReplaceSupplementaryFileTool (editor) {

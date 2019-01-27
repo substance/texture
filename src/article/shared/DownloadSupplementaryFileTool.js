@@ -12,7 +12,7 @@ export default class DownloadSupplementaryFileTool extends Tool {
   }
 
   getClassNames () {
-    return 'sc-download-file-tool'
+    return 'sc-download-supplementary-file-tool'
   }
 
   _onClick (e) {

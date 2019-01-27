@@ -1,5 +1,9 @@
 import { Command } from 'substance'
 
+/*
+  We are using this command only for state computation.
+  Actual implementation of file downloading is done inside DownloadSupplementaryFileTool
+*/
 export default class DownloadSupplementaryFileCommand extends Command {
   getCommandState (params, context) {
     const xpath = params.selectionState.xpath
@@ -11,18 +15,5 @@ export default class DownloadSupplementaryFileCommand extends Command {
   }
 
   execute (params, context) {
-    const state = params.commandState
-    if (state.disabled) return
-    const node = params.selectionState.node
-    const remote = node.remote
-    if (remote) {
-      // download node.href
-    } else {
-      const fileId = node.href.split('.')[0]
-      if (fileId) {
-        // const blob = context.archive.buffer.getBlob(fileId)
-        // download file
-      }
-    }
   }
 }

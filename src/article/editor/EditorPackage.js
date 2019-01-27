@@ -36,6 +36,7 @@ import {
 } from '../shared/FigurePanelCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import DownloadSupplementaryFileCommand from './DownloadSupplementaryFileCommand'
+import DownloadSupplementaryFileTool from '../shared/DownloadSupplementaryFileTool'
 import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
@@ -335,6 +336,7 @@ export default {
 
     // Tools
     config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('download-file', DownloadSupplementaryFileTool)
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-external-link', EditExtLinkTool)
     config.addTool('edit-formula', EditInlineFormulaTool)

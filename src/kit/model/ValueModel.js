@@ -8,7 +8,7 @@ export default class ValueModel {
   }
 
   get id () {
-    return String(this._path)
+    return this._path.join('.')
   }
 
   get type () {

@@ -18,7 +18,7 @@ const FIXTURE = `
   </supplementary-material>
 `
 
-test('Supplementary File: insert to a manuscript', t => {
+test('Supplementary File: upload file and insert to a manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
@@ -38,6 +38,33 @@ test('Supplementary File: insert to a manuscript', t => {
   }, 'triggering file upload should not throw')
   let afterP = editor.find('*[data-id=p1] + *')
   t.ok(afterP.hasClass('sm-supplementary-file'), 'element after p-1 should be a supplementary file now')
+  t.end()
+})
+
+test('Supplementary File: insert remote file to a manuscript', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  const link = 'http://substance.io/images/texture-1.0.png'
+
+  loadBodyFixture(editor, '<p id="p1">ABC</p>')
+  t.notOk(_isToolEnabled(editor), 'tool shoud be disabled by default')
+  setCursor(editor, 'p1.content', 2)
+  t.ok(_isToolEnabled(editor), 'tool shoud be enabled')
+  // Note: testing this only in nodejs because in Browser it is annoying as it opens the file dialog
+  const workflow = _openWorkflow(editor)
+  const urlInput = workflow.find('.sc-input-with-button > .sc-input')
+  urlInput.val(link)
+  const urlAddButton = workflow.find('.sc-input-with-button > .sc-button')
+  urlAddButton.click()
+  let afterP = editor.find('*[data-id=p1] + *')
+  t.ok(afterP.hasClass('sm-supplementary-file'), 'element after p-1 should be a supplementary file now')
+  let fileId = afterP.getAttribute('data-id')
+  let file = doc.get(fileId)
+  t.equal(file.href, link, 'link should be ' + link)
+  t.ok(file.remote, 'file should be remote')
+  let urlEl = afterP.find('.se-href')
+  t.equal(urlEl.textContent, link, 'there should be a link to an external file inside')
   t.end()
 })
 

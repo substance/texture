@@ -2,11 +2,21 @@ import { Component } from 'substance'
 import OverlayMixin from './OverlayMixin'
 
 export default class MultiSelectInput extends OverlayMixin(Component) {
+  getInitialState () {
+    return {
+      isExpanded: this._canShowOverlay()
+    }
+  }
+
+  willReceiveProps () {
+    this.extendState(this.getInitialState())
+  }
+
   render ($$) {
     const selected = this.props.selected
     const isEmpty = selected.length === 0
     const selectedLabels = selected.map(item => item.toString())
-    const isExpanded = this._canShowOverlay()
+    const isExpanded = this.state.isExpanded
     const label = isEmpty ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
 
     const el = $$('div').addClass('sc-multi-select-input')
@@ -15,26 +25,25 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     el.append(
       $$('div').addClass('se-label').text(label)
     )
-
     if (isExpanded) {
       el.addClass('sm-active')
       el.append(
-        this.renderValues($$)
+        this._renderOptions($$)
       )
     }
-    el.on('click', this._toggleOverlay)
+    el.on('click', this._onClick)
       .on('dblclick', this._prevent)
       .on('mousedown', this._prevent)
 
     return el
   }
 
-  renderValues ($$) {
+  _renderOptions ($$) {
     const label = this.props.label
     const selected = this.props.selected
     const selectedIdx = selected.map(item => item.id)
     const options = this._getOptions()
-    const editorEl = $$('div').addClass('se-select-editor').append(
+    const editorEl = $$('div').ref('options').addClass('se-select-editor').append(
       $$('div').addClass('se-arrow'),
       $$('div').addClass('se-select-label')
         .append(label)
@@ -48,7 +57,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
           $$('div').addClass('se-item-label')
             // TODO: I would like to have this implementation more agnostic of a specific data structure
             .append(option.toString()).ref(option.id)
-        ).on('click', this._toggleItem.bind(this, option))
+        ).on('click', this._onToggleItem.bind(this, option))
       )
     })
     return editorEl
@@ -62,20 +71,39 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     return this.getParent().getAvailableOptions()
   }
 
-  _toggleItem (option, event) {
-    event.stopPropagation()
-    event.preventDefault()
-    this.send('toggleOption', option)
-  }
-
-  _toggleOverlay (event) {
-    event.preventDefault()
-    event.stopPropagation()
-    super._toggleOverlay()
-  }
+  // toggleOption (event) {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  //   super._toggleOverlay()
+  // }
 
   _prevent (event) {
     event.stopPropagation()
     event.preventDefault()
+  }
+
+  _onClick (event) {
+    this._prevent(event)
+    super._toggleOverlay()
+  }
+
+  _onOverlayIdHasChanged () {
+    let overlayId = this.context.appState.overlayId
+    let id = this._getOverlayId()
+    let needUpdate = false
+    if (this.state.isExpanded) {
+      needUpdate = (overlayId !== id)
+    } else {
+      needUpdate = (overlayId === id)
+    }
+    if (needUpdate) {
+      this.extendState(this.getInitialState())
+    }
+  }
+
+  _onToggleItem (option, event) {
+    event.stopPropagation()
+    event.preventDefault()
+    this.send('toggleOption', option)
   }
 }

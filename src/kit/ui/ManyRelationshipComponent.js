@@ -84,7 +84,8 @@ export default class ManyRelationshipComponent extends ValueComponent {
       // we used the common implementation.
       // TODO: rethink this approach in general
       this.context.api.selectValue(this._getPath())
-      appState.set('overlayId', modelId, 'propagateImmediately')
+      // DO NOT UNCOMMENT THIS LINE
+      // appState.set('overlayId', modelId, 'propagateImmediately')
     }
   }
 

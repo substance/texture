@@ -41,9 +41,7 @@ test('Input: ManyRelationship dropdown', t => {
     archiveId: 'test'
   })
   let metadataEditor = openMetadataEditor(app)
-  // ATTENTION: just taking the first ManyRelationshipInput we find
-  let manyRelationship = metadataEditor.find('.sc-many-relationship')
-  let selectInput = manyRelationship.find('.sm-person .sm-group .sc-many-relationship .sc-multi-select-input')
+  let selectInput = metadataEditor.find('.sm-person .sm-group .sc-many-relationship .sc-multi-select-input')
   t.ok(selectInput.el.is('.sm-collapsed'), 'the dropdown should be collapsed in the beginning')
   // click on the input to open the dropdown
   selectInput.el.click()

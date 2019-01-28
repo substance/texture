@@ -1,6 +1,6 @@
 <dar>
   <documents>
-    <document id="manuscript" type="article" path="manuscript.xml" />
+    <document id="manuscript" type="article" path="figure.xml" />
   </documents>
   <assets>
     <asset id="placeholder" type="image/png" path="placeholder.png"/>

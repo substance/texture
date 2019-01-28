@@ -9,6 +9,17 @@
       <abstract />
     </article-meta>
   </front>
-  <body />
+  <body>
+    <fig-group id="fig1">
+      <fig id="fig1a">
+        <label>Figure 1A</label>
+        <caption id="fig1a-caption">
+          <title></title>
+          <p id="fig1b-caption-p1"></p>
+        </caption>
+        <graphic id="fig1b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="placeholder.png" />
+      </fig>
+    </fig-group>
+  </body>
   <back />
 </article>

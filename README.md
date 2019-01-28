@@ -6,42 +6,10 @@ Texture is a toolset designed for the production of scientific content. It uses 
 
 ![Texture User Interface](texture.png)
 
+
 ## Roadmap
 
-Texture is still in a beta stage: there are likely to be missing features, bugs and API changes. But we would :heart: to get your suggestions and :bug: reports.
-
-- ✓ = ready for production use
-- Beta = ready for beta user testing
-
-We generally only plan one or two releases ahead, and aim ship regularly.
-
-Feature                                 | Ready
-:-------------------------------------- | :------------:
-General editing                         | Beta
-Copy & Paste (from Word, etc.)          | Beta
-Find and Replace                        | Beta
-Auto-numbered labels (`xref`, `fig`, etc. ) | ✓
-Reference editing (`element-citation`)  | ✓
-Authors and Affiliations                | ✓
-[Dar](https://github.com/substance/dar) Storage | ✓
-Article Record (`issue`, `fpage`, etc.) | ✓
-Translations                            | ✓
-Group authors                           | ✓
-Realtime Collaborative Editing          |
-**Supported Content**                   |
-Paragraph                               | ✓
-Heading                                 | ✓
-Inline Formula                          | ✓
-Display Formula                         | 2.0
-Definition List                         | 2.0
-List                                    | ✓
-Blockquote                              | ✓
-Figure                                  | ✓
-Table                                   | ✓
-Bold & Italic                           | ✓
-Ext-Link                                | ✓
-Subscript & Superscript                 | ✓
-
+See the [Texture Product Brief](https://docs.google.com/document/d/1ZOjKrQZOndU9G12bVaXmFt56aWRW4kJSDjaMjcxSHSc/edit?usp=sharing) for all supported and planned features, as well as a roadmap for the upcoming releases.
 
 ## Install
 

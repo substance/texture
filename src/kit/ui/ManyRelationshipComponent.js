@@ -32,14 +32,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
         })
       )
     } else {
-      const selectedLabels = []
-      // ATTENTION: doing this with a for loop as it can happen
-      // that an item is undefined (if id is not avaiable)
-      for (let item of selected) {
-        if (item) {
-          selectedLabels.push(item.toString())
-        }
-      }
+      const selectedLabels = selected.map(item => item ? item.toString() : null).filter(Boolean)
       let label = selectedLabels.join('; ')
       el.addClass('sm-readonly').append(label)
     }

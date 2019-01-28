@@ -21,7 +21,7 @@ const FIXTURE = `
 
 const FIXTURE_WITH_REMOTE_FILE = `
   <p id="p1">ABC</p>
-  <supplementary-material id="sm1" xlink:href="https://substance.io/images/texture-1.0.png">
+  <supplementary-material id="sm1" xlink:href="http://substance.io/images/texture-1.0.png" xmlns:xlink="http://www.w3.org/1999/xlink">
     <label>Supplementary File 1</label>
     <caption id="sm1-caption">
       <p id="sm1-caption-p1">Description of Supplementary File</p>
@@ -187,9 +187,9 @@ test('Supplementary File: replace a file', t => {
 test('Supplementary File: download a file', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   loadBodyFixture(editor, FIXTURE_WITH_REMOTE_FILE)
 
+  let editorSession = getEditorSession(editor)
   editorSession.setSelection({
     type: 'node',
     nodeId: 'sm1',

@@ -32,15 +32,13 @@
   padding: 0 var(--t-default-spacing);
 }
 
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel.sm-preview {
+.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel {
   padding: var(--t-half-spacing);
   border: var(--t-input-outline-border);
-  width: 110px;
-  height: 110px;
   margin-bottom: var(--t-default-spacing);
 }
 
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel.sm-preview.sm-current-panel {
+.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel.sm-current-panel {
   border: var(--t-input-focus-border);
 }
 

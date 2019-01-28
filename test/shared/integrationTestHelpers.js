@@ -83,7 +83,7 @@ export function createTestApp (options = {}) {
       let _vfs = options.vfs || vfs
       // TODO: find out if we still need options.root, because it looks like
       // we are using options.rootDir
-      let _rootFolder = options.root || options.rootDir || './data/'
+      let _rootFolder = options.root || options.rootDir || '../data/'
       return new VfsStorageClient(_vfs, _rootFolder)
     }
 

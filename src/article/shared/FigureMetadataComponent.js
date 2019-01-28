@@ -4,9 +4,13 @@ export default class FigureMetadataComponent extends ValueComponent {
   render ($$) {
     let items = this.props.model.getItems()
     let el = $$('div').addClass('sc-figure-metadata')
-    el.append(
-      items.map(field => this._renderMetadataField($$, field))
-    )
+    if (items.length > 0) {
+      el.append(
+        items.map(field => this._renderMetadataField($$, field))
+      )
+    } else {
+      el.append(this.getLabel('empty-figure-metadata'))
+    }
     return el
   }
 

@@ -175,6 +175,13 @@ export default function (DocumentSession) {
       this.editorState.propagateUpdates()
     }
 
+    updateNodeStates (tuples, silent) {
+      super.updateNodeStates(tuples, silent)
+      if (!silent) {
+        this.editorState.propagateUpdates()
+      }
+    }
+
     redo () {
       let change = super.redo()
       if (change) this._setSelection(change.after.selection)

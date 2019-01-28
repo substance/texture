@@ -1,3 +1,3 @@
 export default {
-  'body.content': { container: false }
+  'body.content': { readOnly: true }
 }

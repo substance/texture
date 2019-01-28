@@ -5,7 +5,7 @@ export default function (Component) {
     didMount () {
       super.didMount()
       const node = this._getNode()
-      this.context.appState.addObserver(['document'], this.rerender, this, { document: { path: [node.id] }, stage: 'render' })
+      this.context.appState.addObserver(['document'], this._onNodeUpdate, this, { document: { path: [node.id] }, stage: 'render' })
     }
 
     dispose () {
@@ -22,6 +22,10 @@ export default function (Component) {
       let node = this._getNode()
       let doc = node.getDocument()
       return renderValue($$, this, doc, [node.id, propertyName], options)
+    }
+
+    _onNodeUpdate () {
+      this.rerender()
     }
   }
 }

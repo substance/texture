@@ -59,6 +59,9 @@ export default class ToolDropdown extends ToolGroup {
       let toggleButton = $$(Button, toggleButtonProps).ref('toggle')
         .addClass('se-toggle')
         .on('click', this._onClick)
+        // ATTENTION: we need to preventDefault on mousedown, otherwise
+        // native DOM selection disappears
+        .on('mousedown', this._onMousedown)
       el.append(toggleButton)
 
       if (showChoices) {
@@ -130,6 +133,10 @@ export default class ToolDropdown extends ToolGroup {
       items = this.props.items
     }
     return items
+  }
+
+  _onMousedown (event) {
+    event.preventDefault()
   }
 
   _onClick (event) {

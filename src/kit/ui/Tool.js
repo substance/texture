@@ -43,6 +43,9 @@ export default class Tool extends Component {
     }
     el.addClass(this.getClassNames())
     el.on('click', this._onClick)
+      // ATTENTION: we need to preventDefault on mousedown, otherwise
+      // native DOM selection disappears
+      .on('mousedown', this._onMousedown)
 
     if (commandState.active) {
       el.addClass('sm-active')
@@ -125,6 +128,10 @@ export default class Tool extends Component {
     e.preventDefault()
     e.stopPropagation()
     this.executeCommand()
+  }
+
+  _onMousedown (e) {
+    e.preventDefault()
   }
 
   // this is used by TextureConfigurator

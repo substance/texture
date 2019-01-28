@@ -46,4 +46,8 @@ class EditableCollection extends ContainerEditor {
   _getClassNames () {
     return 'sc-collection sc-container-editor sc-surface'
   }
+
+  isDisabled () {
+    return this.props.disabled || this.props.readOnly
+  }
 }

@@ -32,8 +32,8 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
       )
     }
     el.on('click', this._onClick)
-      .on('dblclick', this._prevent)
-      .on('mousedown', this._prevent)
+      .on('dblclick', this._stopAndPreventDefault)
+      .on('mousedown', this._stopAndPreventDefault)
 
     return el
   }
@@ -77,13 +77,13 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
   //   super._toggleOverlay()
   // }
 
-  _prevent (event) {
+  _stopAndPreventDefault (event) {
     event.stopPropagation()
     event.preventDefault()
   }
 
   _onClick (event) {
-    this._prevent(event)
+    this._stopAndPreventDefault(event)
     super._toggleOverlay()
   }
 

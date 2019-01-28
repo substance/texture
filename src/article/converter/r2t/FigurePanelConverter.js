@@ -30,6 +30,11 @@ export default class FigurePanelConverter {
     if (!captionEl.find('p')) {
       captionEl.append($$('p'))
     }
+    // EXPERIMENTAL: supporting <supplementary-material> in figure caption
+    // in JATS this requires a HACK, wrapping <supplementary-material> into a <p>
+    // this implementation is prototypal, i.e. has not been signed off commonly
+    this._unwrapDisplayElements(captionEl)
+
     // Conversion
     if (labelEl) {
       node.label = labelEl.text()
@@ -87,6 +92,9 @@ export default class FigurePanelConverter {
       if (node.title) {
         // Note: this would happen if title is set, but no caption
         if (!captionEl) captionEl = $$('caption')
+        // ATTENTION: wrapping display elements into a <p>
+        // Do this before injecting the title
+        this._wrapDisplayElements(captionEl)
         captionEl.insertAt(0,
           $$('title').append(
             exporter.annotatedText([node.id, 'title'])
@@ -119,6 +127,30 @@ export default class FigurePanelConverter {
       el.append(
         exporter.convertNode(permission)
       )
+    }
+  }
+
+  // EXPERIMENTAL see comment above
+  _unwrapDisplayElements (el) {
+    let children = el.getChildren()
+    let L = children.length
+    for (let i = L - 1; i >= 0; i--) {
+      let child = children[i]
+      if (child.is('p[specific-use="display-element-wrapper"]')) {
+        el.replaceChild(child, child.getChildAt(0))
+      }
+    }
+  }
+
+  _wrapDisplayElements (el) {
+    let children = el.getChildren()
+    let L = children.length
+    for (let i = L - 1; i >= 0; i--) {
+      let child = children[i]
+      if (!child.is('p')) {
+        let p = el.createElement('p').attr('specific-use', 'display-element-wrapper')
+        el.replaceChild(child, p)
+      }
     }
   }
 }

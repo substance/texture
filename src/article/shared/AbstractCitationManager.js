@@ -148,7 +148,7 @@ export default class AbstractCitationManager {
 
     // FIXME: here we also made the 'collection' dirty originally
 
-    this.documentSession.updateNodeStates(stateUpdates, silent)
+    this.documentSession.updateNodeStates(stateUpdates, { silent })
   }
 
   _getDocument () {

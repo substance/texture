@@ -175,6 +175,16 @@ export default function (DocumentSession) {
       this.editorState.propagateUpdates()
     }
 
+    // HACK: desperately trying to find a quick-fix that is not breaking
+    // other behavior
+    updateNodeStates (tuples, options = {}) {
+      super.updateNodeStates(tuples, options)
+
+      if (options.propagate) {
+        this.editorState.propagateUpdates()
+      }
+    }
+
     redo () {
       let change = super.redo()
       if (change) this._setSelection(change.after.selection)

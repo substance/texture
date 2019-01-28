@@ -39,7 +39,7 @@ export default class CardComponent extends Component {
       const figure = node.getParent()
       const panelIds = figure.panels
       const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[figure.id, {currentPanelIndex: panelIds.indexOf(node.id)}]])
+      editorSession.updateNodeStates([[figure.id, {currentPanelIndex: panelIds.indexOf(node.id)}]], { propagate: true })
     }
     api.selectModel(node.id)
   }

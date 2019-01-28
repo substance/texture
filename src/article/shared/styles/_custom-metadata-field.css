@@ -1,6 +1,7 @@
 .sc-custom-metadata-field {
   display: flex;
   margin: var(--t-half-spacing) 0;
+  font-size: var(--t-small-font-size);
 }
 
 .sc-custom-metadata-field > .sc-string {
@@ -9,4 +10,9 @@
 
 .sc-custom-metadata-field > .se-field-name {
   font-weight: var(--t-bold-font-weight);
+}
+
+/* Placeholder for empty custom fields set in metadata mode */
+.sc-figure-metadata.sm-empty {
+  color: var(--t-placeholder-text-color);
 }

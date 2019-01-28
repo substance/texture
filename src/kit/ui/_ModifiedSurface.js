@@ -38,7 +38,7 @@ export default function ModifiedSurface (Surface) {
       let el = super.render($$)
       if (!this.isDisabled()) {
         if (!this.isReadonly()) {
-          // Mouse Events
+          // prevent click from bubbling up
           el.on('click', this.onClick)
         }
       }

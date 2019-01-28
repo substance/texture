@@ -165,6 +165,7 @@ export default {
     config.addLabel('enter-custom-field-value', 'Enter value')
     config.addLabel('article-metadata', 'Article Metadata')
     config.addLabel('subtitle', 'Subtitle')
+    config.addLabel('empty-figure-metadata', 'No fields specified')
     // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
     config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })

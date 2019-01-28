@@ -14,8 +14,8 @@
 }
 
 .sc-multi-select-input.sm-empty .se-label {
-  color: #ccc;
-  font-weight: 400;
+  color: var(--t-placeholder-text-color);
+  font-weight: var(--t-normal-font-weight);
 }
 
 .sc-multi-select-input .se-select-editor {

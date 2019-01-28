@@ -1,73 +1,47 @@
-import { Component, FontAwesomeIcon as Icon, sendRequest } from 'substance'
+import { Component, sendRequest } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
+import QueryComponent from './QueryComponent'
 
 export default class DOIInputComponent extends Component {
-  render ($$) {
-    const labelProvider = this.context.labelProvider
-
-    const inputEl = $$('div').addClass('se-input-group').append(
-      $$('input').addClass('se-input').attr({
-        type: 'text',
-        placeholder: labelProvider.getLabel('enter-doi-placeholder')
-      }).on('input', this._unblockUI)
-    ).ref('input')
-
-    if (this.state.loading) {
-      inputEl.append(
-        $$('div').addClass('se-input-sign').append(
-          $$(Icon, {icon: 'fa-spinner fa-spin'})
-        )
-      )
-    } else if (this.state.error) {
-      const dois = this.state.error.dois
-      const errorsList = $$('ul').addClass('se-error-list')
-      errorsList.append(
-        $$('li').append(this.state.error.message)
-      )
-      if (dois) {
-        errorsList.append(dois.map(d => $$('li').append('- ' + d)))
-      }
-      inputEl.append(
-        $$('div').addClass('se-input-sign sm-error').append(
-          $$(Icon, {icon: 'fa-exclamation-circle'})
-        ),
-        $$('div').addClass('se-error-popup').append(errorsList)
-      )
-    } else {
-      inputEl.append(
-        $$('button').addClass('se-action').append(
-          labelProvider.getLabel('doi-fetch-action')
-        ).on('click', this._startImporting)
-      )
-    }
-
-    const el = $$('div').addClass('se-doi-input').append(
-      $$('div').addClass('se-section-title').append(
-        labelProvider.getLabel('fetch-datacite')
-      ),
-      inputEl
-    )
-
-    return el
+  constructor (...args) {
+    super(...args)
+    this.handleActions({
+      'query': this._startImporting
+    })
   }
 
-  _startImporting () {
-    const input = this.refs.input
-    const val = input.val()
-    const dois = val.split(' ').map(v => v.trim()).filter(v => Boolean(v))
+  getInitialState () {
+    return {
+      loading: false
+    }
+  }
+
+  render ($$) {
+    return $$('div').addClass('sc-doi-input').append(
+      $$(QueryComponent, {
+        placeholder: 'enter-doi-placeholder',
+        actionLabel: 'add-action',
+        loading: this.state.loading,
+        errors: this.state.errors
+      })
+    )
+  }
+
+  _startImporting (input) {
+    const dois = input.split(' ').map(v => v.trim()).filter(v => Boolean(v))
     this.extendState({loading: true})
 
     _getBibEntries(dois).then(entries => {
       this.send('importBib', entries)
     }).catch(error => {
-      this.extendState({error, loading: false})
+      const dois = error.dois
+      const errorMessage = error.message
+      let errors = [
+        errorMessage
+      ]
+      errors = errors.concat(dois.map(d => '- ' + d))
+      this.extendState({errors, loading: false})
     })
-  }
-
-  _unblockUI () {
-    if (this.state.error) {
-      this.extendState({error: undefined})
-    }
   }
 }
 

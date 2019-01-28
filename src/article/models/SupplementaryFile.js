@@ -1,4 +1,4 @@
-import { DocumentNode, STRING, CONTAINER } from 'substance'
+import { DocumentNode, STRING, CONTAINER, BOOLEAN } from 'substance'
 
 export default class SupplementaryFile extends DocumentNode {
   static getTemplate () {
@@ -14,5 +14,6 @@ SupplementaryFile.schema = {
   label: STRING,
   mimetype: STRING,
   href: STRING,
+  remote: BOOLEAN,
   legend: CONTAINER('paragraph')
 }

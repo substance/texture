@@ -147,7 +147,8 @@ export default {
     config.addLabel('add-ref-manually', 'Or create manually')
     config.addLabel('fetch-datacite', 'Fetch from DataCite')
     config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
-    config.addLabel('doi-fetch-action', 'Add')
+    config.addLabel('add-action', 'Add')
+    config.addLabel('enter-url-placeholder', 'Enter url')
     config.addLabel('import-refs', 'Import')
     config.addLabel('supported-ref-formats', 'Supported formats')
     config.addLabel('original-translation', 'Original')
@@ -166,6 +167,8 @@ export default {
     config.addLabel('subtitle', 'Subtitle')
     // Icons
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
+    config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
+    config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
 
     // TODO: need to rethink this a some point
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })

@@ -18,8 +18,8 @@
 
 /* TODO: use variables! */
 .sc-text-input .se-input.sm-empty {
-  color: #ccc;
-  font-weight: 400;
+  color: var(--t-placeholder-text-color);
+  font-weight: var(--t-normal-font-weight);
 }
 
 .sc-text-input.sm-warning {

@@ -28,11 +28,15 @@ import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
 import ReferenceComponent from '../shared/ReferenceComponent'
 
+import AddSupplementaryFileWorkflow from '../shared/AddSupplementaryFileWorkflow'
+
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
+import DownloadSupplementaryFileCommand from './DownloadSupplementaryFileCommand'
+import DownloadSupplementaryFileTool from '../shared/DownloadSupplementaryFileTool'
 import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
@@ -53,7 +57,7 @@ import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
 import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from './InsertInlineGraphicTool'
 import { CreateListCommand, ChangeListTypeCommand } from './ListCommands'
-import InsertSupplementaryFileCommand from './InsertSupplementaryFileCommand'
+import InsertNodeFromWorkflowCommand from './InsertNodeFromWorkflowCommand'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
@@ -61,7 +65,7 @@ import {
 import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
-import { InsertSupplementaryFileTool, ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
+import { ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
@@ -85,6 +89,7 @@ export default {
     // which would generate disallowed content
     config.setCommandManagerClass(SchemaDrivenCommandManager)
 
+    config.addComponent('add-supplementary-file', AddSupplementaryFileWorkflow)
     config.addComponent('figure', FigureComponent, true)
     config.addComponent('figure-panel', FigurePanelComponent, true)
     config.addComponent('table-figure', TableFigureComponent, true)
@@ -118,6 +123,9 @@ export default {
     config.addCommand('delete-rows', DeleteCellsCommand, {
       spec: { dim: 'row' },
       commandGroup: 'table-delete'
+    })
+    config.addCommand('download-file', DownloadSupplementaryFileCommand, {
+      commandGroup: 'file'
     })
     config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
       commandGroup: 'prompt'
@@ -161,7 +169,8 @@ export default {
       nodeType: 'figure',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-file', InsertSupplementaryFileCommand, {
+    config.addCommand('insert-file', InsertNodeFromWorkflowCommand, {
+      workflow: 'add-supplementary-file',
       nodeType: 'supplementary-file',
       commandGroup: 'insert'
     })
@@ -290,6 +299,8 @@ export default {
     config.addLabel('create-unordered-list', 'Bulleted list')
     config.addLabel('create-ordered-list', 'Numbered list')
     config.addLabel('edit-ref', 'Edit Reference')
+    config.addLabel('file-location', 'File location')
+    config.addLabel('file-name', 'File name')
     config.addLabel('manuscript-start', 'Article starts here')
     config.addLabel('manuscript-end', 'Article ends here')
     config.addLabel('no-authors', 'No Authors')
@@ -309,6 +320,8 @@ export default {
     config.addLabel('toggle-ordered-list', 'Numbered list')
     config.addLabel('enter-custom-field-name', 'Enter name')
     config.addLabel('enter-custom-field-value', 'Enter value')
+    config.addLabel('add-action', 'Add')
+    config.addLabel('enter-url-placeholder', 'Enter url')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
@@ -318,16 +331,18 @@ export default {
     config.addIcon('toggle-unordered-list', { 'fontawesome': 'fa-list-ul' })
     config.addIcon('toggle-ordered-list', { 'fontawesome': 'fa-list-ol' })
     config.addIcon('trash', { 'fontawesome': 'fa-trash' })
+    config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
+    config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
 
     // Tools
     config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('download-file', DownloadSupplementaryFileTool)
     config.addTool('edit-block-formula', EditDispFormulaTool)
     config.addTool('edit-external-link', EditExtLinkTool)
     config.addTool('edit-formula', EditInlineFormulaTool)
     config.addTool('edit-xref', EditXrefTool)
     config.addTool('insert-figure', InsertFigureTool)
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addTool('insert-file', InsertSupplementaryFileTool)
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addTool('replace-file', ReplaceSupplementaryFileTool)
 

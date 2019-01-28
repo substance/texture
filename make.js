@@ -203,7 +203,11 @@ b.task('build:vfs', () => {
   })
 })
 
-b.task('build:web', ['build:vfs'], () => {
+b.task('_copy-data-folder', () => {
+  b.copy('./data', DIST + 'data')
+})
+
+b.task('build:web', ['build:vfs', '_copy-data-folder'], () => {
   b.copy('web/index.html', DIST)
   b.copy('web/reader.html', DIST)
   b.js('./web/editor.js', {
@@ -232,10 +236,9 @@ b.task('build:web', ['build:vfs'], () => {
     }],
     external: ['substance', 'substance-texture', 'katex']
   })
-  b.copy('./data', DIST + 'data')
 })
 
-b.task('build:test-assets', ['build:vfs'], () => {
+b.task('build:test-assets', ['build:vfs', '_copy-data-folder'], () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],
     dest: DIST + 'test/test-vfs.js',

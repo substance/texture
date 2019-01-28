@@ -80,15 +80,9 @@ export default class MetadataEditor extends EditorPanel {
       this._renderFooterPane($$)
     )
     if (appState.workflowId) {
-      let Modal = this.getComponent('modal')
-      let WorkflowComponent = this.getComponent(appState.workflowId)
-      let workflowModal = $$(Modal, {
-        width: 'large'
-      }).addClass('se-workflow-modal').append(
-        // TODO: do we need this ref?
-        $$(WorkflowComponent).ref('workflow')
+      mainSection.append(
+        this._renderWorkflow($$, appState.workflowId)
       )
-      mainSection.append(workflowModal)
     }
     return mainSection
   }

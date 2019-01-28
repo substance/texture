@@ -2,8 +2,17 @@ import { Component } from 'substance'
 import DOIInputComponent from './DOIInputComponent'
 import ReferenceUploadComponent from './ReferenceUploadComponent'
 import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
+import { DialogSectionComponent } from '../../kit'
 
 export default class AddReferenceWorkflow extends Component {
+  static get desiredWidth () {
+    return 'large'
+  }
+
+  get supportedUploadFormats () {
+    return ['CSL-JSON']
+  }
+
   didMount () {
     super.didMount()
 
@@ -13,35 +22,32 @@ export default class AddReferenceWorkflow extends Component {
   }
 
   render ($$) {
-    const labelProvider = this.context.labelProvider
-
-    let el = $$('div').addClass('se-add-reference')
+    let el = $$('div').addClass('sc-add-reference sm-workflow')
 
     const title = $$('div').addClass('se-title').append(
-      labelProvider.getLabel('add-reference-title')
-    )
-
-    const manualAddEl = $$('div').addClass('se-manual-add').append(
-      $$('div').addClass('se-section-title').append(
-        labelProvider.getLabel('add-ref-manually')
-      )
+      this.getLabel('add-reference-title')
     )
 
     const refTypesButtons = $$('ul').addClass('se-reftypes-list')
     INTERNAL_BIBR_TYPES.forEach(item => {
       refTypesButtons.append(
         $$('li').addClass('se-type sm-' + item).append(
-          labelProvider.getLabel(item)
+          this.getLabel(item)
         ).on('click', this._onAdd.bind(this, item))
       )
     })
-    manualAddEl.append(refTypesButtons)
+    const manualAddEl = $$('div').addClass('se-manual-add').append(refTypesButtons)
 
     el.append(
       title,
-      $$(DOIInputComponent),
-      $$(ReferenceUploadComponent),
-      manualAddEl
+      $$(DialogSectionComponent, {label: this.getLabel('fetch-datacite')})
+        .append($$(DOIInputComponent)),
+      $$(DialogSectionComponent, {
+        label: this.getLabel('import-refs'),
+        description: this.getLabel('supported-ref-formats') + ': ' + this.supportedUploadFormats.join(', ')
+      }).append($$(ReferenceUploadComponent)),
+      $$(DialogSectionComponent, {label: this.getLabel('add-ref-manually')})
+        .append(manualAddEl)
     )
 
     return el

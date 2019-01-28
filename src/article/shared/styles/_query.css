@@ -1,0 +1,8 @@
+.sc-query {
+	position: relative;
+}
+
+.sc-query.sm-error .se-button {
+	background-color: var(--t-error-color);
+  color: var(--t-error-text-color);
+}

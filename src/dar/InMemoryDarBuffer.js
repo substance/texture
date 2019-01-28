@@ -36,16 +36,17 @@ export default class InMemoryDarBuffer {
     return this._isDirty[docId]
   }
 
-  hasBlob (id) {
-    return this._blobs[id]
+  hasBlobChanged (assetId) {
+    return Boolean(this._isDirty[assetId])
   }
 
-  addBlob (id, blob) {
-    this._blobs[id] = blob
+  addBlob (assetId, blob) {
+    this._isDirty[assetId] = true
+    this._blobs[assetId] = blob
   }
 
-  getBlob (id) {
-    return this._blobs[id]
+  getBlob (assetId) {
+    return this._blobs[assetId]
   }
 
   reset (version) {

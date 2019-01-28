@@ -1,0 +1,20 @@
+.sc-file-upload {
+  position: relative;
+}
+
+.sc-file-upload > .se-drop-import {
+  border: 1px dotted var(--t-light-text-color);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-half-spacing);
+  text-align: center;
+  color: var(--t-light-text-color);
+}
+
+.sc-file-upload > .se-drop-import > input {
+  display: none;
+}
+
+.sc-file-upload > .se-drop-import > .se-select-trigger {
+  color: var(--t-action-color);
+  cursor: pointer;
+}

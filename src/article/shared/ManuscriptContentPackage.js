@@ -78,6 +78,12 @@ export default {
     config.addLabel('authors-label', 'Authors')
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here.')
+    config.addLabel('caption-label', 'Caption')
+    config.addLabel('caption-placeholder', 'Enter caption')
+    config.addLabel('file-upload-error', 'Something goes wrong')
+    config.addLabel('file-upload-placeholder', 'Drag and drop or select item')
+    // Note: we are registering a substring of other label to replace it with component
+    config.addLabel('file-upload-select-placeholder', 'select')
     config.addLabel('footnote-placeholder', 'Enter footnote')
     config.addLabel('footnotes-label', 'Footnotes')
     config.addLabel('label-label', 'Label')
@@ -89,6 +95,10 @@ export default {
     config.addLabel('title-placeholder', 'Enter title')
     config.addLabel('subtitle-label', 'Subtitle')
     config.addLabel('subtitle-placeholder', 'Enter subtitle')
+    config.addLabel('supplementary-file-workflow-title', 'Add supplementary file')
+    config.addLabel('supplementary-file-upload-label', 'Upload local file')
+    config.addLabel('supplementary-file-link-label', 'Or use web link to downloadable file')
+    config.addLabel('supplementary-file-link-placeholder', 'Enter url')
 
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })

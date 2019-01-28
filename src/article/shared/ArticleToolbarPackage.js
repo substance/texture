@@ -252,6 +252,7 @@ export default {
     // File tools
     config.addLabel('file-tools', 'File')
     config.addLabel('replace-file', 'Replace File')
+    config.addLabel('download-file', 'Download File')
     // Figure tools
     config.addLabel('figure-tools', 'Figure')
     config.addLabel('add-figure-panel', 'Add Sub-Figure')

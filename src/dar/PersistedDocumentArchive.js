@@ -1,4 +1,5 @@
 import { forEach, last, uuid, EventEmitter, platform, isString } from 'substance'
+import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
 
 /*
@@ -26,12 +27,18 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._archiveId = null
     this._upstreamArchive = null
     this._sessions = null
-    this._pendingFiles = {}
+    this._pendingFiles = new Map()
     this._config = config
   }
 
-  hasPendingChanges () {
-    return this.buffer.hasPendingChanges()
+  addDocument (type, name, xml) {
+    let documentId = uuid()
+    let sessions = this._sessions
+    let session = this._loadDocument(type, { data: xml }, sessions)
+    sessions[documentId] = session
+    this._registerForSessionChanges(session, documentId)
+    this._addDocumentRecord(documentId, type, name, documentId + '.xml')
+    return documentId
   }
 
   // TODO: this can not be used in NodeJS
@@ -54,67 +61,29 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
     // FIXME: what to do in NodeJS?
     if (platform.inBrowser) {
-      this._pendingFiles[filePath] = URL.createObjectURL(file)
+      this._pendingFiles.set(filePath, URL.createObjectURL(file))
     }
     return filePath
-  }
-
-  /*
-    Adds a document record to the manifest file
-  */
-  _addDocumentRecord (documentId, type, name, path) {
-    this._sessions.manifest.transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.createElement('document', { id: documentId }).attr({
-        name: name,
-        path: path,
-        type: type
-      })
-      documents.appendChild(docEntry)
-    })
-  }
-
-  addDocument (type, name, xml) {
-    let documentId = uuid()
-    let sessions = this._sessions
-    let session = this._loadDocument(type, { data: xml }, sessions)
-    sessions[documentId] = session
-    this._registerForSessionChanges(session, documentId)
-    this._addDocumentRecord(documentId, type, name, documentId + '.xml')
-    return documentId
-  }
-
-  removeDocument (documentId) {
-    let session = this._sessions[documentId]
-    this._unregisterFromSession(session)
-    this._sessions.manifest.transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.find(`#${documentId}`)
-      documents.removeChild(docEntry)
-    })
-  }
-
-  renameDocument (documentId, name) {
-    this._sessions.manifest.transaction(tx => {
-      let docEntry = tx.find(`#${documentId}`)
-      docEntry.attr({name})
-    })
   }
 
   getDocumentEntries () {
     return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
 
-  resolveUrl (path) {
-    let blobUrl = this._pendingFiles[path]
-    if (blobUrl) {
-      return blobUrl
-    } else {
-      let fileRecord = this._upstreamArchive.resources[path]
-      if (fileRecord && fileRecord.encoding === 'url') {
-        return fileRecord.data
-      }
+  getDownloadLink (fileName) {
+    let manifest = this._sessions.manifest.getDocument()
+    let asset = manifest.find(`asset[path="${fileName}"]`)
+    if (asset) {
+      return this.resolveUrl(fileName)
     }
+  }
+
+  getEditorSession (docId) {
+    return this._sessions[docId]
+  }
+
+  hasPendingChanges () {
+    return this.buffer.hasPendingChanges()
   }
 
   load (archiveId, cb) {
@@ -168,8 +137,34 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  _repair () {
-    // no-op
+  removeDocument (documentId) {
+    let session = this._sessions[documentId]
+    this._unregisterFromSession(session)
+    this._sessions.manifest.transaction(tx => {
+      let documents = tx.find('documents')
+      let docEntry = tx.find(`#${documentId}`)
+      documents.removeChild(docEntry)
+    })
+  }
+
+  renameDocument (documentId, name) {
+    this._sessions.manifest.transaction(tx => {
+      let docEntry = tx.find(`#${documentId}`)
+      docEntry.attr({name})
+    })
+  }
+
+  resolveUrl (path) {
+    // until saved, files have a blob URL
+    let blobUrl = this._pendingFiles.get(path)
+    if (blobUrl) {
+      return blobUrl
+    } else {
+      let fileRecord = this._upstreamArchive.resources[path]
+      if (fileRecord && fileRecord.encoding === 'url') {
+        return fileRecord.data
+      }
+    }
   }
 
   save (cb) {
@@ -192,8 +187,19 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  getEditorSession (docId) {
-    return this._sessions[docId]
+  /*
+    Adds a document record to the manifest file
+  */
+  _addDocumentRecord (documentId, type, name, path) {
+    this._sessions.manifest.transaction(tx => {
+      let documents = tx.find('documents')
+      let docEntry = tx.createElement('document', { id: documentId }).attr({
+        name: name,
+        path: path,
+        type: type
+      })
+      documents.appendChild(docEntry)
+    })
   }
 
   _loadManifest (record) {
@@ -217,8 +223,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
     }, this)
   }
 
-  _unregisterFromSession (session) {
-    session.off(this)
+  _repair () {
+    // no-op
   }
 
   /*
@@ -238,6 +244,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
     // a slower persisted buffer
     storage.write(archiveId, rawArchive, (err, res) => {
+      // TODO: this need to implemented in a more robust fashion
+      // i.e. we should only reset the buffer if storage.write was successful
       if (err) return cb(err)
 
       // TODO: if successful we should receive the new version as response
@@ -252,6 +260,13 @@ export default class PersistedDocumentArchive extends EventEmitter {
       }
       // console.log('Saved. New version:', res.version)
       buffer.reset(_res.version)
+      // revoking object urls
+      if (platform.inBrowser) {
+        for (let blobUrl of this._pendingFiles.values()) {
+          window.URL.revokeObjectURL(blobUrl)
+        }
+      }
+      this._pendingFiles.clear()
 
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId
@@ -260,22 +275,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  _exportAssets (sessions, buffer, rawArchive) {
-    let manifest = sessions.manifest.getDocument()
-    let assetNodes = manifest.getAssetNodes()
-    assetNodes.forEach(node => {
-      let id = node.attr('id')
-      if (!buffer.hasBlob(id)) return
-      let path = node.attr('path') || id
-      let blobRecord = buffer.getBlob(id)
-      rawArchive.resources[path] = {
-        id,
-        data: blobRecord.blob,
-        encoding: 'blob',
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-      }
-    })
+  _unregisterFromSession (session) {
+    session.off(this)
   }
 
   /*
@@ -289,8 +290,32 @@ export default class PersistedDocumentArchive extends EventEmitter {
       resources: {}
     }
     this._exportManifest(sessions, buffer, rawArchive)
-    this._exportDocuments(sessions, buffer, rawArchive)
-    this._exportAssets(sessions, buffer, rawArchive)
+    this._exportChangedDocuments(sessions, buffer, rawArchive)
+    this._exportChangedAssets(sessions, buffer, rawArchive)
     return rawArchive
+  }
+
+  // TODO: generalize the implementation so that it can live here
+  _exportChangedDocuments (sessions, buffer, rawArchive) {
+    throwMethodIsAbstract()
+  }
+
+  _exportChangedAssets (sessions, buffer, rawArchive) {
+    let manifest = sessions.manifest.getDocument()
+    let assetNodes = manifest.getAssetNodes()
+    assetNodes.forEach(asset => {
+      let assetId = asset.id
+      if (buffer.hasBlobChanged(assetId)) {
+        let path = asset.attr('path') || assetId
+        let blobRecord = buffer.getBlob(assetId)
+        rawArchive.resources[path] = {
+          assetId,
+          data: blobRecord.blob,
+          encoding: 'blob',
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        }
+      }
+    })
   }
 }

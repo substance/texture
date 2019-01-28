@@ -66,7 +66,7 @@ function testRefCreationForType (t, refType) {
   t.end()
 }
 
-test(`Reference: edit a referencem adding and editing authors`, t => {
+test(`Reference: adding and editing authors`, t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
   _addReference(editor, 'journal-article-ref')
@@ -89,7 +89,7 @@ function _addReference (editor, bibrType) {
   let menu = editor.find('.sc-tool-dropdown.sm-insert')
   menu.find('button').el.click()
   menu.find(`.sc-menu-item.sm-insert-reference`).el.click()
-  editor.find(`.sc-modal-dialog .se-add-reference .se-type.sm-${bibrType}`).click()
+  editor.find(`.sc-modal-dialog .sc-add-reference .se-type.sm-${bibrType}`).click()
 }
 
 function _openWorkflow (metadataEditor) {
@@ -105,5 +105,5 @@ function _openWorkflow (metadataEditor) {
 function _insertReference (editor, bibrType) {
   openMenuAndFindTool(editor, 'insert', '.sm-insert-reference').click()
   // ... this opens a modal where we click on the button for creating the particular bibr type
-  editor.find(`.sc-modal-dialog .se-add-reference .se-type.sm-${bibrType}`).click()
+  editor.find(`.sc-modal-dialog .sc-add-reference .se-type.sm-${bibrType}`).click()
 }

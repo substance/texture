@@ -1,0 +1,8 @@
+<dar>
+  <documents>
+    <document id="manuscript" type="article" path="manuscript.xml" />
+  </documents>
+  <assets>
+    <asset id="zip1" type="application/zip" path="example.zip" />
+  </assets>
+</dar>

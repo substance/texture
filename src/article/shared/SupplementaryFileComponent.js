@@ -14,17 +14,20 @@ export default class SupplementaryFileComponent extends NodeComponent {
     const node = this.props.node
     const label = getLabel(node) || '?'
     const SectionLabel = this.getComponent('section-label')
+    // NOTE: we need an editable href only for remote files, for local files we just need to render a file name
+    const hrefSection = node.remote ? this._renderValue($$, 'href', { placeholder: this.getLabel('supplementary-file-link-placeholder') })
+      .addClass('se-href') : $$('div').addClass('se-href').text(node.href)
 
     let el = $$('div').addClass(`sc-supplementary-file sm-${mode}`)
     el.append(
       $$('div').addClass('se-header').append(
         // FIXME: not using a dedicated component for the label means that this is not updated
-        $$('div').addClass('se-label').text(label),
-        // FIXME: not using a dedicated component for the href model means that this is not updated
-        $$('div').addClass('se-href').text(node.href)
+        $$('div').addClass('se-label').text(label)
       ),
       $$(SectionLabel, {label: 'legend-label'}),
-      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') })
+      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }),
+      $$(SectionLabel, {label: node.remote ? 'file-location' : 'file-name'}),
+      hrefSection
     )
     return el
   }

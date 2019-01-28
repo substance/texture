@@ -81,7 +81,9 @@ export function createTestApp (options = {}) {
   class App extends TextureWebApp {
     _getStorage (storageType) {
       let _vfs = options.vfs || vfs
-      let _rootFolder = options.root || './data/'
+      // TODO: find out if we still need options.root, because it looks like
+      // we are using options.rootDir
+      let _rootFolder = options.root || options.rootDir || '../data/'
       return new VfsStorageClient(_vfs, _rootFolder)
     }
 

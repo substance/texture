@@ -185,8 +185,12 @@ export default class AbstractScrollPane extends Component {
       if (sel.isNodeSelection()) {
         let nodeId = sel.nodeId
         let nodeEl = contentEl.find(`*[data-id="${nodeId}"]`)
-        let nodeRect = nodeEl.getNativeElement().getBoundingClientRect()
-        selectionRect = getRelativeRect(contentRect, nodeRect)
+        if (nodeEl) {
+          let nodeRect = nodeEl.getNativeElement().getBoundingClientRect()
+          selectionRect = getRelativeRect(contentRect, nodeRect)
+        } else {
+          console.error(`FIXME: could not find a node with data-id=${nodeId}`)
+        }
       } else {
         selectionRect = getSelectionRect(contentRect)
       }

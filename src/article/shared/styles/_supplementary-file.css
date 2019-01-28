@@ -9,10 +9,12 @@
 }
 
 .sc-supplementary-file > .se-header > .se-label {
+  flex-shrink: 0;
+  margin-right: var(--t-default-spacing);
   font-weight: var(--t-bold-font-weight);
 }
 
-.sc-supplementary-file > .se-header > .se-href {
+.sc-supplementary-file > .se-href {
   font-weight: var(--t-bold-font-weight);
   font-family: monospace, monospace;
 }

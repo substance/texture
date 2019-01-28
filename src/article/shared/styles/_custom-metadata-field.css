@@ -1,6 +1,7 @@
 .sc-custom-metadata-field {
   display: flex;
   margin: var(--t-half-spacing) 0;
+  font-size: var(--t-small-font-size);
 }
 
 .sc-custom-metadata-field > .sc-string {

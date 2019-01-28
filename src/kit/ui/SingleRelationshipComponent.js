@@ -1,6 +1,10 @@
 import ManyRelationshipComponent from './ManyRelationshipComponent'
 
 export default class SingleRelationshipComponent extends ManyRelationshipComponent {
+  _getClassNames () {
+    return 'sc-single-relationship'
+  }
+
   _getSelectedOptions (options) {
     let targetId = this.props.model.getValue()
     if (!targetId) return []

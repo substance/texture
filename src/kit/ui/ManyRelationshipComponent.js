@@ -22,7 +22,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
     const label = this.getLabel('select-item') + ' ' + this.props.label
     const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)
-    let el = $$('div').addClass('sc-many-relationship')
+    let el = $$('div').addClass(this._getClassNames())
     if (this.context.editable) {
       el.append(
         $$(MultiSelectInput, {
@@ -32,18 +32,15 @@ export default class ManyRelationshipComponent extends ValueComponent {
         })
       )
     } else {
-      const selectedLabels = []
-      // ATTENTION: doing this with a for loop as it can happen
-      // that an item is undefined (if id is not avaiable)
-      for (let item of selected) {
-        if (item) {
-          selectedLabels.push(item.toString())
-        }
-      }
+      const selectedLabels = selected.map(item => item ? item.toString() : null).filter(Boolean)
       let label = selectedLabels.join('; ')
       el.addClass('sm-readonly').append(label)
     }
     return el
+  }
+
+  _getClassNames () {
+    return 'sc-many-relationship'
   }
 
   getActionHandlers () {
@@ -84,7 +81,8 @@ export default class ManyRelationshipComponent extends ValueComponent {
       // we used the common implementation.
       // TODO: rethink this approach in general
       this.context.api.selectValue(this._getPath())
-      appState.set('overlayId', modelId, 'propagateImmediately')
+      // DO NOT UNCOMMENT THIS LINE
+      // appState.set('overlayId', modelId, 'propagateImmediately')
     }
   }
 

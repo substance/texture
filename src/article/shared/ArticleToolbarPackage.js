@@ -159,6 +159,7 @@ export default {
         type: 'dropdown',
         style: 'full',
         hideDisabled: true,
+        displayActiveCommand: true,
         items: [
           { type: 'command', name: 'open-manuscript', label: 'manuscript' },
           { type: 'command', name: 'open-metadata', label: 'metadata' }

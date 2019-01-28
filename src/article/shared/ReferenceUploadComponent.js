@@ -18,7 +18,7 @@ export default class ReferenceUploadComponent extends FileUploadComponent {
     return errorsList
   }
 
-  _handleUploadedFiles (files) {
+  handleUploadedFiles (files) {
     Object.values(files).forEach(file => {
       const reader = new window.FileReader()
       reader.onload = this._onFileLoad.bind(this)

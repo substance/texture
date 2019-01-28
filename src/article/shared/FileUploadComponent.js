@@ -1,5 +1,11 @@
 import { Component } from 'substance'
 
+/*
+  This is a proto component which allows you to render a file uploader
+  with possible drop fuctionaluty.
+  To use it you'll need to inherit this component as a parent and override
+  handleUploadedFiles method to implement your own file handling strategy.
+*/
 export default class FileUploadComponent extends Component {
   get acceptedFiles () {
     return false
@@ -51,6 +57,10 @@ export default class FileUploadComponent extends Component {
     return $$('ul').addClass('se-error-list').append(this.getLabel('file-upload-error'))
   }
 
+  handleUploadedFiles (files) {
+    throw new Error('This method is abstract')
+  }
+
   _onClick () {
     this.refs.input.click()
   }
@@ -61,16 +71,12 @@ export default class FileUploadComponent extends Component {
 
   _selectFile (e) {
     const files = e.currentTarget.files
-    this._handleUploadedFiles(files)
+    this.handleUploadedFiles(files)
   }
 
   _handleDrop (e) {
     const files = e.dataTransfer.files
-    this._handleUploadedFiles(files)
-  }
-
-  _handleUploadedFiles (files) {
-    throw new Error('This method is abstract')
+    this.handleUploadedFiles(files)
   }
 
   _onDrag (e) {

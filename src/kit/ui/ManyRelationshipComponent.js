@@ -22,7 +22,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
     const label = this.getLabel('select-item') + ' ' + this.props.label
     const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)
-    let el = $$('div').addClass('sc-many-relationship')
+    let el = $$('div').addClass(this._getClassNames())
     if (this.context.editable) {
       el.append(
         $$(MultiSelectInput, {
@@ -37,6 +37,10 @@ export default class ManyRelationshipComponent extends ValueComponent {
       el.addClass('sm-readonly').append(label)
     }
     return el
+  }
+
+  _getClassNames () {
+    return 'sc-many-relationship'
   }
 
   getActionHandlers () {

@@ -1,17 +1,27 @@
 import { platform } from 'substance'
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled } from './shared/integrationTestHelpers'
+import {
+  setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
+  fixture, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection,
+  clickUndo, isToolEnabled
+} from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
+
+// TODO: test download for a just uploaded file
 
 const insertFileRefToolSelector = '.sm-insert-xref-file'
 const insertSupplementaryFileToolSelector = '.sm-insert-file'
 const downloadSupplementaryFileToolSelector = '.sc-download-supplementary-file-tool'
 const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-tool'
 
-const FIXTURE = `
+const LOCAL_ASSET_NAME = 'example.zip'
+const LOCAL_ASSET_URL = './tests/fixture/assets/' + LOCAL_ASSET_NAME
+const REMOTE_ASSET_URL = 'http://substance.io/images/texture-1.0.png'
+
+const PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE = `
   <p id="p1">ABC</p>
-  <supplementary-material id="sm1">
+  <supplementary-material id="sm1" xlink:href="${LOCAL_ASSET_NAME}" xmlns:xlink="http://www.w3.org/1999/xlink">
     <label>Supplementary File 1</label>
     <caption id="sm1-caption">
       <p id="sm1-caption-p1">Description of Supplementary File</p>
@@ -19,9 +29,9 @@ const FIXTURE = `
   </supplementary-material>
 `
 
-const FIXTURE_WITH_REMOTE_FILE = `
+const PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE = `
   <p id="p1">ABC</p>
-  <supplementary-material id="sm1" xlink:href="http://substance.io/images/texture-1.0.png" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <supplementary-material id="sm1" xlink:href="${REMOTE_ASSET_URL}" xmlns:xlink="http://www.w3.org/1999/xlink">
     <label>Supplementary File 1</label>
     <caption id="sm1-caption">
       <p id="sm1-caption-p1">Description of Supplementary File</p>
@@ -88,7 +98,7 @@ test('Supplementary File: remove from a manuscript', t => {
   const _isSupplementaryFileDisplayed = () => Boolean(editor.find('.sm-supplementary-file[data-id=sm1]'))
   const _supplemenaryFileExists = () => Boolean(doc.get('sm1'))
 
-  loadBodyFixture(editor, FIXTURE)
+  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
   t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed in manuscript view')
   t.ok(_supplemenaryFileExists(), 'there should be sm1 node in document')
@@ -119,7 +129,7 @@ test('Supplementary File: reference a file', t => {
   const emptyLabel = '???'
   const getXref = () => editor.find(xrefSelector)
 
-  loadBodyFixture(editor, FIXTURE)
+  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
   t.equal(editor.findAll(supplementaryFileSelector).length, 1, 'there should be only one supplementary file in document')
   t.isNil(getXref(), 'there should be no references in manuscript')
 
@@ -165,7 +175,7 @@ test('Supplementary File: replace a file', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let editorSession = getEditorSession(editor)
-  loadBodyFixture(editor, FIXTURE)
+  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
   editorSession.setSelection({
     type: 'node',
@@ -184,25 +194,39 @@ test('Supplementary File: replace a file', t => {
   t.end()
 })
 
-test('Supplementary File: download a file', t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openManuscriptEditor(app)
-  loadBodyFixture(editor, FIXTURE_WITH_REMOTE_FILE)
+function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
+  test(`Supplementary File: download a ${mode} file`, t => {
+    let { app } = setupTestApp(t, fixture('assets'))
+    let editor = openManuscriptEditor(app)
+    loadBodyFixture(editor, bodyXML)
 
-  let editorSession = getEditorSession(editor)
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
+    let editorSession = getEditorSession(editor)
+    editorSession.setSelection({
+      type: 'node',
+      nodeId: 'sm1',
+      surfaceId: 'body',
+      containerPath: ['body', 'content']
+    })
+    t.ok(isToolEnabled(editor, 'file-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
+
+    let downloadTool = _getDownloadSupplementaryFileTool(editor)
+    let downloadLink = downloadTool.refs.link
+    // ATTENTION: in the browser we intercept the click on the link because
+    // it is annoying if during tests files are actually downloaded
+    if (platform.inBrowser) {
+      downloadLink.el.click = () => {}
+    }
+    doesNotThrowInNodejs(t, () => {
+      downloadTool.click()
+    }, 'clicking on the download supplementary file button should not throw error')
+
+    t.equal(downloadLink.attr('href'), expectedDownloadUrl, 'the correct download url should have been used')
+
+    t.end()
   })
-  t.ok(isToolEnabled(editor, 'file-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
-  doesNotThrowInNodejs(t, () => {
-    _getDownloadSupplementaryFileTool(editor).click()
-  }, 'clicking on the download supplementary file button should not throw error')
-
-  t.end()
-})
+}
+_testDownloadTool('local', PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE, LOCAL_ASSET_URL)
+_testDownloadTool('remote', PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE, REMOTE_ASSET_URL)
 
 function _getInsertSupplementaryFileTool (editor) {
   return openMenuAndFindTool(editor, 'insert', insertSupplementaryFileToolSelector)

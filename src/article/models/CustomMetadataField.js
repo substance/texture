@@ -6,6 +6,10 @@ export default class CustomMetadataField extends DocumentNode {
       type: 'custom-metadata-field'
     }
   }
+
+  isEmpty () {
+    return this.length === 0
+  }
 }
 CustomMetadataField.schema = {
   type: 'custom-metadata-field',

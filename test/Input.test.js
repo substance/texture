@@ -53,7 +53,10 @@ test('Input: ManyRelationship dropdown', t => {
   // and the specific item should be selected now
   // Note: better to get the item again, in case that the drop down get rendered from scratch
   item = selectInput.find('.se-select-item')
-  let isSelected = item.el.is('.sm-selected')
-  t.notOk(isSelected, 'the item selection should have changed')
+  t.notOk(item.el.is('.sm-selected'), 'item should not be checked')
+  // toggle again
+  item.click()
+  item = selectInput.find('.se-select-item')
+  t.ok(item.el.is('.sm-selected'), 'item should be checked')
   t.end()
 })

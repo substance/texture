@@ -14,7 +14,6 @@
   font-weight: var(--t-bold-font-weight);
 }
 
-.sc-supplementary-file > .se-href-editor,
 .sc-supplementary-file > .se-href {
   font-weight: var(--t-bold-font-weight);
   font-family: monospace, monospace;

@@ -16,7 +16,7 @@ export default class SupplementaryFileComponent extends NodeComponent {
     const SectionLabel = this.getComponent('section-label')
     // NOTE: we need an editable href only for remote files, for local files we just need to render a file name
     const hrefSection = node.remote ? this._renderValue($$, 'href', { placeholder: this.getLabel('supplementary-file-link-placeholder') })
-      .addClass('se-href-editor') : $$('div').addClass('se-href').text(node.href).attr('title', node.href)
+      .addClass('se-href') : $$('div').addClass('se-href').text(node.href)
 
     let el = $$('div').addClass(`sc-supplementary-file sm-${mode}`)
     el.append(

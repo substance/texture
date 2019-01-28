@@ -243,6 +243,7 @@ b.task('build:test-assets', ['build:vfs'], () => {
     moduleName: 'TEST_VFS',
     rootDir: path.join(__dirname, 'test', 'fixture')
   })
+  b.copy('./data', DIST + 'data')
 })
 
 b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {

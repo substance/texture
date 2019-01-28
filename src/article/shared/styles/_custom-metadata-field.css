@@ -10,3 +10,8 @@
 .sc-custom-metadata-field > .se-field-name {
   font-weight: var(--t-bold-font-weight);
 }
+
+/* Placeholder for empty custom fields set in metadata mode */
+.sc-figure-metadata.sm-empty {
+  color: var(--t-placeholder-text-color);
+}

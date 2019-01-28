@@ -9,7 +9,7 @@ export default class FigureMetadataComponent extends ValueComponent {
         items.map(field => this._renderMetadataField($$, field))
       )
     } else {
-      el.append(this.getLabel('empty-figure-metadata'))
+      el.addClass('sm-empty').append(this.getLabel('empty-figure-metadata'))
     }
     return el
   }

@@ -30,8 +30,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._config = config
   }
 
-  hasPendingChanges () {
-    return this.buffer.hasPendingChanges()
+  addDocument (type, name, xml) {
+    let documentId = uuid()
+    let sessions = this._sessions
+    let session = this._loadDocument(type, { data: xml }, sessions)
+    sessions[documentId] = session
+    this._registerForSessionChanges(session, documentId)
+    this._addDocumentRecord(documentId, type, name, documentId + '.xml')
+    return documentId
   }
 
   // TODO: this can not be used in NodeJS
@@ -59,62 +65,30 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return filePath
   }
 
-  /*
-    Adds a document record to the manifest file
-  */
-  _addDocumentRecord (documentId, type, name, path) {
-    this._sessions.manifest.transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.createElement('document', { id: documentId }).attr({
-        name: name,
-        path: path,
-        type: type
-      })
-      documents.appendChild(docEntry)
-    })
-  }
-
-  addDocument (type, name, xml) {
-    let documentId = uuid()
-    let sessions = this._sessions
-    let session = this._loadDocument(type, { data: xml }, sessions)
-    sessions[documentId] = session
-    this._registerForSessionChanges(session, documentId)
-    this._addDocumentRecord(documentId, type, name, documentId + '.xml')
-    return documentId
-  }
-
-  removeDocument (documentId) {
-    let session = this._sessions[documentId]
-    this._unregisterFromSession(session)
-    this._sessions.manifest.transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.find(`#${documentId}`)
-      documents.removeChild(docEntry)
-    })
-  }
-
-  renameDocument (documentId, name) {
-    this._sessions.manifest.transaction(tx => {
-      let docEntry = tx.find(`#${documentId}`)
-      docEntry.attr({name})
-    })
+  getBlob (fileName) {
+    let manifest = this._sessions.manifest.getDocument()
+    let asset = manifest.find(`asset[path="${fileName}"]`)
+    if (asset) {
+      return this.buffer.getBlob(asset.id)
+    }
   }
 
   getDocumentEntries () {
     return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
 
-  resolveUrl (path) {
-    let blobUrl = this._pendingFiles[path]
-    if (blobUrl) {
-      return blobUrl
-    } else {
-      let fileRecord = this._upstreamArchive.resources[path]
-      if (fileRecord && fileRecord.encoding === 'url') {
-        return fileRecord.data
-      }
-    }
+  getEditorSession (docId) {
+    return this._sessions[docId]
+  }
+
+  hasAsset (fileName) {
+    // TODO: we should introduce an index for assets by filename / path
+    let manifest = this._sessions.manifest.getDocument()
+    return Boolean(manifest.find(`asset[path="${fileName}"]`))
+  }
+
+  hasPendingChanges () {
+    return this.buffer.hasPendingChanges()
   }
 
   load (archiveId, cb) {
@@ -168,8 +142,33 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  _repair () {
-    // no-op
+  removeDocument (documentId) {
+    let session = this._sessions[documentId]
+    this._unregisterFromSession(session)
+    this._sessions.manifest.transaction(tx => {
+      let documents = tx.find('documents')
+      let docEntry = tx.find(`#${documentId}`)
+      documents.removeChild(docEntry)
+    })
+  }
+
+  renameDocument (documentId, name) {
+    this._sessions.manifest.transaction(tx => {
+      let docEntry = tx.find(`#${documentId}`)
+      docEntry.attr({name})
+    })
+  }
+
+  resolveUrl (path) {
+    let blobUrl = this._pendingFiles[path]
+    if (blobUrl) {
+      return blobUrl
+    } else {
+      let fileRecord = this._upstreamArchive.resources[path]
+      if (fileRecord && fileRecord.encoding === 'url') {
+        return fileRecord.data
+      }
+    }
   }
 
   save (cb) {
@@ -192,8 +191,19 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  getEditorSession (docId) {
-    return this._sessions[docId]
+  /*
+    Adds a document record to the manifest file
+  */
+  _addDocumentRecord (documentId, type, name, path) {
+    this._sessions.manifest.transaction(tx => {
+      let documents = tx.find('documents')
+      let docEntry = tx.createElement('document', { id: documentId }).attr({
+        name: name,
+        path: path,
+        type: type
+      })
+      documents.appendChild(docEntry)
+    })
   }
 
   _loadManifest (record) {
@@ -217,8 +227,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
     }, this)
   }
 
-  _unregisterFromSession (session) {
-    session.off(this)
+  _repair () {
+    // no-op
   }
 
   /*
@@ -258,6 +268,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
       this.emit('archive:saved')
       cb()
     })
+  }
+
+  _unregisterFromSession (session) {
+    session.off(this)
   }
 
   _exportAssets (sessions, buffer, rawArchive) {

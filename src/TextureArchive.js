@@ -71,14 +71,17 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _exportDocuments (sessions, buffer, rawArchive) {
+  // TODO: this should be generalized and then live in the base class
+  _exportChangedDocuments (sessions, buffer, rawArchive) {
     // Note: we are only adding resources that have changed
     // and only those which are registered in the manifest
     let entries = this.getDocumentEntries()
     let hasPubMetaChanged = buffer.hasResourceChanged('pub-meta')
-    entries.forEach(entry => {
+    for (let entry of entries) {
       let { id, type, path } = entry
       let hasChanged = buffer.hasResourceChanged(id)
+      // skipping unchanged resources
+      if (!hasChanged) continue
 
       // We will never persist pub-meta
       if (type === 'pub-meta') return
@@ -96,7 +99,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
           updatedAt: Date.now()
         }
       }
-    })
+    }
   }
 
   _loadDocument (type, record, sessions) {

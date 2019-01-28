@@ -1,4 +1,5 @@
 import { forEach, last, uuid, EventEmitter, platform, isString } from 'substance'
+import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
 
 /*
@@ -65,16 +66,16 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return filePath
   }
 
-  getBlob (fileName) {
+  getDocumentEntries () {
+    return this.getEditorSession('manifest').getDocument().getDocumentEntries()
+  }
+
+  getDownloadLink (fileName) {
     let manifest = this._sessions.manifest.getDocument()
     let asset = manifest.find(`asset[path="${fileName}"]`)
     if (asset) {
-      return this.buffer.getBlob(asset.id)
+      return this.resolveUrl(fileName)
     }
-  }
-
-  getDocumentEntries () {
-    return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
 
   getEditorSession (docId) {
@@ -248,6 +249,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
     // a slower persisted buffer
     storage.write(archiveId, rawArchive, (err, res) => {
+      // TODO: this need to implemented in a more robust fashion
+      // i.e. we should only reset the buffer if storage.write was successful
       if (err) return cb(err)
 
       // TODO: if successful we should receive the new version as response
@@ -262,6 +265,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
       }
       // console.log('Saved. New version:', res.version)
       buffer.reset(_res.version)
+      this._pendingFiles = {}
 
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId
@@ -272,24 +276,6 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
   _unregisterFromSession (session) {
     session.off(this)
-  }
-
-  _exportAssets (sessions, buffer, rawArchive) {
-    let manifest = sessions.manifest.getDocument()
-    let assetNodes = manifest.getAssetNodes()
-    assetNodes.forEach(node => {
-      let id = node.attr('id')
-      if (!buffer.hasBlob(id)) return
-      let path = node.attr('path') || id
-      let blobRecord = buffer.getBlob(id)
-      rawArchive.resources[path] = {
-        id,
-        data: blobRecord.blob,
-        encoding: 'blob',
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-      }
-    })
   }
 
   /*
@@ -303,8 +289,32 @@ export default class PersistedDocumentArchive extends EventEmitter {
       resources: {}
     }
     this._exportManifest(sessions, buffer, rawArchive)
-    this._exportDocuments(sessions, buffer, rawArchive)
-    this._exportAssets(sessions, buffer, rawArchive)
+    this._exportChangedDocuments(sessions, buffer, rawArchive)
+    this._exportChangedAssets(sessions, buffer, rawArchive)
     return rawArchive
+  }
+
+  // TODO: generalize the implementation so that it can live here
+  _exportChangedDocuments (sessions, buffer, rawArchive) {
+    throwMethodIsAbstract()
+  }
+
+  _exportChangedAssets (sessions, buffer, rawArchive) {
+    let manifest = sessions.manifest.getDocument()
+    let assetNodes = manifest.getAssetNodes()
+    assetNodes.forEach(asset => {
+      let assetId = asset.id
+      if (buffer.hasBlobChanged(assetId)) {
+        let path = asset.attr('path') || assetId
+        let blobRecord = buffer.getBlob(assetId)
+        rawArchive.resources[path] = {
+          assetId,
+          data: blobRecord.blob,
+          encoding: 'blob',
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        }
+      }
+    })
   }
 }

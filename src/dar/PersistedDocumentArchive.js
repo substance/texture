@@ -82,12 +82,6 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return this._sessions[docId]
   }
 
-  hasAsset (fileName) {
-    // TODO: we should introduce an index for assets by filename / path
-    let manifest = this._sessions.manifest.getDocument()
-    return Boolean(manifest.find(`asset[path="${fileName}"]`))
-  }
-
   hasPendingChanges () {
     return this.buffer.hasPendingChanges()
   }

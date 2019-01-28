@@ -64,7 +64,7 @@
         <caption id="fig1b-caption">
           <title>Second panel</title>
           <p id="fig1b-caption-p1">Second panel caption</p>
-          <p id="fig1a-caption-p2"><xref id="xref-1" ref-type="bibr" rid="source-data-1">Source data 1</xref> has been used to generate this figure.</p>
+          <p id="fig1a-caption-p2"><xref id="xref-1" ref-type="bibr" rid="r1">Source data 1</xref> has been used to generate this figure.</p>
         </caption>
         <graphic id="fig1b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
       </fig>

@@ -69,7 +69,7 @@ export default class DocumentSession extends EventEmitter {
 
   // EXPERIMENTAL: for certain cases it is useful to store volatile information on nodes
   // Then the data does not need to be disposed when a node is deleted.
-  updateNodeStates (tuples, silent) {
+  updateNodeStates (tuples, options = {}) {
     // using a pseudo change to get into the existing updating mechanism
     const doc = this._document
     let change = new DocumentChange([], {}, {})
@@ -83,7 +83,7 @@ export default class DocumentSession extends EventEmitter {
       Object.assign(node.state, state)
       change.updated[id] = true
     }
-    if (!silent) {
+    if (!options.silent) {
       doc._notifyChangeListeners(change, info)
       this.emit('change', change, info)
     }

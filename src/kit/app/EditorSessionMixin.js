@@ -175,9 +175,12 @@ export default function (DocumentSession) {
       this.editorState.propagateUpdates()
     }
 
-    updateNodeStates (tuples, silent) {
-      super.updateNodeStates(tuples, silent)
-      if (!silent) {
+    // HACK: desperately trying to find a quick-fix that is not breaking
+    // other behavior
+    updateNodeStates (tuples, options = {}) {
+      super.updateNodeStates(tuples, options)
+
+      if (options.propagate) {
         this.editorState.propagateUpdates()
       }
     }

@@ -98,7 +98,7 @@ export default class FigureComponent extends NodeComponent {
     const panelId = target.getAttribute('data-id')
     if (panelId) {
       const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[node.id, {currentPanelIndex: panelIds.indexOf(panelId)}]])
+      editorSession.updateNodeStates([[node.id, {currentPanelIndex: panelIds.indexOf(panelId)}]], { propagate: true })
     }
   }
 }

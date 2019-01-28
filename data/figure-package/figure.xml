@@ -64,7 +64,7 @@
         <caption id="fig1b-caption">
           <title>Second panel</title>
           <p id="fig1b-caption-p1">Second panel caption</p>
-          <p id="fig1a-caption-p2"><xref id="xref-1" ref-type="bibr" rid="r1">Source data 1</xref> has been used to generate this figure.</p>
+          <p id="fig1a-caption-p2"><xref id="xref-1" ref-type="bibr" rid="r2">Source data 1</xref> has been used to generate this figure.</p>
         </caption>
         <graphic id="fig1b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
       </fig>
@@ -79,6 +79,55 @@
           <source>NCBI Gene Expression Omnibus</source>
           <data-title>Affinity and Dose of TCR Engagement Yield Proportional Enhancer and Gene Activity in CD4+ T Cells</data-title>
           <uri>http://www.michaeleisen.org/blog/?p=1894</uri>
+        </element-citation>
+      </ref>
+      <ref id="r2">
+        <element-citation publication-type="article">
+          <year>2017</year>
+          <pub-id pub-id-type="doi">10.1101/102392</pub-id>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Alasoo</surname>
+              <given-names>K</given-names>
+            </name>
+            <name>
+              <surname>Rodrigues</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Mukhopadhyay</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Knights</surname>
+              <given-names>AJ</given-names>
+            </name>
+            <name>
+              <surname>Mann</surname>
+              <given-names>AL</given-names>
+            </name>
+            <name>
+              <surname>Kundu</surname>
+              <given-names>K</given-names>
+            </name>
+            <collab>
+              <named-content content-type="name">HIPSCI Consortium</named-content>
+            </collab>
+            <name>
+              <surname>Hale</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Dougan</surname>
+              <given-names>G</given-names>
+            </name>
+            <name>
+              <surname>Gaffney</surname>
+              <given-names>DJ</given-names>
+            </name>
+          </person-group>
+          <source>bioRxiv</source>
+          <article-title>Shared genetic effects on chromatin and gene expression reveal widespread enhancer priming in immune response</article-title>
         </element-citation>
       </ref>
     </ref-list>

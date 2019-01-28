@@ -27,7 +27,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._archiveId = null
     this._upstreamArchive = null
     this._sessions = null
-    this._pendingFiles = {}
+    this._pendingFiles = new Map()
     this._config = config
   }
 
@@ -61,7 +61,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
     // FIXME: what to do in NodeJS?
     if (platform.inBrowser) {
-      this._pendingFiles[filePath] = URL.createObjectURL(file)
+      this._pendingFiles.set(filePath, URL.createObjectURL(file))
     }
     return filePath
   }
@@ -161,7 +161,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   resolveUrl (path) {
-    let blobUrl = this._pendingFiles[path]
+    // until saved, files have a blob URL
+    let blobUrl = this._pendingFiles.get(path)
     if (blobUrl) {
       return blobUrl
     } else {
@@ -265,7 +266,13 @@ export default class PersistedDocumentArchive extends EventEmitter {
       }
       // console.log('Saved. New version:', res.version)
       buffer.reset(_res.version)
-      this._pendingFiles = {}
+      // revoking object urls
+      if (platform.inBrowser) {
+        for (let blobUrl of this._pendingFiles.values()) {
+          window.URL.revokeObjectURL(blobUrl)
+        }
+      }
+      this._pendingFiles.clear()
 
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId

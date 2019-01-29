@@ -39,17 +39,12 @@ export default class SupplementaryFileComponent extends NodeComponent {
 
   _renderPreviewVersion ($$) {
     const node = this.props.node
-    // TODO: We could return the PreviewComponent directly.
-    // However this yields an error we need to investigate.
-    // TODO: we need a read-only version for this
-    let thumbnail = this._renderValue($$, 'legend')
     let label = getLabel(node)
     // TODO: PreviewComponent should work with a model
     // FIXME: there is problem with redirected components
     // and Component as props
     return $$('div').append($$(PreviewComponent, {
       id: node.id,
-      thumbnail,
       label
     }))
   }

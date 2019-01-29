@@ -38,7 +38,6 @@
           <p id="fig1a-caption-p2">The dataset <xref id="xref-1" ref-type="bibr" rid="r1">[1]</xref> has been analysed to generate the following projection:</p>
           <p specific-use="display-element-wrapper">
             <supplementary-material id="source-data-1" mimetype="text" mime-sub-type="csv" xlink:href="fig1a-source-data.csv">
-              <label>Supplementary File 1</label>
               <caption>
                 <title>Orthogroup clustering analysis</title>
               </caption>

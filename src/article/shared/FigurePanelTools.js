@@ -12,12 +12,12 @@ class FigurePanelTool extends UploadTool {
 
 export class InsertFigurePanelTool extends FigurePanelTool {
   getClassNames () {
-    return 'sc-insert-figure-panel-tool sc-upload-tool'
+    return 'sc-insert-figure-panel-tool sc-upload-tool sc-tool'
   }
 }
 
 export class ReplaceFigurePanelTool extends FigurePanelTool {
   getClassNames () {
-    return 'sc-replace-figure-panel-tool sc-upload-tool'
+    return 'sc-replace-figure-panel-tool sc-upload-tool sc-tool'
   }
 }

@@ -19,10 +19,11 @@ import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand
 } from '../shared/FigurePanelCommands'
-import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
 import FiguresSectionComponent from './FiguresSectionComponent'
+import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import MetadataSection from './MetadataSection'
+import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
 import {

@@ -55,6 +55,11 @@ export function selectCard (editor, id) {
   getApi(editor).selectModel(id)
 }
 
+export function selectNode (editor, id) {
+  // TODO: it would be better to have an API method to select a node
+  editor.find(`.sc-isolated-node[data-id="${id}"]`).el.click()
+}
+
 export function deleteSelection (editor) {
   let editorSession = editor.context.editorSession
   editorSession.transaction((tx) => {

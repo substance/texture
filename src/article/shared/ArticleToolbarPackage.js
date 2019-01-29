@@ -167,6 +167,35 @@ export default {
       }
     ])
 
+    // Context menus
+    config.addToolPanel('context-menu', [
+      {
+        name: 'context-menu',
+        type: 'group',
+        style: 'descriptive',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'file' },
+          { type: 'command-group', name: 'figure-panel' },
+          { type: 'command-group', name: 'footnote' },
+          { type: 'command-group', name: 'collection' },
+          { type: 'command-group', name: 'list' },
+          { type: 'command-group', name: 'custom-metadata-fields' }
+        ]
+      }
+    ])
+    config.addToolPanel('table-context-menu', [
+      {
+        name: 'table-context-menu',
+        type: 'group',
+        style: 'descriptive',
+        items: [
+          { type: 'command-group', name: 'table-insert' },
+          { type: 'command-group', name: 'table-delete' }
+        ]
+      }
+    ])
+
     // Icons
     config.addIcon('bold', { 'fontawesome': 'fa-bold' })
     config.addIcon('italic', { 'fontawesome': 'fa-italic' })

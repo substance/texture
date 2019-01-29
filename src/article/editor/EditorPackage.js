@@ -427,35 +427,12 @@ export default {
       }
     ])
 
-    config.addToolPanel('context-menu', [
-      {
-        name: 'context-menu',
-        type: 'group',
-        style: 'descriptive',
-        items: [
-          // TODO: specify what should go into the context menu
-        ]
-      }
-    ])
-
     config.addToolPanel('workflow', [
       {
         name: 'workflow',
         type: 'group',
         items: [
           { type: 'command-group', name: 'workflows' }
-        ]
-      }
-    ])
-
-    config.addToolPanel('table-context-menu', [
-      {
-        name: 'table-context-menu',
-        type: 'group',
-        style: 'descriptive',
-        items: [
-          { type: 'command-group', name: 'table-insert' },
-          { type: 'command-group', name: 'table-delete' }
         ]
       }
     ])

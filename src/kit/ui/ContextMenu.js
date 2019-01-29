@@ -1,6 +1,6 @@
 import ToolPanel from './ToolPanel'
 
-// TODO: refactor this. I don't like how this is coupled to ScrollPane
+// TODO: refactor this. I don't like how this is tight to ScrollPane
 export default class ContextMenu extends ToolPanel {
   didMount () {
     super.didMount()
@@ -16,12 +16,13 @@ export default class ContextMenu extends ToolPanel {
   }
 
   render ($$) {
-    let el = $$('div').addClass('sc-context-menu sm-hidden')
-    el.addClass('sm-theme-' + this.getTheme())
+    let el = $$('div')
+      .addClass(this._getClassNames())
+      .addClass('sm-hidden')
+      .addClass('sm-theme-' + this.getTheme())
     el.append(
       $$('div').addClass('se-active-tools').append(
         this._renderEntries($$)
-      // TODO: do we need this ref?
       ).ref('entriesContainer')
     )
     return el
@@ -34,6 +35,10 @@ export default class ContextMenu extends ToolPanel {
 
   hide () {
     this.el.addClass('sm-hidden')
+  }
+
+  _getClassNames () {
+    return 'sc-context-menu'
   }
 
   /*

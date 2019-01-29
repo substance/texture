@@ -36,11 +36,8 @@
           <title>First panel</title>
           <p id="fig1a-caption-p1">First panel caption. </p>
           <p id="fig1a-caption-p2">The dataset <xref id="xref-1" ref-type="bibr" rid="r1">[1]</xref> has been analysed to generate the following projection:</p>
-          <!-- HACK: supplementary-material is not valid in caption -->
-          <!-- TODO: find a common aggreement on what content should be allowed as paragraph-level display elements -->
           <p specific-use="display-element-wrapper">
-            <supplementary-material id="source-data-1" content-type="sdata" mimetype="text" mime-sub-type="csv" xlink:href="source-data-1.csv">
-              <label>Source data 1.</label><!-- auto-generated, based on counter grouped by content-type -->
+            <supplementary-material id="source-data-1" mimetype="text" mime-sub-type="csv" xlink:href="fig1a-source-data.csv">
               <caption>
                 <title>Orthogroup clustering analysis</title>
               </caption>

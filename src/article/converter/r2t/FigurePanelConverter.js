@@ -137,7 +137,12 @@ export default class FigurePanelConverter {
     for (let i = L - 1; i >= 0; i--) {
       let child = children[i]
       if (child.is('p[specific-use="display-element-wrapper"]')) {
-        el.replaceChild(child, child.getChildAt(0))
+        let children = child.getChildren()
+        if (children.length === 1) {
+          el.replaceChild(child, children[0])
+        } else {
+          console.error('Expecting a single element wrapped in <p>')
+        }
       }
     }
   }

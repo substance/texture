@@ -95,6 +95,7 @@ export default {
     config.addLabel('title-placeholder', 'Enter title')
     config.addLabel('subtitle-label', 'Subtitle')
     config.addLabel('subtitle-placeholder', 'Enter subtitle')
+    config.addLabel('supplementary-file', 'Supplementary file')
     config.addLabel('supplementary-file-workflow-title', 'Add supplementary file')
     config.addLabel('supplementary-file-upload-label', 'Upload local file')
     config.addLabel('supplementary-file-link-label', 'Or use web link to downloadable file')

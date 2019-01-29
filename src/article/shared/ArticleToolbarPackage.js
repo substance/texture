@@ -290,6 +290,7 @@ export default {
     config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
     config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
+    config.addLabel('open-figure-panel-image', 'Open Sub-Figure Image')
     // Footnote tools
     config.addLabel('footnote-tools', 'Footnote')
     config.addLabel('remove-footnote', 'Remove Footnote')

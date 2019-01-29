@@ -118,3 +118,10 @@ export class MoveFigurePanelCommand extends BasicFigurePanelCommand {
     return true
   }
 }
+
+export class OpenFigurePanelImageCommand extends BasicFigurePanelCommand {
+  // We are using this command only for state computation.
+  // Actual implementation of opening sub-figure is done inside OpenSubFigureSourceTool.
+  execute () {
+  }
+}

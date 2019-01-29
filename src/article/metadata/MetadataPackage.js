@@ -17,12 +17,13 @@ import BibliographicEntryEditor from './BibliographicEntryEditor'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
-  ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand
+  ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import MetadataSection from './MetadataSection'
+import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
@@ -86,6 +87,9 @@ export default {
       direction: 'up',
       commandGroup: 'figure-panel'
     })
+    config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
+      commandGroup: 'figure-panel'
+    })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'
     })
@@ -123,6 +127,7 @@ export default {
 
     // Tools
     config.addTool('add-figure-panel', InsertFigurePanelTool)
+    config.addTool('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
 
     // KeyboardShortcuts

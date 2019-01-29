@@ -67,6 +67,15 @@
         <graphic id="fig1b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1b.jpg" />
       </fig>
     </fig-group>
+    <sec>
+      <title>Supplementary Files</title>
+      <supplementary-material id="source-data-2" mimetype="text" mime-sub-type="csv" xlink:href="fig1a-source-data.csv">
+        <caption>
+          <title>Orthogroup clustering analysis</title>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis augue ut orci finibus laoreet.</p>
+        </caption>
+      </supplementary-material>
+    </sec>
   </body>
   <back>
     <ref-list>

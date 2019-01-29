@@ -40,8 +40,7 @@ export default class List extends ListMixin(DocumentNode) {
   }
 
   setListTypeString (listTypeStr) {
-    let doc = this.getDocument()
-    doc.set(this.getItemsPath(), listTypeStr)
+    this.listType = listTypeStr
   }
 }
 

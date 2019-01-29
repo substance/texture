@@ -5,10 +5,10 @@ import {
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-const addCustomMetadataFieldToolSelector = '.sm-add-custom-metadata-field'
-const moveDownCustomMetadataFieldToolSelector = '.sm-move-down-custom-metadata-field'
-const moveUpCustomMetadataFieldToolSelector = '.sm-move-up-custom-metadata-field'
-const removeCustomMetadataFieldToolSelector = '.sm-remove-custom-metadata-field'
+const addCustomMetadataFieldToolSelector = '.sm-add-metadata-field'
+const moveDownCustomMetadataFieldToolSelector = '.sm-move-down-metadata-field'
+const moveUpCustomMetadataFieldToolSelector = '.sm-move-up-metadata-field'
+const removeCustomMetadataFieldToolSelector = '.sm-remove-metadata-field'
 
 const figureMetadataSelector = '.sc-custom-metadata-field'
 const figureCustomMetadataFieldInputSelector = '.sc-custom-metadata-field .sc-string'
@@ -50,7 +50,7 @@ test('Figure Metadata: add a new custom field', t => {
   loadBodyFixture(editor, FIXTURE)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   _selectCustomField(editor)
-  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'custom-field-tools', addCustomMetadataFieldToolSelector)
+  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
   const selectedNodePath = getSelection(editor).path
@@ -71,7 +71,7 @@ test('Figure Metadata: add a new custom field when figure is selected', t => {
     surfaceId: 'body',
     containerPath: ['body', 'content']
   })
-  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'custom-field-tools', addCustomMetadataFieldToolSelector)
+  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
   t.isNotNil(addCustomMetadataFieldTool, 'add custom field tool should be available for a figure selection')
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
@@ -87,7 +87,7 @@ test('Figure Metadata: remove custom field', t => {
   loadBodyFixture(editor, FIXTURE)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   _selectCustomField(editor)
-  const removeCustomMetadataFieldTool = openMenuAndFindTool(editor, 'custom-field-tools', removeCustomMetadataFieldToolSelector)
+  const removeCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', removeCustomMetadataFieldToolSelector)
   t.ok(removeCustomMetadataFieldTool.click(), 'clicking on remove custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 0, 'there should be no custom fields now')
   t.end()
@@ -97,9 +97,9 @@ test('Figure Metadata: move custom field', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
-  const _getMoveUpCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'custom-field-tools', moveUpCustomMetadataFieldToolSelector)
-  const _getMoveDownCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'custom-field-tools', moveDownCustomMetadataFieldToolSelector)
-  const _getAddCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'custom-field-tools', addCustomMetadataFieldToolSelector)
+  const _getMoveUpCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'metadata-field-tools', moveUpCustomMetadataFieldToolSelector)
+  const _getMoveDownCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'metadata-field-tools', moveDownCustomMetadataFieldToolSelector)
+  const _getAddCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
 
   loadBodyFixture(editor, FIXTURE)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')

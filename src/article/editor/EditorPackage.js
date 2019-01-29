@@ -50,7 +50,7 @@ import InsertDispQuoteCommand from './InsertDispQuoteCommand'
 import InsertExtLinkCommand from './InsertExtLinkCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
-import { InsertFigurePanelTool, ReplaceFigurePanelTool } from '../shared/FigurePanelTools'
+import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
 import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
@@ -64,8 +64,9 @@ import {
 } from './TableCommands'
 import InsertTableTool from './InsertTableTool'
 import RemoveItemCommand from './RemoveItemCommand'
+import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
-import { ReplaceSupplementaryFileTool } from './SupplementaryFileTools'
+import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
@@ -98,7 +99,7 @@ export default {
     config.addComponent('reference-list', ReferenceListComponent, true)
     config.addComponent('toc', ManuscriptTOC, true)
 
-    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+    config.addCommand('add-metadata-field', AddCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
@@ -221,7 +222,7 @@ export default {
       refType: 'table',
       commandGroup: 'insert-xref'
     })
-    config.addCommand('move-down-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+    config.addCommand('move-down-metadata-field', MoveCustomMetadataFieldCommand, {
       direction: 'down',
       commandGroup: 'custom-metadata-fields'
     })
@@ -229,7 +230,7 @@ export default {
       direction: 'down',
       commandGroup: 'figure-panel'
     })
-    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+    config.addCommand('move-up-metadata-field', MoveCustomMetadataFieldCommand, {
       direction: 'up',
       commandGroup: 'custom-metadata-fields'
     })
@@ -237,7 +238,7 @@ export default {
       direction: 'up',
       commandGroup: 'figure-panel'
     })
-    config.addCommand('remove-custom-metadata-field', RemoveCustomMetadataFieldCommand, {
+    config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {

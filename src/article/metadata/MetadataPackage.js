@@ -55,7 +55,7 @@ export default {
     config.addComponent('@tables', MetadataSection)
 
     // Commands
-    config.addCommand('add-custom-metadata-field', AddCustomMetadataFieldCommand, {
+    config.addCommand('add-metadata-field', AddCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
@@ -65,7 +65,7 @@ export default {
       direction: 'down',
       commandGroup: 'collection'
     })
-    config.addCommand('move-down-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+    config.addCommand('move-down-metadata-field', MoveCustomMetadataFieldCommand, {
       direction: 'down',
       commandGroup: 'custom-metadata-fields'
     })
@@ -77,7 +77,7 @@ export default {
       direction: 'up',
       commandGroup: 'collection'
     })
-    config.addCommand('move-up-custom-metadata-field', MoveCustomMetadataFieldCommand, {
+    config.addCommand('move-up-metadata-field', MoveCustomMetadataFieldCommand, {
       direction: 'up',
       commandGroup: 'custom-metadata-fields'
     })
@@ -88,7 +88,7 @@ export default {
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'
     })
-    config.addCommand('remove-custom-metadata-field', RemoveCustomMetadataFieldCommand, {
+    config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {

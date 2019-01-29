@@ -146,7 +146,7 @@ export default {
         ]
       },
       {
-        name: 'custom-field-tools',
+        name: 'metadata-field-tools',
         type: 'dropdown',
         style: 'descriptive',
         hideDisabled: true,
@@ -299,11 +299,11 @@ export default {
     config.addLabel('move-down-col-item', 'Move Item Down')
     config.addLabel('remove-col-item', 'Remove Item')
     // Custom field tools
-    config.addLabel('custom-field-tools', 'Metadata')
-    config.addLabel('add-custom-metadata-field', 'Add Custom Field')
-    config.addLabel('move-down-custom-metadata-field', 'Move Down Custom Field')
-    config.addLabel('move-up-custom-metadata-field', 'Move Up Custom Field')
-    config.addLabel('remove-custom-metadata-field', 'Remove Custom Field')
+    config.addLabel('metadata-field-tools', 'Metadata')
+    config.addLabel('add-metadata-field', 'Add Metadata Field')
+    config.addLabel('move-down-metadata-field', 'Move Down Metadata Field')
+    config.addLabel('move-up-metadata-field', 'Move Up Metadata Field')
+    config.addLabel('remove-metadata-field', 'Remove Metadata Field')
     // Mode
     config.addLabel('manuscript', 'Manuscript')
   }

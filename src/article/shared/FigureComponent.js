@@ -1,4 +1,3 @@
-import { DefaultDOMElement } from 'substance'
 import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE } from '../../article/ArticleConstants'
 
@@ -24,11 +23,9 @@ export default class FigureComponent extends NodeComponent {
       return this._renderCurrentPanel($$)
     } else {
       return $$('div').addClass('se-carousel').append(
+        this._renderNavigation($$),
         $$('div').addClass('se-current-panel').append(
           this._renderCurrentPanel($$)
-        ),
-        $$('div').addClass('se-thumbnails').append(
-          this._renderThumbnails($$)
         )
       )
     }
@@ -41,6 +38,33 @@ export default class FigureComponent extends NodeComponent {
       node: panel,
       mode: this.props.mode
     }).ref(panel.id)
+  }
+
+  _renderNavigation ($$) {
+    const node = this.props.node
+    const panels = node.getPanels()
+    const numberOfPanels = panels.length
+    const currentIndex = this._getCurrentPanelIndex() + 1
+    const currentPosition = currentIndex + ' / ' + numberOfPanels
+    const leftControl = $$('div').addClass('se-control').append(this._renderIcon($$, 'left-control'))
+    if (currentIndex > 1) {
+      leftControl.on('click', this._onSwitchPanel.bind(this, 'left'))
+    } else {
+      leftControl.addClass('sm-disabled')
+    }
+    const rightControl = $$('div').addClass('se-control').append(this._renderIcon($$, 'right-control'))
+    if (currentIndex < numberOfPanels) {
+      rightControl.on('click', this._onSwitchPanel.bind(this, 'right'))
+    } else {
+      rightControl.addClass('sm-disabled')
+    }
+    return $$('div').addClass('se-navigation').append(
+      $$('div').addClass('se-current-position').append(currentPosition),
+      $$('div').addClass('se-controls').append(
+        leftControl,
+        rightControl
+      )
+    )
   }
 
   _renderThumbnails ($$) {
@@ -90,15 +114,16 @@ export default class FigureComponent extends NodeComponent {
     return currentPanelIndex
   }
 
-  _handleThumbnailClick (e) {
+  _onSwitchPanel (direction) {
+    let currentIndex = this._getCurrentPanelIndex()
     const node = this.props.node
-    const panelIds = node.panels
-    // ATTENTION: wrap the native element here so that this works for testing too
-    let target = DefaultDOMElement.wrap(e.currentTarget)
-    const panelId = target.getAttribute('data-id')
-    if (panelId) {
-      const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[node.id, {currentPanelIndex: panelIds.indexOf(panelId)}]], { propagate: true })
-    }
+    const editorSession = this.context.editorSession
+    editorSession.updateNodeStates([[node.id, {currentPanelIndex: direction === 'left' ? --currentIndex : ++currentIndex}]], { propagate: true })
+  }
+
+  _renderIcon ($$, iconName) {
+    return $$('div').addClass('se-icon').append(
+      this.context.iconProvider.renderIcon($$, iconName)
+    )
   }
 }

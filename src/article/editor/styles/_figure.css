@@ -19,49 +19,36 @@
   font-size: var(--t-small-font-size);
 }
 
-.sc-figure.sm-manuscript > .se-carousel {
+.sc-figure.sm-manuscript > .se-carousel > .se-navigation {
+  display: flex;
+  float: right;
+  font-size: var(--t-small-font-size);
+}
+
+.sc-figure.sm-manuscript > .se-carousel > .se-navigation > .se-current-position {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: var(--t-default-spacing);
+}
+
+.sc-figure.sm-manuscript > .se-carousel > .se-navigation > .se-controls {
   display: flex;
 }
 
-.sc-figure.sm-manuscript > .se-carousel > .se-current-panel {
-  flex: 1;
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails {
-  width: 150px;
-  padding: 0 var(--t-default-spacing);
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel {
-  padding: var(--t-half-spacing);
-  border: var(--t-input-outline-border);
-  margin-bottom: var(--t-default-spacing);
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails > .sc-figure-panel.sm-current-panel {
-  border: var(--t-input-focus-border);
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails .sc-preview {
-  display: block;
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails .se-thumbnail {
-  max-width: none;
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails .se-thumbnail img {
-  max-height: 70px;
-  max-width: 80px;
-  width: auto;
-  margin: 0 auto;
-}
-
-.sc-figure.sm-manuscript > .se-carousel > .se-thumbnails .se-label {
-  font-weight: var(--t-bold-font-weight);
-  font-size: var(--t-tiny-font-size);
-  color: var(--t-light-text-color);
-  margin-top: var(--t-half-spacing);
+.sc-figure.sm-manuscript > .se-carousel > .se-navigation > .se-controls > .se-control {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
-  padding: 0;
+  height: 30px;
+  width: 30px;
+  margin-left: 2px;
+  border: var(--t-default-border);
+  border-radius: var(--t-border-radius);
+  cursor: pointer;
+}
+
+.sc-figure.sm-manuscript > .se-carousel > .se-navigation > .se-controls > .se-control.sm-disabled {
+  opacity: 0.5;
 }

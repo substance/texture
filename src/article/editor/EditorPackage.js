@@ -334,6 +334,8 @@ export default {
     config.addIcon('trash', { 'fontawesome': 'fa-trash' })
     config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
+    config.addIcon('left-control', { 'fontawesome': 'fa-chevron-left' })
+    config.addIcon('right-control', { 'fontawesome': 'fa-chevron-right' })
 
     // Tools
     config.addTool('add-figure-panel', InsertFigurePanelTool)

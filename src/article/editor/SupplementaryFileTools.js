@@ -12,6 +12,6 @@ class SupplementaryFileTool extends UploadTool {
 
 export class ReplaceSupplementaryFileTool extends SupplementaryFileTool {
   getClassNames () {
-    return 'sc-replace-supplementary-file-tool sc-upload-tool'
+    return 'sc-replace-supplementary-file-tool sc-upload-tool sc-tool'
   }
 }

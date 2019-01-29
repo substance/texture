@@ -62,6 +62,10 @@ export default class Tool extends Component {
     return el
   }
 
+  click () {
+    return this.el.click()
+  }
+
   executeCommand (params) {
     const { item, commandState } = this.props
     // TODO: rethink this. Should we inhibit command execution here
@@ -71,8 +75,8 @@ export default class Tool extends Component {
     }
   }
 
-  click () {
-    return this.el.click()
+  getClassNames () {
+    return 'sc-tool'
   }
 
   _getLabel () {

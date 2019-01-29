@@ -12,7 +12,10 @@ export default class SupplementaryFileComponent extends NodeComponent {
     }
 
     const node = this.props.node
-    const label = getLabel(node) || '?'
+    // HACK: ATM, we do not have a label generator for supplementary files
+    // that are inside a figure legend. It has not been specified yet
+    // if these should have a label at all, or what the label should look like.
+    const label = getLabel(node) || this.getLabel('supplementary-file')
     const SectionLabel = this.getComponent('section-label')
     // NOTE: we need an editable href only for remote files, for local files we just need to render a file name
     const hrefSection = node.remote ? this._renderValue($$, 'href', { placeholder: this.getLabel('supplementary-file-link-placeholder') })
@@ -23,7 +26,9 @@ export default class SupplementaryFileComponent extends NodeComponent {
       $$('div').addClass('se-header').append(
         // FIXME: not using a dedicated component for the label means that this is not updated
         $$('div').addClass('se-label').text(label)
-      ),
+      )
+    )
+    el.append(
       $$(SectionLabel, {label: 'legend-label'}),
       this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }),
       $$(SectionLabel, {label: node.remote ? 'file-location' : 'file-name'}),

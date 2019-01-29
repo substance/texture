@@ -242,6 +242,65 @@ test('ManuscriptEditor: toggling a list', t => {
   t.end()
 })
 
+const LIST = `
+<list list-type="bullet" id="list-1">
+  <list-item id="li1">
+    <p>Item 1</p>
+    <list list-type="order">
+      <list-item id="li1_1">
+        <p>Item 2</p>
+      </list-item>
+      <list-item>
+        <p>Item 3</p>
+      </list-item>
+    </list>
+  </list-item>
+  <list-item>
+    <p>Item 4</p>
+    <list list-type="order">
+      <list-item>
+        <p>Item 5</p>
+      </list-item>
+      <list-item>
+        <p>Item 6</p>
+        <list list-type="bullet">
+          <list-item>
+            <p>Item 7</p>
+          </list-item>
+          <list-item>
+            <p>Item 8</p>
+          </list-item>
+        </list>
+      </list-item>
+    </list>
+  </list-item>
+  <list-item>
+    <p>Item 9</p>
+  </list-item>
+</list>
+`
+
+test('ManuscriptEditor: changing the list style', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, LIST)
+
+  setSelection(editor, 'li1.content', 0)
+  // click on list tool to turn "p1" into a list
+  let ulTool = openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-ordered-list')
+  ulTool.click()
+  let listNode = doc.get('list-1')
+  t.equal(listNode.listType, 'order,order,bullet', 'all levels should be ordered')
+
+  setSelection(editor, 'li1_1.content', 0)
+  let olTool = openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-unordered-list')
+  olTool.click()
+  t.equal(listNode.listType, 'order,bullet,bullet', 'all levels should be ordered')
+
+  t.end()
+})
+
 const P_WITH_EXTERNAL_LINK = `<p id="p1">This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" id="link" xlink:href="substance.io">link</ext-link></p>`
 
 test('ManuscriptEditor: editing an external link', t => {

@@ -15,6 +15,7 @@ const insertFigureXrefSelector = '.sm-insert-xref-figure'
 const insertFigurePanelSelector = '.sc-insert-figure-panel-tool'
 const moveUpToolSelector = '.sm-move-up-figure-panel'
 const moveDownToolSelector = '.sm-move-down-figure-panel'
+const openPanelImageSelector = '.sc-open-figure-panel-source-tool'
 const removePanelToolSelector = '.sm-remove-figure-panel'
 const replacePanelToolSelector = '.sc-replace-figure-panel-tool'
 const subFigureCardSelector = '.sc-card.sm-figure-panel'
@@ -337,6 +338,30 @@ test('Figure: reference multiple sub-figures', t => {
   const removePanelTool = openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector)
   t.ok(removePanelTool.click(), 'clicking on remove sub-figure tool should not throw error')
   t.equal(getXref().text(), 'Figure 1', 'xref label should be equal to xref label')
+  t.end()
+})
+
+test('Figure: open image from figure panel', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
+  const _canOpen = () => _isToolEnabled(editor, openPanelImageSelector)
+  const _openImage = () => openMenuAndFindTool(editor, 'figure-tools', openPanelImageSelector).click()
+
+  t.notOk(_canOpen(), 'open image tool should be disabled by default')
+
+  let editorSession = getEditorSession(editor)
+  editorSession.setSelection({
+    type: 'node',
+    nodeId: 'fig1',
+    surfaceId: 'body',
+    containerPath: ['body', 'content']
+  })
+
+  t.ok(_canOpen(), 'open image tool should be active when selection is on figure node')
+  doesNotThrowInNodejs(t, () => {
+    _openImage()
+  }, 'open image tool should not throw')
   t.end()
 })
 

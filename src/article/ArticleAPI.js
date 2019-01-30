@@ -160,7 +160,7 @@ export default class ArticleAPI {
 
   _replaceFile (hrefPath, file) {
     const articleSession = this.editorSession
-    const path = this.archive.createFile(file)
+    const path = this.archive.addAsset(file)
     articleSession.transaction(tx => {
       tx.set(hrefPath, path)
     })
@@ -395,7 +395,7 @@ export default class ArticleAPI {
   _insertFigures (files) {
     const articleSession = this.editorSession
     let paths = files.map(file => {
-      return this.archive.createFile(file)
+      return this.archive.addAsset(file)
     })
     let sel = articleSession.getSelection()
     if (!sel || !sel.containerPath) return
@@ -406,7 +406,7 @@ export default class ArticleAPI {
 
   _insertSupplementaryFile (file, url) {
     const articleSession = this.editorSession
-    if (file) url = this.archive.createFile(file)
+    if (file) url = this.archive.addAsset(file)
     let sel = articleSession.getSelection()
     articleSession.transaction(tx => {
       let containerPath = sel.containerPath
@@ -422,7 +422,7 @@ export default class ArticleAPI {
 
   _replaceSupplementaryFile (file, supplementaryFile) {
     const articleSession = this.editorSession
-    const path = this.archive.createFile(file)
+    const path = this.archive.addAsset(file)
     articleSession.transaction(tx => {
       const mimeData = file.type.split('/')
       tx.set([supplementaryFile.id, 'mime-subtype'], mimeData[1])
@@ -433,7 +433,7 @@ export default class ArticleAPI {
 
   _insertInlineGraphic (file) {
     const articleSession = this.editorSession
-    const href = this.archive.createFile(file)
+    const href = this.archive.addAsset(file)
     const mimeType = file.type
     const sel = articleSession.getSelection()
     if (!sel) return
@@ -459,7 +459,7 @@ export default class ArticleAPI {
     const doc = this.getDocument()
     const figure = doc.get(figureId)
     const pos = figure.getCurrentPanelIndex()
-    const href = this.archive.createFile(file)
+    const href = this.archive.addAsset(file)
     this.editorSession.transaction(tx => {
       let template = FigurePanel.getTemplate()
       template.content.href = href

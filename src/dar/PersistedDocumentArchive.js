@@ -41,8 +41,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return documentId
   }
 
-  // TODO: this can not be used in NodeJS
-  createFile (file) {
+  addAsset (file) {
     let assetId = uuid()
     let [name, ext] = _getNameAndExtension(file.name)
     let filePath = this._getUniqueFileName(name, ext)
@@ -66,6 +65,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return filePath
   }
 
+  getAsset (fileName) {
+    return this._sessions.manifest.getDocument().find(`asset[path="${fileName}"]`)
+  }
+
   getDocumentEntries () {
     return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
@@ -80,6 +83,11 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
   getEditorSession (docId) {
     return this._sessions[docId]
+  }
+
+  hasAsset (fileName) {
+    // TODO: at some point I want to introduce an index for files by fileName/path
+    return Boolean(this.getAsset(fileName))
   }
 
   hasPendingChanges () {
@@ -202,28 +210,20 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  _getAsset (path) {
-    return this._sessions.manifest.getDocument().find(`asset[path="${path}"]`)
-  }
-
   _getUniqueFileName (name, ext) {
     let candidate
     // first try the canonical one
     candidate = `${name}.${ext}`
-    if (this._hasAsset(candidate)) {
+    if (this.hasAsset(candidate)) {
       let count = 2
       // now use a suffix counting up
       while (true) {
         candidate = `${name}_${count++}.${ext}`
-        if (!this._hasAsset(candidate)) break
+        if (!this.hasAsset(candidate)) break
       }
     }
 
     return candidate
-  }
-
-  _hasAsset (path) {
-    return Boolean(this._getAsset(path))
   }
 
   _loadManifest (record) {

@@ -106,6 +106,25 @@ export default class ArticleAPI {
     this._setSelection(this._createModelSelection(nodeId))
   }
 
+  selectNode (nodeId) {
+    const editorSession = this.editorSession
+    const doc = editorSession.getDocument()
+    const node = doc.get(nodeId)
+    if (node) {
+      const sel = editorSession.getSelection()
+      const containerPath = this._getContainerPathForNode(node)
+      const surface = editorSession.surfaceManager._getSurfaceForProperty(containerPath)
+      const surfaceId = surface ? surface.getId() : (sel ? sel.surfaceId : null)
+      editorSession.setSelection({
+        type: 'node',
+        nodeId: node.id,
+        containerPath,
+        // TODO: we need a way to look up surfaceIds by path
+        surfaceId
+      })
+    }
+  }
+
   // EXPERIMENTAL need to figure out if we really need this
   // This is used by ManyRelationshipComponent (which is kind of weird)
   selectValue (path) {
@@ -469,6 +488,15 @@ export default class ArticleAPI {
       documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
       tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
     })
+  }
+
+  _getContainerPathForNode (node) {
+    let last = node.getXpath()
+    let prop = last.property
+    let prev = last.prev
+    if (prev && prop) {
+      return [prev.id, prop]
+    }
   }
 
   // HACK: determining proper surfaceId in a hard-coded way.

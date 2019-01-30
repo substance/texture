@@ -6,7 +6,6 @@ export default class DownloadSupplementaryFileTool extends Tool {
     let el = super.render($$)
     el.append(
       $$('a').ref('link')
-        .attr('target', '_blank')
         // ATTENTION: stop propagation, otherwise infinite loop
         .on('click', domHelpers.stop)
     )

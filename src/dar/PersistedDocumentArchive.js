@@ -44,8 +44,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
   // TODO: this can not be used in NodeJS
   createFile (file) {
     let assetId = uuid()
-    let fileExtension = last(file.name.split('.'))
-    let filePath = `${assetId}.${fileExtension}`
+    let [name, ext] = _getNameAndExtension(file.name)
+    let filePath = this._getUniqueFileName(name, ext)
     this._sessions.manifest.transaction(tx => {
       let assets = tx.find('assets')
       let asset = tx.createElement('asset', { id: assetId }).attr({
@@ -202,6 +202,30 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
+  _getAsset (path) {
+    return this._sessions.manifest.getDocument().find(`asset[path="${path}"]`)
+  }
+
+  _getUniqueFileName (name, ext) {
+    let candidate
+    // first try the canonical one
+    candidate = `${name}.${ext}`
+    if (this._hasAsset(candidate)) {
+      let count = 2
+      // now use a suffix counting up
+      while (true) {
+        candidate = `${name}_${count++}.${ext}`
+        if (!this._hasAsset(candidate)) break
+      }
+    }
+
+    return candidate
+  }
+
+  _hasAsset (path) {
+    return Boolean(this._getAsset(path))
+  }
+
   _loadManifest (record) {
     if (!record) {
       throw new Error('manifest.xml is missing')
@@ -318,4 +342,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
       }
     })
   }
+}
+
+function _getNameAndExtension (name) {
+  let frags = name.split('.')
+  let ext = ''
+  if (frags.length > 1) {
+    ext = last(frags)
+    name = frags.slice(0, frags.length - 1).join('.')
+  }
+  return [name, ext]
 }

@@ -83,6 +83,8 @@ export default class DarFileStorage {
     let { dir, name } = path.parse(darpath)
     // ATTENTION: it is probably possible to create collisions here if somebody uses '@' in a bad way
     // for now, I accepting this because I don't think that this is realistic
+    // dir folder must end with slash since later we will build path again
+    dir += '/'
     // replace '/' with '@slash@'
     dir = dir.replace(/\//g, '@slash@')
     // replace ':' with '@colon@'

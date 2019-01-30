@@ -1,17 +1,17 @@
-.sc-disp-formula {
+.sc-block-formula {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.sc-disp-formula .se-formula {
+.sc-block-formula .se-formula {
   margin: 0px auto;
 }
 
-.sc-disp-formula .se-label {
+.sc-block-formula .se-label {
   padding-left: 10px;
 }
 
-.sc-disp-formula.sm-error {
+.sc-block-formula.sm-error {
   background: var(--t-error-color);
 }

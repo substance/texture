@@ -20,7 +20,7 @@ export default class BlockFormulaComponent extends NodeComponent {
     }
 
     let el = $$('div')
-      .addClass('sc-disp-formula')
+      .addClass('sc-block-formula')
       .attr('data-id', node.id)
 
     if (!source) {

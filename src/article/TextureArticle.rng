@@ -944,13 +944,6 @@
     </element>
   </define>
 
-  <define name="named-content">
-    <element name="named-content">
-      <ref name="named-content-attlist"/>
-      <text/>
-    </element>
-  </define>
-
   <define name="object-id">
     <element name="object-id">
       <ref name="object-id-attlist"/>

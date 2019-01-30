@@ -112,8 +112,8 @@ test('SupplementaryFile: remove from manuscript', t => {
   doesNotThrowInNodejs(t, () => {
     clickUndo(editor)
   }, 'using "Undo" should not throw')
-  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be again in manuscript view')
-  t.ok(_supplemenaryFileExists(), 'supplementary file should be again in document')
+  t.ok(_supplemenaryFileExists(), 'supplementary file should be back in the document')
+  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed again')
   t.end()
 })
 

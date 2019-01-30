@@ -13,7 +13,7 @@ Metadata.schema = {
   // TODO: this might change in a similar way as we gonna approach Figure metadata, where there can be multiple fields with multiple values
   keywords: CHILDREN('keyword'),
   subjects: CHILDREN('subject'),
-  volumen: STRING,
+  volume: STRING,
   issue: STRING,
   issueTitle: TEXT(...RICH_TEXT_ANNOS),
   fpage: STRING,

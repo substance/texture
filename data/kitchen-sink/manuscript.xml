@@ -21,7 +21,7 @@
         </trans-title-group>
       </title-group>
       <contrib-group content-type="author">
-        <contrib contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
+        <contrib id="author-1" contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
           <name>
             <surname>Doe</surname>
             <given-names>John</given-names>
@@ -30,7 +30,7 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff2" />
         </contrib>
-        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+        <contrib id="author-2" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Mustermann</surname>
             <given-names>Hansjörg</given-names>
@@ -38,21 +38,21 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
         </contrib>
-        <contrib id="group-82b48e1f5a16997cea0f19c820f933d4" contrib-type="group" equal-contrib="yes" corresp="no">
+        <contrib id="group-1" contrib-type="group" equal-contrib="yes" corresp="no">
           <collab>
             <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
             <email>mouse-project@example.com</email>
             <xref ref-type="aff" rid="aff2" />
             <xref ref-type="award" rid="fund1" />
             <contrib-group contrib-type="group-member">
-              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+              <contrib id="author-3" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
                   <surname>Kelly</surname>
                   <given-names>Laura A.</given-names>
                 </name>
                 <xref ref-type="aff" rid="aff2" />
               </contrib>
-              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+              <contrib id="author-4" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
                   <surname>Randall</surname>
                   <given-names>Daniel Lee</given-names>
@@ -70,7 +70,7 @@
         </contrib>
       </contrib-group>
       <contrib-group content-type="editor">
-        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+        <contrib id="editor-1" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Kastner</surname>
             <given-names>Sabine</given-names>

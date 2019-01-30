@@ -3,7 +3,7 @@ import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   fixture, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection,
-  clickUndo, isToolEnabled
+  clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
@@ -39,7 +39,7 @@ const PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE = `
   </supplementary-material>
 `
 
-test('Supplementary File: upload file and insert to a manuscript', t => {
+test('SupplementaryFile: upload file and insert into manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
@@ -62,7 +62,7 @@ test('Supplementary File: upload file and insert to a manuscript', t => {
   t.end()
 })
 
-test('Supplementary File: insert remote file to a manuscript', t => {
+test('SupplementaryFile: insert remote file into manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
@@ -89,29 +89,26 @@ test('Supplementary File: insert remote file to a manuscript', t => {
   t.end()
 })
 
-test('Supplementary File: remove from a manuscript', t => {
+test('SupplementaryFile: remove from manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   let doc = getDocument(editor)
+  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
   const _isSupplementaryFileDisplayed = () => Boolean(editor.find('.sm-supplementary-file[data-id=sm1]'))
   const _supplemenaryFileExists = () => Boolean(doc.get('sm1'))
 
-  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
+  t.comment('initial situation')
+  t.ok(_supplemenaryFileExists(), 'supplementary file node should exist in the document')
+  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed')
 
-  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed in manuscript view')
-  t.ok(_supplemenaryFileExists(), 'there should be sm1 node in document')
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  t.comment('deleting the supplementary file')
+  selectNode(editor, 'sm1')
   deleteSelection(editor)
-  t.notOk(_isSupplementaryFileDisplayed(), 'supplementary file should not be displayed in manuscript view anymore')
   t.notOk(_supplemenaryFileExists(), 'supplementary file should have been removed from document')
-  // undo a supplementary file removing
+  t.notOk(_isSupplementaryFileDisplayed(), 'supplementary file should not be displayed anymore')
+
+  t.comment('undoing the previous delete')
   doesNotThrowInNodejs(t, () => {
     clickUndo(editor)
   }, 'using "Undo" should not throw')
@@ -120,7 +117,7 @@ test('Supplementary File: remove from a manuscript', t => {
   t.end()
 })
 
-test('Supplementary File: reference a file', t => {
+test('SupplementaryFile: reference a file from manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let editorSession = getEditorSession(editor)
@@ -171,7 +168,7 @@ test('Supplementary File: reference a file', t => {
   t.end()
 })
 
-test('Supplementary File: replace a file', t => {
+test('SupplementaryFile: replace a file', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let editorSession = getEditorSession(editor)
@@ -195,7 +192,7 @@ test('Supplementary File: replace a file', t => {
 })
 
 function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
-  test(`Supplementary File: download a ${mode} file`, t => {
+  test(`SupplementaryFile: download a ${mode} file`, t => {
     let { app } = setupTestApp(t, fixture('assets'))
     let editor = openManuscriptEditor(app)
     loadBodyFixture(editor, bodyXML)

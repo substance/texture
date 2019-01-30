@@ -1,5 +1,4 @@
 import { NodeComponent } from '../../kit'
-import { PREVIEW_MODE } from '../../article/ArticleConstants'
 
 export default class FigureComponent extends NodeComponent {
   /*
@@ -67,25 +66,6 @@ export default class FigureComponent extends NodeComponent {
         rightControl
       )
     )
-  }
-
-  _renderThumbnails ($$) {
-    const node = this.props.node
-    const panels = node.getPanels()
-    const currentIndex = this._getCurrentPanelIndex()
-    return panels.map((panel, idx) => {
-      let PanelComponent = this.getComponent(panel.type)
-      const thumbnail = $$(PanelComponent, {
-        node: panel,
-        mode: PREVIEW_MODE
-      }).ref(`${panel.id}@thumbnail`)
-      if (currentIndex === idx) {
-        thumbnail.addClass('sm-current-panel')
-      } else {
-        thumbnail.on('click', this._handleThumbnailClick)
-      }
-      return thumbnail
-    })
   }
 
   _getMode () {

@@ -490,6 +490,15 @@ export default class ArticleAPI {
     })
   }
 
+  _switchFigurePanel (figure, newPanelIndex) {
+    const editorSession = this.editorSession
+    let sel = editorSession.getSelection()
+    if (!sel.isNodeSelection() || sel.getNodeId() === figure.id) {
+      this.selectNode(figure.id)
+    }
+    editorSession.updateNodeStates([[figure.id, {currentPanelIndex: newPanelIndex}]], { propagate: true })
+  }
+
   _getContainerPathForNode (node) {
     let last = node.getXpath()
     let prop = last.property

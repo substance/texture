@@ -98,9 +98,7 @@ export default class FigureComponent extends NodeComponent {
 
   _onSwitchPanel (direction) {
     let currentIndex = this._getCurrentPanelIndex()
-    const node = this.props.node
-    const editorSession = this.context.editorSession
-    editorSession.updateNodeStates([[node.id, {currentPanelIndex: direction === 'left' ? --currentIndex : ++currentIndex}]], { propagate: true })
+    this.context.api._switchFigurePanel(this.props.node, direction === 'left' ? --currentIndex : ++currentIndex)
   }
 
   _renderIcon ($$, iconName) {

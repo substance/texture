@@ -1,4 +1,4 @@
-import { forEach, platform, getQueryStringParam } from 'substance'
+import { forEach } from 'substance'
 import JATSImporter from './converter/JATSImporter'
 import ArticleConfigurator from './ArticleConfigurator'
 import ArticleModelPackage from './ArticleModelPackage'
@@ -9,15 +9,8 @@ export default {
     let configurator = new ArticleConfigurator()
     configurator.import(ArticleModelPackage)
     let jatsImporter = new JATSImporter()
-    // ATTENTION: the defailt policy is now to not support elements that
-    // have not been implemented (UnsupportedNode)
-    // For evaluation it is possible to provide a query parameter like so:
-    // localhost:4000/?allowNotImplemented=true
     let importOptions = {
-      allowNotImplemented: false
-    }
-    if (platform.inBrowser) {
-      importOptions.allowNotImplemented = getQueryStringParam('allowNotImplemented') === 'true'
+      allowNotImplemented: true
     }
     let result = jatsImporter.import(xml, importOptions)
     if (result.hasErrored) {

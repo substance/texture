@@ -21,7 +21,7 @@
         </trans-title-group>
       </title-group>
       <contrib-group content-type="author">
-        <contrib contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
+        <contrib id="author-1" contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
           <name>
             <surname>Doe</surname>
             <given-names>John</given-names>
@@ -30,7 +30,7 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff2" />
         </contrib>
-        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+        <contrib id="author-2" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Mustermann</surname>
             <given-names>Hansjörg</given-names>
@@ -38,21 +38,21 @@
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
         </contrib>
-        <contrib id="group-82b48e1f5a16997cea0f19c820f933d4" contrib-type="group" equal-contrib="yes" corresp="no">
+        <contrib id="group-1" contrib-type="group" equal-contrib="yes" corresp="no">
           <collab>
             <named-content content-type="name">The Mouse Genome Sequencing Consortium</named-content>
             <email>mouse-project@example.com</email>
             <xref ref-type="aff" rid="aff2" />
             <xref ref-type="award" rid="fund1" />
             <contrib-group contrib-type="group-member">
-              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+              <contrib id="author-3" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
                   <surname>Kelly</surname>
                   <given-names>Laura A.</given-names>
                 </name>
                 <xref ref-type="aff" rid="aff2" />
               </contrib>
-              <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+              <contrib id="author-4" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
                 <name>
                   <surname>Randall</surname>
                   <given-names>Daniel Lee</given-names>
@@ -70,7 +70,7 @@
         </contrib>
       </contrib-group>
       <contrib-group content-type="editor">
-        <contrib contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
+        <contrib id="editor-1" contrib-type="person" equal-contrib="no" corresp="no" deceased="no">
           <name>
             <surname>Kastner</surname>
             <given-names>Sabine</given-names>
@@ -173,117 +173,14 @@
     </article-meta>
   </front>
   <body id="body">
-    <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>.</p>
     <sec id="sec-1">
-      <title>Tables</title>
-      <table-wrap id="table1">
-        <label>Table 1</label>
-        <caption>
-          <title>Example Table</title>
-          <p id="table1_caption_p1">This is a table example.</p>
-        </caption>
-        <table id="t1">
-          <tbody>
-            <tr id="t1_1">
-              <th id="t1_1_1">A</th>
-              <th id="t1_1_2">B</th>
-              <th id="t1_1_3">C</th>
-              <th id="t1_1_4">D</th>
-            </tr>
-            <tr id="t1_2">
-              <td id="t1_2_1" colspan="2">1</td>
-              <td id="t1_2_3" rowspan="2" colspan="2">3</td>
-            </tr>
-            <tr id="t1_3">
-              <td id="t1_3_1">5</td>
-              <td id="t1_3_2" rowspan="2">Formatting in table cell <bold id="t1-bold-1">bold</bold>,<italic id="t1-italic-1">italic</italic>, <sub id="t1-sub-1">sub</sub>,<sup id="t1-sup-1">sup</sup>, <monospace id="t1-monospace-1">monospace</monospace></td>
-            </tr>
-            <tr id="t1_4">
-              <td id="t1_4_1">9</td>
-              <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
-              <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
-            </tr>
-            <tr id="t1_5">
-              <td id="t1_5_1">Table footnote<xref id="t1-xref-2" ref-type="table-fn" rid="tfn1">*</xref></td>
-              <td id="t1_5_2">Another table footnote<xref id="t1-xref-3" ref-type="table-fn" rid="tfn2">†</xref></td>
-              <td id="t1_5_3">Table footnote with multiple targets<xref id="t1-xref-4" ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
-              <td id="t1_5_4">16</td>
-            </tr>
-          </tbody>
-        </table>
-        <table-wrap-foot>
-          <fn-group>
-            <fn id="tfn1">
-              <label>*</label>
-              <p id="tfn1-p1">This is a table-footnote.</p>
-            </fn>
-            <fn id="tfn2">
-              <label>†</label>
-              <p id="tfn2-p1">Another table-footnote.</p>
-            </fn>
-          </fn-group>
-        </table-wrap-foot>
-      </table-wrap>
+      <title>Inline content</title>
+      <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>.</p>
+      <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
+      <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
+      <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
     </sec>
     <sec id="sec-2">
-      <title>Figures</title>
-      <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
-      <fig id="fig1">
-        <label>Figure 1</label>
-        <caption>
-          <title>Figure with permissions.</title>
-          <p id="fig1-caption-p1">Legend.</p>
-        </caption>
-        <graphic id="graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
-        <permissions id="permission-2">
-          <copyright-statement>© 2014 Surname et al.</copyright-statement>
-          <copyright-year>2014</copyright-year>
-          <copyright-holder>Surname et al.</copyright-holder>
-          <license>
-            <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
-            <license-p>License text.</license-p>
-          </license>
-        </permissions>
-      </fig>
-      <p id="p-4">Lorem ipsum.</p>
-      <fig-group id="fig2">
-        <fig id="fig2a">
-          <label>Figure 2A</label>
-          <caption>
-            <title>First panel</title>
-            <p id="fig2a-caption-p1">First panel legend</p>
-          </caption>
-          <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
-        </fig>
-        <fig id="fig2b">
-          <label>Figure 2B</label>
-          <caption>
-            <title>Second panel</title>
-            <p id="fig2b-caption-p1">Second panel caption</p>
-          </caption>
-          <graphic id="fig2b-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
-        </fig>
-      </fig-group>
-      <p id="p-5">abc</p>
-      <fig id="fig3">
-        <label>Figure 3</label>
-        <caption>
-          <title>Figure with metadata.</title>
-          <p id="fig3-caption-p1">Legend.</p>
-        </caption>
-        <kwd-group>
-          <label>Field I</label>
-          <kwd>Value A</kwd>
-          <kwd>Value B</kwd>
-        </kwd-group>
-        <kwd-group>
-          <label>Field II</label>
-          <kwd>Value C</kwd>
-        </kwd-group>
-        <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.png" />
-      </fig>
-    </sec>
-    <sec id="sec-3">
       <title>Block level content</title>
       <disp-quote id="disp-quote-1">
         <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -296,9 +193,6 @@ private val in =
 @throws(classOf[IOException])
 def read() = in.read()
 }]]></preformat>
-      <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
-      <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
-      <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>
       <disp-formula id="disp-formula-1" content-type="math/tex">
         <label>(1)</label>
         <tex-math><![CDATA[
@@ -351,21 +245,130 @@ def read() = in.read()
 { \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }
 ]]></tex-math>
       </disp-formula>
-    </sec>
-    <sec id="sec-4">
-      <title>Supplementary Files</title>
-      <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip">
-        <label>Supplementary File 1</label>
-        <caption>
-          <p id="sm1-caption-p1">Description of Supplementary File</p>
-        </caption>
-      </supplementary-material>
-      <supplementary-material id="sm2" xlink:href="https://elifesciences.org/download/aHR0cHM6Ly9jZG4uZWxpZmVzY2llbmNlcy5vcmcvYXJ0aWNsZXMvNDExNjIvZWxpZmUtNDExNjItZmlnMi1kYXRhMS12MS54bHN4/elife-41162-fig2-data1-v1.xlsx?_hash=ft%2F74Gq%2FH3UikSNsi%2Fm1GbowiBFMCRqQ3c1bwBSK9ak%3D">
-        <label>Supplementary File 2</label>
-        <caption>
-          <p id="sm2-caption-p1">A remote file</p>
-        </caption>
-      </supplementary-material>
+      <sec id="sec-2-1">
+        <title>Tables</title>
+        <table-wrap id="table1">
+          <label>Table 1</label>
+          <caption>
+            <title>Example Table</title>
+            <p id="table1_caption_p1">This is a table example.</p>
+          </caption>
+          <table id="t1">
+            <tbody>
+              <tr id="t1_1">
+                <th id="t1_1_1">A</th>
+                <th id="t1_1_2">B</th>
+                <th id="t1_1_3">C</th>
+                <th id="t1_1_4">D</th>
+              </tr>
+              <tr id="t1_2">
+                <td id="t1_2_1" colspan="2">1</td>
+                <td id="t1_2_3" rowspan="2" colspan="2">3</td>
+              </tr>
+              <tr id="t1_3">
+                <td id="t1_3_1">5</td>
+                <td id="t1_3_2" rowspan="2">Formatting in table cell <bold id="t1-bold-1">bold</bold>,<italic id="t1-italic-1">italic</italic>, <sub id="t1-sub-1">sub</sub>,<sup id="t1-sup-1">sup</sup>, <monospace id="t1-monospace-1">monospace</monospace></td>
+              </tr>
+              <tr id="t1_4">
+                <td id="t1_4_1">9</td>
+                <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
+                <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
+              </tr>
+              <tr id="t1_5">
+                <td id="t1_5_1">Table footnote<xref id="t1-xref-2" ref-type="table-fn" rid="tfn1">*</xref></td>
+                <td id="t1_5_2">Another table footnote<xref id="t1-xref-3" ref-type="table-fn" rid="tfn2">†</xref></td>
+                <td id="t1_5_3">Table footnote with multiple targets<xref id="t1-xref-4" ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
+                <td id="t1_5_4">16</td>
+              </tr>
+            </tbody>
+          </table>
+          <table-wrap-foot>
+            <fn-group>
+              <fn id="tfn1">
+                <label>*</label>
+                <p id="tfn1-p1">This is a table-footnote.</p>
+              </fn>
+              <fn id="tfn2">
+                <label>†</label>
+                <p id="tfn2-p1">Another table-footnote.</p>
+              </fn>
+            </fn-group>
+          </table-wrap-foot>
+        </table-wrap>
+      </sec>
+      <sec id="sec-2-2">
+        <title>Figures</title>
+        <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
+        <fig id="fig1">
+          <label>Figure 1</label>
+          <caption>
+            <title>Figure with permissions.</title>
+            <p id="fig1-caption-p1">Legend.</p>
+          </caption>
+          <graphic id="graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
+          <permissions id="permission-2">
+            <copyright-statement>© 2014 Surname et al.</copyright-statement>
+            <copyright-year>2014</copyright-year>
+            <copyright-holder>Surname et al.</copyright-holder>
+            <license>
+              <ali:license_ref>http://creativecommons.org/licenses/by/4.0/</ali:license_ref>
+              <license-p>License text.</license-p>
+            </license>
+          </permissions>
+        </fig>
+        <p id="p-4">Lorem ipsum.</p>
+        <fig-group id="fig2">
+          <fig id="fig2a">
+            <label>Figure 2A</label>
+            <caption>
+              <title>First panel</title>
+              <p id="fig2a-caption-p1">First panel legend</p>
+            </caption>
+            <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
+          </fig>
+          <fig id="fig2b">
+            <label>Figure 2B</label>
+            <caption>
+              <title>Second panel</title>
+              <p id="fig2b-caption-p1">Second panel caption</p>
+            </caption>
+            <graphic id="fig2b-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
+          </fig>
+        </fig-group>
+        <p id="p-5">abc</p>
+        <fig id="fig3">
+          <label>Figure 3</label>
+          <caption>
+            <title>Figure with metadata.</title>
+            <p id="fig3-caption-p1">Legend.</p>
+          </caption>
+          <kwd-group>
+            <label>Field I</label>
+            <kwd>Value A</kwd>
+            <kwd>Value B</kwd>
+          </kwd-group>
+          <kwd-group>
+            <label>Field II</label>
+            <kwd>Value C</kwd>
+          </kwd-group>
+          <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.png" />
+        </fig>
+      </sec>
+      <sec id="sec-2-3">
+        <title>Supplementary Files</title>
+        <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip">
+          <label>Supplementary File 1</label>
+          <caption>
+            <p id="sm1-caption-p1">Description of Supplementary File</p>
+          </caption>
+        </supplementary-material>
+        <supplementary-material id="sm2" xlink:href="https://elifesciences.org/download/aHR0cHM6Ly9jZG4uZWxpZmVzY2llbmNlcy5vcmcvYXJ0aWNsZXMvNDExNjIvZWxpZmUtNDExNjItZmlnMi1kYXRhMS12MS54bHN4/elife-41162-fig2-data1-v1.xlsx?_hash=ft%2F74Gq%2FH3UikSNsi%2Fm1GbowiBFMCRqQ3c1bwBSK9ak%3D">
+          <label>Supplementary File 2</label>
+          <caption>
+            <p id="sm2-caption-p1">A remote file</p>
+          </caption>
+        </supplementary-material>
+      </sec>
     </sec>
   </body>
   <back>

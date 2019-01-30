@@ -75,11 +75,13 @@ export default {
 
     config.addLabel('abstract-label', 'Abstract')
     config.addLabel('abstract-placeholder', 'Enter abstract')
+    config.addLabel('attribution-placeholder', 'Enter attribution')
     config.addLabel('authors-label', 'Authors')
     config.addLabel('body-label', 'Main text')
     config.addLabel('body-placeholder', 'Write your article here.')
     config.addLabel('caption-label', 'Caption')
     config.addLabel('caption-placeholder', 'Enter caption')
+    config.addLabel('content-placeholder', 'Enter content')
     config.addLabel('file-upload-error', 'Something goes wrong')
     config.addLabel('file-upload-placeholder', 'Drag and drop or select item')
     // Note: we are registering a substring of other label to replace it with component

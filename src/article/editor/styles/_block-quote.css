@@ -1,9 +1,9 @@
-.sc-disp-quote {
+.sc-block-quote {
   border-left: 3px solid #444;
   padding-left: var(--t-default-spacing);
 }
 
-.sc-disp-quote .sc-text {
+.sc-block-quote .sc-text {
   padding-top: var(--t-default-spacing);
   font-size: var(--t-small-font-size);
 }

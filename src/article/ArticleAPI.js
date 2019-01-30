@@ -460,12 +460,14 @@ export default class ArticleAPI {
     const figure = doc.get(figureId)
     const pos = figure.getCurrentPanelIndex()
     const href = this.archive.addAsset(file)
+    const insertPos = pos + 1
     this.editorSession.transaction(tx => {
       let template = FigurePanel.getTemplate()
       template.content.href = href
       template.content.mimeType = file.type
       let node = documentHelpers.createNodeFromJson(tx, template)
-      documentHelpers.insertAt(tx, [figure.id, 'panels'], pos, node.id)
+      documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
+      tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
     })
   }
 

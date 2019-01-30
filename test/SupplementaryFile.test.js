@@ -1,7 +1,7 @@
 import { platform } from 'substance'
 import { test } from 'substance-test'
 import {
-  setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
+  setCursor, openManuscriptEditor, PseudoFileEvent,
   fixture, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection,
   clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
@@ -120,7 +120,6 @@ test('SupplementaryFile: remove from manuscript', t => {
 test('SupplementaryFile: reference a file from manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   const supplementaryFileSelector = '.sc-isolated-node.sm-supplementary-file'
   const xrefSelector = '.sc-inline-node .sm-file'
   const emptyLabel = '???'
@@ -157,12 +156,7 @@ test('SupplementaryFile: reference a file from manuscript', t => {
   }, 'triggering file upload should not throw')
   t.equal(getXref().text(), 'Supplementary File 2', 'xref label should be equal to second supplementary file label')
   // remove the referenced supplement
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'sm1')
   deleteSelection(editor)
   t.equal(getXref().text(), emptyLabel, 'xref should be broken and contain empty label')
   t.end()
@@ -171,15 +165,9 @@ test('SupplementaryFile: reference a file from manuscript', t => {
 test('SupplementaryFile: replace a file', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'sm1')
   t.ok(isToolEnabled(editor, 'file-tools', replaceSupplementaryFileToolSelector), 'replace supplementary file tool shoold be available')
   doesNotThrowInNodejs(t, () => {
     _getReplaceSupplementaryFileTool(editor).click()
@@ -197,13 +185,7 @@ function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
     let editor = openManuscriptEditor(app)
     loadBodyFixture(editor, bodyXML)
 
-    let editorSession = getEditorSession(editor)
-    editorSession.setSelection({
-      type: 'node',
-      nodeId: 'sm1',
-      surfaceId: 'body',
-      containerPath: ['body', 'content']
-    })
+    selectNode(editor, 'sm1')
     t.ok(isToolEnabled(editor, 'file-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
 
     let downloadTool = _getDownloadSupplementaryFileTool(editor)

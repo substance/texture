@@ -56,8 +56,7 @@ export function selectCard (editor, id) {
 }
 
 export function selectNode (editor, id) {
-  // TODO: it would be better to have an API method to select a node
-  editor.find(`.sc-isolated-node[data-id="${id}"]`).el.click()
+  getApi(editor).selectNode(id)
 }
 
 export function deleteSelection (editor) {

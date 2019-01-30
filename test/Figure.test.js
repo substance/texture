@@ -125,13 +125,7 @@ test('Figure: remove a figure with multiple panels', t => {
   t.ok(_figureIsVisible(), 'figure should be displayed in manuscript view')
   t.ok(_hasFigure(), 'there should be fig-1 node in document')
 
-  let editorSession = getEditorSession(editor)
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'fig1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'fig1')
   deleteSelection(editor)
 
   t.notOk(_figureIsVisible(), 'figure should not be displayed in manuscript view anymore')

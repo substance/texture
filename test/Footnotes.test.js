@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture, openMenuAndFindTool, getSelection } from './shared/integrationTestHelpers'
+import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture, openMenuAndFindTool, getSelection, selectNode } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
@@ -30,14 +30,7 @@ test('Footnotes: add a footnote while selection is in the manuscript body', t =>
 test('Footnotes: add a footnote while selection is on a table figure', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))
   let editor = openManuscriptEditor(app)
-  const editorSession = editor.editorSession
-  // set selection on table-figure isolated node
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'table-1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'table-1')
   _insertFootnote(editor)
   t.equal(_getTableFootnotes(editor).length, 3, 'there should be three table footnotes')
   t.deepEqual(_getCurrentXpathTypes(editor), tableFootnoteContentXpath, 'selection should be inside table footnote')

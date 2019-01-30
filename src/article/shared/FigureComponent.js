@@ -46,13 +46,15 @@ export default class FigureComponent extends NodeComponent {
     const numberOfPanels = panels.length
     const currentIndex = this._getCurrentPanelIndex() + 1
     const currentPosition = currentIndex + ' / ' + numberOfPanels
-    const leftControl = $$('div').addClass('se-control').append(this._renderIcon($$, 'left-control'))
+    const leftControl = $$('div').addClass('se-control sm-previous').append(
+      this._renderIcon($$, 'left-control')
+    )
     if (currentIndex > 1) {
       leftControl.on('click', this._onSwitchPanel.bind(this, 'left'))
     } else {
       leftControl.addClass('sm-disabled')
     }
-    const rightControl = $$('div').addClass('se-control').append(this._renderIcon($$, 'right-control'))
+    const rightControl = $$('div').addClass('se-control sm-next').append(this._renderIcon($$, 'right-control'))
     if (currentIndex < numberOfPanels) {
       rightControl.on('click', this._onSwitchPanel.bind(this, 'right'))
     } else {

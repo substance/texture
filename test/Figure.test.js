@@ -20,6 +20,9 @@ const replacePanelToolSelector = '.sc-replace-figure-panel-tool'
 const subFigureCardSelector = '.sc-card.sm-figure-panel'
 const xrefSelector = '.sc-xref.sm-fig'
 const xrefListItemSelector = '.sc-edit-xref-tool .se-option .sc-preview'
+const figurePanelPreviousSelector = '.sc-figure .se-control.sm-previous'
+const figurePanelNextSelector = '.sc-figure .se-control.sm-next'
+const currentPanelSelector = '.sc-figure .se-current-panel .sc-figure-panel'
 
 const FIGURE_WITH_TWO_PANELS = `
 <fig-group id="fig1">
@@ -179,9 +182,7 @@ test('Figure: change the order of panels in manuscript', t => {
   const subFigure2Label = 'Figure 1B'
   const subFigure3Label = 'Figure 1C'
   const labels = [subFigure1Label, subFigure2Label, subFigure3Label]
-  const activeSubFigureSelector = '.sc-figure .se-current-panel .sc-figure-panel'
   const _getSubFigureLabels = () => figure.resolve('panels').map(getLabel)
-  const _getDisplayedSubFigureId = () => editor.find(activeSubFigureSelector).getAttribute('data-id')
   const _selectSubFigure = (idx) => _selectFigurePanel(editor, figure, idx)
   const _canMoveUp = () => _isToolEnabled(editor, moveUpToolSelector)
   const _canMoveDown = () => _isToolEnabled(editor, moveDownToolSelector)
@@ -196,19 +197,19 @@ test('Figure: change the order of panels in manuscript', t => {
 
   t.comment('when the first panel is selected')
   _selectSubFigure(0)
-  t.equal(_getDisplayedSubFigureId(), panel1Id, 'correct panel should be displayed')
+  t.equal(_getDisplayedPanelId(editor), panel1Id, 'correct panel should be displayed')
   t.notOk(_canMoveUp(), 'move up tool should not be available')
   t.ok(_canMoveDown(), 'move down tool should be available')
 
   t.comment('when the second panel is selected')
   _selectSubFigure(1)
-  t.equal(_getDisplayedSubFigureId(), panel2Id, 'correct panel should be displayed')
+  t.equal(_getDisplayedPanelId(editor), panel2Id, 'correct panel should be displayed')
   t.ok(_canMoveUp(), 'move up tool should be available')
   t.ok(_canMoveDown(), 'move down tool should be available')
 
   t.comment('when the last panel is selected')
   _selectSubFigure(2)
-  t.equal(_getDisplayedSubFigureId(), panel3Id, 'correct panel should be displayed')
+  t.equal(_getDisplayedPanelId(editor), panel3Id, 'correct panel should be displayed')
   t.ok(_canMoveUp(), 'move up tool should be available')
   t.notOk(_canMoveDown(), 'move down tool should not be available')
 
@@ -220,7 +221,7 @@ test('Figure: change the order of panels in manuscript', t => {
   }, 'move up should not throw')
   t.deepEqual(figure.panels, [panel1Id, panel3Id, panel2Id], 'sub-figures id should match')
   t.deepEqual(_getSubFigureLabels(), labels, 'sub-figures labels should be updated')
-  t.equal(_getDisplayedSubFigureId(), panel3Id, 'selection should move, with sub-figure')
+  t.equal(_getDisplayedPanelId(editor), panel3Id, 'selection should move, with sub-figure')
 
   t.comment('moving the same up again')
   doesNotThrowInNodejs(t, () => {
@@ -228,7 +229,7 @@ test('Figure: change the order of panels in manuscript', t => {
   }, 'move up should not throw')
   t.deepEqual(figure.panels, [panel3Id, panel1Id, panel2Id], 'sub-figures id should match')
   t.deepEqual(_getSubFigureLabels(), labels, 'sub-figures labels should be updated')
-  t.equal(_getDisplayedSubFigureId(), panel3Id, 'selection should move, with sub-figure')
+  t.equal(_getDisplayedPanelId(editor), panel3Id, 'selection should move, with sub-figure')
 
   t.comment('moving down the second panel')
   _selectSubFigure(1)
@@ -237,7 +238,46 @@ test('Figure: change the order of panels in manuscript', t => {
   }, 'move down should not throw')
   t.deepEqual(figure.panels, [panel3Id, panel2Id, panel1Id], 'sub-figures id should match')
   t.deepEqual(_getSubFigureLabels(), labels, 'sub-figures labels should be updated')
-  t.equal(_getDisplayedSubFigureId(), panel1Id, 'selection should move, with sub-figure')
+  t.equal(_getDisplayedPanelId(editor), panel1Id, 'selection should move, with sub-figure')
+
+  t.end()
+})
+
+test('Figure: using panel navigation', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
+
+  const figure = doc.get('fig1')
+  const _canGotoPrevious = () => !(editor.find(figurePanelPreviousSelector).el.hasClass('sm-disabled'))
+  const _gotoPrevious = () => editor.find(figurePanelPreviousSelector).el.click()
+  const _canGotoNext = () => !(editor.find(figurePanelNextSelector).el.hasClass('sm-disabled'))
+  const _gotoNext = () => editor.find(figurePanelNextSelector).el.click()
+
+  t.comment('with first panel selected')
+  _selectFigurePanel(editor, figure, 0)
+  t.equal(_getDisplayedPanelId(editor), figure.panels[0], 'correct panel should be displayed')
+  t.notOk(_canGotoPrevious(), 'should not allow to go to previous panel')
+  t.ok(_canGotoNext(), 'should allow to go to next panel')
+
+  t.comment('open next panel')
+  _gotoNext()
+  t.equal(_getDisplayedPanelId(editor), figure.panels[1], 'correct panel should be displayed')
+  t.ok(_canGotoPrevious(), 'should allow to go to previous panel')
+  t.ok(_canGotoNext(), 'should allow to go to next panel')
+
+  t.comment('open last panel')
+  _gotoNext()
+  t.equal(_getDisplayedPanelId(editor), figure.panels[2], 'correct panel should be displayed')
+  t.ok(_canGotoPrevious(), 'should allow to go to previous panel')
+  t.notOk(_canGotoNext(), 'should not allow to go to next panel')
+
+  t.comment('going back to previous panel')
+  _gotoPrevious()
+  t.equal(_getDisplayedPanelId(editor), figure.panels[1], 'correct panel should be displayed')
+  t.ok(_canGotoPrevious(), 'should allow to go to previous panel')
+  t.ok(_canGotoNext(), 'should allow to go to next panel')
 
   t.end()
 })
@@ -396,4 +436,8 @@ function _removeFigurePanel (editor) {
 
 function _isToolEnabled (editor, toolClass) {
   return isToolEnabled(editor, 'figure-tools', toolClass)
+}
+
+function _getDisplayedPanelId (editor) {
+  return editor.find(currentPanelSelector).getAttribute('data-id')
 }

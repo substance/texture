@@ -139,6 +139,7 @@ function _populateContribs (doc, jats, importer, contribsPath, contribEls, group
       _populateContribs(doc, jats, importer, contribsPath, memberEls, group.id)
     } else {
       let contrib = doc.create({
+        id: contribEl.id,
         type: 'person',
         givenNames: getText(contribEl, 'given-names'),
         surname: getText(contribEl, 'surname'),

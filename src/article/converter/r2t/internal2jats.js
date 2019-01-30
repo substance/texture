@@ -328,6 +328,7 @@ function _groupContribs (contribs) {
 
 function _exportPerson ($$, exporter, node) {
   let el = $$('contrib').attr({
+    'id': node.id,
     'contrib-type': 'person',
     'equal-contrib': node.equalContrib ? 'yes' : 'no',
     'corresp': node.corresp ? 'yes' : 'no',

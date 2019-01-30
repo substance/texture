@@ -349,15 +349,8 @@ test('Figure: open image from figure panel', t => {
   const _openImage = () => openMenuAndFindTool(editor, 'figure-tools', openPanelImageSelector).click()
 
   t.notOk(_canOpen(), 'open image tool should be disabled by default')
-
-  let editorSession = getEditorSession(editor)
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'fig1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
-
+  // put a selection on figure and see if tool is active and not throwing errors
+  selectNode(editor, 'fig1')
   t.ok(_canOpen(), 'open image tool should be active when selection is on figure node')
   doesNotThrowInNodejs(t, () => {
     _openImage()

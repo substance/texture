@@ -32,11 +32,11 @@ import AddSupplementaryFileWorkflow from '../shared/AddSupplementaryFileWorkflow
 
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
-  RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand
+  RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import DownloadSupplementaryFileCommand from './DownloadSupplementaryFileCommand'
-import DownloadSupplementaryFileTool from '../shared/DownloadSupplementaryFileTool'
+import DownloadSupplementaryFileTool from './DownloadSupplementaryFileTool'
 import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
@@ -63,6 +63,7 @@ import {
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from './TableCommands'
 import InsertTableTool from './InsertTableTool'
+import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import RemoveItemCommand from './RemoveItemCommand'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
@@ -238,6 +239,9 @@ export default {
       direction: 'up',
       commandGroup: 'figure-panel'
     })
+    config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
+      commandGroup: 'figure-panel'
+    })
     config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'
     })
@@ -334,6 +338,8 @@ export default {
     config.addIcon('trash', { 'fontawesome': 'fa-trash' })
     config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
+    config.addIcon('left-control', { 'fontawesome': 'fa-chevron-left' })
+    config.addIcon('right-control', { 'fontawesome': 'fa-chevron-right' })
 
     // Tools
     config.addTool('add-figure-panel', InsertFigurePanelTool)
@@ -344,6 +350,7 @@ export default {
     config.addTool('edit-xref', EditXrefTool)
     config.addTool('insert-figure', InsertFigureTool)
     config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
+    config.addTool('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addTool('replace-file', ReplaceSupplementaryFileTool)
 

@@ -1,3 +1,1 @@
-export default {
-  'body.content': { readOnly: true }
-}
+export default {}

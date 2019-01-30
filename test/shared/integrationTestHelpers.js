@@ -55,6 +55,10 @@ export function selectCard (editor, id) {
   getApi(editor).selectModel(id)
 }
 
+export function selectNode (editor, id) {
+  getApi(editor).selectNode(id)
+}
+
 export function deleteSelection (editor) {
   let editorSession = editor.context.editorSession
   editorSession.transaction((tx) => {
@@ -180,20 +184,25 @@ export function loadBodyFixture (editor, xml) {
 }
 
 export class PseudoFileEvent extends DOMEvent {
-  constructor () {
+  constructor (name = 'test.png', type = 'image/png') {
     super()
-    let blob
-    if (platform.inBrowser) {
-      blob = new Blob(['abc'], {type: 'image/png'})
-      blob.name = 'test.png'
-    // FIXME: do something real in NodeJS
-    } else {
-      blob = { name: 'test.png', type: 'image/png' }
-    }
+    let blob = createPseudoFile(name, type)
     this.currentTarget = {
       files: [ blob ]
     }
   }
+}
+
+export function createPseudoFile (name, type) {
+  let blob
+  if (platform.inBrowser) {
+    blob = new Blob(['abc'], { type })
+    blob.name = name
+  // FIXME: do something real in NodeJS
+  } else {
+    blob = { name, type }
+  }
+  return blob
 }
 
 export function findParent (el, selector) {

@@ -1,11 +1,11 @@
-import { platform } from 'substance'
+import { platform, isArrayEqual } from 'substance'
 
 const DEBUG = false
 
 export default class SurfaceManager {
   constructor (editorState) {
     this.editorState = editorState
-    this.surfaces = {}
+    this.surfaces = new Map()
 
     editorState.addObserver(['selection', 'document'], this._onSelectionOrDocumentChange, this, { stage: 'post-render' })
     editorState.addObserver(['selection', 'document'], this._scrollSelectionIntoView, this, { stage: 'finalize' })
@@ -17,7 +17,7 @@ export default class SurfaceManager {
 
   getSurface (name) {
     if (name) {
-      return this.surfaces[name]
+      return this.surfaces.get(name)
     }
   }
 
@@ -29,18 +29,37 @@ export default class SurfaceManager {
   registerSurface (surface) {
     const id = surface.getId()
     if (DEBUG) console.log(`Registering surface ${id}.`, surface.__id__)
-    if (this.surfaces[id]) {
+    if (this.surfaces.has(id)) {
       throw new Error(`A surface with id ${id} has already been registered.`)
     }
-    this.surfaces[id] = surface
+    this.surfaces.set(id, surface)
   }
 
   unregisterSurface (surface) {
     let id = surface.getId()
     if (DEBUG) console.log(`Unregistering surface ${id}.`, surface.__id__)
-    let registeredSurface = this.surfaces[id]
+    let registeredSurface = this.surfaces.get(id)
     if (registeredSurface === surface) {
-      delete this.surfaces[id]
+      this.surfaces.delete(id)
+    }
+  }
+
+  // TODO: would be good to have an index of surfaces by path
+  _getSurfaceForProperty (path) {
+    // first try the canonical one
+    let canonicalId = path.join('.')
+    if (this.surfaces.has(canonicalId)) {
+      return this.surfaces.get(canonicalId)
+    }
+    for (let surface of this.surfaces.values()) {
+      let surfacePath = (
+        surface.getContainerPath ? surface.getContainerPath() : (
+          surface.getPath ? surface.getPath() : null
+        )
+      )
+      if (surfacePath && isArrayEqual(path, surfacePath)) {
+        return surface
+      }
     }
   }
 
@@ -69,7 +88,7 @@ export default class SurfaceManager {
     const editorState = this.editorState
     let surface = null
     if (sel && sel.surfaceId) {
-      surface = this.surfaces[sel.surfaceId]
+      surface = this.surfaces.get(sel.surfaceId)
     }
     editorState.focusedSurface = surface
   }

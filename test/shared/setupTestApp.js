@@ -1,6 +1,12 @@
 import { getMountPoint } from './testHelpers'
 import { createTestApp } from './integrationTestHelpers'
 
+/**
+ *
+ * @param {Test} t
+ * @param {object} options
+ * @param {string} options.archiveId
+ */
 export default function setupTestApp (t, options = {}) {
   // TODO: this is a little weird. Maybe just pass App as
   let el = getMountPoint(t)

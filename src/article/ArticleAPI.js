@@ -106,6 +106,25 @@ export default class ArticleAPI {
     this._setSelection(this._createModelSelection(nodeId))
   }
 
+  selectNode (nodeId) {
+    const editorSession = this.editorSession
+    const doc = editorSession.getDocument()
+    const node = doc.get(nodeId)
+    if (node) {
+      const sel = editorSession.getSelection()
+      const containerPath = this._getContainerPathForNode(node)
+      const surface = editorSession.surfaceManager._getSurfaceForProperty(containerPath)
+      const surfaceId = surface ? surface.getId() : (sel ? sel.surfaceId : null)
+      editorSession.setSelection({
+        type: 'node',
+        nodeId: node.id,
+        containerPath,
+        // TODO: we need a way to look up surfaceIds by path
+        surfaceId
+      })
+    }
+  }
+
   // EXPERIMENTAL need to figure out if we really need this
   // This is used by ManyRelationshipComponent (which is kind of weird)
   selectValue (path) {
@@ -160,7 +179,7 @@ export default class ArticleAPI {
 
   _replaceFile (hrefPath, file) {
     const articleSession = this.editorSession
-    const path = this.archive.createFile(file)
+    const path = this.archive.addAsset(file)
     articleSession.transaction(tx => {
       tx.set(hrefPath, path)
     })
@@ -395,7 +414,7 @@ export default class ArticleAPI {
   _insertFigures (files) {
     const articleSession = this.editorSession
     let paths = files.map(file => {
-      return this.archive.createFile(file)
+      return this.archive.addAsset(file)
     })
     let sel = articleSession.getSelection()
     if (!sel || !sel.containerPath) return
@@ -406,7 +425,7 @@ export default class ArticleAPI {
 
   _insertSupplementaryFile (file, url) {
     const articleSession = this.editorSession
-    if (file) url = this.archive.createFile(file)
+    if (file) url = this.archive.addAsset(file)
     let sel = articleSession.getSelection()
     articleSession.transaction(tx => {
       let containerPath = sel.containerPath
@@ -422,7 +441,7 @@ export default class ArticleAPI {
 
   _replaceSupplementaryFile (file, supplementaryFile) {
     const articleSession = this.editorSession
-    const path = this.archive.createFile(file)
+    const path = this.archive.addAsset(file)
     articleSession.transaction(tx => {
       const mimeData = file.type.split('/')
       tx.set([supplementaryFile.id, 'mime-subtype'], mimeData[1])
@@ -433,7 +452,7 @@ export default class ArticleAPI {
 
   _insertInlineGraphic (file) {
     const articleSession = this.editorSession
-    const href = this.archive.createFile(file)
+    const href = this.archive.addAsset(file)
     const mimeType = file.type
     const sel = articleSession.getSelection()
     if (!sel) return
@@ -459,14 +478,34 @@ export default class ArticleAPI {
     const doc = this.getDocument()
     const figure = doc.get(figureId)
     const pos = figure.getCurrentPanelIndex()
-    const href = this.archive.createFile(file)
+    const href = this.archive.addAsset(file)
+    const insertPos = pos + 1
     this.editorSession.transaction(tx => {
       let template = FigurePanel.getTemplate()
       template.content.href = href
       template.content.mimeType = file.type
       let node = documentHelpers.createNodeFromJson(tx, template)
-      documentHelpers.insertAt(tx, [figure.id, 'panels'], pos, node.id)
+      documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
+      tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
     })
+  }
+
+  _switchFigurePanel (figure, newPanelIndex) {
+    const editorSession = this.editorSession
+    let sel = editorSession.getSelection()
+    if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
+      this.selectNode(figure.id)
+    }
+    editorSession.updateNodeStates([[figure.id, {currentPanelIndex: newPanelIndex}]], { propagate: true })
+  }
+
+  _getContainerPathForNode (node) {
+    let last = node.getXpath()
+    let prop = last.property
+    let prev = last.prev
+    if (prev && prop) {
+      return [prev.id, prop]
+    }
   }
 
   // HACK: determining proper surfaceId in a hard-coded way.

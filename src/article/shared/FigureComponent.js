@@ -1,6 +1,4 @@
-import { DefaultDOMElement } from 'substance'
 import { NodeComponent } from '../../kit'
-import { PREVIEW_MODE } from '../../article/ArticleConstants'
 
 export default class FigureComponent extends NodeComponent {
   /*
@@ -24,11 +22,9 @@ export default class FigureComponent extends NodeComponent {
       return this._renderCurrentPanel($$)
     } else {
       return $$('div').addClass('se-carousel').append(
+        this._renderNavigation($$),
         $$('div').addClass('se-current-panel').append(
           this._renderCurrentPanel($$)
-        ),
-        $$('div').addClass('se-thumbnails').append(
-          this._renderThumbnails($$)
         )
       )
     }
@@ -43,23 +39,33 @@ export default class FigureComponent extends NodeComponent {
     }).ref(panel.id)
   }
 
-  _renderThumbnails ($$) {
+  _renderNavigation ($$) {
     const node = this.props.node
     const panels = node.getPanels()
-    const currentIndex = this._getCurrentPanelIndex()
-    return panels.map((panel, idx) => {
-      let PanelComponent = this.getComponent(panel.type)
-      const thumbnail = $$(PanelComponent, {
-        node: panel,
-        mode: PREVIEW_MODE
-      }).ref(`${panel.id}@thumbnail`)
-      if (currentIndex === idx) {
-        thumbnail.addClass('sm-current-panel')
-      } else {
-        thumbnail.on('click', this._handleThumbnailClick)
-      }
-      return thumbnail
-    })
+    const numberOfPanels = panels.length
+    const currentIndex = this._getCurrentPanelIndex() + 1
+    const currentPosition = currentIndex + ' / ' + numberOfPanels
+    const leftControl = $$('div').addClass('se-control sm-previous').append(
+      this._renderIcon($$, 'left-control')
+    )
+    if (currentIndex > 1) {
+      leftControl.on('click', this._onSwitchPanel.bind(this, 'left'))
+    } else {
+      leftControl.addClass('sm-disabled')
+    }
+    const rightControl = $$('div').addClass('se-control sm-next').append(this._renderIcon($$, 'right-control'))
+    if (currentIndex < numberOfPanels) {
+      rightControl.on('click', this._onSwitchPanel.bind(this, 'right'))
+    } else {
+      rightControl.addClass('sm-disabled')
+    }
+    return $$('div').addClass('se-navigation').append(
+      $$('div').addClass('se-current-position').append(currentPosition),
+      $$('div').addClass('se-controls').append(
+        leftControl,
+        rightControl
+      )
+    )
   }
 
   _getMode () {
@@ -90,15 +96,14 @@ export default class FigureComponent extends NodeComponent {
     return currentPanelIndex
   }
 
-  _handleThumbnailClick (e) {
-    const node = this.props.node
-    const panelIds = node.panels
-    // ATTENTION: wrap the native element here so that this works for testing too
-    let target = DefaultDOMElement.wrap(e.currentTarget)
-    const panelId = target.getAttribute('data-id')
-    if (panelId) {
-      const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[node.id, {currentPanelIndex: panelIds.indexOf(panelId)}]], { propagate: true })
-    }
+  _onSwitchPanel (direction) {
+    let currentIndex = this._getCurrentPanelIndex()
+    this.context.api._switchFigurePanel(this.props.node, direction === 'left' ? --currentIndex : ++currentIndex)
+  }
+
+  _renderIcon ($$, iconName) {
+    return $$('div').addClass('se-icon').append(
+      this.context.iconProvider.renderIcon($$, iconName)
+    )
   }
 }

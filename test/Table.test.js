@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelper
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent
+  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent, selectNode
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -538,12 +538,7 @@ test('Table: automatic updates of table and table-reference labels', t => {
   let t2ref = p2.find('xref')
   t.equal(t2ref.state.label, 'Table 2', 'citation of t2 should have correct label')
 
-  // TODO: use test helper
-  api._setSelection({
-    type: 'node',
-    nodeId: 't1',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 't1')
   api.deleteSelection()
 
   t.equal(t2.state.label, 'Table 1', 'citation of t2 should have correct label')

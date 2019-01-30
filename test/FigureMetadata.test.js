@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import {
   getEditorSession, getSelection, loadBodyFixture,
-  openManuscriptEditor, openMenuAndFindTool, openMetadataEditor
+  openManuscriptEditor, openMenuAndFindTool, openMetadataEditor, selectNode
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -63,14 +63,8 @@ test('Figure Metadata: add a new custom field when figure is selected', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
-  const editorSession = getEditorSession(editor)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'fig1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'fig1')
   const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
   t.isNotNil(addCustomMetadataFieldTool, 'add custom field tool should be available for a figure selection')
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')

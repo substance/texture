@@ -2,6 +2,7 @@ import { platform, substanceGlobals } from 'substance'
 import './shared/testGlobals'
 // tests
 import './Annotations.test'
+import './Archive.test'
 import './ArticlePanel.test'
 import './BodyConverter.test'
 import './Card.test'

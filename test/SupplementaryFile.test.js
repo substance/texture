@@ -1,9 +1,9 @@
 import { platform } from 'substance'
 import { test } from 'substance-test'
 import {
-  setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
+  setCursor, openManuscriptEditor, PseudoFileEvent,
   fixture, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection,
-  clickUndo, isToolEnabled
+  clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
@@ -39,7 +39,7 @@ const PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE = `
   </supplementary-material>
 `
 
-test('Supplementary File: upload file and insert to a manuscript', t => {
+test('SupplementaryFile: upload file and insert into manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
@@ -62,7 +62,7 @@ test('Supplementary File: upload file and insert to a manuscript', t => {
   t.end()
 })
 
-test('Supplementary File: insert remote file to a manuscript', t => {
+test('SupplementaryFile: insert remote file into manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
@@ -89,41 +89,37 @@ test('Supplementary File: insert remote file to a manuscript', t => {
   t.end()
 })
 
-test('Supplementary File: remove from a manuscript', t => {
+test('SupplementaryFile: remove from manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   let doc = getDocument(editor)
+  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
   const _isSupplementaryFileDisplayed = () => Boolean(editor.find('.sm-supplementary-file[data-id=sm1]'))
   const _supplemenaryFileExists = () => Boolean(doc.get('sm1'))
 
-  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
+  t.comment('initial situation')
+  t.ok(_supplemenaryFileExists(), 'supplementary file node should exist in the document')
+  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed')
 
-  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed in manuscript view')
-  t.ok(_supplemenaryFileExists(), 'there should be sm1 node in document')
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  t.comment('deleting the supplementary file')
+  selectNode(editor, 'sm1')
   deleteSelection(editor)
-  t.notOk(_isSupplementaryFileDisplayed(), 'supplementary file should not be displayed in manuscript view anymore')
   t.notOk(_supplemenaryFileExists(), 'supplementary file should have been removed from document')
-  // undo a supplementary file removing
+  t.notOk(_isSupplementaryFileDisplayed(), 'supplementary file should not be displayed anymore')
+
+  t.comment('undoing the previous delete')
   doesNotThrowInNodejs(t, () => {
     clickUndo(editor)
   }, 'using "Undo" should not throw')
-  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be again in manuscript view')
-  t.ok(_supplemenaryFileExists(), 'supplementary file should be again in document')
+  t.ok(_supplemenaryFileExists(), 'supplementary file should be back in the document')
+  t.ok(_isSupplementaryFileDisplayed(), 'supplementary file should be displayed again')
   t.end()
 })
 
-test('Supplementary File: reference a file', t => {
+test('SupplementaryFile: reference a file from manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   const supplementaryFileSelector = '.sc-isolated-node.sm-supplementary-file'
   const xrefSelector = '.sc-inline-node .sm-file'
   const emptyLabel = '???'
@@ -160,29 +156,18 @@ test('Supplementary File: reference a file', t => {
   }, 'triggering file upload should not throw')
   t.equal(getXref().text(), 'Supplementary File 2', 'xref label should be equal to second supplementary file label')
   // remove the referenced supplement
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'sm1')
   deleteSelection(editor)
   t.equal(getXref().text(), emptyLabel, 'xref should be broken and contain empty label')
   t.end()
 })
 
-test('Supplementary File: replace a file', t => {
+test('SupplementaryFile: replace a file', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let editorSession = getEditorSession(editor)
   loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
-  editorSession.setSelection({
-    type: 'node',
-    nodeId: 'sm1',
-    surfaceId: 'body',
-    containerPath: ['body', 'content']
-  })
+  selectNode(editor, 'sm1')
   t.ok(isToolEnabled(editor, 'file-tools', replaceSupplementaryFileToolSelector), 'replace supplementary file tool shoold be available')
   doesNotThrowInNodejs(t, () => {
     _getReplaceSupplementaryFileTool(editor).click()
@@ -195,18 +180,12 @@ test('Supplementary File: replace a file', t => {
 })
 
 function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
-  test(`Supplementary File: download a ${mode} file`, t => {
+  test(`SupplementaryFile: download a ${mode} file`, t => {
     let { app } = setupTestApp(t, fixture('assets'))
     let editor = openManuscriptEditor(app)
     loadBodyFixture(editor, bodyXML)
 
-    let editorSession = getEditorSession(editor)
-    editorSession.setSelection({
-      type: 'node',
-      nodeId: 'sm1',
-      surfaceId: 'body',
-      containerPath: ['body', 'content']
-    })
+    selectNode(editor, 'sm1')
     t.ok(isToolEnabled(editor, 'file-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
 
     let downloadTool = _getDownloadSupplementaryFileTool(editor)

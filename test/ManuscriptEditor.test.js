@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent, selectNode } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
@@ -86,17 +86,11 @@ test('ManuscriptEditor: edit block formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
-  let editorSession = getEditorSession(editor)
   const formulaContent = '\\sqrt(13)'
   const formulaContentV2 = '\\sqrt(14)'
   const formulaContentV3 = '\\sqrt(14)'
   const selectFormula = () => {
-    editorSession.setSelection({
-      type: 'node',
-      nodeId: 'df-1',
-      surfaceId: 'body',
-      containerPath: ['body', 'content']
-    })
+    selectNode(editor, 'df-1')
   }
   const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-text-area')
   loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)

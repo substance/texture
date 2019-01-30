@@ -30,4 +30,14 @@ export default class TextureEditing extends Editing {
       throw new Error(`'list' is not a valid child node for ${containerPath}`)
     }
   }
+
+  insertBlockNode (tx, node) {
+    // HACK: deviating from the current implementation
+    // to replace selected node, because it happens quite often
+    let sel = tx.selection
+    if (sel.isNodeSelection() && sel.mode !== 'before') {
+      tx.setSelection(Object.assign(sel.toJSON(), { mode: 'after' }))
+    }
+    super.insertBlockNode(tx, node)
+  }
 }

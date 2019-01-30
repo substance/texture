@@ -41,11 +41,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return documentId
   }
 
-  // TODO: this can not be used in NodeJS
-  createFile (file) {
+  addAsset (file) {
     let assetId = uuid()
-    let fileExtension = last(file.name.split('.'))
-    let filePath = `${assetId}.${fileExtension}`
+    let [name, ext] = _getNameAndExtension(file.name)
+    let filePath = this._getUniqueFileName(name, ext)
     this._sessions.manifest.transaction(tx => {
       let assets = tx.find('assets')
       let asset = tx.createElement('asset', { id: assetId }).attr({
@@ -66,6 +65,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return filePath
   }
 
+  getAsset (fileName) {
+    return this._sessions.manifest.getDocument().find(`asset[path="${fileName}"]`)
+  }
+
   getDocumentEntries () {
     return this.getEditorSession('manifest').getDocument().getDocumentEntries()
   }
@@ -80,6 +83,11 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
   getEditorSession (docId) {
     return this._sessions[docId]
+  }
+
+  hasAsset (fileName) {
+    // TODO: at some point I want to introduce an index for files by fileName/path
+    return Boolean(this.getAsset(fileName))
   }
 
   hasPendingChanges () {
@@ -202,6 +210,22 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
+  _getUniqueFileName (name, ext) {
+    let candidate
+    // first try the canonical one
+    candidate = `${name}.${ext}`
+    if (this.hasAsset(candidate)) {
+      let count = 2
+      // now use a suffix counting up
+      while (true) {
+        candidate = `${name}_${count++}.${ext}`
+        if (!this.hasAsset(candidate)) break
+      }
+    }
+
+    return candidate
+  }
+
   _loadManifest (record) {
     if (!record) {
       throw new Error('manifest.xml is missing')
@@ -318,4 +342,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
       }
     })
   }
+}
+
+function _getNameAndExtension (name) {
+  let frags = name.split('.')
+  let ext = ''
+  if (frags.length > 1) {
+    ext = last(frags)
+    name = frags.slice(0, frags.length - 1).join('.')
+  }
+  return [name, ext]
 }

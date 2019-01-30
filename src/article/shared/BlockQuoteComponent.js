@@ -8,8 +8,8 @@ export default class BlockQuoteComponent extends NodeComponent {
       .attr('data-id', node.id)
 
     el.append(
-      this._renderValue($$, 'content'),
-      this._renderValue($$, 'attrib')
+      this._renderValue($$, 'content', { placeholder: this.getLabel('content-placeholder') }),
+      this._renderValue($$, 'attrib', { placeholder: this.getLabel('attribution-placeholder') })
     )
     return el
   }

@@ -34,8 +34,7 @@ app.on('ready', () => {
   createMenu()
 
   // look if there is a 'dar' file in the args that does exist
-  console.log('argv', process.argv)
-  let darFiles = process.argv.filter(arg => isDAR)
+  let darFiles = process.argv.filter(arg => isDAR(path))
   darFiles = darFiles.map(f => {
     if (!path.isAbsolute(f)) {
       f = path.join(process.cwd(), f)
@@ -58,8 +57,8 @@ app.on('ready', () => {
 
 // Open file in MAC OS
 app.on('open-file', (event, path) => {
+  event.preventDefault()
   if (isDAR(path)) {
-    event.preventDefault()
     // If app already initialized we need to open a new editor window
     // if it's not, then we need to add path to arguments
     if (app.isReady()) {

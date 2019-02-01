@@ -9,7 +9,6 @@ const {
   BrowserWindow, Menu, ipcMain
 } = electron
 const DEBUG = process.env.DEBUG
-const BLANK_DOCUMENT = path.join(__dirname, 'templates', 'blank.dar')
 
 const tmpDir = app.getPath('temp')
 const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')
@@ -17,6 +16,13 @@ fsExtra.ensureDirSync(darStorageFolder)
 
 const windowStates = new Map()
 const isDAR = path => Boolean(/.dar$/i.exec(path))
+
+const BLANK_DOCUMENT = path.join(__dirname, 'templates', 'blank.dar')
+const BLANK_FIGURE_PACKAGE = path.join(__dirname, 'templates', 'blank-figure-package.dar')
+const templates = {
+  'article': BLANK_DOCUMENT,
+  'figure-package': BLANK_FIGURE_PACKAGE
+}
 
 app.on('ready', () => {
   protocol.registerFileProtocol('dar', (request, handler) => {
@@ -180,8 +186,10 @@ function promptOpen () {
   })
 }
 
-function openNew () {
-  createEditorWindow(BLANK_DOCUMENT, true)
+function openNew (templateId) {
+  templateId = templateId || 'article'
+  const template = templates[templateId]
+  createEditorWindow(template, true)
 }
 
 // used to dispatch save requests from the menu to the window
@@ -209,10 +217,21 @@ function createMenu () {
       submenu: [
         {
           label: 'New',
-          accelerator: 'CommandOrControl+N',
-          click () {
-            openNew()
-          }
+          submenu: [
+            {
+              label: 'Article',
+              accelerator: 'CommandOrControl+N',
+              click () {
+                openNew('article')
+              }
+            },
+            {
+              label: 'Figure Pacakge',
+              click () {
+                openNew('figure-package')
+              }
+            }
+          ]
         },
         {
           label: 'Open',

@@ -16,7 +16,7 @@ const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')
 fsExtra.ensureDirSync(darStorageFolder)
 
 const windowStates = new Map()
-const isDAR = path => /.dar$/i.exec(path)
+const isDAR = path => Boolean(/.dar$/i.exec(path))
 
 app.on('ready', () => {
   protocol.registerFileProtocol('dar', (request, handler) => {
@@ -34,7 +34,7 @@ app.on('ready', () => {
   createMenu()
 
   // look if there is a 'dar' file in the args that does exist
-  let darFiles = process.argv.filter(arg => isDAR(path))
+  let darFiles = process.argv.filter(arg => isDAR(arg))
   darFiles = darFiles.map(f => {
     if (!path.isAbsolute(f)) {
       f = path.join(process.cwd(), f)

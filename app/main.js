@@ -16,6 +16,7 @@ const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')
 fsExtra.ensureDirSync(darStorageFolder)
 
 const windowStates = new Map()
+const isDAR = path => /.dar$/i.exec(path)
 
 app.on('ready', () => {
   protocol.registerFileProtocol('dar', (request, handler) => {
@@ -33,7 +34,7 @@ app.on('ready', () => {
   createMenu()
 
   // look if there is a 'dar' file in the args that does exist
-  let darFiles = process.argv.filter(arg => /.dar$/i.exec(arg))
+  let darFiles = process.argv.filter(arg => isDAR(path))
   darFiles = darFiles.map(f => {
     if (!path.isAbsolute(f)) {
       f = path.join(process.cwd(), f)
@@ -51,6 +52,20 @@ app.on('ready', () => {
     }
   } else {
     openNew()
+  }
+})
+
+// Open file in MAC OS
+app.on('open-file', (event, path) => {
+  event.preventDefault()
+  if (isDAR(path)) {
+    // If app already initialized we need to open a new editor window
+    // if it's not, then we need to add path to arguments
+    if (app.isReady()) {
+      createEditorWindow(path)
+    } else {
+      process.argv.push(path)
+    }
   }
 })
 

@@ -1,15 +1,17 @@
-import { domHelpers } from 'substance'
+import { domHelpers, platform } from 'substance'
 import { Tool } from '../../kit'
 
 export default class DownloadSupplementaryFileTool extends Tool {
   render ($$) {
     let el = super.render($$)
-    el.append(
-      $$('a').ref('link')
-        .attr('target', '_blank')
-        // ATTENTION: stop propagation, otherwise infinite loop
-        .on('click', domHelpers.stop)
-    )
+    let link = $$('a').ref('link')
+      // ATTENTION: stop propagation, otherwise infinite loop
+      .on('click', domHelpers.stop)
+    // Note: in the browser version we want to open the download in a new tab
+    if (!platform.inElectron) {
+      link.attr('target', '_blank')
+    }
+    el.append(link)
     return el
   }
 

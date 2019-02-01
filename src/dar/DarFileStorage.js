@@ -82,7 +82,9 @@ export default class DarFileStorage {
     // split path into fragments: dir, name, extension
     let { dir, name } = path.parse(darpath)
     // ATTENTION: it is probably possible to create collisions here if somebody uses '@' in a bad way
-    // for now, I accepting this because I don't think that this is realistic
+    // for now, I accepting this because I don't think that this is realistic.
+    // Adding an extra slash that got dropped by path.parse().
+    dir += '/'
     // replace '/' with '@slash@'
     dir = dir.replace(/\//g, '@slash@')
     // replace ':' with '@colon@'

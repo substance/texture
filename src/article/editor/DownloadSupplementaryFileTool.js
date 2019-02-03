@@ -5,15 +5,11 @@ export default class DownloadSupplementaryFileTool extends Tool {
   render ($$) {
     let el = super.render($$)
     let link = $$('a').ref('link')
-      // Note: download attribute instructs browsers to download a URL instead of navigating to it
-      // but only for same-origin URLs, e.g. it will not work for remote images
+      // Downloads a non-remote urls
       .attr('download', '')
       // ATTENTION: stop propagation, otherwise infinite loop
       .on('click', domHelpers.stop)
-    // Note: in the browser version we want to open the download in a new tab
-    if (!platform.inElectron) {
-      link.attr('target', '_blank')
-    }
+
     el.append(link)
     return el
   }
@@ -42,6 +38,10 @@ export default class DownloadSupplementaryFileTool extends Tool {
       this.refs.link.el.attr({
         'href': url
       })
+      // Note: in the browser version we want to open remote files in a new tab
+      if (!platform.inElectron && !isLocal) {
+        this.refs.link.attr('target', '_blank')
+      }
       this.refs.link.el.click()
     }
   }

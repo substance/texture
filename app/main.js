@@ -40,7 +40,11 @@ app.on('ready', () => {
   // Download files
   session.defaultSession.on('will-download', (event, item) => {
     let location = dialog.showSaveDialog({ defaultPath: item.getFilename() })
-    item.setSavePath(location)
+    if (location) {
+      item.setSavePath(location)
+    } else {
+      event.preventDefault()
+    }
   })
 
   createMenu()

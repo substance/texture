@@ -6,14 +6,23 @@ import { Command } from 'substance'
 */
 export default class DownloadSupplementaryFileCommand extends Command {
   getCommandState (params, context) {
-    const xpath = params.selectionState.xpath
+    const selectionState = params.selectionState
+    const xpath = selectionState.xpath
     if (xpath.length > 0) {
       const selectedType = xpath[xpath.length - 1].type
-      return { disabled: selectedType !== 'supplementary-file' }
+      if (selectedType === 'supplementary-file') {
+        return {
+          disabled: false,
+          // leaving the node, so that the tool can apply different
+          // strategies for local vs remote files
+          node: selectionState.node
+        }
+      }
     }
     return { disabled: true }
   }
 
   execute (params, context) {
+    // Nothing: downloading is implemented via native download hooks
   }
 }

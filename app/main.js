@@ -5,7 +5,7 @@ const url = require('url')
 const fsExtra = require('fs-extra')
 
 const {
-  app, dialog, shell, protocol,
+  app, dialog, shell, protocol, session,
   BrowserWindow, Menu, ipcMain
 } = electron
 const DEBUG = process.env.DEBUG
@@ -35,6 +35,18 @@ app.on('ready', () => {
     }
   }, (error) => {
     if (error) console.error('Failed to register protocol')
+  })
+
+  // Download files
+  session.defaultSession.on('will-download', (event, item) => {
+    let location = dialog.showSaveDialog({ defaultPath: item.getFilename() })
+    // If there is no location came from dialog it means cancelation and
+    // we should prevent default action to close dialog without error
+    if (location) {
+      item.setSavePath(location)
+    } else {
+      event.preventDefault()
+    }
   })
 
   createMenu()

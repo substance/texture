@@ -40,6 +40,8 @@ app.on('ready', () => {
   // Download files
   session.defaultSession.on('will-download', (event, item) => {
     let location = dialog.showSaveDialog({ defaultPath: item.getFilename() })
+    // If there is no location came from dialog it means cancelation and
+    // we should prevent default action to close dialog without error
     if (location) {
       item.setSavePath(location)
     } else {

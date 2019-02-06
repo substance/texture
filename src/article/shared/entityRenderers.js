@@ -754,7 +754,7 @@ function organisationRenderer ($$, entityId, entityDb, options = {}) {
   return result
 }
 
-function awardRenderer ($$, entityId, entityDb, options = {}) {
+function funderRenderer ($$, entityId, entityDb, options = {}) {
   let { awardId, institution } = entityDb.get(entityId)
   let result = [ institution ]
   if (!options.short) {
@@ -800,7 +800,7 @@ export default {
   'conference-paper-ref': _delegate(conferencePaperRenderer),
   'report-ref': _delegate(reportRenderer),
   'organisation': _delegate(organisationRenderer),
-  'award': _delegate(awardRenderer),
+  'funder': _delegate(funderRenderer),
   'data-publication-ref': _delegate(dataPublicationRenderer),
   'magazine-article-ref': _delegate(magazineArticleRenderer),
   'newspaper-article-ref': _delegate(newspaperArticleRenderer),

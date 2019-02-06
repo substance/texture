@@ -135,7 +135,7 @@ export default {
     config.addLabel('suffix', 'Suffix')
     config.addLabel('bio', 'Biography')
     config.addLabel('affiliations', 'Affiliations')
-    config.addLabel('awards', 'Awards')
+    config.addLabel('funders', 'Funders')
     config.addLabel('group', 'Group')
     config.addLabel('equalContrib', 'Equal Contribution')
     config.addLabel('corresp', 'Corresponding Author')
@@ -163,7 +163,7 @@ export default {
     config.addLabel('edit-members', 'Edit Members')
 
     // award labels
-    config.addLabel('award', 'Award')
+    config.addLabel('funder', 'Funder')
     config.addLabel('institution', 'Institution')
     config.addLabel('fundRefId', 'Institution Identifier')
     config.addLabel('awardId', 'Award Identifier')

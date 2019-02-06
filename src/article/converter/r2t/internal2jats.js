@@ -198,7 +198,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
 
   // funding-group*,
   articleMeta.append(
-    _exportAwards(jats, doc)
+    _exportFunders(jats, doc)
   )
 
   // conference*,      // not supported yet
@@ -350,9 +350,9 @@ function _exportPerson ($$, exporter, node) {
       $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
     )
   })
-  node.awards.forEach(awardId => {
+  node.funders.forEach(funderId => {
     el.append(
-      $$('xref').attr('ref-type', 'award').attr('rid', awardId)
+      $$('xref').attr('ref-type', 'award').attr('rid', funderId)
     )
   })
   return el
@@ -411,10 +411,10 @@ function _exportGroup ($$, exporter, node, groupMembers) {
       $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
     )
   })
-  // Add awards to group
-  node.awards.forEach(awardId => {
+  // Add funders to group
+  node.funders.forEach(funderId => {
     collab.append(
-      $$('xref').attr('ref-type', 'award').attr('rid', awardId)
+      $$('xref').attr('ref-type', 'award').attr('rid', funderId)
     )
   })
   // Add group members
@@ -576,19 +576,19 @@ function _exportKeywords (jats, doc) {
   return keywordGroups
 }
 
-function _exportAwards (jats, doc) {
+function _exportFunders (jats, doc) {
   const $$ = jats.$$
-  let awards = doc.resolve(['metadata', 'awards'])
-  if (awards.length > 0) {
+  let funders = doc.resolve(['metadata', 'funders'])
+  if (funders.length > 0) {
     let fundingGroupEl = $$('funding-group')
-    awards.forEach(award => {
-      let el = $$('award-group').attr('id', award.id)
+    funders.forEach(funder => {
+      let el = $$('award-group').attr('id', funder.id)
       let institutionWrapEl = $$('institution-wrap')
-      institutionWrapEl.append(_createTextElement($$, award.fundRefId, 'institution-id', {'institution-id-type': 'FundRef'}))
-      institutionWrapEl.append(_createTextElement($$, award.institution, 'institution'))
+      institutionWrapEl.append(_createTextElement($$, funder.fundRefId, 'institution-id', {'institution-id-type': 'FundRef'}))
+      institutionWrapEl.append(_createTextElement($$, funder.institution, 'institution'))
       el.append(
         $$('funding-source').append(institutionWrapEl),
-        _createTextElement($$, award.awardId, 'award-id')
+        _createTextElement($$, funder.awardId, 'award-id')
       )
       fundingGroupEl.append(el)
     })

@@ -52,7 +52,7 @@ export default {
           { type: 'command', name: 'insert-editor', label: 'editor' },
           { type: 'command', name: 'insert-group', label: 'group' },
           { type: 'command', name: 'insert-organisation', label: 'affiliation' },
-          { type: 'command', name: 'insert-award', label: 'award' },
+          { type: 'command', name: 'insert-funder', label: 'funder' },
           { type: 'command', name: 'insert-keyword', label: 'keyword' },
           { type: 'command', name: 'insert-subject', label: 'subject' }
         ]
@@ -250,7 +250,7 @@ export default {
     config.addLabel('editor', 'Editor')
     config.addLabel('group', 'Group')
     config.addLabel('affiliation', 'Affiliation')
-    config.addLabel('award', 'Award')
+    config.addLabel('funder', 'Funder')
     config.addLabel('keyword', 'Keyword')
     config.addLabel('subject', 'Subject')
     // Table tools labels

@@ -22,7 +22,7 @@ export default class ArticleMetadataComponent extends DefaultNodeComponent {
   }
 
   _createPropertyModels () {
-    const EXCLUDED_FIELDS = new Set(['authors', 'editors', 'groups', 'organisations', 'awards', 'keywords', 'subjects', 'articleType'])
+    const EXCLUDED_FIELDS = new Set(['authors', 'editors', 'groups', 'organisations', 'funders', 'keywords', 'subjects', 'articleType'])
     const api = this.context.api
     const node = this.props.node
     const doc = node.getDocument()

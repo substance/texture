@@ -1,7 +1,7 @@
 import { DocumentSchema } from 'substance'
 import InternalArticleDocument from './InternalArticleDocument'
 import {
-  Article, ArticleRef, Body, Metadata, Award, Group, Organisation, Person, Keyword, Subject, Abstract,
+  Article, ArticleRef, Body, Metadata, Funder, Group, Organisation, Person, Keyword, Subject, Abstract,
   BlockFormula, BlockQuote, Figure, FigurePanel, Footnote, Heading, List, ListItem, Preformat, Paragraph,
   Table, TableFigure, TableRow, TableCell, Reference, BookRef, ChapterRef, ConferencePaperRef, DataPublicationRef,
   JournalArticleRef, MagazineArticleRef, NewspaperArticleRef, ReportRef, PatentRef, Permission, SoftwareRef,
@@ -26,7 +26,6 @@ export default new DocumentSchema({
     ArticleAbstractTranslation,
     ArticleRef,
     ArticleTitleTranslation,
-    Award,
     BlockFormula,
     BlockQuote,
     Body,
@@ -41,6 +40,7 @@ export default new DocumentSchema({
     Figure,
     FigurePanel,
     Footnote,
+    Funder,
     Group,
     Graphic,
     Heading,

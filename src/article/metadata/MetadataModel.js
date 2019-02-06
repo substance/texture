@@ -17,7 +17,7 @@ export default class MetadataModel {
       { name: 'editors', model: createValueModel(api, ['metadata', 'editors']) },
       { name: 'groups', model: createValueModel(api, ['metadata', 'groups']) },
       { name: 'organisations', model: createValueModel(api, ['metadata', 'organisations']) },
-      { name: 'awards', model: createValueModel(api, ['metadata', 'awards']) },
+      { name: 'funders', model: createValueModel(api, ['metadata', 'funders']) },
       { name: 'keywords', model: createValueModel(api, ['metadata', 'keywords']) },
       { name: 'subjects', model: createValueModel(api, ['metadata', 'subjects']) },
       // HACK: 'article-section' is a fake model

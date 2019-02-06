@@ -317,8 +317,8 @@ export default class ArticleAPI {
     let doc = this.getDocument()
     let targetType = targetTypes[0]
     switch (targetType) {
-      case 'award': {
-        return doc.get('metadata').resolve('awards')
+      case 'funder': {
+        return doc.get('metadata').resolve('funders')
       }
       case 'organisation': {
         return doc.get('metadata').resolve('organisations')

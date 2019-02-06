@@ -63,8 +63,8 @@ export default class TextureAppChrome extends Component {
           this._initArchive(archive, context, (err, archive) => {
             if (err) return cb(err)
             this._childContext = context
-            this._afterInit()
             this.setState({ archive })
+            this._afterInit()
             this.emit('archive:ready')
           })
         })

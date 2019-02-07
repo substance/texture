@@ -886,7 +886,12 @@
   <define name="kwd">
     <element name="kwd">
       <ref name="kwd-attlist"/>
-      <text/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="rich-text"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
 

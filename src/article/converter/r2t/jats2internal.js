@@ -68,7 +68,7 @@ export default function jats2internal (jats, options) {
   _populateEditors(doc, jats, jatsImporter)
   _populateFunders(doc, jats)
   _populateArticleInfo(doc, jats, jatsImporter)
-  _populateKeywords(doc, jats)
+  _populateKeywords(doc, jats, jatsImporter)
   _populateSubjects(doc, jats)
 
   // content
@@ -271,15 +271,16 @@ function _extractDate (el) {
   }
 }
 
-function _populateKeywords (doc, jats) {
+function _populateKeywords (doc, jats, jatsImporter) {
   let kwdEls = jats.findAll('article > front > article-meta > kwd-group > kwd')
   let kwdIds = kwdEls.map(kwdEl => {
-    return doc.create({
+    const kwd = doc.create({
       type: 'keyword',
-      name: kwdEl.textContent,
       category: kwdEl.getAttribute('content-type'),
       language: kwdEl.getParent().getAttribute('xml:lang')
-    }).id
+    })
+    kwd.name = jatsImporter.annotatedText(kwdEl, [kwd.id, 'name'])
+    return kwd.id
   })
   doc.get('metadata').keywords = kwdIds
 }

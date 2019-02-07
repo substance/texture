@@ -193,7 +193,7 @@ function _populateArticleMeta (jats, doc, jatsExporter) {
 
   // kwd-group*,
   articleMeta.append(
-    _exportKeywords(jats, doc)
+    _exportKeywords(jats, doc, jatsExporter)
   )
 
   // funding-group*,
@@ -551,7 +551,7 @@ function _exportAbstract (jats, doc, jatsExporter) {
   return els
 }
 
-function _exportKeywords (jats, doc) {
+function _exportKeywords (jats, doc, jatsExporter) {
   const $$ = jats.$$
   // TODO: keywords should be translatables
   const keywords = doc.resolve(['metadata', 'keywords'])
@@ -568,7 +568,9 @@ function _exportKeywords (jats, doc) {
     let groupEl = $$('kwd-group').attr('xml:lang', lang)
     groupEl.append(
       keywords.map(keyword => {
-        return $$('kwd').attr({ 'content-type': keyword.category }).text(keyword.name)
+        return $$('kwd').attr({ 'content-type': keyword.category }).append(
+          jatsExporter.annotatedText([keyword.id, 'name'])
+        )
       })
     )
     keywordGroups.push(groupEl)

@@ -12,7 +12,7 @@ Person.schema = {
   orcid: STRING,
   group: ONE('group'),
   affiliations: MANY('organisation'),
-  awards: MANY('award'),
+  funders: MANY('funder'),
   bio: CHILDREN('paragraph'),
   equalContrib: BOOLEAN,
   corresp: BOOLEAN,

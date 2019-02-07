@@ -25,7 +25,7 @@ function _entityTest (t, entityType, entityName, checkSelection) {
   doesNotThrowInNodejs(t, () => {
     _insertEntity(editor, entityName)
   })
-  t.ok(_hasCard(), 'there should be a card for the new entitiy')
+  t.ok(_hasCard(), 'there should be a card for the new entity')
   // Note: checking the selection as good as we can. The selected field us derived from the node schema and settings
   // TODO: we could apply a specific configuration so that we know the field name
   let sel = getSelection(editor)
@@ -60,8 +60,8 @@ test(`Entity: add affiliation`, t => {
   _entityTest(t, 'organisation')
 })
 
-test(`Entity: add award`, t => {
-  _entityTest(t, 'award')
+test(`Entity: add funder`, t => {
+  _entityTest(t, 'funder')
 })
 
 test(`Entity: add keyword`, t => {

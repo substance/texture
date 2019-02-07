@@ -66,7 +66,7 @@ export default function jats2internal (jats, options) {
   _populateOrganisations(doc, jats)
   _populateAuthors(doc, jats, jatsImporter)
   _populateEditors(doc, jats, jatsImporter)
-  _populateAwards(doc, jats)
+  _populateFunders(doc, jats)
   _populateArticleInfo(doc, jats, jatsImporter)
   _populateKeywords(doc, jats)
   _populateSubjects(doc, jats)
@@ -131,7 +131,7 @@ function _populateContribs (doc, jats, importer, contribsPath, contribEls, group
         affiliations: _getAffiliationIds(contribEl, true),
         equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
         corresp: contribEl.getAttribute('corresp') === 'yes',
-        awards: _getAwardIds(contribEl)
+        funders: _getAwardIds(contribEl)
       }
       documentHelpers.append(doc, ['metadata', 'groups'], doc.create(group).id)
 
@@ -148,7 +148,7 @@ function _populateContribs (doc, jats, importer, contribsPath, contribEls, group
         prefix: getText(contribEl, 'prefix'),
         suffix: getText(contribEl, 'suffix'),
         affiliations: _getAffiliationIds(contribEl),
-        awards: _getAwardIds(contribEl),
+        funders: _getAwardIds(contribEl),
         bio: _getBioContent(contribEl, importer),
         equalContrib: contribEl.getAttribute('equal-contrib') === 'yes',
         corresp: contribEl.getAttribute('corresp') === 'yes',
@@ -198,19 +198,19 @@ function _getAwardIds (el) {
   return awardIds
 }
 
-function _populateAwards (doc, jats) {
+function _populateFunders (doc, jats) {
   const awardEls = jats.findAll('article > front > article-meta > funding-group > award-group')
-  let awardIds = awardEls.map(el => {
-    let award = {
+  let funderIds = awardEls.map(el => {
+    let funder = {
       id: el.id,
-      type: 'award',
+      type: 'funder',
       institution: getText(el, 'institution'),
       fundRefId: getText(el, 'institution-id'),
       awardId: getText(el, 'award-id')
     }
-    return doc.create(award).id
+    return doc.create(funder).id
   })
-  doc.set(['metadata', 'awards'], awardIds)
+  doc.set(['metadata', 'funders'], funderIds)
 }
 
 // TODO: use doc API for manipulation, not a bare object

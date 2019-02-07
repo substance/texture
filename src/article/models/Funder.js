@@ -1,12 +1,12 @@
 import { DocumentNode, STRING } from 'substance'
 
-export default class Award extends DocumentNode {
+export default class Funder extends DocumentNode {
   toString () {
     return this.institution
   }
 }
-Award.schema = {
-  type: 'award',
+Funder.schema = {
+  type: 'funder',
   institution: STRING,
   fundRefId: STRING,
   awardId: STRING

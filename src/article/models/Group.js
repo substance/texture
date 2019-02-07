@@ -10,7 +10,7 @@ Group.schema = {
   name: STRING,
   email: STRING,
   affiliations: MANY('organisation'),
-  awards: MANY('award'),
+  funders: MANY('funder'),
   equalContrib: BOOLEAN,
   corresp: BOOLEAN
 }

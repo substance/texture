@@ -17,6 +17,26 @@
           <title></title>
           <p id="fig1b-caption-p1"></p>
         </caption>
+        <kwd-group>
+          <label>Exp system</label>
+          <kwd />
+        </kwd-group>
+        <kwd-group>
+          <label>Method</label>
+          <kwd />
+        </kwd-group>
+        <kwd-group>
+          <label>Measured variable</label>
+          <kwd />
+        </kwd-group>
+        <kwd-group>
+          <label>Perturbations</label>
+          <kwd />
+        </kwd-group>
+        <kwd-group>
+          <label>Disease</label>
+          <kwd />
+        </kwd-group>
         <graphic id="fig1b-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="placeholder.png" />
       </fig>
     </fig-group>

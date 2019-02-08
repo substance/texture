@@ -135,7 +135,7 @@
   font-size: smaller;
 }
 
-.sc-texture sup, .sc-texture .sc-annotation.sc-superscript {
+.sc-texture sup, .sc-texture .sc-annotation.sm-superscript {
   vertical-align: super;
   font-size: smaller;
 }

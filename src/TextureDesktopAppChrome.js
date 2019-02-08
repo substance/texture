@@ -94,6 +94,11 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     document.title = newTitle
   }
 
+  _afterInit () {
+    // Update window title after archive loading to display title
+    this._updateTitle()
+  }
+
   _click (event) {
     const target = DefaultDOMElement.wrapNativeElement(event.target)
     let url = target.getAttribute('href')

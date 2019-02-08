@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const url = require('url')
 const fsExtra = require('fs-extra')
+const { DarFileStorage } = require('./lib/texture')
 
 const {
   app, dialog, shell, protocol, session,
@@ -13,6 +14,7 @@ const DEBUG = process.env.DEBUG
 const tmpDir = app.getPath('temp')
 const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')
 fsExtra.ensureDirSync(darStorageFolder)
+const defaultStorage = new DarFileStorage(darStorageFolder, 'dar://')
 
 const windowStates = new Map()
 const isDAR = path => Boolean(/.dar$/i.exec(path))
@@ -26,6 +28,7 @@ const templates = {
 
 app.on('ready', () => {
   protocol.registerFileProtocol('dar', (request, handler) => {
+    // stripping away the protocol prefix 'dar://' and normalizing the requested path
     const resourcePath = path.normalize(request.url.substr(6))
     // console.log('dar-protocol: resourcePath', resourcePath)
     if (/\.\./.exec(resourcePath)) {
@@ -110,6 +113,7 @@ app.on('activate', function () {
 function createEditorWindow (darPath, isNew) {
   // Create the browser window.
   let editorWindow = new BrowserWindow({ width: 1024, height: 768 })
+  editorWindow.storage = defaultStorage
   let windowId = editorWindow.id
   windowStates.set(windowId, {
     dirty: false

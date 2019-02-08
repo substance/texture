@@ -8,7 +8,7 @@ var yazl = require('yazl')
 var yauzl = require('yauzl')
 
 /*
-  This storage is to store working copies of '.dar' files that are located somewhere else on the file-system.
+  This storage is used to store working copies of '.dar' files that are located somewhere else on the file-system.
   Texture will first update the working copy, and then updates (rewrites) the `.dar` file.
 
   The implementation will be done in three major iterations

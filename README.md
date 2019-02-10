@@ -59,6 +59,14 @@ To package the application for distribution do the following:
 $ npm run release
 ```
 
+### MacOS
+
+Running the installed application from command line:
+
+```
+open -a /Applications/Texture.app my-article.dar
+```
+
 ## Running tests
 
 Running tests in NodeJS (like it is done on TravisCI):

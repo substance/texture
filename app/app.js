@@ -2,10 +2,8 @@ const path = require('path')
 const url = require('url')
 const { ipcRenderer: ipc, remote } = require('electron')
 const { shell, dialog } = remote
-const {
-  getQueryStringParam, substanceGlobals, platform
-} = window.substance
-const { TextureDesktopApp } = window.texture
+const { substanceGlobals, platform } = window.substance
+const { TextureDesktopApp, UnpackedDarFolderStorage } = window.texture
 
 let _app, _window
 
@@ -25,11 +23,18 @@ ipc.on('saveAs', () => {
 window.addEventListener('load', () => {
   _window = remote.getCurrentWindow()
 
-  let storage = _window.storage
+  let editorConfig = _window.editorConfig
 
   substanceGlobals.DEBUG_RENDERING = platform.devtools
-  const archiveId = getQueryStringParam('darPath')
-  const isReadOnly = getQueryStringParam('readOnly') === 'true'
+  const archiveId = editorConfig.darPath
+  const isReadOnly = editorConfig.readOnly
+
+  let storage
+  if (editorConfig.unpacked) {
+    storage = new UnpackedDarFolderStorage(editorConfig.darPath)
+  } else {
+    storage = _window.sharedStorage
+  }
 
   _app = TextureDesktopApp.mount({
     archiveId,

@@ -149,7 +149,7 @@ export default {
     config.addLabel('create-organisation', 'Create Organisation')
     config.addLabel('division1', 'Division 1 (Department)')
     config.addLabel('division2', 'Division 2')
-    config.addLabel('division3', 'Division 2')
+    config.addLabel('division3', 'Division 3')
     config.addLabel('street', 'Address Line 1 (Street)')
     config.addLabel('addressComplements', 'Address Line 2 (Complements)')
     config.addLabel('city', 'City')

@@ -10,7 +10,7 @@ export default class PinnedMessage extends Component {
 
     if (icon) {
       wrapper.append(
-        $$(FontAwesomeIcon, {icon: icon}).addClass('se-icon')
+        $$(FontAwesomeIcon, { icon }).addClass('se-icon')
       )
     }
 

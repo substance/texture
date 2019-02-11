@@ -105,7 +105,7 @@ export default class MetadataEditor extends EditorPanel {
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
 
-    sections.forEach(({name, model}) => {
+    sections.forEach(({ name, model }) => {
       let id = model.id
       tocEl.append(
         $$(MetadataSectionTOCEntry, {
@@ -131,7 +131,7 @@ export default class MetadataEditor extends EditorPanel {
 
     let sectionsEl = $$('div').addClass('se-sections')
 
-    sections.forEach(({name, model}) => {
+    sections.forEach(({ name, model }) => {
       let SectionComponent = this._getSectionComponent(name, model)
       let content = $$(SectionComponent, { name, model }).ref(name)
       sectionsEl.append(content)

@@ -29,7 +29,7 @@ export default class DOIInputComponent extends Component {
 
   _startImporting (input) {
     const dois = input.split(' ').map(v => v.trim()).filter(v => Boolean(v))
-    this.extendState({loading: true})
+    this.extendState({ loading: true })
 
     _getBibEntries(dois).then(entries => {
       this.send('importBib', entries)
@@ -40,7 +40,7 @@ export default class DOIInputComponent extends Component {
         errorMessage
       ]
       errors = errors.concat(dois.map(d => '- ' + d))
-      this.extendState({errors, loading: false})
+      this.extendState({ errors, loading: false })
     })
   }
 }
@@ -102,5 +102,5 @@ function _fetchCSLJSONEntries (dois) {
 */
 function _fetchDOI (doi) {
   const url = ENDPOINT + doi
-  return sendRequest({url: url, method: 'GET', header: {'accept': 'application/vnd.citationstyles.csl+json'}})
+  return sendRequest({ url: url, method: 'GET', header: { 'accept': 'application/vnd.citationstyles.csl+json' } })
 }

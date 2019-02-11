@@ -98,7 +98,7 @@ export default class DarFileStorage {
 
   _unpack (darpath, wcDir, cb) {
     // console.log('DarFileStorage::_unpack', darpath, wcDir)
-    yauzl.open(darpath, {lazyEntries: true}, (err, zipfile) => {
+    yauzl.open(darpath, { lazyEntries: true }, (err, zipfile) => {
       if (err) cb(err)
       zipfile.readEntry()
       zipfile.on('entry', (entry) => {

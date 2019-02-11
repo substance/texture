@@ -125,7 +125,7 @@ export default class TextureConfigurator extends Configurator {
     let commands = new Map()
     forEach(this.config.commands, (item, name) => {
       const Command = item.CommandClass
-      let command = new Command(Object.assign({name: name}, item.options))
+      let command = new Command(Object.assign({ name }, item.options))
       commands.set(name, command)
     })
     return commands

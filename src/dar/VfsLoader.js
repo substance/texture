@@ -22,7 +22,7 @@ export default class VfsLoader {
     }
     let manifest, manifestEditorSession
     try {
-      let {editorSession} = loadManifest(manifestXml)
+      let { editorSession } = loadManifest(manifestXml)
       manifest = editorSession.getDocument()
       manifestEditorSession = editorSession
     } catch (err) {

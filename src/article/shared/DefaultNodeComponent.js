@@ -197,7 +197,7 @@ export default class DefaultNodeComponent extends Component {
 
   _toggleMode () {
     const fullMode = this.state.fullMode
-    this.extendState({fullMode: !fullMode})
+    this.extendState({ fullMode: !fullMode })
   }
 
   _rerenderWhenIssueHaveChanged () {

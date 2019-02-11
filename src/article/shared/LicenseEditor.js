@@ -18,8 +18,8 @@ export default class LicenseEditor extends ValueComponent {
     )
 
     LICENSES.forEach(l => {
-      const option = $$('option').attr({value: l.id}).append(l.name)
-      if (l.id === value) option.attr({selected: 'selected'})
+      const option = $$('option').attr({ value: l.id }).append(l.name)
+      if (l.id === value) option.attr({ selected: 'selected' })
       licenseSelector.append(option)
     })
 

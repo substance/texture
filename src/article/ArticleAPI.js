@@ -336,9 +336,9 @@ export default class ArticleAPI {
       let ids = tx.get(path)
       let idx = ids.indexOf(id)
       if (idx === -1) {
-        tx.update(path, {type: 'insert', pos: ids.length, value: id})
+        tx.update(path, { type: 'insert', pos: ids.length, value: id })
       } else {
-        tx.update(path, {type: 'delete', pos: idx, value: id})
+        tx.update(path, { type: 'delete', pos: idx, value: id })
       }
       tx.setSelection(this._createValueSelection(path))
     })
@@ -496,7 +496,7 @@ export default class ArticleAPI {
     if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
       this.selectNode(figure.id)
     }
-    editorSession.updateNodeStates([[figure.id, {currentPanelIndex: newPanelIndex}]], { propagate: true })
+    editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
   }
 
   _getContainerPathForNode (node) {

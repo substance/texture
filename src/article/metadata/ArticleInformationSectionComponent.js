@@ -18,7 +18,7 @@ export default class ArticleInformationSectionComponent extends Component {
     let editorEl, node
     if (model.node) {
       const EditorClass = this.getComponent(model.id)
-      editorEl = $$(EditorClass, {node: model.node})
+      editorEl = $$(EditorClass, { node: model.node })
       node = model.node
     } else {
       // HACK: for model editing (e.g. title, abstract) we are passing

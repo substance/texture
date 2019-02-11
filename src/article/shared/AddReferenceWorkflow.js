@@ -40,13 +40,13 @@ export default class AddReferenceWorkflow extends Component {
 
     el.append(
       title,
-      $$(DialogSectionComponent, {label: this.getLabel('fetch-datacite')})
+      $$(DialogSectionComponent, { label: this.getLabel('fetch-datacite') })
         .append($$(DOIInputComponent)),
       $$(DialogSectionComponent, {
         label: this.getLabel('import-refs'),
         description: this.getLabel('supported-ref-formats') + ': ' + this.supportedUploadFormats.join(', ')
       }).append($$(ReferenceUploadComponent)),
-      $$(DialogSectionComponent, {label: this.getLabel('add-ref-manually')})
+      $$(DialogSectionComponent, { label: this.getLabel('add-ref-manually') })
         .append(manualAddEl)
     )
 
@@ -54,7 +54,7 @@ export default class AddReferenceWorkflow extends Component {
   }
 
   _onAdd (type) {
-    this.context.api._addReference({type})
+    this.context.api._addReference({ type })
     this.send('closeModal')
   }
 

@@ -21,7 +21,7 @@ export default class FileUploadComponent extends Component {
       .ref('input')
 
     if (this.acceptedFiles) {
-      selectInput.attr({accept: this.acceptedFiles})
+      selectInput.attr({ accept: this.acceptedFiles })
     }
 
     // HACK: to place a link inside label we will use

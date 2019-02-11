@@ -93,6 +93,7 @@ export default {
     config.addLabel('edition', 'Edition')
     config.addLabel('elocationId', 'E-Location ID')
     config.addLabel('fpage', 'First Page')
+    config.addLabel('given-names', 'Given Names')
     config.addLabel('inventors', 'Inventors')
     config.addLabel('isbn', 'ISBN')
     config.addLabel('issue', 'Issue')

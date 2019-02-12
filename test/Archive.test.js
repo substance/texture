@@ -2,6 +2,15 @@ import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import { createPseudoFile } from './shared/integrationTestHelpers'
 
+/*
+  - test addDocument()
+  - test load(): 'version' handling
+  - test removeDocument()
+  - test saveAs()
+  - test blob related impl (missing in nodejs)
+    - resolveUrl(): for blobs
+    - _save()
+*/
 test('Archive: add asset', t => {
   let { archive } = setupTestApp(t, { archiveId: 'blank' })
   let FILENAME = 'test.png'

@@ -17,7 +17,7 @@ export default class UploadTool extends Tool {
       .on('click', domHelpers.stop)
     if (!this.doesAcceptAllFileTypes) {
       const fileType = this.getFileType()
-      input.attr({'accept': fileType})
+      input.attr({ 'accept': fileType })
     }
     if (isMultiple) {
       input.attr({

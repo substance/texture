@@ -18,7 +18,7 @@ export default class FormRowComponent extends Component {
         labelEl.append(
           $$('div').addClass('se-warning').append(
             $$(FontAwesomeIcon, { icon: 'fa-warning' }).addClass('se-icon'),
-            $$(Tooltip, {text: tooltipText})
+            $$(Tooltip, { text: tooltipText })
           )
         )
       }

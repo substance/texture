@@ -4,6 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
+const yazl = require('yazl')
 
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
@@ -134,11 +135,9 @@ b.task('build:cover', () => {
   _buildLib(TMP, 'cover')
 })
 
-b.task('build:app', () => {
+b.task('build:app', ['build:app:dars'], () => {
   b.copy('app/index.html', APPDIST)
   b.copy('app/build-resources', APPDIST)
-  // TODO: we should pack folders from ./data
-  b.copy('app/templates', APPDIST)
   // FIXME: this command leads to an extra run when a  file is updated
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
@@ -193,6 +192,15 @@ b.task('build:app', () => {
   fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
 })
 
+b.task('build:app:dars', () => {
+  // templates
+  _packDar('data/blank', APPDIST + 'templates/blank.dar')
+  _packDar('data/blank-figure-package', APPDIST + 'templates/blank-figure-package.dar')
+  // examples
+  _packDar('data/elife-32671', APPDIST + 'examples/elife-32671.dar')
+  _packDar('data/kitchen-sink', APPDIST + 'examples/kitchen-sink.dar')
+})
+
 b.task('build:vfs', () => {
   vfs(b, {
     src: ['./data/**/*'],
@@ -238,7 +246,7 @@ b.task('build:web', ['build:vfs', '_copy-data-folder'], () => {
   })
 })
 
-b.task('build:test-assets', ['build:vfs', '_copy-data-folder'], () => {
+b.task('build:test-assets', ['build:vfs', '_copy-data-folder', 'build:app:dars'], () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],
     dest: DIST + 'test/test-vfs.js',
@@ -325,6 +333,32 @@ function _buildLib (DEST, platform) {
   })
 }
 
+function _packDar (dataFolder, darPath) {
+  b.custom(`Creating ${darPath}...`, {
+    src: dataFolder + '/**/*',
+    dest: darPath,
+    execute (files) {
+      return new Promise((resolve, reject) => {
+        let zipfile = new yazl.ZipFile()
+        for (let f of files) {
+          let relPath = path.relative(dataFolder, f)
+          zipfile.addFile(f, relPath)
+        }
+        zipfile.outputStream.pipe(fs.createWriteStream(darPath))
+          .on('close', (err) => {
+            if (err) {
+              console.error(err)
+              reject(err)
+            } else {
+              resolve()
+            }
+          })
+        zipfile.end()
+      })
+    }
+  })
+}
+
 function _compileSchema (name, src, searchDirs, deps, options = {}) {
   const DEST = `tmp/${name}.data.js`
   const ISSUES = `tmp/${name}.issues.txt`
@@ -339,7 +373,7 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
           const { compileRNG, checkSchema } = require('substance')
           const xmlSchema = compileRNG(fs, searchDirs, entry)
           b.writeFileSync(DEST, `export default ${JSON.stringify(xmlSchema)}`)
-          b.writeFileSync(SCHEMA, xmlSchemaToMD(xmlSchema))
+          b.writeFileSync(SCHEMA, _xmlSchemaToMD(xmlSchema))
           if (options.debug) {
             const issues = checkSchema(xmlSchema)
             const issuesData = [`${issues.length} issues:`, ''].concat(issues).join('\n')
@@ -352,7 +386,7 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
   })
 }
 
-function xmlSchemaToMD (xmlSchema) {
+function _xmlSchemaToMD (xmlSchema) {
   const { _analyzeElementSchemas } = require('substance')
   const PRE_START = '<pre style="white-space:pre-wrap;">'
   const PRE_END = '</pre>'

@@ -57,7 +57,7 @@ export default class QueryComponent extends Component {
 
   _unblockUI () {
     if (this.props.errors) {
-      this.extendProps({errors: undefined})
+      this.extendProps({ errors: undefined })
     }
   }
 }

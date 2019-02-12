@@ -27,7 +27,7 @@ export default class AddSupplementaryFileWorkflow extends Component {
 
     const urlInput = $$(InputWithButton, {
       input: $$(Input, {
-        placeholder: this.getLabel('supplementary-file-link-placeholder')}
+        placeholder: this.getLabel('supplementary-file-link-placeholder') }
       ).ref('urlInput'),
       button: $$(Button).append(
         this.getLabel('add-action')
@@ -36,9 +36,9 @@ export default class AddSupplementaryFileWorkflow extends Component {
 
     el.append(
       title,
-      $$(DialogSectionComponent, {label: this.getLabel('supplementary-file-upload-label')})
+      $$(DialogSectionComponent, { label: this.getLabel('supplementary-file-upload-label') })
         .append($$(SupplementaryFileUploadComponent)),
-      $$(DialogSectionComponent, {label: this.getLabel('supplementary-file-link-label')})
+      $$(DialogSectionComponent, { label: this.getLabel('supplementary-file-link-label') })
         .append(urlInput)
     )
 

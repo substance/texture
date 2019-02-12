@@ -11,7 +11,7 @@ export default class PreviewComponent extends Component {
     let id = this.props.id
     let el = $$('div')
       .addClass('sc-preview')
-      .attr({'data-id': id})
+      .attr({ 'data-id': id })
 
     if (this.props.thumbnail) {
       el.append(

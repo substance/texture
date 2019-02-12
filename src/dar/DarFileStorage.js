@@ -4,11 +4,11 @@ import listDir from './_listDir'
 const fs = require('fs')
 const fsExtra = require('fs-extra')
 const path = require('path')
-var yazl = require('yazl')
-var yauzl = require('yauzl')
+const yazl = require('yazl')
+const yauzl = require('yauzl')
 
 /*
-  This storage is to store working copies of '.dar' files that are located somewhere else on the file-system.
+  This storage is used to store working copies of '.dar' files that are located somewhere else on the file-system.
   Texture will first update the working copy, and then updates (rewrites) the `.dar` file.
 
   The implementation will be done in three major iterations
@@ -81,8 +81,8 @@ export default class DarFileStorage {
     darpath = darpath.replace(/\\+/g, '/')
     // split path into fragments: dir, name, extension
     let { dir, name } = path.parse(darpath)
-    // ATTENTION: it is probably possible to create collisions here if somebody uses '@' in a bad way
-    // for now, I accepting this because I don't think that this is realistic.
+    // ATTENTION: it is probably possible to create collisions here if somebody uses '@' in a bad way.
+    // For now, this is acceptable because it is not realistic.
     // Adding an extra slash that got dropped by path.parse().
     dir += '/'
     // replace '/' with '@slash@'
@@ -98,7 +98,7 @@ export default class DarFileStorage {
 
   _unpack (darpath, wcDir, cb) {
     // console.log('DarFileStorage::_unpack', darpath, wcDir)
-    yauzl.open(darpath, {lazyEntries: true}, (err, zipfile) => {
+    yauzl.open(darpath, { lazyEntries: true }, (err, zipfile) => {
       if (err) cb(err)
       zipfile.readEntry()
       zipfile.on('entry', (entry) => {
@@ -143,5 +143,12 @@ export default class DarFileStorage {
       // call end() after all the files have been added
       zipfile.end()
     }).catch(cb)
+  }
+
+  // used by tests
+  _getRawArchive (darpath, cb) {
+    let id = this._path2Id(darpath)
+    let wcDir = this._getWorkingCopyPath(id)
+    this._internalStorage.read(wcDir, cb)
   }
 }

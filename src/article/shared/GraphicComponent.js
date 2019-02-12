@@ -19,7 +19,7 @@ export default class GraphicComponent extends NodeComponent {
       el.append(errorEl)
     } else {
       el.append(
-        $$('img').attr({src: url})
+        $$('img').attr({ src: url })
           .on('error', this._onLoadError)
       )
     }
@@ -41,6 +41,6 @@ export default class GraphicComponent extends NodeComponent {
   }
 
   _onLoadError () {
-    this.extendState({errored: true})
+    this.extendState({ errored: true })
   }
 }

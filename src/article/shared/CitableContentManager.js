@@ -59,7 +59,7 @@ export default class CitableContentManager extends AbstractCitationManager {
   }
 
   _stateUpdate (record) {
-    return [record.id, {label: record.label}]
+    return [record.id, { label: record.label }]
   }
 
   _computeTargetUpdates () {

@@ -58,7 +58,7 @@ export default class ListConverter {
         return $$('list-item')
       } else {
         let listItem = arg
-        return $$('list-item', {id: arg.id}).append(
+        return $$('list-item', { id: arg.id }).append(
           $$('p').append(
             exporter.annotatedText(listItem.getPath())
           )

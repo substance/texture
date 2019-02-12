@@ -34,13 +34,13 @@ export default class FigurePanelComponent extends NodeComponent {
       .addClass(`sm-${mode}`)
 
     el.append(
-      $$(SectionLabel, {label: 'label-label'}),
+      $$(SectionLabel, { label: 'label-label' }),
       $$(LabelComponent, { node }),
       // no label for the graphic
       this._renderContent($$),
-      $$(SectionLabel, {label: 'title-label'}),
+      $$(SectionLabel, { label: 'title-label' }),
       this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
-      $$(SectionLabel, {label: 'legend-label'}),
+      $$(SectionLabel, { label: 'legend-label' }),
       this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend')
     )
 
@@ -49,7 +49,7 @@ export default class FigurePanelComponent extends NodeComponent {
     // rerender the whole component on metadata changes is not good, as it leads to double rerender, because FigureMetadataComponent reacts too
     if (node.metadata.length > 0) {
       el.append(
-        $$(SectionLabel, {label: 'metadata-label'}),
+        $$(SectionLabel, { label: 'metadata-label' }),
         $$(FigureMetadataComponent, { model: createValueModel(this.context.api, [node.id, 'metadata']) })
       )
     }

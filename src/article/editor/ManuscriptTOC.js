@@ -73,7 +73,7 @@ export default class ManuscriptTOC extends Component {
 
 class SimpleTOCEntry extends Component {
   render ($$) {
-    const {label, id} = this.props
+    const { label, id } = this.props
     let el = $$('a')
       .addClass('se-toc-entry sm-level-1')
       .attr({

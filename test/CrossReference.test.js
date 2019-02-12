@@ -74,7 +74,7 @@ function _getText (editor, selector) {
 
 function _setup (t, seedXML) {
   let testVfs = createTestVfs(seedXML)
-  let {app} = setupTestApp(t, {
+  let { app } = setupTestApp(t, {
     vfs: testVfs,
     archiveId: 'test'
   })

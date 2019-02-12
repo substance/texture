@@ -238,7 +238,7 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
       xpathSelector
     })
 
-    config.addIcon('remove', {'fontawesome': 'fa-trash'})
+    config.addIcon('remove', { 'fontawesome': 'fa-trash' })
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
     config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })
   }

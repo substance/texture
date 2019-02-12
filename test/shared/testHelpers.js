@@ -7,7 +7,7 @@ import {
 
 export { test, spy, wait, getMountPoint, testAsync } from 'substance-test'
 
-export function _async (fn) {
+export function promisify (fn) {
   return new Promise((resolve, reject) => {
     fn((err, result) => {
       if (err) reject(err)

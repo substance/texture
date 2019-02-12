@@ -1,18 +1,9 @@
-import DarFileStorage from '../src/dar/DarFileStorage'
-
 const path = require('path')
 const url = require('url')
 const { ipcRenderer: ipc, remote } = require('electron')
-const { shell, app, dialog } = remote
-const {
-  getQueryStringParam, substanceGlobals, platform
-} = window.substance
-const { TextureDesktopApp } = window.texture
-
-// HACK: this is redundant with main.js
-// TODO: is there a different way to retrieve this location?
-const tmpDir = app.getPath('temp')
-const darStorageFolder = path.join(tmpDir, app.getName(), 'dar-storage')
+const { shell, dialog } = remote
+const { substanceGlobals, platform } = window.substance
+const { TextureDesktopApp, UnpackedDarFolderStorage } = window.texture
 
 let _app, _window
 
@@ -30,16 +21,28 @@ ipc.on('saveAs', () => {
 })
 
 window.addEventListener('load', () => {
+  _window = remote.getCurrentWindow()
+
+  let editorConfig = _window.editorConfig
+
   substanceGlobals.DEBUG_RENDERING = platform.devtools
-  const archiveId = getQueryStringParam('darPath')
-  const isReadOnly = getQueryStringParam('readOnly') === 'true'
+  const archiveId = editorConfig.darPath
+  const isReadOnly = editorConfig.readOnly
+
+  let storage
+  if (editorConfig.unpacked) {
+    storage = new UnpackedDarFolderStorage(editorConfig.darPath)
+  } else {
+    storage = _window.sharedStorage
+  }
+
   _app = TextureDesktopApp.mount({
     archiveId,
     // ATTENTION: we use this flag to open a dar as readOnly
     // e.g., the blank.dar from the app folder is used as a template for new dars
     // but must not be saved back to that file.
     isReadOnly,
-    storage: new DarFileStorage(darStorageFolder, 'dar://')
+    storage
   }, window.document.body)
 
   _app.on('save', () => {
@@ -55,10 +58,10 @@ window.addEventListener('load', () => {
   // because there we have the archive instance to check for pending changes.
   // This however  was not successful because it is not possible (to the current date)
   // to cancel app quiting from the renderer side.
-  // It seems that event.returnValue or event.preventDefault() called on this
+  // It seems that event.returnValue or event.preventDefault() called on this side
   // does not have the effect on the app quitting as it is document.
   // Another strange observation, browserWindow.on('close') does not work on this side.
-  // Alltogether it seems technically impossible to solve this in the a clean way.
+  // Altogether, it seems technically impossible to solve this in the a clean way.
   // For that reason we have to maintain a (redundant) flag in the main process
   // indicating if a window's content should be considered dirty or not.
   _app.on('archive:ready', () => {

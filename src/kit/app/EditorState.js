@@ -144,7 +144,7 @@ class DocumentSlot extends Slot {
     super(editorState, id, stage, deps)
 
     this.documentObserver = documentObserver
-    this.byPath = {'@any': new Set()}
+    this.byPath = { '@any': new Set() }
   }
 
   addObserver (observer, spec) {

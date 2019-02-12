@@ -158,7 +158,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   renameDocument (documentId, name) {
     this._sessions.manifest.transaction(tx => {
       let docEntry = tx.find(`#${documentId}`)
-      docEntry.attr({name})
+      docEntry.attr({ name })
     })
   }
 

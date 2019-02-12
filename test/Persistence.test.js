@@ -16,7 +16,7 @@ function InvariantLoadSaveTest (archiveId) {
   test(`Persistence: loading and saving article ${archiveId}`, t => {
     // create a vfs where we can store the data during save without harming the global vfs instance
     let testVfs = setupTestVfs(vfs, archiveId)
-    let {app, archive, manuscriptSession} = setupTestApp(t, {
+    let { app, archive, manuscriptSession } = setupTestApp(t, {
       vfs: testVfs,
       archiveId
     })
@@ -28,7 +28,7 @@ function InvariantLoadSaveTest (archiveId) {
     })
 
     // trigger a save
-    _NOP({manuscriptSession})
+    _NOP({ manuscriptSession })
 
     // Note: with VFS these calls are actually not asynchronous, i.e. calling back instantly
     app._save(err => {
@@ -89,12 +89,12 @@ function LoadSaveShouldNotThrow (archiveId, title, change) {
   test(`Persistence: ${title}`, t => {
     // create a vfs where we can store the data during save without harming the global vfs instance
     let testVfs = setupTestVfs(vfs, archiveId)
-    let {app, archive, manuscriptSession} = setupTestApp(t, {
+    let { app, archive, manuscriptSession } = setupTestApp(t, {
       vfs: testVfs,
       archiveId
     })
     // change the content
-    change({app, archive, manuscriptSession})
+    change({ app, archive, manuscriptSession })
     // trigger a save
     // Note: with VFS these calls are actually not asynchronous, i.e. calling back instantly
     app._save(err => {
@@ -112,11 +112,11 @@ function LoadSaveShouldNotThrow (archiveId, title, change) {
   })
 }
 
-function _NOP ({manuscriptSession}) {
+function _NOP ({ manuscriptSession }) {
   applyNOP(manuscriptSession)
 }
 
-function _INSERT_FIGURE ({app}) {
+function _INSERT_FIGURE ({ app }) {
   let editor = openManuscriptEditor(app)
   let editorSession = getEditorSession(editor)
   let doc = editorSession.getDocument()

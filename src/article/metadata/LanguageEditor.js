@@ -19,8 +19,8 @@ export default class LanguageEditor extends ValueComponent {
     )
 
     Object.keys(languages).forEach(lang => {
-      const option = $$('option').attr({value: lang}).append(languages[lang])
-      if (lang === value) option.attr({selected: 'selected'})
+      const option = $$('option').attr({ value: lang }).append(languages[lang])
+      if (lang === value) option.attr({ selected: 'selected' })
       languageSelector.append(option)
     })
 

@@ -12,7 +12,12 @@ const path = require('path')
   folders.
 */
 export default class FSStorage {
+  constructor (rootDir) {
+    this._rootDir = rootDir
+  }
+
   read (archiveDir, cb) {
+    archiveDir = this._normalizeArchiveDir(archiveDir)
     readArchive(archiveDir, { noBinaryContent: true, ignoreDotFiles: true })
       .then(rawArchive => {
         // Turn binaries into urls
@@ -30,6 +35,7 @@ export default class FSStorage {
   }
 
   write (archiveDir, rawArchive, cb) {
+    archiveDir = this._normalizeArchiveDir(archiveDir)
     _convertBlobs(rawArchive)
       .then(() => {
         return writeArchive(archiveDir, rawArchive)
@@ -41,12 +47,21 @@ export default class FSStorage {
   }
 
   clone (archiveDir, newArchiveDir, cb) {
+    archiveDir = this._normalizeArchiveDir(archiveDir)
+    newArchiveDir = this._normalizeArchiveDir(newArchiveDir)
     cloneArchive(archiveDir, newArchiveDir)
       .then(success => {
         if (success) cb()
         else cb(new Error('Could not clone archive'))
       })
       .catch(cb)
+  }
+
+  _normalizeArchiveDir (archiveDir) {
+    if (this._rootDir) {
+      archiveDir = path.join(this._rootDir, archiveDir)
+    }
+    return archiveDir
   }
 }
 

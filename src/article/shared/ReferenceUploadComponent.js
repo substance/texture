@@ -45,7 +45,7 @@ export default class ReferenceUploadComponent extends FileUploadComponent {
       if (conversionErrors.length > 0) {
         let error = new Error('Conversion error')
         error.dois = conversionErrors
-        this.extendState({error})
+        this.extendState({ error })
       } else {
         this.send('importBib', convertedEntries)
       }

@@ -264,6 +264,10 @@ const TOOL_SPECS = {
     menu: 'format',
     tool: '.sm-toggle-monospace'
   },
+  'overline': {
+    menu: 'format',
+    tool: '.sm-toggle-overline'
+  },
   'small-caps': {
     menu: 'format',
     tool: '.sm-toggle-small-caps'

@@ -13,6 +13,7 @@ import InlineGraphicConverter from './InlineGraphicConverter'
 import ItalicConverter from './ItalicConverter'
 import MonospaceConverter from './MonospaceConverter'
 import ListConverter from './ListConverter'
+import OverlineConverter from './OverlineConverter'
 import ParagraphConverter from './ParagraphConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
@@ -43,6 +44,7 @@ export default [
   new ItalicConverter(),
   new MonospaceConverter(),
   new ListConverter(),
+  new OverlineConverter(),
   new ParagraphConverter(),
   new PermissionsConverter(),
   new PreformatConverter(),

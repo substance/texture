@@ -52,6 +52,7 @@ export default {
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('manuscript', ManuscriptComponent)
     config.addComponent('monospace', AnnotationComponent)
+    config.addComponent('overline', AnnotationComponent)
     config.addComponent('paragraph', ParagraphComponent)
     config.addComponent('reference', ReferenceComponent)
     config.addComponent('reference-list', ReferenceListComponent)

@@ -207,6 +207,7 @@ export default {
     config.addLabel('italic', 'Italic')
     config.addLabel('link', 'Link')
     config.addLabel('monospace', 'Monospace')
+    config.addLabel('overline', 'Overline')
     config.addLabel('small-caps', 'Small Caps')
     config.addLabel('subscript', 'Subscript')
     config.addLabel('superscript', 'Superscript')

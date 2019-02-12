@@ -283,6 +283,10 @@ export default {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
+    config.addCommand('toggle-overline', AnnotationCommand, {
+      nodeType: 'overline',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-small-caps', AnnotationCommand, {
       nodeType: 'small-caps',
       commandGroup: 'formatting'

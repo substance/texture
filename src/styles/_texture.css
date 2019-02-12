@@ -150,6 +150,10 @@
   font-family: monospace, monospace;
 }
 
+.sc-texture .sm-overline {
+  text-decoration: overline;
+}
+
 .sc-texture underline, .sc-texture .sm-underline {
   text-decoration: underline;
 }

@@ -11,14 +11,6 @@ import { promisify } from './shared/testHelpers'
   - test loading and writing a dar with binaries
   - test loading and saving from and to a folder
   - test HttpStorageClient
-  - test PersistendDocumentArchive
-    - addDocument()
-    - load(): 'version' handling
-    - removeDocument()
-    - saveAs()
-    - blob related (missing in nodejs)
-      - resolveUrl(): for blobs
-      - _save()
 */
 
 const path = require('path')

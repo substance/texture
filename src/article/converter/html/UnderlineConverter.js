@@ -1,8 +1,8 @@
 export default {
   type: 'underline',
-  tagName: 'span',
+  tagName: 'u',
   matchElement (el) {
-    return el.getStyle('text-decoration') === 'underline'
+    return el.is('u') || el.getStyle('text-decoration') === 'underline'
   },
   export (node, el) {
     el.setStyle('text-decoration', 'underline')

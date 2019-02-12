@@ -1,6 +1,6 @@
 import Annotation from './Annotation'
 
-export default class Smallcaps extends Annotation {}
-Smallcaps.schema = {
-  type: 'smallcaps'
+export default class SmallCaps extends Annotation {}
+SmallCaps.schema = {
+  type: 'small-caps'
 }

@@ -272,6 +272,10 @@ const TOOL_SPECS = {
     menu: 'format',
     tool: '.sm-toggle-small-caps'
   },
+  'strike-through': {
+    menu: 'format',
+    tool: '.sm-toggle-strike-through'
+  },
   'subscript': {
     menu: 'format',
     tool: '.sm-toggle-subscript'

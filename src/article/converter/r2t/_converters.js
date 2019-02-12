@@ -18,6 +18,7 @@ import ParagraphConverter from './ParagraphConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
 import SmallCapsConverter from './SmallCapsConverter'
+import StrikeThroughConverter from './StrikeThroughConverter'
 import SubscriptConverter from './SubscriptConverter'
 import SuperscriptConverter from './SuperscriptConverter'
 import SupplementaryFileConverter from './SupplementaryFileConverter'
@@ -49,6 +50,7 @@ export default [
   new PermissionsConverter(),
   new PreformatConverter(),
   new SmallCapsConverter(),
+  new StrikeThroughConverter(),
   new SubscriptConverter(),
   new SuperscriptConverter(),
   new SupplementaryFileConverter(),

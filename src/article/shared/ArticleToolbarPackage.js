@@ -209,6 +209,7 @@ export default {
     config.addLabel('monospace', 'Monospace')
     config.addLabel('overline', 'Overline')
     config.addLabel('small-caps', 'Small Caps')
+    config.addLabel('strike-through', 'Strike Through')
     config.addLabel('subscript', 'Subscript')
     config.addLabel('superscript', 'Superscript')
     config.addLabel('underline', 'Underline')

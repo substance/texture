@@ -53,6 +53,12 @@ const ANNOS = [
     selector: '.sc-annotation.sm-overline'
   },
   {
+    name: 'Strike Through',
+    menu: 'format',
+    tool: 'toggle-strike-through',
+    selector: '.sc-annotation.sm-strike-through'
+  },
+  {
     name: 'Underline',
     menu: 'format',
     tool: 'toggle-underline',

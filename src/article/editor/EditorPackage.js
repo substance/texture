@@ -291,6 +291,10 @@ export default {
       nodeType: 'small-caps',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-strike-through', AnnotationCommand, {
+      nodeType: 'strike-through',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'subscript',
       commandGroup: 'formatting'

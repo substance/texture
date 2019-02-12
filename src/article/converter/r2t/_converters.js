@@ -16,6 +16,7 @@ import ListConverter from './ListConverter'
 import ParagraphConverter from './ParagraphConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
+import SmallCapsConverter from './SmallCapsConverter'
 import SubscriptConverter from './SubscriptConverter'
 import SuperscriptConverter from './SuperscriptConverter'
 import SupplementaryFileConverter from './SupplementaryFileConverter'
@@ -44,6 +45,7 @@ export default [
   new ParagraphConverter(),
   new PermissionsConverter(),
   new PreformatConverter(),
+  new SmallCapsConverter(),
   new SubscriptConverter(),
   new SuperscriptConverter(),
   new SupplementaryFileConverter(),

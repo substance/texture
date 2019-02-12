@@ -6,6 +6,21 @@ import { promisify } from './shared/testHelpers'
 // ATTENTION: these tests can not be run in the browser
 // because implementation uses filesystem etc.
 
+/*
+  TODO:
+  - test loading and writing a dar with binaries
+  - test loading and saving from and to a folder
+  - test HttpStorageClient
+  - test PersistendDocumentArchive
+    - addDocument()
+    - load(): 'version' handling
+    - removeDocument()
+    - saveAs()
+    - blob related (missing in nodejs)
+      - resolveUrl(): for blobs
+      - _save()
+*/
+
 const path = require('path')
 const fs = require('fs')
 const fsExtra = require('fs-extra')
@@ -18,6 +33,18 @@ testAsync('Storage: reading a .dar file', async t => {
     storage.read(darPath, cb)
   })
   t.deepEqual(Object.keys(rawArchive.resources), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
+  t.end()
+})
+
+testAsync('Storage: reading the kitchen-sink.dar', async t => {
+  let storageDir = _getTmpFolder()
+  let darPath = path.join(process.cwd(), 'app-dist', 'examples', 'kitchen-sink.dar')
+  let storage = new DarFileStorage(storageDir)
+  let rawArchive = await promisify(cb => {
+    storage.read(darPath, cb)
+  })
+  t.ok(Boolean(rawArchive.resources['manifest.xml']), 'dar should contain manifest')
+  t.ok(Boolean(rawArchive.resources['manuscript.xml']), 'dar should contain manuscript')
   t.end()
 })
 
@@ -39,6 +66,27 @@ testAsync('Storage: cloning a .dar file', async t => {
   })
   let resourceNames = Object.keys(rawArchive.resources).sort()
   t.deepEqual(resourceNames, ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
+  t.end()
+})
+
+testAsync('Storage: cloning the kitchen-sink.dar', async t => {
+  let storageDir = _getTmpFolder()
+  let storage = new DarFileStorage(storageDir)
+  let darPath = path.join(process.cwd(), 'app-dist', 'examples', 'kitchen-sink.dar')
+  await promisify(cb => {
+    storage.read(darPath, cb)
+  })
+  let tmpDir = _getTmpFolder()
+  let newDarPath = path.join(tmpDir, 'kitchen-sink_2.dar')
+  await promisify(cb => {
+    storage.clone(darPath, newDarPath, cb)
+  })
+  t.ok(fs.existsSync(newDarPath))
+  let rawArchive = await promisify(cb => {
+    storage._getRawArchive(newDarPath, cb)
+  })
+  t.ok(Boolean(rawArchive.resources['manifest.xml']), 'dar should contain manifest')
+  t.ok(Boolean(rawArchive.resources['manuscript.xml']), 'dar should contain manuscript')
   t.end()
 })
 

@@ -53,3 +53,8 @@ if (platform.inNodeJS) {
     })
   }
 }
+
+// pure NodeJS tests (i.e. parts used in electron app)
+if (platform.inNodeJS) {
+  require('./Storage.test.js')
+}

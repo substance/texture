@@ -1,6 +1,6 @@
 import { testAsync } from 'substance-test'
 import { uuid } from 'substance'
-import { DarFileStorage } from '../index'
+import { DarFileStorage, UnpackedDarFolderStorage } from '../index'
 import { promisify } from './shared/testHelpers'
 
 // ATTENTION: these tests can not be run in the browser
@@ -45,6 +45,16 @@ testAsync('Storage: reading the kitchen-sink.dar', async t => {
   })
   t.ok(Boolean(rawArchive.resources['manifest.xml']), 'dar should contain manifest')
   t.ok(Boolean(rawArchive.resources['manuscript.xml']), 'dar should contain manuscript')
+  t.end()
+})
+
+testAsync('Storage: reading a DAR folder', async t => {
+  let darPath = path.join(process.cwd(), 'data', 'blank')
+  let storage = new UnpackedDarFolderStorage(darPath)
+  let rawArchive = await promisify(cb => {
+    storage.read(null, cb)
+  })
+  t.deepEqual(Object.keys(rawArchive.resources), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
   t.end()
 })
 

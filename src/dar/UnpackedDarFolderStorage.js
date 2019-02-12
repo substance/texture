@@ -3,7 +3,7 @@ import FSStorage from './FSStorage'
 /**
  * A storage implementation that is bound to a single folder.
  */
-export default class SingleDarFolderStorage extends FSStorage {
+export default class UnpackedDarFolderStorage extends FSStorage {
   constructor (darFolder) {
     super()
 

@@ -275,6 +275,10 @@ const TOOL_SPECS = {
   'superscript': {
     menu: 'format',
     tool: '.sm-toggle-superscript'
+  },
+  'underline': {
+    menu: 'format',
+    tool: '.sm-toggle-underline'
   }
 }
 

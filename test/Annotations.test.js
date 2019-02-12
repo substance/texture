@@ -45,6 +45,12 @@ const ANNOS = [
     menu: 'format',
     tool: 'toggle-monospace',
     selector: '.sc-annotation.sm-monospace'
+  },
+  {
+    name: 'Underline',
+    menu: 'format',
+    tool: 'toggle-underline',
+    selector: '.sc-annotation.sm-underline'
   }
 ]
 

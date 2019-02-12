@@ -295,6 +295,10 @@ export default {
       nodeType: 'superscript',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-underline', AnnotationCommand, {
+      nodeType: 'underline',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-unordered-list', ChangeListTypeCommand, {
       spec: { listType: 'bullet' },
       commandGroup: 'list'

@@ -61,6 +61,7 @@ export default {
     config.addComponent('superscript', AnnotationComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('table-figure', TableFigureComponent)
+    config.addComponent('underline', AnnotationComponent)
     config.addComponent('unsupported-node', UnsupportedNodeComponent)
     config.addComponent('unsupported-inline-node', UnsupportedInlineNodeComponent)
     config.addComponent('xref', XrefComponent)

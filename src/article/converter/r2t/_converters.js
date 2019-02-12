@@ -22,6 +22,7 @@ import SuperscriptConverter from './SuperscriptConverter'
 import SupplementaryFileConverter from './SupplementaryFileConverter'
 import TableConverter from './TableConverter'
 import TableFigureConverter from './TableFigureConverter'
+import UnderlineConverter from './UnderlineConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 import XrefConverter from './XrefConverter'
@@ -51,6 +52,7 @@ export default [
   new SupplementaryFileConverter(),
   new TableConverter(),
   new TableFigureConverter(),
+  new UnderlineConverter(),
   UnsupportedNodeConverter,
   UnsupportedInlineNodeConverter,
   new XrefConverter()

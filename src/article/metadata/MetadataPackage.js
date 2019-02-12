@@ -128,6 +128,10 @@ export default {
       nodeType: 'sup',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-underline', AnnotationCommand, {
+      nodeType: 'underline',
+      commandGroup: 'formatting'
+    })
 
     // Tools
     config.addTool('add-figure-panel', InsertFigurePanelTool)

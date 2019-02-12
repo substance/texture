@@ -210,6 +210,7 @@ export default {
     config.addLabel('small-caps', 'Small Caps')
     config.addLabel('subscript', 'Subscript')
     config.addLabel('superscript', 'Superscript')
+    config.addLabel('underline', 'Underline')
     // List tools labels
     config.addLabel('list-tools', 'List')
     config.addLabel('toggle-unordered-list', {

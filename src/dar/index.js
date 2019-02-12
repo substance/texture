@@ -1,4 +1,3 @@
-export { default as DocumentArchive } from './DocumentArchive'
 export { default as DarFileStorage } from './DarFileStorage'
 export { default as FSStorage } from './FSStorage'
 export { default as HttpStorageClient } from './HttpStorageClient'

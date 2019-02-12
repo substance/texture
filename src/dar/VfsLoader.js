@@ -1,5 +1,4 @@
 import loadManifest from './loadManifest'
-import DocumentArchive from './DocumentArchive'
 
 const path = {
   join (p1, p2) { return p1 + '/' + p2 }
@@ -35,7 +34,7 @@ export default class VfsLoader {
       session = this._loadDocument(rdcUri, el)
       sessions[el.id] = session
     })
-    let dc = new DocumentArchive(sessions)
+    let dc = new InMemoryDocumentArchive(sessions)
     cb(null, dc)
   }
 
@@ -47,5 +46,30 @@ export default class VfsLoader {
     let content = vfs.readFileSync(uri)
     let loader = this.loaders[type]
     return loader.load(content)
+  }
+}
+
+class InMemoryDocumentArchive {
+  constructor (sessions, buffer) {
+    this.sessions = sessions
+    this.buffer = buffer
+
+    if (!sessions.manifest) throw new Error("'manifest' session is required.")
+
+    this.init()
+  }
+
+  init () {}
+
+  getManifest () {
+    return this.sessions.manifest.getDocument()
+  }
+
+  getDocumentEntries () {
+    return this.getEditorSession('manifest').getDocument().getDocumentEntries()
+  }
+
+  getEditorSession (docId) {
+    return this.sessions[docId]
   }
 }

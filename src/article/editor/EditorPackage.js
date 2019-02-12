@@ -283,6 +283,10 @@ export default {
       spec: { listType: 'order' },
       commandGroup: 'list'
     })
+    config.addCommand('toggle-small-caps', AnnotationCommand, {
+      nodeType: 'small-caps',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'subscript',
       commandGroup: 'formatting'

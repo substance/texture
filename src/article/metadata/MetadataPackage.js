@@ -116,6 +116,10 @@ export default {
       nodeType: 'monospace',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-small-caps', AnnotationCommand, {
+      nodeType: 'small-caps',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'sub',
       commandGroup: 'formatting'

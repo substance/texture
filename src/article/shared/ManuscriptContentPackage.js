@@ -56,6 +56,7 @@ export default {
     config.addComponent('reference', ReferenceComponent)
     config.addComponent('reference-list', ReferenceListComponent)
     config.addComponent('section-label', SectionLabel)
+    config.addComponent('small-caps', AnnotationComponent)
     config.addComponent('subscript', AnnotationComponent)
     config.addComponent('superscript', AnnotationComponent)
     config.addComponent('table', TableComponent)

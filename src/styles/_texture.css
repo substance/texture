@@ -130,6 +130,10 @@
   font-weight: bold;
 }
 
+.sc-texture sc, .sc-texture .sc-annotation.sm-small-caps {
+  font-variant: small-caps;
+}
+
 .sc-texture sub, .sc-texture .sc-annotation.sm-subscript {
   vertical-align: sub;
   font-size: smaller;

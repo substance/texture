@@ -206,9 +206,10 @@ export default {
     config.addLabel('bold', 'Bold')
     config.addLabel('italic', 'Italic')
     config.addLabel('link', 'Link')
+    config.addLabel('monospace', 'Monospace')
+    config.addLabel('small-caps', 'Small Caps')
     config.addLabel('subscript', 'Subscript')
     config.addLabel('superscript', 'Superscript')
-    config.addLabel('monospace', 'Monospace')
     // List tools labels
     config.addLabel('list-tools', 'List')
     config.addLabel('toggle-unordered-list', {

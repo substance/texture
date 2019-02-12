@@ -23,6 +23,12 @@ const ANNOS = [
     selector: '.sc-external-link'
   },
   {
+    name: 'Small Caps',
+    menu: 'format',
+    tool: 'toggle-small-caps',
+    selector: '.sc-annotation.sm-small-caps'
+  },
+  {
     name: 'Subscript',
     menu: 'format',
     tool: 'toggle-subscript',

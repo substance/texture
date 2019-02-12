@@ -264,6 +264,10 @@ const TOOL_SPECS = {
     menu: 'format',
     tool: '.sm-toggle-monospace'
   },
+  'small-caps': {
+    menu: 'format',
+    tool: '.sm-toggle-small-caps'
+  },
   'subscript': {
     menu: 'format',
     tool: '.sm-toggle-subscript'

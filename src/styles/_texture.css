@@ -150,7 +150,6 @@
   font-family: monospace, monospace;
 }
 
-/* Can we get rid of underline from the Dar format */
-.sc-texture .sc-underline {
+.sc-texture underline, .sc-texture .sm-underline {
   text-decoration: underline;
 }

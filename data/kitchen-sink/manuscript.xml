@@ -175,7 +175,7 @@
   <body id="body">
     <sec id="sec-1">
       <title>Inline content</title>
-      <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>.</p>
+      <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>, <sc id="p2-sc-1">small caps</sc>.</p>
       <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
       <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
       <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="formula" rid="disp-formula-1">(1)</xref>.</p>

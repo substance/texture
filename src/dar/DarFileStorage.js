@@ -1,11 +1,16 @@
+import { platform } from 'substance'
 import FSStorage from './FSStorage'
 import listDir from './_listDir'
 
-const fs = require('fs')
-const fsExtra = require('fs-extra')
-const path = require('path')
-const yazl = require('yazl')
-const yauzl = require('yauzl')
+// FIXME: this file should only get bundled in commonjs version
+let fs, fsExtra, path, yazl, yauzl
+if (platform.inNodeJS) {
+  fs = require('fs')
+  fsExtra = require('fs-extra')
+  path = require('path')
+  yazl = require('yazl')
+  yauzl = require('yauzl')
+}
 
 /*
   This storage is used to store working copies of '.dar' files that are located somewhere else on the file-system.

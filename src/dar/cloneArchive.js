@@ -1,6 +1,11 @@
+import { platform } from 'substance'
 import isDocumentArchive from './_isDocumentArchive'
 
-const fsExtra = require('fs-extra')
+// FIXME: this file should only get bundled in commonjs version
+let fsExtra
+if (platform.inNodeJS) {
+  fsExtra = require('fs-extra')
+}
 
 export default async function cloneArchive (archiveDir, newArchiveDir, opts = {}) {
   // make sure that the given path is a dar

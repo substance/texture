@@ -1,9 +1,14 @@
 /* global FileReader, Buffer */
+import { platform } from 'substance'
 import readArchive from './readArchive'
 import writeArchive from './writeArchive'
 import cloneArchive from './cloneArchive'
 
-const path = require('path')
+// FIXME: this file should only get bundled in commonjs version
+let path
+if (platform.inNodeJS) {
+  path = require('path')
+}
 
 /*
   A storage client optimised for Desktop clients

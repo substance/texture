@@ -1,5 +1,5 @@
 // annotations that are simple annotations
-export const RICH_TEXT_ANNOS = ['bold', 'italic', 'superscript', 'subscript']
+export const RICH_TEXT_ANNOS = ['bold', 'italic', 'small-caps', 'superscript', 'subscript']
 
 export const EXTENDED_FORMATTING = ['monospace', 'strike-through', 'underline', 'overline']
 

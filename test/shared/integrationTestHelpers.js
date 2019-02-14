@@ -193,6 +193,16 @@ export class PseudoFileEvent extends DOMEvent {
   }
 }
 
+export class PseudoDropEvent extends DOMEvent {
+  constructor (name = 'test.png', type = 'image/png') {
+    super()
+    let blob = createPseudoFile(name, type)
+    this.dataTransfer = {
+      files: [ blob ]
+    }
+  }
+}
+
 export function createPseudoFile (name, type) {
   let blob
   if (platform.inBrowser) {

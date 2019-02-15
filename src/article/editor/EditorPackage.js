@@ -11,6 +11,7 @@ import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
+import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleNavPackage from '../ArticleNavPackage'
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
@@ -465,8 +466,31 @@ export default {
     config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
     config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
     config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
+
+    // Register commands and keyboard shortcuts for collections
+    registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
+    registerCollectionCommand(config, 'funder', ['metadata', 'funders'], { keyboardShortcut: 'CommandOrControl+Alt+Y' })
+    registerCollectionCommand(config, 'editor', ['metadata', 'editors'], { keyboardShortcut: 'CommandOrControl+Alt+E', nodeType: 'person' })
+    registerCollectionCommand(config, 'group', ['metadata', 'groups'], { keyboardShortcut: 'CommandOrControl+Alt+G' })
+    registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
+    registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
+    registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
   },
   ManuscriptEditor,
   // legacy
   Editor: ManuscriptEditor
+}
+
+// For now we just switch view and do the same action as in metadata editor
+// TODO: later we will probably have just one set of commands for register collection
+function registerCollectionCommand (config, itemType, collectionPath, options = {}) {
+  let nodeType = options.nodeType || itemType
+  config.addCommand(`insert-${itemType}`, AddEntityCommand, {
+    type: nodeType,
+    collection: collectionPath,
+    commandGroup: 'add-entity'
+  })
+  if (options.keyboardShortcut) {
+    config.addKeyboardShortcut(options.keyboardShortcut, { command: `add-${itemType}` })
+  }
 }

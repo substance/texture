@@ -10,7 +10,7 @@ import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-import AddEntityCommand from './AddEntityCommand'
+import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'

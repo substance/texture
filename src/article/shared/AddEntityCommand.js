@@ -10,6 +10,11 @@ export default class AddEntityCommand extends Command {
     if (workflow) {
       context.editor.send('startWorkflow', workflow)
     } else {
+      const appState = context.appState
+      const viewName = appState.get('viewName')
+      if (viewName !== 'metadata') {
+        context.editor.send('updateViewName', 'metadata')
+      }
       this._addItemToCollection(params, context)
       context.editor.send('toggleOverlay')
     }

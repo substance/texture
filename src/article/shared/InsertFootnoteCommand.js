@@ -1,6 +1,6 @@
 import { documentHelpers } from 'substance'
 import { findParentByType } from './nodeHelpers'
-import AddEntityCommand from '../metadata/AddEntityCommand'
+import AddEntityCommand from './AddEntityCommand'
 import Footnote from '../models/Footnote'
 
 export default class InsertFootnoteCommand extends AddEntityCommand {

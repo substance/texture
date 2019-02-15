@@ -5,7 +5,6 @@ export * from './shared'
 export * from './ArticleConstants'
 
 export { default as ArticleAPI } from './ArticleAPI'
-export { default as ArticleEditorSession } from './ArticleEditorSession'
 export { default as ArticleLoader } from './ArticleLoader'
 export { default as ArticlePackage } from './ArticlePackage'
 export { default as ArticleModelPackage } from './ArticleModelPackage'

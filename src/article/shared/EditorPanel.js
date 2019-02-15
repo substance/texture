@@ -1,10 +1,6 @@
 import { Component, keys } from 'substance'
-import { createEditorContext } from '../../kit'
-import ArticleEditorSession from '../ArticleEditorSession'
+import { createEditorContext, EditorSession } from '../../kit'
 import ArticleAPI from '../ArticleAPI'
-import DefaultSettings from '../settings/DefaultSettings'
-import EditorSettings from '../settings/ExperimentalEditorSettings'
-import FigurePackageSettings from '../settings/FigurePackageSettings'
 
 // Base-class for Manuscript- and MetadataEditor to reduced code-redundancy
 export default class EditorPanel extends Component {
@@ -26,19 +22,11 @@ export default class EditorPanel extends Component {
 
   // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
-    const { articleSession, config, archive } = props
+    const { articleSession, config, archive, editorState, viewName } = props
 
     // TODO: I want to refactor how EditorSessions are created
     // particularly I want to work on the multi-view/user sessions
-    const editorSession = new ArticleEditorSession(
-      articleSession, config, this,
-      // initial editor state
-      {
-        workflowId: null,
-        viewName: this.props.viewName,
-        settings: this._createSettings(articleSession.getDocument())
-      }
-    )
+    const editorSession = new EditorSession(viewName, articleSession, config, this, editorState)
     const api = new ArticleAPI(editorSession, archive, config, articleSession, { getContext: () => this.context })
 
     const context = Object.assign(createEditorContext(config, editorSession), {
@@ -101,21 +89,6 @@ export default class EditorPanel extends Component {
     appState.workflowId = null
     appState.overlayId = null
     appState.propagateUpdates()
-  }
-
-  // EXPERIMENTAL:
-  // this is a first prototype for settings used to control editability and required fields
-  // On the long run we need to understand better what different means of configuration we want to offer
-  _createSettings (doc) {
-    let settings = new EditorSettings()
-    let metadata = doc.get('metadata')
-    // Default settings
-    settings.load(DefaultSettings)
-    // Article type specific settings
-    if (metadata.articleType === 'figure-package') {
-      settings.extend(FigurePackageSettings)
-    }
-    return settings
   }
 
   _executeCommand (name, params) {

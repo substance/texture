@@ -1,4 +1,4 @@
-import { DocumentSession } from '../kit'
+import { DocumentSession } from 'substance'
 import FigureManager from './shared/FigureManager'
 import FootnoteManager from './shared/FootnoteManager'
 import FormulaManager from './shared/FormulaManager'
@@ -7,15 +7,15 @@ import TableManager from './shared/TableManager'
 import SupplementaryManager from './shared/SupplementaryManager'
 
 export default class ArticleSession extends DocumentSession {
-  constructor (doc, configurator) {
+  constructor (doc, config) {
     super(doc)
 
-    this.figureManager = new FigureManager(this, configurator.getLabelGenerator('figures'))
-    this.footnoteManager = new FootnoteManager(this, configurator.getLabelGenerator('footnotes'))
-    this.formulaManager = new FormulaManager(this, configurator.getLabelGenerator('formulas'))
-    this.referenceManager = new ReferenceManager(this, configurator.getLabelGenerator('references'))
-    this.supplementaryManager = new SupplementaryManager(this, configurator.getLabelGenerator('supplementaries'))
-    this.tableManager = new TableManager(this, configurator.getLabelGenerator('tables'))
+    this.figureManager = new FigureManager(this, config.getLabelGenerator('figures'))
+    this.footnoteManager = new FootnoteManager(this, config.getLabelGenerator('footnotes'))
+    this.formulaManager = new FormulaManager(this, config.getLabelGenerator('formulas'))
+    this.referenceManager = new ReferenceManager(this, config.getLabelGenerator('references'))
+    this.supplementaryManager = new SupplementaryManager(this, config.getLabelGenerator('supplementaries'))
+    this.tableManager = new TableManager(this, config.getLabelGenerator('tables'))
   }
 
   getFigureManager () {

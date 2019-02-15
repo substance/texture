@@ -1,7 +1,7 @@
 /* global vfs */
 import {
   TextureConfigurator, ArticlePackage,
-  ArticleEditorSession,
+  EditorSession,
   ArticleAPI, createEditorContext,
   VfsStorageClient, TextureArchive, InMemoryDarBuffer
 } from '../../index'
@@ -29,7 +29,7 @@ export default function setupTestArticleSession (opts = {}) {
   }
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context
   let contextProvider = {}
-  let editorSession = new ArticleEditorSession(documentSession, config, contextProvider)
+  let editorSession = new EditorSession('test-editor', documentSession, config, contextProvider)
   let api = new ArticleAPI(editorSession, config, archive)
   let context = Object.assign(createEditorContext(config, editorSession), { api })
   // ... after the context is ready we can store it into the provider

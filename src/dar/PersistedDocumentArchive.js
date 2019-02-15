@@ -1,6 +1,7 @@
 import { forEach, last, uuid, EventEmitter, platform, isString } from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
+import ManifestEditorSession from './ManifestEditorSession'
 
 /*
   A PersistedDocumentArchive is a 3-tier stack representing a document archive
@@ -45,7 +46,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let assetId = uuid()
     let [name, ext] = _getNameAndExtension(file.name)
     let filePath = this._getUniqueFileName(name, ext)
-    this._sessions.manifest.transaction(tx => {
+    this._getManifestEditorSession().transaction(tx => {
       let assets = tx.find('assets')
       let asset = tx.createElement('asset', { id: assetId }).attr({
         path: filePath,
@@ -148,7 +149,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   removeDocument (documentId) {
     let session = this._sessions[documentId]
     this._unregisterFromSession(session)
-    this._sessions.manifest.transaction(tx => {
+    this._getManifestEditorSession().transaction(tx => {
       let documents = tx.find('documents')
       let docEntry = tx.find(`#${documentId}`)
       documents.removeChild(docEntry)
@@ -156,7 +157,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   renameDocument (documentId, name) {
-    this._sessions.manifest.transaction(tx => {
+    this._getManifestEditorSession().transaction(tx => {
       let docEntry = tx.find(`#${documentId}`)
       docEntry.attr({ name })
     })
@@ -199,7 +200,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     Adds a document record to the manifest file
   */
   _addDocumentRecord (documentId, type, name, path) {
-    this._sessions.manifest.transaction(tx => {
+    this._getManifestEditorSession().transaction(tx => {
       let documents = tx.find('documents')
       let docEntry = tx.createElement('document', { id: documentId }).attr({
         name: name,
@@ -208,6 +209,13 @@ export default class PersistedDocumentArchive extends EventEmitter {
       })
       documents.appendChild(docEntry)
     })
+  }
+
+  _getManifestEditorSession () {
+    if (!this._manifestEditorSession) {
+      this._manifestEditorSession = new ManifestEditorSession('manifest', this._sessions.manifest)
+    }
+    return this._manifestEditorSession
   }
 
   _getUniqueFileName (name, ext) {

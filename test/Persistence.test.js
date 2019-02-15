@@ -1,5 +1,5 @@
 /* global vfs */
-import { platform } from 'substance'
+import { platform, AbstractEditorSession } from 'substance'
 import { test } from 'substance-test'
 import { TextureArchive, checkArchive } from '../index'
 import { getMountPoint, diff } from './shared/testHelpers'
@@ -113,7 +113,7 @@ function LoadSaveShouldNotThrow (archiveId, title, change) {
 }
 
 function _NOP ({ manuscriptSession }) {
-  applyNOP(manuscriptSession)
+  applyNOP(new AbstractEditorSession('manuscript', manuscriptSession))
 }
 
 function _INSERT_FIGURE ({ app }) {

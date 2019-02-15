@@ -70,7 +70,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   getDocumentEntries () {
-    return this.getEditorSession('manifest').getDocument().getDocumentEntries()
+    return this.getDocumentSession('manifest').getDocument().getDocumentEntries()
   }
 
   getDownloadLink (fileName) {
@@ -81,7 +81,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     }
   }
 
-  getEditorSession (docId) {
+  getDocumentSession (docId) {
     return this._sessions[docId]
   }
 

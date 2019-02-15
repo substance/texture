@@ -35,26 +35,30 @@ export default class TextureArchive extends PersistedDocumentArchive {
   }
 
   _repair () {
-    let manifestSession = this.getEditorSession('manifest')
+    let manifestSession = this.getDocumentSession('manifest')
     let entries = manifestSession.getDocument().getDocumentEntries()
     let missingEntries = []
 
     entries.forEach(entry => {
-      let session = this.getEditorSession(entry.id)
+      let session = this.getDocumentSession(entry.id)
       if (!session) {
         missingEntries.push(entry.id)
-        console.warn(`${entry.path} could not be found in archive and will be deleted...`)
+        console.warn(`${entry.path} could not be found in the archive`)
       }
     })
 
-    // Cleanup missing entries
-    manifestSession.transaction(tx => {
-      let documentsEl = tx.find('documents')
-      missingEntries.forEach(missingEntry => {
-        let entryEl = tx.get(missingEntry)
-        documentsEl.removeChild(entryEl)
-      })
-    })
+    // TODO: rethink this. IMO it is a HACK to do such things automatically
+    // Instead the user should be informed about the problem and be asked to fix it.
+    if (missingEntries.length > 0) {
+      // Cleanup missing entries
+      // manifestSession.transaction(tx => {
+      //   let documentsEl = tx.find('documents')
+      //   missingEntries.forEach(missingEntry => {
+      //     let entryEl = tx.get(missingEntry)
+      //     documentsEl.removeChild(entryEl)
+      //   })
+      // })
+    }
   }
 
   _exportManifest (sessions, buffer, rawArchive) {
@@ -133,7 +137,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
   }
 
   getTitle () {
-    let editorSession = this.getEditorSession('manuscript')
+    let editorSession = this.getDocumentSession('manuscript')
     let title = 'Untitled'
     if (editorSession) {
       let doc = editorSession.getDocument()

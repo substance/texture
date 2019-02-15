@@ -19,7 +19,7 @@ export default function setupTestArticleSession (opts = {}) {
   // TODO: make sure that this is always the case
   let archiveId = opts.archiveId || 'blank'
   archive.load(archiveId, () => {})
-  let documentSession = archive.getEditorSession('manuscript')
+  let documentSession = archive.getDocumentSession('manuscript')
   let doc = documentSession.getDocument()
   if (opts.seed) {
     // clear the body

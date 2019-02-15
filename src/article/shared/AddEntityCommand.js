@@ -10,9 +10,11 @@ export default class AddEntityCommand extends Command {
     if (workflow) {
       context.editor.send('startWorkflow', workflow)
     } else {
+      // If command requires switching view, then we frst switching to metadate view
+      // and then adding entity to the collection
       const appState = context.appState
       const viewName = appState.get('viewName')
-      if (viewName !== 'metadata') {
+      if (this.config.switchView && viewName !== 'metadata') {
         context.editor.send('updateViewName', 'metadata')
       }
       this._addItemToCollection(params, context)

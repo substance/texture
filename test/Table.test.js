@@ -599,7 +599,7 @@ test('Table: insert rows', t => {
   clickUndo(editor)
   t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple rows above
+  t.comment('insert multiple rows above')
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu.find('.sm-insert-rows-above').click()
   t.equal(_getRowCount(tableComp), originalRowCount + 2, 'there should be two more rows')
@@ -608,7 +608,7 @@ test('Table: insert rows', t => {
   clickUndo(editor)
   t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple rows below
+  t.comment('insert multiple rows below')
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu.find('.sm-insert-rows-below').click()
   t.equal(_getRowCount(tableComp), originalRowCount + 2, 'there should be two more rows')
@@ -625,38 +625,45 @@ test('Table: insert columns', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousColCount = _getColumnCount(tableComp)
+  const originalRowCount = _getColumnCount(tableComp)
 
+  t.comment('insert column left')
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-columns-left').click()
-  let colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 1, 'there should be one new col')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 1, 'there should be one new col')
   // TODO: can we check that the col was inserted before?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
-  previousColCount = colCount
+  t.comment('insert column right')
   _selectCell(tableComp, 1, 0)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-columns-right').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 1, 'there should be one new col')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 1, 'there should be one new col')
   // TODO: can we check that the col was inserted after?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple cols before
-  previousColCount = colCount
+  t.comment('insert multiple columns left')
   _selectRange(tableComp, 1, 0, 1, 1)
   contextMenu.find('.sm-insert-columns-left').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 2, 'there should be two more cols')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 2, 'there should be two more cols')
   // TODO: can we check that the cols were inserted before?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple cols after
-  previousColCount = colCount
+  t.comment('insert multiple columns right')
   _selectRange(tableComp, 1, 0, 1, 1)
   contextMenu.find('.sm-insert-columns-right').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 2, 'there should be two more cols')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 2, 'there should be two more cols')
   // TODO: can we check that the cols were inserted after?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
   t.end()
 })

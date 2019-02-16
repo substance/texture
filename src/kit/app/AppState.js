@@ -76,10 +76,6 @@ export default class AppState extends AbstractAppState {
     }
   }
 
-  propagate (...args) {
-    return this.propagateUpdates(...args)
-  }
-
   _getSlotId (stage, deps) {
     deps.sort()
     return `@${stage}:${deps.join(',')}`

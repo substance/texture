@@ -124,7 +124,7 @@ export default class ArticlePanel extends Component {
     const appState = new AppState({
       viewName: DEFAULT_VIEW
     })
-    appState.addObserver(['view'], this.rerender, this, { stage: 'render' })
+    appState.addObserver(['viewName'], this.rerender, this, { stage: 'render' })
     return appState
   }
 
@@ -144,12 +144,10 @@ export default class ArticlePanel extends Component {
   }
 
   _updateViewName (viewName) {
-    let oldViewName = this.context.appState.viewName
+    let oldViewName = this.state.viewName
     if (oldViewName !== viewName) {
-      this.context.appState.viewName = viewName
-      // store last viewport
       this._viewStates.get(oldViewName).viewport = this.refs.content.getViewport()
-      this.rerender()
+      this.extendState({ viewName })
     }
   }
 

@@ -44,7 +44,6 @@ export default class EditorPanel extends Component {
 
     this.editorSession.initialize()
     this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
-    this.appState.addObserver(['viewName'], this._updateViewName, this, { stage: 'render' })
     this.appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
 
     // HACK: ATM there is no better way than to listen to an archive
@@ -175,10 +174,5 @@ export default class EditorPanel extends Component {
 
   _scrollElementIntoView (el, force) {
     this._getContentPanel().scrollElementIntoView(el, !force)
-  }
-
-  _updateViewName () {
-    let appState = this.context.appState
-    this.send('updateViewName', appState.viewName)
   }
 }

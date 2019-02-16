@@ -194,7 +194,7 @@ export default class EditorSession extends AbstractEditorSession {
     // need to remain open if the selection is a value selection
     let sel = this.getSelection()
     if (sel && sel.customType === 'value') {
-      let valueId = String(sel.data.path)
+      let valueId = sel.data.path.join('.')
       if (overlayId !== valueId) {
         this.editorState.set('overlayId', valueId)
       }

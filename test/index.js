@@ -42,6 +42,9 @@ if (platform.devtools) {
 if (platform.inNodeJS) {
   substanceGlobals.DEBUG_RENDERING = false
 
+  // pure NodeJS tests (i.e. parts used in electron app)
+  require('./Storage.test.js')
+
   if (process.env.TEST) {
     const { test } = require('substance-test')
     let harness = test.getHarness()
@@ -52,9 +55,4 @@ if (platform.inNodeJS) {
       }
     })
   }
-}
-
-// pure NodeJS tests (i.e. parts used in electron app)
-if (platform.inNodeJS) {
-  require('./Storage.test.js')
 }

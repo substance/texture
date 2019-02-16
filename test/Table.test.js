@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelper
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent, selectNode
+  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent, selectNode, clickUndo
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -577,38 +577,45 @@ test('Table: insert rows', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousRowCount = _getRowCount(tableComp)
+  const originalRowCount = _getRowCount(tableComp)
 
+  t.comment('insert a row above')
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-rows-above').click()
-  let rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
+  t.equal(_getRowCount(tableComp), originalRowCount + 1, 'there should be one new row')
   // TODO: can we check that the row was inserted above?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
-  previousRowCount = rowCount
+  t.comment('insert a row below')
   _selectCell(tableComp, 1, 0)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-rows-below').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
+  t.equal(_getRowCount(tableComp), originalRowCount + 1, 'there should be one new row')
   // TODO: can we check that the row was inserted below?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
   // insert multiple rows above
-  previousRowCount = rowCount
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu.find('.sm-insert-rows-above').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
+  t.equal(_getRowCount(tableComp), originalRowCount + 2, 'there should be two more rows')
   // TODO: can we check that the row was inserted above?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
   // insert multiple rows below
-  previousRowCount = rowCount
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu.find('.sm-insert-rows-below').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
+  t.equal(_getRowCount(tableComp), originalRowCount + 2, 'there should be two more rows')
   // TODO: can we check that the row was inserted below?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
   t.end()
 })

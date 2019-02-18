@@ -5,8 +5,6 @@ import InternalArticleSchema from './InternalArticleSchema'
 import ArticleHTMLExporter from './converter/html/ArticleHTMLExporter'
 import ArticleHTMLImporter from './converter/html/ArticleHTMLImporter'
 import ArticlePlainTextExporter from './converter/ArticlePlainTextExporter'
-import JATSExporter from './converter/JATSExporter'
-import JATSImporter from './converter/JATSImporter'
 
 export default class ArticleConfigurator extends TextureConfigurator {
   constructor () {

@@ -19,27 +19,27 @@ import setupTestApp from './shared/setupTestApp'
 // TODO: test pasting of cells with annotations
 
 const SIMPLE_TABLE = `<table-wrap>
-  <table>
+  <table id="t1">
     <tbody>
-      <tr>
+      <tr id="tr1">
         <td id="t11">aaaa</td>
         <td id="t12">bbbb</td>
         <td id="t13">cccc</td>
         <td id="t14">dddd</td>
       </tr>
-      <tr>
+      <tr id="tr2">
         <td id="t21">eeee</td>
         <td id="t22">ffff</td>
         <td id="t23">gggg</td>
         <td id="t24">hhhh</td>
       </tr>
-      <tr>
+      <tr id="tr3">
         <td id="t31">iiii</td>
         <td id="t32">jjjj</td>
         <td id="t33">kkkk</td>
         <td id="t34">llll</td>
         </tr>
-      <tr>
+      <tr id="tr4">
         <td id="t41">mmmm</td>
         <td id="t42">nnnn</td>
         <td id="t43">oooo</td>
@@ -673,23 +673,28 @@ test('Table: delete rows', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousRowCount = _getRowCount(tableComp)
+  let table = _getTable(tableComp)
+  const originalRowCount = table.getRowCount()
 
+  t.comment('delete single row')
   // delete single row
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-rows').click()
-  let rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount - 1, 'there should be one row less')
+  t.equal(table.getRowCount(), originalRowCount - 1, 'there should be one row less')
   // TODO: can we check that the correct row deleted?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(table.getRowCount(), originalRowCount, 'change should have been undone')
 
-  // delete multiple rows
-  previousRowCount = rowCount
+  t.comment('delete multiple rows')
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-rows').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount - 2, 'there should be two rows less')
+  t.equal(_getRowCount(tableComp), originalRowCount - 2, 'there should be two rows less')
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
   t.end()
 })

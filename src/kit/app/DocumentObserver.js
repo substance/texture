@@ -6,6 +6,12 @@ export default class DocumentObserver {
     this.doc = doc
     this.dirty = new Set()
 
+    this.init()
+  }
+
+  init () {
+    const doc = this.doc
+    this.dirty.clear()
     if (!doc.getIndex('relationships')) {
       doc.addIndex('relationships', new RelationshipIndex())
     }

@@ -19,7 +19,7 @@ export default class Texture extends Component {
     const currentDocumentName = 'manuscript'
     const ResourceComponent = this.config.getComponent('article')
     const config = this.config.getConfiguration('article')
-    const documentSession = archive.getEditorSession(currentDocumentName)
+    const documentSession = archive.getDocumentSession(currentDocumentName)
     let props = {
       archive,
       config,

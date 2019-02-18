@@ -23,8 +23,8 @@ export default function setupTestApp (t, options = {}) {
     throw new Error(app.state.error)
   } else {
     let archive = app.state.archive
-    let manifestSession = archive.getEditorSession('manifest')
-    let manuscriptSession = archive.getEditorSession('manuscript')
+    let manifestSession = archive.getDocumentSession('manifest')
+    let manuscriptSession = archive.getDocumentSession('manuscript')
     return { app, archive, manifestSession, manuscriptSession }
   }
 }

@@ -15,10 +15,12 @@ export default class SwitchViewCommand extends Command {
   }
 
   execute (params, context) {
-    let state = context.appState
-    if (state) {
-      state.viewName = this.config.viewName
-      state.propagate()
+    // Note: switch from using app state to simple action
+    // because we do not yet have a good way to 'inherit' app state
+    // i.e. the correct app state would be that of ArticlePanel, but
+    // here we have ManuscriptEditor or MetadataEditor
+    if (context.editor) {
+      context.editor.send('updateViewName', this.config.viewName)
     }
   }
 }

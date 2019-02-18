@@ -1,16 +1,22 @@
 import { Component } from 'substance'
-import { AppState, createComponentContext } from '../kit'
+import { AppState, EditorSession, createComponentContext } from '../kit'
+import DefaultSettings from './settings/DefaultSettings'
+import EditorSettings from './settings/ExperimentalEditorSettings'
+import FigurePackageSettings from './settings/FigurePackageSettings'
 
 const DEFAULT_VIEW = 'manuscript'
+const VIEWS = ['manuscript', 'metadata']
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
+
+    // Store the viewports, so we can restore scroll positions
+    this._viewStates = new Map()
+
     // TODO: should we really (ab-)use the regular Component state as AppState?
     this._initialize(this.props, this.state)
 
-    // Store the viewports, so we can restore scroll positions
-    this._viewports = {}
     this.handleActions({
       'updateViewName': this._updateViewName
     })
@@ -20,13 +26,29 @@ export default class ArticlePanel extends Component {
     // TODO: I want to move to a single-layer setup for all views in this panel,
     // i.e. no extra configurations and if possible no extra editor session
     // and instead contextualize commands tools etc.
-    const archive = props.archive
-    const config = props.config
+    const { archive, config, documentSession } = props
+    const doc = documentSession.getDocument()
 
     this.context = Object.assign(createComponentContext(config), {
       urlResolver: archive,
       appState: this.state
     })
+
+    // setup view states
+    for (let viewName of VIEWS) {
+      let viewConfig = props.config.getConfiguration(viewName)
+      let editorState = EditorSession.createEditorState(documentSession, {
+        workflowId: null,
+        viewName,
+        settings: this._createSettings(doc)
+      })
+      this._viewStates.set(viewName, {
+        config: viewConfig,
+        editorState,
+        // Note: used to retain scroll position when switching between views
+        viewport: null
+      })
+    }
   }
 
   getInitialState () {
@@ -72,8 +94,7 @@ export default class ArticlePanel extends Component {
     const api = this.api
     const archive = props.archive
     const articleSession = props.documentSession
-    const config = props.config.getConfiguration(viewName)
-    const viewport = this._viewports[viewName]
+    const { config, editorState, viewport } = this._viewStates.get(viewName)
 
     let ContentComponent
     switch (viewName) {
@@ -85,20 +106,17 @@ export default class ArticlePanel extends Component {
         ContentComponent = this.getComponent('metadata-editor')
         break
       }
-      case 'reader': {
-        ContentComponent = this.getComponent('article-reader')
-        break
-      }
       default:
         throw new Error('Unsupported view: ' + viewName)
     }
     return $$(ContentComponent, {
-      viewport,
-      viewName,
       api,
       archive,
+      articleSession,
       config,
-      articleSession
+      editorState,
+      viewName,
+      viewport
     }).ref('content')
   }
 
@@ -106,16 +124,30 @@ export default class ArticlePanel extends Component {
     const appState = new AppState({
       viewName: DEFAULT_VIEW
     })
-    appState.addObserver(['view'], this.rerender, this, { stage: 'render' })
+    appState.addObserver(['viewName'], this.rerender, this, { stage: 'render' })
     return appState
   }
 
+  // EXPERIMENTAL:
+  // this is a first prototype for settings used to control editability and required fields
+  // On the long run we need to understand better what different means of configuration we want to offer
+  _createSettings (doc) {
+    let settings = new EditorSettings()
+    let metadata = doc.get('metadata')
+    // Default settings
+    settings.load(DefaultSettings)
+    // Article type specific settings
+    if (metadata.articleType === 'figure-package') {
+      settings.extend(FigurePackageSettings)
+    }
+    return settings
+  }
+
   _updateViewName (viewName) {
-    let oldViewName = this.context.appState.viewName
+    let oldViewName = this.state.viewName
     if (oldViewName !== viewName) {
-      this.context.appState.viewName = viewName
-      this._viewports[oldViewName] = this.refs.content.getViewport()
-      this.rerender()
+      this._viewStates.get(oldViewName).viewport = this.refs.content.getViewport()
+      this.extendState({ viewName })
     }
   }
 

@@ -1,8 +1,8 @@
 import { forEach } from 'substance'
-import JATSImporter from './converter/JATSImporter'
 import ArticleConfigurator from './ArticleConfigurator'
 import ArticleModelPackage from './ArticleModelPackage'
 import ArticleSession from './ArticleSession'
+import JATSImporter from './converter/JATSImporter'
 
 export default {
   load (xml) {
@@ -20,8 +20,7 @@ export default {
       throw err
     }
     let doc = result.doc
-    let editorSession = new ArticleSession(doc, configurator)
-    return editorSession
+    return new ArticleSession(doc, configurator)
   }
 }
 

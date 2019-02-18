@@ -24,6 +24,11 @@ export default class EditorState extends AppState {
     impl._selectionStateReducer = selectionStateReducer
   }
 
+  // Call this to revitalise a previously disposed editor state
+  init () {
+    this._getImpl().documentObserver.init()
+  }
+
   dispose () {
     super.dispose()
 

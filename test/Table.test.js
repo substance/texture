@@ -7,7 +7,7 @@ import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelper
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent, selectNode
+  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent, selectNode, clickUndo
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -19,27 +19,27 @@ import setupTestApp from './shared/setupTestApp'
 // TODO: test pasting of cells with annotations
 
 const SIMPLE_TABLE = `<table-wrap>
-  <table>
+  <table id="t1">
     <tbody>
-      <tr>
+      <tr id="tr1">
         <td id="t11">aaaa</td>
         <td id="t12">bbbb</td>
         <td id="t13">cccc</td>
         <td id="t14">dddd</td>
       </tr>
-      <tr>
+      <tr id="tr2">
         <td id="t21">eeee</td>
         <td id="t22">ffff</td>
         <td id="t23">gggg</td>
         <td id="t24">hhhh</td>
       </tr>
-      <tr>
+      <tr id="tr3">
         <td id="t31">iiii</td>
         <td id="t32">jjjj</td>
         <td id="t33">kkkk</td>
         <td id="t34">llll</td>
         </tr>
-      <tr>
+      <tr id="tr4">
         <td id="t41">mmmm</td>
         <td id="t42">nnnn</td>
         <td id="t43">oooo</td>
@@ -577,38 +577,45 @@ test('Table: insert rows', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousRowCount = _getRowCount(tableComp)
+  const originalRowCount = _getRowCount(tableComp)
 
+  t.comment('insert a row above')
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-rows-above').click()
-  let rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
+  t.equal(_getRowCount(tableComp), originalRowCount + 1, 'there should be one new row')
   // TODO: can we check that the row was inserted above?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
-  previousRowCount = rowCount
+  t.comment('insert a row below')
   _selectCell(tableComp, 1, 0)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-rows-below').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 1, 'there should be one new row')
+  t.equal(_getRowCount(tableComp), originalRowCount + 1, 'there should be one new row')
   // TODO: can we check that the row was inserted below?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple rows above
-  previousRowCount = rowCount
+  t.comment('insert multiple rows above')
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu.find('.sm-insert-rows-above').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
+  t.equal(_getRowCount(tableComp), originalRowCount + 2, 'there should be two more rows')
   // TODO: can we check that the row was inserted above?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple rows below
-  previousRowCount = rowCount
+  t.comment('insert multiple rows below')
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu.find('.sm-insert-rows-below').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount + 2, 'there should be two more rows')
+  t.equal(_getRowCount(tableComp), originalRowCount + 2, 'there should be two more rows')
   // TODO: can we check that the row was inserted below?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
   t.end()
 })
@@ -618,38 +625,45 @@ test('Table: insert columns', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousColCount = _getColumnCount(tableComp)
+  const originalRowCount = _getColumnCount(tableComp)
 
+  t.comment('insert column left')
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-columns-left').click()
-  let colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 1, 'there should be one new col')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 1, 'there should be one new col')
   // TODO: can we check that the col was inserted before?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
-  previousColCount = colCount
+  t.comment('insert column right')
   _selectCell(tableComp, 1, 0)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-insert-columns-right').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 1, 'there should be one new col')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 1, 'there should be one new col')
   // TODO: can we check that the col was inserted after?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple cols before
-  previousColCount = colCount
+  t.comment('insert multiple columns left')
   _selectRange(tableComp, 1, 0, 1, 1)
   contextMenu.find('.sm-insert-columns-left').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 2, 'there should be two more cols')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 2, 'there should be two more cols')
   // TODO: can we check that the cols were inserted before?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
-  // insert multiple cols after
-  previousColCount = colCount
+  t.comment('insert multiple columns right')
   _selectRange(tableComp, 1, 0, 1, 1)
   contextMenu.find('.sm-insert-columns-right').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount + 2, 'there should be two more cols')
+  t.equal(_getColumnCount(tableComp), originalRowCount + 2, 'there should be two more cols')
   // TODO: can we check that the cols were inserted after?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getColumnCount(tableComp), originalRowCount, 'change should have been undone')
 
   t.end()
 })
@@ -659,23 +673,28 @@ test('Table: delete rows', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousRowCount = _getRowCount(tableComp)
+  let table = _getTable(tableComp)
+  const originalRowCount = table.getRowCount()
 
+  t.comment('delete single row')
   // delete single row
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-rows').click()
-  let rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount - 1, 'there should be one row less')
+  t.equal(table.getRowCount(), originalRowCount - 1, 'there should be one row less')
   // TODO: can we check that the correct row deleted?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(table.getRowCount(), originalRowCount, 'change should have been undone')
 
-  // delete multiple rows
-  previousRowCount = rowCount
+  t.comment('delete multiple rows')
   _selectRange(tableComp, 1, 0, 2, 0)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-rows').click()
-  rowCount = _getRowCount(tableComp)
-  t.equal(rowCount, previousRowCount - 2, 'there should be two rows less')
+  t.equal(_getRowCount(tableComp), originalRowCount - 2, 'there should be two rows less')
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(_getRowCount(tableComp), originalRowCount, 'change should have been undone')
 
   t.end()
 })
@@ -685,23 +704,27 @@ test('Table: delete columns', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousColCount = _getColumnCount(tableComp)
+  let table = _getTable(tableComp)
+  const originalColCount = _getColumnCount(tableComp)
 
-  // delete single col
+  t.comment('delete single col')
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-columns').click()
-  let colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount - 1, 'there should be one col less')
+  t.equal(_getColumnCount(tableComp), originalColCount - 1, 'there should be one col less')
   // TODO: can we check that the correct col deleted?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(table.getRowCount(), originalColCount, 'change should have been undone')
 
-  // delete multiple cols
-  previousColCount = colCount
+  t.comment('delete multiple cols')
   _selectRange(tableComp, 1, 0, 1, 1)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-columns').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount - 2, 'there should be two cols less')
+  t.equal(_getColumnCount(tableComp), originalColCount - 2, 'there should be two cols less')
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(table.getRowCount(), originalColCount, 'change should have been undone')
 
   t.end()
 })

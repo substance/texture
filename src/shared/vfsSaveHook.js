@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { platform } from 'substance'
 import checkArchive from './checkArchive'
 

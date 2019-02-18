@@ -68,6 +68,7 @@ export default class ArticlePanel extends Component {
 
   getChildContext () {
     return {
+      articlePanel: this,
       appState: this.state
     }
   }

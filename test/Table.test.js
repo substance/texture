@@ -704,23 +704,27 @@ test('Table: delete columns', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, SIMPLE_TABLE)
   let tableComp = editor.find('.sc-table')
-  let previousColCount = _getColumnCount(tableComp)
+  let table = _getTable(tableComp)
+  const originalColCount = _getColumnCount(tableComp)
 
-  // delete single col
+  t.comment('delete single col')
   _selectCell(tableComp, 1, 0)
   let contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-columns').click()
-  let colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount - 1, 'there should be one col less')
+  t.equal(_getColumnCount(tableComp), originalColCount - 1, 'there should be one col less')
   // TODO: can we check that the correct col deleted?
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(table.getRowCount(), originalColCount, 'change should have been undone')
 
-  // delete multiple cols
-  previousColCount = colCount
+  t.comment('delete multiple cols')
   _selectRange(tableComp, 1, 0, 1, 1)
   contextMenu = _openContextMenu(tableComp)
   contextMenu.find('.sm-delete-columns').click()
-  colCount = _getColumnCount(tableComp)
-  t.equal(colCount, previousColCount - 2, 'there should be two cols less')
+  t.equal(_getColumnCount(tableComp), originalColCount - 2, 'there should be two cols less')
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(table.getRowCount(), originalColCount, 'change should have been undone')
 
   t.end()
 })

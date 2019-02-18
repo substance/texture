@@ -392,10 +392,12 @@ test('ManuscriptEditor: select all', t => {
   let sel = getSelection(editor)
   t.deepEqual({
     type: sel.type,
-    startPath: sel.start.path
+    startPath: sel.start.path,
+    endPath: sel.end.path
   }, {
     type: 'container',
-    startPath: ['sec-1', 'content']
+    startPath: ['sec-1', 'content'],
+    endPath: ['p-5', 'content']
   })
   t.end()
 })

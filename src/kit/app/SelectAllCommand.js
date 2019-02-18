@@ -32,7 +32,7 @@ export default class SelectAllCommand extends Command {
         if (nodeIds.length === 0) return false
         let firstNodeId = nodeIds[0]
         let lastNodeId = last(nodeIds)
-        sel = editorSession.createSelection({
+        sel = doc.createSelection({
           type: 'container',
           startPath: [firstNodeId],
           startOffset: 0,

@@ -161,8 +161,8 @@ export default {
         hideDisabled: true,
         displayActiveCommand: true,
         items: [
-          { type: 'command', name: 'open-manuscript', label: 'manuscript' },
-          { type: 'command', name: 'open-metadata', label: 'metadata' }
+          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
+          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
         ]
       }
     ])
@@ -200,6 +200,8 @@ export default {
     config.addIcon('bold', { 'fontawesome': 'fa-bold' })
     config.addIcon('italic', { 'fontawesome': 'fa-italic' })
     config.addIcon('link', { 'fontawesome': 'fa-link' })
+    config.addIcon('manuscript', { 'fontawesome': 'fa-align-left' })
+    config.addIcon('metadata', { 'fontawesome': 'fa-th-list' })
 
     // Format tools labels
     config.addLabel('format', 'Format')
@@ -310,6 +312,8 @@ export default {
     config.addLabel('move-up-metadata-field', 'Move Up Metadata Field')
     config.addLabel('remove-metadata-field', 'Remove Metadata Field')
     // Mode
-    config.addLabel('manuscript', 'Manuscript')
+    config.addLabel('mode', 'Mode')
+    config.addLabel('open-manuscript', 'Manuscript')
+    config.addLabel('open-metadata', 'Details')
   }
 }

@@ -9,15 +9,18 @@ export default class FindAndReplaceCommand extends Command {
       case 'open-replace': {
         return ENABLED
       }
-      case 'find-next':
-      case 'find-previous': {
-        let fnrState = context.appState.findAndReplace
-        if (fnrState && fnrState.count > 0) {
-          return ENABLED
-        } else {
-          return Command.DISABLED
-        }
-      }
+      // TODO: do we need this anymore. ATM we do not have a global command
+      // enabled, e.g. for a global keyboardshortcut drive way of navigating
+      // search results. ATM this works only if the FindAndReplaceDialog has focus
+      // case 'find-next':
+      // case 'find-previous': {
+      //   let fnrState = context.appState.findAndReplace
+      //   if (fnrState && fnrState.count > 0) {
+      //     return ENABLED
+      //   } else {
+      //     return Command.DISABLED
+      //   }
+      // }
     }
   }
 
@@ -32,14 +35,15 @@ export default class FindAndReplaceCommand extends Command {
         fnr.openDialog('replace')
         break
       }
-      case 'find-next': {
-        fnr.next()
-        break
-      }
-      case 'find-previous': {
-        fnr.previous()
-        break
-      }
+      // TODO: see above
+      // case 'find-next': {
+      //   fnr.next()
+      //   break
+      // }
+      // case 'find-previous': {
+      //   fnr.previous()
+      //   break
+      // }
     }
   }
 }

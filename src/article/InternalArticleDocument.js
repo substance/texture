@@ -1,15 +1,7 @@
 import { Document, documentHelpers, EditingInterface } from 'substance'
-import XrefIndex from './XrefIndex'
 import TextureEditing from './TextureEditing'
 
 export default class InternalArticleDocument extends Document {
-  _initialize () {
-    super._initialize()
-
-    // index for xref reverse lookup, i.e. all xrefs that point to a specific target
-    this.addIndex('xrefs', new XrefIndex())
-  }
-
   getRootNode () {
     return this.get('article')
   }

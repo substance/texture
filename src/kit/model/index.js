@@ -1,8 +1,3 @@
-// Substance overrides
-// TODO: move this to substance
-export { default as DocumentNode } from './_DocumentNode'
-export { default as InlineNode } from './_InlineNode'
-
 export { default as addModelObserver } from './addModelObserver'
 export { default as BooleanModel } from './BooleanModel'
 export { default as ChildModel } from './ChildModel'

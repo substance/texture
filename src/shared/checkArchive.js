@@ -3,6 +3,7 @@ export default function checkLoadArchive (ArchiveClass, rawArchive) {
   try {
     testArchive._ingest(rawArchive)
   } catch (error) {
+    /* istanbul ignore next */
     return error
   }
 }

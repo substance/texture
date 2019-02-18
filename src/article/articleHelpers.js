@@ -1,21 +1,6 @@
 import { documentHelpers, selectionHelpers, last } from 'substance'
 import FigurePanel from './models/FigurePanel'
 
-export function setContainerSelection (tx, node, surfaceId) {
-  if (!surfaceId) surfaceId = node.id
-  const p = node.find('p')
-  if (p) {
-    let path = [p.id, 'content']
-    let newSelection = {
-      type: 'property',
-      path,
-      startOffset: 0,
-      surfaceId
-    }
-    tx.setSelection(newSelection)
-  }
-}
-
 export function importFigures (tx, sel, files, paths) {
   if (files.length === 0) return
 

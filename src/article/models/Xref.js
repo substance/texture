@@ -1,5 +1,4 @@
-import { STRING } from 'substance'
-import { InlineNode } from '../../kit'
+import { STRING, InlineNode } from 'substance'
 
 export default class Xref extends InlineNode {}
 Xref.schema = {

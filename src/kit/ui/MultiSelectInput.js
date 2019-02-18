@@ -15,7 +15,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
   render ($$) {
     const selected = this.props.selected
     const isEmpty = selected.length === 0
-    const selectedLabels = selected.map(item => this.context.api._renderEntity(item))
+    const selectedLabels = selected.map(item => item.toString())
     const isExpanded = this.state.isExpanded
     const label = isEmpty ? this.getLabel('multi-select-default-value') : selectedLabels.join('; ')
 
@@ -56,7 +56,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
           this.context.iconProvider.renderIcon($$, icon).addClass('se-icon'),
           $$('div').addClass('se-item-label')
             // TODO: I would like to have this implementation more agnostic of a specific data structure
-            .append(this.context.api._renderEntity(option)).ref(option.id)
+            .append(option.toString()).ref(option.id)
         ).on('click', this._onToggleItem.bind(this, option))
       )
     })

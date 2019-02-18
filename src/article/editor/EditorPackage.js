@@ -489,7 +489,7 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
     type: nodeType,
     collection: collectionPath,
     commandGroup: 'add-entity',
-    switchView: true
+    metadataOnly: true
   })
   if (options.keyboardShortcut) {
     config.addKeyboardShortcut(options.keyboardShortcut, { command: `add-${itemType}` })

@@ -27,13 +27,14 @@ export default class DOIInputComponent extends Component {
     )
   }
 
-  _startImporting (input) {
+  async _startImporting (input) {
     const dois = input.split(' ').map(v => v.trim()).filter(v => Boolean(v))
     this.extendState({ loading: true })
 
-    _getBibEntries(dois).then(entries => {
+    try {
+      const entries = await _getBibEntries(dois)
       this.send('importBib', entries)
-    }).catch(error => {
+    } catch (error) {
       const dois = error.dois
       const errorMessage = error.message
       let errors = [
@@ -41,7 +42,7 @@ export default class DOIInputComponent extends Component {
       ]
       errors = errors.concat(dois.map(d => '- ' + d))
       this.extendState({ errors, loading: false })
-    })
+    }
   }
 }
 

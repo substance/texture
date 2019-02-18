@@ -206,9 +206,13 @@ export default {
     config.addLabel('bold', 'Bold')
     config.addLabel('italic', 'Italic')
     config.addLabel('link', 'Link')
+    config.addLabel('monospace', 'Monospace')
+    config.addLabel('overline', 'Overline')
+    config.addLabel('small-caps', 'Small Caps')
+    config.addLabel('strike-through', 'Strike Through')
     config.addLabel('subscript', 'Subscript')
     config.addLabel('superscript', 'Superscript')
-    config.addLabel('monospace', 'Monospace')
+    config.addLabel('underline', 'Underline')
     // List tools labels
     config.addLabel('list-tools', 'List')
     config.addLabel('toggle-unordered-list', {
@@ -285,12 +289,12 @@ export default {
     config.addLabel('download-file', 'Download File')
     // Figure tools
     config.addLabel('figure-tools', 'Figure')
-    config.addLabel('add-figure-panel', 'Add Sub-Figure')
-    config.addLabel('replace-figure-panel-image', 'Replace Sub-Figure Image')
-    config.addLabel('remove-figure-panel', 'Remove Sub-Figure')
-    config.addLabel('move-up-figure-panel', 'Move Up Sub-Figure')
-    config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
-    config.addLabel('open-figure-panel-image', 'Open Sub-Figure Image')
+    config.addLabel('add-figure-panel', 'Add Panel')
+    config.addLabel('replace-figure-panel-image', 'Replace Image')
+    config.addLabel('remove-figure-panel', 'Remove Panel')
+    config.addLabel('move-up-figure-panel', 'Move Panel Up')
+    config.addLabel('move-down-figure-panel', 'Move Panel Down')
+    config.addLabel('open-figure-panel-image', 'Open Image')
     // Footnote tools
     config.addLabel('footnote-tools', 'Footnote')
     config.addLabel('remove-footnote', 'Remove Footnote')

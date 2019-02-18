@@ -3,6 +3,7 @@ import setupTestApp from './shared/setupTestApp'
 import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES } from '../index'
 import { openMetadataEditor, setSelection, insertText, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
+import CSLJSON from './fixture/csl-json/csl-json-example'
 
 // addding reference is done in a workflow, where the user can choose to import, or select a specific type
 // TODO: we should also test the other ways to create reference (actually we should cover all cases)
@@ -82,6 +83,35 @@ test(`Reference: adding and editing authors`, t => {
   // TODO: is there a better way to test the effect of editing?
   let previewText = card.find('.sc-model-preview').text()
   t.ok(previewText.search('Doe') > -1, 'preview should display surname of author')
+  t.end()
+})
+
+test(`Reference: upload CSL-JSON set`, t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let metadataEditor = openMetadataEditor(app)
+  let workflow = _openWorkflow(metadataEditor)
+  doesNotThrowInNodejs(t, () => {
+    // TODO: we should find a way to load json from fixtures
+    // would be good to read it via handleUploadedFiles method
+    workflow.find('.sc-file-upload')._onFileLoad({ target: { result: JSON.stringify(CSLJSON) } })
+  }, 'citations file upload should not throw')
+  const references = metadataEditor.findAll(`.sc-metadata-section.sm-references .sc-card`)
+  t.equal(references.length, 3, 'there should be three new cards')
+  t.end()
+})
+
+test(`Reference: query DOI`, t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let metadataEditor = openMetadataEditor(app)
+  let workflow = _openWorkflow(metadataEditor)
+  const DOI = '10.7554/eLife.42837'
+  doesNotThrowInNodejs(t, () => {
+    const doiInput = workflow.find('.sc-doi-input')
+    doiInput.find('input').val(DOI)
+    doiInput.find('button').click()
+  }, 'citations file upload should not throw')
+  // TODO: we should provide our own fake service which will return json
+  // and test conversion and error handling
   t.end()
 })
 

@@ -29,7 +29,11 @@ export default class EditorPanel extends Component {
     const editorSession = new EditorSession(viewName, articleSession, config, this, editorState)
     const api = new ArticleAPI(editorSession, archive, config, articleSession, { getContext: () => this.context })
 
-    const context = Object.assign(createEditorContext(config, editorSession), {
+    // ATTENTION: augmenting the default context with editor stuff and api etc.
+    // TODO: try to find a more idiomatic approach, without needing to hack the context
+    // This should be solvable by sharing things like 'api' on the ArticlePanel level
+    // and adding other things to getChildContext()
+    const context = Object.assign(this.context, createEditorContext(config, editorSession), {
       api,
       archive,
       editor: this,

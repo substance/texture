@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState } from './shared/integrationTestHelpers'
+import { openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, createTestVfs } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 function _entityTest (t, entityType, entityName, checkSelection) {
@@ -77,6 +77,62 @@ test(`Entity: add footnote`, t => {
     t.equal(sel.type, 'property', 'selection should be an property selection')
     t.ok(Boolean(selState.xpath.find(e => e.type === 'paragraph')), '.. inside a paragraph')
   })
+})
+
+const AUTHOR_AND_TWO_AFFS = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title></article-title>
+      </title-group>
+      <contrib-group content-type="author">
+        <contrib contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
+          <name>
+            <surname>Doe</surname>
+            <given-names>John</given-names>
+          </name>
+          <email>john.doe@university</email>
+          <xref ref-type="aff" rid="aff1" />
+          <xref ref-type="aff" rid="aff2" />
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <institution content-type="orgname">Org</institution>
+        <institution content-type="orgdiv1">X</institution>
+        <city>Linz</city>
+        <country>Austria</country>
+      </aff>
+      <aff id="aff2">
+        <institution content-type="orgname">Org</institution>
+        <institution content-type="orgdiv1">Y</institution>
+        <city>Linz</city>
+        <country>Austria</country>
+      </aff>
+    </article-meta>
+  </front>
+  <body>
+  </body>
+  <back>
+  </back>
+</article>
+`
+
+test('Entity: Affilitions should be distinguishable (#981)', t => {
+  let { app } = setupTestApp(t, {
+    vfs: createTestVfs(AUTHOR_AND_TWO_AFFS),
+    archiveId: 'test'
+  })
+  let metadataEditor = openMetadataEditor(app)
+  let selectInput = metadataEditor.find('.sm-person .sm-affiliations .sc-many-relationship .sc-multi-select-input')
+  // click on the input to open the dropdown
+  selectInput.click()
+  let items = selectInput.findAll('.se-select-item')
+  let org1 = items[0].text()
+  let org2 = items[1].text()
+  t.ok(org1 !== org2, 'organisations should be displayed in a distinguishable way')
+  t.end()
 })
 
 function _insertEntity (editor, entityName) {

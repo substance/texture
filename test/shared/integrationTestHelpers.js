@@ -193,6 +193,16 @@ export class PseudoFileEvent extends DOMEvent {
   }
 }
 
+export class PseudoDropEvent extends DOMEvent {
+  constructor (name = 'test.png', type = 'image/png') {
+    super()
+    let blob = createPseudoFile(name, type)
+    this.dataTransfer = {
+      files: [ blob ]
+    }
+  }
+}
+
 export function createPseudoFile (name, type) {
   let blob
   if (platform.inBrowser) {
@@ -264,6 +274,18 @@ const TOOL_SPECS = {
     menu: 'format',
     tool: '.sm-toggle-monospace'
   },
+  'overline': {
+    menu: 'format',
+    tool: '.sm-toggle-overline'
+  },
+  'small-caps': {
+    menu: 'format',
+    tool: '.sm-toggle-small-caps'
+  },
+  'strike-through': {
+    menu: 'format',
+    tool: '.sm-toggle-strike-through'
+  },
   'subscript': {
     menu: 'format',
     tool: '.sm-toggle-subscript'
@@ -271,6 +293,10 @@ const TOOL_SPECS = {
   'superscript': {
     menu: 'format',
     tool: '.sm-toggle-superscript'
+  },
+  'underline': {
+    menu: 'format',
+    tool: '.sm-toggle-underline'
   }
 }
 

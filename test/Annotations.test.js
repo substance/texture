@@ -23,6 +23,12 @@ const ANNOS = [
     selector: '.sc-external-link'
   },
   {
+    name: 'Small Caps',
+    menu: 'format',
+    tool: 'toggle-small-caps',
+    selector: '.sc-annotation.sm-small-caps'
+  },
+  {
     name: 'Subscript',
     menu: 'format',
     tool: 'toggle-subscript',
@@ -39,6 +45,24 @@ const ANNOS = [
     menu: 'format',
     tool: 'toggle-monospace',
     selector: '.sc-annotation.sm-monospace'
+  },
+  {
+    name: 'Overline',
+    menu: 'format',
+    tool: 'toggle-overline',
+    selector: '.sc-annotation.sm-overline'
+  },
+  {
+    name: 'Strike Through',
+    menu: 'format',
+    tool: 'toggle-strike-through',
+    selector: '.sc-annotation.sm-strike-through'
+  },
+  {
+    name: 'Underline',
+    menu: 'format',
+    tool: 'toggle-underline',
+    selector: '.sc-annotation.sm-underline'
   }
 ]
 

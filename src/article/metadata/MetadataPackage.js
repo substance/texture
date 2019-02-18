@@ -10,7 +10,7 @@ import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
-import AddEntityCommand from './AddEntityCommand'
+import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
@@ -116,12 +116,28 @@ export default {
       nodeType: 'monospace',
       commandGroup: 'formatting'
     })
+    config.addCommand('toggle-overline', AnnotationCommand, {
+      nodeType: 'overline',
+      commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-small-caps', AnnotationCommand, {
+      nodeType: 'small-caps',
+      commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-strike-through', AnnotationCommand, {
+      nodeType: 'strike-through',
+      commandGroup: 'formatting'
+    })
     config.addCommand('toggle-subscript', AnnotationCommand, {
       nodeType: 'sub',
       commandGroup: 'formatting'
     })
     config.addCommand('toggle-superscript', AnnotationCommand, {
       nodeType: 'sup',
+      commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-underline', AnnotationCommand, {
+      nodeType: 'underline',
       commandGroup: 'formatting'
     })
 

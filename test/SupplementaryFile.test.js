@@ -1,7 +1,7 @@
 import { platform } from 'substance'
 import { test } from 'substance-test'
 import {
-  setCursor, openManuscriptEditor, PseudoFileEvent,
+  setCursor, openManuscriptEditor, PseudoDropEvent, PseudoFileEvent,
   fixture, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection,
   clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
@@ -56,6 +56,23 @@ test('SupplementaryFile: upload file and insert into manuscript', t => {
   }
   doesNotThrowInNodejs(t, () => {
     workflow.find('.sc-file-upload')._selectFile(new PseudoFileEvent())
+  }, 'triggering file upload should not throw')
+  let afterP = editor.find('*[data-id=p1] + *')
+  t.ok(afterP.hasClass('sm-supplementary-file'), 'element after p-1 should be a supplementary file now')
+  t.end()
+})
+
+test('SupplementaryFile: upload file via drop', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+
+  loadBodyFixture(editor, '<p id="p1">ABC</p>')
+  t.notOk(_isToolEnabled(editor), 'tool shoud be disabled by default')
+  setCursor(editor, 'p1.content', 2)
+  t.ok(_isToolEnabled(editor), 'tool shoud be enabled')
+  const workflow = _openWorkflow(editor)
+  doesNotThrowInNodejs(t, () => {
+    workflow.find('.sc-file-upload')._handleDrop(new PseudoDropEvent())
   }, 'triggering file upload should not throw')
   let afterP = editor.find('*[data-id=p1] + *')
   t.ok(afterP.hasClass('sm-supplementary-file'), 'element after p-1 should be a supplementary file now')

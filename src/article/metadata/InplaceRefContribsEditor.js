@@ -55,10 +55,10 @@ class InplaceRefContribEditor extends NodeComponent {
     el.append(
       $$(FormRowComponent).attr('data-id', node.id).addClass('sm-ref-contrib').append(
         this._renderValue($$, 'name', {
-          label: this.getLabel('name')
+          placeholder: this.getLabel('name')
         }).addClass('sm-name'),
         this._renderValue($$, 'givenNames', {
-          label: this.getLabel('given-names')
+          placeholder: this.getLabel('given-names')
         }).addClass('sm-given-names'),
         $$(Button, {
           icon: 'remove'

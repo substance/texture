@@ -744,14 +744,8 @@ function refContribRenderer ($$, entityId, entityDb, options = {}) {
 }
 
 function organisationRenderer ($$, entityId, entityDb, options = {}) {
-  let { institution, country } = entityDb.get(entityId)
-  let result = [ institution ]
-  if (!options.short) {
-    if (country) {
-      result.push(', ', country)
-    }
-  }
-  return result
+  let org = entityDb.get(entityId)
+  return org.render(options)
 }
 
 function funderRenderer ($$, entityId, entityDb, options = {}) {

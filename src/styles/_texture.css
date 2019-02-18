@@ -122,31 +122,42 @@
   color: var(--t-text-color);
 }
 
-.sc-texture i:not(.fa), .sc-texture .sc-annotation.sm-italic {
+.sc-texture .sc-annotation.sm-italic {
   font-style: italic;
 }
 
-.sc-texture b, .sc-texture .sc-annotation.sm-bold {
+.sc-texture .sc-annotation.sm-bold {
   font-weight: bold;
 }
 
-.sc-texture sub, .sc-texture .sc-annotation.sm-subscript {
+.sc-texture .sc-annotation.sm-small-caps {
+  font-variant: small-caps;
+}
+
+.sc-texture .sc-annotation.sm-subscript {
   vertical-align: sub;
   font-size: smaller;
 }
 
-.sc-texture sup, .sc-texture .sc-annotation.sm-superscript {
+.sc-texture .sc-annotation.sm-superscript {
   vertical-align: super;
   font-size: smaller;
 }
 
-.sc-texture code, .sc-texture .sc-annotation.sm-monospace, .sc-texture .sm-preformat {
+.sc-texture .sc-annotation.sm-monospace, .sc-texture .sm-preformat {
   /* Attention: double monospace here for correcting the inheritance
   and scaling of font size in all browsers */
   font-family: monospace, monospace;
 }
 
-/* Can we get rid of underline from the Dar format */
-.sc-texture .sc-underline {
+.sc-texture .sm-overline {
+  text-decoration: overline;
+}
+
+.sc-texture .sm-strike-through {
+  text-decoration: line-through;
+}
+
+.sc-texture .sm-underline {
   text-decoration: underline;
 }

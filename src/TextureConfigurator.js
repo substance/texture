@@ -1,7 +1,6 @@
 import {
   Configurator, merge, isString, flatten, includes, forEach, Registry
 } from 'substance'
-import SwitchViewCommand from './article/SwitchViewCommand'
 
 export default class TextureConfigurator extends Configurator {
   constructor () {
@@ -106,18 +105,6 @@ export default class TextureConfigurator extends Configurator {
       return toolPanel
     } else if (strict) {
       throw new Error(`No toolpanel configured with name ${name}`)
-    }
-  }
-
-  addViewMode (spec) {
-    this.addCommand(spec.name, SwitchViewCommand, {
-      viewName: spec.viewName,
-      commandGroup: 'switch-view'
-    })
-    this.addIcon(spec.name, { 'fontawesome': spec.icon })
-    this.addLabel(spec.name, spec.label)
-    if (spec.accelerator) {
-      this.addKeyboardShortcut(spec.accelerator, { command: spec.name })
     }
   }
 

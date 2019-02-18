@@ -12,7 +12,6 @@ import {
 } from '../../kit'
 
 import AddEntityCommand from '../shared/AddEntityCommand'
-import ArticleNavPackage from '../ArticleNavPackage'
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
@@ -72,9 +71,10 @@ import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
+import SwitchViewCommand from '../shared/SwitchViewCommand'
 
 export default {
-  name: 'ManscruptEditor',
+  name: 'ManuscriptEditor',
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
@@ -82,7 +82,6 @@ export default {
     config.import(ManuscriptContentPackage)
     config.import(MultiSelectPackage)
     config.import(EntityLabelsPackage)
-    config.import(ArticleNavPackage)
     config.import(ArticleToolbarPackage)
     config.import(PersistencePackage)
     config.import(FindAndReplacePackage)
@@ -242,6 +241,14 @@ export default {
     })
     config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('open-manuscript', SwitchViewCommand, {
+      viewName: 'manuscript',
+      commandGroup: 'switch-view'
+    })
+    config.addCommand('open-metadata', SwitchViewCommand, {
+      viewName: 'metadata',
+      commandGroup: 'switch-view'
     })
     config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'

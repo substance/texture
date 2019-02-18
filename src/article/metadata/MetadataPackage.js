@@ -3,7 +3,6 @@ import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
-import ArticleNavPackage from '../ArticleNavPackage'
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import PersistencePackage from '../../PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
@@ -30,6 +29,7 @@ import TranslatableEntryEditor from './TranslatableEntryEditor'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
+import SwitchViewCommand from '../shared/SwitchViewCommand'
 
 export default {
   name: 'ArticleMetadata',
@@ -37,7 +37,6 @@ export default {
     config.import(BasePackage)
     config.import(EditorBasePackage)
     config.import(ArticleToolbarPackage)
-    config.import(ArticleNavPackage)
     config.import(PersistencePackage)
     config.import(ManuscriptContentPackage)
     config.import(ModelComponentPackage)
@@ -89,6 +88,14 @@ export default {
     })
     config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('open-manuscript', SwitchViewCommand, {
+      viewName: 'manuscript',
+      commandGroup: 'switch-view'
+    })
+    config.addCommand('open-metadata', SwitchViewCommand, {
+      viewName: 'metadata',
+      commandGroup: 'switch-view'
     })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'

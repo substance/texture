@@ -73,6 +73,21 @@ export default class ArticlePanel extends Component {
     }
   }
 
+  didMount () {
+    let router = this.context.router
+    if (router) {
+      this._onRouteChange(router.readRoute())
+      router.on('route:changed', this._onRouteChange, this)
+    }
+  }
+
+  dispose () {
+    let router = this.context.router
+    if (router) {
+      router.off(this)
+    }
+  }
+
   shouldRerender (newProps, newState) {
     return (
       newProps.documentSession !== this.props.documentSession ||
@@ -165,5 +180,20 @@ export default class ArticlePanel extends Component {
       e.preventDefault()
     }
     return handled
+  }
+
+  _onRouteChange (data) {
+    // EXPERIMENTAL: taking an object from the router
+    // and interpreting it to navigate to the right location in the app
+    let { viewName, nodeId } = data
+    if (viewName && viewName !== this.state.viewName) {
+      this.extendState({ viewName })
+    }
+    if (nodeId) {
+      let nodeEl = this.el.find(`[data-id=${nodeId}]`)
+      if (nodeEl) {
+        this.refs.content.send('scrollElementIntoView', nodeEl)
+      }
+    }
   }
 }

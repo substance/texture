@@ -119,12 +119,6 @@ export default class ArticleConfigurator extends TextureConfigurator {
         }
         return this._htmlExporter
       }
-      case 'jats': {
-        if (!this._jatsExporter) {
-          this._jatsExporter = new JATSExporter()
-        }
-        return this._jatsExporter
-      }
     }
   }
 
@@ -135,12 +129,6 @@ export default class ArticleConfigurator extends TextureConfigurator {
           this._htmlImporter = new ArticleHTMLImporter(this)
         }
         return this._htmlImporter
-      }
-      case 'jats': {
-        if (!this._jatsImporter) {
-          this._jatsImporter = new JATSImporter(this)
-        }
-        return this._jatsImporter
       }
     }
   }

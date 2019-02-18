@@ -29,7 +29,7 @@ export default class ArticlePanel extends Component {
     const { archive, config, documentSession } = props
     const doc = documentSession.getDocument()
 
-    this.context = Object.assign(createComponentContext(config), {
+    this.context = Object.assign(this.context, createComponentContext(config), {
       urlResolver: archive,
       appState: this.state
     })

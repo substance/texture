@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent, selectNode } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent, selectNode, getSelection } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
@@ -383,3 +383,19 @@ function testEmptyBodyIsolationNodeInsertion (t, spec) {
   }, 'undoing should not throw')
   t.end()
 }
+
+test('ManuscriptEditor: select all', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let editor = openManuscriptEditor(app)
+  setCursor(editor, 'p-1.content', 1)
+  editor._executeCommand('select-all')
+  let sel = getSelection(editor)
+  t.deepEqual({
+    type: sel.type,
+    startPath: sel.start.path
+  }, {
+    type: 'container',
+    startPath: ['sec-1', 'content']
+  })
+  t.end()
+})

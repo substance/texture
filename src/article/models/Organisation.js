@@ -4,7 +4,25 @@ export default class Organisation extends DocumentNode {
   toString () {
     return this.institution
   }
+
+  render (options = {}) {
+    let { institution, division1, division2, division3 } = this
+    let result = institution ? [ institution ] : '???'
+    if (!options.short && institution) {
+      if (division1) {
+        result.push(', ', division1)
+      }
+      if (division2) {
+        result.push(', ', division2)
+      }
+      if (division3) {
+        result.push(', ', division3)
+      }
+    }
+    return result
+  }
 }
+
 Organisation.schema = {
   type: 'organisation',
   institution: STRING,

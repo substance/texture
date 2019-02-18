@@ -37,6 +37,7 @@
           </name>
           <xref ref-type="aff" rid="aff1" />
           <xref ref-type="aff" rid="aff3" />
+          <xref ref-type="aff" rid="aff5" />
         </contrib>
         <contrib id="group-1" contrib-type="group" equal-contrib="yes" corresp="no">
           <collab>
@@ -99,6 +100,12 @@
       <aff id="aff4">
         <institution content-type="orgname">Princeton University</institution>
         <city>Princeton</city>
+        <country>United States</country>
+      </aff>
+      <aff id="aff5">
+        <institution content-type="orgname">The Rockefeller University</institution>
+        <institution content-type="orgdiv1">Another Laboratory</institution>
+        <city>New York</city>
         <country>United States</country>
       </aff>
       <pub-date date-type="pub" iso-8601-date="1999-01-29">

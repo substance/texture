@@ -10,15 +10,20 @@ export default class AddEntityCommand extends Command {
     if (workflow) {
       context.editor.send('startWorkflow', workflow)
     } else {
-      // If command requires switching view, then we frst switching to metadate view
-      // and then adding entity to the collection
       const appState = context.appState
       const viewName = appState.get('viewName')
-      if (this.config.switchView && viewName !== 'metadata') {
+      // ATTENTION: for now when an entity is added from within the manuscript view
+      // we switch to the metadata view and then execute the command again
+      // However, this is tricky, because this needs be done by a different CommandManager.
+      if (viewName !== 'metadata') {
         context.editor.send('updateViewName', 'metadata')
+        // HACK: using the ArticlePanel instance to get to the current editor
+        // so that we can dispatch 'executeCommand'
+        context.articlePanel.refs.content.send('executeCommand', this.name, params)
+      } else {
+        this._addItemToCollection(params, context)
+        context.editor.send('toggleOverlay')
       }
-      this._addItemToCollection(params, context)
-      context.editor.send('toggleOverlay')
     }
   }
 

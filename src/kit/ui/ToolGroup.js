@@ -158,7 +158,7 @@ export default class ToolGroup extends Component {
         case 'command': {
           // that should should be just a tool, and in a minimal icon based toolbar
           // it looks like a toggle-tool, in a menu or dropdown it would look more descriptive
-          ToolClass = this.getComponent('toggle-tool')
+          ToolClass = this.getComponent('tool')
           break
         }
         case 'dropdown': {

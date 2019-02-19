@@ -17,6 +17,7 @@ import Overlay from './ui/Overlay'
 import ScrollPane from './ui/ScrollPane'
 import TextPropertyComponent from './ui/_TextPropertyComponent'
 import TextPropertyEditor from './ui/_TextPropertyEditor'
+import Tool from './ui/Tool'
 import ToggleTool from './ui/ToggleTool'
 import Toolbar from './ui/Toolbar'
 import ToolDropdown from './ui/ToolDropdown'
@@ -58,6 +59,7 @@ export default {
     configurator.addComponent('modal', ModalDialog)
     configurator.addComponent('overlay', Overlay, true)
     configurator.addComponent('text-area', TextArea)
+    configurator.addComponent('tool', Tool, true)
     configurator.addComponent('toggle-tool', ToggleTool, true)
     configurator.addComponent('toolbar', Toolbar, true)
     configurator.addComponent('tool-dropdown', ToolDropdown, true)

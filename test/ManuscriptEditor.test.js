@@ -177,12 +177,9 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
-  // open the switch type dropdown
-  let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
-  switchTypeDropdown.find('button').click()
-  let h1button = switchTypeDropdown.find('.sc-tool.sm-heading1')
-  t.notNil(h1button, 'there should be an option to switch to heading level 1')
-  h1button.click()
+
+  t.ok(_canSwitchTo(editor, 'heading1'), 'switch to heading1 should be possible')
+  _switchTo(editor, 'heading1')
   // ATTENTION: we do not change id, which might be confusing for others
   let h1El = editor.find('.sc-surface.sm-body > h1')
   t.notNil(h1El, 'there should be a <h1> element now')
@@ -194,12 +191,10 @@ test('ManuscriptEditor: Switch paragraph to preformat', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
-  // open the switch type dropdown
-  let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
-  switchTypeDropdown.find('button').click()
-  let preformatButton = switchTypeDropdown.find('.sc-tool.sm-preformat')
-  t.notNil(preformatButton, 'there should be an option to switch to preformat')
-  preformatButton.click()
+
+  t.ok(_canSwitchTo(editor, 'preformat'), 'switch to preformat should be possible')
+  _switchTo(editor, 'preformat')
+
   let preformatEl = editor.find('.sc-surface.sm-body > .sc-text-node.sm-preformat')
   t.notNil(preformatEl, 'there should be a div with preformat component class now')
   t.end()
@@ -406,3 +401,12 @@ test('ManuscriptEditor: select all', t => {
   })
   t.end()
 })
+
+function _canSwitchTo (editor, type) {
+  let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)
+  return tool && !tool.attr('disabled')
+}
+
+function _switchTo (editor, type) {
+  return openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`).el.click()
+}

@@ -1,6 +1,10 @@
 import { DocumentNode, STRING } from 'substance'
 
-export default class BlockFormula extends DocumentNode {}
+export default class BlockFormula extends DocumentNode {
+  static get refType () {
+    return 'disp-formula'
+  }
+}
 
 BlockFormula.schema = {
   type: 'block-formula',

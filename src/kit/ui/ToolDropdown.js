@@ -11,7 +11,7 @@ export default class ToolDropdown extends ToolGroup {
   }
   render ($$) {
     const appState = this.context.appState
-    const { commandStates, hideDisabled, style, theme } = this.props
+    const { commandStates, style, theme, hideDisabled, alwaysVisible } = this.props
     const toggleName = this._getToggleName()
     const hasEnabledItem = this._derivedState.hasEnabledItem
     const showChoices = appState.overlayId === this.getId()
@@ -25,7 +25,7 @@ export default class ToolDropdown extends ToolGroup {
       el.addClass('sm-open')
     }
 
-    if (!hideDisabled || hasEnabledItem) {
+    if (!hideDisabled || hasEnabledItem || alwaysVisible) {
       const Button = this.getComponent('button')
       let toggleButtonProps = {
         dropdown: true,
@@ -116,6 +116,6 @@ export default class ToolDropdown extends ToolGroup {
   }
 
   _hasChoices () {
-    return this._derivedState.hasEnabledItem
+    return (!this.props.hideDisabled || this._derivedState.hasEnabledItem)
   }
 }

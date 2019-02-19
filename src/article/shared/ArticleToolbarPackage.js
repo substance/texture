@@ -101,7 +101,8 @@ export default {
         type: 'dropdown',
         style: 'descriptive',
         // FIXME: hide disabled commands and groups
-        // hideDisabled: true,
+        hideDisabled: true,
+        alwaysVisible: true,
         items: [
           {
             type: 'group',

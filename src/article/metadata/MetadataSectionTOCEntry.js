@@ -6,7 +6,10 @@ export default class MetadataSectionTOCEntry extends ModelComponent {
     const name = this.props.name
     const model = this.props.model
     let el = $$('a').addClass('sc-meta-section-toc-entry')
-      .attr({ href: '#viewName=metadata,section=' + id })
+      .attr({
+        href: '#viewName=metadata,section=' + id,
+        'data-id': id
+      })
       .on('click', this.handleClick)
 
     let label = this.getLabel(name)

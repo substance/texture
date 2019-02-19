@@ -30,7 +30,7 @@ export default class ToolGroup extends Component {
 
   _deriveState (props) {
     if (this._isTopLevel) {
-      this._derivedState = this._deriveGroupState(this.props, this.props.commandStates)
+      this._derivedState = this._deriveGroupState(props, props.commandStates)
     } else {
       this._derivedState = props.itemState
     }
@@ -156,9 +156,12 @@ export default class ToolGroup extends Component {
     } else {
       switch (item.type) {
         case 'command': {
-          // that should should be just a tool, and in a minimal icon based toolbar
-          // it looks like a toggle-tool, in a menu or dropdown it would look more descriptive
-          ToolClass = this.getComponent('tool')
+          // try to use a tool registered by the same name as the command
+          ToolClass = this.getComponent(item.name, 'no-throw')
+          if (!ToolClass) {
+            // using the default tool otherwise
+            ToolClass = this.getComponent('tool')
+          }
           break
         }
         case 'dropdown': {

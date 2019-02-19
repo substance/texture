@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { 
+import {
   openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture,
   openContextMenuAndFindTool, openMenuAndFindTool, getSelection, selectNode
 } from './shared/integrationTestHelpers'

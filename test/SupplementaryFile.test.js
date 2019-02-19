@@ -2,7 +2,7 @@ import { platform } from 'substance'
 import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoDropEvent, PseudoFileEvent,
-  fixture, loadBodyFixture, getDocument, openContextMenuAndFindTool, 
+  fixture, loadBodyFixture, getDocument, openContextMenuAndFindTool,
   openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'

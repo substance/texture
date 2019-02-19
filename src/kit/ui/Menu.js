@@ -28,7 +28,7 @@ export default class Menu extends Component {
         if (item.label) {
           separatorEl.append(
             $$('div').addClass('se-label').append(
-              this._getLabel(item.label)
+              this.getLabel(item.label)
             )
           )
         }
@@ -56,10 +56,5 @@ export default class Menu extends Component {
       }
     }
     return ToolClass
-  }
-
-  _getLabel (label) {
-    let labelProvider = this.context.labelProvider
-    return labelProvider.getLabel(label)
   }
 }

@@ -23,28 +23,50 @@ export default class ToolGroup extends Component {
       .addClass(this._getClassNames())
       .addClass('sm-' + name)
 
+    el.append(this._renderLabel($$))
+
     for (let item of items) {
       // TODO: should we show separators?
       let type = item.type
-      if (type === 'command') {
-        const commandName = item.name
-        let commandState = commandStates[commandName] || DISABLED
-        // TODO: why is it necessary to override isToolEnabled()?
-        if (!hideDisabled || this.isToolEnabled(commandState, item)) {
+      switch (type) {
+        case 'command': {
+          const commandName = item.name
+          let commandState = commandStates[commandName] || DISABLED
+          // TODO: why is it necessary to override isToolEnabled()?
+          if (!hideDisabled || this.isToolEnabled(commandState, item)) {
+            let ToolClass = this._getToolClass(item)
+            el.append(
+              $$(ToolClass, {
+                item,
+                commandState,
+                style,
+                theme
+              }).ref(commandName)
+            )
+          }
+          break
+        }
+        case 'group': {
           let ToolClass = this._getToolClass(item)
           el.append(
-            $$(ToolClass, {
-              item,
-              commandState,
-              style,
+            $$(ToolClass, Object.assign({}, item, {
+              commandStates,
               theme
-            }).ref(commandName)
+            })).ref(item.name)
           )
+          break
+        }
+        default: {
+          console.warn('Unsupported item type', item.type)
         }
       }
     }
 
     return el
+  }
+
+  _renderLabel () {
+    // Note: only in MenuGroups this is implemented
   }
 
   /*
@@ -75,19 +97,33 @@ export default class ToolGroup extends Component {
 
   _getToolClass (item) {
     // use an ToolClass from toolSpec if configured inline in ToolGroup spec
-    let ToolClass = item.ToolClass
-    // next try if there is a tool registered by the name
-    if (!ToolClass) {
-      ToolClass = this.context.toolRegistry.get(item.name)
-    }
-    // after all fall back to default classes
-    if (!ToolClass) {
-      if (this.props.style === 'descriptive') {
-        ToolClass = this.getComponent('menu-item')
-      } else {
-        ToolClass = this.getComponent('toggle-tool')
+    let ToolClass
+    if (item.ToolClass) {
+      ToolClass = item.ToolClass
+    } else {
+      switch (item.type) {
+        case 'command': {
+          if (this.props.style === 'descriptive') {
+            ToolClass = this.getComponent('menu-item')
+          } else {
+            ToolClass = this.getComponent('toggle-tool')
+          }
+          break
+        }
+        case 'group': {
+          ToolClass = this.getComponent('tool-group')
+          break
+        }
+        case 'separator': {
+          ToolClass = this.getComponent('tool-separator')
+          break
+        }
+        default: {
+          console.error('Unsupported item type inside ToolGroup:', item.type)
+        }
       }
     }
+
     return ToolClass
   }
 }

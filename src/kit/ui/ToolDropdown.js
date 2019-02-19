@@ -3,34 +3,18 @@ import Tooltip from './Tooltip'
 
 // TODO: use OverlayMixin to avoid code redundancy
 export default class ToolDropdown extends ToolGroup {
-  constructor (...args) {
-    super(...args)
-
-    this._derivedState = {}
-    this._deriveState(this.props)
-  }
-
   didMount () {
     this.context.appState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
   }
-
   dispose () {
     this.context.appState.removeObserver(this)
   }
-
-  willReceiveProps (newProps) {
-    this._deriveState(newProps)
-  }
-
   render ($$) {
     const appState = this.context.appState
-    const commandStates = this.props.commandStates
+    const { commandStates, hideDisabled, style, theme } = this.props
     const toggleName = this._getToggleName()
-    const hideDisabled = this.props.hideDisabled
     const hasEnabledTools = this._derivedState.hasEnabledTools
     const showChoices = appState.overlayId === this.getId()
-    const style = this.props.style
-    const theme = this.props.theme
 
     let el = $$('div').addClass('sc-tool-dropdown')
     el.addClass('sm-' + this.props.name)
@@ -43,8 +27,6 @@ export default class ToolDropdown extends ToolGroup {
 
     if (!hideDisabled || hasEnabledTools) {
       const Button = this.getComponent('button')
-      const Menu = this.getComponent('menu')
-
       let toggleButtonProps = {
         dropdown: true,
         active: showChoices,
@@ -66,14 +48,9 @@ export default class ToolDropdown extends ToolGroup {
       el.append(toggleButton)
 
       if (showChoices) {
-        const items = this._getItems()
         el.append(
           $$('div').addClass('se-choices').append(
-            $$(Menu, {
-              style,
-              items,
-              commandStates
-            })
+            this._renderItems($$)
           )
         )
       } else if (style === 'minimal' || toggleName !== this.props.name) {
@@ -93,15 +70,14 @@ export default class ToolDropdown extends ToolGroup {
     })
   }
 
+  get _isTopLevel () {
+    return true
+  }
+
   _deriveState (props) {
-    let hasEnabledTools = this.hasEnabledTools(props.commandStates)
-    let activeCommandName
+    let derivedState = super._deriveState(props)
     if (this.props.displayActiveCommand) {
-      activeCommandName = this._getActiveCommandName(props.items, props.commandStates)
-    }
-    this._derivedState = {
-      activeCommandName,
-      hasEnabledTools
+      derivedState.activeCommandName = this._getActiveCommandName(props.items, props.commandStates)
     }
   }
 
@@ -124,24 +100,6 @@ export default class ToolDropdown extends ToolGroup {
     } else {
       return this.props.name
     }
-  }
-
-  _getItems () {
-    const hideDisabled = this.props.hideDisabled
-    // TODO: this needs to be thought through
-    // what about separators, nested dropdows or groups?
-    let items
-    if (hideDisabled) {
-      const commandStates = this.props.commandStates
-      items = this.props.items.filter(item => {
-        // ATTENTION: ATM with hideDisabled=true we only show enabled commands
-        // i.e. no separatory, or nested groups or dropdowns
-        return (item.type !== 'command' || this._isToolEnabled(commandStates[item.name], item))
-      })
-    } else {
-      items = this.props.items
-    }
-    return items
   }
 
   _onMousedown (event) {

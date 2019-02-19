@@ -13,29 +13,60 @@ const DISABLED = { disabled: true }
  * @param {object} props.commandStates command states by name
  */
 export default class ToolGroup extends Component {
-  render ($$) {
-    const {
-      name, style, theme, hideDisabled,
-      items, commandStates
-    } = this.props
+  constructor (...args) {
+    super(...args)
 
+    this._deriveState(this.props)
+  }
+
+  willReceiveProps (newProps) {
+    this._deriveState(newProps)
+  }
+
+  _deriveState (props) {
+    if (this._isTopLevel) {
+      this._derivedState = this._deriveGroupState(this.props, this.props.commandStates)
+    }
+  }
+
+  render ($$) {
+    const { name } = this.props
     let el = $$('div')
       .addClass(this._getClassNames())
       .addClass('sm-' + name)
 
-    el.append(this._renderLabel($$))
+    return el
+  }
 
-    for (let item of items) {
-      // TODO: should we show separators?
+  _renderContent ($$) {
+    const { hideDisabled } = this.props
+    let els = []
+    let hasEnabledItem = this._derivedState.hasEnabledItem
+    if (hasEnabledItem || !hideDisabled) {
+      els.push(this._renderLabel($$))
+      els.push(this._renderItems($$))
+    }
+  }
+
+  _renderLabel () {
+    // Note: only in MenuGroups this is implemented
+    // TODO: maybe we should instead override _renderContent() in MenuGroup
+  }
+
+  _renderItems ($$) {
+    const { style, theme, hideDisabled, commandStates } = this.props
+    const { itemStates } = this._derivedState
+    let els = []
+    for (let itemState of itemStates) {
+      let item = itemState.item
       let type = item.type
       switch (type) {
         case 'command': {
           const commandName = item.name
-          let commandState = commandStates[commandName] || DISABLED
-          // TODO: why is it necessary to override isToolEnabled()?
-          if (!hideDisabled || this._isToolEnabled(commandState, item)) {
+          let commandState = itemState.commandState
+          if (itemState.enabled || !hideDisabled) {
             let ToolClass = this._getToolClass(item)
-            el.append(
+            els.push(
               $$(ToolClass, {
                 item,
                 commandState,
@@ -48,7 +79,7 @@ export default class ToolGroup extends Component {
         }
         case 'group': {
           let ToolClass = this._getToolClass(item)
-          el.append(
+          els.push(
             $$(ToolClass, Object.assign({}, item, {
               commandStates,
               theme
@@ -58,7 +89,7 @@ export default class ToolGroup extends Component {
         }
         case 'separator': {
           let ToolSeparator = this.getComponent('tool-separator')
-          el.append(
+          els.push(
             $$(ToolSeparator, item)
           )
           break
@@ -68,45 +99,36 @@ export default class ToolGroup extends Component {
         }
       }
     }
-
-    return el
+    return els
   }
 
-  _renderLabel () {
-    // Note: only in MenuGroups this is implemented
+  get _isTopLevel () { return false }
+
+  // ATTENTION: this is only called for top-level tool groups (Menu, Prompt, ) which are ToolDrop
+  _deriveGroupState (group, commandStates) {
+    let itemStates = group.items.map(item => this._deriveItemState(item, commandStates))
+    let hasEnabledItem = itemStates.some(item => item.enabled)
+    return {
+      item: group,
+      itemStates,
+      hasEnabledItem
+    }
   }
 
-  /*
-    Determine whether a tool should be shown or not
-  */
-  _isToolEnabled (commandState) {
-    return (commandState && !commandState.disabled)
-  }
-
-  /*
-    Returns true if at least one command is enabled
-  */
-  hasEnabledTools (commandStates) {
-    if (!commandStates) throw new Error('commandStates are required')
-    return this._hasEnabledTools(commandStates, this.props.items)
-  }
-
-  _hasEnabledTools (commandStates, items) {
-    for (let item of items) {
-      switch (item.type) {
-        case 'command': {
-          let commandState = commandStates[item.name]
-          if (this._isToolEnabled(commandState)) return true
-          break
-        }
-        case 'group': {
-          if (this._hasEnabledTools(commandStates, item.items)) {
-            return true
-          }
+  _deriveItemState (item, commandStates) {
+    switch (item.type) {
+      case 'command': {
+        let commandState = commandStates[item.name] || DISABLED
+        return {
+          item,
+          commandState,
+          enabeld: !commandState.disabled
         }
       }
+      case 'group': {
+        return this._deriveGroupState(item, commandStates)
+      }
     }
-    return false
   }
 
   _getClassNames () {

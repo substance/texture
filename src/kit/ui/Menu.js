@@ -26,4 +26,7 @@ export default class Menu extends ToolGroup {
     }
     return ToolClass
   }
+  get _isTopLevel () {
+    return true
+  }
 }

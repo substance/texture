@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, createTestVfs } from './shared/integrationTestHelpers'
+import { openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, openContextMenuAndFindTool, createTestVfs } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 function _entityTest (t, entityType, entityName, checkSelection) {
@@ -144,7 +144,6 @@ function _insertEntity (editor, entityName) {
 }
 
 function _removeEntity (editor, entityName) {
-  let collectionTools = editor.find('.sc-tool-dropdown.sm-collection-tools')
-  collectionTools.refs.toggle.el.click()
-  editor.find(`.sc-menu-item.sm-remove-${entityName}`).el.click()
+  let collectionTool = openContextMenuAndFindTool(editor, `.sm-remove-${entityName}`)
+  collectionTool.click()
 }

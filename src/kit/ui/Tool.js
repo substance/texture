@@ -76,7 +76,7 @@ export default class Tool extends Component {
   }
 
   getClassNames () {
-    return 'sc-tool'
+    return `sc-tool sm-${this.props.item.name}`
   }
 
   _getLabel () {

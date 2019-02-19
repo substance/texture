@@ -35,7 +35,7 @@ import './Validator.test'
 
 platform.test = true
 
-if (process.env.DEBUG) {
+if (platform.inBrowser) {
   substanceGlobals.DEBUG_RENDERING = true
 }
 

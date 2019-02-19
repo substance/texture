@@ -7,7 +7,8 @@ import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelper
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
-  getEditorSession, annotate, getSelection, setCursor, openMenuAndFindTool, PseudoFileEvent, selectNode, clickUndo
+  getEditorSession, annotate, getSelection, setCursor, openContextMenuAndFindTool,
+  openMenuAndFindTool, PseudoFileEvent, selectNode, clickUndo
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -839,7 +840,7 @@ test('Table: merging cells', t => {
   let table = _getTable(tableComp)
 
   _selectRange(tableComp, 0, 0, 1, 1)
-  let tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-merge')
+  let tool = openContextMenuAndFindTool(editor, '.sm-toggle-cell-merge')
   t.ok(tool.click(), 'using merge toggle should not throw')
   let cell = table.getCell(0, 0)
   t.deepEqual({ rowspan: cell.rowspan, colspan: cell.colspan }, { rowspan: 2, colspan: 2 }, 'cell should be spanning over two rows and two columns')
@@ -874,7 +875,7 @@ test('Table: unmerging cells', t => {
   let doc = table.getDocument()
 
   _selectCellWithId(tableComp, 't23')
-  let tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-merge')
+  let tool = openContextMenuAndFindTool(editor, '.sm-toggle-cell-merge')
   t.ok(tool.click(), 'using merge toggle should not throw')
   let cell = doc.get('t23')
   t.deepEqual({ rowspan: cell.rowspan, colspan: cell.colspan }, { rowspan: 1, colspan: 1 }, 'cell should not be spanning anymore')
@@ -908,14 +909,14 @@ test('Table: toggle cell heading', t => {
 
   t.comment('toggling cell heading')
   _selectCellWithId(tableComp, 't11')
-  let tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-heading')
+  let tool = openContextMenuAndFindTool(editor, '.sm-toggle-cell-heading')
   t.ok(tool.click(), 'using heading toggle should not throw')
   t.equal(cell.heading, false, 'cell should not be heading anymore')
   let cellComp = _getCellComponentById(tableComp, 't11')
   t.equal(cellComp.el.tagName, 'td', 'cell should be rendered as <td>')
 
   t.comment('toggling cell heading back')
-  tool = openMenuAndFindTool(editor, 'table-tools', '.sm-toggle-cell-heading')
+  tool = openContextMenuAndFindTool(editor, '.sm-toggle-cell-heading')
   t.ok(tool.click(), 'using heading toggle should not throw')
   t.equal(cell.heading, true, 'cell should be heading again')
   cellComp = _getCellComponentById(tableComp, 't11')

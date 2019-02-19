@@ -1,5 +1,5 @@
 /* global vfs */
-import { parseKeyEvent, platform, Router } from 'substance'
+import { parseKeyEvent, Router } from 'substance'
 import TextureAppChrome from './TextureAppChrome'
 import { VfsStorageClient, HttpStorageClient, InMemoryDarBuffer } from './dar'
 

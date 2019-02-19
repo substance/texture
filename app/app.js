@@ -2,7 +2,6 @@ const path = require('path')
 const url = require('url')
 const { ipcRenderer: ipc, remote } = require('electron')
 const { shell, dialog } = remote
-const { substanceGlobals, platform } = window.substance
 const { TextureDesktopApp, UnpackedDarFolderStorage } = window.texture
 
 let _app, _window

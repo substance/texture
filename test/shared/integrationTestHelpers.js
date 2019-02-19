@@ -256,6 +256,10 @@ export function openMenuAndFindTool (editor, menuName, toolSelector) {
   return menu.find(toolSelector)
 }
 
+export function openContextMenuAndFindTool (editor, toolSelector) {
+  return openMenuAndFindTool(editor, 'context-tools', toolSelector)
+}
+
 export function isToolEnabled (editor, menuName, toolSelector) {
   let tool = openMenuAndFindTool(editor, menuName, toolSelector)
   return tool && !tool.getAttribute('disabled')

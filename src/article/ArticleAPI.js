@@ -480,10 +480,14 @@ export default class ArticleAPI {
     const pos = figure.getCurrentPanelIndex()
     const href = this.archive.addAsset(file)
     const insertPos = pos + 1
+    // NOTE: with this method we are getting the structure of the first panel
+    // to replicate it, currently only for metadata fields
+    const panelTemplate = figure.getPanelTemplate()
     this.editorSession.transaction(tx => {
       let template = FigurePanel.getTemplate()
       template.content.href = href
       template.content.mimeType = file.type
+      Object.assign(template, panelTemplate)
       let node = documentHelpers.createNodeFromJson(tx, template)
       documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
       tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)

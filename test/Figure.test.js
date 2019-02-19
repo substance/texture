@@ -24,6 +24,7 @@ const xrefListItemSelector = '.sc-edit-xref-tool .se-option .sc-preview'
 const figurePanelPreviousSelector = '.sc-figure .se-control.sm-previous'
 const figurePanelNextSelector = '.sc-figure .se-control.sm-next'
 const currentPanelSelector = '.sc-figure .se-current-panel .sc-figure-panel'
+const figureCustomMetadataFieldInputSelector = '.sc-custom-metadata-field .sc-string'
 
 const FIGURE_WITH_TWO_PANELS = `
 <fig-group id="fig1">
@@ -432,6 +433,38 @@ test('Figure: remove and move figure panels in metadata view', t => {
   t.equal(getSubFigureId(cards[0]), 'fig1c', 'first card should be the moved one')
   t.equal(getSubFigureLabel(cards[0]), 'Figure 1A', 'sub-figure label should have been updated')
   t.notOk(isMoveUpPossible(), 'move up sub-figure tool should be unavailable')
+  t.end()
+})
+
+const FIGURE_PANEL_WITH_CUSTOM_FIELDS = `
+  <fig-group id="fig1">
+    <fig id="fig1a">
+      <graphic />
+      <caption>
+        <p id="fig1a-caption-p1"></p>
+      </caption>
+      <kwd-group>
+        <label>Field I</label>
+        <kwd>Value A</kwd>
+        <kwd>Value B</kwd>
+      </kwd-group>
+    </fig>
+  </fig-group>
+`
+
+test('Figure: replicate first panel structure', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  const _gotoNext = () => editor.find(figurePanelNextSelector).el.click()
+  loadBodyFixture(editor, FIGURE_PANEL_WITH_CUSTOM_FIELDS)
+  selectNode(editor, 'fig1')
+  const insertFigurePanelTool = openMenuAndFindTool(editor, 'figure-tools', insertFigurePanelSelector)
+  t.ok(insertFigurePanelTool.el.click(), 'clicking on the insert figure panel button should not throw error')
+  insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
+  _gotoNext()
+  const fields = editor.findAll(figureCustomMetadataFieldInputSelector)
+  t.equal(fields[0].getTextContent(), 'Field I', 'shoud be replicated keyword label inside custom field name')
+  t.equal(fields[1].getTextContent(), '', 'shoud be empty value')
   t.end()
 })
 

@@ -50,6 +50,8 @@
   --t-light-background-color: #2E72EA0a;
   /* Background for action buttons */
   --t-action-background-color: #4e4e4e;
+  /* Button backgorund */
+  --t-default-button-background: #f7f7f9;
   /* Main text color, used in the article */
   --t-text-color: #111;
   /* Used to display error message */
@@ -79,6 +81,7 @@
   --t-double-spacing: 40px; /* Double of the default spacing */
   --t-input-padding: 4px; /* Padding used input boxes */
   --t-cell-padding: 6px; /* Padding used table cells */
+  --t-button-padding: 7px; /* Padding used by buttons */
 
    /* Margins */
    /* ----------------------------------------------------------------------*/
@@ -93,6 +96,7 @@
   --t-input-focus-border: 2px solid rgb(145, 189, 240);
   --t-negative-input-padding: -6px; /* This must be the negative of input padding + default border width */
   --t-border-radius: 5px; /* Default border radius for rounded corners */
+  --t-tool-border-radius: 3px; /* Default border radius for tools */
   --t-default-border: 1px solid var(--t-border-color);
 
    /* Box shadows */
@@ -106,8 +110,6 @@
   --t-small-layout-width: 300px;
   --t-medium-layout-width: 620px;
   --t-large-layout-width: 960px;
-
-  --t-light-bg-color: #F7F7F9;
   --t-separator-color: rgba(0,0,0,0.05);
 }
 

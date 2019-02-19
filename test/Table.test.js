@@ -569,7 +569,7 @@ test('Table: table context menu', t => {
   _selectCell(tableComp)
   let contextMenu = _openContextMenu(tableComp)
   t.ok(contextMenu && contextMenu.css('display', 'block'), 'context menu should be visible')
-  t.ok(contextMenu.findAll('.sc-menu-item').length > 0, '.. and should not be empty')
+  t.ok(contextMenu.findAll('.sc-tool').length > 0, '.. and should not be empty')
   t.end()
 })
 

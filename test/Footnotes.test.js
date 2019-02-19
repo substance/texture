@@ -181,7 +181,7 @@ function _insertFootnote (el) {
   if (!isDropDownOpened) {
     insertDropdown.click()
   }
-  let insertFootnoteBtn = el.find('.sc-menu-item.sm-insert-footnote')
+  let insertFootnoteBtn = el.find('.sc-tool.sm-insert-footnote')
   insertFootnoteBtn.click()
 }
 

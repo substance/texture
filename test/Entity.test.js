@@ -139,7 +139,7 @@ function _insertEntity (editor, entityName) {
   // open the corresponding dropdown
   let menu = editor.find('.sc-tool-dropdown.sm-insert')
   menu.find('button').el.click()
-  let addButton = menu.find(`.sc-menu-item.sm-insert-${entityName}`).el
+  let addButton = menu.find(`.sc-tool.sm-insert-${entityName}`).el
   return addButton.click()
 }
 

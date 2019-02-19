@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.sc-tool-switcher > .sc-toggle-tool {
+.sc-tool-switcher > .sc-tool {
   line-height: var(--t-default-line-height);
   text-align: center;
   font-size: var(--t-tiny-font-size);
@@ -15,11 +15,11 @@
   cursor: pointer;
 }
 
-.sc-tool-switcher > .sc-toggle-tool > .se-label {
+.sc-tool-switcher > .sc-tool > .se-label {
   margin: 0 var(--t-button-padding);
 }
 
-.sc-tool-switcher > .sc-toggle-tool.sm-active {
+.sc-tool-switcher > .sc-tool.sm-active {
   color: var(--t-text-color);
   background: var(--t-default-button-background);
   cursor: default;

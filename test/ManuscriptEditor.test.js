@@ -36,7 +36,7 @@ test('ManuscriptEditor: add inline formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 3)
-  let insertInlineFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-inline-formula')
+  let insertInlineFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-tool.sm-insert-inline-formula')
   t.ok(insertInlineFormulaTool.click(), 'clicking on the insert inline formula button should not throw error')
   let inlineFormula = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-formula')
   t.notNil(inlineFormula, 'there should be an inline-formula now')
@@ -73,7 +73,7 @@ test('ManuscriptEditor: add block formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
-  let insertDispFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-formula')
+  let insertDispFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-tool.sm-insert-block-formula')
   t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
   let blockFormula = editor.find('*[data-id=p-2] + .sm-block-formula')
   t.notNil(blockFormula, 'there should be a block-formula now')
@@ -125,7 +125,7 @@ test('ManuscriptEditor: add block quote', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
-  let insertBlockQuoteTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-quote')
+  let insertBlockQuoteTool = openMenuAndFindTool(editor, 'insert', '.sc-tool.sm-insert-block-quote')
   t.ok(insertBlockQuoteTool.click(), 'clicking on the insert block quote button should not throw error')
   let blockQuote = editor.find('*[data-id=p-2] + .sm-block-quote')
   t.notNil(blockQuote, 'there should be a block quote now')
@@ -180,7 +180,7 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   // open the switch type dropdown
   let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
   switchTypeDropdown.find('button').click()
-  let h1button = switchTypeDropdown.find('.sc-menu-item.sm-heading1')
+  let h1button = switchTypeDropdown.find('.sc-tool.sm-heading1')
   t.notNil(h1button, 'there should be an option to switch to heading level 1')
   h1button.click()
   // ATTENTION: we do not change id, which might be confusing for others
@@ -197,7 +197,7 @@ test('ManuscriptEditor: Switch paragraph to preformat', t => {
   // open the switch type dropdown
   let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
   switchTypeDropdown.find('button').click()
-  let preformatButton = switchTypeDropdown.find('.sc-menu-item.sm-preformat')
+  let preformatButton = switchTypeDropdown.find('.sc-tool.sm-preformat')
   t.notNil(preformatButton, 'there should be an option to switch to preformat')
   preformatButton.click()
   let preformatEl = editor.find('.sc-surface.sm-body > .sc-text-node.sm-preformat')
@@ -344,12 +344,12 @@ test('ManuscriptEditor: inserting a table figure', t => {
 const SPECS = [
   {
     'type': 'block-formula',
-    'tool': '.sc-menu-item.sm-insert-block-formula',
+    'tool': '.sc-tool.sm-insert-block-formula',
     'label': 'Formula'
   },
   {
     'type': 'block-quote',
-    'tool': '.sc-menu-item.sm-insert-block-quote',
+    'tool': '.sc-tool.sm-insert-block-quote',
     'label': 'Blockquote'
   },
   {

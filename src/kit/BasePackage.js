@@ -60,6 +60,7 @@ export default {
     configurator.addComponent('overlay', Overlay, true)
     configurator.addComponent('text-area', TextArea)
     configurator.addComponent('tool', Tool, true)
+    // TODO: remove toggle-tool
     configurator.addComponent('toggle-tool', ToggleTool, true)
     configurator.addComponent('toolbar', Toolbar, true)
     configurator.addComponent('tool-dropdown', ToolDropdown, true)

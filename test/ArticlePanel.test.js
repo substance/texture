@@ -3,7 +3,6 @@ import setupTestApp from './shared/setupTestApp'
 import { openManuscriptEditor, openMetadataEditor } from './shared/integrationTestHelpers'
 
 const SWITCH_MODE_DROPDOWN_SELECTOR = '.sc-tool-switcher.sm-mode'
-const TOGGLE_BUTTON_SELECTOR = 'button.sc-toggle-tool:not(.sm-active)'
 const OPEN_METADATA_OPTION_SELECTOR = 'button.sm-open-metadata'
 
 test('ArticlePanel: open every view', t => {
@@ -17,9 +16,8 @@ test('ArticlePanel: open every view', t => {
 test('ArticlePanel: using switch view', t => {
   let { app } = setupTestApp(t)
   openManuscriptEditor(app)
-  let dropdown = app.find(SWITCH_MODE_DROPDOWN_SELECTOR)
-  dropdown.find(TOGGLE_BUTTON_SELECTOR).click()
-  dropdown.find(OPEN_METADATA_OPTION_SELECTOR).click()
+  let switcher = app.find(SWITCH_MODE_DROPDOWN_SELECTOR)
+  switcher.find(OPEN_METADATA_OPTION_SELECTOR).click()
   let metadataEditor = app.find('.sc-metadata-editor')
   t.notNil(metadataEditor, 'metadata editor should be displayed now')
   t.equal(metadataEditor.context.appState.viewName, 'metadata', 'appState.viewName should be correct')

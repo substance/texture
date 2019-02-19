@@ -118,7 +118,7 @@ test(`Reference: query DOI`, t => {
 function _addReference (editor, bibrType) {
   let menu = editor.find('.sc-tool-dropdown.sm-insert')
   menu.find('button').el.click()
-  menu.find(`.sc-menu-item.sm-insert-reference`).el.click()
+  menu.find(`.sc-tool.sm-insert-reference`).el.click()
   editor.find(`.sc-modal-dialog .sc-add-reference .se-type.sm-${bibrType}`).click()
 }
 
@@ -127,7 +127,7 @@ function _openWorkflow (metadataEditor) {
   let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-insert')
   addDropDown.find('button').click()
   // click on the add-reference button
-  addDropDown.find('.sc-menu-item.sm-insert-reference').click()
+  addDropDown.find('.sc-tool.sm-insert-reference').click()
   let workflow = metadataEditor.find('.se-workflow-modal')
   return workflow
 }

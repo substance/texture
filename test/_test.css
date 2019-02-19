@@ -1,7 +1,8 @@
 .sc-toolbar > .se-active-tools > * {
   display: inline;
 }
-.sc-toggle-tool {
+.sc-toggle-tool,
+.sc-tool {
   display: inline;
 }
 .sc-tool-group {

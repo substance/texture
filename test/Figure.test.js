@@ -10,9 +10,9 @@ import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 // TODO: test automatic labelling
 
-const insertFigureSelector = '.sm-insert-figure'
+const insertFigureSelector = '.sc-insert-figure-tool'
 const insertFigureXrefSelector = '.sm-insert-xref-figure'
-const insertFigurePanelSelector = '.sm-add-figure-panel'
+const insertFigurePanelSelector = '.sc-insert-figure-panel-tool'
 const moveUpToolSelector = '.sm-move-up-figure-panel'
 const moveDownToolSelector = '.sm-move-down-figure-panel'
 const openPanelImageSelector = '.sc-open-figure-panel-source-tool'
@@ -480,7 +480,7 @@ function _removeFigurePanel (editor) {
 }
 
 function _isToolEnabled (editor, toolClass) {
-  return isToolEnabled(editor, 'figure-tools', toolClass)
+  return isToolEnabled(editor, 'context-tools', toolClass)
 }
 
 function _getDisplayedPanelId (editor) {

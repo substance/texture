@@ -72,6 +72,7 @@ import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
+import { BlockFormula } from '../models'
 
 export default {
   name: 'ManuscriptEditor',
@@ -216,7 +217,7 @@ export default {
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-formula', InsertCrossReferenceCommand, {
-      refType: 'formula',
+      refType: BlockFormula.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {

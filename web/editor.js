@@ -1,12 +1,13 @@
 import {
-  getQueryStringParam, substanceGlobals, platform
+  getQueryStringParam, substanceGlobals
 } from 'substance'
 import { TextureWebApp, TextureArchive, vfsSaveHook, EditorPackage } from 'substance-texture'
 
 window.addEventListener('load', () => {
-  substanceGlobals.DEBUG_RENDERING = platform.devtools
+  substanceGlobals.DEBUG_RENDERING = true
   setTimeout(() => {
     let app = DevWebApp.mount({
+      debug: true,
       archiveId: getQueryStringParam('archive') || 'kitchen-sink',
       storageType: getQueryStringParam('storage') || 'vfs',
       storageUrl: getQueryStringParam('storageUrl') || '/archives'

@@ -35,11 +35,12 @@ import './Validator.test'
 
 platform.test = true
 
-if (platform.devtools) {
+if (process.env.DEBUG) {
   substanceGlobals.DEBUG_RENDERING = true
 }
 
 if (platform.inNodeJS) {
+  // TODO: why do we force this?
   substanceGlobals.DEBUG_RENDERING = false
 
   // pure NodeJS tests (i.e. parts used in electron app)

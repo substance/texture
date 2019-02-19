@@ -25,7 +25,6 @@ window.addEventListener('load', () => {
 
   let editorConfig = _window.editorConfig
 
-  substanceGlobals.DEBUG_RENDERING = platform.devtools
   const archiveId = editorConfig.darPath
   const isReadOnly = editorConfig.readOnly
 

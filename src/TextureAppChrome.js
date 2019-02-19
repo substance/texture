@@ -2,16 +2,17 @@ import { Component, DefaultDOMElement, platform } from 'substance'
 
 export default class TextureAppChrome extends Component {
   didMount () {
-    // when the developer console is not open, display when there is an error
-    if (!platform.devtools) {
+    // if debug is turned on do not 'forward' to an error display and instead
+    // leave the app in its failed state
+    if (this.props.debug) {
+      this._init()
+    } else {
       this._init(err => {
         if (err) {
           console.error(err)
           this.setState({ error: err })
         }
       })
-    } else {
-      this._init()
     }
     // Note: adding global handlers causes problems in the test suite
     if (!platform.test) {

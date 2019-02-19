@@ -5,6 +5,17 @@ export default {
   configure (config) {
     config.addToolPanel('toolbar', [
       {
+        name: 'mode',
+        type: 'switcher',
+        style: 'full',
+        hideDisabled: true,
+        displayActiveCommand: true,
+        items: [
+          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
+          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
+        ]
+      },
+      {
         name: 'document-tools',
         type: 'group',
         style: 'minimal',
@@ -153,17 +164,6 @@ export default {
         items: [
           { type: 'command-group', name: 'custom-metadata-fields' }
         ]
-      },
-      {
-        name: 'mode',
-        type: 'dropdown',
-        style: 'full',
-        hideDisabled: true,
-        displayActiveCommand: true,
-        items: [
-          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
-          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
-        ]
       }
     ])
 
@@ -200,8 +200,6 @@ export default {
     config.addIcon('bold', { 'fontawesome': 'fa-bold' })
     config.addIcon('italic', { 'fontawesome': 'fa-italic' })
     config.addIcon('link', { 'fontawesome': 'fa-link' })
-    config.addIcon('manuscript', { 'fontawesome': 'fa-align-left' })
-    config.addIcon('metadata', { 'fontawesome': 'fa-th-list' })
 
     // Format tools labels
     config.addLabel('format', 'Format')

@@ -66,17 +66,7 @@ export default class TextureConfigurator extends Configurator {
   }
 
   addTool (name, ToolClass) {
-    if (!isString(name)) {
-      throw new Error("Expecting 'name' to be a String")
-    }
-    if (!ToolClass) {
-      throw new Error('Provided nil for tool ' + name)
-    }
-    if (!ToolClass.prototype._isTool) {
-      throw new Error("Expecting 'ToolClass' to be of type Tool. name:", name)
-    }
-
-    this.config.tools[name] = ToolClass
+    throw new Error('This has been removed. Use addComponent(<command-name>, ToolClass) instead')
   }
 
   getToolRegistry () {

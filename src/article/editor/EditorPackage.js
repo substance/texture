@@ -367,19 +367,18 @@ export default {
     config.addIcon('right-control', { 'fontawesome': 'fa-chevron-right' })
 
     // Tools
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addTool('download-file', DownloadSupplementaryFileTool)
-    config.addTool('edit-block-formula', EditDispFormulaTool)
-    config.addTool('edit-external-link', EditExtLinkTool)
-    config.addTool('edit-formula', EditInlineFormulaTool)
-    config.addTool('edit-xref', EditXrefTool)
-    config.addTool('insert-figure', InsertFigureTool)
-    config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addTool('open-figure-panel-image', OpenFigurePanelImageTool)
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addTool('replace-file', ReplaceSupplementaryFileTool)
-
-    config.addTool('insert-table', InsertTableTool)
+    config.addComponent('add-figure-panel', InsertFigurePanelTool)
+    config.addComponent('download-file', DownloadSupplementaryFileTool)
+    config.addComponent('edit-block-formula', EditDispFormulaTool)
+    config.addComponent('edit-external-link', EditExtLinkTool)
+    config.addComponent('edit-formula', EditInlineFormulaTool)
+    config.addComponent('edit-xref', EditXrefTool)
+    config.addComponent('insert-figure', InsertFigureTool)
+    config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
+    config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
+    config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addComponent('replace-file', ReplaceSupplementaryFileTool)
+    config.addComponent('insert-table', InsertTableTool)
 
     // DropDownHandler
     config.addDropHandler(DropFigure)

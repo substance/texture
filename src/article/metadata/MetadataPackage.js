@@ -149,9 +149,9 @@ export default {
     })
 
     // Tools
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addTool('open-figure-panel-image', OpenFigurePanelImageTool)
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addComponent('add-figure-panel', InsertFigurePanelTool)
+    config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
+    config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
 
     // KeyboardShortcuts
     config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })

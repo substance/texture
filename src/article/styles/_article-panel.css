@@ -29,14 +29,13 @@
 }
 
 .sc-article-panel .sc-toolbar .se-active-tools .sm-mode {
-  position: absolute;
-  right: 0px;
-  background: #f0f0f0;
-  border-radius: 2px;
+  flex: 0 0 260px;
+  height: 24px;
+  margin: 2px;
 }
 
-.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .se-label {
-  margin: 0px 5px 0px 15px;
+.sm-compact .sc-toolbar .se-active-tools .sm-mode {
+  display: none;
 }
 
 .sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),

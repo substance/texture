@@ -5,13 +5,13 @@
   border-radius: 3px;
 }
 
-.sc-menu > .se-separator {
+.sc-separator {
   position: relative;
   border: var(--t-default-border);
   margin: var(--t-half-spacing) 0;
 }
 
-.sc-menu > .se-separator > .se-label {
+.sc-separator > .se-label {
   position: absolute;
   top: 50%;
   left: 50%;

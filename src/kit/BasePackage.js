@@ -25,6 +25,7 @@ import Toolbar from './ui/Toolbar'
 import ToolDropdown from './ui/ToolDropdown'
 import ToolGroup from './ui/ToolGroup'
 import ToolPrompt from './ui/ToolPrompt'
+import ToolSeparator from './ui/ToolSeparator'
 import ToolSwitcher from './ui/ToolSwitcher'
 import TextArea from './ui/TextArea'
 
@@ -68,6 +69,7 @@ export default {
     configurator.addComponent('tool-dropdown', ToolDropdown, true)
     configurator.addComponent('tool-group', ToolGroup, true)
     configurator.addComponent('tool-prompt', ToolPrompt, true)
+    configurator.addComponent('tool-separator', ToolSeparator, true)
     configurator.addComponent('tool-switcher', ToolSwitcher, true)
 
     configurator.addLabel('text-types', {

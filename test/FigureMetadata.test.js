@@ -104,8 +104,7 @@ test('Figure Metadata: move custom field', t => {
   t.ok(_canMoveFieldUp(editor), 'move up should be disabled')
   t.notOk(_canMoveFieldDown(editor), 'move down should be disabled')
 
-  // // Move up to a first item
-  t.comment('move up to first position')
+  t.comment('move field up')
   t.ok(_moveFieldUp(editor), 'move up should not throw')
   t.notOk(_canMoveFieldUp(editor), 'move up should be disabled')
   t.ok(_canMoveFieldDown(editor), 'move down should be disabled')

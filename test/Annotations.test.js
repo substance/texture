@@ -107,12 +107,12 @@ function _setup (t) {
 }
 
 function _isToolEnabled (editor, spec) {
-  return isToolEnabled(editor, spec.menu, `.sc-menu-item.sm-${spec.tool}`)
+  return isToolEnabled(editor, spec.menu, `.sc-tool.sm-${spec.tool}`)
 }
 
 function _toggleAnnotation (t, editor, spec) {
   doesNotThrowInNodejs(t, () => {
     let menu = openMenu(editor, spec.menu)
-    menu.find(`.sc-menu-item.sm-${spec.tool}`).el.click()
+    menu.find(`.sc-tool.sm-${spec.tool}`).el.click()
   })
 }

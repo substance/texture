@@ -51,7 +51,7 @@ export default class ToolDropdown extends ToolGroup {
         el.append(
           $$('div').addClass('se-choices').append(
             this._renderItems($$)
-          )
+          ).ref('choices')
         )
       } else if (style === 'minimal' || toggleName !== this.props.name) {
         // NOTE: tooltips are only rendered when explanation is needed
@@ -110,6 +110,12 @@ export default class ToolDropdown extends ToolGroup {
   _onClick (event) {
     event.preventDefault()
     event.stopPropagation()
-    this.send('toggleOverlay', this.getId())
+    if (this._hasChoices()) {
+      this.send('toggleOverlay', this.getId())
+    }
+  }
+
+  _hasChoices () {
+    return this._derivedState.hasEnabledItem
   }
 }

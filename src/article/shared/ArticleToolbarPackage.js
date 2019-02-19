@@ -104,17 +104,73 @@ export default {
         name: 'context-tools',
         type: 'dropdown',
         style: 'descriptive',
-        hideDisabled: true,
+        // FIXME: hide disabled commands and groups
+        // hideDisabled: true,
         items: [
-          { type: 'command-group', name: 'collection' },
-          { type: 'command-group', name: 'table' },
-          { type: 'command-group', name: 'table-insert' },
-          { type: 'command-group', name: 'table-delete' },
-          { type: 'command-group', name: 'file' },
-          { type: 'command-group', name: 'figure-panel' },
-          { type: 'command-group', name: 'footnote' },
-          { type: 'command-group', name: 'list' },
-          { type: 'command-group', name: 'custom-metadata-fields' }
+          {
+            type: 'group',
+            name: 'table',
+            style: 'descriptive',
+            label: 'table-tools',
+            items: [
+              { type: 'command-group', name: 'table' },
+              { type: 'command-group', name: 'table-insert' },
+              { type: 'command-group', name: 'table-delete' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'file',
+            style: 'descriptive',
+            label: 'file-tools',
+            items: [
+              { type: 'command-group', name: 'file' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'figure',
+            style: 'descriptive',
+            label: 'figure-tools',
+            items: [
+              { type: 'command-group', name: 'figure-panel' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'footnote',
+            style: 'descriptive',
+            label: 'footnote-tools',
+            items: [
+              { type: 'command-group', name: 'footnote' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'list',
+            style: 'descriptive',
+            label: 'list-tools',
+            items: [
+              { type: 'command-group', name: 'list' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'custom-metadata-fields',
+            style: 'descriptive',
+            label: 'metadata-field-tools',
+            items: [
+              { type: 'command-group', name: 'custom-metadata-fields' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'collection',
+            style: 'descriptive',
+            items: [
+              { type: 'command-group', name: 'collection' }
+            ]
+          }
         ]
       }
     ])

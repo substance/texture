@@ -11,15 +11,8 @@ export default class MenuGroup extends Menu {
     // EXPERIMENTAL: showing a ToolGroup label an
     const { style, label } = this.props
     if (style === 'descriptive' && label) {
-      // FIXME: introduce a separator component. Currently this is redundant
-      // with code within Menu.js
-      let separatorEl = $$('div').addClass('se-separator')
-      separatorEl.append(
-        $$('div').addClass('se-label').append(
-          this.getLabel(label)
-        )
-      )
-      return separatorEl
+      const SeparatorClass = this.getComponent('tool-separator')
+      return $$(SeparatorClass, { label })
     }
   }
 }

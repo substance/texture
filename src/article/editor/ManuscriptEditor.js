@@ -80,21 +80,18 @@ export default class ManuscriptEditor extends EditorPanel {
   _renderToolbar ($$) {
     const Toolbar = this.getComponent('toolbar')
     const configurator = this._getConfigurator()
-    const toolPanel = configurator.getToolPanel('toolbar', true)
+    const items = configurator.getToolPanel('toolbar', true)
     return $$('div').addClass('se-toolbar-wrapper').append(
       $$(Managed(Toolbar), {
-        toolPanel,
+        items,
         bindings: ['commandStates']
       }).ref('toolbar')
     )
   }
 
   _renderContentPanel ($$) {
-    const configurator = this._getConfigurator()
     const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
-    const Overlay = this.getComponent('overlay')
-    const ContextMenu = this.getComponent('context-menu')
     const Dropzones = this.getComponent('dropzones')
 
     let contentPanel = $$(ScrollPane, {
@@ -108,19 +105,33 @@ export default class ManuscriptEditor extends EditorPanel {
         model: this._model,
         disabled: this.props.disabled
       }).ref('article'),
-      $$(Managed(Overlay), {
-        toolPanel: configurator.getToolPanel('main-overlay'),
-        theme: this._getTheme(),
-        bindings: ['commandStates']
-      }),
-      $$(Managed(ContextMenu), {
-        toolPanel: configurator.getToolPanel('context-menu'),
-        theme: this._getTheme(),
-        bindings: ['commandStates']
-      }),
+      this._renderMainOverlay($$),
+      this._renderContextMenu($$),
       $$(Dropzones)
     )
     return contentPanel
+  }
+
+  _renderMainOverlay ($$) {
+    const Overlay = this.getComponent('overlay')
+    const configurator = this._getConfigurator()
+    const items = configurator.getToolPanel('main-overlay')
+    return $$(Managed(Overlay), {
+      items,
+      theme: this._getTheme(),
+      bindings: ['commandStates']
+    })
+  }
+
+  _renderContextMenu ($$) {
+    const configurator = this._getConfigurator()
+    const ContextMenu = this.getComponent('context-menu')
+    const items = configurator.getToolPanel('context-menu')
+    return $$(Managed(ContextMenu), {
+      items,
+      theme: this._getTheme(),
+      bindings: ['commandStates']
+    })
   }
 
   _renderFooterPane ($$) {

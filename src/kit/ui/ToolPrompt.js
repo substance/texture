@@ -1,11 +1,7 @@
-import ToolGroup from './ToolGroup'
+import ToolPanel from './ToolPanel'
 
-export default class ToolPrompt extends ToolGroup {
+export default class ToolPrompt extends ToolPanel {
   _getClassNames () {
     return 'sc-tool-prompt'
-  }
-
-  get _isTopLevel () {
-    return true
   }
 }

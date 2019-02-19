@@ -13,19 +13,19 @@ export default class ToolDropdown extends ToolGroup {
     const appState = this.context.appState
     const { commandStates, hideDisabled, style, theme } = this.props
     const toggleName = this._getToggleName()
-    const hasEnabledTools = this._derivedState.hasEnabledTools
+    const hasEnabledItem = this._derivedState.hasEnabledItem
     const showChoices = appState.overlayId === this.getId()
 
     let el = $$('div').addClass('sc-tool-dropdown')
     el.addClass('sm-' + this.props.name)
 
-    if (!hasEnabledTools) {
+    if (!hasEnabledItem) {
       el.addClass('sm-disabled')
     } else if (showChoices) {
       el.addClass('sm-open')
     }
 
-    if (!hideDisabled || hasEnabledTools) {
+    if (!hideDisabled || hasEnabledItem) {
       const Button = this.getComponent('button')
       let toggleButtonProps = {
         dropdown: true,
@@ -75,9 +75,10 @@ export default class ToolDropdown extends ToolGroup {
   }
 
   _deriveState (props) {
-    let derivedState = super._deriveState(props)
+    super._deriveState(props)
+
     if (this.props.displayActiveCommand) {
-      derivedState.activeCommandName = this._getActiveCommandName(props.items, props.commandStates)
+      this._derivedState.activeCommandName = this._getActiveCommandName(props.items, props.commandStates)
     }
   }
 

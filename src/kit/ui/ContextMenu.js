@@ -22,7 +22,7 @@ export default class ContextMenu extends ToolPanel {
       .addClass('sm-theme-' + this.getTheme())
     el.append(
       $$('div').addClass('se-active-tools').append(
-        this._renderEntries($$)
+        this._renderItems($$)
       ).ref('entriesContainer')
     )
     return el
@@ -58,9 +58,5 @@ export default class ContextMenu extends ToolPanel {
     let maxLeftPos = mouseBounds.left + mouseBounds.right - contextMenuWidth
     leftPos = Math.min(leftPos, maxLeftPos)
     this.el.css('left', leftPos)
-  }
-
-  getTheme () {
-    return this.props.theme || 'dark'
   }
 }

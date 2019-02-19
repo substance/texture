@@ -12,9 +12,6 @@ import ContextMenu from './ui/ContextMenu'
 import Input from './ui/Input'
 import IsolatedNodeComponent from './ui/_IsolatedNodeComponent'
 import IsolatedInlineNodeComponent from './ui/_IsolatedInlineNodeComponent'
-import Menu from './ui/Menu'
-import MenuGroup from './ui/MenuGroup'
-import MenuItem from './ui/MenuItem'
 import ModalDialog from './ui/ModalDialog'
 import Overlay from './ui/Overlay'
 import ScrollPane from './ui/ScrollPane'
@@ -58,9 +55,6 @@ export default {
     configurator.addComponent('button', Button, true)
     configurator.addComponent('context-menu', ContextMenu, true)
     configurator.addComponent('input', Input)
-    configurator.addComponent('menu', Menu, true)
-    configurator.addComponent('menu-group', MenuGroup, true)
-    configurator.addComponent('menu-item', MenuItem, true)
     configurator.addComponent('modal', ModalDialog)
     configurator.addComponent('overlay', Overlay, true)
     configurator.addComponent('text-area', TextArea)

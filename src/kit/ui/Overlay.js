@@ -31,7 +31,7 @@ export default class Overlay extends ToolPanel {
     el.addClass('sm-theme-' + this.getTheme())
     el.append(
       $$('div').addClass('se-active-tools').append(
-        this._renderEntries($$)
+        this._renderItems($$)
       ).ref('entriesContainer')
     )
     return el
@@ -39,8 +39,8 @@ export default class Overlay extends ToolPanel {
 
   _positionOverlay () {
     let hints = this.context.appState.get('overlayHints')
-    let commandStates = this.context.appState.commandStates
-    if (hints && this.hasEnabledTools(commandStates)) {
+    let hasEnabledItem = this._derivedState.hasEnabledItem
+    if (hints && hasEnabledItem) {
       this.el.removeClass('sm-hidden')
       let overlayWidth = this.el.htmlProp('offsetWidth')
       let selRect = hints.selectionRect

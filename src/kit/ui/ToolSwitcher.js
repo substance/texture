@@ -1,6 +1,6 @@
-import ToolGroup from './ToolGroup'
+import ToolPanel from './ToolPanel'
 
-export default class ToolSwitcher extends ToolGroup {
+export default class ToolSwitcher extends ToolPanel {
   _getClassNames () {
     return 'sc-tool-switcher'
   }

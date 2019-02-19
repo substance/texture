@@ -1,4 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
+import InsertFigureTool from '../editor/InsertFigureTool'
 
 export default {
   name: 'article-toolbar',
@@ -40,8 +41,7 @@ export default {
         type: 'dropdown',
         style: 'descriptive',
         items: [
-          { type: 'command', name: 'insert-figure', label: 'figure' },
-          { type: 'command', name: 'insert-image', label: 'image' },
+          { type: 'command', name: 'insert-figure', label: 'figure', ToolClass: InsertFigureTool },
           { type: 'command', name: 'insert-table', label: 'table' },
           { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
           { type: 'command', name: 'insert-block-formula', label: 'equation' },

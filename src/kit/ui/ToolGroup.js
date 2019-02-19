@@ -23,38 +23,46 @@ export default class ToolGroup extends Component {
     this._deriveState(newProps)
   }
 
+  getTheme () {
+    // HACK: falling back to 'light' in a hard-coded way
+    return this.props.theme || 'light'
+  }
+
   _deriveState (props) {
     if (this._isTopLevel) {
       this._derivedState = this._deriveGroupState(this.props, this.props.commandStates)
+    } else {
+      this._derivedState = props.itemState
     }
   }
 
   render ($$) {
-    const { name } = this.props
+    const { name, hideDisabled } = this.props
     let el = $$('div')
       .addClass(this._getClassNames())
       .addClass('sm-' + name)
 
+    let hasEnabledItem = this._derivedState.hasEnabledItem
+    if (hasEnabledItem || !hideDisabled) {
+      el.append(this._renderLabel($$))
+      el.append(this._renderItems($$))
+    }
+
     return el
   }
 
-  _renderContent ($$) {
-    const { hideDisabled } = this.props
-    let els = []
-    let hasEnabledItem = this._derivedState.hasEnabledItem
-    if (hasEnabledItem || !hideDisabled) {
-      els.push(this._renderLabel($$))
-      els.push(this._renderItems($$))
+  _renderLabel ($$) {
+    // EXPERIMENTAL: showing a ToolGroup label an
+    const { style, label } = this.props
+    if (style === 'descriptive' && label) {
+      const SeparatorClass = this.getComponent('tool-separator')
+      return $$(SeparatorClass, { label })
     }
   }
 
-  _renderLabel () {
-    // Note: only in MenuGroups this is implemented
-    // TODO: maybe we should instead override _renderContent() in MenuGroup
-  }
-
   _renderItems ($$) {
-    const { style, theme, hideDisabled, commandStates } = this.props
+    const { style, hideDisabled, commandStates } = this.props
+    const theme = this.getTheme()
     const { itemStates } = this._derivedState
     let els = []
     for (let itemState of itemStates) {
@@ -77,16 +85,6 @@ export default class ToolGroup extends Component {
           }
           break
         }
-        case 'group': {
-          let ToolClass = this._getToolClass(item)
-          els.push(
-            $$(ToolClass, Object.assign({}, item, {
-              commandStates,
-              theme
-            })).ref(item.name)
-          )
-          break
-        }
         case 'separator': {
           let ToolSeparator = this.getComponent('tool-separator')
           els.push(
@@ -95,7 +93,14 @@ export default class ToolGroup extends Component {
           break
         }
         default: {
-          console.warn('Unsupported item type', item.type)
+          let ToolClass = this._getToolClass(item)
+          els.push(
+            $$(ToolClass, Object.assign({}, item, {
+              commandStates,
+              itemState,
+              theme
+            })).ref(item.name)
+          )
         }
       }
     }
@@ -122,12 +127,20 @@ export default class ToolGroup extends Component {
         return {
           item,
           commandState,
-          enabeld: !commandState.disabled
+          enabled: !commandState.disabled
         }
       }
-      case 'group': {
+      case 'group':
+      case 'dropdown':
+      case 'prompt':
+      case 'switcher': {
         return this._deriveGroupState(item, commandStates)
       }
+      case 'separator': {
+        return { item }
+      }
+      default:
+        throw new Error('Unsupported item type')
     }
   }
 
@@ -143,19 +156,30 @@ export default class ToolGroup extends Component {
     } else {
       switch (item.type) {
         case 'command': {
-          if (this.props.style === 'descriptive') {
-            ToolClass = this.getComponent('menu-item')
-          } else {
-            ToolClass = this.getComponent('toggle-tool')
-          }
+          // that should should be just a tool, and in a minimal icon based toolbar
+          // it looks like a toggle-tool, in a menu or dropdown it would look more descriptive
+          ToolClass = this.getComponent('toggle-tool')
+          break
+        }
+        case 'dropdown': {
+          ToolClass = this.getComponent('tool-dropdown')
           break
         }
         case 'group': {
           ToolClass = this.getComponent('tool-group')
           break
         }
+        case 'prompt': {
+          ToolClass = this.getComponent('tool-prompt')
+          break
+        }
         case 'separator': {
           ToolClass = this.getComponent('tool-separator')
+          break
+        }
+        // TODO: IMO this is a custom Tool, and should instead be used via ToolClass
+        case 'switcher': {
+          ToolClass = this.getComponent('tool-switcher')
           break
         }
         default: {

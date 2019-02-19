@@ -39,8 +39,8 @@ export default class Overlay extends ToolPanel {
 
   _positionOverlay () {
     let hints = this.context.appState.get('overlayHints')
-
-    if (hints && this.hasEnabledTools()) {
+    let commandStates = this.context.appState.commandStates
+    if (hints && this.hasEnabledTools(commandStates)) {
       this.el.removeClass('sm-hidden')
       let overlayWidth = this.el.htmlProp('offsetWidth')
       let selRect = hints.selectionRect

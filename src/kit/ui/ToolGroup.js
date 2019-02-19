@@ -33,7 +33,7 @@ export default class ToolGroup extends Component {
           const commandName = item.name
           let commandState = commandStates[commandName] || DISABLED
           // TODO: why is it necessary to override isToolEnabled()?
-          if (!hideDisabled || this.isToolEnabled(commandState, item)) {
+          if (!hideDisabled || this._isToolEnabled(commandState, item)) {
             let ToolClass = this._getToolClass(item)
             el.append(
               $$(ToolClass, {
@@ -56,6 +56,13 @@ export default class ToolGroup extends Component {
           )
           break
         }
+        case 'separator': {
+          let ToolSeparator = this.getComponent('tool-separator')
+          el.append(
+            $$(ToolSeparator, item)
+          )
+          break
+        }
         default: {
           console.warn('Unsupported item type', item.type)
         }
@@ -72,7 +79,7 @@ export default class ToolGroup extends Component {
   /*
     Determine whether a tool should be shown or not
   */
-  isToolEnabled (commandState, opts = {}) {
+  _isToolEnabled (commandState) {
     return (commandState && !commandState.disabled)
   }
 
@@ -80,13 +87,24 @@ export default class ToolGroup extends Component {
     Returns true if at least one command is enabled
   */
   hasEnabledTools (commandStates) {
-    if (!commandStates) {
-      commandStates = this.props.commandStates
-    }
-    let items = this.props.items
+    if (!commandStates) throw new Error('commandStates are required')
+    return this._hasEnabledTools(commandStates, this.props.items)
+  }
+
+  _hasEnabledTools (commandStates, items) {
     for (let item of items) {
-      let commandState = commandStates[item.name]
-      if (this.isToolEnabled(commandState, item)) return true
+      switch (item.type) {
+        case 'command': {
+          let commandState = commandStates[item.name]
+          if (this._isToolEnabled(commandState)) return true
+          break
+        }
+        case 'group': {
+          if (this._hasEnabledTools(commandStates, item.items)) {
+            return true
+          }
+        }
+      }
     }
     return false
   }

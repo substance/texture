@@ -42,12 +42,12 @@ export default class ToolPanel extends Component {
     })
   }
 
-  hasEnabledTools () {
+  hasEnabledTools (commandStates) {
     let entriesContainer = this.refs.entriesContainer
     let entries = entriesContainer.childNodes
     let hasEnabledTools = false
     entries.forEach((entry) => {
-      if (entry.hasEnabledTools()) {
+      if (entry.hasEnabledTools(commandStates)) {
         hasEnabledTools = true
       }
     })

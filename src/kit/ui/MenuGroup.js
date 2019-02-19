@@ -1,13 +1,9 @@
-import ToolGroup from './ToolGroup'
+import Menu from './ToolGroup'
 
 /**
   A component that renders a group of menu items.
 */
-export default class MenuGroup extends ToolGroup {
-  render ($$) {
-    console.log('rendering MenuGroup')
-    return super.render($$)
-  }
+export default class MenuGroup extends Menu {
   _getClassNames () {
     return 'sc-menu-group'
   }
@@ -25,24 +21,5 @@ export default class MenuGroup extends ToolGroup {
       )
       return separatorEl
     }
-  }
-  _getToolClass (item) {
-    // use an ToolClass from toolSpec if configured inline in ToolGroup spec
-    let ToolClass
-    if (item.ToolClass) {
-      ToolClass = item.ToolClass
-    } else {
-      switch (item.type) {
-        case 'group': {
-          ToolClass = this.getComponent('menu-group')
-          break
-        }
-        default: {
-          ToolClass = super._getToolClass(item)
-          console.error('Unsupported item type inside ToolGroup:', item.type)
-        }
-      }
-    }
-    return ToolClass
   }
 }

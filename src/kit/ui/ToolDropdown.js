@@ -6,6 +6,7 @@ export default class ToolDropdown extends ToolGroup {
   constructor (...args) {
     super(...args)
 
+    this._derivedState = {}
     this._deriveState(this.props)
   }
 
@@ -26,7 +27,7 @@ export default class ToolDropdown extends ToolGroup {
     const commandStates = this.props.commandStates
     const toggleName = this._getToggleName()
     const hideDisabled = this.props.hideDisabled
-    const hasEnabledTools = this._hasEnabledTools
+    const hasEnabledTools = this._derivedState.hasEnabledTools
     const showChoices = appState.overlayId === this.getId()
     const style = this.props.style
     const theme = this.props.theme
@@ -93,25 +94,33 @@ export default class ToolDropdown extends ToolGroup {
   }
 
   _deriveState (props) {
-    const commandStates = props.commandStates
-    const items = props.items
+    let hasEnabledTools = this.hasEnabledTools(props.commandStates)
     let activeCommandName
-    let hasEnabledTools = false
+    if (this.props.displayActiveCommand) {
+      activeCommandName = this._getActiveCommandName(props.items, props.commandStates)
+    }
+    this._derivedState = {
+      activeCommandName,
+      hasEnabledTools
+    }
+  }
+
+  _getActiveCommandName (items, commandStates) {
+    // FIXME: getting an active commandName does only make sense for a flat dropdown
     for (let item of items) {
       if (item.type === 'command') {
         const commandName = item.name
-        let commandState = commandStates[commandName] || { disabled: true }
-        if (!activeCommandName && commandState.active) activeCommandName = commandName
-        if (!commandState.disabled) hasEnabledTools = true
+        let commandState = commandStates[commandName]
+        if (commandState && commandState.active) {
+          return commandName
+        }
       }
     }
-    this._activeCommandName = activeCommandName
-    this._hasEnabledTools = hasEnabledTools
   }
 
   _getToggleName () {
     if (this.props.displayActiveCommand) {
-      return this._activeCommandName || this.props.name
+      return this._derivedState.activeCommandName || this.props.name
     } else {
       return this.props.name
     }
@@ -127,7 +136,7 @@ export default class ToolDropdown extends ToolGroup {
       items = this.props.items.filter(item => {
         // ATTENTION: ATM with hideDisabled=true we only show enabled commands
         // i.e. no separatory, or nested groups or dropdowns
-        return (item.type !== 'command' || this.isToolEnabled(commandStates[item.name], item))
+        return (item.type !== 'command' || this._isToolEnabled(commandStates[item.name], item))
       })
     } else {
       items = this.props.items

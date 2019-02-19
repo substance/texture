@@ -13,7 +13,12 @@ export default class ManuscriptSection extends Component {
     const { model, name, label, children, hideWhenEmpty } = this.props
     const SectionLabel = this.getComponent('section-label')
 
-    let el = $$('div').addClass('sc-manuscript-section').addClass(`sm-${name}`)
+    let el = $$('div')
+      .addClass('sc-manuscript-section')
+      .addClass(`sm-${name}`)
+      .attr({
+        'data-section': name
+      })
     // only rendering content if
     if (hideWhenEmpty && model.length === 0) {
       el.addClass('sm-empty')

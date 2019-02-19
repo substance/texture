@@ -112,7 +112,7 @@ export default class ToolGroup extends Component {
   // ATTENTION: this is only called for top-level tool groups (Menu, Prompt, ) which are ToolDrop
   _deriveGroupState (group, commandStates) {
     let itemStates = group.items.map(item => this._deriveItemState(item, commandStates))
-    let hasEnabledItem = itemStates.some(item => item.enabled)
+    let hasEnabledItem = itemStates.some(item => item.enabled || item.hasEnabledItem)
     return {
       item: group,
       itemStates,

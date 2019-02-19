@@ -5,12 +5,6 @@ import ManuscriptTOC from './ManuscriptTOC'
 import ManuscriptModel from '../models/ManuscriptModel'
 
 export default class ManuscriptEditor extends EditorPanel {
-  getActionHandlers () {
-    return Object.assign(super.getActionHandlers(), {
-      tocEntrySelected: this._tocEntrySelected
-    })
-  }
-
   _initialize (props) {
     super._initialize(props)
 
@@ -165,29 +159,6 @@ export default class ManuscriptEditor extends EditorPanel {
     return {
       x: this.refs.contentPanel.getScrollPosition()
     }
-  }
-
-  _tocEntrySelected (id) {
-    let contentElement
-    switch (id) {
-      // scroll to the section label for the all the higher-level sections
-      case 'title':
-      case 'subtitle':
-      case 'abstract':
-      case 'body':
-      case 'footnotes':
-      case 'references': {
-        let sectionComponent = this._getContentPanel().find(`.sc-manuscript-section.sm-${id} > .sc-section-label`)
-        contentElement = sectionComponent.el
-        break
-      }
-      default: {
-        let nodeComponent = this._getContentPanel().find(`[data-id="${id}"]`)
-        contentElement = nodeComponent.el
-      }
-    }
-    // Note: doing a forced scroll, i.e. not only if target is not visible
-    return this._scrollElementIntoView(contentElement, true)
   }
 
   _showHideTOC () {

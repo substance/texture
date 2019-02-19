@@ -1,9 +1,27 @@
 /* global vfs */
-import { parseKeyEvent, platform } from 'substance'
+import { parseKeyEvent, platform, Router } from 'substance'
 import TextureAppChrome from './TextureAppChrome'
 import { VfsStorageClient, HttpStorageClient, InMemoryDarBuffer } from './dar'
 
 export default class TextureWebAppChrome extends TextureAppChrome {
+  constructor (...args) {
+    super(...args)
+
+    this._router = new Router()
+  }
+
+  _setupChildContext (cb) {
+    super._setupChildContext((err, context) => {
+      if (err) cb(err)
+      else cb(null, Object.assign(context, { router: this._router }))
+    })
+  }
+
+  didMount () {
+    super.didMount()
+    this._router.start()
+  }
+
   _loadArchive (archiveId, context, cb) {
     let storage = this._getStorage(this.props.storageType)
     let buffer = new InMemoryDarBuffer()

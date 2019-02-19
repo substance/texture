@@ -15,7 +15,12 @@ export default class MetadataSection extends Component {
     const model = this.props.model
     const name = this.props.name
     // const label = this.getLabel(model.id)
-    let el = $$('div').addClass('sc-metadata-section').addClass(`sm-${name}`)
+    let el = $$('div')
+      .addClass('sc-metadata-section')
+      .addClass(`sm-${name}`)
+      .attr({
+        'data-section': name
+      })
     if (model.type === 'collection') {
       let label = this.getLabel(name)
       el.append(

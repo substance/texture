@@ -29,7 +29,7 @@ export default class ArticlePanel extends Component {
     const { archive, config, documentSession } = props
     const doc = documentSession.getDocument()
 
-    this.context = Object.assign(createComponentContext(config), {
+    this.context = Object.assign(this.context, createComponentContext(config), {
       urlResolver: archive,
       appState: this.state
     })
@@ -70,6 +70,21 @@ export default class ArticlePanel extends Component {
     return {
       articlePanel: this,
       appState: this.state
+    }
+  }
+
+  didMount () {
+    let router = this.context.router
+    if (router) {
+      this._onRouteChange(router.readRoute())
+      router.on('route:changed', this._onRouteChange, this)
+    }
+  }
+
+  dispose () {
+    let router = this.context.router
+    if (router) {
+      router.off(this)
     }
   }
 
@@ -165,5 +180,28 @@ export default class ArticlePanel extends Component {
       e.preventDefault()
     }
     return handled
+  }
+
+  _onRouteChange (data) {
+    // EXPERIMENTAL: taking an object from the router
+    // and interpreting it to navigate to the right location in the app
+    let { viewName, nodeId, section } = data
+    let el
+    if (viewName && viewName !== this.state.viewName) {
+      this.extendState({ viewName })
+    }
+    if (nodeId) {
+      // NOTE: we need to search elements only inside editor
+      // since TOC contains the same attributes
+      el = this.el.find(`.se-content [data-id='${nodeId}']`)
+    } else if (section) {
+      // NOTE: since we are using dots inside id attributes,
+      // we need to be careful with a dom query
+      el = this.el.find(`.se-content [data-section='${section}']`)
+    }
+    if (el) {
+      // forcing scroll, i.e. bringing target element always to the top
+      this.refs.content.send('scrollElementIntoView', el, true)
+    }
   }
 }

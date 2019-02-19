@@ -1,4 +1,4 @@
-import { Component, DefaultDOMElement, domHelpers } from 'substance'
+import { Component, domHelpers } from 'substance'
 import { ValueComponent, renderModel, createValueModel } from '../../kit'
 
 // TODO: this needs to be redesigned
@@ -10,20 +10,20 @@ export default class ManuscriptTOC extends Component {
 
     let tocEntries = $$('div')
       .addClass('se-toc-entries')
-      .on('click', this.handleClick)
       .ref('tocEntries')
+      .on('click', domHelpers.stop)
 
     tocEntries.append(
-      $$(SimpleTOCEntry, {
+      $$(SectionTOCEntry, {
         label: this.getLabel('title'),
-        id: 'title'
+        section: 'title'
       })
     )
 
     tocEntries.append(
-      $$(SimpleTOCEntry, {
+      $$(SectionTOCEntry, {
         label: this.getLabel('abstract'),
-        id: 'abstract'
+        section: 'abstract'
       })
     )
 
@@ -38,7 +38,7 @@ export default class ManuscriptTOC extends Component {
       $$(DynamicTOCEntry, {
         label: this.getLabel('footnotes-label'),
         model: manuscriptModel.getFootnotes(),
-        id: 'footnotes'
+        section: 'footnotes'
       })
     )
 
@@ -46,7 +46,7 @@ export default class ManuscriptTOC extends Component {
       $$(DynamicTOCEntry, {
         label: this.getLabel('references-label'),
         model: manuscriptModel.getReferences(),
-        id: 'references'
+        section: 'references'
       })
     )
 
@@ -58,27 +58,16 @@ export default class ManuscriptTOC extends Component {
   onTOCUpdated () {
     this.rerender()
   }
-
-  handleClick (e) {
-    e.preventDefault()
-    // ATTENTION: wrap the native element here so that this works for testing too
-    let target = DefaultDOMElement.wrap(e.target)
-    let tocEntry = domHelpers.findParent(target, '.se-toc-entry')
-    if (tocEntry) {
-      const nodeId = tocEntry.getAttribute('data-id')
-      this.send('tocEntrySelected', nodeId)
-    }
-  }
 }
 
-class SimpleTOCEntry extends Component {
+class SectionTOCEntry extends Component {
   render ($$) {
-    const { label, id } = this.props
+    const { label, section } = this.props
     let el = $$('a')
       .addClass('se-toc-entry sm-level-1')
       .attr({
-        href: '#',
-        'data-id': id
+        'data-section': section,
+        href: `#viewName=manuscript,section=${section}`
       })
       .append(label)
     return el
@@ -95,7 +84,7 @@ class BodyTOCEntry extends ValueComponent {
         let el = $$('a').ref(heading.id)
           .addClass(`se-toc-entry sm-level-${heading.level}`)
           .attr({
-            href: '#',
+            href: `#viewName=manuscript,nodeId=${heading.id}`,
             'data-id': heading.id
           })
         el.append(
@@ -110,12 +99,12 @@ class BodyTOCEntry extends ValueComponent {
 // only visible when collection not empty
 class DynamicTOCEntry extends ValueComponent {
   render ($$) {
-    let { label, model, id } = this.props
+    let { label, model, section } = this.props
     let el = $$('a')
       .addClass('se-toc-entry sm-level-1')
       .attr({
-        href: '#',
-        'data-id': id
+        'data-section': section,
+        href: `#viewName=manuscript,section=${section}`
       })
       .append(label)
     if (model.length === 0) {

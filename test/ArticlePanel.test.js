@@ -46,5 +46,46 @@ test('ArticlePanel: open and close every view', t => {
   openMetadataEditor(app)
   openManuscriptEditor(app)
   t.pass('ArticlePanel should be able to open all views without errors.')
+  let articlePanel = app.find('.sc-article-panel')
+  articlePanel.dispose()
+  t.pass('ArticlePanel should dispose without errors.')
+  t.end()
+})
+
+// Note: this test just cause the routing related code to be run
+// I do not yet have an idea how to test that the particular element
+// has been scrolled into the view
+test('ArticlePanel: routing', t => {
+  let { app } = setupTestApp(t)
+  let articlePanel = app.find('.sc-article-panel')
+
+  t.comment('switching to metadata view')
+  articlePanel._onRouteChange({ viewName: 'metadata' })
+  t.equal(articlePanel.state.viewName, 'metadata', 'metadata view should have been opened')
+
+  t.comment('switching to manuscript view')
+  articlePanel._onRouteChange({ viewName: 'manuscript' })
+  t.equal(articlePanel.state.viewName, 'manuscript', 'manuscript view should have been opened')
+
+  t.comment('scrolling to a section in metadata view')
+  articlePanel._onRouteChange({ viewName: 'metadata', section: 'authors' })
+  t.equal(articlePanel.state.viewName, 'metadata', 'metadata view should have been opened')
+  // TODO: how to test this?
+
+  t.comment('scrolling to a section in manuscript view')
+  articlePanel._onRouteChange({ viewName: 'manuscript', section: 'footnotes' })
+  t.equal(articlePanel.state.viewName, 'manuscript', 'manuscript view should have been opened')
+  // TODO: how to test this?
+
+  t.comment('scrolling to a node in metadata view')
+  articlePanel._onRouteChange({ viewName: 'metadata', nodeId: 'fig1' })
+  t.equal(articlePanel.state.viewName, 'metadata', 'metadata view should have been opened')
+  // TODO: how to test this?
+
+  t.comment('scrolling to a node in manuscript view')
+  articlePanel._onRouteChange({ viewName: 'manuscript', nodeId: 'fig1' })
+  t.equal(articlePanel.state.viewName, 'manuscript', 'manuscript view should have been opened')
+  // TODO: how to test this?
+
   t.end()
 })

@@ -185,15 +185,20 @@ export default class ArticlePanel extends Component {
   _onRouteChange (data) {
     // EXPERIMENTAL: taking an object from the router
     // and interpreting it to navigate to the right location in the app
-    let { viewName, nodeId } = data
+    let { viewName, nodeId, section } = data
+    let el
     if (viewName && viewName !== this.state.viewName) {
       this.extendState({ viewName })
     }
     if (nodeId) {
-      let nodeEl = this.el.find(`[data-id=${nodeId}]`)
-      if (nodeEl) {
-        this.refs.content.send('scrollElementIntoView', nodeEl)
-      }
+      el = this.el.find(`[data-id=${nodeId}]`)
+    } else if (section) {
+      // NOTE: since we are using dots inside id attributes,
+      // we need to be careful with a dom query
+      el = this.el.find(`[id='${section}']`)
+    }
+    if (el) {
+      this.refs.content.send('scrollElementIntoView', el)
     }
   }
 }

@@ -185,14 +185,10 @@ test('SupplementaryFile: replace a file', t => {
   loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
 
   selectNode(editor, 'sm1')
-  t.ok(isToolEnabled(editor, 'file-tools', replaceSupplementaryFileToolSelector), 'replace supplementary file tool shoold be available')
+  t.ok(_canReplace(editor), 'replace should be possible')
   doesNotThrowInNodejs(t, () => {
-    _getReplaceSupplementaryFileTool(editor).click()
-  }, 'clicking on the replace supplementary file button should not throw error')
-  doesNotThrowInNodejs(t, () => {
-    _getReplaceSupplementaryFileTool(editor).onFileSelect(new PseudoFileEvent())
-  }, 'triggering file upload for replace supplementary file should not throw')
-
+    _replaceFile(editor)
+  }, 'replace file should not throw')
   t.end()
 })
 
@@ -203,7 +199,7 @@ function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
     loadBodyFixture(editor, bodyXML)
 
     selectNode(editor, 'sm1')
-    t.ok(isToolEnabled(editor, 'file-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
+    t.ok(isToolEnabled(editor, 'context-tools', downloadSupplementaryFileToolSelector), 'download supplementary file tool shoold be available')
 
     let downloadTool = _getDownloadSupplementaryFileTool(editor)
     let downloadLink = downloadTool.refs.link
@@ -246,4 +242,13 @@ function _openWorkflow (editor) {
   tool.click()
   let workflow = editor.find('.se-workflow-modal')
   return workflow
+}
+
+function _canReplace (editor) {
+  return isToolEnabled(editor, 'context-tools', replaceSupplementaryFileToolSelector)
+}
+
+function _replaceFile (editor) {
+  _getReplaceSupplementaryFileTool(editor).click()
+  _getReplaceSupplementaryFileTool(editor).onFileSelect(new PseudoFileEvent())
 }

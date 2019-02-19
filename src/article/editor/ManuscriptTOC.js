@@ -60,7 +60,7 @@ export default class ManuscriptTOC extends Component {
   }
 
   handleClick (e) {
-    e.preventDefault()
+    // e.preventDefault()
     // ATTENTION: wrap the native element here so that this works for testing too
     let target = DefaultDOMElement.wrap(e.target)
     let tocEntry = domHelpers.findParent(target, '.se-toc-entry')
@@ -77,7 +77,7 @@ class SimpleTOCEntry extends Component {
     let el = $$('a')
       .addClass('se-toc-entry sm-level-1')
       .attr({
-        href: '#',
+        href: `#viewName=manuscript,nodeId=${id}`,
         'data-id': id
       })
       .append(label)
@@ -95,7 +95,7 @@ class BodyTOCEntry extends ValueComponent {
         let el = $$('a').ref(heading.id)
           .addClass(`se-toc-entry sm-level-${heading.level}`)
           .attr({
-            href: '#',
+            href: `#viewName=manuscript,nodeId=${heading.id}`,
             'data-id': heading.id
           })
         el.append(
@@ -114,7 +114,7 @@ class DynamicTOCEntry extends ValueComponent {
     let el = $$('a')
       .addClass('se-toc-entry sm-level-1')
       .attr({
-        href: '#',
+        href: `#viewName=manuscript,nodeId=${id}`,
         'data-id': id
       })
       .append(label)

@@ -191,7 +191,9 @@ export default class ArticlePanel extends Component {
       this.extendState({ viewName })
     }
     if (nodeId) {
-      el = this.el.find(`[data-id=${nodeId}]`)
+      // NOTE: we need to search elements only inside editor
+      // since TOC contains the same attributes
+      el = this.el.find(`.se-content [data-id=${nodeId}]`)
     } else if (section) {
       // NOTE: since we are using dots inside id attributes,
       // we need to be careful with a dom query

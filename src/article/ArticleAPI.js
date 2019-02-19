@@ -233,7 +233,7 @@ export default class ArticleAPI {
     let manager
     switch (refType) {
       case BlockFormula.refType: {
-        manager = this._articleSession.getFootnoteManager()
+        manager = this._articleSession.getFormulaManager()
         break
       }
       case 'fig': {

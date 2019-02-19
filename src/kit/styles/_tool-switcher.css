@@ -1,0 +1,26 @@
+.sc-tool-switcher {
+  display: flex;
+}
+
+.sc-tool-switcher > .sc-toggle-tool {
+  line-height: var(--t-default-line-height);
+  text-align: center;
+  font-size: var(--t-tiny-font-size);
+  font-weight: var(--t-bold-font-weight);
+  color: var(--t-light-text-color);
+  border-radius: var(--t-tool-border-radius);
+  padding-left: var(--t-button-padding);
+  padding-right: var(--t-button-padding);
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.sc-tool-switcher > .sc-toggle-tool > .se-label {
+  margin: 0 var(--t-button-padding);
+}
+
+.sc-tool-switcher > .sc-toggle-tool.sm-active {
+  color: var(--t-text-color);
+  background: var(--t-default-button-background);
+  cursor: default;
+}

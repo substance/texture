@@ -158,6 +158,7 @@ export default class TextureConfigurator extends Configurator {
             name: commandName
           }
         })
+      case 'switcher':
       case 'prompt':
       case 'group':
       case 'dropdown':

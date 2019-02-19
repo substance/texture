@@ -21,10 +21,11 @@ export default class Figure extends DocumentNode {
     return this.resolve('panels')
   }
 
-  // NOTE: we are using structure of first panel as template for new one,
+  // NOTE: we are using structure of active panel as template for new one,
   // currently we are replicating the structure of metadata fields
-  getPanelTemplate () {
-    const firstPanel = this.getPanels()[0]
+  getTemplateFromCurrentPanel () {
+    const currentIndex = this.getCurrentPanelIndex()
+    const firstPanel = this.getPanels()[currentIndex]
     return {
       metadata: firstPanel.resolve('metadata').map(metadataField => (
         { type: 'custom-metadata-field', name: metadataField.name, value: '' }

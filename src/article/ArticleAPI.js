@@ -480,9 +480,9 @@ export default class ArticleAPI {
     const pos = figure.getCurrentPanelIndex()
     const href = this.archive.addAsset(file)
     const insertPos = pos + 1
-    // NOTE: with this method we are getting the structure of the first panel
+    // NOTE: with this method we are getting the structure of the active panel
     // to replicate it, currently only for metadata fields
-    const panelTemplate = figure.getPanelTemplate()
+    const panelTemplate = figure.getTemplateFromCurrentPanel()
     this.editorSession.transaction(tx => {
       let template = FigurePanel.getTemplate()
       template.content.href = href

@@ -385,7 +385,7 @@ export default {
 
     // SwitchTextTypes
     config.addTextTypeTool({
-      name: 'heading1',
+      name: 'switch-to-heading1',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
@@ -396,7 +396,7 @@ export default {
       accelerator: 'CommandOrControl+Alt+1'
     })
     config.addTextTypeTool({
-      name: 'heading2',
+      name: 'switch-to-heading2',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
@@ -407,7 +407,7 @@ export default {
       accelerator: 'CommandOrControl+Alt+2'
     })
     config.addTextTypeTool({
-      name: 'heading3',
+      name: 'switch-to-heading3',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
@@ -418,7 +418,7 @@ export default {
       accelerator: 'CommandOrControl+Alt+3'
     })
     config.addTextTypeTool({
-      name: 'paragraph',
+      name: 'switch-to-paragraph',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'paragraph'
@@ -436,7 +436,7 @@ export default {
       commandGroup: 'text-types'
     })
     config.addTextTypeTool({
-      name: 'preformat',
+      name: 'switch-to-preformat',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'preformat'

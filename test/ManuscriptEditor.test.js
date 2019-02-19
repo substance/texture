@@ -1,5 +1,10 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent, selectNode, getSelection } from './shared/integrationTestHelpers'
+import { 
+  setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
+  loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
+  openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
+  isToolEnabled, createKeyEvent, selectNode, getSelection
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
@@ -224,11 +229,11 @@ test('ManuscriptEditor: toggling a list', t => {
   t.equal(listItem.getText(), p1Text, '.. with the text of the former paragraph')
 
   // now there should be contextual list tools be visible
-  t.ok(openMenuAndFindTool(editor, 'list-tools', '.sm-indent-list'), 'now there should be the indent tool be visible')
-  t.ok(openMenuAndFindTool(editor, 'list-tools', '.sm-dedent-list'), '.. and the dedent tool')
+  t.ok(openContextMenuAndFindTool(editor, '.sm-indent-list'), 'now there should be the indent tool be visible')
+  t.ok(openContextMenuAndFindTool(editor, '.sm-dedent-list'), '.. and the dedent tool')
 
   // click on list tool to turn it into a paragraph again
-  openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-unordered-list').click()
+  openContextMenuAndFindTool(editor, '.sm-toggle-unordered-list').click()
 
   let pNode = doc.get('body').getNodeAt(0)
   t.equal(pNode.type, 'paragraph', 'first node should now be a paragraph again')
@@ -282,13 +287,13 @@ test('ManuscriptEditor: changing the list style', t => {
 
   setSelection(editor, 'li1.content', 0)
   // click on list tool to turn "p1" into a list
-  let ulTool = openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-ordered-list')
+  let ulTool = openContextMenuAndFindTool(editor, '.sm-toggle-ordered-list')
   ulTool.click()
   let listNode = doc.get('list-1')
   t.equal(listNode.listType, 'order,order,bullet', 'all levels should be ordered')
 
   setSelection(editor, 'li1_1.content', 0)
-  let olTool = openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-unordered-list')
+  let olTool = openContextMenuAndFindTool(editor, '.sm-toggle-unordered-list')
   olTool.click()
   t.equal(listNode.listType, 'order,bullet,bullet', 'all levels should be ordered')
 

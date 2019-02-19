@@ -2,8 +2,8 @@ import { platform } from 'substance'
 import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoDropEvent, PseudoFileEvent,
-  fixture, loadBodyFixture, getDocument, openMenuAndFindTool, deleteSelection,
-  clickUndo, isToolEnabled, selectNode
+  fixture, loadBodyFixture, getDocument, openContextMenuAndFindTool, 
+  openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
@@ -229,11 +229,11 @@ function _getInsertSupplementaryFileTool (editor) {
 }
 
 function _getDownloadSupplementaryFileTool (editor) {
-  return openMenuAndFindTool(editor, 'file-tools', downloadSupplementaryFileToolSelector)
+  return openContextMenuAndFindTool(editor, downloadSupplementaryFileToolSelector)
 }
 
 function _getReplaceSupplementaryFileTool (editor) {
-  return openMenuAndFindTool(editor, 'file-tools', replaceSupplementaryFileToolSelector)
+  return openContextMenuAndFindTool(editor, replaceSupplementaryFileToolSelector)
 }
 
 function _isToolEnabled (editor) {

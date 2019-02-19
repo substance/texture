@@ -96,10 +96,6 @@ export default {
           { type: 'command-group', name: 'text-types' }
         ]
       },
-      // TODO: we do not have a good concept for contextual tools
-      // we considered to have a toolgroup which renders the context as a label
-      // As we do not have such a thing, the closest we can get there
-      // are drop-down menues which are visible only when enabled
       {
         name: 'context-tools',
         type: 'dropdown',

@@ -1,5 +1,5 @@
 import {
-  Configurator, merge, flatten, includes, forEach, Registry
+  Configurator, merge, flatten, forEach, Registry
 } from 'substance'
 
 export default class TextureConfigurator extends Configurator {
@@ -52,17 +52,6 @@ export default class TextureConfigurator extends Configurator {
     if (opts.accelerator) {
       this.addKeyboardShortcut(opts.accelerator, { command: name })
     }
-  }
-
-  addPropertyEditor (PropertyEditorClass) {
-    if (includes(this.config.propertyEditors, PropertyEditorClass)) {
-      throw new Error('Already registered')
-    }
-    this.config.propertyEditors.push(PropertyEditorClass)
-  }
-
-  getPropertyEditors () {
-    return this.config.propertyEditors
   }
 
   addTool (name, ToolClass) {

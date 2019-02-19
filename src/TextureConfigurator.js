@@ -1,5 +1,5 @@
 import {
-  Configurator, merge, isString, flatten, includes, forEach, Registry
+  Configurator, merge, flatten, includes, forEach, Registry
 } from 'substance'
 
 export default class TextureConfigurator extends Configurator {

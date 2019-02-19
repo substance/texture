@@ -6,7 +6,8 @@ const xrefTypes = {
   'bibr': 'reference',
   'fig': 'figure',
   'table': 'table',
-  'fn': 'footnote'
+  'fn': 'footnote',
+  'disp-formula': 'block-formula'
 }
 
 const DOUBLE_CITATIONS = `<?xml version="1.0" encoding="UTF-8"?>
@@ -24,10 +25,19 @@ const DOUBLE_CITATIONS = `<?xml version="1.0" encoding="UTF-8"?>
     <p id="p-fig">Lorem <xref id="xref-fig" ref-type="fig" rid="fig1 fig2">[Figure 1, Figure 2]</xref> ipsum.</p>
     <p id="p-table">Lorem <xref id="xref-table" ref-type="table" rid="t1 t2">[Table 1, Table 2]</xref> ipsum.</p>
     <p id="p-fn">Lorem <xref id="xref-fn" ref-type="fn" rid="fn1 fn2">[1,2]</xref> ipsum.</p>
+    <p id="p-formula">Lorem <xref id="xref-disp-formula" ref-type="disp-formula" rid="disp-formula-1 disp-formula-2">(1,2)</xref> ipsum.</p>
     <table-wrap id="t1"><table><tbody><tr><td></td></tr></tbody></table></table-wrap>
     <table-wrap id="t2"><table><tbody><tr><td></td></tr></tbody></table></table-wrap>
     <fig id="fig1"><graphic /></fig>
     <fig id="fig2"><graphic /></fig>
+    <disp-formula id="disp-formula-1" content-type="math/tex">
+      <label>(1)</label>
+      <tex-math><![CDATA[x]]></tex-math>
+    </disp-formula>
+    <disp-formula id="disp-formula-2" content-type="math/tex">
+      <label>(2)</label>
+      <tex-math><![CDATA[y]]></tex-math>
+    </disp-formula>
   </body>
   <back>
     <fn-group>

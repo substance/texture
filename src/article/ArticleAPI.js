@@ -5,6 +5,7 @@ import { findParentByType } from './shared/nodeHelpers'
 import renderEntity from './shared/renderEntity'
 import FigurePanel from './models/FigurePanel'
 import SupplementaryFile from './models/SupplementaryFile'
+import { BlockFormula } from './models'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, articleSession, contextProvider) {
@@ -231,8 +232,8 @@ export default class ArticleAPI {
     let refType = xref.refType
     let manager
     switch (refType) {
-      case 'formula': {
-        manager = this._articleSession.getFootnoteManager()
+      case BlockFormula.refType: {
+        manager = this._articleSession.getFormulaManager()
         break
       }
       case 'fig': {

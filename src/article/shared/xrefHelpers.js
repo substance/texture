@@ -1,9 +1,10 @@
 import { getLabel } from './nodeHelpers'
+import { BlockFormula } from '../models'
 
 // left side: node type
 // right side: ref-type
 export const REF_TYPES = {
-  'block-formula': 'formula',
+  'block-formula': BlockFormula.refType,
   'figure': 'fig',
   'footnote': 'fn',
   'refererence': 'bibr',

@@ -11,7 +11,10 @@ export default class TextureWebAppChrome extends TextureAppChrome {
   }
 
   _setupChildContext (cb) {
-    cb(null, { router: this._router })
+    super._setupChildContext((err, context) => {
+      if (err) cb(err)
+      else cb(null, Object.assign(context, { router: this._router }))
+    })
   }
 
   didMount () {

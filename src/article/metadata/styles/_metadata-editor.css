@@ -26,11 +26,12 @@
 }
 
 .sc-metadata-editor .se-toolbar-wrapper .sc-toolbar {
-  max-width: 710px; /* 760 - 50 for padding */
+  max-width: 980px; /* 760 - 50 for padding */
 }
 
 .sc-metadata-editor.sm-compact .se-toolbar-wrapper .sc-toolbar {
   margin: 0 auto;
+  max-width: 710px;
 }
 
 .sc-metadata-editor > .se-main-section > .se-content-section {

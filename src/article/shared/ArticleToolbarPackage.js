@@ -101,67 +101,19 @@ export default {
       // As we do not have such a thing, the closest we can get there
       // are drop-down menues which are visible only when enabled
       {
-        name: 'table-tools',
+        name: 'context-tools',
         type: 'dropdown',
         style: 'descriptive',
         hideDisabled: true,
         items: [
+          { type: 'command-group', name: 'collection' },
           { type: 'command-group', name: 'table' },
           { type: 'command-group', name: 'table-insert' },
-          { type: 'command-group', name: 'table-delete' }
-        ]
-      },
-      {
-        name: 'file-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'file' }
-        ]
-      },
-      {
-        name: 'figure-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'figure-panel' }
-        ]
-      },
-      {
-        name: 'footnote-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'footnote' }
-        ]
-      },
-      {
-        name: 'collection-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'collection' }
-        ]
-      },
-      {
-        name: 'list-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'list' }
-        ]
-      },
-      {
-        name: 'metadata-field-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
+          { type: 'command-group', name: 'table-delete' },
+          { type: 'command-group', name: 'file' },
+          { type: 'command-group', name: 'figure-panel' },
+          { type: 'command-group', name: 'footnote' },
+          { type: 'command-group', name: 'list' },
           { type: 'command-group', name: 'custom-metadata-fields' }
         ]
       }
@@ -309,6 +261,8 @@ export default {
     config.addLabel('move-down-metadata-field', 'Move Down Metadata Field')
     config.addLabel('move-up-metadata-field', 'Move Up Metadata Field')
     config.addLabel('remove-metadata-field', 'Remove Metadata Field')
+    // Context tools
+    config.addLabel('context-tools', 'Edit')
     // Mode
     config.addLabel('mode', 'Mode')
     config.addLabel('open-manuscript', 'Manuscript')

@@ -38,6 +38,18 @@
   display: none;
 }
 
+.sc-article-panel .sc-toolbar .se-active-tools .sm-context-tools {
+  position: absolute;
+  right: 0;
+}
+
+.sc-article-panel .sc-toolbar .sc-tool-dropdown.sm-context-tools > .se-choices {
+  position: absolute;
+  top: 30px;
+  left: initial;
+  right: 0;
+}
+
 .sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),
 .sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light.sm-active {
   background: inherit;

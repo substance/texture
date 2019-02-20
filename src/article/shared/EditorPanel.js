@@ -16,7 +16,8 @@ export default class EditorPanel extends Component {
       toggleOverlay: this._toggleOverlay,
       startWorkflow: this._startWorkflow,
       closeModal: this._closeModal,
-      scrollElementIntoView: this._scrollElementIntoView
+      scrollElementIntoView: this._scrollElementIntoView,
+      scrollTo: this._scrollTo
     }
   }
 
@@ -178,5 +179,25 @@ export default class EditorPanel extends Component {
 
   _scrollElementIntoView (el, force) {
     this._getContentPanel().scrollElementIntoView(el, !force)
+  }
+
+  // used for scrolling when clicking on TOC entries
+  _scrollTo (params) {
+    let selector
+    if (params.nodeId) {
+      selector = `[data-id="${params.nodeId}"]`
+    } else if (params.section) {
+      selector = `[data-section="${params.section}"]`
+    } else {
+      throw new Error('Illegal argument')
+    }
+    let comp = this.refs.contentPanel.find(selector)
+    if (comp) {
+      this._scrollElementIntoView(comp.el, true)
+    }
+    let router = this.context.router
+    if (router) {
+      router.writeRoute(Object.assign({ viewName: this.props.viewName }, params))
+    }
   }
 }

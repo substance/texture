@@ -162,7 +162,7 @@ test('ManuscriptEditor: TOC should be updated on change', t => {
 test('ManuscriptEditor: all TOC items should be clickable', t => {
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let editor = openManuscriptEditor(app)
-  const tocItemSelector = '.se-toc-entries a'
+  const tocItemSelector = '.sc-toc-entry'
   const tocItems = editor.findAll(tocItemSelector)
   tocItems.forEach(item => {
     t.ok(item.click(), 'clicking on TOC item should not throw: ' + item.textContent)

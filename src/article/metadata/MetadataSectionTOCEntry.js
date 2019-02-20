@@ -4,11 +4,8 @@ export default class MetadataSectionTOCEntry extends ModelComponent {
   render ($$) {
     const name = this.props.name
     const model = this.props.model
-    let el = $$('a').addClass('sc-meta-section-toc-entry')
-      .attr({
-        href: '#viewName=metadata,section=' + name,
-        'data-section': name
-      })
+    let el = $$('div').addClass('sc-meta-section-toc-entry sc-toc-entry')
+      .attr({ 'data-section': name })
       .on('click', this.handleClick)
 
     let label = this.getLabel(name)
@@ -27,9 +24,10 @@ export default class MetadataSectionTOCEntry extends ModelComponent {
     return el
   }
 
-  handleClick (e) {
-    // NOTE: currently we are using link anchors for metadata panel navigation
-    // this way we are preventing Electron from opening links in a new window
-    e.stopPropagation()
+  handleClick (event) {
+    event.stopPropagation()
+    event.preventDefault()
+    // this is handled by MetadataEditor
+    this.send('scrollTo', { section: this.props.name })
   }
 }

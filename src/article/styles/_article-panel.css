@@ -28,16 +28,22 @@
   position: relative;
 }
 
+/* View switcher hacks */
 .sc-article-panel .sc-toolbar .se-active-tools .sm-mode {
   flex: 0 0 260px;
   height: 24px;
   margin: 2px;
 }
 
+.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .se-keyboard-shortcut {
+  padding: 0;
+}
+
 .sm-compact .sc-toolbar .se-active-tools .sm-mode {
   display: none;
 }
 
+/* Context menu dropdown */
 .sc-article-panel .sc-toolbar .se-active-tools .sm-context-tools {
   position: absolute;
   right: 0;
@@ -48,16 +54,6 @@
   top: 30px;
   left: initial;
   right: 0;
-}
-
-.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),
-.sc-article-panel .sc-toolbar .se-active-tools .sm-mode .sc-button.sm-theme-light.sm-active {
-  background: inherit;
-  color: inherit;
-}
-
-.sc-article-panel .sc-toolbar .sc-menu-item .se-keyboard-shortcut {
-  color: rgba(0, 0, 0, 0.4);
 }
 
 .sc-article-panel > .sm-compact .sc-find-and-replace-dialog {

@@ -3,15 +3,10 @@
 }
 
 .sc-tool-switcher > .sc-tool {
-  line-height: var(--t-default-line-height);
-  text-align: center;
-  font-size: var(--t-tiny-font-size);
-  font-weight: var(--t-bold-font-weight);
+  width: initial;
   color: var(--t-light-text-color);
-  border-radius: var(--t-tool-border-radius);
-  padding-left: var(--t-button-padding);
-  padding-right: var(--t-button-padding);
-  margin-right: 2px;
+  font-size: var(--t-tiny-font-size);
+  margin-right: 4px;
   cursor: pointer;
 }
 

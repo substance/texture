@@ -9,9 +9,10 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
-  // overridding the default to emit an event up and let the Electron bridge (app.js) handle it
+  // emit an event on this component. The Electron binding in app.js listens to it and
+  // handles it
   _handleSave () {
-    this.el.emit('save')
+    this.emit('save')
   }
 
   // TODO: try to share implementation with TextureDesktopAppChrome

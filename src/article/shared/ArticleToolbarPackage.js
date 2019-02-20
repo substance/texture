@@ -8,7 +8,7 @@ export default {
       {
         name: 'mode',
         type: 'switcher',
-        style: 'full',
+        style: 'descriptive',
         hideDisabled: true,
         displayActiveCommand: true,
         items: [
@@ -94,6 +94,17 @@ export default {
         displayActiveCommand: true,
         items: [
           { type: 'command-group', name: 'text-types' }
+        ]
+      },
+      {
+        name: 'mobile-mode',
+        type: 'dropdown',
+        style: 'descriptive',
+        hideDisabled: false,
+        displayActiveCommand: true,
+        items: [
+          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
+          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
         ]
       },
       {

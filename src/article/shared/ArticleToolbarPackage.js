@@ -205,25 +205,10 @@ export default {
         name: 'table-context-menu',
         type: 'group',
         style: 'descriptive',
+        label: 'table',
         items: [
-          {
-            type: 'group',
-            name: 'insert',
-            style: 'descriptive',
-            label: 'insert',
-            items: [
-              { type: 'command-group', name: 'table-insert' }
-            ]
-          },
-          {
-            type: 'group',
-            name: 'delete',
-            style: 'descriptive',
-            label: 'delete',
-            items: [
-              { type: 'command-group', name: 'table-delete' }
-            ]
-          }
+          { type: 'command-group', name: 'table-insert' },
+          { type: 'command-group', name: 'table-delete' }
         ]
       }
     ])

@@ -39,16 +39,16 @@
   padding: 0;
 }
 
+.sc-toolbar .se-active-tools .sm-mobile-mode,
 .sm-compact .sc-toolbar .se-active-tools .sm-mode {
   display: none;
 }
 
-/* Context menu dropdown */
-.sc-article-panel .sc-toolbar .se-active-tools .sm-context-tools {
-  position: absolute;
-  right: 0;
+.sm-compact .sc-toolbar .se-active-tools .sm-mobile-mode {
+  display: block;
 }
 
+/* Context menu dropdown */
 .sc-article-panel .sc-toolbar .sc-tool-dropdown.sm-context-tools > .se-choices {
   position: absolute;
   top: 30px;

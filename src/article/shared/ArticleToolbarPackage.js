@@ -1,6 +1,4 @@
 /* eslint-disable no-template-curly-in-string */
-import InsertFigureTool from '../editor/InsertFigureTool'
-
 export default {
   name: 'article-toolbar',
   configure (config) {
@@ -41,7 +39,7 @@ export default {
         type: 'dropdown',
         style: 'descriptive',
         items: [
-          { type: 'command', name: 'insert-figure', label: 'figure', ToolClass: InsertFigureTool },
+          { type: 'command', name: 'insert-figure', label: 'figure' },
           { type: 'command', name: 'insert-table', label: 'table' },
           { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
           { type: 'command', name: 'insert-block-formula', label: 'equation' },
@@ -93,6 +91,10 @@ export default {
         items: [
           { type: 'command-group', name: 'text-types' }
         ]
+      },
+      {
+        name: 'divider',
+        type: 'spacer'
       },
       {
         name: 'mobile-mode',
@@ -343,6 +345,7 @@ export default {
     config.addLabel('context-tools', 'Edit')
     // Mode
     config.addLabel('mode', 'Mode')
+    config.addLabel('mobile-mode', 'Mode')
     config.addLabel('open-manuscript', 'Manuscript')
     config.addLabel('open-metadata', 'Details')
   }

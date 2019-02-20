@@ -141,7 +141,8 @@ export default class ToolGroup extends Component {
       case 'switcher': {
         return this._deriveGroupState(item, commandStates)
       }
-      case 'separator': {
+      case 'separator':
+      case 'spacer': {
         return { item }
       }
       default:
@@ -183,6 +184,10 @@ export default class ToolGroup extends Component {
         }
         case 'separator': {
           ToolClass = this.getComponent('tool-separator')
+          break
+        }
+        case 'spacer': {
+          ToolClass = this.getComponent('tool-spacer')
           break
         }
         case 'switcher': {

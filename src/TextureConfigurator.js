@@ -144,6 +144,7 @@ export default class TextureConfigurator extends Configurator {
         item.items = flatten(itemSpec.items.map(itemSpec => this._compileToolPanelItem(itemSpec)))
         break
       case 'separator':
+      case 'spacer':
         break
       default:
         throw new Error('Unsupported tool panel item type: ' + type)

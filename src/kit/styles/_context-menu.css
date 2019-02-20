@@ -1,7 +1,7 @@
 .sc-context-menu {
   position: absolute;
-  background: #fff;
-  border-radius: 5px;
+  background: var(--t-background-color);
+  border-radius: var(--t-border-radius);
   font-size: var(--t-small-font-size);
   z-index: 1000;
   box-shadow: var(--t-default-box-shadow);
@@ -12,19 +12,4 @@
   visibility: hidden;
   left: 0px;
   top: 0px;
-}
-
-.sc-context-menu > .sc-tool-group {
-  min-width: 120px;
-  padding: 5px 0;
-}
-
-.sc-context-menu > .sc-tool-group:not(:last-child) {
-  border-bottom: 1px solid #111;
-}
-
-.sc-context-menu .sc-tool-separator {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #eee;
 }

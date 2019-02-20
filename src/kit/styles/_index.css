@@ -4,9 +4,11 @@
 @import './_pinned-msg.css';
 @import './_placeholder.css';
 @import './_toggle-tool.css';
+@import './_tool.css';
 @import './_tool-drop-down.css';
 @import './_tool-group.css';
 @import './_tool-switcher.css';
+@import './_tool-separator.css';
 @import './_tooltip.css';
 @import './_toolbar.css';
 @import './_edit-ext-link-tool.css';

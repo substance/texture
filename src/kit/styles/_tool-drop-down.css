@@ -16,62 +16,8 @@
   display: block!important;
 }
 
-.sc-tool-dropdown > .se-choices .sc-tool {
-  display: flex;
-  justify-content: space-between;
-  white-space: nowrap;
-  line-height: 2.1;
-  font-size: var(--t-dropdown-font-size);
-  font-weight: var(--t-bold-font-weight);
-  width: 100%;
-  border-radius: var(--t-tool-border-radius);
-  padding: 0px 5px;
-}
-
-.sc-tool-dropdown > .se-choices .sc-tool:hover {
-  background: var(--t-default-button-background);
-}
-
-.sc-tool-dropdown > .se-choices .sc-tool > .se-icon {
-  flex: 0 0 0;
-  padding-right: 7px;
-}
-
-.sc-tool-dropdown > .se-choices .sc-tool > .se-keyboard-shortcut {
-  color: rgba(0,0,0,0.4);
-  font-weight: var(--t-normal-font-weight);
-  font-size: 10px;
-  padding-left: var(--t-default-spacing);
-}
-
-/* Disabled dropdown and tools */
-.sc-tool-dropdown.sm-disabled > .se-toggle,
-.sc-tool-dropdown > .se-choices .sc-tool[disabled=true] {
+.sc-tool-dropdown.sm-disabled > .se-toggle {
   opacity: 0.3;
-}
-
-.sc-tool-dropdown > .se-choices .sc-tool[disabled=true] > .se-keyboard-shortcut {
-  color: rgba(255,255,255,0.4);
-}
-
-/* Separator */
-.sc-tool-dropdown > .se-choices .sc-separator {
-  position: relative;
-  border: var(--t-default-border);
-  margin: var(--t-half-spacing) 0;
-  cursor: default;
-}
-
-.sc-tool-dropdown > .se-choices .sc-separator > .se-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 0 var(--t-half-spacing);
-  background: var(--t-background-color);
-  color: var(--t-light-text-color);
-  font-size: var(--t-tiny-font-size);
-  flex: 0 0 0;
 }
 
 /* Position tooltip */

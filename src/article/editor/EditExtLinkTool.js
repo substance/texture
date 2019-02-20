@@ -48,6 +48,9 @@ export default class EditExtLinkTool extends ToggleTool {
   _openLink () {
     let doc = this._getDocument()
     let url = doc.get(this._getUrlPath())
+    // FIXME: this is not the way how it should be done
+    // instead we should send up an action 'open-url'
+    // and let the ApplicationChrome do it.
     window.open(url, '_blank')
   }
 }

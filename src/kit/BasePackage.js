@@ -12,19 +12,20 @@ import ContextMenu from './ui/ContextMenu'
 import Input from './ui/Input'
 import IsolatedNodeComponent from './ui/_IsolatedNodeComponent'
 import IsolatedInlineNodeComponent from './ui/_IsolatedInlineNodeComponent'
-import Menu from './ui/Menu'
-import MenuGroup from './ui/MenuGroup'
-import MenuItem from './ui/MenuItem'
 import ModalDialog from './ui/ModalDialog'
 import Overlay from './ui/Overlay'
 import ScrollPane from './ui/ScrollPane'
 import TextPropertyComponent from './ui/_TextPropertyComponent'
 import TextPropertyEditor from './ui/_TextPropertyEditor'
+import Tool from './ui/Tool'
 import ToggleTool from './ui/ToggleTool'
 import Toolbar from './ui/Toolbar'
 import ToolDropdown from './ui/ToolDropdown'
 import ToolGroup from './ui/ToolGroup'
 import ToolPrompt from './ui/ToolPrompt'
+import ToolSeparator from './ui/ToolSeparator'
+import ToolSpacer from './ui/ToolSpacer'
+import ToolSwitcher from './ui/ToolSwitcher'
 import TextArea from './ui/TextArea'
 
 export default {
@@ -56,17 +57,19 @@ export default {
     configurator.addComponent('button', Button, true)
     configurator.addComponent('context-menu', ContextMenu, true)
     configurator.addComponent('input', Input)
-    configurator.addComponent('menu', Menu, true)
-    configurator.addComponent('menu-group', MenuGroup, true)
-    configurator.addComponent('menu-item', MenuItem, true)
     configurator.addComponent('modal', ModalDialog)
     configurator.addComponent('overlay', Overlay, true)
     configurator.addComponent('text-area', TextArea)
+    configurator.addComponent('tool', Tool, true)
+    // TODO: remove toggle-tool
     configurator.addComponent('toggle-tool', ToggleTool, true)
     configurator.addComponent('toolbar', Toolbar, true)
     configurator.addComponent('tool-dropdown', ToolDropdown, true)
     configurator.addComponent('tool-group', ToolGroup, true)
     configurator.addComponent('tool-prompt', ToolPrompt, true)
+    configurator.addComponent('tool-separator', ToolSeparator, true)
+    configurator.addComponent('tool-spacer', ToolSpacer, true)
+    configurator.addComponent('tool-switcher', ToolSwitcher, true)
 
     configurator.addLabel('text-types', {
       en: 'Text Type',

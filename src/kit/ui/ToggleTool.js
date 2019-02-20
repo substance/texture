@@ -8,6 +8,6 @@ import Tool from './Tool'
  */
 export default class ToggleTool extends Tool {
   getClassNames () {
-    return `sc-toggle-tool sm-${this.props.item.name}`
+    return `sc-toggle-tool sc-tool sm-${this.props.item.name}`
   }
 }

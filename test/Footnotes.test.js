@@ -1,5 +1,8 @@
 import { test } from 'substance-test'
-import { openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture, openMenuAndFindTool, getSelection, selectNode } from './shared/integrationTestHelpers'
+import {
+  openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture,
+  openContextMenuAndFindTool, openMenuAndFindTool, getSelection, selectNode
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
@@ -86,7 +89,7 @@ test('Footnotes: remove a manuscript footnote', t => {
   let doc = getDocument(editor)
   t.notNil(editor.find('[data-id=fn-1]'), 'the footnote should be visible')
   setSelection(editor, 'fn-1-p-1.content', 1)
-  const removeTool = openMenuAndFindTool(editor, 'footnote-tools', '.sm-remove-footnote')
+  const removeTool = openContextMenuAndFindTool(editor, '.sm-remove-footnote')
   t.ok(removeTool, 'there should be a remove button')
   removeTool.click()
   t.isNil(doc.get('fn-1'), 'the footnote should have been removed from the model')
@@ -100,7 +103,7 @@ test('Footnotes: remove a table footnote', t => {
   let doc = getDocument(editor)
   t.notNil(editor.find('[data-id=table-1-fn-1]'), 'the table footnote should be visible')
   setSelection(editor, 'table-1-fn-1-p-1.content', 1)
-  const removeTool = openMenuAndFindTool(editor, 'footnote-tools', '.sm-remove-footnote')
+  const removeTool = openContextMenuAndFindTool(editor, '.sm-remove-footnote')
   t.ok(removeTool, 'there should be a remove button')
   removeTool.click()
   t.isNil(doc.get('table-1-fn-1'), 'the table footnote should have been removed from the model')
@@ -178,7 +181,7 @@ function _insertFootnote (el) {
   if (!isDropDownOpened) {
     insertDropdown.click()
   }
-  let insertFootnoteBtn = el.find('.sc-menu-item.sm-insert-footnote')
+  let insertFootnoteBtn = el.find('.sc-tool.sm-insert-footnote')
   insertFootnoteBtn.click()
 }
 

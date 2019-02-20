@@ -21,5 +21,5 @@
 }
 
 .sc-add-reference .se-manual-add > .se-reftypes-list > .se-type:hover {
-  background: var(--t-light-bg-color);
+  background: var(---t-default-button-background);
 }

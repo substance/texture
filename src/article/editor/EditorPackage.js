@@ -367,26 +367,25 @@ export default {
     config.addIcon('right-control', { 'fontawesome': 'fa-chevron-right' })
 
     // Tools
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addTool('download-file', DownloadSupplementaryFileTool)
-    config.addTool('edit-block-formula', EditDispFormulaTool)
-    config.addTool('edit-external-link', EditExtLinkTool)
-    config.addTool('edit-formula', EditInlineFormulaTool)
-    config.addTool('edit-xref', EditXrefTool)
-    config.addTool('insert-figure', InsertFigureTool)
-    config.addTool('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addTool('open-figure-panel-image', OpenFigurePanelImageTool)
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
-    config.addTool('replace-file', ReplaceSupplementaryFileTool)
-
-    config.addTool('insert-table', InsertTableTool)
+    config.addComponent('add-figure-panel', InsertFigurePanelTool)
+    config.addComponent('download-file', DownloadSupplementaryFileTool)
+    config.addComponent('edit-block-formula', EditDispFormulaTool)
+    config.addComponent('edit-external-link', EditExtLinkTool)
+    config.addComponent('edit-formula', EditInlineFormulaTool)
+    config.addComponent('edit-xref', EditXrefTool)
+    config.addComponent('insert-figure', InsertFigureTool)
+    config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
+    config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
+    config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addComponent('replace-file', ReplaceSupplementaryFileTool)
+    config.addComponent('insert-table', InsertTableTool)
 
     // DropDownHandler
     config.addDropHandler(DropFigure)
 
     // SwitchTextTypes
     config.addTextTypeTool({
-      name: 'heading1',
+      name: 'switch-to-heading1',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
@@ -397,7 +396,7 @@ export default {
       accelerator: 'CommandOrControl+Alt+1'
     })
     config.addTextTypeTool({
-      name: 'heading2',
+      name: 'switch-to-heading2',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
@@ -408,7 +407,7 @@ export default {
       accelerator: 'CommandOrControl+Alt+2'
     })
     config.addTextTypeTool({
-      name: 'heading3',
+      name: 'switch-to-heading3',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
@@ -419,7 +418,7 @@ export default {
       accelerator: 'CommandOrControl+Alt+3'
     })
     config.addTextTypeTool({
-      name: 'paragraph',
+      name: 'switch-to-paragraph',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'paragraph'
@@ -437,7 +436,7 @@ export default {
       commandGroup: 'text-types'
     })
     config.addTextTypeTool({
-      name: 'preformat',
+      name: 'switch-to-preformat',
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'preformat'

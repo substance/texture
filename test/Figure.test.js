@@ -2,7 +2,7 @@ import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoFileEvent,
   loadBodyFixture, getDocument, openMetadataEditor, getEditorSession, clickUndo,
-  deleteSelection, openMenuAndFindTool, isToolEnabled, selectNode
+  deleteSelection, openContextMenuAndFindTool, openMenuAndFindTool, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
@@ -86,7 +86,7 @@ test('Figure: add a sub-figure to a figure', t => {
   let doc = getDocument(editor)
   let figure = doc.find('body figure')
   setCursor(editor, 'fig1-caption-p1.content', 0)
-  const insertFigurePanelTool = openMenuAndFindTool(editor, 'figure-tools', insertFigurePanelSelector)
+  const insertFigurePanelTool = openContextMenuAndFindTool(editor, insertFigurePanelSelector)
   t.ok(insertFigurePanelTool.el.click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   let panels = figure.panels.map(id => doc.get(id))
@@ -182,8 +182,8 @@ test('Figure: change the order of panels in manuscript', t => {
   const _selectSubFigure = (idx) => _selectFigurePanel(editor, figure, idx)
   const _canMoveUp = () => _isToolEnabled(editor, moveUpToolSelector)
   const _canMoveDown = () => _isToolEnabled(editor, moveDownToolSelector)
-  const _moveUp = () => openMenuAndFindTool(editor, 'figure-tools', moveUpToolSelector).click()
-  const _moveDown = () => openMenuAndFindTool(editor, 'figure-tools', moveDownToolSelector).click()
+  const _moveUp = () => openContextMenuAndFindTool(editor, moveUpToolSelector).click()
+  const _moveDown = () => openContextMenuAndFindTool(editor, moveDownToolSelector).click()
 
   t.comment('when figure is not selected')
   t.notOk(_canMoveUp(), 'move up tool shoold not be available')
@@ -299,7 +299,7 @@ test('Figure: reference a sub-figure', t => {
     firstXref.click()
   }
   const _selectFirstSubFigure = () => _selectFigurePanel(editor, figure, 0)
-  const _removePanel = () => openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector).click()
+  const _removePanel = () => openContextMenuAndFindTool(editor, removePanelToolSelector).click()
 
   setCursor(editor, 'p1.content', 2)
   t.isNil(editor.find(xrefSelector), 'there should be no references in manuscript')
@@ -336,7 +336,7 @@ test('Figure: reference multiple sub-figures', t => {
   t.equal(getXref().text(), 'Figures 1A‒B', 'xref label should be Figure 1A-B')
 
   _selectFigurePanel(editor, figure, 0)
-  const removePanelTool = openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector)
+  const removePanelTool = openContextMenuAndFindTool(editor, removePanelToolSelector)
   t.ok(removePanelTool.click(), 'clicking on remove sub-figure tool should not throw error')
   t.equal(getXref().text(), 'Figure 1', 'xref label should be equal to xref label')
   t.end()
@@ -347,7 +347,7 @@ test('Figure: open image from figure panel', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
   const _canOpen = () => _isToolEnabled(editor, openPanelImageSelector)
-  const _openImage = () => openMenuAndFindTool(editor, 'figure-tools', openPanelImageSelector).click()
+  const _openImage = () => openContextMenuAndFindTool(editor, openPanelImageSelector).click()
 
   t.notOk(_canOpen(), 'open image tool should be disabled by default')
   // put a selection on figure and see if tool is active and not throwing errors
@@ -371,7 +371,7 @@ test('Figure: replace image in figure panel', t => {
 
   _selectFigurePanel(editor, figure, 0)
   // Note: we have the same tool for replace as for add a new sub-figure
-  let replaceSubFigureImageTool = openMenuAndFindTool(editor, 'figure-tools', replacePanelToolSelector)
+  let replaceSubFigureImageTool = openContextMenuAndFindTool(editor, replacePanelToolSelector)
   t.ok(_isToolEnabled(editor, replacePanelToolSelector), 'replace sub-figure image tool should be available')
   t.ok(replaceSubFigureImageTool.click(), 'clicking on the replace sub-figure button should not throw error')
   // triggering onFileSelect() so that the figure replace logic gets called
@@ -398,8 +398,8 @@ test('Figure: remove and move figure panels in metadata view', t => {
   const getSubFigureLabel = (card) => card.find(`.sc-figure-metadata .se-label`).text()
   const getSubFigureId = (card) => card.getAttribute('data-id')
   const selectCard = (card) => card.click()
-  const moveUpCard = () => openMenuAndFindTool(editor, 'figure-tools', moveUpToolSelector).click()
-  const removeCard = () => openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector).click()
+  const moveUpCard = () => openContextMenuAndFindTool(editor, moveUpToolSelector).click()
+  const removeCard = () => openContextMenuAndFindTool(editor, removePanelToolSelector).click()
   const isMoveUpPossible = () => _isToolEnabled(editor, moveUpToolSelector)
   const isRemovePossible = () => _isToolEnabled(editor, removePanelToolSelector)
 
@@ -458,7 +458,7 @@ test('Figure: replicate first panel structure', t => {
   const _gotoNext = () => editor.find(figurePanelNextSelector).el.click()
   loadBodyFixture(editor, FIGURE_PANEL_WITH_CUSTOM_FIELDS)
   selectNode(editor, 'fig1')
-  const insertFigurePanelTool = openMenuAndFindTool(editor, 'figure-tools', insertFigurePanelSelector)
+  const insertFigurePanelTool = openContextMenuAndFindTool(editor, insertFigurePanelSelector)
   t.ok(insertFigurePanelTool.el.click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   _gotoNext()
@@ -475,12 +475,12 @@ function _selectFigurePanel (editor, figure, panelIndex) {
 }
 
 function _removeFigurePanel (editor) {
-  let tool = openMenuAndFindTool(editor, 'figure-tools', removePanelToolSelector)
+  let tool = openContextMenuAndFindTool(editor, removePanelToolSelector)
   return tool.click()
 }
 
 function _isToolEnabled (editor, toolClass) {
-  return isToolEnabled(editor, 'figure-tools', toolClass)
+  return isToolEnabled(editor, 'context-tools', toolClass)
 }
 
 function _getDisplayedPanelId (editor) {

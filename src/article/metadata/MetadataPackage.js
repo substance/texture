@@ -47,7 +47,6 @@ export default {
     config.addComponent('article-metadata', ArticleMetadataComponent)
     config.addComponent('article-information', ArticleInformationSectionComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
-    config.addComponent('insert-reference', AddReferenceWorkflow)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
@@ -149,9 +148,9 @@ export default {
     })
 
     // Tools
-    config.addTool('add-figure-panel', InsertFigurePanelTool)
-    config.addTool('open-figure-panel-image', OpenFigurePanelImageTool)
-    config.addTool('replace-figure-panel-image', ReplaceFigurePanelTool)
+    config.addComponent('add-figure-panel', InsertFigurePanelTool)
+    config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
+    config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
 
     // KeyboardShortcuts
     config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })

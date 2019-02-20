@@ -6,6 +6,18 @@
   position: absolute;
   top: 30px;
   left: -3px;
+  padding: 4px;
+  background: #fff;
+  box-shadow: var(--t-default-box-shadow);
+  border-radius: var(--t-tool-border-radius);
+}
+
+.sc-tool-dropdown > .se-choices .sc-tool-group {
+  display: block!important;
+}
+
+.sc-tool-dropdown.sm-disabled > .se-toggle {
+  opacity: 0.3;
 }
 
 /* Position tooltip */
@@ -19,8 +31,4 @@
 
 .sc-tool-dropdown:hover > .sc-tooltip {
   display: block;
-}
-
-.sc-tool-dropdown.sm-disabled > .se-toggle {
-  opacity: 0.3;
 }

@@ -1,5 +1,5 @@
 import {
-  Configurator, merge, isString, flatten, includes, forEach, Registry
+  Configurator, merge, flatten, forEach, Registry
 } from 'substance'
 
 export default class TextureConfigurator extends Configurator {
@@ -54,29 +54,8 @@ export default class TextureConfigurator extends Configurator {
     }
   }
 
-  addPropertyEditor (PropertyEditorClass) {
-    if (includes(this.config.propertyEditors, PropertyEditorClass)) {
-      throw new Error('Already registered')
-    }
-    this.config.propertyEditors.push(PropertyEditorClass)
-  }
-
-  getPropertyEditors () {
-    return this.config.propertyEditors
-  }
-
   addTool (name, ToolClass) {
-    if (!isString(name)) {
-      throw new Error("Expecting 'name' to be a String")
-    }
-    if (!ToolClass) {
-      throw new Error('Provided nil for tool ' + name)
-    }
-    if (!ToolClass.prototype._isTool) {
-      throw new Error("Expecting 'ToolClass' to be of type Tool. name:", name)
-    }
-
-    this.config.tools[name] = ToolClass
+    throw new Error('This has been removed. Use addComponent(<command-name>, ToolClass) instead')
   }
 
   getToolRegistry () {
@@ -158,12 +137,14 @@ export default class TextureConfigurator extends Configurator {
             name: commandName
           }
         })
+      case 'switcher':
       case 'prompt':
       case 'group':
       case 'dropdown':
         item.items = flatten(itemSpec.items.map(itemSpec => this._compileToolPanelItem(itemSpec)))
         break
       case 'separator':
+      case 'spacer':
         break
       default:
         throw new Error('Unsupported tool panel item type: ' + type)

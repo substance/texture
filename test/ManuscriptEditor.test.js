@@ -1,5 +1,10 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession, loadBodyFixture, getDocument, setSelection, LOREM_IPSUM, openMenuAndFindTool, clickUndo, isToolEnabled, createKeyEvent, selectNode, getSelection } from './shared/integrationTestHelpers'
+import {
+  setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
+  loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
+  openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
+  isToolEnabled, createKeyEvent, selectNode, getSelection
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
@@ -31,7 +36,7 @@ test('ManuscriptEditor: add inline formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 3)
-  let insertInlineFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-inline-formula')
+  let insertInlineFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-tool.sm-insert-inline-formula')
   t.ok(insertInlineFormulaTool.click(), 'clicking on the insert inline formula button should not throw error')
   let inlineFormula = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-formula')
   t.notNil(inlineFormula, 'there should be an inline-formula now')
@@ -68,7 +73,7 @@ test('ManuscriptEditor: add block formula', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
-  let insertDispFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-formula')
+  let insertDispFormulaTool = openMenuAndFindTool(editor, 'insert', '.sc-tool.sm-insert-block-formula')
   t.ok(insertDispFormulaTool.click(), 'clicking on the insert disp formula button should not throw error')
   let blockFormula = editor.find('*[data-id=p-2] + .sm-block-formula')
   t.notNil(blockFormula, 'there should be a block-formula now')
@@ -120,7 +125,7 @@ test('ManuscriptEditor: add block quote', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
-  let insertBlockQuoteTool = openMenuAndFindTool(editor, 'insert', '.sc-menu-item.sm-insert-block-quote')
+  let insertBlockQuoteTool = openMenuAndFindTool(editor, 'insert', '.sc-tool.sm-insert-block-quote')
   t.ok(insertBlockQuoteTool.click(), 'clicking on the insert block quote button should not throw error')
   let blockQuote = editor.find('*[data-id=p-2] + .sm-block-quote')
   t.notNil(blockQuote, 'there should be a block quote now')
@@ -172,12 +177,9 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
-  // open the switch type dropdown
-  let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
-  switchTypeDropdown.find('button').click()
-  let h1button = switchTypeDropdown.find('.sc-menu-item.sm-heading1')
-  t.notNil(h1button, 'there should be an option to switch to heading level 1')
-  h1button.click()
+
+  t.ok(_canSwitchTo(editor, 'heading1'), 'switch to heading1 should be possible')
+  _switchTo(editor, 'heading1')
   // ATTENTION: we do not change id, which might be confusing for others
   let h1El = editor.find('.sc-surface.sm-body > h1')
   t.notNil(h1El, 'there should be a <h1> element now')
@@ -189,12 +191,10 @@ test('ManuscriptEditor: Switch paragraph to preformat', t => {
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
-  // open the switch type dropdown
-  let switchTypeDropdown = editor.find('.sc-tool-dropdown.sm-text-types')
-  switchTypeDropdown.find('button').click()
-  let preformatButton = switchTypeDropdown.find('.sc-menu-item.sm-preformat')
-  t.notNil(preformatButton, 'there should be an option to switch to preformat')
-  preformatButton.click()
+
+  t.ok(_canSwitchTo(editor, 'preformat'), 'switch to preformat should be possible')
+  _switchTo(editor, 'preformat')
+
   let preformatEl = editor.find('.sc-surface.sm-body > .sc-text-node.sm-preformat')
   t.notNil(preformatEl, 'there should be a div with preformat component class now')
   t.end()
@@ -224,11 +224,11 @@ test('ManuscriptEditor: toggling a list', t => {
   t.equal(listItem.getText(), p1Text, '.. with the text of the former paragraph')
 
   // now there should be contextual list tools be visible
-  t.ok(openMenuAndFindTool(editor, 'list-tools', '.sm-indent-list'), 'now there should be the indent tool be visible')
-  t.ok(openMenuAndFindTool(editor, 'list-tools', '.sm-dedent-list'), '.. and the dedent tool')
+  t.ok(openContextMenuAndFindTool(editor, '.sm-indent-list'), 'now there should be the indent tool be visible')
+  t.ok(openContextMenuAndFindTool(editor, '.sm-dedent-list'), '.. and the dedent tool')
 
   // click on list tool to turn it into a paragraph again
-  openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-unordered-list').click()
+  openContextMenuAndFindTool(editor, '.sm-toggle-unordered-list').click()
 
   let pNode = doc.get('body').getNodeAt(0)
   t.equal(pNode.type, 'paragraph', 'first node should now be a paragraph again')
@@ -282,13 +282,13 @@ test('ManuscriptEditor: changing the list style', t => {
 
   setSelection(editor, 'li1.content', 0)
   // click on list tool to turn "p1" into a list
-  let ulTool = openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-ordered-list')
+  let ulTool = openContextMenuAndFindTool(editor, '.sm-toggle-ordered-list')
   ulTool.click()
   let listNode = doc.get('list-1')
   t.equal(listNode.listType, 'order,order,bullet', 'all levels should be ordered')
 
   setSelection(editor, 'li1_1.content', 0)
-  let olTool = openMenuAndFindTool(editor, 'list-tools', '.sm-toggle-unordered-list')
+  let olTool = openContextMenuAndFindTool(editor, '.sm-toggle-unordered-list')
   olTool.click()
   t.equal(listNode.listType, 'order,bullet,bullet', 'all levels should be ordered')
 
@@ -339,12 +339,12 @@ test('ManuscriptEditor: inserting a table figure', t => {
 const SPECS = [
   {
     'type': 'block-formula',
-    'tool': '.sc-menu-item.sm-insert-block-formula',
+    'tool': '.sc-tool.sm-insert-block-formula',
     'label': 'Formula'
   },
   {
     'type': 'block-quote',
-    'tool': '.sc-menu-item.sm-insert-block-quote',
+    'tool': '.sc-tool.sm-insert-block-quote',
     'label': 'Blockquote'
   },
   {
@@ -401,3 +401,12 @@ test('ManuscriptEditor: select all', t => {
   })
   t.end()
 })
+
+function _canSwitchTo (editor, type) {
+  let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)
+  return tool && !tool.attr('disabled')
+}
+
+function _switchTo (editor, type) {
+  return openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`).el.click()
+}

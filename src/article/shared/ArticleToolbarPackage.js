@@ -1,9 +1,19 @@
 /* eslint-disable no-template-curly-in-string */
-
 export default {
   name: 'article-toolbar',
   configure (config) {
     config.addToolPanel('toolbar', [
+      {
+        name: 'mode',
+        type: 'switcher',
+        style: 'descriptive',
+        hideDisabled: true,
+        displayActiveCommand: true,
+        items: [
+          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
+          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
+        ]
+      },
       {
         name: 'document-tools',
         type: 'group',
@@ -30,7 +40,6 @@ export default {
         style: 'descriptive',
         items: [
           { type: 'command', name: 'insert-figure', label: 'figure' },
-          { type: 'command', name: 'insert-image', label: 'image' },
           { type: 'command', name: 'insert-table', label: 'table' },
           { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
           { type: 'command', name: 'insert-block-formula', label: 'equation' },
@@ -57,7 +66,6 @@ export default {
           { type: 'command', name: 'insert-subject', label: 'subject' }
         ]
       },
-      // TODO: not sure yet. This could also be seen as a contextual thing
       {
         name: 'format',
         type: 'dropdown',
@@ -74,7 +82,6 @@ export default {
           { type: 'command', name: 'toggle-strike-through', label: 'strike-through' }
         ]
       },
-      // Contextual stuff
       {
         name: 'text-types',
         type: 'dropdown',
@@ -85,84 +92,93 @@ export default {
           { type: 'command-group', name: 'text-types' }
         ]
       },
-      // TODO: we do not have a good concept for contextual tools
-      // we considered to have a toolgroup which renders the context as a label
-      // As we do not have such a thing, the closest we can get there
-      // are drop-down menues which are visible only when enabled
       {
-        name: 'table-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'table' },
-          { type: 'command-group', name: 'table-insert' },
-          { type: 'command-group', name: 'table-delete' }
-        ]
+        name: 'divider',
+        type: 'spacer'
       },
       {
-        name: 'file-tools',
+        name: 'mobile-mode',
         type: 'dropdown',
         style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'file' }
-        ]
-      },
-      {
-        name: 'figure-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'figure-panel' }
-        ]
-      },
-      {
-        name: 'footnote-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'footnote' }
-        ]
-      },
-      {
-        name: 'collection-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'collection' }
-        ]
-      },
-      {
-        name: 'list-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'list' }
-        ]
-      },
-      {
-        name: 'metadata-field-tools',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: true,
-        items: [
-          { type: 'command-group', name: 'custom-metadata-fields' }
-        ]
-      },
-      {
-        name: 'mode',
-        type: 'dropdown',
-        style: 'full',
-        hideDisabled: true,
+        hideDisabled: false,
         displayActiveCommand: true,
         items: [
           { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
           { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
+        ]
+      },
+      {
+        name: 'context-tools',
+        type: 'dropdown',
+        style: 'descriptive',
+        // hide disabled items but not the dropdown itself
+        hideDisabled: true,
+        alwaysVisible: true,
+        items: [
+          {
+            type: 'group',
+            name: 'table',
+            style: 'descriptive',
+            label: 'table-tools',
+            items: [
+              { type: 'command-group', name: 'table' },
+              { type: 'command-group', name: 'table-insert' },
+              { type: 'command-group', name: 'table-delete' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'file',
+            style: 'descriptive',
+            label: 'file-tools',
+            items: [
+              { type: 'command-group', name: 'file' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'figure',
+            style: 'descriptive',
+            label: 'figure-tools',
+            items: [
+              { type: 'command-group', name: 'figure-panel' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'footnote',
+            style: 'descriptive',
+            label: 'footnote-tools',
+            items: [
+              { type: 'command-group', name: 'footnote' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'list',
+            style: 'descriptive',
+            label: 'list-tools',
+            items: [
+              { type: 'command-group', name: 'list' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'custom-metadata-fields',
+            style: 'descriptive',
+            label: 'metadata-field-tools',
+            items: [
+              { type: 'command-group', name: 'custom-metadata-fields' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'collection',
+            style: 'descriptive',
+            items: [
+              { type: 'command-group', name: 'collection' }
+            ]
+          }
         ]
       }
     ])
@@ -189,6 +205,7 @@ export default {
         name: 'table-context-menu',
         type: 'group',
         style: 'descriptive',
+        label: 'table',
         items: [
           { type: 'command-group', name: 'table-insert' },
           { type: 'command-group', name: 'table-delete' }
@@ -200,8 +217,6 @@ export default {
     config.addIcon('bold', { 'fontawesome': 'fa-bold' })
     config.addIcon('italic', { 'fontawesome': 'fa-italic' })
     config.addIcon('link', { 'fontawesome': 'fa-link' })
-    config.addIcon('manuscript', { 'fontawesome': 'fa-align-left' })
-    config.addIcon('metadata', { 'fontawesome': 'fa-th-list' })
 
     // Format tools labels
     config.addLabel('format', 'Format')
@@ -311,8 +326,11 @@ export default {
     config.addLabel('move-down-metadata-field', 'Move Down Metadata Field')
     config.addLabel('move-up-metadata-field', 'Move Up Metadata Field')
     config.addLabel('remove-metadata-field', 'Remove Metadata Field')
+    // Context tools
+    config.addLabel('context-tools', 'Edit')
     // Mode
     config.addLabel('mode', 'Mode')
+    config.addLabel('mobile-mode', 'Mode')
     config.addLabel('open-manuscript', 'Manuscript')
     config.addLabel('open-metadata', 'Details')
   }

@@ -234,7 +234,7 @@ export function findParent (el, selector) {
 }
 
 export function clickUndo (editor) {
-  editor.find('.sc-toggle-tool.sm-undo').el.click()
+  editor.find('.sc-tool.sm-undo').el.click()
 }
 
 export function openMenu (editor, menuName) {
@@ -254,6 +254,10 @@ export function openMenuAndFindTool (editor, menuName, toolSelector) {
     toggle.el.click()
   }
   return menu.find(toolSelector)
+}
+
+export function openContextMenuAndFindTool (editor, toolSelector) {
+  return openMenuAndFindTool(editor, 'context-tools', toolSelector)
 }
 
 export function isToolEnabled (editor, menuName, toolSelector) {

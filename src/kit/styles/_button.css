@@ -2,13 +2,13 @@
   position: relative;
   height: 24px;
   min-width: 24px;
-  line-height: 24px;
+  line-height: var(--t-default-line-height);
   text-align: center;
-  font-size: 12px;
+  font-size: var(--t-tiny-font-size);
   font-weight: 600;
-  border-radius: 3px;
-  padding-left: 7px;
-  padding-right: 7px;
+  border-radius: var(--t-tool-border-radius);
+  padding-left: var(--t-button-padding);
+  padding-right: var(--t-button-padding);
 }
 
 .sc-button.sm-theme-light > .se-dropdown {
@@ -27,6 +27,6 @@
 
 .sc-button.sm-theme-light:hover:not(.sm-active):not([disabled]),
 .sc-button.sm-theme-light:focus {
-  background: var(--t-light-bg-color);
+  background: var(--t-default-button-background);
   color: var(--t-action-color);
 }

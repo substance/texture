@@ -2,7 +2,6 @@ const path = require('path')
 const url = require('url')
 const { ipcRenderer: ipc, remote } = require('electron')
 const { shell, dialog } = remote
-const { substanceGlobals, platform } = window.substance
 const { TextureDesktopApp, UnpackedDarFolderStorage } = window.texture
 
 let _app, _window
@@ -25,7 +24,6 @@ window.addEventListener('load', () => {
 
   let editorConfig = _window.editorConfig
 
-  substanceGlobals.DEBUG_RENDERING = platform.devtools
   const archiveId = editorConfig.darPath
   const isReadOnly = editorConfig.readOnly
 

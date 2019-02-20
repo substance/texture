@@ -90,9 +90,10 @@ export default class MetadataEditor extends EditorPanel {
   _renderToolbar ($$) {
     const Toolbar = this.getComponent('toolbar')
     let config = this.props.config
+    const items = config.getToolPanel('toolbar')
     return $$('div').addClass('se-toolbar-wrapper').append(
       $$(Managed(Toolbar), {
-        toolPanel: config.getToolPanel('toolbar'),
+        items,
         bindings: ['commandStates']
       // TODO: do we need this ref?
       }).ref('toolbar')

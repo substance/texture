@@ -163,6 +163,10 @@ export default class ArticlePanel extends Component {
     let oldViewName = this.state.viewName
     if (oldViewName !== viewName) {
       this._viewStates.get(oldViewName).viewport = this.refs.content.getViewport()
+      let router = this.context.router
+      if (router) {
+        router.writeRoute({ viewName })
+      }
       this.extendState({ viewName })
     }
   }

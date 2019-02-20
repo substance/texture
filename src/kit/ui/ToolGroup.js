@@ -13,60 +13,141 @@ const DISABLED = { disabled: true }
  * @param {object} props.commandStates command states by name
  */
 export default class ToolGroup extends Component {
-  render ($$) {
-    const {
-      name, style, theme, hideDisabled,
-      items, commandStates
-    } = this.props
+  constructor (...args) {
+    super(...args)
 
+    this._deriveState(this.props)
+  }
+
+  willReceiveProps (newProps) {
+    this._deriveState(newProps)
+  }
+
+  getTheme () {
+    // HACK: falling back to 'light' in a hard-coded way
+    return this.props.theme || 'light'
+  }
+
+  _deriveState (props) {
+    if (this._isTopLevel) {
+      this._derivedState = this._deriveGroupState(props, props.commandStates)
+    } else {
+      this._derivedState = props.itemState
+    }
+  }
+
+  render ($$) {
+    const { name, hideDisabled } = this.props
     let el = $$('div')
       .addClass(this._getClassNames())
       .addClass('sm-' + name)
 
-    for (let item of items) {
-      // TODO: should we show separators?
-      let type = item.type
-      if (type === 'command') {
-        const commandName = item.name
-        let commandState = commandStates[commandName] || DISABLED
-        // TODO: why is it necessary to override isToolEnabled()?
-        if (!hideDisabled || this.isToolEnabled(commandState, item)) {
-          let ToolClass = this._getToolClass(item)
-          el.append(
-            $$(ToolClass, {
-              item,
-              commandState,
-              style,
-              theme
-            }).ref(commandName)
-          )
-        }
-      }
+    let hasEnabledItem = this._derivedState.hasEnabledItem
+    if (hasEnabledItem || !hideDisabled) {
+      el.append(this._renderLabel($$))
+      el.append(this._renderItems($$))
     }
 
     return el
   }
 
-  /*
-    Determine whether a tool should be shown or not
-  */
-  isToolEnabled (commandState, opts = {}) {
-    return (commandState && !commandState.disabled)
+  _renderLabel ($$) {
+    // EXPERIMENTAL: showing a ToolGroup label an
+    const { style, label } = this.props
+    if (style === 'descriptive' && label) {
+      const SeparatorClass = this.getComponent('tool-separator')
+      return $$(SeparatorClass, { label })
+    }
   }
 
-  /*
-    Returns true if at least one command is enabled
-  */
-  hasEnabledTools (commandStates) {
-    if (!commandStates) {
-      commandStates = this.props.commandStates
+  _renderItems ($$) {
+    const { style, hideDisabled, commandStates } = this.props
+    const theme = this.getTheme()
+    const { itemStates } = this._derivedState
+    let els = []
+    for (let itemState of itemStates) {
+      let item = itemState.item
+      let type = item.type
+      switch (type) {
+        case 'command': {
+          const commandName = item.name
+          let commandState = itemState.commandState
+          if (itemState.enabled || !hideDisabled) {
+            let ToolClass = this._getToolClass(item)
+            els.push(
+              $$(ToolClass, {
+                item,
+                commandState,
+                style,
+                theme
+              }).ref(commandName)
+            )
+          }
+          break
+        }
+        case 'separator': {
+          let ToolSeparator = this.getComponent('tool-separator')
+          els.push(
+            $$(ToolSeparator, item)
+          )
+          break
+        }
+        default: {
+          if (!hideDisabled || itemState.enabled || itemState.hasEnabledItem) {
+            let ToolClass = this._getToolClass(item)
+            els.push(
+              // ATTENTION: we are passing down options present on the current
+              // group, but they can be overridden via spec
+              // TODO: add all con
+              $$(ToolClass, Object.assign({ hideDisabled }, item, {
+                commandStates,
+                itemState,
+                theme
+              })).ref(item.name)
+            )
+          }
+        }
+      }
     }
-    let items = this.props.items
-    for (let item of items) {
-      let commandState = commandStates[item.name]
-      if (this.isToolEnabled(commandState, item)) return true
+    return els
+  }
+
+  get _isTopLevel () { return false }
+
+  // ATTENTION: this is only called for top-level tool groups (Menu, Prompt, ) which are ToolDrop
+  _deriveGroupState (group, commandStates) {
+    let itemStates = group.items.map(item => this._deriveItemState(item, commandStates))
+    let hasEnabledItem = itemStates.some(item => item.enabled || item.hasEnabledItem)
+    return {
+      item: group,
+      itemStates,
+      hasEnabledItem
     }
-    return false
+  }
+
+  _deriveItemState (item, commandStates) {
+    switch (item.type) {
+      case 'command': {
+        let commandState = commandStates[item.name] || DISABLED
+        return {
+          item,
+          commandState,
+          enabled: !commandState.disabled
+        }
+      }
+      case 'group':
+      case 'dropdown':
+      case 'prompt':
+      case 'switcher': {
+        return this._deriveGroupState(item, commandStates)
+      }
+      case 'separator':
+      case 'spacer': {
+        return { item }
+      }
+      default:
+        throw new Error('Unsupported item type')
+    }
   }
 
   _getClassNames () {
@@ -75,19 +156,50 @@ export default class ToolGroup extends Component {
 
   _getToolClass (item) {
     // use an ToolClass from toolSpec if configured inline in ToolGroup spec
-    let ToolClass = item.ToolClass
-    // next try if there is a tool registered by the name
-    if (!ToolClass) {
-      ToolClass = this.context.toolRegistry.get(item.name)
-    }
-    // after all fall back to default classes
-    if (!ToolClass) {
-      if (this.props.style === 'descriptive') {
-        ToolClass = this.getComponent('menu-item')
-      } else {
-        ToolClass = this.getComponent('toggle-tool')
+    let ToolClass
+    if (item.ToolClass) {
+      ToolClass = item.ToolClass
+    } else {
+      switch (item.type) {
+        case 'command': {
+          // try to use a tool registered by the same name as the command
+          ToolClass = this.getComponent(item.name, 'no-throw')
+          if (!ToolClass) {
+            // using the default tool otherwise
+            ToolClass = this.getComponent('tool')
+          }
+          break
+        }
+        case 'dropdown': {
+          ToolClass = this.getComponent('tool-dropdown')
+          break
+        }
+        case 'group': {
+          ToolClass = this.getComponent('tool-group')
+          break
+        }
+        case 'prompt': {
+          ToolClass = this.getComponent('tool-prompt')
+          break
+        }
+        case 'separator': {
+          ToolClass = this.getComponent('tool-separator')
+          break
+        }
+        case 'spacer': {
+          ToolClass = this.getComponent('tool-spacer')
+          break
+        }
+        case 'switcher': {
+          ToolClass = this.getComponent('tool-switcher')
+          break
+        }
+        default: {
+          console.error('Unsupported item type inside ToolGroup:', item.type)
+        }
       }
     }
+
     return ToolClass
   }
 }

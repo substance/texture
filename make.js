@@ -217,25 +217,11 @@ b.task('_copy-data-folder', () => {
 
 b.task('build:web', ['build:vfs', '_copy-data-folder'], () => {
   b.copy('web/index.html', DIST)
-  b.copy('web/reader.html', DIST)
   b.js('./web/editor.js', {
     output: [{
       file: DIST + 'editor.js',
       format: 'umd',
       name: 'textureEditor',
-      globals: {
-        'substance': 'substance',
-        'substance-texture': 'texture',
-        'katex': 'katex'
-      }
-    }],
-    external: ['substance', 'substance-texture', 'katex']
-  })
-  b.js('./web/reader.js', {
-    output: [{
-      file: DIST + 'reader.js',
-      format: 'umd',
-      name: 'textureReader',
       globals: {
         'substance': 'substance',
         'substance-texture': 'texture',

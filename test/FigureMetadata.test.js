@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import {
-  getEditorSession, getSelection, loadBodyFixture,
-  openManuscriptEditor, openMenuAndFindTool, openMetadataEditor, selectNode
+  getEditorSession, getSelection, loadBodyFixture, openContextMenuAndFindTool,
+  openManuscriptEditor, openMetadataEditor, selectNode, openMenuAndFindTool
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -50,7 +50,7 @@ test('Figure Metadata: add a new custom field', t => {
   loadBodyFixture(editor, FIXTURE)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   _selectCustomField(editor)
-  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
+  const addCustomMetadataFieldTool = openContextMenuAndFindTool(editor, addCustomMetadataFieldToolSelector)
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
   const selectedNodePath = getSelection(editor).path
@@ -65,7 +65,7 @@ test('Figure Metadata: add a new custom field when figure is selected', t => {
   loadBodyFixture(editor, FIXTURE)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   selectNode(editor, 'fig1')
-  const addCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
+  const addCustomMetadataFieldTool = openContextMenuAndFindTool(editor, addCustomMetadataFieldToolSelector)
   t.isNotNil(addCustomMetadataFieldTool, 'add custom field tool should be available for a figure selection')
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
@@ -81,7 +81,7 @@ test('Figure Metadata: remove custom field', t => {
   loadBodyFixture(editor, FIXTURE)
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   _selectCustomField(editor)
-  const removeCustomMetadataFieldTool = openMenuAndFindTool(editor, 'metadata-field-tools', removeCustomMetadataFieldToolSelector)
+  const removeCustomMetadataFieldTool = openContextMenuAndFindTool(editor, removeCustomMetadataFieldToolSelector)
   t.ok(removeCustomMetadataFieldTool.click(), 'clicking on remove custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 0, 'there should be no custom fields now')
   t.end()
@@ -91,33 +91,37 @@ test('Figure Metadata: move custom field', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
 
-  const _getMoveUpCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'metadata-field-tools', moveUpCustomMetadataFieldToolSelector)
-  const _getMoveDownCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'metadata-field-tools', moveDownCustomMetadataFieldToolSelector)
-  const _getAddCustomMetadataFieldTool = () => openMenuAndFindTool(editor, 'metadata-field-tools', addCustomMetadataFieldToolSelector)
-
   loadBodyFixture(editor, FIXTURE)
+  t.comment('initial state')
   t.equal(editor.findAll(figureMetadataSelector).length, 1, 'there should be one custom field')
   _selectCustomField(editor)
-  t.isNil(_getMoveUpCustomMetadataFieldTool(), 'move up custom field tool should be unavailable for a figure panel with one custom field')
-  t.isNil(_getMoveDownCustomMetadataFieldTool(), 'move down custom field tool should be unavailable for a figure panel with one custom field')
+  t.notOk(_canMoveFieldUp(editor), 'move up should be disabled')
+  t.notOk(_canMoveFieldDown(editor), 'move down should be disabled')
+
+  t.comment('adding a new field')
   // Add a new one should put a selection on latest item
-  t.ok(_getAddCustomMetadataFieldTool().click(), 'clicking on add custom field tool should not throw error')
-  t.isNil(_getMoveDownCustomMetadataFieldTool(), 'move down custom field tool should be unavailable when selection is on latest field')
-  t.isNotNil(_getMoveUpCustomMetadataFieldTool(), 'move up custom field tool should be available when selection is on latest field')
-  // Move up to a first item
-  t.ok(_getMoveUpCustomMetadataFieldTool().click(), 'clicking on move up custom field tool should not throw error')
-  t.isNotNil(_getMoveDownCustomMetadataFieldTool(), 'move down custom field tool should be available when selection is on first field')
-  t.isNil(_getMoveUpCustomMetadataFieldTool(), 'move up custom field tool should be unavailable when selection is on first field')
-  // Add a new one should put a selection on latest item
-  t.ok(_getAddCustomMetadataFieldTool().click(), 'clicking on add custom field tool should not throw error')
-  // Move up to a second item
-  t.ok(_getMoveUpCustomMetadataFieldTool().click(), 'clicking on move up custom field tool should not throw error')
-  t.isNotNil(_getMoveUpCustomMetadataFieldTool(), 'move up custom field tool should be available when selection is not on the latest field')
-  t.isNotNil(_getMoveDownCustomMetadataFieldTool(), 'move down custom field tool should be available when selection is not on the first field')
-  // Move down to a latest item
-  t.ok(_getMoveDownCustomMetadataFieldTool().click(), 'clicking on move down custom field tool should not throw error')
-  t.isNil(_getMoveDownCustomMetadataFieldTool(), 'move down custom field tool should be unavailable again')
-  t.isNotNil(_getMoveUpCustomMetadataFieldTool(), 'move up custom field tool should be available again')
+  t.ok(_addField(editor), 'adding a field should not throw')
+  t.ok(_canMoveFieldUp(editor), 'move up should be disabled')
+  t.notOk(_canMoveFieldDown(editor), 'move down should be disabled')
+
+  t.comment('move field up')
+  t.ok(_moveFieldUp(editor), 'move up should not throw')
+  t.notOk(_canMoveFieldUp(editor), 'move up should be disabled')
+  t.ok(_canMoveFieldDown(editor), 'move down should be disabled')
+
+  t.comment('adding another field')
+  t.ok(_addField(editor), 'adding a field should not throw')
+
+  t.comment('move field up')
+  t.ok(_moveFieldUp(editor), 'move up should not throw')
+  t.ok(_canMoveFieldUp(editor), 'move up should be disabled')
+  t.ok(_canMoveFieldDown(editor), 'move down should be disabled')
+
+  t.comment('move field down')
+  t.ok(_moveFieldDown(editor), 'move down should not throw')
+  t.ok(_canMoveFieldUp(editor), 'move up should be disabled')
+  t.notOk(_canMoveFieldDown(editor), 'move down should be disabled')
+
   t.end()
 })
 
@@ -135,4 +139,29 @@ function _selectCustomField (el, pos) {
     surfaceId,
     startOffset: 0
   })
+}
+
+function _canMoveFieldUp (editor) {
+  let tool = openMenuAndFindTool(editor, 'context-tools', moveUpCustomMetadataFieldToolSelector)
+  return tool && !tool.attr('disabled')
+}
+
+function _canMoveFieldDown (editor) {
+  let tool = openMenuAndFindTool(editor, 'context-tools', moveDownCustomMetadataFieldToolSelector)
+  return tool && !tool.attr('disabled')
+}
+
+function _addField (editor) {
+  let tool = openContextMenuAndFindTool(editor, addCustomMetadataFieldToolSelector)
+  return tool.el.click()
+}
+
+function _moveFieldUp (editor) {
+  let tool = openMenuAndFindTool(editor, 'context-tools', moveUpCustomMetadataFieldToolSelector)
+  return tool.el.click()
+}
+
+function _moveFieldDown (editor) {
+  let tool = openMenuAndFindTool(editor, 'context-tools', moveDownCustomMetadataFieldToolSelector)
+  return tool.el.click()
 }

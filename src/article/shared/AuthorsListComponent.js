@@ -1,9 +1,8 @@
-import { Component } from 'substance'
-import { ModalDialog } from '../../kit'
+import { CustomSurface } from 'substance'
 
-export default class AuthorsListComponent extends Component {
+export default class AuthorsListComponent extends CustomSurface {
   getInitialState () {
-    let items = this._getItems()
+    let items = this._getAuthors()
     return {
       hidden: items.length === 0,
       edit: false
@@ -11,59 +10,35 @@ export default class AuthorsListComponent extends Component {
   }
 
   render ($$) {
-    const items = this._getItems()
-    let el = $$('div').addClass(this.getClassNames())
-
-    if (this.state.hidden) {
-      el.addClass('sm-hidden')
-      return el
-    }
-
-    if (this.state.edit) {
-      var modal = $$(ModalDialog, {
-        width: 'medium',
-        textAlign: 'center'
-      })
-      el.append(modal)
-    }
-
-    let contentEl = $$('div').addClass('se-content')
-    if (items.length > 0) {
-      items.forEach((item, index) => {
-        let short = item.type === 'organisation'
-        contentEl.append(
-          $$('span').addClass('se-contrib').html(
-            // HACK: renderEntity needs a Node
-            // TODO: we should have a model based helper instead
-            this.context.api._renderEntity(item, { short })
-          )
-        )
-        if (index < items.length - 1) {
-          contentEl.append(', ')
-        }
-      })
-    } else {
-      contentEl.append(
-        $$('span').addClass('se-contrib sm-empty').append(this.getEmptyMessage())
-      )
-    }
-
+    let el = $$('div').addClass('sc-authors-list')
     el.append(
-      contentEl
+      this._renderAuthors($$)
     )
-
     return el
   }
 
-  getClassNames () {
-    return 'sc-authors-list'
+  _renderAuthors ($$) {
+    const authors = this._getAuthors()
+    let els = []
+    authors.forEach((author, index) => {
+      let short = author.type === 'organisation'
+      els.push(
+        $$('span').addClass('se-contrib').html(
+          this.context.api._renderEntity(author, { short })
+        )
+      )
+      if (index < authors.length - 1) {
+        els.push(', ')
+      }
+    })
+    return els
   }
 
-  getEmptyMessage () {
-    return this.getLabel('no-authors')
+  _getCustomResourceId () {
+    return 'authors-list'
   }
 
-  _getItems () {
+  _getAuthors () {
     return this.props.model.getItems()
   }
 }

@@ -28,15 +28,6 @@ export default class ContextMenu extends ToolPanel {
     return el
   }
 
-  show (hints) {
-    this.el.removeClass('sm-hidden')
-    this._position(hints)
-  }
-
-  hide () {
-    this.el.addClass('sm-hidden')
-  }
-
   _getClassNames () {
     return 'sc-context-menu'
   }

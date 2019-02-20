@@ -67,7 +67,7 @@
   /* Used for focus border, e.g. selected card, or text input */
   --t-focus-color: rgb(145, 189, 240);
   /* E.g. citations of references, figures, etc. */
-  --t-action-color: #2e72ea;
+  --t-action-color: #292929;
   /* Used to display warning icons */
   --t-warning-color: #ffaf46;
   /* Used to display error message */

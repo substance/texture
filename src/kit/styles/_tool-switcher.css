@@ -15,7 +15,7 @@
 }
 
 .sc-tool-switcher > .sc-tool.sm-active {
-  color: var(--t-text-color);
-  background: var(--t-default-button-background);
+  color: var(--t-inverted-text-color);
+  background: var(--t-action-color);
   cursor: default;
 }

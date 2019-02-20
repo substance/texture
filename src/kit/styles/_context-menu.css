@@ -5,6 +5,7 @@
   font-size: var(--t-small-font-size);
   z-index: 1000;
   box-shadow: var(--t-default-box-shadow);
+  padding: 4px;
 }
 
 .sc-context-menu.sm-hidden {

@@ -2,7 +2,7 @@ import UploadTool from '../shared/UploadTool'
 
 export default class InsertFigureTool extends UploadTool {
   getClassNames () {
-    return 'sc-insert-figure-tool sc-upload-tool'
+    return 'sc-insert-figure-tool sc-upload-tool sc-tool'
   }
 
   getFileType () {

@@ -180,7 +180,6 @@ export default class ToolGroup extends Component {
           ToolClass = this.getComponent('tool-separator')
           break
         }
-        // TODO: IMO this is a custom Tool, and should instead be used via ToolClass
         case 'switcher': {
           ToolClass = this.getComponent('tool-switcher')
           break

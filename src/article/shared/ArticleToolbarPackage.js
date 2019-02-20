@@ -68,7 +68,6 @@ export default {
           { type: 'command', name: 'insert-subject', label: 'subject' }
         ]
       },
-      // TODO: not sure yet. This could also be seen as a contextual thing
       {
         name: 'format',
         type: 'dropdown',
@@ -85,7 +84,6 @@ export default {
           { type: 'command', name: 'toggle-strike-through', label: 'strike-through' }
         ]
       },
-      // Contextual stuff
       {
         name: 'text-types',
         type: 'dropdown',
@@ -111,7 +109,7 @@ export default {
         name: 'context-tools',
         type: 'dropdown',
         style: 'descriptive',
-        // FIXME: hide disabled commands and groups
+        // hide disabled items but not the dropdown itself
         hideDisabled: true,
         alwaysVisible: true,
         items: [

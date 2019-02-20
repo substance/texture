@@ -16,8 +16,10 @@
    --t-large-font-size: 19px;
    /* Table of contents */
    --t-small-font-size: 14px;
-   /* Used in toolbars and dropdown menus and section labels */
+   /* Used in toolbars and section labels */
    --t-tiny-font-size: 12px;
+   /* Used in toolbar dropdown menus */
+   --t-dropdown-font-size: 11px;
    /* E.g. article title */
    --t-title-font-size: 36px;
    /* Heading level 1 */

@@ -93,14 +93,19 @@ export default class ToolGroup extends Component {
           break
         }
         default: {
-          let ToolClass = this._getToolClass(item)
-          els.push(
-            $$(ToolClass, Object.assign({}, item, {
-              commandStates,
-              itemState,
-              theme
-            })).ref(item.name)
-          )
+          if (!hideDisabled || itemState.enabled || itemState.hasEnabledItem) {
+            let ToolClass = this._getToolClass(item)
+            els.push(
+              // ATTENTION: we are passing down options present on the current
+              // group, but they can be overridden via spec
+              // TODO: add all con
+              $$(ToolClass, Object.assign({ hideDisabled }, item, {
+                commandStates,
+                itemState,
+                theme
+              })).ref(item.name)
+            )
+          }
         }
       }
     }

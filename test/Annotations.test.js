@@ -85,15 +85,15 @@ function testAnnotationToggle (t, spec) {
   }
   // Set the cursor and check if tool is active
   setCursor(editor, 'p1.content', 3)
-  t.equal(_isToolEnabled(editor, spec), false, 'Tool must be disabled')
+  t.notOk(_isToolEnabled(editor, spec), 'tool should be disabled')
   // Set the selection and check if tool is active
   setSelection(editor, 'p1.content', 2, 4)
-  t.equal(_isToolEnabled(editor, spec), true, 'Tool must be active')
+  t.ok(_isToolEnabled(editor, spec), 'tool should be enabled')
   // Toggle the annotation
   _toggleAnnotation(t, editor, spec)
-  t.ok(_hasAnno(), 'There should be an annotation')
+  t.ok(_hasAnno(), 'there should be an annotation')
   // then toggle the annotation again to remove it
-  t.equal(_isToolEnabled(editor, spec), true, 'Tool must be active')
+  t.ok(_isToolEnabled(editor, spec), 'tool should be enabled')
   _toggleAnnotation(t, editor, spec)
   t.notOk(_hasAnno(), 'There should be no annotation')
   t.end()

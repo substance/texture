@@ -1,4 +1,4 @@
-import { Component, domHelpers } from 'substance'
+import { Component, domHelpers, DefaultDOMElement } from 'substance'
 import { ValueComponent, renderModel, createValueModel } from '../../kit'
 
 // TODO: this needs to be redesigned
@@ -64,13 +64,17 @@ class SectionTOCEntry extends Component {
   render ($$) {
     const { label, section } = this.props
     let el = $$('a')
-      .addClass('se-toc-entry sm-level-1')
-      .attr({
-        'data-section': section,
-        href: `#viewName=manuscript,section=${section}`
-      })
+      .addClass('sc-toc-entry sm-level-1')
+      .attr({ 'data-section': section })
+      .on('click', this._onClick)
       .append(label)
     return el
+  }
+
+  _onClick (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    this.send('scrollTo', { section: this.props.section })
   }
 }
 
@@ -79,14 +83,12 @@ class BodyTOCEntry extends ValueComponent {
     const api = this.context.api
     let items = this.props.model.getItems()
     let headings = items.filter(node => node.type === 'heading')
-    return $$('div').addClass('sc-body-toc-entry').append(
+    return $$('div').addClass('sc-toc-entry').append(
       headings.map(heading => {
-        let el = $$('a').ref(heading.id)
-          .addClass(`se-toc-entry sm-level-${heading.level}`)
-          .attr({
-            href: `#viewName=manuscript,nodeId=${heading.id}`,
-            'data-id': heading.id
-          })
+        let el = $$('div').ref(heading.id)
+          .addClass(`sc-toc-entry sm-level-${heading.level}`)
+          .attr({ 'data-id': heading.id })
+          .on('click', this._onClick)
         el.append(
           renderModel($$, this, createValueModel(api, heading.getPath()), { readOnly: true })
         )
@@ -94,22 +96,34 @@ class BodyTOCEntry extends ValueComponent {
       })
     )
   }
+
+  _onClick (event) {
+    let target = DefaultDOMElement.wrap(event.currentTarget)
+    let nodeId = target.attr('data-id')
+    event.preventDefault()
+    event.stopPropagation()
+    this.send('scrollTo', { nodeId })
+  }
 }
 
 // only visible when collection not empty
 class DynamicTOCEntry extends ValueComponent {
   render ($$) {
     let { label, model, section } = this.props
-    let el = $$('a')
-      .addClass('se-toc-entry sm-level-1')
-      .attr({
-        'data-section': section,
-        href: `#viewName=manuscript,section=${section}`
-      })
+    let el = $$('div')
+      .addClass('sc-toc-entry sm-level-1')
+      .attr({ 'data-section': section })
+      .on('click', this._onClick)
       .append(label)
     if (model.length === 0) {
       el.addClass('sm-hidden')
     }
     return el
+  }
+
+  _onClick (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    this.send('scrollTo', { section: this.props.section })
   }
 }

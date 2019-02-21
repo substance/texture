@@ -80,19 +80,14 @@ export default class TextureArchive extends PersistedDocumentArchive {
     // Note: we are only adding resources that have changed
     // and only those which are registered in the manifest
     let entries = this.getDocumentEntries()
-    let hasPubMetaChanged = buffer.hasResourceChanged('pub-meta')
     for (let entry of entries) {
       let { id, type, path } = entry
-      let hasChanged = buffer.hasResourceChanged(id)
+      const hasChanged = buffer.hasResourceChanged(id)
       // skipping unchanged resources
       if (!hasChanged) continue
-
-      // We will never persist pub-meta
-      if (type === 'pub-meta') return
-
       // We mark a resource dirty when it has changes, or if it is an article
       // and pub-meta has changed
-      if (hasChanged || (type === 'article' && hasPubMetaChanged)) {
+      if (type === 'article') {
         let session = sessions[id]
         // TODO: how should we communicate file renamings?
         rawArchive.resources[path] = {

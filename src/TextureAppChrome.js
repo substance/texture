@@ -1,6 +1,12 @@
-import { Component, DefaultDOMElement, platform } from 'substance'
+import { Component, DefaultDOMElement, platform, Router } from 'substance'
 
 export default class TextureAppChrome extends Component {
+  constructor (...args) {
+    super(...args)
+
+    this._router = new Router()
+  }
+
   didMount () {
     // if debug is turned on do not 'forward' to an error display and instead
     // leave the app in its failed state
@@ -20,6 +26,7 @@ export default class TextureAppChrome extends Component {
       DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
       DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
     }
+    this._router.start()
     this.handleActions({
       'save': this._handleSave
     })
@@ -74,7 +81,7 @@ export default class TextureAppChrome extends Component {
   }
 
   _setupChildContext (cb) {
-    cb(null, {})
+    cb(null, { router: this._router })
   }
 
   _initContext (context, cb) {

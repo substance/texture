@@ -31,7 +31,7 @@ export default class AuthorsListComponent extends CustomSurface {
 
   _renderAuthors ($$) {
     const sel = this.context.appState.selection
-    console.log(sel)
+
     const authors = this._getAuthors()
     let els = []
     authors.forEach((author, index) => {

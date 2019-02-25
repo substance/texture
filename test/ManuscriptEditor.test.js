@@ -187,6 +187,23 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   t.end()
 })
 
+test('ManuscriptEditor: Switch to heading', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  const _isHeadingDisplayed = (level) => {
+    return Boolean(editor.find(`.sc-surface.sm-body > h${level}`))
+  }
+  loadBodyFixture(editor, ONE_PARAGRAPH)
+  setCursor(editor, 'p1.content', 0)
+  _switchTo(editor, 'heading1')
+  t.ok(_isHeadingDisplayed(1), 'heading level 1 should be displayed')
+  _switchTo(editor, 'heading2')
+  t.ok(_isHeadingDisplayed(2), 'heading level 2 should be displayed')
+  _switchTo(editor, 'heading3')
+  t.ok(_isHeadingDisplayed(3), 'heading level 3 should be displayed')
+  t.end()
+})
+
 test('ManuscriptEditor: Switch paragraph to preformat', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)

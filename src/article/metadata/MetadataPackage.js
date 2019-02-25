@@ -18,6 +18,7 @@ import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
+import EditEntityCommand from '../shared/EditEntityCommand'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
@@ -60,6 +61,14 @@ export default {
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('edit-author', EditEntityCommand, {
+      selectionType: 'author',
+      commandGroup: 'author'
+    })
+    config.addCommand('edit-reference', EditEntityCommand, {
+      selectionType: 'reference',
+      commandGroup: 'reference'
     })
     config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',

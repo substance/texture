@@ -9,8 +9,7 @@ export default class EditEntityCommand extends Command {
   getCommandState (params, context) {
     let sel = params.selection
     let newState = {
-      disabled: true,
-      active: false
+      disabled: true
     }
 
     if (sel.isCustomSelection()) {
@@ -28,6 +27,8 @@ export default class EditEntityCommand extends Command {
     const viewName = appState.get('viewName')
     if (viewName !== 'metadata') {
       context.editor.send('updateViewName', 'metadata')
+      context.articlePanel.refs.content.send('executeCommand', this.name, params)
+    } else {
       const api = context.api
       const editorSession = params.editorSession
       const doc = editorSession.getDocument()

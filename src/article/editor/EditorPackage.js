@@ -40,7 +40,7 @@ import DownloadSupplementaryFileTool from './DownloadSupplementaryFileTool'
 import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
-import EditEntityCommand from './EditEntityCommand'
+import EditEntityCommand from '../shared/EditEntityCommand'
 import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
 import EditInlineFormulaTool from './EditInlineFormulaTool'
 import EditXrefCommand from '../shared/EditXrefCommand'
@@ -135,10 +135,6 @@ export default {
       selectionType: 'author',
       commandGroup: 'author'
     })
-    config.addCommand('edit-reference', EditEntityCommand, {
-      selectionType: 'reference',
-      commandGroup: 'reference'
-    })
     config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
       commandGroup: 'prompt'
     })
@@ -149,6 +145,10 @@ export default {
     config.addCommand('edit-formula', EditInlineFormulaCommand, {
       nodeType: 'inline-formula',
       commandGroup: 'prompt'
+    })
+    config.addCommand('edit-reference', EditEntityCommand, {
+      selectionType: 'reference',
+      commandGroup: 'reference'
     })
     config.addCommand('edit-xref', EditXrefCommand, {
       nodeType: 'xref',

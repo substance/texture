@@ -6,8 +6,19 @@
   cursor: default;
 }
 
+.sc-authors-list .se-contrib {
+  padding: var(--t-input-padding);
+  margin: var(--t-negative-list-padding);
+  cursor: pointer;
+}
+
 .sc-authors-list .se-contrib.sm-empty {
   color: var(--t-light-text-color);
+}
+
+.sc-authors-list .se-contrib.sm-selected {
+  outline: var(--t-input-focus-border);
+  cursor: default;
 }
 
 .sc-authors-list > .se-content {

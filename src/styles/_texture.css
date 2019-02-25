@@ -97,6 +97,7 @@
   --t-input-outline-border: 2px solid var(--t-border-color);
   --t-input-focus-border: 2px solid rgb(145, 189, 240);
   --t-negative-input-padding: -6px; /* This must be the negative of input padding + default border width */
+  --t-negative-list-padding: -4px; /* Same, but without borders. Used in comma-separated lists. */
   --t-border-radius: 5px; /* Default border radius for rounded corners */
   --t-tool-border-radius: 3px; /* Default border radius for tools */
   --t-default-border: 1px solid var(--t-border-color);

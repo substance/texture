@@ -17,6 +17,7 @@ export default class AuthorsListComponent extends CustomSurface {
   }
 
   dispose () {
+    super.dispose()
     this.context.appState.removeObserver(this)
   }
 

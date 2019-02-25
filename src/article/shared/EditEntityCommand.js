@@ -26,16 +26,9 @@ export default class EditEntityCommand extends Command {
     const appState = context.appState
     const viewName = appState.get('viewName')
     if (viewName !== 'metadata') {
-      context.editor.send('updateViewName', 'metadata')
-      context.articlePanel.refs.content.send('executeCommand', this.name, params)
-    } else {
-      const api = context.api
-      const editorSession = params.editorSession
-      const doc = editorSession.getDocument()
       const sel = params.selection
-      const node = doc.get(sel.nodeId)
-      const newSel = api._selectFirstRequiredPropertyOfMetadataCard(node)
-      api._setSelection(newSel)
+      context.editor.send('updateViewName', 'metadata')
+      context.articlePanel.refs.content.send('scrollTo', { nodeId: sel.nodeId })
     }
   }
 }

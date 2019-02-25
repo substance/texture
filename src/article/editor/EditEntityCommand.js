@@ -1,5 +1,10 @@
 import { Command } from 'substance'
 
+/*
+  This command intended to switch view and scroll to the selected node.
+  Command state becoming active only for certain type of custom selection,
+  e.g. if you want to use it, provide config with selectionType property.
+*/
 export default class EditEntityCommand extends Command {
   getCommandState (params, context) {
     let sel = params.selection

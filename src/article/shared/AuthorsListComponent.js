@@ -16,6 +16,10 @@ export default class AuthorsListComponent extends CustomSurface {
     appState.addObserver(['selection'], this.rerender, this, { stage: 'render' })
   }
 
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+
   render ($$) {
     let el = $$('div').addClass('sc-authors-list')
     el.append(

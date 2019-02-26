@@ -132,6 +132,10 @@ export default class ArticleAPI {
     this._setSelection(this._createValueSelection(path))
   }
 
+  selectFirstRequiredPropertyOfMetadataCard (nodeId) {
+    this._setSelection(this._selectFirstRequiredPropertyOfMetadataCard(nodeId))
+  }
+
   _appendChild (collectionPath, data) {
     this.editorSession.transaction(tx => {
       let node = tx.create(data)

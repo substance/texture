@@ -27,8 +27,16 @@ export default class EditEntityCommand extends Command {
     const viewName = appState.get('viewName')
     if (viewName !== 'metadata') {
       const sel = params.selection
+      const nodeId = sel.nodeId
       context.editor.send('updateViewName', 'metadata')
-      context.articlePanel.refs.content.send('scrollTo', { nodeId: sel.nodeId })
+      // HACK: using the ArticlePanel instance to get to the current editor
+      // so that we can dispatch 'executeCommand'
+      let editor = context.articlePanel.refs.content
+      editor.send('scrollTo', { nodeId })
+      // HACK: this is a mess because context.api is a different instance after
+      // switching to metadata view
+      // TODO: we should extend ArticleAPI to allow for this
+      editor.api.selectFirstRequiredPropertyOfMetadataCard(nodeId)
     }
   }
 }

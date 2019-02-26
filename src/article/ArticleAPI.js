@@ -1,4 +1,4 @@
-import { documentHelpers, includes, orderBy, without, copySelection, selectionHelpers } from 'substance'
+import { documentHelpers, includes, orderBy, without, copySelection, selectionHelpers, isString } from 'substance'
 import TableEditingAPI from './shared/TableEditingAPI'
 import { importFigures } from './articleHelpers'
 import { findParentByType } from './shared/nodeHelpers'
@@ -395,6 +395,9 @@ export default class ArticleAPI {
 
   // ATTENTION: this only works for meta-data cards, thus the special naming
   _selectFirstRequiredPropertyOfMetadataCard (node) {
+    if (isString(node)) {
+      node = this.getDocument().get(node)
+    }
     let propName = this._getFirstRequiredPropertyName(node)
     if (propName) {
       let path = [node.id, propName]

@@ -1,7 +1,9 @@
 .sc-graphic img {
   display: block;
-  /* Note: using max-width to avoid upscaling of smaller images*/
+  /* Note: using max-width to avoid upscaling of smaller images */
   max-width: 100%;
+  /* Centering too small graphics */
+  margin: auto;
 }
 
 .sc-graphic .se-error {

@@ -498,6 +498,55 @@ test('ManuscriptEditor: copy and pasting heading and paragraph', t => {
   t.end()
 })
 
+const TINY_LIST = `
+<list list-type="bullet" id="list">
+  <list-item id="li1">
+    <p>Item 1</p>
+    <list list-type="bullet">
+      <list-item id="li1-1">
+        <p>ABCDEFGHI</p>
+      </list-item>
+      <list-item id="li1-2">
+        <p>JKLMNIOQR</p>
+      </list-item>
+    </list>
+  </list-item>
+  <list-item id="li2">
+    <p>Item 2</p>
+    <list list-type="bullet">
+      <list-item id="li2-1">
+        <p>123456789</p>
+      </list-item>
+      <list-item id="li2-2">
+        <p>123456789</p>
+      </list-item>
+      <list-item id="li2-3">
+        <p></p>
+      </list-item>
+    </list>
+  </list-item>
+</list>
+`
+
+test('ManuscriptEditor: copy and pasting list items', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  let editorSession = getEditorSession(editor)
+  let bodySurface = editorSession.getSurface('body')
+  loadBodyFixture(editor, TINY_LIST)
+
+  selectRange(editor, 'li1-1.content', 0, 'li1-2.content', 9)
+  let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
+  bodySurface._onCopy(pasteEvent)
+  setCursor(editor, 'li2-3.content', 0)
+  bodySurface._onPaste(pasteEvent)
+  let list = doc.get('list')
+  t.equal(list.getLength(), 8, 'altogether there should be 8 items')
+  t.deepEqual(list.resolve('items').map(item => item.level), [1, 2, 2, 1, 2, 2, 2], '.. with correct levels')
+  t.end()
+})
+
 function _canSwitchTo (editor, type) {
   let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)
   return tool && !tool.attr('disabled')

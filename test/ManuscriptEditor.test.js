@@ -3,7 +3,7 @@ import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
-  isToolEnabled, createKeyEvent, selectNode, getSelection
+  isToolEnabled, createKeyEvent, selectNode, getSelection, getSelectionState
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
@@ -333,6 +333,43 @@ test('ManuscriptEditor: inserting a table figure', t => {
   let legendEditor = tableFigure.find('.sc-container-editor.se-legend')
   t.notNil(legendEditor, 'the legend should be editable')
   t.notNil(legendEditor.find('.sc-paragraph'), 'there should be a paragraph inside the legend editor')
+  t.end()
+})
+
+test('ManuscriptEditor: authors list', t => {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const contribSelector = '.sc-authors-list .se-contrib'
+  const getFirstContrib = () => editor.find(contribSelector)
+
+  t.notNil(getFirstContrib(), 'there should be at least one author')
+  getFirstContrib().el.click()
+  t.ok(getFirstContrib().hasClass('sm-selected'), 'first author must be visually selected')
+  t.equal(getSelection(editor).type, 'custom', 'selection must be of custom type')
+  t.equal(getSelection(editor).customType, 'author', 'selection must be of author custom type')
+  setSelection(editor, 'p-2.content', 0)
+  t.notOk(getFirstContrib().hasClass('sm-selected'), 'visual selection most be gone')
+  t.notEqual(getSelection(editor).type, 'custom', 'selection must be of different type')
+  t.end()
+})
+
+test('ManuscriptEditor: edit author', t => {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const contribSelector = '.sc-authors-list .se-contrib'
+  const getFirstContrib = () => editor.find(contribSelector)
+  const _canEdit = () => isToolEnabled(editor, 'context-tools', '.sm-edit-author')
+  const _edit = () => openMenuAndFindTool(editor, 'context-tools', '.sm-edit-author').click()
+
+  t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
+  getFirstContrib().el.click()
+  t.ok(_canEdit(), 'edit author should be enabled')
+  _edit()
+
+  const selState = getSelectionState(editor)
+  const xpath = selState.xpath.map(i => i.type)
+  t.ok(xpath.indexOf('metadata'), 'selected property should be inside metadata')
+  t.ok(xpath.indexOf('author'), 'selected property should be inside author')
   t.end()
 })
 

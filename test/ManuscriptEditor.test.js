@@ -336,43 +336,6 @@ test('ManuscriptEditor: inserting a table figure', t => {
   t.end()
 })
 
-test('ManuscriptEditor: authors list', t => {
-  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
-  let editor = openManuscriptEditor(app)
-  const contribSelector = '.sc-authors-list .se-contrib'
-  const getFirstContrib = () => editor.find(contribSelector)
-
-  t.notNil(getFirstContrib(), 'there should be at least one author')
-  getFirstContrib().el.click()
-  t.ok(getFirstContrib().hasClass('sm-selected'), 'first author must be visually selected')
-  t.equal(getSelection(editor).type, 'custom', 'selection must be of custom type')
-  t.equal(getSelection(editor).customType, 'author', 'selection must be of author custom type')
-  setSelection(editor, 'p-2.content', 0)
-  t.notOk(getFirstContrib().hasClass('sm-selected'), 'visual selection most be gone')
-  t.notEqual(getSelection(editor).type, 'custom', 'selection must be of different type')
-  t.end()
-})
-
-test('ManuscriptEditor: edit author', t => {
-  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
-  let editor = openManuscriptEditor(app)
-  const contribSelector = '.sc-authors-list .se-contrib'
-  const getFirstContrib = () => editor.find(contribSelector)
-  const _canEdit = () => isToolEnabled(editor, 'context-tools', '.sm-edit-author')
-  const _edit = () => openMenuAndFindTool(editor, 'context-tools', '.sm-edit-author').click()
-
-  t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
-  getFirstContrib().el.click()
-  t.ok(_canEdit(), 'edit author should be enabled')
-  _edit()
-
-  const selState = getSelectionState(editor)
-  const xpath = selState.xpath.map(i => i.type)
-  t.ok(xpath.indexOf('metadata'), 'selected property should be inside metadata')
-  t.ok(xpath.indexOf('author'), 'selected property should be inside author')
-  t.end()
-})
-
 const SPECS = [
   {
     'type': 'block-formula',
@@ -438,6 +401,66 @@ test('ManuscriptEditor: select all', t => {
   })
   t.end()
 })
+
+const CUSTOM_SELECTIONS = [
+  {
+    'type': 'author',
+    'itemSelector': '.sc-authors-list .se-contrib',
+    'editToolSelector': '.sm-edit-author',
+    'selectionType': 'author',
+    'metadataType': 'person'
+  },
+  {
+    'type': 'reference',
+    'itemSelector': '.sc-reference-list .sc-reference',
+    'editToolSelector': '.sm-edit-reference',
+    'selectionType': 'reference',
+    'metadataType': 'webpage-ref'
+  }
+]
+CUSTOM_SELECTIONS.forEach(spec => {
+  test(`ManuscriptEditor: ${spec.type} selection`, t => {
+    testCustomSelection(t, spec)
+  })
+
+  test(`ManuscriptEditor: edit ${spec.type} tool`, t => {
+    testCustomSelectionEditTool(t, spec)
+  })
+})
+
+function testCustomSelection (t, spec) {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const getFirstItem = () => editor.find(spec.itemSelector)
+
+  t.notNil(getFirstItem(), 'there should be at least one item')
+  getFirstItem().el.click()
+  t.ok(getFirstItem().hasClass('sm-selected'), 'first item must be visually selected')
+  t.equal(getSelection(editor).type, 'custom', 'selection must be of custom type')
+  t.equal(getSelection(editor).customType, spec.selectionType, `selection must be of ${spec.selectionType} custom type`)
+  setSelection(editor, 'p-2.content', 0)
+  t.notOk(getFirstItem().hasClass('sm-selected'), 'visual selection most be gone')
+  t.notEqual(getSelection(editor).type, 'custom', 'selection must be of different type')
+  t.end()
+}
+
+function testCustomSelectionEditTool (t, spec) {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const getFirstItem = () => editor.find(spec.itemSelector)
+  const _canEdit = () => isToolEnabled(editor, 'context-tools', spec.editToolSelector)
+  const _edit = () => openMenuAndFindTool(editor, 'context-tools', spec.editToolSelector).click()
+
+  t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
+  getFirstItem().el.click()
+  t.ok(_canEdit(), 'edit author should be enabled')
+  _edit()
+
+  const selState = getSelectionState(editor)
+  const xpath = selState.xpath.map(i => i.type)
+  t.ok(xpath.indexOf(spec.metadataType) > -1, `selected property should be inside ${spec.metadataType}`)
+  t.end()
+}
 
 function _canSwitchTo (editor, type) {
   let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)

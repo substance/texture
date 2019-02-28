@@ -6,6 +6,10 @@
   margin: var(--t-text-spacing) 0;
 }
 
+.sc-reference-list .sc-reference.sm-selected {
+  outline: var(--t-input-focus-border);
+}
+
 .sc-reference-list .sc-reference:first-child {
   margin-top: 0 !important;
 }

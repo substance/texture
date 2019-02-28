@@ -173,6 +173,22 @@ export default {
           },
           {
             type: 'group',
+            name: 'author',
+            style: 'descriptive',
+            items: [
+              { type: 'command-group', name: 'author' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'reference',
+            style: 'descriptive',
+            items: [
+              { type: 'command-group', name: 'reference' }
+            ]
+          },
+          {
+            type: 'group',
             name: 'collection',
             style: 'descriptive',
             items: [
@@ -194,6 +210,8 @@ export default {
           { type: 'command-group', name: 'file' },
           { type: 'command-group', name: 'figure-panel' },
           { type: 'command-group', name: 'footnote' },
+          { type: 'command-group', name: 'author' },
+          { type: 'command-group', name: 'reference' },
           { type: 'command-group', name: 'collection' },
           { type: 'command-group', name: 'list' },
           { type: 'command-group', name: 'custom-metadata-fields' }
@@ -326,6 +344,10 @@ export default {
     config.addLabel('move-down-metadata-field', 'Move Down Metadata Field')
     config.addLabel('move-up-metadata-field', 'Move Up Metadata Field')
     config.addLabel('remove-metadata-field', 'Remove Metadata Field')
+    // Author tools
+    config.addLabel('edit-author', 'Edit Author')
+    // Reference tools
+    config.addLabel('edit-reference', 'Edit Reference')
     // Context tools
     config.addLabel('context-tools', 'Edit')
     // Mode

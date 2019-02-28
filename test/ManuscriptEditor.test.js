@@ -3,7 +3,8 @@ import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
-  isToolEnabled, createKeyEvent, selectNode, getSelection
+  isToolEnabled, createKeyEvent, selectNode, getSelection,
+  getCurrentViewName
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
@@ -401,6 +402,65 @@ test('ManuscriptEditor: select all', t => {
   })
   t.end()
 })
+
+const CUSTOM_SELECTIONS = [
+  {
+    'type': 'author',
+    'itemSelector': '.sc-authors-list .se-contrib',
+    'editToolSelector': '.sm-edit-author',
+    'selectionType': 'author',
+    'metadataType': 'person'
+  },
+  {
+    'type': 'reference',
+    'itemSelector': '.sc-reference-list .sc-reference',
+    'editToolSelector': '.sm-edit-reference',
+    'selectionType': 'reference',
+    'metadataType': 'webpage-ref'
+  }
+]
+CUSTOM_SELECTIONS.forEach(spec => {
+  test(`ManuscriptEditor: ${spec.type} selection`, t => {
+    testCustomSelection(t, spec)
+  })
+
+  test(`ManuscriptEditor: edit ${spec.type} tool`, t => {
+    testCustomSelectionEditTool(t, spec)
+  })
+})
+
+function testCustomSelection (t, spec) {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const getFirstItem = () => editor.find(spec.itemSelector)
+
+  t.notNil(getFirstItem(), 'there should be at least one item')
+  getFirstItem().el.click()
+  t.ok(getFirstItem().hasClass('sm-selected'), 'first item must be visually selected')
+  t.equal(getSelection(editor).type, 'custom', 'selection must be of custom type')
+  t.equal(getSelection(editor).customType, spec.selectionType, `selection must be of ${spec.selectionType} custom type`)
+  setSelection(editor, 'p-2.content', 0)
+  t.notOk(getFirstItem().hasClass('sm-selected'), 'visual selection most be gone')
+  t.notEqual(getSelection(editor).type, 'custom', 'selection must be of different type')
+  t.end()
+}
+
+function testCustomSelectionEditTool (t, spec) {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let editor = openManuscriptEditor(app)
+  const getFirstItem = () => editor.find(spec.itemSelector)
+  const _canEdit = () => isToolEnabled(editor, 'context-tools', spec.editToolSelector)
+  const _edit = () => openMenuAndFindTool(editor, 'context-tools', spec.editToolSelector).click()
+
+  t.equal(getCurrentViewName(editor), 'manuscript', `should be in manuscript view`)
+  t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
+  getFirstItem().el.click()
+  t.ok(_canEdit(), 'edit author should be enabled')
+  _edit()
+
+  t.equal(getCurrentViewName(editor), 'metadata', `should be in metadata view now`)
+  t.end()
+}
 
 function _canSwitchTo (editor, type) {
   let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)

@@ -8,13 +8,7 @@ import TestVfs from './TestVfs'
 import { DOMEvent } from './testHelpers'
 
 export function setCursor (editor, path, pos) {
-  if (isArray(path)) {
-    path = path.join('.')
-  }
-  let property = editor.find(`.sc-text-property[data-path=${path.replace('.', '\\.')}]`)
-  if (!property) {
-    throw new Error('Could not find text property for path ' + path)
-  }
+  let property = _getTextPropertyForPath(editor, path)
   setCursorIntoProperty(property, pos)
 }
 
@@ -32,20 +26,42 @@ export function setCursorIntoProperty (property, pos) {
 }
 
 export function setSelection (editor, path, from, to) {
-  if (!isString(path)) {
-    path = path.join('.')
+  if (isString(path)) {
+    path = path.split('.')
   }
-  let property = editor.find(`.sc-text-property[data-path=${path.replace('.', '\\.')}]`)
-  if (!property) {
-    throw new Error('Could not find text property for path ' + path)
-  }
+  let property = _getTextPropertyForPath(editor, path)
   let editorSession = editor.context.editorSession
   let surface = property.context.surface
   editorSession.setSelection({
     type: 'property',
-    path: path.split('.'),
+    path,
     startOffset: from,
     endOffset: to,
+    surfaceId: surface.id,
+    containerPath: surface.getContainerPath()
+  })
+}
+
+export function selectRange (editor, startPath, startOffset, endPath, endOffset) {
+  if (isString(startPath)) {
+    startPath = startPath.split('.')
+  }
+  if (isString(endPath)) {
+    endPath = endPath.split('.')
+  }
+  let startProperty = _getTextPropertyForPath(editor, startPath)
+  let endProperty = _getTextPropertyForPath(editor, endPath)
+  if (startProperty.context.surface !== endProperty.context.surface) {
+    throw new Error('Given paths are not in the same surface.')
+  }
+  let editorSession = editor.context.editorSession
+  let surface = startProperty.context.surface
+  editorSession.setSelection({
+    type: 'container',
+    startPath,
+    startOffset,
+    endPath,
+    endOffset,
     surfaceId: surface.id,
     containerPath: surface.getContainerPath()
   })
@@ -383,4 +399,15 @@ export function createKeyEvent (combo) {
         }
     }
   }
+}
+
+function _getTextPropertyForPath (editor, path) {
+  if (isString(path)) {
+    path = path.split('.')
+  }
+  let property = editor.find(`.sc-surface .sc-text-property[data-path="${path.join('.')}"]`)
+  if (!property) {
+    throw new Error('Could not find text property for path ' + path)
+  }
+  return property
 }

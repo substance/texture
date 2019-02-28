@@ -3,7 +3,8 @@ import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
-  isToolEnabled, createKeyEvent, selectNode, getSelection, getSelectionState
+  isToolEnabled, createKeyEvent, selectNode, getSelection,
+  getCurrentViewName
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
@@ -451,14 +452,13 @@ function testCustomSelectionEditTool (t, spec) {
   const _canEdit = () => isToolEnabled(editor, 'context-tools', spec.editToolSelector)
   const _edit = () => openMenuAndFindTool(editor, 'context-tools', spec.editToolSelector).click()
 
+  t.equal(getCurrentViewName(editor), 'manuscript', `should be in manuscript view`)
   t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
   getFirstItem().el.click()
   t.ok(_canEdit(), 'edit author should be enabled')
   _edit()
 
-  const selState = getSelectionState(editor)
-  const xpath = selState.xpath.map(i => i.type)
-  t.ok(xpath.indexOf(spec.metadataType) > -1, `selected property should be inside ${spec.metadataType}`)
+  t.equal(getCurrentViewName(editor), 'metadata', `should be in metadata view now`)
   t.end()
 }
 

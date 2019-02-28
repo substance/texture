@@ -127,6 +127,10 @@ export default class EditorSession extends AbstractEditorSession {
     return this.editorState.selectionState
   }
 
+  getSurface (surfaceId) {
+    return this.surfaceManager.getSurface(surfaceId)
+  }
+
   hasUnsavedChanges () {
     return Boolean(this.editorState.hasUnsavedChanges)
   }

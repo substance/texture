@@ -3,11 +3,11 @@ import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
-  isToolEnabled, createKeyEvent, selectNode, getSelection,
+  isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
   getCurrentViewName
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { doesNotThrowInNodejs } from './shared/testHelpers'
+import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
@@ -478,6 +478,25 @@ function testCustomSelectionEditTool (t, spec) {
   t.equal(getCurrentViewName(editor), 'metadata', `should be in metadata view now`)
   t.end()
 }
+
+test('ManuscriptEditor: copy and pasting heading and paragraph', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let editor = openManuscriptEditor(app)
+  selectRange(editor, 'sec-1.content', 0, 'p-1.content', 10)
+  let editorSession = getEditorSession(editor)
+  let doc = getDocument(editor)
+  let body = doc.get('body')
+  let bodySurface = editorSession.getSurface('body')
+  let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
+  bodySurface._onCopy(pasteEvent)
+  setCursor(editor, 'p-2.content', 0)
+  bodySurface._onPaste(pasteEvent)
+  let third = body.getNodeAt(2)
+  // TODO: the paste logic should be fixed. ATM the Heading is merged into the paragraph.
+  // IMO this should not happen if the node type is different.
+  t.equal(third.getText(), doc.get('sec-1').getText(), 'heading should have been pasted')
+  t.end()
+})
 
 function _canSwitchTo (editor, type) {
   let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)

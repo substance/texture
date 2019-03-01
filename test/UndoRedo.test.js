@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, loadBodyFixture, insertText, getDocument, clickUndo, clickRedo } from './shared/integrationTestHelpers'
+import { setCursor, openManuscriptEditor, loadBodyFixture, insertText, getDocument, clickUndo, clickRedo, getEditorSession } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 const P1 = `<p id="p1">Lorem ipsum dolor sit amet.</p>`
@@ -86,6 +86,33 @@ test('UndoRedo: changing annotated text', t => {
   t.equal(p.getText(), 'xxxLorem iyyypsum dzzzolor sit amet.')
   t.deepEqual(_getAnnoPos(bold), [6 + 3, 11 + 6])
   t.deepEqual(_getAnnoPos(italic), [12 + 6, 17 + 9])
+
+  t.end()
+})
+
+test('UndoRedo: creating and deleting a node', t => {
+  let { editor } = _setup(t)
+  let editorSession = getEditorSession(editor)
+  let doc = getDocument(editor)
+
+  t.comment('create a paragraph')
+  editorSession.transaction(tx => {
+    let body = tx.get('body')
+    tx.create({
+      type: 'paragraph',
+      id: 'p1'
+    })
+    body.append('p1')
+  })
+  t.deepEqual(doc.get('body').content, ['p1'])
+
+  t.comment('undo')
+  clickUndo(editor)
+  t.deepEqual(doc.get('body').content, [])
+
+  t.comment('redo')
+  clickRedo(editor)
+  t.deepEqual(doc.get('body').content, ['p1'])
 
   t.end()
 })

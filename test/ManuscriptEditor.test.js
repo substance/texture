@@ -3,11 +3,11 @@ import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
-  isToolEnabled, createKeyEvent, selectNode, getSelection,
+  isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
   getCurrentViewName
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { doesNotThrowInNodejs } from './shared/testHelpers'
+import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 
 // TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
@@ -184,6 +184,23 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   // ATTENTION: we do not change id, which might be confusing for others
   let h1El = editor.find('.sc-surface.sm-body > h1')
   t.notNil(h1El, 'there should be a <h1> element now')
+  t.end()
+})
+
+test('ManuscriptEditor: Switch to heading', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  const _isHeadingDisplayed = (level) => {
+    return Boolean(editor.find(`.sc-surface.sm-body > h${level}`))
+  }
+  loadBodyFixture(editor, ONE_PARAGRAPH)
+  setCursor(editor, 'p1.content', 0)
+  _switchTo(editor, 'heading1')
+  t.ok(_isHeadingDisplayed(1), 'heading level 1 should be displayed')
+  _switchTo(editor, 'heading2')
+  t.ok(_isHeadingDisplayed(2), 'heading level 2 should be displayed')
+  _switchTo(editor, 'heading3')
+  t.ok(_isHeadingDisplayed(3), 'heading level 3 should be displayed')
   t.end()
 })
 
@@ -461,6 +478,74 @@ function testCustomSelectionEditTool (t, spec) {
   t.equal(getCurrentViewName(editor), 'metadata', `should be in metadata view now`)
   t.end()
 }
+
+test('ManuscriptEditor: copy and pasting heading and paragraph', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let editor = openManuscriptEditor(app)
+  selectRange(editor, 'sec-1.content', 0, 'p-1.content', 10)
+  let editorSession = getEditorSession(editor)
+  let doc = getDocument(editor)
+  let body = doc.get('body')
+  let bodySurface = editorSession.getSurface('body')
+  let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
+  bodySurface._onCopy(pasteEvent)
+  setCursor(editor, 'p-2.content', 0)
+  bodySurface._onPaste(pasteEvent)
+  let third = body.getNodeAt(2)
+  // TODO: the paste logic should be fixed. ATM the Heading is merged into the paragraph.
+  // IMO this should not happen if the node type is different.
+  t.equal(third.getText(), doc.get('sec-1').getText(), 'heading should have been pasted')
+  t.end()
+})
+
+const TINY_LIST = `
+<list list-type="bullet" id="list">
+  <list-item id="li1">
+    <p>Item 1</p>
+    <list list-type="bullet">
+      <list-item id="li1-1">
+        <p>AAA</p>
+      </list-item>
+      <list-item id="li1-2">
+        <p>BBB</p>
+      </list-item>
+    </list>
+  </list-item>
+  <list-item id="li2">
+    <p>Item 2</p>
+    <list list-type="bullet">
+      <list-item id="li2-1">
+        <p>XXX</p>
+      </list-item>
+      <list-item id="li2-2">
+        <p>YYY</p>
+      </list-item>
+      <list-item id="li2-3">
+        <p></p>
+      </list-item>
+    </list>
+  </list-item>
+</list>
+`
+
+test('ManuscriptEditor: copy and pasting list items', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  let editorSession = getEditorSession(editor)
+  let bodySurface = editorSession.getSurface('body')
+  loadBodyFixture(editor, TINY_LIST)
+
+  selectRange(editor, 'li1-1.content', 0, 'li1-2.content', 3)
+  let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
+  bodySurface._onCopy(pasteEvent)
+  setCursor(editor, 'li2-3.content', 0)
+  bodySurface._onPaste(pasteEvent)
+  let list = doc.get('list')
+  t.equal(list.getLength(), 8, 'altogether there should be 8 items')
+  t.deepEqual(list.resolve('items').map(item => item.level), [1, 2, 2, 1, 2, 2, 2, 2], '.. with correct levels')
+  t.end()
+})
 
 function _canSwitchTo (editor, type) {
   let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)

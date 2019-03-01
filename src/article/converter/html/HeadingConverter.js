@@ -10,7 +10,7 @@ export default {
   },
 
   export (node, el, converter) {
-    el.tagName = `h${node.getLevel()}`
+    el.tagName = `h${node.level}`
     el.append(converter.annotatedText([node.id, 'content']))
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, platform } from 'substance'
 import { AppState, EditorSession, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
@@ -164,7 +164,8 @@ export default class ArticlePanel extends Component {
     if (oldViewName !== viewName) {
       this._viewStates.get(oldViewName).viewport = this.refs.content.getViewport()
       let router = this.context.router
-      if (router) {
+      // ATTENTION: do not change the route when running tests otherwise the test url get's lost
+      if (router && !platform.test) {
         router.writeRoute({ viewName })
       }
       this.extendState({ viewName })

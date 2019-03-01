@@ -3,7 +3,7 @@ import isDocumentArchive from './_isDocumentArchive'
 
 // FIXME: this file should only get bundled in commonjs version
 let fsExtra
-if (platform.inNodeJS) {
+if (platform.inNodeJS || platform.inElectron) {
   fsExtra = require('fs-extra')
 }
 

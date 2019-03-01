@@ -38,32 +38,52 @@ export default {
         name: 'insert',
         type: 'dropdown',
         style: 'descriptive',
+        hideDisabled: true,
+        alwaysVisible: true,
         items: [
-          { type: 'command', name: 'insert-figure', label: 'figure' },
-          { type: 'command', name: 'insert-table', label: 'table' },
-          { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
-          { type: 'command', name: 'insert-block-formula', label: 'equation' },
-          { type: 'command', name: 'insert-file', label: 'file' },
-          { type: 'command', name: 'insert-footnote', label: 'footnote' },
-          { type: 'command', name: 'insert-reference', label: 'reference' },
-          { type: 'separator', label: 'inline' },
-          { type: 'command', name: 'insert-inline-formula', label: 'math' },
-          { type: 'command', name: 'insert-inline-graphic', label: 'inline-graphic' },
-          { type: 'command', name: 'create-external-link', label: 'link', icon: 'link' },
-          { type: 'command', name: 'insert-xref-bibr', label: 'citation' },
-          { type: 'command', name: 'insert-xref-figure', label: 'figure-reference' },
-          { type: 'command', name: 'insert-xref-table', label: 'table-reference' },
-          { type: 'command', name: 'insert-xref-footnote', label: 'footnote-reference' },
-          { type: 'command', name: 'insert-xref-formula', label: 'equation-reference' },
-          { type: 'command', name: 'insert-xref-file', label: 'file-reference' },
-          { type: 'separator', label: 'metadata' },
-          { type: 'command', name: 'insert-author', label: 'author' },
-          { type: 'command', name: 'insert-editor', label: 'editor' },
-          { type: 'command', name: 'insert-group', label: 'group' },
-          { type: 'command', name: 'insert-organisation', label: 'affiliation' },
-          { type: 'command', name: 'insert-funder', label: 'funder' },
-          { type: 'command', name: 'insert-keyword', label: 'keyword' },
-          { type: 'command', name: 'insert-subject', label: 'subject' }
+          {
+            name: 'content',
+            type: 'group',
+            items: [
+              { type: 'command', name: 'insert-figure', label: 'figure' },
+              { type: 'command', name: 'insert-table', label: 'table' },
+              { type: 'command', name: 'insert-block-quote', label: 'block-quote' },
+              { type: 'command', name: 'insert-block-formula', label: 'equation' },
+              { type: 'command', name: 'insert-file', label: 'file' },
+              { type: 'command', name: 'insert-footnote', label: 'footnote' },
+              { type: 'command', name: 'insert-reference', label: 'reference' }
+            ]
+          },
+          {
+            name: 'inline-content',
+            type: 'group',
+            label: 'inline',
+            items: [
+              { type: 'command', name: 'insert-inline-formula', label: 'math' },
+              { type: 'command', name: 'insert-inline-graphic', label: 'inline-graphic' },
+              { type: 'command', name: 'create-external-link', label: 'link', icon: 'link' },
+              { type: 'command', name: 'insert-xref-bibr', label: 'citation' },
+              { type: 'command', name: 'insert-xref-figure', label: 'figure-reference' },
+              { type: 'command', name: 'insert-xref-table', label: 'table-reference' },
+              { type: 'command', name: 'insert-xref-footnote', label: 'footnote-reference' },
+              { type: 'command', name: 'insert-xref-formula', label: 'equation-reference' },
+              { type: 'command', name: 'insert-xref-file', label: 'file-reference' }
+            ]
+          },
+          {
+            name: 'metadata',
+            type: 'group',
+            label: 'metadata',
+            items: [
+              { type: 'command', name: 'insert-author', label: 'author' },
+              { type: 'command', name: 'insert-editor', label: 'editor' },
+              { type: 'command', name: 'insert-group', label: 'group' },
+              { type: 'command', name: 'insert-organisation', label: 'affiliation' },
+              { type: 'command', name: 'insert-funder', label: 'funder' },
+              { type: 'command', name: 'insert-keyword', label: 'keyword' },
+              { type: 'command', name: 'insert-subject', label: 'subject' }
+            ]
+          }
         ]
       },
       {

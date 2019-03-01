@@ -1,4 +1,4 @@
-import { Component, keys } from 'substance'
+import { Component, keys, platform } from 'substance'
 import { createEditorContext, EditorSession } from '../../kit'
 import ArticleAPI from '../ArticleAPI'
 
@@ -196,7 +196,8 @@ export default class EditorPanel extends Component {
       this._scrollElementIntoView(comp.el, true)
     }
     let router = this.context.router
-    if (router) {
+    // ATTENTION: do not change the route when running tests otherwise the test url get's lost
+    if (router && !platform.test) {
       router.writeRoute(Object.assign({ viewName: this.props.viewName }, params))
     }
   }

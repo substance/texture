@@ -99,7 +99,7 @@ export default class ToolGroup extends Component {
               // ATTENTION: we are passing down options present on the current
               // group, but they can be overridden via spec
               // TODO: add all con
-              $$(ToolClass, Object.assign({ hideDisabled }, item, {
+              $$(ToolClass, Object.assign({ hideDisabled, style }, item, {
                 commandStates,
                 itemState,
                 theme

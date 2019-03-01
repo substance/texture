@@ -6,7 +6,7 @@ import cloneArchive from './cloneArchive'
 
 // FIXME: this file should only get bundled in commonjs version
 let path
-if (platform.inNodeJS) {
+if (platform.inNodeJS || platform.inElectron) {
   path = require('path')
 }
 

@@ -4,7 +4,7 @@ import listDir from './_listDir'
 
 // FIXME: this file should only get bundled in commonjs version
 let fs, fsExtra, path, yazl, yauzl
-if (platform.inNodeJS) {
+if (platform.inNodeJS || platform.inElectron) {
   fs = require('fs')
   fsExtra = require('fs-extra')
   path = require('path')

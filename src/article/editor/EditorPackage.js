@@ -398,7 +398,7 @@ export default {
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
-        attributes: { level: '1' }
+        level: 1
       },
       icon: 'fa-header',
       label: 'Heading 1',
@@ -409,7 +409,7 @@ export default {
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
-        attributes: { level: '2' }
+        level: 2
       },
       icon: 'fa-header',
       label: 'Heading 2',
@@ -420,7 +420,7 @@ export default {
       commandGroup: 'text-types',
       nodeSpec: {
         type: 'heading',
-        attributes: { level: '3' }
+        level: 3
       },
       icon: 'fa-header',
       label: 'Heading 3',

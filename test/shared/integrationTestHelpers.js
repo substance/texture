@@ -259,6 +259,10 @@ export function clickUndo (editor) {
   editor.find('.sc-tool.sm-undo').el.click()
 }
 
+export function clickRedo (editor) {
+  editor.find('.sc-tool.sm-redo').el.click()
+}
+
 export function openMenu (editor, menuName) {
   let menu = editor.find(`.sc-tool-dropdown.sm-${menuName}`)
   let toggle = menu.refs.toggle

@@ -28,6 +28,7 @@ import './Settings.test'
 import './SupplementaryFile.test'
 import './Table.test'
 import './TableConverter.test'
+import './UndoRedo.test'
 import './Validator.test'
 
 // TODO: there are some tests in ./converter/. Either fix them and include here

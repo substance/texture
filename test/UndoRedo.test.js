@@ -1,5 +1,8 @@
 import { test } from 'substance-test'
-import { setCursor, openManuscriptEditor, loadBodyFixture, insertText, getDocument, clickUndo, clickRedo, getEditorSession } from './shared/integrationTestHelpers'
+import {
+  setCursor, openManuscriptEditor, loadBodyFixture, insertText, getDocument,
+  clickUndo, clickRedo, getEditorSession, breakText
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 const P1 = `<p id="p1">Lorem ipsum dolor sit amet.</p>`
@@ -113,6 +116,64 @@ test('UndoRedo: creating and deleting a node', t => {
   t.comment('redo')
   clickRedo(editor)
   t.deepEqual(doc.get('body').content, ['p1'])
+
+  t.end()
+})
+
+const LIST = `
+<list list-type="bullet" id="list">
+  <list-item id="li1">
+    <p>Item 1</p>
+    <list list-type="order">
+      <list-item id="li1-1">
+        <p>Item 1.1</p>
+      </list-item>
+      <list-item id="li1-2">
+        <p>Item 1.2</p>
+      </list-item>
+    </list>
+  </list-item>
+  <list-item id="li2">
+    <p>Item 2</p>
+    <list list-type="order">
+      <list-item id="li2-1">
+        <p>Item 2.1</p>
+      </list-item>
+      <list-item id="li2-2">
+        <p>Item 2.2</p>
+      </list-item>
+    </list>
+  </list-item>
+</list>
+`
+
+test('UndoRedo: breaking a list', t => {
+  let { editor } = _setup(t, LIST)
+  let doc = getDocument(editor)
+  let body = doc.get('body')
+  let list = doc.get('list')
+
+  t.equal(body.getLength(), 1, 'body should have 1 item')
+  t.equal(list.getLength(), 6, 'list should have 6 items')
+
+  t.comment('break the list')
+  setCursor(editor, 'li1-2.content', doc.get('li1-2').getLength())
+  // Note: the first break creates an empty list items
+  // and the second break splits the list apart
+  breakText(editor)
+  breakText(editor)
+  t.equal(body.getLength(), 3, 'body should have 3 items')
+  t.equal(list.getLength(), 3, 'first list should have 3 items')
+
+  t.comment('undo')
+  clickUndo(editor)
+  t.equal(body.getLength(), 1, 'body should have 1 items')
+  t.equal(list.getLength(), 7, 'first list should have 7 items')
+
+  t.comment('2nd undo')
+  clickUndo(editor)
+  t.equal(body.getLength(), 1, 'body should have 1 items')
+  t.equal(list.getLength(), 6, 'first list should have 6 items')
 
   t.end()
 })

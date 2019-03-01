@@ -89,6 +89,13 @@ export function insertText (editor, text) {
   })
 }
 
+export function breakText (editor) {
+  let editorSession = editor.context.editorSession
+  editorSession.transaction(tx => {
+    tx.break()
+  })
+}
+
 export function applyNOP (editorSession) {
   editorSession._commit(new DocumentChange([new ObjectOperation({ type: 'NOP' })], {}, {}), {})
 }

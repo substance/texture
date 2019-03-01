@@ -504,10 +504,10 @@ const TINY_LIST = `
     <p>Item 1</p>
     <list list-type="bullet">
       <list-item id="li1-1">
-        <p>ABCDEFGHI</p>
+        <p>AAA</p>
       </list-item>
       <list-item id="li1-2">
-        <p>JKLMNIOQR</p>
+        <p>BBB</p>
       </list-item>
     </list>
   </list-item>
@@ -515,10 +515,10 @@ const TINY_LIST = `
     <p>Item 2</p>
     <list list-type="bullet">
       <list-item id="li2-1">
-        <p>123456789</p>
+        <p>XXX</p>
       </list-item>
       <list-item id="li2-2">
-        <p>123456789</p>
+        <p>YYY</p>
       </list-item>
       <list-item id="li2-3">
         <p></p>
@@ -536,14 +536,14 @@ test('ManuscriptEditor: copy and pasting list items', t => {
   let bodySurface = editorSession.getSurface('body')
   loadBodyFixture(editor, TINY_LIST)
 
-  selectRange(editor, 'li1-1.content', 0, 'li1-2.content', 9)
+  selectRange(editor, 'li1-1.content', 0, 'li1-2.content', 3)
   let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
   bodySurface._onCopy(pasteEvent)
   setCursor(editor, 'li2-3.content', 0)
   bodySurface._onPaste(pasteEvent)
   let list = doc.get('list')
   t.equal(list.getLength(), 8, 'altogether there should be 8 items')
-  t.deepEqual(list.resolve('items').map(item => item.level), [1, 2, 2, 1, 2, 2, 2], '.. with correct levels')
+  t.deepEqual(list.resolve('items').map(item => item.level), [1, 2, 2, 1, 2, 2, 2, 2], '.. with correct levels')
   t.end()
 })
 

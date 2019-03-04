@@ -5,10 +5,10 @@ import writeArchive from './writeArchive'
 import cloneArchive from './cloneArchive'
 
 // FIXME: this file should only get bundled in commonjs version
-let path, fs
+let fs, path
 if (platform.inNodeJS || platform.inElectron) {
-  path = require('path')
   fs = require('fs')
+  path = require('path')
 }
 
 /*
@@ -80,8 +80,17 @@ async function _convertBlobs (rawArchive) {
   for (var i = 0; i < paths.length; i++) {
     let record = resources[paths[i]]
     if (record.encoding === 'blob') {
-      // TODO: is there other way to get buffer out of Blob without browser APIs?
-      record.data = fs.readFileSync(record.data.path)
+      record.data = await _blobToArrayBuffer(record.data)
     }
   }
+}
+
+function _blobToArrayBuffer (blob) {
+  return new Promise((resolve, reject) => {
+    // TODO: is there other way to get buffer out of Blob without browser APIs?
+    fs.readFile(blob.path, (err, buffer) => {
+      if (err) return reject(err)
+      resolve(buffer)
+    })
+  })
 }

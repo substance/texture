@@ -1,13 +1,14 @@
-/* global FileReader, Buffer */
+/* global Buffer */
 import { platform } from 'substance'
 import readArchive from './readArchive'
 import writeArchive from './writeArchive'
 import cloneArchive from './cloneArchive'
 
 // FIXME: this file should only get bundled in commonjs version
-let path
+let path, fs
 if (platform.inNodeJS || platform.inElectron) {
   path = require('path')
+  fs = require('fs')
 }
 
 /*
@@ -79,20 +80,8 @@ async function _convertBlobs (rawArchive) {
   for (var i = 0; i < paths.length; i++) {
     let record = resources[paths[i]]
     if (record.encoding === 'blob') {
-      record.data = await _blobToArrayBuffer(record.data)
+      // TODO: is there other way to get buffer out of Blob without browser APIs?
+      record.data = fs.readFileSync(record.data.path)
     }
   }
-}
-
-function _blobToArrayBuffer (blob) {
-  return new Promise(resolve => {
-    let reader = new FileReader()
-    reader.onload = function () {
-      if (reader.readyState === 2) {
-        var buffer = Buffer.from(reader.result)
-        resolve(buffer)
-      }
-    }
-    reader.readAsArrayBuffer(blob)
-  })
 }

@@ -1,9 +1,15 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES } from '../index'
-import { openMetadataEditor, setSelection, insertText, openMenuAndFindTool } from './shared/integrationTestHelpers'
+import {
+  openMetadataEditor, openManuscriptEditor, setSelection,
+  insertText, openContextMenuAndFindTool, openMenuAndFindTool
+} from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 import CSLJSON from './fixture/csl-json/csl-json-example'
+
+const emptyLabel = '???'
+const removeReferenceToolSelector = '.sm-remove-reference'
 
 // addding reference is done in a workflow, where the user can choose to import, or select a specific type
 // TODO: we should also test the other ways to create reference (actually we should cover all cases)
@@ -86,6 +92,24 @@ test(`Reference: adding and editing authors`, t => {
   t.end()
 })
 
+test(`Reference: removing`, t => {
+  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+  let metadataEditor = openMetadataEditor(app)
+  let card = metadataEditor.find('.sc-card.sm-article-ref')
+  card.el.click()
+
+  t.comment('removing reference')
+  t.ok(_canRemoveReference(metadataEditor), 'remove tool should not be disabled')
+  t.ok(_removeReference(metadataEditor), 'remove should not throw')
+
+  t.comment('check what happened with xrefs')
+  let manuscriptEditor = openManuscriptEditor(app)
+  let xref = manuscriptEditor.find('.sc-xref')
+  t.equal(xref.text(), emptyLabel, 'xref label should not contain reference')
+
+  t.end()
+})
+
 test(`Reference: upload CSL-JSON set`, t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let metadataEditor = openMetadataEditor(app)
@@ -136,4 +160,14 @@ function _insertReference (editor, bibrType) {
   openMenuAndFindTool(editor, 'insert', '.sm-insert-reference').click()
   // ... this opens a modal where we click on the button for creating the particular bibr type
   editor.find(`.sc-modal-dialog .sc-add-reference .se-type.sm-${bibrType}`).click()
+}
+
+function _canRemoveReference (editor) {
+  let tool = openMenuAndFindTool(editor, 'context-tools', removeReferenceToolSelector)
+  return tool && !tool.attr('disabled')
+}
+
+function _removeReference (editor) {
+  let tool = openContextMenuAndFindTool(editor, removeReferenceToolSelector)
+  return tool.el.click()
 }

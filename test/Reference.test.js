@@ -95,7 +95,7 @@ test(`Reference: adding and editing authors`, t => {
 test(`Reference: removing`, t => {
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let metadataEditor = openMetadataEditor(app)
-  let card = metadataEditor.find('.sc-card.sm-article-ref')
+  let card = metadataEditor.find('.sc-card.sm-webpage-ref')
   card.el.click()
 
   t.comment('removing reference')

@@ -368,6 +368,7 @@ export default {
     config.addLabel('edit-author', 'Edit Author')
     // Reference tools
     config.addLabel('edit-reference', 'Edit Reference')
+    config.addLabel('remove-reference', 'Remove Reference')
     // Context tools
     config.addLabel('context-tools', 'Edit')
     // Mode

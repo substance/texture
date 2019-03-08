@@ -210,6 +210,13 @@ export default class ArticleAPI {
   _removeReference (ref) {
     this.editorSession.transaction(tx => {
       documentHelpers.remove(tx, ['article', 'references'], ref.id)
+      const referenceManager = this._articleSession.getReferenceManager()
+      referenceManager._getXrefs().forEach(xref => {
+        const index = xref.refTargets.indexOf(ref.id)
+        if (index > -1) {
+          tx.update([xref.id, 'refTargets'], { type: 'delete', pos: index })
+        }
+      })
       documentHelpers.deepDeleteNode(tx, ref)
       tx.selection = null
     })

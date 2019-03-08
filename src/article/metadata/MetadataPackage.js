@@ -30,6 +30,7 @@ import TranslatableEntryEditor from './TranslatableEntryEditor'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
+import RemoveReferenceCommand from './RemoveReferenceCommand'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
 
 export default {
@@ -113,6 +114,9 @@ export default {
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('remove-reference', RemoveReferenceCommand, {
+      commandGroup: 'reference'
     })
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'figure-panel'

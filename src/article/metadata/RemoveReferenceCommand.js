@@ -1,4 +1,4 @@
-import { Command } from 'substance'
+import { Command, isNil } from 'substance'
 
 export default class RemoveReferenceCommand extends Command {
   getCommandState (params, context) {
@@ -8,7 +8,7 @@ export default class RemoveReferenceCommand extends Command {
   isDisabled (params, context) {
     const xpath = params.selectionState.xpath
     const isCustomSelection = params.selection.isCustomSelection()
-    if (!isCustomSelection) return true
+    if (!isCustomSelection || isNil(xpath) || xpath.length === 0) return true
     // Every reference should be inside article references property
     return xpath[xpath.length - 1].property !== 'references'
   }

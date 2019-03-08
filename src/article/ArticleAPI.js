@@ -207,6 +207,14 @@ export default class ArticleAPI {
     })
   }
 
+  _removeReference (ref) {
+    this.editorSession.transaction(tx => {
+      documentHelpers.remove(tx, ['article', 'references'], ref.id)
+      documentHelpers.deepDeleteNode(tx, ref)
+      tx.selection = null
+    })
+  }
+
   _createModelSelection (modelId) {
     return {
       type: 'custom',

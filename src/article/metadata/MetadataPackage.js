@@ -247,7 +247,7 @@ function registerCollectionCommand (config, itemType, collectionPath, options = 
   if (options.keyboardShortcut) {
     config.addKeyboardShortcut(options.keyboardShortcut, { command: `add-${itemType}` })
   }
-  if (!config.automaticOrder) {
+  if (!options.automaticOrder) {
     config.addCommand(`move-up-${itemType}`, MoveCollectionItemCommand, {
       direction: 'up',
       commandGroup: 'collection',

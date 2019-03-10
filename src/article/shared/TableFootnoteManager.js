@@ -25,7 +25,10 @@ export default class TableFootnoteManager extends AbstractCitationManager {
     let doc = this._getDocument()
     let footnotes = this.tableFigure.footnotes
     if (footnotes) {
-      return footnotes.map(id => doc.get(id))
+      // NOTE: in case of table removing there might be already no footnotes
+      // in the document, so we need to filter out undefined values
+      // TODO: can we solve it differently?
+      return footnotes.map(id => doc.get(id)).filter(Boolean)
     } else {
       return []
     }

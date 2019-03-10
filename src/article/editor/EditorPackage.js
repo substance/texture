@@ -65,7 +65,7 @@ import {
 } from './TableCommands'
 import InsertTableTool from './InsertTableTool'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
-import RemoveItemCommand from './RemoveItemCommand'
+import RemoveItemCommand from '../shared/RemoveItemCommand'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'

@@ -31,6 +31,7 @@ import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
 import RemoveReferenceCommand from './RemoveReferenceCommand'
+import RemoveItemCommand from '../shared/RemoveItemCommand'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
 
 export default {
@@ -108,6 +109,10 @@ export default {
     })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'
+    })
+    config.addCommand('remove-footnote', RemoveItemCommand, {
+      nodeType: 'footnote',
+      commandGroup: 'footnote'
     })
     config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'

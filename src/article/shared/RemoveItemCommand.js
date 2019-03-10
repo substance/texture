@@ -1,22 +1,9 @@
 import { Command, documentHelpers } from 'substance'
-import { findParentByType } from '../shared/nodeHelpers'
+import { findParentByType } from './nodeHelpers'
 
-// TODO: We already have collection commands for metadata,
-// maybe we should use set of commands
 export default class RemoveItemCommand extends Command {
   getCommandState (params, context) {
     return { disabled: this.isDisabled(params, context) }
-  }
-
-  execute (params, context) {
-    const node = this._getNodeForSelection(params, context)
-    const path = this._getPath(context, node)
-    let editorSession = context.editorSession
-    editorSession.transaction(tx => {
-      documentHelpers.remove(tx, path, node.id)
-      documentHelpers.deepDeleteNode(tx, node.id)
-      tx.selection = null
-    })
   }
 
   isDisabled (params, context) {
@@ -25,12 +12,26 @@ export default class RemoveItemCommand extends Command {
     return !xpath.find(n => n.type === nodeType)
   }
 
-  _getNodeForSelection (params, context) {
+  execute (params, context) {
+    const api = context.api
+    const node = this._getNode(params)
+    const path = this._getPath(context, node)
+    const editorSession = context.editorSession
+    editorSession.transaction(tx => {
+      documentHelpers.remove(tx, path, node.id)
+      api._removeCorrespondingXrefs(tx, node)
+      documentHelpers.deepDeleteNode(tx, node.id)
+      tx.selection = null
+    })
+  }
+
+  _getNode (params) {
     const nodeType = this.config.nodeType
     const sel = params.selection
     const doc = params.editorSession.getDocument()
     const nodeId = sel.getNodeId()
     const selectedNode = doc.get(nodeId)
+    if (selectedNode.type === nodeType) return selectedNode
     return findParentByType(selectedNode, nodeType)
   }
 

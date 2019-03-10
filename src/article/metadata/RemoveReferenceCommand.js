@@ -1,21 +1,15 @@
-import { Command, isNil } from 'substance'
+import RemoveItemCommand from '../shared/RemoveItemCommand'
 
-export default class RemoveReferenceCommand extends Command {
-  getCommandState (params, context) {
-    return { disabled: this.isDisabled(params, context) }
-  }
-
+export default class RemoveReferenceCommand extends RemoveItemCommand {
   isDisabled (params, context) {
-    const xpath = params.selectionState.xpath
+    const node = this._getNode(params)
     const isCustomSelection = params.selection.isCustomSelection()
-    if (!isCustomSelection || isNil(xpath) || xpath.length === 0) return true
+    if (!isCustomSelection || !node) return true
     // Every reference should be inside article references property
-    return xpath[xpath.length - 1].property !== 'references'
+    return node.getXpath().property !== 'references'
   }
 
-  execute (params, context) {
-    const api = context.api
-    const reference = params.selectionState.node
-    api._removeReference(reference)
+  _getNode (params) {
+    return params.selectionState.node
   }
 }

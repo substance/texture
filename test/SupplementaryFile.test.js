@@ -1,11 +1,11 @@
-import { platform } from 'substance'
+import { DefaultDOMElement, platform } from 'substance'
 import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoDropEvent, PseudoFileEvent,
   fixture, loadBodyFixture, getDocument, openContextMenuAndFindTool,
   openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
-import { doesNotThrowInNodejs } from './shared/testHelpers'
+import { doesNotThrowInNodejs, exportNode, importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: test download for a just uploaded file
@@ -190,6 +190,36 @@ test('SupplementaryFile: replace a file', t => {
     _replaceFile(editor)
   }, 'replace file should not throw')
   t.end()
+})
+
+const FIGURE_WITH_FILE = `
+  <fig id="fig1a">
+    <label>Figure 1A</label>
+    <caption id="fig1a-caption">
+      <title>First panel</title>
+      <p specific-use="display-element-wrapper">
+        <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <caption>
+            <p id="sm1-caption-p1">Description of Supplementary File</p>
+          </caption>
+        </supplementary-material>
+      </p>
+    </caption>
+    <graphic />
+  </fig>
+`
+
+test('SupplementaryFile: export from figure caption', t => {
+  let el = DefaultDOMElement.parseSnippet(FIGURE_WITH_FILE.trim(), 'xml')
+  try {
+    let figureNode = importElement(el)
+    let figureEl = exportNode(figureNode)
+    let supFile = figureEl.find('supplementary-material')
+    t.isNotNil(supFile, 'supplementary-material should be exported')
+    t.end()
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {

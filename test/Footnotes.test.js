@@ -1,14 +1,31 @@
 import { test } from 'substance-test'
+import { DefaultDOMElement } from 'substance'
 import {
   openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture,
   openContextMenuAndFindTool, openMenuAndFindTool, getSelection, selectNode
 } from './shared/integrationTestHelpers'
+import { importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
+const emptyLabel = '???'
 const manuscriptFootnoteSelector = '.sc-manuscript > .sc-manuscript-section.sm-footnotes .sc-footnote'
 const tableFootnoteSelector = '.sc-table-figure > .se-footnotes > .sc-footnote'
 const tableFootnoteContentXpath = ['article', 'body', 'table-figure', 'footnote', 'paragraph']
+
+const FOOTNOTE_WITH_LABEL = `
+  <fn>
+    <label>Label</label>
+    <p>Footnote content</p>
+  </fn>
+`
+
+test('Footnotes: import footnote', t => {
+  let el = DefaultDOMElement.parseSnippet(FOOTNOTE_WITH_LABEL.trim(), 'xml')
+  let footnoteNode = importElement(el)
+  t.equal(footnoteNode.label, '', 'custom label should be ignored during import')
+  t.end()
+})
 
 test('Footnotes: add a footnote while selection is in the manuscript body', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))
@@ -87,13 +104,16 @@ test('Footnotes: remove a manuscript footnote', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
-  t.notNil(editor.find('[data-id=fn-1]'), 'the footnote should be visible')
+  const getFirstFootnote = () => editor.find('[data-id=fn-1]')
+  const getFirstFootnoteXref = () => editor.find('[data-id=p1-xref-1]')
+  t.notNil(getFirstFootnote(), 'the footnote should be visible')
   setSelection(editor, 'fn-1-p-1.content', 1)
   const removeTool = openContextMenuAndFindTool(editor, '.sm-remove-footnote')
   t.ok(removeTool, 'there should be a remove button')
   removeTool.click()
   t.isNil(doc.get('fn-1'), 'the footnote should have been removed from the model')
   t.isNil(editor.find('[data-id=fn-1]'), '.. and should not be visible anymore')
+  t.equal(getFirstFootnoteXref().text(), emptyLabel, 'xref label should not contain reference')
   t.end()
 })
 

@@ -1,4 +1,4 @@
-import { findChild, findAllChildren } from '../util/domHelpers'
+import { findAllChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 
 // TODO: at some point we want to retain the label and determine if the label should be treated as custom
@@ -8,12 +8,9 @@ export default class FootnoteConverter {
 
   get tagName () { return 'fn' }
 
+  // NOTE: we don’t support custom labels at the moment, so we will ignore input from fn > label
   import (el, node, importer) {
-    let labelEl = findChild(el, 'label')
     let pEls = findAllChildren(el, 'p')
-    if (labelEl) {
-      node.label = labelEl.text()
-    }
     node.content = pEls.map(el => importer.convertElement(el).id)
   }
 

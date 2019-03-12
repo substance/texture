@@ -4,7 +4,7 @@ import {
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
-  getCurrentViewName
+  getCurrentViewName, deleteSelection
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
@@ -351,6 +351,38 @@ test('ManuscriptEditor: inserting a table figure', t => {
   let legendEditor = tableFigure.find('.sc-container-editor.se-legend')
   t.notNil(legendEditor, 'the legend should be editable')
   t.notNil(legendEditor.find('.sc-paragraph'), 'there should be a paragraph inside the legend editor')
+  t.end()
+})
+
+const TABLE_WITH_FOOTNOTE = `
+  <table-wrap id="table1">
+    <table>
+      <tbody>
+        <tr id="t1_5">
+          <td id="t1_5_1">Table footnote<xref id="t1-xref-1" ref-type="table-fn" rid="tfn1">*</xref></td>
+        </tr>
+      </tbody>
+    </table>
+    <table-wrap-foot>
+      <fn-group>
+        <fn id="tfn1">
+          <label>*</label>
+          <p id="tfn1-p1">This is a table-footnote.</p>
+        </fn>
+      </fn-group>
+    </table-wrap-foot>
+  </table-wrap>
+`
+
+test('ManuscriptEditor: removing a table figure', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, TABLE_WITH_FOOTNOTE)
+  selectNode(editor, 'table1')
+  doesNotThrowInNodejs(t, () => {
+    deleteSelection(editor)
+  }, 'table removing should not throw')
+  t.isNil(editor.find('[data-id=table1]'), 'There should be no table anymore')
   t.end()
 })
 

@@ -284,7 +284,7 @@ function _createMenu () {
               }
             },
             {
-              label: 'Figure Pacakge',
+              label: 'Figure Package',
               click () {
                 _openNew('figure-package')
               }

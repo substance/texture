@@ -153,7 +153,7 @@ export default class FigurePanelConverter {
     for (let i = L - 1; i >= 0; i--) {
       let child = children[i]
       if (!child.is('p')) {
-        let p = el.createElement('p').attr('specific-use', 'display-element-wrapper')
+        let p = el.createElement('p').attr('specific-use', 'display-element-wrapper').append(child.clone(true))
         el.replaceChild(child, p)
       }
     }

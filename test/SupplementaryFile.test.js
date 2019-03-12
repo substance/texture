@@ -211,15 +211,11 @@ const FIGURE_WITH_FILE = `
 
 test('SupplementaryFile: export from figure caption', t => {
   let el = DefaultDOMElement.parseSnippet(FIGURE_WITH_FILE.trim(), 'xml')
-  try {
-    let figureNode = importElement(el)
-    let figureEl = exportNode(figureNode)
-    let supFile = figureEl.find('supplementary-material')
-    t.isNotNil(supFile, 'supplementary-material should be exported')
-    t.end()
-  } catch (err) {
-    console.log(err)
-  }
+  let figureNode = importElement(el)
+  let figureEl = exportNode(figureNode)
+  let supFile = figureEl.find('supplementary-material')
+  t.isNotNil(supFile, 'supplementary-material should be exported')
+  t.end()
 })
 
 function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {

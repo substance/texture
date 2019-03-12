@@ -1,8 +1,10 @@
 import { test } from 'substance-test'
+import { DefaultDOMElement } from 'substance'
 import {
   openManuscriptEditor, getDocument, getSelectionState, setSelection, fixture,
   openContextMenuAndFindTool, openMenuAndFindTool, getSelection, selectNode
 } from './shared/integrationTestHelpers'
+import { importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { getLabel } from '../index'
 
@@ -10,6 +12,20 @@ const emptyLabel = '???'
 const manuscriptFootnoteSelector = '.sc-manuscript > .sc-manuscript-section.sm-footnotes .sc-footnote'
 const tableFootnoteSelector = '.sc-table-figure > .se-footnotes > .sc-footnote'
 const tableFootnoteContentXpath = ['article', 'body', 'table-figure', 'footnote', 'paragraph']
+
+const FOOTNOTE_WITH_LABEL = `
+  <fn>
+    <label>Label</label>
+    <p>Footnote content</p>
+  </fn>
+`
+
+test('Footnotes: import footnote', t => {
+  let el = DefaultDOMElement.parseSnippet(FOOTNOTE_WITH_LABEL.trim(), 'xml')
+  let footnoteNode = importElement(el)
+  t.equal(footnoteNode.label, '', 'custom label should be ignored during import')
+  t.end()
+})
 
 test('Footnotes: add a footnote while selection is in the manuscript body', t => {
   let { app } = setupTestApp(t, fixture('cross-references'))

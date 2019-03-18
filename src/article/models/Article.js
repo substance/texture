@@ -8,6 +8,7 @@ Article.schema = {
   title: TEXT(RICH_TEXT_ANNOS),
   subTitle: TEXT(RICH_TEXT_ANNOS),
   abstract: CHILD('abstract'),
+  сustomAbstracts: CHILDREN('custom-abstract'),
   body: CHILD('body'),
   references: CHILDREN('reference'),
   footnotes: CHILDREN('footnote'),

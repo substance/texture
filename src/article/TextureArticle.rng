@@ -450,9 +450,9 @@
       <optional>
         <ref name="permissions"/>
       </optional>
-      <optional>
+      <zeroOrMore>
         <ref name="abstract"/>
-      </optional>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="trans-abstract"/>
       </zeroOrMore>

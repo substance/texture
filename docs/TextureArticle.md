@@ -128,7 +128,7 @@ id, xml:base
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,issue-title?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract?,trans-abstract*,kwd-group*,funding-group*
+article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,issue-title?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract*,trans-abstract*,kwd-group*,funding-group*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">

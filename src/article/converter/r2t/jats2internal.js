@@ -368,7 +368,7 @@ function _populateAbstract (doc, jats, jatsImporter) {
         })
       })
       abstract.title = jatsImporter.annotatedText(abstractEl, [abstract.id, 'title'])
-      documentHelpers.append(doc, ['article', 'сustomAbstracts'], abstract.id)
+      documentHelpers.append(doc, ['article', 'customAbstracts'], abstract.id)
     }
   })
 

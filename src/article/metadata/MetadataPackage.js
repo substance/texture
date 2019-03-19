@@ -205,6 +205,7 @@ export default {
     config.addLabel('edit', 'Edit')
     config.addLabel('remove', 'Remove')
     config.addLabel('workflows', 'Workflows')
+    config.addLabel('select-abstract-type', 'Select abstract type')
     config.addLabel('select-license', 'Select license')
     config.addLabel('select-item', 'Choose')
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')

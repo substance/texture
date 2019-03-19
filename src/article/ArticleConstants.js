@@ -70,3 +70,14 @@ export const SYMBOLS = ((symbols, times) => {
   }
   return res
 })(['*', '†', '‡', '¶', '§', '‖', '#'], 4)
+
+export const ABSTRACT_TYPES = [
+  {
+    id: 'executive-summary',
+    name: 'Executive Summary'
+  },
+  {
+    id: 'web-summary',
+    name: 'Web Summary'
+  }
+]

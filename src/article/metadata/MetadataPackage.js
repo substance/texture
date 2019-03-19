@@ -176,6 +176,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
 
     // Labels
+    config.addLabel('abstracts', 'Abstracts')
     config.addLabel('article', 'Article Information')
     config.addLabel('article-information', 'Article Information')
     config.addLabel('authors', 'Authors')

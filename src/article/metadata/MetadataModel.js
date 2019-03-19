@@ -4,6 +4,7 @@ import FigureCollectionModel from './FigureCollectionModel'
 import TableFigureCollectionModel from './TableFigureCollectionModel'
 // import TableCollectionModel from './TableCollectionModel'
 import ArticleInformationSectionModel from './ArticleInformationSectionModel'
+import AbstractsSectionModel from './AbstractsSectionModel'
 
 /**
  * This is an artificial Model used to control the content displayed in the Metadata view.
@@ -13,6 +14,7 @@ export default class MetadataModel {
     this._api = api
     this._sections = [
       { name: 'article-information', model: new ArticleInformationSectionModel(api) },
+      { name: 'abstracts', model: new AbstractsSectionModel(api) },
       { name: 'authors', model: createValueModel(api, ['metadata', 'authors']) },
       { name: 'editors', model: createValueModel(api, ['metadata', 'editors']) },
       { name: 'groups', model: createValueModel(api, ['metadata', 'groups']) },

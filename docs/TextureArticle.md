@@ -12,7 +12,7 @@ id, xml:base, abstract-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-p*
+title?,p*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1902,7 +1902,7 @@ id, xml:base, content-type, specific-use
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-caption, fn-group, sec
+abstract, caption, fn-group, sec, trans-abstract
 </pre>
 
 ### `<title-group>`
@@ -1943,7 +1943,7 @@ id, xml:base, abstract-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-p*
+title?,p*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">

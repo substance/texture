@@ -13,6 +13,7 @@ import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
+import CustomAbstractComponent from './CustomAbstractComponent'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
@@ -49,6 +50,7 @@ export default {
     config.addComponent('add-reference', AddReferenceWorkflow)
     config.addComponent('article-metadata', ArticleMetadataComponent)
     config.addComponent('article-information', ArticleInformationSectionComponent)
+    config.addComponent('custom-abstract', CustomAbstractComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)

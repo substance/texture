@@ -80,6 +80,7 @@ export default {
     config.addLabel('edit-translators', 'Edit Translators')
 
     config.addLabel('abstract', 'Main Abstract')
+    config.addLabel('abstractType', 'Abstract Type')
     config.addLabel('accessedDate', 'Accessed Date')
     config.addLabel('accessionId', 'Accession ID')
     config.addLabel('archiveId', 'Archive ID')

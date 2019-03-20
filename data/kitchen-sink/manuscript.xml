@@ -154,6 +154,7 @@
         <p id="p-1">Please note, this article uses content from different open access articles (eLife) for demoing purposes.</p>
       </abstract>
       <abstract abstract-type="executive-summary">
+        <title>Executive Summary of article</title>
         <p id="p-1-1">This is an example of executive summary.</p>
       </abstract>
       <abstract abstract-type="web-summary">

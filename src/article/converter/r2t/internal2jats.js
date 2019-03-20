@@ -538,9 +538,9 @@ function _exportAbstract (jats, doc, jatsExporter) {
       customAbstractEl.attr('abstract-type', customAbstract.abstractType)
     }
     if (customAbstract.title) {
-      customAbstractEl.append(
-        _exportAnnotatedText(jatsExporter, [customAbstract.id, 'title'], $$('title'))
-      )
+      let titleEl = $$('title')
+      _exportAnnotatedText(jatsExporter, [customAbstract.id, 'title'], titleEl)
+      customAbstractEl.append(titleEl)
     }
     if (!_isContainerEmpty(customAbstract, 'content')) {
       customAbstract.resolve('content').forEach(p => {

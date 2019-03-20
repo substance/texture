@@ -348,6 +348,10 @@ function _populateAbstract (doc, jats, jatsImporter) {
   let abstractEls = jats.findAll('article > front > article-meta > abstract')
   let mainAbstractImported = false
   abstractEls.forEach(abstractEl => {
+    const titleEl = abstractEl.find('title')
+    if (titleEl) {
+      abstractEl.removeChild(titleEl)
+    }
     // if the abstract is empty, add an empty paragraph
     if (abstractEl.getChildCount() === 0) {
       abstractEl.append($$('p'))
@@ -367,7 +371,9 @@ function _populateAbstract (doc, jats, jatsImporter) {
           return jatsImporter.convertElement(el).id
         })
       })
-      abstract.title = jatsImporter.annotatedText(abstractEl, [abstract.id, 'title'])
+      if (titleEl) {
+        abstract.title = jatsImporter.annotatedText(titleEl, [abstract.id, 'title'])
+      }
       documentHelpers.append(doc, ['article', 'customAbstracts'], abstract.id)
     }
   })

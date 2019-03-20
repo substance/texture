@@ -4,6 +4,7 @@
 export default class AbstractsSectionModel {
   constructor (api) {
     this._api = api
+    this._path = ['article', 'customAbstracts']
   }
 
   get id () {
@@ -16,6 +17,14 @@ export default class AbstractsSectionModel {
     return true
   }
 
+  get isValue () {
+    return true
+  }
+
+  getPath () {
+    return this._path
+  }
+
   getItems () {
     let doc = this._api.getDocument()
     return [doc.get('abstract')].concat(
@@ -26,4 +35,6 @@ export default class AbstractsSectionModel {
   get length () {
     return this.getItems().length
   }
+
+  get _isValue () { return true }
 }

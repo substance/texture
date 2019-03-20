@@ -21,6 +21,7 @@ import {
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
 import FiguresSectionComponent from './FiguresSectionComponent'
+import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import MetadataSection from './MetadataSection'
@@ -230,6 +231,7 @@ export default {
     registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
     registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
+    registerCollectionCommand(config, 'custom-abstract', ['article', 'customAbstracts'], { Command: InsertCustomAbstractCommand })
     config.addCommand('insert-reference', AddEntityCommand, {
       workflow: 'add-reference',
       commandGroup: 'add-entity',

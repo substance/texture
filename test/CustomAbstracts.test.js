@@ -1,6 +1,7 @@
 import { test } from 'substance-test'
 import {
-  openMetadataEditor, openContextMenuAndFindTool, isToolEnabled
+  getDocument, insertText, openMetadataEditor,
+  openContextMenuAndFindTool, isToolEnabled, setCursor
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -52,6 +53,39 @@ test('Custom Abstracts: move custom abstract', t => {
   _moveDownAbstract(editor)
   t.ok(_isMoveUpToolPossible(editor), 'should be possible to move up custom abstract')
   t.notOk(_isMoveDownToolPossible(editor), 'should not be possible to move down custom abstract')
+  t.end()
+})
+
+test('Custom Abstracts: editing title', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openMetadataEditor(app)
+  let doc = getDocument(editor)
+  const newTitle = 'Custom abstract title'
+  _addItem(editor, 'custom-abstract')
+  const customAbstracts = doc.get(['article', 'customAbstracts'])
+  const customAbstractId = customAbstracts[0]
+  t.equal(doc.get([customAbstractId, 'title']), '', 'title should be empty')
+  setCursor(editor, customAbstractId + '.title', 0)
+  insertText(editor, newTitle)
+  t.equal(doc.get([customAbstractId, 'title']), newTitle, 'title should changed')
+  t.end()
+})
+
+test('Custom Abstracts: switching type', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openMetadataEditor(app)
+  let doc = getDocument(editor)
+  const customAbstractType = 'executive-summary'
+  _addItem(editor, 'custom-abstract')
+  const customAbstracts = doc.get(['article', 'customAbstracts'])
+  const customAbstractId = customAbstracts[0]
+  t.equal(doc.get([customAbstractId, 'abstractType']), '', 'abstract type should be empty')
+  const abstractTypeEditor = editor.find(customAbstractSelector + ' .sc-dropdown-editor')
+  // since we are dealing with dropdown we should set input value
+  // and call change event handler manually
+  abstractTypeEditor.refs.input.setValue(customAbstractType)
+  abstractTypeEditor._setValue()
+  t.equal(doc.get([customAbstractId, 'abstractType']), customAbstractType, 'abstract type should changed')
   t.end()
 })
 

@@ -11,13 +11,11 @@ export default class AbstractsSectionModel {
     return '@abstracts'
   }
 
-  get type () { return 'collection' }
-
-  get isCollection () {
-    return true
+  get type () {
+    return '@abstracts'
   }
 
-  get isValue () {
+  get isCollection () {
     return true
   }
 
@@ -35,6 +33,4 @@ export default class AbstractsSectionModel {
   get length () {
     return this.getItems().length
   }
-
-  get _isValue () { return true }
 }

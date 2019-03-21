@@ -8,6 +8,7 @@ import PersistencePackage from '../../PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
+import AbstractsSectionComponent from './AbstractsSectionComponent'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
@@ -24,7 +25,6 @@ import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
-import MetadataSection from './MetadataSection'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
@@ -57,8 +57,8 @@ export default {
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
     // Note: @figures and @tables are (dynamic) collections derived from the article's content
+    config.addComponent('@abstracts', AbstractsSectionComponent)
     config.addComponent('@figures', FiguresSectionComponent)
-    config.addComponent('@tables', MetadataSection)
 
     // Commands
     config.addCommand('add-metadata-field', AddCustomMetadataFieldCommand, {

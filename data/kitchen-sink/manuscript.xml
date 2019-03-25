@@ -156,10 +156,6 @@
       <abstract abstract-type="executive-summary">
         <title>eLife Digest</title>
         <p id="p-1-1">This is an example of executive summary with sub sections.</p>
-        <sec>
-          <title>Custom abstract sub section</title>
-          <p id="p-1-1-1">Sub section content.</p>
-        </sec>
       </abstract>
       <abstract abstract-type="web-summary">
         <p id="p-1-2">This is an example of web summary.</p>

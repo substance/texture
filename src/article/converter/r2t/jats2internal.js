@@ -348,7 +348,7 @@ function _populateAbstract (doc, jats, jatsImporter) {
   let abstractEls = jats.findAll('article > front > article-meta > abstract')
   let mainAbstractImported = false
   abstractEls.forEach(abstractEl => {
-    const titleEl = abstractEl.find('title')
+    const titleEl = findChild(abstractEl, 'title')
     if (titleEl) {
       abstractEl.removeChild(titleEl)
     }

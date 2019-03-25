@@ -401,7 +401,10 @@
       <ref name="title"/>
     </optional>
     <zeroOrMore>
-      <ref name="p"/>
+      <choice>
+        <ref name="sec"/>
+        <ref name="p"/>
+      </choice>
     </zeroOrMore>
   </define>
 

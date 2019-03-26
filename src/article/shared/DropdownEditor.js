@@ -1,6 +1,4 @@
-import {
-  ValueComponent
-} from '../../kit'
+import { ValueComponent } from '../../kit'
 
 export default class DropdownEditor extends ValueComponent {
   render ($$) {
@@ -9,6 +7,7 @@ export default class DropdownEditor extends ValueComponent {
     let el = $$('div').addClass(this._getClassNames())
 
     const dropdownSelector = $$('select').ref('input').addClass('se-select')
+      .val(value)
       .on('click', this._suppressClickPropagation)
       .on('change', this._setValue)
 

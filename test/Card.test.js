@@ -30,7 +30,7 @@ test('Card: select the underlying model when clicking on a card', t => {
 // Note: this issue was observed when setting the cursor into a footnote
 // and after that clicking on the card
 test('Card: selecting a card after editing a footnote (regression #841)', t => {
-  // TODO: try to use a smaller fixture
+  // TODO: use a smaller fixture
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let metadataEditor = openMetadataEditor(app)
   let fnSurface = metadataEditor.find('.sc-surface[data-id="fn1.content"]')

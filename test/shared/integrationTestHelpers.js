@@ -71,6 +71,13 @@ export function selectCard (editor, id) {
   getApi(editor).selectCard(id)
 }
 
+export function ensureAllFieldsVisible (editor, cardId) {
+  let control = editor.find(`.sc-card[data-id="${cardId}"] .se-control.sm-show-more-fields`)
+  if (control) {
+    control.click()
+  }
+}
+
 export function selectNode (editor, id) {
   getApi(editor).selectNode(id)
 }
@@ -421,4 +428,28 @@ function _getTextPropertyForPath (editor, path) {
     throw new Error('Could not find text property for path ' + path)
   }
   return property
+}
+
+export const EMPTY_META = `
+<article-meta>
+  <title-group>
+    <article-title></article-title>
+  </title-group>
+</article-meta>
+`
+
+export function createJATSFixture ({ front = EMPTY_META, body = '', back = '' }) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
+  <front>
+    ${front}
+  </front>
+  <body>
+    ${body}
+  </body>
+  <back>
+    ${back}
+  </back>
+</article>`
 }

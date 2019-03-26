@@ -61,7 +61,7 @@ export default class SectionContainerConverter {
 
   export (node, el, exporter) {
     let $$ = el.createElement.bind(el)
-    const children = node.getNodes()
+    const children = node.resolve('content')
     let stack = [{ el }]
     for (let child of children) {
       if (child.type === 'heading') {

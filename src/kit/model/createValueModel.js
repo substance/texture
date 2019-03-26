@@ -1,12 +1,14 @@
 import BooleanModel from './BooleanModel'
 import ChildModel from './ChildModel'
 import CollectionModel from './CollectionModel'
+import EnumModel from './EnumModel'
 import ManyRelationshipModel from './ManyRelationshipModel'
 import NumberModel from './NumberModel'
 import ObjectModel from './ObjectModel'
 import SingleRelationshipModel from './SingleRelationshipModel'
 import StringModel from './StringModel'
 import TextModel from './TextModel'
+import ValueModel from './ValueModel'
 
 export default function createValueModel (api, path, property) {
   let doc = api.getDocument()
@@ -16,6 +18,10 @@ export default function createValueModel (api, path, property) {
   switch (property.type) {
     case 'boolean': {
       valueModel = new BooleanModel(api, path)
+      break
+    }
+    case 'enum': {
+      valueModel = new EnumModel(api, path)
       break
     }
     case 'number': {
@@ -49,8 +55,13 @@ export default function createValueModel (api, path, property) {
             valueModel = new SingleRelationshipModel(api, path, targetTypes)
           }
         }
+      } else {
+        valueModel = new ValueModel(api, path)
       }
     }
+  }
+  if (!valueModel) {
+    throw new Error('Unsupported property type.')
   }
   return valueModel
 }

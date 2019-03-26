@@ -100,12 +100,10 @@ export default class ArticleAPI {
     }
   }
 
-  // EXPERIMENTAL: in the MetadataEditor we want to be able to select a full card
-  // I do not want to introduce a 'card' selection as this is not an internal concept
-  // and instead opting for 'model' selection.
-  // TODO: could we use NodeSelection instead?
-  selectModel (nodeId) {
-    this._setSelection(this._createModelSelection(nodeId))
+  // TODO: a card selection is essentially a node selection
+  // only in metadata view we use customType='card' instead of 'node'
+  selectCard (nodeId) {
+    this._setSelection(this._createCardSelection(nodeId))
   }
 
   selectNode (nodeId) {
@@ -227,14 +225,11 @@ export default class ArticleAPI {
     })
   }
 
-  _createModelSelection (modelId) {
+  _createCardSelection (nodeId) {
     return {
       type: 'custom',
-      customType: 'model',
-      nodeId: modelId,
-      data: {
-        modelId
-      }
+      customType: 'card',
+      nodeId
     }
   }
 
@@ -390,46 +385,47 @@ export default class ArticleAPI {
     return Boolean(valueSettings['required'])
   }
 
-  _getFirstRequiredPropertyName (node) {
-    // NOTE: still not sure if this is the right approach
-    // For now, we find the first required text field, otherwise we take the first one
-    let schema = node.getSchema()
-    let propName = null
-    let firstText = null
-    for (let p of schema) {
-      if (p.type === 'text' || p.type === 'string') {
-        if (!firstText) {
-          firstText = p
-        }
-        if (this._isFieldRequired([node.type, p.name])) {
-          propName = p.name
-          break
-        }
-      }
-    }
-    if (!propName && firstText) {
-      propName = firstText.name
-    }
-    return propName
-  }
-
   // ATTENTION: this only works for meta-data cards, thus the special naming
   _selectFirstRequiredPropertyOfMetadataCard (node) {
     if (isString(node)) {
       node = this.getDocument().get(node)
     }
-    let propName = this._getFirstRequiredPropertyName(node)
-    if (propName) {
-      let path = [node.id, propName]
-      return {
-        type: 'property',
-        path,
-        startOffset: 0,
-        // HACK: this does only work within the meta-data view
-        surfaceId: `${path.join('.')}`
+    let prop = this._getFirstRequiredProperty(node)
+    if (prop) {
+      if (prop.isText() || prop.type === 'string') {
+        let path = [node.id, prop.name]
+        return {
+          type: 'property',
+          path,
+          startOffset: 0,
+          surfaceId: this._getSurfaceId(node, prop.name, 'metadata')
+        }
+      } else if (prop.isContainer()) {
+        let nodes = node.resolve(prop.name)
+        let first = nodes[0]
+        if (first && first.isText()) {
+          let path = first.getPath()
+          return {
+            type: 'property',
+            path,
+            startOffset: 0,
+            surfaceId: this._getSurfaceId(node, prop.name, 'metadata')
+          }
+        }
       }
-    } else {
-      return this._createModelSelection(node.id)
+    }
+    // otherwise fall back to 'card' selection
+    return this._createCardSelection(node.id)
+  }
+
+  _getFirstRequiredProperty (node) {
+    // TODO: still not sure if this is the right approach
+    // Maybe it would be simpler to just use configuration
+    // and fall back to 'node' or 'card' selection otherwise
+    let schema = node.getSchema()
+    for (let p of schema) {
+      if (p.name === 'id' || !this._isFieldRequired([node.type, p.name])) continue
+      return p
     }
   }
 
@@ -540,39 +536,23 @@ export default class ArticleAPI {
     }
   }
 
-  // HACK: determining proper surfaceId in a hard-coded way.
-  // Using templates for different node types and view modes,
-  // before template rendering computes ids of specified parent nodes.
-  _getSurfaceId (node, path, viewName) {
-    const tpl = (strings, ...keys) => args => {
-      let result = [strings[0]]
-      keys.forEach((key, i) => {
-        result.push(args[key], strings[i + 1])
-      })
-      return result.join('')
+  // EXPERIMENTAL: trying to derive a surfaceId for a property in a specific node
+  // exploiting knowledge about the implemented view structure: in metadata every node is top-level (card)
+  // in manuscript it is either top-level (title, abstract) or part of a container (body)
+  _getSurfaceId (node, propertyName, viewName) {
+    if (viewName === 'metadata') {
+      return `${node.id}.${propertyName}`
+    } else {
+      let xpath = node.getXpath().toArray()
+      let idx = xpath.findIndex(entry => entry.id === 'body')
+      let relXpath
+      if (idx >= 0) {
+        relXpath = xpath.slice(idx)
+      } else {
+        relXpath = xpath.slice(-1)
+      }
+      // the 'trace' is concatenated using '/' and the property name appended via '.'
+      return relXpath.map(e => e.id).join('/') + '.' + propertyName
     }
-
-    const surfaceIdTypes = {
-      'custom-metadata-field': [{
-        ids: ['figure'],
-        parts: tpl`body/${'figure'}/${'path'}`,
-        view: 'manuscript'
-      }, {
-        ids: [],
-        parts: tpl`${'path'}`,
-        view: 'metadata'
-      }]
-    }
-
-    const nodeType = node.type
-    const selectedSpec = surfaceIdTypes[nodeType].find(s => s.view === viewName)
-    const args = selectedSpec.ids.reduce((args, type) => {
-      args[type] = findParentByType(node, type).id
-      return args
-    }, {
-      path: path.join('.')
-    })
-
-    return selectedSpec.parts.call(this, args)
   }
 }

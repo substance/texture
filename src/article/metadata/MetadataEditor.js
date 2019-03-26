@@ -56,17 +56,6 @@ export default class MetadataEditor extends EditorPanel {
     editorSession.setSelection(sel)
   }
 
-  _createModelSelection (modelId) {
-    return {
-      type: 'custom',
-      customType: 'model',
-      nodeId: modelId,
-      data: {
-        modelId
-      }
-    }
-  }
-
   _renderMainSection ($$) {
     const appState = this.context.appState
     let mainSection = $$('div').addClass('se-main-section')

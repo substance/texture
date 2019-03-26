@@ -41,12 +41,12 @@ export default class CardComponent extends Component {
       const editorSession = this.context.editorSession
       editorSession.updateNodeStates([[figure.id, { currentPanelIndex: panelIds.indexOf(node.id) }]], { propagate: true })
     }
-    api.selectModel(node.id)
+    api.selectCard(node.id)
   }
 
   _onSelectionChange (sel) {
-    if (sel && sel.customType === 'model') {
-      if (sel.data.modelId === this.props.node.id) {
+    if (sel && sel.customType === 'card') {
+      if (sel.nodeId === this.props.node.id) {
         this.el.addClass('sm-selected')
       } else {
         this.el.removeClass('sm-selected')

@@ -68,7 +68,7 @@ export function selectRange (editor, startPath, startOffset, endPath, endOffset)
 }
 
 export function selectCard (editor, id) {
-  getApi(editor).selectModel(id)
+  getApi(editor).selectCard(id)
 }
 
 export function selectNode (editor, id) {

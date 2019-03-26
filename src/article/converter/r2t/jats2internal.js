@@ -340,23 +340,44 @@ function _populateSubTitle (doc, jats, jatsImporter) {
 
 function _populateAbstract (doc, jats, jatsImporter) {
   let $$ = jats.createElement.bind(jats)
-  let abstract = doc.get('abstract')
-  // ATTENTION: JATS can have multiple abstracts
-  // ATM we only take the first, loosing the others
+
+  // NOTE: The first abstract without abstract-type is used as main abstract,
+  // if there are others they should be imported as a custom abstract
+  // as well as abstracts with abstract-type attribute
+  let mainAbstract = doc.get('abstract')
   let abstractEls = jats.findAll('article > front > article-meta > abstract')
-  if (abstractEls.length > 0) {
-    let abstractEl = abstractEls[0]
-    if (abstractEls.length > 1) {
-      console.error('FIXME: Texture only supports one <abstract>.')
+  let mainAbstractImported = false
+  abstractEls.forEach(abstractEl => {
+    const titleEl = findChild(abstractEl, 'title')
+    if (titleEl) {
+      abstractEl.removeChild(titleEl)
     }
     // if the abstract is empty, add an empty paragraph
     if (abstractEl.getChildCount() === 0) {
       abstractEl.append($$('p'))
     }
-    abstract.content = abstractEl.children.map(el => {
-      return jatsImporter.convertElement(el).id
-    })
-  }
+    const abstractType = abstractEl.attr('abstract-type')
+    if (!abstractType && !mainAbstractImported) {
+      mainAbstract.content = abstractEl.children.map(el => {
+        return jatsImporter.convertElement(el).id
+      })
+      mainAbstractImported = true
+    } else {
+      let abstract = doc.create({
+        type: 'custom-abstract',
+        id: abstractEl.id,
+        abstractType: abstractType,
+        content: abstractEl.children.map(el => {
+          return jatsImporter.convertElement(el).id
+        })
+      })
+      if (titleEl) {
+        abstract.title = jatsImporter.annotatedText(titleEl, [abstract.id, 'title'])
+      }
+      documentHelpers.append(doc, ['article', 'customAbstracts'], abstract.id)
+    }
+  })
+
   // translations
   let transAbstractEls = jats.findAll('article > front > article-meta > trans-abstract')
   for (let transAbstractEl of transAbstractEls) {
@@ -364,7 +385,7 @@ function _populateAbstract (doc, jats, jatsImporter) {
     let translation = doc.create({
       type: 'article-abstract-translation',
       id: transAbstractEl.id,
-      source: [abstract.id, 'content'],
+      source: [mainAbstract.id, 'content'],
       language,
       content: transAbstractEl.getChildren().map(child => {
         return jatsImporter.convertElement(child).id

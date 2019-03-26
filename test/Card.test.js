@@ -15,14 +15,14 @@ test('Card: select the underlying model when clicking on a card', t => {
   let actual = {
     type: sel.type,
     customType: sel.customType,
-    data: sel.data
+    nodeId: sel.nodeId
   }
   let expected = {
     type: 'custom',
-    customType: 'model',
-    data: { modelId: nodeId }
+    customType: 'card',
+    nodeId
   }
-  t.deepEqual(actual, expected, 'model should be selected')
+  t.deepEqual(actual, expected, 'card should be selected')
   t.ok(card.el.is('.sm-selected'), 'the card component should have been updated')
   t.end()
 })
@@ -30,7 +30,7 @@ test('Card: select the underlying model when clicking on a card', t => {
 // Note: this issue was observed when setting the cursor into a footnote
 // and after that clicking on the card
 test('Card: selecting a card after editing a footnote (regression #841)', t => {
-  // TODO: try to use a smaller fixture
+  // TODO: use a smaller fixture
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let metadataEditor = openMetadataEditor(app)
   let fnSurface = metadataEditor.find('.sc-surface[data-id="fn1.content"]')
@@ -46,7 +46,15 @@ test('Card: selecting a card after editing a footnote (regression #841)', t => {
   let nodeId = card.props.node.id
   card.el.click()
   let sel = getSelection(metadataEditor)
-  t.deepEqual({ type: sel.type, customType: sel.customType, data: sel.data }, { type: 'custom', customType: 'model', data: { modelId: nodeId } }, 'model should be selected')
+  t.deepEqual({
+    type: sel.type,
+    customType: sel.customType,
+    nodeId: sel.nodeId
+  }, {
+    type: 'custom',
+    customType: 'card',
+    nodeId
+  }, 'card should be selected')
   t.ok(card.el.is('.sm-selected'), 'the card component should have been updated')
   t.end()
 })

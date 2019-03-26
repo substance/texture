@@ -8,11 +8,13 @@ import PersistencePackage from '../../PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
+import AbstractsSectionComponent from './AbstractsSectionComponent'
 import AddReferenceWorkflow from '../shared/AddReferenceWorkflow'
 import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import BibliographicEntryEditor from './BibliographicEntryEditor'
+import CustomAbstractComponent from './CustomAbstractComponent'
 import { MoveCollectionItemCommand, RemoveCollectionItemCommand } from './CollectionCommands'
 import {
   AddFigurePanelCommand, MoveFigurePanelCommand,
@@ -20,9 +22,9 @@ import {
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
 import FiguresSectionComponent from './FiguresSectionComponent'
+import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
-import MetadataSection from './MetadataSection'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
@@ -49,13 +51,14 @@ export default {
     config.addComponent('add-reference', AddReferenceWorkflow)
     config.addComponent('article-metadata', ArticleMetadataComponent)
     config.addComponent('article-information', ArticleInformationSectionComponent)
+    config.addComponent('custom-abstract', CustomAbstractComponent)
     config.addComponent('bibr', BibliographicEntryEditor, true)
     config.addComponent('table-figure', TableFigureComponent, true)
     config.addComponent('subject', TranslatableEntryEditor)
     config.addComponent('keyword', TranslatableEntryEditor)
     // Note: @figures and @tables are (dynamic) collections derived from the article's content
+    config.addComponent('@abstracts', AbstractsSectionComponent)
     config.addComponent('@figures', FiguresSectionComponent)
-    config.addComponent('@tables', MetadataSection)
 
     // Commands
     config.addCommand('add-metadata-field', AddCustomMetadataFieldCommand, {
@@ -176,6 +179,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
 
     // Labels
+    config.addLabel('abstracts', 'Abstracts')
     config.addLabel('article', 'Article Information')
     config.addLabel('article-information', 'Article Information')
     config.addLabel('authors', 'Authors')
@@ -204,6 +208,7 @@ export default {
     config.addLabel('edit', 'Edit')
     config.addLabel('remove', 'Remove')
     config.addLabel('workflows', 'Workflows')
+    config.addLabel('select-abstract-type', 'Select abstract type')
     config.addLabel('select-license', 'Select license')
     config.addLabel('select-item', 'Choose')
     config.addLabel('move-down-figure-panel', 'Move Down Sub-Figure')
@@ -226,6 +231,7 @@ export default {
     registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
     registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
+    registerCollectionCommand(config, 'custom-abstract', ['article', 'customAbstracts'], { Command: InsertCustomAbstractCommand })
     config.addCommand('insert-reference', AddEntityCommand, {
       workflow: 'add-reference',
       commandGroup: 'add-entity',

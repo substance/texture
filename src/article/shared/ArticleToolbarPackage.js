@@ -45,6 +45,7 @@ export default {
             name: 'content',
             type: 'group',
             items: [
+              { type: 'command', name: 'insert-custom-abstract', label: 'custom-abstract' },
               { type: 'command', name: 'insert-figure', label: 'figure' },
               { type: 'command', name: 'insert-table', label: 'table' },
               { type: 'command', name: 'insert-block-quote', label: 'block-quote' },

@@ -23,12 +23,12 @@ export default class DefaultNodeComponent extends Component {
 
   getInitialState () {
     return {
-      fullMode: false
+      showAllFields: false
     }
   }
 
   render ($$) {
-    const fullMode = this.state.fullMode
+    const showAllFields = this.state.showAllFields
     const node = this._getNode()
     // TODO: issues should be accessed via model, not directly
     const nodeIssues = node['@issues']
@@ -44,7 +44,7 @@ export default class DefaultNodeComponent extends Component {
     const propNames = Array.from(properties.keys())
     // all required and non-empty properties are always displayed
     let mandatoryPropNames = this._getRequiredOrNonEmptyPropertyNames(properties)
-    let visiblePropNames = fullMode ? propNames : mandatoryPropNames
+    let visiblePropNames = showAllFields ? propNames : mandatoryPropNames
     // show only the first k items
     if (visiblePropNames.length === 0) {
       visiblePropNames = propNames.slice(0, CARD_MINIMUM_FIELDS)
@@ -58,26 +58,28 @@ export default class DefaultNodeComponent extends Component {
       )
     }
 
-    const controlEl = $$('div').addClass('se-control')
-      .on('click', this._toggleMode)
+    const footer = $$('div').addClass('se-footer')
 
+    // Note: only showing a button to toggle display of optional fields
+    // when there are hidden fields
     if (hasHiddenProps) {
-      if (fullMode) {
+      const controlEl = $$('div').addClass('se-control')
+        .on('click', this._toggleMode)
+      if (showAllFields) {
         controlEl.append(
           $$(FontAwesomeIcon, { icon: 'fa-chevron-up' }).addClass('se-icon'),
           this.getLabel('show-less-fields')
-        )
+        ).addClass('sm-show-less-fields')
       } else {
         controlEl.append(
           $$(FontAwesomeIcon, { icon: 'fa-chevron-down' }).addClass('se-icon'),
           this.getLabel('show-more-fields')
-        )
+        ).addClass('sm-show-more-fields')
       }
+      footer.append(
+        controlEl
+      )
     }
-
-    const footer = $$('div').addClass('se-footer').append(
-      controlEl
-    )
 
     el.append(footer)
 
@@ -196,8 +198,8 @@ export default class DefaultNodeComponent extends Component {
   }
 
   _toggleMode () {
-    const fullMode = this.state.fullMode
-    this.extendState({ fullMode: !fullMode })
+    const showAllFields = this.state.showAllFields
+    this.extendState({ showAllFields: !showAllFields })
   }
 
   _rerenderWhenIssueHaveChanged () {

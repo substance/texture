@@ -79,7 +79,8 @@ export default {
     config.addLabel('translators', 'Translators')
     config.addLabel('edit-translators', 'Edit Translators')
 
-    config.addLabel('abstract', 'Abstract')
+    config.addLabel('abstract', 'Main Abstract')
+    config.addLabel('abstractType', 'Abstract Type')
     config.addLabel('accessedDate', 'Accessed Date')
     config.addLabel('accessionId', 'Accession ID')
     config.addLabel('archiveId', 'Archive ID')
@@ -88,6 +89,7 @@ export default {
     config.addLabel('confLoc', 'Conference Location')
     config.addLabel('confName', 'Conference Name')
     config.addLabel('containerTitle', 'Source')
+    config.addLabel('custom-abstract', 'Custom Abstract')
     config.addLabel('day', 'Day')
     config.addLabel('doi', 'DOI')
     config.addLabel('edition', 'Edition')

@@ -53,7 +53,7 @@ const EMPTY_ARTICLE = `<?xml version="1.0" encoding="UTF-8"?>
 //   let addTranslation = translatableEditor.find('.se-control')
 //   addTranslation.click()
 //   let sel = getSelection(editor)
-//   let isCardSelected = sel && sel.isCustomSelection() && sel.getCustomType() === 'model'
+//   let isCardSelected = sel && sel.isCustomSelection() && sel.getCustomType() === 'card'
 //   t.notOk(isCardSelected, 'The translation card should not be selected')
 //   t.end()
 // })

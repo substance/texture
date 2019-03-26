@@ -37,8 +37,7 @@ export default class InsertFootnoteCommand extends AddEntityCommand {
         type: 'property',
         path: p.getPath(),
         startOffset: 0,
-        // TODO: adapt ArticleAPI._getSurfaceId()
-        surfaceId: `${node.id}.content`,
+        surfaceId: context.api._getSurfaceId(node, 'content', context.appState.viewName),
         containerPath: [node.id, 'content']
       })
     })

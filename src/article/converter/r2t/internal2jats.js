@@ -521,8 +521,7 @@ function _exportAbstract (jats, doc, jatsExporter) {
   const $$ = jats.$$
   let abstract = doc.get('abstract')
   let els = []
-
-  // <abstract>
+  // Main abstract
   let abstractEl = $$('abstract')
   // the abstract element itself is required
   // but we skip empty content
@@ -532,6 +531,24 @@ function _exportAbstract (jats, doc, jatsExporter) {
     })
   }
   els.push(abstractEl)
+  // Custom abstracts
+  doc.resolve(['article', 'customAbstracts']).forEach(customAbstract => {
+    let customAbstractEl = $$('abstract')
+    if (customAbstract.abstractType) {
+      customAbstractEl.attr('abstract-type', customAbstract.abstractType)
+    }
+    if (customAbstract.title) {
+      let titleEl = $$('title')
+      _exportAnnotatedText(jatsExporter, [customAbstract.id, 'title'], titleEl)
+      customAbstractEl.append(titleEl)
+    }
+    if (!_isContainerEmpty(customAbstract, 'content')) {
+      customAbstract.resolve('content').forEach(p => {
+        customAbstractEl.append(jatsExporter.convertNode(p))
+      })
+    }
+    els.push(customAbstractEl)
+  })
 
   // translations
   doc.resolve(['article', 'translations']).filter(translation => {

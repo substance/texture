@@ -8,7 +8,7 @@ import {
   ThesisRef, WebpageRef, RefContrib, UnsupportedNode, UnsupportedInlineNode, Graphic, InlineGraphic,
   Bold, Italic, Subscript, Superscript, Monospace, Overline, Underline, SmallCaps, StrikeThrough, Break,
   ExternalLink, InlineFormula, Xref, SupplementaryFile, CustomMetadataField,
-  ArticleTitleTranslation, ArticleAbstractTranslation
+  ArticleTitleTranslation, ArticleAbstractTranslation, CustomAbstract
 } from './models'
 
 export default new DocumentSchema({
@@ -34,6 +34,7 @@ export default new DocumentSchema({
     Break,
     ChapterRef,
     ConferencePaperRef,
+    CustomAbstract,
     CustomMetadataField,
     DataPublicationRef,
     ExternalLink,

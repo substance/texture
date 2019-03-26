@@ -389,7 +389,17 @@
     </optional>
   </define>
 
+  <define name="abstract">
+    <element name="abstract">
+      <ref name="abstract-attlist"/>
+      <ref name="abstract-model"/>
+    </element>
+  </define>
+
   <define name="abstract-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
     <zeroOrMore>
       <ref name="p"/>
     </zeroOrMore>
@@ -450,9 +460,9 @@
       <optional>
         <ref name="permissions"/>
       </optional>
-      <optional>
+      <zeroOrMore>
         <ref name="abstract"/>
-      </optional>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="trans-abstract"/>
       </zeroOrMore>

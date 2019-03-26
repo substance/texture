@@ -34,7 +34,7 @@ export default class SelectAllCommand extends Command {
         if (nodeIds.length === 0) return false
         let firstNodeId = nodeIds[0]
         let lastNodeId = last(nodeIds)
-        sel = doc.createSelection({
+        sel = {
           type: 'container',
           startPath: [firstNodeId],
           startOffset: 0,
@@ -42,17 +42,17 @@ export default class SelectAllCommand extends Command {
           endOffset: 1,
           containerPath,
           surfaceId
-        })
+        }
       } else if (focusedSurface._isTextPropertyEditor) {
         let path = focusedSurface.getPath()
         let text = doc.get(path)
-        sel = editorSession.createSelection({
+        sel = {
           type: 'property',
           path: path,
           startOffset: 0,
           endOffset: text.length,
           surfaceId
-        })
+        }
       }
       if (sel) {
         editorSession.setSelection(sel)

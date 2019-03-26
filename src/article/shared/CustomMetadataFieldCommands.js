@@ -46,12 +46,12 @@ export class AddCustomMetadataFieldCommand extends BasicCustomMetadataFieldComma
       documentHelpers.append(tx, collectionPath, node.id)
       const path = [node.id, 'name']
       const viewName = context.appState.viewName
-      const surfaceId = context.api._getSurfaceId(node, path, viewName)
+      const surfaceId = context.api._getSurfaceId(node, 'name', viewName)
       tx.setSelection({
         type: 'property',
         path,
-        surfaceId,
-        startOffset: 0
+        startOffset: 0,
+        surfaceId
       })
     })
   }

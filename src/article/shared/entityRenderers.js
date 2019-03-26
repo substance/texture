@@ -781,6 +781,11 @@ function subjectRenderer ($$, entityId, entityDb, options = {}) {
   return result
 }
 
+function customAbstractRenderer ($$, entityId, entityDb, options = {}) {
+  let customAbstract = entityDb.get(entityId)
+  return customAbstract.render(options)
+}
+
 /*
   Exports
 */
@@ -804,7 +809,8 @@ export default {
   'keyword': _delegate(keywordRenderer),
   'ref-contrib': _delegate(refContribRenderer),
   'patent-ref': _delegate(patentRenderer),
-  'subject': _delegate(subjectRenderer)
+  'subject': _delegate(subjectRenderer),
+  'custom-abstract': _delegate(customAbstractRenderer)
 }
 
 /*

@@ -2,6 +2,7 @@ import BodyConverter from './BodyConverter'
 import BoldConverter from './BoldConverter'
 import BlockFormulaConverter from './BlockFormulaConverter'
 import BlockQuoteConverter from './BlockQuoteConverter'
+import BreakConverter from './BreakConverter'
 import FigureConverter from './FigureConverter'
 import FigurePanelConverter from './FigurePanelConverter'
 import FootnoteConverter from './FootnoteConverter'
@@ -34,6 +35,7 @@ export default [
   new BoldConverter(),
   new BlockFormulaConverter(),
   new BlockQuoteConverter(),
+  new BreakConverter(),
   new ExternalLinkConverter(),
   new FigureConverter(),
   new FigurePanelConverter(),

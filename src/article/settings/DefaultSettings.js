@@ -9,6 +9,8 @@ export default {
   'chapter-ref.title': { required: true },
   'conference-paper-ref.authors': { required: true },
   'conference-paper-ref.title': { required: true },
+  'custom-abstract.abstractType': { required: true },
+  'custom-abstract.content': { required: true },
   'data-publication-ref.authors': { required: true },
   'data-publication-ref.containerTitle': { required: true },
   'data-publication-ref.title': { required: true },

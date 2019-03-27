@@ -2,7 +2,7 @@ import { TextPropertyComponent as SubstanceTextPropertyComponent, getKeyForPath 
 
 /**
  * Overriding the original implementation
- * 1. to use markersManager to for retrieving
+ * 1. to retrieve markers from MarkersManager in addition to Annotations
  * 2. to change the way how place-holders are rendered
  * 3. to provide default implementation for unsupported inline nodes
 */
@@ -39,11 +39,6 @@ export default class TextPropertyComponentNew extends SubstanceTextPropertyCompo
     }
 
     return el
-  }
-
-  rerender () {
-    console.log('Rerendering TextPropertyComponent ', this.getPath())
-    super.rerender()
   }
 
   getAnnotations () {

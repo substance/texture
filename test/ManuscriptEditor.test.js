@@ -5,7 +5,7 @@ import {
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
-  getCurrentViewName, deleteSelection, createSurfaceEvent
+  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
@@ -180,8 +180,8 @@ test('ManuscriptEditor: Switch paragraph to heading', t => {
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
 
-  t.ok(_canSwitchTo(editor, 'heading1'), 'switch to heading1 should be possible')
-  _switchTo(editor, 'heading1')
+  t.ok(canSwitchTextTypeTo(editor, 'heading1'), 'switch to heading1 should be possible')
+  switchTextType(editor, 'heading1')
   // ATTENTION: we do not change id, which might be confusing for others
   let h1El = editor.find('.sc-surface.sm-body > h1')
   t.notNil(h1El, 'there should be a <h1> element now')
@@ -196,11 +196,11 @@ test('ManuscriptEditor: Switch to heading', t => {
   }
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
-  _switchTo(editor, 'heading1')
+  switchTextType(editor, 'heading1')
   t.ok(_isHeadingDisplayed(1), 'heading level 1 should be displayed')
-  _switchTo(editor, 'heading2')
+  switchTextType(editor, 'heading2')
   t.ok(_isHeadingDisplayed(2), 'heading level 2 should be displayed')
-  _switchTo(editor, 'heading3')
+  switchTextType(editor, 'heading3')
   t.ok(_isHeadingDisplayed(3), 'heading level 3 should be displayed')
   t.end()
 })
@@ -211,8 +211,8 @@ test('ManuscriptEditor: Switch paragraph to preformat', t => {
   loadBodyFixture(editor, ONE_PARAGRAPH)
   setCursor(editor, 'p1.content', 0)
 
-  t.ok(_canSwitchTo(editor, 'preformat'), 'switch to preformat should be possible')
-  _switchTo(editor, 'preformat')
+  t.ok(canSwitchTextTypeTo(editor, 'preformat'), 'switch to preformat should be possible')
+  switchTextType(editor, 'preformat')
 
   let preformatEl = editor.find('.sc-surface.sm-body > .sc-text-node.sm-preformat')
   t.notNil(preformatEl, 'there should be a div with preformat component class now')
@@ -612,15 +612,6 @@ test('ManuscriptEditor: copy and pasting list items', t => {
   t.deepEqual(list.resolve('items').map(item => item.level), [1, 2, 2, 1, 2, 2, 2, 2], '.. with correct levels')
   t.end()
 })
-
-function _canSwitchTo (editor, type) {
-  let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)
-  return tool && !tool.attr('disabled')
-}
-
-function _switchTo (editor, type) {
-  return openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`).el.click()
-}
 
 function _getLineCount (str) {
   return str.split(/\r\n|\r|\n/).length

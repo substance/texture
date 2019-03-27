@@ -1,4 +1,4 @@
-import { NodeIndex } from 'substance'
+import { NodeIndex, getKeyForPath } from 'substance'
 
 // kind of an index that is used to dispatch updates
 export default class DocumentObserver {
@@ -28,7 +28,7 @@ export default class DocumentObserver {
   }
 
   setDirty (path) {
-    this.dirty.add(String(path))
+    this.dirty.add(getKeyForPath(path))
   }
 
   // TODO: this is built on top of the current implementation of

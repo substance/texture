@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { forEach, isNil } from 'substance'
+import { forEach, isNil, getKeyForPath } from 'substance'
 
 /*
   EXPERIMENTAL: This should only be used as a prototype.
@@ -33,7 +33,7 @@ export default class ExperimentalArticleValidator {
   clearIssues (path, type) {
     // Note: storing the issues grouped by propertyName in node['@issues']
     let nodeIssues = this._getNodeIssues(path[0])
-    nodeIssues.clear(path.slice(1).join('.'), type)
+    nodeIssues.clear(getKeyForPath(path.slice(1)), type)
     this._markAsDirty(path)
   }
 
@@ -41,9 +41,9 @@ export default class ExperimentalArticleValidator {
     Thoughts: adding issues one-by-one, and clearing by type
   */
   addIssue (path, issue) {
-    // console.log('ArticleValidator: adding issue for %s', path.join('.'), issue)
+    // console.log('ArticleValidator: adding issue for %s', getKeyForPath(path), issue)
     let nodeIssues = this._getNodeIssues(path[0])
-    nodeIssues.add(path.slice(1).join('.'), issue)
+    nodeIssues.add(getKeyForPath(path.slice(1)), issue)
     this._markAsDirty(path)
   }
 
@@ -90,7 +90,7 @@ export default class ExperimentalArticleValidator {
       }
     })
     Object.keys(change.updated).forEach(key => {
-      let path = key.split(',')
+      let path = key.split('.')
       let node = article.get(path[0])
       if (node) {
         CheckRequiredFields.onUpdate(this, node, path, article.get(path))

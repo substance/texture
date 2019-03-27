@@ -1,3 +1,4 @@
+import { DocumentChange, getKeyForPath } from 'substance'
 import AppState from './AppState'
 import SelectionStateReducer from './SelectionStateReducer'
 import DocumentObserver from './DocumentObserver'
@@ -158,7 +159,7 @@ class DocumentSlot extends Slot {
     const index = this.byPath
     let docSpec = spec.options.document
     if (docSpec && docSpec.path) {
-      let key = docSpec.path
+      let key = getKeyForPath(docSpec.path)
       let records = index[key]
       if (!records) {
         records = index[key] = new Set()
@@ -179,7 +180,7 @@ class DocumentSlot extends Slot {
 
       let docSpec = entry.spec.options.document
       if (docSpec && docSpec.path) {
-        let key = docSpec.path
+        let key = getKeyForPath(docSpec.path)
         let records = index[key]
         records.delete(observer)
       } else {

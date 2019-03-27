@@ -1,5 +1,5 @@
 import {
-  AbstractEditorSession, Selection, isPlainObject, ChangeHistoryView
+  AbstractEditorSession, Selection, isPlainObject, ChangeHistoryView, getKeyForPath
 } from 'substance'
 
 import EditorState from './EditorState'
@@ -193,12 +193,12 @@ export default class EditorSession extends AbstractEditorSession {
 
   _resetOverlayId () {
     const overlayId = this.editorState.overlayId
-    // overlayId === path.join('.') => if selection is value &&
+    // overlayId === getKeyForPath(path) => if selection is value &&
     // Overlays of value components (ManyRelationshipComponent, SingleRelationship)
     // need to remain open if the selection is a value selection
     let sel = this.getSelection()
     if (sel && sel.customType === 'value') {
-      let valueId = sel.data.path.join('.')
+      let valueId = getKeyForPath(sel.data.path)
       if (overlayId !== valueId) {
         this.editorState.set('overlayId', valueId)
       }

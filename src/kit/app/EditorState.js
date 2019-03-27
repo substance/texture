@@ -4,6 +4,8 @@ import SelectionStateReducer from './SelectionStateReducer'
 import DocumentObserver from './DocumentObserver'
 
 const ANY = '@any'
+const NO_CHANGE = new DocumentChange([], {}, {})
+NO_CHANGE._extractInformation()
 
 export default class EditorState extends AppState {
   _initialize (initialState) {
@@ -34,6 +36,17 @@ export default class EditorState extends AppState {
     super.dispose()
 
     this._getImpl().documentObserver.dispose()
+  }
+
+  getUpdate (name) {
+    let update = super.getUpdate(name)
+    // HACK: sometimes we fake a document change to trigger document observers
+    // In this case, there might be no actual update (change and info)
+    // and we provide a NOP change and empty info
+    if (!update && name === 'document') {
+      update = { change: NO_CHANGE, info: {} }
+    }
+    return update
   }
 
   _createSlot (id, stage, deps) {

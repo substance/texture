@@ -9,6 +9,7 @@ import FootnoteConverter from './FootnoteConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import ExternalLinkConverter from './ExternalLinkConverter'
 import GraphicConverter from './GraphicConverter'
+import HeadingConverter from './HeadingConverter'
 import InlineFormulaConverter from './InlineFormulaConverter'
 import InlineGraphicConverter from './InlineGraphicConverter'
 import ItalicConverter from './ItalicConverter'
@@ -41,6 +42,7 @@ export default [
   new FigurePanelConverter(),
   new FootnoteConverter(),
   new GraphicConverter(),
+  new HeadingConverter(),
   new ElementCitationConverter(),
   new InlineFormulaConverter(),
   new InlineGraphicConverter(),

@@ -1,5 +1,5 @@
 /* global vfs */
-import { platform, AbstractEditorSession } from 'substance'
+import { platform, AbstractEditorSession, DefaultDOMElement } from 'substance'
 import { test } from 'substance-test'
 import { TextureArchive, checkArchive } from '../index'
 import { getMountPoint, diff } from './shared/testHelpers'
@@ -10,10 +10,29 @@ InvariantLoadSaveTest('blank')
 
 InvariantLoadSaveTest('kitchen-sink')
 
+// run persistence test in the browser using MemoryDOM to be able
+// to debug problems with that implementation
+if (platform.inBrowser) {
+  InvariantLoadSaveTest('kitchen-sink', true)
+}
+
 LoadSaveShouldNotThrow('blank', 'saving and loading an article after inserting a figure', _INSERT_FIGURE)
 
-function InvariantLoadSaveTest (archiveId) {
-  test(`Persistence: loading and saving article ${archiveId}`, t => {
+function InvariantLoadSaveTest (archiveId, memory) {
+  const _test = (title, fn) => test(`${title}${memory ? ' (memory)' : ''}`, t => {
+    if (memory) {
+      DefaultDOMElement._forceMemoryDOM = true
+      delete t.sandbox
+    }
+    t._document = DefaultDOMElement.createDocument('html')
+    try {
+      fn(t)
+    } finally {
+      DefaultDOMElement._forceMemoryDOM = false
+    }
+  })
+
+  _test(`Persistence: loading and saving article ${archiveId}`, t => {
     // create a vfs where we can store the data during save without harming the global vfs instance
     let testVfs = setupTestVfs(vfs, archiveId)
     let { app, archive, manuscriptSession } = setupTestApp(t, {

@@ -4,8 +4,10 @@ import SelectionStateReducer from './SelectionStateReducer'
 import DocumentObserver from './DocumentObserver'
 
 const ANY = '@any'
-const NO_CHANGE = new DocumentChange([], {}, {})
-NO_CHANGE._extractInformation()
+const NOP = new DocumentChange({
+  ops: [],
+  info: { action: 'nop' }
+})
 
 export default class EditorState extends AppState {
   _initialize (initialState) {
@@ -44,7 +46,9 @@ export default class EditorState extends AppState {
     // In this case, there might be no actual update (change and info)
     // and we provide a NOP change and empty info
     if (!update && name === 'document') {
-      update = { change: NO_CHANGE, info: {} }
+      let change = NOP
+      change._extractInformation()
+      update = { change, info: change.info }
     }
     return update
   }

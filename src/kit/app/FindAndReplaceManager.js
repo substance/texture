@@ -1,22 +1,21 @@
-import { debounce, uuid, platform, documentHelpers } from 'substance'
+import { debounce, uuid, platform, documentHelpers, Marker, getKeyForPath } from 'substance'
 
 const UPDATE_DELAY = 200
 
 export default class FindAndReplaceManager {
-  constructor (editorSession, appState, markersManager) {
+  constructor (editorSession, appState, editor) {
     this._editorSession = editorSession
+    this._doc = editorSession.getDocument()
     this._appState = appState
-    this._markersManager = markersManager
+    this._editor = editor
     this._dirty = new Set()
 
-    this._updateSearchDebounced = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
+    // Note: this is debounced to avoid slow down while typing by running searches too eagerly
+    // Only for testing search updates are done synchronously
+    this._updateSearchDebounced = debounce(this._updateSearch.bind(this, true), UPDATE_DELAY)
 
-    // EXPERIMENTAL: we use the MarkersManager to detect changes on text-properties
-    markersManager.on('text-property:registered', this._onTextPropertyChanged, this)
-    markersManager.on('text-property:deregistered', this._onTextPropertyChanged, this)
-    markersManager.on('text-property:changed', this._onTextPropertyChanged, this)
-
-    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
+    appState.addObserver(['document'], this._onUpdate, this, { stage: 'update' })
+    appState.addObserver(['document'], this._onRender, this, { stage: 'render' })
   }
 
   openDialog (enableReplace) {
@@ -112,7 +111,7 @@ export default class FindAndReplaceManager {
           }, { action: 'replace' })
           // updating the result for the current text property
           // and propagating changes so that so that text properties are updated
-          this._updateSearchForProperty(String(m.path))
+          this._updateSearchForProperty(getKeyForPath(m.path))
           this._appState.propagateUpdates()
           // set the cursor back and scroll to the next
           state.cursor--
@@ -158,6 +157,10 @@ export default class FindAndReplaceManager {
     this._toggleOption('fullWord')
   }
 
+  _getMarkersManager () {
+    return this._editorSession.markersManager
+  }
+
   _getState () {
     return this._appState.get('findAndReplace') || FindAndReplaceManager.defaultState()
   }
@@ -176,7 +179,11 @@ export default class FindAndReplaceManager {
     }
     // console.log('Updating appState.findAndReplace', state)
     appState.set('findAndReplace', state)
-    appState.propagateUpdates()
+    this._propgateUpdates()
+  }
+
+  _propgateUpdates () {
+    this._appState.propagateUpdates()
   }
 
   _searchAndHighlight () {
@@ -184,6 +191,7 @@ export default class FindAndReplaceManager {
     this._clearHighlights()
     this._search()
     this._addHighlights()
+    this._propgateUpdates()
   }
 
   _search () {
@@ -199,14 +207,16 @@ export default class FindAndReplaceManager {
         let _matches = this._searchInProperty(tp, pattern, opts)
         // if (_matches.length > 0) console.log('found %s matches', _matches.length)
         count += _matches.length
-        matches.set(String(tp.getPath()), _matches)
+        if (_matches.length > 0) {
+          matches.set(getKeyForPath(tp.getPath()), _matches)
+        }
       }
     }
     state.matches = matches
     state.count = count
   }
 
-  _updateSearch () {
+  _updateSearch (propagate) {
     let state = this._getState()
     if (!state.enabled || !state.pattern || this._dirty.size === 0) return
 
@@ -220,10 +230,13 @@ export default class FindAndReplaceManager {
     // HACK: need to make sure that the selection is recovered here
     this._updateState(state, 'recoverSelection')
     this._dirty = new Set()
+    if (propagate) {
+      this._propgateUpdates()
+    }
   }
 
   _updateSearchForProperty (key) {
-    let markersManager = this._markersManager
+    let markersManager = this._getMarkersManager()
     let state = this._getState()
     let matches = state.matches
     let count = state.count
@@ -231,8 +244,8 @@ export default class FindAndReplaceManager {
     if (_matches) {
       count -= _matches.length
     }
-    let path = key.split(',')
-    markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
+    let path = key.split('.')
+    markersManager.clearMarkers(path, m => m.type === 'find-marker')
     let tp = this._getTextProperty(key)
     if (tp) {
       _matches = this._searchInProperty(tp, state.pattern, state)
@@ -293,12 +306,12 @@ export default class FindAndReplaceManager {
   }
 
   _clearHighlights () {
-    const markersManager = this._markersManager
+    const markersManager = this._getMarkersManager()
     const state = this._getState()
     if (state.matches) {
       state.matches.forEach((_, key) => {
-        let path = key.split(',')
-        markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
+        let path = key.split('.')
+        markersManager.clearMarkers(path, m => m.type === 'find-marker')
       })
     }
   }
@@ -307,7 +320,7 @@ export default class FindAndReplaceManager {
     const state = this._getState()
     if (state.matches) {
       state.matches.forEach((matches, key) => {
-        let path = key.split(',')
+        let path = key.split('.')
         this._addHighlightsForProperty(path, matches)
       })
     }
@@ -315,9 +328,9 @@ export default class FindAndReplaceManager {
 
   // TODO: don't know yet how we want to update Markers incrementally
   _addHighlightsForProperty (path, matches) {
-    let markersManager = this._markersManager
+    let markersManager = this._getMarkersManager()
     matches.forEach(m => {
-      markersManager.addPropertyMarker(path, {
+      markersManager.addMarker(new Marker(this._doc, {
         type: 'find-marker',
         id: m.id,
         start: {
@@ -328,18 +341,20 @@ export default class FindAndReplaceManager {
           path,
           offset: m.end
         }
-      })
+      }))
     })
   }
 
   _getTextProperties () {
-    // HACK: accessing TextPropertyIndex via private member of markersManager
-    return this._markersManager._textProperties.getSorted()
+    // EXPERIMENTAL: we need to retrieve all *editable* text properties in the correct order
+    // which is not possible just from the model (without further knowledge)
+    // However, doing it via DOM search is probably rather slow
+    return this._editor.getContentPanel().findAll('.sc-text-property')
   }
 
-  _getTextProperty (key) {
-    // HACK: accessing TextPropertyIndex via private member of markersManager
-    return this._markersManager._textProperties.getTextProperty(key)
+  _getTextProperty (id) {
+    // EXPERIMENTAL: same as _getTextProperties()
+    return this._editor.getContentPanel().find(`.sc-text-property[data-path="${id}"]`)
   }
 
   _nav (direction) {
@@ -395,11 +410,15 @@ export default class FindAndReplaceManager {
     }
   }
 
-  _onTextPropertyChanged (path) {
-    this._dirty.add(String(path))
+  _onUpdate (change) {
+    for (let op of change.ops) {
+      if (op.isUpdate() && op.diff._isTextOperation) {
+        this._dirty.add(getKeyForPath(op.path))
+      }
+    }
   }
 
-  _onDocumentChange (change) {
+  _onRender (change) {
     // skip changes caused by replaceNext() and replaceAll()
     if (change.info.action === 'replace' || change.info.action === 'replace-all') return
     // HACK: this is a bit hacky but should work. When the user has changed the text we leave a mark in the state

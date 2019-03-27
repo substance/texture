@@ -21,6 +21,11 @@ export default class EditorPanel extends Component {
     }
   }
 
+  // EXPERIMENTAL: Editor interface to be able to access the root element of editable content
+  getContentPanel () {
+    return this.refs.contentPanel
+  }
+
   // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
     const { articleSession, config, archive, editorState, viewName } = props
@@ -34,7 +39,7 @@ export default class EditorPanel extends Component {
     // TODO: try to find a more idiomatic approach, without needing to hack the context
     // This should be solvable by sharing things like 'api' on the ArticlePanel level
     // and adding other things to getChildContext()
-    const context = Object.assign(this.context, createEditorContext(config, editorSession), {
+    const context = Object.assign(this.context, createEditorContext(config, editorSession, this), {
       api,
       archive,
       editor: this,

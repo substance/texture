@@ -18,15 +18,13 @@ export default class EditorSession extends AbstractEditorSession {
    * @param {object} contextProvider an object with getContext()
    * @param {object|EditorState} editorState a plain object with intial values or an EditorState instance for reuse
    */
-  constructor (id, documentSession, config, contextProvider, editorState = {}) {
+  constructor (id, documentSession, config, editor, editorState = {}) {
     super(id, documentSession, editorState.history)
-
-    if (!contextProvider) contextProvider = { context: { editorSession: this } }
 
     const doc = documentSession.getDocument()
 
     this._config = config
-    this._contextProvider = contextProvider
+    this._editor = editor
 
     // FIXME: it a little confusing how the history injection is done here
     // On the one hand, AbstractEditorSession initializes a history if not given
@@ -48,14 +46,14 @@ export default class EditorSession extends AbstractEditorSession {
     let globalEventHandler = new GlobalEventHandler(editorState)
     let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName, params) => {
       return this.executeCommand(commandName, params)
-    }, contextProvider)
+    }, editor)
     let commandManager = new SchemaDrivenCommandManager(editorState,
       // update commands when document or selection have changed
       ['document', 'selection'],
       config.getCommands(),
-      contextProvider
+      editor
     )
-    let findAndReplaceManager = new FindAndReplaceManager(this, editorState, markersManager)
+    let findAndReplaceManager = new FindAndReplaceManager(this, editorState, editor)
 
     this.editorState = editorState
     this.surfaceManager = surfaceManager
@@ -141,7 +139,11 @@ export default class EditorSession extends AbstractEditorSession {
 
   setSelection (sel) {
     super.setSelection(sel)
-    this.editorState.propagateUpdates()
+    const editorState = this.editorState
+    if (editorState.isBlurred) {
+      editorState.isBlurred = false
+    }
+    editorState.propagateUpdates()
   }
 
   transaction (...args) {

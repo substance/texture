@@ -87,7 +87,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
   }
 
   _rerenderOnModelChangeIfNecessary (change) {
-    let updateNeeded = Boolean(change.updated[this._getPath()])
+    let updateNeeded = Boolean(change.hasUpdated(this._getPath()))
     if (!updateNeeded) {
       let ids = this.props.model.getValue()
       if (ids) {
@@ -95,7 +95,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
           ids = [ids]
         }
         for (let id of ids) {
-          if (change.deleted[id] || change.updated[id]) {
+          if (change.hasDeleted(id) || change.hasUpdated(id)) {
             updateNeeded = true
             break
           }

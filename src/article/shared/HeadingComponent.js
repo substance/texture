@@ -2,7 +2,7 @@ import { TextNodeComponent } from '../../kit'
 
 export default class HeadingComponent extends TextNodeComponent {
   getClassNames () {
-    return 'sc-heading'
+    return 'sc-heading sc-text-node'
   }
 
   getTagName () {

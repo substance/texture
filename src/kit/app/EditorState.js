@@ -175,9 +175,7 @@ class DocumentSlot extends Slot {
     if (entries) {
       const entry = entries.get(this.id)
       const index = this.byPath
-
       super.removeObserver(observer)
-
       let docSpec = entry.spec.options.document
       if (docSpec && docSpec.path) {
         let key = getKeyForPath(docSpec.path)

@@ -1,31 +1,18 @@
-import { TextPropertyComponent as SubstanceTextPropertyComponent } from 'substance'
+import { TextPropertyComponent as SubstanceTextPropertyComponent, getKeyForPath } from 'substance'
 
-/*
-  Overriding the original implementation
-  - 1. to be able to pass down Model instances to inline nodes and annotations
-  - 2. to change the way how place-holders are rendered
+/**
+ * Overriding the original implementation
+ * 1. to use markersManager to for retrieving
+ * 2. to change the way how place-holders are rendered
+ * 3. to provide default implementation for unsupported inline nodes
 */
 export default class TextPropertyComponentNew extends SubstanceTextPropertyComponent {
-  // ATTENTION: need to override this because we need to change the behavior of registration.
-  // In the current implementation in MarkersManager, it is only allowed to register one TextPropertComponent per path
-  // without registration, there are no updates.
   didMount () {
-    const markersManager = this.context.markersManager
-    if (markersManager) {
-      this._isRegistered = markersManager.register(this)
-    }
-    // if not managed by the MarkersManager we let the component be updated directly
-    if (!this._isRegistered) {
-      this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: this.getPath() } })
-    }
+    this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: this.getPath() } })
   }
 
   dispose () {
-    if (this._isRegistered) {
-      this.context.markersManager.deregister(this)
-    } else {
-      this.context.appState.off(this)
-    }
+    this.context.appState.off(this)
   }
 
   render ($$) {
@@ -34,7 +21,7 @@ export default class TextPropertyComponentNew extends SubstanceTextPropertyCompo
     let el = this._renderContent($$)
       .addClass('sc-text-property')
       .attr({
-        'data-path': path.join('.')
+        'data-path': getKeyForPath(path)
       })
       .css({
         'white-space': 'pre-wrap'
@@ -54,8 +41,19 @@ export default class TextPropertyComponentNew extends SubstanceTextPropertyCompo
     return el
   }
 
-  _getFragmentComponentClass (node, noDefault) {
-    return super._getFragmentComponentClass(node, noDefault)
+  rerender () {
+    console.log('Rerendering TextPropertyComponent ', this.getPath())
+    super.rerender()
+  }
+
+  getAnnotations () {
+    let path = this.getPath()
+    let annos = this.getDocument().getAnnotations(path) || []
+    let markersManager = this.context.markersManager
+    if (markersManager) {
+      annos = annos.concat(markersManager.getMarkers(path))
+    }
+    return annos
   }
 
   _getUnsupportedInlineNodeComponentClass () {

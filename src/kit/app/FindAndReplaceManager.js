@@ -104,11 +104,11 @@ export default class FindAndReplaceManager {
       if (state.cursor >= 0) {
         let m = this._getMatchAt(state.cursor)
         if (m) {
-          // ATTENTION: we are not changing the search result on changes with action type: 'replace'
-          // Instead we are doing it here so that
           this._editorSession.transaction(tx => {
             this._replace(tx, m, state)
           }, { action: 'replace' })
+          // ATTENTION: we are not changing the search result on changes with action type: 'replace'
+          // Instead we are doing it here manually:
           // updating the result for the current text property
           // and propagating changes so that so that text properties are updated
           this._updateSearchForProperty(getKeyForPath(m.path))
@@ -420,7 +420,7 @@ export default class FindAndReplaceManager {
 
   _onRender (change) {
     // skip changes caused by replaceNext() and replaceAll()
-    if (change.info.action === 'replace' || change.info.action === 'replace-all') return
+    if (change.info.action === 'replace' || change.info.action === 'replace-all' || change.info.action === 'nop') return
     // HACK: this is a bit hacky but should work. When the user has changed the text we leave a mark in the state
     // so that we can force a 'next()' when 'replaceNext()' is called
     let state = this._getState()

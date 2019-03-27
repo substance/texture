@@ -127,6 +127,8 @@
   color: var(--t-text-color);
 }
 
+/* TODO: move these in specific files for sake of consistency */
+
 .sc-texture .sc-annotation.sm-italic {
   font-style: italic;
 }

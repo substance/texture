@@ -149,6 +149,7 @@ export default class FindAndReplaceDialog extends Component {
       .val(state.pattern)
       .on('keydown', this._onPatternKeydown)
       .on('input', this._updatePattern)
+      .on('focus', this._onFocus)
   }
 
   _renderReplacePatternInput ($$) {
@@ -248,6 +249,11 @@ export default class FindAndReplaceDialog extends Component {
       e.preventDefault()
       this._close()
     }
+  }
+
+  _onFocus (e) {
+    e.stopPropagation()
+    this.context.appState.set('isBlurred', true)
   }
 
   _onPatternKeydown (e) {

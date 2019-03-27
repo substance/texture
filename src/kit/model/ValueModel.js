@@ -1,4 +1,4 @@
-import { isNil } from 'substance'
+import { isNil, getKeyForPath } from 'substance'
 import { throwMethodIsAbstract } from '../shared'
 
 export default class ValueModel {
@@ -8,7 +8,7 @@ export default class ValueModel {
   }
 
   get id () {
-    return this._path.join('.')
+    return getKeyForPath(this._path)
   }
 
   get type () {

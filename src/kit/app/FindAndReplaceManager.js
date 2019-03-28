@@ -14,7 +14,11 @@ export default class FindAndReplaceManager {
     // Only for testing search updates are done synchronously
     this._updateSearchDebounced = debounce(this._updateSearch.bind(this, true), UPDATE_DELAY)
 
+    // during update stage we watch for changes on properties with matches
+    // to keep the internal state up2date
     appState.addObserver(['document'], this._onUpdate, this, { stage: 'update' })
+    // HACK: without this we see strange errors. As a temporary fix leave it here
+    // but should try tor find the source of the problem ASAP
     appState.addObserver(['document'], this._onRender, this, { stage: 'render' })
   }
 
@@ -32,8 +36,9 @@ export default class FindAndReplaceManager {
       state.showReplace = Boolean(enableReplace)
       // resetting dirty flags as we do a full search initially
       this._dirty = new Set()
-      this.search()
+      this._performSearch()
     }
+    this._propgateUpdates()
   }
 
   closeDialog () {
@@ -43,42 +48,27 @@ export default class FindAndReplaceManager {
     this._clearHighlights()
     // Note: recovering the selection here
     this._updateState(state, 'recoverSelection')
-  }
-
-  search () {
-    let state = this._getState()
-    if (state.pattern) {
-      this._searchAndHighlight()
-    } else {
-      this._clear()
-    }
-    state.cursor = -1
-    this._updateState(state)
-    // ATTENTION: scrolling to the first match (if available)
-    // this needs to be done after rolling out the state update
-    // so that the markers have been rendered already
-    if (state.count > 0) {
-      this.next()
-    }
+    this._propgateUpdates()
   }
 
   next () {
-    let state = this._getState()
-    this._nav('forward')
-    this._updateState(state)
+    this._next()
+    this._propgateUpdates()
   }
 
   previous () {
     let state = this._getState()
     this._nav('back')
     this._updateState(state)
+    this._propgateUpdates()
   }
 
   setSearchPattern (pattern) {
     let state = this._getState()
     if (state.pattern !== pattern) {
       state.pattern = pattern
-      this.search()
+      this._performSearch()
+      this._propgateUpdates()
     }
   }
 
@@ -87,6 +77,7 @@ export default class FindAndReplaceManager {
     if (state.replacePattern !== replacePattern) {
       state.replacePattern = replacePattern
       this._updateState(state)
+      this._propgateUpdates()
     }
   }
 
@@ -96,7 +87,7 @@ export default class FindAndReplaceManager {
     // in this case we do a forced 'next()' when using 'replaceNext()'
     if (state._forceNav) {
       state._forceNav = false
-      this.next()
+      this._next()
       return
     }
     if (state.replacePattern) {
@@ -122,8 +113,9 @@ export default class FindAndReplaceManager {
       }
       if (!hasReplaced) {
         // otherwise seek to the next match position first
-        this.next()
+        this._next()
       }
+      this._propgateUpdates()
     }
   }
 
@@ -143,18 +135,22 @@ export default class FindAndReplaceManager {
     state.count = 0
     state.cursor = -1
     this._updateState(state)
+    this._propgateUpdates()
   }
 
   toggleCaseSensitivity () {
     this._toggleOption('caseSensitive')
+    this._propgateUpdates()
   }
 
   toggleRegexSearch () {
     this._toggleOption('regexSearch')
+    this._propgateUpdates()
   }
 
   toggleFullWordSearch () {
     this._toggleOption('fullWord')
+    this._propgateUpdates()
   }
 
   _getMarkersManager () {
@@ -168,7 +164,30 @@ export default class FindAndReplaceManager {
   _toggleOption (optionName) {
     let state = this._getState()
     state[optionName] = !state[optionName]
-    this.search()
+    this._performSearch()
+  }
+
+  _performSearch () {
+    let state = this._getState()
+    if (state.pattern) {
+      this._searchAndHighlight()
+    } else {
+      this._clear()
+    }
+    state.cursor = -1
+    this._updateState(state)
+    // ATTENTION: scrolling to the first match (if available)
+    // this needs to be done after rolling out the state update
+    // so that the markers have been rendered already
+    if (state.count > 0) {
+      this._next()
+    }
+  }
+
+  _next () {
+    let state = this._getState()
+    this._nav('forward')
+    this._updateState(state)
   }
 
   _updateState (state, recoverSelection) {
@@ -179,11 +198,17 @@ export default class FindAndReplaceManager {
     }
     // console.log('Updating appState.findAndReplace', state)
     appState.set('findAndReplace', state)
-    this._propgateUpdates()
   }
 
   _propgateUpdates () {
-    this._appState.propagateUpdates()
+    let appState = this._appState
+    // TODO: we need to figure out if this is a problem
+    // only in tests this is called synchronously
+    // leading to extra updates e.g. when the content is changed while
+    // the FNR dialog is open
+    if (!appState._isUpdating()) {
+      this._appState.propagateUpdates()
+    }
   }
 
   _searchAndHighlight () {
@@ -220,13 +245,10 @@ export default class FindAndReplaceManager {
     let state = this._getState()
     if (!state.enabled || !state.pattern || this._dirty.size === 0) return
 
-    let count = state.count
-    let matches = state.matches
     for (let key of this._dirty) {
+      // ATTENTION: this updates state.count
       this._updateSearchForProperty(key)
     }
-    state.count = count
-    state.matches = matches
     // HACK: need to make sure that the selection is recovered here
     this._updateState(state, 'recoverSelection')
     this._dirty = new Set()
@@ -411,19 +433,22 @@ export default class FindAndReplaceManager {
   }
 
   _onUpdate (change) {
+    // skip changes caused by replaceNext() and replaceAll()
+    if (
+      change.info.action === 'replace' ||
+      change.info.action === 'replace-all' ||
+      change.info.action === 'nop'
+    ) return
     for (let op of change.ops) {
       if (op.isUpdate() && op.diff._isTextOperation) {
         this._dirty.add(getKeyForPath(op.path))
       }
     }
-  }
+    let state = this._getState()
+    if (!state.enabled) return
 
-  _onRender (change) {
-    // skip changes caused by replaceNext() and replaceAll()
-    if (change.info.action === 'replace' || change.info.action === 'replace-all' || change.info.action === 'nop') return
     // HACK: this is a bit hacky but should work. When the user has changed the text we leave a mark in the state
     // so that we can force a 'next()' when 'replaceNext()' is called
-    let state = this._getState()
     state._forceNav = true
     // Note: when running tests updating the search result synchronously
     if (platform.test) {
@@ -432,6 +457,13 @@ export default class FindAndReplaceManager {
       // otherwise this is done debounced
       this._updateSearchDebounced()
     }
+  }
+
+  _onRender (change) {
+    // HACK: There seems to be a problem with registering observers in the appState
+    // without registering this hook we see strange errors at other places
+    // Probably related to a bug in the observer registration/deregistration
+    // during propagation of AppState changes
   }
 
   static defaultState () {

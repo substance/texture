@@ -140,7 +140,7 @@ export default class FindAndReplaceDialog extends Component {
 
   _renderPatternInput ($$) {
     let state = this._getState()
-    return $$('input').ref('pattern')
+    return $$('input').ref('pattern').addClass('sm-find')
       .attr({
         type: 'text',
         placeholder: this.getLabel('find'),
@@ -154,7 +154,7 @@ export default class FindAndReplaceDialog extends Component {
 
   _renderReplacePatternInput ($$) {
     let state = this._getState()
-    return $$('input').ref('replacePattern')
+    return $$('input').ref('replacePattern').addClass('sm-replace')
       .attr({
         type: 'text',
         placeholder: this.getLabel('replace'),

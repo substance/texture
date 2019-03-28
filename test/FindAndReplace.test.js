@@ -1,21 +1,40 @@
 import { test } from 'substance-test'
-import { setCursor, LOREM_IPSUM, getDocument, openManuscriptEditor } from './shared/integrationTestHelpers'
+import { setCursor, LOREM_IPSUM, getDocument, openManuscriptEditor, insertText, clickUndo } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: instead of the kitchen-sink we should use a fixture that has a defined content
 // so that we can write proper test assertions
 
-test('FindAndReplace: open find dialog', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
-  let { fnrDialog } = _openFindAndReplaceDialog(app)
+test('FindAndReplace: opening and closing the find and replace dialog', t => {
+  let { editor } = _setup(t, LOREM_IPSUM)
+  t.comment('opening the find dialog')
+  let { fnrDialog } = _openFindAndReplaceDialog(editor)
+  function _isFindInputVisible () { return Boolean(fnrDialog.find('input.sm-find')) }
+  function _isReplaceInputVisible () { return Boolean(fnrDialog.find('input.sm-replace')) }
+
   t.notNil(fnrDialog, 'The dialog should be rendered')
   t.notOk(fnrDialog.hasClass('sm-hidden'), '.. and should be visible')
+  t.ok(_isFindInputVisible(), 'an input field for the find patter should be displayed')
+
+  t.comment('closing the dialog')
+  _closeFindAndReplaceDialog(editor)
+  t.ok(fnrDialog.hasClass('sm-hidden'), '.. and should be visible')
+
+  t.comment('opening the replace dialog')
+  _openFindAndReplaceDialog(editor, true)
+  t.notOk(fnrDialog.hasClass('sm-hidden'), 'The dialog should be visible')
+  t.ok(_isReplaceInputVisible(), 'an input field for the replace pattern should be displayed')
+
+  t.comment('opening the dialog for find without closing')
+  _openFindAndReplaceDialog(editor)
+  t.notOk(_isReplaceInputVisible(), 'replace pattern field should not be displayed')
+
   t.end()
 })
 
 test('FindAndReplace: simple search', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
-  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(app)
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(editor)
   let input = fnrDialog.find('.sm-find input')
   input.val('Lorem')
   input.el.emit('input')
@@ -25,8 +44,8 @@ test('FindAndReplace: simple search', t => {
 })
 
 test('FindAndReplace: clear search pattern', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
-  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(app)
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(editor)
   let input = fnrDialog.find('.sm-find input')
   // first set the search field
   input.val('Lorem')
@@ -40,8 +59,8 @@ test('FindAndReplace: clear search pattern', t => {
 })
 
 test('FindAndReplace: find and replace', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
-  let { editor, fnrDialog, fnrManager } = _openFindAndReplaceDialog(app, true)
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(editor, true)
   let findInput = fnrDialog.find('.sm-find input')
   findInput.val('dolor')
   findInput.el.emit('input')
@@ -62,8 +81,8 @@ test('FindAndReplace: find and replace', t => {
 })
 
 test('FindAndReplace: replaceAll', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
-  let { editor, fnrDialog, fnrManager } = _openFindAndReplaceDialog(app, true)
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(editor, true)
   let findInput = fnrDialog.find('.sm-find input')
   findInput.val('dolor')
   findInput.el.emit('input')
@@ -82,8 +101,8 @@ test('FindAndReplace: replaceAll', t => {
 })
 
 test('FindAndReplace: replaceAll (replace pattern)', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
-  let { editor, fnrManager } = _openFindAndReplaceDialog(app, true)
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrManager } = _openFindAndReplaceDialog(editor, true)
   fnrManager.toggleCaseSensitivity()
   fnrManager.toggleFullWordSearch()
   fnrManager.toggleRegexSearch()
@@ -98,12 +117,77 @@ test('FindAndReplace: replaceAll (replace pattern)', t => {
   t.end()
 })
 
-function _openFindAndReplaceDialog (app, replace) {
+test('FindAndReplace: navigating matches', t => {
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(editor)
+  function _next () {
+    fnrDialog.find('button.sm-next').click()
+    return true
+  }
+  function _previous () {
+    fnrDialog.find('button.sm-previous').click()
+    return true
+  }
+
+  let input = fnrDialog.find('.sm-find input')
+  input.val('Lorem')
+  input.el.emit('input')
+  let state = fnrManager._getState()
+  let count = state.count
+  t.equal(state.cursor, 0, 'after search the cursor should be on the first match')
+  t.comment('cycling through matches')
+  for (let i = 0; i < count - 1; i++) {
+    _next()
+  }
+  t.equal(state.cursor, count - 1, 'cursor should be on last')
+  t.ok(_next(), 'another next() should not be a problem')
+  t.comment('cycling backwards')
+  for (let i = 0; i < count - 1; i++) {
+    _previous()
+  }
+  t.equal(state.cursor, 0, 'cursor should be on the first match again')
+  t.ok(_previous(), 'another previous() should not be a problem')
+  t.end()
+})
+
+test('FindAndReplace: updating search results when text is changed', t => {
+  let { editor } = _setup(t, LOREM_IPSUM)
+  let { fnrDialog, fnrManager } = _openFindAndReplaceDialog(editor)
+  let input = fnrDialog.find('.sm-find input')
+  input.val('Lorem')
+  input.el.emit('input')
+  let state = fnrManager._getState()
+  let origCount = state.count
+
+  t.comment('inserting text')
+  setCursor(editor, 'p-1.content', 2)
+  // this should invalidate the first match on p-1
+  insertText(editor, 'xxx')
+  t.equal(fnrManager._getState().count, origCount - 1, 'one match should have been invalidated')
+
+  t.comment('undoing the change')
+  clickUndo(editor)
+  t.equal(fnrManager._getState().count, origCount, 'match should be back again')
+
+  t.end()
+})
+
+function _setup (t, fixture) {
+  let { app } = setupTestApp(t, fixture)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 5)
+  return { app, editor }
+}
+
+function _openFindAndReplaceDialog (editor, replace) {
   // open findAndReplace dialog
   let fnrManager = editor.context.findAndReplaceManager
   fnrManager.openDialog(replace)
   let fnrDialog = editor.find('.sc-find-and-replace-dialog')
-  return { editor, fnrManager, fnrDialog }
+  return { fnrManager, fnrDialog }
+}
+
+function _closeFindAndReplaceDialog (editor) {
+  let fnrManager = editor.context.findAndReplaceManager
+  fnrManager.closeDialog()
 }

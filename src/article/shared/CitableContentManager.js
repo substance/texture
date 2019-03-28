@@ -35,7 +35,7 @@ export default class CitableContentManager extends AbstractCitationManager {
       if (isArrayEqual(op.path, contentPath)) {
         const doc = this._getDocument()
         let id = op.diff.val
-        let node = doc.get(id) || change.deleted[id]
+        let node = doc.get(id) || change.hasDeleted(id)
         return (node && this.targetTypes.has(node.type))
       }
     }

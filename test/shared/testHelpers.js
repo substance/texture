@@ -1,11 +1,13 @@
-import { getMountPoint } from 'substance-test'
 import { platform } from 'substance'
 import {
   InternalArticleDocument, InternalArticleSchema,
   createJatsImporter, createJatsExporter, createEmptyJATS
 } from '../../index'
+import getMountPoint from './getMountPoint'
 
-export { test, spy, wait, getMountPoint, testAsync } from 'substance-test'
+export { test, spy, wait, testAsync } from 'substance-test'
+
+export { getMountPoint }
 
 export function promisify (fn) {
   return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import { platform, isArrayEqual } from 'substance'
+import { platform, isArrayEqual, getKeyForPath } from 'substance'
 
 const DEBUG = false
 
@@ -47,7 +47,7 @@ export default class SurfaceManager {
   // TODO: would be good to have an index of surfaces by path
   _getSurfaceForProperty (path) {
     // first try the canonical one
-    let canonicalId = path.join('.')
+    let canonicalId = getKeyForPath(path)
     if (this.surfaces.has(canonicalId)) {
       return this.surfaces.get(canonicalId)
     }

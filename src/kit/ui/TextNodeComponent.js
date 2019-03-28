@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, getKeyForPath } from 'substance'
 
 export default class TextNodeComponent extends Component {
   /*
@@ -27,7 +27,7 @@ export default class TextNodeComponent extends Component {
     el.append(
       $$(TextPropertyComponent, {
         doc: node.getDocument(),
-        name: path.join('.'),
+        name: getKeyForPath(path),
         path,
         placeholder: this.props.placeholder
       })

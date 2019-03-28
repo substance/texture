@@ -1,7 +1,7 @@
 /* global vfs, TEST_VFS, Blob */
 import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
-  Component, DefaultDOMElement, keys
+  Component, DefaultDOMElement, keys, getKeyForPath
 } from 'substance'
 import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
 import TestVfs from './TestVfs'
@@ -423,7 +423,7 @@ function _getTextPropertyForPath (editor, path) {
   if (isString(path)) {
     path = path.split('.')
   }
-  let property = editor.find(`.sc-surface .sc-text-property[data-path="${path.join('.')}"]`)
+  let property = editor.find(`.sc-surface .sc-text-property[data-path="${getKeyForPath(path)}"]`)
   if (!property) {
     throw new Error('Could not find text property for path ' + path)
   }

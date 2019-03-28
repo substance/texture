@@ -100,6 +100,10 @@ export default class AppState extends AbstractAppState {
     return schedule
   }
 
+  _isUpdating () {
+    return this._getImpl().isFlowing
+  }
+
   _reset () {
     super._reset()
     this._setDirty(ANY)

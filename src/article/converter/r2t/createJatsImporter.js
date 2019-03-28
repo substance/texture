@@ -3,7 +3,7 @@ import TextureArticleSchema from '../../TextureArticleSchema'
 import InternalArticleSchema from '../../InternalArticleSchema'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
-import _converters from './_converters'
+import converters from './_converters'
 
 export default function createJatsImporter (doc) {
   // Note: we are applying a hybrid approach, i.e. we create XML importers for the JATS schema
@@ -11,7 +11,6 @@ export default function createJatsImporter (doc) {
   let jatsSchema = TextureArticleSchema.xmlSchema
   // HeadingImporter is only used for import, because BodyConverter does an on-the-fly DOM transformation
   // before calling element converters. Thus, in the export direction headings are already transformed into <sec> elements
-  let converters = [HeadingImporter].concat(_converters)
   let jatsImporter = new _HybridJATSImporter({
     schema: InternalArticleSchema,
     xmlSchema: jatsSchema,
@@ -70,15 +69,5 @@ class _HybridJATSImporter extends XMLDocumentImporter {
       id = this.state.uuid('_' + prefix)
     }
     return id
-  }
-}
-
-const HeadingImporter = {
-  type: 'heading',
-  tagName: 'heading',
-  import (el, node, importer) {
-    // Note: attributes are converted automatically
-    node.level = parseInt(node.attributes.level, 10)
-    node.content = importer.annotatedText(el, [node.id, 'content'])
   }
 }

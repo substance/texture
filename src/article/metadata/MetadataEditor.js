@@ -115,8 +115,9 @@ export default class MetadataEditor extends EditorPanel {
     const ScrollPane = this.getComponent('scroll-pane')
 
     let contentPanel = $$(ScrollPane, {
+      contextMenu: 'custom',
       scrollbarPosition: 'right'
-    // TODO: do we need this ref?
+    // NOTE: this ref is needed to access the root element of the editable content
     }).ref('contentPanel')
 
     let sectionsEl = $$('div').addClass('se-sections')

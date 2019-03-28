@@ -1,3 +1,4 @@
+import { getKeyForPath } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class ListItemComponent extends NodeComponent {
@@ -11,7 +12,7 @@ export default class ListItemComponent extends NodeComponent {
     el.append(
       $$(TextPropertyComponent, {
         doc,
-        name: path.join('.'),
+        name: getKeyForPath(path),
         path
       })
     )

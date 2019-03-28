@@ -1,8 +1,13 @@
+import { DocumentChange, getKeyForPath } from 'substance'
 import AppState from './AppState'
 import SelectionStateReducer from './SelectionStateReducer'
 import DocumentObserver from './DocumentObserver'
 
 const ANY = '@any'
+const NOP = new DocumentChange({
+  ops: [],
+  info: { action: 'nop' }
+})
 
 export default class EditorState extends AppState {
   _initialize (initialState) {
@@ -33,6 +38,19 @@ export default class EditorState extends AppState {
     super.dispose()
 
     this._getImpl().documentObserver.dispose()
+  }
+
+  getUpdate (name) {
+    let update = super.getUpdate(name)
+    // HACK: sometimes we fake a document change to trigger document observers
+    // In this case, there might be no actual update (change and info)
+    // and we provide a NOP change and empty info
+    if (!update && name === 'document') {
+      let change = NOP
+      change._extractInformation()
+      update = { change, info: change.info }
+    }
+    return update
   }
 
   _createSlot (id, stage, deps) {
@@ -158,7 +176,7 @@ class DocumentSlot extends Slot {
     const index = this.byPath
     let docSpec = spec.options.document
     if (docSpec && docSpec.path) {
-      let key = docSpec.path
+      let key = getKeyForPath(docSpec.path)
       let records = index[key]
       if (!records) {
         records = index[key] = new Set()
@@ -174,12 +192,10 @@ class DocumentSlot extends Slot {
     if (entries) {
       const entry = entries.get(this.id)
       const index = this.byPath
-
       super.removeObserver(observer)
-
       let docSpec = entry.spec.options.document
       if (docSpec && docSpec.path) {
-        let key = docSpec.path
+        let key = getKeyForPath(docSpec.path)
         let records = index[key]
         records.delete(observer)
       } else {

@@ -1,4 +1,4 @@
-import { AnnotationCommand } from 'substance'
+import { AnnotationCommand, getKeyForPath } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
@@ -248,7 +248,7 @@ export default {
 // such as disabling move up/down etc.
 function registerCollectionCommand (config, itemType, collectionPath, options = {}) {
   let nodeType = options.nodeType || itemType
-  let xpathSelector = collectionPath.join('.')
+  let xpathSelector = getKeyForPath(collectionPath)
   let Command = options.Command || AddEntityCommand
   config.addCommand(`insert-${itemType}`, Command, {
     type: nodeType,

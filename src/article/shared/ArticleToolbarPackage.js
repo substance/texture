@@ -210,10 +210,10 @@ export default {
           },
           {
             type: 'group',
-            name: 'collection',
+            name: 'text',
             style: 'descriptive',
             items: [
-              { type: 'command-group', name: 'collection' }
+              { type: 'command-group', name: 'text' }
             ]
           }
         ]

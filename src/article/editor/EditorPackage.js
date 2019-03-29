@@ -114,7 +114,7 @@ export default {
       commandGroup: 'formatting'
     })
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
-      commandGroup: 'text-level'
+      commandGroup: 'text'
     })
     config.addCommand('dedent-list', ListPackage.IndentListCommand, {
       spec: { action: 'dedent' },
@@ -155,7 +155,7 @@ export default {
       commandGroup: 'prompt'
     })
     config.addCommand('increase-heading-level', IncreaseHeadingLevelCommand, {
-      commandGroup: 'text-level'
+      commandGroup: 'text'
     })
     config.addCommand('indent-list', ListPackage.IndentListCommand, {
       spec: { action: 'indent' },
@@ -479,8 +479,6 @@ export default {
     ])
 
     // KeyboardShortcuts
-    config.addKeyboardShortcut('shift+tab', { command: 'decrease-heading-level' })
-    config.addKeyboardShortcut('tab', { command: 'increase-heading-level' })
     config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
 
     // Register commands and keyboard shortcuts for collections

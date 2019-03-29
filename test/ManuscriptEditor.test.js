@@ -10,10 +10,8 @@ import {
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 
-// TODO: test changin level of list item
 // TODO: test open link in EditExtLinkTool
 // TODO: test save button
-// TODO: find out why Footnote.getTemplate() is not covered -> insert footnote?
 // TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
 // TODO: test automatic label generation for block-formulas
 

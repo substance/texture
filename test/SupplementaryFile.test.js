@@ -8,8 +8,6 @@ import {
 import { doesNotThrowInNodejs, exportNode, importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-// TODO: test download for a just uploaded file
-
 const insertFileRefToolSelector = '.sm-insert-xref-file'
 const insertSupplementaryFileToolSelector = '.sm-insert-file'
 const downloadSupplementaryFileToolSelector = '.sc-download-supplementary-file-tool'
@@ -24,9 +22,9 @@ test('SupplementaryFile: upload file and insert into manuscript', t => {
   let editor = openManuscriptEditor(app)
 
   loadBodyFixture(editor, '<p id="p1">ABC</p>')
-  t.notOk(_isToolEnabled(editor), 'tool shoud be disabled by default')
+  t.notOk(_canInsertSupplementaryFile(editor), 'tool shoud be disabled by default')
   setCursor(editor, 'p1.content', 2)
-  t.ok(_isToolEnabled(editor), 'tool shoud be enabled')
+  t.ok(_canInsertSupplementaryFile(editor), 'tool shoud be enabled')
   // Note: testing this only in nodejs because in Browser it is annoying as it opens the file dialog
   const workflow = _openWorkflow(editor)
   if (platform.inNodeJS) {
@@ -47,9 +45,9 @@ test('SupplementaryFile: upload file via drop', t => {
   let editor = openManuscriptEditor(app)
 
   loadBodyFixture(editor, '<p id="p1">ABC</p>')
-  t.notOk(_isToolEnabled(editor), 'tool shoud be disabled by default')
+  t.notOk(_canInsertSupplementaryFile(editor), 'tool should not be enabled by default')
   setCursor(editor, 'p1.content', 2)
-  t.ok(_isToolEnabled(editor), 'tool shoud be enabled')
+  t.ok(_canInsertSupplementaryFile(editor), 'tool shoud be enabled')
   const workflow = _openWorkflow(editor)
   doesNotThrowInNodejs(t, () => {
     workflow.find('.sc-file-upload')._handleDrop(new PseudoDropEvent())
@@ -66,9 +64,9 @@ test('SupplementaryFile: insert remote file into manuscript', t => {
   const link = 'http://substance.io/images/texture-1.0.png'
 
   loadBodyFixture(editor, '<p id="p1">ABC</p>')
-  t.notOk(_isToolEnabled(editor), 'tool shoud be disabled by default')
+  t.notOk(_canInsertSupplementaryFile(editor), 'tool should not be enabled by default')
   setCursor(editor, 'p1.content', 2)
-  t.ok(_isToolEnabled(editor), 'tool shoud be enabled')
+  t.ok(_canInsertSupplementaryFile(editor), 'tool should be enabled')
   // Note: testing this only in nodejs because in Browser it is annoying as it opens the file dialog
   const workflow = _openWorkflow(editor)
   const urlInput = workflow.find('.sc-input-with-button > .sc-input')
@@ -257,6 +255,26 @@ test('SupplementaryFile: editing file description', t => {
   t.end()
 })
 
+// this test is run only in nodejs because clicking on the download tool
+// in the browser actually downloads the link
+if (platform.inNodeJS) {
+  test('SupplementaryFile: downloading an uploaded file', t => {
+    let { app } = setupTestApp(t, { archiveId: 'blank' })
+    let editor = openManuscriptEditor(app)
+    loadBodyFixture(editor, '<p id="p1"></p>')
+    setCursor(editor, 'p1.content', 0)
+    const workflow = _openWorkflow(editor)
+    workflow.find('.sc-file-upload')._selectFile(new PseudoFileEvent())
+    let downloadTool = _getDownloadSupplementaryFileTool(editor)
+    // a freshly uploaded file is downloaded using a blob url
+    t.doesNotThrow(() => {
+      downloadTool.click()
+    })
+    t.equal(downloadTool.refs.link.el.attr('href'), `PSEUDO-BLOB-URL:test.png`)
+    t.end()
+  })
+}
+
 function _getInsertSupplementaryFileTool (editor) {
   return openMenuAndFindTool(editor, 'insert', insertSupplementaryFileToolSelector)
 }
@@ -269,7 +287,7 @@ function _getReplaceSupplementaryFileTool (editor) {
   return openContextMenuAndFindTool(editor, replaceSupplementaryFileToolSelector)
 }
 
-function _isToolEnabled (editor) {
+function _canInsertSupplementaryFile (editor) {
   return isToolEnabled(editor, 'insert', '.sm-insert-file')
 }
 

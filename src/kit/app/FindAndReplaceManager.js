@@ -1,22 +1,29 @@
-import { debounce, uuid, platform, documentHelpers } from 'substance'
+import { debounce, uuid, platform, documentHelpers, Marker, getKeyForPath } from 'substance'
 
 const UPDATE_DELAY = 200
 
 export default class FindAndReplaceManager {
-  constructor (editorSession, appState, markersManager) {
+  constructor (editorSession, appState, editor) {
     this._editorSession = editorSession
+    this._doc = editorSession.getDocument()
     this._appState = appState
-    this._markersManager = markersManager
+    this._editor = editor
     this._dirty = new Set()
 
-    this._updateSearchDebounced = debounce(this._updateSearch.bind(this), UPDATE_DELAY)
+    // Note: this is debounced to avoid slow down while typing by running searches too eagerly
+    // Only for testing search updates are done synchronously
+    this._updateSearchDebounced = debounce(this._updateSearch.bind(this, true), UPDATE_DELAY)
 
-    // EXPERIMENTAL: we use the MarkersManager to detect changes on text-properties
-    markersManager.on('text-property:registered', this._onTextPropertyChanged, this)
-    markersManager.on('text-property:deregistered', this._onTextPropertyChanged, this)
-    markersManager.on('text-property:changed', this._onTextPropertyChanged, this)
+    // during update stage we watch for changes on properties with matches
+    // to keep the internal state up2date
+    appState.addObserver(['document'], this._onUpdate, this, { stage: 'update' })
+    // HACK: without this we see strange errors. As a temporary fix leave it here
+    // but should try tor find the source of the problem ASAP
+    appState.addObserver(['document'], this._onRender, this, { stage: 'render' })
+  }
 
-    appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
+  dispose () {
+    this._appState.removeObserver(this)
   }
 
   openDialog (enableReplace) {
@@ -33,8 +40,9 @@ export default class FindAndReplaceManager {
       state.showReplace = Boolean(enableReplace)
       // resetting dirty flags as we do a full search initially
       this._dirty = new Set()
-      this.search()
+      this._performSearch()
     }
+    this._propgateUpdates()
   }
 
   closeDialog () {
@@ -44,42 +52,27 @@ export default class FindAndReplaceManager {
     this._clearHighlights()
     // Note: recovering the selection here
     this._updateState(state, 'recoverSelection')
-  }
-
-  search () {
-    let state = this._getState()
-    if (state.pattern) {
-      this._searchAndHighlight()
-    } else {
-      this._clear()
-    }
-    state.cursor = -1
-    this._updateState(state)
-    // ATTENTION: scrolling to the first match (if available)
-    // this needs to be done after rolling out the state update
-    // so that the markers have been rendered already
-    if (state.count > 0) {
-      this.next()
-    }
+    this._propgateUpdates()
   }
 
   next () {
-    let state = this._getState()
-    this._nav('forward')
-    this._updateState(state)
+    this._next()
+    this._propgateUpdates()
   }
 
   previous () {
     let state = this._getState()
     this._nav('back')
     this._updateState(state)
+    this._propgateUpdates()
   }
 
   setSearchPattern (pattern) {
     let state = this._getState()
     if (state.pattern !== pattern) {
       state.pattern = pattern
-      this.search()
+      this._performSearch()
+      this._propgateUpdates()
     }
   }
 
@@ -88,6 +81,7 @@ export default class FindAndReplaceManager {
     if (state.replacePattern !== replacePattern) {
       state.replacePattern = replacePattern
       this._updateState(state)
+      this._propgateUpdates()
     }
   }
 
@@ -97,7 +91,7 @@ export default class FindAndReplaceManager {
     // in this case we do a forced 'next()' when using 'replaceNext()'
     if (state._forceNav) {
       state._forceNav = false
-      this.next()
+      this._next()
       return
     }
     if (state.replacePattern) {
@@ -105,14 +99,14 @@ export default class FindAndReplaceManager {
       if (state.cursor >= 0) {
         let m = this._getMatchAt(state.cursor)
         if (m) {
-          // ATTENTION: we are not changing the search result on changes with action type: 'replace'
-          // Instead we are doing it here so that
           this._editorSession.transaction(tx => {
             this._replace(tx, m, state)
           }, { action: 'replace' })
+          // ATTENTION: we are not changing the search result on changes with action type: 'replace'
+          // Instead we are doing it here manually:
           // updating the result for the current text property
           // and propagating changes so that so that text properties are updated
-          this._updateSearchForProperty(String(m.path))
+          this._updateSearchForProperty(getKeyForPath(m.path))
           this._appState.propagateUpdates()
           // set the cursor back and scroll to the next
           state.cursor--
@@ -123,8 +117,9 @@ export default class FindAndReplaceManager {
       }
       if (!hasReplaced) {
         // otherwise seek to the next match position first
-        this.next()
+        this._next()
       }
+      this._propgateUpdates()
     }
   }
 
@@ -144,18 +139,26 @@ export default class FindAndReplaceManager {
     state.count = 0
     state.cursor = -1
     this._updateState(state)
+    this._propgateUpdates()
   }
 
   toggleCaseSensitivity () {
     this._toggleOption('caseSensitive')
+    this._propgateUpdates()
   }
 
   toggleRegexSearch () {
     this._toggleOption('regexSearch')
+    this._propgateUpdates()
   }
 
   toggleFullWordSearch () {
     this._toggleOption('fullWord')
+    this._propgateUpdates()
+  }
+
+  _getMarkersManager () {
+    return this._editorSession.markersManager
   }
 
   _getState () {
@@ -165,7 +168,30 @@ export default class FindAndReplaceManager {
   _toggleOption (optionName) {
     let state = this._getState()
     state[optionName] = !state[optionName]
-    this.search()
+    this._performSearch()
+  }
+
+  _performSearch () {
+    let state = this._getState()
+    if (state.pattern) {
+      this._searchAndHighlight()
+    } else {
+      this._clear()
+    }
+    state.cursor = -1
+    this._updateState(state)
+    // ATTENTION: scrolling to the first match (if available)
+    // this needs to be done after rolling out the state update
+    // so that the markers have been rendered already
+    if (state.count > 0) {
+      this._next()
+    }
+  }
+
+  _next () {
+    let state = this._getState()
+    this._nav('forward')
+    this._updateState(state)
   }
 
   _updateState (state, recoverSelection) {
@@ -176,7 +202,17 @@ export default class FindAndReplaceManager {
     }
     // console.log('Updating appState.findAndReplace', state)
     appState.set('findAndReplace', state)
-    appState.propagateUpdates()
+  }
+
+  _propgateUpdates () {
+    let appState = this._appState
+    // TODO: we need to figure out if this is a problem
+    // only in tests this is called synchronously
+    // leading to extra updates e.g. when the content is changed while
+    // the FNR dialog is open
+    if (!appState._isUpdating()) {
+      this._appState.propagateUpdates()
+    }
   }
 
   _searchAndHighlight () {
@@ -184,6 +220,7 @@ export default class FindAndReplaceManager {
     this._clearHighlights()
     this._search()
     this._addHighlights()
+    this._propgateUpdates()
   }
 
   _search () {
@@ -199,31 +236,33 @@ export default class FindAndReplaceManager {
         let _matches = this._searchInProperty(tp, pattern, opts)
         // if (_matches.length > 0) console.log('found %s matches', _matches.length)
         count += _matches.length
-        matches.set(String(tp.getPath()), _matches)
+        if (_matches.length > 0) {
+          matches.set(getKeyForPath(tp.getPath()), _matches)
+        }
       }
     }
     state.matches = matches
     state.count = count
   }
 
-  _updateSearch () {
+  _updateSearch (propagate) {
     let state = this._getState()
     if (!state.enabled || !state.pattern || this._dirty.size === 0) return
 
-    let count = state.count
-    let matches = state.matches
     for (let key of this._dirty) {
+      // ATTENTION: this updates state.count
       this._updateSearchForProperty(key)
     }
-    state.count = count
-    state.matches = matches
     // HACK: need to make sure that the selection is recovered here
     this._updateState(state, 'recoverSelection')
     this._dirty = new Set()
+    if (propagate) {
+      this._propgateUpdates()
+    }
   }
 
   _updateSearchForProperty (key) {
-    let markersManager = this._markersManager
+    let markersManager = this._getMarkersManager()
     let state = this._getState()
     let matches = state.matches
     let count = state.count
@@ -231,8 +270,8 @@ export default class FindAndReplaceManager {
     if (_matches) {
       count -= _matches.length
     }
-    let path = key.split(',')
-    markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
+    let path = key.split('.')
+    markersManager.clearMarkers(path, m => m.type === 'find-marker')
     let tp = this._getTextProperty(key)
     if (tp) {
       _matches = this._searchInProperty(tp, state.pattern, state)
@@ -293,12 +332,12 @@ export default class FindAndReplaceManager {
   }
 
   _clearHighlights () {
-    const markersManager = this._markersManager
+    const markersManager = this._getMarkersManager()
     const state = this._getState()
     if (state.matches) {
       state.matches.forEach((_, key) => {
-        let path = key.split(',')
-        markersManager.clearPropertyMarkers(path, m => m.type === 'find-marker')
+        let path = key.split('.')
+        markersManager.clearMarkers(path, m => m.type === 'find-marker')
       })
     }
   }
@@ -307,7 +346,7 @@ export default class FindAndReplaceManager {
     const state = this._getState()
     if (state.matches) {
       state.matches.forEach((matches, key) => {
-        let path = key.split(',')
+        let path = key.split('.')
         this._addHighlightsForProperty(path, matches)
       })
     }
@@ -315,9 +354,9 @@ export default class FindAndReplaceManager {
 
   // TODO: don't know yet how we want to update Markers incrementally
   _addHighlightsForProperty (path, matches) {
-    let markersManager = this._markersManager
+    let markersManager = this._getMarkersManager()
     matches.forEach(m => {
-      markersManager.addPropertyMarker(path, {
+      markersManager.addMarker(new Marker(this._doc, {
         type: 'find-marker',
         id: m.id,
         start: {
@@ -328,18 +367,20 @@ export default class FindAndReplaceManager {
           path,
           offset: m.end
         }
-      })
+      }))
     })
   }
 
   _getTextProperties () {
-    // HACK: accessing TextPropertyIndex via private member of markersManager
-    return this._markersManager._textProperties.getSorted()
+    // EXPERIMENTAL: we need to retrieve all *editable* text properties in the correct order
+    // which is not possible just from the model (without further knowledge)
+    // However, doing it via DOM search is probably rather slow
+    return this._editor.getContentPanel().findAll('.sc-text-property')
   }
 
-  _getTextProperty (key) {
-    // HACK: accessing TextPropertyIndex via private member of markersManager
-    return this._markersManager._textProperties.getTextProperty(key)
+  _getTextProperty (id) {
+    // EXPERIMENTAL: same as _getTextProperties()
+    return this._editor.getContentPanel().find(`.sc-text-property[data-path="${id}"]`)
   }
 
   _nav (direction) {
@@ -395,16 +436,23 @@ export default class FindAndReplaceManager {
     }
   }
 
-  _onTextPropertyChanged (path) {
-    this._dirty.add(String(path))
-  }
-
-  _onDocumentChange (change) {
+  _onUpdate (change) {
     // skip changes caused by replaceNext() and replaceAll()
-    if (change.info.action === 'replace' || change.info.action === 'replace-all') return
+    if (
+      change.info.action === 'replace' ||
+      change.info.action === 'replace-all' ||
+      change.info.action === 'nop'
+    ) return
+    for (let op of change.ops) {
+      if (op.isUpdate() && op.diff._isTextOperation) {
+        this._dirty.add(getKeyForPath(op.path))
+      }
+    }
+    let state = this._getState()
+    if (!state.enabled) return
+
     // HACK: this is a bit hacky but should work. When the user has changed the text we leave a mark in the state
     // so that we can force a 'next()' when 'replaceNext()' is called
-    let state = this._getState()
     state._forceNav = true
     // Note: when running tests updating the search result synchronously
     if (platform.test) {
@@ -413,6 +461,13 @@ export default class FindAndReplaceManager {
       // otherwise this is done debounced
       this._updateSearchDebounced()
     }
+  }
+
+  _onRender (change) {
+    // HACK: There seems to be a problem with registering observers in the appState
+    // without registering this hook we see strange errors at other places
+    // Probably related to a bug in the observer registration/deregistration
+    // during propagation of AppState changes
   }
 
   static defaultState () {

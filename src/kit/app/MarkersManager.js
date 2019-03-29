@@ -1,131 +1,170 @@
-import { forEach, Marker, EventEmitter } from 'substance'
-import TextPropertyIndex from './TextPropertyIndex'
-import MarkersIndex from './MarkersIndex'
+import { EventEmitter, deleteFromArray, getKeyForPath } from 'substance'
 
-// TODO: extract code that can be shared with original editorSession based implementation
-// TODO: let this act as a reducer for editorState.markers
-// EXPERIMENTAL: events emitted by this class are meant for internal use only
 export default class MarkersManager extends EventEmitter {
   constructor (editorState) {
     super()
 
-    this.editorState = editorState
-    // registry
-    this._textProperties = new TextPropertyIndex()
-    this._dirtyProps = {}
-    this._markers = new MarkersIndex(this)
+    this._editorState = editorState
+    this._markers = new MarkersIndex()
 
-    // keep markers up-to-date, and record which text properties
-    // are affected by a change
-    editorState.addObserver(['document'], this._onChange, this, { stage: 'update' })
-    editorState.addObserver(['@any'], this._updateProperties, this, { stage: 'render' })
+    editorState.addObserver(['document'], this._onDocumentChange, this, { stage: 'update' })
   }
 
   dispose () {
-    this.editorState.off(this)
+    this._editorState.removeObserver(this)
   }
 
-  setMarkers (key, markers) {
-    this.clearMarkers(key)
-    markers.forEach(m => this.addMarker(key, m))
+  addMarker (marker) {
+    let path = marker.getPath()
+    this._markers.add(path, marker)
+    this._setDirty(path)
   }
 
-  addMarker (key, marker) {
-    marker._key = key
-    if (!marker._isMarker) {
-      marker = new Marker(this.editorState.document, marker)
+  removeMarker (marker) {
+    let path = marker.getPath()
+    this._markers.remove(path, marker)
+    this._setDirty(path)
+  }
+
+  clearMarkers (path, filter) {
+    this._markers.clearMarkers(path, filter)
+    this._setDirty(path)
+  }
+
+  getMarkers (path) {
+    return this._markers.get(path)
+  }
+
+  _getDocumentObserver () {
+    return this._editorState._getDocumentObserver()
+  }
+
+  _setDirty (path) {
+    this._editorState._setDirty('document')
+    this._getDocumentObserver().setDirty(path)
+  }
+
+  // updating markers to reflect changes on the text they are bound to
+  _onDocumentChange (change) {
+    for (let op of change.ops) {
+      if (op.type === 'update' && op.diff._isTextOperation) {
+        let markers = this._markers.get(op.path)
+        if (!markers || markers.length === 0) continue
+        let diff = op.diff
+        switch (diff.type) {
+          case 'insert':
+            markers.forEach(m => this._transformInsert(m, diff))
+            break
+          case 'delete':
+            markers.forEach(m => this._transformDelete(m, diff))
+            break
+          default:
+          //
+        }
+      }
     }
-    this._markers.add(marker)
   }
 
-  clearMarkers (key) {
-    this._markers.clear(key)
+  _transformInsert (marker, op) {
+    const pos = op.pos
+    const length = op.str.length
+    if (length === 0) return
+    // console.log('Transforming marker after insert')
+    let start = marker.start.offset
+    let end = marker.end.offset
+    let newStart = start
+    let newEnd = end
+    if (pos >= end) return
+    if (pos <= start) {
+      newStart += length
+      newEnd += length
+      marker.start.offset = newStart
+      marker.end.offset = newEnd
+      return
+    }
+    if (pos < end) {
+      newEnd += length
+      marker.end.offset = newEnd
+      // NOTE: right now, any change inside a marker
+      // removes the marker, as opposed to changes before
+      // which shift the marker
+      this._remove(marker)
+    }
   }
 
-  clearPropertyMarkers (path, filter) {
-    this._markers.clearPropertyMarkers(path, filter)
-    this._dirtyProps[path] = true
-  }
+  _transformDelete (marker, op) {
+    const pos1 = op.pos
+    const length = op.str.length
+    const pos2 = pos1 + length
+    if (pos1 === pos2) return
+    var start = marker.start.offset
+    var end = marker.end.offset
+    var newStart = start
+    var newEnd = end
+    if (pos2 <= start) {
+      newStart -= length
+      newEnd -= length
+      marker.start.offset = newStart
+      marker.end.offset = newEnd
+    } else if (pos1 >= end) {
 
-  addPropertyMarker (path, data) {
-    // TODO: maybe provide a factory for creating markers
-    this._markers.addPropertyMarker(path, new Marker(this.editorState.document, data))
-    this._dirtyProps[path] = true
-  }
-
-  register (textPropertyComponent) {
-    let index = this._textProperties
-    let path = textPropertyComponent.getPath()
-    if (index.isPathRegistered(path)) {
-      return false
+      // the marker needs to be changed
+      // now, there might be cases where the marker gets invalid, such as a spell-correction
     } else {
-      // console.log('Registering text-property', path)
-      this._textProperties.registerTextProperty(textPropertyComponent)
-      // ATTENTION: see note about events above
-      this.emit('text-property:registered', textPropertyComponent.getPath())
-      return true
+      if (pos1 <= start) {
+        newStart = start - Math.min(pos2 - pos1, start - pos1)
+      }
+      if (pos1 <= end) {
+        newEnd = end - Math.min(pos2 - pos1, end - pos1)
+      }
+      // TODO: we should do something special when the change occurred inside the marker
+      if (start !== end && newStart === newEnd) {
+        this._remove(marker)
+        return
+      }
+      if (start !== newStart) {
+        marker.start.offset = newStart
+      }
+      if (end !== newEnd) {
+        marker.end.offset = newEnd
+      }
+      this._remove(marker)
     }
   }
 
-  deregister (textPropertyComponent) {
-    // console.log('Deregistering text-property', textPropertyComponent.getPath())
-    this._textProperties.unregisterTextProperty(textPropertyComponent)
-    // ATTENTION: see note about events above
-    this.emit('text-property:deregistered', textPropertyComponent.getPath())
+  _remove (marker) {
+    this.removeMarker(marker)
   }
+}
 
-  getMarkers (path, opts) {
-    opts = opts || {}
-    let doc = this.editorState.document
-    let annos = doc.getAnnotations(path) || []
-    let markers = this._markers.get(path, opts.surfaceId, opts.containerPath)
-    return annos.concat(markers)
+// TODO: move getKeyForPath() into substance land, and change ArrayTree implementation to use it
+class MarkersIndex {
+  add (path, val) {
+    let key = getKeyForPath(path)
+    if (!this[key]) {
+      this[key] = []
+    }
+    this[key].push(val)
   }
-
-  _onChange (change) {
-    // console.log('MarkersManager.onChange()', change)
-    this._markers._onDocumentChange(change)
-    this._recordDirtyTextProperties(change)
+  remove (path, val) {
+    let key = getKeyForPath(path)
+    if (this[key]) {
+      deleteFromArray(this[key], val)
+    }
   }
-
-  _recordDirtyTextProperties (change) {
-    const textProperties = this._textProperties
-    // mark all updated props per se as dirty
-    forEach(change.updated, (val, id) => {
-      if (textProperties._hasProperty(id)) {
-        this._dirtyProps[id] = true
-        // ATTENTION: see note about events above
-        this.emit('text-property:changed', id)
+  get (path) {
+    let key = getKeyForPath(path)
+    return this[key] || []
+  }
+  clearMarkers (path, filter) {
+    let key = getKeyForPath(path)
+    let arr = this[key]
+    if (arr) {
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (filter(arr[i])) {
+          arr.splice(i, 1)
+        }
       }
-    })
-  }
-
-  /*
-    Trigger rerendering of all dirty text properties.
-  */
-  _updateProperties () {
-    // console.log('MarkersManager._updateProperties()')
-    Object.keys(this._dirtyProps).forEach((path) => {
-      let textPropertyComponent = this._textProperties.getTextProperty(path)
-      if (textPropertyComponent) {
-        this._updateTextProperty(textPropertyComponent)
-      }
-    })
-    this._dirtyProps = {}
-  }
-
-  /*
-    Here a dirty text property is rerendered via calling setState()
-  */
-  _updateTextProperty (textPropertyComponent) {
-    let path = textPropertyComponent.getPath()
-    let markers = this.getMarkers(path, {
-      surfaceId: textPropertyComponent.getSurfaceId(),
-      containerPath: textPropertyComponent.getContainerPath()
-    })
-    // console.log('## providing %s markers for %s', markers.length, path)
-    textPropertyComponent.setState({
-      markers: markers
-    })
+    }
   }
 }

@@ -1,7 +1,7 @@
 /* global vfs, TEST_VFS, Blob */
 import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
-  Component, DefaultDOMElement, keys
+  Component, DefaultDOMElement, keys, getKeyForPath
 } from 'substance'
 import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
 import TestVfs from './TestVfs'
@@ -251,6 +251,10 @@ export function createPseudoFile (name, type) {
   return blob
 }
 
+export function createSurfaceEvent (surface, eventData) {
+  return new DOMEvent(Object.assign({ target: surface.getNativeElement() }, eventData))
+}
+
 export function findParent (el, selector) {
   let isComponent = el._isComponent
   if (isComponent) {
@@ -423,7 +427,7 @@ function _getTextPropertyForPath (editor, path) {
   if (isString(path)) {
     path = path.split('.')
   }
-  let property = editor.find(`.sc-surface .sc-text-property[data-path="${path.join('.')}"]`)
+  let property = editor.find(`.sc-surface .sc-text-property[data-path="${getKeyForPath(path)}"]`)
   if (!property) {
     throw new Error('Could not find text property for path ' + path)
   }

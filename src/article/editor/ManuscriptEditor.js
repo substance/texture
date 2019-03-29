@@ -95,9 +95,9 @@ export default class ManuscriptEditor extends EditorPanel {
     const Dropzones = this.getComponent('dropzones')
 
     let contentPanel = $$(ScrollPane, {
-      // scrollbarType: 'substance',
       contextMenu: 'custom',
       scrollbarPosition: 'right'
+    // NOTE: this ref is needed to access the root element of the editable content
     }).ref('contentPanel')
 
     contentPanel.append(

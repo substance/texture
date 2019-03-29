@@ -58,8 +58,6 @@ class Internal2JATSExporter extends XMLExporter {
     el.attr(this.config.idAttribute, node.id)
     if (converter.export) {
       el = converter.export(node, el, this) || el
-    } else {
-      throw new Error('Converter must define a function export(node, el, exporter)')
     }
     return el
   }

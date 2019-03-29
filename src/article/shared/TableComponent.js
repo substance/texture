@@ -1,7 +1,7 @@
 import {
   Component, CustomSurface, platform,
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
-  keys
+  keys, getKeyForPath
 } from 'substance'
 import { Managed, Clipboard } from '../../kit'
 import { getCellRange, computeUpdatedSelection, createTableSelection } from '../shared/tableHelpers'
@@ -429,7 +429,7 @@ export default class TableComponent extends CustomSurface {
           type: 'property',
           path,
           startOffset: cell.getLength(),
-          surfaceId: this.getId() + '/' + path.join('.')
+          surfaceId: this.getId() + '/' + getKeyForPath(path)
         })
       }
     }

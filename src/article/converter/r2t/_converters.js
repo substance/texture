@@ -2,12 +2,14 @@ import BodyConverter from './BodyConverter'
 import BoldConverter from './BoldConverter'
 import BlockFormulaConverter from './BlockFormulaConverter'
 import BlockQuoteConverter from './BlockQuoteConverter'
+import BreakConverter from './BreakConverter'
 import FigureConverter from './FigureConverter'
 import FigurePanelConverter from './FigurePanelConverter'
 import FootnoteConverter from './FootnoteConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import ExternalLinkConverter from './ExternalLinkConverter'
 import GraphicConverter from './GraphicConverter'
+import HeadingConverter from './HeadingConverter'
 import InlineFormulaConverter from './InlineFormulaConverter'
 import InlineGraphicConverter from './InlineGraphicConverter'
 import ItalicConverter from './ItalicConverter'
@@ -34,11 +36,13 @@ export default [
   new BoldConverter(),
   new BlockFormulaConverter(),
   new BlockQuoteConverter(),
+  new BreakConverter(),
   new ExternalLinkConverter(),
   new FigureConverter(),
   new FigurePanelConverter(),
   new FootnoteConverter(),
   new GraphicConverter(),
+  new HeadingConverter(),
   new ElementCitationConverter(),
   new InlineFormulaConverter(),
   new InlineGraphicConverter(),

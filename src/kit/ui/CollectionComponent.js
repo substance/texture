@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, getKeyForPath } from 'substance'
 import ContainerEditor from './_ContainerEditor'
 import ValueComponent from './ValueComponent'
 import renderNode from './_renderNode'
@@ -33,7 +33,7 @@ class ReadOnlyCollection extends ValueComponent {
   render ($$) {
     let props = this.props
     let model = props.model
-    let el = $$('div').addClass('sc-collection').attr('data-id', model.getPath().join('.'))
+    let el = $$('div').addClass('sc-collection').attr('data-id', getKeyForPath(model.getPath()))
     let items = model.getItems()
     el.append(
       items.map(item => renderNode($$, this, item, { disabled: props.disabled }).ref(item.id))

@@ -1,10 +1,11 @@
 import { test } from 'substance-test'
+import { parseKeyCombo } from 'substance'
 import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
-  getCurrentViewName, deleteSelection
+  getCurrentViewName, deleteSelection, createSurfaceEvent
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
@@ -215,6 +216,39 @@ test('ManuscriptEditor: Switch paragraph to preformat', t => {
 
   let preformatEl = editor.find('.sc-surface.sm-body > .sc-text-node.sm-preformat')
   t.notNil(preformatEl, 'there should be a div with preformat component class now')
+  t.end()
+})
+
+const SHIFT_ENTER = parseKeyCombo('Shift+Enter')
+const PREFORMAT = `<preformat id="preformat" preformat-type="code"><![CDATA[for (let i=0; i<5; i++) {
+  console.log(i)
+}]]></preformat>`
+
+test('ManuscriptEditor: insert a line-break into preformat', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  loadBodyFixture(editor, PREFORMAT)
+  let doc = getDocument(editor)
+  let preformat = doc.get('preformat')
+  let origLineCount = _getLineCount(preformat.getText())
+  let bodySurface = editor.getContentPanel().find('.sc-surface[data-surface-id="body"]')
+  setCursor(editor, 'preformat.content', 0)
+  bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_ENTER))
+  t.equal(_getLineCount(preformat.getText()), origLineCount + 1, 'there should be a new line inserted')
+  t.end()
+})
+
+test('ManuscriptEditor: insert a line-break into heading', t => {
+  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  let heading = doc.get('sec-1')
+  let bodySurface = editor.getContentPanel().find('.sc-surface[data-surface-id="body"]')
+
+  setCursor(editor, 'sec-1.content', 1)
+  bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_ENTER))
+  let annos = heading.getAnnotations()
+  t.deepEqual(['break'], annos.map(a => a.type), 'there should be a line-break inserted')
   t.end()
 })
 
@@ -586,4 +620,8 @@ function _canSwitchTo (editor, type) {
 
 function _switchTo (editor, type) {
   return openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`).el.click()
+}
+
+function _getLineCount (str) {
+  return str.split(/\r\n|\r|\n/).length
 }

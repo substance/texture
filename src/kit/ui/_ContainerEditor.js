@@ -77,4 +77,39 @@ export default class ContainerEditorNew extends ModifiedSurface(SubstanceContain
     props.placeholder = this.props.placeholder
     return props
   }
+
+  _handleEnterKey (event) {
+    // for SHIFT-ENTER a line break is inserted (<break> if allowed, or \n alternatively)
+    if (event.shiftKey) {
+      event.preventDefault()
+      event.stopPropagation()
+      this._softBreak()
+    } else {
+      super._handleEnterKey(event)
+    }
+  }
+
+  _softBreak () {
+    let editorSession = this.getEditorSession()
+    let sel = editorSession.getSelection()
+    if (sel.isPropertySelection()) {
+      // find out if the current node allows for <break>
+      let doc = editorSession.getDocument()
+      let prop = doc.getProperty(sel.start.path)
+      if (prop.targetTypes && prop.targetTypes.indexOf('break') !== -1) {
+        editorSession.transaction(tx => {
+          let br = tx.create({ type: 'break' })
+          tx.insertInlineNode(br)
+        }, { action: 'soft-break' })
+      } else {
+        editorSession.transaction(tx => {
+          tx.insertText('\n')
+        }, { action: 'soft-break' })
+      }
+    } else {
+      editorSession.transaction((tx) => {
+        tx.break()
+      }, { action: 'break' })
+    }
+  }
 }

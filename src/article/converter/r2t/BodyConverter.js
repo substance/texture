@@ -76,7 +76,7 @@ export default class BodyConverter {
         }
         let sec = $$('sec').attr({ id: heading.id })
         let title = $$('title')
-        title.innerHTML = exporter.annotatedText(heading.getPath())
+        title.append(exporter.annotatedText(heading.getPath()))
         sec.appendChild(title)
         last(stack).el.appendChild(sec)
         stack.push({ el: sec })

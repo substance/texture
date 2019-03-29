@@ -33,7 +33,7 @@ export function findParentByType (node, type) {
 export function ifNodeOrRelatedHasChanged (node, change, cb) {
   let doc = node.getDocument()
   let id = node.id
-  let hasChanged = change.updated[id]
+  let hasChanged = change.hasUpdated(id)
   if (!hasChanged) {
     let relationships = doc.getIndex('relationships')
     // TODO: this could probably be improved by only navigating updated nodes

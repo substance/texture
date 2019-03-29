@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, getKeyForPath } from 'substance'
 import TextInput from './TextInput'
 
 export default class StringComponent extends Component {
@@ -6,7 +6,7 @@ export default class StringComponent extends Component {
     let placeholder = this.props.placeholder
     let model = this.props.model
     let path = model.getPath()
-    let name = path.join('.')
+    let name = getKeyForPath(path)
     let el = $$('div').addClass(this.getClassNames())
     if (this.props.readOnly) {
       let doc = this.context.api.getDocument()

@@ -1,0 +1,6 @@
+.sc-text-node.sm-preformat {
+  /* TODO: come up with a better design and use variables */
+  border-left: 2px solid #777;
+  padding-left: var(--t-default-spacing);
+  background: #f8f8f8;
+}

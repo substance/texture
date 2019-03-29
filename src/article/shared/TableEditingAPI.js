@@ -1,4 +1,4 @@
-import { documentHelpers } from 'substance'
+import { documentHelpers, getKeyForPath } from 'substance'
 import { getCellRange, getRangeFromMatrix, createTableSelection } from '../shared/tableHelpers'
 import { Table } from '../models'
 
@@ -250,7 +250,7 @@ export default class TableEditingAPI {
         type: 'property',
         path,
         startOffset: newVal.length,
-        surfaceId: selData.surfaceId + '/' + path.join('.')
+        surfaceId: selData.surfaceId + '/' + getKeyForPath(path)
       })
     }, { action: 'insertText' })
   }

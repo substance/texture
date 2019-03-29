@@ -8,7 +8,7 @@ import setupTestArticleSession from './shared/setupTestArticleSession'
 import {
   openManuscriptEditor, loadBodyFixture, getDocument, setSelection, getApi,
   getEditorSession, annotate, getSelection, setCursor, openContextMenuAndFindTool,
-  openMenuAndFindTool, PseudoFileEvent, selectNode, clickUndo
+  openMenuAndFindTool, PseudoFileEvent, selectNode, clickUndo, createSurfaceEvent
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -314,7 +314,7 @@ test('Table: leaving a cell with ENTER', t => {
   setCursor(editor, cell.getPath(), 0)
   let cellComp = _getCellComponentById(tableComp, cell.id)
   let cellEditor = cellComp.find('.sc-table-cell-editor')
-  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, ENTER))
+  cellEditor.onKeyDown(createSurfaceEvent(cellEditor, ENTER))
   let sel = getSelection(editor)
   let expectedCellId = table.getCell(1, 0).id
   t.deepEqual({
@@ -364,7 +364,7 @@ test('Table: leaving a cell with TAB', t => {
   setCursor(editor, cell.getPath(), 0)
   let cellComp = _getCellComponentById(tableComp, cell.id)
   let cellEditor = cellComp.find('.sc-table-cell-editor')
-  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, TAB))
+  cellEditor.onKeyDown(createSurfaceEvent(cellEditor, TAB))
   let sel = getSelection(editor)
   let expectedCellId = table.getCell(0, 1).id
   t.deepEqual({
@@ -412,7 +412,7 @@ test('Table: ESCAPE from a cell', t => {
   setCursor(editor, matrix[1][0].getPath(), 0)
   let cell = _getCellComponent(tableComp, 1, 0)
   let cellEditor = cell.find('.sc-table-cell-editor')
-  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, ESCAPE))
+  cellEditor.onKeyDown(createSurfaceEvent(cellEditor, ESCAPE))
   let sel = getSelection(editor)
   let expectedCellId = matrix[1][0].id
   t.deepEqual({
@@ -464,7 +464,7 @@ test('Table: inserting line break in a cell', t => {
   setCursor(editor, cell.getPath(), 1)
   let cellComp = _getCellComponentById(tableComp, cell.id)
   let cellEditor = cellComp.find('.sc-table-cell-editor')
-  cellEditor.onKeyDown(_createSurfaceEvent(cellEditor, SHIFT_ENTER))
+  cellEditor.onKeyDown(createSurfaceEvent(cellEditor, SHIFT_ENTER))
   t.equal(cell.content, 'x\nxx', 'a line break should have been inserted')
   t.end()
 })
@@ -1104,8 +1104,4 @@ function _getCellRange (matrix, startRow, startCol, endRow, endCol) {
   if (!isArray(range)) range = [range]
   else range = flattenOften(range, 2)
   return range
-}
-
-function _createSurfaceEvent (surface, eventData) {
-  return new DOMEvent(Object.assign({ target: surface.getNativeElement() }, eventData))
 }

@@ -3,7 +3,7 @@ import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoDropEvent, PseudoFileEvent,
   fixture, loadBodyFixture, getDocument, openContextMenuAndFindTool,
-  openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled, selectNode
+  openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled, selectNode, insertText
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs, exportNode, importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
@@ -18,26 +18,6 @@ const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-too
 const LOCAL_ASSET_NAME = 'example.zip'
 const LOCAL_ASSET_URL = './tests/fixture/assets/' + LOCAL_ASSET_NAME
 const REMOTE_ASSET_URL = 'http://substance.io/images/texture-1.0.png'
-
-const PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE = `
-  <p id="p1">ABC</p>
-  <supplementary-material id="sm1" xlink:href="${LOCAL_ASSET_NAME}" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <label>Supplementary File 1</label>
-    <caption id="sm1-caption">
-      <p id="sm1-caption-p1">Description of Supplementary File</p>
-    </caption>
-  </supplementary-material>
-`
-
-const PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE = `
-  <p id="p1">ABC</p>
-  <supplementary-material id="sm1" xlink:href="${REMOTE_ASSET_URL}" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <label>Supplementary File 1</label>
-    <caption id="sm1-caption">
-      <p id="sm1-caption-p1">Description of Supplementary File</p>
-    </caption>
-  </supplementary-material>
-`
 
 test('SupplementaryFile: upload file and insert into manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -105,6 +85,16 @@ test('SupplementaryFile: insert remote file into manuscript', t => {
   t.equal(urlEl.textContent, link, 'there should be a link to an external file inside')
   t.end()
 })
+
+const PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE = `
+  <p id="p1">ABC</p>
+  <supplementary-material id="sm1" xlink:href="${LOCAL_ASSET_NAME}" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <label>Supplementary File 1</label>
+    <caption id="sm1-caption">
+      <p id="sm1-caption-p1">Description of Supplementary File</p>
+    </caption>
+  </supplementary-material>
+`
 
 test('SupplementaryFile: remove from manuscript', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -218,7 +208,7 @@ test('SupplementaryFile: export from figure caption', t => {
   t.end()
 })
 
-function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
+function testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
   test(`SupplementaryFile: download a ${mode} file`, t => {
     let { app } = setupTestApp(t, fixture('assets'))
     let editor = openManuscriptEditor(app)
@@ -243,8 +233,29 @@ function _testDownloadTool (mode, bodyXML, expectedDownloadUrl) {
     t.end()
   })
 }
-_testDownloadTool('local', PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE, LOCAL_ASSET_URL)
-_testDownloadTool('remote', PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE, REMOTE_ASSET_URL)
+testDownloadTool('local', PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE, LOCAL_ASSET_URL)
+
+const PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE = `
+  <p id="p1">ABC</p>
+  <supplementary-material id="sm1" xlink:href="${REMOTE_ASSET_URL}" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <label>Supplementary File 1</label>
+    <caption id="sm1-caption">
+      <p id="sm1-caption-p1">Description of Supplementary File</p>
+    </caption>
+  </supplementary-material>
+`
+testDownloadTool('remote', PARAGRAPH_AND_REMOTE_SUPPLEMENTARY_FILE, REMOTE_ASSET_URL)
+
+test('SupplementaryFile: editing file description', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, PARAGRAPH_AND_LOCAL_SUPPLEMENTARY_FILE)
+  setCursor(editor, 'sm1-caption-p1.content', 0)
+  insertText(editor, 'xxx')
+  t.ok(doc.get(['sm1-caption-p1', 'content']).startsWith('xxx'), 'file description should have been updated')
+  t.end()
+})
 
 function _getInsertSupplementaryFileTool (editor) {
   return openMenuAndFindTool(editor, 'insert', insertSupplementaryFileToolSelector)

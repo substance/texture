@@ -386,6 +386,41 @@ test('ManuscriptEditor: changing the list style', t => {
   t.end()
 })
 
+test('ManuscriptEditor: increasing and decreasing level of list items using TAB', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, TINY_LIST)
+  let bodySurface = _getBodySurface(editor)
+
+  function _indent () {
+    bodySurface.onKeyDown(createSurfaceEvent(bodySurface, TAB))
+  }
+
+  function _dedent () {
+    bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_TAB))
+  }
+
+  setCursor(editor, 'li1-2.content', 0)
+  let item = doc.get('li1-2')
+
+  t.comment('increasing item level')
+  _indent()
+  t.equal(item.level, 3, 'level should have been increased')
+  _indent()
+  t.equal(item.level, 3, 'level should not be increased higher than level 3')
+
+  t.comment('decreasing item level')
+  _dedent()
+  t.equal(item.level, 2, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should not be decreased lower than level 1')
+
+  t.end()
+})
+
 const P_WITH_EXTERNAL_LINK = `<p id="p1">This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" id="link" xlink:href="substance.io">link</ext-link></p>`
 
 test('ManuscriptEditor: editing an external link', t => {

@@ -225,7 +225,7 @@ test('ManuscriptEditor: increasing and decreasing heading level using TAB', t =>
 
   let heading = doc.get('body').getNodeAt(0)
 
-  t.comment('increasing heading level')
+  t.comment('increasing level')
   _indent()
   t.equal(heading.level, 2, 'heading level should have been increased')
   _indent()
@@ -233,7 +233,7 @@ test('ManuscriptEditor: increasing and decreasing heading level using TAB', t =>
   _indent()
   t.equal(heading.level, 3, 'heading level should not be increased higher than level 3')
 
-  t.comment('decreasing heading level')
+  t.comment('decreasing level')
   _dedent()
   t.equal(heading.level, 2, 'heading level should have been decreased')
   _dedent()
@@ -392,15 +392,45 @@ test('ManuscriptEditor: increasing and decreasing level of list items using TAB'
   let doc = getDocument(editor)
   loadBodyFixture(editor, TINY_LIST)
   let bodySurface = _getBodySurface(editor)
-
   function _indent () {
     bodySurface.onKeyDown(createSurfaceEvent(bodySurface, TAB))
   }
-
   function _dedent () {
     bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_TAB))
   }
 
+  setCursor(editor, 'li1-2.content', 0)
+  let item = doc.get('li1-2')
+
+  t.comment('increasing item level')
+  _indent()
+  t.equal(item.level, 3, 'level should have been increased')
+  _indent()
+  t.equal(item.level, 3, 'level should not be increased higher than level 3')
+
+  t.comment('decreasing item level')
+  _dedent()
+  t.equal(item.level, 2, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should not be decreased lower than level 1')
+
+  t.end()
+})
+
+test('ManuscriptEditor: increasing and decreasing level of list items via tool', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, TINY_LIST)
+  function _indent () {
+    openMenuAndFindTool(editor, 'context-tools', '.sm-indent-list').click()
+  }
+
+  function _dedent () {
+    openMenuAndFindTool(editor, 'context-tools', '.sm-dedent-list').click()
+  }
   setCursor(editor, 'li1-2.content', 0)
   let item = doc.get('li1-2')
 

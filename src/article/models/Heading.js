@@ -22,6 +22,10 @@ export default class Heading extends TextNode {
       this.level = this.level - 1
     }
   }
+
+  static get MIN_LEVEL () { return MIN_LEVEL }
+
+  static get MAX_LEVEL () { return MAX_LEVEL }
 }
 
 Heading.schema = {

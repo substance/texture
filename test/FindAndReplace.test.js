@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, LOREM_IPSUM, getDocument, openManuscriptEditor, insertText, clickUndo } from './shared/integrationTestHelpers'
+import { setCursor, LOREM_IPSUM, getDocument, openManuscriptEditor, insertText, clickUndo, setSelection, deleteSelection } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: instead of the kitchen-sink we should use a fixture that has a defined content
@@ -163,6 +163,15 @@ test('FindAndReplace: updating search results when text is changed', t => {
   setCursor(editor, 'p-1.content', 2)
   // this should invalidate the first match on p-1
   insertText(editor, 'xxx')
+  t.equal(fnrManager._getState().count, origCount - 1, 'one match should have been invalidated')
+
+  t.comment('undoing the change')
+  clickUndo(editor)
+  t.equal(fnrManager._getState().count, origCount, 'match should be back again')
+
+  t.comment('deleting text')
+  setSelection(editor, 'p-1.content', 0, 5)
+  deleteSelection(editor)
   t.equal(fnrManager._getState().count, origCount - 1, 'one match should have been invalidated')
 
   t.comment('undoing the change')

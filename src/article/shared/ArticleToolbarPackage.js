@@ -215,6 +215,14 @@ export default {
             items: [
               { type: 'command-group', name: 'text' }
             ]
+          },
+          {
+            type: 'group',
+            name: 'collection',
+            style: 'descriptive',
+            items: [
+              { type: 'command-group', name: 'collection' }
+            ]
           }
         ]
       }

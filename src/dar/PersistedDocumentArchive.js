@@ -59,9 +59,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
       path: filePath,
       blob: file
     })
-    // FIXME: what to do in NodeJS?
+    // ATTENTION: blob urls are not supported in nodejs
+    // and I do not see that this is really necessary
+    // For sake of testing we use `PSEUDO-BLOB-URL:${filePath}`
+    // so that we can see if the rest of the system is working
     if (platform.inBrowser) {
       this._pendingFiles.set(filePath, URL.createObjectURL(file))
+    } else {
+      this._pendingFiles.set(filePath, `PSEUDO-BLOB-URL:${filePath}`)
     }
     return filePath
   }

@@ -1,13 +1,8 @@
-import { DocumentNode, CHILDREN, documentHelpers } from 'substance'
+import { DocumentNode, CHILDREN } from 'substance'
 
 export default class TableRow extends DocumentNode {
   getCells () {
-    return documentHelpers.getNodesForIds(this.getDocument(), this.cells)
-  }
-
-  getCellAt (cellIdx) {
-    let doc = this.getDocument()
-    return doc.get(this.cells[cellIdx])
+    return this.resolve('cells')
   }
 }
 TableRow.schema = {

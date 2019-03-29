@@ -13,7 +13,6 @@ import {
 import setupTestApp from './shared/setupTestApp'
 
 // TODO: test SHIFT selection handling
-// TODO: find out why TableRow.getCellAt is not covered
 // TODO: test merge and unmerge cells for selection with mixed cells
 // TODO: test toggling cell heading for selection with mixed cells
 // TODO: test pasting with resize with content containing merged cells and headings

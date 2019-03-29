@@ -40,4 +40,26 @@ export default class TextureEditing extends Editing {
     }
     super.insertBlockNode(tx, node)
   }
+
+  indent (tx) {
+    let sel = tx.selection
+    if (sel.isPropertySelection()) {
+      let nodeId = sel.start.getNodeId()
+      let node = tx.get(nodeId)
+      if (node.canIndent) {
+        node.indent()
+      }
+    }
+  }
+
+  dedent (tx) {
+    let sel = tx.selection
+    if (sel.isPropertySelection()) {
+      let nodeId = sel.start.getNodeId()
+      let node = tx.get(nodeId)
+      if (node.canDedent) {
+        node.dedent()
+      }
+    }
+  }
 }

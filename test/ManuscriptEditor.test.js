@@ -10,13 +10,8 @@ import {
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 
-// TODO: test editing of supplementary file description
 // TODO: test open link in EditExtLinkTool
-// TODO: test IncreaseHeadingLevel
 // TODO: test save button
-// TODO: find out why Footnote.getTemplate() is not covered -> insert footnote?
-// TODO: test changin level of list item
-// TODO: BreakComponent not used
 // TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
 // TODO: test automatic label generation for block-formulas
 
@@ -205,6 +200,78 @@ test('ManuscriptEditor: Switch to heading', t => {
   t.end()
 })
 
+const TAB = parseKeyCombo('Tab')
+const SHIFT_TAB = parseKeyCombo('Shift+Tab')
+
+test('ManuscriptEditor: increasing and decreasing heading level using TAB', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, ONE_PARAGRAPH)
+  let bodySurface = _getBodySurface(editor)
+
+  function _indent () {
+    bodySurface.onKeyDown(createSurfaceEvent(bodySurface, TAB))
+  }
+
+  function _dedent () {
+    bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_TAB))
+  }
+
+  setCursor(editor, 'p1.content', 0)
+  switchTextType(editor, 'heading1')
+
+  let heading = doc.get('body').getNodeAt(0)
+
+  t.comment('increasing level')
+  _indent()
+  t.equal(heading.level, 2, 'heading level should have been increased')
+  _indent()
+  t.equal(heading.level, 3, 'heading level should have been increased')
+  _indent()
+  t.equal(heading.level, 3, 'heading level should not be increased higher than level 3')
+
+  t.comment('decreasing level')
+  _dedent()
+  t.equal(heading.level, 2, 'heading level should have been decreased')
+  _dedent()
+  t.equal(heading.level, 1, 'heading level should have been decreased')
+  _dedent()
+  t.equal(heading.level, 1, 'heading level should no be decreased lower than level 1')
+
+  t.end()
+})
+
+test('ManuscriptEditor: increasing and decreasing heading level via tool', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, ONE_PARAGRAPH)
+  function _indent () {
+    openMenuAndFindTool(editor, 'context-tools', '.sm-increase-heading-level').click()
+  }
+  function _dedent () {
+    openMenuAndFindTool(editor, 'context-tools', '.sm-decrease-heading-level').click()
+  }
+
+  setCursor(editor, 'p1.content', 0)
+  switchTextType(editor, 'heading1')
+  let heading = doc.get('body').getNodeAt(0)
+  t.comment('increasing level')
+  _indent()
+  t.equal(heading.level, 2, 'heading level should have been increased')
+  _indent()
+  t.equal(heading.level, 3, 'heading level should have been increased')
+
+  t.comment('decreasing level')
+  _dedent()
+  t.equal(heading.level, 2, 'heading level should have been decreased')
+  _dedent()
+  t.equal(heading.level, 1, 'heading level should have been decreased')
+
+  t.end()
+})
+
 test('ManuscriptEditor: Switch paragraph to preformat', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
@@ -231,7 +298,7 @@ test('ManuscriptEditor: insert a line-break into preformat', t => {
   let doc = getDocument(editor)
   let preformat = doc.get('preformat')
   let origLineCount = _getLineCount(preformat.getText())
-  let bodySurface = editor.getContentPanel().find('.sc-surface[data-surface-id="body"]')
+  let bodySurface = _getBodySurface(editor)
   setCursor(editor, 'preformat.content', 0)
   bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_ENTER))
   t.equal(_getLineCount(preformat.getText()), origLineCount + 1, 'there should be a new line inserted')
@@ -243,7 +310,7 @@ test('ManuscriptEditor: insert a line-break into heading', t => {
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
   let heading = doc.get('sec-1')
-  let bodySurface = editor.getContentPanel().find('.sc-surface[data-surface-id="body"]')
+  let bodySurface = _getBodySurface(editor)
 
   setCursor(editor, 'sec-1.content', 1)
   bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_ENTER))
@@ -343,6 +410,63 @@ test('ManuscriptEditor: changing the list style', t => {
   let olTool = openContextMenuAndFindTool(editor, '.sm-toggle-unordered-list')
   olTool.click()
   t.equal(listNode.listType, 'order,bullet,bullet', 'all levels should be ordered')
+
+  t.end()
+})
+
+test('ManuscriptEditor: increasing and decreasing level of list items using TAB', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, TINY_LIST)
+  let bodySurface = _getBodySurface(editor)
+  function _indent () {
+    bodySurface.onKeyDown(createSurfaceEvent(bodySurface, TAB))
+  }
+  function _dedent () {
+    bodySurface.onKeyDown(createSurfaceEvent(bodySurface, SHIFT_TAB))
+  }
+
+  setCursor(editor, 'li1-2.content', 0)
+  let item = doc.get('li1-2')
+  t.comment('increasing item level')
+  _indent()
+  t.equal(item.level, 3, 'level should have been increased')
+  _indent()
+  t.equal(item.level, 3, 'level should not be increased higher than level 3')
+  t.comment('decreasing item level')
+  _dedent()
+  t.equal(item.level, 2, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should not be decreased lower than level 1')
+
+  t.end()
+})
+
+test('ManuscriptEditor: increasing and decreasing level of list items via tool', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let doc = getDocument(editor)
+  loadBodyFixture(editor, TINY_LIST)
+  function _indent () {
+    openMenuAndFindTool(editor, 'context-tools', '.sm-indent-list').click()
+  }
+  function _dedent () {
+    openMenuAndFindTool(editor, 'context-tools', '.sm-dedent-list').click()
+  }
+
+  setCursor(editor, 'li1-2.content', 0)
+  let item = doc.get('li1-2')
+  t.comment('increasing item level')
+  _indent()
+  t.equal(item.level, 3, 'level should have been increased')
+  t.comment('decreasing item level')
+  _dedent()
+  t.equal(item.level, 2, 'level should have been decreased')
+  _dedent()
+  t.equal(item.level, 1, 'level should have been decreased')
 
   t.end()
 })
@@ -549,10 +673,9 @@ test('ManuscriptEditor: copy and pasting heading and paragraph', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   selectRange(editor, 'sec-1.content', 0, 'p-1.content', 10)
-  let editorSession = getEditorSession(editor)
   let doc = getDocument(editor)
   let body = doc.get('body')
-  let bodySurface = editorSession.getSurface('body')
+  let bodySurface = _getBodySurface(editor)
   let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
   bodySurface._onCopy(pasteEvent)
   setCursor(editor, 'p-2.content', 0)
@@ -598,8 +721,7 @@ test('ManuscriptEditor: copy and pasting list items', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   let doc = getDocument(editor)
-  let editorSession = getEditorSession(editor)
-  let bodySurface = editorSession.getSurface('body')
+  let bodySurface = _getBodySurface(editor)
   loadBodyFixture(editor, TINY_LIST)
 
   selectRange(editor, 'li1-1.content', 0, 'li1-2.content', 3)
@@ -615,4 +737,8 @@ test('ManuscriptEditor: copy and pasting list items', t => {
 
 function _getLineCount (str) {
   return str.split(/\r\n|\r|\n/).length
+}
+
+function _getBodySurface (editor) {
+  return editor.getContentPanel().find('.sc-surface[data-surface-id="body"]')
 }

@@ -42,6 +42,12 @@ export default class List extends ListMixin(DocumentNode) {
   setListTypeString (listTypeStr) {
     this.listType = listTypeStr
   }
+
+  _itemsChanged () {
+    // HACK: using a pseudo-change triggered by items when e.g. level changes
+    // TODO: find a better way for this.
+    this.getDocument().set([this.id, '_itemsChanged'], true)
+  }
 }
 
 List.schema = {

@@ -2,9 +2,8 @@ import { Component, getKeyForPath } from 'substance'
 
 export default class TextNodeComponent extends Component {
   /*
-    ATTENTION: There is another mechanism which leads to rerendering of TextPropertyComponents (-> MarkersManager)
-    HACK: To avoid double rendering of text nodes, we do not register for updates here
-    TODO: rethink this.
+    NOTE: text updates are observed by TextPropertyComponent
+    If necessary override this method and add other observers
   */
   didMount () {}
 

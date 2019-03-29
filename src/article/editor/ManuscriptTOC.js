@@ -80,18 +80,14 @@ class SectionTOCEntry extends Component {
 
 class BodyTOCEntry extends ValueComponent {
   render ($$) {
-    const api = this.context.api
     let items = this.props.model.getItems()
     let headings = items.filter(node => node.type === 'heading')
     return $$('div').addClass('sc-toc-entry').append(
       headings.map(heading => {
-        let el = $$('div').ref(heading.id)
+        let el = $$(TOCHeadingEntry, { node: heading }).ref(heading.id)
           .addClass(`sc-toc-entry sm-level-${heading.level}`)
           .attr({ 'data-id': heading.id })
           .on('click', this._onClick)
-        el.append(
-          renderModel($$, this, createValueModel(api, heading.getPath()), { readOnly: true })
-        )
         return el
       })
     )
@@ -103,6 +99,25 @@ class BodyTOCEntry extends ValueComponent {
     event.preventDefault()
     event.stopPropagation()
     this.send('scrollTo', { nodeId })
+  }
+}
+
+class TOCHeadingEntry extends Component {
+  didMount () {
+    this.context.appState.addObserver(['document'], this.rerender, this, {
+      stage: 'render',
+      document: { path: [this.props.node.id] }
+    })
+  }
+  dispose () {
+    this.context.appState.removeObserver(this)
+  }
+  render ($$) {
+    const api = this.context.api
+    let heading = this.props.node
+    return $$('div').append(
+      renderModel($$, this, createValueModel(api, heading.getPath()), { readOnly: true })
+    )
   }
 }
 

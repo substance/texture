@@ -77,6 +77,11 @@ export default class EditorSession extends AbstractEditorSession {
 
   dispose () {
     this.getDocument().off(this)
+    this.findAndReplaceManager.dispose()
+    this.commandManager.dispose()
+    this.globalEventHandler.dispose()
+    this.markersManager.dispose()
+    this.surfaceManager.dispose()
     this.editorState.off(this)
     this.editorState.dispose()
   }

@@ -22,6 +22,10 @@ export default class FindAndReplaceManager {
     appState.addObserver(['document'], this._onRender, this, { stage: 'render' })
   }
 
+  dispose () {
+    this._appState.removeObserver(this)
+  }
+
   openDialog (enableReplace) {
     enableReplace = Boolean(enableReplace)
     let state = this._getState()

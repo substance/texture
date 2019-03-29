@@ -156,6 +156,10 @@
       <abstract abstract-type="executive-summary">
         <title>eLife Digest</title>
         <p id="p-1-1">This is an example of executive summary with sub sections.</p>
+        <sec id="sec-1">
+          <title>Custom abstract sub section</title>
+          <p id="p-1-1-1">Sub section content.</p>
+        </sec>
       </abstract>
       <abstract abstract-type="web-summary">
         <p id="p-1-2">This is an example of web summary.</p>
@@ -187,14 +191,14 @@
     </article-meta>
   </front>
   <body id="body">
-    <sec id="sec-1">
+    <sec id="sec-2">
       <title>Inline content</title>
       <p id="p-2">Lorem <xref id="xref-1" ref-type="bibr" rid="r7">[1]</xref> ipsum <xref id="xref-2" ref-type="bibr" rid="r1">[2]</xref> dolor <ext-link id="ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">sit amet</ext-link>. Formatting <bold id="p-2-bold-1">bold</bold>,<italic id="p2-italic-1">italic</italic>, <sub id="p2-sub-1">sub</sub>,<sup id="p2-sup-1">sup</sup>, <monospace id="p2-monospace-1">monospace</monospace>, <sc id="p2-sc-1">small caps</sc>, <underline id="p2-underline-1">underline</underline>, <overline id="p2-overline-1">overline</overline>, <strike id="p2-strike-1">strike through</strike>.</p>
       <p id="p-8">Aenean facilisis diam nec neque accumsan, eu faucibus est efficitur <xref id="xref-6" ref-type="table" rid="table1">Table 1</xref>.</p>
       <p id="p-9">The Dow Jones Industrial Average for February 7, 2006 <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/>.</p>
       <p id="p-81">Math as part of the text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math><![CDATA[\sqrt(13)]]></tex-math></inline-formula>. You can also set a reference to block formula, like this: <xref id="xref-7" ref-type="disp-formula" rid="disp-formula-1">(1)</xref>.</p>
     </sec>
-    <sec id="sec-2">
+    <sec id="sec-3">
       <title>Block level content</title>
       <disp-quote id="disp-quote-1">
         <p id="p-7">Curabitur vehicula mattis sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -259,7 +263,7 @@ def read() = in.read()
 { \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }
 ]]></tex-math>
       </disp-formula>
-      <sec id="sec-2-1">
+      <sec id="sec-3-1">
         <title>Tables</title>
         <table-wrap id="table1">
           <label>Table 1</label>
@@ -310,7 +314,7 @@ def read() = in.read()
           </table-wrap-foot>
         </table-wrap>
       </sec>
-      <sec id="sec-2-2">
+      <sec id="sec-3-2">
         <title>Figures</title>
         <p id="p-3">Reference to simple figure <xref id="xref-3" ref-type="fig" rid="fig1">Figure 1</xref>. Reference to footnote <xref id="xref-4" ref-type="fn" rid="fn1">1</xref>. Citation with two references <xref id="xref-5" ref-type="bibr" rid="r1 r7">[1,2]</xref>.</p>
         <fig id="fig1">
@@ -368,7 +372,7 @@ def read() = in.read()
           <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.png" />
         </fig>
       </sec>
-      <sec id="sec-2-3">
+      <sec id="sec-3-3">
         <title>Supplementary Files</title>
         <supplementary-material id="sm1" mimetype="application" mime-subtype="zip" xlink:href="example.zip">
           <label>Supplementary File 1</label>
@@ -384,15 +388,15 @@ def read() = in.read()
         </supplementary-material>
       </sec>
     </sec>
-    <sec id="sec-3">
+    <sec id="sec-4">
       <title>Sections and Subsections</title>
-      <sec id="sec-3-1">
+      <sec id="sec-4-1">
         <title>Section Level 2</title>
-        <sec id="sec-3-1-1">
+        <sec id="sec-4-1-1">
           <title>Section Level 3</title>
         </sec>
       </sec>
-      <sec id="sec-3-2">
+      <sec id="sec-4-2">
         <title>Section heading with <break id="br1"/>Line-Break</title>
       </sec>
     </sec>

@@ -60,6 +60,50 @@ export default {
     config.addComponent('@abstracts', AbstractsSectionComponent)
     config.addComponent('@figures', FiguresSectionComponent)
 
+    // SwitchTextTypes
+    config.addTextTypeTool({
+      name: 'switch-to-heading1',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        level: 1
+      },
+      icon: 'fa-header',
+      label: 'Heading 1',
+      accelerator: 'CommandOrControl+Alt+1'
+    })
+    config.addTextTypeTool({
+      name: 'switch-to-heading2',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        level: 2
+      },
+      icon: 'fa-header',
+      label: 'Heading 2',
+      accelerator: 'CommandOrControl+Alt+2'
+    })
+    config.addTextTypeTool({
+      name: 'switch-to-heading3',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'heading',
+        level: 3
+      },
+      icon: 'fa-header',
+      label: 'Heading 3',
+      accelerator: 'CommandOrControl+Alt+3'
+    })
+    config.addTextTypeTool({
+      name: 'switch-to-paragraph',
+      commandGroup: 'text-types',
+      nodeSpec: {
+        type: 'paragraph'
+      },
+      icon: 'fa-paragraph',
+      label: 'Paragraph',
+      accelerator: 'CommandOrControl+Alt+0'
+    })
     // Commands
     config.addCommand('add-metadata-field', AddCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'

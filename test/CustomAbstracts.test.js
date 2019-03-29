@@ -2,11 +2,12 @@ import { test } from 'substance-test'
 import {
   getDocument, insertText, openMetadataEditor,
   openContextMenuAndFindTool, isToolEnabled, setCursor, ensureAllFieldsVisible,
-  createJATSFixture, createTestVfs
+  createJATSFixture, createTestVfs, canSwitchTextTypeTo, switchTextType
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
 const customAbstractSelector = '.sc-custom-abstract'
+const customAbstractContentEditorSelector = '.sc-custom-abstract > .sm-content > .se-editor'
 const moveDownToolSelector = '.sm-move-down-custom-abstract'
 const moveUpToolSelector = '.sm-move-up-custom-abstract'
 const removeToolSelector = '.sm-remove-custom-abstract'
@@ -117,6 +118,45 @@ test('Custom Abstracts: switching type', t => {
   t.equal(doc.get([customAbstractId, 'abstractType']), '', 'abstract type should be empty')
   _selectAbstractType(editor, customAbstractId, customAbstractType)
   t.equal(doc.get([customAbstractId, 'abstractType']), customAbstractType, 'abstract type should changed')
+  t.end()
+})
+
+const META_WITH_MULTISECTION_SUMMARY = `
+<article-meta>
+  <title-group>
+    <article-title></article-title>
+  </title-group>
+  <abstract abstract-type="executive-summary" id="executive-summary">
+    <title>Executive Summary</title>
+    <sec id="sec-1">
+      <title>Part 1</title>
+      <p id="p-1">First part content.</p>
+      <sec id="sec-2">
+        <title>Editors</title>
+      </sec>
+    </sec>
+  </abstract>
+</article-meta>
+`
+const ARTICLE_WITH_MULTISECTION_SUMMARY = createJATSFixture({ front: META_WITH_MULTISECTION_SUMMARY })
+
+test(`Custom Abstracts: switching headings`, t => {
+  let { app } = setupTestApp(t, {
+    vfs: createTestVfs(ARTICLE_WITH_MULTISECTION_SUMMARY),
+    archiveId: 'test'
+  })
+  let editor = openMetadataEditor(app)
+  let abstractEditor = editor.find(customAbstractContentEditorSelector)
+  t.equal(abstractEditor.findAll('h1').length, 1, 'there should be one heading level 1')
+  t.equal(abstractEditor.findAll('h2').length, 1, 'there should be one heading level 2')
+  setCursor(abstractEditor, 'sec-1.content', 0)
+  t.ok(canSwitchTextTypeTo(editor, 'paragraph'), 'switch to paragraph should be possible')
+  switchTextType(editor, 'paragraph')
+  t.equal(abstractEditor.findAll('h1').length, 0, 'there should be no heading level 1')
+  setCursor(abstractEditor, 'p-1.content', 0)
+  t.ok(canSwitchTextTypeTo(editor, 'heading1'), 'switch to heading level 1 should be possible')
+  switchTextType(editor, 'heading1')
+  t.equal(abstractEditor.findAll('h1').length, 1, 'there should be one heading level 1')
   t.end()
 })
 

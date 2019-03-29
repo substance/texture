@@ -309,6 +309,15 @@ export function isToolEnabled (editor, menuName, toolSelector) {
   return tool && !tool.getAttribute('disabled')
 }
 
+export function switchTextType (editor, type) {
+  return openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`).el.click()
+}
+
+export function canSwitchTextTypeTo (editor, type) {
+  let tool = openMenuAndFindTool(editor, 'text-types', `.sm-switch-to-${type}`)
+  return tool && !tool.attr('disabled')
+}
+
 const TOOL_SPECS = {
   'bold': {
     menu: 'format',

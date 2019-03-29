@@ -12,7 +12,7 @@ id, xml:base, abstract-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-title?,p*
+title?,(sec|p)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1542,7 +1542,7 @@ title?,(boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-f
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-body, sec
+abstract, body, sec, trans-abstract
 </pre>
 
 ### `<series>`
@@ -1943,7 +1943,7 @@ id, xml:base, abstract-type, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-title?,p*
+title?,(sec|p)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">

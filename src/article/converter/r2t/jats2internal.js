@@ -4,6 +4,7 @@ import InternalArticle from '../../InternalArticleDocument'
 // TODO: rename to XML helpers
 import { findChild, getText, retainChildren } from '../util/domHelpers'
 import createJatsImporter from './createJatsImporter'
+import SectionContainerConverter from './SectionContainerConverter'
 
 /*
   TextureJATs Reference: (Please keep this up-to-date)
@@ -340,6 +341,7 @@ function _populateSubTitle (doc, jats, jatsImporter) {
 
 function _populateAbstract (doc, jats, jatsImporter) {
   let $$ = jats.createElement.bind(jats)
+  let sectionContainerConverter = new SectionContainerConverter()
 
   // NOTE: The first abstract without abstract-type is used as main abstract,
   // if there are others they should be imported as a custom abstract
@@ -358,19 +360,15 @@ function _populateAbstract (doc, jats, jatsImporter) {
     }
     const abstractType = abstractEl.attr('abstract-type')
     if (!abstractType && !mainAbstractImported) {
-      mainAbstract.content = abstractEl.children.map(el => {
-        return jatsImporter.convertElement(el).id
-      })
+      sectionContainerConverter.import(abstractEl, mainAbstract, jatsImporter)
       mainAbstractImported = true
     } else {
       let abstract = doc.create({
         type: 'custom-abstract',
         id: abstractEl.id,
-        abstractType: abstractType,
-        content: abstractEl.children.map(el => {
-          return jatsImporter.convertElement(el).id
-        })
+        abstractType: abstractType
       })
+      sectionContainerConverter.import(abstractEl, abstract, jatsImporter)
       if (titleEl) {
         abstract.title = jatsImporter.annotatedText(titleEl, [abstract.id, 'title'])
       }

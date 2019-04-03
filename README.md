@@ -8,8 +8,14 @@ Texture is a toolset designed for the production of scientific content. It uses 
 
 
 ## Roadmap
+A [roadmap](https://github.com/substance/texture/projects/3?add_cards_query=is%3Aopen) for the upcoming releases is  populated on an ongoing basis.
 
-See the [Texture Product Brief](https://docs.google.com/document/d/1ZOjKrQZOndU9G12bVaXmFt56aWRW4kJSDjaMjcxSHSc/edit?usp=sharing) for all supported and planned features, as well as a roadmap for the upcoming releases.
+See the [Texture Product Brief](https://docs.google.com/document/d/1ZOjKrQZOndU9G12bVaXmFt56aWRW4kJSDjaMjcxSHSc/edit?usp=sharing) for all supported and planned features.
+
+
+## Feature requests and Feedback
+Feature requests can be made via the GitHub issues using a Feature request template. It be assessed and costed, then scheduled accordingly in collaboration with the requesting organisation.
+Please feedback any problems with the product using the Bug template.
 
 ## Install
 

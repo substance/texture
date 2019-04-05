@@ -22,11 +22,15 @@ import {
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
 import EditExtLinkTool from '../shared/EditExtLinkTool'
+import EditXrefCommand from '../shared/EditXrefCommand'
+import EditXrefTool from '../editor/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
+import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
 import InsertExtLinkCommand from '../shared/InsertExtLinkCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import InsertFootnoteCrossReferenceCommand from '../shared/InsertFootnoteCrossReferenceCommand'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
@@ -41,6 +45,7 @@ import {
 import RemoveReferenceCommand from './RemoveReferenceCommand'
 import RemoveItemCommand from '../shared/RemoveItemCommand'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
+import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
 
 export default {
   name: 'ArticleMetadata',
@@ -142,6 +147,10 @@ export default {
       selectionType: 'reference',
       commandGroup: 'reference'
     })
+    config.addCommand('edit-xref', EditXrefCommand, {
+      nodeType: 'xref',
+      commandGroup: 'prompt'
+    })
     config.addCommand('insert-columns-left', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'left' },
       commandGroup: 'table-insert'
@@ -161,6 +170,31 @@ export default {
     config.addCommand('insert-table', InsertTableCommand, {
       nodeType: 'table-figure',
       commandGroup: 'insert'
+    })
+    config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
+      refType: Reference.refType,
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
+      refType: Figure.refType,
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
+      refType: SupplementaryFile.refType,
+      commandGroup: 'insert-xref'
+    })
+    // Note: footnote cross-references are special, because they take the current scope into account
+    // i.e. whether to create a footnote on article level, or inside a table-figure
+    config.addCommand('insert-xref-footnote', InsertFootnoteCrossReferenceCommand, {
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-formula', InsertCrossReferenceCommand, {
+      refType: BlockFormula.refType,
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
+      refType: Table.refType,
+      commandGroup: 'insert-xref'
     })
     config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',
@@ -278,6 +312,7 @@ export default {
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('edit-external-link', EditExtLinkTool)
+    config.addComponent('edit-xref', EditXrefTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
 

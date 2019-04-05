@@ -32,6 +32,10 @@ export default class Figure extends DocumentNode {
       ))
     }
   }
+
+  static get refType () {
+    return 'fig'
+  }
 }
 Figure.schema = {
   type: 'figure',

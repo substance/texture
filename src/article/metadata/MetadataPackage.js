@@ -1,4 +1,4 @@
-import { AnnotationCommand, getKeyForPath } from 'substance'
+import { AnnotationCommand, EditAnnotationCommand, getKeyForPath } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
@@ -21,10 +21,25 @@ import {
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
+import EditExtLinkTool from '../shared/EditExtLinkTool'
+import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
+import EditInlineFormulaTool from '../shared/EditInlineFormulaTool'
+import EditXrefCommand from '../shared/EditXrefCommand'
+import EditXrefTool from '../shared/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
+import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
+import InsertExtLinkCommand from '../shared/InsertExtLinkCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import InsertFootnoteCrossReferenceCommand from '../shared/InsertFootnoteCrossReferenceCommand'
+import InsertInlineFormulaCommand from '../shared/InsertInlineFormulaCommand'
+import InsertInlineGraphicCommand from '../shared/InsertInlineGraphicCommand'
+import InsertInlineGraphicTool from '../shared/InsertInlineGraphicTool'
+import {
+  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
+} from '../editor/TableCommands'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
@@ -35,6 +50,7 @@ import {
 import RemoveReferenceCommand from './RemoveReferenceCommand'
 import RemoveItemCommand from '../shared/RemoveItemCommand'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
+import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
 
 export default {
   name: 'ArticleMetadata',
@@ -111,13 +127,90 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('create-external-link', InsertExtLinkCommand, {
+      nodeType: 'external-link',
+      accelerator: 'CommandOrControl+K',
+      commandGroup: 'formatting'
+    })
+    config.addCommand('delete-columns', DeleteCellsCommand, {
+      spec: { dim: 'col' },
+      commandGroup: 'table-delete'
+    })
+    config.addCommand('delete-rows', DeleteCellsCommand, {
+      spec: { dim: 'row' },
+      commandGroup: 'table-delete'
+    })
     config.addCommand('edit-author', EditEntityCommand, {
       selectionType: 'author',
       commandGroup: 'author'
     })
+    config.addCommand('edit-external-link', EditAnnotationCommand, {
+      nodeType: 'external-link',
+      commandGroup: 'prompt'
+    })
+    config.addCommand('edit-formula', EditInlineFormulaCommand, {
+      nodeType: 'inline-formula',
+      commandGroup: 'prompt'
+    })
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
       commandGroup: 'reference'
+    })
+    config.addCommand('edit-xref', EditXrefCommand, {
+      nodeType: 'xref',
+      commandGroup: 'prompt'
+    })
+    config.addCommand('insert-columns-left', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'left' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-columns-right', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'right' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-inline-formula', InsertInlineFormulaCommand, {
+      commandGroup: 'insert'
+    })
+    config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
+      nodeType: 'inline-graphic',
+      commandGroup: 'insert'
+    })
+    config.addCommand('insert-rows-above', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'above' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-rows-below', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'below' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-table', InsertTableCommand, {
+      nodeType: 'table-figure',
+      commandGroup: 'insert'
+    })
+    config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
+      refType: Reference.refType,
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
+      refType: Figure.refType,
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
+      refType: SupplementaryFile.refType,
+      commandGroup: 'insert-xref'
+    })
+    // Note: footnote cross-references are special, because they take the current scope into account
+    // i.e. whether to create a footnote on article level, or inside a table-figure
+    config.addCommand('insert-xref-footnote', InsertFootnoteCrossReferenceCommand, {
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-formula', InsertCrossReferenceCommand, {
+      refType: BlockFormula.refType,
+      commandGroup: 'insert-xref'
+    })
+    config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
+      refType: Table.refType,
+      commandGroup: 'insert-xref'
     })
     config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',
@@ -173,10 +266,17 @@ export default {
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('table:select-all', TableSelectAllCommand)
     config.addCommand('toggle-bold', AnnotationCommand, {
       nodeType: 'bold',
       accelerator: 'CommandOrControl+B',
       commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-cell-heading', ToggleCellHeadingCommand, {
+      commandGroup: 'table'
+    })
+    config.addCommand('toggle-cell-merge', ToggleCellMergeCommand, {
+      commandGroup: 'table'
     })
     config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',
@@ -212,8 +312,25 @@ export default {
       commandGroup: 'formatting'
     })
 
+    // Toolpanels
+    config.addToolPanel('main-overlay', [
+      {
+        name: 'prompt',
+        type: 'prompt',
+        style: 'minimal',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'prompt' }
+        ]
+      }
+    ])
+
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
+    config.addComponent('edit-external-link', EditExtLinkTool)
+    config.addComponent('edit-xref', EditXrefTool)
+    config.addComponent('edit-formula', EditInlineFormulaTool)
+    config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
 
@@ -261,10 +378,12 @@ export default {
     config.addLabel('article-metadata', 'Article Metadata')
     config.addLabel('subtitle', 'Subtitle')
     config.addLabel('empty-figure-metadata', 'No fields specified')
+    config.addLabel('open-link', 'Open Link')
     // Icons
-    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
-    config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
+    config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
+    config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
 
     // TODO: need to rethink this a some point
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })

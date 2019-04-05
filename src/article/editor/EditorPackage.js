@@ -18,8 +18,8 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import PersistencePackage from '../../PersistencePackage'
 
 import ReferenceListComponent from '../shared/ReferenceListComponent'
-import EditXrefTool from './EditXrefTool'
-import EditExtLinkTool from './EditExtLinkTool'
+import EditXrefTool from '../shared/EditXrefTool'
+import EditExtLinkTool from '../shared/EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import ManuscriptTOC from './ManuscriptTOC'
 import FigureComponent from '../shared/FigureComponent'
@@ -42,21 +42,21 @@ import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
 import EditEntityCommand from '../shared/EditEntityCommand'
 import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
-import EditInlineFormulaTool from './EditInlineFormulaTool'
+import EditInlineFormulaTool from '../shared/EditInlineFormulaTool'
 import EditXrefCommand from '../shared/EditXrefCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
-import InsertCrossReferenceCommand from './InsertCrossReferenceCommand'
+import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
 import InsertDispQuoteCommand from './InsertDispQuoteCommand'
-import InsertExtLinkCommand from './InsertExtLinkCommand'
+import InsertExtLinkCommand from '../shared/InsertExtLinkCommand'
 import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
-import InsertFootnoteCrossReferenceCommand from './InsertFootnoteCrossReferenceCommand'
-import InsertInlineFormulaCommand from './InsertInlineFormulaCommand'
-import InsertInlineGraphicCommand from './InsertInlineGraphicCommand'
-import InsertInlineGraphicTool from './InsertInlineGraphicTool'
+import InsertFootnoteCrossReferenceCommand from '../shared/InsertFootnoteCrossReferenceCommand'
+import InsertInlineFormulaCommand from '../shared/InsertInlineFormulaCommand'
+import InsertInlineGraphicCommand from '../shared/InsertInlineGraphicCommand'
+import InsertInlineGraphicTool from '../shared/InsertInlineGraphicTool'
 import { CreateListCommand, ChangeListTypeCommand } from './ListCommands'
 import InsertNodeFromWorkflowCommand from './InsertNodeFromWorkflowCommand'
 import {
@@ -73,7 +73,7 @@ import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
-import { BlockFormula } from '../models'
+import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
 
 export default {
   name: 'ManuscriptEditor',
@@ -209,15 +209,15 @@ export default {
       commandGroup: 'insert'
     })
     config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
-      refType: 'bibr',
+      refType: Reference.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
-      refType: 'fig',
+      refType: Figure.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
-      refType: 'file',
+      refType: SupplementaryFile.refType,
       commandGroup: 'insert-xref'
     })
     // Note: footnote cross-references are special, because they take the current scope into account
@@ -230,7 +230,7 @@ export default {
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
-      refType: 'table',
+      refType: Table.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('move-down-metadata-field', MoveCustomMetadataFieldCommand, {

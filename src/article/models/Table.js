@@ -163,6 +163,10 @@ export default class Table extends DocumentNode {
       }
     })
   }
+
+  static get refType () {
+    return 'table'
+  }
 }
 
 Table.schema = {

@@ -7,6 +7,10 @@ export default class SupplementaryFile extends DocumentNode {
       legend: [{ type: 'paragraph' }]
     }
   }
+
+  static get refType () {
+    return 'file'
+  }
 }
 
 SupplementaryFile.schema = {

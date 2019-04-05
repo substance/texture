@@ -60,8 +60,6 @@ export default function createValueModel (api, path, property) {
       }
     }
   }
-  if (!valueModel) {
-    throw new Error('Unsupported property type.')
-  }
+
   return valueModel
 }

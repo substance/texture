@@ -1,4 +1,4 @@
-import InsertInlineNodeCommand from './InsertInlineNodeCommand'
+import InsertInlineNodeCommand from '../shared/InsertInlineNodeCommand'
 
 export default class InsertInlineGraphicCommand extends InsertInlineNodeCommand {
   getType () {

@@ -1,5 +1,5 @@
 import { documentHelpers } from 'substance'
-import InsertInlineNodeCommand from './InsertInlineNodeCommand'
+import InsertInlineNodeCommand from '../shared/InsertInlineNodeCommand'
 
 export default class InsertInlineFormulaCommand extends InsertInlineNodeCommand {
   getType () {

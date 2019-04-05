@@ -22,6 +22,8 @@ import {
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
 import EditExtLinkTool from '../shared/EditExtLinkTool'
+import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
+import EditInlineFormulaTool from '../shared/EditInlineFormulaTool'
 import EditXrefCommand from '../shared/EditXrefCommand'
 import EditXrefTool from '../shared/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
@@ -31,6 +33,9 @@ import InsertExtLinkCommand from '../shared/InsertExtLinkCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import InsertFootnoteCrossReferenceCommand from '../shared/InsertFootnoteCrossReferenceCommand'
+import InsertInlineFormulaCommand from '../shared/InsertInlineFormulaCommand'
+import InsertInlineGraphicCommand from '../shared/InsertInlineGraphicCommand'
+import InsertInlineGraphicTool from '../shared/InsertInlineGraphicTool'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
@@ -143,6 +148,10 @@ export default {
       nodeType: 'external-link',
       commandGroup: 'prompt'
     })
+    config.addCommand('edit-formula', EditInlineFormulaCommand, {
+      nodeType: 'inline-formula',
+      commandGroup: 'prompt'
+    })
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
       commandGroup: 'reference'
@@ -158,6 +167,13 @@ export default {
     config.addCommand('insert-columns-right', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'right' },
       commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-inline-formula', InsertInlineFormulaCommand, {
+      commandGroup: 'insert'
+    })
+    config.addCommand('insert-inline-graphic', InsertInlineGraphicCommand, {
+      nodeType: 'inline-graphic',
+      commandGroup: 'insert'
     })
     config.addCommand('insert-rows-above', InsertCellsCommand, {
       spec: { dim: 'row', pos: 'above' },
@@ -313,6 +329,8 @@ export default {
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('edit-external-link', EditExtLinkTool)
     config.addComponent('edit-xref', EditXrefTool)
+    config.addComponent('edit-formula', EditInlineFormulaTool)
+    config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
 

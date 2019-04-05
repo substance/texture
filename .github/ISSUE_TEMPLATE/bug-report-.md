@@ -7,14 +7,14 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+# Describe the bug
 
 
-**Steps To Reproduce**
+# Steps To Reproduce
 
 
-**Expected behavior**
+# Expected behavior
 
 
-**Screenshots**
+# Screenshots
 If applicable, add screenshots to help explain your problem.

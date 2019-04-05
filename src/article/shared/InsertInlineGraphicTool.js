@@ -1,4 +1,4 @@
-import UploadTool from '../shared/UploadTool'
+import UploadTool from './UploadTool'
 
 export default class InsertInlineGraphicTool extends UploadTool {
   getClassNames () {

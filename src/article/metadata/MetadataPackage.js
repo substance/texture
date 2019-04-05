@@ -1,4 +1,4 @@
-import { AnnotationCommand, getKeyForPath } from 'substance'
+import { AnnotationCommand, EditAnnotationCommand, getKeyForPath } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
@@ -21,8 +21,10 @@ import {
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
+import EditExtLinkTool from '../shared/EditExtLinkTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
+import InsertExtLinkCommand from '../shared/InsertExtLinkCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
 import {
@@ -115,6 +117,11 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('create-external-link', InsertExtLinkCommand, {
+      nodeType: 'external-link',
+      accelerator: 'CommandOrControl+K',
+      commandGroup: 'formatting'
+    })
     config.addCommand('delete-columns', DeleteCellsCommand, {
       spec: { dim: 'col' },
       commandGroup: 'table-delete'
@@ -126,6 +133,10 @@ export default {
     config.addCommand('edit-author', EditEntityCommand, {
       selectionType: 'author',
       commandGroup: 'author'
+    })
+    config.addCommand('edit-external-link', EditAnnotationCommand, {
+      nodeType: 'external-link',
+      commandGroup: 'prompt'
     })
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
@@ -251,8 +262,22 @@ export default {
       commandGroup: 'formatting'
     })
 
+    // Toolpanels
+    config.addToolPanel('main-overlay', [
+      {
+        name: 'prompt',
+        type: 'prompt',
+        style: 'minimal',
+        hideDisabled: true,
+        items: [
+          { type: 'command-group', name: 'prompt' }
+        ]
+      }
+    ])
+
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
+    config.addComponent('edit-external-link', EditExtLinkTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
 
@@ -300,10 +325,12 @@ export default {
     config.addLabel('article-metadata', 'Article Metadata')
     config.addLabel('subtitle', 'Subtitle')
     config.addLabel('empty-figure-metadata', 'No fields specified')
+    config.addLabel('open-link', 'Open Link')
     // Icons
-    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
-    config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
+    config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
+    config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
+    config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
 
     // TODO: need to rethink this a some point
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })

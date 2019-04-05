@@ -128,9 +128,23 @@ export default class MetadataEditor extends EditorPanel {
       sectionsEl.append(content)
     })
 
-    contentPanel.append(sectionsEl)
+    contentPanel.append(
+      sectionsEl.ref('sections'),
+      this._renderMainOverlay($$)
+    )
 
     return contentPanel
+  }
+
+  _renderMainOverlay ($$) {
+    const Overlay = this.getComponent('overlay')
+    const configurator = this._getConfigurator()
+    const items = configurator.getToolPanel('main-overlay')
+    return $$(Managed(Overlay), {
+      items,
+      theme: this._getTheme(),
+      bindings: ['commandStates']
+    })
   }
 
   _getSectionComponent (name, model) {

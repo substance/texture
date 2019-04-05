@@ -73,7 +73,7 @@ import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
 import SwitchViewCommand from '../shared/SwitchViewCommand'
-import { BlockFormula } from '../models'
+import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
 
 export default {
   name: 'ManuscriptEditor',
@@ -209,15 +209,15 @@ export default {
       commandGroup: 'insert'
     })
     config.addCommand('insert-xref-bibr', InsertCrossReferenceCommand, {
-      refType: 'bibr',
+      refType: Reference.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-figure', InsertCrossReferenceCommand, {
-      refType: 'fig',
+      refType: Figure.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-file', InsertCrossReferenceCommand, {
-      refType: 'file',
+      refType: SupplementaryFile.refType,
       commandGroup: 'insert-xref'
     })
     // Note: footnote cross-references are special, because they take the current scope into account
@@ -230,7 +230,7 @@ export default {
       commandGroup: 'insert-xref'
     })
     config.addCommand('insert-xref-table', InsertCrossReferenceCommand, {
-      refType: 'table',
+      refType: Table.refType,
       commandGroup: 'insert-xref'
     })
     config.addCommand('move-down-metadata-field', MoveCustomMetadataFieldCommand, {

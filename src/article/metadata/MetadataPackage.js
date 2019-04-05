@@ -25,6 +25,10 @@ import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
 import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
+import {
+  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
+} from '../editor/TableCommands'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
@@ -111,6 +115,14 @@ export default {
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('delete-columns', DeleteCellsCommand, {
+      spec: { dim: 'col' },
+      commandGroup: 'table-delete'
+    })
+    config.addCommand('delete-rows', DeleteCellsCommand, {
+      spec: { dim: 'row' },
+      commandGroup: 'table-delete'
+    })
     config.addCommand('edit-author', EditEntityCommand, {
       selectionType: 'author',
       commandGroup: 'author'
@@ -118,6 +130,26 @@ export default {
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
       commandGroup: 'reference'
+    })
+    config.addCommand('insert-columns-left', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'left' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-columns-right', InsertCellsCommand, {
+      spec: { dim: 'col', pos: 'right' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-rows-above', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'above' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-rows-below', InsertCellsCommand, {
+      spec: { dim: 'row', pos: 'below' },
+      commandGroup: 'table-insert'
+    })
+    config.addCommand('insert-table', InsertTableCommand, {
+      nodeType: 'table-figure',
+      commandGroup: 'insert'
     })
     config.addCommand('move-down-col-item', MoveCollectionItemCommand, {
       direction: 'down',
@@ -173,10 +205,17 @@ export default {
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('table:select-all', TableSelectAllCommand)
     config.addCommand('toggle-bold', AnnotationCommand, {
       nodeType: 'bold',
       accelerator: 'CommandOrControl+B',
       commandGroup: 'formatting'
+    })
+    config.addCommand('toggle-cell-heading', ToggleCellHeadingCommand, {
+      commandGroup: 'table'
+    })
+    config.addCommand('toggle-cell-merge', ToggleCellMergeCommand, {
+      commandGroup: 'table'
     })
     config.addCommand('toggle-italic', AnnotationCommand, {
       nodeType: 'italic',

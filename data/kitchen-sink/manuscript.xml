@@ -369,7 +369,7 @@ def read() = in.read()
             <label>Field II</label>
             <kwd>Value C</kwd>
           </kwd-group>
-          <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.png" />
+          <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.jpg" />
         </fig>
       </sec>
       <sec id="sec-3-3">

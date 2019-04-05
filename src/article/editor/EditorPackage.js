@@ -18,7 +18,7 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import PersistencePackage from '../../PersistencePackage'
 
 import ReferenceListComponent from '../shared/ReferenceListComponent'
-import EditXrefTool from './EditXrefTool'
+import EditXrefTool from '../shared/EditXrefTool'
 import EditExtLinkTool from '../shared/EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import ManuscriptTOC from './ManuscriptTOC'

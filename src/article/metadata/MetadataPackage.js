@@ -23,7 +23,7 @@ import {
 import EditEntityCommand from '../shared/EditEntityCommand'
 import EditExtLinkTool from '../shared/EditExtLinkTool'
 import EditXrefCommand from '../shared/EditXrefCommand'
-import EditXrefTool from '../editor/EditXrefTool'
+import EditXrefTool from '../shared/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'

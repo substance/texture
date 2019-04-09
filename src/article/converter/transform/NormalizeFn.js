@@ -1,6 +1,8 @@
 /*
   Normalize footnotes contents.
   Removes everything except textual paragraphs from footnotes.
+
+  TODO: there are similar contexts, such as figure legends for instance.
 */
 export default class NormalizeFn {
   import (dom) {

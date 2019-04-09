@@ -1,9 +1,9 @@
 import { HTMLExporter, DefaultDOMElement } from 'substance'
 
 export default class ArticleHTMLExporter extends HTMLExporter {
-  constructor (configurator) {
+  constructor (articleConfig) {
     super({
-      converters: _getConverters(configurator),
+      converters: articleConfig.getConverters('html'),
       idAttribute: 'data-id',
       elementFactory: DefaultDOMElement.createDocument('html')
     })
@@ -22,9 +22,4 @@ export default class ArticleHTMLExporter extends HTMLExporter {
     }
     return super.annotatedText(path)
   }
-}
-
-// TODO: we should improve the configurators internal format, e.g. use Map instead of {}
-function _getConverters (configurator) {
-  return configurator.getConverters('html')
 }

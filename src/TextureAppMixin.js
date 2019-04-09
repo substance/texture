@@ -1,6 +1,5 @@
 import Texture from './Texture'
 import TextureArchive from './TextureArchive'
-import { JATSImportDialog } from './article'
 
 export default function TextureAppMixin (ParentAppChrome) {
   return class TextureApp extends ParentAppChrome {
@@ -8,14 +7,16 @@ export default function TextureAppMixin (ParentAppChrome) {
       let el = $$('div').addClass('sc-app')
       let { archive, error } = this.state
       if (archive) {
+        const config = this._config
         const Texture = this._getAppClass()
         el.append(
-          $$(Texture, { archive }).ref('texture')
+          $$(Texture, { config, archive }).ref('texture')
         )
       } else if (error) {
-        if (error.type === 'jats-import-error') {
+        let ErrorRenderer = this.getComponent(error.type)
+        if (ErrorRenderer) {
           el.append(
-            $$(JATSImportDialog, { errors: error.detail._errors })
+            $$(ErrorRenderer, { error })
           )
         } else {
           el.append('ERROR:', error.message)

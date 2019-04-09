@@ -1,7 +1,7 @@
 import {
   getQueryStringParam, substanceGlobals
 } from 'substance'
-import { TextureWebApp, TextureArchive, vfsSaveHook, EditorPackage } from 'substance-texture'
+import { TextureWebApp, TextureArchive, vfsSaveHook } from 'substance-texture'
 
 window.addEventListener('load', () => {
   substanceGlobals.DEBUG_RENDERING = true
@@ -30,9 +30,5 @@ class DevWebApp extends TextureWebApp {
       vfsSaveHook(storage, TextureArchive)
     }
     return storage
-  }
-
-  _getArticleConfig () {
-    return EditorPackage
   }
 }

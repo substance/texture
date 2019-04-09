@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import { renderModel } from '../../kit'
-import ManuscriptSection from '../editor/ManuscriptSection'
+import ManuscriptSection from './ManuscriptSection'
 
 export default class ManuscriptComponent extends Component {
   render ($$) {

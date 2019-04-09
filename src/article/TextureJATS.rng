@@ -174,7 +174,6 @@
   <s:removed name="nlm-citation"/>
   <s:removed name="time-stamp"/>
 
-
   <!-- we do not support MML -->
   <s:removed name="mml:abs"/>
   <s:removed name="mml:and"/>

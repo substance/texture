@@ -15,7 +15,7 @@ const RNG_SEARCH_DIRS = [
 const JATS = 'JATS-archiving'
 const RNG_FILES = [
   `src/article/${JATS}.rng`,
-  'src/article/TextureArticle.rng'
+  'src/article/TextureJATS.rng'
 ]
 
 // Server configuration
@@ -89,12 +89,12 @@ b.task('schema:jats', () => {
 })
 
 b.task('schema:texture-article', () => {
-  _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2))
+  _compileSchema('TextureJATS', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2))
   b.custom(`Copy schema documentation...`, {
-    src: './tmp/TextureArticle.schema.md',
-    dest: './docs/TextureArticle.md',
+    src: './tmp/TextureJATS.schema.md',
+    dest: './docs/TextureJATS.md',
     execute () {
-      b.copy('./tmp/TextureArticle.schema.md', './docs/TextureArticle.md')
+      b.copy('./tmp/TextureJATS.schema.md', './docs/TextureJATS.md')
     }
   })
 })
@@ -105,7 +105,7 @@ b.task('schema:dar-manifest', () => {
 
 b.task('schema:debug', () => {
   _compileSchema(JATS, RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 1), { debug: true })
-  _compileSchema('TextureArticle', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2), { debug: true })
+  _compileSchema('TextureJATS', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2), { debug: true })
 })
 
 b.task('build:assets', function () {

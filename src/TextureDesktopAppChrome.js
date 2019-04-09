@@ -42,7 +42,7 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     const ArchiveClass = this._getArchiveClass()
     let storage = this.props.storage
     let buffer = new InMemoryDarBuffer()
-    let archive = new ArchiveClass(storage, buffer, context)
+    let archive = new ArchiveClass(storage, buffer, context, this._config)
     // HACK: this should be done earlier in the lifecycle (after first didMount)
     // and later disposed properly. However we can accept this for now as
     // the app lives as a singleton atm.

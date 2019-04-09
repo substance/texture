@@ -15,7 +15,7 @@ import AddEntityCommand from '../shared/AddEntityCommand'
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
-import PersistencePackage from '../../PersistencePackage'
+import PersistencePackage from '../../shared/PersistencePackage'
 
 import ReferenceListComponent from '../shared/ReferenceListComponent'
 import EditXrefTool from '../shared/EditXrefTool'
@@ -87,11 +87,6 @@ export default {
     config.import(ArticleToolbarPackage)
     config.import(PersistencePackage)
     config.import(FindAndReplacePackage)
-
-    // EXPERIMENTAL:
-    // a CommandManager that uses the xmlSchema to inhibit commands
-    // which would generate disallowed content
-    config.setCommandManagerClass(SchemaDrivenCommandManager)
 
     config.addComponent('add-supplementary-file', AddSupplementaryFileWorkflow)
     config.addComponent('figure', FigureComponent, true)

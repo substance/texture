@@ -1,28 +1,29 @@
 import { Component, platform } from 'substance'
 import TextureConfigurator from './TextureConfigurator'
-import ArticlePackage from './article/ArticlePackage'
+import ArticlePlugin from './article/ArticlePlugin'
 import { PinnedMessage } from './kit/ui'
 
 // TODO: this should incoporate the 'Project' stuff that we have in Stencila
 export default class Texture extends Component {
-  constructor (...args) {
-    super(...args)
-
-    this.config = this._getConfiguration()
+  getInitialState () {
+    return {
+      currentDocumentName: 'manuscript'
+    }
   }
 
   render ($$) {
+    const config = this.props.config
     const archive = this.props.archive
     let el = $$('div').addClass('sc-texture')
 
     // TODO: switch by current document tab
-    const currentDocumentName = 'manuscript'
-    const ResourceComponent = this.config.getComponent('article')
-    const config = this.config.getConfiguration('article')
+    const currentDocumentName = this.state.currentDocumentName
+    const ResourceComponent = config.getComponent('article')
+    const articleConfig = config.getConfiguration('article')
     const documentSession = archive.getDocumentSession(currentDocumentName)
     let props = {
       archive,
-      config,
+      config: articleConfig,
       documentSession
     }
     el.append(
@@ -36,10 +37,25 @@ export default class Texture extends Component {
     return el
   }
 
-  _getConfiguration () {
+  static registerPlugin (plugin) {
+    let plugins = Texture.plugins
+    if (!plugins) {
+      Texture.plugins = plugins = new Map()
+    }
+    let name = plugin.name
+    if (plugins.has(name)) {
+      throw new Error(`Plugin with name '${name}' has already been registered`)
+    }
+    plugins.set(name, plugin)
+  }
+
+  static getConfiguration () {
+    let plugins = Texture.plugins
     let config = new TextureConfigurator()
-    // TODO: in future we want to make this configurable (plugin framework)
-    config.import(ArticlePackage)
+    for (let plugin of plugins.values()) {
+      // TODO: allow to disable plugins via a settings dialog
+      plugin.configure(config)
+    }
     return config
   }
 
@@ -47,3 +63,6 @@ export default class Texture extends Component {
     this.refs.resource._handleKeydown(event)
   }
 }
+
+// register the core plugins here
+Texture.registerPlugin(ArticlePlugin)

@@ -1,10 +1,13 @@
-import { Component, DefaultDOMElement, platform, Router } from 'substance'
+import { Component, DefaultDOMElement, platform, Router, domHelpers } from 'substance'
+import Texture from './Texture'
 
 export default class TextureAppChrome extends Component {
   constructor (...args) {
     super(...args)
 
     this._router = new Router()
+    // TODO: rethink how configuration is loaded
+    this._config = Texture.getConfiguration()
   }
 
   didMount () {
@@ -23,8 +26,8 @@ export default class TextureAppChrome extends Component {
     // Note: adding global handlers causes problems in the test suite
     if (!platform.test) {
       DefaultDOMElement.getBrowserWindow().on('keydown', this._keyDown, this)
-      DefaultDOMElement.getBrowserWindow().on('drop', this._supressDnD, this)
-      DefaultDOMElement.getBrowserWindow().on('dragover', this._supressDnD, this)
+      DefaultDOMElement.getBrowserWindow().on('drop', domHelpers.stopAndPrevent, this)
+      DefaultDOMElement.getBrowserWindow().on('dragover', domHelpers.stopAndPrevent, this)
     }
     this._router.start()
     this.handleActions({
@@ -114,9 +117,5 @@ export default class TextureAppChrome extends Component {
     if (this._handleKeydown) {
       this._handleKeydown(event)
     }
-  }
-
-  _supressDnD (event) {
-    event.preventDefault()
   }
 }

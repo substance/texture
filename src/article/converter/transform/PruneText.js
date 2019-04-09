@@ -1,5 +1,5 @@
 import pruneText from '../util/pruneText'
-import TextureArticleSchema from '../../TextureArticleSchema'
+import TextureArticleSchema from '../../TextureJATS'
 
 /*
   Removes all native TextNodes from elements which we specified to be

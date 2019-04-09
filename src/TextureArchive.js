@@ -1,6 +1,5 @@
 import { prettyPrintXML, DefaultDOMElement } from 'substance'
 import { PersistedDocumentArchive } from './dar'
-import { ArticleLoader, JATSExporter } from './article'
 
 export default class TextureArchive extends PersistedDocumentArchive {
   /*
@@ -22,43 +21,12 @@ export default class TextureArchive extends PersistedDocumentArchive {
       if (!record) {
         return
       }
-      // Load any document except pub-meta (which we prepared manually)
-      if (entry.type !== 'pub-meta') {
-        // TODO: we need better concept for handling errors
-        let session
-        // Passing down 'sessions' so that we can add to the pub-meta session
-        session = this._loadDocument(entry.type, record, sessions)
-        sessions[entry.id] = session
-      }
+      // TODO: we need better concept for handling errors
+      // Passing down 'sessions' so that we can add to the pub-meta session
+      let session = this._loadDocument(entry.type, record, sessions)
+      sessions[entry.id] = session
     })
     return sessions
-  }
-
-  _repair () {
-    let manifestSession = this.getDocumentSession('manifest')
-    let entries = manifestSession.getDocument().getDocumentEntries()
-    let missingEntries = []
-
-    entries.forEach(entry => {
-      let session = this.getDocumentSession(entry.id)
-      if (!session) {
-        missingEntries.push(entry.id)
-        console.warn(`${entry.path} could not be found in the archive`)
-      }
-    })
-
-    // TODO: rethink this. IMO it is a HACK to do such things automatically
-    // Instead the user should be informed about the problem and be asked to fix it.
-    if (missingEntries.length > 0) {
-      // Cleanup missing entries
-      // manifestSession.transaction(tx => {
-      //   let documentsEl = tx.find('documents')
-      //   missingEntries.forEach(missingEntry => {
-      //     let entryEl = tx.get(missingEntry)
-      //     documentsEl.removeChild(entryEl)
-      //   })
-      // })
-    }
   }
 
   _exportManifest (sessions, buffer, rawArchive) {
@@ -102,32 +70,20 @@ export default class TextureArchive extends PersistedDocumentArchive {
   }
 
   _loadDocument (type, record, sessions) {
-    switch (type) {
-      case 'article': {
-        return ArticleLoader.load(record.data, {}, this._config)
-      }
-      default:
-        throw new Error('Unsupported document type')
+    let loader = this._config.getDocumentLoader(type)
+    if (loader) {
+      return loader.load(record.data, this._config)
+    } else {
+      throw new Error('Unsupported document type')
     }
   }
 
   _exportDocument (type, session, sessions) { // eslint-disable-line no-unused-vars
-    switch (type) {
-      case 'article': {
-        let exporter = new JATSExporter()
-        let doc = session.getDocument()
-        let res = exporter.export(doc)
-        // TODO: we need a way to report this problem, i.e. make us at least aware of it
-        // if (!res.ok) {
-        //   throw new Error('FIXME: generated XML is not JATS compliant!')
-        // }
-        let jats = res.jats
-        console.info('saving jats', jats.getNativeElement())
-        let xmlStr = prettyPrintXML(jats)
-        return xmlStr
-      }
-      default:
-        throw new Error('Unsupported document type')
+    let serializer = this._config.getDocumentSerializer(type)
+    if (serializer) {
+      return serializer.export(session.getDocument(), this._config)
+    } else {
+      throw new Error('Unsupported document type')
     }
   }
 

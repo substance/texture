@@ -1,52 +1,69 @@
-import { forEach } from 'substance'
-import ArticleConfigurator from './ArticleConfigurator'
-import ArticleModelPackage from './ArticleModelPackage'
+import { DocumentSchema, DefaultDOMElement } from 'substance'
 import ArticleSession from './ArticleSession'
-import JATSImporter from './converter/JATSImporter'
+import InternalArticleDocument from './InternalArticleDocument'
 
-export default {
-  load (xml) {
-    let configurator = new ArticleConfigurator()
-    configurator.import(ArticleModelPackage)
-    let jatsImporter = new JATSImporter()
-    let importOptions = {
-      allowNotImplemented: true
-    }
-    let result = jatsImporter.import(xml, importOptions)
-    if (result.hasErrored) {
-      let err = new Error('JATS import failed')
-      err.type = 'jats-import-error'
-      err.detail = new ImporterErrorReport(result.errors)
-      throw err
-    }
-    let doc = result.doc
-    return new ArticleSession(doc, configurator)
-  }
-}
+export default class ArticleLoader {
+  load (xml, config) {
+    let articleConfig = config.getConfiguration('article')
 
-class ImporterErrorReport {
-  constructor (jatsImporterErrors) {
-    let failedStages = []
-    forEach(jatsImporterErrors, (errors, stage) => {
-      if (errors && errors.length > 0) {
-        failedStages.push({ name: stage, errors })
-      }
+    let xmlDom = DefaultDOMElement.parseXML(xml)
+
+    // TODO: allow for a translation layer here, where certain known common transformation are applied.
+    // FIXME: bring back transformations
+
+    // TODO: allow to control via options if validation should be done or not
+    // or if the importer should be resilient against violations (e.g. by wrapping unsupported elements)
+
+    // TODO: we should only use nodes that are registered for the specifc article type
+    // e.g. only nodes of a specific JATS customisation if the article
+    let schema = new DocumentSchema({
+      DocumentClass: InternalArticleDocument,
+      nodes: articleConfig.getNodes()
     })
-    this._errors = failedStages
-  }
+    let doc = InternalArticleDocument.createEmptyArticle(schema)
 
-  toString () {
-    let frags = this._errors.reduce((frags, stage) => {
-      frags.push(`Errors during stage ${stage.name}:`)
-      frags = frags.concat(stage.errors.map(err => {
-        return _indentMsg(err.msg, '  ') + '\n'
-      }))
-      return frags
-    }, [])
-    return frags.join('\n')
+    // TODO: support JATS customisations registered via a plugin (e.g. stencila)
+    // the plugin would register a 'sniffer' used by a loader factory
+    // per default we would use our regular JATS importer
+
+    let importer = articleConfig.createImporter('jats', doc)
+    importer.import(xmlDom, {
+      // being less strict, with the side-effect that there is no error-report
+      // for unsupported content, only for violating content
+      // TODO: we should in this case treat those errors as warnings, show
+      // a warnings dialog, allowing to continue
+      allowNotImplemented: true
+    })
+
+    // TODO: bring back validation and error reporting
+
+    return new ArticleSession(doc, articleConfig)
   }
 }
 
-function _indentMsg (msg, indent) {
-  return msg.split('\n').map(line => indent + line).join('\n')
-}
+// class ImporterErrorReport {
+//   constructor (jatsImporterErrors) {
+//     let failedStages = []
+//     forEach(jatsImporterErrors, (errors, stage) => {
+//       if (errors && errors.length > 0) {
+//         failedStages.push({ name: stage, errors })
+//       }
+//     })
+//     this._errors = failedStages
+//   }
+
+//   toString () {
+//     let frags = this._errors.reduce((frags, stage) => {
+//       frags.push(`Errors during stage ${stage.name}:`)
+//       frags = frags.concat(stage.errors.map(err => {
+//         return _indentMsg(err.msg, '  ') + '\n'
+//       }))
+//       return frags
+//     }, [])
+//     return frags.join('\n')
+//   }
+// }
+
+// function _indentMsg (msg, indent) {
+//   return msg.split('\n').map(line => indent + line).join('\n')
+// }

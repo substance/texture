@@ -1,5 +1,5 @@
 import { ListPackage } from 'substance'
-import TableConverter from '../r2t/TableConverter'
+import TableConverter from '../jats/TableConverter'
 
 import BoldConverter from './BoldConverter'
 import ExtLinkConverter from './ExtLinkConverter'

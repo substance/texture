@@ -1,5 +1,5 @@
 import { Document, documentHelpers, EditingInterface } from 'substance'
-import TextureEditing from './TextureEditing'
+import TextureEditing from './shared/TextureEditing'
 
 export default class InternalArticleDocument extends Document {
   getRootNode () {

@@ -1,29 +1,27 @@
+import { XMLExporter, validateXMLSchema, isString } from 'substance'
+import TextureJATS from '../../TextureJATS'
+import internal2jats from './internal2jats'
 
-import { XMLExporter, isString } from 'substance'
-import converters from './_converters'
-
-/**
- * A factory the creates an exporter instance that can be used to convert a full document to JATS
- * but also for converting single nodes.
- *
- * @param {DOMElement} jatsDom
- * @param {InternalArticleDocument} doc
- */
-export default function createJatsExporter (jatsDom, doc) {
-  // ATTENTION: in this case it is different to the importer
-  // not the first matching converter is used, but the last one which is
-  // registered for a specific nody type, i.e. a later converter overrides a previous one
-  let exporter = new Internal2JATSExporter({
-    converters,
-    elementFactory: {
-      createElement: jatsDom.createElement.bind(jatsDom)
+export default class ArticleJATSExporter extends XMLExporter {
+  /*
+    Takes a InternalArticle document as a DOM and transforms it into a JATS document,
+    following TextureArticle guidelines.
+  */
+  export (doc) {
+    let jats = internal2jats(doc)
+    let res = this._validate(jats)
+    if (!res.ok) {
+      res.errors.forEach((err) => {
+        console.error(err.msg, err.el)
+      })
     }
-  })
-  exporter.state.doc = doc
-  return exporter
-}
+    return {
+      jats,
+      ok: res.ok,
+      errors: res.errors
+    }
+  }
 
-class Internal2JATSExporter extends XMLExporter {
   getNodeConverter (node) {
     let type = node.type
     if (node.isInstanceOf('reference')) {
@@ -60,5 +58,9 @@ class Internal2JATSExporter extends XMLExporter {
       el = converter.export(node, el, this) || el
     }
     return el
+  }
+
+  _validate (jats) {
+    return validateXMLSchema(TextureJATS, jats)
   }
 }

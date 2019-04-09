@@ -1,68 +1,8 @@
 import { uuid, documentHelpers } from 'substance'
-import InternalArticleSchema from '../../InternalArticleSchema'
-import InternalArticle from '../../InternalArticleDocument'
-// TODO: rename to XML helpers
 import { findChild, getText, retainChildren } from '../util/domHelpers'
-import createJatsImporter from './createJatsImporter'
 import SectionContainerConverter from './SectionContainerConverter'
 
-/*
-  TextureJATs Reference: (Please keep this up-to-date)
-  article:
-    (
-      front,
-      body?,
-      back?,
-    )
-  front:
-    (
-      journal-meta?,    // not supported yet
-      article-meta,     // -> metadata and others
-      // TODO: define a strict schema here ( why multiple ones? )
-      (def-list|list|ack|bio|fn-group|glossary|notes)*
-    )
-  article-meta:
-    (
-      article-id*,      // not supported yet
-      article-categories?,  //   -> metadata
-      title-group?,     // this is not optional internally, at least it contains the main title
-      contrib-group*,   // -> mapped to authors, editors, and contributors
-      aff*,             // -> affiliations
-      author-notes?,    // not supported yet
-      pub-date*,        // -> metadata
-      volume?,          // -> metadata
-      issue?,           // -> metadata
-      issue-title?,           // -> metadata
-      isbn?,            // -> metadata
-      (((fpage,lpage?)?,page-range?)|elocation-id)?,  // -> metadata
-      history?,         // -> metadata
-      permissions?,     // -> metadata
-      self-uri*,        // not supported yet
-      (related-article,related-object)*, // not supported yet
-      abstract?,        // -> content.abstract
-      trans-abstract*,  // -> translations
-      kwd-group*,       // -> keywords
-      funding-group*,   // not supported yet
-      conference*,      // not supported yet
-      counts?,          // not supported yet
-      custom-meta-group?  // not supported yet
-    )
-  back:
-    (
-      label?,   // not supported
-      title*, // not supported
-      (ack|app-group|bio|fn-group|glossary|ref-list|notes|sec)* // not supported
-    )
-
-  TODO:
-    Allow only one place for '<ack>', '<bio>', '<fn-group>', '<glossary>', '<notes>'
-*/
-
-export default function jats2internal (jats, options) {
-  let doc = InternalArticle.createEmptyArticle(InternalArticleSchema)
-  // this is used to for parts of the DOM where we use JATS in the internal model
-  let jatsImporter = createJatsImporter(doc)
-
+export default function jats2internal (jats, doc, jatsImporter) {
   // metadata
   _populateOrganisations(doc, jats)
   _populateAuthors(doc, jats, jatsImporter)
@@ -315,20 +255,21 @@ function _populateTitle (doc, jats, jatsImporter) {
   if (titleEl) {
     article.title = jatsImporter.annotatedText(titleEl, ['article', 'title'])
   }
+  // FIXME: bring back translations
   // translations
-  let transTitleEls = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
-  for (let transTitleEl of transTitleEls) {
-    let group = transTitleEl.parentNode
-    let language = group.attr('xml:lang')
-    let translation = doc.create({
-      type: 'article-title-translation',
-      id: transTitleEl.id,
-      source: ['article', 'title'],
-      language
-    })
-    translation.content = jatsImporter.annotatedText(transTitleEl, translation.getPath())
-    documentHelpers.append(doc, ['article', 'translations'], translation.id)
-  }
+  // let transTitleEls = jats.findAll('article > front > article-meta > title-group > trans-title-group > trans-title')
+  // for (let transTitleEl of transTitleEls) {
+  //   let group = transTitleEl.parentNode
+  //   let language = group.attr('xml:lang')
+  //   let translation = doc.create({
+  //     type: 'article-title-translation',
+  //     id: transTitleEl.id,
+  //     source: ['article', 'title'],
+  //     language
+  //   })
+  //   translation.content = jatsImporter.annotatedText(transTitleEl, translation.getPath())
+  //   documentHelpers.append(doc, ['article', 'translations'], translation.id)
+  // }
 }
 
 function _populateSubTitle (doc, jats, jatsImporter) {
@@ -376,21 +317,22 @@ function _populateAbstract (doc, jats, jatsImporter) {
     }
   })
 
+  // FIXME: bring back translations
   // translations
-  let transAbstractEls = jats.findAll('article > front > article-meta > trans-abstract')
-  for (let transAbstractEl of transAbstractEls) {
-    let language = transAbstractEl.attr('xml:lang')
-    let translation = doc.create({
-      type: 'article-abstract-translation',
-      id: transAbstractEl.id,
-      source: [mainAbstract.id, 'content'],
-      language,
-      content: transAbstractEl.getChildren().map(child => {
-        return jatsImporter.convertElement(child).id
-      })
-    })
-    documentHelpers.append(doc, ['article', 'translations'], translation.id)
-  }
+  // let transAbstractEls = jats.findAll('article > front > article-meta > trans-abstract')
+  // for (let transAbstractEl of transAbstractEls) {
+  //   let language = transAbstractEl.attr('xml:lang')
+  //   let translation = doc.create({
+  //     type: 'article-abstract-translation',
+  //     id: transAbstractEl.id,
+  //     source: [mainAbstract.id, 'content'],
+  //     language,
+  //     content: transAbstractEl.getChildren().map(child => {
+  //       return jatsImporter.convertElement(child).id
+  //     })
+  //   })
+  //   documentHelpers.append(doc, ['article', 'translations'], translation.id)
+  // }
 }
 
 function _populateBody (doc, jats, jatsImporter) {

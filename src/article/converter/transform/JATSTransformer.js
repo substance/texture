@@ -12,8 +12,13 @@ const trafos = [
   PruneText
 ].map(C => new C())
 
-export function jats2restrictedJats (dom, api) {
-  for (let i = 0; i < trafos.length; i++) {
-    trafos[i].import(dom, api)
+export default class JATSTransformer {
+  import (jatsDom) {
+    // TODO: we should create some kind of report
+    trafos.forEach(t => t.import(jatsDom))
+  }
+
+  export () {
+    // nothing yet
   }
 }

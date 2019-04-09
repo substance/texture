@@ -1,70 +1,10 @@
 import { forEach, isArrayEqual } from 'substance'
 import createEmptyJATS from '../util/createEmptyJATS'
-import createJatsExporter from './createJatsExporter'
 import SectionContainerConverter from './SectionContainerConverter'
 
-/*
-  Output will have the following form:
-
-  article:
-    (
-      front,
-      body?,
-      back?,
-    )
-  front:
-    (
-      journal-meta?,    // not supported yet
-      article-meta,
-      def-list?         // not supported yet
-    )
-  article-meta:
-    (
-      article-id*,      // not supported yet
-      article-categories?,  // derived from subjects
-      title-group?,
-      contrib-group*,
-      aff*,
-      author-notes?,    // not supported yet
-      pub-date*,
-      volume?,
-      issue?,
-      isbn?,
-      (((fpage,lpage?)?,page-range?)|elocation-id)?,
-      history?,
-      permissions?,     // not supported yet
-      self-uri*,        // not supported yet
-      related-article*, // not supported yet
-      related-object*,  // not supported yet
-      abstract?,
-      trans-abstract*,
-      kwd-group*,
-      funding-group*,   // derived from awards
-      conference*,      // not supported yet
-      counts?,          // not supported yet
-      custom-meta-group?  // not supported yet
-    )
-  back:
-    (
-      ack*, // not supported yet
-      bio*, // not supported yet
-      fn-group?,
-      glossary?,  // not supported yet
-      ref-list?,
-      notes*, // not supported yet
-      sec*  // do we want to support this at all?
-    )
-
-  TODO:
-    Allow only one place for '<ack>', '<bio>', '<fn-group>', '<glossary>', '<notes>'
-*/
-
-export default function internal2jats (doc) { // eslint-disable-line
+export default function internal2jats (doc, jatsExporter) { // eslint-disable-line
   let jats = createEmptyJATS()
   jats.$$ = jats.createElement.bind(jats)
-
-  // we use this exporter for JATS compliant parts of our intneral document
-  let jatsExporter = createJatsExporter(jats, doc)
 
   // metadata
   _populateMeta(jats, doc, jatsExporter)

@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { printElement } from './util/domHelpers'
+import { printElement } from '../util/domHelpers'
 
 export default class JATSImportDialog extends Component {
   render ($$) {

@@ -4,7 +4,7 @@ import {
 } from '../../kit'
 
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
-import PersistencePackage from '../../PersistencePackage'
+import PersistencePackage from '../../shared/PersistencePackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 
@@ -39,7 +39,7 @@ import InsertInlineGraphicTool from '../shared/InsertInlineGraphicTool'
 import {
   InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
-} from '../editor/TableCommands'
+} from '../manuscript/TableCommands'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'

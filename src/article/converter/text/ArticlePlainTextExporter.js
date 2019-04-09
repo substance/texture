@@ -1,4 +1,4 @@
-import { getLabel } from '../shared/nodeHelpers'
+import { getLabel } from '../../shared/nodeHelpers'
 
 export default class ArticlePlainTextExporter {
   export (article) {

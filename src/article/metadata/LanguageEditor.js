@@ -1,12 +1,18 @@
-import {
-  ValueComponent
-} from '../../kit'
+import { ValueComponent } from '../../kit'
+
+// TODO: this should come from settings (not configuration)
+const LANGUAGES = {
+  'en': 'English',
+  'es': 'Spanish',
+  'pt': 'Portugese',
+  'fr': 'French'
+}
 
 export default class LanguageEditor extends ValueComponent {
   render ($$) {
     const model = this.props.model
     const value = model.getValue()
-    const languages = this._getArticleLanguages()
+    const languages = LANGUAGES
     let el = $$('div').addClass('sc-language-editor')
 
     const languageSelector = $$('select').addClass('se-select')
@@ -34,11 +40,6 @@ export default class LanguageEditor extends ValueComponent {
     const input = this.refs.input
     const value = input.getValue()
     model.setValue(value)
-  }
-
-  _getArticleLanguages () {
-    const configurator = this.context.configurator
-    return configurator.getAvailableLanguages()
   }
 
   _suppressClickPropagation (e) {

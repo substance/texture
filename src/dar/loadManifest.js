@@ -5,11 +5,13 @@ import ManifestSchema from './ManifestSchema'
 import ManifestDocument from './ManifestDocument'
 
 export default function loadManifest (xmlStr) {
+  // TODO: get rid XMLDocumentImporter and this way of defining a schema
   let configurator = new Configurator()
   registerSchema(configurator, ManifestSchema, ManifestDocument, {
     ImporterClass: XMLDocumentImporter
   })
-  let importer = configurator.createImporter(ManifestSchema.getName())
-  let manifest = importer.importDocument(xmlStr)
+  let manifest = new ManifestDocument(configurator.getSchema())
+  let importer = configurator.createImporter(ManifestSchema.getName(), {}, { document: manifest })
+  manifest = importer.importDocument(xmlStr)
   return new DocumentSession(manifest)
 }

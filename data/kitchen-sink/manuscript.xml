@@ -16,9 +16,6 @@
       <title-group>
         <article-title>Kitchen Sink</article-title>
         <subtitle>A word processor for structured content</subtitle>
-        <trans-title-group xml:lang="es">
-          <trans-title id="trans-title-1">Objeto de visión a acción manual en <italic id="italic-1">cortezas parietales</italic>, premotoras y motoras de macaco</trans-title>
-        </trans-title-group>
       </title-group>
       <contrib-group content-type="author">
         <contrib id="author-1" contrib-type="person" equal-contrib="yes" corresp="yes" deceased="no">
@@ -164,9 +161,6 @@
       <abstract abstract-type="web-summary">
         <p id="p-1-2">This is an example of web summary.</p>
       </abstract>
-      <trans-abstract id="trans-abstract-1" xml:lang="es">
-        <p id="p-1-3">Tenga en cuenta que este artículo utiliza contenido de diferentes artículos de acceso abierto (eLife) con fines de demostración. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id nibh id ipsum ultrices vehicula in et ante.</p>
-      </trans-abstract>
       <kwd-group xml:lang="en">
         <kwd content-type="author-keyword">optogenetics</kwd>
         <kwd content-type="author-keyword">two-photon</kwd>

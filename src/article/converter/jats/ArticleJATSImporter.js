@@ -1,9 +1,10 @@
 import {
   DOMImporter, last
 } from 'substance'
+import InternalArticleDocument from '../../InternalArticleDocument'
+import jats2internal from './jats2internal'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
-import jats2internal from './jats2internal'
 
 export default class ArticleJATSImporter extends DOMImporter {
   constructor (articleConfig, document, options = {}) {
@@ -16,6 +17,7 @@ export default class ArticleJATSImporter extends DOMImporter {
 
   import (jats, options = {}) {
     jats2internal(jats, this.state.doc, this)
+    return this.state.doc
   }
 
   annotatedText (el, path, options = {}) {
@@ -43,6 +45,10 @@ export default class ArticleJATSImporter extends DOMImporter {
       id = this.state.uuid('_' + prefix)
     }
     return id
+  }
+
+  _createDocument () {
+    return InternalArticleDocument.createEmptyArticle(this.config.document.getSchema())
   }
 
   _getConverterForElement (el, mode) {

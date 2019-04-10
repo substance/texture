@@ -131,8 +131,7 @@ export default class ClipboardNew {
       }
       bodyEl = this._wrapIntoParagraph(bodyEl)
       snippet = context.appState.document.createSnippet()
-      let htmlImporter = context.configurator.getImporter('html')
-      htmlImporter.setDocument(snippet)
+      let htmlImporter = context.configurator.createImporter('html', snippet)
       let container = snippet.get(documentHelpers.SNIPPET_ID)
       bodyEl.getChildren().forEach(el => {
         let node = htmlImporter.convertElement(el)

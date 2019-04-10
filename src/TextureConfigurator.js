@@ -64,12 +64,12 @@ export default class TextureConfigurator {
     }
   }
 
-  get (name) {
-    return this._valuesRegistry.get(name)
+  getValue (key) {
+    return this._valuesRegistry.get(key)
   }
 
-  set (name, value) {
-    this._values.set(name, value)
+  setValue (key, value) {
+    this._values.set(key, value)
   }
 
   addCommand (name, CommandClass, options = {}) {
@@ -160,13 +160,14 @@ export default class TextureConfigurator {
     } else {
       label = label.replace(/CommandOrControl/i, 'Ctrl')
     }
-    this._keyboardShortcuts.push({
+    let entry = {
       key: combo,
       label,
       spec
-    })
+    }
+    this._keyboardShortcuts.push(entry)
     if (spec.command) {
-      this._keyboardShortcutsByCommandName.set(spec.command, spec)
+      this._keyboardShortcutsByCommandName.set(spec.command, entry)
     }
   }
 

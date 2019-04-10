@@ -18,7 +18,9 @@ export default class ArticleLoader {
     // e.g. only nodes of a specific JATS customisation if the article
     let schema = new DocumentSchema({
       DocumentClass: InternalArticleDocument,
-      nodes: articleConfig.getNodes()
+      nodes: articleConfig.getNodes(),
+      // TODO: try to get rid of this by using property schema
+      defaultTextType: 'paragraph'
     })
     let doc = InternalArticleDocument.createEmptyArticle(schema)
 

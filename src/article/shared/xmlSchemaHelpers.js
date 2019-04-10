@@ -79,7 +79,7 @@ export function createSchema (XMLSchemaData, name, version, DocumentClass, docTy
     version,
     DocumentClass,
     // TODO: try to get rid of this
-    defaultTextType: 'p'
+    defaultTextType: 'paragraph'
   })
   schema.addNodes(nodeClasses)
   // HACK: add legacy API (Formerly XMLSchema)

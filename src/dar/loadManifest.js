@@ -11,6 +11,7 @@ export default function loadManifest (xmlStr) {
     ImporterClass: XMLDocumentImporter
   })
   let manifest = new ManifestDocument(configurator.getSchema())
+  // FIXME: this API is now inconsistent with the general DOMImporter
   let importer = configurator.createImporter(ManifestSchema.getName(), {}, { document: manifest })
   manifest = importer.importDocument(xmlStr)
   return new DocumentSession(manifest)

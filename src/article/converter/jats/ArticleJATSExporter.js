@@ -3,12 +3,18 @@ import TextureJATS from '../../TextureJATS'
 import internal2jats from './internal2jats'
 
 export default class ArticleJATSExporter extends XMLExporter {
+  constructor (articleConfig, document, { converters }) {
+    super({ document, converters })
+  }
+
   /*
     Takes a InternalArticle document as a DOM and transforms it into a JATS document,
     following TextureArticle guidelines.
   */
   export (doc) {
-    let jats = internal2jats(doc)
+    // TODO: consolidate DOMExporter / XMLExporter
+    this.state.doc = doc
+    let jats = internal2jats(doc, this)
     let res = this._validate(jats)
     if (!res.ok) {
       res.errors.forEach((err) => {

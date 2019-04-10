@@ -10,12 +10,12 @@ export default class ArticleSession extends DocumentSession {
   constructor (doc, articleConfig) {
     super(doc)
 
-    this.figureManager = new FigureManager(this, articleConfig.get('figure-label-generator'))
-    this.footnoteManager = new FootnoteManager(this, articleConfig.get('footnote-label-generator'))
-    this.formulaManager = new FormulaManager(this, articleConfig.get('formula-label-generator'))
-    this.referenceManager = new ReferenceManager(this, articleConfig.get('reference-label-generator'))
-    this.supplementaryManager = new SupplementaryManager(this, articleConfig.get('supplementary-file-label-generator'))
-    this.tableManager = new TableManager(this, articleConfig.get('table-label-generator'))
+    this.figureManager = new FigureManager(this, articleConfig.getValue('figure-label-generator'))
+    this.footnoteManager = new FootnoteManager(this, articleConfig.getValue('footnote-label-generator'))
+    this.formulaManager = new FormulaManager(this, articleConfig.getValue('formula-label-generator'))
+    this.referenceManager = new ReferenceManager(this, articleConfig.getValue('reference-label-generator'))
+    this.supplementaryManager = new SupplementaryManager(this, articleConfig.getValue('supplementary-file-label-generator'))
+    this.tableManager = new TableManager(this, articleConfig.getValue('table-label-generator'))
   }
 
   getFigureManager () {

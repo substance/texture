@@ -5,6 +5,7 @@ import ArticlePlugin from '../../ArticlePlugin'
 export default function createJatsExporter (jatsDom, doc) {
   let config = new TextureConfigurator()
   config.import(ArticlePlugin)
-  let exporter = config.createExporter('jats', doc)
+  let articleConfig = config.getConfiguration('article')
+  let exporter = articleConfig.createExporter('jats', doc)
   return exporter
 }

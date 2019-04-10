@@ -2,7 +2,6 @@
 import {
   EditAnnotationCommand,
   ListPackage,
-  SchemaDrivenCommandManager,
   MultiSelectPackage,
   AnnotationCommand
 } from 'substance'

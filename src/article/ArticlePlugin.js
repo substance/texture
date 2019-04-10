@@ -1,18 +1,20 @@
-import ArticlePanel from './ArticlePanel'
-import ArticleModelPackage from './models/ArticleModelPackage'
 import ArticleLoader from './ArticleLoader'
+import ArticleModelPackage from './models/ArticleModelPackage'
+import ArticlePanel from './ArticlePanel'
+import ArticleSerializer from './ArticleSerializer'
 import ManuscriptEditor from './manuscript/ManuscriptEditor'
 import ManuscriptPackage from './manuscript/ManuscriptPackage'
 import MetadataEditor from './metadata/MetadataEditor'
 import MetadataPackage from './metadata/MetadataPackage'
 import FigureLabelGenerator from './shared/FigureLabelGenerator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
-import ArticleJATSConverters from './converter/jats/ArticleJATSConverters'
-import ArticleJATSImporter from './converter/jats/ArticleJATSImporter'
-import ArticleJATSExporter from './converter/jats/ArticleJATSExporter'
 import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
-import ArticleHTMLImporter from './converter/html/ArticleHTMLImporter'
 import ArticleHTMLExporter from './converter/html/ArticleHTMLExporter'
+import ArticleHTMLImporter from './converter/html/ArticleHTMLImporter'
+import ArticleJATSConverters from './converter/jats/ArticleJATSConverters'
+import ArticleJATSExporter from './converter/jats/ArticleJATSExporter'
+import ArticleJATSImporter from './converter/jats/ArticleJATSImporter'
+import ArticlePlainTextExporter from './converter/text/ArticlePlainTextExporter'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
 
 export default {
@@ -22,6 +24,7 @@ export default {
     config.addComponent('article', ArticlePanel)
 
     config.registerDocumentLoader('article', ArticleLoader)
+    config.registerDocumentSerializer('article', ArticleSerializer)
 
     let articleConfig = config.createSubConfiguration('article')
 
@@ -45,37 +48,39 @@ export default {
     articleConfig.addImporter('html', ArticleHTMLImporter)
     articleConfig.addExporter('html', ArticleHTMLExporter)
 
+    articleConfig.addExporter('text', ArticlePlainTextExporter)
+
     // ATTENTION: FigureLabelGenerator works a bit differently
     // TODO: consolidate LabelGenerators and configuration
     // e.g. it does not make sense to say 'setLabelGenerator' but then only provide a configuration for 'NumberedLabelGenerator'
-    articleConfig.set('figure-label-generator', new FigureLabelGenerator({
+    articleConfig.setValue('figure-label-generator', new FigureLabelGenerator({
       singular: 'Figure $',
       plural: 'Figures $',
       and: ',',
       to: '-'
     }))
-    articleConfig.set('footnote-label-generator', new NumberedLabelGenerator({
+    articleConfig.setValue('footnote-label-generator', new NumberedLabelGenerator({
       template: '$',
       and: ',',
       to: '-'
     }))
-    articleConfig.set('formula-label-generator', new NumberedLabelGenerator({
+    articleConfig.setValue('formula-label-generator', new NumberedLabelGenerator({
       template: '($)',
       and: ',',
       to: '-'
     }))
-    articleConfig.set('reference-label-generator', new NumberedLabelGenerator({
+    articleConfig.setValue('reference-label-generator', new NumberedLabelGenerator({
       template: '[$]',
       and: ',',
       to: '-'
     }))
-    articleConfig.set('supplementary-file-label-generator', new NumberedLabelGenerator({
+    articleConfig.setValue('supplementary-file-label-generator', new NumberedLabelGenerator({
       name: 'Supplementary File',
       plural: 'Supplementary Files',
       and: ',',
       to: '-'
     }))
-    articleConfig.set('table-label-generator', new NumberedLabelGenerator({
+    articleConfig.setValue('table-label-generator', new NumberedLabelGenerator({
       name: 'Table',
       plural: 'Tables',
       and: ',',

@@ -1,6 +1,6 @@
-import { platform } from 'substance'
+import { platform, DocumentSchema } from 'substance'
 import {
-  InternalArticleDocument, InternalArticleSchema,
+  InternalArticleDocument, TextureConfigurator, ArticlePlugin,
   createJatsImporter, createJatsExporter, createEmptyJATS
 } from '../../index'
 import getMountPoint from './getMountPoint'
@@ -80,8 +80,21 @@ export function injectStyle (t, style) {
   sandbox.insertAt(0, sandbox.createElement('style').text(style))
 }
 
+export function createEmptyArticle () {
+  let config = new TextureConfigurator()
+  config.import(ArticlePlugin)
+  let articleConfig = config.getConfiguration('article')
+  let schema = new DocumentSchema({
+    DocumentClass: InternalArticleDocument,
+    nodes: articleConfig.getNodes(),
+    // TODO: try to get rid of this by using property schema
+    defaultTextType: 'paragraph'
+  })
+  return InternalArticleDocument.createEmptyArticle(schema)
+}
+
 export function importElement (el) {
-  let doc = InternalArticleDocument.createEmptyArticle(InternalArticleSchema)
+  let doc = createEmptyArticle()
   let importer = createJatsImporter(doc)
   return importer.convertElement(el)
 }

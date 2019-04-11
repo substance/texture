@@ -1,3 +1,4 @@
+import ArticleConfigurator from './ArticleConfigurator'
 import ArticleLoader from './ArticleLoader'
 import ArticleModelPackage from './models/ArticleModelPackage'
 import ArticlePanel from './ArticlePanel'
@@ -16,6 +17,8 @@ import ArticleJATSExporter from './converter/jats/ArticleJATSExporter'
 import ArticleJATSImporter from './converter/jats/ArticleJATSImporter'
 import ArticlePlainTextExporter from './converter/text/ArticlePlainTextExporter'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
+import JATS from './JATS'
+import TextureJATS from './TextureJATS'
 
 export default {
   name: 'article',
@@ -26,7 +29,11 @@ export default {
     config.registerDocumentLoader('article', ArticleLoader)
     config.registerDocumentSerializer('article', ArticleSerializer)
 
-    let articleConfig = config.createSubConfiguration('article')
+    let articleConfig = config.createSubConfiguration('article', { ConfiguratorClass: ArticleConfigurator })
+
+    // used for validation
+    articleConfig.addJATSVariant(JATS.publicId, JATS)
+    articleConfig.addJATSVariant(TextureJATS.publicId, TextureJATS)
 
     articleConfig.import(ArticleModelPackage)
 
@@ -38,8 +45,23 @@ export default {
     ArticleJATSConverters.forEach(converter => {
       articleConfig.addConverter('jats', converter)
     })
+    // register default 'jats' im-/exporter
     articleConfig.addImporter('jats', ArticleJATSImporter)
     articleConfig.addExporter('jats', ArticleJATSExporter)
+    // register same exporter for the specific publicId
+    articleConfig.addImporter(JATS.publicId, ArticleJATSImporter, {
+      converterGroups: ['jats']
+    })
+    articleConfig.addExporter(JATS.publicId, ArticleJATSExporter, {
+      converterGroups: ['jats']
+    })
+    // ... and the same for TextureJATS
+    articleConfig.addImporter(TextureJATS.publicId, ArticleJATSImporter, {
+      converterGroups: ['jats']
+    })
+    articleConfig.addExporter(TextureJATS.publicId, ArticleJATSExporter, {
+      converterGroups: ['jats']
+    })
 
     // enable rich-text support for clipboard
     ArticleHTMLConverters.forEach(converter => {

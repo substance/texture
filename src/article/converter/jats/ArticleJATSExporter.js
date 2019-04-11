@@ -1,5 +1,4 @@
-import { XMLExporter, validateXMLSchema, isString } from 'substance'
-import TextureJATS from '../../TextureJATS'
+import { XMLExporter, isString } from 'substance'
 import internal2jats from './internal2jats'
 
 export default class ArticleJATSExporter extends XMLExporter {
@@ -15,16 +14,10 @@ export default class ArticleJATSExporter extends XMLExporter {
     // TODO: consolidate DOMExporter / XMLExporter
     this.state.doc = doc
     let jats = internal2jats(doc, this)
-    let res = this._validate(jats)
-    if (!res.ok) {
-      res.errors.forEach((err) => {
-        console.error(err.msg, err.el)
-      })
-    }
     return {
       jats,
-      ok: res.ok,
-      errors: res.errors
+      ok: true,
+      errors: []
     }
   }
 
@@ -64,9 +57,5 @@ export default class ArticleJATSExporter extends XMLExporter {
       el = converter.export(node, el, this) || el
     }
     return el
-  }
-
-  _validate (jats) {
-    return validateXMLSchema(TextureJATS, jats)
   }
 }

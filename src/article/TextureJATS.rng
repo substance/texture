@@ -1,35 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="JATS-archiving.rng"/>
-
-  <!--
-    Element-Type Overrides: These are necessary to generate
-    the DocumentSchema correctly.
-   -->
-  <!-- Annotations -->
-  <s:elementType name="bold" s:type="annotation"/>
-  <s:elementType name="ext-link" s:type="annotation"/>
-  <s:elementType name="italic" s:type="annotation"/>
-  <s:elementType name="monospace" s:type="annotation"/>
-  <s:elementType name="sc" s:type="annotation"/>
-  <s:elementType name="strike" s:type="annotation"/>
-  <s:elementType name="sub" s:type="annotation"/>
-  <s:elementType name="sup" s:type="annotation"/>
-  <s:elementType name="overline" s:type="annotation"/>
-  <s:elementType name="underline" s:type="annotation"/>
-  <!-- Inline-Elements -->
-  <s:elementType name="break" s:type="inline-element"/>
-  <s:elementType name="inline-formula" s:type="inline-element"/>
-  <s:elementType name="inline-graphic" s:type="inline-element"/>
-  <s:elementType name="xref" s:type="inline-element"/>
-  <!-- Containers -->
-  <s:elementType name="abstract" s:type="container"/>
-  <s:elementType name="trans-abstract" s:type="container"/>
-  <s:elementType name="body" s:type="container"/>
-  <s:elementType name="bio" s:type="container"/>
-  <s:elementType name="caption" s:type="container"/>
-  <s:elementType name="fn" s:type="container"/>
-
   <!--
     for these we need to figure out if we want to support at all,
     come up with a guide-line, and decide when to implement it
@@ -162,8 +133,6 @@
   <s:not-implemented name="volume-issue-group"/>
   <s:not-implemented name="volume-series"/>
   <s:not-implemented name="word-count"/>
-
-  <!-- removed until we can use these, i.e. we add a parent-element that has them -->
 
   <!-- elements we do not want to support -->
   <s:removed name="x"/>

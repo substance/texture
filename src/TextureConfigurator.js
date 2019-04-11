@@ -42,8 +42,8 @@ export default class TextureConfigurator {
     return this
   }
 
-  createSubConfiguration (name) {
-    let ConfiguratorClass = this.constructor
+  createSubConfiguration (name, options = {}) {
+    let ConfiguratorClass = options.ConfiguratorClass || this.constructor
     let subConfig = new ConfiguratorClass(this, name)
     this._subConfigurations.set(name, subConfig)
     return subConfig

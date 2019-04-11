@@ -1,6 +1,10 @@
 import { DocumentSchema, DefaultDOMElement } from 'substance'
 import ArticleSession from './ArticleSession'
 import InternalArticleDocument from './InternalArticleDocument'
+import JATSTransformer from './converter/transform/JATSTransformer'
+import validateXML from './converter/util/validateXML'
+import JATS from './JATS'
+import TextureJATS from './TextureJATS'
 
 export default class ArticleLoader {
   load (xml, config) {
@@ -8,14 +12,47 @@ export default class ArticleLoader {
 
     let xmlDom = DefaultDOMElement.parseXML(xml)
 
-    // TODO: allow for a translation layer here, where certain known common transformation are applied.
-    // FIXME: bring back transformations
+    // TODO: detect the actual schema version
+    let publicId = xmlDom.getDoctype().publicId
+    // TODO: this needs to be thought through better
+    let jatsSchema = articleConfig.getJATSVariant(publicId)
+    // use the default JATS schema in case that this variant is not registered
+    if (!jatsSchema) {
+      jatsSchema = JATS
+    }
+
+    // TODO: create error report
+    if (!jatsSchema) throw new Error(`Unsupported JATS variant: ${publicId}`)
 
     // TODO: allow to control via options if validation should be done or not
     // or if the importer should be resilient against violations (e.g. by wrapping unsupported elements)
+    // TODO: bring back validation
+    // TODO validate the input using the given schema
+    let validationResult = validateXML(jatsSchema, xmlDom)
+    // TODO: create report
+    if (!validationResult.ok) {
+      throw new Error('Validation failed.')
+    }
 
-    // TODO: we should only use nodes that are registered for the specifc article type
-    // e.g. only nodes of a specific JATS customisation if the article
+    // TODO: allow to configure this transformation layer
+    // For now transformers are run only for regular JATS files every imported jats,
+    // but on the long run we should only run transformers for a specific schema
+    if (jatsSchema.publicId === JATS.publicId) {
+      let transformer = new JATSTransformer()
+      xmlDom = transformer.import(xmlDom)
+    }
+
+    // TODO: how would we make sure that a custom JATS would conform to TextureJATS?
+    // ... idea: we could validate only elements that are goverened by TextureJATS
+    if (jatsSchema === JATS) {
+      let validationResult = validateXML(TextureJATS, xmlDom)
+      // TODO: create report
+      if (!validationResult.ok) {
+        throw new Error('Validation failed.')
+      }
+    }
+
+    // TODO: we should only use nodes that are registered for the specifc schema
     let schema = new DocumentSchema({
       DocumentClass: InternalArticleDocument,
       nodes: articleConfig.getNodes(),
@@ -24,11 +61,12 @@ export default class ArticleLoader {
     })
     let doc = InternalArticleDocument.createEmptyArticle(schema)
 
-    // TODO: support JATS customisations registered via a plugin (e.g. stencila)
-    // the plugin would register a 'sniffer' used by a loader factory
-    // per default we would use our regular JATS importer
-
-    let importer = articleConfig.createImporter('jats', doc)
+    let importer = articleConfig.createImporter(publicId, doc)
+    if (!importer) {
+      console.error(`No importer registered for jats type "${publicId}". Falling back to default JATS importer`)
+      // Falling back to default importer
+      importer = articleConfig.createImporter('jats', doc)
+    }
     importer.import(xmlDom, {
       // being less strict, with the side-effect that there is no error-report
       // for unsupported content, only for violating content
@@ -36,8 +74,6 @@ export default class ArticleLoader {
       // a warnings dialog, allowing to continue
       allowNotImplemented: true
     })
-
-    // TODO: bring back validation and error reporting
 
     return new ArticleSession(doc, articleConfig)
   }

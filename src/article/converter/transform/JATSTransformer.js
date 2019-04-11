@@ -16,6 +16,7 @@ export default class JATSTransformer {
   import (jatsDom) {
     // TODO: we should create some kind of report
     trafos.forEach(t => t.import(jatsDom))
+    return jatsDom
   }
 
   export () {

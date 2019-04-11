@@ -45,7 +45,13 @@ export default class ArticleLoader {
     // TODO: how would we make sure that a custom JATS would conform to TextureJATS?
     // ... idea: we could validate only elements that are goverened by TextureJATS
     if (jatsSchema === JATS) {
-      let validationResult = validateXML(TextureJATS, xmlDom)
+      let validationResult = validateXML(TextureJATS, xmlDom, {
+        // being less strict, with the side-effect that there is no error-report
+        // for unsupported content, only for violating content
+        // TODO: we should in this case treat those errors as warnings, show
+        // a warnings dialog, allowing to continue
+        allowNotImplemented: true
+      })
       // TODO: create report
       if (!validationResult.ok) {
         throw new Error('Validation failed.')
@@ -67,13 +73,7 @@ export default class ArticleLoader {
       // Falling back to default importer
       importer = articleConfig.createImporter('jats', doc)
     }
-    importer.import(xmlDom, {
-      // being less strict, with the side-effect that there is no error-report
-      // for unsupported content, only for violating content
-      // TODO: we should in this case treat those errors as warnings, show
-      // a warnings dialog, allowing to continue
-      allowNotImplemented: true
-    })
+    importer.import(xmlDom)
 
     return new ArticleSession(doc, articleConfig)
   }

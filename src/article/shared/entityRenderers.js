@@ -749,14 +749,8 @@ function organisationRenderer ($$, entityId, entityDb, options = {}) {
 }
 
 function funderRenderer ($$, entityId, entityDb, options = {}) {
-  let { awardId, institution } = entityDb.get(entityId)
-  let result = [ institution ]
-  if (!options.short) {
-    if (awardId) {
-      result.push(', ', awardId)
-    }
-  }
-  return result
+  let org = entityDb.get(entityId)
+  return org.render(options)
 }
 
 function keywordRenderer ($$, entityId, entityDb, options = {}) {

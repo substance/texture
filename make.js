@@ -99,10 +99,6 @@ b.task('schema:texture-article', () => {
   })
 })
 
-b.task('schema:dar-manifest', () => {
-  _compileSchema('Manifest', 'src/dar/Manifest.rng', [path.join(__dirname, 'src', 'dar')], [])
-})
-
 b.task('schema:debug', () => {
   _compileSchema(JATS, RNG_FILES[0], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 1), { debug: true })
   _compileSchema('TextureJATS', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2), { debug: true })
@@ -117,7 +113,7 @@ b.task('build:assets', function () {
   b.css('texture-reset.css', DIST + 'texture-reset.css')
 })
 
-b.task('build:schema', ['schema:jats', 'schema:texture-article', 'schema:dar-manifest'])
+b.task('build:schema', ['schema:jats', 'schema:texture-article'])
 
 b.task('build:browser', () => {
   _buildLib(DIST, 'browser')
@@ -373,14 +369,14 @@ function _compileSchema (name, src, searchDirs, deps, options = {}) {
 }
 
 function _xmlSchemaToMD (xmlSchema) {
-  const { _analyzeElementSchemas } = require('substance')
+  const { _analyzeSchema } = require('substance')
   const PRE_START = '<pre style="white-space:pre-wrap;">'
   const PRE_END = '</pre>'
 
   let result = []
   let elementSchemas = xmlSchema._elementSchemas
   let elementNames = Object.keys(elementSchemas)
-  _analyzeElementSchemas(elementSchemas)
+  _analyzeSchema(elementSchemas)
 
   elementNames.sort()
   let notImplemented = []

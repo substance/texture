@@ -1,4 +1,4 @@
-import { prettyPrintXML, DefaultDOMElement } from 'substance'
+import { DefaultDOMElement } from 'substance'
 import { PersistedDocumentArchive } from './dar'
 
 export default class TextureArchive extends PersistedDocumentArchive {
@@ -27,20 +27,6 @@ export default class TextureArchive extends PersistedDocumentArchive {
       sessions[entry.id] = session
     })
     return sessions
-  }
-
-  _exportManifest (sessions, buffer, rawArchive) {
-    let manifest = sessions.manifest.getDocument()
-    if (buffer.hasResourceChanged('manifest')) {
-      let manifestDom = manifest.toXML()
-      let manifestXmlStr = prettyPrintXML(manifestDom)
-      rawArchive.resources['manifest.xml'] = {
-        id: 'manifest',
-        data: manifestXmlStr,
-        encoding: 'utf8',
-        updatedAt: Date.now()
-      }
-    }
   }
 
   // TODO: this should be generalized and then live in the base class

@@ -1,4 +1,6 @@
-import { forEach, last, uuid, EventEmitter, platform, isString } from 'substance'
+import {
+  forEach, last, uuid, EventEmitter, platform, isString, documentHelpers, prettyPrintXML
+} from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
 import ManifestEditorSession from './ManifestEditorSession'
@@ -47,12 +49,13 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let [name, ext] = _getNameAndExtension(file.name)
     let filePath = this._getUniqueFileName(name, ext)
     this._getManifestEditorSession().transaction(tx => {
-      let assets = tx.find('assets')
-      let asset = tx.createElement('asset', { id: assetId }).attr({
+      let assetNode = tx.create({
+        type: 'asset',
+        id: assetId,
         path: filePath,
-        type: file.type
+        assetType: file.type
       })
-      assets.appendChild(asset)
+      documentHelpers.append(tx, ['dar', 'assets'], assetNode.id)
     })
     this.buffer.addBlob(assetId, {
       id: assetId,
@@ -72,7 +75,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   getAsset (fileName) {
-    return this._sessions.manifest.getDocument().find(`asset[path="${fileName}"]`)
+    return this._sessions.manifest.getDocument().getAssetByPath(fileName)
   }
 
   getDocumentEntries () {
@@ -81,7 +84,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
   getDownloadLink (fileName) {
     let manifest = this._sessions.manifest.getDocument()
-    let asset = manifest.find(`asset[path="${fileName}"]`)
+    let asset = manifest.getAssetByPath(fileName)
     if (asset) {
       return this.resolveUrl(fileName)
     }
@@ -153,16 +156,15 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let session = this._sessions[documentId]
     this._unregisterFromSession(session)
     this._getManifestEditorSession().transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.find(`#${documentId}`)
-      documents.removeChild(docEntry)
+      documentHelpers.remove(tx, ['dar', 'documents'], documentId)
+      documentHelpers.deleteNode(documentId)
     })
   }
 
   renameDocument (documentId, name) {
     this._getManifestEditorSession().transaction(tx => {
-      let docEntry = tx.find(`#${documentId}`)
-      docEntry.attr({ name })
+      let documentNode = tx.get(documentId)
+      documentNode.name = name
     })
   }
 
@@ -204,13 +206,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
   */
   _addDocumentRecord (documentId, type, name, path) {
     this._getManifestEditorSession().transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.createElement('document', { id: documentId }).attr({
-        name: name,
-        path: path,
-        type: type
+      let documentNode = tx.create({
+        type: 'document',
+        id: documentId,
+        documentType: type,
+        name,
+        path
       })
-      documents.appendChild(docEntry)
+      documentHelpers.append(tx, ['dar', 'documents', documentNode.id])
     })
   }
 
@@ -328,6 +331,20 @@ export default class PersistedDocumentArchive extends EventEmitter {
     this._exportChangedDocuments(sessions, buffer, rawArchive)
     this._exportChangedAssets(sessions, buffer, rawArchive)
     return rawArchive
+  }
+
+  _exportManifest (sessions, buffer, rawArchive) {
+    let manifest = sessions.manifest.getDocument()
+    if (buffer.hasResourceChanged('manifest')) {
+      let manifestDom = manifest.toXML()
+      let manifestXmlStr = prettyPrintXML(manifestDom)
+      rawArchive.resources['manifest.xml'] = {
+        id: 'manifest',
+        data: manifestXmlStr,
+        encoding: 'utf8',
+        updatedAt: Date.now()
+      }
+    }
   }
 
   // TODO: generalize the implementation so that it can live here

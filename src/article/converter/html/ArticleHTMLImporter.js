@@ -12,12 +12,6 @@ export default class ArticleHTMLImporter extends HTMLImporter {
     this.IGNORE_DEFAULT_WARNINGS = true
   }
 
-  // TODO: it is necessary to set the document instance so that the importer is creating nodes for this document
-  setDocument (doc) {
-    this.reset()
-    this.state.doc = doc
-  }
-
   _getConverterForElement (el, mode) {
     let converter = super._getConverterForElement(el, mode)
     // provide a backup for unsupported inline content

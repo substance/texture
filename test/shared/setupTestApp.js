@@ -14,6 +14,7 @@ export default function setupTestApp (t, options = {}) {
   let App = createTestApp(options)
   // TODO: use options here
   let app = App.mount({
+    debug: true,
     archiveId,
     storageType: 'vfs'
   }, el)

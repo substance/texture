@@ -7,6 +7,15 @@ import JATS from './JATS'
 import TextureJATS from './TextureJATS'
 
 export default class ArticleLoader {
+  /**
+   * The ArticleLoader by default takes a JATS file and importing it into
+   * Texture's internal article model. On the way to there, the source file
+   * is first validated against the declared schema. Then a set of transformations
+   * is applied open to some known tagging habbits deviating from the tagging style
+   * adopted by Texture. Before applying the actual mapping into the internal
+   * article model, the content is validated against the TextureJATS schema,
+   * being a subset of JATS, as an indicator for problems such as loss of information.
+   */
   load (xml, config) {
     let articleConfig = config.getConfiguration('article')
 
@@ -21,19 +30,17 @@ export default class ArticleLoader {
       jatsSchema = JATS
     }
 
-    // TODO: create error report
     if (!jatsSchema) throw new Error(`Unsupported JATS variant: ${publicId}`)
 
-    // TODO: allow to control via options if validation should be done or not
-    // or if the importer should be resilient against violations (e.g. by wrapping unsupported elements)
-    // TODO: bring back validation
-    // TODO validate the input using the given schema
+    // Note: the first check is used to detect violations of the declared
+    // schema of the XML input. This is a strict check, which stops the import.
+    // TODO: create error report
     let validationResult = validateXML(jatsSchema, xmlDom)
-    // TODO: create report
     if (!validationResult.ok) {
       throw new Error('Validation failed.')
     }
 
+    // Note: after the initial validation
     // TODO: allow to configure this transformation layer
     // For now transformers are run only for regular JATS files every imported jats,
     // but on the long run we should only run transformers for a specific schema

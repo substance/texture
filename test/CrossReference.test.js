@@ -1,6 +1,7 @@
 import { test } from 'substance-test'
 import { createTestVfs, openManuscriptEditor } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
 
 const xrefTypes = {
   'bibr': 'reference',
@@ -11,7 +12,7 @@ const xrefTypes = {
 }
 
 const DOUBLE_CITATIONS = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">
 <article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
   <front>
     <article-meta>

@@ -1,7 +1,10 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, openContextMenuAndFindTool, createTestVfs } from './shared/integrationTestHelpers'
+import {
+  openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, openContextMenuAndFindTool, createTestVfs
+} from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
 
 function _entityTest (t, entityType, entityName, checkSelection) {
   entityName = entityName || entityType
@@ -80,7 +83,7 @@ test(`Entity: add footnote`, t => {
 })
 
 const AUTHOR_AND_TWO_AFFS = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">
 <article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
   <front>
     <article-meta>

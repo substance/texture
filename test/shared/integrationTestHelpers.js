@@ -3,7 +3,9 @@ import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
   Component, DefaultDOMElement, keys, getKeyForPath
 } from 'substance'
-import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
+import {
+  TextureWebApp, VfsStorageClient, createJatsImporter, DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD
+} from '../../index'
 import TestVfs from './TestVfs'
 import { DOMEvent } from './testHelpers'
 
@@ -453,7 +455,7 @@ export const EMPTY_META = `
 
 export function createJATSFixture ({ front = EMPTY_META, body = '', back = '' }) {
   return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">
 <article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
   <front>
     ${front}

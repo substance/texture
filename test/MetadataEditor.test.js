@@ -1,6 +1,7 @@
 import { test } from 'substance-test'
 import { openMetadataEditor, createTestVfs, getSelection, loadBodyFixture, openManuscriptEditor, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
 
 // TODO: test TOC
 // TODO: test EditReferenceWorkflow (or is this dead code?)
@@ -9,7 +10,7 @@ import setupTestApp from './shared/setupTestApp'
 // TODO: add general tests for kit value editors
 
 // const TRANSLATED_TITLE = `<?xml version="1.0" encoding="UTF-8"?>
-// <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+// <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.2 20190208//EN" "JATS-journalarchiving.dtd">
 // <article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
 //   <front>
 //     <article-meta>
@@ -30,7 +31,7 @@ import setupTestApp from './shared/setupTestApp'
 // </article>`
 
 const EMPTY_ARTICLE = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">
 <article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
   <front>
     <article-meta>

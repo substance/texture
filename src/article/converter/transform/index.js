@@ -1,5 +1,1 @@
-export { default as JATSTransformer } from './JATSTransformer'
-export { default as NormalizeContribGroup } from './NormalizeContribGroup'
-export { default as NormalizeFn } from './NormalizeFn'
-export { default as NormalizeRefList } from './NormalizeRefList'
-export { default as UnwrapBlockLevelElements } from './UnwrapBlockLevelElements'
+export { default as JATSTransformer } from './jats/JATSTransformer'

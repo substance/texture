@@ -81,3 +81,16 @@ export const ABSTRACT_TYPES = [
     name: 'Web Summary'
   }
 ]
+
+export const JATS_GREEN_1_DTD = 'JATS-archivearticle1.dtd'
+export const JATS_GREEN_1_0_PUBLIC_ID = '-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN'
+export const JATS_GREEN_1_1_PUBLIC_ID = '-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1 20151215//EN'
+export const JATS_GREEN_1_2_PUBLIC_ID = '-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.2 20190208//EN'
+// NOTE: this DTD is used mainly internally so it is not so important how it looks like
+export const TEXTURE_JATS_PUBLIC_ID = '-//TEXTURE/DTD Texture JATS DTD v1.0'
+// TODO: we should maintain a DTD and bundle with texture or have it in the github repo
+export const TEXTURE_JATS_DTD = 'TextureJATS-1.0.dtd'
+
+const DEFAULT_JATS_SCHEMA_ID = JATS_GREEN_1_2_PUBLIC_ID
+const DEFAULT_JATS_DTD = JATS_GREEN_1_DTD
+export { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD }

@@ -4,15 +4,32 @@ export default class ArticleConfigurator extends TextureConfigurator {
   constructor (parent, name) {
     super(parent, name)
 
-    // custom JATS schemas
-    this._jatsVariants = new Map()
+    this._xmlSchemaIds = new Set()
+    this._xmlValidators = new Map()
+    this._xmlTransformations = new Map()
   }
 
-  addJATSVariant (publicId, xmlSchema) {
-    this._jatsVariants.set(publicId, xmlSchema)
+  registerSchemaId (xmlSchemaId) {
+    this._xmlSchemaIds.add(xmlSchemaId)
   }
 
-  getJATSVariant (publicId) {
-    return this._jatsVariants.get(publicId)
+  isSchemaKnown (xmlSchemaId) {
+    return this._xmlSchemaIds.has(xmlSchemaId)
+  }
+
+  addValidator (xmlSchemaId, validator) {
+    this._xmlValidators.set(xmlSchemaId, validator)
+  }
+
+  getValidator (xmlSchemaId) {
+    return this._xmlValidators.get(xmlSchemaId)
+  }
+
+  addTransformation (xmlSchemaId, transformation) {
+    this._xmlTransformations.set(xmlSchemaId, transformation)
+  }
+
+  getTransformation (xmlSchemaId) {
+    return this._xmlTransformations.get(xmlSchemaId)
   }
 }

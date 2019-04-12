@@ -17,8 +17,10 @@ import ArticleJATSExporter from './converter/jats/ArticleJATSExporter'
 import ArticleJATSImporter from './converter/jats/ArticleJATSImporter'
 import ArticlePlainTextExporter from './converter/text/ArticlePlainTextExporter'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
-import JATS from './JATS'
-import TextureJATS from './TextureJATS'
+import JATSTransformer from './converter/transform/jats/JATSTransformer'
+import {
+  TEXTURE_JATS_PUBLIC_ID, JATS_GREEN_1_0_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
+} from './ArticleConstants'
 
 export default {
   name: 'article',
@@ -32,9 +34,6 @@ export default {
     let articleConfig = config.createSubConfiguration('article', { ConfiguratorClass: ArticleConfigurator })
 
     // used for validation
-    articleConfig.addJATSVariant(JATS.publicId, JATS)
-    articleConfig.addJATSVariant(TextureJATS.publicId, TextureJATS)
-
     articleConfig.import(ArticleModelPackage)
 
     articleConfig.addComponent('manuscript-editor', ManuscriptEditor)
@@ -42,26 +41,32 @@ export default {
 
     articleConfig.import(EntityLabelsPackage)
 
+    articleConfig.registerSchemaId(JATS_GREEN_1_0_PUBLIC_ID)
+    articleConfig.registerSchemaId(JATS_GREEN_1_1_PUBLIC_ID)
+    articleConfig.registerSchemaId(JATS_GREEN_1_2_PUBLIC_ID)
+
     ArticleJATSConverters.forEach(converter => {
       articleConfig.addConverter('jats', converter)
     })
     // register default 'jats' im-/exporter
     articleConfig.addImporter('jats', ArticleJATSImporter)
     articleConfig.addExporter('jats', ArticleJATSExporter)
-    // register same exporter for the specific publicId
-    articleConfig.addImporter(JATS.publicId, ArticleJATSImporter, {
+
+    // register im-/exporter for TextureJATS
+    articleConfig.addImporter(TEXTURE_JATS_PUBLIC_ID, ArticleJATSImporter, {
       converterGroups: ['jats']
     })
-    articleConfig.addExporter(JATS.publicId, ArticleJATSExporter, {
+    articleConfig.addExporter(TEXTURE_JATS_PUBLIC_ID, ArticleJATSExporter, {
       converterGroups: ['jats']
     })
-    // ... and the same for TextureJATS
-    articleConfig.addImporter(TextureJATS.publicId, ArticleJATSImporter, {
-      converterGroups: ['jats']
-    })
-    articleConfig.addExporter(TextureJATS.publicId, ArticleJATSExporter, {
-      converterGroups: ['jats']
-    })
+    let transformation = new JATSTransformer()
+    // register transformations for all supported JATS versions
+    // NOTE: ATM  there is only one transformation because we do not use all JATS features
+    // as TextureJATS is a very strict subset of JATS
+    articleConfig.addTransformation('jats', transformation)
+    articleConfig.addTransformation(JATS_GREEN_1_0_PUBLIC_ID, transformation)
+    articleConfig.addTransformation(JATS_GREEN_1_1_PUBLIC_ID, transformation)
+    articleConfig.addTransformation(JATS_GREEN_1_2_PUBLIC_ID, transformation)
 
     // enable rich-text support for clipboard
     ArticleHTMLConverters.forEach(converter => {

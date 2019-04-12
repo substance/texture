@@ -1,10 +1,9 @@
 import { DocumentSchema, DefaultDOMElement } from 'substance'
 import ArticleSession from './ArticleSession'
 import InternalArticleDocument from './InternalArticleDocument'
-import JATSTransformer from './converter/transform/JATSTransformer'
-import validateXML from './converter/util/validateXML'
-import JATS from './JATS'
-import TextureJATS from './TextureJATS'
+import {
+  DEFAULT_JATS_SCHEMA_ID, JATS_GREEN_1_0_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
+} from './ArticleConstants'
 
 export default class ArticleLoader {
   /**
@@ -21,47 +20,57 @@ export default class ArticleLoader {
 
     let xmlDom = DefaultDOMElement.parseXML(xml)
 
-    // TODO: detect the actual schema version
-    let publicId = xmlDom.getDoctype().publicId
-    // TODO: this needs to be thought through better
-    let jatsSchema = articleConfig.getJATSVariant(publicId)
-    // use the default JATS schema in case that this variant is not registered
-    if (!jatsSchema) {
-      jatsSchema = JATS
+    let xmlSchemaId = xmlDom.getDoctype().publicId
+    // TODO: we need some kind of schema id normalisation, as it seems that
+    // in real-world JATS files, nobody is
+    if (!articleConfig.isSchemaKnown(xmlSchemaId)) {
+      if (!xmlSchemaId) {
+        console.error(`No XML schema given. Using ${DEFAULT_JATS_SCHEMA_ID}`)
+        xmlSchemaId = DEFAULT_JATS_SCHEMA_ID
+      // try to fuzzy detect the JATS schema
+      } else if (/JATS/i.exec(xmlSchemaId)) {
+        let _xmlSchemaId
+        if (/v1.0/.exec(xmlSchemaId)) {
+          _xmlSchemaId = JATS_GREEN_1_0_PUBLIC_ID
+        } else if (/v1.1/.exec(xmlSchemaId)) {
+          _xmlSchemaId = JATS_GREEN_1_1_PUBLIC_ID
+        } else if (/v1.2/.exec(xmlSchemaId)) {
+          _xmlSchemaId = JATS_GREEN_1_2_PUBLIC_ID
+        } else {
+          _xmlSchemaId = DEFAULT_JATS_SCHEMA_ID
+        }
+        console.error(`JATS schema id is either not supported or incorrect: ${xmlSchemaId}. Using ${_xmlSchemaId} instead. `)
+        xmlSchemaId = _xmlSchemaId
+      } else {
+        throw new Error(`Unknown xml schema: ${xmlSchemaId}`)
+      }
     }
 
-    if (!jatsSchema) throw new Error(`Unsupported JATS variant: ${publicId}`)
-
-    // Note: the first check is used to detect violations of the declared
-    // schema of the XML input. This is a strict check, which stops the import.
-    // TODO: create error report
-    let validationResult = validateXML(jatsSchema, xmlDom)
-    if (!validationResult.ok) {
-      throw new Error('Validation failed.')
-    }
-
-    // Note: after the initial validation
-    // TODO: allow to configure this transformation layer
-    // For now transformers are run only for regular JATS files every imported jats,
-    // but on the long run we should only run transformers for a specific schema
-    if (jatsSchema.publicId === JATS.publicId) {
-      let transformer = new JATSTransformer()
-      xmlDom = transformer.import(xmlDom)
-    }
-
-    // TODO: how would we make sure that a custom JATS would conform to TextureJATS?
-    // ... idea: we could validate only elements that are goverened by TextureJATS
-    if (jatsSchema === JATS) {
-      let validationResult = validateXML(TextureJATS, xmlDom, {
-        // being less strict, with the side-effect that there is no error-report
-        // for unsupported content, only for violating content
-        // TODO: we should in this case treat those errors as warnings, show
-        // a warnings dialog, allowing to continue
-        allowNotImplemented: true
-      })
-      // TODO: create report
+    // optional input validation if registered
+    let validator = articleConfig.getValidator(xmlSchemaId)
+    if (validator) {
+      let validationResult = validator.validate(xmlDom)
       if (!validationResult.ok) {
+        // TODO: create report
         throw new Error('Validation failed.')
+      }
+    }
+
+    // NOTE: there is only one transformation step, i.e. a migration would need
+    // to apply other steps implicitly
+    let transformation = articleConfig.getTransformation(xmlSchemaId)
+    if (transformation) {
+      xmlDom = transformation.import(xmlDom)
+      // transformation should have updated the schema
+      xmlSchemaId = xmlDom.getDoctype().publicId
+      // optional another validation step for the new schema
+      let validator = articleConfig.getValidator(xmlSchemaId)
+      if (validator) {
+        let validationResult = validator.validate(xmlDom)
+        if (!validationResult.ok) {
+          // TODO: create report
+          throw new Error('Validation failed.')
+        }
       }
     }
 
@@ -74,9 +83,9 @@ export default class ArticleLoader {
     })
     let doc = InternalArticleDocument.createEmptyArticle(schema)
 
-    let importer = articleConfig.createImporter(publicId, doc)
+    let importer = articleConfig.createImporter(xmlSchemaId, doc)
     if (!importer) {
-      console.error(`No importer registered for jats type "${publicId}". Falling back to default JATS importer`)
+      console.error(`No importer registered for "${xmlSchemaId}". Falling back to default JATS importer, but with unpredictable result.`)
       // Falling back to default importer
       importer = articleConfig.createImporter('jats', doc)
     }

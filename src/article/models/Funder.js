@@ -2,7 +2,7 @@ import { DocumentNode, STRING } from 'substance'
 
 export default class Funder extends DocumentNode {
   toString () {
-    return this.institution
+    return this.render()
   }
 
   render (options = {}) {

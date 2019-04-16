@@ -2,7 +2,12 @@ import { DocumentNode, STRING, MANY, BOOLEAN } from 'substance'
 
 export default class Group extends DocumentNode {
   toString () {
-    return this.name
+    return this.render()
+  }
+
+  render (options = {}) {
+    let { name } = this
+    return [ name ]
   }
 }
 Group.schema = {

@@ -11,8 +11,6 @@ export default class PreformatConverter {
     // ATTENTION: trimming the content to avoid extra TEXTNODES
     xml = xml.trim()
     let snippet = DefaultDOMElement.parseSnippet(xml, 'xml')
-    // NOTE: trying to find the math source robustly
-    // often the content is wrapped with CDATA but is also allowed without
     let content = snippet.getTextContent()
     node.content = content || ''
   }

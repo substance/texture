@@ -158,7 +158,7 @@ id, xml:base, specific-use, xml:lang
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -248,7 +248,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -267,7 +267,7 @@ EMPTY
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, chapter-title, institution, label, part-title, subject, subtitle, title, trans-title, xref
+article-title, attrib, bold, chapter-title, fixed-case, institution, italic, label, monospace, overline, part-title, sc, strike, sub, subject, subtitle, sup, title, trans-title, underline, xref
 </pre>
 
 ### `<caption>`
@@ -672,7 +672,7 @@ id, xml:base, ext-link-type, assigning-authority, specific-use, xml:lang, xlink:
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, article-title, chapter-title, data-title, edition, email, ext-link, given-names, institution, label, license-p, named-content, p, part-title, patent, phone, prefix, role, series, subject, subtitle, suffix, surname, td, th, title, trans-title, uri, version, xref
+aff, article-title, attrib, bold, chapter-title, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, label, license-p, monospace, named-content, overline, p, part-title, patent, phone, prefix, role, sc, series, strike, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<fax>`
@@ -728,7 +728,7 @@ id, xml:base, content-type, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -882,7 +882,7 @@ tex-math
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, chapter-title, edition, email, ext-link, given-names, institution, label, license-p, named-content, p, part-title, patent, phone, prefix, role, series, subject, subtitle, suffix, surname, td, th, title, trans-title, uri, version, xref
+article-title, attrib, bold, chapter-title, edition, email, ext-link, fixed-case, given-names, institution, italic, label, license-p, monospace, named-content, overline, p, part-title, patent, phone, prefix, role, sc, series, strike, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<inline-graphic>`
@@ -897,7 +897,7 @@ alt-text?
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, chapter-title, edition, email, ext-link, given-names, institution, label, license-p, named-content, p, part-title, patent, phone, prefix, role, series, subject, subtitle, suffix, surname, td, th, title, trans-title, uri, version, xref
+article-title, attrib, bold, chapter-title, edition, email, ext-link, fixed-case, given-names, institution, italic, label, license-p, monospace, named-content, overline, p, part-title, patent, phone, prefix, role, sc, series, strike, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<institution>`
@@ -998,7 +998,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1133,7 +1133,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1197,7 +1197,7 @@ id, xml:base, rid, alt, content-type, specific-use, xml:lang, xlink:type, xlink:
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, chapter-title, collab, data-title, edition, email, ext-link, given-names, institution, label, license-p, named-content, p, part-title, patent, phone, prefix, preformat, role, series, subject, subtitle, suffix, surname, td, th, title, trans-title, uri, version, xref
+article-title, attrib, bold, chapter-title, collab, data-title, edition, email, ext-link, fixed-case, given-names, institution, italic, label, license-p, monospace, named-content, overline, p, part-title, patent, phone, prefix, preformat, role, sc, series, strike, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<object-id>`
@@ -1223,7 +1223,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1508,7 +1508,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1598,7 +1598,7 @@ id, xml:base, toggle, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1643,7 +1643,7 @@ id, xml:base, arrange, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1718,7 +1718,7 @@ id, xml:base, arrange, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1988,7 +1988,7 @@ id, xml:base, toggle, underline-style, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -2052,7 +2052,7 @@ id, xml:base, ref-type, alt, rid, specific-use, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-title, chapter-title, collab, contrib, edition, email, ext-link, given-names, institution, label, license-p, named-content, p, part-title, patent, phone, prefix, role, series, subject, subtitle, suffix, surname, td, th, title, trans-title, uri, version, xref
+article-title, attrib, bold, chapter-title, collab, contrib, edition, email, ext-link, fixed-case, given-names, institution, italic, label, license-p, monospace, named-content, overline, p, part-title, patent, phone, prefix, role, sc, series, strike, sub, subject, subtitle, suffix, sup, surname, td, th, title, trans-title, underline, uri, version, xref
 </pre>
 
 ### `<year>`

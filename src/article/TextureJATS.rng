@@ -684,13 +684,6 @@
     </element>
   </define>
 
-  <define name="emphasized-text">
-    <choice>
-      <ref name="emphasis.class"/>
-      <ref name="subsup.class"/>
-    </choice>
-  </define>
-
   <define name="element-citation">
     <element name="element-citation">
       <ref name="element-citation-attlist"/>

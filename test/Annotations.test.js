@@ -78,8 +78,32 @@ ANNOS.forEach(spec => {
   })
 })
 
+const FORMATTED_LINK_FIXTURE = `<p><italic><ext-link>link content</ext-link></italic></p>`
+
+test(`Annotations: link inside of formatting`, t => {
+  let { editor } = _setup(t, FORMATTED_LINK_FIXTURE)
+  const anno = editor.find(`.sm-italic`)
+  const link = editor.find(`.sc-external-link`)
+  t.ok(Boolean(anno), 'annotation should exist')
+  t.ok(Boolean(anno), 'link should exist')
+  t.equal(anno.text(), link.text(), 'content of the annotation and the link should be the same')
+  t.end()
+})
+
+const LINK_WITH_FORMATTING_FIXTURE = `<p><ext-link><bold>bold content</bold></ext-link></p>`
+
+test(`Annotations: formatting content inside a link`, t => {
+  let { editor } = _setup(t, LINK_WITH_FORMATTING_FIXTURE)
+  const anno = editor.find(`.sm-bold`)
+  const link = editor.find(`.sc-external-link`)
+  t.ok(Boolean(anno), 'annotation should exist')
+  t.ok(Boolean(anno), 'link should exist')
+  t.equal(anno.text(), link.text(), 'content of the annotation and the link should be the same')
+  t.end()
+})
+
 function testAnnotationToggle (t, spec) {
-  let { app, editor } = _setup(t)
+  let { app, editor } = _setup(t, FIXTURE)
   const _hasAnno = () => {
     return Boolean(editor.find(`[data-path="p1.content"] ${spec.selector}`))
   }
@@ -101,10 +125,10 @@ function testAnnotationToggle (t, spec) {
   t.end()
 }
 
-function _setup (t) {
+function _setup (t, fixture) {
   let { app } = setupTestApp(t, { archiveId: 'blank', readOnly: true })
   let editor = openManuscriptEditor(app)
-  loadBodyFixture(editor, FIXTURE)
+  loadBodyFixture(editor, fixture)
   return { app, editor }
 }
 

@@ -2,7 +2,7 @@ import { DocumentNode, STRING, MANY, BOOLEAN } from 'substance'
 
 export default class Group extends DocumentNode {
   toString () {
-    return this.render()
+    return this.render().join('')
   }
 
   render (options = {}) {

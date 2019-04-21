@@ -4,7 +4,7 @@ import { extractInitials } from './modelHelpers'
 /* Holds data for persons and instituions/groups in references */
 export default class RefContrib extends DocumentNode {
   toString () {
-    return this.render()
+    return this.render().join('')
   }
 
   render (options = {}) {

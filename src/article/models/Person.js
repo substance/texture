@@ -3,7 +3,7 @@ import { extractInitials } from './modelHelpers'
 
 export default class Person extends DocumentNode {
   toString () {
-    return this.render()
+    return this.render().join('')
   }
 
   render (options = {}) {

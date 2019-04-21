@@ -2,7 +2,7 @@ import { DocumentNode, STRING } from 'substance'
 
 export default class Organisation extends DocumentNode {
   toString () {
-    return this.render()
+    return this.render().join('')
   }
 
   render (options = {}) {

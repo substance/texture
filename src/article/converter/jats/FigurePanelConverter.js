@@ -59,11 +59,11 @@ export default class FigurePanelConverter {
       let kwdEls = kwdGroupEl.findAll('kwd')
       let labelEl = kwdGroupEl.find('label')
       let name = labelEl ? labelEl.textContent : ''
-      let value = kwdEls.map(kwdEl => kwdEl.textContent).join(', ')
+      let values = kwdEls.map(kwdEl => kwdEl.textContent)
       return doc.create({
         type: 'custom-metadata-field',
         name,
-        value
+        values
       }).id
     })
   }
@@ -109,7 +109,7 @@ export default class FigurePanelConverter {
         let kwdGroupEl = $$('kwd-group').append(
           $$('label').text(field.name)
         )
-        let kwdEls = field.value.split(',').map(str => {
+        let kwdEls = field.values.map(str => {
           return $$('kwd').text(str.trim())
         })
         kwdGroupEl.append(kwdEls)

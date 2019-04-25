@@ -38,17 +38,35 @@ export default class KeywordInput extends OverlayMixin(Component) {
 
   _renderEditor ($$) {
     const values = this.props.values
+    const Button = this.getComponent('button')
+    const Input = this.getComponent('input')
     const editorEl = $$('div').ref('editor').addClass('se-keyword-editor')
-    values.forEach(value => {
+    values.forEach((value, idx) => {
       editorEl.append(
         $$('div').addClass('se-keyword').append(
-          $$('div').addClass('se-keyword-input').append(value),
-          this.context.iconProvider.renderIcon($$, 'remove-button').addClass('se-icon')
-            .on('click', this._removeKeyword)
+          $$('div').addClass('se-keyword-input').append(
+            $$(Input, {
+              path: this.props.model.getPath().concat(idx)
+            })
+          ),
+          this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, idx))
         )
       )
     })
+    editorEl.append(
+      $$('div').addClass('se-keyword-input').append(''),
+      $$(Button, {
+        label: this.getLabel('create')
+      }).addClass('se-create-value')
+        .on('click', this._addKeyword)
+    )
     return editorEl
+  }
+
+  _renderIcon ($$, iconName) {
+    return $$('div').addClass('se-icon').append(
+      this.context.iconProvider.renderIcon($$, iconName)
+    )
   }
 
   _getOverlayId () {
@@ -72,5 +90,15 @@ export default class KeywordInput extends OverlayMixin(Component) {
     if (needUpdate) {
       this.extendState(this.getInitialState())
     }
+  }
+
+  _addKeyword () {
+    
+  }
+
+  _removeKeyword (idx) {
+    const values = this.props.values
+    values.splice(idx, 1)
+    this.send('updateValues', values)
   }
 }

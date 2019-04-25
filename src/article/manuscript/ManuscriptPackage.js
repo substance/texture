@@ -306,6 +306,7 @@ export default {
     config.addLabel('article-info', 'Article Information')
     config.addLabel('article-record', 'Article Record')
     config.addLabel('contributors', 'Authors & Contributors')
+    config.addLabel('create', 'Create')
     config.addLabel('create-unordered-list', 'Bulleted list')
     config.addLabel('create-ordered-list', 'Numbered list')
     config.addLabel('edit-ref', 'Edit Reference')

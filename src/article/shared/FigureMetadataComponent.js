@@ -15,7 +15,7 @@ export default class FigureMetadataComponent extends ValueComponent {
   }
 
   _renderMetadataField ($$, metadataField) {
-    let MetdataFieldComponent = this.getComponent(metadataField.type)
-    return $$(MetdataFieldComponent, { node: metadataField }).ref(metadataField.id)
+    let MetadataFieldComponent = this.getComponent(metadataField.type)
+    return $$(MetadataFieldComponent, { node: metadataField }).ref(metadataField.id)
   }
 }

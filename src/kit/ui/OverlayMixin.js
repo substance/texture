@@ -30,6 +30,11 @@ export default function (Component) {
       // console.log('Rerendering overlay component because overlay id has changed', this._getOverlayId()')
       this.rerender()
     }
+
+    _stopAndPreventDefault (event) {
+      event.stopPropagation()
+      event.preventDefault()
+    }
   }
   return OverlayComponent
 }

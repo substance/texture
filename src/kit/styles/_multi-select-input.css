@@ -10,12 +10,16 @@
 
 .sc-multi-select-input.sm-active {
   border: var(--t-input-focus-border);
-  background: #218df312;
+  background: var(--t-focus-background-color);
 }
 
 .sc-multi-select-input.sm-empty .se-label {
   color: var(--t-placeholder-text-color);
   font-weight: var(--t-normal-font-weight);
+}
+
+.sc-multi-select-input .se-select-editor {
+  padding: var(--t-half-spacing) var(--t-default-spacing);
 }
 
 .sc-multi-select-input .se-select-editor .se-select-item {
@@ -29,5 +33,5 @@
 }
 
 .sc-multi-select-input .se-select-editor .se-select-item .se-item-label {
-  margin-left: 10px;
+  margin-left: var(--t-half-spacing);
 }

@@ -4,7 +4,8 @@
   font-size: var(--t-small-font-size);
 }
 
-.sc-custom-metadata-field > .sc-string {
+.sc-custom-metadata-field > .sc-string,
+.sc-custom-metadata-field > .sc-keyword-input {
   flex: 1;
 }
 

@@ -3,6 +3,7 @@
 @import './_find-and-replace.css';
 @import './_input-with-button.css';
 @import './_isolated-node.css';
+@import './_keyword-input.css';
 @import './_multi-select-input.css';
 @import './_overlay-canvas.css';
 @import './_pinned-msg.css';

@@ -1,0 +1,38 @@
+.sc-keyword-input {
+  position: relative;
+  width: 100%;
+  line-height: var(--t-input-line-height);
+  cursor: pointer;
+  padding: var(--t-input-padding);
+  margin: var(--t-negative-input-padding);
+  border-radius: var(--t-border-radius);
+  border: var(--t-input-default-border);
+}
+
+.sc-keyword-input.sm-active {
+  border: var(--t-input-focus-border);
+  background: var(--t-focus-background-color);
+}
+
+.sc-keyword-input .se-keyword {
+  display: flex;
+  align-items: center;
+  border-bottom: var(--t-default-border);
+}
+
+.sc-keyword-input .se-keyword > * {
+  margin-right: var(--t-half-spacing);
+}
+
+.sc-keyword-input .se-keyword .se-keyword-input {
+  flex: 1 1 auto;
+}
+
+.sc-keyword-input .sc-text-input .se-input {
+  border-radius: 0;
+  margin: 0;
+}
+
+.sc-keyword-input .sc-text-input:focus .se-input {
+  border: var(--t-input-default-border);
+}

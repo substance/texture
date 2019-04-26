@@ -1,6 +1,5 @@
 import { Component, getKeyForPath } from 'substance'
-import OverlayMixin from './OverlayMixin'
-import TextInput from './TextInput'
+import { InputWithButton, OverlayMixin, Popup, TextInput } from '../../kit'
 
 export default class KeywordInput extends OverlayMixin(Component) {
   getInitialState () {
@@ -39,10 +38,12 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   _renderEditor ($$) {
-    const model = this.props.model
+    const { model, placeholder } = this.props
     const values = model.getValue()
-    const placeholder = this.props.placeholder
+    
     const Button = this.getComponent('button')
+    const Input = this.getComponent('input')
+
     const editorEl = $$('div').ref('editor').addClass('se-keyword-editor')
     values.forEach((value, idx) => {
       const path = model.getPath().concat(idx)
@@ -61,13 +62,15 @@ export default class KeywordInput extends OverlayMixin(Component) {
       )
     })
     editorEl.append(
-      $$('div').addClass('se-keyword-input').append(''),
-      $$(Button, {
-        label: this.getLabel('create')
-      }).addClass('se-create-value')
-        .on('click', this._addKeyword)
+      $$('div').addClass('se-keyword-input').append(
+        $$(Input, { placeholder }).ref('urlInput'),
+        $$(Button).append(
+          this.getLabel('create')
+        ).addClass('se-create-value')
+          .on('click', this._addKeyword)
+      )
     )
-    return editorEl
+    return $$(Popup).append(editorEl)
   }
 
   _renderIcon ($$, iconName) {

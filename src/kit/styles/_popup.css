@@ -1,0 +1,40 @@
+.sc-popup {
+  position: absolute;
+  top: 55px;
+  left: 200px;
+  background: #fff;
+  border: 1px solid #8a8a8a;
+  padding: 10px 20px;
+  max-width: 100%;
+  box-shadow: 0px 3px 7px 1px #777;
+  z-index: 99;
+}
+
+.sc-popup .se-popup-label {
+  text-align: center;
+  font-size: 12px;
+  color: #8a8a8a;
+  margin-bottom: 10px;
+}
+
+.sc-popup .se-popup-arrow {
+  width: 60px;
+  height: 16px;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  margin-left: -30px;
+  top: -16px;
+}
+
+.sc-popup .se-popup-arrow:after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  border: 1px solid #8a8a8a;
+  background: #fff;
+}

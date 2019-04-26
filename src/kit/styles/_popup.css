@@ -1,20 +1,20 @@
 .sc-popup {
   position: absolute;
-  top: 55px;
-  left: 200px;
-  background: #fff;
-  border: 1px solid #8a8a8a;
-  padding: 10px 20px;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  background: var(--t-background-color);
+  border: var(--t-default-border);
+  border-radius: var(--t-border-radius);
   max-width: 100%;
-  box-shadow: 0px 3px 7px 1px #777;
+  box-shadow: var(--t-popup-box-shadow);
   z-index: 99;
 }
 
 .sc-popup .se-popup-label {
   text-align: center;
-  font-size: 12px;
-  color: #8a8a8a;
-  margin-bottom: 10px;
+  font-size: var(--t-tiny-font-size);
+  color: var(--t-light-text-color);
+  margin-bottom: var(--t-half-spacing);
 }
 
 .sc-popup .se-popup-arrow {
@@ -35,6 +35,7 @@
   width: 20px;
   height: 20px;
   transform: rotate(45deg);
-  border: 1px solid #8a8a8a;
-  background: #fff;
+  border: var(--t-default-border);
+  background: var(--t-background-color);
+  box-shadow: var(--t-popup-box-shadow);
 }

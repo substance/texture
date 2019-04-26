@@ -1,5 +1,6 @@
-import { Component } from 'substance'
+import { Component, getKeyForPath } from 'substance'
 import OverlayMixin from './OverlayMixin'
+import TextInput from './TextInput'
 
 export default class KeywordInput extends OverlayMixin(Component) {
   getInitialState () {
@@ -13,7 +14,8 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   render ($$) {
-    const values = this.props.values
+    const model = this.props.model
+    const values = model.getValue()
     const isEmpty = values.length === 0
     const isExpanded = this.state.isExpanded
 
@@ -37,16 +39,21 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   _renderEditor ($$) {
-    const values = this.props.values
+    const model = this.props.model
+    const values = model.getValue()
+    const placeholder = this.props.placeholder
     const Button = this.getComponent('button')
-    const Input = this.getComponent('input')
     const editorEl = $$('div').ref('editor').addClass('se-keyword-editor')
     values.forEach((value, idx) => {
+      const path = model.getPath().concat(idx)
+      const name = getKeyForPath(path)
       editorEl.append(
         $$('div').addClass('se-keyword').append(
           $$('div').addClass('se-keyword-input').append(
-            $$(Input, {
-              path: this.props.model.getPath().concat(idx)
+            $$(TextInput, {
+              name,
+              path,
+              placeholder
             })
           ),
           this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, idx))

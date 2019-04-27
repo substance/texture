@@ -66,7 +66,7 @@ export default class EditorSession extends AbstractEditorSession {
     // EXPERIMENTAL: hook that records changes triggered via node state updates
     doc.on('document:changed', this._onDocumentChange, this)
     // EXPERIMENTAL: registering a 'reducer' that resets overlayId whenever the selection changes
-    editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
+    // editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
   }
 
   initialize () {
@@ -197,18 +197,18 @@ export default class EditorSession extends AbstractEditorSession {
   }
 
   _resetOverlayId () {
-    // const overlayId = this.editorState.overlayId
-    // // overlayId === getKeyForPath(path) => if selection is value &&
-    // // Overlays of value components (ManyRelationshipComponent, SingleRelationship)
-    // // need to remain open if the selection is a value selection
-    // let sel = this.getSelection()
-    // if (sel && sel.customType === 'value') {
-    //   let valueId = getKeyForPath(sel.data.path)
-    //   if (overlayId !== valueId) {
-    //     this.editorState.set('overlayId', valueId)
-    //   }
-    // } else {
-    //   this.editorState.set('overlayId', null)
-    // }
+    const overlayId = this.editorState.overlayId
+    // overlayId === getKeyForPath(path) => if selection is value &&
+    // Overlays of value components (ManyRelationshipComponent, SingleRelationship)
+    // need to remain open if the selection is a value selection
+    let sel = this.getSelection()
+    if (sel && sel.customType === 'value') {
+      let valueId = getKeyForPath(sel.data.path)
+      if (overlayId !== valueId) {
+        this.editorState.set('overlayId', valueId)
+      }
+    } else {
+      this.editorState.set('overlayId', null)
+    }
   }
 }

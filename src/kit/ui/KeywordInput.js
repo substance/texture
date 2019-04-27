@@ -62,8 +62,10 @@ export default class KeywordInput extends OverlayMixin(Component) {
       )
     })
     editorEl.append(
-      $$('div').addClass('se-keyword-input').append(
-        $$(Input, { placeholder }).ref('urlInput'),
+      $$('div').addClass('se-keyword').append(
+        $$('div').addClass('se-keyword-input').append(
+          $$(Input, { placeholder }).ref('urlInput')
+        ),
         $$(Button).append(
           this.getLabel('create')
         ).addClass('se-create-value')

@@ -38,15 +38,15 @@
   },
   "scripts": {
     "prepack": "npm install && node make publish",
-    "start": "node --require esm make web -s -w -d data",
+    "start": "node --require esm make dev -s -w -d data",
     "app": "node make run-app -w",
-    "release": "node make app && build --project app-dist",
+    "release": "node make desktop && build --project app-dist",
     "pretest": "npm run lint",
     "test": "node make test-nodejs && node --require esm test | tap-spec",
     "test-debug": "node make test-nodejs && node --inspect-brk --require esm test",
     "webtest": "node make test-browser -s -w",
     "cover": "node make test-nodejs && nyc --require esm --reporter=lcov --reporter=text node test",
-    "lint": "standard \"app/**/*.js\" \"src/**/*.js\" \"test/**/*.js\" \"web/**/*.js\""
+    "lint": "standard \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\""
   },
   "nyc": {
     "include": [

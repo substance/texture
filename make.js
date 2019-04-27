@@ -9,14 +9,6 @@ const yazl = require('yazl')
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
 const TMP = 'tmp/'
-// const RNG_SEARCH_DIRS = [
-//   path.join(__dirname, 'src', 'article')
-// ]
-// const JATS = 'JATS-archiving'
-// const RNG_FILES = [
-//   `src/article/${JATS}.rng`,
-//   'src/article/TextureJATS.rng'
-// ]
 
 // Server configuration
 let port = process.env['PORT'] || 4000
@@ -40,7 +32,7 @@ if (argv.d) {
 }
 b.serve({ static: true, route: '/', folder: './dist' })
 
-// Make Targets
+b.task('default', ['publish'])
 
 b.task('clean', function () {
   b.rm(DIST)
@@ -48,41 +40,32 @@ b.task('clean', function () {
   b.rm(APPDIST)
 }).describe('removes all generated files and folders.')
 
+b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:lib'])
+  .describe('builds the release bundle (library + web).')
+
 b.task('lib', ['clean', 'build:schema', 'build:assets', 'build:lib'])
   .describe('builds the library bundle.')
 
-b.task('browser', ['clean', 'build:schema', 'build:assets', 'build:browser'])
-  .describe('builds the browser bundle.')
+b.task('dev', ['clean', 'build:schema', 'build:assets', 'build:demo'])
+  .describe('builds the web bundle.')
 
-b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:lib', 'build:web'])
-  .describe('builds the release bundle (library + web).')
-
-b.task('web', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:web'])
-  .describe('builds the web bundle (browser + web).')
-
-b.task('app', ['clean', 'build:schema', 'build:assets', 'build:browser', 'build:app'])
-  .describe('builds the app bundle (electron app).')
+b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib:browser', 'build:desktop'])
+  .describe('builds the desktop bundle (electron).')
 
 b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets'])
   .describe('prepares everything necessary to run tests in node.')
 
-b.task('test-browser', ['clean', 'build:schema', 'build:browser', 'build:test-assets', 'build:test-browser'])
+b.task('test-browser', ['clean', 'build:schema', 'build:lib:browser', 'build:test-assets', 'build:test-browser'])
   .describe('builds the test-suite for the browser.')
 
 // an alias because in all our other projects it is named this way
 b.task('test:browser', ['test-browser'])
 
-b.task('default', ['publish'])
-  .describe('default: publish')
-
 // spawns electron after build is ready
-b.task('run-app', ['app'], () => {
+b.task('run-app', ['desktop'], () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
   fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: APPDIST, await: false })
-})
-  .describe('runs the application in electron.')
-
-// low-level make targets
+}).describe('runs the application in electron.')
 
 b.task('schema:texture-article', () => {
   // TODO: bring this back after factoring out xml utilities and prebuilt JATS schemas
@@ -96,26 +79,23 @@ b.task('schema:texture-article', () => {
   // })
 })
 
-b.task('schema:debug', () => {
-  // _compileSchema('TextureJATS', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2), { debug: true })
-})
-
 b.task('build:assets', function () {
-  b.copy('./node_modules/font-awesome', DIST + 'font-awesome')
-  b.copy('./node_modules/inter-ui', DIST + 'inter-ui')
-  b.copy('./node_modules/katex/dist', DIST + 'katex')
-  b.copy('./node_modules/substance/dist', DIST + 'substance/dist')
+  b.copy('./node_modules/font-awesome', DIST + 'lib/font-awesome')
+  b.copy('./node_modules/inter-ui', DIST + 'lib/inter-ui')
+  b.copy('./node_modules/katex/dist', DIST + 'lib/katex')
+  b.copy('./node_modules/substance/dist/*.css*', DIST + 'lib/substance/')
+  b.copy('./node_modules/substance/dist/substance.min.js*', DIST + 'lib/substance/')
   b.css('texture.css', DIST + 'texture.css')
   b.css('texture-reset.css', DIST + 'texture-reset.css')
 })
 
 b.task('build:schema', ['schema:texture-article'])
 
-b.task('build:browser', () => {
+b.task('build:lib:browser', () => {
   _buildLib(DIST, 'browser')
 })
 
-b.task('build:nodejs', () => {
+b.task('build:lib:nodejs', () => {
   _buildLib(DIST, 'nodejs')
 })
 
@@ -127,16 +107,17 @@ b.task('build:cover', () => {
   _buildLib(TMP, 'cover')
 })
 
-b.task('build:app', ['build:app:dars'], () => {
-  b.copy('app/index.html', APPDIST)
-  b.copy('app/build-resources', APPDIST)
+b.task('build:desktop', ['build:desktop:dars'], () => {
+  b.copy('builds/desktop/index.html', APPDIST)
+  b.copy('builds/desktop/build-resources', APPDIST)
   // FIXME: this command leads to an extra run when a  file is updated
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
-  b.copy('dist/font-awesome', APPDIST + 'lib/')
-  b.copy('dist/katex', APPDIST + 'lib/')
-  b.copy('dist/inter-ui', APPDIST + 'lib/')
-  b.copy('dist/substance', APPDIST + 'lib/')
+  b.copy('./node_modules/font-awesome', APPDIST + 'lib/')
+  b.copy('./node_modules/katex', APPDIST + 'lib/')
+  b.copy('./node_modules/inter-ui', APPDIST + 'lib/')
+  b.copy('./node_modules/substance/dist/*.css*', APPDIST + 'lib/substance/')
+  b.copy('./node_modules/substance/dist/substance.min.js*', APPDIST + 'lib/substance/')
   ;[
     'texture.js',
     'texture.css',
@@ -149,25 +130,25 @@ b.task('build:app', ['build:app:dars'], () => {
   // TODO: maybe we could come up with an extension
   // that expands a source file using a given dict.
   b.custom('Creating application package.json...', {
-    src: 'app/package.json.in',
+    src: 'builds/desktop/package.json.in',
     dest: APPDIST + 'package.json',
     execute () {
       let { version, dependencies, devDependencies } = require('./package.json')
-      let tpl = fs.readFileSync('app/package.json.in', 'utf8')
+      let tpl = fs.readFileSync('builds/desktop/package.json.in', 'utf8')
       let out = tpl.replace('${version}', version)
         .replace('${electronVersion}', devDependencies.electron)
         .replace('${dependencies}', JSON.stringify(dependencies))
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })
-  b.js('app/main.js', {
+  b.js('builds/desktop/main.js', {
     output: [{
       file: APPDIST + 'main.js',
       format: 'cjs'
     }],
     external: ['electron', 'path', 'url']
   })
-  b.js('app/app.js', {
+  b.js('builds/desktop/app.js', {
     output: [{
       file: APPDIST + 'app.js',
       format: 'umd',
@@ -184,7 +165,7 @@ b.task('build:app', ['build:app:dars'], () => {
   fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
 })
 
-b.task('build:app:dars', () => {
+b.task('build:desktop:dars', () => {
   // templates
   _packDar('data/blank', APPDIST + 'templates/blank.dar')
   _packDar('data/blank-figure-package', APPDIST + 'templates/blank-figure-package.dar')
@@ -193,25 +174,22 @@ b.task('build:app:dars', () => {
   _packDar('data/kitchen-sink', APPDIST + 'examples/kitchen-sink.dar')
 })
 
-b.task('build:vfs', () => {
+b.task('build:demo:vfs', () => {
+  b.copy('data', DIST + 'demo/data')
   vfs(b, {
     src: ['./data/**/*'],
-    dest: DIST + 'vfs.js',
+    dest: DIST + 'demo/vfs.js',
     format: 'umd',
     moduleName: 'vfs',
     rootDir: path.join(__dirname, 'data')
   })
 })
 
-b.task('_copy-data-folder', () => {
-  b.copy('./data', DIST + 'data')
-})
-
-b.task('build:web', ['build:vfs', '_copy-data-folder'], () => {
-  b.copy('web/index.html', DIST)
-  b.js('./web/editor.js', {
+b.task('build:demo', ['build:demo:vfs', 'build:lib:browser'], () => {
+  b.copy('builds/demo/index.html', DIST)
+  b.js('builds/demo/demo.js', {
     output: [{
-      file: DIST + 'editor.js',
+      file: DIST + 'demo/demo.js',
       format: 'umd',
       name: 'textureEditor',
       globals: {
@@ -276,10 +254,10 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
 /* HELPERS */
 
 function _buildLib (DEST, platform) {
-  let targets = []
+  let output = []
   let istanbul
   if (platform === 'browser' || platform === 'all') {
-    targets.push({
+    output.push({
       file: DEST + 'texture.js',
       format: 'umd',
       name: 'texture',
@@ -293,19 +271,19 @@ function _buildLib (DEST, platform) {
     })
   }
   if (platform === 'nodejs' || platform === 'all') {
-    targets.push({
+    output.push({
       file: DEST + 'texture.cjs.js',
       format: 'cjs'
     })
   }
   if (platform === 'es' || platform === 'all') {
-    targets.push({
+    output.push({
       file: DEST + 'texture.es.js',
       format: 'es'
     })
   }
   b.js('./index.js', {
-    output: targets,
+    output,
     external: ['substance', 'katex', 'vfs'],
     istanbul
   })

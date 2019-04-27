@@ -1,10 +1,11 @@
 import {
   getQueryStringParam, substanceGlobals
 } from 'substance'
-import { TextureWebApp, TextureArchive, vfsSaveHook } from 'substance-texture'
+import { Texture, TextureWebApp, TextureArchive, vfsSaveHook } from 'substance-texture'
 
 window.addEventListener('load', () => {
   substanceGlobals.DEBUG_RENDERING = true
+  Texture.defaultDataFolder = './demo/data/'
   setTimeout(() => {
     let app = DevWebApp.mount({
       debug: true,

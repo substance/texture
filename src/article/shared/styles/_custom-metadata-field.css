@@ -11,6 +11,7 @@
 
 .sc-custom-metadata-field .se-keyword-editor {
   width: 300px;
+  max-width: 100%;
 }
 
 .sc-custom-metadata-field > .se-field-name {

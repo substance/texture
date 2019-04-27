@@ -114,7 +114,7 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
   // .. instead copying the files explicitly for now
   // b.copy('dist', APPDIST+'lib/')
   b.copy('./node_modules/font-awesome', APPDIST + 'lib/')
-  b.copy('./node_modules/katex', APPDIST + 'lib/')
+  b.copy('./node_modules/katex/dist', APPDIST + 'lib/katex')
   b.copy('./node_modules/inter-ui', APPDIST + 'lib/')
   b.copy('./node_modules/substance/dist/*.css*', APPDIST + 'lib/substance/')
   b.copy('./node_modules/substance/dist/substance.min.js*', APPDIST + 'lib/substance/')

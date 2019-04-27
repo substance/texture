@@ -333,6 +333,7 @@ export default {
     config.addLabel('enter-custom-field-value', 'Enter value')
     config.addLabel('add-action', 'Add')
     config.addLabel('enter-url-placeholder', 'Enter url')
+    config.addLabel('enter-keyword', 'Enter keyword')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })

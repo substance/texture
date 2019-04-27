@@ -1,5 +1,5 @@
 import { Component, getKeyForPath } from 'substance'
-import { InputWithButton, OverlayMixin, Popup, TextInput } from '../../kit'
+import { OverlayMixin, Popup, TextInput } from '../../kit'
 
 export default class KeywordInput extends OverlayMixin(Component) {
   getInitialState () {
@@ -23,6 +23,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
     el.addClass(isExpanded ? 'sm-expanded' : 'sm-collapsed')
     el.append(
       $$('div').addClass('se-label').text(values.join(', '))
+        .on('click', this._onClick)
     )
     if (isExpanded) {
       el.addClass('sm-active')
@@ -30,8 +31,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
         this._renderEditor($$)
       )
     }
-    el.on('click', this._onClick)
-      .on('dblclick', this._stopAndPreventDefault)
+    el.on('dblclick', this._stopAndPreventDefault)
       .on('mousedown', this._stopAndPreventDefault)
 
     return el
@@ -40,7 +40,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
   _renderEditor ($$) {
     const { model, placeholder } = this.props
     const values = model.getValue()
-    
+
     const Button = this.getComponent('button')
     const Input = this.getComponent('input')
 
@@ -64,7 +64,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
     editorEl.append(
       $$('div').addClass('se-keyword').append(
         $$('div').addClass('se-keyword-input').append(
-          $$(Input, { placeholder }).ref('urlInput')
+          $$(Input, { placeholder }).ref('keywordInput')
         ),
         $$(Button).append(
           this.getLabel('create')
@@ -105,11 +105,16 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   _addKeyword () {
-    
+    const model = this.props.model
+    const values = model.getValue()
+    const keyword = this.refs.keywordInput.val()
+    values.push(keyword)
+    this.send('updateValues', values)
   }
 
   _removeKeyword (idx) {
-    const values = this.props.values
+    const model = this.props.model
+    const values = model.getValue()
     values.splice(idx, 1)
     this.send('updateValues', values)
   }

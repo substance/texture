@@ -51,8 +51,9 @@ export default class ArticleLoader {
     if (validator) {
       let validationResult = validator.validate(xmlDom)
       if (!validationResult.ok) {
-        // TODO: create report
-        throw new Error('Validation failed.')
+        let err = new Error('Validation failed.')
+        err.detail = validationResult.errors
+        throw err
       }
     }
 
@@ -68,8 +69,9 @@ export default class ArticleLoader {
       if (validator) {
         let validationResult = validator.validate(xmlDom)
         if (!validationResult.ok) {
-          // TODO: create report
-          throw new Error('Validation failed.')
+          let err = new Error('Validation failed.')
+          err.detail = validationResult.errors
+          throw err
         }
       }
     }

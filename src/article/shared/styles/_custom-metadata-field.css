@@ -9,11 +9,6 @@
   flex: 1;
 }
 
-.sc-custom-metadata-field .se-keyword-editor {
-  width: 300px;
-  max-width: 100%;
-}
-
 .sc-custom-metadata-field > .se-field-name {
   font-weight: var(--t-bold-font-weight);
 }

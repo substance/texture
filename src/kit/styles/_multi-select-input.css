@@ -1,4 +1,5 @@
 .sc-multi-select-input {
+  position: relative;
   width: 100%;
   line-height: var(--t-input-line-height);
   cursor: pointer;

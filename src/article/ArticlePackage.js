@@ -47,7 +47,6 @@ export default {
     articleConfig.registerSchemaId(JATS_GREEN_1_1_PUBLIC_ID)
     articleConfig.registerSchemaId(JATS_GREEN_1_2_PUBLIC_ID)
 
-
     ArticleJATSConverters.forEach(converter => {
       articleConfig.addConverter('jats', converter)
     })

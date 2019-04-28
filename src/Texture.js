@@ -1,6 +1,6 @@
 import { Component, platform } from 'substance'
 import TextureConfigurator from './TextureConfigurator'
-import ArticlePlugin from './article/ArticlePlugin'
+import ArticlePackage from './article/ArticlePackage'
 import { PinnedMessage } from './kit/ui'
 
 // TODO: this should incoporate the 'Project' stuff that we have in Stencila
@@ -65,4 +65,4 @@ export default class Texture extends Component {
 }
 
 // register the core plugins here
-Texture.registerPlugin(ArticlePlugin)
+Texture.registerPlugin(ArticlePackage)

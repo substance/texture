@@ -1,6 +1,6 @@
 import { platform, DocumentSchema } from 'substance'
 import {
-  InternalArticleDocument, TextureConfigurator, ArticlePlugin,
+  InternalArticleDocument, TextureConfigurator, ArticlePackage,
   createJatsImporter, createJatsExporter, createEmptyJATS
 } from '../../index'
 import getMountPoint from './getMountPoint'
@@ -82,7 +82,7 @@ export function injectStyle (t, style) {
 
 export function createEmptyArticle () {
   let config = new TextureConfigurator()
-  config.import(ArticlePlugin)
+  config.import(ArticlePackage)
   let articleConfig = config.getConfiguration('article')
   let schema = new DocumentSchema({
     DocumentClass: InternalArticleDocument,

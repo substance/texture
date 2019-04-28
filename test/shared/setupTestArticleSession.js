@@ -1,6 +1,6 @@
 /* global vfs */
 import {
-  TextureConfigurator, ArticlePlugin,
+  TextureConfigurator, ArticlePackage,
   EditorSession,
   ArticleAPI, createEditorContext,
   VfsStorageClient, TextureArchive, InMemoryDarBuffer
@@ -8,7 +8,7 @@ import {
 
 export default function setupTestArticleSession (opts = {}) {
   let config = new TextureConfigurator()
-  config.import(ArticlePlugin)
+  config.import(ArticlePackage)
   // TODO: this could be a little easier
   let manuscriptConfig = config.getConfiguration('article.manuscript')
 

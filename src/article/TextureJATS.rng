@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="JATS-archiving.rng"/>
+<grammar
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  xmlns:s="texture://xml-utils"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="JATS-Archiving-1-1-MathML3-DTD-RNG/JATS-archivearticle1-mathml3.rng"/>
   <!--
     for these we need to figure out if we want to support at all,
     come up with a guide-line, and decide when to implement it

@@ -1,3 +1,4 @@
+import { validateXML } from 'texture-xml-utils'
 import ArticleConfigurator from './ArticleConfigurator'
 import ArticleLoader from './ArticleLoader'
 import ArticleModelPackage from './models/ArticleModelPackage'
@@ -21,6 +22,7 @@ import JATSTransformer from './converter/transform/jats/JATSTransformer'
 import {
   TEXTURE_JATS_PUBLIC_ID, JATS_GREEN_1_0_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
 } from './ArticleConstants'
+import TextureJATS from './TextureJATS'
 
 export default {
   name: 'article',
@@ -45,6 +47,7 @@ export default {
     articleConfig.registerSchemaId(JATS_GREEN_1_1_PUBLIC_ID)
     articleConfig.registerSchemaId(JATS_GREEN_1_2_PUBLIC_ID)
 
+
     ArticleJATSConverters.forEach(converter => {
       articleConfig.addConverter('jats', converter)
     })
@@ -67,6 +70,14 @@ export default {
     articleConfig.addTransformation(JATS_GREEN_1_0_PUBLIC_ID, transformation)
     articleConfig.addTransformation(JATS_GREEN_1_1_PUBLIC_ID, transformation)
     articleConfig.addTransformation(JATS_GREEN_1_2_PUBLIC_ID, transformation)
+
+    let validator = {
+      schemaId: TextureJATS.publicId,
+      validate (xmlDom) {
+        return validateXML(TextureJATS, xmlDom)
+      }
+    }
+    articleConfig.addValidator(TextureJATS.publicId, validator)
 
     // enable rich-text support for clipboard
     ArticleHTMLConverters.forEach(converter => {

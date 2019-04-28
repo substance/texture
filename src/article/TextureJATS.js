@@ -1,8 +1,10 @@
-import { XMLSchema } from 'substance'
+import { deserializeXMLSchema } from 'texture-xml-utils'
 import TextureJATSData from '../../tmp/TextureJATS.data'
+import { TEXTURE_JATS_DTD, TEXTURE_JATS_PUBLIC_ID } from './ArticleConstants'
 
-// TODO: it would be great to achieve this via an extension of the JATS schema
-// i.e. instead of compiling a full schema, just compile an increment
-let TextureJATS = XMLSchema.fromJSON(TextureJATSData, 'article', 'TextureArticle 1.0', '')
+let TextureJATS = deserializeXMLSchema(TextureJATSData,
+  TEXTURE_JATS_PUBLIC_ID,
+  TEXTURE_JATS_DTD
+)
 
 export default TextureJATS

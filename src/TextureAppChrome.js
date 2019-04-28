@@ -137,10 +137,10 @@ export default class TextureAppChrome extends Component {
   }
 
   _save (cb) {
-    this.state.archive.save(err => {
+    this.state.archive.save((err, update) => {
       if (err) return cb(err)
       this._updateTitle()
-      cb(null)
+      cb(null, update)
     })
   }
 

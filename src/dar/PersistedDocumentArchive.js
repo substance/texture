@@ -273,7 +273,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     const storage = this.storage
     const sessions = this._sessions
 
-    let rawArchive = this._exportChanges(sessions, buffer)
+    let rawArchiveUpdate = this._exportChanges(sessions, buffer)
 
     // CHALLENGE: we either need to lock the buffer, so that
     // new changes are interfering with ongoing sync
@@ -281,7 +281,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // sync has succeeded or failed, e.g. we could use a second buffer in the meantime
     // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
     // a slower persisted buffer
-    storage.write(archiveId, rawArchive, (err, res) => {
+    storage.write(archiveId, rawArchiveUpdate, (err, res) => {
       // TODO: this need to implemented in a more robust fashion
       // i.e. we should only reset the buffer if storage.write was successful
       if (err) return cb(err)
@@ -309,7 +309,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId
       this.emit('archive:saved')
-      cb()
+      cb(null, rawArchiveUpdate)
     })
   }
 

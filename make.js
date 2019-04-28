@@ -5,6 +5,8 @@ const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
 const yazl = require('yazl')
+const compileSchema = require('texture-xml-utils/bundler/compileSchema')
+const generateSchemaDocumentation = require('texture-xml-utils/bundler/generateSchemaDocumentation')
 
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
@@ -68,15 +70,29 @@ b.task('run-app', ['desktop'], () => {
 }).describe('runs the application in electron.')
 
 b.task('schema:texture-article', () => {
-  // TODO: bring this back after factoring out xml utilities and prebuilt JATS schemas
-  // _compileSchema('TextureJATS', RNG_FILES[1], RNG_SEARCH_DIRS, RNG_FILES.slice(0, 2))
-  // b.custom(`Copy schema documentation...`, {
-  //   src: './tmp/TextureJATS.schema.md',
-  //   dest: './docs/TextureJATS.md',
-  //   execute () {
-  //     b.copy('./tmp/TextureJATS.schema.md', './docs/TextureJATS.md')
-  //   }
-  // })
+  let rngFile = path.join(__dirname, 'src', 'article', 'TextureJATS.rng')
+  compileSchema(b, rngFile, {
+    dest: TMP + 'TextureJATS.data.js',
+    searchDirs: [
+      path.join(__dirname, 'node_modules', 'texture-plugin-jats', 'rng')
+    ]
+  })
+  generateSchemaDocumentation(b, rngFile, {
+    dest: 'docs/TextureJATS.md',
+    searchDirs: [
+      path.join(__dirname, 'node_modules', 'texture-plugin-jats', 'rng')
+    ],
+    headingLevelOffset: 1,
+    ammend (md) {
+      return [
+        '# Texture Article',
+        '',
+        'This schema defines a strict sub-set of JATS Archiving 1.2.',
+        '',
+        md
+      ].join('\n')
+    }
+  })
 })
 
 b.task('build:assets', function () {

@@ -42,7 +42,7 @@ b.task('clean', function () {
   b.rm(APPDIST)
 }).describe('removes all generated files and folders.')
 
-b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:lib'])
+b.task('publish', ['clean', 'build:schema', 'build:assets', 'build:lib', 'build:demo'])
   .describe('builds the release bundle (library + web).')
 
 b.task('lib', ['clean', 'build:schema', 'build:assets', 'build:lib'])

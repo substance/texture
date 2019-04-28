@@ -1,11 +1,12 @@
 import ManifestLoader from './ManifestLoader'
 
 export default class VfsStorageClient {
-  constructor (vfs, baseUrl) {
+  constructor (vfs, baseUrl, options = {}) {
     this.vfs = vfs
 
     // an url rom where the assets are served statically
     this.baseUrl = baseUrl
+    this.options = options
   }
 
   read (archiveId, cb) {
@@ -14,7 +15,9 @@ export default class VfsStorageClient {
   }
 
   write (archiveId, data, cb) { // eslint-disable-line
-    _updateRawArchive(this.vfs, archiveId, data, this.baseUrl)
+    if (this.options.writable) {
+      _updateRawArchive(this.vfs, archiveId, data, this.baseUrl)
+    }
     cb(null, true)
   }
 }

@@ -227,6 +227,8 @@ b.task('build:test-assets', ['build:demo:vfs', 'build:desktop:dars'], () => {
     moduleName: 'TEST_VFS',
     rootDir: path.join(__dirname, 'test', 'fixture')
   })
+  // copy a non-minified substance file into test folder
+  b.copy('./node_modules/substance/dist/substance.js*', DIST + 'test/')
 })
 
 b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {

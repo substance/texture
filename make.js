@@ -34,7 +34,7 @@ if (argv.d) {
 }
 b.serve({ static: true, route: '/', folder: './dist' })
 
-b.task('default', ['publish'])
+b.task('default', ['dev'])
 
 b.task('clean', function () {
   b.rm(DIST)

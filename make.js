@@ -101,6 +101,7 @@ b.task('build:assets', function () {
   b.copy('./node_modules/katex/dist', DIST + 'lib/katex')
   b.copy('./node_modules/substance/dist/*.css*', DIST + 'lib/substance/')
   b.copy('./node_modules/substance/dist/substance.min.js*', DIST + 'lib/substance/')
+  b.copy('./node_modules/texture-plugin-jats/dist', DIST + 'plugins/texture-plugin-jats')
   b.css('texture.css', DIST + 'texture.css')
   b.css('texture-reset.css', DIST + 'texture-reset.css')
 })

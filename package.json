@@ -35,6 +35,7 @@
     "substance-bundler": "0.25.5",
     "substance-test": "0.13.2",
     "tap-spec": "5.0.0",
+    "texture-plugin-jats": "0.1.0",
     "texture-xml-utils": "0.2.0"
   },
   "scripts": {

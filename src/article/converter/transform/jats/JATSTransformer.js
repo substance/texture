@@ -2,7 +2,7 @@ import NormalizeFn from './NormalizeFn'
 import NormalizeContribGroup from './NormalizeContribGroup'
 import UnwrapBlockLevelElements from './UnwrapBlockLevelElements'
 import NormalizeRefList from './NormalizeRefList'
-import { TEXTURE_JATS_PUBLIC_ID, TEXTURE_JATS_DTD, JATS_GREEN_1_2_PUBLIC_ID } from '../../../ArticleConstants'
+import { TEXTURE_JATS_PUBLIC_ID, TEXTURE_JATS_DTD, JATS_GREEN_1_2_PUBLIC_ID, JATS_GREEN_1_DTD } from '../../../ArticleConstants'
 
 const trafos = [
   NormalizeContribGroup,
@@ -23,6 +23,6 @@ export default class JATSTransformer {
 
   export (jatsDom) {
     // set the doctype to the JATS format which we want to produce
-    jatsDom.setDoctype('article', JATS_GREEN_1_2_PUBLIC_ID, TEXTURE_JATS_DTD)
+    jatsDom.setDoctype('article', JATS_GREEN_1_2_PUBLIC_ID, JATS_GREEN_1_DTD)
   }
 }

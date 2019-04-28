@@ -219,7 +219,7 @@ b.task('build:demo', ['build:demo:vfs', 'build:lib:browser'], () => {
   })
 })
 
-b.task('build:test-assets', ['build:vfs', '_copy-data-folder', 'build:app:dars'], () => {
+b.task('build:test-assets', ['build:demo:vfs', 'build:desktop:dars'], () => {
   vfs(b, {
     src: ['./test/fixture/**/*.xml'],
     dest: DIST + 'test/test-vfs.js',

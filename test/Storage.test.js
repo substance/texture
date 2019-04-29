@@ -24,7 +24,7 @@ testAsync('Storage: reading a .dar file', async t => {
   let rawArchive = await promisify(cb => {
     storage.read(darPath, cb)
   })
-  t.deepEqual(Object.keys(rawArchive.resources), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
+  t.deepEqual(_getResourceNames(rawArchive), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
   t.end()
 })
 
@@ -129,4 +129,10 @@ function _getTmpFolder () {
   let folder = path.join(process.cwd(), 'tmp', uuid())
   fsExtra.ensureDirSync(folder)
   return folder
+}
+
+function _getResourceNames (rawArchive) {
+  let names = Object.keys(rawArchive.resources)
+  names.sort()
+  return names
 }

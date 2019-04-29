@@ -1,3 +1,4 @@
+import { domHelpers } from 'substance'
 import { ValueComponent } from '../../kit'
 
 // TODO: this should come from settings (not configuration)
@@ -17,7 +18,7 @@ export default class LanguageEditor extends ValueComponent {
 
     const languageSelector = $$('select').addClass('se-select')
       .ref('input')
-      .on('click', this._suppressClickPropagation)
+      .on('click', domHelpers.stop)
       .on('change', this._setLanguage)
 
     languageSelector.append(
@@ -40,9 +41,5 @@ export default class LanguageEditor extends ValueComponent {
     const input = this.refs.input
     const value = input.getValue()
     model.setValue(value)
-  }
-
-  _suppressClickPropagation (e) {
-    e.stopPropagation()
   }
 }

@@ -136,8 +136,6 @@ export function createTestApp (options = {}) {
     }
 
     _save (cb) {
-      // TODO: here I would like to add a hook that validates the generated
-      // XML against the TextureJATS spec
       return super._save((err, rawArchiveUpdate) => {
         if (validateOnSave) {
           if (!err && rawArchiveUpdate) {
@@ -169,14 +167,9 @@ const JATS_SHOULD_BE_VALID = 'current JATS should be valid.'
 export function ensureValidJATS (t, app) {
   // Note: in the test suite we use VFS as storage which works
   // synchronously, even if the API is asynchronous (for the real storage impls).
-  // try {
   app._save(err => {
     t.notOk(Boolean(err), JATS_SHOULD_BE_VALID)
   })
-  // } catch (err) {
-  //   console.error(err)
-  //   t.notOk(Boolean(err), JATS_SHOULD_BE_VALID)
-  // }
 }
 
 export const LOREM_IPSUM = {

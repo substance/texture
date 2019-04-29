@@ -9,8 +9,7 @@ export default class RemoveKeywordCommand extends Command {
     const { path, idx } = params
     const editorSession = context.editorSession
     editorSession.transaction(tx => {
-      documentHelpers.remove(tx, path, idx)
-      tx.selection = null
+      documentHelpers.removeAt(tx, path, idx)
     })
   }
 }

@@ -17,7 +17,7 @@ export default class CustomMetadataFieldComponent extends NodeComponent {
         this._renderValue($$, 'name', { placeholder: this.getLabel('enter-custom-field-name') }).addClass('se-field-name'),
         $$(KeywordInput, {
           model: valuesModel,
-          placeholder: this.getLabel('enter-keyword'),
+          placeholder: this.getLabel('enter-keywords'),
           overlayId: valuesModel.id
         }).addClass('se-field-values')
       )

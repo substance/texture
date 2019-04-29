@@ -17,12 +17,13 @@ export default class KeywordInput extends OverlayMixin(Component) {
     const values = model.getValue()
     const isEmpty = values.length === 0
     const isExpanded = this.state.isExpanded
+    const label = isEmpty ? this.props.placeholder : values.join(', ')
 
     const el = $$('div').addClass('sc-keyword-input')
     if (isEmpty) el.addClass('sm-empty')
     el.addClass(isExpanded ? 'sm-expanded' : 'sm-collapsed')
     el.append(
-      $$('div').addClass('se-label').text(values.join(', '))
+      $$('div').addClass('se-label').text(label)
         .on('click', this._onClick)
     )
     if (isExpanded) {
@@ -38,8 +39,9 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   _renderEditor ($$) {
-    const { model, placeholder } = this.props
+    const model = this.props.model
     const values = model.getValue()
+    const placeholder = this.getLabel('enter-keyword')
 
     const Button = this.getComponent('button')
     const Input = this.getComponent('input')

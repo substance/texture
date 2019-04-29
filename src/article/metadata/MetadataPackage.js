@@ -360,6 +360,8 @@ export default {
     config.addLabel('empty-figure-metadata', 'No fields specified')
     config.addLabel('open-link', 'Open Link')
     config.addLabel('enter-keyword', 'Enter keyword')
+    config.addLabel('enter-keywords', 'Click to add keywords')
+
     // Icons
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
     config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })

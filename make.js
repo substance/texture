@@ -54,7 +54,7 @@ b.task('dev', ['clean', 'build:schema', 'build:assets', 'build:demo'])
 b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib:browser', 'build:desktop'])
   .describe('builds the desktop bundle (electron).')
 
-b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets'])
+b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets', 'create-dev-self-module'])
   .describe('prepares everything necessary to run tests in node.')
 
 b.task('test-browser', ['clean', 'build:schema', 'build:lib:browser', 'build:test-assets', 'build:test-browser'])
@@ -229,6 +229,15 @@ b.task('build:test-assets', ['build:demo:vfs', 'build:desktop:dars'], () => {
   })
   // copy a non-minified substance file into test folder
   b.copy('./node_modules/substance/dist/substance.js*', DIST + 'test/')
+})
+
+b.task('create-dev-self-module', () => {
+  b.custom('Creating pseudo-module "texture"', {
+    execute () {
+      b.writeFileSync('node_modules/texture/package.json', '{"main":"index.js"}')
+      b.writeFileSync('node_modules/texture/index.js', 'module.exports = require("../../index")')
+    }
+  })
 })
 
 b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {

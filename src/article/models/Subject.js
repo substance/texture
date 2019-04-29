@@ -1,9 +1,10 @@
 import { DocumentNode, STRING } from 'substance'
 
 export default class Subject extends DocumentNode {
-  toString () {
-    return this.render().join('')
-  }
+  // not used
+  // toString () {
+  //   return this.render().join('')
+  // }
 
   render (options = {}) {
     let { category, name } = this

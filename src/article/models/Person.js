@@ -2,9 +2,10 @@ import { DocumentNode, STRING, ONE, MANY, CHILDREN, BOOLEAN } from 'substance'
 import { extractInitials } from './modelHelpers'
 
 export default class Person extends DocumentNode {
-  toString () {
-    return this.render().join('')
-  }
+  // not used
+  // toString () {
+  //   return this.render().join('')
+  // }
 
   render (options = {}) {
     let { prefix, suffix, givenNames, surname } = this

@@ -2,9 +2,10 @@ import { DocumentNode, STRING, TEXT } from 'substance'
 import { RICH_TEXT_ANNOS } from './modelConstants'
 
 export default class Keyword extends DocumentNode {
-  toString () {
-    return this.render().join('')
-  }
+  // not used
+  // toString () {
+  //   return this.render().join('')
+  // }
 
   render (options = {}) {
     let { category, name } = this

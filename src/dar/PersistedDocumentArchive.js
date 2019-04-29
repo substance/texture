@@ -358,7 +358,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     assetNodes.forEach(asset => {
       let assetId = asset.id
       if (buffer.hasBlobChanged(assetId)) {
-        let path = asset.attr('path') || assetId
+        let path = asset.path || assetId
         let blobRecord = buffer.getBlob(assetId)
         rawArchive.resources[path] = {
           assetId,

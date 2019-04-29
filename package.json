@@ -46,7 +46,7 @@
     "pretest": "npm run lint",
     "test": "node make test-nodejs && node --require esm test | tap-spec",
     "test-debug": "node make test-nodejs && node --inspect-brk --require esm test",
-    "webtest": "node make test-browser -s -w",
+    "test-browser": "node make test-browser -s -w",
     "cover": "node make test-nodejs && nyc --require esm --reporter=lcov --reporter=text node test",
     "lint": "standard \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\""
   },

@@ -1,9 +1,6 @@
 import { DocumentSchema, DefaultDOMElement } from 'substance'
 import ArticleSession from './ArticleSession'
 import InternalArticleDocument from './InternalArticleDocument'
-import {
-  DEFAULT_JATS_SCHEMA_ID, JATS_GREEN_1_0_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
-} from './ArticleConstants'
 
 export default class ArticleLoader {
   /**
@@ -23,27 +20,10 @@ export default class ArticleLoader {
     let xmlSchemaId = xmlDom.getDoctype().publicId
     // TODO: we need some kind of schema id normalisation, as it seems that
     // in real-world JATS files, nobody is
-    if (!articleConfig.isSchemaKnown(xmlSchemaId)) {
-      if (!xmlSchemaId) {
-        console.error(`No XML schema given. Using ${DEFAULT_JATS_SCHEMA_ID}`)
-        xmlSchemaId = DEFAULT_JATS_SCHEMA_ID
-      // try to fuzzy detect the JATS schema
-      } else if (/JATS/i.exec(xmlSchemaId)) {
-        let _xmlSchemaId
-        if (/v1.0/.exec(xmlSchemaId)) {
-          _xmlSchemaId = JATS_GREEN_1_0_PUBLIC_ID
-        } else if (/v1.1/.exec(xmlSchemaId)) {
-          _xmlSchemaId = JATS_GREEN_1_1_PUBLIC_ID
-        } else if (/v1.2/.exec(xmlSchemaId)) {
-          _xmlSchemaId = JATS_GREEN_1_2_PUBLIC_ID
-        } else {
-          _xmlSchemaId = DEFAULT_JATS_SCHEMA_ID
-        }
-        console.error(`JATS schema id is either not supported or incorrect: ${xmlSchemaId}. Using ${_xmlSchemaId} instead. `)
-        xmlSchemaId = _xmlSchemaId
-      } else {
-        throw new Error(`Unknown xml schema: ${xmlSchemaId}`)
-      }
+    if (!xmlSchemaId) {
+      throw new Error(`No XML schema specified.`)
+    } else if (!articleConfig.isSchemaKnown(xmlSchemaId)) {
+      throw new Error(`Unsupported xml schema: ${xmlSchemaId}`)
     }
 
     // optional input validation if registered

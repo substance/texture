@@ -42,6 +42,9 @@ if (platform.inBrowser) {
 }
 
 if (platform.inNodeJS) {
+  // load JATS plugin to enable validators
+  require('texture-plugin-jats')
+
   // TODO: why do we force this?
   substanceGlobals.DEBUG_RENDERING = false
 

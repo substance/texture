@@ -492,7 +492,7 @@ export default class ArticleAPI {
   }
 
   _renderEntity (entity, options) {
-    let exporter = this.config.getExporter('html')
+    let exporter = this.config.createExporter('html')
     return renderEntity(entity, exporter)
   }
 

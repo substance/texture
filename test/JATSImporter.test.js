@@ -1,14 +1,14 @@
 import { test } from 'substance-test'
-import { createEmptyJATS, jats2internal } from '../index'
+import { createEmptyJATS, createJatsImporter } from '../index'
 
-// TODO: add more tests covering the implementation of jats2internal
+// TODO: add more tests covering the implementation of ArticleJATSImporter
 
 // TODO: this test looks a bit 'arbitrary'. It could be more targeted, addressing a specifc issue
-// or it should be generalized introducing a concept for generel import/export testing
+// or it should be generalized introducing a concept for general import/export testing
 test('JATSImporter: article-record permission', t => {
-  // empty JATS
   let jats = createEmptyJATS()
-  let doc = jats2internal(jats)
+  let importer = createJatsImporter()
+  let doc = importer.import(jats)
   let metadata = doc.get('metadata')
   let permission = metadata.resolve('permission')
 
@@ -30,7 +30,8 @@ test('JATSImporter: article-record permission', t => {
       )
     )
   )
-  doc = jats2internal(jats)
+  importer.reset()
+  doc = importer.import(jats)
   metadata = doc.get('metadata')
   permission = metadata.resolve('permission')
   t.ok(metadata === permission.getParent(), 'article permission should have article-record as parent')

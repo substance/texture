@@ -2,7 +2,7 @@ import { test } from 'substance-test'
 import {
   getDocument, insertText, openMetadataEditor,
   openContextMenuAndFindTool, isToolEnabled, setCursor, ensureAllFieldsVisible,
-  createJATSFixture, createTestVfs, canSwitchTextTypeTo, switchTextType
+  createJATSFixture, createTestVfs, canSwitchTextTypeTo, switchTextType, ensureValidJATS
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
@@ -28,6 +28,7 @@ test(`Custom Abstracts: add a custom abstract`, t => {
     _addItem(editor, 'custom-abstract')
   }, 'adding new custom abstract should not throw error')
   t.equal(editor.findAll(customAbstractSelector).length, 1, 'there should be one custom abstract')
+  ensureValidJATS(t, app)
   t.end()
 })
 
@@ -71,6 +72,7 @@ test('Custom Abstracts: move custom abstract', t => {
   _moveDownAbstract(editor)
   t.ok(_isMoveUpToolPossible(editor), 'should be possible to move up custom abstract')
   t.notOk(_isMoveDownToolPossible(editor), 'should not be possible to move down custom abstract')
+  ensureValidJATS(t, app)
   t.end()
 })
 
@@ -103,6 +105,7 @@ test('Custom Abstracts: editing title', t => {
   setCursor(editor, customAbstractId + '.title', 0)
   insertText(editor, newTitle)
   t.equal(doc.get([customAbstractId, 'title']), newTitle, 'title should changed')
+  ensureValidJATS(t, app)
   t.end()
 })
 
@@ -118,6 +121,7 @@ test('Custom Abstracts: switching type', t => {
   t.equal(doc.get([customAbstractId, 'abstractType']), '', 'abstract type should be empty')
   _selectAbstractType(editor, customAbstractId, customAbstractType)
   t.equal(doc.get([customAbstractId, 'abstractType']), customAbstractType, 'abstract type should changed')
+  ensureValidJATS(t, app)
   t.end()
 })
 
@@ -157,6 +161,7 @@ test(`Custom Abstracts: switching headings`, t => {
   t.ok(canSwitchTextTypeTo(editor, 'heading1'), 'switch to heading level 1 should be possible')
   switchTextType(editor, 'heading1')
   t.equal(abstractEditor.findAll('h1').length, 1, 'there should be one heading level 1')
+  ensureValidJATS(t, app)
   t.end()
 })
 

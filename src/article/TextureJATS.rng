@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  xmlns:s="texture://xml-utils"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="JATS-Archiving-1-1-MathML3-DTD-RNG/JATS-archivearticle1-mathml3.rng"/>
+  <!--
+    for these we need to figure out if we want to support at all,
+    come up with a guide-line, and decide when to implement it
+  -->
+  <s:not-implemented name="abbrev"/>
+  <s:not-implemented name="abbrev-journal-title"/>
+  <s:not-implemented name="aff-alternatives"/>
+  <s:not-implemented name="ack"/>
+  <s:not-implemented name="address"/>
+  <s:not-implemented name="alt-text"/>
+  <s:not-implemented name="alt-title"/>
+  <s:not-implemented name="alternatives"/>
+  <s:not-implemented name="annotation"/>
+  <s:not-implemented name="anonymous"/>
+  <s:not-implemented name="app"/>
+  <s:not-implemented name="app-group"/>
+  <s:not-implemented name="array"/>
+  <s:not-implemented name="author-comment"/>
+  <s:not-implemented name="author-notes"/>
+  <s:not-implemented name="boxed-text"/>
+  <s:not-implemented name="chem-struct"/>
+  <s:not-implemented name="chem-struct-wrap"/>
+  <s:not-implemented name="citation-alternatives"/>
+  <s:not-implemented name="collab-alternatives"/>
+  <s:not-implemented name="comment"/>
+  <s:not-implemented name="compound-kwd"/>
+  <s:not-implemented name="compound-kwd-part"/>
+  <s:not-implemented name="compound-subject"/>
+  <s:not-implemented name="compound-subject-part"/>
+  <s:not-implemented name="conference"/>
+  <s:not-implemented name="conf-acronym"/>
+  <s:not-implemented name="conf-date"/>
+  <s:not-implemented name="conf-num"/>
+  <s:not-implemented name="conf-theme"/>
+  <s:not-implemented name="conf-sponsor"/>
+  <s:not-implemented name="corresp"/>
+  <s:not-implemented name="count"/>
+  <s:not-implemented name="counts"/>
+  <s:not-implemented name="custom-meta"/>
+  <s:not-implemented name="custom-meta-group"/>
+  <s:not-implemented name="def"/>
+  <s:not-implemented name="def-head"/>
+  <s:not-implemented name="def-item"/>
+  <s:not-implemented name="def-list"/>
+  <s:not-implemented name="degrees"/>
+  <s:not-implemented name="disp-formula-group"/>
+  <s:not-implemented name="equation-count"/>
+  <s:not-implemented name="etal"/>
+  <s:not-implemented name="fig-count"/>
+  <s:not-implemented name="floats-group"/>
+  <s:not-implemented name="front-stub"/>
+  <s:not-implemented name="funding-statement"/>
+  <s:not-implemented name="glossary"/>
+  <s:not-implemented name="glyph-data"/>
+  <s:not-implemented name="glyph-ref"/>
+  <s:not-implemented name="gov"/>
+  <s:not-implemented name="hr"/>
+  <s:not-implemented name="inline-supplementary-material"/>
+  <s:not-implemented name="issue-sponsor"/>
+  <s:not-implemented name="issn"/>
+  <s:not-implemented name="issn-l"/>
+  <s:not-implemented name="issue-id"/>
+  <s:not-implemented name="issue-part"/>
+  <s:not-implemented name="journal-id"/>
+  <s:not-implemented name="journal-meta"/>
+  <s:not-implemented name="journal-subtitle"/>
+  <s:not-implemented name="journal-title"/>
+  <s:not-implemented name="journal-title-group"/>
+  <s:not-implemented name="long-desc"/>
+  <s:not-implemented name="media"/>
+  <s:not-implemented name="meta-name"/>
+  <s:not-implemented name="meta-value"/>
+  <s:not-implemented name="milestone-start"/>
+  <s:not-implemented name="milestone-end"/>
+  <s:not-implemented name="mixed-citation"/>
+  <s:not-implemented name="nested-kwd"/>
+  <s:not-implemented name="note"/>
+  <s:not-implemented name="notes"/>
+  <s:not-implemented name="on-behalf"/>
+  <s:not-implemented name="on-behalf-of"/>
+  <s:not-implemented name="open-access"/>
+  <s:not-implemented name="overline-start"/>
+  <s:not-implemented name="overline-end"/>
+  <s:not-implemented name="page-count"/>
+  <s:not-implemented name="private-char"/>
+  <s:not-implemented name="principal-award-recipient"/>
+  <s:not-implemented name="principal-investigator"/>
+  <s:not-implemented name="product"/>
+  <s:not-implemented name="publisher"/>
+  <s:not-implemented name="rb"/>
+  <s:not-implemented name="ref-count"/>
+  <s:not-implemented name="related-article"/>
+  <s:not-implemented name="related-object"/>
+  <s:not-implemented name="response"/>
+  <s:not-implemented name="roman"/>
+  <s:not-implemented name="rp"/>
+  <s:not-implemented name="rt"/>
+  <s:not-implemented name="ruby"/>
+  <s:not-implemented name="sans-serif"/>
+  <s:not-implemented name="sec-meta"/>
+  <s:not-implemented name="self-uri"/>
+  <s:not-implemented name="series-text"/>
+  <s:not-implemented name="series-title"/>
+  <s:not-implemented name="sig"/>
+  <s:not-implemented name="sig-block"/>
+  <s:not-implemented name="size"/>
+  <s:not-implemented name="speaker"/>
+  <s:not-implemented name="speech"/>
+  <s:not-implemented name="statement"/>
+  <s:not-implemented name="std"/>
+  <s:not-implemented name="std-organization"/>
+  <s:not-implemented name="string-conf"/>
+  <s:not-implemented name="styled-content"/>
+  <s:not-implemented name="sub-article"/>
+  <s:not-implemented name="supplement"/>
+  <s:not-implemented name="table-count"/>
+  <s:not-implemented name="table-wrap-group"/>
+  <s:not-implemented name="target"/>
+  <s:not-implemented name="term"/>
+  <s:not-implemented name="term-head"/>
+  <s:not-implemented name="textual-form"/>
+  <s:not-implemented name="trans-source"/>
+  <s:not-implemented name="trans-subtitle"/>
+  <s:not-implemented name="underline-start"/>
+  <s:not-implemented name="underline-end"/>
+  <s:not-implemented name="unstructured-kwd-group"/>
+  <s:not-implemented name="verse-group"/>
+  <s:not-implemented name="verse-line"/>
+  <s:not-implemented name="volume-id"/>
+  <s:not-implemented name="volume-issue-group"/>
+  <s:not-implemented name="volume-series"/>
+  <s:not-implemented name="word-count"/>
+
+  <!-- elements we do not want to support -->
+  <s:removed name="x"/>
+  <s:removed name="code"/>
+
+  <!-- deprecated ones -->
+  <s:removed name="access-date"/>
+  <s:removed name="nlm-citation"/>
+  <s:removed name="time-stamp"/>
+
+  <!-- we do not support MML -->
+  <s:removed name="mml:abs"/>
+  <s:removed name="mml:and"/>
+  <s:removed name="mml:annotation"/>
+  <s:removed name="mml:annotation-xml"/>
+  <s:removed name="mml:apply"/>
+  <s:removed name="mml:approx"/>
+  <s:removed name="mml:arccos"/>
+  <s:removed name="mml:arccosh"/>
+  <s:removed name="mml:arccot"/>
+  <s:removed name="mml:arccoth"/>
+  <s:removed name="mml:arccsc"/>
+  <s:removed name="mml:arccsch"/>
+  <s:removed name="mml:arcsec"/>
+  <s:removed name="mml:arcsech"/>
+  <s:removed name="mml:arcsin"/>
+  <s:removed name="mml:arcsinh"/>
+  <s:removed name="mml:arctan"/>
+  <s:removed name="mml:arctanh"/>
+  <s:removed name="mml:arg"/>
+  <s:removed name="mml:bind"/>
+  <s:removed name="mml:bvar"/>
+  <s:removed name="mml:card"/>
+  <s:removed name="mml:cartesianproduct"/>
+  <s:removed name="mml:cbytes"/>
+  <s:removed name="mml:ceiling"/>
+  <s:removed name="mml:cerror"/>
+  <s:removed name="mml:ci"/>
+  <s:removed name="mml:cn"/>
+  <s:removed name="mml:codomain"/>
+  <s:removed name="mml:complexes"/>
+  <s:removed name="mml:compose"/>
+  <s:removed name="mml:condition"/>
+  <s:removed name="mml:conjugate"/>
+  <s:removed name="mml:cos"/>
+  <s:removed name="mml:cosh"/>
+  <s:removed name="mml:cot"/>
+  <s:removed name="mml:coth"/>
+  <s:removed name="mml:cs"/>
+  <s:removed name="mml:csc"/>
+  <s:removed name="mml:csch"/>
+  <s:removed name="mml:csymbol"/>
+  <s:removed name="mml:curl"/>
+  <s:removed name="mml:declare"/>
+  <s:removed name="mml:degree"/>
+  <s:removed name="mml:determinant"/>
+  <s:removed name="mml:diff"/>
+  <s:removed name="mml:divergence"/>
+  <s:removed name="mml:divide"/>
+  <s:removed name="mml:domain"/>
+  <s:removed name="mml:domainofapplication"/>
+  <s:removed name="mml:emptyset"/>
+  <s:removed name="mml:eq"/>
+  <s:removed name="mml:equivalent"/>
+  <s:removed name="mml:eulergamma"/>
+  <s:removed name="mml:exists"/>
+  <s:removed name="mml:exp"/>
+  <s:removed name="mml:exponentiale"/>
+  <s:removed name="mml:factorial"/>
+  <s:removed name="mml:factorof"/>
+  <s:removed name="mml:false"/>
+  <s:removed name="mml:floor"/>
+  <s:removed name="mml:fn"/>
+  <s:removed name="mml:forall"/>
+  <s:removed name="mml:gcd"/>
+  <s:removed name="mml:geq"/>
+  <s:removed name="mml:grad"/>
+  <s:removed name="mml:gt"/>
+  <s:removed name="mml:ident"/>
+  <s:removed name="mml:image"/>
+  <s:removed name="mml:imaginary"/>
+  <s:removed name="mml:imaginaryi"/>
+  <s:removed name="mml:implies"/>
+  <s:removed name="mml:in"/>
+  <s:removed name="mml:infinity"/>
+  <s:removed name="mml:int"/>
+  <s:removed name="mml:integers"/>
+  <s:removed name="mml:intersect"/>
+  <s:removed name="mml:interval"/>
+  <s:removed name="mml:inverse"/>
+  <s:removed name="mml:lambda"/>
+  <s:removed name="mml:laplacian"/>
+  <s:removed name="mml:lcm"/>
+  <s:removed name="mml:leq"/>
+  <s:removed name="mml:limit"/>
+  <s:removed name="mml:list"/>
+  <s:removed name="mml:ln"/>
+  <s:removed name="mml:log"/>
+  <s:removed name="mml:logbase"/>
+  <s:removed name="mml:lowlimit"/>
+  <s:removed name="mml:lt"/>
+  <s:removed name="mml:math"/>
+  <s:removed name="mml:maction"/>
+  <s:removed name="mml:maligngroup"/>
+  <s:removed name="mml:malignmark"/>
+  <s:removed name="mml:matrix"/>
+  <s:removed name="mml:matrixrow"/>
+  <s:removed name="mml:max"/>
+  <s:removed name="mml:mean"/>
+  <s:removed name="mml:median"/>
+  <s:removed name="mml:menclose"/>
+  <s:removed name="mml:merror"/>
+  <s:removed name="mml:mfenced"/>
+  <s:removed name="mml:mfrac"/>
+  <s:removed name="mml:mglyph"/>
+  <s:removed name="mml:mi"/>
+  <s:removed name="mml:min"/>
+  <s:removed name="mml:minus"/>
+  <s:removed name="mml:mlabeledtr"/>
+  <s:removed name="mml:mlongdiv"/>
+  <s:removed name="mml:mmultiscripts"/>
+  <s:removed name="mml:mn"/>
+  <s:removed name="mml:mo"/>
+  <s:removed name="mml:mode"/>
+  <s:removed name="mml:moment"/>
+  <s:removed name="mml:momentabout"/>
+  <s:removed name="mml:mover"/>
+  <s:removed name="mml:mpadded"/>
+  <s:removed name="mml:mphantom"/>
+  <s:removed name="mml:mprescripts"/>
+  <s:removed name="mml:mroot"/>
+  <s:removed name="mml:mrow"/>
+  <s:removed name="mml:ms"/>
+  <s:removed name="mml:mscarries"/>
+  <s:removed name="mml:mscarry"/>
+  <s:removed name="mml:msgroup"/>
+  <s:removed name="mml:msline"/>
+  <s:removed name="mml:mspace"/>
+  <s:removed name="mml:msqrt"/>
+  <s:removed name="mml:msrow"/>
+  <s:removed name="mml:mstack"/>
+  <s:removed name="mml:mstyle"/>
+  <s:removed name="mml:msub"/>
+  <s:removed name="mml:msubsup"/>
+  <s:removed name="mml:msup"/>
+  <s:removed name="mml:mtable"/>
+  <s:removed name="mml:mtd"/>
+  <s:removed name="mml:mtext"/>
+  <s:removed name="mml:mtr"/>
+  <s:removed name="mml:munder"/>
+  <s:removed name="mml:munderover"/>
+  <s:removed name="mml:naturalnumbers"/>
+  <s:removed name="mml:neq"/>
+  <s:removed name="mml:none"/>
+  <s:removed name="mml:not"/>
+  <s:removed name="mml:notanumber"/>
+  <s:removed name="mml:notin"/>
+  <s:removed name="mml:notprsubset"/>
+  <s:removed name="mml:notsubset"/>
+  <s:removed name="mml:or"/>
+  <s:removed name="mml:otherwise"/>
+  <s:removed name="mml:outerproduct"/>
+  <s:removed name="mml:partialdiff"/>
+  <s:removed name="mml:pi"/>
+  <s:removed name="mml:piece"/>
+  <s:removed name="mml:piecewise"/>
+  <s:removed name="mml:plus"/>
+  <s:removed name="mml:power"/>
+  <s:removed name="mml:primes"/>
+  <s:removed name="mml:product"/>
+  <s:removed name="mml:prsubset"/>
+  <s:removed name="mml:quotient"/>
+  <s:removed name="mml:rationals"/>
+  <s:removed name="mml:real"/>
+  <s:removed name="mml:reals"/>
+  <s:removed name="mml:reln"/>
+  <s:removed name="mml:rem"/>
+  <s:removed name="mml:root"/>
+  <s:removed name="mml:scalarproduct"/>
+  <s:removed name="mml:sdev"/>
+  <s:removed name="mml:sec"/>
+  <s:removed name="mml:sech"/>
+  <s:removed name="mml:selector"/>
+  <s:removed name="mml:semantics"/>
+  <s:removed name="mml:sep"/>
+  <s:removed name="mml:set"/>
+  <s:removed name="mml:setdiff"/>
+  <s:removed name="mml:share"/>
+  <s:removed name="mml:sin"/>
+  <s:removed name="mml:sinh"/>
+  <s:removed name="mml:subset"/>
+  <s:removed name="mml:sum"/>
+  <s:removed name="mml:tan"/>
+  <s:removed name="mml:tanh"/>
+  <s:removed name="mml:tendsto"/>
+  <s:removed name="mml:times"/>
+  <s:removed name="mml:transpose"/>
+  <s:removed name="mml:true"/>
+  <s:removed name="mml:union"/>
+  <s:removed name="mml:uplimit"/>
+  <s:removed name="mml:variance"/>
+  <s:removed name="mml:vector"/>
+  <s:removed name="mml:vectorproduct"/>
+  <s:removed name="mml:xor"/>
+
+  <!-- we only support HTML tables  -->
+  <s:removed name="oasis:colspec"/>
+  <s:removed name="oasis:entry"/>
+  <s:removed name="oasis:row"/>
+  <s:removed name="oasis:table"/>
+  <s:removed name="oasis:tbody"/>
+  <s:removed name="oasis:tgroup"/>
+  <s:removed name="oasis:thead"/>
+
+  <define name="article-full-model">
+    <ref name="front"/>
+    <optional>
+      <ref name="body"/>
+    </optional>
+    <optional>
+      <ref name="back"/>
+    </optional>
+  </define>
+
+  <define name="abstract">
+    <element name="abstract">
+      <ref name="abstract-attlist"/>
+      <ref name="abstract-model"/>
+    </element>
+  </define>
+
+  <define name="abstract-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="sec"/>
+        <ref name="p"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="article-meta">
+    <element name="article-meta">
+      <ref name="article-meta-attlist"/>
+      <zeroOrMore>
+        <ref name="article-id"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="article-categories"/>
+      </optional>
+      <optional>
+        <ref name="title-group"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="contrib-group"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="aff"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="pub-date"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="volume"/>
+      </optional>
+      <optional>
+        <ref name="issue"/>
+      </optional>
+      <optional>
+        <ref name="issue-title"/>
+      </optional>
+      <optional>
+        <ref name="isbn"/>
+      </optional>
+      <optional>
+        <choice>
+          <group>
+            <optional>
+              <ref name="fpage"/>
+              <optional>
+                <ref name="lpage"/>
+              </optional>
+            </optional>
+            <optional>
+              <ref name="page-range"/>
+            </optional>
+          </group>
+          <ref name="elocation-id"/>
+        </choice>
+      </optional>
+      <optional>
+        <ref name="history"/>
+      </optional>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="abstract"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="trans-abstract"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="kwd-group"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="funding-group"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="addr-line">
+    <element name="addr-line">
+      <ref name="addr-line-attlist"/>
+      <optional>
+        <text/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="aff">
+    <element name="aff">
+      <ref name="aff-attlist"/>
+      <interleave>
+        <zeroOrMore><ref name="addr-line"/></zeroOrMore>
+        <optional><ref name="label"/></optional>
+        <optional><ref name="city"/></optional>
+        <optional><ref name="country"/></optional>
+        <optional><ref name="fax"/></optional>
+        <zeroOrMore><ref name="institution"/></zeroOrMore>
+        <zeroOrMore><ref name="institution-wrap"/></zeroOrMore>
+        <optional><ref name="phone"/></optional>
+        <optional><ref name="postal-code"/></optional>
+        <optional><ref name="state"/></optional>
+        <optional><ref name="email"/></optional>
+        <zeroOrMore><ref name="ext-link"/></zeroOrMore>
+        <optional><ref name="uri"/></optional>
+        <zeroOrMore><ref name="x"/></zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="all-phrase">
+    <choice>
+      <ref name="simple-phrase"/>
+      <ref name="x.class"/>
+    </choice>
+  </define>
+
+  <define name="article-categories">
+    <element name="article-categories">
+      <ref name="article-categories-attlist"/>
+      <zeroOrMore>
+        <ref name="subj-group"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="award-id">
+    <element name="award-id">
+      <ref name="award-id-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="back">
+    <element name="back">
+      <ref name="back-attlist"/>
+      <interleave>
+        <optional>
+          <ref name="fn-group"/>
+        </optional>
+        <optional>
+          <ref name="ref-list"/>
+        </optional>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="bio">
+    <element name="bio">
+      <ref name="bio-attlist"/>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="block-display.class">
+    <choice>
+      <ref name="boxed-text"/>
+      <ref name="chem-struct-wrap"/>
+      <ref name="fig"/>
+      <ref name="fig-group"/>
+      <ref name="table-wrap"/>
+      <ref name="disp-formula"/>
+      <ref name="disp-formula-group"/>
+      <ref name="def-list"/>
+      <ref name="list"/>
+      <ref name="p"/>
+      <ref name="preformat"/>
+      <ref name="disp-quote"/>
+      <ref name="supplementary-material"/>
+    </choice>
+  </define>
+
+  <define name="body">
+    <element name="body">
+      <ref name="body-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="sec.class"/>
+          <ref name="para-level"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="caption">
+    <element name="caption">
+      <ref name="caption-attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="collab">
+    <element name="collab">
+      <ref name="collab-attlist"/>
+      <interleave>
+        <optional><ref name="email"/></optional>
+        <ref name="named-content"/>
+        <optional><ref name="contrib-group"/></optional>
+        <zeroOrMore><ref name="xref"/></zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="conf-loc">
+    <element name="conf-loc">
+      <ref name="conf-loc-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="conf-name">
+    <element name="conf-name">
+      <ref name="conf-name-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="contrib">
+    <element name="contrib">
+      <ref name="contrib-attlist"/>
+      <interleave>
+        <zeroOrMore>
+          <ref name="contrib-id"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="name"/>
+        </optional>
+        <optional>
+          <ref name="email"/>
+        </optional>
+        <optional>
+          <ref name="string-name"/>
+        </optional>
+        <optional>
+          <ref name="bio"/>
+        </optional>
+        <optional>
+          <ref name="collab"/>
+        </optional>
+        <optional>
+          <ref name="role"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="xref"/>
+        </zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="contrib-group">
+    <element name="contrib-group">
+      <ref name="contrib-group-attlist"/>
+      <zeroOrMore>
+        <ref name="contrib"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="copyright-holder">
+    <element name="copyright-holder">
+      <ref name="copyright-holder-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="copyright-statement">
+    <element name="copyright-statement">
+      <ref name="copyright-statement-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="copyright-year">
+    <element name="copyright-year">
+      <ref name="copyright-year-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="date-in-citation">
+    <element name="date-in-citation">
+      <ref name="date-in-citation-attlist"/>
+      <optional>
+        <text />
+      </optional>
+    </element>
+  </define>
+
+  <define name="disp-formula">
+    <element name="disp-formula">
+      <ref name="disp-formula-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <ref name="tex-math"/>
+    </element>
+  </define>
+
+  <define name="disp-quote">
+    <element name="disp-quote">
+      <ref name="disp-quote-attlist"/>
+      <oneOrMore><ref name="p"/></oneOrMore>
+      <optional><ref name="attrib"/></optional>
+    </element>
+  </define>
+
+  <define name="emphasized-text">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
+  <define name="element-citation">
+    <element name="element-citation">
+      <ref name="element-citation-attlist"/>
+      <interleave>
+        <optional><ref name="article-title"/></optional>
+        <optional><ref name="chapter-title"/></optional>
+        <optional><ref name="comment"/></optional>
+        <optional><ref name="collab"/></optional>
+        <optional><ref name="edition"/></optional>
+        <optional><ref name="elocation-id"/></optional>
+        <optional><ref name="fpage"/></optional>
+        <optional><ref name="issue"/></optional>
+        <optional><ref name="lpage"/></optional>
+        <optional><ref name="page-range"/></optional>
+        <zeroOrMore>
+          <ref name="person-group"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="pub-id"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="publisher-loc"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="publisher-name"/>
+        </zeroOrMore>
+        <optional><ref name="source"/></optional>
+        <optional><ref name="volume"/></optional>
+        <optional><ref name="year"/></optional>
+        <optional><ref name="month"/></optional>
+        <optional><ref name="day"/></optional>
+        <optional><ref name="conf-name"/></optional>
+        <optional><ref name="conf-loc"/></optional>
+        <optional><ref name="data-title"/></optional>
+        <optional><ref name="part-title"/></optional>
+        <optional><ref name="patent"/></optional>
+        <optional><ref name="series"/></optional>
+        <optional><ref name="version"/></optional>
+        <optional><ref name="uri"/></optional>
+        <optional><ref name="date-in-citation"/></optional>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="elocation-id">
+    <element name="elocation-id">
+      <ref name="elocation-id-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="fax">
+    <element name="fax">
+      <ref name="fax-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="fig">
+    <element name="fig">
+      <ref name="fig-attlist"/>
+      <!-- We allow only one object-id[pub-id-type=doi] -->
+      <optional><ref name="object-id"/></optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="kwd-group"/>
+      </zeroOrMore>
+      <ref name="graphic"/>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="fig-group">
+    <element name="fig-group">
+      <ref name="fig-group-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <oneOrMore>
+        <ref name="fig"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="fn">
+    <element name="fn">
+      <ref name="fn-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <oneOrMore>
+        <ref name="p"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="fpage">
+    <element name="fpage">
+      <ref name="fpage-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="front">
+    <element name="front">
+      <ref name="front-attlist"/>
+      <optional>
+        <ref name="journal-meta"/>
+      </optional>
+      <ref name="article-meta"/>
+    </element>
+  </define>
+
+  <define name="funding-group">
+    <element name="funding-group">
+      <ref name="funding-group-attlist"/>
+      <zeroOrMore>
+        <ref name="award-group"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="funding-source">
+    <element name="funding-source">
+      <ref name="funding-source-attlist"/>
+      <ref name="institution-wrap"/>
+    </element>
+  </define>
+
+  <define name="graphic">
+    <element name="graphic">
+      <ref name="graphic-attlist"/>
+    </element>
+  </define>
+
+  <define name="history">
+    <element name="history">
+      <ref name="history-attlist"/>
+      <zeroOrMore>
+        <ref name="date"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="inline-formula">
+    <element name="inline-formula">
+      <ref name="inline-formula-attlist"/>
+      <ref name="tex-math"/>
+    </element>
+  </define>
+
+  <define name="issue">
+    <element name="issue">
+      <ref name="issue-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="issue-title">
+    <element name="issue-title">
+      <ref name="issue-title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="rich-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="kwd">
+    <element name="kwd">
+      <ref name="kwd-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="rich-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="kwd-group">
+    <element name="kwd-group">
+      <ref name="kwd-group-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="kwd"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="lpage">
+    <element name="lpage">
+      <ref name="lpage-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="license">
+    <element name="license">
+      <ref name="license-attlist"/>
+      <interleave>
+        <optional>
+          <ref name="ali.license_ref"/>
+        </optional>
+        <optional>
+          <ref name="license-p"/>
+        </optional>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="list">
+    <element name="list">
+      <ref name="list-attlist"/>
+      <oneOrMore>
+        <ref name="list-item"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="list-item">
+    <element name="list-item">
+      <ref name="list-item-attlist"/>
+      <oneOrMore>
+        <choice>
+          <ref name="p"/>
+          <ref name="list"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="object-id">
+    <element name="object-id">
+      <ref name="object-id-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="p-elements">
+    <choice>
+      <ref name="ext-link"/>
+      <ref name="inline-supplementary-material"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+      <!-- HACK: allowing specifc display elements as they are requested as content in captions for instance which only allow (p*) -->
+      <!-- TODO: in Texture such elements shall be pulled up one level, treated as siblings -->
+      <!-- on the long run we want to introduce 'paragraph' continuation -->
+      <ref name="supplementary-material"/>
+    </choice>
+  </define>
+
+  <define name="para-level">
+    <choice>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="list.class"/>
+      <ref name="nothing-but-para.class"/>
+      <ref name="rest-of-para.class"/>
+    </choice>
+  </define>
+
+  <define name="page-range">
+    <element name="page-range">
+      <ref name="page-range-attlist"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="person-group-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="person-group-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="preformat-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="phrase.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
+  <define name="publisher-loc">
+    <element name="publisher-loc">
+      <ref name="publisher-loc-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="publisher-name">
+    <element name="publisher-name">
+      <ref name="publisher-name-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="pub-id">
+    <element name="pub-id">
+      <ref name="pub-id-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="ref">
+    <element name="ref">
+      <ref name="ref-attlist"/>
+      <ref name="element-citation"/>
+    </element>
+  </define>
+
+  <define name="ref-list">
+    <element name="ref-list">
+      <ref name="ref-list-attlist"/>
+      <zeroOrMore>
+        <ref name="ref"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="references.class">
+    <choice>
+      <ref name="annotation"/>
+      <ref name="article-title"/>
+      <ref name="chapter-title"/>
+      <ref name="collab"/>
+      <ref name="collab-alternatives"/>
+      <ref name="comment"/>
+      <ref name="conf-acronym"/>
+      <ref name="conf-date"/>
+      <ref name="conf-loc"/>
+      <ref name="conf-name"/>
+      <ref name="conf-sponsor"/>
+      <ref name="data-title"/>
+      <ref name="date"/>
+      <ref name="date-in-citation"/>
+      <ref name="day"/>
+      <ref name="edition"/>
+      <ref name="email"/>
+      <ref name="elocation-id"/>
+      <ref name="etal"/>
+      <ref name="ext-link"/>
+      <ref name="fpage"/>
+      <ref name="gov"/>
+      <ref name="institution"/>
+      <ref name="institution-wrap"/>
+      <ref name="isbn"/>
+      <ref name="issn"/>
+      <ref name="issn-l"/>
+      <ref name="issue"/>
+      <ref name="issue-id"/>
+      <ref name="issue-part"/>
+      <ref name="issue-title"/>
+      <ref name="lpage"/>
+      <ref name="month"/>
+      <ref name="name"/>
+      <ref name="name-alternatives"/>
+      <ref name="object-id"/>
+      <ref name="page-range"/>
+      <ref name="part-title"/>
+      <ref name="patent"/>
+      <ref name="person-group"/>
+      <ref name="pub-id"/>
+      <ref name="publisher-loc"/>
+      <ref name="publisher-name"/>
+      <ref name="role"/>
+      <ref name="season"/>
+      <ref name="series"/>
+      <ref name="size"/>
+      <ref name="source"/>
+      <ref name="std"/>
+      <ref name="string-name"/>
+      <ref name="supplement"/>
+      <ref name="trans-source"/>
+      <ref name="trans-title"/>
+      <ref name="uri"/>
+      <ref name="version"/>
+      <ref name="volume"/>
+      <ref name="volume-id"/>
+      <ref name="volume-series"/>
+      <ref name="year"/>
+    </choice>
+  </define>
+
+  <define name="rich-text">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
+  <define name="sec">
+    <element name="sec">
+      <ref name="sec-attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="para-level"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="sec-level"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="simple-link.class">
+    <choice>
+      <ref name="target"/>
+      <ref name="xref"/>
+    </choice>
+  </define>
+
+  <define name="simple-phrase">
+    <choice>
+      <ref name="ext-link"/>
+      <ref name="inline-supplementary-material"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
+  <define name="simple-text">
+    <ref name="rich-text" />
+  </define>
+
+  <define name="source">
+    <element name="source">
+      <ref name="source-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="rich-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="string-date">
+    <element name="string-date">
+      <ref name="string-date-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="string-name">
+    <element name="string-name">
+      <ref name="string-name-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="supplementary-material">
+    <element name="supplementary-material">
+      <ref name="supplementary-material-attlist"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="table-wrap">
+    <element name="table-wrap">
+      <ref name="table-wrap-attlist"/>
+      <optional>
+        <ref name="object-id"/>
+      </optional>
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <optional>
+        <ref name="caption"/>
+      </optional>
+      <ref name="table"/>
+      <optional>
+        <ref name="permissions"/>
+      </optional>
+      <optional>
+        <ref name="table-wrap-foot"/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="table-wrap-foot">
+    <element name="table-wrap-foot">
+      <ref name="table-wrap-foot-attlist"/>
+      <optional>
+        <ref name="fn-group"/>
+      </optional>
+    </element>
+  </define>
+
+  <define name="textual-form-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+
+  <define name="title">
+    <element name="title">
+      <ref name="title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <choice>
+            <ref name="simple-phrase"/>
+            <ref name="break.class"/>
+          </choice>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="title-group">
+    <element name="title-group">
+      <ref name="title-group-attlist"/>
+      <ref name="article-title"/>
+      <optional>
+        <ref name="subtitle"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="trans-title-group"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="td">
+    <element name="td">
+      <ref name="td-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="th">
+    <element name="th">
+      <ref name="th-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="simple-phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="trans-abstract">
+    <element name="trans-abstract">
+      <ref name="trans-abstract-attlist"/>
+      <ref name="abstract-model"/>
+    </element>
+  </define>
+
+  <define name="volume">
+    <element name="volume">
+      <ref name="volume-attlist"/>
+      <optional><text/></optional>
+    </element>
+  </define>
+
+  <define name="year">
+    <element name="year">
+      <optional><text/></optional>
+    </element>
+  </define>
+
+</grammar>

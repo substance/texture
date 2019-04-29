@@ -1,3 +1,4 @@
+import { domHelpers } from 'substance'
 import { ValueComponent } from '../../kit'
 
 export default class DropdownEditor extends ValueComponent {
@@ -8,7 +9,7 @@ export default class DropdownEditor extends ValueComponent {
 
     const dropdownSelector = $$('select').ref('input').addClass('se-select')
       .val(value)
-      .on('click', this._suppressClickPropagation)
+      .on('click', domHelpers.stop)
       .on('change', this._setValue)
 
     dropdownSelector.append(
@@ -43,9 +44,5 @@ export default class DropdownEditor extends ValueComponent {
     const input = this.refs.input
     const value = input.getValue()
     model.setValue(value)
-  }
-
-  _suppressClickPropagation (e) {
-    e.stopPropagation()
   }
 }

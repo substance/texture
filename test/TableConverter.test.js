@@ -1,9 +1,9 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import {
-  InternalArticleDocument, InternalArticleSchema,
   createJatsImporter, createJatsExporter, createEmptyJATS
 } from '../index'
+import { createEmptyArticle } from './shared/testHelpers'
 
 const SIMPLE = `
 <table>
@@ -205,7 +205,7 @@ test('TableConverter: export table with row span (1)', t => {
 function _importTable (el) {
   // TODO: create a minimal document, and the JATS importer
   // then run the converter and see if the body node has the proper content
-  let doc = InternalArticleDocument.createEmptyArticle(InternalArticleSchema)
+  let doc = createEmptyArticle()
   let importer = createJatsImporter(doc)
   return importer.convertElement(el)
 }

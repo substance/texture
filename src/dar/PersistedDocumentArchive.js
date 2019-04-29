@@ -1,4 +1,6 @@
-import { forEach, last, uuid, EventEmitter, platform, isString } from 'substance'
+import {
+  forEach, last, uuid, EventEmitter, platform, isString, documentHelpers, prettyPrintXML
+} from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
 import ManifestEditorSession from './ManifestEditorSession'
@@ -47,12 +49,13 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let [name, ext] = _getNameAndExtension(file.name)
     let filePath = this._getUniqueFileName(name, ext)
     this._getManifestEditorSession().transaction(tx => {
-      let assets = tx.find('assets')
-      let asset = tx.createElement('asset', { id: assetId }).attr({
+      let assetNode = tx.create({
+        type: 'asset',
+        id: assetId,
         path: filePath,
-        type: file.type
+        assetType: file.type
       })
-      assets.appendChild(asset)
+      documentHelpers.append(tx, ['dar', 'assets'], assetNode.id)
     })
     this.buffer.addBlob(assetId, {
       id: assetId,
@@ -72,7 +75,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   getAsset (fileName) {
-    return this._sessions.manifest.getDocument().find(`asset[path="${fileName}"]`)
+    return this._sessions.manifest.getDocument().getAssetByPath(fileName)
   }
 
   getDocumentEntries () {
@@ -81,7 +84,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
   getDownloadLink (fileName) {
     let manifest = this._sessions.manifest.getDocument()
-    let asset = manifest.find(`asset[path="${fileName}"]`)
+    let asset = manifest.getAssetByPath(fileName)
     if (asset) {
       return this.resolveUrl(fileName)
     }
@@ -144,8 +147,6 @@ export default class PersistedDocumentArchive extends EventEmitter {
         this._upstreamArchive = upstreamArchive
         this._sessions = sessions
 
-        // Run through a repair step (e.g. remove missing files from archive)
-        this._repair()
         cb(null, this)
       })
     })
@@ -155,16 +156,15 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let session = this._sessions[documentId]
     this._unregisterFromSession(session)
     this._getManifestEditorSession().transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.find(`#${documentId}`)
-      documents.removeChild(docEntry)
+      documentHelpers.remove(tx, ['dar', 'documents'], documentId)
+      documentHelpers.deleteNode(documentId)
     })
   }
 
   renameDocument (documentId, name) {
     this._getManifestEditorSession().transaction(tx => {
-      let docEntry = tx.find(`#${documentId}`)
-      docEntry.attr({ name })
+      let documentNode = tx.get(documentId)
+      documentNode.name = name
     })
   }
 
@@ -206,13 +206,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
   */
   _addDocumentRecord (documentId, type, name, path) {
     this._getManifestEditorSession().transaction(tx => {
-      let documents = tx.find('documents')
-      let docEntry = tx.createElement('document', { id: documentId }).attr({
-        name: name,
-        path: path,
-        type: type
+      let documentNode = tx.create({
+        type: 'document',
+        id: documentId,
+        documentType: type,
+        name,
+        path
       })
-      documents.appendChild(docEntry)
+      documentHelpers.append(tx, ['dar', 'documents', documentNode.id])
     })
   }
 
@@ -272,7 +273,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     const storage = this.storage
     const sessions = this._sessions
 
-    let rawArchive = this._exportChanges(sessions, buffer)
+    let rawArchiveUpdate = this._exportChanges(sessions, buffer)
 
     // CHALLENGE: we either need to lock the buffer, so that
     // new changes are interfering with ongoing sync
@@ -280,7 +281,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // sync has succeeded or failed, e.g. we could use a second buffer in the meantime
     // probably a fast first-level buffer (in-mem) is necessary anyways, even in conjunction with
     // a slower persisted buffer
-    storage.write(archiveId, rawArchive, (err, res) => {
+    storage.write(archiveId, rawArchiveUpdate, (err, res) => {
       // TODO: this need to implemented in a more robust fashion
       // i.e. we should only reset the buffer if storage.write was successful
       if (err) return cb(err)
@@ -308,7 +309,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
       // After successful save the archiveId may have changed (save as use case)
       this._archiveId = archiveId
       this.emit('archive:saved')
-      cb()
+      cb(null, rawArchiveUpdate)
     })
   }
 
@@ -332,6 +333,20 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return rawArchive
   }
 
+  _exportManifest (sessions, buffer, rawArchive) {
+    let manifest = sessions.manifest.getDocument()
+    if (buffer.hasResourceChanged('manifest')) {
+      let manifestDom = manifest.toXML()
+      let manifestXmlStr = prettyPrintXML(manifestDom)
+      rawArchive.resources['manifest.xml'] = {
+        id: 'manifest',
+        data: manifestXmlStr,
+        encoding: 'utf8',
+        updatedAt: Date.now()
+      }
+    }
+  }
+
   // TODO: generalize the implementation so that it can live here
   _exportChangedDocuments (sessions, buffer, rawArchive) {
     throwMethodIsAbstract()
@@ -343,7 +358,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
     assetNodes.forEach(asset => {
       let assetId = asset.id
       if (buffer.hasBlobChanged(assetId)) {
-        let path = asset.attr('path') || assetId
+        let path = asset.path || assetId
         let blobRecord = buffer.getBlob(assetId)
         rawArchive.resources[path] = {
           assetId,

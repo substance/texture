@@ -7,15 +7,15 @@ import TableManager from './shared/TableManager'
 import SupplementaryManager from './shared/SupplementaryManager'
 
 export default class ArticleSession extends DocumentSession {
-  constructor (doc, config) {
+  constructor (doc, articleConfig) {
     super(doc)
 
-    this.figureManager = new FigureManager(this, config.getLabelGenerator('figures'))
-    this.footnoteManager = new FootnoteManager(this, config.getLabelGenerator('footnotes'))
-    this.formulaManager = new FormulaManager(this, config.getLabelGenerator('formulas'))
-    this.referenceManager = new ReferenceManager(this, config.getLabelGenerator('references'))
-    this.supplementaryManager = new SupplementaryManager(this, config.getLabelGenerator('supplementaries'))
-    this.tableManager = new TableManager(this, config.getLabelGenerator('tables'))
+    this.figureManager = new FigureManager(this, articleConfig.getValue('figure-label-generator'))
+    this.footnoteManager = new FootnoteManager(this, articleConfig.getValue('footnote-label-generator'))
+    this.formulaManager = new FormulaManager(this, articleConfig.getValue('formula-label-generator'))
+    this.referenceManager = new ReferenceManager(this, articleConfig.getValue('reference-label-generator'))
+    this.supplementaryManager = new SupplementaryManager(this, articleConfig.getValue('supplementary-file-label-generator'))
+    this.tableManager = new TableManager(this, articleConfig.getValue('table-label-generator'))
   }
 
   getFigureManager () {

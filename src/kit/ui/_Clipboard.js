@@ -47,12 +47,16 @@ export default class ClipboardNew {
 
   _createClipboardText (context, snippet) {
     let configurator = context.configurator
-    let textExporter = configurator.getExporter('text')
-    return textExporter.exportNode(snippet.getContainer())
+    let textExporter = configurator.createExporter('text')
+    if (textExporter) {
+      return textExporter.exportNode(snippet.getContainer())
+    } else {
+      return ''
+    }
   }
 
   _createClipboardHtml (context, snippet) {
-    let htmlExporter = context.configurator.getExporter('html')
+    let htmlExporter = context.configurator.createExporter('html')
     let elements = htmlExporter.convertContainer(snippet, snippet.getContainer().getPath())
     // special treatment for a text snippet
     let snippetHtml
@@ -127,8 +131,7 @@ export default class ClipboardNew {
       }
       bodyEl = this._wrapIntoParagraph(bodyEl)
       snippet = context.appState.document.createSnippet()
-      let htmlImporter = context.configurator.getImporter('html')
-      htmlImporter.setDocument(snippet)
+      let htmlImporter = context.configurator.createImporter('html', snippet)
       let container = snippet.get(documentHelpers.SNIPPET_ID)
       bodyEl.getChildren().forEach(el => {
         let node = htmlImporter.convertElement(el)

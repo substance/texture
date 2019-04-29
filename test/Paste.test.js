@@ -58,10 +58,9 @@ function _setup (t, snippetHtml, fixture) {
 
   loadBodyFixture(editor, fixture)
 
-  let importer = editor.context.configurator.getImporter('html')
   let snippet = doc.createSnippet()
   let container = snippet.getContainer()
-  importer.setDocument(snippet)
+  let importer = editor.context.configurator.createImporter('html', snippet)
   let els = DefaultDOMElement.parseSnippet(snippetHtml.trim(), 'html')
   if (!isArray(els)) els = [els]
   els = els.filter(el => el.isElementNode())

@@ -42,9 +42,3 @@
 .sc-text-input.sm-size-large {
   width: var(--width-large);
 }
-
-/* HACK: unfortunately Substance default-style is using a hard-coded value  */
-.sc-text-input .sc-text-property.sm-empty .se-placeholder {
-  /* TODO: use variables! */
-  color: inherit !important;
-}

@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture, isToolEnabled, openMenu } from './shared/integrationTestHelpers'
+import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture, isToolEnabled, openMenu, ensureValidJATS } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
@@ -79,7 +79,7 @@ ANNOS.forEach(spec => {
 })
 
 function testAnnotationToggle (t, spec) {
-  let { editor } = _setup(t)
+  let { app, editor } = _setup(t)
   const _hasAnno = () => {
     return Boolean(editor.find(`[data-path="p1.content"] ${spec.selector}`))
   }
@@ -92,6 +92,8 @@ function testAnnotationToggle (t, spec) {
   // Toggle the annotation
   _toggleAnnotation(t, editor, spec)
   t.ok(_hasAnno(), 'there should be an annotation')
+  ensureValidJATS(t, app)
+
   // then toggle the annotation again to remove it
   t.ok(_isToolEnabled(editor, spec), 'tool should be enabled')
   _toggleAnnotation(t, editor, spec)
@@ -100,10 +102,10 @@ function testAnnotationToggle (t, spec) {
 }
 
 function _setup (t) {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let { app } = setupTestApp(t, { archiveId: 'blank', readOnly: true })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
-  return { editor }
+  return { app, editor }
 }
 
 function _isToolEnabled (editor, spec) {

@@ -9,54 +9,21 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     DefaultDOMElement.getBrowserWindow().on('click', this._click, this)
   }
 
+  _getBuffer () {
+    return new InMemoryDarBuffer()
+  }
+
+  _getStorage (storageType) {
+    // Note: in the Desktop app, the storage is maintained by the main process
+    // and passed as a prop directly. In contrast to the web-version
+    // there is no control via HTTP param possible
+    return this.props.storage
+  }
+
   // emit an event on this component. The Electron binding in app.js listens to it and
   // handles it
   _handleSave () {
     this.emit('save')
-  }
-
-  // TODO: try to share implementation with TextureDesktopAppChrome
-  // move as much as possible into TextureAppChrome
-  // and only add browser specific overrides here
-  _handleKeydown (event) {
-    // let key = parseKeyEvent(event)
-    // console.log('Texture received keydown for combo', key)
-    let handled = false
-    // CommandOrControl+S
-    // if (key === 'META+83' || key === 'CTRL+83') {
-    //   this._save(err => {
-    //     if (err) console.error(err)
-    //   })
-    //   handled = true
-    // }
-    // if (!handled) {
-    handled = this.refs.texture._handleKeydown(event)
-    // }
-    if (handled) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-  }
-
-  _loadArchive (archiveId, context, cb) {
-    const ArchiveClass = this._getArchiveClass()
-    let storage = this.props.storage
-    let buffer = new InMemoryDarBuffer()
-    let archive = new ArchiveClass(storage, buffer, context)
-    // HACK: this should be done earlier in the lifecycle (after first didMount)
-    // and later disposed properly. However we can accept this for now as
-    // the app lives as a singleton atm.
-    // NOTE: _archiveChanged is implemented by DesktopAppChrome
-    archive.on('archive:changed', this._archiveChanged, this)
-    // ATTENTION: we want to treat new archives as 'read-only' in the
-    // sense that a new archive is essentially one of several dar templates.
-    archive.load(archiveId, (err, archive) => {
-      if (err) return cb(err)
-      if (this.props.isReadOnly) {
-        archive.isReadOnly = true
-      }
-      cb(null, archive)
-    })
   }
 
   _saveAs (newDarPath, cb) {
@@ -81,10 +48,6 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     })
   }
 
-  _archiveChanged () {
-    this._updateTitle()
-  }
-
   _updateTitle () {
     const archive = this.state.archive
     if (!archive) return
@@ -93,11 +56,6 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
       newTitle += ' *'
     }
     document.title = newTitle
-  }
-
-  _afterInit () {
-    // Update window title after archive loading to display title
-    this._updateTitle()
   }
 
   _click (event) {

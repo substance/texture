@@ -3,9 +3,13 @@ import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
   Component, DefaultDOMElement, keys, getKeyForPath
 } from 'substance'
-import { TextureWebApp, VfsStorageClient, createJatsImporter } from '../../index'
+import {
+  TextureWebApp, VfsStorageClient, createJatsImporter, DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD,
+  TextureJATS
+} from '../../index'
 import TestVfs from './TestVfs'
 import { DOMEvent } from './testHelpers'
+import { validateXML } from 'texture-xml-utils'
 
 export function setCursor (editor, path, pos) {
   let property = _getTextPropertyForPath(editor, path)
@@ -112,13 +116,15 @@ export function toUnix (str) {
 }
 
 export function createTestApp (options = {}) {
+  const validateOnSave = !options.noValidationOnSave
+
   class App extends TextureWebApp {
     _getStorage (storageType) {
       let _vfs = options.vfs || vfs
       // TODO: find out if we still need options.root, because it looks like
       // we are using options.rootDir
       let _rootFolder = options.root || options.rootDir || '../data/'
-      return new VfsStorageClient(_vfs, _rootFolder)
+      return new VfsStorageClient(_vfs, _rootFolder, options)
     }
 
     willUpdateState (newState) {
@@ -128,8 +134,42 @@ export function createTestApp (options = {}) {
         this.emit('archive:failed', newState.error)
       }
     }
+
+    _save (cb) {
+      return super._save((err, rawArchiveUpdate) => {
+        if (validateOnSave) {
+          if (!err && rawArchiveUpdate) {
+            let changedResourceNames = Object.keys(rawArchiveUpdate.resources)
+            for (let resourceName of changedResourceNames) {
+              if (!resourceName.endsWith('.xml')) continue
+              let xmlStr = rawArchiveUpdate.resources[resourceName].data
+              let xmlDom = DefaultDOMElement.parseXML(xmlStr)
+              let doctype = xmlDom.getDoctype()
+              if (doctype && /JATS/.exec(doctype.publicId)) {
+                let result = validateXML(TextureJATS, xmlDom)
+                if (!result.ok) {
+                  console.error('Texture generated invalid JATS:' + result.errors)
+                  throw new Error('Texture generated invalid JATS')
+                }
+              }
+            }
+          }
+        }
+        cb(err, rawArchiveUpdate)
+      })
+    }
   }
   return App
+}
+
+const JATS_SHOULD_BE_VALID = 'current JATS should be valid.'
+
+export function ensureValidJATS (t, app) {
+  // Note: in the test suite we use VFS as storage which works
+  // synchronously, even if the API is asynchronous (for the real storage impls).
+  app._save(err => {
+    t.notOk(Boolean(err), JATS_SHOULD_BE_VALID)
+  })
 }
 
 export const LOREM_IPSUM = {
@@ -453,7 +493,7 @@ export const EMPTY_META = `
 
 export function createJATSFixture ({ front = EMPTY_META, body = '', back = '' }) {
   return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD v1.0 20120330//EN" "JATS-journalarchiving.dtd">
+<!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">
 <article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
   <front>
     ${front}

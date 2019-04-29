@@ -1,338 +1,2200 @@
-# Texture JATS
+# Texture Article
 
-This document shows examples for Texture JATS usage. The premise of TextureJATS is to have exactly one tagging style per use-case. E.g. there is only one way to tag a reference, author or affiliation. Additionally we define a set of optional extensions to model reproducible elements (cells) in JATS. This work is inspired but not related to JATS4R, a similar effort to make JATS more reusable.
+This schema defines a strict sub-set of JATS Archiving 1.2.
 
-## Abstract
+## Elements
 
-### Regular abstract
+### `<abstract>`
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<abstract>
-  <p>Optional abstract.</p>
-</abstract>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, abstract-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+title?,(sec|p)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
 
-### Custom abstract
+### `<addr-line>`
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<abstract abstract-type="executive-summary">
-  <title>Digest<title>
-  <p>An executive summary.</p>
-</abstract>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
 
-## Affiliation
+### `<aff>`
 
-`<aff>` records are used to encode affiliations of authors and editors, as well as present addresses.
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, rid, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(addr-line*, label?, city?, country?, fax?, institution*, institution-wrap*, phone?, postal-code?, state?, email?, ext-link*, uri?)[unordered]
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta, person-group
+</pre>
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<!-- removed fax -->
-<aff id="aff1">
-  <institution content-type="orgname">Example Organisation</institution>
-  <institution content-type="orgdiv1">Optional Division Level 1</institution>
-  <institution content-type="orgdiv2">Optional Division Level 2</institution>
-  <institution content-type="orgdiv3">Optional Division Level 3</institution>
-  <addr-line content-type="street-address">Optional Street Address</addr-line>
-  <addr-line content-type="complements">Optional Street Complements</addr-line>
-  <city>Optional City</city>
-  <state>Optional State</state>
-  <postal-code>Optional Postal Code</postal-code>
-  <country>Country Country</country>
-  <phone>Optional Phone</phone>
-  <email>Optional Email</email>
-  <uri content-type="link">Optional Website</uri>
-</aff>
-```
+### `<ali:free_to_read>`
 
-## Article Meta
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, end_date, start_date
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+EMPTY
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+permissions
+</pre>
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<article-meta>
-  <title-group>...</title-group>
-  <contrib-group content-type="author">...</contrib-group>
-  <contrib-group content-type="editor">...</contrib-group>
-  <aff id="aff1">...</aff>
-  <aff id="aff2">...</aff>
-  <pub-date publication-format="print" date-type="pub" iso-8601-date="1999-01-29">
-    <day>29</day>
-    <month>01</month>
-    <year>1999</year>
-  </pub-date>
-  <volume>318</volume>
-  <issue>7187</issue>
-  <fpage>837</fpage>
-  <lpage>841</lpage>
-  <history>...</history>
-  <abstract>...</abstract>
-</article-meta>
-```
+### `<ali:license_ref>`
 
-## Article Title
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, start_date
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license
+</pre>
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<title-group>
-  <article-title>Article title can contain <italic>italic</italic>, <bold>bold</bold>, <sup>superscript</sup> and <sub>subscript</sub></article-title>
-  <trans-title-group xml:lang="es">
-    <trans-title id="trans-title-1">Objeto de visión a acción manual en <italic id="italic-1">cortezas parietales</italic>, premotoras y motoras de macaco</trans-title>
-  </trans-title-group>
-</title-group>
-```
+### `<article>`
 
-## Chapter
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, article-type, specific-use, xml:lang, dtd-version
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+front,body?,back?
+</pre>
 
-Chapters are used to model appendices, acknowledgements, author response, decision letter, data availability section.
+### `<article-categories>`
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<sub-article article-type="decision-letter" id="chapter-1">
-  <front-stub>
-  <title-group>
-    <article-title>Decision letter</article-title>
-  </title-group>
-  <contrib-group>...</contrib-group>
-  </front-stub>
-  <body>...</body>
-</sub-article>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+subj-group*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
 
-## Custom text fields
+### `<article-id>`
 
-Arbitrary custom text fields with id, name and value can be defined to capture publisher-specific metadata.
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, pub-id-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<custom-meta-group>
-    <custom-meta id="author-impact-statement" specific-use="meta-only">
-        <meta-name>Author impact statement</meta-name>
-        <meta-value>How to tag an eLife article using JATS XML.</meta-value>
-    </custom-meta>
-</custom-meta-group>
-```
+### `<article-meta>`
 
-## Contributor
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,issue-title?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract*,trans-abstract*,kwd-group*,funding-group*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+front
+</pre>
 
-The are different types of contributors. Each of them are collected in a separate `<contrib-group>` element.
+### `<article-title>`
 
-### Author
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, title-group
+</pre>
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<!-- content-type="authors" or content-type="author"? -->
-<!-- role (with free form text) should be implemented but vocab-* attributes awaiting JATS4R confirmation -->
-<!-- present address is realised with a reference to an affiliation. eLife would like to use free-form footnote instead -->
-<contrib-group content-type="authors">
-  <contrib contrib-type="author" equal-contrib="yes" corresp="no" deceased="no">
-    <name>
-      <surname>Schaffelhofer</surname>
-      <given-names>Stefan</given-names>
-    </name>
-    <xref ref-type="aff" rid="aff1" />
-    <xref ref-type="aff" rid="aff2" />
-    <xref ref-type="present-address" rid="aff1" />
-    <xref ref-type="fn" rid="conf1"/>
-    <xref ref-type="award" rid="fund1" />
-    <role vocab="CRediT" vocab-identifier="http://dictionary.casrai.org/Contributor_Roles" vocab-term="Conceptualization" vocab-term-identifier="http://dictionary.casrai.org/Contributor_Roles/Conceptualization">study designer</role>
-    <role vocab="CRediT" vocab-identifier="http://dictionary.casrai.org/Contributor_Roles" vocab-term="Data_curation" vocab-term-identifier="http://dictionary.casrai.org/Contributor_Roles/Data_curation">data curator</role>
-  </contrib>
-</contrib-group>
-```
+### `<attrib>`
 
-## Group Author
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+disp-quote
+</pre>
 
-```xml
-TODO
-```
+### `<award-group>`
 
-## Figure
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, rid, award-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+funding-source*,award-id*,principal-award-recipient*,principal-investigator*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+funding-group
+</pre>
 
-Use Case: Single figure
+### `<award-id>`
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-  <fig id="fig1">
-    <label>Figure 1</label>
-    <caption>
-      <title>Figure 1 title</title>
-      <p>Figure 1 caption</p>
-    </caption>
-    <graphic id="fig3a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig1.jpg" />
-  </fig>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, rid, award-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+award-group
+</pre>
 
-Use Case: Multi-panel figure
+### `<back>`
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<fig-group id="fig3-group">
-  <fig id="fig3a">
-    <label>Figure 3A</label>
-    <caption>
-      <title>First panel</title>
-      <p>First panel caption</p>
-    </caption>
-    <graphic id="fig3a-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig3a.jpg" />
-  </fig>
-  <fig id="fig3b">
-    <label>Figure 1B</label>
-    <caption>
-      <title>Second panel</title>
-      <p>Second panel caption</p>
-    </caption>
-    <graphic id="fig3-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig3b.jpg" />
-  </fig>
-</fig-group>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(fn-group?, ref-list?)[unordered]
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article
+</pre>
 
-Use Case: Main Figure + Figure supplement
+### `<bio>`
 
-```xml
-<fig-group id="fig2-group">
-  <fig id="fig2">
-    <label>Figure 2</label>
-    <caption id="fig2-caption">
-      <title>Figure with supplement</title>
-      <p>Caption of main figure</p>
-    </caption>
-    <graphic id="fig2-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
-  </fig>
-  <fig id="fig2s1" specific-use="supplement">
-    <label>Figure 2–figure supplement 1</label>
-    <caption id="fig2-caption">
-      <title>Figure supplement title</title>
-      <p id="fig2-caption-p1">Caption of figure supplement</p>
-    </caption>
-    <graphic mime-subtype="jpeg" mimetype="image" xlink:href="fig2s1.jpg" />
-  </fig>
-</fig-group>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, rid, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+p*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib
+</pre>
 
-Use Case: Custom fields
+### `<body>`
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<fig id="fig2">
-  <label>Figure 2</label>
-  <caption id="fig2-caption">
-    <title>Figure 2</title>
-    <p>Caption of main figure</p>
-  </caption>
-  <kwd-group kwd-group-type="exp-system">
-    <label>Exp. System</label>
-    <kwd>immunostaining</kwd>
-    <kwd>confocal microscopy</kwd>
-  </kwd-group>
-  <kwd-group kwd-group-type="measured-variables">
-    <label>Measured-Variables</label>
-    <kwd>immunostaining</kwd>
-    <kwd>confocal microscopy</kwd>
-  </kwd-group>
-  <graphic id="fig2-graphic" mime-subtype="jpeg" mimetype="image" xlink:href="fig2.jpg" />
-</fig>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(sec|boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article
+</pre>
 
-## Formula
+### `<bold>`
 
-```xml
-<disp-formula id="disp-formula-1">
-  <label>(1)</label>
-  <tex-math><![CDATA[1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
-\prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},
-\quad\quad \text{for }\lvert q\rvert<1.]]></tex-math>
-</disp-formula>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
 
-## Inline Formula
+### `<break>`
 
-```xml
-<p>Some text <inline-formula id="inline-formula-1" content-type="math/tex"><tex-math>\sqrt(13)</tex-math></inline-formula> and more text</p>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+EMPTY
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-title, trans-title, institution, label, title, subject, subtitle, xref, chapter-title, part-title
+</pre>
 
-## Inline Graphic
+### `<caption>`
 
-```xml
-<p>Some text <inline-graphic id="inline-graphic-1" mimetype="image" mime-subtype="svg" xlink:href="fig3.svg"/> and more text.</p>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang, style
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+title?,p*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+fig, supplementary-material, table-wrap
+</pre>
 
-## Preformatted Text
+### `<chapter-title>`
 
-```xml
-<preformat id="_preformat-1" preformat-type="code"><![CDATA[import java.io._
-class Reader(fname: String) {
-  private val in =
-    new BufferedReader(new FileReader(fname))
-  @throws(classOf[IOException])
-  def read() = in.read()
-}]]></preformat>
-```
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
 
-## Supplementary File
+### `<city>`
 
-Use Case: Stand-alone supplemntary file
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
 
-```xml
-<!-- NEEDS_KITCHEN_SINK_SYNC, NEEDS_SCHEMA_SYNC -->
-<supplementary-material id="source-data-1" content-type="sdata" mimetype="application" mime-sub-type="zip" xlink:href="source-data-1.zip">
-  <label>Source data 1.</label><!-- auto-generated, based on counter grouped by content-type -->
-  <caption>
-    <title>Orthogroup clustering analysis</title>
-  </caption>
-</supplementary-material>
-```
+### `<col>`
 
-## Table
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, span, width, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+EMPTY
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table, colgroup
+</pre>
 
-```xml
-<table-wrap id="table1">
-  <label>Table 1</label>
-  <caption id="table1_caption">
-    <title>Example Table</title>
-    <p id="table1_caption_p1">This is a table example.</p>
-  </caption>
-  <table id="t1">
-    <tbody>
-      <tr id="t1_1">
-        <th id="t1_1_1">A</th>
-        <th id="t1_1_2">B</th>
-        <th id="t1_1_3">C</th>
-        <th id="t1_1_4">D</th>
-      </tr>
-      <tr id="t1_2">
-        <td id="t1_2_1" colspan="2">1</td>
-        <td id="t1_2_3" rowspan="2" colspan="2">3</td>
-      </tr>
-      <tr id="t1_3">
-        <td id="t1_3_1">5</td>
-        <td id="t1_3_2" rowspan="2">Formatting in table cell <bold id="t1-bold-1">bold</bold>,<italic id="t1-italic-1">italic</italic>, <sub id="t1-sub-1">sub</sub>,<sup id="t1-sup-1">sup</sup>, <monospace id="t1-monospace-1">monospace</monospace></td>
-      </tr>
-      <tr id="t1_4">
-        <td id="t1_4_1">9</td>
-        <td id="t1_4_3">Hyper <ext-link id="t1-ext-link-1" ext-link-type="uri" xlink:href="http://substance.io">link</ext-link> in table cell.</td>
-        <td id="t1_4_4">Reference citation in table cell <xref id="t1-xref-1" ref-type="bibr" rid="r7">[1]</xref></td>
-      </tr>
-      <tr id="t1_5">
-        <td id="t1_5_1">Table footnote<xref id="t1-xref-2" ref-type="table-fn" rid="tfn1">*</xref></td>
-        <td id="t1_5_2">Another table footnote<xref id="t1-xref-3" ref-type="table-fn" rid="tfn2">†</xref></td>
-        <td id="t1_5_3">Table footnote with multiple targets<xref id="t1-xref-4" ref-type="table-fn" rid="tfn1 tfn2">*, †</xref></td>
-        <td id="t1_5_4">16</td>
-      </tr>
-    </tbody>
-  </table>
-  <table-wrap-foot>
-    <fn-group>
-      <fn id="tfn1">
-        <label>*</label>
-        <p id="tfn1-p1">This is a table-footnote.</p>
-      </fn>
-      <fn id="tfn2">
-        <label>†</label>
-        <p id="tfn2-p1">Another table-footnote.</p>
-      </fn>
-    </fn-group>
-  </table-wrap-foot>
-</table-wrap>
-```
+### `<colgroup>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, span, width, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+col*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table
+</pre>
+
+### `<collab>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, collab-type, symbol, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(email?, named-content, contrib-group?, xref*)[unordered]
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib, element-citation, person-group
+</pre>
+
+### `<conf-loc>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<conf-name>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<contrib>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, contrib-type, corresp, equal-contrib, deceased, rid, specific-use, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(contrib-id*, name?, email?, string-name?, bio?, collab?, role?, xref*)[unordered]
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib-group
+</pre>
+
+### `<contrib-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+contrib*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+collab, article-meta
+</pre>
+
+### `<contrib-id>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, contrib-id-type, authenticated, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib
+</pre>
+
+### `<copyright-holder>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+permissions
+</pre>
+
+### `<copyright-statement>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+permissions
+</pre>
+
+### `<copyright-year>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+permissions
+</pre>
+
+### `<country>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, country, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
+
+### `<data-title>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|email|ext-link|uri|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|named-content|styled-content|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<date>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, date-type, publication-format, iso-8601-date, calendar, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+((day?,month?)|season)?,year?,era?,string-date?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+history
+</pre>
+
+### `<date-in-citation>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, iso-8601-date, calendar, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<day>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, date, pub-date
+</pre>
+
+### `<disp-formula>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,tex-math
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+named-content, sec, body
+</pre>
+
+### `<disp-quote>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+p+,attrib?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+named-content, sec, body
+</pre>
+
+### `<edition>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, designator, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<element-citation>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, publication-type, publisher-type, publication-format, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(article-title?, chapter-title?, comment?, collab?, edition?, elocation-id?, fpage?, issue?, lpage?, page-range?, person-group*, pub-id*, publisher-loc*, publisher-name*, source?, volume?, year?, month?, day?, conf-name?, conf-loc?, data-title?, part-title?, patent?, series?, version?, uri?, date-in-citation?)[unordered]
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+ref
+</pre>
+
+### `<elocation-id>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, seq, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, article-meta
+</pre>
+
+### `<email>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib, aff, collab, data-title
+</pre>
+
+### `<era>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+date, pub-date
+</pre>
+
+### `<ext-link>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, ext-link-type, assigning-authority, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, aff, role, trans-title, email, institution, phone, uri, given-names, surname, prefix, suffix, ext-link, label, title, subject, subtitle, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, version, th, td
+</pre>
+
+### `<fax>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
+
+### `<fig>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, fig-type
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+object-id?,label?,caption?,kwd-group*,graphic,permissions?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+fig-group, named-content, sec, body
+</pre>
+
+### `<fig-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, content-type
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,fig+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+named-content, sec, body
+</pre>
+
+### `<fixed-case>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<fn>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, symbol, fn-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,p+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+fn-group
+</pre>
+
+### `<fn-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,title?,fn+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table-wrap-foot, back
+</pre>
+
+### `<fpage>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, seq, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, article-meta
+</pre>
+
+### `<front>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+journal-meta?,article-meta
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article
+</pre>
+
+### `<funding-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+award-group*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<funding-source>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, rid, source-type, country, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+institution-wrap
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+award-group
+</pre>
+
+### `<given-names>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, initials
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+name
+</pre>
+
+### `<graphic>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, content-type, mime-subtype, mimetype, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+EMPTY
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+fig, named-content
+</pre>
+
+### `<history>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+date*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<inline-formula>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+tex-math
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, role, trans-title, email, institution, phone, uri, given-names, surname, prefix, suffix, ext-link, label, title, subject, subtitle, xref, p, named-content, chapter-title, edition, part-title, patent, series, version, th, td
+</pre>
+
+### `<inline-graphic>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, baseline-shift, mimetype, mime-subtype, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+alt-text?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, role, trans-title, email, institution, phone, uri, given-names, surname, prefix, suffix, ext-link, label, title, subject, subtitle, xref, p, named-content, chapter-title, edition, part-title, patent, series, version, th, td
+</pre>
+
+### `<institution>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff, institution-wrap
+</pre>
+
+### `<institution-id>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, institution-id-type, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+institution-wrap
+</pre>
+
+### `<institution-wrap>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(institution|institution-id)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff, funding-source
+</pre>
+
+### `<isbn>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, publication-format, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<issue>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, seq, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, article-meta
+</pre>
+
+### `<issue-title>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<italic>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<kwd>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+kwd-group
+</pre>
+
+### `<kwd-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, kwd-group-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,kwd*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta, fig
+</pre>
+
+### `<label>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, alt, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff, kwd-group, fn-group, fig-group, fig, supplementary-material, table-wrap, fn, disp-formula
+</pre>
+
+### `<license>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, license-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(ali:license_ref?, license-p?)[unordered]
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+permissions
+</pre>
+
+### `<license-p>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|supplementary-material|price)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license
+</pre>
+
+### `<list>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, list-type, prefix-word, list-content, continued-from, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+list-item+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+list-item, named-content, sec, body
+</pre>
+
+### `<list-item>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(p|list)+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+list
+</pre>
+
+### `<lpage>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, article-meta
+</pre>
+
+### `<monospace>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<month>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, date, pub-date
+</pre>
+
+### `<name>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, name-style, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+((surname,given-names?)|given-names),prefix?,suffix?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib, name-alternatives, person-group
+</pre>
+
+### `<name-alternatives>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(name|string-name)+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+person-group
+</pre>
+
+### `<named-content>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, rid, alt, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|address|array|boxed-text|chem-struct-wrap|fig|fig-group|graphic|media|preformat|supplementary-material|table-wrap|table-wrap-group|disp-formula|disp-formula-group|def-list|list|ack|disp-quote|speech|statement|verse-group)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, role, trans-title, email, institution, phone, uri, collab, given-names, surname, prefix, suffix, ext-link, label, title, subject, subtitle, preformat, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, version, th, td
+</pre>
+
+### `<object-id>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, pub-id-type, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+fig, table-wrap
+</pre>
+
+### `<overline>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<p>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|chem-struct|inline-formula|inline-graphic|private-char|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|supplementary-material)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+bio, abstract, trans-abstract, caption, fn, list-item, disp-quote, sec, body
+</pre>
+
+### `<page-range>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, article-meta
+</pre>
+
+### `<part-title>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<patent>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, country, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<permissions>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+copyright-statement*,copyright-year*,copyright-holder*,(ali:free_to_read|license)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta, fig, table-wrap
+</pre>
+
+### `<person-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, person-group-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(anonymous|collab|collab-alternatives|name|name-alternatives|string-name|aff|aff-alternatives|etal|role)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<phone>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
+
+### `<postal-code>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
+
+### `<prefix>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+name
+</pre>
+
+### `<preformat>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, preformat-type, xml:space
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|abbrev|milestone-end|milestone-start|named-content|styled-content|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+named-content, sec, body
+</pre>
+
+### `<price>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, currency, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p
+</pre>
+
+### `<pub-date>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, pub-type, publication-format, date-type, iso-8601-date, calendar, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(day|era|month|season|year|string-date)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<pub-id>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, pub-id-type, assigning-authority, specific-use, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<publisher-loc>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<publisher-name>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<ref>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+ref-list
+</pre>
+
+### `<ref-list>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+ref*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+back
+</pre>
+
+### `<role>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib, person-group
+</pre>
+
+### `<sc>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<season>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+date, pub-date
+</pre>
+
+### `<sec>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, xml:lang, sec-type, disp-level, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+title?,(boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+abstract, trans-abstract, sec, body
+</pre>
+
+### `<series>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<source>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<state>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff
+</pre>
+
+### `<strike>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<string-date>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, iso-8601-date, calendar, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+date, pub-date
+</pre>
+
+### `<string-name>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, name-style, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib, name-alternatives, person-group
+</pre>
+
+### `<sub>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, arrange, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<subj-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, subj-group-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(subject|compound-subject)+,subj-group*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-categories, subj-group
+</pre>
+
+### `<subject>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+subj-group
+</pre>
+
+### `<subtitle>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+title-group
+</pre>
+
+### `<suffix>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+name
+</pre>
+
+### `<sup>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, arrange, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<supplementary-material>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, content-type, mimetype, mime-subtype, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+label?,caption?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, p, named-content, sec, body
+</pre>
+
+### `<surname>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, initials
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+name
+</pre>
+
+### `<table>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, summary, width, border, frame, rules, cellspacing, cellpadding, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(col*|colgroup*),((thead?,tfoot?,tbody+)|tr+)
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table-wrap
+</pre>
+
+### `<table-wrap>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, position, orientation, specific-use, xml:lang, content-type
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+object-id?,label?,caption?,table,permissions?,table-wrap-foot?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+named-content, sec, body
+</pre>
+
+### `<table-wrap-foot>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+fn-group?
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table-wrap
+</pre>
+
+### `<tbody>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+tr+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table
+</pre>
+
+### `<td>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, abbr, axis, headers, scope, rowspan, colspan, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+tr
+</pre>
+
+### `<tex-math>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, notation, version
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+inline-formula, disp-formula
+</pre>
+
+### `<tfoot>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+tr+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table
+</pre>
+
+### `<th>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, abbr, axis, headers, scope, rowspan, colspan, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+tr
+</pre>
+
+### `<thead>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+tr+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table
+</pre>
+
+### `<title>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+abstract, trans-abstract, fn-group, caption, sec
+</pre>
+
+### `<title-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+article-title,subtitle?,trans-title-group*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<tr>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, style, align, char, charoff, valign
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(th|td)+
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+table, thead, tfoot, tbody
+</pre>
+
+### `<trans-abstract>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, abstract-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+title?,(sec|p)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
+### `<trans-title>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+trans-title-group
+</pre>
+
+### `<trans-title-group>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+trans-title,trans-subtitle*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+title-group
+</pre>
+
+### `<underline>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, toggle, underline-style, specific-use
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+license-p, article-title, issue-title, role, trans-title, email, institution, phone, uri, string-name, given-names, surname, prefix, suffix, ext-link, attrib, label, price, title, subject, kwd, subtitle, preformat, bold, fixed-case, italic, monospace, sc, overline, strike, sub, sup, underline, xref, p, named-content, chapter-title, data-title, edition, part-title, patent, series, source, version, th, td
+</pre>
+
+### `<uri>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, content-type, specific-use, xml:lang, xlink:type, xlink:href, xlink:role, xlink:title, xlink:show, xlink:actuate
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+aff, element-citation, data-title
+</pre>
+
+### `<version>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, designator, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation
+</pre>
+
+### `<volume>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, seq, content-type, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, article-meta
+</pre>
+
+### `<xref>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+id, xml:base, ref-type, alt, rid, specific-use, xml:lang
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+(TEXT|ext-link|inline-supplementary-material|bold|fixed-case|italic|monospace|overline|overline-start|overline-end|roman|sans-serif|sc|strike|underline|underline-start|underline-end|ruby|alternatives|inline-graphic|private-char|chem-struct|inline-formula|abbrev|milestone-end|milestone-start|named-content|styled-content|target|xref|sub|sup|break)*
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+contrib, license-p, article-title, role, trans-title, email, institution, phone, uri, collab, given-names, surname, prefix, suffix, ext-link, label, title, subject, subtitle, xref, p, named-content, chapter-title, edition, part-title, patent, series, version, th, td
+</pre>
+
+### `<year>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+TEXT
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+element-citation, date, pub-date
+</pre>
+
+## Not Implemented
+- abbrev
+- abbrev-journal-title
+- ack
+- address
+- aff-alternatives
+- alt-text
+- alt-title
+- alternatives
+- annotation
+- anonymous
+- app
+- app-group
+- array
+- author-comment
+- author-notes
+- boxed-text
+- chem-struct
+- chem-struct-wrap
+- citation-alternatives
+- collab-alternatives
+- comment
+- compound-kwd
+- compound-kwd-part
+- compound-subject
+- compound-subject-part
+- conf-acronym
+- conf-date
+- conf-num
+- conf-sponsor
+- conf-theme
+- conference
+- corresp
+- count
+- counts
+- custom-meta
+- custom-meta-group
+- def
+- def-head
+- def-item
+- def-list
+- degrees
+- disp-formula-group
+- equation-count
+- etal
+- fig-count
+- floats-group
+- front-stub
+- funding-statement
+- glossary
+- glyph-data
+- glyph-ref
+- gov
+- hr
+- inline-supplementary-material
+- issn
+- issn-l
+- issue-id
+- issue-part
+- issue-sponsor
+- journal-id
+- journal-meta
+- journal-subtitle
+- journal-title
+- journal-title-group
+- long-desc
+- media
+- meta-name
+- meta-value
+- milestone-end
+- milestone-start
+- mixed-citation
+- nested-kwd
+- note
+- notes
+- on-behalf-of
+- open-access
+- overline-end
+- overline-start
+- page-count
+- principal-award-recipient
+- principal-investigator
+- private-char
+- product
+- publisher
+- rb
+- ref-count
+- related-article
+- related-object
+- response
+- roman
+- rp
+- rt
+- ruby
+- sans-serif
+- sec-meta
+- self-uri
+- series-text
+- series-title
+- sig
+- sig-block
+- size
+- speaker
+- speech
+- statement
+- std
+- std-organization
+- string-conf
+- styled-content
+- sub-article
+- supplement
+- table-count
+- table-wrap-group
+- target
+- term
+- term-head
+- textual-form
+- trans-source
+- trans-subtitle
+- underline-end
+- underline-start
+- unstructured-kwd-group
+- verse-group
+- verse-line
+- volume-id
+- volume-issue-group
+- volume-series
+- word-count

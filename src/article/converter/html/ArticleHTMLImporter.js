@@ -1,12 +1,10 @@
 import { HTMLImporter } from 'substance'
-import InternalArticleSchema from '../../InternalArticleSchema'
 
 export default class ArticleHTMLImporter extends HTMLImporter {
-  constructor (configurator) {
+  constructor (articleConfig, doc) {
     super({
-      schema: InternalArticleSchema,
-      // HACK: in contrast to DOMExporter, DOMImporter takes an array of converters, instead of a Registry
-      converters: _getConverters(configurator),
+      document: doc,
+      converters: _getConverters(articleConfig),
       idAttribute: 'data-id'
     })
 
@@ -14,30 +12,23 @@ export default class ArticleHTMLImporter extends HTMLImporter {
     this.IGNORE_DEFAULT_WARNINGS = true
   }
 
-  // TODO: it is necessary to set the document instance so that the importer is creating nodes for this document
-  setDocument (doc) {
-    this.reset()
-    this.state.doc = doc
-  }
-
   _getConverterForElement (el, mode) {
     let converter = super._getConverterForElement(el, mode)
-    // apply a fallback
+    // provide a backup for unsupported inline content
     if (!converter) {
       if (mode !== 'inline') {
-        return UnsupportedElementImporter
+        return _UnsupportedElementImporter
       }
     }
     return converter
   }
 }
 
-// TODO: we should improve the configurators internal format, e.g. use Map instead of {}
-function _getConverters (configurator) {
-  return configurator.getConverters('html').values()
+function _getConverters (articleConfig) {
+  return articleConfig.getConverters('html')
 }
 
-const UnsupportedElementImporter = {
+const _UnsupportedElementImporter = {
   type: 'paragraph',
   import (el, node, converter) {
     node.content = converter.annotatedText(el, [node.id, 'content'], { preserveWhitespace: true })

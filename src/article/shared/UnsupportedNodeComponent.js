@@ -1,4 +1,5 @@
-import { Component, IsolatedNodeComponent } from 'substance'
+import { Component } from 'substance'
+import IsolatedNodeComponent from '../../kit/ui/_IsolatedNodeComponent'
 
 export default class UnsupportedNodeComponent extends IsolatedNodeComponent {
   _getContentClass () {

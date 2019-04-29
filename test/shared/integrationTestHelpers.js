@@ -146,10 +146,13 @@ export function createTestApp (options = {}) {
               if (!resourceName.endsWith('.xml')) continue
               let xmlStr = rawArchiveUpdate.resources[resourceName].data
               let xmlDom = DefaultDOMElement.parseXML(xmlStr)
-              let result = validateXML(TextureJATS, xmlDom)
-              if (!result.ok) {
-                console.error('Texture generated invalid JATS:' + result.errors)
-                throw new Error('Texture generated invalid JATS')
+              let doctype = xmlDom.getDoctype()
+              if (doctype && /JATS/.exec(doctype.publicId)) {
+                let result = validateXML(TextureJATS, xmlDom)
+                if (!result.ok) {
+                  console.error('Texture generated invalid JATS:' + result.errors)
+                  throw new Error('Texture generated invalid JATS')
+                }
               }
             }
           }
@@ -162,17 +165,18 @@ export function createTestApp (options = {}) {
 }
 
 const JATS_SHOULD_BE_VALID = 'current JATS should be valid.'
+
 export function ensureValidJATS (t, app) {
   // Note: in the test suite we use VFS as storage which works
   // synchronously, even if the API is asynchronous (for the real storage impls).
-  try {
-    app._save(err => {
-      t.notOk(Boolean(err), JATS_SHOULD_BE_VALID)
-    })
-  } catch (err) {
-    console.error(err)
+  // try {
+  app._save(err => {
     t.notOk(Boolean(err), JATS_SHOULD_BE_VALID)
-  }
+  })
+  // } catch (err) {
+  //   console.error(err)
+  //   t.notOk(Boolean(err), JATS_SHOULD_BE_VALID)
+  // }
 }
 
 export const LOREM_IPSUM = {

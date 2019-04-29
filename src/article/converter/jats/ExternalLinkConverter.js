@@ -4,8 +4,8 @@ export default class ExternalLinkConverter {
 
   import (el, node) {
     let extLinkType = el.getAttribute('ext-link-type')
-    if (extLinkType && extLinkType !== 'uri') {
-      throw new Error('Only ext-link-type="uri" is supported.')
+    if (extLinkType) {
+      node.linkType = extLinkType
     }
     let href = el.getAttribute('xlink:href')
     if (href) {
@@ -13,8 +13,11 @@ export default class ExternalLinkConverter {
     }
   }
   export (node, el) {
-    // ATM only 'uri' is supported, and thus hard-coded here
-    el.setAttribute('ext-link-type', 'uri')
-    el.setAttribute('xlink:href', node.href)
+    if (node.linkType) {
+      el.setAttribute('ext-link-type', node.linkType)
+    }
+    if (node.href) {
+      el.setAttribute('xlink:href', node.href)
+    }
   }
 }

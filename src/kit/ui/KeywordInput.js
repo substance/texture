@@ -64,7 +64,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
     editorEl.append(
       $$('div').addClass('se-keyword').append(
         $$('div').addClass('se-keyword-input').append(
-          $$(Input, { placeholder }).ref('keywordInput')
+          $$(Input, { placeholder }).attr({ tabindex: '2' }).ref('keywordInput')
         ),
         $$(Button).append(
           this.getLabel('create')
@@ -114,8 +114,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
 
   _removeKeyword (idx) {
     const model = this.props.model
-    const values = model.getValue()
-    values.splice(idx, 1)
-    this.send('updateValues', values)
+    const path = model.getPath()
+    this.send('executeCommand', 'remove-keyword', { path, idx })
   }
 }

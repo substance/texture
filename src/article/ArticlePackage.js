@@ -20,7 +20,7 @@ import ArticlePlainTextExporter from './converter/text/ArticlePlainTextExporter'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import JATSTransformer from './converter/transform/jats/JATSTransformer'
 import {
-  TEXTURE_JATS_PUBLIC_ID, JATS_GREEN_1_0_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
+  TEXTURE_JATS_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
 } from './ArticleConstants'
 import TextureJATS from './TextureJATS'
 
@@ -43,7 +43,6 @@ export default {
 
     articleConfig.import(EntityLabelsPackage)
 
-    articleConfig.registerSchemaId(JATS_GREEN_1_0_PUBLIC_ID)
     articleConfig.registerSchemaId(JATS_GREEN_1_1_PUBLIC_ID)
     articleConfig.registerSchemaId(JATS_GREEN_1_2_PUBLIC_ID)
 
@@ -66,7 +65,6 @@ export default {
     // NOTE: ATM  there is only one transformation because we do not use all JATS features
     // as TextureJATS is a very strict subset of JATS
     articleConfig.addTransformation('jats', transformation)
-    articleConfig.addTransformation(JATS_GREEN_1_0_PUBLIC_ID, transformation)
     articleConfig.addTransformation(JATS_GREEN_1_1_PUBLIC_ID, transformation)
     articleConfig.addTransformation(JATS_GREEN_1_2_PUBLIC_ID, transformation)
 

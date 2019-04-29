@@ -5,7 +5,7 @@ import {
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
-  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType
+  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
@@ -18,14 +18,16 @@ import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/tes
 const EMPTY_P = `<p id="p1"></p>`
 
 test('ManuscriptEditor: add inline graphic', t => {
-  let { app } = setupTestApp(t, LOREM_IPSUM)
+  let { app, archive } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-2.content', 3)
   let insertInlineGraphicTool = openMenuAndFindTool(editor, 'insert', '.sc-insert-inline-graphic-tool')
   // Trigger onFileSelect() directly
-  insertInlineGraphicTool.onFileSelect(new PseudoFileEvent())
+  insertInlineGraphicTool.onFileSelect(new PseudoFileEvent('test.png'))
   let inlineGraphic = editor.find('[data-id=p-2] .sc-inline-node.sm-inline-graphic')
   t.notNil(inlineGraphic, 'there should be an inline-graphic now')
+  ensureValidJATS(t, app)
+  t.ok(archive.hasAsset('test.png'), 'the archive should contain the new asset')
   t.end()
 })
 

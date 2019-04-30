@@ -1,4 +1,5 @@
-import { createValueModel, KeywordInput, NodeComponent } from '../../kit'
+import { createValueModel, NodeComponent } from '../../kit'
+import KeywordInput from './KeywordInput'
 
 export default class CustomMetadataFieldComponent extends NodeComponent {
   getActionHandlers () {

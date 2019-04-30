@@ -1,5 +1,6 @@
 import { Component } from 'substance'
-import { OverlayMixin, Popup } from '../../kit'
+import OverlayMixin from './OverlayMixin'
+import Popup from './Popup'
 
 export default class MultiSelectInput extends OverlayMixin(Component) {
   getInitialState () {

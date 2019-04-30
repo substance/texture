@@ -15,7 +15,7 @@ export default function (Component) {
     }
 
     _getOverlayId () {
-      return this.getId()
+      return this.props.overlayId || this.getId()
     }
 
     _canShowOverlay () {

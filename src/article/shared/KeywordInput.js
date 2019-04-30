@@ -84,10 +84,6 @@ export default class KeywordInput extends OverlayMixin(Component) {
     )
   }
 
-  _getOverlayId () {
-    return this.props.overlayId || this.getId()
-  }
-
   _onClick (event) {
     domHelpers.stopAndPrevent(event)
     super._toggleOverlay()

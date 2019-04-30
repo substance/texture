@@ -60,10 +60,6 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     return $$(Popup, { label }).append(editorEl)
   }
 
-  _getOverlayId () {
-    return this.props.overlayId || this.getId()
-  }
-
   _getOptions () {
     return this.getParent().getAvailableOptions()
   }

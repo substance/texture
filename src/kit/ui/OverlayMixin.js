@@ -1,5 +1,9 @@
 export default function (Component) {
   class OverlayComponent extends Component {
+    getChildContext () {
+      return { overlay: this }
+    }
+
     didMount () {
       super.didMount()
 

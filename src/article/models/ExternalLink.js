@@ -1,9 +1,12 @@
 import { STRING } from 'substance'
 import Annotation from './Annotation'
 
-export default class ExternalLink extends Annotation {}
+export default class ExternalLink extends Annotation {
+  shouldNotSplit () { return true }
+}
+
 ExternalLink.schema = {
   type: 'external-link',
-  href: STRING
-  // TODO: JATS also has ext-link-type
+  href: STRING,
+  linkType: STRING
 }

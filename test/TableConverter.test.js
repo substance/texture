@@ -202,6 +202,25 @@ test('TableConverter: export table with row span (1)', t => {
   t.end()
 })
 
+const TABLE_WITH_LINKS = `
+<table>
+  <tr>
+    <td id="td-1"><ext-link>link</ext-link></td>
+    <td><ext-link>link</ext-link></td>
+  </tr>
+</table>
+`
+
+test('TableConverter: import table with links', t => {
+  let el = DefaultDOMElement.parseSnippet(TABLE_WITH_LINKS.trim(), 'xml')
+  let table = _importTable(el)
+  let tableEl = _exportTable(table)
+  const links = tableEl.findAll('ext-link')
+  // Links should be imported regardless of cell's id attribute presence (see issue #1216)
+  t.equal(links.length, 2, 'there should be two links inside table')
+  t.end()
+})
+
 function _importTable (el) {
   // TODO: create a minimal document, and the JATS importer
   // then run the converter and see if the body node has the proper content

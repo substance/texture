@@ -1,3 +1,5 @@
+import { uuid } from 'substance'
+
 export default class TableConverter {
   get tagName () { return 'table' }
 
@@ -42,12 +44,13 @@ export default class TableConverter {
         }
         // flag all spanned cells so that we can skip them
         _fillSpanned($$, newRows, i, k, rowspan, colspan)
+        const cellId = c.id || uuid()
         let cell = $$('table-cell', {
-          id: c.id,
+          id: cellId,
           heading: attributes['heading'],
           rowspan: attributes['rowspan'],
           colspan: attributes['colspan'],
-          content: importer.annotatedText(c, [c.id, 'content'])
+          content: importer.annotatedText(c, [cellId, 'content'])
         })
         newRows[i].children[k] = cell
       }

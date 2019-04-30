@@ -12,6 +12,18 @@ export default class KeywordInput extends OverlayMixin(Component) {
     this.extendState(this.getInitialState())
   }
 
+  didMount () {
+    super.didMount()
+
+    this._focusNewKeyworkInput()
+  }
+
+  didUpdate (oldProps, oldState) {
+    if (!oldState.isExpanded) {
+      this._focusNewKeyworkInput()
+    }
+  }
+
   render ($$) {
     const model = this.props.model
     const values = model.getValue()
@@ -67,7 +79,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
     editorEl.append(
       $$('div').addClass('se-keyword').append(
         $$('div').addClass('se-keyword-input').append(
-          $$(Input, { placeholder }).attr({ tabindex: '2' }).ref('keywordInput')
+          $$(Input, { placeholder }).attr({ tabindex: '2' }).ref('newKeywordInput')
         ),
         $$(Button).append(
           this.getLabel('create')
@@ -106,7 +118,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
   _addKeyword () {
     const model = this.props.model
     const values = model.getValue()
-    const keyword = this.refs.keywordInput.val()
+    const keyword = this.refs.newKeywordInput.val()
     values.push(keyword)
     this.send('updateValues', values)
   }
@@ -115,5 +127,11 @@ export default class KeywordInput extends OverlayMixin(Component) {
     const model = this.props.model
     const path = model.getPath()
     this.send('executeCommand', 'remove-keyword', { path, idx })
+  }
+
+  _focusNewKeyworkInput () {
+    if (this.state.isExpanded) {
+      this.refs['newKeywordInput'].focus()
+    }
   }
 }

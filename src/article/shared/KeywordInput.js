@@ -1,4 +1,4 @@
-import { Component, getKeyForPath } from 'substance'
+import { Component, getKeyForPath, domHelpers } from 'substance'
 import { OverlayMixin, Popup, TextInput } from '../../kit'
 
 export default class KeywordInput extends OverlayMixin(Component) {
@@ -32,8 +32,9 @@ export default class KeywordInput extends OverlayMixin(Component) {
         this._renderEditor($$)
       )
     }
-    el.on('dblclick', this._stopAndPreventDefault)
-      .on('mousedown', this._stopAndPreventDefault)
+    el.on('dblclick', domHelpers.stopAndPrevent)
+      .on('mousedown', domHelpers.stopAndPrevent)
+      .on('mouseup', domHelpers.stopAndPrevent)
 
     return el
   }
@@ -88,7 +89,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   _onClick (event) {
-    this._stopAndPreventDefault(event)
+    domHelpers.stopAndPrevent(event)
     super._toggleOverlay()
   }
 

@@ -1,21 +1,42 @@
-import { Component, getKeyForPath, domHelpers } from 'substance'
+import { Component, getKeyForPath, domHelpers, keys } from 'substance'
 import { OverlayMixin, Popup, TextInput } from '../../kit'
 
+/**
+ * Experimental: this is the first example of an overlay that itself
+ * hosts Surfaces, similar to an IsolatedNodeComponent.
+ * Thus we are applying the same strategy regarding selections and surfaceId.
+ */
 export default class KeywordInput extends OverlayMixin(Component) {
+  constructor (...args) {
+    super(...args)
+
+    this._surfaceId = this.context.parentSurfaceId + '/' + this._getOverlayId()
+  }
   getInitialState () {
     return {
       isExpanded: this._canShowOverlay()
     }
   }
 
-  willReceiveProps () {
-    this.extendState(this.getInitialState())
+  getChildContext () {
+    return Object.assign(super.getChildContext(), {
+      parentSurfaceId: this._surfaceId
+    })
   }
 
   didMount () {
     super.didMount()
 
+    let appState = this.context.appState
+    appState.addObserver(['selection'], this._onSelectionHasChanged, this, { stage: 'render' })
+
     this._focusNewKeyworkInput()
+  }
+
+  dispose () {
+    super.dispose()
+
+    this.context.appState.removeObserver(this)
   }
 
   didUpdate (oldProps, oldState) {
@@ -44,9 +65,10 @@ export default class KeywordInput extends OverlayMixin(Component) {
         this._renderEditor($$)
       )
     }
-    el.on('dblclick', domHelpers.stopAndPrevent)
-      .on('mousedown', domHelpers.stopAndPrevent)
-      .on('mouseup', domHelpers.stopAndPrevent)
+    el.on('mousedown', domHelpers.stop)
+      .on('mouseup', domHelpers.stop)
+      .on('click', domHelpers.stop)
+      .on('dblclick', domHelpers.stop)
 
     return el
   }
@@ -60,16 +82,18 @@ export default class KeywordInput extends OverlayMixin(Component) {
     const Input = this.getComponent('input')
 
     const editorEl = $$('div').ref('editor').addClass('se-keyword-editor')
+    let lastIdx = values.length - 1
     values.forEach((value, idx) => {
       const path = model.getPath().concat(idx)
       const name = getKeyForPath(path)
       editorEl.append(
         $$('div').addClass('se-keyword').append(
           $$('div').addClass('se-keyword-input').append(
-            $$(TextInput, {
+            $$(_HackedTextInput, {
               name,
               path,
-              placeholder
+              placeholder,
+              isLast: idx === lastIdx
             })
           ),
           this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, idx))
@@ -79,7 +103,9 @@ export default class KeywordInput extends OverlayMixin(Component) {
     editorEl.append(
       $$('div').addClass('se-keyword').append(
         $$('div').addClass('se-keyword-input').append(
-          $$(Input, { placeholder }).attr({ tabindex: '2' }).ref('newKeywordInput')
+          $$(Input, { placeholder }).ref('newKeywordInput')
+            .attr({ tabindex: '2' })
+            .on('keydown', this._onNewKeywordKeydown)
         ),
         $$(Button).append(
           this.getLabel('create')
@@ -101,6 +127,15 @@ export default class KeywordInput extends OverlayMixin(Component) {
     super._toggleOverlay()
   }
 
+  _onNewKeywordKeydown (event) {
+    // TODO: maybe use the parseKeyEvent + parseKeyCombo trick to have exactly only reaction on ENTER without modifiers
+    if (event.keyCode === keys.ENTER) {
+      event.stopPropagation()
+      event.preventDefault()
+      this._addKeyword()
+    }
+  }
+
   _onOverlayIdHasChanged () {
     let overlayId = this.context.appState.overlayId
     let id = this._getOverlayId()
@@ -112,6 +147,17 @@ export default class KeywordInput extends OverlayMixin(Component) {
     }
     if (needUpdate) {
       this.extendState(this.getInitialState())
+    }
+  }
+
+  _onSelectionHasChanged (sel) {
+    let surfaceId = sel.surfaceId
+    if (surfaceId && surfaceId.startsWith(this._surfaceId)) {
+      if (!this.state.isExpanded) {
+        this.extendState({ isExpanded: true })
+      }
+    } else if (this.state.isExpanded) {
+      this.extendState({ isExpanded: false })
     }
   }
 
@@ -132,6 +178,15 @@ export default class KeywordInput extends OverlayMixin(Component) {
   _focusNewKeyworkInput () {
     if (this.state.isExpanded) {
       this.refs['newKeywordInput'].focus()
+    }
+  }
+}
+
+class _HackedTextInput extends TextInput {
+  _handleTabKey (event) {
+    event.stopPropagation()
+    if (!event.shiftKey && !this.props.isLast) {
+      this.__handleTab(event)
     }
   }
 }

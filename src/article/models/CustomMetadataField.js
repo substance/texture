@@ -1,4 +1,4 @@
-import { DocumentNode, STRING, STRING_ARRAY } from 'substance'
+import { CHILDREN, DocumentNode, STRING } from 'substance'
 
 export default class CustomMetadataField extends DocumentNode {
   static getTemplate () {
@@ -14,5 +14,5 @@ export default class CustomMetadataField extends DocumentNode {
 CustomMetadataField.schema = {
   type: 'custom-metadata-field',
   name: STRING,
-  values: STRING_ARRAY
+  values: CHILDREN('custom-metadata-value')
 }

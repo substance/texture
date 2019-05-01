@@ -46,11 +46,12 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   render ($$) {
+    const doc = this.context.doc
     const model = this.props.model
     const values = model.getValue()
     const isEmpty = values.length === 0
     const isExpanded = this.state.isExpanded
-    const label = isEmpty ? this.props.placeholder : values.join(', ')
+    const label = isEmpty ? this.props.placeholder : values.map(v => doc.get([v, 'content'])).join(', ')
 
     const el = $$('div').addClass('sc-keyword-input')
     if (isEmpty) el.addClass('sm-empty')
@@ -75,16 +76,16 @@ export default class KeywordInput extends OverlayMixin(Component) {
 
   _renderEditor ($$) {
     const model = this.props.model
-    const values = model.getValue()
+    const metadataValues = model.getValue()
     const placeholder = this.getLabel('enter-keyword')
 
     const Button = this.getComponent('button')
     const Input = this.getComponent('input')
 
     const editorEl = $$('div').ref('editor').addClass('se-keyword-editor')
-    let lastIdx = values.length - 1
-    values.forEach((value, idx) => {
-      const path = model.getPath().concat(idx)
+    let lastIdx = metadataValues.length - 1
+    metadataValues.forEach((value, idx) => {
+      const path = [value, 'content']
       const name = getKeyForPath(path)
       editorEl.append(
         $$('div').addClass('se-keyword').append(
@@ -96,7 +97,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
               isLast: idx === lastIdx
             })
           ),
-          this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, idx))
+          this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, value))
         )
       )
     })
@@ -162,17 +163,14 @@ export default class KeywordInput extends OverlayMixin(Component) {
   }
 
   _addKeyword () {
-    const model = this.props.model
-    const values = model.getValue()
     const keyword = this.refs.newKeywordInput.val()
-    values.push(keyword)
-    this.send('updateValues', values)
+    this.send('addValue', keyword)
   }
 
-  _removeKeyword (idx) {
+  _removeKeyword (value) {
     const model = this.props.model
     const path = model.getPath()
-    this.send('executeCommand', 'remove-keyword', { path, idx })
+    this.send('executeCommand', 'remove-keyword', { path, value })
   }
 
   _focusNewKeyworkInput () {

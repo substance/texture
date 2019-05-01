@@ -4,7 +4,7 @@ import KeywordInput from './KeywordInput'
 export default class CustomMetadataFieldComponent extends NodeComponent {
   getActionHandlers () {
     return {
-      updateValues: this._updateValues
+      addValue: this._addValue
     }
   }
 
@@ -31,9 +31,9 @@ export default class CustomMetadataFieldComponent extends NodeComponent {
     return el
   }
 
-  _updateValues (values) {
-    const model = this._getValuesModel()
-    model.setValue(values)
+  _addValue (value) {
+    const node = this._getNode()
+    this.context.api._appendChild([node.id, 'values'], { type: 'custom-metadata-value', content: value })
   }
 
   _getValuesModel () {

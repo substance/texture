@@ -170,7 +170,7 @@ export default class KeywordInput extends OverlayMixin(Component) {
   _removeKeyword (value) {
     const model = this.props.model
     const path = model.getPath()
-    this.send('executeCommand', 'remove-keyword', { path, value })
+    this.send('executeCommand', 'remove-keyword', { path, nodeId: value, surfaceId: this._surfaceId })
   }
 
   _focusNewKeyworkInput () {

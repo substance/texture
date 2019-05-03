@@ -24,7 +24,8 @@ const xrefListItemSelector = '.sc-edit-xref-tool .se-option .sc-preview'
 const figurePanelPreviousSelector = '.sc-figure .se-control.sm-previous'
 const figurePanelNextSelector = '.sc-figure .se-control.sm-next'
 const currentPanelSelector = '.sc-figure .se-current-panel .sc-figure-panel'
-const figureCustomMetadataFieldInputSelector = '.sc-custom-metadata-field .sc-string'
+const figureCustomMetadataFieldNameSelector = '.sc-custom-metadata-field .sc-string'
+const figureCustomMetadataFieldValuesSelector = '.sc-custom-metadata-field .sc-keyword-input'
 
 const FIGURE_WITH_TWO_PANELS = `
 <fig-group id="fig1">
@@ -462,9 +463,12 @@ test('Figure: replicate first panel structure', t => {
   t.ok(insertFigurePanelTool.el.click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   _gotoNext()
-  const fields = editor.findAll(figureCustomMetadataFieldInputSelector)
-  t.equal(fields[0].getTextContent(), 'Field I', 'shoud be replicated keyword label inside custom field name')
-  t.equal(fields[1].getTextContent(), '', 'shoud be empty value')
+  const fieldNames = editor.findAll(figureCustomMetadataFieldNameSelector)
+  const fieldValues = editor.findAll(figureCustomMetadataFieldValuesSelector)
+  t.equal(fieldNames.length, 1, 'there should be one input for a field name')
+  t.equal(fieldNames.length, fieldValues.length, 'there should be the same number of custom metadata field name and values')
+  t.equal(fieldNames[0].getTextContent(), 'Field I', 'shoud be replicated keyword label inside custom field name')
+  t.equal(fieldValues[0].getTextContent(), 'Click to add keywords', 'shoud be empty value')
   t.end()
 })
 

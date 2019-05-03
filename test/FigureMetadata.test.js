@@ -11,8 +11,8 @@ const moveUpCustomMetadataFieldToolSelector = '.sm-move-up-metadata-field'
 const removeCustomMetadataFieldToolSelector = '.sm-remove-metadata-field'
 
 const figureMetadataSelector = '.sc-custom-metadata-field'
-const figureCustomMetadataFieldInputSelector = '.sc-custom-metadata-field .sc-string'
-const figureCustomMetadataFieldNameSelector = '.sc-custom-metadata-field .se-field-name .se-input'
+const figureCustomMetadataFieldNameSelector = '.sc-custom-metadata-field .sc-string'
+const figureCustomMetadataFieldValuesSelector = '.sc-custom-metadata-field .sc-keyword-input'
 
 const FIXTURE = `
   <fig-group id="fig1">
@@ -35,10 +35,12 @@ test('Figure Metadata: open figure with custom fields in manuscript and metadata
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
   t.notNil(editor.find(figureMetadataSelector), 'there should be a figure with metadata in manuscript')
-  const fields = editor.findAll(figureCustomMetadataFieldInputSelector)
-  t.equal(fields.length, 2, 'there should be two inputs')
-  t.equal(fields[0].getTextContent(), 'Field I', 'shoud be keyword label inside first')
-  t.equal(fields[1].getTextContent(), 'Value A, Value B', 'shoud be values joined with comma inside second')
+  const fieldNames = editor.findAll(figureCustomMetadataFieldNameSelector)
+  const fieldValues = editor.findAll(figureCustomMetadataFieldValuesSelector)
+  t.equal(fieldNames.length, 1, 'there should be one input for a field name')
+  t.equal(fieldNames.length, fieldValues.length, 'there should be the same number of custom metadata field name and values')
+  t.equal(fieldNames[0].getTextContent(), 'Field I', 'shoud be keyword label inside first')
+  t.equal(fieldValues[0].getTextContent(), 'Value A, Value B', 'shoud be values joined with comma inside second')
   editor = openMetadataEditor(app)
   t.notNil(editor.find(figureMetadataSelector), 'there should be a figure with metadata in manuscript')
   t.end()
@@ -54,8 +56,9 @@ test('Figure Metadata: add a new custom field', t => {
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
   const selectedNodePath = getSelection(editor).path
-  const secondCustomFieldInputPath = editor.findAll(figureCustomMetadataFieldNameSelector)[1].getPath()
-  t.deepEqual(selectedNodePath, secondCustomFieldInputPath, 'selection path and second custom field path should match')
+  const secondCustomFieldInput = editor.findAll(figureCustomMetadataFieldNameSelector)[1]
+  const secondCustomFieldInputModel = secondCustomFieldInput.props.model
+  t.deepEqual(selectedNodePath, secondCustomFieldInputModel.getPath(), 'selection path and second custom field path should match')
   t.end()
 })
 
@@ -70,8 +73,9 @@ test('Figure Metadata: add a new custom field when figure is selected', t => {
   t.ok(addCustomMetadataFieldTool.click(), 'clicking on add custom field tool should not throw error')
   t.equal(editor.findAll(figureMetadataSelector).length, 2, 'there should be two custom fields now')
   const selectedNodePath = getSelection(editor).path
-  const secondCustomFieldInputPath = editor.findAll(figureCustomMetadataFieldNameSelector)[1].getPath()
-  t.deepEqual(selectedNodePath, secondCustomFieldInputPath, 'selection path and second custom field path should match')
+  const secondCustomFieldInput = editor.findAll(figureCustomMetadataFieldNameSelector)[1]
+  const secondCustomFieldInputModel = secondCustomFieldInput.props.model
+  t.deepEqual(selectedNodePath, secondCustomFieldInputModel.getPath(), 'selection path and second custom field path should match')
   t.end()
 })
 

@@ -36,13 +36,16 @@ export default class KeywordInput extends CustomSurface {
   }
 
   render ($$) {
-    const doc = this.context.doc
+    const editorSession = this.context.editorSession
+    const doc = editorSession.getDocument()
     const model = this.props.model
     const values = model.getValue()
     const isEmpty = values.length === 0
     const isSelected = this.state.isSelected
     const isExpanded = this.state.isExpanded
-    const label = isEmpty ? this.props.placeholder : values.map(v => doc.get([v, 'content'])).join(', ')
+    const label = isEmpty ? this.props.placeholder : values.map(v => {
+      return doc.get([v, 'content'])
+    }).join(', ')
 
     const el = $$('div').addClass('sc-keyword-input')
     if (isEmpty) el.addClass('sm-empty')

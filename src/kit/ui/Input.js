@@ -60,9 +60,11 @@ export default class Input extends Component {
     switch (combo) {
       // ESCAPE reverts the current pending change
       case ESCAPE: {
-        event.stopPropagation()
-        event.preventDefault()
-        this.el.val(this._getDocumentValue())
+        if (this.props.handleEscape !== false) {
+          event.stopPropagation()
+          event.preventDefault()
+          this.el.val(this._getDocumentValue())
+        }
         break
       }
       default:

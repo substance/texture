@@ -95,7 +95,7 @@ export default class KeywordInput extends CustomSurface {
           $$('div').addClass('se-keyword-input').append(
             input
           ),
-          this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, value))
+          this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, value.id))
         )
       )
     })
@@ -231,10 +231,10 @@ export default class KeywordInput extends CustomSurface {
     }
   }
 
-  _removeKeyword (value) {
+  _removeKeyword (nodeId) {
     const model = this.props.model
     const path = model.getPath()
-    this.send('executeCommand', 'remove-keyword', { path, nodeId: value, surfaceId: this._surfaceId })
+    this.send('executeCommand', 'remove-keyword', { path, nodeId, surfaceId: this._surfaceId })
   }
 
   _focusNewKeyworkInput () {

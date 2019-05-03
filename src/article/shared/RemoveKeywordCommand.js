@@ -15,18 +15,24 @@ export default class RemoveKeywordCommand extends Command {
 
       documentHelpers.removeAt(tx, path, index)
       documentHelpers.deepDeleteNode(nodeId)
-      // TODO: after removing selection should be
-      // moved to the next ‘reasonable’ place
+      // NOTE: After removing keyword selection should be moved to
+      // the next reasonable place: next keyword value or new keyword input
       if (index < size - 1) {
+        const nextNodeId = tx.get(path)[index]
         tx.setSelection({
           type: 'property',
-          path: [tx.get(path)[index], 'content'],
-          surfaceId: surfaceId,
-          startOffset: 0,
-          endOffset: 0
+          path: [nextNodeId, 'content'],
+          surfaceId,
+          startOffset: 0
         })
       } else {
-        tx.selection = null
+        tx.setSelection({
+          type: 'custom',
+          customType: 'keywordInput',
+          nodeId,
+          data: { isExpanded: true },
+          surfaceId
+        })
       }
     })
   }

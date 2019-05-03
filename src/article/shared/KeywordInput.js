@@ -234,7 +234,13 @@ export default class KeywordInput extends CustomSurface {
   _removeKeyword (nodeId) {
     const model = this.props.model
     const path = model.getPath()
-    this.send('executeCommand', 'remove-keyword', { path, nodeId, surfaceId: this._surfaceId })
+    const values = model.getValue()
+    const valueIndex = values.indexOf(nodeId)
+    const isLast = valueIndex === values.length - 1
+    // NOTE: current strartegy it to put selection to a next keyword.
+    // To do it we need to pass next input surfaceId or new keyword input surfaceId
+    const surfaceId = isLast ? this._surfaceId : this.refs[values[valueIndex + 1]].getSurfaceId()
+    this.send('executeCommand', 'remove-keyword', { path, nodeId, surfaceId })
   }
 
   _focusNewKeyworkInput () {

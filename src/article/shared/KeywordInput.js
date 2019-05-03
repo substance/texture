@@ -138,7 +138,7 @@ export default class KeywordInput extends CustomSurface {
   }
 
   _onKeydown (event) {
-    console.log('### _onKeydown()', event)
+    // console.log('### _onKeydown()', event)
     event.stopPropagation()
     if (event.keyCode === keys.ESCAPE) {
       event.preventDefault()
@@ -147,8 +147,7 @@ export default class KeywordInput extends CustomSurface {
   }
 
   _onNewKeywordKeydown (event) {
-    console.log('### _onNewKeywordKeydown()', event)
-    // TODO: maybe use the parseKeyEvent + parseKeyCombo trick to have exactly only reaction on ENTER without modifiers
+    // console.log('### _onNewKeywordKeydown()', event)
     if (event.keyCode === keys.ENTER) {
       event.stopPropagation()
       event.preventDefault()

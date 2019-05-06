@@ -25,6 +25,7 @@ export default class TextureConfigurator {
     this._labels = new Map()
     this._nodes = new Map()
     this._toolPanels = new Map()
+    this._services = new Map()
 
     // hierarchical registries
     this._valuesRegistry = new HierarchicalRegistry(this, '_values')
@@ -32,6 +33,7 @@ export default class TextureConfigurator {
     this._componentRegistry = new HierarchicalRegistry(this, '_components')
     this._iconRegistry = new HierarchicalRegistry(this, '_icons')
     this._labelRegistry = new HierarchicalRegistry(this, '_labels')
+    this._serviceRegistry = new HierarchicalRegistry(this, '_services')
 
     // TODO: document why this is necessary, beyond legacy reasons
     this._compiledToolPanels = new Map()
@@ -186,6 +188,29 @@ export default class TextureConfigurator {
 
   addToolPanel (name, spec) {
     this._toolPanels.set(name, spec)
+  }
+
+  addService (serviceId, factory) {
+    this._services.set(serviceId, {
+      factory,
+      instance: null
+    })
+  }
+
+  getService (serviceId, context) {
+    let entry = this._serviceRegistry.get(serviceId)
+    if (entry) {
+      if (entry.instance) {
+        return Promise.resolve(entry.instance)
+      } else {
+        return entry.factory(context).then(service => {
+          entry.instance = service
+          return service
+        })
+      }
+    } else {
+      return Promise.reject(new Error(`Unknown service: ${serviceId}`))
+    }
   }
 
   registerDocumentLoader (docType, LoaderClass, spec = {}) {

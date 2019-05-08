@@ -106,6 +106,7 @@ export default class CommandManager {
     if (!this._commands) {
       this._initializeCommands()
     }
+    return this._commands
   }
 
   _initializeCommands () {

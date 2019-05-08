@@ -7,7 +7,7 @@ import SurfaceManager from './SurfaceManager'
 import MarkersManager from './MarkersManager'
 import GlobalEventHandler from './GlobalEventHandler'
 import KeyboardManager from './KeyboardManager'
-import SchemaDrivenCommandManager from './SchemaDrivenCommandManager'
+import CommandManager from './CommandManager'
 import FindAndReplaceManager from './FindAndReplaceManager'
 
 export default class EditorSession extends AbstractEditorSession {
@@ -47,7 +47,7 @@ export default class EditorSession extends AbstractEditorSession {
     let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName, params) => {
       return this.executeCommand(commandName, params)
     }, editor)
-    let commandManager = new SchemaDrivenCommandManager(editorState,
+    let commandManager = new CommandManager(editorState,
       // update commands when document or selection have changed
       ['document', 'selection'],
       config.getCommands(),
@@ -70,9 +70,7 @@ export default class EditorSession extends AbstractEditorSession {
   }
 
   initialize () {
-    // TODO: is this the right place?
-    // initial reduce step
-    this.commandManager.reduce()
+    this.commandManager.initialize()
   }
 
   dispose () {

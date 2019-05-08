@@ -172,16 +172,18 @@ export function ensureValidJATS (t, app) {
   })
 }
 
+export const TEST_VFS_ROOT_DIR = './test/fixture/'
+
 export const LOREM_IPSUM = {
   vfs: TEST_VFS,
-  rootDir: platform.inBrowser ? './fixture/' : './test/fixture/',
+  rootDir: TEST_VFS_ROOT_DIR,
   archiveId: 'lorem-ipsum'
 }
 
 export function fixture (archiveId) {
   return {
     vfs: TEST_VFS,
-    rootDir: platform.inBrowser ? './fixture/' : './test/fixture/',
+    rootDir: TEST_VFS_ROOT_DIR,
     archiveId
   }
 }

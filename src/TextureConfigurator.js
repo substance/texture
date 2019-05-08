@@ -190,6 +190,12 @@ export default class TextureConfigurator {
     this._toolPanels.set(name, spec)
   }
 
+  // EXPERIMENTAL: for now we just use a callback as it is the most flexible
+  // but on the long run I think it would better to restrict this by introducing a DSL
+  extendToolPanel (name, extensionCb) {
+    extensionCb(this._toolPanels.get(name))
+  }
+
   addService (serviceId, factory) {
     this._services.set(serviceId, {
       factory,
@@ -203,10 +209,16 @@ export default class TextureConfigurator {
       if (entry.instance) {
         return Promise.resolve(entry.instance)
       } else {
-        return entry.factory(context).then(service => {
-          entry.instance = service
-          return service
-        })
+        let res = entry.factory(context)
+        if (res instanceof Promise) {
+          return res.then(service => {
+            entry.instance = service
+            return service
+          })
+        } else {
+          entry.instance = res
+          return Promise.resolve(res)
+        }
       }
     } else {
       return Promise.reject(new Error(`Unknown service: ${serviceId}`))

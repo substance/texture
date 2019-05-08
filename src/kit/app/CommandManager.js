@@ -48,6 +48,8 @@ export default class CommandManager {
   }
 
   _getCommandStates () {
+    if (!this._commands) this._initializeCommands()
+
     const context = this.contextProvider.context
     const appState = context.appState
     const params = new HandlerParams(context)

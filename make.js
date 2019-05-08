@@ -229,6 +229,7 @@ b.task('build:test-assets', ['build:demo:vfs', 'build:desktop:dars'], () => {
   })
   // copy a non-minified substance file into test folder
   b.copy('./node_modules/substance/dist/substance.js*', DIST + 'test/')
+  b.copy('./test/fixture', DIST + 'test/')
 })
 
 b.task('create-dev-self-module', () => {

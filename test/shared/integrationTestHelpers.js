@@ -1,4 +1,4 @@
-/* global vfs, TEST_VFS, Blob */
+/* global vfs, TEST_VFS, Blob, Response */
 import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
   Component, DefaultDOMElement, keys, getKeyForPath
@@ -174,14 +174,14 @@ export function ensureValidJATS (t, app) {
 
 export const LOREM_IPSUM = {
   vfs: TEST_VFS,
-  rootDir: './tests/fixture/',
+  rootDir: platform.inBrowser ? './fixture/' : './test/fixture/',
   archiveId: 'lorem-ipsum'
 }
 
 export function fixture (archiveId) {
   return {
     vfs: TEST_VFS,
-    rootDir: './tests/fixture/',
+    rootDir: platform.inBrowser ? './fixture/' : './test/fixture/',
     archiveId
   }
 }

@@ -109,7 +109,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
               responseType: 'blob'
             })
           } else {
-            return Promise.reject(new Error('FIXME: support blob retrieval in nodejs'))
+            // TODO: add a proper implementation for nodejs
+            const fs = require('fs')
+            return new Promise((resolve, reject) => {
+              fs.readFile(fileRecord.data, (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+              })
+            })
           }
         } else {
           let blob = platform.inBrowser ? new Blob([fileRecord.data]) : fileRecord.data

@@ -3,7 +3,7 @@ import { Command } from 'substance'
 import { Texture } from '../index'
 import setupTestApp from './shared/setupTestApp'
 import { openManuscriptEditor, openMenuAndFindTool } from './shared/integrationTestHelpers'
-import { spy } from './shared/testHelpers'
+import { spy, testAsync } from './shared/testHelpers'
 
 // TODO: most of the functionality is covered by regular tests, still it would be better
 // to cover some functionality explicitly
@@ -53,6 +53,41 @@ test('Configurator: extend the toolbar', t => {
   let editor = openManuscriptEditor(app)
   let testTool = openMenuAndFindTool(editor, 'context-tools', '.sm-test')
   t.notNil(testTool, 'test tool should be displayed in context-tools menu')
+  t.end()
+
+  Texture.plugins.delete('test-plugin')
+})
+
+class MyService {
+  static create (async) {
+    if (async) {
+      return Promise.resolve(new MyService())
+    } else {
+      return new MyService()
+    }
+  }
+
+  foo () { return true }
+}
+
+testAsync('Configurator: add a service', async t => {
+  let testPlugin = {
+    name: 'test-plugin',
+    configure (configurator) {
+      let articleConfig = configurator.getConfiguration('article')
+      articleConfig.addService('test', MyService.create)
+      articleConfig.addService('test-async', MyService.create.bind(MyService, true))
+    }
+  }
+  Texture.registerPlugin(testPlugin)
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let service = await editor.context.config.getService('test')
+  t.ok(service.foo(), 'service should have been provided')
+  let service2 = await editor.context.config.getService('test')
+  t.ok(service === service2, 'service instance should be a singleton')
+  let asyncService = await editor.context.config.getService('test-async')
+  t.ok(asyncService.foo(), 'asynchronous service should have been provided')
   t.end()
 
   Texture.plugins.delete('test-plugin')

@@ -1,4 +1,4 @@
-/* global vfs, TEST_VFS, Blob */
+/* global vfs, TEST_VFS, Blob, Response */
 import {
   ObjectOperation, DocumentChange, isString, isArray, platform,
   Component, DefaultDOMElement, keys, getKeyForPath
@@ -172,16 +172,18 @@ export function ensureValidJATS (t, app) {
   })
 }
 
+export const TEST_VFS_ROOT_DIR = './test/fixture/'
+
 export const LOREM_IPSUM = {
   vfs: TEST_VFS,
-  rootDir: './tests/fixture/',
+  rootDir: TEST_VFS_ROOT_DIR,
   archiveId: 'lorem-ipsum'
 }
 
 export function fixture (archiveId) {
   return {
     vfs: TEST_VFS,
-    rootDir: './tests/fixture/',
+    rootDir: TEST_VFS_ROOT_DIR,
     archiveId
   }
 }
@@ -279,14 +281,16 @@ export class PseudoDropEvent extends DOMEvent {
   }
 }
 
+export const PSEUDO_FILE_CONTENT = 'abc'
+
 export function createPseudoFile (name, type) {
   let blob
   if (platform.inBrowser) {
-    blob = new Blob(['abc'], { type })
+    blob = new Blob([PSEUDO_FILE_CONTENT], { type })
     blob.name = name
   // FIXME: do something real in NodeJS
   } else {
-    blob = { name, type }
+    blob = { name, type, data: PSEUDO_FILE_CONTENT }
   }
   return blob
 }
@@ -505,4 +509,20 @@ export function createJATSFixture ({ front = EMPTY_META, body = '', back = '' })
     ${back}
   </back>
 </article>`
+}
+
+export async function blob2string (blob) {
+  if (platform.inBrowser) {
+    let str = await (new Response(blob)).text()
+    return str
+  } else {
+    if (blob instanceof Buffer) {
+      // in nodejs we use buffers instead of blobs
+      let buffer = blob
+      return buffer.toString('utf8')
+    } else {
+      // otherwise we assume that this is a pseudo blob created with createPseudoFile
+      return blob.data
+    }
+  }
 }

@@ -1,6 +1,6 @@
-import { test } from 'substance-test'
+import { test, testAsync } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { createPseudoFile } from './shared/integrationTestHelpers'
+import { createPseudoFile, PSEUDO_FILE_CONTENT, fixture, blob2string } from './shared/integrationTestHelpers'
 
 /*
   - test addDocument()
@@ -35,6 +35,20 @@ test('Archive: adding assets with same name', t => {
   let fileName2 = archive.addAsset(file)
   t.equal(fileName2, 'test_2.png', 'filename should have been changed to be unique')
   t.ok(archive.hasAsset(fileName2), 'asset should be registered in the archive')
+
+  t.end()
+})
+
+testAsync('Archive: getBlob()', async t => {
+  let { archive } = setupTestApp(t, fixture('assets'))
+  // 'example.zip' should be served via URL
+  let blob = await archive.getBlob('example.zip')
+  t.equal(await blob2string(blob), '123', 'blob of already persisted asset should be correct')
+
+  let file = createPseudoFile('test.png', 'image/png')
+  let fileName = archive.addAsset(file)
+  blob = await archive.getBlob(fileName)
+  t.equal(await blob2string(blob), PSEUDO_FILE_CONTENT, 'blob of just uploaded asset should be correct')
 
   t.end()
 })

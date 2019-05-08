@@ -1,5 +1,7 @@
+/* globals Blob */
 import {
-  forEach, last, uuid, EventEmitter, platform, isString, documentHelpers, prettyPrintXML
+  forEach, last, uuid, EventEmitter, platform, isString, documentHelpers, prettyPrintXML,
+  sendRequest
 } from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
@@ -67,15 +69,63 @@ export default class PersistedDocumentArchive extends EventEmitter {
     // For sake of testing we use `PSEUDO-BLOB-URL:${filePath}`
     // so that we can see if the rest of the system is working
     if (platform.inBrowser) {
-      this._pendingFiles.set(filePath, URL.createObjectURL(file))
+      this._pendingFiles.set(filePath, {
+        blob: file,
+        blobUrl: URL.createObjectURL(file)
+      })
     } else {
-      this._pendingFiles.set(filePath, `PSEUDO-BLOB-URL:${filePath}`)
+      this._pendingFiles.set(filePath, {
+        blob: file,
+        blobUrl: `PSEUDO-BLOB-URL:${filePath}`
+      })
     }
     return filePath
   }
 
   getAsset (fileName) {
     return this._sessions.manifest.getDocument().getAssetByPath(fileName)
+  }
+
+  getAssetEntries () {
+    return this._sessions.manifest.getDocument().getAssetNodes().map(node => node.toJSON())
+  }
+
+  getBlob (path) {
+    // There are the following cases
+    // 1. the asset is on a different server (remote url)
+    // 2. the asset is on the local server (local url / relative path)
+    // 3. an unsaved is present as a blob in memory
+    let blobEntry = this._pendingFiles.get(path)
+    if (blobEntry) {
+      return Promise.resolve(blobEntry.blob)
+    } else {
+      let fileRecord = this._upstreamArchive.resources[path]
+      if (fileRecord) {
+        if (fileRecord.encoding === 'url') {
+          if (platform.inBrowser) {
+            return sendRequest({
+              method: 'GET',
+              url: fileRecord.data,
+              responseType: 'blob'
+            })
+          } else {
+            // TODO: add a proper implementation for nodejs
+            const fs = require('fs')
+            return new Promise((resolve, reject) => {
+              fs.readFile(fileRecord.data, (err, data) => {
+                if (err) reject(err)
+                else resolve(data)
+              })
+            })
+          }
+        } else {
+          let blob = platform.inBrowser ? new Blob([fileRecord.data]) : fileRecord.data
+          return Promise.resolve(blob)
+        }
+      } else {
+        return Promise.reject(new Error('File not found: ' + path))
+      }
+    }
   }
 
   getDocumentEntries () {
@@ -170,9 +220,9 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
   resolveUrl (path) {
     // until saved, files have a blob URL
-    let blobUrl = this._pendingFiles.get(path)
-    if (blobUrl) {
-      return blobUrl
+    let blobEntry = this._pendingFiles.get(path)
+    if (blobEntry) {
+      return blobEntry.blobUrl
     } else {
       let fileRecord = this._upstreamArchive.resources[path]
       if (fileRecord && fileRecord.encoding === 'url') {
@@ -300,8 +350,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
       buffer.reset(_res.version)
       // revoking object urls
       if (platform.inBrowser) {
-        for (let blobUrl of this._pendingFiles.values()) {
-          window.URL.revokeObjectURL(blobUrl)
+        for (let blobEntry of this._pendingFiles.values()) {
+          window.URL.revokeObjectURL(blobEntry.blobUrl)
         }
       }
       this._pendingFiles.clear()

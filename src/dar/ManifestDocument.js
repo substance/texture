@@ -1,6 +1,6 @@
 import {
   Document, DocumentNode, CHILDREN, STRING, DocumentSchema, documentHelpers,
-  DefaultDOMElement
+  DefaultDOMElement, BOOLEAN
 } from 'substance'
 
 export default class ManifestDocument extends Document {
@@ -62,7 +62,8 @@ export default class ManifestDocument extends Document {
         type: 'asset',
         id: el.attr('id'),
         assetType: el.attr('type'),
-        path: el.attr('path')
+        path: el.attr('path'),
+        sync: el.attr('sync') === 'true'
       })
       documentHelpers.append(manifest, ['dar', 'assets'], assetNode.id)
     }
@@ -91,7 +92,8 @@ export default class ManifestDocument extends Document {
             return $$('asset').attr({
               id: node.id,
               type: node.assetType,
-              path: node.path
+              path: node.path,
+              sync: node.sync ? 'true' : undefined
             })
           })
         )
@@ -130,7 +132,8 @@ DARAsset.schema = {
   type: 'asset',
   name: STRING,
   assetType: STRING,
-  path: STRING
+  path: STRING,
+  sync: BOOLEAN
 }
 
 const DARSchema = new DocumentSchema({

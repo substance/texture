@@ -1,5 +1,5 @@
 import { DefaultDOMElement } from 'substance'
-import { Managed } from '../../kit'
+import { Managed, OverlayCanvas } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
 import ManuscriptTOC from './ManuscriptTOC'
 import ManuscriptModel from '../models/ManuscriptModel'
@@ -113,14 +113,9 @@ export default class ManuscriptEditor extends EditorPanel {
   }
 
   _renderMainOverlay ($$) {
-    const Overlay = this.getComponent('overlay')
-    const configurator = this._getConfigurator()
-    const items = configurator.getToolPanel('main-overlay')
-    return $$(Managed(Overlay), {
-      items,
-      theme: this._getTheme(),
-      bindings: ['commandStates']
-    })
+    return $$(OverlayCanvas, {
+      theme: this._getTheme()
+    }).ref('overlay')
   }
 
   _renderContextMenu ($$) {

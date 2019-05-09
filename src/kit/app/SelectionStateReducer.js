@@ -120,6 +120,7 @@ class SelectionState {
       isInlineNodeSelection: false,
       // container information (only for ContainerSelection)
       containerPath: null,
+      node: null,
       previousNode: null,
       nextNode: null,
       // if the previous node is one char away

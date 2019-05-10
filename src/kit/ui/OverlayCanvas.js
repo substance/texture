@@ -50,13 +50,13 @@ export default class OverlayCanvas extends Component {
   }
 
   acquireOverlay (comp, options = {}) {
-    if (!this._items.has(comp.__id__)) console.log('acquiring overlay', comp, comp.__id__)
+    // if (!this._items.has(comp.__id__)) console.log('acquiring overlay', comp, comp.__id__)
     this._toBeAdded.push({ comp, options })
   }
 
   releaseOverlay (comp) {
     if (this._items.has(comp.__id__)) {
-      console.log('releasing overlay', comp, comp.__id__)
+      // console.log('releasing overlay', comp, comp.__id__)
       this._toBeRemoved.push(comp)
     }
   }

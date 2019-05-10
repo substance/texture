@@ -32,7 +32,7 @@
     "parse-formdata": "1.0.2",
     "source-map-support": "0.5.10",
     "standard": "12.0.1",
-    "substance-bundler": "0.25.5",
+    "substance-bundler": "0.26.0",
     "substance-test": "0.13.2",
     "tap-spec": "5.0.0",
     "texture-plugin-jats": "0.2.0",

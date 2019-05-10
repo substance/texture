@@ -4,7 +4,7 @@ import {
   setCursor, openManuscriptEditor, PseudoFileEvent, getEditorSession,
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
-  isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
+  isToolEnabled, selectNode, getSelection, selectRange,
   getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS, insertText
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'

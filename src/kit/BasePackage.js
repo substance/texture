@@ -1,9 +1,3 @@
-import {
-  ButtonPackage, ContextMenuPackage, DropzonesPackage,
-  ScrollbarPackage, ScrollPanePackage, BodyScrollPanePackage, SplitPanePackage,
-  TabbedPanePackage, ToolPanelPackage
-} from 'substance'
-
 import AnnotationComponent from './ui/AnnotationComponent'
 import BodyScrollPane from './ui/BodyScrollPane'
 import Button from './ui/Button'
@@ -32,16 +26,6 @@ import TextArea from './ui/TextArea'
 export default {
   name: 'TextureBase',
   configure: function (configurator) {
-    configurator.import(ButtonPackage)
-    configurator.import(ScrollPanePackage)
-    configurator.import(BodyScrollPanePackage)
-    configurator.import(SplitPanePackage)
-    configurator.import(TabbedPanePackage)
-    configurator.import(ScrollbarPackage)
-    configurator.import(ContextMenuPackage)
-    configurator.import(DropzonesPackage)
-    configurator.import(ToolPanelPackage)
-
     configurator.addComponent('annotation', AnnotationComponent)
     // customized built-ins
     configurator.addComponent('container-editor', ContainerEditor)
@@ -52,25 +36,25 @@ export default {
     configurator.addComponent('text-input', TextInput)
 
     // replacing Substance components with custom ones
-    configurator.addComponent('scroll-pane', ScrollPane, true)
-    configurator.addComponent('body-scroll-pane', BodyScrollPane, true)
+    configurator.addComponent('scroll-pane', ScrollPane)
+    configurator.addComponent('body-scroll-pane', BodyScrollPane)
 
-    configurator.addComponent('button', Button, true)
-    configurator.addComponent('context-menu', ContextMenu, true)
+    configurator.addComponent('button', Button)
+    configurator.addComponent('context-menu', ContextMenu)
     configurator.addComponent('input', Input)
     configurator.addComponent('modal', ModalDialog)
     configurator.addComponent('overlay-canvas', OverlayCanvas)
     configurator.addComponent('text-area', TextArea)
-    configurator.addComponent('tool', Tool, true)
+    configurator.addComponent('tool', Tool)
     // TODO: remove toggle-tool
-    configurator.addComponent('toggle-tool', ToggleTool, true)
-    configurator.addComponent('toolbar', Toolbar, true)
-    configurator.addComponent('tool-dropdown', ToolDropdown, true)
-    configurator.addComponent('tool-group', ToolGroup, true)
-    configurator.addComponent('tool-prompt', ToolPrompt, true)
-    configurator.addComponent('tool-separator', ToolSeparator, true)
-    configurator.addComponent('tool-spacer', ToolSpacer, true)
-    configurator.addComponent('tool-switcher', ToolSwitcher, true)
+    configurator.addComponent('toggle-tool', ToggleTool)
+    configurator.addComponent('toolbar', Toolbar)
+    configurator.addComponent('tool-dropdown', ToolDropdown)
+    configurator.addComponent('tool-group', ToolGroup)
+    configurator.addComponent('tool-prompt', ToolPrompt)
+    configurator.addComponent('tool-separator', ToolSeparator)
+    configurator.addComponent('tool-spacer', ToolSpacer)
+    configurator.addComponent('tool-switcher', ToolSwitcher)
 
     configurator.addLabel('text-types', {
       en: 'Text Type',
@@ -84,5 +68,7 @@ export default {
       en: 'Container',
       de: 'Container'
     })
+
+    configurator.addIcon('dropdown', { 'fontawesome': 'fa-angle-down' })
   }
 }

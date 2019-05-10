@@ -4,9 +4,12 @@ const fs = require('fs')
 const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
+const rollup = require('substance-bundler/extensions/rollup')
 const yazl = require('yazl')
 const compileSchema = require('texture-xml-utils/bundler/compileSchema')
 const generateSchemaDocumentation = require('texture-xml-utils/bundler/generateSchemaDocumentation')
+const commonjs = require('rollup-plugin-commonjs')
+const nodeResolve = require('rollup-plugin-node-resolve')
 
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
@@ -120,10 +123,6 @@ b.task('build:lib', () => {
   _buildLib(DIST, 'all')
 })
 
-b.task('build:cover', () => {
-  _buildLib(TMP, 'cover')
-})
-
 b.task('build:desktop', ['build:desktop:dars'], () => {
   b.copy('builds/desktop/index.html', APPDIST)
   b.copy('builds/desktop/build-resources', APPDIST)
@@ -158,15 +157,23 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })
-  b.js('builds/desktop/main.js', {
-    output: [{
+  rollup(b, {
+    input: 'builds/desktop/main.js',
+    output: {
       file: APPDIST + 'main.js',
       format: 'cjs'
-    }],
-    external: ['electron', 'path', 'url']
+    },
+    external: ['electron', 'path', 'url'],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ]
   })
-  b.js('builds/desktop/app.js', {
-    output: [{
+  rollup(b, {
+    input: 'builds/desktop/app.js',
+    output: {
       file: APPDIST + 'app.js',
       format: 'umd',
       name: 'textureApp',
@@ -175,8 +182,14 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
         'substance-texture': 'texture',
         'katex': 'katex'
       }
-    }],
-    external: [ 'substance', 'substance-texture', 'katex' ]
+    },
+    external: [ 'substance', 'substance-texture', 'katex' ],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ]
   })
   // execute 'install-app-deps'
   fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
@@ -204,18 +217,19 @@ b.task('build:demo:vfs', () => {
 
 b.task('build:demo', ['build:demo:vfs', 'build:lib:browser'], () => {
   b.copy('builds/demo/index.html', DIST)
-  b.js('builds/demo/demo.js', {
-    output: [{
+  rollup(b, {
+    input: 'builds/demo/demo.js',
+    external: ['substance', 'substance-texture', 'katex'],
+    output: {
       file: DIST + 'demo/demo.js',
       format: 'umd',
-      name: 'textureEditor',
+      name: 'TextureDemo',
       globals: {
         'substance': 'substance',
         'substance-texture': 'texture',
         'katex': 'katex'
       }
-    }],
-    external: ['substance', 'substance-texture', 'katex']
+    }
   })
 })
 
@@ -263,13 +277,8 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
   globals[INDEX_JS] = 'texture'
   globals[TEST_VFS] = 'testVfs'
 
-  b.js('test/index.js', {
-    output: [{
-      file: 'dist/test/tests.js',
-      format: 'umd',
-      name: 'tests',
-      globals
-    }],
+  rollup(b, {
+    input: 'test/index.js',
     external: [
       'substance',
       'substance-test',
@@ -277,7 +286,19 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
       'katex',
       'vfs',
       TEST_VFS
-    ]
+    ],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ],
+    output: {
+      file: 'dist/test/tests.js',
+      format: 'umd',
+      name: 'tests',
+      globals
+    }
   })
 })
 
@@ -285,14 +306,11 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
 
 function _buildLib (DEST, platform) {
   let output = []
-  let istanbul
   if (platform === 'browser' || platform === 'all') {
     output.push({
       file: DEST + 'texture.js',
       format: 'umd',
       name: 'texture',
-      sourcemapRoot: __dirname,
-      sourcemapPrefix: 'texture',
       globals: {
         'substance': 'substance',
         'katex': 'katex',
@@ -309,13 +327,19 @@ function _buildLib (DEST, platform) {
   if (platform === 'es' || platform === 'all') {
     output.push({
       file: DEST + 'texture.es.js',
-      format: 'es'
+      format: 'esm'
     })
   }
-  b.js('./index.js', {
-    output,
+  rollup(b, {
+    input: './index.js',
     external: ['substance', 'katex', 'vfs'],
-    istanbul
+    output,
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ]
   })
 }
 

@@ -1,15 +1,17 @@
-import { AnnotationComponent } from 'substance'
-import { NodeComponentMixin } from '../../kit'
+import { EditableAnnotationComponent } from '../../kit'
+import ExternalLinkEditor from './ExternalLinkEditor'
 
-export default class ExtLinkComponent extends NodeComponentMixin(AnnotationComponent) {
+export default class ExtLinkComponent extends EditableAnnotationComponent {
   render ($$) {
     let node = this.props.node
-    let el = super.render($$)
-    el.attr('href', node.href)
-    return el
+    return super.render($$).attr('href', node.href)
   }
 
   getTagName () {
     return 'a'
+  }
+
+  _getEditorClass () {
+    return ExternalLinkEditor
   }
 }

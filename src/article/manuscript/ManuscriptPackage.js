@@ -1,6 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
 import {
-  EditAnnotationCommand,
   ListPackage,
   MultiSelectPackage,
   AnnotationCommand
@@ -18,7 +17,6 @@ import PersistencePackage from '../../shared/PersistencePackage'
 
 import ReferenceListComponent from '../shared/ReferenceListComponent'
 import EditXrefTool from '../shared/EditXrefTool'
-import EditExtLinkTool from '../shared/EditExtLinkTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import ManuscriptTOC from './ManuscriptTOC'
 import FigureComponent from '../shared/FigureComponent'
@@ -130,10 +128,6 @@ export default {
       commandGroup: 'author'
     })
     config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
-      commandGroup: 'prompt'
-    })
-    config.addCommand('edit-external-link', EditAnnotationCommand, {
-      nodeType: 'external-link',
       commandGroup: 'prompt'
     })
     config.addCommand('edit-formula', EditInlineFormulaCommand, {
@@ -373,7 +367,6 @@ export default {
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('download-file', DownloadSupplementaryFileTool)
     config.addComponent('edit-block-formula', EditDispFormulaTool)
-    config.addComponent('edit-external-link', EditExtLinkTool)
     config.addComponent('edit-formula', EditInlineFormulaTool)
     config.addComponent('edit-xref', EditXrefTool)
     config.addComponent('insert-figure', InsertFigureTool)

@@ -1,5 +1,5 @@
 import {
-  Component, DefaultDOMElement, platform, getSelectionRect, getRelativeMouseBounds, getRelativeRect
+  Component, platform, getSelectionRect, getRelativeMouseBounds, getRelativeRect
 } from 'substance'
 
 export default class AbstractScrollPane extends Component {
@@ -17,66 +17,8 @@ export default class AbstractScrollPane extends Component {
     }
   }
 
-  didMount () {
-    if (platform.inBrowser) {
-      this.windowEl = DefaultDOMElement.wrapNativeElement(window)
-      this.windowEl.on('resize', this._onResize, this)
-    }
-    // FIXME: we need to define when exactly this must be executed
-    // ATM this causes trouble when
-    this.context.appState.addObserver(['@any'], this._afterRender, this, { stage: 'position' })
-  }
-
-  dispose () {
-    if (this.windowEl) {
-      this.windowEl.off(this)
-    }
-    this.context.appState.off(this)
-  }
-
   getName () {
     return this.props.name
-  }
-
-  _computeOverlayHints () {
-    let contentRect = this._getContentRect()
-    let selectionRect = this._getSelectionRect()
-    return {
-      contentRect,
-      selectionRect
-    }
-  }
-
-  _reduceOverlayHints (hints) {
-    // TODO: introduce a reducer for this
-    this.context.appState.set('overlayHints', hints)
-  }
-
-  /*
-    Determine selection rectangle relative to content element
-    and emit a selection:positioned event with positioning hints
-  */
-  _position () {
-    let hints = this._computeOverlayHints()
-    if (hints) {
-      this._reduceOverlayHints(hints)
-      // TODO: this is problematic and needs to be approached in
-      // a different way.
-      // Now we use overlays not only for selection anchored popups
-      // but also for menu dropdowns.
-      // Only for cases where the overlay needs to be position with a selection
-      // we should do that. I.e. I guess this should not be considered here at all
-      // but rather done along with the selection rendering
-      // this._scrollSelectionIntoView(hints.selectionRect)
-    }
-  }
-
-  _afterRender () {
-    this._position()
-  }
-
-  _onResize () {
-    this._position()
   }
 
   /*
@@ -91,22 +33,12 @@ export default class AbstractScrollPane extends Component {
     })
   }
 
-  _scrollSelectionIntoView () {
+  _scrollRectIntoView (rect) {
     // console.log('AbstractScrollPane._scrollSelectionIntoView()')
-    let hints = this.context.appState.get('overlayHints')
-    if (!hints) {
-      // console.log('...no hints')
-      return
-    }
-    let selectionRect = hints.selectionRect
-    if (!selectionRect) {
-      // console.log('...no selection rect')
-      return
-    }
     let upperBound = this.getScrollPosition()
     let lowerBound = upperBound + this.getHeight()
-    let selTop = selectionRect.top
-    let selBottom = selectionRect.top + selectionRect.height
+    let selTop = rect.top
+    let selBottom = rect.top + rect.height
     if ((selTop < upperBound && selBottom < upperBound) ||
         (selTop > lowerBound && selBottom > lowerBound)) {
       this.setScrollPosition(selTop)

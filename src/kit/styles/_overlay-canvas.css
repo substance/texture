@@ -1,0 +1,42 @@
+/*
+TODO: moving away from the old Overlay implementation
+replacing it with OverlayCanvas, which is more generic, but also more low-level
+*/
+
+.sc-overlay-canvas { z-index: 200; position: absolute; }
+
+.sc-overlay-canvas.sm-hidden { visibility: hidden; left: 0px; top: 0px; }
+
+.sc-overlay-canvas > .se-canvas {
+  margin: 5px;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  flex-wrap: nowrap;
+  box-shadow: var(--t-default-box-shadow);
+}
+
+/*
+  TODO: do we really want to keep these?
+  On the one hand, I'd prefer not to be too prescriptive w.r.t. the overlay content.
+  But, on the other we need a style 'framework' for those overlays to
+  achieve a consistent look and feel.
+  I.e. we probably want to consolidate styles below, providing such a CSS framework.
+*/
+.sc-overlay-canvas > .se-canvas .sc-tool-group {
+  flex: 0 0 0;
+  display: flex;
+}
+
+.sc-overlay-canvas > .se-canvas .sc-tool-group .sc-button {
+  flex: 0 0 0;
+  margin: 2px;
+}
+
+.sc-overlay-canvas > .se-canvas .sc-tool-dropdown .sc-button {
+  margin: 2px;
+}
+
+.sc-overlay-canvas .sc-tool-group { display: inline-block; }
+
+.sc-overlay-canvas .sc-tool-group .sc-button { margin: 0px 1px; }

@@ -34,10 +34,7 @@ export default class OverlayCanvas extends Component {
   shouldRerender () { return false }
 
   render ($$) {
-    let el = $$('div').addClass('sc-overlay-canvas sc-overlay')
-    // LEGACY: using the styles of the former Overlay component
-    // TODO: at some point we should rename the styles to 'sc-overlay-canvas'
-    el.addClass('sc-overlay')
+    let el = $$('div').addClass('sc-overlay-canvas')
     el.addClass('sm-hidden')
     el.addClass('sm-theme-' + this.getTheme())
     el.append(

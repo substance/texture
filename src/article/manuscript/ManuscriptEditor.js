@@ -92,7 +92,6 @@ export default class ManuscriptEditor extends EditorPanel {
   _renderContentPanel ($$) {
     const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
-    const Dropzones = this.getComponent('dropzones')
 
     let contentPanel = $$(ScrollPane, {
       contextMenu: 'custom',
@@ -106,8 +105,7 @@ export default class ManuscriptEditor extends EditorPanel {
         disabled: this.props.disabled
       }).ref('article'),
       this._renderMainOverlay($$),
-      this._renderContextMenu($$),
-      $$(Dropzones)
+      this._renderContextMenu($$)
     )
     return contentPanel
   }

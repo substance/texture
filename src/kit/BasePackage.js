@@ -17,6 +17,7 @@ import Overlay from './ui/Overlay'
 import ScrollPane from './ui/ScrollPane'
 import TextPropertyComponent from './ui/_TextPropertyComponent'
 import TextPropertyEditor from './ui/_TextPropertyEditor'
+import TextInput from './ui/TextInput'
 import Tool from './ui/Tool'
 import ToggleTool from './ui/ToggleTool'
 import Toolbar from './ui/Toolbar'
@@ -49,6 +50,7 @@ export default {
     configurator.addComponent('inline-node', IsolatedInlineNodeComponent)
     configurator.addComponent('text-property', TextPropertyComponent)
     configurator.addComponent('text-property-editor', TextPropertyEditor)
+    configurator.addComponent('text-input', TextInput)
 
     // replacing Substance components with custom ones
     configurator.addComponent('scroll-pane', ScrollPane, true)

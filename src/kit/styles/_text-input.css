@@ -16,7 +16,6 @@
   border: var(--t-input-focus-border);
 }
 
-/* TODO: use variables! */
 .sc-text-input .se-input.sm-empty {
   color: var(--t-placeholder-text-color);
   font-weight: var(--t-normal-font-weight);

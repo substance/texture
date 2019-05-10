@@ -34,7 +34,7 @@ export default class AbstractScrollPane extends Component {
   }
 
   _scrollRectIntoView (rect) {
-    // console.log('AbstractScrollPane._scrollSelectionIntoView()')
+    // console.log('AbstractScrollPane._scrollRectIntoView()')
     let upperBound = this.getScrollPosition()
     let lowerBound = upperBound + this.getHeight()
     let selTop = rect.top
@@ -43,6 +43,10 @@ export default class AbstractScrollPane extends Component {
         (selTop > lowerBound && selBottom > lowerBound)) {
       this.setScrollPosition(selTop)
     }
+  }
+
+  _scrollSelectionIntoView () {
+    this._scrollRectIntoView(this._getSelectionRect())
   }
 
   /**

@@ -34,6 +34,7 @@ export default class AbstractScrollPane extends Component {
   }
 
   _scrollRectIntoView (rect) {
+    if (!rect) return
     // console.log('AbstractScrollPane._scrollRectIntoView()')
     let upperBound = this.getScrollPosition()
     let lowerBound = upperBound + this.getHeight()

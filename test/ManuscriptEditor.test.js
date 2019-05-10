@@ -481,7 +481,7 @@ test('ManuscriptEditor: editing an external link', t => {
   let doc = getDocument(editor)
   loadBodyFixture(editor, P_WITH_EXTERNAL_LINK)
 
-  function _getUrlInput () { return editor.find('.sc-edit-external-link-tool > input') }
+  function _getUrlInput () { return editor.find('.sc-external-link-editor > input') }
   function _getUrlInputValue () { return _getUrlInput().el.val() }
   function _setUrlInputValue (val) { return _getUrlInput().el.val(val) }
 

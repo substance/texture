@@ -46,7 +46,7 @@ testAsync('Storage: reading a DAR folder', async t => {
   let rawArchive = await promisify(cb => {
     storage.read(null, cb)
   })
-  t.deepEqual(Object.keys(rawArchive.resources), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
+  t.deepEqual(_getResourceNames(rawArchive), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
   t.end()
 })
 
@@ -66,8 +66,7 @@ testAsync('Storage: cloning a .dar file', async t => {
   let rawArchive = await promisify(cb => {
     storage._getRawArchive(newDarPath, cb)
   })
-  let resourceNames = Object.keys(rawArchive.resources).sort()
-  t.deepEqual(resourceNames, ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
+  t.deepEqual(_getResourceNames(rawArchive), ['manifest.xml', 'manuscript.xml'], 'archive should contain correct resources')
   t.end()
 })
 
@@ -87,6 +86,8 @@ testAsync('Storage: cloning the kitchen-sink.dar', async t => {
   let rawArchive = await promisify(cb => {
     storage._getRawArchive(newDarPath, cb)
   })
+  // ATTENTION: there are more than these two files in that dar
+  // testing only manifest and manuscript
   t.ok(Boolean(rawArchive.resources['manifest.xml']), 'dar should contain manifest')
   t.ok(Boolean(rawArchive.resources['manuscript.xml']), 'dar should contain manuscript')
   t.end()

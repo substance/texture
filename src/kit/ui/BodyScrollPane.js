@@ -1,26 +1,6 @@
 import { DefaultDOMElement, platform } from 'substance'
 import AbstractScrollPane from './AbstractScrollPane'
 
-/**
-  Wraps content in a scroll pane.
-
-  @class ScrollPane
-  @component
-
-  @prop {String} scrollbarType 'native' or 'substance' for a more advanced visual scrollbar. Defaults to 'native'
-  @prop {String} [scrollbarPosition] 'left' or 'right' only relevant when scrollBarType: 'substance'. Defaults to 'right'
-  @prop {ui/Highlights} [highlights] object that maintains highlights and can be manipulated from different sources
-
-  @example
-
-  ```js
-  $$(BodyScrollPane).append(
-    content,
-    $$(ContextMenu)
-    $$(Overlay)
-  )
-  ```
-*/
 export default class BodyScrollPane extends AbstractScrollPane {
   /*
     Expose scrollPane as a child context

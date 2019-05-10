@@ -13,8 +13,8 @@ export default class OverlayCanvas extends Component {
 
     // TODO: avoid using appState directly, instead use a Managed component
     this.context.appState.addObserver(['@any'], this._reset, this, { stage: 'update' })
-    this.context.appState.addObserver(['@any'], this._updateOverlayCanvas, this, { stage: 'pre-render' })
-    this.context.appState.addObserver(['@any'], this._positionOverlay, this, { stage: 'finalize' })
+    this.context.appState.addObserver(['@any'], this._updateOverlayCanvas, this, { stage: 'post-render' })
+    this.context.appState.addObserver(['@any'], this._positionOverlay, this, { stage: 'position' })
   }
 
   dispose () {

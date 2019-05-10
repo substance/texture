@@ -2,7 +2,7 @@ import { isNil, isFunction } from 'substance'
 import AbstractAppState from './AbstractAppState'
 
 const ANY = '@any'
-const STAGES = ['update', 'pre-render', 'render', 'post-render', 'position', 'finalize']
+const STAGES = ['update', 'pre-render', 'render', 'post-render', 'pre-position', 'position', 'finalize']
 const DEFAULT_STAGE = 'update'
 const STAGE_IDX = STAGES.reduce((m, s, idx) => {
   m[s] = idx

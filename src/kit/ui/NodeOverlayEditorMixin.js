@@ -23,7 +23,8 @@ export default function (NodeComponent) {
         // .. that we will attach to the OverlayCanvas whenever the selection is on the annotation
         // TODO: similar as with IsolatedNodes and InlineNodes, the number of listeners will grow with
         // the size of the document. Thus, we need to introduce a means to solve this more efficiently
-        this.context.appState.addObserver(['selectionState'], this._onSelectionStateChange, this, { stage: 'pre-render' })
+        this.context.appState.addObserver(['selectionState'], this._onSelectionStateChange, this, { stage: 'render' })
+        this._onSelectionStateChange(this.context.appState.selectionState)
       }
     }
 

@@ -21,8 +21,6 @@ import {
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
-import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
-import EditInlineFormulaTool from '../shared/EditInlineFormulaTool'
 import EditXrefCommand from '../shared/EditXrefCommand'
 import EditXrefTool from '../shared/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
@@ -142,10 +140,6 @@ export default {
     config.addCommand('edit-author', EditEntityCommand, {
       selectionType: 'author',
       commandGroup: 'author'
-    })
-    config.addCommand('edit-formula', EditInlineFormulaCommand, {
-      nodeType: 'inline-formula',
-      commandGroup: 'prompt'
     })
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
@@ -323,7 +317,6 @@ export default {
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('edit-xref', EditXrefTool)
-    config.addComponent('edit-formula', EditInlineFormulaTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)

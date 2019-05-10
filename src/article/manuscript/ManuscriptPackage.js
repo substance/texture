@@ -38,8 +38,6 @@ import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
 import EditEntityCommand from '../shared/EditEntityCommand'
-import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
-import EditInlineFormulaTool from '../shared/EditInlineFormulaTool'
 import EditXrefCommand from '../shared/EditXrefCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
@@ -128,10 +126,6 @@ export default {
       commandGroup: 'author'
     })
     config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
-      commandGroup: 'prompt'
-    })
-    config.addCommand('edit-formula', EditInlineFormulaCommand, {
-      nodeType: 'inline-formula',
       commandGroup: 'prompt'
     })
     config.addCommand('edit-reference', EditEntityCommand, {
@@ -367,7 +361,6 @@ export default {
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('download-file', DownloadSupplementaryFileTool)
     config.addComponent('edit-block-formula', EditDispFormulaTool)
-    config.addComponent('edit-formula', EditInlineFormulaTool)
     config.addComponent('edit-xref', EditXrefTool)
     config.addComponent('insert-figure', InsertFigureTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)

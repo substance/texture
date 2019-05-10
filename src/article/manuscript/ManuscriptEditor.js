@@ -113,8 +113,10 @@ export default class ManuscriptEditor extends EditorPanel {
   }
 
   _renderMainOverlay ($$) {
+    const panelProvider = () => this.refs.contentPanel
     return $$(OverlayCanvas, {
-      theme: this._getTheme()
+      theme: this._getTheme(),
+      panelProvider
     }).ref('overlay')
   }
 

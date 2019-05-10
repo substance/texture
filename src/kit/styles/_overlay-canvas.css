@@ -17,26 +17,41 @@ replacing it with OverlayCanvas, which is more generic, but also more low-level
 }
 
 /*
-  TODO: do we really want to keep these?
-  On the one hand, I'd prefer not to be too prescriptive w.r.t. the overlay content.
-  But, on the other we need a style 'framework' for those overlays to
-  achieve a consistent look and feel.
-  I.e. we probably want to consolidate styles below, providing such a CSS framework.
+  TODO: develop a CSS framework for overlays
+  This is WIP
 */
-.sc-overlay-canvas > .se-canvas .sc-tool-group {
-  flex: 0 0 0;
+.sc-overlay-canvas > .se-canvas > .sm-horizontal-layout {
   display: flex;
+  align-items: center;
+  font-size: var(--t-dropdown-font-size);
+  font-weight: var(--t-bold-font-weight);
+  padding: 0px var(--t-button-padding);
 }
 
-.sc-overlay-canvas > .se-canvas .sc-tool-group .sc-button {
+.sc-overlay-canvas > .se-canvas > .sm-horizontal-layout > * {
   flex: 0 0 0;
   margin: 2px;
 }
 
-.sc-overlay-canvas > .se-canvas .sc-tool-dropdown .sc-button {
-  margin: 2px;
+.sc-overlay-canvas > .se-canvas > .sm-horizontal-layout .sc-text-property-editor {
+  min-width: 200px;
+  padding: var(--t-input-padding);
 }
 
-.sc-overlay-canvas .sc-tool-group { display: inline-block; }
+.sc-overlay-canvas > .se-canvas .sm-monospace {
+  font-family: var(--t-code-font);
+  background: transparent;
+  border: none;
+}
 
-.sc-overlay-canvas .sc-tool-group .sc-button { margin: 0px 1px; }
+.sc-overlay-canvas > .se-canvas .sc-container-editor,
+.sc-overlay-canvas > .se-canvas .sc-text-property-editor {
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+}
+
+.sc-overlay-canvas > .se-canvas .sc-container-editor:focus,
+.sc-overlay-canvas > .se-canvas .sc-text-property-editor:focus {
+  border: var(--t-input-focus-border);
+}

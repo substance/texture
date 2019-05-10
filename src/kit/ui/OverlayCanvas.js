@@ -4,17 +4,16 @@ export default class OverlayCanvas extends Component {
   constructor (...args) {
     super(...args)
 
-    this._hasBeenAcquired = false
+    this._items = new Map()
   }
-
   didMount () {
     super.didMount()
 
     this._positionOverlay()
 
     // TODO: avoid using appState directly, instead use a Managed component
-    this.context.appState.addObserver(['@any'], this._resetAcquire, this, { stage: 'update' })
-    this.context.appState.addObserver(['@any'], this._injectOverlayContent, this, { stage: 'post-render' })
+    this.context.appState.addObserver(['@any'], this._reset, this, { stage: 'update' })
+    this.context.appState.addObserver(['@any'], this._updateOverlayCanvas, this, { stage: 'pre-render' })
     this.context.appState.addObserver(['@any'], this._positionOverlay, this, { stage: 'finalize' })
   }
 
@@ -22,6 +21,8 @@ export default class OverlayCanvas extends Component {
     super.dispose()
 
     this.context.appState.removeObserver(this)
+    this._items.length = 0
+    this.refs.canvas.empty()
   }
 
   didUpdate () {
@@ -49,38 +50,27 @@ export default class OverlayCanvas extends Component {
   }
 
   acquireOverlay (comp, options = {}) {
-    if (this._hasBeenAcquired) {
-      console.error('OverlayCanvas has already been acquire by', this._overlayContent)
-    } else {
-      // a guard to make sure the overlay is not acquired
-      this._hasBeenAcquired = true
-      // the component and options
-      this._overlayContent = comp
-      this._overlayOptions = options
-    }
+    this._toBeAdded.push({ comp, options })
   }
 
   releaseOverlay (comp) {
-    let currentComp = this._getCurrentOverlayContent()
-    if (currentComp === comp) {
-      this._clearCanvas()
-      this._overlayContent = null
-      this._overlayOptions = null
-    }
+    this._toBeRemoved.push(comp)
   }
 
-  _resetAcquire () {
-    this._hasBeenAcquired = false
+  _reset () {
+    this._toBeAdded = []
+    this._toBeRemoved = []
   }
 
-  _injectOverlayContent () {
-    let oldContent = this._getCurrentOverlayContent()
-    if (oldContent !== this._overlayContent) {
-      this._clearCanvas()
-      if (this._overlayContent) {
-        this.refs.canvas.getElement().append(this._overlayContent.getElement())
-      }
-    }
+  _updateOverlayCanvas () {
+    this._toBeRemoved.forEach(comp => {
+      this._items.delete(comp.__id__)
+      comp.el.remove()
+    })
+    this._toBeAdded.forEach(entry => {
+      this._items.set(entry.comp.__id__, entry)
+      this.refs.canvas.getElement().append(entry.comp.getElement())
+    })
   }
 
   _getCurrentOverlayContent () {
@@ -96,13 +86,14 @@ export default class OverlayCanvas extends Component {
   }
 
   _positionOverlay () {
-    if (!this._overlayContent) {
+    if (this._items.size === 0) {
       this.el.addClass('sm-hidden')
       return
     }
+    const firstItem = this._items.values().next().value
     const contentPanel = this._getContentPanel()
     let contentRect = contentPanel._getContentRect()
-    let anchorEl = this._overlayOptions.anchor
+    let anchorEl = firstItem.options.anchor
     let anchorRect
     let scrollIntoView = false
     if (anchorEl) {

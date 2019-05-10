@@ -74,7 +74,6 @@ export default class SelectionStateReducer {
 
   deriveAnnoState (state, doc, sel) {
     // create a mapping by type for the currently selected annotations
-    // create a mapping by type for the currently selected annotations
     let annosByType = {}
     function _add (anno) {
       if (!annosByType[anno.type]) {
@@ -84,11 +83,15 @@ export default class SelectionStateReducer {
     }
     const propAnnos = documentHelpers.getPropertyAnnotationsForSelection(doc, sel)
     propAnnos.forEach(_add)
-    let firstAnno = propAnnos[0]
-    if (propAnnos.length === 1 && firstAnno.isInlineNode()) {
-      state.isInlineNodeSelection = firstAnno.getSelection().equals(sel)
-      state.node = firstAnno
+    if (propAnnos.length === 1) {
+      let firstAnno = propAnnos[0]
+      if (firstAnno.isInlineNode()) {
+        state.isInlineNodeSelection = firstAnno.getSelection().equals(sel)
+        state.node = firstAnno
+      }
     }
+    state.annos = propAnnos
+
     const containerPath = sel.containerPath
     if (containerPath) {
       const containerAnnos = documentHelpers.getContainerAnnotationsForSelection(doc, sel, containerPath)
@@ -120,9 +123,12 @@ class SelectionState {
       isInlineNodeSelection: false,
       // container information (only for ContainerSelection)
       containerPath: null,
+      // nodes
       node: null,
       previousNode: null,
       nextNode: null,
+      // active annos
+      annos: [],
       // if the previous node is one char away
       isFirst: false,
       // if the next node is one char away

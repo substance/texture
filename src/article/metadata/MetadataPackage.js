@@ -21,8 +21,6 @@ import {
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
-import EditXrefCommand from '../shared/EditXrefCommand'
-import EditXrefTool from '../shared/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
@@ -144,10 +142,6 @@ export default {
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
       commandGroup: 'reference'
-    })
-    config.addCommand('edit-xref', EditXrefCommand, {
-      nodeType: 'xref',
-      commandGroup: 'prompt'
     })
     config.addCommand('insert-columns-left', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'left' },
@@ -316,7 +310,6 @@ export default {
 
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
-    config.addComponent('edit-xref', EditXrefTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)

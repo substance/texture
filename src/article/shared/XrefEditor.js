@@ -1,10 +1,9 @@
-import { ToggleTool, renderNode } from '../../kit'
+import { renderNode, NodeComponent } from '../../kit'
 import { PREVIEW_MODE } from '../../article/ArticleConstants'
 
-export default class EditXRefTool extends ToggleTool {
+export default class XrefEditor extends NodeComponent {
   render ($$) {
     const targets = this._getAvailableTargets()
-
     let el = $$('div').addClass('sc-edit-xref-tool')
     // ATTENTION the targets are not models or nodes, but entries
     // created by xrefHelpers
@@ -33,9 +32,7 @@ export default class EditXRefTool extends ToggleTool {
   }
 
   _getNode () {
-    let doc = this.context.editorSession.getDocument()
-    let id = this.props.commandState.nodeId
-    return doc.get(id)
+    return this.props.node
   }
 
   _getAvailableTargets () {
@@ -49,8 +46,6 @@ export default class EditXRefTool extends ToggleTool {
     e.stopPropagation()
     let node = this._getNode()
     let targets = this.context.api._toggleXrefTarget(node, targetNodeId)
-    this.setState({
-      targets
-    })
+    this.setState({ targets })
   }
 }

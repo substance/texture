@@ -16,7 +16,6 @@ import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import PersistencePackage from '../../shared/PersistencePackage'
 
 import ReferenceListComponent from '../shared/ReferenceListComponent'
-import EditXrefTool from '../shared/EditXrefTool'
 import ManuscriptEditor from './ManuscriptEditor'
 import ManuscriptTOC from './ManuscriptTOC'
 import FigureComponent from '../shared/FigureComponent'
@@ -38,7 +37,6 @@ import DropFigure from './DropFigure'
 import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
 import EditDispFormulaTool from './EditDispFormulaTool'
 import EditEntityCommand from '../shared/EditEntityCommand'
-import EditXrefCommand from '../shared/EditXrefCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertDispFormulaCommand from './InsertDispFormulaCommand'
@@ -131,10 +129,6 @@ export default {
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
       commandGroup: 'reference'
-    })
-    config.addCommand('edit-xref', EditXrefCommand, {
-      nodeType: 'xref',
-      commandGroup: 'prompt'
     })
     config.addCommand('increase-heading-level', IncreaseHeadingLevelCommand, {
       commandGroup: 'text'
@@ -361,7 +355,6 @@ export default {
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('download-file', DownloadSupplementaryFileTool)
     config.addComponent('edit-block-formula', EditDispFormulaTool)
-    config.addComponent('edit-xref', EditXrefTool)
     config.addComponent('insert-figure', InsertFigureTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)

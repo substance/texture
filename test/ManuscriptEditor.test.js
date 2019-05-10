@@ -5,7 +5,7 @@ import {
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, createKeyEvent, selectNode, getSelection, selectRange,
-  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS
+  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS, insertText
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
@@ -47,24 +47,25 @@ const PARAGRAPH_WITH_INLINE_FORMULA = `<p id="p1">abc <inline-formula id="if-1" 
 test('ManuscriptEditor: edit inline formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let doc = getDocument(editor)
-  const formulaContent = '\\sqrt(13)'
-  const changedFormulaContent = '\\sqrt(14)'
-  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-input')
   loadBodyFixture(editor, PARAGRAPH_WITH_INLINE_FORMULA)
+
+  const getInlineFormulaEditor = () => editor.find('.sc-inline-formula-editor')
+
+  let doc = getDocument(editor)
+  let inlineFormulaNode = doc.get('if-1')
+  let originalContent = inlineFormulaNode.content
+
   // Set selection to open prompt editor
   setSelection(editor, 'p1.content', 4, 5)
-  const formulaInput = getFormulaInput()
-  t.notNil(formulaInput, 'there should be a math input inside popup')
-  t.equal(formulaInput.val(), formulaContent, 'should equal to: ' + formulaContent)
-  // Change the value
-  formulaInput.val(changedFormulaContent)
-  formulaInput._onChange()
-  // Change selection to close editor
+  t.ok(Boolean(getInlineFormulaEditor()), 'the inline formula editor should be shown')
+
+  setCursor(editor, `${inlineFormulaNode.id}.content`, inlineFormulaNode.content.length)
+  insertText(editor, '+1')
+  t.equal(inlineFormulaNode.content, originalContent + '+1', 'content should have been updated')
+
+  // setting the selection somewhere else should close the editor
   setSelection(editor, 'p1.content', 2)
-  t.isNil(getFormulaInput(), 'there should be no math input now')
-  let inlineFormulaNode = doc.get('if-1')
-  t.equal(inlineFormulaNode.content, changedFormulaContent, 'should equal to: ' + changedFormulaContent)
+  t.notOk(Boolean(getInlineFormulaEditor()), 'the inline formula editor should be hidden now')
   t.end()
 })
 
@@ -86,37 +87,33 @@ const PARAGRAPH_AND_BLOCK_FORMULA = `<p id="p1">abcdef</p>
 </disp-formula>
 `
 
-test('ManuscriptEditor: edit block formula', t => {
+test('ManuscriptEditor: edit a formula', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
-  let doc = getDocument(editor)
-  const formulaContent = '\\sqrt(13)'
-  const formulaContentV2 = '\\sqrt(14)'
-  const formulaContentV3 = '\\sqrt(14)'
-  const selectFormula = () => {
-    selectNode(editor, 'df-1')
-  }
-  const getFormulaInput = () => editor.find('.sc-edit-math-tool .sc-text-area')
   loadBodyFixture(editor, PARAGRAPH_AND_BLOCK_FORMULA)
+
+  const getFormulaComponent = () => editor.find('.sc-block-formula')
+  const getFormulaEditor = () => editor.find('.sc-block-formula-editor')
+
+  let doc = getDocument(editor)
+  let node = doc.get('df-1')
+  let originalContent = node.content
+  let blockFormulaComp = getFormulaComponent()
+
   // Set selection to open prompt editor
-  selectFormula()
-  let formulaInput = getFormulaInput()
-  t.notNil(formulaInput, 'there should be an input inside popup')
-  t.equal(formulaInput.val(), formulaContent, 'input should show formula')
-  // Change the value
-  formulaInput.val(formulaContentV2)
-  formulaInput._onChange()
-  // Change selection to close editor
+  selectNode(editor, 'df-1')
+  t.ok(Boolean(getFormulaEditor()), 'the formula editor should be shown')
+
+  setCursor(editor, `${node.id}.content`, node.content.length)
+  insertText(editor, '+1')
+  t.equal(node.content, originalContent + '+1', 'content should have been updated')
+
+  insertText(editor, '^')
+  t.ok(blockFormulaComp.el.hasClass('sm-error'), 'formula should show an error now')
+
+  // setting the selection somewhere else should close the editor
   setSelection(editor, 'p1.content', 2)
-  t.isNil(getFormulaInput(), 'there should be no math input now')
-  let blockFormulaNode = doc.get('df-1')
-  t.equal(blockFormulaNode.content, formulaContentV2, 'formula should have been updated')
-  // Submitting a change via CommandOrControl+Enter
-  selectFormula()
-  formulaInput = getFormulaInput()
-  formulaInput.val(formulaContentV3)
-  formulaInput.emit('keyevent', createKeyEvent('CommandOrControl+Enter'))
-  t.equal(blockFormulaNode.content, formulaContentV3, 'formula should have been updated')
+  t.notOk(Boolean(getFormulaEditor()), 'the formula editor should be hidden now')
   t.end()
 })
 
@@ -473,7 +470,7 @@ test('ManuscriptEditor: increasing and decreasing level of list items via tool',
   t.end()
 })
 
-const P_WITH_EXTERNAL_LINK = `<p id="p1">This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" id="link" xlink:href="substance.io">link</ext-link></p>`
+const P_WITH_EXTERNAL_LINK = `<p id="p1">This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" id="link" xlink:href="test">link</ext-link></p>`
 
 test('ManuscriptEditor: editing an external link', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
@@ -481,19 +478,17 @@ test('ManuscriptEditor: editing an external link', t => {
   let doc = getDocument(editor)
   loadBodyFixture(editor, P_WITH_EXTERNAL_LINK)
 
-  function _getUrlInput () { return editor.find('.sc-external-link-editor > input') }
-  function _getUrlInputValue () { return _getUrlInput().el.val() }
-  function _setUrlInputValue (val) { return _getUrlInput().el.val(val) }
+  function _getHrefEditor () { return editor.find('.sc-external-link-editor .se-href') }
 
   let link = doc.get('link')
   setCursor(editor, 'p1.content', link.start.offset + 1)
-
-  t.equal(_getUrlInputValue(), link.href, 'url input field should show current href value')
-  _setUrlInputValue('foo')
-  t.doesNotThrow(() => {
-    _getUrlInput()._onChange()
-  }, 'triggering href update should not throw')
-  t.equal(link.href, 'foo', '.. and the link should have been updated')
+  // there should now be the popup open
+  // now put a cursor there and type
+  let hrefEditor = _getHrefEditor()
+  t.ok(Boolean(hrefEditor), 'href editor should be shown')
+  setCursor(editor, `${link.id}.href`, 0)
+  insertText(editor, 'foo')
+  t.equal(link.href, 'footest', 'the link should have been updated')
   t.end()
 })
 

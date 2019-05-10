@@ -37,4 +37,12 @@ export default class TextPropertyEditorNew extends ModifiedSurface(SubstanceText
     }
     return el
   }
+
+  _handleEnterKey (event) {
+    event.stopPropagation()
+    event.preventDefault()
+    if (this.props.multiLine) {
+      this.type('\n')
+    }
+  }
 }

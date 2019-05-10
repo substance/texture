@@ -1,6 +1,6 @@
-import throwMethodIsAbstract from '../shared/throwMethodIsAbstract'
 import AnnotationComponent from './AnnotationComponent'
 import NodeComponentMixin from './NodeComponentMixin'
+import NodeOverlayMixin from './NodeOverlayEditorMixin'
 
 /**
  * A component that renders an editor in an overlay when the selection is on the annotation.
@@ -11,40 +11,7 @@ import NodeComponentMixin from './NodeComponentMixin'
  * to determine if the tool should be displayed or not.
  * Furthermore, our need for more complex editors for such popover was increasing (keywords editor, inline-cell editor, etc.)
  */
-export default class EditableAnnotationComponent extends NodeComponentMixin(AnnotationComponent) {
-  constructor (...args) {
-    super(...args)
-
-    this._surfaceId = this.context.parentSurfaceId + '/' + this.props.node.id
-  }
-
-  getChildContext () {
-    return {
-      parentSurfaceId: this._surfaceId
-    }
-  }
-
-  didMount () {
-    super.didMount()
-
-    // a detached editor component
-    this._editor = this._createEditor()
-    // .. that we will attach to the OverlayCanvas whenever the selection is on the annotation
-    // TODO: similar as with IsolatedNodes and InlineNodes, the number of listeners will grow with
-    // the size of the document. Thus, we need to introduce a means to solve this more efficiently
-    this.context.appState.addObserver(['selectionState'], this._onSelectionStateChange, this, { stage: 'pre-render' })
-  }
-
-  dispose () {
-    super.dispose()
-
-    if (this._editor) {
-      this._releaseOverlay()
-      this._editor.triggerDispose()
-      this._editor = null
-    }
-  }
-
+export default class EditableAnnotationComponent extends NodeOverlayMixin(NodeComponentMixin(AnnotationComponent)) {
   _onSelectionStateChange (selectionState) {
     let surfaceId = selectionState.selection.surfaceId
     let isSelected = selectionState.annos.indexOf(this.props.node) !== -1
@@ -63,24 +30,5 @@ export default class EditableAnnotationComponent extends NodeComponentMixin(Anno
     } else {
       this._releaseOverlay()
     }
-  }
-
-  _getEditorClass () { throwMethodIsAbstract() }
-
-  _createEditor () {
-    let EditorClass = this._getEditorClass()
-    // keep a rendered editor around
-    let editor = new EditorClass(this, { node: this.props.node })
-    editor._render()
-    editor.triggerDidMount()
-    return editor
-  }
-
-  _acquireOverlay (options) {
-    this.context.editor.refs.overlay.acquireOverlay(this._editor, options)
-  }
-
-  _releaseOverlay () {
-    this.context.editor.refs.overlay.releaseOverlay(this._editor)
   }
 }

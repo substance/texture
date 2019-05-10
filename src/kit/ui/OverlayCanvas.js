@@ -50,11 +50,15 @@ export default class OverlayCanvas extends Component {
   }
 
   acquireOverlay (comp, options = {}) {
+    if (!this._items.has(comp.__id__)) console.log('acquiring overlay', comp, comp.__id__)
     this._toBeAdded.push({ comp, options })
   }
 
   releaseOverlay (comp) {
-    this._toBeRemoved.push(comp)
+    if (this._items.has(comp.__id__)) {
+      console.log('releasing overlay', comp, comp.__id__)
+      this._toBeRemoved.push(comp)
+    }
   }
 
   _reset () {
@@ -68,8 +72,12 @@ export default class OverlayCanvas extends Component {
       comp.el.remove()
     })
     this._toBeAdded.forEach(entry => {
-      this._items.set(entry.comp.__id__, entry)
-      this.refs.canvas.getElement().append(entry.comp.getElement())
+      let id = entry.comp.__id__
+      let alreadyThere = this._items.has(id)
+      this._items.set(id, entry)
+      if (!alreadyThere) {
+        this.refs.canvas.getElement().append(entry.comp.getElement())
+      }
     })
   }
 

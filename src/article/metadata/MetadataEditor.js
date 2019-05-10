@@ -141,7 +141,7 @@ export default class MetadataEditor extends EditorPanel {
     return $$(OverlayCanvas, {
       panelProvider,
       theme: this._getTheme()
-    })
+    }).ref('overlay')
   }
 
   _getSectionComponent (name, model) {

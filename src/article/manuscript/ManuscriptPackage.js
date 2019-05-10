@@ -34,8 +34,6 @@ import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
 import DownloadSupplementaryFileCommand from './DownloadSupplementaryFileCommand'
 import DownloadSupplementaryFileTool from './DownloadSupplementaryFileTool'
 import DropFigure from './DropFigure'
-import EditBlockFormulaCommand from '../shared/EditBlockFormulaCommand'
-import EditDispFormulaTool from './EditDispFormulaTool'
 import EditEntityCommand from '../shared/EditEntityCommand'
 import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
 import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
@@ -122,9 +120,6 @@ export default {
     config.addCommand('edit-author', EditEntityCommand, {
       selectionType: 'author',
       commandGroup: 'author'
-    })
-    config.addCommand('edit-block-formula', EditBlockFormulaCommand, {
-      commandGroup: 'prompt'
     })
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
@@ -354,7 +349,6 @@ export default {
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('download-file', DownloadSupplementaryFileTool)
-    config.addComponent('edit-block-formula', EditDispFormulaTool)
     config.addComponent('insert-figure', InsertFigureTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)

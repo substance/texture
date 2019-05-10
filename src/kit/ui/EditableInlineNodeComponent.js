@@ -1,17 +1,8 @@
-import EditableAnnotationComponent from './EditableAnnotationComponent'
+import NodeComponent from './NodeComponent'
+import NodeOverlayEditorMixin from './NodeOverlayEditorMixin'
 
-export default class EditableInlineNodeComponent extends EditableAnnotationComponent {
+export default class EditableInlineNodeComponent extends NodeOverlayEditorMixin(NodeComponent) {
   render ($$) {
-    return $$('span')
-  }
-
-  _onSelectionStateChange (selectionState) {
-    let surfaceId = selectionState.selection.surfaceId
-    let node = selectionState.node
-    if (((node && node === this.props.node) || (surfaceId && surfaceId.startsWith(this._surfaceId)))) {
-      this._acquireOverlay({ anchor: this.el })
-    } else {
-      this._releaseOverlay()
-    }
+    return $$('span').attr('data-id', this.props.node.id)
   }
 }

@@ -6,6 +6,8 @@
    --t-interface-font: 'Inter UI', system-ui, sans-serif;
    /* Used for flowing text, such as paragraphs */
    --t-text-font: 'Inter UI', system-ui, sans-serif;
+   /* used for code, URLS, etc */
+   --t-code-font: Monaco, 'Courier New';
 
    /* Font sizes */
    /* ----------------------------------------------------------------------*/

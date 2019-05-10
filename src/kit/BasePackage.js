@@ -1,5 +1,5 @@
 import {
-  ButtonPackage, ContextMenuPackage, OverlayPackage, DropzonesPackage,
+  ButtonPackage, ContextMenuPackage, DropzonesPackage,
   ScrollbarPackage, ScrollPanePackage, BodyScrollPanePackage, SplitPanePackage,
   TabbedPanePackage, ToolPanelPackage
 } from 'substance'
@@ -13,7 +13,7 @@ import Input from './ui/Input'
 import IsolatedNodeComponent from './ui/_IsolatedNodeComponent'
 import IsolatedInlineNodeComponent from './ui/_IsolatedInlineNodeComponent'
 import ModalDialog from './ui/ModalDialog'
-import Overlay from './ui/Overlay'
+import OverlayCanvas from './ui/OverlayCanvas'
 import ScrollPane from './ui/ScrollPane'
 import TextPropertyComponent from './ui/_TextPropertyComponent'
 import TextPropertyEditor from './ui/_TextPropertyEditor'
@@ -39,7 +39,6 @@ export default {
     configurator.import(TabbedPanePackage)
     configurator.import(ScrollbarPackage)
     configurator.import(ContextMenuPackage)
-    configurator.import(OverlayPackage)
     configurator.import(DropzonesPackage)
     configurator.import(ToolPanelPackage)
 
@@ -60,7 +59,7 @@ export default {
     configurator.addComponent('context-menu', ContextMenu, true)
     configurator.addComponent('input', Input)
     configurator.addComponent('modal', ModalDialog)
-    configurator.addComponent('overlay', Overlay, true)
+    configurator.addComponent('overlay-canvas', OverlayCanvas)
     configurator.addComponent('text-area', TextArea)
     configurator.addComponent('tool', Tool, true)
     // TODO: remove toggle-tool

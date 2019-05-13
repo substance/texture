@@ -1,8 +1,7 @@
 .sc-popup {
   position: absolute;
   width: 100%;
-  left: 50%;
-  transform: translate(-50%, 10%);
+  top: 45px;
   background: var(--t-background-color);
   border: var(--t-default-border);
   border-radius: var(--t-border-radius);

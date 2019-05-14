@@ -31,6 +31,7 @@
 }
 
 .sc-keyword-input .se-new-keyword-input > .sc-input {
+  width: 100%;
   border: var(--t-input-default-border);
   border-radius: var(--t-border-radius);
   padding: var(--t-input-padding);

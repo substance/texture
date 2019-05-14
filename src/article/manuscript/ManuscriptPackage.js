@@ -337,6 +337,7 @@ export default {
     config.addLabel('enter-url-placeholder', 'Enter url')
     config.addLabel('enter-keyword', 'Enter keyword')
     config.addLabel('enter-keywords', 'Click to add keywords')
+    config.addLabel('edit-keywords', 'Edit keywords')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })

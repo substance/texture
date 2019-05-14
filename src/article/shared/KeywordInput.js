@@ -74,6 +74,7 @@ export default class KeywordInput extends CustomSurface {
   _renderEditor ($$) {
     const model = this.props.model
     const metadataValues = model.getItems()
+    const label = this.props.label
     const placeholder = this.getLabel('enter-keyword')
 
     const Button = this.getComponent('button')
@@ -95,30 +96,26 @@ export default class KeywordInput extends CustomSurface {
       }).ref(value.id)
       editorEl.append(
         $$('div').addClass('se-keyword').append(
-          $$('div').addClass('se-keyword-input').append(
-            input
-          ),
-          this._renderIcon($$, 'trash').on('click', this._removeKeyword.bind(this, value.id))
+          input
         )
       )
     })
     editorEl.append(
-      $$('div').addClass('se-keyword').append(
-        $$('div').addClass('se-keyword-input').append(
-          $$(Input, {
-            placeholder,
-            handleEscape: false
-          }).ref('newKeywordInput')
-            .attr({ tabindex: '2' })
-            .on('keydown', this._onNewKeywordKeydown)
-        ),
+      $$('div').addClass('se-new-keyword-input').append(
+        $$(Input, {
+          placeholder,
+          handleEscape: false
+        }).ref('newKeywordInput')
+          .attr({ tabindex: '2' })
+          .on('keydown', this._onNewKeywordKeydown)
+          .on('click', this._onNewKeywordClick),
         $$(Button).append(
           this.getLabel('create')
         ).addClass('se-create-value')
           .on('click', this._addKeyword)
       )
     )
-    return $$(Popup).append(editorEl)
+    return $$(Popup, { label }).append(editorEl)
   }
 
   _renderIcon ($$, iconName) {
@@ -147,6 +144,11 @@ export default class KeywordInput extends CustomSurface {
       event.preventDefault()
       this._ensureIsCollapsed()
     }
+  }
+
+  _onNewKeywordClick (event) {
+    domHelpers.stopAndPrevent(event)
+    this._select(true)
   }
 
   _onNewKeywordKeydown (event) {
@@ -232,18 +234,6 @@ export default class KeywordInput extends CustomSurface {
     if (keyword) {
       this.send('addValue', keyword)
     }
-  }
-
-  _removeKeyword (nodeId) {
-    const model = this.props.model
-    const path = model.getPath()
-    const values = model.getValue()
-    const valueIndex = values.indexOf(nodeId)
-    const isLast = valueIndex === values.length - 1
-    // NOTE: current strartegy it to put selection to a next keyword.
-    // To do it we need to pass next input surfaceId or new keyword input surfaceId
-    const surfaceId = isLast ? this._surfaceId : this.refs[values[valueIndex + 1]].getSurfaceId()
-    this.send('executeCommand', 'remove-keyword', { path, nodeId, surfaceId })
   }
 
   _focusNewKeyworkInput () {

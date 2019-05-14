@@ -1,6 +1,5 @@
 .sc-keyword-input {
   position: relative;
-  width: 100%;
   line-height: var(--t-input-line-height);
   cursor: pointer;
   padding: var(--t-input-padding);
@@ -9,55 +8,50 @@
   border: var(--t-input-default-border);
 }
 
+.sc-keyword-input .se-keyword-editor {
+  padding: var(--t-half-spacing) var(--t-default-spacing);
+}
+
 .sc-keyword-input.sm-active {
   border: var(--t-input-focus-border);
   background: var(--t-focus-background-color);
 }
 
-.sc-keyword-input .se-keyword {
-  display: flex;
-  align-items: center;
-  border-bottom: var(--t-default-border);
-}
-
-.sc-keyword-input .se-keyword:last-child {
-  border-bottom: none;
-}
-
-.sc-keyword-input .se-keyword > * {
-  margin-right: var(--t-half-spacing);
-}
-
-.sc-keyword-input .se-keyword .se-keyword-input {
-  flex: 1 1 auto;
-}
-
 .sc-keyword-input .sc-text-input .se-input {
-  border-radius: 0;
-  margin: 0;
+  width: auto;
 }
 
-.sc-keyword-input .sc-text-input:focus .se-input {
-  border: var(--t-input-default-border);
+.sc-keyword-input .se-keyword-editor .se-keyword {
+  margin: var(--t-half-spacing) 0;
 }
 
-.sc-keyword-input .se-keyword-input > .sc-input {
-  width: 100%;
-  height: var(--t-input-height);
-  padding: var(--t-input-padding);
-  font-size: var(--t-small-font-size);
-  line-height: var(--t-input-line-height);
+.sc-keyword-input .se-new-keyword-input {
+  display: flex;
+  margin: 0 var(--t-negative-input-padding);
+}
+
+.sc-keyword-input .se-new-keyword-input > .sc-input {
   border: var(--t-input-default-border);
   border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+  margin-right: var(--t-half-spacing);
+  font-size: var(--t-small-font-size);
+  line-height: var(--t-input-line-height);
+  flex-grow: 1;
 }
 
-.sc-keyword-input .se-keyword-input > .sc-input::placeholder {
+.sc-keyword-input .se-new-keyword-input > .sc-input:focus {
+  border: var(--t-input-focus-border);
+}
+
+.sc-keyword-input .se-new-keyword-input > .sc-input::placeholder {
   color: var(--t-placeholder-text-color);
   font-weight: var(--t-normal-font-weight);
 }
+
 .sc-keyword-input .se-create-value {
   background: var(--t-action-background-color);
   color: var(--t-inverted-text-color);
   border-radius: var(--t-border-radius);
-  padding: 2px 6px;
+  padding: var(--t-input-padding) var(--t-half-spacing);
 }

@@ -361,6 +361,7 @@ export default {
     config.addLabel('open-link', 'Open Link')
     config.addLabel('enter-keyword', 'Enter keyword')
     config.addLabel('enter-keywords', 'Click to add keywords')
+    config.addLabel('edit-keywords', 'Edit keywords')
 
     // Icons
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })

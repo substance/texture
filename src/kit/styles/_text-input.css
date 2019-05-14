@@ -5,7 +5,7 @@
 .sc-text-input .se-input {
   width: 100%;
   height: var(--t-input-height);
-  border-radius: 5px;
+  border-radius: var(--t-border-radius);
   padding: var(--t-input-padding);
   border: var(--t-input-default-border);
   margin: var(--t-negative-input-padding);

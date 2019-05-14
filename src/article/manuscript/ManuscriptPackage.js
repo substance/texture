@@ -242,7 +242,9 @@ export default {
       nodeType: 'footnote',
       commandGroup: 'footnote'
     })
-    config.addCommand('remove-keyword', RemoveKeywordCommand)
+    config.addCommand('remove-metadata-keyword', RemoveKeywordCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
     })

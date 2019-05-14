@@ -36,6 +36,7 @@ import {
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from '../manuscript/TableCommands'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
+import RemoveKeywordCommand from '../shared/RemoveKeywordCommand'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
@@ -242,6 +243,9 @@ export default {
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'
+    })
+    config.addCommand('remove-metadata-keyword', RemoveKeywordCommand, {
+      commandGroup: 'custom-metadata-fields'
     })
     config.addCommand('remove-reference', RemoveReferenceCommand, {
       commandGroup: 'reference'

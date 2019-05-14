@@ -2,38 +2,29 @@ import { Command, documentHelpers } from 'substance'
 
 export default class RemoveKeywordCommand extends Command {
   getCommandState (params, context) {
-    return { disabled: false }
+    const xpath = params.selectionState.xpath
+    if (xpath.length > 0) {
+      const selectedType = xpath[xpath.length - 1].type
+      if (selectedType === 'custom-metadata-value') {
+        return { disabled: false }
+      }
+    }
+    return { disabled: true }
   }
 
   execute (params, context) {
-    const { path, nodeId, surfaceId } = params
+    const selectionState = params.selectionState
+    const node = selectionState.node
+    const nodeId = node.id
+    const parentNode = node.getParent()
+    const path = [parentNode.id, 'values']
     const editorSession = context.editorSession
+
     editorSession.transaction(tx => {
       const index = tx.get(path).indexOf(nodeId)
-      const size = tx.get(path).length
-      if (index === -1) return false
-
       documentHelpers.removeAt(tx, path, index)
       documentHelpers.deepDeleteNode(nodeId)
-      // NOTE: After removing keyword selection should be moved to
-      // the next reasonable place: next keyword value or new keyword input
-      if (index < size - 1) {
-        const nextNodeId = tx.get(path)[index]
-        tx.setSelection({
-          type: 'property',
-          path: [nextNodeId, 'content'],
-          surfaceId,
-          startOffset: 0
-        })
-      } else {
-        tx.setSelection({
-          type: 'custom',
-          customType: 'keywordInput',
-          nodeId,
-          data: { isExpanded: true },
-          surfaceId
-        })
-      }
+      tx.setSelection(null)
     })
   }
 }

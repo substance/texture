@@ -29,6 +29,7 @@
     "font-awesome": "4.5.0",
     "inter-ui": "3.3.2",
     "nyc": "14.1.0",
+    "module-alias": "2.2.0",
     "parse-formdata": "1.0.2",
     "rollup": "^1.11.3",
     "rollup-plugin-commonjs": "^9.3.4",
@@ -43,15 +44,16 @@
   },
   "scripts": {
     "prepack": "npm install && node make publish",
+    "lint": "standard \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\"",
     "start": "node --require esm make dev -s -w -d data",
     "app": "node make run-app -w",
     "release": "node make desktop && build --project app-dist",
     "pretest": "npm run lint",
-    "test": "node make test-nodejs && node --require esm test | tap-spec",
+    "test": "npm run test-nodejs",
     "test-debug": "node make test-nodejs && node --inspect-brk --require esm test",
+    "test-nodejs": "node make test-nodejs && node test/runTests | tap-spec",
     "test-browser": "node make test-browser -s -w",
     "cover": "node make test-nodejs && nyc --require esm --reporter=lcov --reporter=text node test",
-    "lint": "standard \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\""
   },
   "nyc": {
     "include": [

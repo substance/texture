@@ -2,7 +2,7 @@ import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
 import {
   createJatsImporter, createJatsExporter, createEmptyJATS
-} from '../index'
+} from 'substance-texture'
 import { createEmptyArticle } from './shared/testHelpers'
 
 const SIMPLE = `

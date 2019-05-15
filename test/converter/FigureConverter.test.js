@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { ConvertFig } from '../../index'
+import { ConvertFig } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('fig.xml')

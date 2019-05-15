@@ -6,7 +6,7 @@ import {
 } from './shared/integrationTestHelpers'
 import { importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { getLabel } from '../index'
+import { getLabel } from 'substance-texture'
 
 const emptyLabel = '???'
 const manuscriptFootnoteSelector = '.sc-manuscript > .sc-manuscript-section.sm-footnotes .sc-footnote'

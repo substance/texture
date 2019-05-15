@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import { openMetadataEditor, createTestVfs, getSelection, loadBodyFixture, openManuscriptEditor, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
 // TODO: test TOC
 // TODO: test EditReferenceWorkflow (or is this dead code?)

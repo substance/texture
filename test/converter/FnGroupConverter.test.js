@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { DefaultDOMElement } from 'substance'
-import { FnGroupConverter } from '../../index'
+import { FnGroupConverter } from 'substance-texture'
 import readFixture from '../fixture/readFixture'
 
 const fixture = readFixture('fn-group.xml')

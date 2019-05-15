@@ -1,5 +1,5 @@
 import { test } from 'substance-test'
-import { createEmptyJATS, createJatsImporter } from '../index'
+import { createEmptyJATS, createJatsImporter } from 'substance-texture'
 
 // TODO: add more tests covering the implementation of ArticleJATSImporter
 

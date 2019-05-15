@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import { openMetadataEditor, createTestVfs } from './shared/integrationTestHelpers'
-import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
 const AUTHOR_AND_GROUP = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">

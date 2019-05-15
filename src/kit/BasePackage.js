@@ -17,7 +17,6 @@ import ToggleTool from './ui/ToggleTool'
 import Toolbar from './ui/Toolbar'
 import ToolDropdown from './ui/ToolDropdown'
 import ToolGroup from './ui/ToolGroup'
-import ToolPrompt from './ui/ToolPrompt'
 import ToolSeparator from './ui/ToolSeparator'
 import ToolSpacer from './ui/ToolSpacer'
 import ToolSwitcher from './ui/ToolSwitcher'
@@ -51,7 +50,6 @@ export default {
     configurator.addComponent('toolbar', Toolbar)
     configurator.addComponent('tool-dropdown', ToolDropdown)
     configurator.addComponent('tool-group', ToolGroup)
-    configurator.addComponent('tool-prompt', ToolPrompt)
     configurator.addComponent('tool-separator', ToolSeparator)
     configurator.addComponent('tool-spacer', ToolSpacer)
     configurator.addComponent('tool-switcher', ToolSwitcher)

@@ -294,7 +294,7 @@ b.task('build:coverage:browser', ['build:schema', 'build:test-browser'], () => {
   _buildCoverageBundle('browser')
 })
 
-b.task('build:coverage:nodejs', ['build:schema'], () => {
+b.task('build:coverage:nodejs', ['build:schema', 'build:test-assets'], () => {
   _buildCoverageBundle('nodejs')
 })
 

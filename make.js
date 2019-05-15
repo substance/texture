@@ -10,6 +10,7 @@ const compileSchema = require('texture-xml-utils/bundler/compileSchema')
 const generateSchemaDocumentation = require('texture-xml-utils/bundler/generateSchemaDocumentation')
 const commonjs = require('rollup-plugin-commonjs')
 const nodeResolve = require('rollup-plugin-node-resolve')
+const istanbul = require('substance-bundler/extensions/rollup/rollup-plugin-istanbul')
 
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
@@ -250,7 +251,7 @@ b.task('build:test-assets', ['build:demo:vfs', 'build:desktop:dars'], () => {
 b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
   b.copy('test/index.html', 'dist/test/index.html')
   b.copy('test/_test.css', 'dist/test/_test.css')
-  b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
+  b.copy('node_modules/substance-test/dist/substance-test.js*', 'dist/test/')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
 
   const TEST_VFS = path.join(__dirname, 'tmp', 'test-vfs.js')
@@ -288,6 +289,64 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
     }
   })
 })
+
+b.task('build:coverage:browser', ['build:schema', 'build:test-browser'], () => {
+  _buildCoverageBundle('browser')
+})
+
+b.task('build:coverage:nodejs', ['build:schema'], () => {
+  _buildCoverageBundle('nodejs')
+})
+
+b.task('run:coverage:browser', () => {
+  // Note: `await=false` is important, as otherwise bundler would await this to finish
+  fork(b, require.resolve('electron/cli.js'), '.', '--coverage', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: true })
+})
+
+b.task('run:test:electron', ['test-browser'], () => {
+  // Note: `await=false` is important, as otherwise bundler would await this to finish
+  fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: false })
+})
+
+function _buildCoverageBundle (target) {
+  let output = []
+  if (target === 'browser') {
+    output.push({
+      file: 'tmp/texture.instrumented.js',
+      format: 'umd',
+      name: 'texture',
+      globals: {
+        'substance': 'substance',
+        'katex': 'katex'
+      }
+    })
+  }
+  if (target === 'nodejs') {
+    output.push({
+      file: 'tmp/texture.instrumented.cjs.js',
+      format: 'cjs'
+    })
+  }
+  rollup(b, {
+    input: './index.js',
+    external: [
+      'substance',
+      'katex'
+    ],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      }),
+      istanbul({
+        include: [
+          'src/**/*.js'
+        ]
+      })
+    ],
+    output
+  })
+}
 
 /* HELPERS */
 

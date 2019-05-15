@@ -28,8 +28,9 @@
     "express": "4.16.4",
     "font-awesome": "4.5.0",
     "inter-ui": "3.3.2",
-    "nyc": "14.1.0",
+    "istanbul-lib-instrument": "^3.3.0",
     "module-alias": "2.2.0",
+    "nyc": "^14.1.1",
     "parse-formdata": "1.0.2",
     "rollup": "^1.11.3",
     "rollup-plugin-commonjs": "^9.3.4",
@@ -53,7 +54,11 @@
     "test-debug": "node make test-nodejs && node --inspect-brk test/runTests",
     "test-nodejs": "node make test-nodejs && node test/runTests | tap-spec",
     "test-browser": "node make test-browser -s -w",
-    "cover": "node make test-nodejs && nyc --require esm --reporter=lcov --reporter=text node test",
+    "test-electron": "node make run:test:electron -w",
+    "cover": "npm run cover:nodejs && npm run cover:electron && npm run cover:report",
+    "cover:nodejs": "node make build:coverage:nodejs && node test/runTests --coverage | tap-spec nyc",
+    "cover:electron": "node make build:coverage:browser && electron builds/test --coverage | tap-spec",
+    "cover:report": "nyc report --reporter=lcov --reporter=html"
   },
   "nyc": {
     "include": [

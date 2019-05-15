@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texture Tests</title>
+    <meta charset="UTF-8">
+    <!-- styles -->
+    <link href='../../node_modules/substance-test/dist/test.css' rel='stylesheet' type='text/css'/>
+    <link href='../../node_modules/font-awesome/css/font-awesome.min.css' rel='stylesheet' type='text/css' />
+    <link href='../../dist/test/_test.css' rel='stylesheet' type='text/css' />
+    <!-- scripts -->
+    <script type="text/javascript" src="../../node_modules/substance/dist/substance.min.js"></script>
+    <script type="text/javascript" src="../../node_modules/katex/dist/katex.js"></script>
+    <script type="text/javascript" src="../../node_modules/substance-test/dist/substance-test.js"></script>
+    <script type="text/javascript" src="../../tmp/texture.instrumented.js"></script>
+    <script type="text/javascript">
+      (function () {
+        const { ipcRenderer: ipcMain, remote } = require('electron')
+        const { shell, dialog } = remote
+        const { test, harness } = window.substanceTest
+        // pipe out the tap output
+        test.createStream().pipe(process.stdout)
+        harness.on('done', () => {
+          // this generates the TAP summary
+          // TODO: this should be public API
+          test._results.close()
+          // write coverage report
+          // TODO: share code with test/runTests.js
+          const fs = require('fs')
+          const path = require('path')
+          let nycOutputDir = path.join(__dirname, '..', '..', '.nyc_output')
+          if (!fs.existsSync(nycOutputDir)) {
+            fs.mkdirSync(nycOutputDir)
+          }
+          fs.writeFileSync(path.join(nycOutputDir, 'texture.electron.json'), JSON.stringify(window.__coverage__))
+          // TODO: write the coverage file
+          remote.getCurrentWindow().close()
+        })
+      })()
+    </script>
+    <script type="text/javascript" src="../../dist/test/tests.js"></script>
+  </head>
+  <body>
+  </body>
+</html>

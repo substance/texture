@@ -1,6 +1,4 @@
 const _initLoader = require('./_initLoader')
-const fs = require('fs')
-const path = require('path')
 
 let isCoverage = Boolean(process.argv.find(p => p === '--coverage'))
 
@@ -9,7 +7,9 @@ _require('./index.js')
 
 if (isCoverage) {
   process.on('beforeExit', () => {
-    // TODO: make this more robust
+    // TODO: we could try to share this code with the electron coverage runner (see builds/test/coverage.html)
+    const fs = require('fs')
+    const path = require('path')
     let nycOutputDir = path.join(__dirname, '..', '.nyc_output')
     if (!fs.existsSync(nycOutputDir)) {
       fs.mkdirSync(nycOutputDir)

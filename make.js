@@ -253,19 +253,15 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
   b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
 
-  // NOTE: by declaring texture/index.js as external we manage to serve both environments, browser and nodejs
-  // with the same code.
-  // In the browser, texture is used via the regular texture bundle, in nodejs it is resolved in the regular way
-  const INDEX_JS = path.join(__dirname, 'index.js')
   const TEST_VFS = path.join(__dirname, 'tmp', 'test-vfs.js')
   let globals = {
     'substance': 'substance',
     'substance-test': 'substanceTest',
+    'substance-texture': 'texture',
     'katex': 'katex',
     // TODO: this should be done in the same way as INDEX_JS and TEST_VFS
     'vfs': 'vfs'
   }
-  globals[INDEX_JS] = 'texture'
   globals[TEST_VFS] = 'testVfs'
 
   rollup(b, {
@@ -273,7 +269,7 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
     external: [
       'substance',
       'substance-test',
-      INDEX_JS,
+      'substance-texture',
       'katex',
       'vfs',
       TEST_VFS

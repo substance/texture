@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import { createTestVfs, openManuscriptEditor } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
 const xrefTypes = {
   'bibr': 'reference',

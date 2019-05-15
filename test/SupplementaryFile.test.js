@@ -4,7 +4,7 @@ import {
   setCursor, openManuscriptEditor, PseudoDropEvent, PseudoFileEvent,
   fixture, loadBodyFixture, getDocument, openContextMenuAndFindTool,
   openMenuAndFindTool, deleteSelection, clickUndo, isToolEnabled, selectNode,
-  insertText, TEST_VFS_ROOT_DIR
+  insertText, getTestVfsRootDir
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs, exportNode, importElement } from './shared/testHelpers'
 import setupTestApp from './shared/setupTestApp'
@@ -15,7 +15,7 @@ const downloadSupplementaryFileToolSelector = '.sc-download-supplementary-file-t
 const replaceSupplementaryFileToolSelector = '.sc-replace-supplementary-file-tool'
 
 const LOCAL_ASSET_NAME = 'example.zip'
-const LOCAL_ASSET_URL = TEST_VFS_ROOT_DIR + 'assets/' + LOCAL_ASSET_NAME
+const LOCAL_ASSET_URL = getTestVfsRootDir() + 'assets/' + LOCAL_ASSET_NAME
 const REMOTE_ASSET_URL = 'http://substance.io/images/texture-1.0.png'
 
 test('SupplementaryFile: upload file and insert into manuscript', t => {

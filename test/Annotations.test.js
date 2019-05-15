@@ -1,5 +1,8 @@
 import { test } from 'substance-test'
-import { setCursor, setSelection, openManuscriptEditor, loadBodyFixture, isToolEnabled, openMenu, ensureValidJATS } from './shared/integrationTestHelpers'
+import {
+  setCursor, setSelection, openManuscriptEditor, loadBodyFixture, isToolEnabled,
+  openMenu, ensureValidJATS
+} from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 

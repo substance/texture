@@ -6,7 +6,7 @@ import {
 import {
   TextureWebApp, VfsStorageClient, createJatsImporter, DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD,
   TextureJATS
-} from '../../index'
+} from 'substance-texture'
 import TestVfs from './TestVfs'
 import { DOMEvent } from './testHelpers'
 import { validateXML } from 'texture-xml-utils'
@@ -123,7 +123,17 @@ export function createTestApp (options = {}) {
       let _vfs = options.vfs || vfs
       // TODO: find out if we still need options.root, because it looks like
       // we are using options.rootDir
-      let _rootFolder = options.root || options.rootDir || '../data/'
+      // HACK: hard-coding the data location for different test-scenarios
+      // 1. when running nodejs tests, then the data is in '../data'
+      // 2. when running tests in electron, the data is in '../../data'
+      let _rootFolder = options.root || options.rootDir
+      if (!_rootFolder) {
+        if (platform.inElectron) {
+          _rootFolder = '../../data/'
+        } else {
+          _rootFolder = '../data/'
+        }
+      }
       return new VfsStorageClient(_vfs, _rootFolder, options)
     }
 
@@ -172,18 +182,28 @@ export function ensureValidJATS (t, app) {
   })
 }
 
-export const TEST_VFS_ROOT_DIR = './test/fixture/'
+export function getTestVfsRootDir () {
+  // ATTENTION: these are hard-coded according to the different
+  // test builds we are using
+  // in the browser test-suite we bundle assets into an extra 'test' folder
+  // in electron we can access the original files directly via relative path to the root
+  if (platform.inElectron) {
+    return '../../test/fixture/'
+  } else {
+    return './test/fixture/'
+  }
+}
 
 export const LOREM_IPSUM = {
   vfs: TEST_VFS,
-  rootDir: TEST_VFS_ROOT_DIR,
+  rootDir: getTestVfsRootDir(),
   archiveId: 'lorem-ipsum'
 }
 
 export function fixture (archiveId) {
   return {
     vfs: TEST_VFS,
-    rootDir: TEST_VFS_ROOT_DIR,
+    rootDir: getTestVfsRootDir(),
     archiveId
   }
 }

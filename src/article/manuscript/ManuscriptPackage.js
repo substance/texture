@@ -455,6 +455,7 @@ export default {
 
     // KeyboardShortcuts
     config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
+    config.addKeyboardShortcut('CommandOrControl+Delete', { command: 'remove-metadata-keyword' })
 
     // Register commands and keyboard shortcuts for collections
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })

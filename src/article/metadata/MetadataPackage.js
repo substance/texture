@@ -322,6 +322,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
     config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
     config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
+    config.addKeyboardShortcut('CommandOrControl+Delete', { command: 'remove-metadata-keyword' })
 
     // Labels
     config.addLabel('abstracts', 'Abstracts')

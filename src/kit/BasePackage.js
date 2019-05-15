@@ -20,7 +20,6 @@ import ToolGroup from './ui/ToolGroup'
 import ToolSeparator from './ui/ToolSeparator'
 import ToolSpacer from './ui/ToolSpacer'
 import ToolSwitcher from './ui/ToolSwitcher'
-import TextArea from './ui/TextArea'
 
 export default {
   name: 'TextureBase',
@@ -43,7 +42,6 @@ export default {
     configurator.addComponent('input', Input)
     configurator.addComponent('modal', ModalDialog)
     configurator.addComponent('overlay-canvas', OverlayCanvas)
-    configurator.addComponent('text-area', TextArea)
     configurator.addComponent('tool', Tool)
     // TODO: remove toggle-tool
     configurator.addComponent('toggle-tool', ToggleTool)

@@ -50,7 +50,7 @@
     "release": "node make desktop && build --project app-dist",
     "pretest": "npm run lint",
     "test": "npm run test-nodejs",
-    "test-debug": "node make test-nodejs && node --inspect-brk --require esm test",
+    "test-debug": "node make test-nodejs && node --inspect-brk test/runTests",
     "test-nodejs": "node make test-nodejs && node test/runTests | tap-spec",
     "test-browser": "node make test-browser -s -w",
     "cover": "node make test-nodejs && nyc --require esm --reporter=lcov --reporter=text node test",

@@ -178,10 +178,6 @@ export default class ToolGroup extends Component {
           ToolClass = this.getComponent('tool-group')
           break
         }
-        case 'prompt': {
-          ToolClass = this.getComponent('tool-prompt')
-          break
-        }
         case 'separator': {
           ToolClass = this.getComponent('tool-separator')
           break

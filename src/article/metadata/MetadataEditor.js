@@ -1,5 +1,5 @@
 import { DefaultDOMElement } from 'substance'
-import { Managed } from '../../kit'
+import { Managed, OverlayCanvas } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
 import MetadataModel from './MetadataModel'
 import MetadataSection from './MetadataSection'
@@ -137,14 +137,11 @@ export default class MetadataEditor extends EditorPanel {
   }
 
   _renderMainOverlay ($$) {
-    const Overlay = this.getComponent('overlay')
-    const configurator = this._getConfigurator()
-    const items = configurator.getToolPanel('main-overlay')
-    return $$(Managed(Overlay), {
-      items,
-      theme: this._getTheme(),
-      bindings: ['commandStates']
-    })
+    const panelProvider = () => this.refs.contentPanel
+    return $$(OverlayCanvas, {
+      panelProvider,
+      theme: this._getTheme()
+    }).ref('overlay')
   }
 
   _getSectionComponent (name, model) {

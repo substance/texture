@@ -1,21 +1,33 @@
-import { NodeComponent } from '../../kit'
+import { NodeComponent, NodeOverlayEditorMixin } from '../../kit'
 import katex from 'katex'
 import { PREVIEW_MODE } from '../ArticleConstants'
+import BlockFormulaEditor from './BlockFormulaEditor'
 import PreviewComponent from './PreviewComponent'
 import { getLabel } from './nodeHelpers'
 
-export default class BlockFormulaComponent extends NodeComponent {
+export default class BlockFormulaComponent extends NodeOverlayEditorMixin(NodeComponent) {
+  getInitialState () {
+    return this._deriveState(this.props, {})
+  }
+
+  willUpdateProps (newProps) {
+    this.setState(this._deriveState(newProps))
+  }
+
   render ($$) {
     const mode = this.props.mode
     const node = this.props.node
     const label = getLabel(node) || '?'
     const source = node.content
+    const state = this.state
 
     if (mode === PREVIEW_MODE) {
+      let description = $$('div').html(state.html)
+      if (state.error) description.addClass('sm-error')
       return $$(PreviewComponent, {
         id: node.id,
         label,
-        description: $$('div').html(katex.renderToString(source))
+        description
       })
     }
 
@@ -23,24 +35,57 @@ export default class BlockFormulaComponent extends NodeComponent {
       .addClass('sc-block-formula')
       .attr('data-id', node.id)
 
+    let content = $$('div').addClass('se-content')
     if (!source) {
-      el.append('?')
+      content.append('?')
     } else {
-      try {
-        el.append(
-          $$('span').addClass('se-formula').html(katex.renderToString(source))
-        )
-        el.append($$('div').addClass('se-blocker'))
-      } catch (error) {
-        el.addClass('sm-error')
-          .text(error.message)
-      }
+      content.append(
+        $$('div').addClass('se-formula').html(state.html || state.lastHtml)
+      )
     }
-
-    el.append(
+    content.append(
       $$('div').addClass('se-label').append(label)
     )
 
+    el.append(
+      content
+    )
+
+    if (this.state.error) {
+      el.addClass('sm-error')
+      el.append(
+        $$('div').addClass('se-error').text(this.state.error.message)
+      )
+    }
+
+    // TODO: what is this for?
+    el.append($$('div').addClass('se-blocker'))
+
     return el
+  }
+
+  _onNodeUpdate () {
+    this.setState(this._deriveState(this.props, this.state))
+  }
+
+  _deriveState (props, oldState) {
+    try {
+      let html = katex.renderToString(props.node.content)
+      return { html, lastHtml: html }
+    } catch (error) {
+      return {
+        error,
+        html: '',
+        lastHtml: oldState.lastHtml
+      }
+    }
+  }
+
+  _getEditorClass () {
+    return BlockFormulaEditor
+  }
+
+  _shouldEnableOverlayEditor () {
+    return this.props.mode !== PREVIEW_MODE
   }
 }

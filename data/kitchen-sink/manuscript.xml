@@ -207,8 +207,7 @@ def read() = in.read()
 }]]></preformat>
       <disp-formula id="disp-formula-1" content-type="math/tex">
         <label>(1)</label>
-        <tex-math><![CDATA[
-1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
+        <tex-math><![CDATA[1+\frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots=
 \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},
 \quad\quad \text{for }\lvert q\rvert<1.]]></tex-math>
       </disp-formula>
@@ -249,13 +248,11 @@ def read() = in.read()
       </list>
       <disp-formula id="disp-formula-2" content-type="math/tex">
         <label>(2)</label>
-        <tex-math><![CDATA[
-\sum_{i = 1}^{ \left[ \frac{n}{2} \right] }
+        <tex-math><![CDATA[\sum_{i = 1}^{ \left[ \frac{n}{2} \right] }
 \binom{ x_{i, i + 1}^{i^{2}} }
 { \left[ \frac{i + 3}{3} \right] }
 \frac{ \sqrt{ \mu(i)^{ \frac{3}{2}} (i^{2} - 1) } }
-{ \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }
-]]></tex-math>
+{ \sqrt[3]{\rho(i) - 2} + \sqrt[3]{\rho(i) - 1} }]]></tex-math>
       </disp-formula>
       <sec id="sec-3-1">
         <title>Tables</title>

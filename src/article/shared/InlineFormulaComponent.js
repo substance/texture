@@ -1,15 +1,15 @@
-import { NodeComponent } from '../../kit'
 import katex from 'katex'
+import { EditableInlineNodeComponent } from '../../kit'
+import InlineFormulaEditor from './InlineFormulaEditor'
 
-export default class InlineFormulaComponent extends NodeComponent {
+export default class InlineFormulaComponent extends EditableInlineNodeComponent {
   // ATTENTION: this is very similar to BlockFormulaComponent
   // but unfortunately also substantially different
   // e.g. has no blocker, elements are spans, error message as tooltip
   render ($$) {
     const node = this.props.node
-    let el = $$('span')
+    let el = super.render($$)
       .addClass('sc-inline-formula')
-      .attr('data-id', node.id)
     let source = node.content
     if (!source) {
       el.append('?')
@@ -25,5 +25,9 @@ export default class InlineFormulaComponent extends NodeComponent {
       }
     }
     return el
+  }
+
+  _getEditorClass () {
+    return InlineFormulaEditor
   }
 }

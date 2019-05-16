@@ -7,7 +7,7 @@ export default class SurfaceManager {
     this.editorState = editorState
     this.surfaces = new Map()
 
-    editorState.addObserver(['selection', 'document'], this._onSelectionOrDocumentChange, this, { stage: 'post-render' })
+    editorState.addObserver(['selection', 'document'], this._onSelectionOrDocumentChange, this, { stage: 'pre-position' })
     editorState.addObserver(['selection', 'document'], this._scrollSelectionIntoView, this, { stage: 'finalize' })
   }
 

@@ -52,7 +52,6 @@ export default class TextureConfigurator {
   }
 
   getConfiguration (path) {
-    // TODO: implement this in a strict way
     if (isString(path)) {
       path = path.split('.')
     }

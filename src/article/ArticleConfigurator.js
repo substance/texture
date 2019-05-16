@@ -7,8 +7,16 @@ export default class ArticleConfigurator extends TextureConfigurator {
     this._xmlSchemaIds = new Set()
     this._xmlValidators = new Map()
     this._xmlTransformations = new Map()
+
+    this._customisations = new Map()
   }
 
+  createCustomisation (xmlSchemaId) {
+    this._xmlSchemaIds.add(xmlSchemaId)
+  }
+
+  // TODO: IMO this is not needed, because it is either a customisation
+  // or covered via transformations
   registerSchemaId (xmlSchemaId) {
     this._xmlSchemaIds.add(xmlSchemaId)
   }

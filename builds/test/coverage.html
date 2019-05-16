@@ -22,6 +22,10 @@
         harness.on('done', () => {
           // this generates the TAP summary
           // TODO: this should be public API
+          let tests = harness.getTests()
+          for (let t of tests) {
+            t._exit()
+          }
           test._results.close()
           // write coverage report
           // TODO: share code with test/runTests.js

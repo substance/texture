@@ -14,6 +14,7 @@ import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/tes
 // TODO: test save button
 // TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
 // TODO: test automatic label generation for block-formulas
+// TODO: add a test using AddSupplementaryFileWorkflow
 
 const EMPTY_P = `<p id="p1"></p>`
 

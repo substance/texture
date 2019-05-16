@@ -1,7 +1,7 @@
 /* global vfs */
 import { platform, AbstractEditorSession, DefaultDOMElement } from 'substance'
 import { test } from 'substance-test'
-import { TextureArchive, checkArchive } from '../index'
+import { TextureArchive, checkArchive } from 'substance-texture'
 import { getMountPoint, diff } from './shared/testHelpers'
 import { applyNOP, toUnix, setupTestVfs, openManuscriptEditor, PseudoFileEvent, getEditorSession, setSelection } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'

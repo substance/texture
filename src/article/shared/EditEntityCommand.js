@@ -1,9 +1,9 @@
 import { Command } from 'substance'
 
 /*
-  This command intended to switch view and scroll to the selected node.
-  Command state becoming active only for certain type of custom selection,
-  e.g. if you want to use it, provide config with selectionType property.
+  This is a preliminary solultion that switches to the correct view and scrolls
+  the selected node into view.
+  On the long run we want to let the views be independent, e.g. using a popup instead.
 */
 export default class EditEntityCommand extends Command {
   getCommandState (params, context) {
@@ -11,7 +11,8 @@ export default class EditEntityCommand extends Command {
     let newState = {
       disabled: true
     }
-
+    // this command only becomes active for a specific type of custom selection,
+    // e.g. if you want to use it, provide config with selectionType property
     if (sel.isCustomSelection()) {
       if (sel.customType === this.config.selectionType) {
         newState.disabled = false

@@ -1,4 +1,4 @@
-import { AnnotationCommand, EditAnnotationCommand, getKeyForPath } from 'substance'
+import { AnnotationCommand, getKeyForPath } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
@@ -21,11 +21,6 @@ import {
   ReplaceFigurePanelImageCommand, RemoveFigurePanelCommand, OpenFigurePanelImageCommand
 } from '../shared/FigurePanelCommands'
 import EditEntityCommand from '../shared/EditEntityCommand'
-import EditExtLinkTool from '../shared/EditExtLinkTool'
-import EditInlineFormulaCommand from '../shared/EditInlineFormulaCommand'
-import EditInlineFormulaTool from '../shared/EditInlineFormulaTool'
-import EditXrefCommand from '../shared/EditXrefCommand'
-import EditXrefTool from '../shared/EditXrefTool'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
 import InsertCustomAbstractCommand from '../shared/InsertCustomAbstractCommand'
@@ -144,21 +139,9 @@ export default {
       selectionType: 'author',
       commandGroup: 'author'
     })
-    config.addCommand('edit-external-link', EditAnnotationCommand, {
-      nodeType: 'external-link',
-      commandGroup: 'prompt'
-    })
-    config.addCommand('edit-formula', EditInlineFormulaCommand, {
-      nodeType: 'inline-formula',
-      commandGroup: 'prompt'
-    })
     config.addCommand('edit-reference', EditEntityCommand, {
       selectionType: 'reference',
       commandGroup: 'reference'
-    })
-    config.addCommand('edit-xref', EditXrefCommand, {
-      nodeType: 'xref',
-      commandGroup: 'prompt'
     })
     config.addCommand('insert-columns-left', InsertCellsCommand, {
       spec: { dim: 'col', pos: 'left' },
@@ -327,9 +310,6 @@ export default {
 
     // Tools
     config.addComponent('add-figure-panel', InsertFigurePanelTool)
-    config.addComponent('edit-external-link', EditExtLinkTool)
-    config.addComponent('edit-xref', EditXrefTool)
-    config.addComponent('edit-formula', EditInlineFormulaTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
     config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
     config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)

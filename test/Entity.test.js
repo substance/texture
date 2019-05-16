@@ -4,7 +4,7 @@ import {
   openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, openContextMenuAndFindTool, createTestVfs
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
-import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from '../index'
+import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
 function _entityTest (t, entityType, entityName, checkSelection) {
   entityName = entityName || entityType

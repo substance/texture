@@ -2,7 +2,7 @@ import { platform, DocumentSchema } from 'substance'
 import {
   InternalArticleDocument, TextureConfigurator, ArticlePackage,
   createJatsImporter, createJatsExporter, createEmptyJATS
-} from '../../index'
+} from 'substance-texture'
 import getMountPoint from './getMountPoint'
 
 export { test, spy, wait, testAsync } from 'substance-test'

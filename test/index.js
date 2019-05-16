@@ -32,9 +32,13 @@ import './Table.test'
 import './TableConverter.test'
 import './UndoRedo.test'
 import './Validator.test'
-
 // TODO: there are some tests in ./converter/. Either fix them and include here
 // or remove them
+
+// stopping after loading tests if running for debug
+if (typeof process !== 'undefined' && process.execArgv && process.execArgv.find(p => p.startsWith('--inspect'))) {
+  debugger // eslint-disable-line
+}
 
 platform.test = true
 

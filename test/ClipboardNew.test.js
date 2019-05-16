@@ -2,7 +2,7 @@ import { test as _test } from 'substance-test'
 import {
   DefaultDOMElement, platform, find, documentHelpers
 } from 'substance'
-import { Clipboard } from '../index'
+import { Clipboard } from 'substance-texture'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import { ClipboardEventData } from './shared/testHelpers'
 

@@ -5,7 +5,7 @@ import {
   deleteSelection, openContextMenuAndFindTool, openMenuAndFindTool, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
-import { getLabel } from '../index'
+import { getLabel } from 'substance-texture'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 
 // TODO: test automatic labelling

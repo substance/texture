@@ -1,14 +1,14 @@
-.sc-block-formula {
+.sc-block-formula > .se-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.sc-block-formula .se-formula {
+.sc-block-formula > .se-content > .se-formula {
   margin: 0px auto;
 }
 
-.sc-block-formula .se-label {
+.sc-block-formula > .se-content > .se-label {
   padding-left: 10px;
 }
 

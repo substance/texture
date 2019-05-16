@@ -1,4 +1,4 @@
-import { Component, sendRequest } from 'substance'
+import { Component, sendRequest, platform } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
 import QueryComponent from './QueryComponent'
 
@@ -102,6 +102,11 @@ function _fetchCSLJSONEntries (dois) {
   Fetch single entry for DOI
 */
 function _fetchDOI (doi) {
-  const url = ENDPOINT + doi
-  return sendRequest({ url: url, method: 'GET', header: { 'accept': 'application/vnd.citationstyles.csl+json' } })
+  // ATTENTION: sendRequest uses XMLHTTPRequest, thus make sure to call it only in the browser
+  if (platform.inBrowser) {
+    const url = ENDPOINT + doi
+    return sendRequest({ url: url, method: 'GET', header: { 'accept': 'application/vnd.citationstyles.csl+json' } })
+  } else {
+    return Promise.resolve('{}')
+  }
 }

@@ -1,6 +1,8 @@
 import { test, testAsync } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { createPseudoFile, PSEUDO_FILE_CONTENT, fixture, blob2string } from './shared/integrationTestHelpers'
+import {
+  createPseudoFile, PSEUDO_FILE_CONTENT, fixture, blob2string
+} from './shared/integrationTestHelpers'
 
 /*
   - test addDocument()

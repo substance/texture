@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES } from '../index'
+import { JATS_BIBR_TYPES_TO_INTERNAL, INTERNAL_BIBR_TYPES } from 'substance-texture'
 import {
   openMetadataEditor, openManuscriptEditor, setSelection,
   insertText, openContextMenuAndFindTool, openMenuAndFindTool

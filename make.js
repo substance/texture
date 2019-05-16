@@ -4,9 +4,13 @@ const fs = require('fs')
 const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
+const rollup = require('substance-bundler/extensions/rollup')
 const yazl = require('yazl')
 const compileSchema = require('texture-xml-utils/bundler/compileSchema')
 const generateSchemaDocumentation = require('texture-xml-utils/bundler/generateSchemaDocumentation')
+const commonjs = require('rollup-plugin-commonjs')
+const nodeResolve = require('rollup-plugin-node-resolve')
+const istanbul = require('substance-bundler/extensions/rollup/rollup-plugin-istanbul')
 
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
@@ -54,7 +58,7 @@ b.task('dev', ['clean', 'build:schema', 'build:assets', 'build:demo'])
 b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib:browser', 'build:desktop'])
   .describe('builds the desktop bundle (electron).')
 
-b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets', 'create-dev-self-module'])
+b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets'])
   .describe('prepares everything necessary to run tests in node.')
 
 b.task('test-browser', ['clean', 'build:schema', 'build:lib:browser', 'build:test-assets', 'build:test-browser'])
@@ -120,10 +124,6 @@ b.task('build:lib', () => {
   _buildLib(DIST, 'all')
 })
 
-b.task('build:cover', () => {
-  _buildLib(TMP, 'cover')
-})
-
 b.task('build:desktop', ['build:desktop:dars'], () => {
   b.copy('builds/desktop/index.html', APPDIST)
   b.copy('builds/desktop/build-resources', APPDIST)
@@ -158,15 +158,23 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
       fs.writeFileSync(APPDIST + 'package.json', out)
     }
   })
-  b.js('builds/desktop/main.js', {
-    output: [{
+  rollup(b, {
+    input: 'builds/desktop/main.js',
+    output: {
       file: APPDIST + 'main.js',
       format: 'cjs'
-    }],
-    external: ['electron', 'path', 'url']
+    },
+    external: ['electron', 'path', 'url'],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ]
   })
-  b.js('builds/desktop/app.js', {
-    output: [{
+  rollup(b, {
+    input: 'builds/desktop/app.js',
+    output: {
       file: APPDIST + 'app.js',
       format: 'umd',
       name: 'textureApp',
@@ -175,8 +183,14 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
         'substance-texture': 'texture',
         'katex': 'katex'
       }
-    }],
-    external: [ 'substance', 'substance-texture', 'katex' ]
+    },
+    external: [ 'substance', 'substance-texture', 'katex' ],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ]
   })
   // execute 'install-app-deps'
   fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
@@ -204,18 +218,19 @@ b.task('build:demo:vfs', () => {
 
 b.task('build:demo', ['build:demo:vfs', 'build:lib:browser'], () => {
   b.copy('builds/demo/index.html', DIST)
-  b.js('builds/demo/demo.js', {
-    output: [{
+  rollup(b, {
+    input: 'builds/demo/demo.js',
+    external: ['substance', 'substance-texture', 'katex'],
+    output: {
       file: DIST + 'demo/demo.js',
       format: 'umd',
-      name: 'textureEditor',
+      name: 'TextureDemo',
       globals: {
         'substance': 'substance',
         'substance-texture': 'texture',
         'katex': 'katex'
       }
-    }],
-    external: ['substance', 'substance-texture', 'katex']
+    }
   })
 })
 
@@ -233,66 +248,115 @@ b.task('build:test-assets', ['build:demo:vfs', 'build:desktop:dars'], () => {
   b.copy('./test/fixture', DIST + 'test/test/')
 })
 
-b.task('create-dev-self-module', () => {
-  b.custom('Creating pseudo-module "texture"', {
-    execute () {
-      b.writeFileSync('node_modules/texture/package.json', '{"main":"index.js"}')
-      b.writeFileSync('node_modules/texture/index.js', 'module.exports = require("../../index")')
-    }
-  })
-})
-
 b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
   b.copy('test/index.html', 'dist/test/index.html')
   b.copy('test/_test.css', 'dist/test/_test.css')
-  b.copy('node_modules/substance-test/dist/testsuite.js', 'dist/test/testsuite.js')
+  b.copy('node_modules/substance-test/dist/substance-test.js*', 'dist/test/')
   b.copy('node_modules/substance-test/dist/test.css', 'dist/test/test.css')
 
-  // NOTE: by declaring texture/index.js as external we manage to serve both environments, browser and nodejs
-  // with the same code.
-  // In the browser, texture is used via the regular texture bundle, in nodejs it is resolved in the regular way
-  const INDEX_JS = path.join(__dirname, 'index.js')
   const TEST_VFS = path.join(__dirname, 'tmp', 'test-vfs.js')
   let globals = {
     'substance': 'substance',
     'substance-test': 'substanceTest',
+    'substance-texture': 'texture',
     'katex': 'katex',
     // TODO: this should be done in the same way as INDEX_JS and TEST_VFS
     'vfs': 'vfs'
   }
-  globals[INDEX_JS] = 'texture'
   globals[TEST_VFS] = 'testVfs'
 
-  b.js('test/index.js', {
-    output: [{
+  rollup(b, {
+    input: 'test/index.js',
+    external: [
+      'substance',
+      'substance-test',
+      'substance-texture',
+      'katex',
+      'vfs',
+      TEST_VFS
+    ],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ],
+    output: {
       file: 'dist/test/tests.js',
       format: 'umd',
       name: 'tests',
       globals
-    }],
-    external: [
-      'substance',
-      'substance-test',
-      INDEX_JS,
-      'katex',
-      'vfs',
-      TEST_VFS
-    ]
+    }
   })
 })
+
+b.task('build:coverage:browser', ['build:schema', 'build:test-browser'], () => {
+  _buildCoverageBundle('browser')
+})
+
+b.task('build:coverage:nodejs', ['build:schema', 'build:test-assets'], () => {
+  _buildCoverageBundle('nodejs')
+})
+
+b.task('run:coverage:browser', () => {
+  // Note: `await=false` is important, as otherwise bundler would await this to finish
+  fork(b, require.resolve('electron/cli.js'), '.', '--coverage', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: true })
+})
+
+b.task('run:test:electron', ['test-browser'], () => {
+  // Note: `await=false` is important, as otherwise bundler would await this to finish
+  fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: false })
+})
+
+function _buildCoverageBundle (target) {
+  let output = []
+  if (target === 'browser') {
+    output.push({
+      file: 'tmp/texture.instrumented.js',
+      format: 'umd',
+      name: 'texture',
+      globals: {
+        'substance': 'substance',
+        'katex': 'katex'
+      }
+    })
+  }
+  if (target === 'nodejs') {
+    output.push({
+      file: 'tmp/texture.instrumented.cjs.js',
+      format: 'cjs'
+    })
+  }
+  rollup(b, {
+    input: './index.js',
+    external: [
+      'substance',
+      'katex'
+    ],
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      }),
+      istanbul({
+        include: [
+          'src/**/*.js'
+        ]
+      })
+    ],
+    output
+  })
+}
 
 /* HELPERS */
 
 function _buildLib (DEST, platform) {
   let output = []
-  let istanbul
   if (platform === 'browser' || platform === 'all') {
     output.push({
       file: DEST + 'texture.js',
       format: 'umd',
       name: 'texture',
-      sourcemapRoot: __dirname,
-      sourcemapPrefix: 'texture',
       globals: {
         'substance': 'substance',
         'katex': 'katex',
@@ -309,13 +373,19 @@ function _buildLib (DEST, platform) {
   if (platform === 'es' || platform === 'all') {
     output.push({
       file: DEST + 'texture.es.js',
-      format: 'es'
+      format: 'esm'
     })
   }
-  b.js('./index.js', {
-    output,
+  rollup(b, {
+    input: './index.js',
     external: ['substance', 'katex', 'vfs'],
-    istanbul
+    output,
+    plugins: [
+      nodeResolve(),
+      commonjs({
+        include: 'node_modules/**'
+      })
+    ]
   })
 }
 

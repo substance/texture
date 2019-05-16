@@ -1,13 +1,24 @@
+dist: "trusty"
+sudo: required
 language: node_js
+node_js:
+  - "10"
+addons:
+  chrome: stable
+env:
+  global:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 cache:
   directories:
     - node_modules
-node_js:
-  - "8"
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+    - $HOME/.npm/_prebuilds
 before_script:
     - 'npm install'
 script:
-  - npm run test
-  - npm run cover
+  - npm run lint
+  - xvfb-run npm run cover
 after_success:
   - bash <(curl -s https://codecov.io/bash)

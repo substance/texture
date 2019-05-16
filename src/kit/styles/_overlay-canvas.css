@@ -1,0 +1,57 @@
+/*
+TODO: moving away from the old Overlay implementation
+replacing it with OverlayCanvas, which is more generic, but also more low-level
+*/
+
+.sc-overlay-canvas { z-index: 200; position: absolute; }
+
+.sc-overlay-canvas.sm-hidden { visibility: hidden; left: 0px; top: 0px; }
+
+.sc-overlay-canvas > .se-canvas {
+  margin: 5px;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  flex-wrap: nowrap;
+  box-shadow: var(--t-default-box-shadow);
+}
+
+/*
+  TODO: develop a CSS framework for overlays
+  This is WIP
+*/
+.sc-overlay-canvas .sm-horizontal-layout {
+  display: flex;
+  align-items: center;
+  font-size: var(--t-dropdown-font-size);
+  font-weight: var(--t-bold-font-weight);
+  padding: 0px var(--t-button-padding);
+}
+
+.sc-overlay-canvas .sm-horizontal-layout > * {
+  flex: 0 0 0;
+  margin: 2px;
+}
+
+.sc-overlay-canvas .sm-horizontal-layout .sc-text-property-editor {
+  min-width: 200px;
+  padding: var(--t-input-padding);
+}
+
+.sc-overlay-canvas .sm-monospace {
+  font-family: var(--t-code-font);
+  background: transparent;
+  border: none;
+}
+
+.sc-overlay-canvas .sc-container-editor,
+.sc-overlay-canvas .sc-text-property-editor {
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+}
+
+.sc-overlay-canvas .sc-container-editor:focus,
+.sc-overlay-canvas .sc-text-property-editor:focus {
+  border: var(--t-input-focus-border);
+}

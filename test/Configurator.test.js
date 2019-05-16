@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import { Command } from 'substance'
-import { Texture } from '../index'
+import { Texture } from 'substance-texture'
 import setupTestApp from './shared/setupTestApp'
 import { openManuscriptEditor, openMenuAndFindTool } from './shared/integrationTestHelpers'
 import { spy, testAsync } from './shared/testHelpers'

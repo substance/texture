@@ -1,5 +1,5 @@
 import { DefaultDOMElement } from 'substance'
-import { Managed } from '../../kit'
+import { Managed, OverlayCanvas } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
 import ManuscriptTOC from './ManuscriptTOC'
 import ManuscriptModel from '../models/ManuscriptModel'
@@ -92,7 +92,6 @@ export default class ManuscriptEditor extends EditorPanel {
   _renderContentPanel ($$) {
     const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
-    const Dropzones = this.getComponent('dropzones')
 
     let contentPanel = $$(ScrollPane, {
       contextMenu: 'custom',
@@ -106,21 +105,17 @@ export default class ManuscriptEditor extends EditorPanel {
         disabled: this.props.disabled
       }).ref('article'),
       this._renderMainOverlay($$),
-      this._renderContextMenu($$),
-      $$(Dropzones)
+      this._renderContextMenu($$)
     )
     return contentPanel
   }
 
   _renderMainOverlay ($$) {
-    const Overlay = this.getComponent('overlay')
-    const configurator = this._getConfigurator()
-    const items = configurator.getToolPanel('main-overlay')
-    return $$(Managed(Overlay), {
-      items,
+    const panelProvider = () => this.refs.contentPanel
+    return $$(OverlayCanvas, {
       theme: this._getTheme(),
-      bindings: ['commandStates']
-    })
+      panelProvider
+    }).ref('overlay')
   }
 
   _renderContextMenu ($$) {

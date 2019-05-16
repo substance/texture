@@ -2,7 +2,7 @@ import { parseKeyCombo, DefaultDOMElement, getRangeFromMatrix, isArray, flattenO
 import { test } from 'substance-test'
 import {
   TableComponent, tableHelpers
-} from '../index'
+} from 'substance-texture'
 import { getMountPoint, DOMEvent, ClipboardEventData } from './shared/testHelpers'
 import setupTestArticleSession from './shared/setupTestArticleSession'
 import {

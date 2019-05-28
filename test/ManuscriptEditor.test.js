@@ -733,6 +733,81 @@ test('ManuscriptEditor: copy and pasting list items', t => {
   t.end()
 })
 
+const TWO_FIGURES = `
+<fig id="fig1">
+  <graphic />
+  <caption />
+</fig>
+<p id="p1">This is a reference to <xref id="fig1-ref" ref-type="fig" rid="fig1" />.</p>
+<fig id="fig2">
+  <graphic />
+  <caption />
+</fig>
+<p id="empty"></p>
+`
+
+test('ManuscriptEditor: cut and pasting a figure', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let bodySurface = _getBodySurface(editor)
+  loadBodyFixture(editor, TWO_FIGURES)
+
+  // HACK: ATM, we are wrapping every fig into a fig-group internally, using a '_' as prefix for the id of the group
+  // TODO: we should rethink if this is really what we want. IMO there is no advantage in having an implicit conversion
+  // with respect to collaboration. Maybe it is better to treat FigureGroups as an extra thing.
+  selectNode(editor, '_fig-1')
+  let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
+  bodySurface._onCut(pasteEvent)
+  setCursor(editor, 'empty.content', 0)
+  bodySurface._onPaste(pasteEvent)
+
+  const expectedLabel = 'Figure 2'
+  let fig1Comp = bodySurface.find('[data-id="fig1"]')
+  let fig1Label = fig1Comp.find('.sc-label')
+  let refComp = bodySurface.find('[data-id="fig1-ref"]')
+  t.ok(Boolean(fig1Comp), 'figure 1 should be displayed')
+  t.equal(fig1Label.text(), expectedLabel, 'figure should have been labeled automatically')
+  t.equal(refComp.text(), expectedLabel, 'figure reference should have been relabeled automatically')
+
+  t.end()
+})
+
+const TABLE_AND_REF = `
+  <table-wrap id="table1">
+    <table>
+    </table>
+  </table-wrap>
+  <p id="p1">This is a reference to <xref id="table1-ref" ref-type="table" rid="table1" />.</p>
+  <table-wrap id="table2">
+    <table>
+    </table>
+  </table-wrap>
+  <p id="empty"></p>
+  `
+
+test('ManuscriptEditor: cut and pasting a table', t => {
+  let { app } = setupTestApp(t, { archiveId: 'blank' })
+  let editor = openManuscriptEditor(app)
+  let bodySurface = _getBodySurface(editor)
+  loadBodyFixture(editor, TABLE_AND_REF)
+
+  selectNode(editor, 'table1')
+  let pasteEvent = new DOMEvent({ clipboardData: new ClipboardEventData() })
+  bodySurface._onCut(pasteEvent)
+  setCursor(editor, 'empty.content', 0)
+  bodySurface._onPaste(pasteEvent)
+
+  const expectedLabel = 'Table 2'
+  let table1Comp = bodySurface.find('[data-id="table1"]')
+  let table1Label = table1Comp.find('.sc-label')
+  let refComp = bodySurface.find('[data-id="table1-ref"]')
+  t.ok(Boolean(table1Comp), 'table should be displayed')
+  t.equal(table1Label.text(), expectedLabel, 'table should have been labeled automatically')
+  t.equal(refComp.text(), expectedLabel, 'table reference should have been relabeled automatically')
+
+  t.end()
+})
+
 function _getLineCount (str) {
   return str.split(/\r\n|\r|\n/).length
 }

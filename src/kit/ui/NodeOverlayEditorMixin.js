@@ -18,8 +18,6 @@ export default function (NodeComponent) {
       super.didMount()
 
       if (this._shouldEnableOverlayEditor()) {
-        // a detached editor component
-        this._editor = this._createEditor()
         // .. that we will attach to the OverlayCanvas whenever the selection is on the annotation
         // TODO: similar as with IsolatedNodes and InlineNodes, the number of listeners will grow with
         // the size of the document. Thus, we need to introduce a means to solve this more efficiently
@@ -52,6 +50,27 @@ export default function (NodeComponent) {
 
     _getEditorClass () { throwMethodIsAbstract() }
 
+    _acquireOverlay (options) {
+      let editor = this._getEditor()
+      this.context.editor.refs.overlay.acquireOverlay(editor, options)
+    }
+
+    _releaseOverlay () {
+      if (this._editor) {
+        this.context.editor.refs.overlay.releaseOverlay(this._editor)
+      }
+    }
+
+    _getEditor () {
+      // create editor lazily to avoid that all nodes with such an overlay are creating it
+      // at once in the beginning
+      if (!this._editor) {
+        // a detached editor component
+        this._editor = this._createEditor()
+      }
+      return this._editor
+    }
+
     _createEditor () {
       let EditorClass = this._getEditorClass()
       // keep a rendered editor around
@@ -59,14 +78,6 @@ export default function (NodeComponent) {
       editor._render()
       editor.triggerDidMount()
       return editor
-    }
-
-    _acquireOverlay (options) {
-      this.context.editor.refs.overlay.acquireOverlay(this._editor, options)
-    }
-
-    _releaseOverlay () {
-      this.context.editor.refs.overlay.releaseOverlay(this._editor)
     }
   }
 }

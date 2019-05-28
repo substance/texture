@@ -56,6 +56,10 @@ if (platform.inNodeJS) {
   // pure NodeJS tests (i.e. parts used in electron app)
   require('./Storage.test.js')
 
+  if (process.env.DEBUG) {
+    platform.DEBUG = true
+  }
+
   if (process.env.TEST) {
     const { test } = require('substance-test')
     let harness = test.getHarness()

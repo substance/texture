@@ -4,6 +4,7 @@ export { default as CustomMetadataFieldComponent } from './CustomMetadataFieldCo
 export { default as FigureLabelGenerator } from './FigureLabelGenerator'
 export { default as FigureManager } from './FigureManager'
 export { default as FootnoteManager } from './FootnoteManager'
+export { default as InsertInlineNodeCommand } from './InsertInlineNodeCommand'
 export * from './nodeHelpers'
 export { default as NumberedLabelGenerator } from './NumberedLabelGenerator'
 export { default as ReferenceManager } from './ReferenceManager'

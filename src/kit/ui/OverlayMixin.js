@@ -1,5 +1,9 @@
 export default function (Component) {
   class OverlayComponent extends Component {
+    getChildContext () {
+      return { overlay: this }
+    }
+
     didMount () {
       super.didMount()
 
@@ -15,7 +19,7 @@ export default function (Component) {
     }
 
     _getOverlayId () {
-      return this.getId()
+      return this.props.overlayId || this.getId()
     }
 
     _canShowOverlay () {

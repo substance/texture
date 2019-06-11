@@ -373,6 +373,7 @@ export default {
     config.addLabel('move-down-metadata-field', 'Move Down Metadata Field')
     config.addLabel('move-up-metadata-field', 'Move Up Metadata Field')
     config.addLabel('remove-metadata-field', 'Remove Metadata Field')
+    config.addLabel('remove-metadata-keyword', 'Remove Keyword')
     // Author tools
     config.addLabel('edit-author', 'Edit Author')
     // Reference tools

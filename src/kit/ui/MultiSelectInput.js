@@ -1,5 +1,6 @@
 import { Component } from 'substance'
 import OverlayMixin from './OverlayMixin'
+import Popup from './Popup'
 
 export default class MultiSelectInput extends OverlayMixin(Component) {
   getInitialState () {
@@ -43,11 +44,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     const selected = this.props.selected
     const selectedIdx = selected.map(item => item.id)
     const options = this._getOptions()
-    const editorEl = $$('div').ref('options').addClass('se-select-editor').append(
-      $$('div').addClass('se-arrow'),
-      $$('div').addClass('se-select-label')
-        .append(label)
-    )
+    const editorEl = $$('div').ref('options').addClass('se-select-editor')
     options.forEach(option => {
       const isSelected = selectedIdx.indexOf(option.id) > -1
       const icon = isSelected ? 'checked-item' : 'unchecked-item'
@@ -60,11 +57,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
         ).on('click', this._onToggleItem.bind(this, option))
       )
     })
-    return editorEl
-  }
-
-  _getOverlayId () {
-    return this.props.overlayId || this.getId()
+    return $$(Popup, { label }).append(editorEl)
   }
 
   _getOptions () {

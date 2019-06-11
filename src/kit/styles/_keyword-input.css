@@ -1,0 +1,58 @@
+.sc-keyword-input {
+  position: relative;
+  line-height: var(--t-input-line-height);
+  cursor: pointer;
+  padding: var(--t-input-padding);
+  margin: var(--t-negative-input-padding);
+  border-radius: var(--t-border-radius);
+  border: var(--t-input-default-border);
+}
+
+.sc-keyword-input .se-keyword-editor {
+  padding: var(--t-half-spacing) var(--t-default-spacing);
+}
+
+.sc-keyword-input.sm-active {
+  border: var(--t-input-focus-border);
+  background: var(--t-focus-background-color);
+}
+
+.sc-keyword-input .sc-text-input .se-input {
+  width: auto;
+}
+
+.sc-keyword-input .se-keyword-editor .se-keyword {
+  margin: var(--t-half-spacing) 0;
+}
+
+.sc-keyword-input .se-new-keyword-input {
+  display: flex;
+  margin: 0 var(--t-negative-input-padding);
+}
+
+.sc-keyword-input .se-new-keyword-input > .sc-input {
+  width: 100%;
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding);
+  margin-right: var(--t-half-spacing);
+  font-size: var(--t-small-font-size);
+  line-height: var(--t-input-line-height);
+  flex-grow: 1;
+}
+
+.sc-keyword-input .se-new-keyword-input > .sc-input:focus {
+  border: var(--t-input-focus-border);
+}
+
+.sc-keyword-input .se-new-keyword-input > .sc-input::placeholder {
+  color: var(--t-placeholder-text-color);
+  font-weight: var(--t-normal-font-weight);
+}
+
+.sc-keyword-input .se-create-value {
+  background: var(--t-action-background-color);
+  color: var(--t-inverted-text-color);
+  border-radius: var(--t-border-radius);
+  padding: var(--t-input-padding) var(--t-half-spacing);
+}

@@ -57,6 +57,7 @@ import {
 import InsertTableTool from './InsertTableTool'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
 import RemoveItemCommand from '../shared/RemoveItemCommand'
+import RemoveKeywordCommand from '../shared/RemoveKeywordCommand'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'
@@ -241,6 +242,9 @@ export default {
       nodeType: 'footnote',
       commandGroup: 'footnote'
     })
+    config.addCommand('remove-metadata-keyword', RemoveKeywordCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
     })
@@ -306,6 +310,7 @@ export default {
     config.addLabel('article-info', 'Article Information')
     config.addLabel('article-record', 'Article Record')
     config.addLabel('contributors', 'Authors & Contributors')
+    config.addLabel('create', 'Create')
     config.addLabel('create-unordered-list', 'Bulleted list')
     config.addLabel('create-ordered-list', 'Numbered list')
     config.addLabel('edit-ref', 'Edit Reference')
@@ -332,6 +337,9 @@ export default {
     config.addLabel('enter-custom-field-value', 'Enter value')
     config.addLabel('add-action', 'Add')
     config.addLabel('enter-url-placeholder', 'Enter url')
+    config.addLabel('enter-keyword', 'Enter keyword')
+    config.addLabel('enter-keywords', 'Click to add keywords')
+    config.addLabel('edit-keywords', 'Edit keywords')
 
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
@@ -447,6 +455,7 @@ export default {
 
     // KeyboardShortcuts
     config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
+    config.addKeyboardShortcut('CommandOrControl+Delete', { command: 'remove-metadata-keyword' })
 
     // Register commands and keyboard shortcuts for collections
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })

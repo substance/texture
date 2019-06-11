@@ -36,6 +36,7 @@ import {
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from '../manuscript/TableCommands'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
+import RemoveKeywordCommand from '../shared/RemoveKeywordCommand'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
 import TableFigureComponent from '../shared/TableFigureComponent'
 import TranslatableEntryEditor from './TranslatableEntryEditor'
@@ -243,6 +244,9 @@ export default {
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('remove-metadata-keyword', RemoveKeywordCommand, {
+      commandGroup: 'custom-metadata-fields'
+    })
     config.addCommand('remove-reference', RemoveReferenceCommand, {
       commandGroup: 'reference'
     })
@@ -318,6 +322,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+Alt+Up', { command: 'move-up-col-item' })
     config.addKeyboardShortcut('CommandOrControl+Alt+Down', { command: 'move-down-col-item' })
     config.addKeyboardShortcut('CommandOrControl+Alt+Delete', { command: 'remove-col-item' })
+    config.addKeyboardShortcut('CommandOrControl+Delete', { command: 'remove-metadata-keyword' })
 
     // Labels
     config.addLabel('abstracts', 'Abstracts')
@@ -359,11 +364,16 @@ export default {
     config.addLabel('subtitle', 'Subtitle')
     config.addLabel('empty-figure-metadata', 'No fields specified')
     config.addLabel('open-link', 'Open Link')
+    config.addLabel('enter-keyword', 'Enter keyword')
+    config.addLabel('enter-keywords', 'Click to add keywords')
+    config.addLabel('edit-keywords', 'Edit keywords')
+
     // Icons
     config.addIcon('input-error', { 'fontawesome': 'fa-exclamation-circle' })
     config.addIcon('input-loading', { 'fontawesome': 'fa-spinner fa-spin' })
     config.addIcon('move-down-figure-panel', { 'fontawesome': 'fa-caret-square-o-down' })
     config.addIcon('open-link', { 'fontawesome': 'fa-external-link' })
+    config.addIcon('trash', { 'fontawesome': 'fa-trash' })
 
     // TODO: need to rethink this a some point
     registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })

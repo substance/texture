@@ -208,7 +208,21 @@ export default class EditorSession extends AbstractEditorSession {
         this.editorState.set('overlayId', valueId)
       }
     } else {
-      this.editorState.set('overlayId', null)
+      // EXPERIMENTAL: OverlayMixin leaves context.overlay
+      // which can be used to detect if the focused surface is inside an overlay
+      let focusedSurface = this.getSurface(sel.surfaceId)
+      if (focusedSurface) {
+        let overlay = focusedSurface.context.overlay
+        if (overlay) {
+          if (overlayId !== overlay._getOverlayId()) {
+            this.editorState.set('overlayId', overlay._getOverlayId())
+          }
+        } else {
+          this.editorState.set('overlayId', null)
+        }
+      } else {
+        this.editorState.set('overlayId', null)
+      }
     }
   }
 }

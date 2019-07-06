@@ -27,25 +27,17 @@ export default class ArticlePanel extends Component {
     this.api = new ArticleAPI(this.editorSession, archive, config, this)
     this.context = Object.assign(this.context, createComponentContext(config), {
       urlResolver: archive,
-      appState: this.state,
       config,
       editorSession: this.editorSession,
+      appState: this.editorSession.editorState,
       api: this.api
     })
   }
 
-  getInitialState () {
-    // using AppState as Component state
-    return this._createAppState(this.props.config)
-  }
-
   willReceiveProps (props) {
     if (props.document !== this.props.document) {
-      let state = this._createAppState(props.config)
-      this._initialize(props, state)
-      // wipe children and update state
+      this._initialize(props)
       this.empty()
-      this.setState(state)
     }
   }
 

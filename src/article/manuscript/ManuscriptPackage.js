@@ -63,7 +63,6 @@ import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'
 import {
   AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
 } from '../shared/CustomMetadataFieldCommands'
-import SwitchViewCommand from '../shared/SwitchViewCommand'
 import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
 
 export default {
@@ -222,14 +221,6 @@ export default {
     })
     config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
-    })
-    config.addCommand('open-manuscript', SwitchViewCommand, {
-      viewName: 'manuscript',
-      commandGroup: 'switch-view'
-    })
-    config.addCommand('open-metadata', SwitchViewCommand, {
-      viewName: 'metadata',
-      commandGroup: 'switch-view'
     })
     config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
       commandGroup: 'custom-metadata-fields'

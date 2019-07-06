@@ -4,17 +4,6 @@ export default {
   configure (config) {
     config.addToolPanel('toolbar', [
       {
-        name: 'mode',
-        type: 'switcher',
-        style: 'descriptive',
-        hideDisabled: true,
-        displayActiveCommand: true,
-        items: [
-          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
-          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
-        ]
-      },
-      {
         name: 'document-tools',
         type: 'group',
         style: 'minimal',
@@ -116,17 +105,6 @@ export default {
       {
         name: 'divider',
         type: 'spacer'
-      },
-      {
-        name: 'mobile-mode',
-        type: 'dropdown',
-        style: 'descriptive',
-        hideDisabled: false,
-        displayActiveCommand: true,
-        items: [
-          { type: 'command', name: 'open-manuscript', label: 'open-manuscript', icon: 'manuscript' },
-          { type: 'command', name: 'open-metadata', label: 'open-metadata', icon: 'metadata' }
-        ]
       },
       {
         name: 'context-tools',
@@ -383,7 +361,5 @@ export default {
     // Mode
     config.addLabel('mode', 'Mode')
     config.addLabel('mobile-mode', 'Mode')
-    config.addLabel('open-manuscript', 'Manuscript')
-    config.addLabel('open-metadata', 'Details')
   }
 }

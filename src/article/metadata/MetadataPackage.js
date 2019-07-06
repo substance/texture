@@ -44,7 +44,6 @@ import {
 } from '../shared/CustomMetadataFieldCommands'
 import RemoveReferenceCommand from './RemoveReferenceCommand'
 import RemoveItemCommand from '../shared/RemoveItemCommand'
-import SwitchViewCommand from '../shared/SwitchViewCommand'
 import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
 
 export default {
@@ -221,14 +220,6 @@ export default {
     })
     config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
-    })
-    config.addCommand('open-manuscript', SwitchViewCommand, {
-      viewName: 'manuscript',
-      commandGroup: 'switch-view'
-    })
-    config.addCommand('open-metadata', SwitchViewCommand, {
-      viewName: 'metadata',
-      commandGroup: 'switch-view'
     })
     config.addCommand('remove-col-item', RemoveCollectionItemCommand, {
       commandGroup: 'collection'

@@ -31,17 +31,17 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
     this._archiveId = null
     this._upstreamArchive = null
-    this._sessions = null
+    this._documents = null
     this._pendingFiles = new Map()
     this._config = config
   }
 
   addDocument (type, name, xml) {
     let documentId = uuid()
-    let sessions = this._sessions
-    let session = this._loadDocument(type, { data: xml }, sessions)
-    sessions[documentId] = session
-    this._registerForSessionChanges(session, documentId)
+    let documents = this._documents
+    let document = this._loadDocument(type, { data: xml }, documents)
+    documents[documentId] = document
+    this._registerForChanges(document, documentId)
     this._addDocumentRecord(documentId, type, name, documentId + '.xml')
     return documentId
   }
@@ -129,19 +129,19 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   getDocumentEntries () {
-    return this.getDocumentSession('manifest').getDocument().getDocumentEntries()
+    return this.getDocument('manifest').getDocumentEntries()
   }
 
   getDownloadLink (fileName) {
-    let manifest = this._sessions.manifest.getDocument()
+    let manifest = this.getDocument('manifest')
     let asset = manifest.getAssetByPath(fileName)
     if (asset) {
       return this.resolveUrl(fileName)
     }
   }
 
-  getDocumentSession (docId) {
-    return this._sessions[docId]
+  getDocument (docId) {
+    return this._documents[docId]
   }
 
   hasAsset (fileName) {
@@ -176,10 +176,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
             buffer.reset(upstreamVersion)
           }
         }
-        // convert raw archive into sessions (=ingestion)
-        let sessions = this._ingest(upstreamArchive)
+        // convert raw archive to documents (=ingestion)
+        let documents = this._ingest(upstreamArchive)
         // contract: there must be a manifest
-        if (!sessions['manifest']) {
+        if (!documents['manifest']) {
           throw new Error('There must be a manifest session.')
         }
         // apply pending changes
@@ -191,11 +191,11 @@ export default class PersistedDocumentArchive extends EventEmitter {
           buffer.reset(upstreamArchive.version)
         }
         // register for any changes in each session
-        this._registerForAllChanges(sessions)
+        this._registerForAllChanges(documents)
 
         this._archiveId = archiveId
         this._upstreamArchive = upstreamArchive
-        this._sessions = sessions
+        this._documents = documents
 
         cb(null, this)
       })
@@ -297,14 +297,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return ManifestLoader.load(record.data)
   }
 
-  _registerForAllChanges (sessions) {
-    forEach(sessions, (session, docId) => {
-      this._registerForSessionChanges(session, docId)
+  _registerForAllChanges (documents) {
+    forEach(documents, (document, docId) => {
+      this._registerForChanges(document, docId)
     })
   }
 
-  _registerForSessionChanges (session, docId) {
-    session.on('change', (change) => {
+  _registerForChanges (document, docId) {
+    document.on('document:changed', change => {
       this.buffer.addChange(docId, change)
       // Apps can subscribe to this (e.g. to show there's pending changes)
       this.emit('archive:changed')

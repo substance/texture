@@ -6,8 +6,6 @@ import ArticlePanel from './ArticlePanel'
 import ArticleSerializer from './ArticleSerializer'
 import ManuscriptEditor from './manuscript/ManuscriptEditor'
 import ManuscriptPackage from './manuscript/ManuscriptPackage'
-import MetadataEditor from './metadata/MetadataEditor'
-import MetadataPackage from './metadata/MetadataPackage'
 import FigureLabelGenerator from './shared/FigureLabelGenerator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
 import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
@@ -37,9 +35,6 @@ export default {
 
     // used for validation
     articleConfig.import(ArticleModelPackage)
-
-    articleConfig.addComponent('manuscript-editor', ManuscriptEditor)
-    articleConfig.addComponent('metadata-editor', MetadataEditor)
 
     articleConfig.import(EntityLabelsPackage)
 
@@ -122,11 +117,9 @@ export default {
       to: '-'
     }))
 
-    // config for ManuscriptView
-    let manuscriptConfig = articleConfig.createSubConfiguration('manuscript')
-    manuscriptConfig.import(ManuscriptPackage)
-
-    let metadataConfig = articleConfig.createSubConfiguration('metadata')
-    metadataConfig.import(MetadataPackage)
+    // The default article-editor is a ManuscriptEditor
+    // TODO: think about how Texture can allow customizations that use a different editor
+    articleConfig.addComponent('article-editor', ManuscriptEditor)
+    articleConfig.import(ManuscriptPackage)
   }
 }

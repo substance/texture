@@ -7,18 +7,35 @@ import FigurePanel from './models/FigurePanel'
 import SupplementaryFile from './models/SupplementaryFile'
 import { BlockFormula } from './models'
 import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
+import FigureManager from './shared/FigureManager'
+import FootnoteManager from './shared/FootnoteManager'
+import FormulaManager from './shared/FormulaManager'
+import ReferenceManager from './shared/ReferenceManager'
+import TableManager from './shared/TableManager'
+import SupplementaryManager from './shared/SupplementaryManager'
 
 export default class ArticleAPI {
-  constructor (editorSession, archive, config, articleSession, contextProvider) {
+  constructor (editorSession, archive, config, contextProvider) {
+    let doc = editorSession.getDocument()
+
     this.editorSession = editorSession
     this.config = config
     this.archive = archive
     this._contextProvider = contextProvider
-    this._document = editorSession.getDocument()
-    // TODO: do we really need this?
-    this._articleSession = articleSession
+    this._document = doc
+
     // TODO: rethink this
+    // we created a sub-api for table manipulations in an attempt of modularisation
     this._tableApi = new TableEditingAPI(editorSession)
+
+    // TODO: rethink this
+    // these have been hard coded. Instead we should register them as a service, and instantiate on demand
+    this._figureManager = new FigureManager(editorSession, config.getValue('figure-label-generator'))
+    this._footnoteManager = new FootnoteManager(editorSession, config.getValue('footnote-label-generator'))
+    this._formulaManager = new FormulaManager(editorSession, config.getValue('formula-label-generator'))
+    this._referenceManager = new ReferenceManager(editorSession, config.getValue('reference-label-generator'))
+    this._supplementaryManager = new SupplementaryManager(editorSession, config.getValue('supplementary-file-label-generator'))
+    this._tableManager = new TableManager(editorSession, config.getValue('table-label-generator'))
   }
 
   getDocument () {
@@ -211,9 +228,9 @@ export default class ArticleAPI {
   _removeCorrespondingXrefs (tx, node) {
     let manager
     if (INTERNAL_BIBR_TYPES.indexOf(node.type) > -1) {
-      manager = this._articleSession.getReferenceManager()
+      manager = this._referenceManager
     } else if (node.type === 'footnote') {
-      manager = this._articleSession.getFootnoteManager()
+      manager = this._footnoteManager
     } else {
       return
     }
@@ -252,23 +269,21 @@ export default class ArticleAPI {
     let manager
     switch (refType) {
       case BlockFormula.refType: {
-        manager = this._articleSession.getFormulaManager()
+        manager = this._formulaManager
         break
       }
       case 'fig': {
-        manager = this._articleSession.getFigureManager()
+        manager = this._figureManager
         break
       }
       case 'fn': {
-        // FIXME: bring back table-footnotes
-        // EXPERIMENTAL:
-        // the above mechanism does not work for table-footnotes
-        // there we need access to the current TableFigure and get its TableFootnoteManager
+        // EXPERIMENTAL: table footnotes
+        // TableFootnoteManager is stored on the TableFigure instance
         let tableFigure = findParentByType(xref, 'table-figure')
         if (tableFigure) {
           manager = tableFigure.getFootnoteManager()
         } else {
-          manager = this._articleSession.getFootnoteManager()
+          manager = this._footnoteManager
         }
         break
       }
@@ -280,15 +295,15 @@ export default class ArticleAPI {
         break
       }
       case 'bibr': {
-        manager = this._articleSession.getReferenceManager()
+        manager = this._referenceManager
         break
       }
       case 'table': {
-        manager = this._articleSession.getTableManager()
+        manager = this._tableManager
         break
       }
       case 'file': {
-        manager = this._articleSession.getSupplementaryManager()
+        manager = this._supplementaryManager
         break
       }
       default:

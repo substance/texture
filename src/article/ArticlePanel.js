@@ -1,54 +1,37 @@
-import { Component, platform } from 'substance'
+import { Component } from 'substance'
 import { AppState, EditorSession, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
 import FigurePackageSettings from './settings/FigurePackageSettings'
-
-const DEFAULT_VIEW = 'manuscript'
-const VIEWS = ['manuscript', 'metadata']
+import ArticleAPI from './ArticleAPI'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
 
-    // Store the viewports, so we can restore scroll positions
-    this._viewStates = new Map()
-
     // TODO: should we really (ab-)use the regular Component state as AppState?
     this._initialize(this.props, this.state)
-
-    this.handleActions({
-      'updateViewName': this._updateViewName
-    })
   }
 
   _initialize (props) {
     // TODO: I want to move to a single-layer setup for all views in this panel,
     // i.e. no extra configurations and if possible no extra editor session
     // and instead contextualize commands tools etc.
-    const { archive, config, documentSession } = props
-    const doc = documentSession.getDocument()
+    const { archive, config, document } = props
+    const doc = document
 
+    this.editorSession = new EditorSession('article', doc, config, this, {
+      workflowId: null,
+      settings: this._createSettings(doc)
+    })
+    this.api = new ArticleAPI(this.editorSession, archive, config, this)
     this.context = Object.assign(this.context, createComponentContext(config), {
       urlResolver: archive,
-      appState: this.state
+      appState: this.state,
+      config,
+      editorSession: this.editorSession,
+      api: this.api
     })
-
-    // setup view states
-    for (let viewName of VIEWS) {
-      let viewConfig = props.config.getConfiguration(viewName)
-      let editorState = EditorSession.createEditorState(documentSession, {
-        workflowId: null,
-        viewName,
-        settings: this._createSettings(doc)
-      })
-      this._viewStates.set(viewName, {
-        config: viewConfig,
-        editorState,
-        // Note: used to retain scroll position when switching between views
-        viewport: null
-      })
-    }
   }
 
   getInitialState () {
@@ -57,7 +40,7 @@ export default class ArticlePanel extends Component {
   }
 
   willReceiveProps (props) {
-    if (props.documentSession !== this.props.documentSession) {
+    if (props.document !== this.props.document) {
       let state = this._createAppState(props.config)
       this._initialize(props, state)
       // wipe children and update state
@@ -66,10 +49,15 @@ export default class ArticlePanel extends Component {
     }
   }
 
+  getContext () {
+    return this.context
+  }
+
   getChildContext () {
     return {
       articlePanel: this,
-      appState: this.state
+      appState: this.state,
+      api: this.api
     }
   }
 
@@ -90,7 +78,7 @@ export default class ArticlePanel extends Component {
 
   shouldRerender (newProps, newState) {
     return (
-      newProps.documentSession !== this.props.documentSession ||
+      newProps.document !== this.props.document ||
       newProps.config !== this.props.config ||
       newState !== this.state
     )
@@ -106,42 +94,24 @@ export default class ArticlePanel extends Component {
 
   _renderContent ($$) {
     const props = this.props
-    const viewName = this.state.viewName
     const api = this.api
     const archive = props.archive
-    const articleSession = props.documentSession
-    const { config, editorState, viewport } = this._viewStates.get(viewName)
+    const editorSession = this.editorSession
+    const config = props.config
 
-    let ContentComponent
-    switch (viewName) {
-      case 'manuscript': {
-        ContentComponent = this.getComponent('manuscript-editor')
-        break
-      }
-      case 'metadata': {
-        ContentComponent = this.getComponent('metadata-editor')
-        break
-      }
-      default:
-        throw new Error('Unsupported view: ' + viewName)
-    }
+    // TODO: allow to
+    let ContentComponent = this.getComponent('article-editor')
     return $$(ContentComponent, {
       api,
       archive,
-      articleSession,
+      editorSession,
       config,
-      editorState,
-      viewName,
-      viewport
+      editorState: editorSession.editorState
     }).ref('content')
   }
 
   _createAppState (config) { // eslint-disable-line no-unused-vars
-    const appState = new AppState({
-      viewName: DEFAULT_VIEW
-    })
-    appState.addObserver(['viewName'], this.rerender, this, { stage: 'render' })
-    return appState
+    return new AppState()
   }
 
   // EXPERIMENTAL:
@@ -157,19 +127,6 @@ export default class ArticlePanel extends Component {
       settings.extend(FigurePackageSettings)
     }
     return settings
-  }
-
-  _updateViewName (viewName) {
-    let oldViewName = this.state.viewName
-    if (oldViewName !== viewName) {
-      this._viewStates.get(oldViewName).viewport = this.refs.content.getViewport()
-      let router = this.context.router
-      // ATTENTION: do not change the route when running tests otherwise the test url get's lost
-      if (router && !platform.test) {
-        router.writeRoute({ viewName })
-      }
-      this.extendState({ viewName })
-    }
   }
 
   _handleKeydown (e) {

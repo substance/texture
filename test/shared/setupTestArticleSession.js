@@ -19,8 +19,7 @@ export default function setupTestArticleSession (opts = {}) {
   // TODO: make sure that this is always the case
   let archiveId = opts.archiveId || 'blank'
   archive.load(archiveId, () => {})
-  let documentSession = archive.getDocumentSession('manuscript')
-  let doc = documentSession.getDocument()
+  let doc = archive.getDocument('manuscript')
   if (opts.seed) {
     // clear the body
     let body = doc.get('body')
@@ -29,7 +28,7 @@ export default function setupTestArticleSession (opts = {}) {
   }
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context
   let contextProvider = {}
-  let editorSession = new EditorSession('test-editor', documentSession, manuscriptConfig, contextProvider)
+  let editorSession = new EditorSession('test-editor', doc, manuscriptConfig, contextProvider)
   let api = new ArticleAPI(editorSession, manuscriptConfig, archive)
   let context = Object.assign(createEditorContext(manuscriptConfig, editorSession), { api })
   // ... after the context is ready we can store it into the provider

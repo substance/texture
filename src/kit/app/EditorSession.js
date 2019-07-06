@@ -1,5 +1,5 @@
 import {
-  AbstractEditorSession, Selection, isPlainObject, ChangeHistoryView, getKeyForPath
+  AbstractEditorSession, Selection, getKeyForPath, SimpleChangeHistory
 } from 'substance'
 
 import EditorState from './EditorState'
@@ -13,34 +13,20 @@ import FindAndReplaceManager from './FindAndReplaceManager'
 export default class EditorSession extends AbstractEditorSession {
   /**
    * @param {string} id a unique name for this editor session
-   * @param {DocumentSession} documentSession
+   * @param {Document} document
    * @param {Configurator} config
    * @param {object} contextProvider an object with getContext()
    * @param {object|EditorState} editorState a plain object with intial values or an EditorState instance for reuse
    */
-  constructor (id, documentSession, config, editor, editorState = {}) {
-    super(id, documentSession, editorState.history)
+  constructor (id, document, config, editor, initialEditorState = {}) {
+    super(id, document)
 
-    const doc = documentSession.getDocument()
-
+    const doc = document
     this._config = config
     this._editor = editor
 
-    // FIXME: it a little confusing how the history injection is done here
-    // On the one hand, AbstractEditorSession initializes a history if not given
-    // On the other, we want to reuse the history, so we put it into the created
-    // editorState, so somebody can pick it up and reuse it
-    // Alternatively, like we do it in ArticlePanel, the whole editorState is injected
-    // with a history already initialized
-    if (isPlainObject(editorState)) {
-      editorState.history = this._history
-      editorState = this.constructor.createEditorState(documentSession, editorState)
-    } else {
-      // revitalising the given editorState because it has probably been disposed
-      // TODO: we should think about a general approach to hibernate an EditorSession
-      // re-using the editorState is a first step towards this.
-      editorState.init()
-    }
+    let editorState = this._createEditorState(document, initialEditorState)
+
     let surfaceManager = new SurfaceManager(editorState)
     let markersManager = new MarkersManager(editorState)
     let globalEventHandler = new GlobalEventHandler(editorState)
@@ -49,6 +35,7 @@ export default class EditorSession extends AbstractEditorSession {
     }, editor)
     let commandManager = new CommandManager(editorState,
       // update commands when document or selection have changed
+      // TODO: is this really sufficient?
       ['document', 'selection'],
       config.getCommands(),
       editor
@@ -84,11 +71,10 @@ export default class EditorSession extends AbstractEditorSession {
     this.editorState.dispose()
   }
 
-  static createEditorState (documentSession, initialState = {}) {
-    let doc = documentSession.getDocument()
+  _createEditorState (document, initialState = {}) {
     return new EditorState(Object.assign({
-      document: doc,
-      history: new ChangeHistoryView(documentSession),
+      document,
+      history: new SimpleChangeHistory(this),
       selection: Selection.nullSelection,
       selectionState: {},
       focusedSurface: null,

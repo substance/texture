@@ -3,8 +3,8 @@ import CitableContentManager from './CitableContentManager'
 import FigureLabelGenerator from './FigureLabelGenerator'
 
 export default class FigureManager extends CitableContentManager {
-  constructor (documentSession, config) {
-    super(documentSession, 'fig', ['figure-panel'], new FigureLabelGenerator(config))
+  constructor (editorSession, config) {
+    super(editorSession, 'fig', ['figure-panel'], new FigureLabelGenerator(config))
     this._updateLabels('initial')
   }
 

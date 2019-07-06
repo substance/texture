@@ -24,8 +24,7 @@ export default class VfsStorageClient {
 
 function _readRawArchive (fs, archiveId, baseUrl = '') {
   let manifestXML = fs.readFileSync(`${archiveId}/manifest.xml`)
-  let manifestSession = ManifestLoader.load(manifestXML)
-  let manifest = manifestSession.getDocument()
+  let manifest = ManifestLoader.load(manifestXML)
   let docs = manifest.getDocumentNodes()
   let assets = manifest.getAssetNodes()
   let rawArchive = {

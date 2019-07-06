@@ -55,7 +55,7 @@ export default class CitableContentManager extends AbstractCitationManager {
     let xrefUpdates = this._computeXrefUpdates(targetUpdates)
     let stateUpdates = map(targetUpdates, this._stateUpdate).concat(map(xrefUpdates, this._stateUpdate))
     // HACK: do not propagate change initially
-    this.documentSession.updateNodeStates(stateUpdates, { silent })
+    this.editorSession.updateNodeStates(stateUpdates, { silent })
   }
 
   _stateUpdate (record) {

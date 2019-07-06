@@ -1,6 +1,5 @@
 import { Component, keys, platform } from 'substance'
-import { createEditorContext, EditorSession } from '../../kit'
-import ArticleAPI from '../ArticleAPI'
+import { createEditorContext } from '../../kit'
 
 // Base-class for Manuscript- and MetadataEditor to reduced code-redundancy
 export default class EditorPanel extends Component {
@@ -28,12 +27,8 @@ export default class EditorPanel extends Component {
 
   // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
-    const { articleSession, config, archive, editorState, viewName } = props
-
-    // TODO: I want to refactor how EditorSessions are created
-    // particularly I want to work on the multi-view/user sessions
-    const editorSession = new EditorSession(viewName, articleSession, config, this, editorState)
-    const api = new ArticleAPI(editorSession, archive, config, articleSession, { getContext: () => this.context })
+    const { api, editorSession, archive } = props
+    const config = this.context.config
 
     // ATTENTION: augmenting the default context with editor stuff and api etc.
     // TODO: try to find a more idiomatic approach, without needing to hack the context
@@ -81,9 +76,7 @@ export default class EditorPanel extends Component {
 
   dispose () {
     const appState = this.context.appState
-    const articleSession = this.props.articleSession
     const editorSession = this.editorSession
-    articleSession.off(this)
     editorSession.dispose()
     appState.removeObserver(this)
     this.props.archive.off(this)
@@ -114,7 +107,7 @@ export default class EditorPanel extends Component {
   }
 
   _getDocument () {
-    return this.props.articleSession.getDocument()
+    return this.props.editorSession.getDocument()
   }
 
   _getTheme () {

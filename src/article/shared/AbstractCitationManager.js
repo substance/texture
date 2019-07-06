@@ -1,17 +1,17 @@
 import { getPos } from './nodeHelpers'
 
 export default class AbstractCitationManager {
-  constructor (documentSession, refType, targetTypes, labelGenerator) {
-    this.documentSession = documentSession
+  constructor (editorSession, refType, targetTypes, labelGenerator) {
+    this.editorSession = editorSession
     this.refType = refType
     this.targetTypes = new Set(targetTypes)
     this.labelGenerator = labelGenerator
 
-    documentSession.on('change', this._onDocumentChange, this)
+    editorSession.on('change', this._onDocumentChange, this)
   }
 
   dispose () {
-    this.documentSession.off(this)
+    this.editorSession.off(this)
   }
 
   hasCitables () {
@@ -148,11 +148,11 @@ export default class AbstractCitationManager {
 
     // FIXME: here we also made the 'collection' dirty originally
 
-    this.documentSession.updateNodeStates(stateUpdates, { silent })
+    this.editorSession.updateNodeStates(stateUpdates, { silent })
   }
 
   _getDocument () {
-    return this.documentSession.getDocument()
+    return this.editorSession.getDocument()
   }
 
   _getXrefs () {

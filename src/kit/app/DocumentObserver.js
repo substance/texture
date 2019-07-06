@@ -35,6 +35,9 @@ export default class DocumentObserver {
   // DocumentChange. We could try to consolidate and have just
   // one place where this information is derived
   _onDocumentChanged (change) {
+    // ATTENTION: the change is not carrying reflection until change._extracted = true
+    if (!change._extracted) change._extractInformation(this.doc)
+
     let dirty = this.dirty
     Object.keys(change.updated).forEach(id => {
       dirty.add(id)

@@ -10,7 +10,7 @@ const STAGE_IDX = STAGES.reduce((m, s, idx) => {
 }, {})
 
 export default class AppState extends AbstractAppState {
-  _initialize (initialState) {
+  _initialize (initialState = {}) {
     super._initialize()
 
     const impl = this._getImpl()

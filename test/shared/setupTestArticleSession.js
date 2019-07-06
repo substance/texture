@@ -9,6 +9,7 @@ import {
 export default function setupTestArticleSession (opts = {}) {
   let config = new TextureConfigurator()
   config.import(ArticlePackage)
+  let articleConfig = config.getConfiguration('article')
 
   // load the empty archive
   let storage = new VfsStorageClient(vfs, './data/')
@@ -26,9 +27,9 @@ export default function setupTestArticleSession (opts = {}) {
   }
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context
   let contextProvider = {}
-  let editorSession = new EditorSession('test-editor', doc, config, contextProvider)
-  let api = new ArticleAPI(editorSession, archive, config)
-  let context = Object.assign(createEditorContext(config, editorSession), { api })
+  let editorSession = new EditorSession('test-editor', doc, articleConfig, contextProvider)
+  let api = new ArticleAPI(editorSession, archive, articleConfig)
+  let context = Object.assign(createEditorContext(articleConfig, editorSession), { api })
   // ... after the context is ready we can store it into the provider
   contextProvider.context = context
 

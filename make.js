@@ -286,7 +286,8 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
       file: 'dist/test/tests.js',
       format: 'umd',
       name: 'tests',
-      globals
+      globals,
+      sourcemap: true
     }
   })
 })

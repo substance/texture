@@ -1,7 +1,7 @@
 import { validateXML } from 'texture-xml-utils'
 import ArticleConfigurator from './ArticleConfigurator'
 import ArticleLoader from './ArticleLoader'
-import ArticleModelPackage from './models/ArticleModelPackage'
+import ArticleModelPackage from './nodes/ArticleModelPackage'
 import ArticlePanel from './ArticlePanel'
 import ArticleSerializer from './ArticleSerializer'
 import ManuscriptEditor from './manuscript/ManuscriptEditor'

@@ -1,6 +1,6 @@
 import { documentHelpers } from 'substance'
 import AddEntityCommand from './AddEntityCommand'
-import CustomAbstract from '../models/CustomAbstract'
+import CustomAbstract from '../nodes/CustomAbstract'
 
 export default class InsertCustomAbstractCommand extends AddEntityCommand {
   _createNode (tx) {

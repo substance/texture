@@ -1,6 +1,6 @@
 import { Command, getRangeFromMatrix, flatten, documentHelpers } from 'substance'
 import InsertNodeCommand from './InsertNodeCommand'
-import TableFigure from '../models/TableFigure'
+import TableFigure from '../nodes/TableFigure'
 
 const DISABLED = { disabled: true }
 

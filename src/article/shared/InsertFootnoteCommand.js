@@ -1,7 +1,7 @@
 import { documentHelpers } from 'substance'
 import { findParentByType } from './nodeHelpers'
 import AddEntityCommand from './AddEntityCommand'
-import Footnote from '../models/Footnote'
+import Footnote from '../nodes/Footnote'
 
 export default class InsertFootnoteCommand extends AddEntityCommand {
   detectScope (params) {

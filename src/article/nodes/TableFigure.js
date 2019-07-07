@@ -1,4 +1,4 @@
-import Table from '../models/Table'
+import Table from '../nodes/Table'
 import FigurePanel from './FigurePanel'
 import { CHILD, CHILDREN } from 'substance'
 

@@ -1,5 +1,5 @@
 import { Command } from 'substance'
-import Heading from '../models/Heading'
+import Heading from '../nodes/Heading'
 
 export default class DecreaseHeadingLevelCommand extends Command {
   getCommandState (params, context) {

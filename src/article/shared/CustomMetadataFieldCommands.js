@@ -1,6 +1,6 @@
 import { documentHelpers, Command } from 'substance'
 import { findParentByType } from './nodeHelpers'
-import CustomMetadataField from '../models/CustomMetadataField'
+import CustomMetadataField from '../nodes/CustomMetadataField'
 
 class BasicCustomMetadataFieldCommand extends Command {
   get contextType () {

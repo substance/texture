@@ -5,7 +5,7 @@ import {
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, selectNode, getSelection, selectRange,
-  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS, insertText
+  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS, insertText, executeCommand
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'
@@ -594,7 +594,7 @@ test('ManuscriptEditor: select all', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)
   let editor = openManuscriptEditor(app)
   setCursor(editor, 'p-1.content', 1)
-  editor._executeCommand('select-all')
+  executeCommand(editor, 'select-all')
   let sel = getSelection(editor)
   t.deepEqual({
     type: sel.type,
@@ -608,7 +608,7 @@ test('ManuscriptEditor: select all', t => {
   t.end()
 })
 
-const CUSTOM_SELECTIONS = [
+const ENTITIES = [
   {
     'type': 'author',
     'itemSelector': '.sc-authors-list .se-contrib',
@@ -624,17 +624,17 @@ const CUSTOM_SELECTIONS = [
     'metadataType': 'webpage-ref'
   }
 ]
-CUSTOM_SELECTIONS.forEach(spec => {
+ENTITIES.forEach(spec => {
   test(`ManuscriptEditor: ${spec.type} selection`, t => {
-    testCustomSelection(t, spec)
+    testEntitySelection(t, spec)
   })
 
-  test(`ManuscriptEditor: edit ${spec.type} tool`, t => {
-    testCustomSelectionEditTool(t, spec)
-  })
+  // test(`ManuscriptEditor: edit ${spec.type} tool`, t => {
+  //   testEntityEditTool(t, spec)
+  // })
 })
 
-function testCustomSelection (t, spec) {
+function testEntitySelection (t, spec) {
   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
   let editor = openManuscriptEditor(app)
   const getFirstItem = () => editor.find(spec.itemSelector)
@@ -650,22 +650,23 @@ function testCustomSelection (t, spec) {
   t.end()
 }
 
-function testCustomSelectionEditTool (t, spec) {
-  let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
-  let editor = openManuscriptEditor(app)
-  const getFirstItem = () => editor.find(spec.itemSelector)
-  const _canEdit = () => isToolEnabled(editor, 'context-tools', spec.editToolSelector)
-  const _edit = () => openMenuAndFindTool(editor, 'context-tools', spec.editToolSelector).click()
+// FIXME: Bring back editing of authors and references
+// function testEntityEditTool (t, spec) {
+//   let { app } = setupTestApp(t, { archiveId: 'kitchen-sink' })
+//   let editor = openManuscriptEditor(app)
+//   const getFirstItem = () => editor.find(spec.itemSelector)
+//   const _canEdit = () => isToolEnabled(editor, 'context-tools', spec.editToolSelector)
+//   const _edit = () => openMenuAndFindTool(editor, 'context-tools', spec.editToolSelector).click()
 
-  t.equal(getCurrentViewName(editor), 'manuscript', `should be in manuscript view`)
-  t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
-  getFirstItem().el.click()
-  t.ok(_canEdit(), 'edit author should be enabled')
-  _edit()
+//   t.equal(getCurrentViewName(editor), 'manuscript', `should be in manuscript view`)
+//   t.notOk(_canEdit(), 'edit author should be disabled wihtout selection')
+//   getFirstItem().el.click()
+//   t.ok(_canEdit(), 'edit author should be enabled')
+//   _edit()
 
-  t.equal(getCurrentViewName(editor), 'metadata', `should be in metadata view now`)
-  t.end()
-}
+//   t.equal(getCurrentViewName(editor), 'metadata', `should be in metadata view now`)
+//   t.end()
+// }
 
 test('ManuscriptEditor: copy and pasting heading and paragraph', t => {
   let { app } = setupTestApp(t, LOREM_IPSUM)

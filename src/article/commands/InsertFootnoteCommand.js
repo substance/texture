@@ -1,5 +1,5 @@
 import { documentHelpers } from 'substance'
-import { findParentByType } from './nodeHelpers'
+import { findParentByType } from '../shared/nodeHelpers'
 import AddEntityCommand from './AddEntityCommand'
 import Footnote from '../nodes/Footnote'
 

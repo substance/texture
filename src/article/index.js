@@ -1,9 +1,10 @@
+export * from './api'
+export * from './commands'
 export * from './converter'
 export * from './manuscript'
 export * from './metadata'
+export * from './nodes'
 export * from './shared'
-
-export { default as ArticleAPI } from './ArticleAPI'
 export * from './ArticleConstants'
 export * from './articleHelpers'
 export { default as ArticleLoader } from './ArticleLoader'

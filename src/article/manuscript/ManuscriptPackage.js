@@ -9,61 +9,63 @@ import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 
-import AddEntityCommand from '../shared/AddEntityCommand'
+import AddEntityCommand from '../commands/AddEntityCommand'
+import {
+  AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
+} from '../commands/CustomMetadataFieldCommands'
+import DecreaseHeadingLevelCommand from '../commands/DecreaseHeadingLevelCommand'
+import DownloadSupplementaryFileCommand from '../commands/DownloadSupplementaryFileCommand'
+import EditEntityCommand from '../commands/EditEntityCommand'
+import {
+  AddFigurePanelCommand, MoveFigurePanelCommand,
+  RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand, OpenFigurePanelImageCommand
+} from '../commands/FigurePanelCommands'
+import IncreaseHeadingLevelCommand from '../commands/IncreaseHeadingLevelCommand'
+import InsertCrossReferenceCommand from '../commands/InsertCrossReferenceCommand'
+import InsertDispFormulaCommand from '../commands/InsertDispFormulaCommand'
+import InsertDispQuoteCommand from '../commands/InsertDispQuoteCommand'
+import InsertExtLinkCommand from '../commands/InsertExtLinkCommand'
+import InsertFigureCommand from '../commands/InsertFigureCommand'
+import InsertFootnoteCommand from '../commands/InsertFootnoteCommand'
+import InsertFootnoteCrossReferenceCommand from '../commands/InsertFootnoteCrossReferenceCommand'
+import InsertInlineFormulaCommand from '../commands/InsertInlineFormulaCommand'
+import InsertInlineGraphicCommand from '../commands/InsertInlineGraphicCommand'
+import InsertNodeFromWorkflowCommand from '../commands/InsertNodeFromWorkflowCommand'
+import { CreateListCommand, ChangeListTypeCommand } from '../commands/ListCommands'
+import RemoveFootnoteCommand from '../commands/RemoveFootnoteCommand'
+import ReplaceSupplementaryFileCommand from '../commands/ReplaceSupplementaryFileCommand'
+import {
+  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
+} from '../commands/TableCommands'
+
 import ArticleToolbarPackage from '../shared/ArticleToolbarPackage'
 import EntityLabelsPackage from '../shared/EntityLabelsPackage'
 import ManuscriptContentPackage from '../shared/ManuscriptContentPackage'
 import PersistencePackage from '../../shared/PersistencePackage'
 
-import ReferenceListComponent from '../shared/ReferenceListComponent'
-import ManuscriptEditor from './ManuscriptEditor'
-import ManuscriptTOC from './ManuscriptTOC'
 import FigureComponent from '../shared/FigureComponent'
 import FigurePanelComponent from '../shared/FigurePanelComponent'
-import TableFigureComponent from '../shared/TableFigureComponent'
 import FootnoteComponent from '../shared/FootnoteComponent'
+import ManuscriptEditor from './ManuscriptEditor'
+import ManuscriptTOC from './ManuscriptTOC'
 import ReferenceComponent from '../shared/ReferenceComponent'
+import ReferenceListComponent from '../shared/ReferenceListComponent'
+import TableFigureComponent from '../shared/TableFigureComponent'
 
 import AddSupplementaryFileWorkflow from '../shared/AddSupplementaryFileWorkflow'
 
-import {
-  AddFigurePanelCommand, MoveFigurePanelCommand,
-  RemoveFigurePanelCommand, ReplaceFigurePanelImageCommand, OpenFigurePanelImageCommand
-} from '../shared/FigurePanelCommands'
-import DecreaseHeadingLevelCommand from './DecreaseHeadingLevelCommand'
-import DownloadSupplementaryFileCommand from './DownloadSupplementaryFileCommand'
 import DownloadSupplementaryFileTool from './DownloadSupplementaryFileTool'
 import DropFigure from './DropFigure'
-import EditEntityCommand from '../shared/EditEntityCommand'
-import IncreaseHeadingLevelCommand from './IncreaseHeadingLevelCommand'
-import InsertCrossReferenceCommand from '../shared/InsertCrossReferenceCommand'
-import InsertDispFormulaCommand from './InsertDispFormulaCommand'
-import InsertDispQuoteCommand from './InsertDispQuoteCommand'
-import InsertExtLinkCommand from '../shared/InsertExtLinkCommand'
-import InsertFigureCommand from './InsertFigureCommand'
 import InsertFigureTool from './InsertFigureTool'
 import InsertFigurePanelTool from '../shared/InsertFigurePanelTool'
-import InsertFootnoteCommand from '../shared/InsertFootnoteCommand'
-import InsertFootnoteCrossReferenceCommand from '../shared/InsertFootnoteCrossReferenceCommand'
-import InsertInlineFormulaCommand from '../shared/InsertInlineFormulaCommand'
-import InsertInlineGraphicCommand from '../shared/InsertInlineGraphicCommand'
 import InsertInlineGraphicTool from '../shared/InsertInlineGraphicTool'
-import { CreateListCommand, ChangeListTypeCommand } from './ListCommands'
-import InsertNodeFromWorkflowCommand from './InsertNodeFromWorkflowCommand'
-import {
-  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
-  TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
-} from './TableCommands'
 import InsertTableTool from './InsertTableTool'
 import OpenFigurePanelImageTool from '../shared/OpenFigurePanelImageTool'
-import RemoveItemCommand from '../shared/RemoveItemCommand'
 import ReplaceFigurePanelTool from '../shared/ReplaceFigurePanelTool'
-import ReplaceSupplementaryFileCommand from './ReplaceSupplementaryFileCommand'
 import ReplaceSupplementaryFileTool from './ReplaceSupplementaryFileTool'
-import {
-  AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
-} from '../shared/CustomMetadataFieldCommands'
-import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../models'
+
+import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../nodes'
 
 export default {
   name: 'ManuscriptEditor',
@@ -228,7 +230,7 @@ export default {
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
-    config.addCommand('remove-footnote', RemoveItemCommand, {
+    config.addCommand('remove-footnote', RemoveFootnoteCommand, {
       nodeType: 'footnote',
       commandGroup: 'footnote'
     })

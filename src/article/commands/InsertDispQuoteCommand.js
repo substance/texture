@@ -1,5 +1,5 @@
 import { documentHelpers } from 'substance'
-import { BlockQuote } from '../models'
+import { BlockQuote } from '../nodes'
 import InsertNodeCommand from './InsertNodeCommand'
 
 export default class InsertBlockQuoteCommand extends InsertNodeCommand {

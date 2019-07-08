@@ -48,13 +48,13 @@ export default class AddSupplementaryFileWorkflow extends Component {
   _onExternalFileImport () {
     const url = this.refs.urlInput.val()
     let api = this.context.api
-    api._insertSupplementaryFile(null, url)
+    api.insertSupplementaryFile(null, url)
     this.send('closeModal')
   }
 
   _onFileImport (files) {
     let api = this.context.api
-    api._insertSupplementaryFile(files[0])
+    api.insertSupplementaryFile(files[0])
     this.send('closeModal')
   }
 }

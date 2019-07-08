@@ -206,7 +206,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
       this._unregisterFromDocument(document)
       // TODO: this is not ready for collab
       let manifest = this._documents['manifest']
-      documentHelpers.remove(manifest, ['dar', 'documents'], documentId)
+      documentHelpers.removeFromCollection(manifest, ['dar', 'documents'], documentId)
       documentHelpers.deepDeleteNode(manifest, documentId)
     }
   }

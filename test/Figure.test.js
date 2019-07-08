@@ -43,18 +43,16 @@ const FIGURE_WITH_TWO_PANELS = `
 </fig-group>
 `
 
-test('Figure: open figure with sub-figures in manuscript and metadata view', t => {
+// TODO: this test should be more specific
+test('Figure: figure with sub-figures', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIGURE_WITH_TWO_PANELS)
   t.notNil(editor.find('.sc-figure[data-id=fig1]'), 'figure should be displayed in manuscript view')
-  editor = openMetadataEditor(app)
-  let subFigureCards = editor.findAll('.sc-card.sm-figure-panel')
-  t.equal(subFigureCards.length, 2, 'there should be a card for each panel in metadata view')
   t.end()
 })
 
-test('Figure: add figure into manuscript', t => {
+test('Figure: add figure', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, '<p id="p1">ABC</p>')
@@ -380,59 +378,6 @@ test('Figure: replace image in figure panel', t => {
     replaceSubFigureImageTool.onFileSelect(new PseudoFileEvent())
   }, 'triggering file upload for replace sub-figure should not throw')
 
-  t.end()
-})
-
-test('Figure: remove and move figure panels in metadata view', t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  // TODO: MetadataEditor is not updating when loading the fixture
-  // after opening the view. It would be better to have an 'editorSession' just for
-  // the loading, and then open the Metadata view. But the editor session is currently
-  // bound to the views.
-  let editor = openManuscriptEditor(app)
-  let doc = getDocument(editor)
-  loadBodyFixture(editor, FIGURE_WITH_THREE_PANELS)
-
-  // Helpers
-  const getSubFigureCards = () => editor.findAll(subFigureCardSelector)
-  const getSubFigureLabel = (card) => card.find(`.sc-figure-metadata .se-label`).text()
-  const getSubFigureId = (card) => card.getAttribute('data-id')
-  const selectCard = (card) => card.click()
-  const moveUpCard = () => openContextMenuAndFindTool(editor, moveUpToolSelector).click()
-  const removeCard = () => openContextMenuAndFindTool(editor, removePanelToolSelector).click()
-  const isMoveUpPossible = () => _isToolEnabled(editor, moveUpToolSelector)
-  const isRemovePossible = () => _isToolEnabled(editor, removePanelToolSelector)
-
-  editor = openMetadataEditor(app)
-
-  // checking that there is a card for every panel
-  let expectedNumberOfCards = doc.findAll('figure').reduce((n, fig) => n + fig.panels.length, 0)
-  let cards = getSubFigureCards()
-  t.equal(cards.length, expectedNumberOfCards, 'there should a card for each panel in the metadata view')
-  // ... contextual tools should be disabled without selecting panel
-  t.notOk(isMoveUpPossible(), 'move up sub-figure tool should be unavailable by default')
-  t.notOk(isRemovePossible(), 'remove sub-figure tool should be unavailable by default')
-
-  // selecting a card should activate contextual tools
-  selectCard(cards[1])
-  t.ok(isMoveUpPossible(), 'move up sub-figure tool should be available when panel card is selected')
-  t.ok(isRemovePossible(), 'remove sub-figure tool should be available when panel card is selected')
-
-  // removing selected panel should remove card and update label
-  removeCard()
-  cards = getSubFigureCards()
-  t.equal(cards.length, expectedNumberOfCards - 1, 'one panel card should have been removed')
-  t.equal(getSubFigureId(cards[1]), 'fig1c', 'second sub-figure id should match')
-  // ATTENTION: the label has changed, so data-id and label do not fit together well anymore
-  t.equal(getSubFigureLabel(cards[1]), 'Figure 1B', 'second sub-figure label should match')
-
-  // moving up a sub-figure to the top should move the panel, update the label, and disable move-up tool
-  selectCard(cards[1])
-  moveUpCard()
-  cards = getSubFigureCards()
-  t.equal(getSubFigureId(cards[0]), 'fig1c', 'first card should be the moved one')
-  t.equal(getSubFigureLabel(cards[0]), 'Figure 1A', 'sub-figure label should have been updated')
-  t.notOk(isMoveUpPossible(), 'move up sub-figure tool should be unavailable')
   t.end()
 })
 

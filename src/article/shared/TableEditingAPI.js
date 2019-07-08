@@ -1,6 +1,6 @@
 import { documentHelpers, getKeyForPath } from 'substance'
 import { getCellRange, getRangeFromMatrix, createTableSelection } from '../shared/tableHelpers'
-import { Table } from '../models'
+import { Table } from '../nodes'
 
 export default class TableEditingAPI {
   constructor (editorSession) {

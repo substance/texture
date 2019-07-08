@@ -9,17 +9,6 @@ export default class EditorPanel extends Component {
     this._initialize(this.props)
   }
 
-  getActionHandlers () {
-    return {
-      executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay,
-      startWorkflow: this._startWorkflow,
-      closeModal: this._closeModal,
-      scrollElementIntoView: this._scrollElementIntoView,
-      scrollTo: this._scrollTo
-    }
-  }
-
   // EXPERIMENTAL: Editor interface to be able to access the root element of editable content
   getContentPanel () {
     return this.refs.contentPanel
@@ -27,7 +16,7 @@ export default class EditorPanel extends Component {
 
   // TODO: shouldn't we react on willReceiveProps?
   _initialize (props) {
-    const { api, editorSession, archive } = props
+    const { editorSession } = props
     const config = this.context.config
 
     // ATTENTION: augmenting the default context with editor stuff and api etc.
@@ -35,36 +24,10 @@ export default class EditorPanel extends Component {
     // This should be solvable by sharing things like 'api' on the ArticlePanel level
     // and adding other things to getChildContext()
     const context = Object.assign(this.context, createEditorContext(config, editorSession, this), {
-      api,
-      archive,
-      editor: this,
-      urlResolver: archive,
-      editable: true
+      editable: true,
+      editor: this
     })
-
-    this.api = api
-    this.appState = context.appState
     this.context = context
-    this.editorSession = editorSession
-
-    this.editorSession.initialize()
-    this.appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
-    this.appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
-
-    // HACK: ATM there is no better way than to listen to an archive
-    // event and forcing the CommandManager to update commandStates
-    // and propagating the changes
-    archive.on('archive:saved', () => {
-      // HACK: alternatively we could trigger the commandManager directly
-      // but setting the selection dirty, also makes sure the DOM selection gets rerendered
-      // this.editorSession.commandManager.reduce()
-      this.appState._setDirty('selection')
-      this.appState.propagateUpdates()
-    })
-
-    // HACK: resetting the app state here, because things might get 'dirty' during initialization
-    // TODO: find out if there is a better way to do this
-    this.appState._reset()
   }
 
   _restoreViewport () {
@@ -76,7 +39,7 @@ export default class EditorPanel extends Component {
 
   dispose () {
     const appState = this.context.appState
-    const editorSession = this.editorSession
+    const editorSession = this._getEditorSession()
     editorSession.dispose()
     appState.removeObserver(this)
     this.props.archive.off(this)
@@ -84,17 +47,6 @@ export default class EditorPanel extends Component {
 
   getComponentRegistry () {
     return this.props.config.getComponentRegistry()
-  }
-
-  _closeModal () {
-    const appState = this.context.appState
-    appState.workflowId = null
-    appState.overlayId = null
-    appState.propagateUpdates()
-  }
-
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
   }
 
   _getConfigurator () {
@@ -107,7 +59,11 @@ export default class EditorPanel extends Component {
   }
 
   _getDocument () {
-    return this.props.editorSession.getDocument()
+    return this._getEditorSession().getDocument()
+  }
+
+  _getEditorSession () {
+    return this.props.editorSession
   }
 
   _getTheme () {
@@ -140,21 +96,6 @@ export default class EditorPanel extends Component {
     return handled
   }
 
-  _onSettingsUpdate () {
-    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
-    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
-    // ATTENTION: removing the following line leads to the BUG
-    this.empty()
-    this.rerender()
-  }
-
-  _startWorkflow (workflowId) {
-    const appState = this.context.appState
-    appState.workflowId = workflowId
-    appState.overlayId = workflowId
-    appState.propagateUpdates()
-  }
-
   _renderWorkflow ($$, workflowId) {
     let Modal = this.getComponent('modal')
     let WorkflowComponent = this.getComponent(workflowId)
@@ -163,16 +104,6 @@ export default class EditorPanel extends Component {
     }).addClass('se-workflow-modal sm-workflow-' + workflowId).append(
       $$(WorkflowComponent).ref('workflow')
     )
-  }
-
-  _toggleOverlay (overlayId) {
-    const appState = this.context.appState
-    if (appState.overlayId === overlayId) {
-      appState.overlayId = null
-    } else {
-      appState.overlayId = overlayId
-    }
-    appState.propagateUpdates()
   }
 
   _scrollElementIntoView (el, force) {

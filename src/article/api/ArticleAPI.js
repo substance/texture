@@ -1,18 +1,23 @@
-import { documentHelpers, includes, orderBy, without, copySelection, selectionHelpers, isString } from 'substance'
-import TableEditingAPI from './shared/TableEditingAPI'
-import { importFigures } from './articleHelpers'
-import { findParentByType } from './shared/nodeHelpers'
-import renderEntity from './shared/renderEntity'
-import FigurePanel from './nodes/FigurePanel'
-import SupplementaryFile from './nodes/SupplementaryFile'
-import BlockFormula from './nodes/BlockFormula'
-import { INTERNAL_BIBR_TYPES } from './ArticleConstants'
-import FigureManager from './shared/FigureManager'
-import FootnoteManager from './shared/FootnoteManager'
-import FormulaManager from './shared/FormulaManager'
-import ReferenceManager from './shared/ReferenceManager'
-import TableManager from './shared/TableManager'
-import SupplementaryManager from './shared/SupplementaryManager'
+import {
+  documentHelpers, includes, orderBy, without, copySelection, selectionHelpers,
+  isString, isArray, getKeyForPath
+} from 'substance'
+import { createValueModel } from '../../kit'
+import TableEditingAPI from '../shared/TableEditingAPI'
+import { importFigures } from '../articleHelpers'
+import { findParentByType } from '../shared/nodeHelpers'
+import renderEntity from '../shared/renderEntity'
+import FigurePanel from '../nodes/FigurePanel'
+import SupplementaryFile from '../nodes/SupplementaryFile'
+import BlockFormula from '../nodes/BlockFormula'
+import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
+import FigureManager from '../shared/FigureManager'
+import FootnoteManager from '../shared/FootnoteManager'
+import FormulaManager from '../shared/FormulaManager'
+import ReferenceManager from '../shared/ReferenceManager'
+import TableManager from '../shared/TableManager'
+import SupplementaryManager from '../shared/SupplementaryManager'
+import ArticleModel from './ArticleModel'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -24,12 +29,15 @@ export default class ArticleAPI {
     this._contextProvider = contextProvider
     this._document = doc
 
+    this._articleModel = new ArticleModel(this)
+    this._valueModelCache = new Map()
+
     // TODO: rethink this
     // we created a sub-api for table manipulations in an attempt of modularisation
     this._tableApi = new TableEditingAPI(editorSession)
 
     // TODO: rethink this
-    // these have been hard coded. Instead we should register them as a service, and instantiate on demand
+    // Instead we should register these managers as a service, and instantiate on demand
     this._figureManager = new FigureManager(editorSession, config.getValue('figure-label-generator'))
     this._footnoteManager = new FootnoteManager(editorSession, config.getValue('footnote-label-generator'))
     this._formulaManager = new FormulaManager(editorSession, config.getValue('formula-label-generator'))
@@ -50,11 +58,95 @@ export default class ArticleAPI {
     return this.editorSession.getSelection()
   }
 
+  getArticleModel () {
+    return this._articleModel
+  }
+
+  /**
+   * Provides a model for a property of the document.
+   *
+   * @param {string|array} propKey path of a property as string or array
+   */
+  getValueModel (propKey) {
+    if (isArray(propKey)) {
+      propKey = getKeyForPath(propKey)
+    }
+    let valueModel = this._valueModelCache.get(propKey)
+    if (!valueModel) {
+      let doc = this.getDocument()
+      let path = propKey.split('.')
+      let prop = doc.getProperty(path)
+      if (!prop) throw new Error('Property does not exist')
+      valueModel = createValueModel(this, path, prop)
+    }
+    return valueModel
+  }
+
   /**
    * Provides a sub-api for editing tables.
    */
   getTableAPI () {
     return this._tableApi
+  }
+
+  _renderEntity (entity, options) {
+    let exporter = this.config.createExporter('html')
+    return renderEntity(entity, exporter)
+  }
+
+  _getContainerPathForNode (node) {
+    let last = node.getXpath()
+    let prop = last.property
+    let prev = last.prev
+    if (prev && prop) {
+      return [prev.id, prop]
+    }
+  }
+
+  // EXPERIMENTAL: trying to derive a surfaceId for a property in a specific node
+  // exploiting knowledge about the implemented view structure: in metadata every node is top-level (card)
+  // in manuscript it is either top-level (title, abstract) or part of a container (body)
+  _getSurfaceId (node, propertyName, viewName) {
+    if (viewName === 'metadata') {
+      return `${node.id}.${propertyName}`
+    } else {
+      let xpath = node.getXpath().toArray()
+      let idx = xpath.findIndex(entry => entry.id === 'body')
+      let relXpath
+      if (idx >= 0) {
+        relXpath = xpath.slice(idx)
+      } else {
+        relXpath = xpath.slice(-1)
+      }
+      // the 'trace' is concatenated using '/' and the property name appended via '.'
+      return relXpath.map(e => e.id).join('/') + '.' + propertyName
+    }
+  }
+
+  // EXPERIMENTAL need to figure out if we really need this
+  // This is used by ManyRelationshipComponent (which is kind of weird)
+  selectValue (path) {
+    this._setSelection(this._createValueSelection(path))
+  }
+
+  selectFirstRequiredPropertyOfMetadataCard (nodeId) {
+    this._setSelection(this._selectFirstRequiredPropertyOfMetadataCard(nodeId))
+  }
+
+  _getAppState () {
+    return this._getContext().appState
+  }
+
+  _getContext () {
+    return this._contextProvider.getContext()
+  }
+
+  // TODO: we need a better way to update settings
+  _loadSettings (settings) {
+    let appState = this._getContext().appState
+    appState.settings.load(settings)
+    appState._setDirty('settings')
+    appState.propagateUpdates()
   }
 
   // TODO: how are we using this?
@@ -107,6 +199,8 @@ export default class ArticleAPI {
   }
 
   paste (content, options) {
+    // TODO: how could we modularise this, i.e. there could be other
+    // types with a special paste support
     if (this._tableApi.isTableSelected()) {
       return this._tableApi.paste(content, options)
     } else {
@@ -142,16 +236,6 @@ export default class ArticleAPI {
     }
   }
 
-  // EXPERIMENTAL need to figure out if we really need this
-  // This is used by ManyRelationshipComponent (which is kind of weird)
-  selectValue (path) {
-    this._setSelection(this._createValueSelection(path))
-  }
-
-  selectFirstRequiredPropertyOfMetadataCard (nodeId) {
-    this._setSelection(this._selectFirstRequiredPropertyOfMetadataCard(nodeId))
-  }
-
   _appendChild (collectionPath, data) {
     this.editorSession.transaction(tx => {
       let node = tx.create(data)
@@ -161,28 +245,12 @@ export default class ArticleAPI {
 
   _deleteChild (collectionPath, child, txHook) {
     this.editorSession.transaction(tx => {
-      documentHelpers.remove(tx, collectionPath, child.id)
+      documentHelpers.removeFromCollection(tx, collectionPath, child.id)
       documentHelpers.deepDeleteNode(tx, child)
       if (txHook) {
         txHook(tx)
       }
     })
-  }
-
-  _getAppState () {
-    return this._getContext().appState
-  }
-
-  _getContext () {
-    return this._contextProvider.getContext()
-  }
-
-  // TODO: we need a better way to update settings
-  _loadSettings (settings) {
-    let appState = this._getContext().appState
-    appState.settings.load(settings)
-    appState._setDirty('settings')
-    appState.propagateUpdates()
   }
 
   _moveChild (collectionPath, child, shift, txHook) {
@@ -198,49 +266,7 @@ export default class ArticleAPI {
     })
   }
 
-  _replaceFile (hrefPath, file) {
-    const articleSession = this.editorSession
-    const path = this.archive.addAsset(file)
-    articleSession.transaction(tx => {
-      tx.set(hrefPath, path)
-    })
-  }
 
-  _addReference (refData) {
-    this._addReferences([refData])
-  }
-
-  _addReferences (refsData) {
-    this.editorSession.transaction(tx => {
-      let refNodes = refsData.map(refData => documentHelpers.createNodeFromJson(tx, refData))
-      refNodes.forEach(ref => {
-        documentHelpers.append(tx, ['article', 'references'], ref.id)
-      })
-      if (refNodes.length > 0) {
-        let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(refNodes[0])
-        tx.setSelection(newSelection)
-      }
-    })
-  }
-
-  // This method is used to cleanup xref targets
-  // during footnote or reference removing
-  _removeCorrespondingXrefs (tx, node) {
-    let manager
-    if (INTERNAL_BIBR_TYPES.indexOf(node.type) > -1) {
-      manager = this._referenceManager
-    } else if (node.type === 'footnote') {
-      manager = this._footnoteManager
-    } else {
-      return
-    }
-    manager._getXrefs().forEach(xref => {
-      const index = xref.refTargets.indexOf(node.id)
-      if (index > -1) {
-        tx.update([xref.id, 'refTargets'], { type: 'delete', pos: index })
-      }
-    })
-  }
 
   _createCardSelection (nodeId) {
     return {
@@ -400,39 +426,6 @@ export default class ArticleAPI {
     return Boolean(valueSettings['required'])
   }
 
-  // ATTENTION: this only works for meta-data cards, thus the special naming
-  _selectFirstRequiredPropertyOfMetadataCard (node) {
-    if (isString(node)) {
-      node = this.getDocument().get(node)
-    }
-    let prop = this._getFirstRequiredProperty(node)
-    if (prop) {
-      if (prop.isText() || prop.type === 'string') {
-        let path = [node.id, prop.name]
-        return {
-          type: 'property',
-          path,
-          startOffset: 0,
-          surfaceId: this._getSurfaceId(node, prop.name, 'metadata')
-        }
-      } else if (prop.isContainer()) {
-        let nodes = node.resolve(prop.name)
-        let first = nodes[0]
-        if (first && first.isText()) {
-          let path = first.getPath()
-          return {
-            type: 'property',
-            path,
-            startOffset: 0,
-            surfaceId: this._getSurfaceId(node, prop.name, 'metadata')
-          }
-        }
-      }
-    }
-    // otherwise fall back to 'card' selection
-    return this._createCardSelection(node.id)
-  }
-
   _getFirstRequiredProperty (node) {
     // TODO: still not sure if this is the right approach
     // Maybe it would be simpler to just use configuration
@@ -462,22 +455,6 @@ export default class ArticleAPI {
     })
   }
 
-  _insertSupplementaryFile (file, url) {
-    const articleSession = this.editorSession
-    if (file) url = this.archive.addAsset(file)
-    let sel = articleSession.getSelection()
-    articleSession.transaction(tx => {
-      let containerPath = sel.containerPath
-      let nodeData = SupplementaryFile.getTemplate()
-      nodeData.mimetype = file ? file.type : ''
-      nodeData.href = url
-      nodeData.remote = !file
-      let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
-      tx.insertBlockNode(supplementaryFile)
-      selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)
-    })
-  }
-
   _replaceSupplementaryFile (file, supplementaryFile) {
     const articleSession = this.editorSession
     const path = this.archive.addAsset(file)
@@ -489,31 +466,9 @@ export default class ArticleAPI {
     })
   }
 
-  _insertInlineGraphic (file) {
-    const articleSession = this.editorSession
-    const href = this.archive.addAsset(file)
-    const mimeType = file.type
-    const sel = articleSession.getSelection()
-    if (!sel) return
-    articleSession.transaction(tx => {
-      const node = tx.create({
-        type: 'inline-graphic',
-        mimeType,
-        href
-      })
-      tx.insertInlineNode(node)
-      tx.setSelection(node.getSelection())
-    })
-  }
+  // # Actions
 
-  _renderEntity (entity, options) {
-    let exporter = this.config.createExporter('html')
-    return renderEntity(entity, exporter)
-  }
-
-  // Internal API where I do not have a better solution yet
-
-  _addFigurePanel (figureId, file) {
+  addFigurePanel (figureId, file) {
     const doc = this.getDocument()
     const figure = doc.get(figureId)
     const pos = figure.getCurrentPanelIndex()
@@ -533,7 +488,104 @@ export default class ArticleAPI {
     })
   }
 
-  _switchFigurePanel (figure, newPanelIndex) {
+  addReference (refData) {
+    this._addReferences([refData])
+  }
+
+  addReferences (refsData) {
+    this.editorSession.transaction(tx => {
+      let refNodes = refsData.map(refData => documentHelpers.createNodeFromJson(tx, refData))
+      refNodes.forEach(ref => {
+        documentHelpers.append(tx, ['article', 'references'], ref.id)
+      })
+      if (refNodes.length > 0) {
+        let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(refNodes[0])
+        tx.setSelection(newSelection)
+      }
+    })
+  }
+
+  insertInlineGraphic (file) {
+    const articleSession = this.editorSession
+    const href = this.archive.addAsset(file)
+    const mimeType = file.type
+    const sel = articleSession.getSelection()
+    if (!sel) return
+    articleSession.transaction(tx => {
+      const node = tx.create({
+        type: 'inline-graphic',
+        mimeType,
+        href
+      })
+      tx.insertInlineNode(node)
+      tx.setSelection(node.getSelection())
+    })
+  }
+
+  insertSupplementaryFile (file, url) {
+    const articleSession = this.editorSession
+    if (file) url = this.archive.addAsset(file)
+    let sel = articleSession.getSelection()
+    articleSession.transaction(tx => {
+      let containerPath = sel.containerPath
+      let nodeData = SupplementaryFile.getTemplate()
+      nodeData.mimetype = file ? file.type : ''
+      nodeData.href = url
+      nodeData.remote = !file
+      let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
+      tx.insertBlockNode(supplementaryFile)
+      selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)
+    })
+  }
+
+  removeFootnote (footnoteId) {
+    // ATTENTION: footnotes appear in different contexts
+    // e.g. article.footnotes, or table-fig.footnotes
+    let doc = this.getDocument()
+    let footnote = doc.get(footnoteId)
+    let parent = footnote.getParent()
+    this._removeItemFromCollection(footnoteId, [parent.id, 'footnotes'])
+  }
+
+  _removeItemFromCollection (itemId, collectionPath) {
+    const editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let item = tx.get(itemId)
+      documentHelpers.removeFromCollection(tx, collectionPath, itemId)
+      this._removeCorrespondingXrefs(tx, item)
+      documentHelpers.deepDeleteNode(tx, itemId)
+      tx.selection = null
+    })
+  }
+
+  // This method is used to cleanup xref targets
+  // during footnote or reference removing
+  _removeCorrespondingXrefs (tx, node) {
+    let manager
+    if (INTERNAL_BIBR_TYPES.indexOf(node.type) > -1) {
+      manager = this._referenceManager
+    } else if (node.type === 'footnote') {
+      manager = this._footnoteManager
+    } else {
+      return
+    }
+    manager._getXrefs().forEach(xref => {
+      const index = xref.refTargets.indexOf(node.id)
+      if (index > -1) {
+        tx.update([xref.id, 'refTargets'], { type: 'delete', pos: index })
+      }
+    })
+  }
+
+  replaceFile (hrefPath, file) {
+    const articleSession = this.editorSession
+    const path = this.archive.addAsset(file)
+    articleSession.transaction(tx => {
+      tx.set(hrefPath, path)
+    })
+  }
+
+  switchFigurePanel (figure, newPanelIndex) {
     const editorSession = this.editorSession
     let sel = editorSession.getSelection()
     if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
@@ -542,32 +594,4 @@ export default class ArticleAPI {
     editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
   }
 
-  _getContainerPathForNode (node) {
-    let last = node.getXpath()
-    let prop = last.property
-    let prev = last.prev
-    if (prev && prop) {
-      return [prev.id, prop]
-    }
-  }
-
-  // EXPERIMENTAL: trying to derive a surfaceId for a property in a specific node
-  // exploiting knowledge about the implemented view structure: in metadata every node is top-level (card)
-  // in manuscript it is either top-level (title, abstract) or part of a container (body)
-  _getSurfaceId (node, propertyName, viewName) {
-    if (viewName === 'metadata') {
-      return `${node.id}.${propertyName}`
-    } else {
-      let xpath = node.getXpath().toArray()
-      let idx = xpath.findIndex(entry => entry.id === 'body')
-      let relXpath
-      if (idx >= 0) {
-        relXpath = xpath.slice(idx)
-      } else {
-        relXpath = xpath.slice(-1)
-      }
-      // the 'trace' is concatenated using '/' and the property name appended via '.'
-      return relXpath.map(e => e.id).join('/') + '.' + propertyName
-    }
-  }
 }

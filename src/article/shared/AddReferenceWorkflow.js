@@ -54,12 +54,12 @@ export default class AddReferenceWorkflow extends Component {
   }
 
   _onAdd (type) {
-    this.context.api._addReference({ type })
+    this.context.api.addReference({ type })
     this.send('closeModal')
   }
 
   _onImport (items) {
-    this.context.api._addReferences(items)
+    this.context.api.addReferences(items)
     this.send('closeModal')
   }
 }

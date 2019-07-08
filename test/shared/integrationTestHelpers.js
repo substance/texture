@@ -230,14 +230,11 @@ export function createTestVfs (seedXML) {
 
 export function openManuscriptEditor (app) {
   let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'manuscript')
   return articlePanel.find('.sc-manuscript-editor')
 }
 
 export function openMetadataEditor (app) {
-  let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'metadata')
-  return articlePanel.find('.sc-metadata-editor')
+  throw new Error('This has been removed!')
 }
 
 export function getApi (editor) {
@@ -335,6 +332,10 @@ export function findParent (el, selector) {
     }
     parent = parent.getParent()
   }
+}
+
+export function executeCommand (editor, commandName, params) {
+  editor.send('executeCommand', commandName, params)
 }
 
 export function clickUndo (editor) {

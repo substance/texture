@@ -1,5 +1,5 @@
 import { Command } from 'substance'
-import { findParentByType } from './nodeHelpers'
+import { findParentByType } from '../shared/nodeHelpers'
 
 class BasicFigurePanelCommand extends Command {
   getCommandState (params, context) {
@@ -46,7 +46,7 @@ export class AddFigurePanelCommand extends BasicFigurePanelCommand {
     if (files.length > 0) {
       const file = files[0]
       const figure = this._getFigure(params, context)
-      context.api._addFigurePanel(figure.id, file)
+      context.api.addFigurePanel(figure.id, file)
     }
   }
 }
@@ -57,7 +57,7 @@ export class ReplaceFigurePanelImageCommand extends BasicFigurePanelCommand {
     const files = params.files
     if (files.length > 0) {
       let graphic = figurePanel.getContent()
-      context.api._replaceFile([graphic.id, 'href'], files[0])
+      context.api.replaceFile([graphic.id, 'href'], files[0])
     }
   }
 

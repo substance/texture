@@ -30,7 +30,7 @@ const FIXTURE = `
   </fig-group>
 `
 
-test('Figure Metadata: open figure with custom fields in manuscript and metadata view', t => {
+test('Figure Metadata: figure with custom fields', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openManuscriptEditor(app)
   loadBodyFixture(editor, FIXTURE)
@@ -39,8 +39,6 @@ test('Figure Metadata: open figure with custom fields in manuscript and metadata
   t.equal(fields.length, 2, 'there should be two inputs')
   t.equal(fields[0].getTextContent(), 'Field I', 'shoud be keyword label inside first')
   t.equal(fields[1].getTextContent(), 'Value A, Value B', 'shoud be values joined with comma inside second')
-  editor = openMetadataEditor(app)
-  t.notNil(editor.find(figureMetadataSelector), 'there should be a figure with metadata in manuscript')
   t.end()
 })
 

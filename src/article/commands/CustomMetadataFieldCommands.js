@@ -1,5 +1,5 @@
 import { documentHelpers, Command } from 'substance'
-import { findParentByType } from './nodeHelpers'
+import { findParentByType } from '../shared/nodeHelpers'
 import CustomMetadataField from '../nodes/CustomMetadataField'
 
 class BasicCustomMetadataFieldCommand extends Command {
@@ -62,7 +62,7 @@ export class RemoveCustomMetadataFieldCommand extends BasicCustomMetadataFieldCo
     const collectionPath = this._getCollectionPath(params, context)
     context.editorSession.transaction(tx => {
       const nodeId = tx.selection.getNodeId()
-      documentHelpers.remove(tx, collectionPath, nodeId)
+      documentHelpers.removeFromCollection(tx, collectionPath, nodeId)
       tx.selection = null
     })
   }

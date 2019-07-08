@@ -3,7 +3,7 @@ import { AppState, EditorSession, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
 import FigurePackageSettings from './settings/FigurePackageSettings'
-import ArticleAPI from './ArticleAPI'
+import ArticleAPI from './api/ArticleAPI'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
@@ -13,6 +13,17 @@ export default class ArticlePanel extends Component {
     this._initialize(this.props, this.state)
   }
 
+  getActionHandlers () {
+    return {
+      executeCommand: this._executeCommand,
+      toggleOverlay: this._toggleOverlay,
+      startWorkflow: this._startWorkflow,
+      closeModal: this._closeModal,
+      scrollElementIntoView: this._scrollElementIntoView,
+      scrollTo: this._scrollTo
+    }
+  }
+
   _initialize (props) {
     // TODO: I want to move to a single-layer setup for all views in this panel,
     // i.e. no extra configurations and if possible no extra editor session
@@ -20,18 +31,44 @@ export default class ArticlePanel extends Component {
     const { archive, config, document } = props
     const doc = document
 
-    this.editorSession = new EditorSession('article', doc, config, this, {
+    let editorSession = new EditorSession('article', doc, config, this, {
       workflowId: null,
+      overlayId: null,
       settings: this._createSettings(doc)
     })
-    this.api = new ArticleAPI(this.editorSession, archive, config, this)
-    this.context = Object.assign(this.context, createComponentContext(config), {
-      urlResolver: archive,
+    let appState = editorSession.editorState
+    let api = new ArticleAPI(editorSession, archive, config, this)
+    let context = Object.assign(this.context, createComponentContext(config), {
       config,
-      editorSession: this.editorSession,
-      appState: this.editorSession.editorState,
-      api: this.api
+      editorSession,
+      appState,
+      api,
+      archive,
+      urlResolver: archive,
+      editor: this
     })
+
+    this.editorSession = editorSession
+    this.api = api
+    this.appState = appState
+    this.context = context
+
+    editorSession.initialize()
+    appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
+    appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
+    // HACK: ATM there is no better way than to listen to an archive
+    // event and forcing the CommandManager to update commandStates
+    // and propagating the changes
+    archive.on('archive:saved', () => {
+      // HACK: setting the selection dirty, also makes sure the DOM selection gets rerendered
+      // as opposed to triggering the commandManager directly
+      appState._setDirty('selection')
+      appState.propagateUpdates()
+    })
+    // HACK: resetting the app state here, because things might get 'dirty' during initialization
+    // TODO: find out if there is a better way to do this
+    appState._reset()
+
   }
 
   willReceiveProps (props) {
@@ -43,6 +80,13 @@ export default class ArticlePanel extends Component {
 
   getContext () {
     return this.context
+  }
+
+  getContentPanel () {
+    // This is part of the Editor interface
+    // ATTENTION: being a legacy of the multi-view implementation
+    // this has to provide the content panel of the content panel
+    return this.refs.content.getContentPanel()
   }
 
   getChildContext () {
@@ -91,7 +135,6 @@ export default class ArticlePanel extends Component {
     const editorSession = this.editorSession
     const config = props.config
 
-    // TODO: allow to
     let ContentComponent = this.getComponent('article-editor')
     return $$(ContentComponent, {
       api,
@@ -100,6 +143,13 @@ export default class ArticlePanel extends Component {
       config,
       editorState: editorSession.editorState
     }).ref('content')
+  }
+
+  _closeModal () {
+    const appState = this._getAppState()
+    appState.workflowId = null
+    appState.overlayId = null
+    appState.propagateUpdates()
   }
 
   _createAppState (config) { // eslint-disable-line no-unused-vars
@@ -121,6 +171,18 @@ export default class ArticlePanel extends Component {
     return settings
   }
 
+  _executeCommand (name, params) {
+    this._getEditorSession().executeCommand(name, params)
+  }
+
+  _getAppState () {
+    return this.appState
+  }
+
+  _getEditorSession () {
+    return this.editorSession
+  }
+
   _handleKeydown (e) {
     // console.log('ArticlePanel._handleKeydown', e)
     // ATTENTION: asking the currently active content to handle the keydown event first
@@ -134,6 +196,31 @@ export default class ArticlePanel extends Component {
       e.preventDefault()
     }
     return handled
+  }
+
+  _scrollElementIntoView (el, force) {
+    return this.refs.content._scrollElementIntoView(el, force)
+  }
+
+  _scrollTo (params) {
+    return this.refs.content._scrollTo(params)
+  }
+
+  _startWorkflow (workflowId) {
+    const appState = this._getAppState()
+    appState.workflowId = workflowId
+    appState.overlayId = workflowId
+    appState.propagateUpdates()
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this._getAppState()
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
   }
 
   _onRouteChange (data) {
@@ -157,5 +244,13 @@ export default class ArticlePanel extends Component {
       // forcing scroll, i.e. bringing target element always to the top
       this.refs.content.send('scrollElementIntoView', el, true)
     }
+  }
+
+  _onSettingsUpdate () {
+    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
+    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
+    // ATTENTION: removing the following line leads to the BUG
+    this.empty()
+    this.rerender()
   }
 }

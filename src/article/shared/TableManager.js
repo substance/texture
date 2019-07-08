@@ -37,7 +37,7 @@ export default class TableManager extends CitableContentManager {
       if (op.isCreate()) {
         let node = doc.get(op.getValue().id)
         if (node && node.type === 'table-figure') {
-          node.setFootnoteManager(new TableFootnoteManager(this.document, node))
+          node.setFootnoteManager(new TableFootnoteManager(this.editorSession, node))
         }
       }
     }

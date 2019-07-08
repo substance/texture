@@ -15,7 +15,7 @@ export default class InsertInlineGraphicCommand extends InsertInlineNodeCommand 
     const files = params.files
     let api = context.api
     if (files.length > 0) {
-      api._insertInlineGraphic(files[0])
+      api.insertInlineGraphic(files[0])
     }
   }
 }

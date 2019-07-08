@@ -2,13 +2,12 @@ import { DefaultDOMElement } from 'substance'
 import { Managed, OverlayCanvas } from '../../kit'
 import EditorPanel from '../shared/EditorPanel'
 import ManuscriptTOC from './ManuscriptTOC'
-import ManuscriptModel from '../models/ManuscriptModel'
 
 export default class ManuscriptEditor extends EditorPanel {
   _initialize (props) {
     super._initialize(props)
 
-    this._model = new ManuscriptModel(this.context.api, this._getDocument())
+    this._model = this.context.api.getArticleModel()
   }
 
   didMount () {

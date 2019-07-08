@@ -1,5 +1,5 @@
 import CitableContentManager from './CitableContentManager'
-import { BlockFormula } from '../models'
+import { BlockFormula } from '../nodes'
 
 export default class FormulaManager extends CitableContentManager {
   constructor (editorSession, labelGenerator) {

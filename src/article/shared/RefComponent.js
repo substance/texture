@@ -6,10 +6,9 @@ export default class RefComponent extends NodeComponent {
     const api = this.context.api
     const ref = this.props.node
     let label = _getReferenceLabel(ref)
-    let entityHtml = api._renderEntity(ref)
+    let entityHtml = api.renderEntity(ref)
 
-    // TODO: do we want to display something like this
-    // if so, use the label provider
+    // TODO: use the label provider
     entityHtml = entityHtml || '<i>Not available</i>'
 
     return $$('div').addClass('sc-ref-component').append(

@@ -37,7 +37,7 @@ export default class AuthorsListComponent extends CustomSurface {
     authors.forEach((author, index) => {
       const short = author.type === 'organisation'
       const authorEl = $$('span').addClass('se-contrib').html(
-        this.context.api._renderEntity(author, { short })
+        this.context.api.renderEntity(author, { short })
       ).on('click', this._selectAuthor.bind(this, author.id))
       if (sel && sel.customType === 'author' && sel.data.authorId === author.id) {
         authorEl.addClass('sm-selected')

@@ -11,13 +11,13 @@ export default class ModelPreviewComponent extends Component {
   }
 
   render ($$) {
-    // TODO: rethink this. IMO rendering should not be part of the Article API
-    // Either it could be part of the general Model API, i.e. model.previewHtml()
-    // or we could use some kind of configurable renderer, very much like a converter
     let node = this.props.node
     let el = $$('div').addClass('sc-model-preview')
     el.html(
-      this.context.api._renderEntity(node)
+      // TODO: rethink this. IMO rendering should not be part of the Article API
+      // Either it could be part of the general Model API, i.e. model.previewHtml()
+      // or we could use some kind of configurable renderer, very much like a converter
+      this.context.api.renderEntity(node)
     )
     return el
   }

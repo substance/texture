@@ -1,7 +1,5 @@
-import { documentHelpers } from 'substance'
 import { findParentByType } from '../shared/nodeHelpers'
 import AddEntityCommand from './AddEntityCommand'
-import Footnote from '../nodes/Footnote'
 
 export default class InsertFootnoteCommand extends AddEntityCommand {
   detectScope (params) {
@@ -27,19 +25,8 @@ export default class InsertFootnoteCommand extends AddEntityCommand {
     }
   }
 
-  _addItemToCollection (params, context) {
-    let collectionPath = this._getCollectionPath(params, context)
-    context.editorSession.transaction(tx => {
-      let node = documentHelpers.createNodeFromJson(tx, Footnote.getTemplate())
-      documentHelpers.append(tx, collectionPath, node.id)
-      let p = tx.get(node.content[0])
-      tx.setSelection({
-        type: 'property',
-        path: p.getPath(),
-        startOffset: 0,
-        surfaceId: context.api._getSurfaceId(node, 'content', context.appState.viewName),
-        containerPath: [node.id, 'content']
-      })
-    })
+  execute (params, context) {
+    let footnoteCollectionPath = this._getCollectionPath(params, context)
+    context.api.addFootnote(footnoteCollectionPath)
   }
 }

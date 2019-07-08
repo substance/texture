@@ -12,9 +12,6 @@ export default class DecreaseHeadingLevelCommand extends Command {
   }
 
   execute (params, context) {
-    let editorSession = params.editorSession
-    editorSession.transaction(tx => {
-      tx.dedent()
-    })
+    context.api.dedent()
   }
 }

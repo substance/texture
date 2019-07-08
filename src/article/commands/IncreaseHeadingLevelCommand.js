@@ -11,10 +11,7 @@ export default class IncreaseHeadingLevelCommand extends Command {
     }
   }
 
-  execute (params) {
-    let editorSession = params.editorSession
-    editorSession.transaction(tx => {
-      tx.indent()
-    })
+  execute (params, context) {
+    context.api.indent()
   }
 }

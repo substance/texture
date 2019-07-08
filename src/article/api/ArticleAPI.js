@@ -1,6 +1,6 @@
 import {
   documentHelpers, includes, orderBy, without, copySelection, selectionHelpers,
-  isString, isArray, getKeyForPath
+  isArray, getKeyForPath
 } from 'substance'
 import { createValueModel } from '../../kit'
 import TableEditingAPI from '../shared/TableEditingAPI'
@@ -18,6 +18,7 @@ import ReferenceManager from '../shared/ReferenceManager'
 import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
+import Footnote from '../nodes/Footnote'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -89,11 +90,6 @@ export default class ArticleAPI {
     return this._tableApi
   }
 
-  _renderEntity (entity, options) {
-    let exporter = this.config.createExporter('html')
-    return renderEntity(entity, exporter)
-  }
-
   _getContainerPathForNode (node) {
     let last = node.getXpath()
     let prop = last.property
@@ -104,23 +100,19 @@ export default class ArticleAPI {
   }
 
   // EXPERIMENTAL: trying to derive a surfaceId for a property in a specific node
-  // exploiting knowledge about the implemented view structure: in metadata every node is top-level (card)
-  // in manuscript it is either top-level (title, abstract) or part of a container (body)
-  _getSurfaceId (node, propertyName, viewName) {
-    if (viewName === 'metadata') {
-      return `${node.id}.${propertyName}`
+  // exploiting knowledge about the implemented view structure
+  // in manuscript it is either top-level (e.g. title, abstract) or part of a container (body)
+  _getSurfaceId (node, propertyName) {
+    let xpath = node.getXpath().toArray()
+    let idx = xpath.findIndex(entry => entry.id === 'body')
+    let relXpath
+    if (idx >= 0) {
+      relXpath = xpath.slice(idx)
     } else {
-      let xpath = node.getXpath().toArray()
-      let idx = xpath.findIndex(entry => entry.id === 'body')
-      let relXpath
-      if (idx >= 0) {
-        relXpath = xpath.slice(idx)
-      } else {
-        relXpath = xpath.slice(-1)
-      }
-      // the 'trace' is concatenated using '/' and the property name appended via '.'
-      return relXpath.map(e => e.id).join('/') + '.' + propertyName
+      relXpath = xpath.slice(-1)
     }
+    // the 'trace' is concatenated using '/' and the property name appended via '.'
+    return relXpath.map(e => e.id).join('/') + '.' + propertyName
   }
 
   // EXPERIMENTAL need to figure out if we really need this
@@ -149,8 +141,8 @@ export default class ArticleAPI {
     appState.propagateUpdates()
   }
 
-  // TODO: how are we using this?
-  // This could be part of an Editor API
+  // Basic editing
+
   copy () {
     if (this._tableApi.isTableSelected()) {
       return this._tableApi.copySelection()
@@ -176,6 +168,13 @@ export default class ArticleAPI {
     }
   }
 
+  dedent () {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      tx.dedent()
+    })
+  }
+
   deleteSelection (options) {
     const sel = this.getSelection()
     if (sel && !sel.isNull() && !sel.isCollapsed()) {
@@ -183,6 +182,13 @@ export default class ArticleAPI {
         tx.deleteSelection(options)
       }, { action: 'deleteSelection' })
     }
+  }
+
+  indent () {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      tx.indent()
+    })
   }
 
   insertText (text) {
@@ -211,10 +217,9 @@ export default class ArticleAPI {
     }
   }
 
-  // TODO: a card selection is essentially a node selection
-  // only in metadata view we use customType='card' instead of 'node'
-  selectCard (nodeId) {
-    this._setSelection(this._createCardSelection(nodeId))
+  renderEntity (entity, options) {
+    let exporter = this.config.createExporter('html')
+    return renderEntity(entity, exporter)
   }
 
   selectNode (nodeId) {
@@ -264,16 +269,6 @@ export default class ArticleAPI {
         txHook(tx)
       }
     })
-  }
-
-
-
-  _createCardSelection (nodeId) {
-    return {
-      type: 'custom',
-      customType: 'card',
-      nodeId
-    }
   }
 
   _createValueSelection (path) {
@@ -493,7 +488,8 @@ export default class ArticleAPI {
   }
 
   addReferences (refsData) {
-    this.editorSession.transaction(tx => {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
       let refNodes = refsData.map(refData => documentHelpers.createNodeFromJson(tx, refData))
       refNodes.forEach(ref => {
         documentHelpers.append(tx, ['article', 'references'], ref.id)
@@ -502,6 +498,22 @@ export default class ArticleAPI {
         let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(refNodes[0])
         tx.setSelection(newSelection)
       }
+    })
+  }
+
+  addFootnote (footnoteCollectionPath) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let node = documentHelpers.createNodeFromJson(tx, Footnote.getTemplate())
+      documentHelpers.append(tx, footnoteCollectionPath, node.id)
+      let p = tx.get(node.content[0])
+      tx.setSelection({
+        type: 'property',
+        path: p.getPath(),
+        startOffset: 0,
+        surfaceId: this._getSurfaceId(node, 'content'),
+        containerPath: [node.id, 'content']
+      })
     })
   }
 
@@ -593,5 +605,4 @@ export default class ArticleAPI {
     }
     editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
   }
-
 }

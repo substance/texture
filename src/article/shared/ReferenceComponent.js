@@ -10,8 +10,7 @@ export default class ReferenceComponent extends NodeComponent {
     let mode = this.props.mode
     let node = this.props.node
     let label = this._getReferenceLabel()
-    // TODO: this should also use model
-    let html = this.context.api._renderEntity(node)
+    let html = this.context.api.renderEntity(node)
     // TODO: use the label provider
     html = html || '<i>Not available</i>'
     if (mode === PREVIEW_MODE) {

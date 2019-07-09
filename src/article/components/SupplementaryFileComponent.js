@@ -1,7 +1,7 @@
 import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class SupplementaryFileComponent extends NodeComponent {
   render ($$) {

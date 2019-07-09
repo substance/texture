@@ -1,5 +1,5 @@
 import { EditableInlineNodeComponent } from '../../kit'
-import { getXrefLabel } from './xrefHelpers'
+import { getXrefLabel } from '../shared/xrefHelpers'
 import XrefEditor from './XrefEditor'
 
 export default class XrefComponent extends EditableInlineNodeComponent {

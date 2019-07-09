@@ -1,4 +1,4 @@
-import DropdownEditor from './DropdownEditor'
+import DropdownEditor from '../shared/DropdownEditor'
 import { LICENSES } from '../ArticleConstants'
 
 export default class LicenseEditor extends DropdownEditor {

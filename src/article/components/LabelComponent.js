@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 // TODO: we need to rethink how we model labels
 // ATM, we have it in the schema, but we are using node state

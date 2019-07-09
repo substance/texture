@@ -4,8 +4,12 @@ import ArticleLoader from './ArticleLoader'
 import ArticleModelPackage from './nodes/ArticleModelPackage'
 import ArticlePanel from './ArticlePanel'
 import ArticleSerializer from './ArticleSerializer'
-import ManuscriptEditor from './manuscript/ManuscriptEditor'
-import ManuscriptPackage from './manuscript/ManuscriptPackage'
+import {
+  TEXTURE_JATS_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
+} from './ArticleConstants'
+import TextureJATS from './TextureJATS'
+import ManuscriptPackage from './shared/ManuscriptPackage'
+import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import FigureLabelGenerator from './shared/FigureLabelGenerator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
 import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
@@ -15,12 +19,8 @@ import ArticleJATSConverters from './converter/jats/ArticleJATSConverters'
 import ArticleJATSExporter from './converter/jats/ArticleJATSExporter'
 import ArticleJATSImporter from './converter/jats/ArticleJATSImporter'
 import ArticlePlainTextExporter from './converter/text/ArticlePlainTextExporter'
-import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import JATSTransformer from './converter/transform/jats/JATSTransformer'
-import {
-  TEXTURE_JATS_PUBLIC_ID, JATS_GREEN_1_1_PUBLIC_ID, JATS_GREEN_1_2_PUBLIC_ID
-} from './ArticleConstants'
-import TextureJATS from './TextureJATS'
+import { ManuscriptEditor } from './components'
 
 export default {
   name: 'article',

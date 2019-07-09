@@ -4,7 +4,7 @@ import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata
 import FigureMetadataComponent from './FigureMetadataComponent'
 import PreviewComponent from './PreviewComponent'
 import LabelComponent from './LabelComponent'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class FigurePanelComponent extends NodeComponent {
   render ($$) {

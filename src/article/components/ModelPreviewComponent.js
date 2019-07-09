@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { ifNodeOrRelatedHasChanged } from './nodeHelpers'
+import { ifNodeOrRelatedHasChanged } from '../shared/nodeHelpers'
 
 export default class ModelPreviewComponent extends Component {
   didMount () {

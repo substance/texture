@@ -3,7 +3,7 @@ import katex from 'katex'
 import { PREVIEW_MODE } from '../ArticleConstants'
 import BlockFormulaEditor from './BlockFormulaEditor'
 import PreviewComponent from './PreviewComponent'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 
 export default class BlockFormulaComponent extends NodeOverlayEditorMixin(NodeComponent) {
   getInitialState () {

@@ -1,5 +1,5 @@
 import { createNodePropertyModels } from '../../kit'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 import DefaultNodeComponent from './DefaultNodeComponent'
 import LicenseEditor from './LicenseEditor'
 import FigureMetadataComponent from './FigureMetadataComponent'

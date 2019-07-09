@@ -1,6 +1,6 @@
 import { DefaultDOMElement } from 'substance'
 import { Managed, OverlayCanvas } from '../../kit'
-import EditorPanel from '../shared/EditorPanel'
+import EditorPanel from './EditorPanel'
 import ManuscriptTOC from './ManuscriptTOC'
 
 export default class ManuscriptEditor extends EditorPanel {

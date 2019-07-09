@@ -1,6 +1,6 @@
 import { CustomSurface } from 'substance'
 import { renderNode } from '../../kit'
-import { getPos } from './nodeHelpers'
+import { getPos } from '../shared/nodeHelpers'
 
 export default class ReferenceListComponent extends CustomSurface {
   didMount () {

@@ -1,6 +1,6 @@
 import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 import PreviewComponent from './PreviewComponent'
 import DefaultNodeComponent from './DefaultNodeComponent'
 import InplaceRefContribsEditor from '../metadata/InplaceRefContribsEditor'

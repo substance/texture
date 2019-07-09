@@ -1,5 +1,5 @@
 import { NodeComponent } from '../../kit'
-import { getLabel } from './nodeHelpers'
+import { getLabel } from '../shared/nodeHelpers'
 import { PREVIEW_MODE } from '../ArticleConstants'
 import PreviewComponent from './PreviewComponent'
 

@@ -1,4 +1,4 @@
-import UploadTool from '../shared/UploadTool'
+import UploadTool from './UploadTool'
 
 export default class ReplaceSupplementaryFileTool extends UploadTool {
   getClassNames () {

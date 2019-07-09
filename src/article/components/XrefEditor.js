@@ -1,5 +1,5 @@
 import { renderNode, NodeComponent } from '../../kit'
-import { PREVIEW_MODE } from '../../article/ArticleConstants'
+import { PREVIEW_MODE } from '../ArticleConstants'
 
 export default class XrefEditor extends NodeComponent {
   render ($$) {

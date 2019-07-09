@@ -1,14 +1,14 @@
-.sc-custom-metadata-field {
+.sc-metadata-field {
   display: flex;
   margin: var(--t-half-spacing) 0;
   font-size: var(--t-small-font-size);
 }
 
-.sc-custom-metadata-field > .sc-string {
+.sc-metadata-field > .sc-string {
   flex: 1;
 }
 
-.sc-custom-metadata-field > .se-field-name {
+.sc-metadata-field > .se-field-name {
   font-weight: var(--t-bold-font-weight);
 }
 

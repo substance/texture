@@ -163,11 +163,11 @@ export default {
           },
           {
             type: 'group',
-            name: 'custom-metadata-fields',
+            name: 'metadata-fields',
             style: 'descriptive',
             label: 'metadata-field-tools',
             items: [
-              { type: 'command-group', name: 'custom-metadata-fields' }
+              { type: 'command-group', name: 'metadata-fields' }
             ]
           },
           {
@@ -221,7 +221,7 @@ export default {
           { type: 'command-group', name: 'reference' },
           { type: 'command-group', name: 'collection' },
           { type: 'command-group', name: 'list' },
-          { type: 'command-group', name: 'custom-metadata-fields' }
+          { type: 'command-group', name: 'metadata-fields' }
         ]
       }
     ])

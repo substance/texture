@@ -1,10 +1,15 @@
 import { documentHelpers, Command } from 'substance'
 import { findParentByType } from '../shared/nodeHelpers'
-import CustomMetadataField from '../nodes/CustomMetadataField'
+import { Figure, MetadataField, FigurePanel } from '../nodes'
 
-class BasicCustomMetadataFieldCommand extends Command {
+// TODO: refactor this so that editorSession.transaction() is not used directly
+// but only via context.api.
+// Also, this implementation is kind of tight to Figures. However, such metadata fields could occurr in other environments as well, e.g. tables.
+// And pull out commands in individual files.
+
+class BasicFigureMetadataCommand extends Command {
   get contextType () {
-    return 'custom-metadata-field'
+    return MetadataField.type
   }
 
   getCommandState (params, context) {
@@ -23,18 +28,18 @@ class BasicCustomMetadataFieldCommand extends Command {
     const nodeId = params.selection.getNodeId()
     const node = doc.get(nodeId)
     let figurePanelId = node.id
-    if (params.selection.type === 'node' && this.contextType === 'figure') {
+    if (params.selection.type === 'node' && this.contextType === Figure.type) {
       const currentIndex = node.getCurrentPanelIndex()
       figurePanelId = node.panels[currentIndex]
-    } else if (node.type !== 'figure-panel') {
-      const parentFigurePanel = findParentByType(node, 'figure-panel')
+    } else if (node.type !== FigurePanel.type) {
+      const parentFigurePanel = findParentByType(node, FigurePanel.type)
       figurePanelId = parentFigurePanel.id
     }
     return [figurePanelId, 'metadata']
   }
 }
 
-export class AddCustomMetadataFieldCommand extends BasicCustomMetadataFieldCommand {
+export class AddFigureMetadataFieldCommand extends BasicFigureMetadataCommand {
   get contextType () {
     return 'figure'
   }
@@ -42,7 +47,7 @@ export class AddCustomMetadataFieldCommand extends BasicCustomMetadataFieldComma
   execute (params, context) {
     const collectionPath = this._getCollectionPath(params, context)
     context.editorSession.transaction(tx => {
-      let node = documentHelpers.createNodeFromJson(tx, CustomMetadataField.getTemplate())
+      let node = documentHelpers.createNodeFromJson(tx, MetadataField.getTemplate())
       documentHelpers.append(tx, collectionPath, node.id)
       const path = [node.id, 'name']
       const viewName = context.appState.viewName
@@ -57,7 +62,7 @@ export class AddCustomMetadataFieldCommand extends BasicCustomMetadataFieldComma
   }
 }
 
-export class RemoveCustomMetadataFieldCommand extends BasicCustomMetadataFieldCommand {
+export class RemoveMetadataFieldCommand extends BasicFigureMetadataCommand {
   execute (params, context) {
     const collectionPath = this._getCollectionPath(params, context)
     context.editorSession.transaction(tx => {
@@ -68,7 +73,7 @@ export class RemoveCustomMetadataFieldCommand extends BasicCustomMetadataFieldCo
   }
 }
 
-export class MoveCustomMetadataFieldCommand extends BasicCustomMetadataFieldCommand {
+export class MoveMetadataFieldCommand extends BasicFigureMetadataCommand {
   execute (params, context) {
     const direction = this.config.direction
     const collectionPath = this._getCollectionPath(params, context)

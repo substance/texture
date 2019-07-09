@@ -1,14 +1,9 @@
-import { Command, getRangeFromMatrix, flatten, documentHelpers } from 'substance'
-import InsertNodeCommand from './InsertNodeCommand'
-import TableFigure from '../nodes/TableFigure'
+import { Command, getRangeFromMatrix, flatten } from 'substance'
 
 const DISABLED = { disabled: true }
 
-export class InsertTableCommand extends InsertNodeCommand {
-  createNode (tx, params, context) {
-    return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
-  }
-}
+// TODO: pull commands into single files.
+// and move manipulation code into ArticleAPI
 
 class BasicTableCommand extends Command {
   getCommandState (params, context) { // eslint-disable-line no-unused-vars

@@ -1,9 +1,9 @@
 import { DocumentNode, STRING } from 'substance'
 
-export default class CustomMetadataField extends DocumentNode {
+export default class MetadataField extends DocumentNode {
   static getTemplate () {
     return {
-      type: 'custom-metadata-field'
+      type: 'metadata-field'
     }
   }
 
@@ -11,8 +11,8 @@ export default class CustomMetadataField extends DocumentNode {
     return this.length === 0
   }
 }
-CustomMetadataField.schema = {
-  type: 'custom-metadata-field',
+MetadataField.schema = {
+  type: 'metadata-field',
   name: STRING,
   // ATTENTION: for now a field consist only of one plain-text value
   // user may use ',' to separate values

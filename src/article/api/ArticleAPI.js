@@ -19,7 +19,7 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
-import { InlineFormula, Xref, TableFigure, InlineGraphic } from '../nodes'
+import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote } from '../nodes'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -224,21 +224,28 @@ export default class ArticleAPI {
   }
 
   selectNode (nodeId) {
-    const editorSession = this.editorSession
-    const doc = editorSession.getDocument()
+    let selData = this._createNodeSelection(nodeId)
+    if (selData) {
+      this.editorSession.setSelection(selData)
+    }
+  }
+
+  _createNodeSelection (nodeId) {
+    let appState = this.getAppState()
+    let doc = appState.document
     const node = doc.get(nodeId)
     if (node) {
-      const sel = editorSession.getSelection()
+      let editorSession = this.getEditorSession()
+      let sel = appState.selection
       const containerPath = this._getContainerPathForNode(node)
       const surface = editorSession.surfaceManager._getSurfaceForProperty(containerPath)
       const surfaceId = surface ? surface.getId() : (sel ? sel.surfaceId : null)
-      editorSession.setSelection({
+      return {
         type: 'node',
         nodeId: node.id,
         containerPath,
-        // TODO: we need a way to look up surfaceIds by path
         surfaceId
-      })
+      }
     }
   }
 
@@ -437,20 +444,6 @@ export default class ArticleAPI {
     this.editorSession.setSelection(sel)
   }
 
-  // TODO: can we improve this?
-  // Here we would need a transaction on archive level, creating assets, plus placing them inside the article body.
-  _insertFigures (files) {
-    const articleSession = this.editorSession
-    let paths = files.map(file => {
-      return this.archive.addAsset(file)
-    })
-    let sel = articleSession.getSelection()
-    if (!sel || !sel.containerPath) return
-    articleSession.transaction(tx => {
-      importFigures(tx, sel, files, paths)
-    })
-  }
-
   _replaceSupplementaryFile (file, supplementaryFile) {
     const articleSession = this.editorSession
     const path = this.archive.addAsset(file)
@@ -520,12 +513,87 @@ export default class ArticleAPI {
     })
   }
 
+  canCreateAnnotation (annoType) {
+    let appState = this.getAppState()
+    const sel = appState.selection
+    const selectionState = appState.selectionState
+    if (sel && !sel.isNull() && sel.isPropertySelection() && !sel.isCollapsed() && selectionState.property.targetTypes.has(annoType)) {
+      // otherwise these annos are only allowed to 'touch' the current selection, not overlap.
+      for (let anno of selectionState.annos) {
+        if (sel.overlaps(anno.getSelection(), 'strict')) return false
+      }
+      return true
+    }
+    return false
+  }
+
+  canInsertBlockFormula () {
+    return this.canInsertBlockNode(BlockFormula.type)
+  }
+
+  insertBlockFormula () {
+    if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error('Invalid manipulation.')
+    this._insertBlockNode(tx => {
+      return tx.create({ type: BlockFormula.type })
+    })
+  }
+
+  canInsertBlockNode (nodeType) {
+    let appState = this.getAppState()
+    let doc = appState.document
+    let sel = appState.selection
+    let selState = appState.selectionState
+    if (sel && !sel.isNull() && !sel.isCustomSelection() && sel.isCollapsed() && selState.containerPath) {
+      let containerProp = doc.getProperty(selState.containerPath)
+      if (containerProp.targetTypes.has(nodeType)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  _insertBlockNode (createNode, setSelection) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let node = tx.insertBlockNode(createNode(tx))
+      if (setSelection) {
+        setSelection(tx)
+      } else {
+        tx.setSelection(this._createNodeSelection(node))
+      }
+    })
+  }
+
+  insertBlockQuote () {
+    if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error('Invalid manipulation')
+    this._insertBlockNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
+    })
+  }
+
+  // TODO: we should discuss if it would also make sense to create a figure with multiple panels
+  insertImagesAsFigures (files) {
+    // TODO: we would need a transaction on archive level, creating assets,
+    // and then placing them inside the article body.
+    // This way the archive gets 'polluted', i.e. a redo of that change does
+    // not remove the asset.
+    const editorSession = this.getEditorSession()
+    let paths = files.map(file => {
+      return this.archive.addAsset(file)
+    })
+    let sel = editorSession.getSelection()
+    if (!sel || !sel.containerPath) return
+    editorSession.transaction(tx => {
+      importFigures(tx, sel, files, paths)
+    })
+  }
+
   canInsertInlineGraphic () {
     return this.canInsertInlineNode(InlineGraphic.type)
   }
 
   insertInlineGraphic (file) {
-    if (!this.canInsertInlineGraphic()) return
+    if (!this.canInsertInlineGraphic()) throw new Error('Invalid manipulation')
     const editorSession = this.getEditorSession()
     const sel = editorSession.getSelection()
     if (!sel) return
@@ -634,6 +702,13 @@ export default class ArticleAPI {
       let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
       tx.insertBlockNode(supplementaryFile)
       selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)
+    })
+  }
+
+  insertTable () {
+    if (!this.canInsertBlockNode(TableFigure.type)) throw new Error('Invalid manipulation')
+    this._insertBlockNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
     })
   }
 

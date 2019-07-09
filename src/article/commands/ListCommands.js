@@ -1,5 +1,8 @@
 import { Command } from 'substance'
 
+// TODO: pull out commands into individual files
+// and move manipulation code into ArticleAPI
+
 // turns the current text node into a list
 export class CreateListCommand extends Command {
   isSwitchTypeCommand () { return true }

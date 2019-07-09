@@ -1,4 +1,5 @@
 import { DocumentNode, CHILDREN } from 'substance'
+import MetadataField from './MetadataField'
 
 export default class Figure extends DocumentNode {
   _initialize (...args) {
@@ -28,7 +29,7 @@ export default class Figure extends DocumentNode {
     const firstPanel = this.getPanels()[currentIndex]
     return {
       metadata: firstPanel.resolve('metadata').map(metadataField => (
-        { type: 'custom-metadata-field', name: metadataField.name, value: '' }
+        { type: MetadataField.type, name: metadataField.name, value: '' }
       ))
     }
   }

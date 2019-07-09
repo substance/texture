@@ -12,8 +12,4 @@ export default class AddEntityCommand extends Command {
   execute (params, context) {
     throw new Error('This is abstract')
   }
-
-  _createNode (tx) {
-    return tx.create({ type: this.config.type })
-  }
 }

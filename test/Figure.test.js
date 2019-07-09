@@ -18,13 +18,13 @@ const moveDownToolSelector = '.sm-move-down-figure-panel'
 const openPanelImageSelector = '.sc-open-figure-panel-source-tool'
 const removePanelToolSelector = '.sm-remove-figure-panel'
 const replacePanelToolSelector = '.sc-replace-figure-panel-tool'
-const subFigureCardSelector = '.sc-card.sm-figure-panel'
+// const subFigureCardSelector = '.sc-card.sm-figure-panel'
 const xrefSelector = '.sc-xref.sm-fig'
 const xrefListItemSelector = '.sc-edit-xref-tool .se-option .sc-preview'
 const figurePanelPreviousSelector = '.sc-figure .se-control.sm-previous'
 const figurePanelNextSelector = '.sc-figure .se-control.sm-next'
 const currentPanelSelector = '.sc-figure .se-current-panel .sc-figure-panel'
-const figureCustomMetadataFieldInputSelector = '.sc-custom-metadata-field .sc-string'
+const figureMetadataFieldInputSelector = '.sc-metadata-field .sc-string'
 
 const FIGURE_WITH_TWO_PANELS = `
 <fig-group id="fig1">
@@ -407,7 +407,7 @@ test('Figure: replicate first panel structure', t => {
   t.ok(insertFigurePanelTool.el.click(), 'clicking on the insert figure panel button should not throw error')
   insertFigurePanelTool.onFileSelect(new PseudoFileEvent())
   _gotoNext()
-  const fields = editor.findAll(figureCustomMetadataFieldInputSelector)
+  const fields = editor.findAll(figureMetadataFieldInputSelector)
   t.equal(fields[0].getTextContent(), 'Field I', 'shoud be replicated keyword label inside custom field name')
   t.equal(fields[1].getTextContent(), '', 'shoud be empty value')
   t.end()

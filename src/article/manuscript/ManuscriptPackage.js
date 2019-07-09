@@ -11,8 +11,8 @@ import {
 
 import AddEntityCommand from '../commands/AddEntityCommand'
 import {
-  AddCustomMetadataFieldCommand, MoveCustomMetadataFieldCommand, RemoveCustomMetadataFieldCommand
-} from '../commands/CustomMetadataFieldCommands'
+  AddFigureMetadataFieldCommand, MoveMetadataFieldCommand, RemoveMetadataFieldCommand
+} from '../commands/FigureMetadataCommands'
 import DecreaseHeadingLevelCommand from '../commands/DecreaseHeadingLevelCommand'
 import DownloadSupplementaryFileCommand from '../commands/DownloadSupplementaryFileCommand'
 import EditEntityCommand from '../commands/EditEntityCommand'
@@ -22,8 +22,8 @@ import {
 } from '../commands/FigurePanelCommands'
 import IncreaseHeadingLevelCommand from '../commands/IncreaseHeadingLevelCommand'
 import InsertCrossReferenceCommand from '../commands/InsertCrossReferenceCommand'
-import InsertDispFormulaCommand from '../commands/InsertDispFormulaCommand'
-import InsertDispQuoteCommand from '../commands/InsertDispQuoteCommand'
+import InsertBlockFormulaCommand from '../commands/InsertBlockFormulaCommand'
+import InsertBlockQuoteCommand from '../commands/InsertBlockQuoteCommand'
 import InsertExtLinkCommand from '../commands/InsertExtLinkCommand'
 import InsertFigureCommand from '../commands/InsertFigureCommand'
 import InsertFootnoteCommand from '../commands/InsertFootnoteCommand'
@@ -31,11 +31,12 @@ import InsertFootnoteCrossReferenceCommand from '../commands/InsertFootnoteCross
 import InsertInlineFormulaCommand from '../commands/InsertInlineFormulaCommand'
 import InsertInlineGraphicCommand from '../commands/InsertInlineGraphicCommand'
 import InsertNodeFromWorkflowCommand from '../commands/InsertNodeFromWorkflowCommand'
+import InsertTableCommand from '../commands/InsertTableCommand'
 import { CreateListCommand, ChangeListTypeCommand } from '../commands/ListCommands'
 import RemoveFootnoteCommand from '../commands/RemoveFootnoteCommand'
 import ReplaceSupplementaryFileCommand from '../commands/ReplaceSupplementaryFileCommand'
 import {
-  InsertTableCommand, InsertCellsCommand, DeleteCellsCommand,
+  InsertCellsCommand, DeleteCellsCommand,
   TableSelectAllCommand, ToggleCellHeadingCommand, ToggleCellMergeCommand
 } from '../commands/TableCommands'
 
@@ -89,8 +90,8 @@ export default {
     config.addComponent('reference-list', ReferenceListComponent, true)
     config.addComponent('toc', ManuscriptTOC, true)
 
-    config.addCommand('add-metadata-field', AddCustomMetadataFieldCommand, {
-      commandGroup: 'custom-metadata-fields'
+    config.addCommand('add-metadata-field', AddFigureMetadataFieldCommand, {
+      commandGroup: 'metadata-fields'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
@@ -133,11 +134,11 @@ export default {
       spec: { action: 'indent' },
       commandGroup: 'list'
     })
-    config.addCommand('insert-block-formula', InsertDispFormulaCommand, {
+    config.addCommand('insert-block-formula', InsertBlockFormulaCommand, {
       nodeType: 'block-formula',
       commandGroup: 'insert'
     })
-    config.addCommand('insert-block-quote', InsertDispQuoteCommand, {
+    config.addCommand('insert-block-quote', InsertBlockQuoteCommand, {
       nodeType: 'block-quote',
       commandGroup: 'insert'
     })
@@ -205,17 +206,17 @@ export default {
       refType: Table.refType,
       commandGroup: 'insert-xref'
     })
-    config.addCommand('move-down-metadata-field', MoveCustomMetadataFieldCommand, {
+    config.addCommand('move-down-metadata-field', MoveMetadataFieldCommand, {
       direction: 'down',
-      commandGroup: 'custom-metadata-fields'
+      commandGroup: 'metadata-fields'
     })
     config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
       direction: 'down',
       commandGroup: 'figure-panel'
     })
-    config.addCommand('move-up-metadata-field', MoveCustomMetadataFieldCommand, {
+    config.addCommand('move-up-metadata-field', MoveMetadataFieldCommand, {
       direction: 'up',
-      commandGroup: 'custom-metadata-fields'
+      commandGroup: 'metadata-fields'
     })
     config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
       direction: 'up',
@@ -224,8 +225,8 @@ export default {
     config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
       commandGroup: 'figure-panel'
     })
-    config.addCommand('remove-metadata-field', RemoveCustomMetadataFieldCommand, {
-      commandGroup: 'custom-metadata-fields'
+    config.addCommand('remove-metadata-field', RemoveMetadataFieldCommand, {
+      commandGroup: 'metadata-fields'
     })
     config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
       commandGroup: 'figure-panel'

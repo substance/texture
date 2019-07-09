@@ -1,5 +1,7 @@
 import { Command } from 'substance'
 
+// TODO: move manipulation code into ArticleAPI
+
 export default class ToggleListCommand extends Command {
   isSwitchTypeCommand () { return true }
 

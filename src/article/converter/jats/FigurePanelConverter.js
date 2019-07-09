@@ -1,5 +1,6 @@
 import { findChild, retainChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
+import { MetadataField } from '../../nodes';
 
 export default class FigurePanelConverter {
   get type () { return 'figure-panel' }
@@ -61,7 +62,7 @@ export default class FigurePanelConverter {
       let name = labelEl ? labelEl.textContent : ''
       let value = kwdEls.map(kwdEl => kwdEl.textContent).join(', ')
       return doc.create({
-        type: 'custom-metadata-field',
+        type: MetadataField.type,
         name,
         value
       }).id

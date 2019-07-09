@@ -24,7 +24,7 @@ export default class TextureEditing extends Editing {
 
   createListNode (tx, containerPath, params) {
     let prop = tx.getProperty(containerPath)
-    if (prop.targetTypes.indexOf('list') >= 0) {
+    if (prop.targetTypes.has('list')) {
       return tx.create({ type: 'list', listType: params.listType })
     } else {
       throw new Error(`'list' is not a valid child node for ${containerPath}`)

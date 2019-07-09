@@ -19,6 +19,7 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
+import { InlineFormula, Xref, TableFigure, InlineGraphic } from '../nodes'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -125,17 +126,17 @@ export default class ArticleAPI {
     this._setSelection(this._selectFirstRequiredPropertyOfMetadataCard(nodeId))
   }
 
-  _getAppState () {
-    return this._getContext().appState
+  getAppState () {
+    return this.getContext().appState
   }
 
-  _getContext () {
-    return this._contextProvider.getContext()
+  getContext () {
+    return this._contextProvider.context
   }
 
   // TODO: we need a better way to update settings
   _loadSettings (settings) {
-    let appState = this._getContext().appState
+    let appState = this.getContext().appState
     appState.settings.load(settings)
     appState._setDirty('settings')
     appState.propagateUpdates()
@@ -365,13 +366,13 @@ export default class ArticleAPI {
   // Instead we could use dedicated Components derived from the ones from the kit
   // and use specific API to accomplish this
   _getAvailableOptions (model) {
-    // HACK only suppor
     let targetTypes = Array.from(model._targetTypes)
-    if (targetTypes.length !== 1) {
+    if (targetTypes.size !== 1) {
       throw new Error('Unsupported relationship. Expected to find one targetType')
     }
     let doc = this.getDocument()
-    let targetType = targetTypes[0]
+    let first = targetTypes.values().next()
+    let targetType = first.value
     switch (targetType) {
       case 'funder': {
         return doc.get('metadata').resolve('funders')
@@ -416,7 +417,7 @@ export default class ArticleAPI {
 
   _isFieldRequired (path) {
     // ATTENTION: this API is experimental
-    let settings = this._getAppState().settings
+    let settings = this.getAppState().settings
     let valueSettings = settings.getSettingsForValue(path)
     return Boolean(valueSettings['required'])
   }
@@ -466,6 +467,7 @@ export default class ArticleAPI {
   addFigurePanel (figureId, file) {
     const doc = this.getDocument()
     const figure = doc.get(figureId)
+    if (!figure) throw new Error('Figure does not exist')
     const pos = figure.getCurrentPanelIndex()
     const href = this.archive.addAsset(file)
     const insertPos = pos + 1
@@ -484,7 +486,7 @@ export default class ArticleAPI {
   }
 
   addReference (refData) {
-    this._addReferences([refData])
+    this.addReferences([refData])
   }
 
   addReferences (refsData) {
@@ -501,6 +503,7 @@ export default class ArticleAPI {
     })
   }
 
+  // TODO: it is not so common to add footnotes without an xref in the text
   addFootnote (footnoteCollectionPath) {
     let editorSession = this.getEditorSession()
     editorSession.transaction(tx => {
@@ -517,21 +520,105 @@ export default class ArticleAPI {
     })
   }
 
+  canInsertInlineGraphic () {
+    return this.canInsertInlineNode(InlineGraphic.type)
+  }
+
   insertInlineGraphic (file) {
-    const articleSession = this.editorSession
+    if (!this.canInsertInlineGraphic()) return
+    const editorSession = this.getEditorSession()
+    const sel = editorSession.getSelection()
+    if (!sel) return
     const href = this.archive.addAsset(file)
     const mimeType = file.type
-    const sel = articleSession.getSelection()
-    if (!sel) return
-    articleSession.transaction(tx => {
+    editorSession.transaction(tx => {
       const node = tx.create({
-        type: 'inline-graphic',
+        type: InlineGraphic.type,
         mimeType,
         href
       })
       tx.insertInlineNode(node)
       tx.setSelection(node.getSelection())
     })
+  }
+
+  canInsertCrossReference () {
+    return this.canInsertInlineNode(Xref.type, true)
+  }
+
+  insertCrossReference (refType) {
+    if (!this.canInsertCrossReference()) throw new Error('Invalid manipulation.')
+    this._insertCrossReference(refType)
+  }
+
+  insertFootnoteReference () {
+    if (!this.canInsertCrossReference()) throw new Error('Invalid manipulation.')
+    // In table-figures we want to allow only cross-reference to table-footnotes
+    let selectionState = this.getAppState().selectionState
+    const xpath = selectionState.xpath
+    let refType = xpath.find(n => n.type === TableFigure.type) ? 'table-fn' : 'fn'
+    this._insertCrossReference(refType)
+  }
+
+  _insertCrossReference (refType) {
+    this._insertInlineNode(tx => {
+      return tx.create({
+        type: Xref.type,
+        refType
+      })
+    })
+  }
+
+  insertInlineFormula (content) {
+    if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error('Invalid manipulation.')
+    this._insertInlineNode(tx => {
+      return tx.create({
+        type: InlineFormula.type,
+        contentType: 'math/tex',
+        content
+      })
+    })
+  }
+
+  /**
+   * Checks if an inline node can be inserted for the current selection.
+   *
+   * @param {string} type the type of the inline node
+   * @param {boolean} collapsedOnly true if insertion is allowed only for collapsed selection
+   */
+  canInsertInlineNode (type, collapsedOnly) {
+    let appState = this.getAppState()
+    const sel = appState.selection
+    const selectionState = appState.selectionState
+    if (sel && !sel.isNull() && sel.isPropertySelection() && (!collapsedOnly || sel.isCollapsed())) {
+      // make sure that the schema allows to insert that node
+      let targetTypes = selectionState.property.targetTypes
+      if (targetTypes.size > 0 && targetTypes.has(type)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  _insertInlineNode (createNode) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let inlineNode = createNode(tx)
+      tx.insertInlineNode(inlineNode)
+      // TODO: some inline nodes have an input field
+      // which we might want to focus initially
+      // instead of selecting the whole node
+      tx.setSelection(this._selectInlineNode(inlineNode))
+    })
+  }
+
+  _selectInlineNode (inlineNode) {
+    return {
+      type: 'property',
+      path: inlineNode.getPath(),
+      startOffset: inlineNode.start.offset,
+      endOffset: inlineNode.end.offset
+    }
   }
 
   insertSupplementaryFile (file, url) {

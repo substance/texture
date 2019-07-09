@@ -96,7 +96,7 @@ export default class ContainerEditorNew extends ModifiedSurface(SubstanceContain
       // find out if the current node allows for <break>
       let doc = editorSession.getDocument()
       let prop = doc.getProperty(sel.start.path)
-      if (prop.targetTypes && prop.targetTypes.indexOf('break') !== -1) {
+      if (prop.targetTypes && prop.targetTypes.has('break')) {
         editorSession.transaction(tx => {
           let br = tx.create({ type: 'break' })
           tx.insertInlineNode(br)

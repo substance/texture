@@ -82,8 +82,7 @@ export default class CommandManager {
       // annotations can only be applied on PropertySelections inside
       // text, and not on an inline-node
       if (isInsideText && sel.isPropertySelection() && !selectionState.isInlineNodeSelection) {
-        let targetTypes = nodeProp.targetTypes || []
-        Object.assign(commandStates, _disabledIfDisallowedTargetType(this._annotationCommands, targetTypes, params, context))
+        Object.assign(commandStates, _disabledIfDisallowedTargetType(this._annotationCommands, nodeProp.targetTypes, params, context))
       }
 
       // for InsertCommands the selection must be inside a ContainerEditor
@@ -91,7 +90,7 @@ export default class CommandManager {
       if (containerPath) {
         let containerProp = doc.getProperty(containerPath)
         if (containerProp) {
-          let targetTypes = containerProp.targetTypes || []
+          let targetTypes = containerProp.targetTypes
           Object.assign(commandStates, _disabledIfDisallowedTargetType(this._insertCommands, targetTypes, params, context))
           Object.assign(commandStates, _disabledIfDisallowedTargetType(this._switchTypeCommands, targetTypes, params, context))
         }
@@ -159,11 +158,14 @@ function _disabled (commands) {
   }, {})
 }
 
+const EMPTY_SET = new Set()
+
 function _disabledIfDisallowedTargetType (commands, targetTypes, params, context) {
+  targetTypes = targetTypes || EMPTY_SET
   return commands.reduce((m, cmd) => {
     const type = cmd.getType()
     const name = cmd.getName()
-    if (targetTypes.indexOf(type) > -1) {
+    if (targetTypes.has(type)) {
       m[name] = cmd.getCommandState(params, context)
     } else {
       m[name] = DISABLED

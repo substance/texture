@@ -28,7 +28,7 @@ export default function setupTestArticleSession (opts = {}) {
   // NOTE: this indirection is necessary because we need to pass the context to parts of the context
   let contextProvider = {}
   let editorSession = new EditorSession('test-editor', doc, articleConfig, contextProvider)
-  let api = new ArticleAPI(editorSession, archive, articleConfig)
+  let api = new ArticleAPI(editorSession, archive, articleConfig, contextProvider)
   let context = Object.assign(createEditorContext(articleConfig, editorSession), { api })
   // ... after the context is ready we can store it into the provider
   contextProvider.context = context

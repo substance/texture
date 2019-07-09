@@ -3,7 +3,7 @@ import {
   isArray, getKeyForPath
 } from 'substance'
 import { createValueModel } from '../../kit'
-import TableEditingAPI from '../shared/TableEditingAPI'
+import TableEditingAPI from './TableEditingAPI'
 import { importFigures } from '../articleHelpers'
 import { findParentByType } from '../shared/nodeHelpers'
 import renderEntity from '../shared/renderEntity'

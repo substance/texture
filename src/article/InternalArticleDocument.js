@@ -1,5 +1,5 @@
 import { Document, documentHelpers, EditingInterface } from 'substance'
-import TextureEditing from './shared/TextureEditing'
+import ArticleEditingImpl from './shared/ArticleEditingImpl'
 
 export default class InternalArticleDocument extends Document {
   getRootNode () {
@@ -16,7 +16,7 @@ export default class InternalArticleDocument extends Document {
   }
 
   createEditingInterface () {
-    return new EditingInterface(this, { editing: new TextureEditing() })
+    return new EditingInterface(this, { editing: new ArticleEditingImpl() })
   }
 
   find (selector) {

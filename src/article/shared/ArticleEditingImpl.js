@@ -4,7 +4,7 @@ import { Editing } from 'substance'
   EXPERIMENTAL: an 'Editing' interface that takes the XML schema into account.
   TODO: try to generalize this and add it to the 'app dev kit'
 */
-export default class TextureEditing extends Editing {
+export default class ArticleEditingImpl extends Editing {
   /*
     2.0 API suggestion (pass only id, not data)
   */

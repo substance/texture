@@ -1,7 +1,7 @@
 import { test } from 'substance-test'
 import {
   setCursor, openManuscriptEditor, PseudoFileEvent,
-  loadBodyFixture, getDocument, openMetadataEditor, getEditorSession, clickUndo,
+  loadBodyFixture, getDocument, getEditorSession, clickUndo,
   deleteSelection, openContextMenuAndFindTool, openMenuAndFindTool, isToolEnabled, selectNode
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'

@@ -1,6 +1,6 @@
 import { findChild, retainChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
-import { MetadataField } from '../../nodes';
+import { MetadataField } from '../../nodes'
 
 export default class FigurePanelConverter {
   get type () { return 'figure-panel' }

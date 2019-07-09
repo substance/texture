@@ -68,7 +68,6 @@ export default class ArticlePanel extends Component {
     // HACK: resetting the app state here, because things might get 'dirty' during initialization
     // TODO: find out if there is a better way to do this
     appState._reset()
-
   }
 
   willReceiveProps (props) {

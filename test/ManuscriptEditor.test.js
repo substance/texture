@@ -5,7 +5,7 @@ import {
   loadBodyFixture, getDocument, setSelection, LOREM_IPSUM,
   openContextMenuAndFindTool, openMenuAndFindTool, clickUndo,
   isToolEnabled, selectNode, getSelection, selectRange,
-  getCurrentViewName, deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS, insertText, executeCommand
+  deleteSelection, createSurfaceEvent, canSwitchTextTypeTo, switchTextType, ensureValidJATS, insertText, executeCommand
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/testHelpers'

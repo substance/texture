@@ -19,18 +19,15 @@ import { Component } from 'substance'
 */
 export default class ModalDialog extends Component {
   render ($$) {
-    let el = $$('div').addClass(this._getClassName())
     let width = this.props.width || 'large'
-
-    el.on('keydown', this._onKeydown)
-
+    let el = $$('div').addClass(this._getClassName())
     if (this.props.width) {
       el.addClass('sm-width-' + width)
     }
-
     if (this.props.transparent) {
       el.addClass('sm-transparent-bg')
     }
+    el.on('keydown', this._onKeydown)
 
     let verticalContainer = $$('div').addClass('se-vertical-container')
     let horizontalContainer = $$('div').addClass('se-horizontal-container')
@@ -44,7 +41,6 @@ export default class ModalDialog extends Component {
       horizontalContainer,
       $$('div').addClass('se-vertical-spacer')
     )
-
     el.append(verticalContainer)
 
     return el

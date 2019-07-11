@@ -9,9 +9,7 @@ export default class EditMetadataWorkflow extends EditorWorkflow {
     // scroll to the node if a workflow props are given
     // Note: this has to be done after everything as been mounted
     if (this.props.nodeId) {
-      setTimeout(() => {
-        this.api.selectEntity(this.props.nodeId)
-      })
+      this.api.selectEntity(this.props.nodeId)
     }
   }
 

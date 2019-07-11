@@ -254,14 +254,6 @@ export default {
     config.addLabel('underline', 'Underline')
     // List tools labels
     config.addLabel('list-tools', 'List')
-    config.addLabel('toggle-unordered-list', {
-      en: 'Bulleted list',
-      de: 'Liste'
-    })
-    config.addLabel('toggle-ordered-list', {
-      en: 'Numbered list',
-      de: 'Aufzählung'
-    })
     config.addLabel('indent-list', {
       en: 'Increase indentation',
       de: 'Einrückung vergrößern'
@@ -272,7 +264,6 @@ export default {
     })
     // Insert tools labels
     config.addLabel('insert', 'Insert')
-    config.addLabel('figure', 'Figure')
     config.addLabel('table', 'Table')
     config.addLabel('block-quote', 'Block Quote')
     config.addLabel('equation', 'Equation')
@@ -291,11 +282,7 @@ export default {
     config.addLabel('reference', 'Reference')
     config.addLabel('author', 'Author')
     config.addLabel('editor', 'Editor')
-    config.addLabel('group', 'Group')
     config.addLabel('affiliation', 'Affiliation')
-    config.addLabel('funder', 'Funder')
-    config.addLabel('keyword', 'Keyword')
-    config.addLabel('subject', 'Subject')
     // Table tools labels
     config.addLabel('table-tools', 'Table')
     config.addLabel('insert-rows-above', {

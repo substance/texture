@@ -78,6 +78,7 @@ export default class TextureConfigurator {
   }
 
   addCommand (name, CommandClass, options = {}) {
+    if (this._commands.has(name) && !options.force) throw new Error(`Command with name '${name}' already registered`)
     this._commands.set(name, new CommandClass(Object.assign({ name }, options)))
     if (options.commandGroup) {
       this._addCommandToCommandGroup(name, options.commandGroup)
@@ -87,7 +88,8 @@ export default class TextureConfigurator {
     }
   }
 
-  addComponent (name, ComponentClass) {
+  addComponent (name, ComponentClass, options = {}) {
+    if (this._components.has(name) && !options.force) throw new Error(`Component with name '${name}' already registered`)
     this._components.set(name, ComponentClass)
   }
 
@@ -135,7 +137,8 @@ export default class TextureConfigurator {
     })
   }
 
-  addLabel (labelName, label) {
+  addLabel (labelName, label, options = {}) {
+    if (this._labels.has(labelName) && !options.force) throw new Error(`Label with name '${labelName}' already registered.`)
     let labels
     if (isString(label)) {
       labels = { en: label }
@@ -145,9 +148,9 @@ export default class TextureConfigurator {
     this._labels.set(labelName, labels)
   }
 
-  addNode (NodeClass) {
+  addNode (NodeClass, options = {}) {
     let type = NodeClass.type
-    if (this._nodes.has(type)) {
+    if (this._nodes.has(type) && !options.force) {
       throw new Error(`Node class for type '${type}' already registered`)
     }
     this._nodes.set(type, NodeClass)
@@ -189,8 +192,8 @@ export default class TextureConfigurator {
     }
   }
 
-  addToolPanel (name, spec) {
-    if (this._toolPanels.has(name)) {
+  addToolPanel (name, spec, options = {}) {
+    if (this._toolPanels.has(name) && !options.force) {
       throw new Error(`ToolPanel '${name}' is already defined`)
     }
     this._toolPanels.set(name, spec)
@@ -202,7 +205,10 @@ export default class TextureConfigurator {
     extensionCb(this._toolPanels.get(name))
   }
 
-  addService (serviceId, factory) {
+  addService (serviceId, factory, options = {}) {
+    if (this._services.has(serviceId) && !options.force) {
+      throw new Error(`Service '${serviceId}' is already defined`)
+    }
     this._services.set(serviceId, {
       factory,
       instance: null
@@ -231,14 +237,20 @@ export default class TextureConfigurator {
     }
   }
 
-  registerDocumentLoader (docType, LoaderClass, spec = {}) {
+  registerDocumentLoader (docType, LoaderClass, spec = {}, options = {}) {
+    if (this._documentLoaders.has(docType) && !options.force) {
+      throw new Error(`Loader for docType '${docType}' is already defined`)
+    }
     this._documentLoaders.set(docType, {
       LoaderClass,
       spec
     })
   }
 
-  registerDocumentSerializer (docType, SerializerClass, spec = {}) {
+  registerDocumentSerializer (docType, SerializerClass, spec = {}, options = {}) {
+    if (this._documentSerializers.has(docType) && !options.force) {
+      throw new Error(`Serializer for docType '${docType}' is already defined`)
+    }
     this._documentSerializers.set(docType, {
       SerializerClass,
       spec

@@ -282,6 +282,13 @@ export class PseudoFileEvent extends DOMEvent {
   }
 }
 
+export function getModalEditorSession (editor) {
+  let modal = editor.find('.sc-modal-dialog .se-body > .se-content')
+  if (modal) {
+    return modal.context.editorSession
+  }
+}
+
 export class PseudoDropEvent extends DOMEvent {
   constructor (name = 'test.png', type = 'image/png') {
     super()

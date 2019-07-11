@@ -18,6 +18,12 @@ import { Component } from 'substance'
   ```
 */
 export default class ModalDialog extends Component {
+  getActionHandlers () {
+    return {
+      'close': this.close
+    }
+  }
+
   render ($$) {
     let width = this.props.width || 'large'
     let el = $$('div').addClass(this._getClassName())
@@ -55,7 +61,7 @@ export default class ModalDialog extends Component {
     const closeButton = $$(Button, {
       icon: 'close'
     }).addClass('se-close-button')
-      .on('click', this._closeModal)
+      .on('click', this._onCloseButtonClick)
     let modalBody = $$('div').addClass('se-body').ref('body')
     // ATTENTION: it is not possible to set a ref on a component passed in as prop (different owner)
     modalBody.append(
@@ -69,10 +75,13 @@ export default class ModalDialog extends Component {
     e.stopPropagation()
   }
 
-  _closeModal (e) {
+  _onCloseButtonClick (e) {
     e.preventDefault()
     e.stopPropagation()
+    this.close()
+  }
 
+  close () {
     // let the content handl
     let content = this._getContent()
     if (content.beforeClose) {
@@ -81,7 +90,6 @@ export default class ModalDialog extends Component {
         return
       }
     }
-
     this.send('closeModal')
   }
 

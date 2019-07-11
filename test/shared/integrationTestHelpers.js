@@ -282,6 +282,16 @@ export class PseudoFileEvent extends DOMEvent {
   }
 }
 
+export function startEditMetadata (editor) {
+  editor.send('startWorkflow', 'edit-metadata-workflow')
+  let modalEditor = editor.find('.sc-modal-dialog .se-body > .se-content')
+  return modalEditor
+}
+
+export function closeModalEditor (modalEditor) {
+  modalEditor.send('close')
+}
+
 export function getModalEditorSession (editor) {
   let modal = editor.find('.sc-modal-dialog .se-body > .se-content')
   if (modal) {

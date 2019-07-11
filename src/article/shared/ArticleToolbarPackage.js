@@ -110,7 +110,7 @@ export default {
         hideDisabled: true,
         alwaysVisible: true,
         items: [
-          { type: 'command', name: 'edit-metadata', label: 'metadata' },
+          { type: 'command', name: 'edit-metadata', label: 'edit-metadata' },
           {
             type: 'group',
             name: 'table',
@@ -197,6 +197,14 @@ export default {
             style: 'descriptive',
             items: [
               { type: 'command-group', name: 'entities' }
+            ]
+          },
+          {
+            type: 'group',
+            name: 'collection',
+            style: 'descriptive',
+            items: [
+              { type: 'command-group', name: 'collection' }
             ]
           }
         ]

@@ -1,5 +1,5 @@
 import { getMountPoint } from './testHelpers'
-import { createTestApp } from './integrationTestHelpers'
+import { createTestApp, openManuscriptEditor } from './integrationTestHelpers'
 
 /**
  *
@@ -26,6 +26,7 @@ export default function setupTestApp (t, options = {}) {
     let archive = app.state.archive
     let manifest = archive.getDocument('manifest')
     let manuscript = archive.getDocument('manuscript')
-    return { app, archive, manifest, manuscript }
+    let editor = openManuscriptEditor(app)
+    return { app, archive, manifest, manuscript, editor }
   }
 }

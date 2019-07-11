@@ -10,7 +10,6 @@ import renderEntity from '../shared/renderEntity'
 import FigurePanel from '../nodes/FigurePanel'
 import SupplementaryFile from '../nodes/SupplementaryFile'
 import BlockFormula from '../nodes/BlockFormula'
-import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
 import FigureManager from '../shared/FigureManager'
 import FootnoteManager from '../shared/FootnoteManager'
 import FormulaManager from '../shared/FormulaManager'
@@ -19,7 +18,7 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
-import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation, CustomAbstract } from '../nodes'
+import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation, CustomAbstract, Reference } from '../nodes'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -753,6 +752,38 @@ export default class ArticleAPI {
     })
   }
 
+  canRemoveEntity (nodeId) {
+    let node = this._getNode(nodeId)
+    return (node && this._isRemovableEntity(node))
+  }
+
+  _isRemovableEntity (node) {
+    switch (node.type) {
+      case CustomAbstract.type:
+      case Person.type:
+      case Organisation.type:
+      {
+        return true
+      }
+      default:
+        return (node.isInstanceOf(Reference.type))
+    }
+  }
+
+  removeEntity (nodeId) {
+    let node = this._getNode(nodeId)
+    if (!node) throw new Error('Invalid argument.')
+    if (!this._isRemovableEntity(node)) throw new Error('Entity can not be removed.')
+    let propName = node.getXpath().property
+    let parent = node.getParent()
+    let collectionPath = [parent.id, propName]
+    this._removeItemFromCollection(nodeId, collectionPath)
+  }
+
+  _getNode (nodeId) {
+    return nodeId._isNode ? nodeId : this.getDocument().get(nodeId)
+  }
+
   removeFootnote (footnoteId) {
     // ATTENTION: footnotes appear in different contexts
     // e.g. article.footnotes, or table-fig.footnotes
@@ -767,6 +798,7 @@ export default class ArticleAPI {
     editorSession.transaction(tx => {
       let item = tx.get(itemId)
       documentHelpers.removeFromCollection(tx, collectionPath, itemId)
+      // TODO: discuss if we really should do this, or want to do something different.
       this._removeCorrespondingXrefs(tx, item)
       documentHelpers.deepDeleteNode(tx, itemId)
       tx.selection = null
@@ -777,9 +809,9 @@ export default class ArticleAPI {
   // during footnote or reference removing
   _removeCorrespondingXrefs (tx, node) {
     let manager
-    if (INTERNAL_BIBR_TYPES.indexOf(node.type) > -1) {
+    if (node.isInstanceOf(Reference.type)) {
       manager = this._referenceManager
-    } else if (node.type === 'footnote') {
+    } else if (node.isInstanceOf(Footnote.type)) {
       manager = this._footnoteManager
     } else {
       return

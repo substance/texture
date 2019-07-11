@@ -295,6 +295,7 @@ export default {
     config.addLabel('contributors', 'Authors & Contributors')
     config.addLabel('create-unordered-list', 'Bulleted list')
     config.addLabel('create-ordered-list', 'Numbered list')
+    config.addLabel('edit-metadata', 'Edit Metadata')
     config.addLabel('edit-ref', 'Edit Reference')
     config.addLabel('file-location', 'File location')
     config.addLabel('file-name', 'File name')

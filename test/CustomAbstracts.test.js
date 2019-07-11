@@ -2,32 +2,30 @@ import { test } from 'substance-test'
 import {
   getDocument, insertText, openMetadataEditor,
   openContextMenuAndFindTool, isToolEnabled, setCursor, ensureAllFieldsVisible,
-  createJATSFixture, createTestVfs, canSwitchTextTypeTo, switchTextType, ensureValidJATS
+  createJATSFixture, createTestVfs, canSwitchTextTypeTo, switchTextType, ensureValidJATS, startEditMetadata, closeModalEditor
 } from './shared/integrationTestHelpers'
 import setupTestApp from './shared/setupTestApp'
 
-const customAbstractSelector = '.sc-custom-abstract'
+const customAbstractSelector = '.sc-card.sm-custom-abstract'
 const customAbstractContentEditorSelector = '.sc-custom-abstract > .sm-content > .se-editor'
 const moveDownToolSelector = '.sm-move-down-custom-abstract'
 const moveUpToolSelector = '.sm-move-up-custom-abstract'
-const removeToolSelector = '.sm-remove-custom-abstract'
+const removeToolSelector = '.sm-remove-entity'
 const _getCustomAbstracts = editor => editor.findAll(customAbstractSelector)
-const _selectCustomAbstractCard = card => card.click()
-const _selectCard = (editor, id) => editor.find(`.sc-card[data-id="${id}"]`).click()
+const _selectCustomAbstractCard = card => card.el.emit('mousedown')
+const _selectCard = (editor, id) => editor.find(`.sc-card[data-id="${id}"]`).el.emit('mousedown')
 const _isMoveDownToolPossible = editor => isToolEnabled(editor, 'context-tools', moveDownToolSelector)
 const _isMoveUpToolPossible = editor => isToolEnabled(editor, 'context-tools', moveUpToolSelector)
 const _isRemovePossible = editor => isToolEnabled(editor, 'context-tools', removeToolSelector)
 const _moveDownAbstract = editor => openContextMenuAndFindTool(editor, moveDownToolSelector).click()
 const _removeAbstract = editor => openContextMenuAndFindTool(editor, removeToolSelector).click()
 
-test(`Custom Abstracts: add a custom abstract`, t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openMetadataEditor(app)
-  t.equal(editor.findAll(customAbstractSelector).length, 0, 'there should be no custom abstract')
-  t.doesNotThrow(() => {
-    _addItem(editor, 'custom-abstract')
-  }, 'adding new custom abstract should not throw error')
-  t.equal(editor.findAll(customAbstractSelector).length, 1, 'there should be one custom abstract')
+test(`CustomAbstracts: add a custom abstract`, t => {
+  let { app, editor } = setupTestApp(t, { archiveId: 'blank' })
+  let modalEditor = startEditMetadata(editor)
+  _addCustomAbstract(modalEditor)
+  t.equal(modalEditor.findAll(customAbstractSelector).length, 1, 'there should be one custom abstract')
+  closeModalEditor(modalEditor)
   ensureValidJATS(t, app)
   t.end()
 })
@@ -45,33 +43,33 @@ const META_WITH_ONE_EXECUTIVE_SUMMARY = `
 `
 const ARTICLE_WITH_ONE_EXECUTIVE_SUMMARY = createJATSFixture({ front: META_WITH_ONE_EXECUTIVE_SUMMARY })
 
-test(`Custom Abstracts: removing a custom abstract`, t => {
-  let { app } = setupTestApp(t, {
+test(`CustomAbstracts: removing a custom abstract`, t => {
+  let { editor } = setupTestApp(t, {
     vfs: createTestVfs(ARTICLE_WITH_ONE_EXECUTIVE_SUMMARY),
     archiveId: 'test'
   })
-  let editor = openMetadataEditor(app)
-  t.equal(editor.findAll(customAbstractSelector).length, 1, 'there should be one custom abstract')
-  _selectCard(editor, 'executive-summary')
-  t.ok(_isRemovePossible(editor), 'should be possible to remove custom abstract')
-  _removeAbstract(editor)
-  t.equal(editor.findAll(customAbstractSelector).length, 0, 'there should be no custom abstract')
+  let modalEditor = startEditMetadata(editor)
+  _selectCard(modalEditor, 'executive-summary')
+  t.ok(_isRemovePossible(modalEditor), 'should be possible to remove custom abstract')
+  _removeAbstract(modalEditor)
+  t.equal(modalEditor.findAll(customAbstractSelector).length, 0, 'there should be no custom abstract')
   t.end()
 })
 
-test('Custom Abstracts: move custom abstract', t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openMetadataEditor(app)
-  _addItem(editor, 'custom-abstract')
-  t.notOk(_isMoveUpToolPossible(editor), 'should not be possible to move up custom abstract')
-  t.notOk(_isMoveDownToolPossible(editor), 'should not be possible to move down custom abstract')
-  _addItem(editor, 'custom-abstract')
-  _selectCustomAbstractCard(_getCustomAbstracts(editor)[0])
-  t.notOk(_isMoveUpToolPossible(editor), 'should not be possible to move up custom abstract')
-  t.ok(_isMoveDownToolPossible(editor), 'should be possible to move down custom abstract')
-  _moveDownAbstract(editor)
-  t.ok(_isMoveUpToolPossible(editor), 'should be possible to move up custom abstract')
-  t.notOk(_isMoveDownToolPossible(editor), 'should not be possible to move down custom abstract')
+test('CustomAbstracts: move custom abstract', t => {
+  let { editor, app } = setupTestApp(t, { archiveId: 'blank' })
+  let modalEditor = startEditMetadata(editor)
+  _addCustomAbstract(modalEditor)
+  t.notOk(_isMoveUpToolPossible(modalEditor), 'should not be possible to move up custom abstract')
+  t.notOk(_isMoveDownToolPossible(modalEditor), 'should not be possible to move down custom abstract')
+  _addCustomAbstract(modalEditor)
+  _selectCustomAbstractCard(_getCustomAbstracts(modalEditor)[0])
+  t.notOk(_isMoveUpToolPossible(modalEditor), 'should not be possible to move up custom abstract')
+  t.ok(_isMoveDownToolPossible(modalEditor), 'should be possible to move down custom abstract')
+  _moveDownAbstract(modalEditor)
+  t.ok(_isMoveUpToolPossible(modalEditor), 'should be possible to move up custom abstract')
+  t.notOk(_isMoveDownToolPossible(modalEditor), 'should not be possible to move down custom abstract')
+  closeModalEditor(modalEditor)
   ensureValidJATS(t, app)
   t.end()
 })
@@ -89,7 +87,7 @@ const META_WITH_EMPTY_CUSTOM_ABSTRACT = `
 `
 const ARTICLE_WITH_ONE_EMPTY_CUSTOM_ABSTRACT = createJATSFixture({ front: META_WITH_EMPTY_CUSTOM_ABSTRACT })
 
-test('Custom Abstracts: editing title', t => {
+test('CustomAbstracts: editing title', t => {
   let { app } = setupTestApp(t, {
     vfs: createTestVfs(ARTICLE_WITH_ONE_EMPTY_CUSTOM_ABSTRACT),
     archiveId: 'test'
@@ -97,25 +95,25 @@ test('Custom Abstracts: editing title', t => {
   let editor = openMetadataEditor(app)
   let doc = getDocument(editor)
   const newTitle = 'Custom abstract title'
-  _addItem(editor, 'custom-abstract')
+  _addCustomAbstract(editor)
   const customAbstracts = doc.get(['article', 'customAbstracts'])
   const customAbstractId = customAbstracts[0]
   t.equal(doc.get([customAbstractId, 'title']), '', 'title should be empty')
   ensureAllFieldsVisible(editor, customAbstractId)
   setCursor(editor, customAbstractId + '.title', 0)
   insertText(editor, newTitle)
-  t.equal(doc.get([customAbstractId, 'title']), newTitle, 'title should changed')
+  t.equal(doc.get([customAbstractId, 'title']), newTitle, 'title should have changed')
   ensureValidJATS(t, app)
   t.end()
 })
 
-test('Custom Abstracts: switching type', t => {
+test('CustomAbstracts: switching type', t => {
   let { app } = setupTestApp(t, { archiveId: 'blank' })
   let editor = openMetadataEditor(app)
   let doc = getDocument(editor)
   const customAbstractType = 'executive-summary'
   // TODO: instead of inserting a new item we should use a fixture
-  _addItem(editor, 'custom-abstract')
+  _addCustomAbstract(editor)
   const customAbstracts = doc.get(['article', 'customAbstracts'])
   const customAbstractId = customAbstracts[0]
   t.equal(doc.get([customAbstractId, 'abstractType']), '', 'abstract type should be empty')
@@ -144,7 +142,7 @@ const META_WITH_MULTISECTION_SUMMARY = `
 `
 const ARTICLE_WITH_MULTISECTION_SUMMARY = createJATSFixture({ front: META_WITH_MULTISECTION_SUMMARY })
 
-test(`Custom Abstracts: switching headings`, t => {
+test(`CustomAbstracts: switching headings`, t => {
   let { app } = setupTestApp(t, {
     vfs: createTestVfs(ARTICLE_WITH_MULTISECTION_SUMMARY),
     archiveId: 'test'
@@ -165,11 +163,11 @@ test(`Custom Abstracts: switching headings`, t => {
   t.end()
 })
 
-function _addItem (metadataEditor, modelName) {
+function _addCustomAbstract (metadataEditor) {
   // open the add drop down and click the according insert button
   let addDropDown = metadataEditor.find('.sc-tool-dropdown.sm-insert')
   addDropDown.find('button').click()
-  addDropDown.find('.sc-tool.sm-insert-' + modelName).click()
+  addDropDown.find('.sc-tool.sm-add-custom-abstract').click()
 }
 
 function _selectAbstractType (editor, customAbstractId, abstractType) {

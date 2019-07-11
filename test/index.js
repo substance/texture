@@ -7,8 +7,7 @@ import './BodyConverter.test'
 import './ClipboardNew.test'
 import './Configurator.test'
 import './CrossReference.test'
-// FIXME Bring back custom abstracts
-// import './CustomAbstracts.test'
+import './CustomAbstracts.test'
 // FIXME Bring back all sorts of entity editors, now in a popup instead of extra view
 // import './Entity.test'
 import './Figure.test'

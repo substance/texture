@@ -1,8 +1,10 @@
+import { CustomAbstract } from '../nodes'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import AbstractsSectionComponent from './AbstractsSectionComponent'
 import FiguresSectionComponent from './FiguresSectionComponent'
-import { AddAuthorCommand, AddCustomAbstractCommand } from './MetadataEntityCommands'
+import { AddAuthorCommand, AddCustomAbstractCommand, RemoveEntityCommand } from './MetadataEntityCommands'
+import CustomAbstractComponent from './CustomAbstractComponent'
 
 export default {
   name: 'metadata',
@@ -72,8 +74,16 @@ export default {
       articleToolbarSpec.find(spec => spec.name === 'format'),
       // inherit text type switcher
       articleToolbarSpec.find(spec => spec.name === 'text-types'),
-      // inherit contextual tools
-      articleToolbarSpec.find(spec => spec.name === 'context-tools')
+      // inherit contextual tools, but exclude the 'Edit Metadata' tool
+      {
+        name: 'context-tools',
+        type: 'dropdown',
+        style: 'descriptive',
+        // hide disabled items but not the dropdown itself
+        hideDisabled: true,
+        alwaysVisible: true,
+        items: articleToolbarSpec.find(spec => spec.name === 'context-tools').items.filter(s => s.name !== 'edit-metadata')
+      }
     ])
 
     config.addToolPanel('context-menu', [
@@ -94,11 +104,15 @@ export default {
 
     config.addComponent('article-metadata', ArticleMetadataComponent)
     config.addComponent('article-information', ArticleInformationSectionComponent)
+    config.addComponent(CustomAbstract.type, CustomAbstractComponent)
     config.addComponent('@abstracts', AbstractsSectionComponent)
     config.addComponent('@figures', FiguresSectionComponent)
 
     config.addCommand('add-author', AddAuthorCommand)
     config.addCommand('add-custom-abstract', AddCustomAbstractCommand)
+    config.addCommand('remove-entity', RemoveEntityCommand, {
+      commandGroup: 'collection'
+    })
 
     config.addLabel('abstracts', 'Abstracts')
     config.addLabel('article-information', 'Article Information')
@@ -106,9 +120,10 @@ export default {
     config.addLabel('groups', 'Groups')
     config.addLabel('issueTitle', 'Issue Title')
     config.addLabel('keywords', 'Keywords')
-    config.addLabel('references', 'References')
-    config.addLabel('subjects', 'Subjects')
     config.addLabel('organisations', 'Affiliations')
+    config.addLabel('references', 'References')
+    config.addLabel('remove-entity', 'Remove ${type}')
+    config.addLabel('subjects', 'Subjects')
 
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })
     config.addIcon('unchecked-item', { 'fontawesome': 'fa-square-o' })

@@ -1,9 +1,11 @@
+import { getKeyForPath } from 'substance'
 import StageSession from './StageSession'
 import SurfaceManager from './SurfaceManager'
 import MarkersManager from './MarkersManager'
 import KeyboardManager from './KeyboardManager'
 import CommandManager from './CommandManager'
 
+// TODO: extract shareble code (see EditorSession)
 export default class ModalEditorSession extends StageSession {
   constructor (id, parentEditorSession, config, editor, initialEditorState) {
     super(id, parentEditorSession, initialEditorState)
@@ -15,7 +17,7 @@ export default class ModalEditorSession extends StageSession {
 
     let surfaceManager = new SurfaceManager(editorState)
     let markersManager = new MarkersManager(editorState)
-    let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName, params) => {
+    let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts({ inherit: true }), (commandName, params) => {
       return this.executeCommand(commandName, params)
     }, this._contextProvider)
     let commandManager = new CommandManager(editorState,
@@ -30,6 +32,8 @@ export default class ModalEditorSession extends StageSession {
     this.keyboardManager = keyboardManager
     this.commandManager = commandManager
 
+    // EXPERIMENTAL: registering a 'reducer' that resets overlayId whenever the selection changes
+    this.editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
     this.commandManager.initialize()
   }
 
@@ -69,5 +73,21 @@ export default class ModalEditorSession extends StageSession {
 
   getSurface (surfaceId) {
     return this.surfaceManager.getSurface(surfaceId)
+  }
+
+  _resetOverlayId () {
+    const overlayId = this.editorState.overlayId
+    // overlayId === getKeyForPath(path) => if selection is value &&
+    // Overlays of value components (ManyRelationshipComponent, SingleRelationship)
+    // need to remain open if the selection is a value selection
+    let sel = this.getSelection()
+    if (sel && sel.customType === 'value') {
+      let valueId = getKeyForPath(sel.data.path)
+      if (overlayId !== valueId) {
+        this.editorState.set('overlayId', valueId)
+      }
+    } else {
+      this.editorState.set('overlayId', null)
+    }
   }
 }

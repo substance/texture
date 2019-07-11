@@ -8,6 +8,8 @@ export default class ReferenceListComponent extends CustomSurface {
 
     const appState = this.context.appState
     appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: ['article', 'references'] } })
+    // TODO: it is not good to rerender on every selection change.
+    // Instead derive a meaningful state, and render if the state changes
     appState.addObserver(['selection'], this.rerender, this, { stage: 'render' })
   }
 
@@ -39,9 +41,9 @@ export default class ReferenceListComponent extends CustomSurface {
     bibliography.forEach(ref => {
       const referenceEl = renderNode($$, this, ref)
         .ref(ref.id)
-        .on('click', this._selectReference.bind(this, ref.id))
+        .on('mousedown', this._selectReference.bind(this, ref.id))
 
-      if (sel && sel.customType === 'reference' && sel.data.referenceId === ref.id) {
+      if (sel && sel.nodeId === ref.id) {
         referenceEl.addClass('sm-selected')
       }
 
@@ -64,14 +66,6 @@ export default class ReferenceListComponent extends CustomSurface {
   }
 
   _selectReference (referenceId) {
-    const newSel = {
-      type: 'custom',
-      customType: 'reference',
-      nodeId: referenceId,
-      data: {
-        referenceId
-      }
-    }
-    this.context.editorSession.setSelection(newSel)
+    this.context.api.selectEntity(referenceId)
   }
 }

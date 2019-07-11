@@ -65,13 +65,9 @@ export default {
             type: 'group',
             label: 'metadata',
             items: [
-              { type: 'command', name: 'insert-author', label: 'author' },
-              { type: 'command', name: 'insert-editor', label: 'editor' },
-              { type: 'command', name: 'insert-group', label: 'group' },
-              { type: 'command', name: 'insert-organisation', label: 'affiliation' },
-              { type: 'command', name: 'insert-funder', label: 'funder' },
-              { type: 'command', name: 'insert-keyword', label: 'keyword' },
-              { type: 'command', name: 'insert-subject', label: 'subject' }
+              { type: 'command', name: 'add-author', label: 'author' },
+              { type: 'command', name: 'add-affiliation', label: 'affiliation' },
+              { type: 'command', name: 'add-reference', label: 'reference' }
             ]
           }
         ]
@@ -114,6 +110,7 @@ export default {
         hideDisabled: true,
         alwaysVisible: true,
         items: [
+          { type: 'command', name: 'edit-metadata', label: 'metadata' },
           {
             type: 'group',
             name: 'table',
@@ -196,10 +193,10 @@ export default {
           },
           {
             type: 'group',
-            name: 'collection',
+            name: 'entities',
             style: 'descriptive',
             items: [
-              { type: 'command-group', name: 'collection' }
+              { type: 'command-group', name: 'entities' }
             ]
           }
         ]
@@ -219,7 +216,7 @@ export default {
           { type: 'command-group', name: 'footnote' },
           { type: 'command-group', name: 'author' },
           { type: 'command-group', name: 'reference' },
-          { type: 'command-group', name: 'collection' },
+          { type: 'command-group', name: 'entities' },
           { type: 'command-group', name: 'list' },
           { type: 'command-group', name: 'metadata-fields' }
         ]

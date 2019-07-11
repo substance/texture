@@ -1,3 +1,13 @@
+/* HACKZ:
+  1. do not position the Edit dropdown on the right because ATM there is the
+  modal close button.
+  2. hide the save button
+*/
+.sc-modal-dialog .sc-metadata-editor .se-toolbar-wrapper .sc-tool-spacer,
+.sc-modal-dialog .sc-metadata-editor .se-toolbar-wrapper button.sm-save {
+  display: none;
+}
+
 .sc-metadata-editor {
   display: flex;
   flex-direction: row;

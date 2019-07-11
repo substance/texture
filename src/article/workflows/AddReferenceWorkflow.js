@@ -1,6 +1,6 @@
 import { Component } from 'substance'
-import DOIInputComponent from './DOIInputComponent'
-import ReferenceUploadComponent from './ReferenceUploadComponent'
+import DOIInputComponent from '../components/DOIInputComponent'
+import ReferenceUploadComponent from '../components/ReferenceUploadComponent'
 import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
 import { DialogSectionComponent } from '../../kit'
 

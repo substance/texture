@@ -35,6 +35,8 @@ export default class TextureConfigurator {
     this._iconRegistry = new HierarchicalRegistry(this, '_icons')
     this._labelRegistry = new HierarchicalRegistry(this, '_labels')
     this._serviceRegistry = new HierarchicalRegistry(this, '_services')
+    this._toolPanelRegistry = new HierarchicalRegistry(this, '_toolPanels')
+    this._keyboardShortcutsByCommandNameRegistry = new HierarchicalRegistry(this, '_keyboardShortcutsByCommandName')
 
     // TODO: document why this is necessary, beyond legacy reasons
     this._compiledToolPanels = new Map()
@@ -329,15 +331,19 @@ export default class TextureConfigurator {
     }
   }
 
-  getKeyboardShortcuts () {
-    return this._keyboardShortcuts
+  getKeyboardShortcuts (options = {}) {
+    if (options.inherit) {
+      return Array.from(this._keyboardShortcutsByCommandNameRegistry.getAll().values())
+    } else {
+      return this._keyboardShortcuts
+    }
   }
 
   /*
     Allows lookup of a keyboard shortcut by command name
   */
   getKeyboardShortcutsByCommandName (commandName) {
-    return this._keyboardShortcutsByCommandName.get(commandName)
+    return this._keyboardShortcutsByCommandNameRegistry.get(commandName)
   }
 
   getNodes () {
@@ -345,7 +351,7 @@ export default class TextureConfigurator {
   }
 
   getToolPanel (name, strict) {
-    let toolPanelSpec = this._toolPanels.get(name)
+    let toolPanelSpec = this._toolPanelRegistry.get(name)
     if (toolPanelSpec) {
       // return cache compiled tool-panels
       if (this._compiledToolPanels.has(name)) return this._compiledToolPanels.get(name)
@@ -459,12 +465,12 @@ class IconProvider {
   renderIcon ($$, name) {
     let spec = this._getIconDef(name)
     if (!spec) {
-      console.error(`No icon found for name '${name}'`)
+      throw new Error(`No icon found for name '${name}'`)
     } else {
       if (spec['fontawesome']) {
         return $$(FontAwesomeIcon, { icon: spec['fontawesome'] })
       } else {
-        console.error('Unsupported icon spec')
+        throw new Error('Unsupported icon spec')
       }
     }
   }

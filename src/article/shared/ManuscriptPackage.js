@@ -9,14 +9,15 @@ import ManuscriptContentPackage from './ManuscriptContentPackage'
 import PersistencePackage from '../../shared/PersistencePackage'
 
 import {
-  AddEntityCommand, AddFigureMetadataFieldCommand, MoveMetadataFieldCommand,
-  RemoveMetadataFieldCommand,
-  AddFigurePanelCommand,
+  AddAuthorCommand, AddAffiliationCommand, AddEntityCommand,
+  AddFigureMetadataFieldCommand, AddFigurePanelCommand,
+  AddReferenceCommand,
+  MoveMetadataFieldCommand, RemoveMetadataFieldCommand,
   InsertExtLinkCommand,
   DecreaseHeadingLevelCommand,
   DeleteCellsCommand,
   DownloadSupplementaryFileCommand,
-  EditEntityCommand,
+  EditAuthorCommand, EditReferenceCommand,
   IncreaseHeadingLevelCommand,
   InsertBlockFormulaCommand,
   InsertBlockQuoteCommand,
@@ -39,17 +40,25 @@ import {
   ToggleCellHeadingCommand,
   ToggleCellMergeCommand,
   ChangeListTypeCommand,
-  CreateListCommand
+  CreateListCommand,
+  EditMetadataCommand
 } from '../commands'
 
 import {
-  FigureComponent, AddSupplementaryFileWorkflow, FigurePanelComponent, TableFigureComponent, FootnoteComponent, ReferenceComponent, ReferenceListComponent, ManuscriptTOC, InsertFigurePanelTool, DownloadSupplementaryFileTool, InsertFigureTool, InsertInlineGraphicTool, OpenFigurePanelImageTool, ReplaceFigurePanelTool, ReplaceSupplementaryFileTool, InsertTableTool, ManuscriptEditor
+  FigureComponent, AddSupplementaryFileWorkflow, FigurePanelComponent,
+  TableFigureComponent, FootnoteComponent, ReferenceComponent,
+  ReferenceListComponent, ManuscriptTOC, InsertFigurePanelTool,
+  DownloadSupplementaryFileTool, InsertFigureTool, InsertInlineGraphicTool,
+  OpenFigurePanelImageTool, ReplaceFigurePanelTool,
+  ReplaceSupplementaryFileTool, InsertTableTool, ManuscriptEditor
 } from '../components'
 
 import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../nodes'
 
 import DropFigure from './DropFigure'
-import EditMetadataCommand from '../commands/EditMetadataCommand'
+
+import { AddAuthorWorkflow, AddAffiliationWorkflow, AddReferenceWorkflow } from '../workflows'
+import EditMetadataWorkflow from '../metadata/EditMetadataWorkflow'
 
 export default {
   name: 'ManuscriptEditor',
@@ -73,12 +82,16 @@ export default {
     config.addComponent('reference-list', ReferenceListComponent, true)
     config.addComponent('toc', ManuscriptTOC, true)
 
+    config.addCommand('add-author', AddAuthorCommand)
+    config.addCommand('add-affiliation', AddAffiliationCommand)
     config.addCommand('add-metadata-field', AddFigureMetadataFieldCommand, {
       commandGroup: 'metadata-fields'
     })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('add-reference', AddReferenceCommand)
+
     config.addCommand('create-external-link', InsertExtLinkCommand, {
       nodeType: 'external-link',
       accelerator: 'CommandOrControl+K',
@@ -102,13 +115,12 @@ export default {
     config.addCommand('download-file', DownloadSupplementaryFileCommand, {
       commandGroup: 'file'
     })
-    config.addCommand('edit-author', EditMetadataCommand, {
-      selectionType: 'author',
-      commandGroup: 'author'
+    config.addCommand('edit-author', EditAuthorCommand, {
+      commandGroup: 'entities'
     })
-    config.addCommand('edit-reference', EditEntityCommand, {
-      selectionType: 'reference',
-      commandGroup: 'reference'
+    config.addCommand('edit-metadata', EditMetadataCommand)
+    config.addCommand('edit-reference', EditReferenceCommand, {
+      commandGroup: 'entities'
     })
     config.addCommand('increase-heading-level', IncreaseHeadingLevelCommand, {
       commandGroup: 'text'
@@ -278,7 +290,14 @@ export default {
       commandGroup: 'list'
     })
 
+    // Workflows
+    config.addComponent('add-affiliation-workflow', AddAffiliationWorkflow)
+    config.addComponent('add-author-workflow', AddAuthorWorkflow)
+    config.addComponent('add-reference-workflow', AddReferenceWorkflow)
+    config.addComponent('edit-metadata-workflow', EditMetadataWorkflow)
+
     // Labels
+    config.addLabel('add-author', 'Add Author')
     config.addLabel('add-ref', 'Add Reference')
     config.addLabel('article-info', 'Article Information')
     config.addLabel('article-record', 'Article Record')
@@ -425,7 +444,7 @@ export default {
     config.addKeyboardShortcut('CommandOrControl+a', { command: 'table:select-all' })
 
     // Register commands and keyboard shortcuts for collections
-    registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
+    // registerCollectionCommand(config, 'author', ['metadata', 'authors'], { keyboardShortcut: 'CommandOrControl+Alt+A', nodeType: 'person' })
     registerCollectionCommand(config, 'funder', ['metadata', 'funders'], { keyboardShortcut: 'CommandOrControl+Alt+Y' })
     registerCollectionCommand(config, 'editor', ['metadata', 'editors'], { keyboardShortcut: 'CommandOrControl+Alt+E', nodeType: 'person' })
     registerCollectionCommand(config, 'group', ['metadata', 'groups'], { keyboardShortcut: 'CommandOrControl+Alt+G' })

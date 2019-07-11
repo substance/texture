@@ -1,4 +1,4 @@
-import { Component, keys, platform } from 'substance'
+import { Component, keys } from 'substance'
 import { createEditorContext } from '../../kit'
 
 // Base-class for Manuscript- and MetadataEditor to reduced code-redundancy
@@ -97,13 +97,13 @@ export default class EditorPanel extends Component {
   }
 
   _renderWorkflow ($$, workflowId) {
+    let workflowProps = this.context.appState.workflowProps || {}
     let Modal = this.getComponent('modal')
     let WorkflowComponent = this.getComponent(workflowId)
     return $$(Modal, {
-      width: WorkflowComponent.desiredWidth
-    }).addClass('se-workflow-modal sm-workflow-' + workflowId).append(
-      $$(WorkflowComponent).ref('workflow')
-    )
+      width: WorkflowComponent.desiredWidth,
+      content: $$(WorkflowComponent, workflowProps).ref('workflow')
+    }).addClass('se-workflow-modal sm-workflow-' + workflowId)
   }
 
   _scrollElementIntoView (el, force) {
@@ -124,10 +124,6 @@ export default class EditorPanel extends Component {
     if (comp) {
       this._scrollElementIntoView(comp.el, true)
     }
-    let router = this.context.router
-    // ATTENTION: do not change the route when running tests otherwise the test url get's lost
-    if (router && !platform.test) {
-      router.writeRoute(params)
-    }
+    this.send('updateRoute', params)
   }
 }

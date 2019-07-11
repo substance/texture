@@ -24,7 +24,7 @@ export default class CardComponent extends Component {
         $$('div').addClass('se-label').append(label)
       )
     el.append(children)
-    el.on('click', this._toggleCardSelection)
+    el.on('mousedown', this._toggleCardSelection)
     return el
   }
 

@@ -6,6 +6,6 @@ export default class EditMetadataCommand extends Command {
   }
 
   execute (params, context) {
-    context.editor.send('startWorkflow', 'edit-metadata')
+    context.editor.send('startWorkflow', 'edit-metadata-workflow')
   }
 }

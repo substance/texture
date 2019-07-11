@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, platform } from 'substance'
 import { AppState, EditorSession, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
@@ -20,7 +20,8 @@ export default class ArticlePanel extends Component {
       startWorkflow: this._startWorkflow,
       closeModal: this._closeModal,
       scrollElementIntoView: this._scrollElementIntoView,
-      scrollTo: this._scrollTo
+      scrollTo: this._scrollTo,
+      updateRoute: this._updateRoute
     }
   }
 
@@ -33,6 +34,7 @@ export default class ArticlePanel extends Component {
 
     let editorSession = new EditorSession('article', doc, config, this, {
       workflowId: null,
+      workflowProps: null,
       overlayId: null,
       settings: this._createSettings(doc)
     })
@@ -147,6 +149,10 @@ export default class ArticlePanel extends Component {
 
   _closeModal () {
     const appState = this._getAppState()
+    let workflowId = appState.workflowId
+    if (workflowId) {
+      this._clearRoute()
+    }
     appState.workflowId = null
     appState.overlayId = null
     appState.propagateUpdates()
@@ -206,11 +212,13 @@ export default class ArticlePanel extends Component {
     return this.refs.content._scrollTo(params)
   }
 
-  _startWorkflow (workflowId) {
+  _startWorkflow (workflowId, workflowProps) {
     const appState = this._getAppState()
     appState.workflowId = workflowId
+    appState.workflowProps = workflowProps
     appState.overlayId = workflowId
     appState.propagateUpdates()
+    this._updateRoute({ workflow: workflowId })
   }
 
   _toggleOverlay (overlayId) {
@@ -221,6 +229,36 @@ export default class ArticlePanel extends Component {
       appState.overlayId = overlayId
     }
     appState.propagateUpdates()
+  }
+  _onSettingsUpdate () {
+    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
+    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
+    // ATTENTION: removing the following line leads to the BUG
+    this.empty()
+    this.rerender()
+  }
+
+  // Routing
+  // =======
+  // NOTE: I don't thing that this is generally a good idea. E.g. what to do if multiple this is embedded
+  // into a different thing with its own router.
+
+  _clearRoute () {
+    let router = this.context.router
+    // Note: we do not change the route while running tests, otherwise the test url get's lost
+    // TODO: why is the TestSuite using a router? sounds like this could be achieved with URL params at least
+    if (router && !platform.test) {
+      router.clearRoute()
+    }
+  }
+
+  _updateRoute (params) {
+    let router = this.context.router
+    // Note: we do not change the route while running tests, otherwise the test url get's lost
+    // TODO: why is the TestSuite using a router? sounds like this could be achieved with URL params at least
+    if (router && !platform.test) {
+      router.writeRoute(params)
+    }
   }
 
   _onRouteChange (data) {
@@ -247,13 +285,5 @@ export default class ArticlePanel extends Component {
       // forcing scroll, i.e. bringing target element always to the top
       this.refs.content.send('scrollElementIntoView', el, true)
     }
-  }
-
-  _onSettingsUpdate () {
-    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
-    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
-    // ATTENTION: removing the following line leads to the BUG
-    this.empty()
-    this.rerender()
   }
 }

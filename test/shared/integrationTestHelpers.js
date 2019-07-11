@@ -108,7 +108,7 @@ export function breakText (editor) {
 }
 
 export function applyNOP (editorSession) {
-  editorSession._commit(new DocumentChange([new ObjectOperation({ type: 'NOP' })], {}, {}), {})
+  editorSession.applyChange(new DocumentChange([new ObjectOperation({ type: 'NOP' })], {}, {}), {})
 }
 
 export function toUnix (str) {

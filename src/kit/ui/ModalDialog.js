@@ -1,4 +1,4 @@
-import { Component, DefaultDOMElement } from 'substance'
+import { Component } from 'substance'
 
 /**
   ModalDialog component
@@ -22,9 +22,6 @@ export default class ModalDialog extends Component {
     let el = $$('div').addClass(this._getClassName())
     let width = this.props.width || 'large'
 
-    // TODO: don't think that this is good enough. Right the modal is closed by any unhandled click.
-    // Need to be discussed.
-    el.on('click', this._closeModal)
     el.on('keydown', this._onKeydown)
 
     if (this.props.width) {
@@ -58,9 +55,18 @@ export default class ModalDialog extends Component {
   }
 
   _renderModalBody ($$) {
-    return $$('div').addClass('se-body').append(
-      this.props.children
+    const Button = this.getComponent('button')
+    const closeButton = $$(Button, {
+      icon: 'close'
+    }).addClass('se-close-button')
+      .on('click', this._closeModal)
+    let modalBody = $$('div').addClass('se-body').ref('body')
+    // ATTENTION: it is not possible to set a ref on a component passed in as prop (different owner)
+    modalBody.append(
+      this.props.content.addClass('se-content')
     )
+    modalBody.append(closeButton)
+    return modalBody
   }
 
   _onKeydown (e) {
@@ -70,11 +76,24 @@ export default class ModalDialog extends Component {
   _closeModal (e) {
     e.preventDefault()
     e.stopPropagation()
-    // wrap the target so that we can use DOMElement API
-    let targetEl = DefaultDOMElement.wrap(e.target)
-    let closeSurfaceClick = targetEl.hasClass('sc-modal-dialog')
-    if (closeSurfaceClick) {
-      this.send('closeModal')
+
+    // let the content handl
+    let content = this._getContent()
+    if (content.beforeClose) {
+      let result = content.beforeClose()
+      if (result === false) {
+        return
+      }
     }
+
+    this.send('closeModal')
+  }
+
+  _getContent () {
+    // Unfortunately we can not have a ref on the content,
+    // because it is passed as property.
+    // ATM, Substance allows only the owner to set a ref.
+    // Thus, we have to find the component manually.
+    return this.refs.body.getChildren().find(c => c.el.hasClass('se-content'))
   }
 }

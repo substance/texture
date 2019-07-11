@@ -1,76 +1,42 @@
-import { Component, domHelpers } from 'substance'
-import { createEditorContext, ModalEditorSession } from '../../kit'
+import EditorWorkflow from '../shared/EditorWorkflow'
 import MetadataEditor from './MetadataEditor'
 import MetadataAPI from './MetadataAPI'
 
-export default class EditMetadataWorkflow extends Component {
-  constructor (...args) {
-    super(...args)
+export default class EditMetadataWorkflow extends EditorWorkflow {
+  didMount () {
+    super.didMount()
 
-    this._initialize(this.props)
-  }
-
-  _initialize (props) {
-    let parentContext = this.getParent().context
-    let archive = parentContext.archive
-    let parentEditorSession = parentContext.editorSession
-    let config = parentContext.config.getConfiguration('metadata')
-    let editorSession = new ModalEditorSession('edit-metadata', parentEditorSession, config, this, {
-      settings: parentEditorSession.editorState.settings
-    })
-    let api = new MetadataAPI(editorSession, archive, config, this)
-    let editor = this
-    const context = Object.assign(createEditorContext(config, editorSession, editor), {
-      api,
-      editable: true
-    })
-    // ATTENTION: the editorSession needs to be initialized
-    editorSession.initialize()
-
-    this.context = context
-    this.api = api
-    this.config = config
-    this.editorSession = editorSession
-  }
-
-  getActionHandlers () {
-    return {
-      executeCommand: this._executeCommand,
-      toggleOverlay: this._toggleOverlay,
-      scrollTo: this._scrollTo,
-      scrollElementIntoView: this._scrollElementIntoView
+    // scroll to the node if a workflow props are given
+    // Note: this has to be done after everything as been mounted
+    if (this.props.nodeId) {
+      setTimeout(() => {
+        this.api.selectEntity(this.props.nodeId)
+      })
     }
   }
 
-  dispose () {
-    this.editorSession.dispose()
-  }
-
   render ($$) {
-    let el = $$('div').addClass('sc-edit-metadata-worklfow')
-    el.append($$(MetadataEditor).ref('editor'))
-    // ATTENTION: don't let mousedowns pass, otherwise the parent will null the selection
-    el.on('mousedown', domHelpers.stopAndPrevent)
+    let el = super.render($$)
+    el.append(
+      // ATTENTION: ATM it is important to use 'editor' ref
+      $$(MetadataEditor).ref('editor')
+    )
     return el
   }
 
-  getComponentRegistry () {
-    return this.config.getComponentRegistry()
+  _getClassNames () {
+    return 'sc-edit-metadata-workflow sc-editor-workflow'
   }
 
-  getContentPanel () {
-    return this.refs.contentPanel
+  _getConfig () {
+    return this.getParent().context.config.getConfiguration('metadata')
   }
 
-  _executeCommand (name, params) {
-    this.editorSession.executeCommand(name, params)
+  _getWorkflowId () {
+    return 'edit-metadata-workflow'
   }
 
-  _scrollElementIntoView (el, force) {
-    this.refs.editor._scrollElementIntoView(el, force)
-  }
-
-  _scrollTo (params) {
-    this.refs.editor._scrollTo(params)
+  _createAPI () {
+    return new MetadataAPI(this.editorSession, this.context.archive, this.config, this)
   }
 }

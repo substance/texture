@@ -1,6 +1,6 @@
 import {
   documentHelpers, includes, orderBy, without, copySelection, selectionHelpers,
-  isArray, getKeyForPath
+  isArray, isString, getKeyForPath
 } from 'substance'
 import { createValueModel } from '../../kit'
 import TableEditingAPI from './TableEditingAPI'
@@ -19,7 +19,7 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
-import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote } from '../nodes'
+import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation } from '../nodes'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -122,8 +122,15 @@ export default class ArticleAPI {
     this._setSelection(this._createValueSelection(path))
   }
 
-  selectFirstRequiredPropertyOfMetadataCard (nodeId) {
-    this._setSelection(this._selectFirstRequiredPropertyOfMetadataCard(nodeId))
+  selectEntity (node) {
+    if (isString(node)) {
+      node = this.getDocument().get(node)
+    }
+    if (node) {
+      this._setSelection(this._createEntitySelection(node))
+    } else {
+      throw new Error('Invalid argument.')
+    }
   }
 
   getAppState () {
@@ -246,6 +253,16 @@ export default class ArticleAPI {
         containerPath,
         surfaceId
       }
+    }
+  }
+
+  // TODO: think if this is really needed. We could instead try to use NodeSelections
+  // this might only problematic cause of the lack of a containerPath
+  _createEntitySelection (node, options = {}) {
+    return {
+      type: 'custom',
+      customType: 'entity',
+      nodeId: node.id
     }
   }
 
@@ -457,6 +474,23 @@ export default class ArticleAPI {
 
   // # Actions
 
+  addAuthor () {
+    this._addEntity(['metadata', 'authors'], Person.type)
+  }
+
+  addAffiliation () {
+    this._addEntity(['metadata', 'organisations'], Organisation.type)
+  }
+
+  _addEntity (collectionPath, type) {
+    const editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let node = tx.create({ type })
+      documentHelpers.append(tx, collectionPath, node.id)
+      tx.setSelection(this._createEntitySelection(node))
+    })
+  }
+
   addFigurePanel (figureId, file) {
     const doc = this.getDocument()
     const figure = doc.get(figureId)
@@ -490,7 +524,7 @@ export default class ArticleAPI {
         documentHelpers.append(tx, ['article', 'references'], ref.id)
       })
       if (refNodes.length > 0) {
-        let newSelection = this._selectFirstRequiredPropertyOfMetadataCard(refNodes[0])
+        let newSelection = this._createEntitySelection(refNodes[0])
         tx.setSelection(newSelection)
       }
     })

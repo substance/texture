@@ -1,5 +1,4 @@
 export { default as AbstractComponent } from './AbstractComponent'
-export { default as AddReferenceWorkflow } from './AddReferenceWorkflow'
 export { default as AddSupplementaryFileWorkflow } from './AddSupplementaryFileWorkflow'
 export { default as AuthorsListComponent } from './AuthorsListComponent'
 export { default as BlockFormulaComponent } from './BlockFormulaComponent'

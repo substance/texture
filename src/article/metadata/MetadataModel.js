@@ -17,7 +17,10 @@ export default class MetadataModel {
       { name: 'organisations', model: createValueModel(api, ['metadata', 'organisations']) },
       { name: 'funders', model: createValueModel(api, ['metadata', 'funders']) },
       { name: 'keywords', model: createValueModel(api, ['metadata', 'keywords']) },
-      { name: 'subjects', model: createValueModel(api, ['metadata', 'subjects']) }
+      { name: 'subjects', model: createValueModel(api, ['metadata', 'subjects']) },
+      // TODO: references are not really metadata. This should be edited in the Manuscript directly
+      // for the time being we leave it as it is
+      { name: 'references', model: createValueModel(api, ['article', 'references']) }
     ]
   }
 

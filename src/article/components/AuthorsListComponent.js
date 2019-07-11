@@ -13,6 +13,9 @@ export default class AuthorsListComponent extends CustomSurface {
     super.didMount()
 
     const appState = this.context.appState
+    // FIXME: it is not good to rerender on every selection change.
+    // Instead it should derive a state from the selection, and only rerender if the
+    // state has changed (not-selected, selected + author id)
     appState.addObserver(['selection'], this.rerender, this, { stage: 'render' })
   }
 
@@ -35,11 +38,10 @@ export default class AuthorsListComponent extends CustomSurface {
     const authors = this._getAuthors()
     let els = []
     authors.forEach((author, index) => {
-      const short = author.type === 'organisation'
       const authorEl = $$('span').addClass('se-contrib').html(
-        this.context.api.renderEntity(author, { short })
-      ).on('click', this._selectAuthor.bind(this, author.id))
-      if (sel && sel.customType === 'author' && sel.data.authorId === author.id) {
+        this.context.api.renderEntity(author)
+      ).on('mousedown', this._selectAuthor.bind(this, author.id))
+      if (sel && sel.nodeId === author.id) {
         authorEl.addClass('sm-selected')
       }
       els.push(authorEl)
@@ -59,14 +61,6 @@ export default class AuthorsListComponent extends CustomSurface {
   }
 
   _selectAuthor (authorId) {
-    const newSel = {
-      type: 'custom',
-      customType: 'author',
-      nodeId: authorId,
-      data: {
-        authorId
-      }
-    }
-    this.context.editorSession.setSelection(newSel)
+    this.context.api.selectEntity(authorId)
   }
 }

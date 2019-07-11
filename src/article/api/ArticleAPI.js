@@ -374,12 +374,12 @@ export default class ArticleAPI {
   // and use specific API to accomplish this
   _getAvailableOptions (model) {
     let targetTypes = Array.from(model._targetTypes)
-    if (targetTypes.size !== 1) {
+    if (targetTypes.length !== 1) {
       throw new Error('Unsupported relationship. Expected to find one targetType')
     }
     let doc = this.getDocument()
-    let first = targetTypes.values().next()
-    let targetType = first.value
+    let first = targetTypes[0]
+    let targetType = first
     switch (targetType) {
       case 'funder': {
         return doc.get('metadata').resolve('funders')

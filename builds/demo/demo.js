@@ -5,6 +5,7 @@ import { Texture, TextureWebApp, TextureArchive, vfsSaveHook } from 'substance-t
 
 window.addEventListener('load', () => {
   substanceGlobals.DEBUG_RENDERING = true
+  substanceGlobals.DETERMINISTIC_UUID = true
   Texture.defaultDataFolder = './demo/data/'
   setTimeout(() => {
     let app = DevWebApp.mount({

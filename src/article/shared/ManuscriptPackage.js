@@ -49,6 +49,7 @@ import {
 import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../nodes'
 
 import DropFigure from './DropFigure'
+import EditMetadataCommand from '../commands/EditMetadataCommand'
 
 export default {
   name: 'ManuscriptEditor',
@@ -101,7 +102,7 @@ export default {
     config.addCommand('download-file', DownloadSupplementaryFileCommand, {
       commandGroup: 'file'
     })
-    config.addCommand('edit-author', EditEntityCommand, {
+    config.addCommand('edit-author', EditMetadataCommand, {
       selectionType: 'author',
       commandGroup: 'author'
     })
@@ -299,7 +300,6 @@ export default {
     config.addLabel('sig-block-end', 'Signature Block ends here')
     config.addLabel('structure', 'Structure')
     config.addLabel('toc', 'Table of Contents')
-    config.addLabel('translations', 'Translations')
     config.addLabel('edit-ref', 'Edit')
     config.addLabel('remove-ref', 'Remove')
     config.addLabel('toggle-unordered-list', 'Bulleted list')

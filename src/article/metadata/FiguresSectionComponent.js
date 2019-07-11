@@ -1,8 +1,8 @@
 import { Component } from 'substance'
 import { createValueModel } from '../../kit'
-import MetadataCollectionComponent from './MetadataCollectionComponent'
 import { METADATA_MODE } from '../ArticleConstants'
-import CardComponent from '../shared/CardComponent'
+import MetadataCollectionComponent from './MetadataCollectionComponent'
+import CardComponent from './CardComponent'
 
 // NOTE: We use a special component to render Figures in the Metadata view.
 // Every Figure can be seen as a collection of sub-figure (aka panels), and

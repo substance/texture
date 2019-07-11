@@ -1,45 +1,34 @@
-import { DefaultDOMElement } from 'substance'
+import { Component, DefaultDOMElement } from 'substance'
 import { Managed, OverlayCanvas } from '../../kit'
-import EditorPanel from '../shared/EditorPanel'
 import MetadataModel from './MetadataModel'
 import MetadataSection from './MetadataSection'
 import MetadataSectionTOCEntry from './MetadataSectionTOCEntry'
 import ExperimentalArticleValidator from '../ExperimentalArticleValidator'
 
-export default class MetadataEditor extends EditorPanel {
-  _initialize (props) {
-    super._initialize(props)
+export default class MetadataEditor extends Component {
+  constructor (...args) {
+    super(...args)
 
-    this.articleValidator = new ExperimentalArticleValidator(this.api)
-    this.model = new MetadataModel(this.editorSession)
+    this._initialize(this.props)
+  }
+
+  _initialize (props) {
+    this.articleValidator = new ExperimentalArticleValidator(this.context.api)
+    this.model = new MetadataModel(this.context.editorSession)
 
     // HACK: this is making all properties dirty, so we have to reset the appState after that
     this.articleValidator.initialize()
-    this.appState._reset()
+    this.context.appState._reset()
   }
 
   didMount () {
-    super.didMount()
     this._showHideTOC()
-    this._restoreViewport()
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
   }
 
-  didUpdate () {
-    super.didUpdate()
-    this._restoreViewport()
-  }
-
   dispose () {
-    super.dispose()
     this.articleValidator.dispose()
     DefaultDOMElement.getBrowserWindow().off(this)
-  }
-
-  getViewport () {
-    return {
-      x: this.refs.contentPanel.getScrollPosition()
-    }
   }
 
   render ($$) {
@@ -51,13 +40,7 @@ export default class MetadataEditor extends EditorPanel {
     return el
   }
 
-  setSelection (sel) {
-    let editorSession = this.editorSession
-    editorSession.setSelection(sel)
-  }
-
   _renderMainSection ($$) {
-    const appState = this.context.appState
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
@@ -65,36 +48,27 @@ export default class MetadataEditor extends EditorPanel {
         this._renderTOCPane($$),
         this._renderContentPanel($$)
       // TODO: do we need this ref?
-      ).ref('contentSection'),
-      this._renderFooterPane($$)
+      ).ref('contentSection')
     )
-    if (appState.workflowId) {
-      mainSection.append(
-        this._renderWorkflow($$, appState.workflowId)
-      )
-    }
     return mainSection
   }
 
   _renderToolbar ($$) {
     const Toolbar = this.getComponent('toolbar')
-    let config = this.props.config
+    let config = this.context.config
     const items = config.getToolPanel('toolbar')
     return $$('div').addClass('se-toolbar-wrapper').append(
       $$(Managed(Toolbar), {
         items,
         bindings: ['commandStates']
-      // TODO: do we need this ref?
       }).ref('toolbar')
     )
   }
 
   _renderTOCPane ($$) {
     const sections = this.model.getSections()
-
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
-
     sections.forEach(({ name, model }) => {
       let id = model.id
       tocEl.append(
@@ -105,7 +79,6 @@ export default class MetadataEditor extends EditorPanel {
         })
       )
     })
-
     el.append(tocEl)
     return el
   }
@@ -123,14 +96,14 @@ export default class MetadataEditor extends EditorPanel {
     let sectionsEl = $$('div').addClass('se-sections')
 
     sections.forEach(({ name, model }) => {
-      let SectionComponent = this._getSectionComponent(name, model)
-      let content = $$(SectionComponent, { name, model }).ref(name)
+      let content = $$(MetadataSection, { name, model }).ref(name)
       sectionsEl.append(content)
     })
 
     contentPanel.append(
       sectionsEl.ref('sections'),
-      this._renderMainOverlay($$)
+      this._renderMainOverlay($$),
+      this._renderContextMenu($$)
     )
 
     return contentPanel
@@ -144,25 +117,51 @@ export default class MetadataEditor extends EditorPanel {
     }).ref('overlay')
   }
 
-  _getSectionComponent (name, model) {
-    return MetadataSection
-  }
-
-  _renderFooterPane ($$) {
-    const FindAndReplaceDialog = this.getComponent('find-and-replace-dialog')
-    let el = $$('div').addClass('se-footer-pane')
-    el.append(
-      $$(FindAndReplaceDialog, {
-        theme: this._getTheme(),
-        viewName: 'metadata'
-      // TODO: do we need this ref?
-      }).ref('findAndReplace')
-    )
-    return el
+  _renderContextMenu ($$) {
+    const config = this.context.config
+    const ContextMenu = this.getComponent('context-menu')
+    const items = config.getToolPanel('context-menu')
+    return $$(Managed(ContextMenu), {
+      items,
+      theme: this._getTheme(),
+      bindings: ['commandStates']
+    })
   }
 
   _getContentPanel () {
     return this.refs.contentPanel
+  }
+
+  _getTheme () {
+    return 'dark'
+  }
+
+  _onKeydown (e) {
+    let handled = this.context.keyboardManager.onKeydown(e, this.context)
+    if (handled) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+    return handled
+  }
+
+  _scrollElementIntoView (el, force) {
+    this._getContentPanel().scrollElementIntoView(el, !force)
+  }
+
+  _scrollTo (params) {
+    let selector
+    if (params.nodeId) {
+      selector = `[data-id="${params.nodeId}"]`
+    } else if (params.section) {
+      selector = `[data-section="${params.section}"]`
+    } else {
+      throw new Error('Illegal argument')
+    }
+    let comp = this.refs.contentPanel.find(selector)
+    if (comp) {
+      this._scrollElementIntoView(comp.el, true)
+    }
   }
 
   _showHideTOC () {

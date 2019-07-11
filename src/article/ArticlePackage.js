@@ -10,6 +10,7 @@ import {
 import TextureJATS from './TextureJATS'
 import ManuscriptPackage from './shared/ManuscriptPackage'
 import EntityLabelsPackage from './shared/EntityLabelsPackage'
+import MetadataPackage from './metadata/MetadataPackage'
 import FigureLabelGenerator from './shared/FigureLabelGenerator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
 import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
@@ -121,5 +122,7 @@ export default {
     // TODO: think about how Texture can allow customizations that use a different editor
     articleConfig.addComponent('article-editor', ManuscriptEditor)
     articleConfig.import(ManuscriptPackage)
+
+    articleConfig.import(MetadataPackage)
   }
 }

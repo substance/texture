@@ -8,10 +8,12 @@ import { TextPropertyComponent as SubstanceTextPropertyComponent, getKeyForPath 
 */
 export default class TextPropertyComponentNew extends SubstanceTextPropertyComponent {
   didMount () {
-    this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: this.getPath() } })
+    // console.log('TextPropertyComponent.didMount()', this.context.appState.getId(), this.getPath())
+    this.context.appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render', document: { path: this.getPath() } })
   }
 
   dispose () {
+    // console.log('TextPropertyComponent.dispose()', this.context.appState.getId(), this.getPath())
     this.context.appState.off(this)
   }
 
@@ -53,5 +55,10 @@ export default class TextPropertyComponentNew extends SubstanceTextPropertyCompo
 
   _getUnsupportedInlineNodeComponentClass () {
     return this.getComponent('unsupported-inline-node')
+  }
+
+  _onDocumentChange () {
+    // console.log('TextPropertyComponent._onDocumentChange', 'Received update from appState', this.context.appState.getId())
+    this.rerender()
   }
 }

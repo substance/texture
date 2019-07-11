@@ -127,7 +127,7 @@ export default class EditorPanel extends Component {
     let router = this.context.router
     // ATTENTION: do not change the route when running tests otherwise the test url get's lost
     if (router && !platform.test) {
-      router.writeRoute(Object.assign({ viewName: this.props.viewName }, params))
+      router.writeRoute(params)
     }
   }
 }

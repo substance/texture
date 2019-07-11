@@ -1,5 +1,6 @@
 import {
-  flatten, isString, isFunction, platform, DefaultLabelProvider, FontAwesomeIconProvider
+  flatten, isString, isFunction, platform, DefaultLabelProvider,
+  FontAwesomeIcon
 } from 'substance'
 import { SwitchTextTypeCommand } from './kit'
 
@@ -187,6 +188,9 @@ export default class TextureConfigurator {
   }
 
   addToolPanel (name, spec) {
+    if (this._toolPanels.has(name)) {
+      throw new Error(`ToolPanel '${name}' is already defined`)
+    }
     this._toolPanels.set(name, spec)
   }
 
@@ -239,8 +243,12 @@ export default class TextureConfigurator {
     })
   }
 
-  getCommands () {
-    return this._commands
+  getCommands (options = {}) {
+    if (options.inherit) {
+      return this._commandRegistry.getAll()
+    } else {
+      return this._commands
+    }
   }
 
   getCommandGroup (name) {
@@ -278,7 +286,7 @@ export default class TextureConfigurator {
   }
 
   getIconProvider () {
-    return new FontAwesomeIconProvider(this._icons)
+    return new IconProvider(this)
   }
 
   // TODO: the label provider should not be maintained by the configuration
@@ -407,6 +415,20 @@ class HierarchicalRegistry {
     }
     if (strict) throw new Error(`No value registered for name '${name}'`)
   }
+
+  getAll () {
+    let config = this._config
+    let registries = []
+    const key = this._key
+    while (config) {
+      let registry = config[key]
+      if (registry) {
+        registries.unshift(registry)
+      }
+      config = config.parent
+    }
+    return new Map([].concat(...registries.map(r => Array.from(r.entries()))))
+  }
 }
 
 class LabelProvider extends DefaultLabelProvider {
@@ -426,5 +448,28 @@ class LabelProvider extends DefaultLabelProvider {
     } else {
       return rawLabel
     }
+  }
+}
+
+class IconProvider {
+  constructor (config) {
+    this.config = config
+  }
+
+  renderIcon ($$, name) {
+    let spec = this._getIconDef(name)
+    if (!spec) {
+      console.error(`No icon found for name '${name}'`)
+    } else {
+      if (spec['fontawesome']) {
+        return $$(FontAwesomeIcon, { icon: spec['fontawesome'] })
+      } else {
+        console.error('Unsupported icon spec')
+      }
+    }
+  }
+
+  _getIconDef (name) {
+    return this.config._iconRegistry.get(name)
   }
 }

@@ -1,8 +1,5 @@
-import {
-  AbstractEditorSession, Selection, getKeyForPath, SimpleChangeHistory
-} from 'substance'
-
-import EditorState from './EditorState'
+import { getKeyForPath } from 'substance'
+import AbstractEditorSession from './_AbstractEditorSession'
 import SurfaceManager from './SurfaceManager'
 import MarkersManager from './MarkersManager'
 import GlobalEventHandler from './GlobalEventHandler'
@@ -19,76 +16,61 @@ export default class EditorSession extends AbstractEditorSession {
    * @param {object|EditorState} editorState a plain object with intial values or an EditorState instance for reuse
    */
   constructor (id, document, config, editor, initialEditorState = {}) {
-    super(id, document)
+    super(id, document, initialEditorState)
 
-    const doc = document
+    const editorState = this.editorState
     this._config = config
     this._editor = editor
-
-    let editorState = this._createEditorState(document, initialEditorState)
+    this._contextProvider = editor
 
     let surfaceManager = new SurfaceManager(editorState)
     let markersManager = new MarkersManager(editorState)
     let globalEventHandler = new GlobalEventHandler(editorState)
     let keyboardManager = new KeyboardManager(config.getKeyboardShortcuts(), (commandName, params) => {
       return this.executeCommand(commandName, params)
-    }, editor)
+    }, this._contextProvider)
     let commandManager = new CommandManager(editorState,
       // update commands when document or selection have changed
       // TODO: is this really sufficient?
       ['document', 'selection'],
       config.getCommands(),
-      editor
+      this._contextProvider
     )
     let findAndReplaceManager = new FindAndReplaceManager(this, editorState, editor)
 
-    this.editorState = editorState
     this.surfaceManager = surfaceManager
     this.markersManager = markersManager
     this.globalEventHandler = globalEventHandler
     this.keyboardManager = keyboardManager
     this.commandManager = commandManager
     this.findAndReplaceManager = findAndReplaceManager
-
-    // EXPERIMENTAL: hook that records changes triggered via node state updates
-    doc.on('document:changed', this._onDocumentChange, this)
-    // EXPERIMENTAL: registering a 'reducer' that resets overlayId whenever the selection changes
-    editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
   }
 
   initialize () {
+    super.initialize()
+
+    // EXPERIMENTAL: registering a 'reducer' that resets overlayId whenever the selection changes
+    this.editorState.addObserver(['selection'], this._resetOverlayId, this, { stage: 'update' })
     this.commandManager.initialize()
   }
 
   dispose () {
-    this.getDocument().off(this)
+    super.dispose()
     this.findAndReplaceManager.dispose()
     this.commandManager.dispose()
     this.globalEventHandler.dispose()
     this.markersManager.dispose()
     this.surfaceManager.dispose()
-    this.editorState.off(this)
-    this.editorState.dispose()
   }
 
   _createEditorState (document, initialState = {}) {
-    return new EditorState(Object.assign({
-      document,
-      history: new SimpleChangeHistory(this),
-      selection: Selection.nullSelection,
-      selectionState: {},
+    return Object.assign({
       focusedSurface: null,
       commandStates: {},
-      hasUnsavedChanges: false,
-      isBlurred: false,
       overlayId: null,
       findAndReplace: FindAndReplaceManager.defaultState()
-    }, initialState))
+    }, super._createEditorState(document, initialState))
   }
-
-  // createSelection (...args) {
-  //   return this._document.createSelection(...args)
-  // }
 
   executeCommand (commandName, params) {
     return this.commandManager.executeCommand(commandName, params)
@@ -110,76 +92,8 @@ export default class EditorSession extends AbstractEditorSession {
     return this.editorState.focusedSurface
   }
 
-  getSelectionState () {
-    return this.editorState.selectionState
-  }
-
   getSurface (surfaceId) {
     return this.surfaceManager.getSurface(surfaceId)
-  }
-
-  hasUnsavedChanges () {
-    return Boolean(this.editorState.hasUnsavedChanges)
-  }
-
-  isBlurred () {
-    return Boolean(this.editorState.isBlurred)
-  }
-
-  setSelection (sel) {
-    super.setSelection(sel)
-    const editorState = this.editorState
-    if (editorState.isBlurred) {
-      editorState.isBlurred = false
-    }
-    editorState.propagateUpdates()
-  }
-
-  transaction (...args) {
-    super.transaction(...args)
-    this.editorState.propagateUpdates()
-  }
-
-  _getSelection () {
-    return this.editorState.selection
-  }
-
-  _setSelection (sel) {
-    this.editorState.selection = sel
-    return sel
-  }
-
-  undo () {
-    super.undo()
-    this.editorState.propagateUpdates()
-  }
-
-  updateNodeStates (tuples, options = {}) {
-    super.updateNodeStates(tuples, options)
-
-    if (options.propagate) {
-      this.editorState.propagateUpdates()
-    }
-  }
-
-  redo () {
-    super.redo()
-    this.editorState.propagateUpdates()
-  }
-
-  _onDocumentChange (change, info) {
-    const editorState = this.editorState
-    // ATTENTION: ATM we are using a DocumentChange to implement node states
-    // Now it happens, that something that reacts on document changes (particularly a CitationManager)
-    // updates the node state during a flow.
-    // HACK: In that case we 'merge' the state update into the already propagated document change
-    if (editorState.isDirty('document') && info.action === 'node-state-update') {
-      let propagatedChange = editorState.getUpdate('document').change
-      Object.assign(propagatedChange.updated, change.updated)
-    } else {
-      this.editorState._setUpdate('document', { change, info })
-      this.editorState.hasUnsavedChanges = true
-    }
   }
 
   _resetOverlayId () {

@@ -5,6 +5,7 @@ const IMPL = Symbol('__AppStateImpl__')
 export default class AbstractAppState {
   constructor (...args) {
     this[IMPL] = new AppStateImpl()
+    // console.log('Created AppState', this.getId())
 
     this._initialize(...args)
     this._reset()

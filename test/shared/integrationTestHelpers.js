@@ -253,12 +253,6 @@ export function getSelectionState (editor) {
   return editor.context.appState.selectionState
 }
 
-export function getCurrentViewName (editor) {
-  const articlePanel = editor.context.articlePanel
-  const articlePanelState = articlePanel.getState()
-  return articlePanelState.viewName
-}
-
 export function getDocument (editor) {
   return editor.context.appState.document
 }

@@ -47,3 +47,5 @@
 @import './_upload-tool.css';
 @import './_workflow-modal.css';
 @import './_xref';
+
+@import '../metadata/styles/_index.css'

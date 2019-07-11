@@ -2,7 +2,9 @@ import { NodeIndex, getKeyForPath } from 'substance'
 
 // kind of an index that is used to dispatch updates
 export default class DocumentObserver {
-  constructor (doc) {
+  constructor (doc, appState) {
+    // console.log('Creating DocumentObserver for', appState.getId())
+    this.appState = appState
     this.doc = doc
     this.dirty = new Set()
 
@@ -34,10 +36,11 @@ export default class DocumentObserver {
   // TODO: this is built on top of the current implementation of
   // DocumentChange. We could try to consolidate and have just
   // one place where this information is derived
-  _onDocumentChanged (change) {
+  _onDocumentChanged (change, info = {}) {
     // ATTENTION: the change is not carrying reflection until change._extracted = true
     if (!change._extracted) change._extractInformation(this.doc)
 
+    // console.log('DocumentObserver._onDocumentChanged()', this.appState.getId(), change, change.updated)
     let dirty = this.dirty
     Object.keys(change.updated).forEach(id => {
       dirty.add(id)

@@ -11,6 +11,7 @@ export default class CommandManager {
     // commands are setup lazily so that we can take context into consideration
     // allowing to disable certain commands if they should not be considered
     // in a specifc context at all
+    this._allCommands = commands
     this._commands = null
 
     appState.addObserver(deps, this.reduce, this, { stage: 'update' })
@@ -112,7 +113,7 @@ export default class CommandManager {
 
   _initializeCommands () {
     const context = this.contextProvider.context
-    const allCommands = Array.from(context.config.getCommands().entries())
+    const allCommands = Array.from(this._allCommands)
     // remove disabled all commands that revoke by inspecting the context
     let commands = new Map(allCommands.filter(([name, command]) => {
       // for legacy, keep commands enabled which do not proved a `shouldBeEnabled()` method

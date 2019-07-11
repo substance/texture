@@ -53,6 +53,7 @@ export default class ArticlePanel extends Component {
     this.appState = appState
     this.context = context
 
+    // ATTENTION: the editorSession needs to be initialized
     editorSession.initialize()
     appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
@@ -225,10 +226,13 @@ export default class ArticlePanel extends Component {
   _onRouteChange (data) {
     // EXPERIMENTAL: taking an object from the router
     // and interpreting it to navigate to the right location in the app
-    let { viewName, nodeId, section } = data
+    let { workflow, section, nodeId } = data
     let el
-    if (viewName && viewName !== this.state.viewName) {
-      this.extendState({ viewName })
+    if (workflow && workflow !== this.appState.workflowId) {
+      if (this.appState.workflowId) {
+        this._closeModal()
+      }
+      this._startWorkflow(workflow)
     }
     if (nodeId) {
       // NOTE: we need to search elements only inside editor

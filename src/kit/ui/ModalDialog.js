@@ -35,7 +35,20 @@ export default class ModalDialog extends Component {
       el.addClass('sm-transparent-bg')
     }
 
-    el.append(this._renderModalBody($$))
+    let verticalContainer = $$('div').addClass('se-vertical-container')
+    let horizontalContainer = $$('div').addClass('se-horizontal-container')
+    horizontalContainer.append(
+      $$('div').addClass('se-horizontal-spacer'),
+      this._renderModalBody($$),
+      $$('div').addClass('se-horizontal-spacer')
+    )
+    verticalContainer.append(
+      $$('div').addClass('se-vertical-spacer'),
+      horizontalContainer,
+      $$('div').addClass('se-vertical-spacer')
+    )
+
+    el.append(verticalContainer)
 
     return el
   }

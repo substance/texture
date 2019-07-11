@@ -1,3 +1,4 @@
+/* TODO: this is a hack. Instead we should use defined configurations for modals */
 .sc-modal-dialog.sm-workflow-edit-reference .se-body {
   position: fixed;
   top: 50%;

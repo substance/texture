@@ -4,7 +4,6 @@ import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
 import ArticleToolbarPackage from './ArticleToolbarPackage'
-import EntityLabelsPackage from './EntityLabelsPackage'
 import ManuscriptContentPackage from './ManuscriptContentPackage'
 import PersistencePackage from '../../shared/PersistencePackage'
 
@@ -45,9 +44,8 @@ import {
 } from '../commands'
 
 import {
-  FigureComponent, AddSupplementaryFileWorkflow, FigurePanelComponent,
-  TableFigureComponent, FootnoteComponent, ReferenceComponent,
-  ReferenceListComponent, ManuscriptTOC, InsertFigurePanelTool,
+  AddSupplementaryFileWorkflow,
+  ManuscriptTOC, InsertFigurePanelTool,
   DownloadSupplementaryFileTool, InsertFigureTool, InsertInlineGraphicTool,
   OpenFigurePanelImageTool, ReplaceFigurePanelTool,
   ReplaceSupplementaryFileTool, InsertTableTool, ManuscriptEditor

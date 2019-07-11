@@ -11,7 +11,6 @@ export default class CustomAbstract extends Abstract {
       ]
     }
   }
-
   render (options = {}) {
     return this.title || ''
   }

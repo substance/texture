@@ -19,7 +19,7 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
-import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation } from '../nodes'
+import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation, CustomAbstract } from '../nodes'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -482,10 +482,17 @@ export default class ArticleAPI {
     this._addEntity(['metadata', 'organisations'], Organisation.type)
   }
 
-  _addEntity (collectionPath, type) {
+  addCustomAbstract () {
+    this._addEntity(['article', 'customAbstracts'], CustomAbstract.type, tx => documentHelpers.createNodeFromJson(tx, CustomAbstract.getTemplate()))
+  }
+
+  _addEntity (collectionPath, type, createNode) {
     const editorSession = this.getEditorSession()
+    if (!createNode) {
+      createNode = tx => tx.create({ type })
+    }
     editorSession.transaction(tx => {
-      let node = tx.create({ type })
+      let node = createNode(tx)
       documentHelpers.append(tx, collectionPath, node.id)
       tx.setSelection(this._createEntitySelection(node))
     })

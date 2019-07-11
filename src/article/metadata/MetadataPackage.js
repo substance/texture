@@ -2,7 +2,7 @@ import ArticleInformationSectionComponent from './ArticleInformationSectionCompo
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import AbstractsSectionComponent from './AbstractsSectionComponent'
 import FiguresSectionComponent from './FiguresSectionComponent'
-import { AddAuthorCommand } from './MetadataEntityCommands'
+import { AddAuthorCommand, AddCustomAbstractCommand } from './MetadataEntityCommands'
 
 export default {
   name: 'metadata',
@@ -36,6 +36,21 @@ export default {
         alwaysVisible: true,
         items: [
           {
+            name: 'metadata',
+            type: 'group',
+            label: 'entities',
+            items: [
+              { type: 'command', name: 'add-author', label: 'author' },
+              { type: 'command', name: 'add-custom-abstract', label: 'custom-abstract' }
+              // { type: 'command', name: 'insert-editor', label: 'editor' },
+              // { type: 'command', name: 'insert-group', label: 'group' },
+              // { type: 'command', name: 'insert-organisation', label: 'affiliation' },
+              // { type: 'command', name: 'insert-funder', label: 'funder' },
+              // { type: 'command', name: 'insert-keyword', label: 'keyword' },
+              // { type: 'command', name: 'insert-subject', label: 'subject' }
+            ]
+          },
+          {
             name: 'inline-content',
             type: 'group',
             label: 'inline',
@@ -49,21 +64,6 @@ export default {
               { type: 'command', name: 'insert-xref-footnote', label: 'footnote-reference' },
               { type: 'command', name: 'insert-xref-formula', label: 'equation-reference' },
               { type: 'command', name: 'insert-xref-file', label: 'file-reference' }
-            ]
-          },
-          {
-            name: 'metadata',
-            type: 'group',
-            label: 'metadata',
-            items: [
-              { type: 'command', name: 'add-author', label: 'author' }
-              // { type: 'command', name: 'insert-custom-abstract', label: 'custom-abstract' },
-              // { type: 'command', name: 'insert-editor', label: 'editor' },
-              // { type: 'command', name: 'insert-group', label: 'group' },
-              // { type: 'command', name: 'insert-organisation', label: 'affiliation' },
-              // { type: 'command', name: 'insert-funder', label: 'funder' },
-              // { type: 'command', name: 'insert-keyword', label: 'keyword' },
-              // { type: 'command', name: 'insert-subject', label: 'subject' }
             ]
           }
         ]
@@ -98,6 +98,7 @@ export default {
     config.addComponent('@figures', FiguresSectionComponent)
 
     config.addCommand('add-author', AddAuthorCommand)
+    config.addCommand('add-custom-abstract', AddCustomAbstractCommand)
 
     config.addLabel('abstracts', 'Abstracts')
     config.addLabel('article-information', 'Article Information')

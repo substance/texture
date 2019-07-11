@@ -4,11 +4,9 @@
   <front>
     <article-meta>
       <article-categories>
-        <subj-group xml:lang="en">
+        <subj-group>
           <subject content-type="display-channel">Research Article</subject>
           <subject content-type="heading">Computational and Systems Biology</subject>
-        </subj-group>
-        <subj-group xml:lang="es">
           <subject content-type="display-channel">Artículo de investigación</subject>
           <subject content-type="heading">Biología computacional y de sistemas</subject>
         </subj-group>
@@ -161,13 +159,11 @@
       <abstract abstract-type="web-summary">
         <p id="p-1-2">This is an example of web summary.</p>
       </abstract>
-      <kwd-group xml:lang="en">
+      <kwd-group>
         <kwd content-type="author-keyword">optogenetics</kwd>
         <kwd content-type="author-keyword">two-photon</kwd>
         <kwd content-type="author-keyword">calcium imaging</kwd>
         <kwd content-type="research-organism">Mouse</kwd>
-      </kwd-group>
-      <kwd-group xml:lang="es">
         <kwd content-type="author-keyword">nada</kwd>
         <kwd content-type="author-keyword">si</kwd>
       </kwd-group>

@@ -163,6 +163,7 @@ function _exportSubjects (jats, doc) {
   // TODO: this should come from the article node
   let $$ = jats.$$
   let subjects = doc.resolve(['metadata', 'subjects'])
+  // TODO: remove or rework translations of subjects
   let byLang = subjects.reduce((byLang, subject) => {
     let lang = subject.language
     if (!byLang[lang]) {
@@ -173,7 +174,10 @@ function _exportSubjects (jats, doc) {
   }, {})
   let articleCategories = $$('article-categories')
   forEach(byLang, (subjects, lang) => {
-    let groupEl = $$('subj-group').attr('xml:lang', lang)
+    let groupEl = $$('subj-group')
+    if (lang !== 'undefined') {
+      groupEl.attr('xml:lang', lang)
+    }
     groupEl.append(
       subjects.map(subject => {
         return $$('subject').attr({ 'content-type': subject.category }).text(subject.name)
@@ -508,7 +512,7 @@ function _exportAbstract (jats, doc, jatsExporter) {
 
 function _exportKeywords (jats, doc, jatsExporter) {
   const $$ = jats.$$
-  // TODO: keywords should be translatables
+  // TODO: remove or rework tranlations of keywords
   const keywords = doc.resolve(['metadata', 'keywords'])
   let byLang = keywords.reduce((byLang, keyword) => {
     let lang = keyword.language
@@ -520,7 +524,10 @@ function _exportKeywords (jats, doc, jatsExporter) {
   }, {})
   let keywordGroups = []
   forEach(byLang, (keywords, lang) => {
-    let groupEl = $$('kwd-group').attr('xml:lang', lang)
+    let groupEl = $$('kwd-group')
+    if (lang !== 'undefined') {
+      groupEl.attr('xml:lang', lang)
+    }
     groupEl.append(
       keywords.map(keyword => {
         return $$('kwd').attr({ 'content-type': keyword.category }).append(

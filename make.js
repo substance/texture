@@ -390,8 +390,7 @@ function _buildLib (DEST, platform) {
       commonjs({
         include: 'node_modules/**'
       })
-    ],
-    sourcemap: true
+    ]
   })
 }
 

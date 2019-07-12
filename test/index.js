@@ -30,8 +30,7 @@ import './SupplementaryFile.test'
 import './Table.test'
 import './TableConverter.test'
 import './UndoRedo.test'
-// FIXME: this was using the metadata view to test validation; this should be done in the manuscript view instead
-// import './Validator.test'
+import './Validator.test'
 
 // TODO: there are some tests in ./converter/. Either fix them and include here
 // or remove them

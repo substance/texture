@@ -56,10 +56,21 @@ export default class AddReferenceWorkflow extends Component {
   _onAdd (type) {
     this.context.api.addReference({ type })
     this.send('closeModal')
+    this._openEditReference()
   }
 
   _onImport (items) {
     this.context.api.addReferences(items)
     this.send('closeModal')
+    this._openEditReference()
+  }
+
+  _openEditReference () {
+    // HACK: for the time being, references are edited in the metadata modal
+    // for some reason, we need to wait here, before being able to execute the
+    // 'edit-reference' command
+    setTimeout(() => {
+      this.send('executeCommand', 'edit-reference')
+    })
   }
 }

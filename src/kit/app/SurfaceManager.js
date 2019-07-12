@@ -69,6 +69,15 @@ export default class SurfaceManager {
     // Reducing state.focusedSurface (only if selection has changed)
     if (this.editorState.isDirty('selection')) {
       const selection = this.editorState.selection
+      if (!selection || selection.isNull()) {
+        // blur the focused surface to make sure that it does not remain focused
+        // e.g. if DOM selection is not set for some reasons.
+        // HACK: not all surfaces implement _blur()
+        let focusedSurface = this.editorState.focusedSurface
+        if (focusedSurface && focusedSurface._blur) {
+          focusedSurface._blur()
+        }
+      }
       // update state.focusedSurface
       this._reduceFocusedSurface(selection)
       // HACK: removing DOM selection *and* blurring when having a CustomSelection

@@ -1,4 +1,4 @@
-import { CustomSurface } from 'substance'
+import { CustomSurface, Component } from 'substance'
 
 export default class AuthorsListComponent extends CustomSurface {
   getInitialState () {
@@ -34,13 +34,10 @@ export default class AuthorsListComponent extends CustomSurface {
 
   _renderAuthors ($$) {
     const sel = this.context.appState.selection
-
     const authors = this._getAuthors()
     let els = []
     authors.forEach((author, index) => {
-      const authorEl = $$('span').addClass('se-contrib').html(
-        this.context.api.renderEntity(author)
-      ).on('mousedown', this._selectAuthor.bind(this, author.id))
+      const authorEl = $$(AuthorDisplay, { node: author })
       if (sel && sel.nodeId === author.id) {
         authorEl.addClass('sm-selected')
       }
@@ -59,8 +56,31 @@ export default class AuthorsListComponent extends CustomSurface {
   _getAuthors () {
     return this.props.model.getItems()
   }
+}
 
-  _selectAuthor (authorId) {
-    this.context.api.selectEntity(authorId)
+class AuthorDisplay extends Component {
+  render ($$) {
+    let el = $$('span').addClass('se-contrib').html(
+      this.context.api.renderEntity(this.props.node)
+    )
+    el.on('mousedown', this._onMousedown)
+      .on('click', this._onClick)
+    return el
+  }
+
+  _onMousedown (e) {
+    e.stopPropagation()
+    if (e.button === 2) {
+      this._select()
+    }
+  }
+
+  _onClick (e) {
+    e.stopPropagation()
+    this._select()
+  }
+
+  _select () {
+    this.context.api.selectEntity(this.props.node.id)
   }
 }

@@ -91,8 +91,9 @@ export default class EditorWorkflow extends Component {
 
   render ($$) {
     let el = $$('div').addClass(this._getClassNames())
-    // ATTENTION: don't let mousedowns pass, otherwise the parent will null the selection
-    el.on('mousedown', domHelpers.stopAndPrevent)
+    // ATTENTION: don't let mousedowns and clicks pass, otherwise the parent will null the selection
+    el.on('mousedown', this._onMousedown)
+    el.on('click', this._onClick)
     return el
   }
 
@@ -132,5 +133,18 @@ export default class EditorWorkflow extends Component {
       appState.overlayId = overlayId
     }
     appState.propagateUpdates()
+  }
+
+  _onMousedown (e) {
+    e.stopPropagation()
+  }
+
+  _onClick (e) {
+    domHelpers.stopAndPrevent(e)
+    let focusedSurface = this.editorSession.getFocusedSurface()
+    if (focusedSurface) {
+      focusedSurface._blur()
+    }
+    this.editorSession.setSelection(null)
   }
 }

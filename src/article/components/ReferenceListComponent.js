@@ -1,4 +1,4 @@
-import { CustomSurface } from 'substance'
+import { CustomSurface, Component } from 'substance'
 import { renderNode } from '../../kit'
 import { getPos } from '../shared/nodeHelpers'
 
@@ -39,14 +39,10 @@ export default class ReferenceListComponent extends CustomSurface {
     }
 
     bibliography.forEach(ref => {
-      const referenceEl = renderNode($$, this, ref)
-        .ref(ref.id)
-        .on('mousedown', this._selectReference.bind(this, ref.id))
-
+      const referenceEl = $$(ReferenceDisplay, { node: ref }).ref(ref.id)
       if (sel && sel.nodeId === ref.id) {
         referenceEl.addClass('sm-selected')
       }
-
       el.append(referenceEl)
     })
 
@@ -64,8 +60,29 @@ export default class ReferenceListComponent extends CustomSurface {
     })
     return references
   }
+}
 
-  _selectReference (referenceId) {
-    this.context.api.selectEntity(referenceId)
+class ReferenceDisplay extends Component {
+  render ($$) {
+    let el = renderNode($$, this, this.props.node)
+    el.on('mousedown', this._onMousedown)
+      .on('click', this._onClick)
+    return el
+  }
+
+  _onMousedown (e) {
+    e.stopPropagation()
+    if (e.button === 2) {
+      this._select()
+    }
+  }
+
+  _onClick (e) {
+    e.stopPropagation()
+    this._select()
+  }
+
+  _select () {
+    this.context.api.selectEntity(this.props.node.id)
   }
 }

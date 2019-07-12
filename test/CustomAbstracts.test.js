@@ -12,8 +12,8 @@ const moveDownToolSelector = '.sm-move-entity-down'
 const moveUpToolSelector = '.sm-move-entity-up'
 const removeToolSelector = '.sm-remove-entity'
 const _getCustomAbstracts = editor => editor.findAll(customAbstractSelector)
-const _selectCustomAbstractCard = card => card.el.emit('mousedown')
-const _selectCard = (editor, id) => editor.find(`.sc-card[data-id="${id}"]`).el.emit('mousedown')
+const _selectCustomAbstractCard = card => card.el.click()
+const _selectCard = (editor, id) => editor.find(`.sc-card[data-id="${id}"]`).el.click()
 const _isMoveDownToolPossible = editor => isToolEnabled(editor, 'context-tools', moveDownToolSelector)
 const _isMoveUpToolPossible = editor => isToolEnabled(editor, 'context-tools', moveUpToolSelector)
 const _isRemovePossible = editor => isToolEnabled(editor, 'context-tools', removeToolSelector)

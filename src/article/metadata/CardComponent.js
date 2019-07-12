@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, domHelpers } from 'substance'
 
 export default class CardComponent extends Component {
   didMount () {
@@ -24,7 +24,8 @@ export default class CardComponent extends Component {
         $$('div').addClass('se-label').append(label)
       )
     el.append(children)
-    el.on('mousedown', this._toggleCardSelection)
+    el.on('mousedown', this._onMousedown)
+    el.on('click', this._onClick)
     return el
   }
 
@@ -54,5 +55,19 @@ export default class CardComponent extends Component {
     } else {
       this.el.removeClass('sm-selected')
     }
+  }
+
+  _onMousedown (e) {
+    // Note: stopping propagation so that no-one else is doing somthing undesired
+    // and selecting the card on right-mousedown
+    e.stopPropagation()
+    if (e.button === 2) {
+      this._toggleCardSelection()
+    }
+  }
+
+  _onClick (e) {
+    domHelpers.stopAndPrevent(e)
+    this._toggleCardSelection()
   }
 }

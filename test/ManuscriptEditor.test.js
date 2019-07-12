@@ -638,7 +638,7 @@ function testEntitySelection (t, spec) {
   const getFirstItem = () => editor.find(spec.itemSelector)
 
   t.notNil(getFirstItem(), 'there should be at least one item')
-  getFirstItem().el.emit('mousedown')
+  getFirstItem().el.click()
   t.ok(getFirstItem().hasClass('sm-selected'), 'first item must be visually selected')
   t.equal(getSelection(editor).type, 'custom', 'selection must be of custom type')
   setSelection(editor, 'p-2.content', 0)
@@ -664,7 +664,7 @@ function testEditEntity (t, spec) {
   const _edit = () => openMenuAndFindTool(editor, 'context-tools', spec.editToolSelector).click()
 
   t.notOk(_canEdit(), 'editing should be disabled wihtout selection')
-  _getFirstItem().el.emit('mousedown')
+  _getFirstItem().el.click()
   t.ok(_canEdit(), 'edit author should be enabled')
   _edit()
 

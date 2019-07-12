@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import {
-  getDocument, insertText, openMetadataEditor,
+  getDocument, insertText,
   openContextMenuAndFindTool, isToolEnabled, setCursor, ensureAllFieldsVisible,
   createJATSFixture, createTestVfs, canSwitchTextTypeTo, switchTextType, ensureValidJATS, startEditMetadata, closeModalEditor
 } from './shared/integrationTestHelpers'
@@ -8,8 +8,8 @@ import setupTestApp from './shared/setupTestApp'
 
 const customAbstractSelector = '.sc-card.sm-custom-abstract'
 const customAbstractContentEditorSelector = '.sc-custom-abstract > .sm-content > .se-editor'
-const moveDownToolSelector = '.sm-move-down-custom-abstract'
-const moveUpToolSelector = '.sm-move-up-custom-abstract'
+const moveDownToolSelector = '.sm-move-entity-down'
+const moveUpToolSelector = '.sm-move-entity-up'
 const removeToolSelector = '.sm-remove-entity'
 const _getCustomAbstracts = editor => editor.findAll(customAbstractSelector)
 const _selectCustomAbstractCard = card => card.el.emit('mousedown')
@@ -22,10 +22,12 @@ const _removeAbstract = editor => openContextMenuAndFindTool(editor, removeToolS
 
 test(`CustomAbstracts: add a custom abstract`, t => {
   let { app, editor } = setupTestApp(t, { archiveId: 'blank' })
+
   let modalEditor = startEditMetadata(editor)
   _addCustomAbstract(modalEditor)
   t.equal(modalEditor.findAll(customAbstractSelector).length, 1, 'there should be one custom abstract')
   closeModalEditor(modalEditor)
+
   ensureValidJATS(t, app)
   t.end()
 })
@@ -58,6 +60,7 @@ test(`CustomAbstracts: removing a custom abstract`, t => {
 
 test('CustomAbstracts: move custom abstract', t => {
   let { editor, app } = setupTestApp(t, { archiveId: 'blank' })
+
   let modalEditor = startEditMetadata(editor)
   _addCustomAbstract(modalEditor)
   t.notOk(_isMoveUpToolPossible(modalEditor), 'should not be possible to move up custom abstract')
@@ -70,6 +73,7 @@ test('CustomAbstracts: move custom abstract', t => {
   t.ok(_isMoveUpToolPossible(modalEditor), 'should be possible to move up custom abstract')
   t.notOk(_isMoveDownToolPossible(modalEditor), 'should not be possible to move down custom abstract')
   closeModalEditor(modalEditor)
+
   ensureValidJATS(t, app)
   t.end()
 })
@@ -88,37 +92,43 @@ const META_WITH_EMPTY_CUSTOM_ABSTRACT = `
 const ARTICLE_WITH_ONE_EMPTY_CUSTOM_ABSTRACT = createJATSFixture({ front: META_WITH_EMPTY_CUSTOM_ABSTRACT })
 
 test('CustomAbstracts: editing title', t => {
-  let { app } = setupTestApp(t, {
+  let { app, editor } = setupTestApp(t, {
     vfs: createTestVfs(ARTICLE_WITH_ONE_EMPTY_CUSTOM_ABSTRACT),
     archiveId: 'test'
   })
-  let editor = openMetadataEditor(app)
-  let doc = getDocument(editor)
+
+  let modalEditor = startEditMetadata(editor)
+  let modalDoc = getDocument(modalEditor)
+  _addCustomAbstract(modalEditor)
   const newTitle = 'Custom abstract title'
-  _addCustomAbstract(editor)
-  const customAbstracts = doc.get(['article', 'customAbstracts'])
+  const customAbstracts = modalDoc.get(['article', 'customAbstracts'])
   const customAbstractId = customAbstracts[0]
-  t.equal(doc.get([customAbstractId, 'title']), '', 'title should be empty')
-  ensureAllFieldsVisible(editor, customAbstractId)
-  setCursor(editor, customAbstractId + '.title', 0)
-  insertText(editor, newTitle)
-  t.equal(doc.get([customAbstractId, 'title']), newTitle, 'title should have changed')
+  t.equal(modalDoc.get([customAbstractId, 'title']), '', 'title should be empty')
+  ensureAllFieldsVisible(modalEditor, customAbstractId)
+  setCursor(modalEditor, customAbstractId + '.title', 0)
+  insertText(modalEditor, newTitle)
+  t.equal(modalDoc.get([customAbstractId, 'title']), newTitle, 'title should have changed')
+  closeModalEditor(modalEditor)
+
   ensureValidJATS(t, app)
   t.end()
 })
 
 test('CustomAbstracts: switching type', t => {
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openMetadataEditor(app)
-  let doc = getDocument(editor)
+  let { app, editor } = setupTestApp(t, { archiveId: 'blank' })
+
+  let modalEditor = startEditMetadata(editor)
+  let modalDoc = getDocument(modalEditor)
   const customAbstractType = 'executive-summary'
   // TODO: instead of inserting a new item we should use a fixture
-  _addCustomAbstract(editor)
-  const customAbstracts = doc.get(['article', 'customAbstracts'])
+  _addCustomAbstract(modalEditor)
+  const customAbstracts = modalDoc.get(['article', 'customAbstracts'])
   const customAbstractId = customAbstracts[0]
-  t.equal(doc.get([customAbstractId, 'abstractType']), '', 'abstract type should be empty')
-  _selectAbstractType(editor, customAbstractId, customAbstractType)
-  t.equal(doc.get([customAbstractId, 'abstractType']), customAbstractType, 'abstract type should changed')
+  t.equal(modalDoc.get([customAbstractId, 'abstractType']), '', 'abstract type should be empty')
+  _selectAbstractType(modalEditor, customAbstractId, customAbstractType)
+  t.equal(modalDoc.get([customAbstractId, 'abstractType']), customAbstractType, 'abstract type should changed')
+  closeModalEditor(modalEditor)
+
   ensureValidJATS(t, app)
   t.end()
 })
@@ -143,22 +153,25 @@ const META_WITH_MULTISECTION_SUMMARY = `
 const ARTICLE_WITH_MULTISECTION_SUMMARY = createJATSFixture({ front: META_WITH_MULTISECTION_SUMMARY })
 
 test(`CustomAbstracts: switching headings`, t => {
-  let { app } = setupTestApp(t, {
+  let { app, editor } = setupTestApp(t, {
     vfs: createTestVfs(ARTICLE_WITH_MULTISECTION_SUMMARY),
     archiveId: 'test'
   })
-  let editor = openMetadataEditor(app)
-  let abstractEditor = editor.find(customAbstractContentEditorSelector)
+
+  let modalEditor = startEditMetadata(editor)
+  let abstractEditor = modalEditor.find(customAbstractContentEditorSelector)
   t.equal(abstractEditor.findAll('h1').length, 1, 'there should be one heading level 1')
   t.equal(abstractEditor.findAll('h2').length, 1, 'there should be one heading level 2')
   setCursor(abstractEditor, 'sec-1.content', 0)
-  t.ok(canSwitchTextTypeTo(editor, 'paragraph'), 'switch to paragraph should be possible')
-  switchTextType(editor, 'paragraph')
+  t.ok(canSwitchTextTypeTo(modalEditor, 'paragraph'), 'switch to paragraph should be possible')
+  switchTextType(modalEditor, 'paragraph')
   t.equal(abstractEditor.findAll('h1').length, 0, 'there should be no heading level 1')
   setCursor(abstractEditor, 'p-1.content', 0)
-  t.ok(canSwitchTextTypeTo(editor, 'heading1'), 'switch to heading level 1 should be possible')
-  switchTextType(editor, 'heading1')
+  t.ok(canSwitchTextTypeTo(modalEditor, 'heading1'), 'switch to heading level 1 should be possible')
+  switchTextType(modalEditor, 'heading1')
   t.equal(abstractEditor.findAll('h1').length, 1, 'there should be one heading level 1')
+  closeModalEditor(modalEditor)
+
   ensureValidJATS(t, app)
   t.end()
 })

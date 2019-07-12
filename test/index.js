@@ -25,8 +25,7 @@ import './Persistence.test'
 import './PreformatConverter.test'
 // FIXME: Bring back Reference editing in popup
 // import './Reference.test'
-// FIXME: this was using the metadata view to test some settings; this should be doable in the Manuscript too
-// import './Settings.test'
+import './Settings.test'
 import './SupplementaryFile.test'
 import './Table.test'
 import './TableConverter.test'

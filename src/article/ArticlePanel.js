@@ -214,6 +214,7 @@ export default class ArticlePanel extends Component {
 
   _startWorkflow (workflowId, workflowProps) {
     const appState = this._getAppState()
+    if (appState.workflowId) throw new Error('Another workflow has been started already.')
     appState.workflowId = workflowId
     appState.workflowProps = workflowProps
     appState.overlayId = workflowId

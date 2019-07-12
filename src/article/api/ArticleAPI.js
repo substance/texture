@@ -1,6 +1,6 @@
 import {
   documentHelpers, includes, orderBy, without, copySelection, selectionHelpers,
-  isArray, isString, getKeyForPath
+  isArray, isString, getKeyForPath, isNil
 } from 'substance'
 import { createValueModel } from '../../kit'
 import TableEditingAPI from './TableEditingAPI'
@@ -18,7 +18,12 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
-import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation, CustomAbstract, Reference, Funder, Keyword, Subject } from '../nodes'
+import {
+  InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person,
+  Organisation, CustomAbstract, Reference
+} from '../nodes'
+
+const DISALLOWED_MANIPULATION = 'Manipulation is not allowed.'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -572,7 +577,7 @@ export default class ArticleAPI {
   }
 
   insertBlockFormula () {
-    if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error('Invalid manipulation.')
+    if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
     this._insertBlockNode(tx => {
       return tx.create({ type: BlockFormula.type })
     })
@@ -605,7 +610,7 @@ export default class ArticleAPI {
   }
 
   insertBlockQuote () {
-    if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error('Invalid manipulation')
+    if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error(DISALLOWED_MANIPULATION)
     this._insertBlockNode(tx => {
       return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
     })
@@ -633,7 +638,7 @@ export default class ArticleAPI {
   }
 
   insertInlineGraphic (file) {
-    if (!this.canInsertInlineGraphic()) throw new Error('Invalid manipulation')
+    if (!this.canInsertInlineGraphic()) throw new Error(DISALLOWED_MANIPULATION)
     const editorSession = this.getEditorSession()
     const sel = editorSession.getSelection()
     if (!sel) return
@@ -655,12 +660,12 @@ export default class ArticleAPI {
   }
 
   insertCrossReference (refType) {
-    if (!this.canInsertCrossReference()) throw new Error('Invalid manipulation.')
+    if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
     this._insertCrossReference(refType)
   }
 
   insertFootnoteReference () {
-    if (!this.canInsertCrossReference()) throw new Error('Invalid manipulation.')
+    if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
     // In table-figures we want to allow only cross-reference to table-footnotes
     let selectionState = this.getAppState().selectionState
     const xpath = selectionState.xpath
@@ -678,7 +683,7 @@ export default class ArticleAPI {
   }
 
   insertInlineFormula (content) {
-    if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error('Invalid manipulation.')
+    if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
     this._insertInlineNode(tx => {
       return tx.create({
         type: InlineFormula.type,
@@ -746,7 +751,7 @@ export default class ArticleAPI {
   }
 
   insertTable () {
-    if (!this.canInsertBlockNode(TableFigure.type)) throw new Error('Invalid manipulation')
+    if (!this.canInsertBlockNode(TableFigure.type)) throw new Error(DISALLOWED_MANIPULATION)
     this._insertBlockNode(tx => {
       return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
     })
@@ -754,37 +759,78 @@ export default class ArticleAPI {
 
   canRemoveEntity (nodeId) {
     let node = this._getNode(nodeId)
-    return (node && this._isRemovableEntity(node))
+    if (node) {
+      return this._isCollectionItem(node)
+    } else {
+      return false
+    }
   }
 
-  _isRemovableEntity (node) {
-    switch (node.type) {
-      case CustomAbstract.type:
-      case Person.type:
-      case Organisation.type:
-      case Funder.type:
-      case Keyword.type:
-      case Subject.type:
-      {
-        return true
-      }
-      default:
-        return (node.isInstanceOf(Reference.type))
+  canMoveEntityUp (nodeId) {
+    let node = this._getNode(nodeId)
+    if (node && this._isCollectionItem(node) && !this._isManagedCollectionItem(node)) {
+      return node.getPosition() > 0
+    }
+  }
+
+  canMoveEntityDown (nodeId) {
+    let node = this._getNode(nodeId)
+    if (node && this._isCollectionItem(node) && !this._isManagedCollectionItem(node)) {
+      let pos = node.getPosition()
+      let ids = this.getDocument().get(this._getCollectionPathForItem(node))
+      return pos < ids.length - 1
     }
   }
 
   removeEntity (nodeId) {
+    if (!this.canRemoveEntity(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
     let node = this._getNode(nodeId)
     if (!node) throw new Error('Invalid argument.')
-    if (!this._isRemovableEntity(node)) throw new Error('Entity can not be removed.')
-    let propName = node.getXpath().property
-    let parent = node.getParent()
-    let collectionPath = [parent.id, propName]
+    let collectionPath = this._getCollectionPathForItem(node)
     this._removeItemFromCollection(nodeId, collectionPath)
+  }
+
+  moveEntityUp (nodeId) {
+    if (!this.canMoveEntityUp(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
+    this._moveEntity(nodeId, -1)
+  }
+
+  moveEntityDown (nodeId) {
+    if (!this.canMoveEntityDown(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
+    this._moveEntity(nodeId, 1)
+  }
+
+  _moveEntity (nodeId, shift) {
+    let node = this._getNode(nodeId)
+    if (!node) throw new Error('Invalid argument.')
+    let collectionPath = this._getCollectionPathForItem(node)
+    this.editorSession.transaction(tx => {
+      let ids = tx.get(collectionPath)
+      let pos = ids.indexOf(node.id)
+      documentHelpers.removeAt(tx, collectionPath, pos)
+      documentHelpers.insertAt(tx, collectionPath, pos + shift, node.id)
+    })
   }
 
   _getNode (nodeId) {
     return nodeId._isNode ? nodeId : this.getDocument().get(nodeId)
+  }
+
+  _getCollectionPathForItem (node) {
+    let parent = node.getParent()
+    let propName = node.getXpath().property
+    if (parent && propName) {
+      return [parent.id, propName]
+    }
+  }
+
+  _isCollectionItem (node) {
+    return !isNil(this._getCollectionPathForItem(node))
+  }
+
+  _isManagedCollectionItem (node) {
+    // ATM, only references are managed (i.e. not sorted manually)
+    return node.isInstanceOf(Reference.type)
   }
 
   removeFootnote (footnoteId) {

@@ -4,7 +4,10 @@ import ArticleInformationSectionComponent from './ArticleInformationSectionCompo
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import AbstractsSectionComponent from './AbstractsSectionComponent'
 import FiguresSectionComponent from './FiguresSectionComponent'
-import { AddAuthorCommand, AddCustomAbstractCommand, RemoveEntityCommand } from './MetadataEntityCommands'
+import {
+  AddAuthorCommand, AddCustomAbstractCommand, RemoveEntityCommand,
+  MoveEntityUpCommand, MoveEntityDownCommand
+} from './MetadataEntityCommands'
 import CustomAbstractComponent from './CustomAbstractComponent'
 
 export default {
@@ -114,6 +117,12 @@ export default {
     config.addCommand('remove-entity', RemoveEntityCommand, {
       commandGroup: 'collection'
     })
+    config.addCommand('move-entity-down', MoveEntityDownCommand, {
+      commandGroup: 'collection'
+    })
+    config.addCommand('move-entity-up', MoveEntityUpCommand, {
+      commandGroup: 'collection'
+    })
 
     config.addLabel('abstracts', 'Abstracts')
     config.addLabel('article-information', 'Article Information')
@@ -124,7 +133,11 @@ export default {
     config.addLabel('organisations', 'Affiliations')
     config.addLabel('references', 'References')
     config.addLabel('remove-entity', '${label}') // NOTE: the command itself has to provide 'label' via commandState
+    config.addLabel('move-entity-down', '${label}') // NOTE: the command itself has to provide 'label' via commandState
+    config.addLabel('move-entity-up', '${label}') // NOTE: the command itself has to provide 'label' via commandState
     config.addLabel('remove-something', 'Remove ${something}')
+    config.addLabel('move-something-down', 'Move ${something} down')
+    config.addLabel('move-something-up', 'Move ${something} up')
     config.addLabel('subjects', 'Subjects')
 
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })

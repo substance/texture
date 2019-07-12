@@ -1,6 +1,6 @@
 import { DocumentNode, STRING } from 'substance'
 
-export default class Organisation extends DocumentNode {
+export default class Affiliation extends DocumentNode {
   toString () {
     return this.render().join('')
   }
@@ -25,8 +25,8 @@ export default class Organisation extends DocumentNode {
   }
 }
 
-Organisation.schema = {
-  type: 'organisation',
+Affiliation.schema = {
+  type: 'affiliation',
   institution: STRING,
   division1: STRING,
   division2: STRING,

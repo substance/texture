@@ -144,11 +144,8 @@ export default {
     config.addLabel('corresp', 'Corresponding Author')
     config.addLabel('deceased', 'Deceased')
 
-    // organisation labels
-    config.addLabel('organisation', 'Affiliation')
-    config.addLabel('add-organisation', 'Add Organisation')
-    config.addLabel('edit-organisation', 'Edit Organisation')
-    config.addLabel('create-organisation', 'Create Organisation')
+    // affiliation labels
+    config.addLabel('affiliation', 'Affiliation')
     config.addLabel('division1', 'Division 1 (Department)')
     config.addLabel('division2', 'Division 2')
     config.addLabel('division3', 'Division 3')

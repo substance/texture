@@ -1,4 +1,5 @@
 import Abstract from './Abstract'
+import Affiliation from './Affiliation'
 import Article from './Article'
 import ArticleRef from './ArticleRef'
 import BlockFormula from './BlockFormula'
@@ -31,7 +32,6 @@ import MagazineArticleRef from './MagazineArticleRef'
 import Metadata from './Metadata'
 import Monospace from './Monospace'
 import NewspaperArticleRef from './NewspaperArticleRef'
-import Organisation from './Organisation'
 import Overline from './Overline'
 import Paragraph from './Paragraph'
 import PatentRef from './PatentRef'
@@ -68,7 +68,7 @@ export default {
       CustomAbstract, MetadataField, DataPublicationRef, ExternalLink, Figure, FigurePanel,
       Footnote, Funder, Graphic, Group, Heading, InlineFormula, InlineGraphic, Italic,
       Keyword, JournalArticleRef, List, ListItem, MagazineArticleRef, Metadata, Monospace,
-      NewspaperArticleRef, Organisation, Overline, Paragraph, PatentRef, Permission,
+      NewspaperArticleRef, Affiliation, Overline, Paragraph, PatentRef, Permission,
       Person, Preformat, RefContrib, Reference, ReportRef, SmallCaps, SoftwareRef,
       StrikeThrough, Subject, Subscript, Superscript, SupplementaryFile, Table, TableCell,
       TableFigure, TableRow, ThesisRef, Underline, WebpageRef, Xref

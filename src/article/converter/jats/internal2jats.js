@@ -290,9 +290,9 @@ function _exportPerson ($$, exporter, node) {
     _createTextElement($$, node.alias, 'string-name', { 'content-type': 'alias' }),
     _createBioElement($$, exporter, node)
   )
-  node.affiliations.forEach(organisationId => {
+  node.affiliations.forEach(affiliationId => {
     el.append(
-      $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
+      $$('xref').attr('ref-type', 'aff').attr('rid', affiliationId)
     )
   })
   node.funders.forEach(funderId => {
@@ -351,9 +351,9 @@ function _exportGroup ($$, exporter, node, groupMembers) {
     $$('email').append(node.email)
   )
   // Adds affiliations to group
-  node.affiliations.forEach(organisationId => {
+  node.affiliations.forEach(affiliationId => {
     collab.append(
-      $$('xref').attr('ref-type', 'aff').attr('rid', organisationId)
+      $$('xref').attr('ref-type', 'aff').attr('rid', affiliationId)
     )
   })
   // Add funders to group
@@ -376,8 +376,8 @@ function _exportGroup ($$, exporter, node, groupMembers) {
 
 function _exportAffiliations (jats, doc) {
   let $$ = jats.$$
-  let organisations = doc.resolve(['metadata', 'organisations'])
-  let orgEls = organisations.map(node => {
+  let affiliations = doc.resolve(['metadata', 'affiliations'])
+  let orgEls = affiliations.map(node => {
     let el = $$('aff').attr('id', node.id)
     el.append(_createTextElement($$, node.institution, 'institution', { 'content-type': 'orgname' }))
     el.append(_createTextElement($$, node.division1, 'institution', { 'content-type': 'orgdiv1' }))

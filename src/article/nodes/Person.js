@@ -37,7 +37,7 @@ Person.schema = {
   email: STRING,
   orcid: STRING,
   group: ONE('group'),
-  affiliations: MANY('organisation'),
+  affiliations: MANY('affiliation'),
   funders: MANY('funder'),
   bio: CHILDREN('paragraph'),
   equalContrib: BOOLEAN,

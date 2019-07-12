@@ -8,7 +8,7 @@ Metadata.schema = {
   authors: CHILDREN('person'),
   editors: CHILDREN('person'),
   groups: CHILDREN('group'),
-  organisations: CHILDREN('organisation'),
+  affiliations: CHILDREN('affiliation'),
   funders: CHILDREN('funder'),
   // TODO: this might change in a similar way as we gonna approach Figure metadata, where there can be multiple fields with multiple values
   keywords: CHILDREN('keyword'),

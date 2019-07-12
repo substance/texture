@@ -290,7 +290,6 @@ export default {
     config.addLabel('reference', 'Reference')
     config.addLabel('author', 'Author')
     config.addLabel('editor', 'Editor')
-    config.addLabel('affiliation', 'Affiliation')
     // Table tools labels
     config.addLabel('table-tools', 'Table')
     config.addLabel('insert-rows-above', {

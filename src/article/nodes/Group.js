@@ -14,7 +14,7 @@ Group.schema = {
   type: 'group',
   name: STRING,
   email: STRING,
-  affiliations: MANY('organisation'),
+  affiliations: MANY('affiliation'),
   funders: MANY('funder'),
   equalContrib: BOOLEAN,
   corresp: BOOLEAN

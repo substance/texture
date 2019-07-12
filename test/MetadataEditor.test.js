@@ -61,11 +61,11 @@ const EMPTY_ARTICLE = `<?xml version="1.0" encoding="UTF-8"?>
 
 test('MetadataEditor: TOC dynamic sections appear only if content is not empty', t => {
   let { editor } = _setup(t, EMPTY_ARTICLE)
-  const affiliationsTOCSectionSelector = '.se-toc [data-section="organisations"]'
+  const affiliationsTOCSectionSelector = '.se-toc [data-section="affiliations"]'
   const getAffiliationsTocSection = () => editor.find(affiliationsTOCSectionSelector)
   t.ok(getAffiliationsTocSection().hasClass('sm-empty'), 'TOC should not have a reference to an affiliations section')
   // click on insert affiliation tool
-  const insertAffiliationTool = openMenuAndFindTool(editor, 'insert', '.sm-insert-organisation')
+  const insertAffiliationTool = openMenuAndFindTool(editor, 'insert', '.sm-add-affiliation')
   insertAffiliationTool.click()
   t.notOk(getAffiliationsTocSection().hasClass('sm-empty'), 'TOC should have a reference to an affiliations section')
   t.end()

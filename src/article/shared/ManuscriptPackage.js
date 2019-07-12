@@ -74,13 +74,13 @@ export default {
     config.addComponent('toc', ManuscriptTOC)
 
     config.addCommand('add-author', AddAuthorCommand)
-    config.addCommand('add-affiliation', AddAffiliationCommand)
-    config.addCommand('add-metadata-field', AddFigureMetadataFieldCommand, {
-      commandGroup: 'metadata-fields'
-    })
     config.addCommand('add-figure-panel', AddFigurePanelCommand, {
       commandGroup: 'figure-panel'
     })
+    config.addCommand('add-metadata-field', AddFigureMetadataFieldCommand, {
+      commandGroup: 'metadata-fields'
+    })
+    config.addCommand('add-affiliation', AddAffiliationCommand)
     config.addCommand('add-reference', AddReferenceCommand)
 
     config.addCommand('create-external-link', InsertExtLinkCommand, {
@@ -440,7 +440,7 @@ export default {
     registerCollectionCommand(config, 'editor', ['metadata', 'editors'], { keyboardShortcut: 'CommandOrControl+Alt+E', nodeType: 'person' })
     registerCollectionCommand(config, 'group', ['metadata', 'groups'], { keyboardShortcut: 'CommandOrControl+Alt+G' })
     registerCollectionCommand(config, 'keyword', ['metadata', 'keywords'], { keyboardShortcut: 'CommandOrControl+Alt+K' })
-    registerCollectionCommand(config, 'organisation', ['metadata', 'organisations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
+    registerCollectionCommand(config, 'affiliation', ['metadata', 'affiliations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
   },
   ManuscriptEditor,

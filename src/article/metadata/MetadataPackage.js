@@ -136,11 +136,14 @@ export default {
     config.addLabel('abstracts', 'Abstracts')
     config.addLabel('article-information', 'Article Information')
     config.addLabel('article-metadata', 'Article Metadata')
+    config.addLabel('entities', 'Entities')
     config.addLabel('groups', 'Groups')
     config.addLabel('issueTitle', 'Issue Title')
     config.addLabel('keywords', 'Keywords')
     config.addLabel('affiliations', 'Affiliations')
     config.addLabel('references', 'References')
+    // TODO: provide a means to override the label via commandState,
+    // i.e. the command itself stores the desired lable in commandState.label
     config.addLabel('remove-entity', '${label}') // NOTE: the command itself has to provide 'label' via commandState
     config.addLabel('move-entity-down', '${label}') // NOTE: the command itself has to provide 'label' via commandState
     config.addLabel('move-entity-up', '${label}') // NOTE: the command itself has to provide 'label' via commandState

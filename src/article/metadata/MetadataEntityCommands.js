@@ -1,6 +1,12 @@
 import { Command } from 'substance'
 import { AddEntityCommand } from '../commands'
 
+export class AddAffiliationCommand extends AddEntityCommand {
+  execute (params, context) {
+    context.api.addAffiliation()
+  }
+}
+
 export class AddAuthorCommand extends AddEntityCommand {
   execute (params, context) {
     context.api.addAuthor()
@@ -10,6 +16,36 @@ export class AddAuthorCommand extends AddEntityCommand {
 export class AddCustomAbstractCommand extends AddEntityCommand {
   execute (params, context) {
     context.api.addCustomAbstract()
+  }
+}
+
+export class AddEditorCommand extends AddEntityCommand {
+  execute (params, context) {
+    context.api.addEditor()
+  }
+}
+
+export class AddGroupCommand extends AddEntityCommand {
+  execute (params, context) {
+    context.api.addGroup()
+  }
+}
+
+export class AddFunderCommand extends AddEntityCommand {
+  execute (params, context) {
+    context.api.addFunder()
+  }
+}
+
+export class AddKeywordCommand extends AddEntityCommand {
+  execute (params, context) {
+    context.api.addKeyword()
+  }
+}
+
+export class AddSubjectCommand extends AddEntityCommand {
+  execute (params, context) {
+    context.api.addSubject()
   }
 }
 

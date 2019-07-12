@@ -20,7 +20,7 @@ import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
 import {
   InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person,
-  Organisation, CustomAbstract, Reference
+  Affiliation, CustomAbstract, Reference, Group, Funder, Keyword, Subject
 } from '../nodes'
 
 const DISALLOWED_MANIPULATION = 'Manipulation is not allowed.'
@@ -405,8 +405,8 @@ export default class ArticleAPI {
       case 'funder': {
         return doc.get('metadata').resolve('funders')
       }
-      case 'organisation': {
-        return doc.get('metadata').resolve('organisations')
+      case 'affiliation': {
+        return doc.get('metadata').resolve('affiliations')
       }
       case 'group': {
         return doc.get('metadata').resolve('groups')
@@ -478,16 +478,36 @@ export default class ArticleAPI {
 
   // # Actions
 
+  addAffiliation () {
+    this._addEntity(['metadata', 'affiliations'], Affiliation.type)
+  }
+
   addAuthor () {
     this._addEntity(['metadata', 'authors'], Person.type)
   }
 
-  addAffiliation () {
-    this._addEntity(['metadata', 'organisations'], Organisation.type)
-  }
-
   addCustomAbstract () {
     this._addEntity(['article', 'customAbstracts'], CustomAbstract.type, tx => documentHelpers.createNodeFromJson(tx, CustomAbstract.getTemplate()))
+  }
+
+  addEditor () {
+    this._addEntity(['metadata', 'editors'], Person.type)
+  }
+
+  addFunder () {
+    this._addEntity(['metadata', 'funders'], Funder.type)
+  }
+
+  addGroup () {
+    this._addEntity(['metadata', 'groups'], Group.type)
+  }
+
+  addKeyword () {
+    this._addEntity(['metadata', 'keywords'], Keyword.type)
+  }
+
+  addSubject () {
+    this._addEntity(['metadata', 'subjects'], Subject.type)
   }
 
   _addEntity (collectionPath, type, createNode) {

@@ -5,8 +5,10 @@ import ArticleMetadataComponent from './ArticleMetadataComponent'
 import AbstractsSectionComponent from './AbstractsSectionComponent'
 import FiguresSectionComponent from './FiguresSectionComponent'
 import {
-  AddAuthorCommand, AddCustomAbstractCommand, RemoveEntityCommand,
-  MoveEntityUpCommand, MoveEntityDownCommand
+  AddAffiliationCommand, AddAuthorCommand, AddCustomAbstractCommand, RemoveEntityCommand,
+  MoveEntityUpCommand, MoveEntityDownCommand, AddEditorCommand,
+  AddGroupCommand, AddFunderCommand, AddKeywordCommand,
+  AddSubjectCommand
 } from './MetadataEntityCommands'
 import CustomAbstractComponent from './CustomAbstractComponent'
 
@@ -47,13 +49,13 @@ export default {
             label: 'entities',
             items: [
               { type: 'command', name: 'add-author', label: 'author' },
-              { type: 'command', name: 'add-custom-abstract', label: 'custom-abstract' }
-              // { type: 'command', name: 'insert-editor', label: 'editor' },
-              // { type: 'command', name: 'insert-group', label: 'group' },
-              // { type: 'command', name: 'insert-organisation', label: 'affiliation' },
-              // { type: 'command', name: 'insert-funder', label: 'funder' },
-              // { type: 'command', name: 'insert-keyword', label: 'keyword' },
-              // { type: 'command', name: 'insert-subject', label: 'subject' }
+              { type: 'command', name: 'add-custom-abstract', label: 'custom-abstract' },
+              { type: 'command', name: 'add-editor', label: 'editor' },
+              { type: 'command', name: 'add-group', label: 'group' },
+              { type: 'command', name: 'add-affiliation', label: 'affiliation' },
+              { type: 'command', name: 'add-funder', label: 'funder' },
+              { type: 'command', name: 'add-keyword', label: 'keyword' },
+              { type: 'command', name: 'add-subject', label: 'subject' }
             ]
           },
           {
@@ -113,7 +115,14 @@ export default {
     config.addComponent('@figures', FiguresSectionComponent)
 
     config.addCommand('add-author', AddAuthorCommand)
+    config.addCommand('add-affiliation', AddAffiliationCommand)
     config.addCommand('add-custom-abstract', AddCustomAbstractCommand)
+    config.addCommand('add-editor', AddEditorCommand)
+    config.addCommand('add-group', AddGroupCommand)
+    config.addCommand('add-funder', AddFunderCommand)
+    config.addCommand('add-keyword', AddKeywordCommand)
+    config.addCommand('add-subject', AddSubjectCommand)
+
     config.addCommand('remove-entity', RemoveEntityCommand, {
       commandGroup: 'collection'
     })
@@ -130,7 +139,7 @@ export default {
     config.addLabel('groups', 'Groups')
     config.addLabel('issueTitle', 'Issue Title')
     config.addLabel('keywords', 'Keywords')
-    config.addLabel('organisations', 'Affiliations')
+    config.addLabel('affiliations', 'Affiliations')
     config.addLabel('references', 'References')
     config.addLabel('remove-entity', '${label}') // NOTE: the command itself has to provide 'label' via commandState
     config.addLabel('move-entity-down', '${label}') // NOTE: the command itself has to provide 'label' via commandState

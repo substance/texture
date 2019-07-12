@@ -41,6 +41,8 @@ export default class MetadataAPI extends ArticleAPI {
             surfaceId: this._getSurfaceId(node, prop.name, 'metadata')
           }
         }
+      } else {
+        console.error('FIXME: set the cursor into a property of unsupported type')
       }
     }
     // otherwise fall back to 'card' selection

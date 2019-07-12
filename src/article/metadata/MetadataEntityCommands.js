@@ -20,7 +20,12 @@ export class RemoveEntityCommand extends Command {
     if (sel && sel.customType === 'card') {
       let node = appState.selectionState.node
       if (context.api.canRemoveEntity(node)) {
-        return { disabled: false, nodeId: node.id, type: node.type }
+        let labelProvider = context.labelProvider
+        return {
+          disabled: false,
+          nodeId: node.id,
+          label: `${labelProvider.getLabel('remove-something', { something: labelProvider.getLabel(node.type) })}`
+        }
       }
     }
     return { disabled: true }

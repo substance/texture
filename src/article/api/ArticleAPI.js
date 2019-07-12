@@ -18,7 +18,7 @@ import TableManager from '../shared/TableManager'
 import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
-import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation, CustomAbstract, Reference } from '../nodes'
+import { InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person, Organisation, CustomAbstract, Reference, Funder, Keyword, Subject } from '../nodes'
 
 export default class ArticleAPI {
   constructor (editorSession, archive, config, contextProvider) {
@@ -762,6 +762,9 @@ export default class ArticleAPI {
       case CustomAbstract.type:
       case Person.type:
       case Organisation.type:
+      case Funder.type:
+      case Keyword.type:
+      case Subject.type:
       {
         return true
       }

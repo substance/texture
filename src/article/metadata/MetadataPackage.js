@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import { CustomAbstract } from '../nodes'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
@@ -122,7 +123,8 @@ export default {
     config.addLabel('keywords', 'Keywords')
     config.addLabel('organisations', 'Affiliations')
     config.addLabel('references', 'References')
-    config.addLabel('remove-entity', 'Remove ${type}')
+    config.addLabel('remove-entity', '${label}') // NOTE: the command itself has to provide 'label' via commandState
+    config.addLabel('remove-something', 'Remove ${something}')
     config.addLabel('subjects', 'Subjects')
 
     config.addIcon('checked-item', { 'fontawesome': 'fa-check-square-o' })

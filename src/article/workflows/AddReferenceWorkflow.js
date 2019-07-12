@@ -66,11 +66,6 @@ export default class AddReferenceWorkflow extends Component {
   }
 
   _openEditReference () {
-    // HACK: for the time being, references are edited in the metadata modal
-    // for some reason, we need to wait here, before being able to execute the
-    // 'edit-reference' command
-    setTimeout(() => {
-      this.send('executeCommand', 'edit-reference')
-    })
+    this.send('executeCommand', 'edit-reference')
   }
 }

@@ -319,6 +319,13 @@ export default {
     config.addLabel('add-action', 'Add')
     config.addLabel('enter-url-placeholder', 'Enter url')
 
+    // These labels are used by the AddReferenceWorkflow only
+    config.addLabel('add-reference-title', 'Add Reference(s)')
+    config.addLabel('add-ref-manually', 'Or create manually')
+    config.addLabel('fetch-datacite', 'Fetch from DataCite')
+    config.addLabel('enter-doi-placeholder', 'Enter one or more DOIs')
+    config.addLabel('import-refs', 'Import')
+
     // Icons
     config.addIcon('create-unordered-list', { 'fontawesome': 'fa-list-ul' })
     config.addIcon('create-ordered-list', { 'fontawesome': 'fa-list-ol' })

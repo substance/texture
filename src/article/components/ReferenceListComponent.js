@@ -1,5 +1,5 @@
-import { CustomSurface, Component } from 'substance'
-import { renderNode } from '../../kit'
+import { CustomSurface } from 'substance'
+import { renderNode, NodeComponent } from '../../kit'
 import { getPos } from '../shared/nodeHelpers'
 
 export default class ReferenceListComponent extends CustomSurface {
@@ -62,7 +62,7 @@ export default class ReferenceListComponent extends CustomSurface {
   }
 }
 
-class ReferenceDisplay extends Component {
+class ReferenceDisplay extends NodeComponent {
   render ($$) {
     let el = renderNode($$, this, this.props.node)
     el.on('mousedown', this._onMousedown)

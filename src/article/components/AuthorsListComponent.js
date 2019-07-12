@@ -1,4 +1,5 @@
-import { CustomSurface, Component } from 'substance'
+import { CustomSurface } from 'substance'
+import { NodeComponent } from '../../kit'
 
 export default class AuthorsListComponent extends CustomSurface {
   getInitialState () {
@@ -37,7 +38,7 @@ export default class AuthorsListComponent extends CustomSurface {
     const authors = this._getAuthors()
     let els = []
     authors.forEach((author, index) => {
-      const authorEl = $$(AuthorDisplay, { node: author })
+      const authorEl = $$(AuthorDisplay, { node: author }).ref(author.id)
       if (sel && sel.nodeId === author.id) {
         authorEl.addClass('sm-selected')
       }
@@ -58,7 +59,7 @@ export default class AuthorsListComponent extends CustomSurface {
   }
 }
 
-class AuthorDisplay extends Component {
+class AuthorDisplay extends NodeComponent {
   render ($$) {
     let el = $$('span').addClass('se-contrib').html(
       this.context.api.renderEntity(this.props.node)

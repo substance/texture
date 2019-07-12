@@ -93,9 +93,25 @@ export default class EditorWorkflow extends Component {
     let el = $$('div').addClass(this._getClassNames())
     // ATTENTION: don't let mousedowns and clicks pass, otherwise the parent will null the selection
     el.on('mousedown', this._onMousedown)
-    el.on('click', this._onClick)
+      .on('click', this._onClick)
+    el.append(
+      this._renderContent($$)
+    )
+    el.append(this._renderKeyTrap($$))
     return el
   }
+
+  _renderKeyTrap ($$) {
+    return $$('textarea').addClass('se-keytrap').ref('keytrap')
+      .css({ position: 'absolute', width: 0, height: 0, opacity: 0 })
+      .on('keydown', this._onKeydown)
+      // TODO: copy'n'paste support?
+      // .on('copy', this._onCopy)
+      // .on('paste', this._onPaste)
+      // .on('cut', this._onCut)
+  }
+
+  _renderContent ($$) {}
 
   _getClassNames () {
     return 'sc-editor-workflow'
@@ -135,10 +151,6 @@ export default class EditorWorkflow extends Component {
     appState.propagateUpdates()
   }
 
-  _onMousedown (e) {
-    e.stopPropagation()
-  }
-
   _onClick (e) {
     domHelpers.stopAndPrevent(e)
     let focusedSurface = this.editorSession.getFocusedSurface()
@@ -146,5 +158,18 @@ export default class EditorWorkflow extends Component {
       focusedSurface._blur()
     }
     this.editorSession.setSelection(null)
+  }
+
+  _onKeydown (e) {
+    let handled = this.context.keyboardManager.onKeydown(e, this.context)
+    if (handled) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+    return handled
+  }
+
+  _onMousedown (e) {
+    e.stopPropagation()
   }
 }

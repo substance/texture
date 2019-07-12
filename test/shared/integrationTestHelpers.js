@@ -288,6 +288,10 @@ export function startEditMetadata (editor) {
   return modalEditor
 }
 
+export function getModalEditor (mainEditor) {
+  return mainEditor.find('.sc-modal-dialog .se-body > .se-content')
+}
+
 export function closeModalEditor (modalEditor) {
   modalEditor.send('close')
 }

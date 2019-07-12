@@ -840,7 +840,11 @@ export default class ArticleAPI {
     let parent = node.getParent()
     let propName = node.getXpath().property
     if (parent && propName) {
-      return [parent.id, propName]
+      let collectionPath = [parent.id, propName]
+      let property = node.getDocument().getProperty(collectionPath)
+      if (property.isArray() && property.isReference()) {
+        return collectionPath
+      }
     }
   }
 

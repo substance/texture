@@ -37,6 +37,7 @@ export default class TextureConfigurator {
     this._serviceRegistry = new HierarchicalRegistry(this, '_services')
     this._toolPanelRegistry = new HierarchicalRegistry(this, '_toolPanels')
     this._keyboardShortcutsByCommandNameRegistry = new HierarchicalRegistry(this, '_keyboardShortcutsByCommandName')
+    this._commandGroupRegistry = new HierarchicalRegistry(this, '_commandGroups')
 
     // TODO: document why this is necessary, beyond legacy reasons
     this._compiledToolPanels = new Map()
@@ -266,7 +267,12 @@ export default class TextureConfigurator {
   }
 
   getCommandGroup (name) {
-    return this._commandGroups.get(name) || []
+    // Note: as commands are registered hierarchically
+    // we need to collect commands from all levels
+    let records = this._commandGroupRegistry.getRecords(name)
+    let flattened = flatten(records)
+    let set = new Set(flattened)
+    return Array.from(set)
   }
 
   getComponent (name) {
@@ -446,6 +452,23 @@ class HierarchicalRegistry {
       config = config.parent
     }
     return new Map([].concat(...registries.map(r => Array.from(r.entries()))))
+  }
+
+  getRecords (name) {
+    let config = this._config
+    let records = []
+    const key = this._key
+    while (config) {
+      let registry = config[key]
+      if (registry) {
+        let record = registry.get(name)
+        if (record) {
+          records.unshift(record)
+        }
+      }
+      config = config.parent
+    }
+    return records
   }
 }
 

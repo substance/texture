@@ -15,7 +15,6 @@ export { default as IncreaseHeadingLevelCommand } from './IncreaseHeadingLevelCo
 export { default as InsertBlockFormulaCommand } from './InsertBlockFormulaCommand'
 export { default as InsertBlockQuoteCommand } from './InsertBlockQuoteCommand'
 export { default as InsertCrossReferenceCommand } from './InsertCrossReferenceCommand'
-export { default as InsertCustomAbstractCommand } from './InsertCustomAbstractCommand'
 export { default as InsertExtLinkCommand } from './InsertExtLinkCommand'
 export { default as InsertFigureCommand } from './InsertFigureCommand'
 export { default as InsertFootnoteCommand } from './InsertFootnoteCommand'

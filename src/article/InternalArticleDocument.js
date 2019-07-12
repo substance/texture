@@ -6,15 +6,6 @@ export default class InternalArticleDocument extends Document {
     return this.get('article')
   }
 
-  getXRefs () {
-    let articleEl = this.get('article')
-    return articleEl.findAll('xref')
-  }
-
-  getTitle () {
-    return this.get(['article', 'title'])
-  }
-
   createEditingInterface () {
     return new EditingInterface(this, { editing: new ArticleEditingImpl() })
   }

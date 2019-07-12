@@ -3,7 +3,6 @@ import { CustomAbstract } from '../nodes'
 import ArticleInformationSectionComponent from './ArticleInformationSectionComponent'
 import ArticleMetadataComponent from './ArticleMetadataComponent'
 import AbstractsSectionComponent from './AbstractsSectionComponent'
-import FiguresSectionComponent from './FiguresSectionComponent'
 import {
   AddAffiliationCommand, AddAuthorCommand, AddCustomAbstractCommand, RemoveEntityCommand,
   MoveEntityUpCommand, MoveEntityDownCommand, AddEditorCommand,
@@ -112,7 +111,6 @@ export default {
     config.addComponent('article-information', ArticleInformationSectionComponent)
     config.addComponent(CustomAbstract.type, CustomAbstractComponent)
     config.addComponent('@abstracts', AbstractsSectionComponent)
-    config.addComponent('@figures', FiguresSectionComponent)
 
     config.addCommand('add-author', AddAuthorCommand)
     config.addCommand('add-affiliation', AddAffiliationCommand)

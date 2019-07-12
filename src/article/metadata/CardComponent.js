@@ -36,12 +36,6 @@ export default class CardComponent extends Component {
   _toggleCardSelection () {
     const node = this.props.node
     const api = this.context.api
-    if (node.type === 'figure-panel') {
-      const figure = node.getParent()
-      const panelIds = figure.panels
-      const editorSession = this.context.editorSession
-      editorSession.updateNodeStates([[figure.id, { currentPanelIndex: panelIds.indexOf(node.id) }]], { propagate: true })
-    }
     api.selectCard(node.id)
   }
 

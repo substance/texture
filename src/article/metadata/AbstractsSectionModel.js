@@ -26,9 +26,7 @@ export default class AbstractsSectionModel {
 
   getItems () {
     let doc = this._api.getDocument()
-    return [doc.get('abstract')].concat(
-      doc.resolve(['article', 'customAbstracts'])
-    )
+    return doc.resolve(['article', 'customAbstracts'])
   }
 
   get length () {

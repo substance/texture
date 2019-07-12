@@ -1,34 +1,14 @@
 import { AnnotationComponent } from '../../kit'
 
-import AbstractComponent from './AbstractComponent'
-import AuthorsListComponent from './AuthorsListComponent'
-import BreakComponent from './BreakComponent'
-import BlockFormulaComponent from './BlockFormulaComponent'
-import BlockQuoteComponent from './BlockQuoteComponent'
-import CustomMetadataFieldComponent from './CustomMetadataFieldComponent'
-import ExternalLinkComponent from './ExternalLinkComponent'
-import FigureComponent from './FigureComponent'
-import FigurePanelComponent from './FigurePanelComponent'
-import FootnoteComponent from './FootnoteComponent'
-import HeadingComponent from './HeadingComponent'
-import InlineFormulaComponent from './InlineFormulaComponent'
-import InlineGraphicComponent from './InlineGraphicComponent'
-import ListComponent from './ListComponent'
-import ListItemComponent from './ListItemComponent'
-import ManuscriptComponent from './ManuscriptComponent'
-import ModelPreviewComponent from './ModelPreviewComponent'
-import ParagraphComponent from './ParagraphComponent'
-import ReferenceComponent from './ReferenceComponent'
-import ReferenceListComponent from './ReferenceListComponent'
-import SectionLabel from './SectionLabel'
-import TableComponent from './TableComponent'
-import TableFigureComponent from './TableFigureComponent'
-import UnsupportedNodeComponent from './UnsupportedNodeComponent'
-import UnsupportedInlineNodeComponent from './UnsupportedInlineNodeComponent'
-import XrefComponent from './XrefComponent'
-import DefaultNodeComponent from './DefaultNodeComponent'
-import GraphicComponent from './GraphicComponent'
-import SupplementaryFileComponent from './SupplementaryFileComponent'
+import {
+  AbstractComponent, AuthorsListComponent, BlockFormulaComponent,
+  BlockQuoteComponent, BreakComponent, MetadataFieldComponent,
+  ExternalLinkComponent, FigureComponent, FigurePanelComponent, FootnoteComponent,
+  HeadingComponent, InlineFormulaComponent, InlineGraphicComponent, ListComponent,
+  ListItemComponent, ManuscriptComponent, ParagraphComponent, ReferenceComponent,
+  ReferenceListComponent, SectionLabel, TableComponent, TableFigureComponent,
+  UnsupportedInlineNodeComponent, XrefComponent, UnsupportedNodeComponent, GraphicComponent, SupplementaryFileComponent, DefaultNodeComponent, ModelPreviewComponent
+} from '../components'
 
 export default {
   name: 'manuscript-content',
@@ -39,7 +19,7 @@ export default {
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
-    config.addComponent('custom-metadata-field', CustomMetadataFieldComponent)
+    config.addComponent('metadata-field', MetadataFieldComponent)
     config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)
     config.addComponent('figure-panel', FigurePanelComponent)

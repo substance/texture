@@ -5,15 +5,13 @@ import {
 } from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
-import ManifestEditorSession from './ManifestEditorSession'
 
 /*
   A PersistedDocumentArchive is a 3-tier stack representing a document archive
   at different application levels:
 
   1. Editor: an application such as Texture works on an in-memory data model,
-     managed by EditorSessions. There may be multiple sessions for different parts of the
-     document archive, e.g. the manuscript and an entity db.
+     managed by EditorSessions.
   2. Buffer: a short-term storage for pending changes. Until the document archive
      is saved permanently, changes are recorded and can be persisted, e.g. to
      avoid loosing changes when the browser is closed inadvertently.
@@ -31,17 +29,17 @@ export default class PersistedDocumentArchive extends EventEmitter {
 
     this._archiveId = null
     this._upstreamArchive = null
-    this._sessions = null
+    this._documents = null
     this._pendingFiles = new Map()
     this._config = config
   }
 
   addDocument (type, name, xml) {
     let documentId = uuid()
-    let sessions = this._sessions
-    let session = this._loadDocument(type, { data: xml }, sessions)
-    sessions[documentId] = session
-    this._registerForSessionChanges(session, documentId)
+    let documents = this._documents
+    let document = this._loadDocument(type, { data: xml }, documents)
+    documents[documentId] = document
+    this._registerForChanges(document, documentId)
     this._addDocumentRecord(documentId, type, name, documentId + '.xml')
     return documentId
   }
@@ -50,15 +48,15 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let assetId = uuid()
     let [name, ext] = _getNameAndExtension(file.name)
     let filePath = this._getUniqueFileName(name, ext)
-    this._getManifestEditorSession().transaction(tx => {
-      let assetNode = tx.create({
-        type: 'asset',
-        id: assetId,
-        path: filePath,
-        assetType: file.type
-      })
-      documentHelpers.append(tx, ['dar', 'assets'], assetNode.id)
+    // TODO: this is not ready for collab
+    let manifest = this._documents['manifest']
+    let assetNode = manifest.create({
+      type: 'asset',
+      id: assetId,
+      path: filePath,
+      assetType: file.type
     })
+    documentHelpers.append(manifest, ['dar', 'assets'], assetNode.id)
     this.buffer.addBlob(assetId, {
       id: assetId,
       path: filePath,
@@ -83,11 +81,11 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   getAsset (fileName) {
-    return this._sessions.manifest.getDocument().getAssetByPath(fileName)
+    return this._documents['manifest'].getAssetByPath(fileName)
   }
 
   getAssetEntries () {
-    return this._sessions.manifest.getDocument().getAssetNodes().map(node => node.toJSON())
+    return this._documents['manifest'].getAssetNodes().map(node => node.toJSON())
   }
 
   getBlob (path) {
@@ -129,19 +127,19 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   getDocumentEntries () {
-    return this.getDocumentSession('manifest').getDocument().getDocumentEntries()
+    return this.getDocument('manifest').getDocumentEntries()
   }
 
   getDownloadLink (fileName) {
-    let manifest = this._sessions.manifest.getDocument()
+    let manifest = this.getDocument('manifest')
     let asset = manifest.getAssetByPath(fileName)
     if (asset) {
       return this.resolveUrl(fileName)
     }
   }
 
-  getDocumentSession (docId) {
-    return this._sessions[docId]
+  getDocument (docId) {
+    return this._documents[docId]
   }
 
   hasAsset (fileName) {
@@ -176,11 +174,11 @@ export default class PersistedDocumentArchive extends EventEmitter {
             buffer.reset(upstreamVersion)
           }
         }
-        // convert raw archive into sessions (=ingestion)
-        let sessions = this._ingest(upstreamArchive)
+        // convert raw archive to documents (=ingestion)
+        let documents = this._ingest(upstreamArchive)
         // contract: there must be a manifest
-        if (!sessions['manifest']) {
-          throw new Error('There must be a manifest session.')
+        if (!documents['manifest']) {
+          throw new Error('There must be a manifest.')
         }
         // apply pending changes
         if (!buffer.hasPendingChanges()) {
@@ -190,12 +188,12 @@ export default class PersistedDocumentArchive extends EventEmitter {
         } else {
           buffer.reset(upstreamArchive.version)
         }
-        // register for any changes in each session
-        this._registerForAllChanges(sessions)
+        // register for any changes in each document
+        this._registerForAllChanges(documents)
 
         this._archiveId = archiveId
         this._upstreamArchive = upstreamArchive
-        this._sessions = sessions
+        this._documents = documents
 
         cb(null, this)
       })
@@ -203,19 +201,21 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   removeDocument (documentId) {
-    let session = this._sessions[documentId]
-    this._unregisterFromSession(session)
-    this._getManifestEditorSession().transaction(tx => {
-      documentHelpers.remove(tx, ['dar', 'documents'], documentId)
-      documentHelpers.deleteNode(documentId)
-    })
+    let document = this._documents[documentId]
+    if (document) {
+      this._unregisterFromDocument(document)
+      // TODO: this is not ready for collab
+      let manifest = this._documents['manifest']
+      documentHelpers.removeFromCollection(manifest, ['dar', 'documents'], documentId)
+      documentHelpers.deepDeleteNode(manifest, documentId)
+    }
   }
 
   renameDocument (documentId, name) {
-    this._getManifestEditorSession().transaction(tx => {
-      let documentNode = tx.get(documentId)
-      documentNode.name = name
-    })
+    // TODO: this is not ready for collab
+    let manifest = this._documents['manifest']
+    let documentNode = manifest.get(documentId)
+    documentNode.name = name
   }
 
   resolveUrl (path) {
@@ -255,23 +255,16 @@ export default class PersistedDocumentArchive extends EventEmitter {
     Adds a document record to the manifest file
   */
   _addDocumentRecord (documentId, type, name, path) {
-    this._getManifestEditorSession().transaction(tx => {
-      let documentNode = tx.create({
-        type: 'document',
-        id: documentId,
-        documentType: type,
-        name,
-        path
-      })
-      documentHelpers.append(tx, ['dar', 'documents', documentNode.id])
+    // TODO: this is not collab ready
+    let manifest = this._documents['manifest']
+    let documentNode = manifest.create({
+      type: 'document',
+      id: documentId,
+      documentType: type,
+      name,
+      path
     })
-  }
-
-  _getManifestEditorSession () {
-    if (!this._manifestEditorSession) {
-      this._manifestEditorSession = new ManifestEditorSession('manifest', this._sessions.manifest)
-    }
-    return this._manifestEditorSession
+    documentHelpers.append(manifest, ['dar', 'documents', documentNode.id])
   }
 
   _getUniqueFileName (name, ext) {
@@ -297,14 +290,14 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return ManifestLoader.load(record.data)
   }
 
-  _registerForAllChanges (sessions) {
-    forEach(sessions, (session, docId) => {
-      this._registerForSessionChanges(session, docId)
+  _registerForAllChanges (documents) {
+    forEach(documents, (document, docId) => {
+      this._registerForChanges(document, docId)
     })
   }
 
-  _registerForSessionChanges (session, docId) {
-    session.on('change', (change) => {
+  _registerForChanges (document, docId) {
+    document.on('document:changed', change => {
       this.buffer.addChange(docId, change)
       // Apps can subscribe to this (e.g. to show there's pending changes)
       this.emit('archive:changed')
@@ -321,9 +314,8 @@ export default class PersistedDocumentArchive extends EventEmitter {
   _save (archiveId, cb) {
     const buffer = this.buffer
     const storage = this.storage
-    const sessions = this._sessions
 
-    let rawArchiveUpdate = this._exportChanges(sessions, buffer)
+    let rawArchiveUpdate = this._exportChanges(this._documents, buffer)
 
     // CHALLENGE: we either need to lock the buffer, so that
     // new changes are interfering with ongoing sync
@@ -363,28 +355,28 @@ export default class PersistedDocumentArchive extends EventEmitter {
     })
   }
 
-  _unregisterFromSession (session) {
-    session.off(this)
+  _unregisterFromDocument (document) {
+    document.off(this)
   }
 
   /*
     Uses the current state of the buffer to generate a rawArchive object
     containing all changed documents
   */
-  _exportChanges (sessions, buffer) {
+  _exportChanges (documents, buffer) {
     let rawArchive = {
       version: buffer.getVersion(),
       diff: buffer.getChanges(),
       resources: {}
     }
-    this._exportManifest(sessions, buffer, rawArchive)
-    this._exportChangedDocuments(sessions, buffer, rawArchive)
-    this._exportChangedAssets(sessions, buffer, rawArchive)
+    this._exportManifest(documents, buffer, rawArchive)
+    this._exportChangedDocuments(documents, buffer, rawArchive)
+    this._exportChangedAssets(documents, buffer, rawArchive)
     return rawArchive
   }
 
-  _exportManifest (sessions, buffer, rawArchive) {
-    let manifest = sessions.manifest.getDocument()
+  _exportManifest (documents, buffer, rawArchive) {
+    let manifest = documents['manifest']
     if (buffer.hasResourceChanged('manifest')) {
       let manifestDom = manifest.toXML()
       let manifestXmlStr = prettyPrintXML(manifestDom)
@@ -398,12 +390,12 @@ export default class PersistedDocumentArchive extends EventEmitter {
   }
 
   // TODO: generalize the implementation so that it can live here
-  _exportChangedDocuments (sessions, buffer, rawArchive) {
+  _exportChangedDocuments (documents, buffer, rawArchive) {
     throwMethodIsAbstract()
   }
 
-  _exportChangedAssets (sessions, buffer, rawArchive) {
-    let manifest = sessions.manifest.getDocument()
+  _exportChangedAssets (documents, buffer, rawArchive) {
+    let manifest = documents['manifest']
     let assetNodes = manifest.getAssetNodes()
     assetNodes.forEach(asset => {
       let assetId = asset.id

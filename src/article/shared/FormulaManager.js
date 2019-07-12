@@ -1,9 +1,9 @@
 import CitableContentManager from './CitableContentManager'
-import { BlockFormula } from '../models'
+import { BlockFormula } from '../nodes'
 
 export default class FormulaManager extends CitableContentManager {
-  constructor (documentSession, labelGenerator) {
-    super(documentSession, BlockFormula.refType, [BlockFormula.type], labelGenerator)
+  constructor (editorSession, labelGenerator) {
+    super(editorSession, BlockFormula.refType, [BlockFormula.type], labelGenerator)
     this._updateLabels('initial')
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from 'substance'
 import { renderModel } from '../../kit'
-import CardComponent from '../shared/CardComponent'
+import CardComponent from './CardComponent'
 
 export default class ArticleInformationSectionComponent extends Component {
   render ($$) {

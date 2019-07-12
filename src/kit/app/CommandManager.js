@@ -11,6 +11,7 @@ export default class CommandManager {
     // commands are setup lazily so that we can take context into consideration
     // allowing to disable certain commands if they should not be considered
     // in a specifc context at all
+    this._allCommands = commands
     this._commands = null
 
     appState.addObserver(deps, this.reduce, this, { stage: 'update' })
@@ -82,8 +83,7 @@ export default class CommandManager {
       // annotations can only be applied on PropertySelections inside
       // text, and not on an inline-node
       if (isInsideText && sel.isPropertySelection() && !selectionState.isInlineNodeSelection) {
-        let targetTypes = nodeProp.targetTypes || []
-        Object.assign(commandStates, _disabledIfDisallowedTargetType(this._annotationCommands, targetTypes, params, context))
+        Object.assign(commandStates, _disabledIfDisallowedTargetType(this._annotationCommands, nodeProp.targetTypes, params, context))
       }
 
       // for InsertCommands the selection must be inside a ContainerEditor
@@ -91,7 +91,7 @@ export default class CommandManager {
       if (containerPath) {
         let containerProp = doc.getProperty(containerPath)
         if (containerProp) {
-          let targetTypes = containerProp.targetTypes || []
+          let targetTypes = containerProp.targetTypes
           Object.assign(commandStates, _disabledIfDisallowedTargetType(this._insertCommands, targetTypes, params, context))
           Object.assign(commandStates, _disabledIfDisallowedTargetType(this._switchTypeCommands, targetTypes, params, context))
         }
@@ -113,7 +113,7 @@ export default class CommandManager {
 
   _initializeCommands () {
     const context = this.contextProvider.context
-    const allCommands = Array.from(context.config.getCommands().entries())
+    const allCommands = Array.from(this._allCommands)
     // remove disabled all commands that revoke by inspecting the context
     let commands = new Map(allCommands.filter(([name, command]) => {
       // for legacy, keep commands enabled which do not proved a `shouldBeEnabled()` method
@@ -159,11 +159,14 @@ function _disabled (commands) {
   }, {})
 }
 
+const EMPTY_SET = new Set()
+
 function _disabledIfDisallowedTargetType (commands, targetTypes, params, context) {
+  targetTypes = targetTypes || EMPTY_SET
   return commands.reduce((m, cmd) => {
     const type = cmd.getType()
     const name = cmd.getName()
-    if (targetTypes.indexOf(type) > -1) {
+    if (targetTypes.has(type)) {
       m[name] = cmd.getCommandState(params, context)
     } else {
       m[name] = DISABLED

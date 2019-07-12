@@ -1,0 +1,14 @@
+/* TODO: this is a hack. Instead we should use defined configurations for modals */
+.sc-modal-dialog.sm-workflow-edit-reference .se-body {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.sc-modal-dialog.sm-workflow-edit-reference .se-body .sc-card {
+  margin: 2px;
+}

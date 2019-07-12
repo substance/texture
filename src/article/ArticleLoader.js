@@ -1,5 +1,4 @@
 import { DocumentSchema, DefaultDOMElement } from 'substance'
-import ArticleSession from './ArticleSession'
 import InternalArticleDocument from './InternalArticleDocument'
 
 export default class ArticleLoader {
@@ -73,7 +72,7 @@ export default class ArticleLoader {
     }
     importer.import(xmlDom)
 
-    return new ArticleSession(doc, articleConfig)
+    return doc
   }
 }
 

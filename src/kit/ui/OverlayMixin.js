@@ -4,7 +4,6 @@ export default function (Component) {
       super.didMount()
 
       let appState = this.context.appState
-
       appState.addObserver(['overlayId'], this._onOverlayIdHasChanged, this, { stage: 'render' })
     }
 
@@ -27,7 +26,7 @@ export default function (Component) {
     }
 
     _onOverlayIdHasChanged () {
-      // console.log('Rerendering overlay component because overlay id has changed', this._getOverlayId()')
+      console.log('Rerendering overlay component because overlay id has changed', this._getOverlayId())
       this.rerender()
     }
   }

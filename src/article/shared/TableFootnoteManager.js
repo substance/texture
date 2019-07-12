@@ -5,8 +5,8 @@ import { SYMBOLS } from '../ArticleConstants'
 const UNDEFINED = '?'
 
 export default class TableFootnoteManager extends AbstractCitationManager {
-  constructor (documentSession, tableFigure) {
-    super(documentSession, 'table-fn', ['fn'], new SymbolSetLabelGenerator(SYMBOLS))
+  constructor (editorSession, tableFigure) {
+    super(editorSession, 'table-fn', ['fn'], new SymbolSetLabelGenerator(SYMBOLS))
 
     this.tableFigure = tableFigure
 

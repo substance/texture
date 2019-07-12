@@ -1,6 +1,6 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
-import { openMetadataEditor, createTestVfs } from './shared/integrationTestHelpers'
+import { createTestVfs, startEditMetadata } from './shared/integrationTestHelpers'
 import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
 const AUTHOR_AND_GROUP = `<?xml version="1.0" encoding="UTF-8"?>
@@ -38,11 +38,11 @@ const AUTHOR_AND_GROUP = `<?xml version="1.0" encoding="UTF-8"?>
 
 // Note: using Author + Group here
 test('Input: SinlgeRelationship dropdown', t => {
-  let { app } = setupTestApp(t, {
+  let { editor } = setupTestApp(t, {
     vfs: createTestVfs(AUTHOR_AND_GROUP),
     archiveId: 'test'
   })
-  let metadataEditor = openMetadataEditor(app)
+  let metadataEditor = startEditMetadata(editor)
   let selectInput = metadataEditor.find('.sm-person .sm-group .sc-single-relationship .sc-multi-select-input')
   t.ok(selectInput.el.is('.sm-collapsed'), 'the dropdown should be collapsed in the beginning')
   // click on the input to open the dropdown
@@ -104,11 +104,11 @@ const AUTHOR_AND_TWO_AFFS = `<?xml version="1.0" encoding="UTF-8"?>
 `
 
 test('Input: ManyRelationship dropdown', t => {
-  let { app } = setupTestApp(t, {
+  let { editor } = setupTestApp(t, {
     vfs: createTestVfs(AUTHOR_AND_TWO_AFFS),
     archiveId: 'test'
   })
-  let metadataEditor = openMetadataEditor(app)
+  let metadataEditor = startEditMetadata(editor)
   let selectInput = metadataEditor.find('.sm-person .sm-affiliations .sc-many-relationship .sc-multi-select-input')
   t.ok(selectInput.el.is('.sm-collapsed'), 'the dropdown should be collapsed in the beginning')
   // click on the input to open the dropdown

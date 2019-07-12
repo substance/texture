@@ -6,7 +6,7 @@ export default class CollectionModel extends ValueModel {
   constructor (api, path, targetTypes) {
     super(api, path)
 
-    this._targetTypes = new Set(targetTypes)
+    this._targetTypes = targetTypes
   }
 
   get type () { return 'collection' }

@@ -1,6 +1,6 @@
 import { createNodePropertyModels, createValueModel } from '../../kit'
-import DefaultNodeComponent from '../shared/DefaultNodeComponent'
-import LicenseEditor from '../shared/LicenseEditor'
+import DefaultNodeComponent from '../components/DefaultNodeComponent'
+import LicenseEditor from '../components/LicenseEditor'
 
 export default class ArticleMetadataComponent extends DefaultNodeComponent {
   _getClassNames () {
@@ -22,7 +22,7 @@ export default class ArticleMetadataComponent extends DefaultNodeComponent {
   }
 
   _createPropertyModels () {
-    const EXCLUDED_FIELDS = new Set(['authors', 'editors', 'groups', 'organisations', 'funders', 'keywords', 'subjects', 'articleType'])
+    const EXCLUDED_FIELDS = new Set(['authors', 'editors', 'groups', 'affiliations', 'funders', 'keywords', 'subjects', 'articleType'])
     const api = this.context.api
     const node = this.props.node
     const doc = node.getDocument()

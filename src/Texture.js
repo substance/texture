@@ -20,11 +20,11 @@ export default class Texture extends Component {
     const currentDocumentName = this.state.currentDocumentName
     const ResourceComponent = config.getComponent('article')
     const articleConfig = config.getConfiguration('article')
-    const documentSession = archive.getDocumentSession(currentDocumentName)
+    const document = archive.getDocument(currentDocumentName)
     let props = {
       archive,
       config: articleConfig,
-      documentSession
+      document
     }
     el.append(
       $$(ResourceComponent, props).ref('resource')

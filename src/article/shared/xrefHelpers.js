@@ -1,5 +1,5 @@
 import { getLabel } from './nodeHelpers'
-import { BlockFormula } from '../models'
+import { BlockFormula } from '../nodes'
 
 // left side: node type
 // right side: ref-type

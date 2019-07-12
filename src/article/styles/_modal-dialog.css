@@ -5,6 +5,7 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
+  margin: 0;
   overflow: auto;
   background: rgba(0,0,0,0.7);
 }
@@ -13,16 +14,54 @@
   background: transparent;
 }
 
-.sc-modal-dialog .se-body {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
+.sc-modal-dialog > .se-vertical-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.sc-modal-dialog > .se-vertical-container > .se-vertical-spacer {
+  height: calc(2*var(--t-default-spacing));
+}
+
+.sc-modal-dialog > .se-vertical-container > .se-horizontal-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.sc-modal-dialog > .se-vertical-container > .se-horizontal-container > .se-horizontal-spacer {
+  flex-grow: 0;
+  width: var(--t-default-spacing);
+  height: 100%;
+}
+
+.sc-modal-dialog > .se-vertical-container > .se-horizontal-container > .se-body {
+  flex-grow: 1;
+}
+
+.sc-modal-dialog > .se-vertical-container > .se-horizontal-container > .se-body > .se-content {
+  height: 100%;
+}
+
+.sc-modal-dialog .se-body {
+  position: relative;
   background: white;
   border-radius: 10px;
   box-shadow: 0 0 25px 0 rgba(0,0,0,0.8);
 }
-.sc-modal-dialog.sm-width-small .se-body { max-width: var(--t-small-layout-width); }
+
+.sc-modal-dialog .se-body .se-close-button {
+  position: absolute;
+  /* HACK: let's introduce some z-index guidelines */
+  z-index: 10000;
+  right: var(--t-button-padding);
+  top: var(--t-button-padding);
+  font-size: var(--t-large-font-size);
+}
+
+/* .sc-modal-dialog.sm-width-small .se-body { max-width: var(--t-small-layout-width); }
 .sc-modal-dialog.sm-width-medium .se-body { max-width: var(--t-medium-layout-width); }
-.sc-modal-dialog.sm-width-large .se-body { max-width: var(--t-large-layout-width); }
+.sc-modal-dialog.sm-width-large .se-body { max-width: var(--t-large-layout-width); } */

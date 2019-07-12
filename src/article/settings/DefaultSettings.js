@@ -27,7 +27,7 @@ export default {
   'newspaper-article-ref.authors': { required: true },
   'newspaper-article-ref.containerTitle': { required: true },
   'newspaper-article-ref.title': { required: true },
-  'organisation.institution': { required: true },
+  'affiliation.institution': { required: true },
   'patent-ref.containerTitle': { required: true },
   'patent-ref.inventors': { required: true },
   'patent-ref.title': { required: true },

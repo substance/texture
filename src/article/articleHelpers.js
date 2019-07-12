@@ -1,5 +1,5 @@
 import { documentHelpers, selectionHelpers, last } from 'substance'
-import FigurePanel from './models/FigurePanel'
+import FigurePanel from './nodes/FigurePanel'
 
 export function importFigures (tx, sel, files, paths) {
   if (files.length === 0) return

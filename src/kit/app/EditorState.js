@@ -21,7 +21,7 @@ export default class EditorState extends AppState {
     // EXPERIMENTAL:
     // one observer for all slots that watches for document changes and marks paths as dirty
     // this is also used to broadcast other node based changes such as node state updates
-    let documentObserver = new DocumentObserver(doc)
+    let documentObserver = new DocumentObserver(doc, this)
     impl.documentObserver = documentObserver
 
     let selectionStateReducer = new SelectionStateReducer(this)
@@ -107,6 +107,7 @@ class Slot {
 
   notifyObservers () {
     let observers = this._getObservers()
+    // console.log('Slot.notifyObservers()', observers, this.deps)
     for (let o of observers) {
       let entry = this._getEntryForObserver(o)
       // observer might have been disposed in the meantime

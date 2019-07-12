@@ -3,73 +3,99 @@ import { AppState, EditorSession, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
 import FigurePackageSettings from './settings/FigurePackageSettings'
-
-const DEFAULT_VIEW = 'manuscript'
-const VIEWS = ['manuscript', 'metadata']
+import ArticleAPI from './api/ArticleAPI'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
 
-    // Store the viewports, so we can restore scroll positions
-    this._viewStates = new Map()
-
     // TODO: should we really (ab-)use the regular Component state as AppState?
     this._initialize(this.props, this.state)
+  }
 
-    this.handleActions({
-      'updateViewName': this._updateViewName
-    })
+  getActionHandlers () {
+    return {
+      executeCommand: this._executeCommand,
+      toggleOverlay: this._toggleOverlay,
+      startWorkflow: this._startWorkflow,
+      closeModal: this._closeModal,
+      scrollElementIntoView: this._scrollElementIntoView,
+      scrollTo: this._scrollTo,
+      updateRoute: this._updateRoute
+    }
   }
 
   _initialize (props) {
     // TODO: I want to move to a single-layer setup for all views in this panel,
     // i.e. no extra configurations and if possible no extra editor session
     // and instead contextualize commands tools etc.
-    const { archive, config, documentSession } = props
-    const doc = documentSession.getDocument()
+    const { archive, config, document } = props
+    const doc = document
 
-    this.context = Object.assign(this.context, createComponentContext(config), {
+    let editorSession = new EditorSession('article', doc, config, this, {
+      workflowId: null,
+      workflowProps: null,
+      overlayId: null,
+      settings: this._createSettings(doc)
+    })
+    let appState = editorSession.editorState
+    let api = new ArticleAPI(editorSession, archive, config, this)
+    let context = Object.assign(this.context, createComponentContext(config), {
+      config,
+      editorSession,
+      appState,
+      api,
+      archive,
       urlResolver: archive,
-      appState: this.state
+      editor: this
     })
 
-    // setup view states
-    for (let viewName of VIEWS) {
-      let viewConfig = props.config.getConfiguration(viewName)
-      let editorState = EditorSession.createEditorState(documentSession, {
-        workflowId: null,
-        viewName,
-        settings: this._createSettings(doc)
-      })
-      this._viewStates.set(viewName, {
-        config: viewConfig,
-        editorState,
-        // Note: used to retain scroll position when switching between views
-        viewport: null
-      })
-    }
-  }
+    this.editorSession = editorSession
+    this.api = api
+    this.appState = appState
+    this.context = context
 
-  getInitialState () {
-    // using AppState as Component state
-    return this._createAppState(this.props.config)
+    // ATTENTION: the editorSession needs to be initialized
+    editorSession.initialize()
+    appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
+    appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
+    // HACK: ATM there is no better way than to listen to an archive
+    // event and forcing the CommandManager to update commandStates
+    // and propagating the changes
+    archive.on('archive:saved', () => {
+      // HACK: setting the selection dirty, also makes sure the DOM selection gets rerendered
+      // as opposed to triggering the commandManager directly
+      appState._setDirty('selection')
+      appState.propagateUpdates()
+    })
+    // HACK: resetting the app state here, because things might get 'dirty' during initialization
+    // TODO: find out if there is a better way to do this
+    appState._reset()
   }
 
   willReceiveProps (props) {
-    if (props.documentSession !== this.props.documentSession) {
-      let state = this._createAppState(props.config)
-      this._initialize(props, state)
-      // wipe children and update state
+    if (props.document !== this.props.document) {
+      this._initialize(props)
       this.empty()
-      this.setState(state)
     }
+  }
+
+  getContext () {
+    return this.context
+  }
+
+  getContentPanel () {
+    // This is part of the Editor interface
+    // ATTENTION: being a legacy of the multi-view implementation
+    // this has to provide the content panel of the content panel
+    return this.refs.content.getContentPanel()
   }
 
   getChildContext () {
     return {
       articlePanel: this,
-      appState: this.state
+      appState: this.state,
+      api: this.api
     }
   }
 
@@ -90,7 +116,7 @@ export default class ArticlePanel extends Component {
 
   shouldRerender (newProps, newState) {
     return (
-      newProps.documentSession !== this.props.documentSession ||
+      newProps.document !== this.props.document ||
       newProps.config !== this.props.config ||
       newState !== this.state
     )
@@ -106,42 +132,34 @@ export default class ArticlePanel extends Component {
 
   _renderContent ($$) {
     const props = this.props
-    const viewName = this.state.viewName
     const api = this.api
     const archive = props.archive
-    const articleSession = props.documentSession
-    const { config, editorState, viewport } = this._viewStates.get(viewName)
+    const editorSession = this.editorSession
+    const config = props.config
 
-    let ContentComponent
-    switch (viewName) {
-      case 'manuscript': {
-        ContentComponent = this.getComponent('manuscript-editor')
-        break
-      }
-      case 'metadata': {
-        ContentComponent = this.getComponent('metadata-editor')
-        break
-      }
-      default:
-        throw new Error('Unsupported view: ' + viewName)
-    }
+    let ContentComponent = this.getComponent('article-editor')
     return $$(ContentComponent, {
       api,
       archive,
-      articleSession,
+      editorSession,
       config,
-      editorState,
-      viewName,
-      viewport
+      editorState: editorSession.editorState
     }).ref('content')
   }
 
+  _closeModal () {
+    const appState = this._getAppState()
+    let workflowId = appState.workflowId
+    if (workflowId) {
+      this._clearRoute()
+    }
+    appState.workflowId = null
+    appState.overlayId = null
+    appState.propagateUpdates()
+  }
+
   _createAppState (config) { // eslint-disable-line no-unused-vars
-    const appState = new AppState({
-      viewName: DEFAULT_VIEW
-    })
-    appState.addObserver(['viewName'], this.rerender, this, { stage: 'render' })
-    return appState
+    return new AppState()
   }
 
   // EXPERIMENTAL:
@@ -159,17 +177,16 @@ export default class ArticlePanel extends Component {
     return settings
   }
 
-  _updateViewName (viewName) {
-    let oldViewName = this.state.viewName
-    if (oldViewName !== viewName) {
-      this._viewStates.get(oldViewName).viewport = this.refs.content.getViewport()
-      let router = this.context.router
-      // ATTENTION: do not change the route when running tests otherwise the test url get's lost
-      if (router && !platform.test) {
-        router.writeRoute({ viewName })
-      }
-      this.extendState({ viewName })
-    }
+  _executeCommand (name, params) {
+    this._getEditorSession().executeCommand(name, params)
+  }
+
+  _getAppState () {
+    return this.appState
+  }
+
+  _getEditorSession () {
+    return this.editorSession
   }
 
   _handleKeydown (e) {
@@ -187,13 +204,74 @@ export default class ArticlePanel extends Component {
     return handled
   }
 
+  _scrollElementIntoView (el, force) {
+    return this.refs.content._scrollElementIntoView(el, force)
+  }
+
+  _scrollTo (params) {
+    return this.refs.content._scrollTo(params)
+  }
+
+  _startWorkflow (workflowId, workflowProps) {
+    const appState = this._getAppState()
+    if (appState.workflowId) throw new Error('Another workflow has been started already.')
+    appState.workflowId = workflowId
+    appState.workflowProps = workflowProps
+    appState.overlayId = workflowId
+    appState.propagateUpdates()
+    this._updateRoute({ workflow: workflowId })
+  }
+
+  _toggleOverlay (overlayId) {
+    const appState = this._getAppState()
+    if (appState.overlayId === overlayId) {
+      appState.overlayId = null
+    } else {
+      appState.overlayId = overlayId
+    }
+    appState.propagateUpdates()
+  }
+  _onSettingsUpdate () {
+    // FIXME: there is a BUG in Component.js leading to undisposed surfaces
+    // HACK: instead of doing an incremental DOM update force disposal by wiping the content
+    // ATTENTION: removing the following line leads to the BUG
+    this.empty()
+    this.rerender()
+  }
+
+  // Routing
+  // =======
+  // NOTE: I don't thing that this is generally a good idea. E.g. what to do if multiple this is embedded
+  // into a different thing with its own router.
+
+  _clearRoute () {
+    let router = this.context.router
+    // Note: we do not change the route while running tests, otherwise the test url get's lost
+    // TODO: why is the TestSuite using a router? sounds like this could be achieved with URL params at least
+    if (router && !platform.test) {
+      router.clearRoute()
+    }
+  }
+
+  _updateRoute (params) {
+    let router = this.context.router
+    // Note: we do not change the route while running tests, otherwise the test url get's lost
+    // TODO: why is the TestSuite using a router? sounds like this could be achieved with URL params at least
+    if (router && !platform.test) {
+      router.writeRoute(params)
+    }
+  }
+
   _onRouteChange (data) {
     // EXPERIMENTAL: taking an object from the router
     // and interpreting it to navigate to the right location in the app
-    let { viewName, nodeId, section } = data
+    let { workflow, section, nodeId } = data
     let el
-    if (viewName && viewName !== this.state.viewName) {
-      this.extendState({ viewName })
+    if (workflow && workflow !== this.appState.workflowId) {
+      if (this.appState.workflowId) {
+        this._closeModal()
+      }
+      this._startWorkflow(workflow)
     }
     if (nodeId) {
       // NOTE: we need to search elements only inside editor

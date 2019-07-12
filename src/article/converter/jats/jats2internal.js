@@ -4,7 +4,7 @@ import SectionContainerConverter from './SectionContainerConverter'
 
 export default function jats2internal (jats, doc, jatsImporter) {
   // metadata
-  _populateOrganisations(doc, jats)
+  _populateAffiliations(doc, jats)
   _populateAuthors(doc, jats, jatsImporter)
   _populateEditors(doc, jats, jatsImporter)
   _populateFunders(doc, jats)
@@ -23,12 +23,12 @@ export default function jats2internal (jats, doc, jatsImporter) {
   return doc
 }
 
-function _populateOrganisations (doc, jats) {
+function _populateAffiliations (doc, jats) {
   const affEls = jats.findAll('article > front > article-meta > aff')
   let orgIds = affEls.map(el => {
     let org = {
       id: el.id,
-      type: 'organisation',
+      type: 'affiliation',
       institution: getText(el, 'institution[content-type=orgname]'),
       division1: getText(el, 'institution[content-type=orgdiv1]'),
       division2: getText(el, 'institution[content-type=orgdiv2]'),
@@ -46,7 +46,7 @@ function _populateOrganisations (doc, jats) {
     }
     return doc.create(org).id
   })
-  doc.set(['metadata', 'organisations'], orgIds)
+  doc.set(['metadata', 'affiliations'], orgIds)
 }
 
 function _populateAuthors (doc, jats, importer) {

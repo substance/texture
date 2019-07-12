@@ -24,6 +24,8 @@ export default class SelectionStateReducer {
     if (doc.getIndex('markers')) {
       this.deriveMarkerState(state, doc, sel)
     }
+    this.deriveSelectedText(state, doc, sel)
+
     return state
   }
 
@@ -35,6 +37,9 @@ export default class SelectionStateReducer {
       if (node) {
         state.xpath = node.getXpath().toArray()
         state.node = node
+        if (sel.isPropertySelection()) {
+          state.property = node.getSchema().getProperty(sel.getPropertyName())
+        }
       }
     }
   }
@@ -105,6 +110,13 @@ export default class SelectionStateReducer {
     state.markers = markers
   }
 
+  deriveSelectedText (state, doc, sel) {
+    if (sel && sel.isPropertySelection() && !sel.isCollapsed()) {
+      const text = documentHelpers.getTextForSelection(doc, sel)
+      state.selectedText = text
+    }
+  }
+
   createState (sel) {
     return new SelectionState(sel)
   }
@@ -134,7 +146,10 @@ class SelectionState {
       // if the next node is one char away
       isLast: false,
       // current context
-      xpath: []
+      xpath: [],
+      property: null,
+      // for non collapsed property selections
+      selectedText: ''
     })
   }
 }

@@ -104,6 +104,7 @@ b.task('build:assets', function () {
   b.copy('./node_modules/inter-ui', DIST + 'lib/inter-ui')
   b.copy('./node_modules/katex/dist', DIST + 'lib/katex')
   b.copy('./node_modules/substance/dist/*.css*', DIST + 'lib/substance/')
+  b.copy('./node_modules/substance/dist/substance.js*', DIST + 'lib/substance/')
   b.copy('./node_modules/substance/dist/substance.min.js*', DIST + 'lib/substance/')
   b.copy('./node_modules/texture-plugin-jats/dist', DIST + 'plugins/texture-plugin-jats')
   b.css('texture.css', DIST + 'texture.css')
@@ -285,7 +286,8 @@ b.task('build:test-browser', ['build:assets', 'build:test-assets'], () => {
       file: 'dist/test/tests.js',
       format: 'umd',
       name: 'tests',
-      globals
+      globals,
+      sourcemap: true
     }
   })
 })
@@ -361,19 +363,22 @@ function _buildLib (DEST, platform) {
         'substance': 'substance',
         'katex': 'katex',
         'vfs': 'vfs'
-      }
+      },
+      sourcemap: true
     })
   }
   if (platform === 'nodejs' || platform === 'all') {
     output.push({
       file: DEST + 'texture.cjs.js',
-      format: 'cjs'
+      format: 'cjs',
+      sourcemap: true
     })
   }
   if (platform === 'es' || platform === 'all') {
     output.push({
       file: DEST + 'texture.es.js',
-      format: 'esm'
+      format: 'esm',
+      sourcemap: true
     })
   }
   rollup(b, {
@@ -385,7 +390,8 @@ function _buildLib (DEST, platform) {
       commonjs({
         include: 'node_modules/**'
       })
-    ]
+    ],
+    sourcemap: true
   })
 }
 

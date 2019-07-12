@@ -1,22 +1,13 @@
 import { Document, documentHelpers, EditingInterface } from 'substance'
-import TextureEditing from './shared/TextureEditing'
+import ArticleEditingImpl from './shared/ArticleEditingImpl'
 
 export default class InternalArticleDocument extends Document {
   getRootNode () {
     return this.get('article')
   }
 
-  getXRefs () {
-    let articleEl = this.get('article')
-    return articleEl.findAll('xref')
-  }
-
-  getTitle () {
-    return this.get(['article', 'title'])
-  }
-
   createEditingInterface () {
-    return new EditingInterface(this, { editing: new TextureEditing() })
+    return new EditingInterface(this, { editing: new ArticleEditingImpl() })
   }
 
   find (selector) {

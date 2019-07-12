@@ -30,9 +30,9 @@ test('Configurator: extend the toolbar', t => {
       let MyCommand = class MyCommand extends Command {
         getCommandState () { return { disabled: false } }
       }
-      let articleManuscriptConfig = configurator.getConfiguration('article.manuscript')
-      articleManuscriptConfig.addCommand('test', MyCommand, { commandGroup: 'test' })
-      articleManuscriptConfig.extendToolPanel('toolbar', toolPanelConfig => {
+      let articleConfig = configurator.getConfiguration('article')
+      articleConfig.addCommand('test', MyCommand, { commandGroup: 'test' })
+      articleConfig.extendToolPanel('toolbar', toolPanelConfig => {
         let contextTools = toolPanelConfig.find(group => group.name === 'context-tools')
         if (contextTools) {
           contextTools.items.push({

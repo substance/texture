@@ -712,7 +712,7 @@ export default {
   'journal-article-ref': _delegate(journalArticleRenderer),
   'conference-paper-ref': _delegate(conferencePaperRenderer),
   'report-ref': _delegate(reportRenderer),
-  'organisation': _delegate(entityRenderer),
+  'affiliation': _delegate(entityRenderer),
   'funder': _delegate(entityRenderer),
   'data-publication-ref': _delegate(dataPublicationRenderer),
   'magazine-article-ref': _delegate(magazineArticleRenderer),

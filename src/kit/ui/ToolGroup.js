@@ -186,10 +186,6 @@ export default class ToolGroup extends Component {
           ToolClass = this.getComponent('tool-spacer')
           break
         }
-        case 'switcher': {
-          ToolClass = this.getComponent('tool-switcher')
-          break
-        }
         default: {
           console.error('Unsupported item type inside ToolGroup:', item.type)
         }

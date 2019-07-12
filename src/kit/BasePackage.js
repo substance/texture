@@ -19,7 +19,6 @@ import ToolDropdown from './ui/ToolDropdown'
 import ToolGroup from './ui/ToolGroup'
 import ToolSeparator from './ui/ToolSeparator'
 import ToolSpacer from './ui/ToolSpacer'
-import ToolSwitcher from './ui/ToolSwitcher'
 
 export default {
   name: 'TextureBase',
@@ -50,7 +49,6 @@ export default {
     configurator.addComponent('tool-group', ToolGroup)
     configurator.addComponent('tool-separator', ToolSeparator)
     configurator.addComponent('tool-spacer', ToolSpacer)
-    configurator.addComponent('tool-switcher', ToolSwitcher)
 
     configurator.addLabel('text-types', {
       en: 'Text Type',

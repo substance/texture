@@ -7,11 +7,11 @@ export default class TextureArchive extends PersistedDocumentArchive {
     This might involve some consolidation and ingestion.
   */
   _ingest (rawArchive) {
-    let sessions = {}
+    let documents = {}
     let manifestXML = _importManifest(rawArchive)
-    let manifestSession = this._loadManifest({ data: manifestXML })
-    sessions['manifest'] = manifestSession
-    let entries = manifestSession.getDocument().getDocumentEntries()
+    let manifest = this._loadManifest({ data: manifestXML })
+    documents['manifest'] = manifest
+    let entries = manifest.getDocumentEntries()
 
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
@@ -22,15 +22,14 @@ export default class TextureArchive extends PersistedDocumentArchive {
         return
       }
       // TODO: we need better concept for handling errors
-      // Passing down 'sessions' so that we can add to the pub-meta session
-      let session = this._loadDocument(entry.type, record, sessions)
-      sessions[entry.id] = session
+      let document = this._loadDocument(entry.type, record, documents)
+      documents[entry.id] = document
     })
-    return sessions
+    return documents
   }
 
   // TODO: this should be generalized and then live in the base class
-  _exportChangedDocuments (sessions, buffer, rawArchive) {
+  _exportChangedDocuments (documents, buffer, rawArchive) {
     // Note: we are only adding resources that have changed
     // and only those which are registered in the manifest
     let entries = this.getDocumentEntries()
@@ -42,12 +41,11 @@ export default class TextureArchive extends PersistedDocumentArchive {
       // We mark a resource dirty when it has changes, or if it is an article
       // and pub-meta has changed
       if (type === 'article') {
-        let session = sessions[id]
+        let document = documents[id]
         // TODO: how should we communicate file renamings?
         rawArchive.resources[path] = {
           id,
-          // HACK: same as when loading we pass down all sessions so that we can do some hacking there
-          data: this._exportDocument(type, session, sessions),
+          data: this._exportDocument(type, document, documents),
           encoding: 'utf8',
           updatedAt: Date.now()
         }
@@ -55,7 +53,7 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _loadDocument (type, record, sessions) {
+  _loadDocument (type, record, documents) {
     let loader = this._config.getDocumentLoader(type)
     if (loader) {
       return loader.load(record.data, this._config)
@@ -64,21 +62,21 @@ export default class TextureArchive extends PersistedDocumentArchive {
     }
   }
 
-  _exportDocument (type, session, sessions) { // eslint-disable-line no-unused-vars
+  _exportDocument (type, document, documents) { // eslint-disable-line no-unused-vars
     let serializer = this._config.getDocumentSerializer(type)
     if (serializer) {
-      return serializer.export(session.getDocument(), this._config)
+      return serializer.export(document, this._config)
     } else {
       throw new Error('Unsupported document type')
     }
   }
 
   getTitle () {
-    let editorSession = this.getDocumentSession('manuscript')
+    // TODO: the name of the 'main' document should not be hard-coded
+    let mainDocument = this.getDocument('manuscript')
     let title = 'Untitled'
-    if (editorSession) {
-      let doc = editorSession.getDocument()
-      let articleTitle = doc.getTitle()
+    if (mainDocument) {
+      let articleTitle = mainDocument.getTitle()
       if (articleTitle) {
         title = articleTitle
       }

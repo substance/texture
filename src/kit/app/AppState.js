@@ -10,7 +10,7 @@ const STAGE_IDX = STAGES.reduce((m, s, idx) => {
 }, {})
 
 export default class AppState extends AbstractAppState {
-  _initialize (initialState) {
+  _initialize (initialState = {}) {
     super._initialize()
 
     const impl = this._getImpl()
@@ -23,6 +23,10 @@ export default class AppState extends AbstractAppState {
       const initialValue = initialState[name]
       this._addProperty(name, initialValue)
     })
+  }
+
+  getId () {
+    return this._getImpl().id
   }
 
   addObserver (deps, handler, observer, options = {}) {
@@ -41,6 +45,7 @@ export default class AppState extends AbstractAppState {
       impl.slots.set(slotId, slot)
     }
     if (!observer[ID]) observer[ID] = new Map()
+    // console.log('Adding observer', slot, deps, stage, options)
     slot.addObserver(observer, {
       stage,
       deps,
@@ -61,6 +66,7 @@ export default class AppState extends AbstractAppState {
 
   propagateUpdates () {
     const impl = this._getImpl()
+    // console.log('AppState.propagatUpdates()', impl.id)
     if (impl.isFlowing) throw new Error('Already updating.')
     impl.isFlowing = true
     try {

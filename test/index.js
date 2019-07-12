@@ -1,11 +1,10 @@
 import { platform, substanceGlobals } from 'substance'
 import './shared/testGlobals'
-// tests
+
+// Tests
 import './Annotations.test'
 import './Archive.test'
-import './ArticlePanel.test'
 import './BodyConverter.test'
-import './Card.test'
 import './ClipboardNew.test'
 import './Configurator.test'
 import './CrossReference.test'
@@ -21,7 +20,6 @@ import './Input.test'
 import './JATSImporter.test'
 import './LabelGenerator.test'
 import './ManuscriptEditor.test'
-import './MetadataEditor.test'
 import './Paste.test'
 import './Persistence.test'
 import './PreformatConverter.test'
@@ -32,6 +30,9 @@ import './Table.test'
 import './TableConverter.test'
 import './UndoRedo.test'
 import './Validator.test'
+// FIXME: bring back all relevant tests from MetadataEditor.test
+// import './MetadataEditor.test'
+
 // TODO: there are some tests in ./converter/. Either fix them and include here
 // or remove them
 

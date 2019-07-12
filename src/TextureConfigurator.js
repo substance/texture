@@ -1,5 +1,6 @@
 import {
-  flatten, isString, isFunction, platform, DefaultLabelProvider, FontAwesomeIconProvider
+  flatten, isString, isFunction, platform, DefaultLabelProvider,
+  FontAwesomeIcon
 } from 'substance'
 import { SwitchTextTypeCommand } from './kit'
 
@@ -34,6 +35,9 @@ export default class TextureConfigurator {
     this._iconRegistry = new HierarchicalRegistry(this, '_icons')
     this._labelRegistry = new HierarchicalRegistry(this, '_labels')
     this._serviceRegistry = new HierarchicalRegistry(this, '_services')
+    this._toolPanelRegistry = new HierarchicalRegistry(this, '_toolPanels')
+    this._keyboardShortcutsByCommandNameRegistry = new HierarchicalRegistry(this, '_keyboardShortcutsByCommandName')
+    this._commandGroupRegistry = new HierarchicalRegistry(this, '_commandGroups')
 
     // TODO: document why this is necessary, beyond legacy reasons
     this._compiledToolPanels = new Map()
@@ -75,6 +79,7 @@ export default class TextureConfigurator {
   }
 
   addCommand (name, CommandClass, options = {}) {
+    if (this._commands.has(name) && !options.force) throw new Error(`Command with name '${name}' already registered`)
     this._commands.set(name, new CommandClass(Object.assign({ name }, options)))
     if (options.commandGroup) {
       this._addCommandToCommandGroup(name, options.commandGroup)
@@ -84,7 +89,8 @@ export default class TextureConfigurator {
     }
   }
 
-  addComponent (name, ComponentClass) {
+  addComponent (name, ComponentClass, options = {}) {
+    if (this._components.has(name) && !options.force) throw new Error(`Component with name '${name}' already registered`)
     this._components.set(name, ComponentClass)
   }
 
@@ -132,7 +138,8 @@ export default class TextureConfigurator {
     })
   }
 
-  addLabel (labelName, label) {
+  addLabel (labelName, label, options = {}) {
+    if (this._labels.has(labelName) && !options.force) throw new Error(`Label with name '${labelName}' already registered.`)
     let labels
     if (isString(label)) {
       labels = { en: label }
@@ -142,9 +149,9 @@ export default class TextureConfigurator {
     this._labels.set(labelName, labels)
   }
 
-  addNode (NodeClass) {
+  addNode (NodeClass, options = {}) {
     let type = NodeClass.type
-    if (this._nodes.has(type)) {
+    if (this._nodes.has(type) && !options.force) {
       throw new Error(`Node class for type '${type}' already registered`)
     }
     this._nodes.set(type, NodeClass)
@@ -186,7 +193,10 @@ export default class TextureConfigurator {
     }
   }
 
-  addToolPanel (name, spec) {
+  addToolPanel (name, spec, options = {}) {
+    if (this._toolPanels.has(name) && !options.force) {
+      throw new Error(`ToolPanel '${name}' is already defined`)
+    }
     this._toolPanels.set(name, spec)
   }
 
@@ -196,7 +206,10 @@ export default class TextureConfigurator {
     extensionCb(this._toolPanels.get(name))
   }
 
-  addService (serviceId, factory) {
+  addService (serviceId, factory, options = {}) {
+    if (this._services.has(serviceId) && !options.force) {
+      throw new Error(`Service '${serviceId}' is already defined`)
+    }
     this._services.set(serviceId, {
       factory,
       instance: null
@@ -225,26 +238,41 @@ export default class TextureConfigurator {
     }
   }
 
-  registerDocumentLoader (docType, LoaderClass, spec = {}) {
+  registerDocumentLoader (docType, LoaderClass, spec = {}, options = {}) {
+    if (this._documentLoaders.has(docType) && !options.force) {
+      throw new Error(`Loader for docType '${docType}' is already defined`)
+    }
     this._documentLoaders.set(docType, {
       LoaderClass,
       spec
     })
   }
 
-  registerDocumentSerializer (docType, SerializerClass, spec = {}) {
+  registerDocumentSerializer (docType, SerializerClass, spec = {}, options = {}) {
+    if (this._documentSerializers.has(docType) && !options.force) {
+      throw new Error(`Serializer for docType '${docType}' is already defined`)
+    }
     this._documentSerializers.set(docType, {
       SerializerClass,
       spec
     })
   }
 
-  getCommands () {
-    return this._commands
+  getCommands (options = {}) {
+    if (options.inherit) {
+      return this._commandRegistry.getAll()
+    } else {
+      return this._commands
+    }
   }
 
   getCommandGroup (name) {
-    return this._commandGroups.get(name) || []
+    // Note: as commands are registered hierarchically
+    // we need to collect commands from all levels
+    let records = this._commandGroupRegistry.getRecords(name)
+    let flattened = flatten(records)
+    let set = new Set(flattened)
+    return Array.from(set)
   }
 
   getComponent (name) {
@@ -278,7 +306,7 @@ export default class TextureConfigurator {
   }
 
   getIconProvider () {
-    return new FontAwesomeIconProvider(this._icons)
+    return new IconProvider(this)
   }
 
   // TODO: the label provider should not be maintained by the configuration
@@ -321,15 +349,19 @@ export default class TextureConfigurator {
     }
   }
 
-  getKeyboardShortcuts () {
-    return this._keyboardShortcuts
+  getKeyboardShortcuts (options = {}) {
+    if (options.inherit) {
+      return Array.from(this._keyboardShortcutsByCommandNameRegistry.getAll().values())
+    } else {
+      return this._keyboardShortcuts
+    }
   }
 
   /*
     Allows lookup of a keyboard shortcut by command name
   */
   getKeyboardShortcutsByCommandName (commandName) {
-    return this._keyboardShortcutsByCommandName.get(commandName)
+    return this._keyboardShortcutsByCommandNameRegistry.get(commandName)
   }
 
   getNodes () {
@@ -337,7 +369,7 @@ export default class TextureConfigurator {
   }
 
   getToolPanel (name, strict) {
-    let toolPanelSpec = this._toolPanels.get(name)
+    let toolPanelSpec = this._toolPanelRegistry.get(name)
     if (toolPanelSpec) {
       // return cache compiled tool-panels
       if (this._compiledToolPanels.has(name)) return this._compiledToolPanels.get(name)
@@ -407,6 +439,37 @@ class HierarchicalRegistry {
     }
     if (strict) throw new Error(`No value registered for name '${name}'`)
   }
+
+  getAll () {
+    let config = this._config
+    let registries = []
+    const key = this._key
+    while (config) {
+      let registry = config[key]
+      if (registry) {
+        registries.unshift(registry)
+      }
+      config = config.parent
+    }
+    return new Map([].concat(...registries.map(r => Array.from(r.entries()))))
+  }
+
+  getRecords (name) {
+    let config = this._config
+    let records = []
+    const key = this._key
+    while (config) {
+      let registry = config[key]
+      if (registry) {
+        let record = registry.get(name)
+        if (record) {
+          records.unshift(record)
+        }
+      }
+      config = config.parent
+    }
+    return records
+  }
 }
 
 class LabelProvider extends DefaultLabelProvider {
@@ -426,5 +489,28 @@ class LabelProvider extends DefaultLabelProvider {
     } else {
       return rawLabel
     }
+  }
+}
+
+class IconProvider {
+  constructor (config) {
+    this.config = config
+  }
+
+  renderIcon ($$, name) {
+    let spec = this._getIconDef(name)
+    if (!spec) {
+      throw new Error(`No icon found for name '${name}'`)
+    } else {
+      if (spec['fontawesome']) {
+        return $$(FontAwesomeIcon, { icon: spec['fontawesome'] })
+      } else {
+        throw new Error('Unsupported icon spec')
+      }
+    }
+  }
+
+  _getIconDef (name) {
+    return this.config._iconRegistry.get(name)
   }
 }

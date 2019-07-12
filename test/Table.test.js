@@ -1084,18 +1084,13 @@ for (let i = 0, count = 1; i < 10; i++) {
 // not unit testing the TableComponent testing the TableComponent used in the ManuscriptEditor
 function _setupEditorWithOneTable (t) {
   let table
-  let res = setupTestArticleSession({
+  let { context, editorSession, doc } = setupTestArticleSession({
     seed: doc => {
       table = tableHelpers.createTableFromTabularData(doc, TABLE_DATA, 't')
       doc.find('body').append(table)
     }
   })
-  return {
-    context: res.context,
-    editorSession: res.editorSession,
-    doc: res.doc,
-    table
-  }
+  return { context, editorSession, doc, table }
 }
 
 function _getCellRange (matrix, startRow, startCol, endRow, endCol) {

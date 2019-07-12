@@ -108,7 +108,7 @@ export function breakText (editor) {
 }
 
 export function applyNOP (editorSession) {
-  editorSession._commit(new DocumentChange([new ObjectOperation({ type: 'NOP' })], {}, {}), {})
+  editorSession.applyChange(new DocumentChange([new ObjectOperation({ type: 'NOP' })], {}, {}), {})
 }
 
 export function toUnix (str) {
@@ -230,14 +230,11 @@ export function createTestVfs (seedXML) {
 
 export function openManuscriptEditor (app) {
   let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'manuscript')
   return articlePanel.find('.sc-manuscript-editor')
 }
 
 export function openMetadataEditor (app) {
-  let articlePanel = app.find('.sc-article-panel')
-  articlePanel.send('updateViewName', 'metadata')
-  return articlePanel.find('.sc-metadata-editor')
+  throw new Error('This has been removed!')
 }
 
 export function getApi (editor) {
@@ -254,12 +251,6 @@ export function getSelection (editor) {
 
 export function getSelectionState (editor) {
   return editor.context.appState.selectionState
-}
-
-export function getCurrentViewName (editor) {
-  const articlePanel = editor.context.articlePanel
-  const articlePanelState = articlePanel.getState()
-  return articlePanelState.viewName
 }
 
 export function getDocument (editor) {
@@ -288,6 +279,27 @@ export class PseudoFileEvent extends DOMEvent {
     this.currentTarget = {
       files: [ blob ]
     }
+  }
+}
+
+export function startEditMetadata (editor) {
+  editor.send('startWorkflow', 'edit-metadata-workflow')
+  let modalEditor = editor.find('.sc-modal-dialog .se-body > .se-content')
+  return modalEditor
+}
+
+export function getModalEditor (mainEditor) {
+  return mainEditor.find('.sc-modal-dialog .se-body > .se-content')
+}
+
+export function closeModalEditor (modalEditor) {
+  modalEditor.send('close')
+}
+
+export function getModalEditorSession (editor) {
+  let modal = editor.find('.sc-modal-dialog .se-body > .se-content')
+  if (modal) {
+    return modal.context.editorSession
   }
 }
 
@@ -335,6 +347,10 @@ export function findParent (el, selector) {
     }
     parent = parent.getParent()
   }
+}
+
+export function executeCommand (editor, commandName, params) {
+  editor.send('executeCommand', commandName, params)
 }
 
 export function clickUndo (editor) {

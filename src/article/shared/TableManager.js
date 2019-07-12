@@ -3,8 +3,8 @@ import CitableContentManager from './CitableContentManager'
 import TableFootnoteManager from './TableFootnoteManager'
 
 export default class TableManager extends CitableContentManager {
-  constructor (documentSession, labelGenerator) {
-    super(documentSession, 'table', ['table-figure'], labelGenerator)
+  constructor (editorSession, labelGenerator) {
+    super(editorSession, 'table', ['table-figure'], labelGenerator)
 
     this._updateLabels('initial')
 
@@ -26,7 +26,7 @@ export default class TableManager extends CitableContentManager {
     let doc = this._getDocument()
     let tableFigures = doc.getIndex('type').get('table-figure')
     forEach(tableFigures, tableFigure => {
-      tableFigure.setFootnoteManager(new TableFootnoteManager(this.documentSession, tableFigure))
+      tableFigure.setFootnoteManager(new TableFootnoteManager(this.editorSession, tableFigure))
     })
   }
 
@@ -37,7 +37,7 @@ export default class TableManager extends CitableContentManager {
       if (op.isCreate()) {
         let node = doc.get(op.getValue().id)
         if (node && node.type === 'table-figure') {
-          node.setFootnoteManager(new TableFootnoteManager(this.documentSession, node))
+          node.setFootnoteManager(new TableFootnoteManager(this.editorSession, node))
         }
       }
     }

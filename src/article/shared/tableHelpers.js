@@ -1,5 +1,5 @@
 import { tableHelpers, documentHelpers } from 'substance'
-import Table from '../models/Table'
+import Table from '../nodes/Table'
 
 export function createTableSelection (tableId, data, surfaceId) {
   if (!data.anchorCellId || !data.focusCellId) throw new Error('Invalid selection data')

@@ -1,20 +1,25 @@
 import { test } from 'substance-test'
 import setupTestApp from './shared/setupTestApp'
 import {
-  openMetadataEditor, selectCard, clickUndo, getSelection, getSelectionState, openContextMenuAndFindTool, createTestVfs
+  selectCard, clickUndo, getSelection, getSelectionState, openContextMenuAndFindTool, createTestVfs, startEditMetadata
 } from './shared/integrationTestHelpers'
 import { doesNotThrowInNodejs } from './shared/testHelpers'
 import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
 function _entityTest (t, entityType, entityName, checkSelection) {
   entityName = entityName || entityType
-
-  let { app } = setupTestApp(t, { archiveId: 'blank' })
-  let editor = openMetadataEditor(app)
+  let { editor } = setupTestApp(t, { archiveId: 'blank' })
+  let modalEditor = startEditMetadata(editor)
 
   const CARD_SELECTOR = `.sc-card.sm-${entityType}`
-  const _hasCard = () => { return Boolean(editor.find(CARD_SELECTOR)) }
-  const _getModelId = () => { return editor.find(CARD_SELECTOR).getAttribute('data-id') }
+  const _hasCard = () => {
+    let card = modalEditor.find(CARD_SELECTOR)
+    return Boolean(card)
+  }
+  const _getModelId = () => {
+    let card = modalEditor.find(CARD_SELECTOR)
+    return card.getAttribute('data-id')
+  }
   function _defaultCheckSelection (t, sel) {
     t.deepEqual({
       type: sel.type,
@@ -26,22 +31,23 @@ function _entityTest (t, entityType, entityName, checkSelection) {
   }
 
   doesNotThrowInNodejs(t, () => {
-    _insertEntity(editor, entityName)
+    _insertEntity(modalEditor, entityName)
   })
   t.ok(_hasCard(), 'there should be a card for the new entity')
+
   // Note: checking the selection as good as we can. The selected field us derived from the node schema and settings
   // TODO: we could apply a specific configuration so that we know the field name
-  let sel = getSelection(editor)
-  let selState = getSelectionState(editor)
+  let sel = getSelection(modalEditor)
+  let selState = getSelectionState(modalEditor)
   let _checkSelection = checkSelection || _defaultCheckSelection
   _checkSelection(t, sel, selState)
 
   // in addition to the plain 'Add Entity' we also test removal + undo
-  selectCard(editor, _getModelId())
-  _removeEntity(editor, entityName)
+  selectCard(modalEditor, _getModelId())
+  _removeEntity(modalEditor, entityName)
   t.notOk(_hasCard(), 'card should have been removed')
 
-  clickUndo(editor)
+  clickUndo(modalEditor)
   t.ok(_hasCard(), 'card should be back again')
 
   t.end()
@@ -60,7 +66,7 @@ test(`Entity: add group`, t => {
 })
 
 test(`Entity: add affiliation`, t => {
-  _entityTest(t, 'organisation')
+  _entityTest(t, 'affiliation')
 })
 
 test(`Entity: add funder`, t => {
@@ -73,13 +79,6 @@ test(`Entity: add keyword`, t => {
 
 test(`Entity: add subject`, t => {
   _entityTest(t, 'subject')
-})
-
-test(`Entity: add footnote`, t => {
-  _entityTest(t, 'footnote', 'footnote', (t, sel, selState) => {
-    t.equal(sel.type, 'property', 'selection should be an property selection')
-    t.ok(Boolean(selState.xpath.find(e => e.type === 'paragraph')), '.. inside a paragraph')
-  })
 })
 
 const AUTHOR_AND_TWO_AFFS = `<?xml version="1.0" encoding="UTF-8"?>
@@ -123,18 +122,18 @@ const AUTHOR_AND_TWO_AFFS = `<?xml version="1.0" encoding="UTF-8"?>
 `
 
 test('Entity: Affilitions should be distinguishable (#981)', t => {
-  let { app } = setupTestApp(t, {
+  let { editor } = setupTestApp(t, {
     vfs: createTestVfs(AUTHOR_AND_TWO_AFFS),
     archiveId: 'test'
   })
-  let metadataEditor = openMetadataEditor(app)
+  let metadataEditor = startEditMetadata(editor)
   let selectInput = metadataEditor.find('.sm-person .sm-affiliations .sc-many-relationship .sc-multi-select-input')
   // click on the input to open the dropdown
   selectInput.click()
   let items = selectInput.findAll('.se-select-item')
   let org1 = items[0].text()
   let org2 = items[1].text()
-  t.ok(org1 !== org2, 'organisations should be displayed in a distinguishable way')
+  t.ok(org1 !== org2, 'affiliations should be displayed in a distinguishable way')
   t.end()
 })
 
@@ -142,11 +141,11 @@ function _insertEntity (editor, entityName) {
   // open the corresponding dropdown
   let menu = editor.find('.sc-tool-dropdown.sm-insert')
   menu.find('button').el.click()
-  let addButton = menu.find(`.sc-tool.sm-insert-${entityName}`).el
+  let addButton = menu.find(`.sc-tool.sm-add-${entityName}`).el
   return addButton.click()
 }
 
 function _removeEntity (editor, entityName) {
-  let collectionTool = openContextMenuAndFindTool(editor, `.sm-remove-${entityName}`)
+  let collectionTool = openContextMenuAndFindTool(editor, `.sm-remove-entity`)
   collectionTool.click()
 }

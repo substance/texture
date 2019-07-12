@@ -1,8 +1,4 @@
 import { createValueModel } from '../../kit'
-// import TranslationCollectionModel from './TranslationCollectionModel'
-import FigureCollectionModel from './FigureCollectionModel'
-import TableFigureCollectionModel from './TableFigureCollectionModel'
-// import TableCollectionModel from './TableCollectionModel'
 import ArticleInformationSectionModel from './ArticleInformationSectionModel'
 import AbstractsSectionModel from './AbstractsSectionModel'
 
@@ -18,16 +14,13 @@ export default class MetadataModel {
       { name: 'authors', model: createValueModel(api, ['metadata', 'authors']) },
       { name: 'editors', model: createValueModel(api, ['metadata', 'editors']) },
       { name: 'groups', model: createValueModel(api, ['metadata', 'groups']) },
-      { name: 'organisations', model: createValueModel(api, ['metadata', 'organisations']) },
+      { name: 'affiliations', model: createValueModel(api, ['metadata', 'affiliations']) },
       { name: 'funders', model: createValueModel(api, ['metadata', 'funders']) },
       { name: 'keywords', model: createValueModel(api, ['metadata', 'keywords']) },
       { name: 'subjects', model: createValueModel(api, ['metadata', 'subjects']) },
-      // HACK: 'article-section' is a fake model
-      // TODO: we should allow sections without model and create the section via name
-      { name: 'figures', model: new FigureCollectionModel(api) },
-      { name: 'tables', model: new TableFigureCollectionModel(api) },
-      { name: 'references', model: createValueModel(api, ['article', 'references']) },
-      { name: 'footnotes', model: createValueModel(api, ['article', 'footnotes']) }
+      // TODO: references are not really metadata. This should be edited in the Manuscript directly
+      // for the time being we leave it as it is
+      { name: 'references', model: createValueModel(api, ['article', 'references']) }
     ]
   }
 

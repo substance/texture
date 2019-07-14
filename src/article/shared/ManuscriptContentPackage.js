@@ -2,12 +2,14 @@ import { AnnotationComponent } from '../../kit'
 
 import {
   AbstractComponent, AuthorsListComponent, BlockFormulaComponent,
-  BlockQuoteComponent, BreakComponent, MetadataFieldComponent,
+  BlockQuoteComponent, BoldComponent, BreakComponent, MetadataFieldComponent,
   ExternalLinkComponent, FigureComponent, FigurePanelComponent, FootnoteComponent,
-  HeadingComponent, InlineFormulaComponent, InlineGraphicComponent, ListComponent,
+  HeadingComponent, InlineFormulaComponent, InlineGraphicComponent, ItalicComponent, ListComponent,
   ListItemComponent, ManuscriptComponent, ParagraphComponent, ReferenceComponent,
-  ReferenceListComponent, SectionLabel, TableComponent, TableFigureComponent,
-  UnsupportedInlineNodeComponent, XrefComponent, UnsupportedNodeComponent, GraphicComponent, SupplementaryFileComponent, DefaultNodeComponent, ModelPreviewComponent
+  ReferenceListComponent, SectionLabel, SubscriptComponent, SuperscriptComponent,
+  TableComponent, TableFigureComponent, UnsupportedInlineNodeComponent, XrefComponent,
+  UnsupportedNodeComponent, GraphicComponent, SupplementaryFileComponent,
+  DefaultNodeComponent, ModelPreviewComponent
 } from '../components'
 
 export default {
@@ -15,7 +17,7 @@ export default {
   configure (config) {
     config.addComponent('abstract', AbstractComponent)
     config.addComponent('authors-list', AuthorsListComponent)
-    config.addComponent('bold', AnnotationComponent)
+    config.addComponent('bold', BoldComponent)
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
@@ -27,7 +29,7 @@ export default {
     config.addComponent('heading', HeadingComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)
     config.addComponent('inline-graphic', InlineGraphicComponent)
-    config.addComponent('italic', AnnotationComponent)
+    config.addComponent('italic', ItalicComponent)
     config.addComponent('list', ListComponent)
     config.addComponent('list-item', ListItemComponent)
     config.addComponent('manuscript', ManuscriptComponent)
@@ -39,8 +41,8 @@ export default {
     config.addComponent('section-label', SectionLabel)
     config.addComponent('small-caps', AnnotationComponent)
     config.addComponent('strike-through', AnnotationComponent)
-    config.addComponent('subscript', AnnotationComponent)
-    config.addComponent('superscript', AnnotationComponent)
+    config.addComponent('subscript', SubscriptComponent)
+    config.addComponent('superscript', SuperscriptComponent)
     config.addComponent('table', TableComponent)
     config.addComponent('table-figure', TableFigureComponent)
     config.addComponent('underline', AnnotationComponent)

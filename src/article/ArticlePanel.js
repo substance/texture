@@ -1,9 +1,10 @@
 import { Component, platform } from 'substance'
-import { AppState, EditorSession, createComponentContext } from '../kit'
+import { AppState, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
 import FigurePackageSettings from './settings/FigurePackageSettings'
 import ArticleAPI from './api/ArticleAPI'
+import ArticleEditorSession from './api/ArticleEditorSession'
 
 export default class ArticlePanel extends Component {
   constructor (...args) {
@@ -32,14 +33,20 @@ export default class ArticlePanel extends Component {
     const { archive, config, document } = props
     const doc = document
 
-    let editorSession = new EditorSession('article', doc, config, this, {
+    let editorSession = new ArticleEditorSession('article', doc, config, {
       workflowId: null,
       workflowProps: null,
       overlayId: null,
       settings: this._createSettings(doc)
     })
+    this.editorSession = editorSession
+
     let appState = editorSession.editorState
-    let api = new ArticleAPI(editorSession, archive, config, this)
+    this.appState = appState
+
+    let api = new ArticleAPI(editorSession, archive, config)
+    this.api = api
+
     let context = Object.assign(this.context, createComponentContext(config), {
       config,
       editorSession,
@@ -49,14 +56,11 @@ export default class ArticlePanel extends Component {
       urlResolver: archive,
       editor: this
     })
-
-    this.editorSession = editorSession
-    this.api = api
-    this.appState = appState
     this.context = context
 
-    // ATTENTION: the editorSession needs to be initialized
+    editorSession.setContext(context)
     editorSession.initialize()
+
     appState.addObserver(['workflowId'], this.rerender, this, { stage: 'render' })
     appState.addObserver(['settings'], this._onSettingsUpdate, this, { stage: 'render' })
     // HACK: ATM there is no better way than to listen to an archive
@@ -89,14 +93,6 @@ export default class ArticlePanel extends Component {
     // ATTENTION: being a legacy of the multi-view implementation
     // this has to provide the content panel of the content panel
     return this.refs.content.getContentPanel()
-  }
-
-  getChildContext () {
-    return {
-      articlePanel: this,
-      appState: this.state,
-      api: this.api
-    }
   }
 
   didMount () {

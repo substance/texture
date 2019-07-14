@@ -21,15 +21,10 @@ export default class MetadataEditor extends Component {
     this.context.appState._reset()
   }
 
-  getChildContext () {
-    // HACK: this is needed to get things working
-    // TODO: the current use of this.context.editor is problematic
-    return { editor: this }
-  }
-
   didMount () {
     this._showHideTOC()
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+    this.context.editorSession.setRootComponent(this._getContentPanel())
   }
 
   dispose () {

@@ -39,7 +39,7 @@ export default class EditorWorkflow extends Component {
     })
     this.context = context
 
-    // ATTENTION: the editorSession needs to be initialized
+    editorSession.setContext(context)
     editorSession.initialize()
   }
 

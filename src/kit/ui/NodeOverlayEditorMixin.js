@@ -52,12 +52,12 @@ export default function (NodeComponent) {
 
     _acquireOverlay (options) {
       let editor = this._getEditor()
-      this.context.editor.refs.overlay.acquireOverlay(editor, options)
+      this.send('acquireOverlay', editor, options)
     }
 
     _releaseOverlay () {
       if (this._editor) {
-        this.context.editor.refs.overlay.releaseOverlay(this._editor)
+        this.send('releaseOverlay', this._editor)
       }
     }
 

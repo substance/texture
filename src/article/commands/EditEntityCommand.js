@@ -18,7 +18,7 @@ export default class EditEntityCommand extends Command {
     // TODO: this might not be general enough, maybe we could introduce edit-entity-workflow
     // which could just be derived from edit-metadata-workflow
     let commandState = params.commandState
-    context.editor.send('startWorkflow', 'edit-metadata-workflow', { nodeId: commandState.node.id })
+    context.editorSession.getRootComponent().send('startWorkflow', 'edit-metadata-workflow', { nodeId: commandState.node.id })
   }
 
   _getType () {

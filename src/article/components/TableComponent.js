@@ -120,9 +120,9 @@ export default class TableComponent extends CustomSurface {
   }
 
   _renderContextMenu ($$) {
-    const configurator = this.context.configurator
+    const config = this.context.config
     let contextMenu
-    const items = configurator.getToolPanel('table-context-menu')
+    const items = config.getToolPanel('table-context-menu')
     if (items) {
       contextMenu = $$(Managed(TableContextMenu), {
         items,

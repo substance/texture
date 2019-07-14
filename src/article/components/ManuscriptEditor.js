@@ -17,6 +17,7 @@ export default class ManuscriptEditor extends EditorPanel {
     this._restoreViewport()
 
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+    this.context.editorSession.setRootComponent(this._getContentPanel())
   }
 
   didUpdate () {
@@ -91,7 +92,6 @@ export default class ManuscriptEditor extends EditorPanel {
   _renderContentPanel ($$) {
     const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
-
     let contentPanel = $$(ScrollPane, {
       contextMenu: 'custom',
       scrollbarPosition: 'right'

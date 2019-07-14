@@ -3,11 +3,11 @@ import { ifNodeOrRelatedHasChanged } from '../shared/nodeHelpers'
 
 export default class ModelPreviewComponent extends Component {
   didMount () {
-    this.context.appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
+    this.context.editorState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
   }
 
   dispose () {
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   render ($$) {

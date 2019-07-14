@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import { ListPackage, MultiSelectPackage, AnnotationCommand } from 'substance'
+import { AnnotationCommand, IndentListCommand } from 'substance'
 import {
   BasePackage, EditorBasePackage, ModelComponentPackage, FindAndReplacePackage
 } from '../../kit'
@@ -65,7 +65,6 @@ export default {
     config.import(EditorBasePackage)
     config.import(ModelComponentPackage)
     config.import(ManuscriptContentPackage)
-    config.import(MultiSelectPackage)
     config.import(ArticleToolbarPackage)
     config.import(PersistencePackage)
     config.import(FindAndReplacePackage)
@@ -91,7 +90,7 @@ export default {
     config.addCommand('decrease-heading-level', DecreaseHeadingLevelCommand, {
       commandGroup: 'text'
     })
-    config.addCommand('dedent-list', ListPackage.IndentListCommand, {
+    config.addCommand('dedent-list', IndentListCommand, {
       spec: { action: 'dedent' },
       commandGroup: 'list'
     })
@@ -116,7 +115,7 @@ export default {
     config.addCommand('increase-heading-level', IncreaseHeadingLevelCommand, {
       commandGroup: 'text'
     })
-    config.addCommand('indent-list', ListPackage.IndentListCommand, {
+    config.addCommand('indent-list', IndentListCommand, {
       spec: { action: 'indent' },
       commandGroup: 'list'
     })

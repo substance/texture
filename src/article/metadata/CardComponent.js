@@ -5,11 +5,11 @@ export default class CardComponent extends Component {
     // Note: without a 'managed' approach every card component needs to listen to selection updates
     // TODO: consider to use a reducer that maps the selection to another variable, e.g. activeCard
     // then the cards would not be triggered on every other change
-    this.context.appState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'render' })
+    this.context.editorState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'render' })
   }
 
   dispose () {
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   render ($$) {

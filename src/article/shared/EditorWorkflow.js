@@ -24,7 +24,7 @@ export default class EditorWorkflow extends Component {
     let config = this._getConfig()
     this.config = config
 
-    let editorSession = new ModalEditorSession(this._getWorkflowId(), parentEditorSession, config, this, this._getInitialEditorState())
+    let editorSession = new ModalEditorSession(this._getWorkflowId(), parentEditorSession, config, this._getInitialEditorState())
     this.editorSession = editorSession
 
     this.appState = editorSession.editorState
@@ -39,7 +39,7 @@ export default class EditorWorkflow extends Component {
     })
     this.context = context
 
-    // ATTENTION: the editorSession needs to be initialized
+    editorSession.setContext(context)
     editorSession.initialize()
   }
 

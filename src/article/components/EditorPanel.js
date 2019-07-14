@@ -18,14 +18,8 @@ export default class EditorPanel extends Component {
   _initialize (props) {
     const { editorSession } = props
     const config = this.context.config
-
-    // ATTENTION: augmenting the default context with editor stuff and api etc.
-    // TODO: try to find a more idiomatic approach, without needing to hack the context
-    // This should be solvable by sharing things like 'api' on the ArticlePanel level
-    // and adding other things to getChildContext()
     const context = Object.assign(this.context, createEditorContext(config, editorSession, this), {
-      editable: true,
-      editor: this
+      editable: true
     })
     this.context = context
   }
@@ -38,7 +32,7 @@ export default class EditorPanel extends Component {
   }
 
   dispose () {
-    const appState = this.context.appState
+    const appState = this.context.editorState
     const editorSession = this._getEditorSession()
     editorSession.dispose()
     appState.removeObserver(this)
@@ -74,7 +68,7 @@ export default class EditorPanel extends Component {
   _onKeydown (e) {
     // console.log('EditorPanel._onKeydown', e)
     let handled = false
-    const appState = this.context.appState
+    const appState = this.context.editorState
     switch (e.keyCode) {
       case keys.ESCAPE: {
         if (appState.findAndReplace.enabled) {
@@ -97,7 +91,7 @@ export default class EditorPanel extends Component {
   }
 
   _renderWorkflow ($$, workflowId) {
-    let workflowProps = this.context.appState.workflowProps || {}
+    let workflowProps = this.context.editorState.workflowProps || {}
     let Modal = this.getComponent('modal')
     let WorkflowComponent = this.getComponent(workflowId)
     return $$(Modal, {

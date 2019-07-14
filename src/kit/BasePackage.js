@@ -1,15 +1,16 @@
-import AnnotationComponent from './ui/AnnotationComponent'
+import {
+  AnnotationComponent, IsolatedInlineNodeComponent, TextPropertyComponent
+} from 'substance'
+
 import BodyScrollPane from './ui/BodyScrollPane'
 import Button from './ui/Button'
 import ContainerEditor from './ui/_ContainerEditor'
 import ContextMenu from './ui/ContextMenu'
 import Input from './ui/Input'
 import IsolatedNodeComponent from './ui/_IsolatedNodeComponent'
-import IsolatedInlineNodeComponent from './ui/_IsolatedInlineNodeComponent'
 import ModalDialog from './ui/ModalDialog'
 import OverlayCanvas from './ui/OverlayCanvas'
 import ScrollPane from './ui/ScrollPane'
-import TextPropertyComponent from './ui/_TextPropertyComponent'
 import TextPropertyEditor from './ui/_TextPropertyEditor'
 import TextInput from './ui/TextInput'
 import Tool from './ui/Tool'

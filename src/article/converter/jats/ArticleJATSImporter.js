@@ -1,20 +1,12 @@
 import {
-  DOMImporter, last
+  XMLImporter, last
 } from 'substance'
 import InternalArticleDocument from '../../InternalArticleDocument'
 import jats2internal from './jats2internal'
 import UnsupportedInlineNodeConverter from './UnsupportedInlineNodeConverter'
 import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 
-export default class ArticleJATSImporter extends DOMImporter {
-  constructor (articleConfig, document, options = {}) {
-    super(Object.assign({
-      document,
-      converters: options.converters,
-      idAttribute: 'id'
-    }, options))
-  }
-
+export default class ArticleJATSImporter extends XMLImporter {
   import (jats, options = {}) {
     jats2internal(jats, this.state.doc, this)
     return this.state.doc
@@ -48,7 +40,7 @@ export default class ArticleJATSImporter extends DOMImporter {
   }
 
   _createDocument () {
-    return InternalArticleDocument.createEmptyArticle(this.config.document.getSchema())
+    return InternalArticleDocument.createEmptyArticle(this.state.doc.getSchema())
   }
 
   _getConverterForElement (el, mode) {

@@ -1,5 +1,5 @@
 import {
-  documentHelpers, includes, orderBy, without, copySelection, selectionHelpers,
+  documentHelpers, includes, orderBy, without, selectionHelpers,
   isArray, isString, getKeyForPath, isNil
 } from 'substance'
 import { createValueModel } from '../../kit'
@@ -26,13 +26,12 @@ import {
 const DISALLOWED_MANIPULATION = 'Manipulation is not allowed.'
 
 export default class ArticleAPI {
-  constructor (editorSession, archive, config, contextProvider) {
+  constructor (editorSession, archive, config) {
     let doc = editorSession.getDocument()
 
     this.editorSession = editorSession
     this.config = config
     this.archive = archive
-    this._contextProvider = contextProvider
     this._document = doc
 
     this._articleModel = new ArticleModel(this)
@@ -52,6 +51,215 @@ export default class ArticleAPI {
     this._tableManager = new TableManager(editorSession, config.getValue('table-label-generator'))
   }
 
+  addAffiliation () {
+    this._addEntity(['metadata', 'affiliations'], Affiliation.type)
+  }
+
+  addAuthor () {
+    this._addEntity(['metadata', 'authors'], Person.type)
+  }
+
+  addCustomAbstract () {
+    this._addEntity(['article', 'customAbstracts'], CustomAbstract.type, tx => documentHelpers.createNodeFromJson(tx, CustomAbstract.getTemplate()))
+  }
+
+  addEditor () {
+    this._addEntity(['metadata', 'editors'], Person.type)
+  }
+
+  addFunder () {
+    this._addEntity(['metadata', 'funders'], Funder.type)
+  }
+
+  addGroup () {
+    this._addEntity(['metadata', 'groups'], Group.type)
+  }
+
+  addKeyword () {
+    this._addEntity(['metadata', 'keywords'], Keyword.type)
+  }
+
+  addSubject () {
+    this._addEntity(['metadata', 'subjects'], Subject.type)
+  }
+
+  addFigurePanel (figureId, file) {
+    const doc = this.getDocument()
+    const figure = doc.get(figureId)
+    if (!figure) throw new Error('Figure does not exist')
+    const pos = figure.getCurrentPanelIndex()
+    const href = this.archive.addAsset(file)
+    const insertPos = pos + 1
+    // NOTE: with this method we are getting the structure of the active panel
+    // to replicate it, currently only for metadata fields
+    const panelTemplate = figure.getTemplateFromCurrentPanel()
+    this.editorSession.transaction(tx => {
+      let template = FigurePanel.getTemplate()
+      template.content.href = href
+      template.content.mimeType = file.type
+      Object.assign(template, panelTemplate)
+      let node = documentHelpers.createNodeFromJson(tx, template)
+      documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
+      tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
+    })
+  }
+
+  // TODO: it is not so common to add footnotes without an xref in the text
+  addFootnote (footnoteCollectionPath) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let node = documentHelpers.createNodeFromJson(tx, Footnote.getTemplate())
+      documentHelpers.append(tx, footnoteCollectionPath, node.id)
+      let p = tx.get(node.content[0])
+      tx.setSelection({
+        type: 'property',
+        path: p.getPath(),
+        startOffset: 0,
+        surfaceId: this._getSurfaceId(node, 'content'),
+        containerPath: [node.id, 'content']
+      })
+    })
+  }
+
+  addReference (refData) {
+    this.addReferences([refData])
+  }
+
+  addReferences (refsData) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let refNodes = refsData.map(refData => documentHelpers.createNodeFromJson(tx, refData))
+      refNodes.forEach(ref => {
+        documentHelpers.append(tx, ['article', 'references'], ref.id)
+      })
+      if (refNodes.length > 0) {
+        let newSelection = this._createEntitySelection(refNodes[0])
+        tx.setSelection(newSelection)
+      }
+    })
+  }
+
+  canCreateAnnotation (annoType) {
+    let editorState = this.getEditorState()
+    const sel = editorState.selection
+    const selectionState = editorState.selectionState
+    if (sel && !sel.isNull() && sel.isPropertySelection() && !sel.isCollapsed() && selectionState.property.targetTypes.has(annoType)) {
+      // otherwise these annos are only allowed to 'touch' the current selection, not overlap.
+      for (let anno of selectionState.annos) {
+        if (sel.overlaps(anno.getSelection(), 'strict')) return false
+      }
+      return true
+    }
+    return false
+  }
+
+  canInsertBlockFormula () {
+    return this.canInsertBlockNode(BlockFormula.type)
+  }
+
+  canInsertBlockNode (nodeType) {
+    let editorState = this.getEditorState()
+    let doc = editorState.document
+    let sel = editorState.selection
+    let selState = editorState.selectionState
+    if (sel && !sel.isNull() && !sel.isCustomSelection() && sel.isCollapsed() && selState.containerPath) {
+      let containerProp = doc.getProperty(selState.containerPath)
+      if (containerProp.targetTypes.has(nodeType)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  canInsertCrossReference () {
+    return this.canInsertInlineNode(Xref.type, true)
+  }
+
+  canInsertInlineGraphic () {
+    return this.canInsertInlineNode(InlineGraphic.type)
+  }
+
+  /**
+   * Checks if an inline node can be inserted for the current selection.
+   *
+   * @param {string} type the type of the inline node
+   * @param {boolean} collapsedOnly true if insertion is allowed only for collapsed selection
+   */
+  canInsertInlineNode (type, collapsedOnly) {
+    let editorState = this.getEditorState()
+    const sel = editorState.selection
+    const selectionState = editorState.selectionState
+    if (sel && !sel.isNull() && sel.isPropertySelection() && (!collapsedOnly || sel.isCollapsed())) {
+      // make sure that the schema allows to insert that node
+      let targetTypes = selectionState.property.targetTypes
+      if (targetTypes.size > 0 && targetTypes.has(type)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  canMoveEntityUp (nodeId) {
+    let node = this._getNode(nodeId)
+    if (node && this._isCollectionItem(node) && !this._isManagedCollectionItem(node)) {
+      return node.getPosition() > 0
+    }
+  }
+
+  canMoveEntityDown (nodeId) {
+    let node = this._getNode(nodeId)
+    if (node && this._isCollectionItem(node) && !this._isManagedCollectionItem(node)) {
+      let pos = node.getPosition()
+      let ids = this.getDocument().get(this._getCollectionPathForItem(node))
+      return pos < ids.length - 1
+    }
+  }
+
+  canRemoveEntity (nodeId) {
+    let node = this._getNode(nodeId)
+    if (node) {
+      return this._isCollectionItem(node)
+    } else {
+      return false
+    }
+  }
+
+  copy () {
+    return this.getEditorSession().copy()
+  }
+
+  cut () {
+    return this.getEditorSession().cut()
+  }
+
+  dedent () {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      tx.dedent()
+    })
+  }
+
+  deleteSelection (options) {
+    const sel = this.getSelection()
+    if (sel && !sel.isNull() && !sel.isCollapsed()) {
+      this.editorSession.transaction(tx => {
+        tx.deleteSelection(options)
+      }, { action: 'deleteSelection' })
+    }
+  }
+
+  getEditorState () {
+    return this.editorSession.getEditorState()
+  }
+
+  getArticleModel () {
+    return this._articleModel
+  }
+
+  getContext () {
+    return this.editorSession.getContext()
+  }
+
   getDocument () {
     return this._document
   }
@@ -62,10 +270,6 @@ export default class ArticleAPI {
 
   getSelection () {
     return this.editorSession.getSelection()
-  }
-
-  getArticleModel () {
-    return this._articleModel
   }
 
   /**
@@ -95,29 +299,163 @@ export default class ArticleAPI {
     return this._tableApi
   }
 
-  _getContainerPathForNode (node) {
-    let last = node.getXpath()
-    let prop = last.property
-    let prev = last.prev
-    if (prev && prop) {
-      return [prev.id, prop]
-    }
+  indent () {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      tx.indent()
+    })
   }
 
-  // EXPERIMENTAL: trying to derive a surfaceId for a property in a specific node
-  // exploiting knowledge about the implemented view structure
-  // in manuscript it is either top-level (e.g. title, abstract) or part of a container (body)
-  _getSurfaceId (node, propertyName) {
-    let xpath = node.getXpath().toArray()
-    let idx = xpath.findIndex(entry => entry.id === 'body')
-    let relXpath
-    if (idx >= 0) {
-      relXpath = xpath.slice(idx)
-    } else {
-      relXpath = xpath.slice(-1)
+  insertBlockFormula () {
+    if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
+    this._insertBlockNode(tx => {
+      return tx.create({ type: BlockFormula.type })
+    })
+  }
+
+  insertBlockQuote () {
+    if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error(DISALLOWED_MANIPULATION)
+    this._insertBlockNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
+    })
+  }
+
+  insertCrossReference (refType) {
+    if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
+    this._insertCrossReference(refType)
+  }
+
+  insertFootnoteReference () {
+    if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
+    // In table-figures we want to allow only cross-reference to table-footnotes
+    let selectionState = this.getEditorState().selectionState
+    const xpath = selectionState.xpath
+    let refType = xpath.find(n => n.type === TableFigure.type) ? 'table-fn' : 'fn'
+    this._insertCrossReference(refType)
+  }
+
+  // TODO: we should discuss if it would also make sense to create a figure with multiple panels
+  insertImagesAsFigures (files) {
+    // TODO: we would need a transaction on archive level, creating assets,
+    // and then placing them inside the article body.
+    // This way the archive gets 'polluted', i.e. a redo of that change does
+    // not remove the asset.
+    const editorSession = this.getEditorSession()
+    let paths = files.map(file => {
+      return this.archive.addAsset(file)
+    })
+    let sel = editorSession.getSelection()
+    if (!sel || !sel.containerPath) return
+    editorSession.transaction(tx => {
+      importFigures(tx, sel, files, paths)
+    })
+  }
+
+  insertInlineGraphic (file) {
+    if (!this.canInsertInlineGraphic()) throw new Error(DISALLOWED_MANIPULATION)
+    const editorSession = this.getEditorSession()
+    const sel = editorSession.getSelection()
+    if (!sel) return
+    const href = this.archive.addAsset(file)
+    const mimeType = file.type
+    editorSession.transaction(tx => {
+      const node = tx.create({
+        type: InlineGraphic.type,
+        mimeType,
+        href
+      })
+      tx.insertInlineNode(node)
+      tx.setSelection(node.getSelection())
+    })
+  }
+
+  insertInlineFormula (content) {
+    if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
+    this._insertInlineNode(tx => {
+      return tx.create({
+        type: InlineFormula.type,
+        contentType: 'math/tex',
+        content
+      })
+    })
+  }
+
+  insertSupplementaryFile (file, url) {
+    const articleSession = this.editorSession
+    if (file) url = this.archive.addAsset(file)
+    let sel = articleSession.getSelection()
+    articleSession.transaction(tx => {
+      let containerPath = sel.containerPath
+      let nodeData = SupplementaryFile.getTemplate()
+      nodeData.mimetype = file ? file.type : ''
+      nodeData.href = url
+      nodeData.remote = !file
+      let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
+      tx.insertBlockNode(supplementaryFile)
+      selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)
+    })
+  }
+
+  insertTable () {
+    if (!this.canInsertBlockNode(TableFigure.type)) throw new Error(DISALLOWED_MANIPULATION)
+    this._insertBlockNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
+    })
+  }
+
+  insertText (text) {
+    return this.getEditorSession().insertText(text)
+  }
+
+  moveEntityUp (nodeId) {
+    if (!this.canMoveEntityUp(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
+    this._moveEntity(nodeId, -1)
+  }
+
+  moveEntityDown (nodeId) {
+    if (!this.canMoveEntityDown(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
+    this._moveEntity(nodeId, 1)
+  }
+
+  paste (content, options) {
+    return this.getEditorSession().paste(content, options)
+  }
+
+  removeEntity (nodeId) {
+    if (!this.canRemoveEntity(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
+    let node = this._getNode(nodeId)
+    if (!node) throw new Error('Invalid argument.')
+    let collectionPath = this._getCollectionPathForItem(node)
+    this._removeItemFromCollection(nodeId, collectionPath)
+  }
+
+  removeFootnote (footnoteId) {
+    // ATTENTION: footnotes appear in different contexts
+    // e.g. article.footnotes, or table-fig.footnotes
+    let doc = this.getDocument()
+    let footnote = doc.get(footnoteId)
+    let parent = footnote.getParent()
+    this._removeItemFromCollection(footnoteId, [parent.id, 'footnotes'])
+  }
+
+  renderEntity (entity, options) {
+    let exporter = this.config.createExporter('html')
+    return renderEntity(entity, exporter)
+  }
+
+  replaceFile (hrefPath, file) {
+    const articleSession = this.editorSession
+    const path = this.archive.addAsset(file)
+    articleSession.transaction(tx => {
+      tx.set(hrefPath, path)
+    })
+  }
+
+  selectNode (nodeId) {
+    let selData = this._createNodeSelection(nodeId)
+    if (selData) {
+      this.editorSession.setSelection(selData)
     }
-    // the 'trace' is concatenated using '/' and the property name appended via '.'
-    return relXpath.map(e => e.id).join('/') + '.' + propertyName
   }
 
   // EXPERIMENTAL need to figure out if we really need this
@@ -137,117 +475,42 @@ export default class ArticleAPI {
     }
   }
 
-  getAppState () {
-    return this.getContext().appState
-  }
-
-  getContext () {
-    return this._contextProvider.context
-  }
-
-  // TODO: we need a better way to update settings
-  _loadSettings (settings) {
-    let appState = this.getContext().appState
-    appState.settings.load(settings)
-    appState._setDirty('settings')
-    appState.propagateUpdates()
-  }
-
-  // Basic editing
-
-  copy () {
-    if (this._tableApi.isTableSelected()) {
-      return this._tableApi.copySelection()
-    } else {
-      const sel = this.getSelection()
-      const doc = this.getDocument()
-      if (sel && !sel.isNull() && !sel.isCollapsed()) {
-        return copySelection(doc, sel)
-      }
+  switchFigurePanel (figure, newPanelIndex) {
+    const editorSession = this.editorSession
+    let sel = editorSession.getSelection()
+    if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
+      this.selectNode(figure.id)
     }
+    editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
   }
 
-  cut () {
-    if (this._tableApi.isTableSelected()) {
-      return this._tableApi.cut()
-    } else {
-      const sel = this.getSelection()
-      if (sel && !sel.isNull() && !sel.isCollapsed()) {
-        let snippet = this.copy()
-        this.deleteSelection()
-        return snippet
-      }
+  _addEntity (collectionPath, type, createNode) {
+    const editorSession = this.getEditorSession()
+    if (!createNode) {
+      createNode = tx => tx.create({ type })
     }
-  }
-
-  dedent () {
-    let editorSession = this.getEditorSession()
     editorSession.transaction(tx => {
-      tx.dedent()
+      let node = createNode(tx)
+      documentHelpers.append(tx, collectionPath, node.id)
+      tx.setSelection(this._createEntitySelection(node))
     })
   }
 
-  deleteSelection (options) {
-    const sel = this.getSelection()
-    if (sel && !sel.isNull() && !sel.isCollapsed()) {
-      this.editorSession.transaction(tx => {
-        tx.deleteSelection(options)
-      }, { action: 'deleteSelection' })
-    }
-  }
-
-  indent () {
-    let editorSession = this.getEditorSession()
-    editorSession.transaction(tx => {
-      tx.indent()
+  // TODO: still used?
+  _appendChild (collectionPath, data) {
+    this.editorSession.transaction(tx => {
+      let node = tx.create(data)
+      documentHelpers.append(tx, collectionPath, node.id)
     })
-  }
-
-  insertText (text) {
-    if (this._tableApi.isTableSelected()) {
-      this._tableApi.insertText(text)
-    } else {
-      const sel = this.getSelection()
-      if (sel && !sel.isNull()) {
-        this.editorSession.transaction(tx => {
-          tx.insertText(text)
-        }, { action: 'insertText' })
-      }
-    }
-  }
-
-  paste (content, options) {
-    // TODO: how could we modularise this, i.e. there could be other
-    // types with a special paste support
-    if (this._tableApi.isTableSelected()) {
-      return this._tableApi.paste(content, options)
-    } else {
-      this.editorSession.transaction(tx => {
-        tx.paste(content, options)
-      }, { action: 'paste' })
-      return true
-    }
-  }
-
-  renderEntity (entity, options) {
-    let exporter = this.config.createExporter('html')
-    return renderEntity(entity, exporter)
-  }
-
-  selectNode (nodeId) {
-    let selData = this._createNodeSelection(nodeId)
-    if (selData) {
-      this.editorSession.setSelection(selData)
-    }
   }
 
   _createNodeSelection (nodeId) {
-    let appState = this.getAppState()
-    let doc = appState.document
+    let editorState = this.getEditorState()
+    let doc = editorState.document
     const node = doc.get(nodeId)
     if (node) {
       let editorSession = this.getEditorSession()
-      let sel = appState.selection
+      let sel = editorState.selection
       const containerPath = this._getContainerPathForNode(node)
       const surface = editorSession.surfaceManager._getSurfaceForProperty(containerPath)
       const surfaceId = surface ? surface.getId() : (sel ? sel.surfaceId : null)
@@ -270,36 +533,6 @@ export default class ArticleAPI {
     }
   }
 
-  _appendChild (collectionPath, data) {
-    this.editorSession.transaction(tx => {
-      let node = tx.create(data)
-      documentHelpers.append(tx, collectionPath, node.id)
-    })
-  }
-
-  _deleteChild (collectionPath, child, txHook) {
-    this.editorSession.transaction(tx => {
-      documentHelpers.removeFromCollection(tx, collectionPath, child.id)
-      documentHelpers.deepDeleteNode(tx, child)
-      if (txHook) {
-        txHook(tx)
-      }
-    })
-  }
-
-  _moveChild (collectionPath, child, shift, txHook) {
-    this.editorSession.transaction(tx => {
-      let ids = tx.get(collectionPath)
-      let pos = ids.indexOf(child.id)
-      if (pos === -1) return
-      documentHelpers.removeAt(tx, collectionPath, pos)
-      documentHelpers.insertAt(tx, collectionPath, pos + shift, child.id)
-      if (txHook) {
-        txHook(tx)
-      }
-    })
-  }
-
   _createValueSelection (path) {
     return {
       type: 'custom',
@@ -310,6 +543,71 @@ export default class ArticleAPI {
         propertyName: path[1]
       },
       surfaceId: path[0]
+    }
+  }
+
+  _customCopy () {
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.copySelection()
+    }
+  }
+
+  _customCut () {
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.cut()
+    }
+  }
+
+  _customInsertText (text) {
+    if (this._tableApi.isTableSelected()) {
+      this._tableApi.insertText(text)
+      return true
+    }
+  }
+
+  _customPaste (content, options) {
+    if (this._tableApi.isTableSelected()) {
+      return this._tableApi.paste(content, options)
+    }
+  }
+
+  // still used?
+  _deleteChild (collectionPath, child, txHook) {
+    this.editorSession.transaction(tx => {
+      documentHelpers.removeFromCollection(tx, collectionPath, child.id)
+      documentHelpers.deepDeleteNode(tx, child)
+      if (txHook) {
+        txHook(tx)
+      }
+    })
+  }
+
+  // EXPERIMENTAL
+  // this is called by ManyRelationshipComponent and SingleRelationshipComponent to get
+  // options for the selection
+  // TODO: I am not sure if it is the right approach, trying to generalize this
+  // Instead we could use dedicated Components derived from the ones from the kit
+  // and use specific API to accomplish this
+  _getAvailableOptions (model) {
+    let targetTypes = Array.from(model._targetTypes)
+    if (targetTypes.length !== 1) {
+      throw new Error('Unsupported relationship. Expected to find one targetType')
+    }
+    let doc = this.getDocument()
+    let first = targetTypes[0]
+    let targetType = first
+    switch (targetType) {
+      case 'funder': {
+        return doc.get('metadata').resolve('funders')
+      }
+      case 'affiliation': {
+        return doc.get('metadata').resolve('affiliations')
+      }
+      case 'group': {
+        return doc.get('metadata').resolve('groups')
+      }
+      default:
+        throw new Error('Unsupported relationship: ' + targetType)
     }
   }
 
@@ -387,33 +685,194 @@ export default class ArticleAPI {
     return targets
   }
 
-  // EXPERIMENTAL
-  // this is called by ManyRelationshipComponent and SingleRelationshipComponent to get
-  // options for the selection
-  // TODO: I am not sure if it is the right approach, trying to generalize this
-  // Instead we could use dedicated Components derived from the ones from the kit
-  // and use specific API to accomplish this
-  _getAvailableOptions (model) {
-    let targetTypes = Array.from(model._targetTypes)
-    if (targetTypes.length !== 1) {
-      throw new Error('Unsupported relationship. Expected to find one targetType')
+  _getCollectionPathForItem (node) {
+    let parent = node.getParent()
+    let propName = node.getXpath().property
+    if (parent && propName) {
+      let collectionPath = [parent.id, propName]
+      let property = node.getDocument().getProperty(collectionPath)
+      if (property.isArray() && property.isReference()) {
+        return collectionPath
+      }
     }
-    let doc = this.getDocument()
-    let first = targetTypes[0]
-    let targetType = first
-    switch (targetType) {
-      case 'funder': {
-        return doc.get('metadata').resolve('funders')
-      }
-      case 'affiliation': {
-        return doc.get('metadata').resolve('affiliations')
-      }
-      case 'group': {
-        return doc.get('metadata').resolve('groups')
-      }
-      default:
-        throw new Error('Unsupported relationship: ' + targetType)
+  }
+
+  _getContainerPathForNode (node) {
+    let last = node.getXpath()
+    let prop = last.property
+    let prev = last.prev
+    if (prev && prop) {
+      return [prev.id, prop]
     }
+  }
+
+  _getFirstRequiredProperty (node) {
+    // TODO: still not sure if this is the right approach
+    // Maybe it would be simpler to just use configuration
+    // and fall back to 'node' or 'card' selection otherwise
+    let schema = node.getSchema()
+    for (let p of schema) {
+      if (p.name === 'id' || !this._isFieldRequired([node.type, p.name])) continue
+      return p
+    }
+  }
+
+  _getNode (nodeId) {
+    return nodeId._isNode ? nodeId : this.getDocument().get(nodeId)
+  }
+
+  // EXPERIMENTAL: trying to derive a surfaceId for a property in a specific node
+  // exploiting knowledge about the implemented view structure
+  // in manuscript it is either top-level (e.g. title, abstract) or part of a container (body)
+  _getSurfaceId (node, propertyName) {
+    let xpath = node.getXpath().toArray()
+    let idx = xpath.findIndex(entry => entry.id === 'body')
+    let relXpath
+    if (idx >= 0) {
+      relXpath = xpath.slice(idx)
+    } else {
+      relXpath = xpath.slice(-1)
+    }
+    // the 'trace' is concatenated using '/' and the property name appended via '.'
+    return relXpath.map(e => e.id).join('/') + '.' + propertyName
+  }
+
+  _insertBlockNode (createNode, setSelection) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let node = tx.insertBlockNode(createNode(tx))
+      if (setSelection) {
+        setSelection(tx)
+      } else {
+        tx.setSelection(this._createNodeSelection(node))
+      }
+    })
+  }
+
+  _insertCrossReference (refType) {
+    this._insertInlineNode(tx => {
+      return tx.create({
+        type: Xref.type,
+        refType
+      })
+    })
+  }
+
+  _insertInlineNode (createNode) {
+    let editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let inlineNode = createNode(tx)
+      tx.insertInlineNode(inlineNode)
+      // TODO: some inline nodes have an input field
+      // which we might want to focus initially
+      // instead of selecting the whole node
+      tx.setSelection(this._selectInlineNode(inlineNode))
+    })
+  }
+
+  _isCollectionItem (node) {
+    return !isNil(this._getCollectionPathForItem(node))
+  }
+
+  _isFieldRequired (path) {
+    // ATTENTION: this API is experimental
+    let settings = this.getEditorState().settings
+    let valueSettings = settings.getSettingsForValue(path)
+    return Boolean(valueSettings['required'])
+  }
+
+  _isManagedCollectionItem (node) {
+    // ATM, only references are managed (i.e. not sorted manually)
+    return node.isInstanceOf(Reference.type)
+  }
+
+  // TODO: we need a better way to update settings
+  _loadSettings (settings) {
+    let editorState = this.getContext().editorState
+    editorState.settings.load(settings)
+    editorState._setDirty('settings')
+    editorState.propagateUpdates()
+  }
+
+  _moveEntity (nodeId, shift) {
+    let node = this._getNode(nodeId)
+    if (!node) throw new Error('Invalid argument.')
+    let collectionPath = this._getCollectionPathForItem(node)
+    this.editorSession.transaction(tx => {
+      let ids = tx.get(collectionPath)
+      let pos = ids.indexOf(node.id)
+      documentHelpers.removeAt(tx, collectionPath, pos)
+      documentHelpers.insertAt(tx, collectionPath, pos + shift, node.id)
+    })
+  }
+
+  // TODO: still used?
+  _moveChild (collectionPath, child, shift, txHook) {
+    this.editorSession.transaction(tx => {
+      let ids = tx.get(collectionPath)
+      let pos = ids.indexOf(child.id)
+      if (pos === -1) return
+      documentHelpers.removeAt(tx, collectionPath, pos)
+      documentHelpers.insertAt(tx, collectionPath, pos + shift, child.id)
+      if (txHook) {
+        txHook(tx)
+      }
+    })
+  }
+
+  // This method is used to cleanup xref targets
+  // during footnote or reference removing
+  _removeCorrespondingXrefs (tx, node) {
+    let manager
+    if (node.isInstanceOf(Reference.type)) {
+      manager = this._referenceManager
+    } else if (node.isInstanceOf(Footnote.type)) {
+      manager = this._footnoteManager
+    } else {
+      return
+    }
+    manager._getXrefs().forEach(xref => {
+      const index = xref.refTargets.indexOf(node.id)
+      if (index > -1) {
+        tx.update([xref.id, 'refTargets'], { type: 'delete', pos: index })
+      }
+    })
+  }
+
+  _removeItemFromCollection (itemId, collectionPath) {
+    const editorSession = this.getEditorSession()
+    editorSession.transaction(tx => {
+      let item = tx.get(itemId)
+      documentHelpers.removeFromCollection(tx, collectionPath, itemId)
+      // TODO: discuss if we really should do this, or want to do something different.
+      this._removeCorrespondingXrefs(tx, item)
+      documentHelpers.deepDeleteNode(tx, itemId)
+      tx.selection = null
+    })
+  }
+
+  _replaceSupplementaryFile (file, supplementaryFile) {
+    const articleSession = this.editorSession
+    const path = this.archive.addAsset(file)
+    articleSession.transaction(tx => {
+      const mimeData = file.type.split('/')
+      tx.set([supplementaryFile.id, 'mime-subtype'], mimeData[1])
+      tx.set([supplementaryFile.id, 'mimetype'], mimeData[0])
+      tx.set([supplementaryFile.id, 'href'], path)
+    })
+  }
+
+  _selectInlineNode (inlineNode) {
+    return {
+      type: 'property',
+      path: inlineNode.getPath(),
+      startOffset: inlineNode.start.offset,
+      endOffset: inlineNode.end.offset
+    }
+  }
+
+  _setSelection (sel) {
+    this.editorSession.setSelection(sel)
   }
 
   _toggleRelationship (path, id) {
@@ -441,476 +900,5 @@ export default class ArticleAPI {
         tx.update([xref.id, 'refTargets'], { type: 'insert', pos: targetIds.length, value: targetId })
       })
     }
-  }
-
-  _isFieldRequired (path) {
-    // ATTENTION: this API is experimental
-    let settings = this.getAppState().settings
-    let valueSettings = settings.getSettingsForValue(path)
-    return Boolean(valueSettings['required'])
-  }
-
-  _getFirstRequiredProperty (node) {
-    // TODO: still not sure if this is the right approach
-    // Maybe it would be simpler to just use configuration
-    // and fall back to 'node' or 'card' selection otherwise
-    let schema = node.getSchema()
-    for (let p of schema) {
-      if (p.name === 'id' || !this._isFieldRequired([node.type, p.name])) continue
-      return p
-    }
-  }
-
-  _setSelection (sel) {
-    this.editorSession.setSelection(sel)
-  }
-
-  _replaceSupplementaryFile (file, supplementaryFile) {
-    const articleSession = this.editorSession
-    const path = this.archive.addAsset(file)
-    articleSession.transaction(tx => {
-      const mimeData = file.type.split('/')
-      tx.set([supplementaryFile.id, 'mime-subtype'], mimeData[1])
-      tx.set([supplementaryFile.id, 'mimetype'], mimeData[0])
-      tx.set([supplementaryFile.id, 'href'], path)
-    })
-  }
-
-  // # Actions
-
-  addAffiliation () {
-    this._addEntity(['metadata', 'affiliations'], Affiliation.type)
-  }
-
-  addAuthor () {
-    this._addEntity(['metadata', 'authors'], Person.type)
-  }
-
-  addCustomAbstract () {
-    this._addEntity(['article', 'customAbstracts'], CustomAbstract.type, tx => documentHelpers.createNodeFromJson(tx, CustomAbstract.getTemplate()))
-  }
-
-  addEditor () {
-    this._addEntity(['metadata', 'editors'], Person.type)
-  }
-
-  addFunder () {
-    this._addEntity(['metadata', 'funders'], Funder.type)
-  }
-
-  addGroup () {
-    this._addEntity(['metadata', 'groups'], Group.type)
-  }
-
-  addKeyword () {
-    this._addEntity(['metadata', 'keywords'], Keyword.type)
-  }
-
-  addSubject () {
-    this._addEntity(['metadata', 'subjects'], Subject.type)
-  }
-
-  _addEntity (collectionPath, type, createNode) {
-    const editorSession = this.getEditorSession()
-    if (!createNode) {
-      createNode = tx => tx.create({ type })
-    }
-    editorSession.transaction(tx => {
-      let node = createNode(tx)
-      documentHelpers.append(tx, collectionPath, node.id)
-      tx.setSelection(this._createEntitySelection(node))
-    })
-  }
-
-  addFigurePanel (figureId, file) {
-    const doc = this.getDocument()
-    const figure = doc.get(figureId)
-    if (!figure) throw new Error('Figure does not exist')
-    const pos = figure.getCurrentPanelIndex()
-    const href = this.archive.addAsset(file)
-    const insertPos = pos + 1
-    // NOTE: with this method we are getting the structure of the active panel
-    // to replicate it, currently only for metadata fields
-    const panelTemplate = figure.getTemplateFromCurrentPanel()
-    this.editorSession.transaction(tx => {
-      let template = FigurePanel.getTemplate()
-      template.content.href = href
-      template.content.mimeType = file.type
-      Object.assign(template, panelTemplate)
-      let node = documentHelpers.createNodeFromJson(tx, template)
-      documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
-      tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
-    })
-  }
-
-  addReference (refData) {
-    this.addReferences([refData])
-  }
-
-  addReferences (refsData) {
-    let editorSession = this.getEditorSession()
-    editorSession.transaction(tx => {
-      let refNodes = refsData.map(refData => documentHelpers.createNodeFromJson(tx, refData))
-      refNodes.forEach(ref => {
-        documentHelpers.append(tx, ['article', 'references'], ref.id)
-      })
-      if (refNodes.length > 0) {
-        let newSelection = this._createEntitySelection(refNodes[0])
-        tx.setSelection(newSelection)
-      }
-    })
-  }
-
-  // TODO: it is not so common to add footnotes without an xref in the text
-  addFootnote (footnoteCollectionPath) {
-    let editorSession = this.getEditorSession()
-    editorSession.transaction(tx => {
-      let node = documentHelpers.createNodeFromJson(tx, Footnote.getTemplate())
-      documentHelpers.append(tx, footnoteCollectionPath, node.id)
-      let p = tx.get(node.content[0])
-      tx.setSelection({
-        type: 'property',
-        path: p.getPath(),
-        startOffset: 0,
-        surfaceId: this._getSurfaceId(node, 'content'),
-        containerPath: [node.id, 'content']
-      })
-    })
-  }
-
-  canCreateAnnotation (annoType) {
-    let appState = this.getAppState()
-    const sel = appState.selection
-    const selectionState = appState.selectionState
-    if (sel && !sel.isNull() && sel.isPropertySelection() && !sel.isCollapsed() && selectionState.property.targetTypes.has(annoType)) {
-      // otherwise these annos are only allowed to 'touch' the current selection, not overlap.
-      for (let anno of selectionState.annos) {
-        if (sel.overlaps(anno.getSelection(), 'strict')) return false
-      }
-      return true
-    }
-    return false
-  }
-
-  canInsertBlockFormula () {
-    return this.canInsertBlockNode(BlockFormula.type)
-  }
-
-  insertBlockFormula () {
-    if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
-      return tx.create({ type: BlockFormula.type })
-    })
-  }
-
-  canInsertBlockNode (nodeType) {
-    let appState = this.getAppState()
-    let doc = appState.document
-    let sel = appState.selection
-    let selState = appState.selectionState
-    if (sel && !sel.isNull() && !sel.isCustomSelection() && sel.isCollapsed() && selState.containerPath) {
-      let containerProp = doc.getProperty(selState.containerPath)
-      if (containerProp.targetTypes.has(nodeType)) {
-        return true
-      }
-    }
-    return false
-  }
-
-  _insertBlockNode (createNode, setSelection) {
-    let editorSession = this.getEditorSession()
-    editorSession.transaction(tx => {
-      let node = tx.insertBlockNode(createNode(tx))
-      if (setSelection) {
-        setSelection(tx)
-      } else {
-        tx.setSelection(this._createNodeSelection(node))
-      }
-    })
-  }
-
-  insertBlockQuote () {
-    if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
-      return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
-    })
-  }
-
-  // TODO: we should discuss if it would also make sense to create a figure with multiple panels
-  insertImagesAsFigures (files) {
-    // TODO: we would need a transaction on archive level, creating assets,
-    // and then placing them inside the article body.
-    // This way the archive gets 'polluted', i.e. a redo of that change does
-    // not remove the asset.
-    const editorSession = this.getEditorSession()
-    let paths = files.map(file => {
-      return this.archive.addAsset(file)
-    })
-    let sel = editorSession.getSelection()
-    if (!sel || !sel.containerPath) return
-    editorSession.transaction(tx => {
-      importFigures(tx, sel, files, paths)
-    })
-  }
-
-  canInsertInlineGraphic () {
-    return this.canInsertInlineNode(InlineGraphic.type)
-  }
-
-  insertInlineGraphic (file) {
-    if (!this.canInsertInlineGraphic()) throw new Error(DISALLOWED_MANIPULATION)
-    const editorSession = this.getEditorSession()
-    const sel = editorSession.getSelection()
-    if (!sel) return
-    const href = this.archive.addAsset(file)
-    const mimeType = file.type
-    editorSession.transaction(tx => {
-      const node = tx.create({
-        type: InlineGraphic.type,
-        mimeType,
-        href
-      })
-      tx.insertInlineNode(node)
-      tx.setSelection(node.getSelection())
-    })
-  }
-
-  canInsertCrossReference () {
-    return this.canInsertInlineNode(Xref.type, true)
-  }
-
-  insertCrossReference (refType) {
-    if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertCrossReference(refType)
-  }
-
-  insertFootnoteReference () {
-    if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
-    // In table-figures we want to allow only cross-reference to table-footnotes
-    let selectionState = this.getAppState().selectionState
-    const xpath = selectionState.xpath
-    let refType = xpath.find(n => n.type === TableFigure.type) ? 'table-fn' : 'fn'
-    this._insertCrossReference(refType)
-  }
-
-  _insertCrossReference (refType) {
-    this._insertInlineNode(tx => {
-      return tx.create({
-        type: Xref.type,
-        refType
-      })
-    })
-  }
-
-  insertInlineFormula (content) {
-    if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertInlineNode(tx => {
-      return tx.create({
-        type: InlineFormula.type,
-        contentType: 'math/tex',
-        content
-      })
-    })
-  }
-
-  /**
-   * Checks if an inline node can be inserted for the current selection.
-   *
-   * @param {string} type the type of the inline node
-   * @param {boolean} collapsedOnly true if insertion is allowed only for collapsed selection
-   */
-  canInsertInlineNode (type, collapsedOnly) {
-    let appState = this.getAppState()
-    const sel = appState.selection
-    const selectionState = appState.selectionState
-    if (sel && !sel.isNull() && sel.isPropertySelection() && (!collapsedOnly || sel.isCollapsed())) {
-      // make sure that the schema allows to insert that node
-      let targetTypes = selectionState.property.targetTypes
-      if (targetTypes.size > 0 && targetTypes.has(type)) {
-        return true
-      }
-    }
-    return false
-  }
-
-  _insertInlineNode (createNode) {
-    let editorSession = this.getEditorSession()
-    editorSession.transaction(tx => {
-      let inlineNode = createNode(tx)
-      tx.insertInlineNode(inlineNode)
-      // TODO: some inline nodes have an input field
-      // which we might want to focus initially
-      // instead of selecting the whole node
-      tx.setSelection(this._selectInlineNode(inlineNode))
-    })
-  }
-
-  _selectInlineNode (inlineNode) {
-    return {
-      type: 'property',
-      path: inlineNode.getPath(),
-      startOffset: inlineNode.start.offset,
-      endOffset: inlineNode.end.offset
-    }
-  }
-
-  insertSupplementaryFile (file, url) {
-    const articleSession = this.editorSession
-    if (file) url = this.archive.addAsset(file)
-    let sel = articleSession.getSelection()
-    articleSession.transaction(tx => {
-      let containerPath = sel.containerPath
-      let nodeData = SupplementaryFile.getTemplate()
-      nodeData.mimetype = file ? file.type : ''
-      nodeData.href = url
-      nodeData.remote = !file
-      let supplementaryFile = documentHelpers.createNodeFromJson(tx, nodeData)
-      tx.insertBlockNode(supplementaryFile)
-      selectionHelpers.selectNode(tx, supplementaryFile.id, containerPath)
-    })
-  }
-
-  insertTable () {
-    if (!this.canInsertBlockNode(TableFigure.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
-      return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
-    })
-  }
-
-  canRemoveEntity (nodeId) {
-    let node = this._getNode(nodeId)
-    if (node) {
-      return this._isCollectionItem(node)
-    } else {
-      return false
-    }
-  }
-
-  canMoveEntityUp (nodeId) {
-    let node = this._getNode(nodeId)
-    if (node && this._isCollectionItem(node) && !this._isManagedCollectionItem(node)) {
-      return node.getPosition() > 0
-    }
-  }
-
-  canMoveEntityDown (nodeId) {
-    let node = this._getNode(nodeId)
-    if (node && this._isCollectionItem(node) && !this._isManagedCollectionItem(node)) {
-      let pos = node.getPosition()
-      let ids = this.getDocument().get(this._getCollectionPathForItem(node))
-      return pos < ids.length - 1
-    }
-  }
-
-  removeEntity (nodeId) {
-    if (!this.canRemoveEntity(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
-    let node = this._getNode(nodeId)
-    if (!node) throw new Error('Invalid argument.')
-    let collectionPath = this._getCollectionPathForItem(node)
-    this._removeItemFromCollection(nodeId, collectionPath)
-  }
-
-  moveEntityUp (nodeId) {
-    if (!this.canMoveEntityUp(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
-    this._moveEntity(nodeId, -1)
-  }
-
-  moveEntityDown (nodeId) {
-    if (!this.canMoveEntityDown(nodeId)) throw new Error(DISALLOWED_MANIPULATION)
-    this._moveEntity(nodeId, 1)
-  }
-
-  _moveEntity (nodeId, shift) {
-    let node = this._getNode(nodeId)
-    if (!node) throw new Error('Invalid argument.')
-    let collectionPath = this._getCollectionPathForItem(node)
-    this.editorSession.transaction(tx => {
-      let ids = tx.get(collectionPath)
-      let pos = ids.indexOf(node.id)
-      documentHelpers.removeAt(tx, collectionPath, pos)
-      documentHelpers.insertAt(tx, collectionPath, pos + shift, node.id)
-    })
-  }
-
-  _getNode (nodeId) {
-    return nodeId._isNode ? nodeId : this.getDocument().get(nodeId)
-  }
-
-  _getCollectionPathForItem (node) {
-    let parent = node.getParent()
-    let propName = node.getXpath().property
-    if (parent && propName) {
-      let collectionPath = [parent.id, propName]
-      let property = node.getDocument().getProperty(collectionPath)
-      if (property.isArray() && property.isReference()) {
-        return collectionPath
-      }
-    }
-  }
-
-  _isCollectionItem (node) {
-    return !isNil(this._getCollectionPathForItem(node))
-  }
-
-  _isManagedCollectionItem (node) {
-    // ATM, only references are managed (i.e. not sorted manually)
-    return node.isInstanceOf(Reference.type)
-  }
-
-  removeFootnote (footnoteId) {
-    // ATTENTION: footnotes appear in different contexts
-    // e.g. article.footnotes, or table-fig.footnotes
-    let doc = this.getDocument()
-    let footnote = doc.get(footnoteId)
-    let parent = footnote.getParent()
-    this._removeItemFromCollection(footnoteId, [parent.id, 'footnotes'])
-  }
-
-  _removeItemFromCollection (itemId, collectionPath) {
-    const editorSession = this.getEditorSession()
-    editorSession.transaction(tx => {
-      let item = tx.get(itemId)
-      documentHelpers.removeFromCollection(tx, collectionPath, itemId)
-      // TODO: discuss if we really should do this, or want to do something different.
-      this._removeCorrespondingXrefs(tx, item)
-      documentHelpers.deepDeleteNode(tx, itemId)
-      tx.selection = null
-    })
-  }
-
-  // This method is used to cleanup xref targets
-  // during footnote or reference removing
-  _removeCorrespondingXrefs (tx, node) {
-    let manager
-    if (node.isInstanceOf(Reference.type)) {
-      manager = this._referenceManager
-    } else if (node.isInstanceOf(Footnote.type)) {
-      manager = this._footnoteManager
-    } else {
-      return
-    }
-    manager._getXrefs().forEach(xref => {
-      const index = xref.refTargets.indexOf(node.id)
-      if (index > -1) {
-        tx.update([xref.id, 'refTargets'], { type: 'delete', pos: index })
-      }
-    })
-  }
-
-  replaceFile (hrefPath, file) {
-    const articleSession = this.editorSession
-    const path = this.archive.addAsset(file)
-    articleSession.transaction(tx => {
-      tx.set(hrefPath, path)
-    })
-  }
-
-  switchFigurePanel (figure, newPanelIndex) {
-    const editorSession = this.editorSession
-    let sel = editorSession.getSelection()
-    if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
-      this.selectNode(figure.id)
-    }
-    editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
   }
 }

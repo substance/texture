@@ -1,4 +1,4 @@
-import AnnotationComponent from './AnnotationComponent'
+import { AnnotationComponent } from 'substance'
 import NodeComponentMixin from './NodeComponentMixin'
 import NodeOverlayMixin from './NodeOverlayEditorMixin'
 

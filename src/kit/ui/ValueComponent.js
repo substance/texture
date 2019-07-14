@@ -2,7 +2,7 @@ import { Component } from 'substance'
 
 export default class ValueComponent extends Component {
   didMount () {
-    const appState = this.context.appState
+    const appState = this.context.editorState
     const path = this._getPath()
     appState.addObserver(['document'], this._rerenderOnModelChange, this, {
       stage: 'render',
@@ -11,7 +11,7 @@ export default class ValueComponent extends Component {
   }
 
   dispose () {
-    const appState = this.context.appState
+    const appState = this.context.editorState
     appState.removeObserver(this)
   }
 

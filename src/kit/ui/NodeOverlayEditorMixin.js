@@ -18,11 +18,11 @@ export default function (NodeComponent) {
       super.didMount()
 
       if (this._shouldEnableOverlayEditor()) {
-        // .. that we will attach to the OverlayCanvas whenever the selection is on the annotation
+        // we will attach to the OverlayCanvas whenever the selection is on the annotation
         // TODO: similar as with IsolatedNodes and InlineNodes, the number of listeners will grow with
         // the size of the document. Thus, we need to introduce a means to solve this more efficiently
-        this.context.appState.addObserver(['selectionState'], this._onSelectionStateChange, this, { stage: 'render' })
-        this._onSelectionStateChange(this.context.appState.selectionState)
+        this.context.editorState.addObserver(['selectionState'], this._onSelectionStateChange, this, { stage: 'render' })
+        this._onSelectionStateChange(this.context.editorState.selectionState)
       }
     }
 
@@ -52,12 +52,12 @@ export default function (NodeComponent) {
 
     _acquireOverlay (options) {
       let editor = this._getEditor()
-      this.context.editor.refs.overlay.acquireOverlay(editor, options)
+      this.send('acquireOverlay', editor, options)
     }
 
     _releaseOverlay () {
       if (this._editor) {
-        this.context.editor.refs.overlay.releaseOverlay(this._editor)
+        this.send('releaseOverlay', this._editor)
       }
     }
 

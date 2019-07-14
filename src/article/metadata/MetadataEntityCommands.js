@@ -51,7 +51,7 @@ export class AddSubjectCommand extends AddEntityCommand {
 
 class _CardCommand extends Command {
   getCommandState (params, context) {
-    let appState = context.appState
+    let appState = context.editorState
     let sel = appState.selection
     if (sel && sel.customType === 'card') {
       let node = appState.selectionState.node

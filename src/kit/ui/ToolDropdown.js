@@ -4,13 +4,13 @@ import Tooltip from './Tooltip'
 // TODO: use OverlayMixin to avoid code redundancy
 export default class ToolDropdown extends ToolGroup {
   didMount () {
-    this.context.appState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
+    this.context.editorState.addObserver(['overlayId'], this.rerender, this, { stage: 'render' })
   }
   dispose () {
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
   render ($$) {
-    const appState = this.context.appState
+    const appState = this.context.editorState
     const { commandStates, style, theme, hideDisabled, alwaysVisible } = this.props
     const toggleName = this._getToggleName()
     const hasEnabledItem = this._derivedState.hasEnabledItem

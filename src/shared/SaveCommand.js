@@ -13,6 +13,6 @@ export default class SaveCommand extends Command {
   }
 
   execute (params, context) {
-    context.editor.send('save')
+    context.editorSession.getRootComponent().send('save')
   }
 }

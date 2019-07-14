@@ -13,7 +13,7 @@ export default class AuthorsListComponent extends CustomSurface {
   didMount () {
     super.didMount()
 
-    const appState = this.context.appState
+    const appState = this.context.editorState
     // FIXME: it is not good to rerender on every selection change.
     // Instead it should derive a state from the selection, and only rerender if the
     // state has changed (not-selected, selected + author id)
@@ -22,7 +22,7 @@ export default class AuthorsListComponent extends CustomSurface {
 
   dispose () {
     super.dispose()
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   render ($$) {
@@ -34,7 +34,7 @@ export default class AuthorsListComponent extends CustomSurface {
   }
 
   _renderAuthors ($$) {
-    const sel = this.context.appState.selection
+    const sel = this.context.editorState.selection
     const authors = this._getAuthors()
     let els = []
     authors.forEach((author, index) => {

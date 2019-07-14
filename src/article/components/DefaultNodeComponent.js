@@ -9,7 +9,7 @@ export default class DefaultNodeComponent extends Component {
   didMount () {
     // EXPERIMENTAL: ExperimentalArticleValidator updates `node.id, @issues`
     const node = this._getNode()
-    this.context.appState.addObserver(['document'], this._rerenderWhenIssueHaveChanged, this, {
+    this.context.editorState.addObserver(['document'], this._rerenderWhenIssueHaveChanged, this, {
       stage: 'render',
       document: {
         path: [node.id, '@issues']
@@ -18,7 +18,7 @@ export default class DefaultNodeComponent extends Component {
   }
 
   dispose () {
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   getInitialState () {

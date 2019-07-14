@@ -1,9 +1,6 @@
-export { default as AppState } from './AppState'
-export { default as createComponentContext } from './createComponentContext'
-export { default as createEditorContext } from './createEditorContext'
-export { default as DocumentObserver } from './DocumentObserver'
-export { default as EditorSession } from './EditorSession'
-export { default as EditorState } from './EditorState'
-export { default as FindAndReplacePackage } from './FindAndReplacePackage'
-export { default as ModalEditorSession } from './ModalEditorSession'
-export { default as SwitchTextTypeCommand } from './_SwitchTextTypeCommand'
+// Legacy
+export {
+  AppState, createComponentContext, createEditorContext,
+  DocumentObserver, EditorSession, EditorState, FindAndReplacePackage,
+  ModalEditorSession, SwitchTextTypeCommand
+} from 'substance'

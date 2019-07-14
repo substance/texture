@@ -18,18 +18,20 @@ export default class MetadataEditor extends Component {
 
     // HACK: this is making all properties dirty, so we have to reset the appState after that
     this.articleValidator.initialize()
-    this.context.appState._reset()
+    this.context.editorState._reset()
   }
 
-  getChildContext () {
-    // HACK: this is needed to get things working
-    // TODO: the current use of this.context.editor is problematic
-    return { editor: this }
+  getActionHandlers () {
+    return {
+      'acquireOverlay': this._acquireOverlay,
+      'releaseOverlay': this._releaseOverlay
+    }
   }
 
   didMount () {
     this._showHideTOC()
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+    this.context.editorSession.setRootComponent(this._getContentPanel())
   }
 
   dispose () {
@@ -177,5 +179,13 @@ export default class MetadataEditor extends Component {
     } else {
       this.el.removeClass('sm-compact')
     }
+  }
+
+  _acquireOverlay (...args) {
+    this.refs.overlay.acquireOverlay(...args)
+  }
+
+  _releaseOverlay (...args) {
+    this.refs.overlay.releaseOverlay(...args)
   }
 }

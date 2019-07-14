@@ -1,8 +1,6 @@
 import {
-  UndoCommand, RedoCommand
+  UndoCommand, RedoCommand, SelectAllCommand
 } from 'substance'
-
-import SelectAllCommand from './app/SelectAllCommand'
 
 export default {
   name: 'EditorBase',

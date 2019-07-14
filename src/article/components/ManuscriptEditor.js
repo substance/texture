@@ -10,6 +10,13 @@ export default class ManuscriptEditor extends EditorPanel {
     this._model = this.context.api.getArticleModel()
   }
 
+  getActionHandlers () {
+    return {
+      'acquireOverlay': this._acquireOverlay,
+      'releaseOverlay': this._releaseOverlay
+    }
+  }
+
   didMount () {
     super.didMount()
 
@@ -17,6 +24,7 @@ export default class ManuscriptEditor extends EditorPanel {
     this._restoreViewport()
 
     DefaultDOMElement.getBrowserWindow().on('resize', this._showHideTOC, this)
+    this.context.editorSession.setRootComponent(this._getContentPanel())
   }
 
   didUpdate () {
@@ -45,7 +53,7 @@ export default class ManuscriptEditor extends EditorPanel {
   }
 
   _renderMainSection ($$) {
-    const appState = this.context.appState
+    const appState = this.context.editorState
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
       this._renderToolbar($$),
@@ -91,7 +99,6 @@ export default class ManuscriptEditor extends EditorPanel {
   _renderContentPanel ($$) {
     const ScrollPane = this.getComponent('scroll-pane')
     const ManuscriptComponent = this.getComponent('manuscript')
-
     let contentPanel = $$(ScrollPane, {
       contextMenu: 'custom',
       scrollbarPosition: 'right'
@@ -173,5 +180,13 @@ export default class ManuscriptEditor extends EditorPanel {
     } else {
       this.el.removeClass('sm-compact')
     }
+  }
+
+  _acquireOverlay (...args) {
+    this.refs.overlay.acquireOverlay(...args)
+  }
+
+  _releaseOverlay (...args) {
+    this.refs.overlay.releaseOverlay(...args)
   }
 }

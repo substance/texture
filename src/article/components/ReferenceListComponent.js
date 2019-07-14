@@ -6,7 +6,7 @@ export default class ReferenceListComponent extends CustomSurface {
   didMount () {
     super.didMount()
 
-    const appState = this.context.appState
+    const appState = this.context.editorState
     appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: ['article', 'references'] } })
     // TODO: it is not good to rerender on every selection change.
     // Instead derive a meaningful state, and render if the state changes
@@ -16,7 +16,7 @@ export default class ReferenceListComponent extends CustomSurface {
   dispose () {
     super.dispose()
     // TODO: as we have a node for references now, we should turn this into a NodeComponent instead
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   getInitialState () {
@@ -27,7 +27,7 @@ export default class ReferenceListComponent extends CustomSurface {
   }
 
   render ($$) {
-    const sel = this.context.appState.selection
+    const sel = this.context.editorState.selection
     const bibliography = this._getBibliography()
 
     let el = $$('div').addClass('sc-reference-list')

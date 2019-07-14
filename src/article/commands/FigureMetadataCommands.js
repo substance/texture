@@ -50,7 +50,7 @@ export class AddFigureMetadataFieldCommand extends BasicFigureMetadataCommand {
       let node = documentHelpers.createNodeFromJson(tx, MetadataField.getTemplate())
       documentHelpers.append(tx, collectionPath, node.id)
       const path = [node.id, 'name']
-      const viewName = context.appState.viewName
+      const viewName = context.editorState.viewName
       const surfaceId = context.api._getSurfaceId(node, 'name', viewName)
       tx.setSelection({
         type: 'property',

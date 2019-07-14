@@ -48,7 +48,7 @@ export default class ArticleJATSExporter extends XMLExporter {
     } else {
       el = this.$$('div')
     }
-    el.attr(this.config.idAttribute, node.id)
+    el.attr(this.idAttribute, node.id)
     if (converter.export) {
       el = converter.export(node, el, this) || el
     }

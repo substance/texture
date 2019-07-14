@@ -32,7 +32,7 @@ export default class EditorPanel extends Component {
   }
 
   dispose () {
-    const appState = this.context.appState
+    const appState = this.context.editorState
     const editorSession = this._getEditorSession()
     editorSession.dispose()
     appState.removeObserver(this)
@@ -68,7 +68,7 @@ export default class EditorPanel extends Component {
   _onKeydown (e) {
     // console.log('EditorPanel._onKeydown', e)
     let handled = false
-    const appState = this.context.appState
+    const appState = this.context.editorState
     switch (e.keyCode) {
       case keys.ESCAPE: {
         if (appState.findAndReplace.enabled) {
@@ -91,7 +91,7 @@ export default class EditorPanel extends Component {
   }
 
   _renderWorkflow ($$, workflowId) {
-    let workflowProps = this.context.appState.workflowProps || {}
+    let workflowProps = this.context.editorState.workflowProps || {}
     let Modal = this.getComponent('modal')
     let WorkflowComponent = this.getComponent(workflowId)
     return $$(Modal, {

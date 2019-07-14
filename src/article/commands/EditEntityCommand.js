@@ -2,7 +2,7 @@ import { Command } from 'substance'
 
 export default class EditEntityCommand extends Command {
   getCommandState (params, context) {
-    let selectionState = context.appState.selectionState
+    let selectionState = context.editorState.selectionState
     let node = selectionState.node
     if (node && node.isInstanceOf(this._getType())) {
       return {

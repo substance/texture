@@ -18,7 +18,14 @@ export default class MetadataEditor extends Component {
 
     // HACK: this is making all properties dirty, so we have to reset the appState after that
     this.articleValidator.initialize()
-    this.context.appState._reset()
+    this.context.editorState._reset()
+  }
+
+  getActionHandlers () {
+    return {
+      'acquireOverlay': this._acquireOverlay,
+      'releaseOverlay': this._releaseOverlay
+    }
   }
 
   didMount () {
@@ -172,5 +179,13 @@ export default class MetadataEditor extends Component {
     } else {
       this.el.removeClass('sm-compact')
     }
+  }
+
+  _acquireOverlay (...args) {
+    this.refs.overlay.acquireOverlay(...args)
+  }
+
+  _releaseOverlay (...args) {
+    this.refs.overlay.releaseOverlay(...args)
   }
 }

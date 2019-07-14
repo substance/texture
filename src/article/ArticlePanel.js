@@ -50,7 +50,7 @@ export default class ArticlePanel extends Component {
     let context = Object.assign(this.context, createComponentContext(config), {
       config,
       editorSession,
-      appState,
+      editorState: appState,
       api,
       archive,
       urlResolver: archive,

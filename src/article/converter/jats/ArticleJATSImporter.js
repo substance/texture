@@ -40,7 +40,7 @@ export default class ArticleJATSImporter extends XMLImporter {
   }
 
   _createDocument () {
-    return InternalArticleDocument.createEmptyArticle(this.config.document.getSchema())
+    return InternalArticleDocument.createEmptyArticle(this.state.doc.getSchema())
   }
 
   _getConverterForElement (el, mode) {

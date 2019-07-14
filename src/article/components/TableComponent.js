@@ -34,7 +34,7 @@ export default class TableComponent extends CustomSurface {
     super.didMount()
 
     this._tableSha = this.props.node._getSha()
-    const appState = this.context.appState
+    const appState = this.context.editorState
 
     appState.addObserver(['document'], this._onDocumentChange, this, { stage: 'render' })
     appState.addObserver(['selection'], this._onSelectionChange, this, { stage: 'render' })
@@ -45,7 +45,7 @@ export default class TableComponent extends CustomSurface {
   dispose () {
     super.dispose()
 
-    const appState = this.context.appState
+    const appState = this.context.editorState
     appState.off(this)
   }
 
@@ -151,7 +151,7 @@ export default class TableComponent extends CustomSurface {
 
   _onSelectionChange () {
     const doc = this.context.editorSession.getDocument()
-    const sel = this.context.appState.selection
+    const sel = this.context.editorState.selection
     const self = this
     if (!sel || sel.isNull()) {
       _disableActiveCell()

@@ -6,7 +6,7 @@ export default class InsertInlineFormulaCommand extends InsertInlineNodeCommand 
   }
 
   execute (params, context) {
-    let selectionState = context.appState.get('selectionState')
+    let selectionState = context.editorState.get('selectionState')
     context.api.insertInlineFormula(selectionState.selectedText)
   }
 }

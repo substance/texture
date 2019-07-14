@@ -2,14 +2,14 @@ import { TextNodeComponent } from '../../kit'
 
 export default class HeadingComponent extends TextNodeComponent {
   didMount () {
-    this.context.appState.addObserver(['document'], this.rerender, this, {
+    this.context.editorState.addObserver(['document'], this.rerender, this, {
       stage: 'render',
       document: { path: [this.props.node.id] }
     })
   }
 
   dispose () {
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   getClassNames () {

@@ -246,15 +246,15 @@ export function getEditorSession (editor) {
 }
 
 export function getSelection (editor) {
-  return editor.context.appState.selection
+  return editor.context.editorState.selection
 }
 
 export function getSelectionState (editor) {
-  return editor.context.appState.selectionState
+  return editor.context.editorState.selectionState
 }
 
 export function getDocument (editor) {
-  return editor.context.appState.document
+  return editor.context.editorState.document
 }
 
 export function loadBodyFixture (editor, xml) {

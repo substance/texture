@@ -5,11 +5,11 @@ import { getLabel } from '../shared/nodeHelpers'
 // ATM, we have it in the schema, but we are using node state
 export default class LabelComponent extends Component {
   didMount () {
-    this.context.appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: [this.props.node.id] } })
+    this.context.editorState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: [this.props.node.id] } })
   }
 
   dispose () {
-    this.context.appState.removeObserver(this)
+    this.context.editorState.removeObserver(this)
   }
 
   render ($$) {

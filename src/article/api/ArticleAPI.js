@@ -140,9 +140,9 @@ export default class ArticleAPI {
   }
 
   canCreateAnnotation (annoType) {
-    let appState = this.getAppState()
-    const sel = appState.selection
-    const selectionState = appState.selectionState
+    let editorState = this.getEditorState()
+    const sel = editorState.selection
+    const selectionState = editorState.selectionState
     if (sel && !sel.isNull() && sel.isPropertySelection() && !sel.isCollapsed() && selectionState.property.targetTypes.has(annoType)) {
       // otherwise these annos are only allowed to 'touch' the current selection, not overlap.
       for (let anno of selectionState.annos) {
@@ -158,10 +158,10 @@ export default class ArticleAPI {
   }
 
   canInsertBlockNode (nodeType) {
-    let appState = this.getAppState()
-    let doc = appState.document
-    let sel = appState.selection
-    let selState = appState.selectionState
+    let editorState = this.getEditorState()
+    let doc = editorState.document
+    let sel = editorState.selection
+    let selState = editorState.selectionState
     if (sel && !sel.isNull() && !sel.isCustomSelection() && sel.isCollapsed() && selState.containerPath) {
       let containerProp = doc.getProperty(selState.containerPath)
       if (containerProp.targetTypes.has(nodeType)) {
@@ -186,9 +186,9 @@ export default class ArticleAPI {
    * @param {boolean} collapsedOnly true if insertion is allowed only for collapsed selection
    */
   canInsertInlineNode (type, collapsedOnly) {
-    let appState = this.getAppState()
-    const sel = appState.selection
-    const selectionState = appState.selectionState
+    let editorState = this.getEditorState()
+    const sel = editorState.selection
+    const selectionState = editorState.selectionState
     if (sel && !sel.isNull() && sel.isPropertySelection() && (!collapsedOnly || sel.isCollapsed())) {
       // make sure that the schema allows to insert that node
       let targetTypes = selectionState.property.targetTypes
@@ -248,8 +248,8 @@ export default class ArticleAPI {
     }
   }
 
-  getAppState () {
-    return this.getContext().appState
+  getEditorState () {
+    return this.editorSession.getEditorState()
   }
 
   getArticleModel () {
@@ -328,7 +328,7 @@ export default class ArticleAPI {
   insertFootnoteReference () {
     if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
     // In table-figures we want to allow only cross-reference to table-footnotes
-    let selectionState = this.getAppState().selectionState
+    let selectionState = this.getEditorState().selectionState
     const xpath = selectionState.xpath
     let refType = xpath.find(n => n.type === TableFigure.type) ? 'table-fn' : 'fn'
     this._insertCrossReference(refType)
@@ -505,12 +505,12 @@ export default class ArticleAPI {
   }
 
   _createNodeSelection (nodeId) {
-    let appState = this.getAppState()
-    let doc = appState.document
+    let editorState = this.getEditorState()
+    let doc = editorState.document
     const node = doc.get(nodeId)
     if (node) {
       let editorSession = this.getEditorSession()
-      let sel = appState.selection
+      let sel = editorState.selection
       const containerPath = this._getContainerPathForNode(node)
       const surface = editorSession.surfaceManager._getSurfaceForProperty(containerPath)
       const surfaceId = surface ? surface.getId() : (sel ? sel.surfaceId : null)
@@ -776,7 +776,7 @@ export default class ArticleAPI {
 
   _isFieldRequired (path) {
     // ATTENTION: this API is experimental
-    let settings = this.getAppState().settings
+    let settings = this.getEditorState().settings
     let valueSettings = settings.getSettingsForValue(path)
     return Boolean(valueSettings['required'])
   }
@@ -788,10 +788,10 @@ export default class ArticleAPI {
 
   // TODO: we need a better way to update settings
   _loadSettings (settings) {
-    let appState = this.getContext().appState
-    appState.settings.load(settings)
-    appState._setDirty('settings')
-    appState.propagateUpdates()
+    let editorState = this.getContext().editorState
+    editorState.settings.load(settings)
+    editorState._setDirty('settings')
+    editorState.propagateUpdates()
   }
 
   _moveEntity (nodeId, shift) {

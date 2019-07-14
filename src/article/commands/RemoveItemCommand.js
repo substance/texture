@@ -18,8 +18,10 @@ export default class RemoveItemCommand extends Command {
       const nodeId = sel.getNodeId()
       if (nodeId) {
         const selectedNode = doc.get(nodeId)
-        if (selectedNode.type === nodeType) return selectedNode
-        return findParentByType(selectedNode, nodeType)
+        if (selectedNode) {
+          if (selectedNode.type === nodeType) return selectedNode
+          return findParentByType(selectedNode, nodeType)
+        }
       }
     }
   }

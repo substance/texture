@@ -15,6 +15,7 @@ import { doesNotThrowInNodejs, DOMEvent, ClipboardEventData } from './shared/tes
 // TODO: test error case for loading in GraphicComponent and InlineGraphicCOmponent
 // TODO: test automatic label generation for block-formulas
 // TODO: add a test using AddSupplementaryFileWorkflow
+// TODO: test removing an author via metadata modal
 
 const EMPTY_P = `<p id="p1"></p>`
 

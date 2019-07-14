@@ -1,6 +1,6 @@
 import { isString, domHelpers, renderListNode } from 'substance'
 
-export default class ListHTMLConverter {
+export default class ListConverter {
   get type () { return 'list' }
 
   matchElement (el) {

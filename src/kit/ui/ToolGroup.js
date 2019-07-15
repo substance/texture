@@ -141,6 +141,7 @@ export default class ToolGroup extends Component {
       case 'switcher': {
         return this._deriveGroupState(item, commandStates)
       }
+      case 'custom':
       case 'separator':
       case 'spacer': {
         return { item }

@@ -3,8 +3,6 @@
 // import setupTestApp from './shared/setupTestApp'
 // import { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD } from 'substance-texture'
 
-// TODO: test TOC
-// TODO: test EditReferenceWorkflow (or is this dead code?)
 // TODO: test BiblioGraphicEntryEditor
 // TODO: test ReferenceUpload
 // TODO: add general tests for kit value editors
@@ -45,40 +43,6 @@
 //   <back>
 //   </back>
 // </article>`
-
-// FIXME: bring back translations
-// test(`MetadataEditor: clicking on "Add Translation" should not select card (#838)`, t => {
-//   let { editor } = _setup(t, TRANSLATED_TITLE)
-//   let translatableEditor = editor.find('.sc-translatable-editor')
-//   // TODO: I don't like 'se-control' as a name for the 'Add Translation' button
-//   let addTranslation = translatableEditor.find('.se-control')
-//   addTranslation.click()
-//   let sel = getSelection(editor)
-//   let isCardSelected = sel && sel.isCustomSelection() && sel.getCustomType() === 'card'
-//   t.notOk(isCardSelected, 'The translation card should not be selected')
-//   t.end()
-// })
-
-// test('MetadataEditor: TOC dynamic sections appear only if content is not empty', t => {
-//   let { editor } = _setup(t, EMPTY_ARTICLE)
-//   const affiliationsTOCSectionSelector = '.se-toc [data-section="affiliations"]'
-//   const getAffiliationsTocSection = () => editor.find(affiliationsTOCSectionSelector)
-//   t.ok(getAffiliationsTocSection().hasClass('sm-empty'), 'TOC should not have a reference to an affiliations section')
-//   // click on insert affiliation tool
-//   const insertAffiliationTool = openMenuAndFindTool(editor, 'insert', '.sm-add-affiliation')
-//   insertAffiliationTool.click()
-//   t.notOk(getAffiliationsTocSection().hasClass('sm-empty'), 'TOC should have a reference to an affiliations section')
-//   t.end()
-// })
-
-// test(`MetadataEditor: a newly created footnote should contain at least one parapgraph (#947)`, t => {
-//   let { editor } = _setup(t, EMPTY_ARTICLE)
-//   _addItem(editor, 'footnote')
-//   let fnEditor = editor.find('.sc-metadata-section.sm-footnotes .sc-footnote')
-//   let paragraphs = fnEditor.findAll('.sc-paragraph')
-//   t.ok(paragraphs.length >= 1, 'a footnote should have at least one paragraph')
-//   t.end()
-// })
 
 // test(`MetadataEditor: after adding a new footnote cursor should be inside (#948)`, t => {
 //   let { editor } = _setup(t, EMPTY_ARTICLE)

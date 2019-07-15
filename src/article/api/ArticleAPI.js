@@ -248,6 +248,14 @@ export default class ArticleAPI {
     }
   }
 
+  focusEditor (path) {
+    let editorSession = this.getEditorSession()
+    let surface = editorSession.getSurfaceForProperty(path)
+    if (surface) {
+      surface.selectFirst()
+    }
+  }
+
   getEditorState () {
     return this.editorSession.getEditorState()
   }
@@ -308,21 +316,28 @@ export default class ArticleAPI {
 
   insertBlockFormula () {
     if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
+    return this._insertBlockNode(tx => {
       return tx.create({ type: BlockFormula.type })
     })
   }
 
+  insertBlockNode (nodeData) {
+    let nodeId = this._insertBlockNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, nodeData)
+    })
+    return this.getDocument().get(nodeId)
+  }
+
   insertBlockQuote () {
     if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
+    return this._insertBlockNode(tx => {
       return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
     })
   }
 
   insertCrossReference (refType) {
     if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertCrossReference(refType)
+    return this._insertCrossReference(refType)
   }
 
   insertFootnoteReference () {
@@ -331,7 +346,7 @@ export default class ArticleAPI {
     let selectionState = this.getEditorState().selectionState
     const xpath = selectionState.xpath
     let refType = xpath.find(n => n.type === TableFigure.type) ? 'table-fn' : 'fn'
-    this._insertCrossReference(refType)
+    return this._insertCrossReference(refType)
   }
 
   // TODO: we should discuss if it would also make sense to create a figure with multiple panels
@@ -351,27 +366,29 @@ export default class ArticleAPI {
     })
   }
 
+  insertInlineNode (nodeData) {
+    let nodeId = this._insertInlineNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, nodeData)
+    })
+    return this.getDocument().get(nodeId)
+  }
+
   insertInlineGraphic (file) {
     if (!this.canInsertInlineGraphic()) throw new Error(DISALLOWED_MANIPULATION)
-    const editorSession = this.getEditorSession()
-    const sel = editorSession.getSelection()
-    if (!sel) return
     const href = this.archive.addAsset(file)
     const mimeType = file.type
-    editorSession.transaction(tx => {
-      const node = tx.create({
+    return this._insertInlineNode(tx => {
+      return tx.create({
         type: InlineGraphic.type,
         mimeType,
         href
       })
-      tx.insertInlineNode(node)
-      tx.setSelection(node.getSelection())
     })
   }
 
   insertInlineFormula (content) {
     if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertInlineNode(tx => {
+    return this._insertInlineNode(tx => {
       return tx.create({
         type: InlineFormula.type,
         contentType: 'math/tex',
@@ -398,7 +415,7 @@ export default class ArticleAPI {
 
   insertTable () {
     if (!this.canInsertBlockNode(TableFigure.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
+    return this._insertBlockNode(tx => {
       return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
     })
   }
@@ -496,7 +513,7 @@ export default class ArticleAPI {
     })
   }
 
-  // TODO: still used?
+  // This is used by CollectionModel
   _appendChild (collectionPath, data) {
     this.editorSession.transaction(tx => {
       let node = tx.create(data)
@@ -737,16 +754,16 @@ export default class ArticleAPI {
     return relXpath.map(e => e.id).join('/') + '.' + propertyName
   }
 
-  _insertBlockNode (createNode, setSelection) {
+  _insertBlockNode (createNode) {
     let editorSession = this.getEditorSession()
+    let nodeId
     editorSession.transaction(tx => {
-      let node = tx.insertBlockNode(createNode(tx))
-      if (setSelection) {
-        setSelection(tx)
-      } else {
-        tx.setSelection(this._createNodeSelection(node))
-      }
+      let node = createNode(tx)
+      tx.insertBlockNode(node)
+      tx.setSelection(this._createNodeSelection(node))
+      nodeId = node.id
     })
+    return nodeId
   }
 
   _insertCrossReference (refType) {
@@ -760,6 +777,7 @@ export default class ArticleAPI {
 
   _insertInlineNode (createNode) {
     let editorSession = this.getEditorSession()
+    let nodeId
     editorSession.transaction(tx => {
       let inlineNode = createNode(tx)
       tx.insertInlineNode(inlineNode)
@@ -767,7 +785,9 @@ export default class ArticleAPI {
       // which we might want to focus initially
       // instead of selecting the whole node
       tx.setSelection(this._selectInlineNode(inlineNode))
+      nodeId = inlineNode.id
     })
+    return nodeId
   }
 
   _isCollectionItem (node) {
@@ -798,26 +818,31 @@ export default class ArticleAPI {
     let node = this._getNode(nodeId)
     if (!node) throw new Error('Invalid argument.')
     let collectionPath = this._getCollectionPathForItem(node)
-    this.editorSession.transaction(tx => {
-      let ids = tx.get(collectionPath)
-      let pos = ids.indexOf(node.id)
-      documentHelpers.removeAt(tx, collectionPath, pos)
-      documentHelpers.insertAt(tx, collectionPath, pos + shift, node.id)
-    })
+    this._moveChild(collectionPath, nodeId, shift)
   }
 
-  // TODO: still used?
-  _moveChild (collectionPath, child, shift, txHook) {
+  // Used by MoveMetadataFieldCommand(FigureMetadataCommands)
+  // and MoveFigurePanelCommand (FigurePanelCommands)
+  // txHook isued by MoveFigurePanelCommand to update the node state
+  // This needs a little more thinking, however, making it apparent
+  // that in some cases it is not so easy to completely separate Commands
+  // from EditorSession logic
+  _moveChild (collectionPath, childId, shift, txHook) {
     this.editorSession.transaction(tx => {
       let ids = tx.get(collectionPath)
-      let pos = ids.indexOf(child.id)
+      let pos = ids.indexOf(childId)
       if (pos === -1) return
       documentHelpers.removeAt(tx, collectionPath, pos)
-      documentHelpers.insertAt(tx, collectionPath, pos + shift, child.id)
+      documentHelpers.insertAt(tx, collectionPath, pos + shift, childId)
       if (txHook) {
         txHook(tx)
       }
     })
+  }
+
+  // used by CollectionModel
+  _removeChild (collectionPath, childId) {
+    this._removeItemFromCollection(childId, collectionPath)
   }
 
   // This method is used to cleanup xref targets

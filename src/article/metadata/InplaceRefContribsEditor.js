@@ -35,15 +35,11 @@ export default class InplaceRefContribsEditor extends ValueComponent {
   }
 
   _addContrib () {
-    const model = this.props.model
-    const path = model.getPath()
-    this.context.api._appendChild(path, { type: 'ref-contrib' })
+    this.props.model.addItem({ type: 'ref-contrib' })
   }
 
   _removeContrib (contrib) {
-    const model = this.props.model
-    const path = model.getPath()
-    this.context.api._deleteChild(path, contrib)
+    this.props.model.removeItem(contrib)
   }
 }
 

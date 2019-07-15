@@ -1,4 +1,4 @@
-import { forEach, isArrayEqual } from 'substance'
+import { forEach } from 'substance'
 import createEmptyJATS from '../util/createEmptyJATS'
 import SectionContainerConverter from './SectionContainerConverter'
 
@@ -208,19 +208,6 @@ function _exportTitleGroup (jats, doc, jatsExporter) {
     _exportAnnotatedText(jatsExporter, SUBTITLE_PATH, articleSubTitle)
     titleGroupEl.append(articleSubTitle)
   }
-
-  // translations
-  doc.resolve(['article', 'translations']).filter(translation => {
-    return isArrayEqual(translation.source, TITLE_PATH)
-  }).forEach(translation => {
-    titleGroupEl.append(
-      $$('trans-title-group').attr({ 'xml:lang': translation.language }).append(
-        $$('trans-title').attr({ id: translation.id }).append(
-          jatsExporter.annotatedText(translation.getPath())
-        )
-      )
-    )
-  })
 
   return titleGroupEl
 }
@@ -490,21 +477,6 @@ function _exportAbstract (jats, doc, jatsExporter) {
       sectionContainerConverter.export(customAbstract, customAbstractEl, jatsExporter)
     }
     els.push(customAbstractEl)
-  })
-
-  // translations
-  doc.resolve(['article', 'translations']).filter(translation => {
-    return isArrayEqual(translation.source, [abstract.id, 'content'])
-  }).forEach(translation => {
-    if (!_isContainerEmpty(translation, 'content')) {
-      let transAbstractEl = $$('trans-abstract').attr({
-        id: translation.id,
-        'xml:lang': translation.language
-      }).append(
-        translation.resolve('content').map(child => jatsExporter.convertNode(child))
-      )
-      els.push(transAbstractEl)
-    }
   })
 
   return els

@@ -1,6 +1,6 @@
 import {
   Document, DocumentNode, CHILDREN, STRING, DocumentSchema, documentHelpers,
-  DefaultDOMElement, BOOLEAN
+  DefaultDOMElement
 } from 'substance'
 
 export default class ManifestDocument extends Document {
@@ -132,8 +132,7 @@ DARAsset.schema = {
   type: 'asset',
   name: STRING,
   assetType: STRING,
-  path: STRING,
-  sync: BOOLEAN
+  path: STRING
 }
 
 const DARSchema = new DocumentSchema({

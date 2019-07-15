@@ -11,10 +11,5 @@ Article.schema = {
   customAbstracts: CHILDREN('custom-abstract'),
   body: CHILD('body'),
   references: CHILDREN('reference'),
-  footnotes: CHILDREN('footnote'),
-  // EXPERIMENTAL: a translation has a link to the original content property
-  // e.g. a translation for the article abstract points to 'article.abstract'
-  // and has the same 'targetTypes' as the source property
-  // FIXME: implement a UI for translations
-  translations: CHILDREN('translation')
+  footnotes: CHILDREN('footnote')
 }

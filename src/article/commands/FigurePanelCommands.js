@@ -93,12 +93,16 @@ export class RemoveFigurePanelCommand extends BasicFigurePanelCommand {
 
 export class MoveFigurePanelCommand extends BasicFigurePanelCommand {
   execute (params, context) {
+    // NOTE: this is an example where IMO it will be difficult
+    // to separate Commands from EditorSession logic,
+    // other than adding an API method for doing exactly this
+    // TODO: consider adding a FigureAPI to ArticleAPI
     const direction = this.config.direction
     const figure = this._getFigure(params, context)
     const figurePanel = this._getFigurePanel(params, context)
     const pos = figurePanel.getPosition()
     const shift = direction === 'up' ? -1 : 1
-    context.api._moveChild([figure.id, 'panels'], figurePanel, shift, tx => {
+    context.api._moveChild([figure.id, 'panels'], figurePanel.id, shift, tx => {
       tx.set([figure.id, 'state', 'currentPanelIndex'], pos + shift)
     })
   }

@@ -248,6 +248,14 @@ export default class ArticleAPI {
     }
   }
 
+  focusEditor (path) {
+    let editorSession = this.getEditorSession()
+    let surface = editorSession.getSurfaceForProperty(path)
+    if (surface) {
+      surface.selectFirst()
+    }
+  }
+
   getEditorState () {
     return this.editorSession.getEditorState()
   }

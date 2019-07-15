@@ -337,7 +337,7 @@ export default class ArticleAPI {
 
   insertCrossReference (refType) {
     if (!this.canInsertCrossReference()) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertCrossReference(refType)
+    return this._insertCrossReference(refType)
   }
 
   insertFootnoteReference () {
@@ -346,7 +346,7 @@ export default class ArticleAPI {
     let selectionState = this.getEditorState().selectionState
     const xpath = selectionState.xpath
     let refType = xpath.find(n => n.type === TableFigure.type) ? 'table-fn' : 'fn'
-    this._insertCrossReference(refType)
+    return this._insertCrossReference(refType)
   }
 
   // TODO: we should discuss if it would also make sense to create a figure with multiple panels
@@ -366,27 +366,29 @@ export default class ArticleAPI {
     })
   }
 
+  insertInlineNode (nodeData) {
+    let nodeId = this._insertInlineNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, nodeData)
+    })
+    return this.getDocument().get(nodeId)
+  }
+
   insertInlineGraphic (file) {
     if (!this.canInsertInlineGraphic()) throw new Error(DISALLOWED_MANIPULATION)
-    const editorSession = this.getEditorSession()
-    const sel = editorSession.getSelection()
-    if (!sel) return
     const href = this.archive.addAsset(file)
     const mimeType = file.type
-    editorSession.transaction(tx => {
-      const node = tx.create({
+    return this._insertInlineNode(tx => {
+      return tx.create({
         type: InlineGraphic.type,
         mimeType,
         href
       })
-      tx.insertInlineNode(node)
-      tx.setSelection(node.getSelection())
     })
   }
 
   insertInlineFormula (content) {
     if (!this.canInsertInlineNode(InlineFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertInlineNode(tx => {
+    return this._insertInlineNode(tx => {
       return tx.create({
         type: InlineFormula.type,
         contentType: 'math/tex',
@@ -775,6 +777,7 @@ export default class ArticleAPI {
 
   _insertInlineNode (createNode) {
     let editorSession = this.getEditorSession()
+    let nodeId
     editorSession.transaction(tx => {
       let inlineNode = createNode(tx)
       tx.insertInlineNode(inlineNode)
@@ -782,7 +785,9 @@ export default class ArticleAPI {
       // which we might want to focus initially
       // instead of selecting the whole node
       tx.setSelection(this._selectInlineNode(inlineNode))
+      nodeId = inlineNode.id
     })
+    return nodeId
   }
 
   _isCollectionItem (node) {

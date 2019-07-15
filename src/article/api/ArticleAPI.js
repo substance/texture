@@ -316,14 +316,21 @@ export default class ArticleAPI {
 
   insertBlockFormula () {
     if (!this.canInsertBlockNode(BlockFormula.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
+    return this._insertBlockNode(tx => {
       return tx.create({ type: BlockFormula.type })
     })
   }
 
+  insertBlockNode (nodeData) {
+    let nodeId = this._insertBlockNode(tx => {
+      return documentHelpers.createNodeFromJson(tx, nodeData)
+    })
+    return this.getDocument().get(nodeId)
+  }
+
   insertBlockQuote () {
     if (!this.canInsertBlockNode(BlockQuote.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
+    return this._insertBlockNode(tx => {
       return documentHelpers.createNodeFromJson(tx, BlockQuote.getTemplate())
     })
   }
@@ -406,7 +413,7 @@ export default class ArticleAPI {
 
   insertTable () {
     if (!this.canInsertBlockNode(TableFigure.type)) throw new Error(DISALLOWED_MANIPULATION)
-    this._insertBlockNode(tx => {
+    return this._insertBlockNode(tx => {
       return documentHelpers.createNodeFromJson(tx, TableFigure.getTemplate())
     })
   }
@@ -745,16 +752,16 @@ export default class ArticleAPI {
     return relXpath.map(e => e.id).join('/') + '.' + propertyName
   }
 
-  _insertBlockNode (createNode, setSelection) {
+  _insertBlockNode (createNode) {
     let editorSession = this.getEditorSession()
+    let nodeId
     editorSession.transaction(tx => {
-      let node = tx.insertBlockNode(createNode(tx))
-      if (setSelection) {
-        setSelection(tx)
-      } else {
-        tx.setSelection(this._createNodeSelection(node))
-      }
+      let node = createNode(tx)
+      tx.insertBlockNode(node)
+      tx.setSelection(this._createNodeSelection(node))
+      nodeId = node.id
     })
+    return nodeId
   }
 
   _insertCrossReference (refType) {

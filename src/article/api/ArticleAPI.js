@@ -511,7 +511,7 @@ export default class ArticleAPI {
     })
   }
 
-  // TODO: still used?
+  // This is used by CollectionModel
   _appendChild (collectionPath, data) {
     this.editorSession.transaction(tx => {
       let node = tx.create(data)
@@ -813,26 +813,31 @@ export default class ArticleAPI {
     let node = this._getNode(nodeId)
     if (!node) throw new Error('Invalid argument.')
     let collectionPath = this._getCollectionPathForItem(node)
-    this.editorSession.transaction(tx => {
-      let ids = tx.get(collectionPath)
-      let pos = ids.indexOf(node.id)
-      documentHelpers.removeAt(tx, collectionPath, pos)
-      documentHelpers.insertAt(tx, collectionPath, pos + shift, node.id)
-    })
+    this._moveChild(collectionPath, nodeId, shift)
   }
 
-  // TODO: still used?
-  _moveChild (collectionPath, child, shift, txHook) {
+  // Used by MoveMetadataFieldCommand(FigureMetadataCommands)
+  // and MoveFigurePanelCommand (FigurePanelCommands)
+  // txHook isued by MoveFigurePanelCommand to update the node state
+  // This needs a little more thinking, however, making it apparent
+  // that in some cases it is not so easy to completely separate Commands
+  // from EditorSession logic
+  _moveChild (collectionPath, childId, shift, txHook) {
     this.editorSession.transaction(tx => {
       let ids = tx.get(collectionPath)
-      let pos = ids.indexOf(child.id)
+      let pos = ids.indexOf(childId)
       if (pos === -1) return
       documentHelpers.removeAt(tx, collectionPath, pos)
-      documentHelpers.insertAt(tx, collectionPath, pos + shift, child.id)
+      documentHelpers.insertAt(tx, collectionPath, pos + shift, childId)
       if (txHook) {
         txHook(tx)
       }
     })
+  }
+
+  // used by CollectionModel
+  _removeChild (collectionPath, childId) {
+    this._removeItemFromCollection(childId, collectionPath)
   }
 
   // This method is used to cleanup xref targets

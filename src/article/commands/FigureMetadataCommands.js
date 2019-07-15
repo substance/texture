@@ -78,10 +78,8 @@ export class MoveMetadataFieldCommand extends BasicFigureMetadataCommand {
     const direction = this.config.direction
     const collectionPath = this._getCollectionPath(params, context)
     const nodeId = params.selection.getNodeId()
-    const doc = context.editorSession.getDocument()
-    const customField = doc.get(nodeId)
     const shift = direction === 'up' ? -1 : 1
-    context.api._moveChild(collectionPath, customField, shift)
+    context.api._moveChild(collectionPath, nodeId, shift)
   }
 
   isDisabled (params, context) {

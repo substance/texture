@@ -19,6 +19,10 @@ export default class InternalArticleDocument extends Document {
     return this.getRootNode().findAll(selector)
   }
 
+  getTitle () {
+    this.resolve(['article', 'title'])
+  }
+
   invert (change) {
     let inverted = change.invert()
     let info = inverted.info || {}

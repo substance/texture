@@ -26,7 +26,7 @@ export default function (Component) {
     }
 
     _onOverlayIdHasChanged () {
-      console.log('Rerendering overlay component because overlay id has changed', this._getOverlayId())
+      // console.log('Rerendering overlay component because overlay id has changed', this._getOverlayId())
       this.rerender()
     }
   }

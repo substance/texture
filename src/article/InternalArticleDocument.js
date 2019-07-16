@@ -1,5 +1,6 @@
 import { Document, documentHelpers, EditingInterface } from 'substance'
 import ArticleEditingImpl from './shared/ArticleEditingImpl'
+import { DEFAULT_JATS_SCHEMA_ID } from './ArticleConstants'
 
 export default class InternalArticleDocument extends Document {
   getRootNode () {
@@ -45,6 +46,13 @@ export default class InternalArticleDocument extends Document {
     return inverted
   }
 
+  // Overridden to retain the original docType
+  newInstance () {
+    let doc = super.newInstance()
+    doc.docType = this.docType
+    return doc
+  }
+
   static createEmptyArticle (schema) {
     let doc = new InternalArticleDocument(schema)
     documentHelpers.createNodeFromJson(doc, {
@@ -68,6 +76,7 @@ export default class InternalArticleDocument extends Document {
         id: 'body'
       }
     })
+    doc.docType = DEFAULT_JATS_SCHEMA_ID
     return doc
   }
 }

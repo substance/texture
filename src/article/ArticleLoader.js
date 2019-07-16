@@ -71,6 +71,9 @@ export default class ArticleLoader {
       importer = articleConfig.createImporter('jats', doc)
     }
     importer.import(xmlDom)
+    // EXPERIMENTAL: storing the xmlSchemaId on the doc, so that
+    // it can be exported using the correct transformers and exporters
+    doc.docType = xmlSchemaId
 
     return doc
   }

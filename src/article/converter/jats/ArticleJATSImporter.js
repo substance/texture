@@ -8,8 +8,9 @@ import UnsupportedNodeConverter from './UnsupportedNodeConverter'
 
 export default class ArticleJATSImporter extends XMLImporter {
   import (jats, options = {}) {
-    jats2internal(jats, this.state.doc, this)
-    return this.state.doc
+    let doc = this.state.doc
+    jats2internal(jats, doc, this)
+    return doc
   }
 
   annotatedText (el, path, options = {}) {

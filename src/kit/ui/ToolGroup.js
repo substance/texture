@@ -52,7 +52,6 @@ export default class ToolGroup extends Component {
   }
 
   _renderLabel ($$) {
-    // EXPERIMENTAL: showing a ToolGroup label an
     const { style, label } = this.props
     if (style === 'descriptive' && label) {
       const SeparatorClass = this.getComponent('tool-separator')

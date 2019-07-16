@@ -46,8 +46,9 @@ export default class InternalArticleDocument extends Document {
     return inverted
   }
 
+  // Overridden to retain the original docType
   newInstance () {
-    let doc = super.newInstance
+    let doc = super.newInstance()
     doc.docType = this.docType
     return doc
   }

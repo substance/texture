@@ -1,6 +1,8 @@
+import _require from './_require'
+
 export default async function writeArchive (archiveDir, rawArchive, opts = {}) {
-  const fs = opts.path || require('fs')
-  const path = opts.path || require('path')
+  const fs = opts.path || _require('fs')
+  const path = opts.path || _require('path')
 
   let resourceNames = Object.keys(rawArchive.resources)
   let newVersion = '0'

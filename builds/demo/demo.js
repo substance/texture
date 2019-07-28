@@ -11,7 +11,8 @@ window.addEventListener('load', () => {
       debug: true,
       archiveId: getQueryStringParam('archive') || 'kitchen-sink',
       storageType: getQueryStringParam('storage') || 'vfs',
-      storageUrl: getQueryStringParam('storageUrl') || '/archives'
+      storageUrl: getQueryStringParam('storageUrl') || '/archives',
+      vfs: window.vfs
     }, window.document.body)
 
     // put the archive and some more things into global scope, for debugging
@@ -25,8 +26,9 @@ window.addEventListener('load', () => {
 // if the stored data could be loaded again, or if there is a bug in
 // Textures exporter
 class DevWebApp extends TextureWebApp {
-  _getStorage (storageType) {
-    let storage = super._getStorage(storageType)
+  _getStorage () {
+    let storageType = this.props.storageType
+    let storage = super._getStorage()
     if (storageType === 'vfs') {
       vfsSaveHook(storage, TextureArchive)
     }

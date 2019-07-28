@@ -13,7 +13,7 @@ export default class TextureDesktopAppChrome extends TextureAppChrome {
     return new InMemoryDarBuffer()
   }
 
-  _getStorage (storageType) {
+  _getStorage () {
     // Note: in the Desktop app, the storage is maintained by the main process
     // and passed as a prop directly. In contrast to the web-version
     // there is no control via HTTP param possible

@@ -11,12 +11,13 @@ export default function setupTestApp (t, options = {}) {
   // TODO: this is a little weird. Maybe just pass App as
   let el = getMountPoint(t)
   let archiveId = options.archiveId || 'kitchen-sink'
+  // this creates a customized TextureWebApp that uses a VfsStorageClient
+  // for options.vfs (if provided)
   let App = createTestApp(options)
   // TODO: use options here
   let app = App.mount({
     debug: true,
-    archiveId,
-    storageType: 'vfs'
+    archiveId
   }, el)
   // ATTENTION: in the test suite everything works synchronously
   // even despite the API beyond asynchronous

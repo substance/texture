@@ -1,4 +1,3 @@
-/* global vfs */
 import { parseKeyEvent } from 'substance'
 import TextureAppChrome from './TextureAppChrome'
 import { VfsStorageClient, HttpStorageClient, InMemoryDarBuffer } from './dar'
@@ -11,6 +10,10 @@ export default class TextureWebAppChrome extends TextureAppChrome {
   _getStorage () {
     let storageType = this.props.storageType
     if (storageType === 'vfs') {
+      let vfs = this.props.vfs
+      if (!vfs) {
+        throw new Error('No VirtualFilesystem instance provided.')
+      }
       return new VfsStorageClient(vfs, this._getDefaultDataFolder())
     } else {
       return new HttpStorageClient(this.props.storageUrl)

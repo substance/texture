@@ -119,7 +119,7 @@ export function createTestApp (options = {}) {
   const validateOnSave = !options.noValidationOnSave
 
   class App extends TextureWebApp {
-    _getStorage (storageType) {
+    _getStorage () {
       let _vfs = options.vfs || vfs
       // TODO: find out if we still need options.root, because it looks like
       // we are using options.rootDir

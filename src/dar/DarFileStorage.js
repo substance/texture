@@ -1,15 +1,16 @@
 import { platform } from 'substance'
 import FSStorage from './FSStorage'
 import listDir from './_listDir'
+import _require from './_require'
 
 // FIXME: this file should only get bundled in commonjs version
 let fs, fsExtra, path, yazl, yauzl
 if (platform.inNodeJS || platform.inElectron) {
-  fs = require('fs')
-  fsExtra = require('fs-extra')
-  path = require('path')
-  yazl = require('yazl')
-  yauzl = require('yauzl')
+  fs = _require('fs')
+  fsExtra = _require('fs-extra')
+  path = _require('path')
+  yazl = _require('yazl')
+  yauzl = _require('yauzl')
 }
 
 /*

@@ -94,3 +94,22 @@ export const TEXTURE_JATS_DTD = 'TextureJATS-1.0.dtd'
 const DEFAULT_JATS_SCHEMA_ID = JATS_GREEN_1_2_PUBLIC_ID
 const DEFAULT_JATS_DTD = JATS_GREEN_1_DTD
 export { DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD }
+
+// TODO: we need a way to specify which namespaces should be declared
+export const EMPTY_JATS = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "${DEFAULT_JATS_SCHEMA_ID}" "${DEFAULT_JATS_DTD}">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ali="http://www.niso.org/schemas/ali/1.0">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title></article-title>
+      </title-group>
+      <abstract>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+  </body>
+  <back>
+  </back>
+</article>`

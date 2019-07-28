@@ -1,5 +1,6 @@
 import * as tableHelpers from './tableHelpers'
 
+export { default as createDemoVfs } from './createDemoVfs'
 export { default as FigureLabelGenerator } from './FigureLabelGenerator'
 export { default as FigureManager } from './FigureManager'
 export { default as FootnoteManager } from './FootnoteManager'

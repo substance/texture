@@ -4,10 +4,9 @@ import {
   Component, DefaultDOMElement, keys, getKeyForPath
 } from 'substance'
 import {
-  TextureWebApp, VfsStorageClient, createJatsImporter, DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD,
-  TextureJATS
+  TextureWebApp, createJatsImporter, DEFAULT_JATS_SCHEMA_ID, DEFAULT_JATS_DTD,
+  TextureJATS, Vfs, VfsStorageClient
 } from 'substance-texture'
-import TestVfs from './TestVfs'
 import { DOMEvent } from './testHelpers'
 import { validateXML } from 'texture-xml-utils'
 
@@ -119,7 +118,7 @@ export function createTestApp (options = {}) {
   const validateOnSave = !options.noValidationOnSave
 
   class App extends TextureWebApp {
-    _getStorage (storageType) {
+    _getStorage () {
       let _vfs = options.vfs || vfs
       // TODO: find out if we still need options.root, because it looks like
       // we are using options.rootDir
@@ -216,7 +215,7 @@ export function setupTestVfs (mainVfs, archiveId) {
       data[path] = mainVfs._data[path]
     }
   }
-  return new TestVfs(data)
+  return new Vfs(data)
 }
 
 // creates a vfs instance that contains a standard manifest
@@ -225,7 +224,7 @@ export function createTestVfs (seedXML) {
     "test/manifest.xml": "<dar>\n  <documents>\n    <document id=\"manuscript\" type=\"article\" path=\"manuscript.xml\" />\n  </documents>\n  <assets>\n  </assets>\n</dar>\n", //eslint-disable-line
     "test/manuscript.xml": seedXML, //eslint-disable-line
   }
-  return new TestVfs(data)
+  return new Vfs(data)
 }
 
 export function openManuscriptEditor (app) {

@@ -5,6 +5,7 @@ import {
 } from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
+import _require from './_require'
 
 /*
   A PersistedDocumentArchive is a 3-tier stack representing a document archive
@@ -108,7 +109,7 @@ export default class PersistedDocumentArchive extends EventEmitter {
             })
           } else {
             // TODO: add a proper implementation for nodejs
-            const fs = require('fs')
+            const fs = _require('fs')
             return new Promise((resolve, reject) => {
               fs.readFile(fileRecord.data, (err, data) => {
                 if (err) reject(err)

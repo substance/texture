@@ -1,5 +1,6 @@
 const SLASH = '/'.charCodeAt(0)
-export default class TestVfs {
+
+export default class Vfs {
   constructor (data) {
     this._data = data
   }

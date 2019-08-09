@@ -237,8 +237,10 @@ export default class ArticlePanel extends Component {
 
   // Routing
   // =======
-  // NOTE: I don't thing that this is generally a good idea. E.g. what to do if multiple this is embedded
-  // into a different thing with its own router.
+  // ATTENTION: routing is a questionable feature, because Texture might be embedded into an environment with
+  // its own routing. We primarily use it for development. We are considering to remove it from this component
+  // and instead do this just in the demo setup.
+  // ATM, this is only activated when Texture is mounted with `enableRouting:true`
 
   _clearRoute () {
     let router = this.context.router

@@ -6,7 +6,10 @@ export default class TextureAppChrome extends Component {
   constructor (...args) {
     super(...args)
 
-    this._router = new Router()
+    if (this.props.enableRouting) {
+      this._router = new Router()
+    }
+
     // TODO: rethink how configuration is loaded
     this._config = Texture.getConfiguration()
   }
@@ -40,7 +43,9 @@ export default class TextureAppChrome extends Component {
       DefaultDOMElement.getBrowserWindow().on('drop', domHelpers.stopAndPrevent, this)
       DefaultDOMElement.getBrowserWindow().on('dragover', domHelpers.stopAndPrevent, this)
     }
-    this._router.start()
+    if (this._router) {
+      this._router.start()
+    }
     this.handleActions({
       'save': this._handleSave
     })

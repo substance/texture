@@ -38,7 +38,7 @@
     "rollup-plugin-node-resolve": "4.2.3",
     "source-map-support": "0.5.10",
     "standard": "12.0.1",
-    "substance-bundler": "0.26.4",
+    "substance-bundler": "0.27.0",
     "substance-test": "0.14.0",
     "tap-spec": "5.0.0",
     "texture-plugin-jats": "0.2.0",

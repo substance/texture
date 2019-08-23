@@ -5,6 +5,7 @@ const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
 const rollup = require('substance-bundler/extensions/rollup')
+const postcss = require('substance-bundler/extensions/postcss')
 const yazl = require('yazl')
 const compileSchema = require('texture-xml-utils/bundler/compileSchema')
 const generateSchemaDocumentation = require('texture-xml-utils/bundler/generateSchemaDocumentation')
@@ -107,8 +108,14 @@ b.task('build:assets', function () {
   b.copy('./node_modules/substance/dist/substance.js*', DIST + 'lib/substance/')
   b.copy('./node_modules/substance/dist/substance.min.js*', DIST + 'lib/substance/')
   b.copy('./node_modules/texture-plugin-jats/dist', DIST + 'plugins/texture-plugin-jats')
-  b.css('texture.css', DIST + 'texture.css')
-  b.css('texture-reset.css', DIST + 'texture-reset.css')
+  postcss(b, {
+    from: 'texture.css',
+    to: DIST + 'texture.css'
+  })
+  postcss(b, {
+    from: 'texture-reset.css',
+    to: DIST + 'texture-reset.css'
+  })
 })
 
 b.task('build:schema', ['schema:texture-article'])

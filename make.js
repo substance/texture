@@ -13,6 +13,9 @@ const commonjs = require('rollup-plugin-commonjs')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const istanbul = require('substance-bundler/extensions/rollup/rollup-plugin-istanbul')
 
+let _require = require('esm')(module)
+const serve = _require('./src/dar-server/serve').default
+
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
 const TMP = 'tmp/'
@@ -27,7 +30,6 @@ b.yargs.option('d', {
 })
 let argv = b.yargs.argv
 if (argv.d) {
-  const serve = require('./src/dar/serve')
   const rootDir = argv.d
   const archiveDir = path.resolve(path.join(__dirname, rootDir))
   serve(b.server, {
@@ -56,7 +58,7 @@ b.task('lib', ['clean', 'build:schema', 'build:assets', 'build:lib'])
 b.task('dev', ['clean', 'build:schema', 'build:assets', 'build:demo'])
   .describe('builds the web bundle.')
 
-b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib:browser', 'build:desktop'])
+b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib', 'build:desktop'])
   .describe('builds the desktop bundle (electron).')
 
 b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets'])
@@ -71,7 +73,7 @@ b.task('test:browser', ['test-browser'])
 // spawns electron after build is ready
 b.task('run-app', ['desktop'], () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
-  fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: APPDIST, await: false })
+  fork(b, require.resolve('electron/cli.js'), ['.'], { verbose: true, cwd: APPDIST, await: false })
 }).describe('runs the application in electron.')
 
 b.task('schema:texture-article', () => {
@@ -201,7 +203,7 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
     ]
   })
   // execute 'install-app-deps'
-  fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
+  fork(b, require.resolve('electron-builder/out/cli/cli.js'), ['install-app-deps'], { verbose: true, cwd: APPDIST, await: true })
 })
 
 b.task('build:desktop:dars', () => {
@@ -309,12 +311,12 @@ b.task('build:coverage:nodejs', ['build:schema', 'build:test-assets'], () => {
 
 b.task('run:coverage:browser', () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
-  fork(b, require.resolve('electron/cli.js'), '.', '--coverage', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: true })
+  fork(b, require.resolve('electron/cli.js'), ['.', '--coverage'], { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: true })
 })
 
 b.task('run:test:electron', ['test-browser'], () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
-  fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: false })
+  fork(b, require.resolve('electron/cli.js'), ['.'], { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: false })
 })
 
 function _buildCoverageBundle (target) {

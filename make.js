@@ -399,6 +399,17 @@ function _buildLib (DEST, platform) {
       })
     ]
   })
+  if (platform === 'nodejs' || platform === 'all') {
+    rollup(b, {
+      input: './src/dar-server/index.js',
+      output: {
+        file: DEST + 'dar-server.js',
+        format: 'cjs',
+        sourcemap: true
+      },
+      external: ['fs', 'path', 'fs-extra', 'yazl', 'yauzl', 'parse-formdata']
+    })
+  }
 }
 
 function _packDar (dataFolder, darPath) {

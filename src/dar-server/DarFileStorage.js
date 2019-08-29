@@ -1,17 +1,11 @@
-import { platform } from 'substance'
 import FSStorage from './FSStorage'
 import listDir from './_listDir'
-import _require from './_require'
 
-// FIXME: this file should only get bundled in commonjs version
-let fs, fsExtra, path, yazl, yauzl
-if (platform.inNodeJS || platform.inElectron) {
-  fs = _require('fs')
-  fsExtra = _require('fs-extra')
-  path = _require('path')
-  yazl = _require('yazl')
-  yauzl = _require('yauzl')
-}
+const fs = require('fs')
+const fsExtra = require('fs-extra')
+const path = require('path')
+const yazl = require('yazl')
+const yauzl = require('yauzl')
 
 /*
   This storage is used to store working copies of '.dar' files that are located somewhere else on the file-system.

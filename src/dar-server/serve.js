@@ -1,8 +1,6 @@
 import readArchive from './readArchive'
 import writeArchive from './writeArchive'
 import cloneArchive from './cloneArchive'
-// TODO: bring this back
-// const listArchives = require('./listArchives')
 
 const fs = require('fs')
 const path = require('path')
@@ -10,7 +8,7 @@ const parseFormdata = require('parse-formdata')
 
 const DOT = '.'.charCodeAt(0)
 
-module.exports = function serve (app, opts = {}) {
+export default function serve (app, opts = {}) {
   const apiUrl = opts.apiUrl || ''
   const serverUrl = opts.serverUrl
   const rootDir = opts.rootDir
@@ -22,20 +20,6 @@ module.exports = function serve (app, opts = {}) {
     res.header('Access-Control-Allow-Headers', 'X-Requested-With')
     res.header('Access-Control-Allow-Methods', '*')
     next()
-  })
-
-  // listing avalable dars
-  app.get(apiUrl + '/!list', async (req, res) => {
-    res.status(500).send()
-    // TODO: bring this back
-    // listArchives(rootDir)
-    //   .then((records) => {
-    //     res.status(200).json(records)
-    //   })
-    //   .catch((err) => {
-    //     console.error(err)
-    //     res.status(500).send()
-    //   })
   })
 
   /*

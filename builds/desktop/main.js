@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const url = require('url')
 const fsExtra = require('fs-extra')
-const { DarFileStorage } = require('./lib/texture')
+const { DarFileStorage } = require('./lib/dar-server')
 const debug = require('debug')('main')
 
 const {

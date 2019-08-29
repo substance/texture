@@ -148,7 +148,8 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
   ;[
     'texture.js',
     'texture.css',
-    'texture-reset.css'
+    'texture-reset.css',
+    'dar-server.js'
   ].forEach(f => {
     b.copy(`dist/${f}`, APPDIST + 'lib/')
     b.copy(`dist/${f}.map`, APPDIST + 'lib/')

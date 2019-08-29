@@ -60,10 +60,13 @@ if (platform.inNodeJS) {
     platform.DEBUG = true
   }
 
+  // this allows to run only a subset of tests
   if (process.env.TEST) {
     const { test } = require('substance-test')
     let harness = test.getHarness()
     let re = new RegExp(process.env.TEST)
+    // TODO: it would be nice to remove the other tests
+    // because skipped tests still produce a lot of noise
     harness._tests.forEach(t => {
       if (!re.exec(t.name)) {
         t._skip = true

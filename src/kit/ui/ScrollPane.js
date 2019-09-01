@@ -1,4 +1,4 @@
-import { platform, getRelativeBoundingRect, Scrollbar } from 'substance'
+import { platform, getRelativeBoundingRect } from 'substance'
 import AbstractScrollPane from './AbstractScrollPane'
 
 /**
@@ -59,26 +59,6 @@ export default class ScrollPane extends AbstractScrollPane {
     // any absolute positioned containers, leaving the body scrollable.
     if (!this.props.noStyle) {
       el.addClass('sm-default-style')
-    }
-
-    // Initialize Substance scrollbar (if enabled)
-    if (this.props.scrollbarType === 'substance') {
-      el.addClass('sm-substance-scrollbar')
-      el.addClass('sm-scrollbar-position-' + this.props.scrollbarPosition)
-
-      el.append(
-        // TODO: is there a way to pass scrollbar highlights already
-        // via props? Currently the are initialized with a delay
-        $$(Scrollbar, {
-          scrollPane: this
-        }).ref('scrollbar')
-          .attr('id', 'content-scrollbar')
-      )
-
-      // Scanline is debugging purposes, display: none by default.
-      el.append(
-        $$('div').ref('scanline').addClass('se-scanline')
-      )
     }
 
     el.append(

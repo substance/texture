@@ -15,13 +15,12 @@
     "fs-extra": "7.0.1",
     "katex": "0.10.0",
     "parse-formdata": "1.0.2",
-    "substance": "1.0.2",
     "texture-xml-utils": "0.2.0",
     "yauzl": "2.10.0",
     "yazl": "2.5.1"
   },
   "peerDependency": {
-    "substance": "^1.0.2"
+    "substance": "^1.1.0"
   },
   "devDependencies": {
     "colors": "1.3.3",
@@ -40,6 +39,7 @@
     "rollup-plugin-node-resolve": "4.2.3",
     "source-map-support": "0.5.10",
     "standard": "12.0.1",
+    "substance": "1.1.0-preview.1",
     "substance-bundler": "0.27.0",
     "substance-test": "0.14.0",
     "tap-spec": "5.0.0",

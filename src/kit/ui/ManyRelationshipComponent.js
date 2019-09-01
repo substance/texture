@@ -69,20 +69,21 @@ export default class ManyRelationshipComponent extends ValueComponent {
   }
 
   _toggleOverlay () {
-    const appState = this.context.editorState
-    let overlayId = appState.overlayId
+    const editorState = this.context.editorState
+    let overlayId = editorState.overlayId
     let modelId = this.props.model.id
     if (overlayId === modelId) {
       this.getParent().send('toggleOverlay')
     } else {
-      // ATTENTION: At the moment a reducer maps value selections to appState.overlayId
+      // ATTENTION: At the moment a reducer maps value selections to editorState.overlayId
       // i.e. we must not call toggleOverlay
       // But if we decided to disable the reducer this would break if
       // we used the common implementation.
       // TODO: rethink this approach in general
       this.context.api.selectValue(this._getPath())
-      // DO NOT UNCOMMENT THIS LINE
-      // appState.set('overlayId', modelId, 'propagateImmediately')
+      // DO NOT UNCOMMENT THESE LINES
+      // editorState.overlayId = modelId
+      // editorState.propagateChanges()
     }
   }
 

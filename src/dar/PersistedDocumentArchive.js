@@ -107,8 +107,9 @@ export default class PersistedDocumentArchive extends EventEmitter {
               responseType: 'blob'
             })
           } else {
-            // TODO: add a proper implementation for nodejs
-            const fs = require('fs')
+            // TODO: find a better way to provid platform specific implementations
+            // HACK: global['require'] prevents webpack to bundle 'fs'
+            const fs = global['require']('fs')
             return new Promise((resolve, reject) => {
               fs.readFile(fileRecord.data, (err, data) => {
                 if (err) reject(err)

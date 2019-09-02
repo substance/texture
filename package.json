@@ -15,7 +15,7 @@
     "fs-extra": "7.0.1",
     "katex": "0.10.0",
     "parse-formdata": "1.0.2",
-    "texture-xml-utils": "0.2.0",
+    "texture-xml-utils": "0.2.1",
     "yauzl": "2.10.0",
     "yazl": "2.5.1"
   },

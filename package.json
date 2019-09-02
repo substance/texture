@@ -19,7 +19,7 @@
     "yauzl": "2.10.0",
     "yazl": "2.5.1"
   },
-  "peerDependency": {
+  "peerDependencies": {
     "substance": "^1.1.0"
   },
   "devDependencies": {

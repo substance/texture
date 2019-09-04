@@ -1,7 +1,8 @@
 /* globals Blob */
 import {
   forEach, last, uuid, EventEmitter, platform, isString, documentHelpers, prettyPrintXML,
-  sendRequest
+  sendRequest,
+  AbstractEditorSession
 } from 'substance'
 import { throwMethodIsAbstract } from '../kit/shared'
 import ManifestLoader from './ManifestLoader'
@@ -49,14 +50,15 @@ export default class PersistedDocumentArchive extends EventEmitter {
     let [name, ext] = _getNameAndExtension(file.name)
     let filePath = this._getUniqueFileName(name, ext)
     // TODO: this is not ready for collab
-    let manifest = this._documents['manifest']
-    let assetNode = manifest.create({
-      type: 'asset',
-      id: assetId,
-      path: filePath,
-      assetType: file.type
+    this._manifestSession.transaction(tx => {
+      let assetNode = tx.create({
+        type: 'asset',
+        id: assetId,
+        path: filePath,
+        assetType: file.type
+      })
+      documentHelpers.append(tx, ['dar', 'assets'], assetNode.id)
     })
-    documentHelpers.append(manifest, ['dar', 'assets'], assetNode.id)
     this.buffer.addBlob(assetId, {
       id: assetId,
       path: filePath,
@@ -181,6 +183,9 @@ export default class PersistedDocumentArchive extends EventEmitter {
         if (!documents['manifest']) {
           throw new Error('There must be a manifest.')
         }
+        // Creating an EditorSession for the manifest
+        this._manifestSession = new AbstractEditorSession('manifest', documents['manifest'])
+
         // apply pending changes
         if (!buffer.hasPendingChanges()) {
           // TODO: when we have a persisted buffer we need to apply all pending
@@ -256,16 +261,16 @@ export default class PersistedDocumentArchive extends EventEmitter {
     Adds a document record to the manifest file
   */
   _addDocumentRecord (documentId, type, name, path) {
-    // TODO: this is not collab ready
-    let manifest = this._documents['manifest']
-    let documentNode = manifest.create({
-      type: 'document',
-      id: documentId,
-      documentType: type,
-      name,
-      path
+    this._manifestSession.transaction(tx => {
+      let documentNode = tx.create({
+        type: 'document',
+        id: documentId,
+        documentType: type,
+        name,
+        path
+      })
+      documentHelpers.append(tx, ['dar', 'documents', documentNode.id])
     })
-    documentHelpers.append(manifest, ['dar', 'documents', documentNode.id])
   }
 
   _getUniqueFileName (name, ext) {
@@ -300,8 +305,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
   _registerForChanges (document, docId) {
     document.on('document:changed', change => {
       this.buffer.addChange(docId, change)
-      // Apps can subscribe to this (e.g. to show there's pending changes)
-      this.emit('archive:changed')
+      setTimeout(() => {
+        // Apps can subscribe to this (e.g. to show there's pending changes)
+        this.emit('archive:changed')
+      }, 0)
     }, this)
   }
 

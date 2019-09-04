@@ -11,6 +11,12 @@ Texture is a toolset designed for the production of scientific content. It uses 
 
 Feature requests can be made via the GitHub issues using a Feature request template. It will be assessed and costed, then scheduled accordingly in collaboration with the requesting organisation. Please feedback any problems with the product using the Bug template.
 
+## Releases and Roadmap
+
+[The current release](https://github.com/substance/texture/releases/) is *Texture 2.3*, released 12 April 2019. Texture is currently in beta and optimised for publishers. An updated version will add missing features to fully support scientific authoring.
+
+See [the Roadmap section of the Product Brief](https://docs.google.com/document/d/1ZOjKrQZOndU9G12bVaXmFt56aWRW4kJSDjaMjcxSHSc/edit#heading=h.gsyknu9gn8x).
+
 ## Install
 
 *You need Node 8.x installed on your system.*

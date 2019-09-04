@@ -12,7 +12,7 @@ export default class Table extends DocumentNode {
     this._enableCaching()
   }
 
-  get (cellId) {
+  getCellById (cellId) {
     if (!this._cellIds.has(cellId)) throw new Error('Cell is not part of this table.')
     return this.document.get(cellId)
   }

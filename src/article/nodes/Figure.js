@@ -5,9 +5,13 @@ export default class Figure extends DocumentNode {
   _initialize (...args) {
     super._initialize(...args)
 
-    this.state = {
+    this._set('state', {
       currentPanelIndex: 0
-    }
+    })
+  }
+
+  get state () {
+    return this.get('state')
   }
 
   getCurrentPanelIndex () {

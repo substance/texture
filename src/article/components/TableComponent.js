@@ -523,7 +523,7 @@ export default class TableComponent extends CustomSurface {
 
   _getActualCellComp (cellId) {
     let table = this.props.node
-    let cell = table.get(cellId)
+    let cell = table.getCellById(cellId)
     if (cell.shadowed) cell = cell.masterCell
     return this.refs[cell.id]
   }

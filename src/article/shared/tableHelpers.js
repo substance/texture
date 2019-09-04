@@ -33,8 +33,8 @@ export function computeSelectionRectangle (ulRect, lrRect) {
 }
 
 export function getCellRange (table, anchorCellId, focusCellId) {
-  let anchorCell = table.get(anchorCellId)
-  let focusCell = table.get(focusCellId)
+  let anchorCell = table.getCellById(anchorCellId)
+  let focusCell = table.getCellById(focusCellId)
   let startRow = Math.min(anchorCell.rowIdx, focusCell.rowIdx)
   let startCol = Math.min(anchorCell.colIdx, focusCell.colIdx)
   let endRow = Math.max(anchorCell.rowIdx + anchorCell.rowspan - 1, focusCell.rowIdx + focusCell.rowspan - 1)
@@ -44,7 +44,7 @@ export function getCellRange (table, anchorCellId, focusCellId) {
 
 export function computeUpdatedSelection (table, selData, dr, dc, expand) {
   let focusCellId = selData.focusCellId
-  let focusCell = table.get(focusCellId)
+  let focusCell = table.getCellById(focusCellId)
   let rowIdx = focusCell.rowIdx
   let colIdx = focusCell.colIdx
   let rowspan = focusCell.rowspan

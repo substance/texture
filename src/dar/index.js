@@ -1,5 +1,6 @@
 export { default as HttpStorageClient } from './HttpStorageClient'
 export { default as ManifestLoader } from './ManifestLoader'
+export { default as ManifestDocument } from './ManifestDocument'
 export { default as InMemoryDarBuffer } from './InMemoryDarBuffer'
 export { default as PersistedDocumentArchive } from './PersistedDocumentArchive'
 export { default as Vfs } from './Vfs'

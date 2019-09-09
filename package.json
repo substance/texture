@@ -39,7 +39,7 @@
     "rollup-plugin-node-resolve": "4.2.3",
     "source-map-support": "0.5.10",
     "standard": "12.0.1",
-    "substance": "1.1.0-preview.2",
+    "substance": "1.1.0-preview.3",
     "substance-bundler": "0.27.0",
     "substance-test": "0.14.0",
     "tap-spec": "5.0.0",

@@ -33,7 +33,9 @@ export default class EditorWorkflow extends Component {
     this.api = api
 
     let editor = this
-    const context = Object.assign(createEditorContext(config, editorSession, editor), {
+    // ATTENTION: be carful with the context here
+    // make sure to override everything that is owned by the parent editor
+    const context = Object.assign(this.context, createEditorContext(config, editorSession, editor), {
       api
     })
     this.context = context

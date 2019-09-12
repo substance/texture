@@ -10,7 +10,6 @@ export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
 
-    // TODO: should we really (ab-)use the regular Component state as AppState?
     this._initialize(this.props, this.state)
   }
 

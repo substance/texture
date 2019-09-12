@@ -13,7 +13,7 @@ export default class BooleanComponent extends ValueComponent {
     const value = model.getValue()
     let el = $$('div').addClass('sc-boolean')
     if (!this.context.editable) {
-      el.addclass('sm-readonly')
+      el.addClass('sm-readonly')
     }
     el.append(
       $$(CheckboxInput, { value })

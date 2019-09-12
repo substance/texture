@@ -33,7 +33,7 @@ export default class FootnoteComponent extends NodeComponent {
         id: footnote.id,
         label: label,
         description: this._renderValue($$, 'content', {
-          // TODO: we should need to pass down 'disabled' manually
+          // TODO: we should not need to pass down 'disabled' manually
           // editable=false should be disabled per-se
           disabled: true,
           editable: false

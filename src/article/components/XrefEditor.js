@@ -13,7 +13,9 @@ export default class XrefEditor extends NodeComponent {
       if (!target) continue
       const selected = entry.selected
       let targetPreviewEl = this._renderOption($$, target, selected)
-      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
+      if (this.context.editable) {
+        targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
+      }
       el.append(targetPreviewEl)
     }
     return el

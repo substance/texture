@@ -1,4 +1,3 @@
-import { forEach } from 'substance'
 import CitableContentManager from './CitableContentManager'
 import TableFootnoteManager from './TableFootnoteManager'
 

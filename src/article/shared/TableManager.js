@@ -25,9 +25,9 @@ export default class TableManager extends CitableContentManager {
   _initializeTableFootnoteManagers () {
     let doc = this._getDocument()
     let tableFigures = doc.getIndex('type').get('table-figure')
-    forEach(tableFigures, tableFigure => {
+    for (const tableFigure of tableFigures) {
       tableFigure.setFootnoteManager(new TableFootnoteManager(this.editorSession, tableFigure))
-    })
+    }
   }
 
   _checkForNewTableFigures (change) {

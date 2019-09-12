@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
       storageUrl: getQueryStringParam('storageUrl') || '/archives',
       vfs: window.vfs,
       enableRouting: true,
-      editable: false
+      editable: true
     }, window.document.body)
 
     // put the archive and some more things into global scope, for debugging

@@ -11,11 +11,12 @@ export default {
 
     config.addIcon('insert', { 'fontawesome': 'fa-plus' })
     config.addIcon('undo', { 'fontawesome': 'fa-undo' })
-    config.addIcon('redo', { 'fontawesome': 'fa-repeat' })
+    config.addIcon('redo', { 'fontawesome': 'fa-redo fa-repeat' })
     config.addIcon('edit', { 'fontawesome': 'fa-cog' })
     config.addIcon('delete', { 'fontawesome': 'fa-times' })
     config.addIcon('expand', { 'fontawesome': 'fa-arrows-h' })
     config.addIcon('truncate', { 'fontawesome': 'fa-arrows-h' })
+    config.addIcon('close', { 'fontawesome': 'fa-times fa-close' })
 
     config.addLabel('undo', {
       en: 'Undo',

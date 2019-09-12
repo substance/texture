@@ -18,9 +18,7 @@ export default class EditorPanel extends Component {
   _initialize (props) {
     const { editorSession } = props
     const config = this.context.config
-    const context = Object.assign(this.context, createEditorContext(config, editorSession, this), {
-      editable: true
-    })
+    const context = Object.assign(this.context, createEditorContext(config, editorSession, this))
     this.context = context
   }
 

@@ -34,8 +34,7 @@ export default class EditorWorkflow extends Component {
 
     let editor = this
     const context = Object.assign(createEditorContext(config, editorSession, editor), {
-      api,
-      editable: true
+      api
     })
     this.context = context
 

@@ -11,9 +11,17 @@ export default class Texture extends Component {
     }
   }
 
+  getChildContext () {
+    const { config, archive, editable } = this.props
+    return {
+      config,
+      archive,
+      editable
+    }
+  }
+
   render ($$) {
-    const config = this.props.config
-    const archive = this.props.archive
+    const { config, archive } = this.props
     let el = $$('div').addClass('sc-texture')
 
     // TODO: switch by current document tab

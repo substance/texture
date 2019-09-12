@@ -321,6 +321,7 @@ b.task('run:test:electron', ['test-browser'], () => {
 })
 
 function _buildCoverageBundle (target) {
+  let input = 'index.js'
   let output = []
   if (target === 'browser') {
     output.push({
@@ -334,13 +335,14 @@ function _buildCoverageBundle (target) {
     })
   }
   if (target === 'nodejs') {
+    input = 'index.node.js'
     output.push({
       file: 'tmp/texture.instrumented.cjs.js',
       format: 'cjs'
     })
   }
   rollup(b, {
-    input: './index.js',
+    input,
     external: [
       'substance',
       'katex'
@@ -363,6 +365,13 @@ function _buildCoverageBundle (target) {
 /* HELPERS */
 
 function _buildLib (DEST, platform) {
+  const external = ['substance', 'katex', 'vfs']
+  const plugins = [
+    nodeResolve(),
+    commonjs({
+      include: 'node_modules/**'
+    })
+  ]
   let output = []
   if (platform === 'browser' || platform === 'all') {
     output.push({
@@ -377,13 +386,6 @@ function _buildLib (DEST, platform) {
       sourcemap: true
     })
   }
-  if (platform === 'nodejs' || platform === 'all') {
-    output.push({
-      file: DEST + 'texture.cjs.js',
-      format: 'cjs',
-      sourcemap: true
-    })
-  }
   if (platform === 'es' || platform === 'all') {
     output.push({
       file: DEST + 'texture.es.js',
@@ -391,26 +393,25 @@ function _buildLib (DEST, platform) {
       sourcemap: true
     })
   }
-  rollup(b, {
-    input: './index.js',
-    external: ['substance', 'katex', 'vfs'],
-    output,
-    plugins: [
-      nodeResolve(),
-      commonjs({
-        include: 'node_modules/**'
-      })
-    ]
-  })
+  // HACK: using a different entry point for nodejs build
+  if (platform !== 'nodejs') {
+    rollup(b, {
+      input: './index.js',
+      external,
+      output,
+      plugins
+    })
+  }
   if (platform === 'nodejs' || platform === 'all') {
     rollup(b, {
-      input: './src/dar-server/index.js',
+      input: './index.node.js',
       output: {
-        file: DEST + 'dar-server.js',
+        file: DEST + 'texture.cjs.js',
         format: 'cjs',
         sourcemap: true
       },
-      external: ['fs', 'path', 'fs-extra', 'yazl', 'yauzl', 'parse-formdata']
+      external,
+      plugins
     })
   }
 }

@@ -110,8 +110,9 @@ export default class PersistedDocumentArchive extends EventEmitter {
             })
           } else {
             // TODO: find a better way to provid platform specific implementations
-            // HACK: global['require'] prevents webpack to bundle 'fs'
-            const fs = global['require']('fs')
+            // This is problematic for webpack because it will try to bundle
+            // 'fs' even if this code is never used in the browser
+            const fs = require('fs')
             return new Promise((resolve, reject) => {
               fs.readFile(fileRecord.data, (err, data) => {
                 if (err) reject(err)

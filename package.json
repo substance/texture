@@ -20,7 +20,7 @@
     "yazl": "2.5.1"
   },
   "peerDependencies": {
-    "substance": "^1.1.0-preview.11"
+    "substance": "^1.1.0-preview.12"
   },
   "devDependencies": {
     "colors": "1.3.3",
@@ -39,7 +39,7 @@
     "rollup-plugin-node-resolve": "4.2.3",
     "source-map-support": "0.5.10",
     "standard": "12.0.1",
-    "substance": "1.1.0-preview.11",
+    "substance": "1.1.0-preview.12",
     "substance-bundler": "0.27.0",
     "substance-test": "0.14.0",
     "tap-spec": "5.0.0",

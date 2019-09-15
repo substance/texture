@@ -130,6 +130,10 @@ export default class PersistedDocumentArchive extends EventEmitter {
     }
   }
 
+  getConfig () {
+    return this._config
+  }
+
   getDocumentEntries () {
     return this.getDocument('manifest').getDocumentEntries()
   }

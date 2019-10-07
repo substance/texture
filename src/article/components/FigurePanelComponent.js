@@ -51,7 +51,7 @@ export default class FigurePanelComponent extends NodeComponent {
     if (node.metadata.length > 0) {
       el.append(
         $$(SectionLabel, { label: 'metadata-label' }),
-        $$(FigureMetadataComponent, { model: createValueModel(this.context.api, [node.id, 'metadata']) })
+        $$(FigureMetadataComponent, { path: [node.id, 'metadata'] })
       )
     }
 

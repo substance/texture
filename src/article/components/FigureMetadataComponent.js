@@ -3,7 +3,7 @@ import { ValueComponent } from '../../kit'
 
 export default class FigureMetadataComponent extends ValueComponent {
   render () {
-    let items = this.props.model.getItems()
+    let items = this._getDocument().resolve(this._getPath())
     let el = $$('div').addClass('sc-figure-metadata')
     if (items.length > 0) {
       el.append(

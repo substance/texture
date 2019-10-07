@@ -1,6 +1,12 @@
-import { Component } from 'substance'
+import { Component, getKeyForPath } from 'substance'
 
 export default class ValueComponent extends Component {
+  constructor (...args) {
+    super(...args)
+
+    if (!this.props.path) throw new Error('"path" is required')
+  }
+
   didMount () {
     const appState = this.context.editorState
     const path = this._getPath()
@@ -15,10 +21,8 @@ export default class ValueComponent extends Component {
     appState.removeObserver(this)
   }
 
-  // EXPERIMENTAL:
-  // trying to avoid unnecessary rerenderings
   shouldRerender (newProps) {
-    return newProps.model !== this.props.model
+    return getKeyForPath(newProps.path) !== getKeyForPath(this._getPath())
   }
 
   _rerenderOnModelChange () {
@@ -26,7 +30,22 @@ export default class ValueComponent extends Component {
     this.rerender()
   }
 
+  _getDocument () {
+    return this.context.editorState.document
+  }
+
   _getPath () {
-    return this.props.model._path
+    return this.props.path
+  }
+
+  _getValue () {
+    const document = this._getDocument()
+    return document.get(this._getPath())
+  }
+
+  _setValue (val) {
+    const path = this._getPath()
+    const api = this.context.api
+    api.setValue(path, val)
   }
 }

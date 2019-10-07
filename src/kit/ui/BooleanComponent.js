@@ -10,8 +10,7 @@ export default class BooleanComponent extends ValueComponent {
   }
 
   render () {
-    const model = this.props.model
-    const value = model.getValue()
+    const value = this._getValue()
     let el = $$('div').addClass('sc-boolean')
     if (!this.context.editable) {
       el.addClass('sm-readonly')
@@ -24,8 +23,7 @@ export default class BooleanComponent extends ValueComponent {
 
   _toggleValue () {
     if (this.context.editable) {
-      const model = this.props.model
-      this.props.model.setValue(!model.getValue())
+      this._setValue(!this._getValue())
     }
   }
 }

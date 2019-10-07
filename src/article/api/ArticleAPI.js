@@ -492,6 +492,13 @@ export default class ArticleAPI {
     }
   }
 
+  setValue (path, val) {
+    this.getEditorSession().transaction(tx => {
+      tx.set(path, val)
+      tx.setSelection(this._createValueSelection(path))
+    })
+  }
+
   switchFigurePanel (figure, newPanelIndex) {
     const editorSession = this.editorSession
     let sel = editorSession.getSelection()
@@ -605,8 +612,9 @@ export default class ArticleAPI {
   // TODO: I am not sure if it is the right approach, trying to generalize this
   // Instead we could use dedicated Components derived from the ones from the kit
   // and use specific API to accomplish this
-  _getAvailableOptions (model) {
-    let targetTypes = Array.from(model._targetTypes)
+  _getAvailableOptions (path) {
+    let prop = this.editorSession.getDocument().getProperty(path)
+    let targetTypes = Array.from(prop.targetTypes)
     if (targetTypes.length !== 1) {
       throw new Error('Unsupported relationship. Expected to find one targetType')
     }

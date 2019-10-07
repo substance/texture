@@ -23,8 +23,7 @@ export default class InplaceRefContribsEditor extends ValueComponent {
   }
 
   _renderRefContribs () {
-    const model = this.props.model
-    let items = model.getItems()
+    let items = this._getDocument().resolve(this._getPath())
     return items.map(item => this._renderRefContrib(item))
   }
 
@@ -34,11 +33,11 @@ export default class InplaceRefContribsEditor extends ValueComponent {
   }
 
   _addContrib () {
-    this.props.model.addItem({ type: 'ref-contrib' })
+    this.context.api._appendChild(this._getPath(), { type: 'ref-contrib' })
   }
 
   _removeContrib (contrib) {
-    this.props.model.removeItem(contrib)
+    this.context.api._removeChild(this._getPath(), contrib.id)
   }
 }
 

@@ -1,26 +1,17 @@
-import { Component, $$, getKeyForPath } from 'substance'
-import ContainerEditor from './_ContainerEditor'
-import ValueComponent from './ValueComponent'
-import renderNode from './_renderNode'
+import { $$, Component, getKeyForPath, ContainerEditor, isNil } from 'substance'
+import _renderNode from './_renderNode'
 
-/**
- * A component that renders a CHILDREN value.
- *
- * Note: I decided to use the name Collection here as from the application point of view a CHILDREN field is a collection.
- */
 export default class CollectionComponent extends Component {
   render () {
     const props = this.props
-    const model = props.model
+    const { container, path } = props
     let renderAsContainer
-    if (props.hasOwnProperty('container')) {
-      renderAsContainer = Boolean(props.container)
-    } else {
-      renderAsContainer = model.getSchema().isContainer()
+    if (!isNil(container)) {
+      renderAsContainer = Boolean(container)
     }
     if (renderAsContainer) {
       return $$(EditableCollection, Object.assign({}, props, {
-        containerPath: props.model.getPath()
+        containerPath: path
       }))
     } else {
       return $$(ReadOnlyCollection, props)
@@ -28,15 +19,14 @@ export default class CollectionComponent extends Component {
   }
 }
 
-class ReadOnlyCollection extends ValueComponent {
+class ReadOnlyCollection extends Component {
   // NOTE: this is less efficient than ContainerEditor as it will always render the whole collection
   render () {
-    let props = this.props
-    let model = props.model
-    let el = $$('div').addClass('sc-collection').attr('data-id', getKeyForPath(model.getPath()))
-    let items = model.getItems()
+    const { document, path, disabled } = this.props
+    const el = $$('div').addClass('sc-collection').attr('data-id', getKeyForPath(path))
+    const items = document.resolve(path)
     el.append(
-      items.map(item => renderNode(this, item, { disabled: props.disabled }).ref(item.id))
+      items.map(item => _renderNode(this, item, { disabled }).ref(item.id))
     )
     return el
   }

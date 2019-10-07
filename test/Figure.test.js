@@ -24,7 +24,7 @@ const xrefListItemSelector = '.sc-edit-xref-tool .se-option .sc-preview'
 const figurePanelPreviousSelector = '.sc-figure .se-control.sm-previous'
 const figurePanelNextSelector = '.sc-figure .se-control.sm-next'
 const currentPanelSelector = '.sc-figure .se-current-panel .sc-figure-panel'
-const figureMetadataFieldInputSelector = '.sc-metadata-field .sc-string'
+const figureMetadataFieldInputSelector = '.sc-metadata-field .sc-text-input'
 
 const FIGURE_WITH_TWO_PANELS = `
 <fig-group id="fig1">

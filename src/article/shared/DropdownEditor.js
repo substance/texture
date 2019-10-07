@@ -3,8 +3,7 @@ import { ValueComponent } from '../../kit'
 
 export default class DropdownEditor extends ValueComponent {
   render () {
-    const model = this.props.model
-    const value = model.getValue()
+    const value = this._getValue()
     let el = $$('div').addClass(this._getClassNames())
 
     const dropdownSelector = $$('select').ref('input').addClass('se-select')
@@ -40,9 +39,8 @@ export default class DropdownEditor extends ValueComponent {
   }
 
   _setValue () {
-    const model = this.props.model
     const input = this.refs.input
     const value = input.getValue()
-    model.setValue(value)
+    this.context.api.setValue(this._getPath(), value)
   }
 }

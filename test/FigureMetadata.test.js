@@ -11,7 +11,7 @@ const moveUpMetadataFieldToolSelector = '.sm-move-up-metadata-field'
 const removeMetadataFieldToolSelector = '.sm-remove-metadata-field'
 
 const metadataFieldSelector = '.sc-metadata-field'
-const metadataFieldInputSelector = '.sc-metadata-field .sc-string'
+const metadataFieldInputSelector = '.sc-metadata-field .sc-text-input'
 const metadataFieldNameSelector = '.sc-metadata-field .se-field-name .se-input'
 
 const FIXTURE = `

@@ -152,8 +152,7 @@ export default class DefaultNodeComponent extends Component {
 
   _getPropertyEditorProps (name, value) {
     let props = {
-      // TODO: rename to value
-      model: value,
+      path: value._path,
       placeholder: this._getPlaceHolder(name)
     }
     if (this._showLabelForProperty(name)) {

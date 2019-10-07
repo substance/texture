@@ -48,7 +48,7 @@ import {
   ManuscriptTOC, InsertFigurePanelTool,
   DownloadSupplementaryFileTool, InsertFigureTool, InsertInlineGraphicTool,
   OpenFigurePanelImageTool, ReplaceFigurePanelTool,
-  ReplaceSupplementaryFileTool, InsertTableTool, ManuscriptEditor
+  ReplaceSupplementaryFileTool, InsertTableTool, DefaultArticleEditor
 } from '../components'
 
 import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../nodes'
@@ -59,7 +59,7 @@ import { AddAuthorWorkflow, AddAffiliationWorkflow, AddReferenceWorkflow } from 
 import EditMetadataWorkflow from '../metadata/EditMetadataWorkflow'
 
 export default {
-  name: 'ManuscriptEditor',
+  name: 'DefaultArticleEditor',
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
@@ -449,9 +449,9 @@ export default {
     registerCollectionCommand(config, 'affiliation', ['metadata', 'affiliations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
   },
-  ManuscriptEditor,
+  DefaultArticleEditor,
   // legacy
-  Editor: ManuscriptEditor
+  Editor: DefaultArticleEditor
 }
 
 // For now we just switch view and do the same action as in metadata editor

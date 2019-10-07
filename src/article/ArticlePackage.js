@@ -21,7 +21,7 @@ import ArticleJATSExporter from './converter/jats/ArticleJATSExporter'
 import ArticleJATSImporter from './converter/jats/ArticleJATSImporter'
 import ArticlePlainTextExporter from './converter/text/ArticlePlainTextExporter'
 import JATSTransformer from './converter/transform/jats/JATSTransformer'
-import { ManuscriptEditor } from './components'
+import DefaultArticleEditor from './components/DefaultArticleEditor'
 
 export default {
   name: 'article',
@@ -118,9 +118,9 @@ export default {
       to: '-'
     }))
 
-    // The default article-editor is a ManuscriptEditor
-    // TODO: think about how Texture can allow customizations that use a different editor
-    articleConfig.addComponent('article-editor', ManuscriptEditor)
+    // The default article-editor is a DefaultArticleEditor
+    // TODO: document how a plugin can override this, for a specific article type
+    articleConfig.addComponent('article-editor', DefaultArticleEditor)
     articleConfig.import(ManuscriptPackage)
 
     articleConfig.import(MetadataPackage)

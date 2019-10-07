@@ -1,4 +1,4 @@
-import { Component, keys } from 'substance'
+import { Component, $$, keys } from 'substance'
 import { createEditorContext } from '../../kit'
 
 // Base-class for Manuscript- and MetadataEditor to reduced code-redundancy
@@ -86,16 +86,6 @@ export default class EditorPanel extends Component {
       e.preventDefault()
     }
     return handled
-  }
-
-  _renderWorkflow ($$, workflowId) {
-    let workflowProps = this.context.editorState.workflowProps || {}
-    let Modal = this.getComponent('modal')
-    let WorkflowComponent = this.getComponent(workflowId)
-    return $$(Modal, {
-      width: WorkflowComponent.desiredWidth,
-      content: $$(WorkflowComponent, workflowProps).ref('workflow')
-    }).addClass('se-workflow-modal sm-workflow-' + workflowId)
   }
 
   _scrollElementIntoView (el, force) {

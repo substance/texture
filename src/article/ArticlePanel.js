@@ -17,6 +17,8 @@ export default class ArticlePanel extends Component {
     return {
       executeCommand: this._executeCommand,
       toggleOverlay: this._toggleOverlay,
+      // TODO: is this really the right place?
+      // IMO this is editor specific and should go into BasicArticleEditor
       startWorkflow: this._startWorkflow,
       closeModal: this._closeModal,
       scrollElementIntoView: this._scrollElementIntoView,

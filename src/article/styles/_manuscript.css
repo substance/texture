@@ -7,7 +7,7 @@
   margin: 0 auto;
 }
 
-.sc-manuscript .sc-string.sm-title {
+.sc-manuscript .sc-text-input.sm-title {
   font-size: var(--t-title-font-size);
   font-weight: var(--t-bold-font-weight);
 }

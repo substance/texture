@@ -13,7 +13,7 @@ export default class DefaultArticleEditor extends BasicArticleEditor {
   _getClass () {
     // TODO: at some point I have renamed this class to 'DefaultArticleEditor'
     // to avoid breaking tests and styles, I left the old class still there
-    return 'sc-default-article-editor sc-manuscript-editor'
+    return 'sc-default-article-editor sc-manuscript-editor sc-manuscript-view'
   }
 
   _renderTOC () {

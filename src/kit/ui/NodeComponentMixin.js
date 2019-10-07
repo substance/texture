@@ -1,4 +1,4 @@
-import renderValue from './_renderValue'
+import renderProperty from './_renderProperty'
 
 export default function (Component) {
   return class NodeComponent extends Component {
@@ -21,7 +21,7 @@ export default function (Component) {
     _renderValue (propertyName, options = {}) {
       let node = this._getNode()
       let doc = node.getDocument()
-      return renderValue(this, doc, [node.id, propertyName], options)
+      return renderProperty(this, doc, [node.id, propertyName], options)
     }
 
     _onNodeUpdate () {

@@ -6,8 +6,9 @@ export default class ReferenceListComponent extends CustomSurface {
   didMount () {
     super.didMount()
 
+    const path = this.props.path
     const appState = this.context.editorState
-    appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path: ['article', 'references'] } })
+    appState.addObserver(['document'], this.rerender, this, { stage: 'render', document: { path } })
     // TODO: it is not good to rerender on every selection change.
     // Instead derive a meaningful state, and render if the state changes
     appState.addObserver(['selection'], this.rerender, this, { stage: 'render' })
@@ -54,7 +55,8 @@ export default class ReferenceListComponent extends CustomSurface {
   }
 
   _getBibliography () {
-    let references = this.props.model.getItems()
+    const document = this.context.editorState.document
+    let references = document.resolve(this.props.path)
     references.sort((a, b) => {
       return getPos(a) - getPos(b)
     })

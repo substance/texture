@@ -1,8 +1,8 @@
-import { getKeyForPath } from 'substance'
+import { $$, getKeyForPath } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class ListItemComponent extends NodeComponent {
-  render ($$) {
+  render () {
     const node = this.props.node
     const doc = node.getDocument()
     const path = node.getPath()

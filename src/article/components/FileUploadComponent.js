@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 /*
   This is a proto component which allows you to render a file uploader
@@ -11,7 +11,7 @@ export default class FileUploadComponent extends Component {
     return false
   }
 
-  render ($$) {
+  render () {
     const el = $$('div').addClass('sc-file-upload')
 
     const selectInput = $$('input').attr({
@@ -46,14 +46,14 @@ export default class FileUploadComponent extends Component {
 
     if (this.state.error) {
       el.append(
-        $$('div').addClass('se-error-popup').append(this.renderErrorsList($$))
+        $$('div').addClass('se-error-popup').append(this.renderErrorsList())
       )
     }
 
     return el
   }
 
-  renderErrorsList ($$) {
+  renderErrorsList () {
     return $$('ul').addClass('se-error-list').append(this.getLabel('file-upload-error'))
   }
 

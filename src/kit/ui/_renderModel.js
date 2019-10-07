@@ -1,6 +1,7 @@
+import { $$ } from 'substance'
 import _getSettings from './_getSettings'
 
-export default function renderModel ($$, comp, valueModel, options = {}) {
+export default function renderModel (comp, valueModel, options = {}) {
   let ValueComponent = comp.getComponent(valueModel.type)
 
   let valueSettings

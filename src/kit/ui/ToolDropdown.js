@@ -1,5 +1,6 @@
 import ToolGroup from './ToolGroup'
 import Tooltip from './Tooltip'
+import { $$ } from 'substance'
 
 // TODO: use OverlayMixin to avoid code redundancy
 export default class ToolDropdown extends ToolGroup {
@@ -9,7 +10,7 @@ export default class ToolDropdown extends ToolGroup {
   dispose () {
     this.context.editorState.removeObserver(this)
   }
-  render ($$) {
+  render () {
     const appState = this.context.editorState
     const { commandStates, style, theme, hideDisabled, alwaysVisible } = this.props
     const toggleName = this._getToggleName()
@@ -50,20 +51,20 @@ export default class ToolDropdown extends ToolGroup {
       if (showChoices) {
         el.append(
           $$('div').addClass('se-choices').append(
-            this._renderItems($$)
+            this._renderItems()
           ).ref('choices')
         )
       } else if (style === 'minimal' || toggleName !== this.props.name) {
         // NOTE: tooltips are only rendered when explanation is needed
         el.append(
-          this._renderToolTip($$)
+          this._renderToolTip()
         )
       }
     }
     return el
   }
 
-  _renderToolTip ($$) {
+  _renderToolTip () {
     let labelProvider = this.context.labelProvider
     return $$(Tooltip, {
       text: labelProvider.getLabel(this.props.name)

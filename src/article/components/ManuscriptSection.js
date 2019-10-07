@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { addModelObserver, removeModelObserver } from '../../kit'
 export default class ManuscriptSection extends Component {
   didMount () {
@@ -9,7 +9,7 @@ export default class ManuscriptSection extends Component {
     removeModelObserver(this)
   }
 
-  render ($$) {
+  render () {
     const { model, name, label, children, hideWhenEmpty } = this.props
     const SectionLabel = this.getComponent('section-label')
 

@@ -1,9 +1,9 @@
-import { domHelpers } from 'substance'
+import { $$, domHelpers } from 'substance'
 import { Tool } from '../../kit'
 
 export default class OpenFigurePanelImageTool extends Tool {
-  render ($$) {
-    let el = super.render($$)
+  render () {
+    let el = super.render()
     el.append(
       $$('a').ref('link')
         .attr('target', '_blank')

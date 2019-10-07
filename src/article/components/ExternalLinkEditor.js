@@ -1,10 +1,10 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 /**
  * Used in the popup when cursor is on an external-link.
  */
 export default class ExternalLinkEditor extends Component {
-  render ($$) {
+  render () {
     let TextPropertyEditor = this.getComponent('text-property-editor')
     let Button = this.getComponent('button')
     let el = $$('div').addClass('sc-external-link-editor').addClass('sm-horizontal-layout')

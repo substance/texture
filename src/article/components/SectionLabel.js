@@ -1,7 +1,7 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class SectionLabel extends Component {
-  render ($$) {
+  render () {
     const label = this.props.label
     return $$('div').addClass('sc-section-label')
       .append(this.getLabel(label))

@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 const _ManagedComponentCache = new Map()
 
@@ -47,7 +47,7 @@ export default function Managed (ComponentClass) {
       this.context.editorState.off(this)
     }
 
-    render ($$) {
+    render () {
       return $$(ComponentClass, this._props).ref('managed')
     }
 

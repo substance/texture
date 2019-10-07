@@ -1,8 +1,8 @@
-import { domHelpers } from 'substance'
+import { $$, domHelpers } from 'substance'
 import { ValueComponent } from '../../kit'
 
 export default class DropdownEditor extends ValueComponent {
-  render ($$) {
+  render () {
     const model = this.props.model
     const value = model.getValue()
     let el = $$('div').addClass(this._getClassNames())

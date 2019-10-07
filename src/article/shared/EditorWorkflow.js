@@ -1,4 +1,4 @@
-import { Component, uuid, domHelpers } from 'substance'
+import { Component, $$, uuid, domHelpers } from 'substance'
 import { ModalEditorSession, createEditorContext } from '../../kit'
 
 /**
@@ -90,19 +90,19 @@ export default class EditorWorkflow extends Component {
     this.editorSession.dispose()
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass(this._getClassNames())
     // ATTENTION: don't let mousedowns and clicks pass, otherwise the parent will null the selection
     el.on('mousedown', this._onMousedown)
       .on('click', this._onClick)
     el.append(
-      this._renderContent($$)
+      this._renderContent()
     )
-    el.append(this._renderKeyTrap($$))
+    el.append(this._renderKeyTrap())
     return el
   }
 
-  _renderKeyTrap ($$) {
+  _renderKeyTrap () {
     return $$('textarea').addClass('se-keytrap').ref('keytrap')
       .css({ position: 'absolute', width: 0, height: 0, opacity: 0 })
       .on('keydown', this._onKeydown)
@@ -112,7 +112,7 @@ export default class EditorWorkflow extends Component {
       // .on('cut', this._onCut)
   }
 
-  _renderContent ($$) {}
+  _renderContent () {}
 
   _getClassNames () {
     return 'sc-editor-workflow'

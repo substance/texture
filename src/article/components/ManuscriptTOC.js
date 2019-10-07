@@ -1,10 +1,10 @@
-import { Component, domHelpers, DefaultDOMElement } from 'substance'
+import { Component, $$, domHelpers, DefaultDOMElement } from 'substance'
 import { ValueComponent, renderModel, createValueModel } from '../../kit'
 
 // TODO: this needs to be redesigned
 // TODO: we should follow the same approach as in Metadata, i.e. having a model which is a list of sections
 export default class ManuscriptTOC extends Component {
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-toc')
     let manuscriptModel = this.props.model
 
@@ -61,7 +61,7 @@ export default class ManuscriptTOC extends Component {
 }
 
 class SectionTOCEntry extends Component {
-  render ($$) {
+  render () {
     const { label, section } = this.props
     let el = $$('a')
       .addClass('sc-toc-entry sm-level-1')
@@ -79,7 +79,7 @@ class SectionTOCEntry extends Component {
 }
 
 class BodyTOCEntry extends ValueComponent {
-  render ($$) {
+  render () {
     let items = this.props.model.getItems()
     let headings = items.filter(node => node.type === 'heading')
     return $$('div').addClass('sc-toc-entry').append(
@@ -112,18 +112,18 @@ class TOCHeadingEntry extends Component {
   dispose () {
     this.context.editorState.removeObserver(this)
   }
-  render ($$) {
+  render () {
     const api = this.context.api
     let heading = this.props.node
     return $$('div').append(
-      renderModel($$, this, createValueModel(api, heading.getPath()), { readOnly: true })
+      renderModel(this, createValueModel(api, heading.getPath()), { readOnly: true })
     )
   }
 }
 
 // only visible when collection not empty
 class DynamicTOCEntry extends ValueComponent {
-  render ($$) {
+  render () {
     let { label, model, section } = this.props
     let el = $$('div')
       .addClass('sc-toc-entry sm-level-1')

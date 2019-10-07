@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import EditorWorkflow from '../shared/EditorWorkflow'
 import MetadataEditor from './MetadataEditor'
 import MetadataAPI from './MetadataAPI'
@@ -21,7 +22,7 @@ export default class EditMetadataWorkflow extends EditorWorkflow {
     this.appState.removeObserver(this)
   }
 
-  _renderContent ($$) {
+  _renderContent () {
     // ATTENTION: ATM it is important to use 'editor' ref
     return $$(MetadataEditor).ref('editor')
   }

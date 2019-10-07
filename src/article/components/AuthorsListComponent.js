@@ -1,4 +1,4 @@
-import { CustomSurface } from 'substance'
+import { CustomSurface, $$ } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class AuthorsListComponent extends CustomSurface {
@@ -25,15 +25,15 @@ export default class AuthorsListComponent extends CustomSurface {
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-authors-list')
     el.append(
-      this._renderAuthors($$)
+      this._renderAuthors()
     )
     return el
   }
 
-  _renderAuthors ($$) {
+  _renderAuthors () {
     const sel = this.context.editorState.selection
     const authors = this._getAuthors()
     let els = []
@@ -60,7 +60,7 @@ export default class AuthorsListComponent extends CustomSurface {
 }
 
 class AuthorDisplay extends NodeComponent {
-  render ($$) {
+  render () {
     let el = $$('span').addClass('se-contrib').html(
       this.context.api.renderEntity(this.props.node)
     )

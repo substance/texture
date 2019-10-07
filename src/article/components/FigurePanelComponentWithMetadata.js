@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import { createNodePropertyModels } from '../../kit'
 import { getLabel } from '../shared/nodeHelpers'
 import DefaultNodeComponent from './DefaultNodeComponent'
@@ -9,7 +10,7 @@ export default class FigurePanelComponentWithMetadata extends DefaultNodeCompone
     return `sc-figure-metadata sc-default-node`
   }
 
-  _renderHeader ($$) {
+  _renderHeader () {
     const node = this.props.node
     let header = $$('div').addClass('se-header')
     header.append(

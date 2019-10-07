@@ -1,10 +1,10 @@
+import { isNil, $$ } from 'substance'
 import Texture from './Texture'
 import TextureArchive from './TextureArchive'
-import { isNil } from 'substance'
 
 export default function TextureAppMixin (ParentAppChrome) {
   return class TextureApp extends ParentAppChrome {
-    render ($$) {
+    render () {
       let el = $$('div').addClass('sc-app')
       let { archive, error } = this.state
       let editable = isNil(this.props.editable) ? true : this.props.editable

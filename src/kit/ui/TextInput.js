@@ -1,7 +1,8 @@
+import { $$ } from 'substance'
 import Surface from './_Surface'
 
 export default class TextInput extends Surface {
-  render ($$) {
+  render () {
     const TextPropertyComponent = this.getComponent('text-property')
     const placeholder = this.props.placeholder
     const path = this.props.path

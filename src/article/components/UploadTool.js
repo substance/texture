@@ -1,11 +1,11 @@
-import { domHelpers } from 'substance'
+import { domHelpers, $$ } from 'substance'
 import { Tool } from '../../kit'
 
 export default class UploadTool extends Tool {
   // In addition to the regular button a file input is rendered
   // which is used to trigger the browser's file dialog.
-  render ($$) {
-    let el = super.render($$)
+  render () {
+    let el = super.render()
 
     const isMultiple = this.canUploadMultiple
     const input = $$('input').attr({

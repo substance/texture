@@ -1,4 +1,4 @@
-import { FontAwesomeIcon, Component } from 'substance'
+import { FontAwesomeIcon, Component, $$ } from 'substance'
 import { FormRowComponent, createNodePropertyModels } from '../../kit'
 import { CARD_MINIMUM_FIELDS } from '../ArticleConstants'
 
@@ -27,7 +27,7 @@ export default class DefaultNodeComponent extends Component {
     }
   }
 
-  render ($$) {
+  render () {
     const showAllFields = this.state.showAllFields
     const node = this._getNode()
     // TODO: issues should be accessed via model, not directly
@@ -38,7 +38,7 @@ export default class DefaultNodeComponent extends Component {
     if (hasIssues) {
       el.addClass('sm-warning')
     }
-    el.append(this._renderHeader($$))
+    el.append(this._renderHeader())
 
     const properties = this._getProperties()
     const propNames = Array.from(properties.keys())
@@ -54,7 +54,7 @@ export default class DefaultNodeComponent extends Component {
     for (let name of visiblePropNames) {
       let value = properties.get(name)
       el.append(
-        this._renderProperty($$, name, value, nodeIssues)
+        this._renderProperty(name, value, nodeIssues)
       )
     }
 
@@ -86,7 +86,7 @@ export default class DefaultNodeComponent extends Component {
     return el
   }
 
-  _renderProperty ($$, name, value, nodeIssues) {
+  _renderProperty (name, value, nodeIssues) {
     const PropertyEditor = this._getPropertyEditorClass(name, value)
     const editorProps = this._getPropertyEditorProps(name, value)
     // skip this property if the editor implementation produces nil
@@ -120,7 +120,7 @@ export default class DefaultNodeComponent extends Component {
     return `sc-default-model sm-${this._getNode().type}`
   }
 
-  _renderHeader ($$) {
+  _renderHeader () {
     // TODO: rethink this. IMO it is not possible to generalize this implementation.
     // Maybe it is better to just use the regular component and pass a prop to allow the component to render in a 'short' style
     const ModelPreviewComponent = this.getComponent('model-preview', true)

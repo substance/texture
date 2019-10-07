@@ -1,8 +1,8 @@
-import { Component, getKeyForPath } from 'substance'
+import { Component, getKeyForPath, $$ } from 'substance'
 import TextInput from './TextInput'
 
 export default class StringComponent extends Component {
-  render ($$) {
+  render () {
     let placeholder = this.props.placeholder
     let model = this.props.model
     let path = model.getPath()

@@ -1,4 +1,4 @@
-import { DefaultDOMElement, platform } from 'substance'
+import { DefaultDOMElement, platform, $$ } from 'substance'
 import AbstractScrollPane from './AbstractScrollPane'
 
 export default class BodyScrollPane extends AbstractScrollPane {
@@ -15,7 +15,7 @@ export default class BodyScrollPane extends AbstractScrollPane {
     return 'body'
   }
 
-  render ($$) {
+  render () {
     let el = $$('div')
     if (this.props.contextMenu === 'custom') {
       el.on('contextmenu', this._onContextMenu)

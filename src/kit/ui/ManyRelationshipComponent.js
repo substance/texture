@@ -1,4 +1,4 @@
-import { isArray } from 'substance'
+import { isArray, $$ } from 'substance'
 import ValueComponent from './ValueComponent'
 import MultiSelectInput from './MultiSelectInput'
 
@@ -18,7 +18,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     const label = this.getLabel('select-item') + ' ' + this.props.label
     const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)

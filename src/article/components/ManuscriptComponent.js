@@ -1,9 +1,9 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { renderModel } from '../../kit'
 import ManuscriptSection from './ManuscriptSection'
 
 export default class ManuscriptComponent extends Component {
-  render ($$) {
+  render () {
     const manuscript = this.props.model
     const AuthorsListComponent = this.getComponent('authors-list')
     const ReferenceListComponent = this.getComponent('reference-list')
@@ -20,7 +20,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('title-label'),
         model: titleModel
       }).append(
-        renderModel($$, this, titleModel, {
+        renderModel(this, titleModel, {
           placeholder: this.getLabel('title-placeholder')
         }).addClass('sm-title')
       )
@@ -33,7 +33,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('subtitle-label'),
         model: subTitleModel
       }).append(
-        renderModel($$, this, subTitleModel, {
+        renderModel(this, subTitleModel, {
           placeholder: this.getLabel('subtitle-placeholder')
         }).addClass('sm-subtitle')
       )
@@ -61,7 +61,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('abstract-label'),
         model: abstractModel
       }).append(
-        renderModel($$, this, abstractModel, {
+        renderModel(this, abstractModel, {
           name: 'abstract',
           placeholder: this.getLabel('abstract-placeholder')
         }).addClass('sm-abstract')
@@ -75,7 +75,7 @@ export default class ManuscriptComponent extends Component {
         label: this.getLabel('body-label'),
         model: bodyModel
       }).append(
-        renderModel($$, this, bodyModel, {
+        renderModel(this, bodyModel, {
           name: 'body',
           placeholder: this.getLabel('body-placeholder')
         }).addClass('sm-body')
@@ -90,7 +90,7 @@ export default class ManuscriptComponent extends Component {
         model: footnotesModel,
         hideWhenEmpty: true
       }).append(
-        renderModel($$, this, footnotesModel).addClass('sm-footnotes')
+        renderModel(this, footnotesModel).addClass('sm-footnotes')
       )
     )
     // References

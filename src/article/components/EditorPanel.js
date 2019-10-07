@@ -1,4 +1,4 @@
-import { Component, $$, keys } from 'substance'
+import { Component, keys } from 'substance'
 import { createEditorContext } from '../../kit'
 
 // Base-class for Manuscript- and MetadataEditor to reduced code-redundancy

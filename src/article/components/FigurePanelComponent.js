@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import { NodeComponent, createValueModel } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata'
@@ -7,15 +8,15 @@ import LabelComponent from './LabelComponent'
 import { getLabel } from '../shared/nodeHelpers'
 
 export default class FigurePanelComponent extends NodeComponent {
-  render ($$) {
+  render () {
     const mode = this._getMode()
     // different rendering when rendered as preview or in metadata view
     if (mode === PREVIEW_MODE) {
-      return this._renderPreviewVersion($$)
+      return this._renderPreviewVersion()
     } else if (mode === METADATA_MODE) {
-      return this._renderMetadataVersion($$)
+      return this._renderMetadataVersion()
     } else {
-      return this._renderManuscriptVersion($$)
+      return this._renderManuscriptVersion()
     }
   }
 
@@ -23,7 +24,7 @@ export default class FigurePanelComponent extends NodeComponent {
     return `sc-figure-panel`
   }
 
-  _renderManuscriptVersion ($$) {
+  _renderManuscriptVersion () {
     const mode = this._getMode()
     const node = this.props.node
     const SectionLabel = this.getComponent('section-label')
@@ -37,11 +38,11 @@ export default class FigurePanelComponent extends NodeComponent {
       $$(SectionLabel, { label: 'label-label' }),
       $$(LabelComponent, { node }),
       // no label for the graphic
-      this._renderContent($$),
+      this._renderContent(),
       $$(SectionLabel, { label: 'title-label' }),
-      this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
+      this._renderValue('title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
       $$(SectionLabel, { label: 'legend-label' }),
-      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend')
+      this._renderValue('legend', { placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend')
     )
 
     // TODO: this is problematic as this node does not necessarily rerender if node.metadata has changed
@@ -57,11 +58,11 @@ export default class FigurePanelComponent extends NodeComponent {
     return el
   }
 
-  _renderContent ($$) {
-    return this._renderValue($$, 'content').addClass('se-content')
+  _renderContent () {
+    return this._renderValue('content').addClass('se-content')
   }
 
-  _renderPreviewVersion ($$) {
+  _renderPreviewVersion () {
     const node = this.props.node
     // TODO: We could return the PreviewComponent directly.
     // However this yields an error we need to investigate.
@@ -83,7 +84,7 @@ export default class FigurePanelComponent extends NodeComponent {
     })).addClass('sc-figure-panel').attr('data-id', node.id)
   }
 
-  _renderMetadataVersion ($$) {
+  _renderMetadataVersion () {
     return $$(FigurePanelComponentWithMetadata, { node: this.props.node })
   }
 

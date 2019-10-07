@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
 import FileUploadComponent from './FileUploadComponent'
 
@@ -6,7 +7,7 @@ export default class ReferenceUploadComponent extends FileUploadComponent {
     return 'application/json'
   }
 
-  renderErrorsList ($$) {
+  renderErrorsList () {
     const dois = this.state.error.dois
     const errorsList = $$('ul').addClass('se-error-list')
     errorsList.append(

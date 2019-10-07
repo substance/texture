@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 const DISABLED = { disabled: true }
 
@@ -36,7 +36,7 @@ export default class ToolGroup extends Component {
     }
   }
 
-  render ($$) {
+  render () {
     const { name, hideDisabled } = this.props
     let el = $$('div')
       .addClass(this._getClassNames())
@@ -44,14 +44,14 @@ export default class ToolGroup extends Component {
 
     let hasEnabledItem = this._derivedState.hasEnabledItem
     if (hasEnabledItem || !hideDisabled) {
-      el.append(this._renderLabel($$))
-      el.append(this._renderItems($$))
+      el.append(this._renderLabel())
+      el.append(this._renderItems())
     }
 
     return el
   }
 
-  _renderLabel ($$) {
+  _renderLabel () {
     const { style, label } = this.props
     if (style === 'descriptive' && label) {
       const SeparatorClass = this.getComponent('tool-separator')
@@ -59,7 +59,7 @@ export default class ToolGroup extends Component {
     }
   }
 
-  _renderItems ($$) {
+  _renderItems () {
     const { style, hideDisabled, commandStates } = this.props
     const theme = this.getTheme()
     const { itemStates } = this._derivedState

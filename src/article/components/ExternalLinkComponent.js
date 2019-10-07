@@ -2,9 +2,9 @@ import { EditableAnnotationComponent } from '../../kit'
 import ExternalLinkEditor from './ExternalLinkEditor'
 
 export default class ExternalLinkComponent extends EditableAnnotationComponent {
-  render ($$) {
+  render () {
     let node = this.props.node
-    return super.render($$).attr('href', node.href).addClass('sc-external-link')
+    return super.render().attr('href', node.href).addClass('sc-external-link')
   }
 
   getTagName () {

@@ -1,7 +1,7 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class BlockFormulaEditor extends Component {
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-block-formula-editor')
     const node = this.props.node
 

@@ -1,4 +1,4 @@
-import { Component, sendRequest, platform } from 'substance'
+import { Component, $$, sendRequest, platform } from 'substance'
 import { convertCSLJSON } from '../converter/bib/BibConversion'
 import QueryComponent from './QueryComponent'
 
@@ -16,7 +16,7 @@ export default class DOIInputComponent extends Component {
     }
   }
 
-  render ($$) {
+  render () {
     return $$('div').addClass('sc-doi-input').append(
       $$(QueryComponent, {
         placeholder: 'enter-doi-placeholder',

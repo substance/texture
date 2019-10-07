@@ -1,7 +1,7 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class ToolSeparator extends Component {
-  render ($$) {
+  render () {
     const label = this.props.label
     let el = $$('div').addClass('sc-tool-separator')
     if (label) {

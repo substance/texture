@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 /**
   ModalDialog component
@@ -24,7 +24,7 @@ export default class ModalDialog extends Component {
     }
   }
 
-  render ($$) {
+  render () {
     let width = this.props.width || 'large'
     let el = $$('div').addClass(this._getClassName())
     if (this.props.width) {
@@ -39,7 +39,7 @@ export default class ModalDialog extends Component {
     let horizontalContainer = $$('div').addClass('se-horizontal-container')
     horizontalContainer.append(
       $$('div').addClass('se-horizontal-spacer'),
-      this._renderModalBody($$),
+      this._renderModalBody(),
       $$('div').addClass('se-horizontal-spacer')
     )
     verticalContainer.append(
@@ -56,7 +56,7 @@ export default class ModalDialog extends Component {
     return 'sc-modal-dialog'
   }
 
-  _renderModalBody ($$) {
+  _renderModalBody () {
     const Button = this.getComponent('button')
     const closeButton = $$(Button, {
       icon: 'close'

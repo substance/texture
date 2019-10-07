@@ -1,4 +1,4 @@
-import { platform, getRelativeBoundingRect } from 'substance'
+import { platform, getRelativeBoundingRect, $$ } from 'substance'
 import AbstractScrollPane from './AbstractScrollPane'
 
 /**
@@ -47,7 +47,7 @@ export default class ScrollPane extends AbstractScrollPane {
     }
   }
 
-  render ($$) {
+  render () {
     let el = $$('div')
       .addClass('sc-scroll-pane')
 
@@ -63,13 +63,13 @@ export default class ScrollPane extends AbstractScrollPane {
 
     el.append(
       $$('div').ref('scrollable').addClass('se-scrollable').append(
-        this.renderContent($$)
+        this.renderContent()
       ).on('scroll', this.onScroll)
     )
     return el
   }
 
-  renderContent ($$) {
+  renderContent () {
     let contentEl = $$('div').ref('content').addClass('se-content')
     contentEl.append(this.props.children)
     if (this.props.contextMenu === 'custom') {

@@ -1,4 +1,4 @@
-import { Component, getKeyForPath } from 'substance'
+import { Component, getKeyForPath, $$ } from 'substance'
 
 export default class TextNodeComponent extends Component {
   /*
@@ -7,7 +7,7 @@ export default class TextNodeComponent extends Component {
   */
   didMount () {}
 
-  render ($$) {
+  render () {
     let parentSurface = this.context.surface
     let TextPropertyComponent
     // render the TextNode as Surface if the parent is not a ContainerEditor

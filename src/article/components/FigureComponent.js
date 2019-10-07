@@ -1,36 +1,37 @@
+import { $$ } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class FigureComponent extends NodeComponent {
   /*
     Note: in the Manuscript View only one figure panel is shown at time.
   */
-  render ($$) {
+  render () {
     let mode = this._getMode()
     let node = this.props.node
     let panels = node.panels
 
     let el = $$('div').addClass('sc-figure').addClass(`sm-${mode}`).attr('data-id', node.id)
     if (panels.length > 0) {
-      let content = this._renderCarousel($$, panels)
+      let content = this._renderCarousel(panels)
       el.append(content)
     }
     return el
   }
 
-  _renderCarousel ($$, panels) {
+  _renderCarousel (panels) {
     if (panels.length === 1) {
-      return this._renderCurrentPanel($$)
+      return this._renderCurrentPanel()
     } else {
       return $$('div').addClass('se-carousel').append(
-        this._renderNavigation($$),
+        this._renderNavigation(),
         $$('div').addClass('se-current-panel').append(
-          this._renderCurrentPanel($$)
+          this._renderCurrentPanel()
         )
       )
     }
   }
 
-  _renderCurrentPanel ($$) {
+  _renderCurrentPanel () {
     let panel = this._getCurrentPanel()
     let PanelComponent = this.getComponent(panel.type)
     return $$(PanelComponent, {
@@ -39,21 +40,21 @@ export default class FigureComponent extends NodeComponent {
     }).ref(panel.id)
   }
 
-  _renderNavigation ($$) {
+  _renderNavigation () {
     const node = this.props.node
     const panels = node.getPanels()
     const numberOfPanels = panels.length
     const currentIndex = this._getCurrentPanelIndex() + 1
     const currentPosition = currentIndex + ' / ' + numberOfPanels
     const leftControl = $$('div').addClass('se-control sm-previous').append(
-      this._renderIcon($$, 'left-control')
+      this._renderIcon('left-control')
     )
     if (currentIndex > 1) {
       leftControl.on('click', this._onSwitchPanel.bind(this, 'left'))
     } else {
       leftControl.addClass('sm-disabled')
     }
-    const rightControl = $$('div').addClass('se-control sm-next').append(this._renderIcon($$, 'right-control'))
+    const rightControl = $$('div').addClass('se-control sm-next').append(this._renderIcon('right-control'))
     if (currentIndex < numberOfPanels) {
       rightControl.on('click', this._onSwitchPanel.bind(this, 'right'))
     } else {
@@ -101,9 +102,9 @@ export default class FigureComponent extends NodeComponent {
     this.context.api.switchFigurePanel(this.props.node, direction === 'left' ? --currentIndex : ++currentIndex)
   }
 
-  _renderIcon ($$, iconName) {
+  _renderIcon (iconName) {
     return $$('div').addClass('se-icon').append(
-      this.context.iconProvider.renderIcon($$, iconName)
+      this.context.iconProvider.renderIcon(iconName)
     )
   }
 }

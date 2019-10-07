@@ -1,4 +1,4 @@
-import { Component, DefaultDOMElement } from 'substance'
+import { Component, $$, DefaultDOMElement } from 'substance'
 import { Managed, OverlayCanvas } from '../../kit'
 import MetadataModel from './MetadataModel'
 import MetadataSection from './MetadataSection'
@@ -39,29 +39,29 @@ export default class MetadataEditor extends Component {
     DefaultDOMElement.getBrowserWindow().off(this)
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-metadata-editor')
     el.append(
-      this._renderMainSection($$)
+      this._renderMainSection()
     )
     el.on('keydown', this._onKeydown)
     return el
   }
 
-  _renderMainSection ($$) {
+  _renderMainSection () {
     let mainSection = $$('div').addClass('se-main-section')
     mainSection.append(
-      this._renderToolbar($$),
+      this._renderToolbar(),
       $$('div').addClass('se-content-section').append(
-        this._renderTOCPane($$),
-        this._renderContentPanel($$)
+        this._renderTOCPane(),
+        this._renderContentPanel()
       // TODO: do we need this ref?
       ).ref('contentSection')
     )
     return mainSection
   }
 
-  _renderToolbar ($$) {
+  _renderToolbar () {
     const Toolbar = this.getComponent('toolbar')
     let config = this.context.config
     const items = config.getToolPanel('toolbar')
@@ -73,7 +73,7 @@ export default class MetadataEditor extends Component {
     )
   }
 
-  _renderTOCPane ($$) {
+  _renderTOCPane () {
     const sections = this.model.getSections()
     let el = $$('div').addClass('se-toc-pane').ref('tocPane')
     let tocEl = $$('div').addClass('se-toc')
@@ -91,7 +91,7 @@ export default class MetadataEditor extends Component {
     return el
   }
 
-  _renderContentPanel ($$) {
+  _renderContentPanel () {
     const sections = this.model.getSections()
     const ScrollPane = this.getComponent('scroll-pane')
 
@@ -110,14 +110,14 @@ export default class MetadataEditor extends Component {
 
     contentPanel.append(
       sectionsEl.ref('sections'),
-      this._renderMainOverlay($$),
-      this._renderContextMenu($$)
+      this._renderMainOverlay(),
+      this._renderContextMenu()
     )
 
     return contentPanel
   }
 
-  _renderMainOverlay ($$) {
+  _renderMainOverlay () {
     const panelProvider = () => this.refs.contentPanel
     return $$(OverlayCanvas, {
       panelProvider,
@@ -125,7 +125,7 @@ export default class MetadataEditor extends Component {
     }).ref('overlay')
   }
 
-  _renderContextMenu ($$) {
+  _renderContextMenu () {
     const config = this.context.config
     const ContextMenu = this.getComponent('context-menu')
     const items = config.getToolPanel('context-menu')

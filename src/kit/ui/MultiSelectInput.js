@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import OverlayMixin from './OverlayMixin'
 
 export default class MultiSelectInput extends OverlayMixin(Component) {
@@ -12,7 +12,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     this.extendState(this.getInitialState())
   }
 
-  render ($$) {
+  render () {
     const selected = this.props.selected
     const isEmpty = selected.length === 0
     const selectedLabels = selected.map(item => item.toString())
@@ -28,7 +28,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     if (isExpanded) {
       el.addClass('sm-active')
       el.append(
-        this._renderOptions($$)
+        this._renderOptions()
       )
     }
     el.on('click', this._onClick)
@@ -38,7 +38,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
     return el
   }
 
-  _renderOptions ($$) {
+  _renderOptions () {
     const label = this.props.label
     const selected = this.props.selected
     const selectedIdx = selected.map(item => item.id)
@@ -53,7 +53,7 @@ export default class MultiSelectInput extends OverlayMixin(Component) {
       const icon = isSelected ? 'checked-item' : 'unchecked-item'
       editorEl.append(
         $$('div').addClass('se-select-item').addClass(isSelected ? 'sm-selected' : '').append(
-          this.context.iconProvider.renderIcon($$, icon).addClass('se-icon'),
+          this.context.iconProvider.renderIcon(icon).addClass('se-icon'),
           $$('div').addClass('se-item-label')
             // TODO: I would like to have this implementation more agnostic of a specific data structure
             .append(option.toString()).ref(option.id)

@@ -1,8 +1,8 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { printElement } from '../util/domHelpers'
 
 export default class JATSImportDialog extends Component {
-  render ($$) {
+  render () {
     const errors = this.props.errors
     let el = $$('div').addClass('sc-jats-import-dialog')
     el.append($$('h1').addClass('se-title').text('Importing JATS'))
@@ -17,7 +17,7 @@ export default class JATSImportDialog extends Component {
 }
 
 class ImportStage extends Component {
-  render ($$) {
+  render () {
     const errors = this.props.errors
     let el = $$('div').addClass('sc-import-stage')
     el.append($$('h2').addClass('se-title').text(_getTitle(this.props.stage)))
@@ -25,14 +25,14 @@ class ImportStage extends Component {
     if (this.props.errors.length > 0) {
       let errorsEl = $$('div').addClass('se-errors')
       errors.forEach((err) => {
-        errorsEl.append(this._renderError($$, err))
+        errorsEl.append(this._renderError(err))
       })
       el.append(errorsEl)
     }
     return el
   }
 
-  _renderError ($$, err) {
+  _renderError (err) {
     let el = $$('div').addClass('se-error')
     // TODO: maybe we will have more structured errors
     el.append(

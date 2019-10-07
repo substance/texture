@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import ValueComponent from './ValueComponent'
 import CheckboxInput from './CheckboxInput'
 
@@ -8,7 +9,7 @@ export default class BooleanComponent extends ValueComponent {
     }
   }
 
-  render ($$) {
+  render () {
     const model = this.props.model
     const value = model.getValue()
     let el = $$('div').addClass('sc-boolean')

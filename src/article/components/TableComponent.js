@@ -1,5 +1,5 @@
 import {
-  Component, CustomSurface, platform,
+  Component, $$, CustomSurface, platform,
   DefaultDOMElement as DOM, domHelpers, getRelativeBoundingRect,
   keys, getKeyForPath
 } from 'substance'
@@ -49,20 +49,20 @@ export default class TableComponent extends CustomSurface {
     appState.off(this)
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-table')
     el.on('mousedown', this._onMousedown)
       .on('mouseup', this._onMouseup)
       .on('click', this._prevent)
-    el.append(this._renderTable($$))
-    el.append(this._renderKeyTrap($$))
-    el.append(this._renderUnclickableOverlays($$))
-    // el.append(this._renderClickableOverlays($$))
-    el.append(this._renderContextMenu($$))
+    el.append(this._renderTable())
+    el.append(this._renderKeyTrap())
+    el.append(this._renderUnclickableOverlays())
+    // el.append(this._renderClickableOverlays())
+    el.append(this._renderContextMenu())
     return el
   }
 
-  _renderTable ($$) {
+  _renderTable () {
     let table = $$('table').ref('table')
     let node = this.props.node
     let matrix = node.getCellMatrix()
@@ -89,7 +89,7 @@ export default class TableComponent extends CustomSurface {
     return table
   }
 
-  _renderKeyTrap ($$) {
+  _renderKeyTrap () {
     return $$('textarea').addClass('se-keytrap').ref('keytrap')
       .css({ position: 'absolute', width: 0, height: 0, opacity: 0 })
       .on('keydown', this._onKeydown)
@@ -99,10 +99,10 @@ export default class TableComponent extends CustomSurface {
       .on('cut', this._onCut)
   }
 
-  _renderUnclickableOverlays ($$) {
+  _renderUnclickableOverlays () {
     let el = $$('div').addClass('se-unclickable-overlays')
     el.append(
-      this._renderSelectionOverlay($$)
+      this._renderSelectionOverlay()
     )
     el.append(
       this.props.unclickableOverlays
@@ -110,7 +110,7 @@ export default class TableComponent extends CustomSurface {
     return el
   }
 
-  _renderSelectionOverlay ($$) {
+  _renderSelectionOverlay () {
     let el = $$('div').addClass('se-selection-overlay')
     el.append(
       $$('div').addClass('se-selection-anchor').ref('selAnchor').css('visibility', 'hidden'),
@@ -119,7 +119,7 @@ export default class TableComponent extends CustomSurface {
     return el
   }
 
-  _renderContextMenu ($$) {
+  _renderContextMenu () {
     const config = this.context.config
     let contextMenu
     const items = config.getToolPanel('table-context-menu')

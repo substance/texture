@@ -1,4 +1,4 @@
-import { Component, platform } from 'substance'
+import { Component, platform, $$ } from 'substance'
 import TextureConfigurator from './TextureConfigurator'
 import ArticlePackage from './article/ArticlePackage'
 import { PinnedMessage } from './kit/ui'
@@ -20,7 +20,7 @@ export default class Texture extends Component {
     }
   }
 
-  render ($$) {
+  render () {
     const { config, archive } = this.props
     let el = $$('div').addClass('sc-texture')
 

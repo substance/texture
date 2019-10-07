@@ -1,8 +1,8 @@
-import { isString, renderListNode } from 'substance'
+import { $$, isString, renderListNode } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class ListComponent extends NodeComponent {
-  render ($$) {
+  render () {
     const ListItemComponent = this.getComponent('list-item')
     let node = this.props.node
     // TODO: is it ok to rely on Node API here?

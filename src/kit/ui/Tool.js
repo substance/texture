@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import Button from './Button'
 
 /**
@@ -9,7 +9,7 @@ import Button from './Button'
  * @param {object} props.commandState
  */
 export default class Tool extends Component {
-  render ($$) {
+  render () {
     const { style, theme, commandState } = this.props
     let el
     switch (style) {
@@ -26,8 +26,8 @@ export default class Tool extends Component {
         // TODO: try to use Button instead
         el = $$('button')
         el.append(
-          this._renderLabel($$),
-          this._renderKeyboardShortcut($$)
+          this._renderLabel(),
+          this._renderKeyboardShortcut()
         )
         break
       }
@@ -35,9 +35,9 @@ export default class Tool extends Component {
         // TODO: try to use Button instead
         el = $$('button')
         el.append(
-          this._renderIcon($$),
-          this._renderLabel($$),
-          this._renderKeyboardShortcut($$)
+          this._renderIcon(),
+          this._renderLabel(),
+          this._renderKeyboardShortcut()
         )
       }
     }
@@ -111,20 +111,20 @@ export default class Tool extends Component {
     }
   }
 
-  _renderLabel ($$) {
+  _renderLabel () {
     return $$('div').addClass('se-label').append(
       this._getLabel()
     )
   }
 
-  _renderIcon ($$) {
+  _renderIcon () {
     const iconName = this._getIconName()
     return $$('div').addClass('se-icon').append(
-      this.context.iconProvider.renderIcon($$, iconName)
+      this.context.iconProvider.renderIcon(iconName)
     )
   }
 
-  _renderKeyboardShortcut ($$) {
+  _renderKeyboardShortcut () {
     const keyboardShortcut = this._getKeyboardShortcut()
     return $$('div').addClass('se-keyboard-shortcut').append(
       keyboardShortcut || ''

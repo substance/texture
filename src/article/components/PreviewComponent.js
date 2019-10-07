@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class PreviewComponent extends Component {
   getChildContext () {
@@ -7,7 +7,7 @@ export default class PreviewComponent extends Component {
     }
   }
 
-  render ($$) {
+  render () {
     let id = this.props.id
     let el = $$('div')
       .addClass('sc-preview')

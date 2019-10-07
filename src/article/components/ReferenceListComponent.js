@@ -1,4 +1,4 @@
-import { CustomSurface } from 'substance'
+import { CustomSurface, $$ } from 'substance'
 import { renderNode, NodeComponent } from '../../kit'
 import { getPos } from '../shared/nodeHelpers'
 
@@ -26,7 +26,7 @@ export default class ReferenceListComponent extends CustomSurface {
     }
   }
 
-  render ($$) {
+  render () {
     const sel = this.context.editorState.selection
     const bibliography = this._getBibliography()
 
@@ -63,8 +63,8 @@ export default class ReferenceListComponent extends CustomSurface {
 }
 
 class ReferenceDisplay extends NodeComponent {
-  render ($$) {
-    let el = renderNode($$, this, this.props.node)
+  render () {
+    let el = renderNode(this, this.props.node)
     el.on('mousedown', this._onMousedown)
       .on('click', this._onClick)
     return el

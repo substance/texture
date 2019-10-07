@@ -1,4 +1,4 @@
-import { Component, platform } from 'substance'
+import { Component, $$, platform } from 'substance'
 import { AppState, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
@@ -119,15 +119,15 @@ export default class ArticlePanel extends Component {
     )
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-article-panel')
     el.append(
-      this._renderContent($$)
+      this._renderContent()
     )
     return el
   }
 
-  _renderContent ($$) {
+  _renderContent () {
     const props = this.props
     const api = this.api
     const archive = props.archive

@@ -10,6 +10,9 @@ import SingleRelationshipComponent from './SingleRelationshipComponent'
 
 export default function renderProperty (comp, document, path, props = {}) {
   const propSpec = document.getProperty(path)
+  if (!propSpec) {
+    throw new Error(`Could not find property for path ${path}`)
+  }
 
   let valueSettings
   let settings = _getSettings(comp)

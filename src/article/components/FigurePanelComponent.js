@@ -1,5 +1,5 @@
 import { $$ } from 'substance'
-import { NodeComponent, createValueModel } from '../../kit'
+import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata'
 import FigureMetadataComponent from './FigureMetadataComponent'

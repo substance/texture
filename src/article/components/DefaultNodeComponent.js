@@ -158,8 +158,7 @@ export default class DefaultNodeComponent extends Component {
     if (this._showLabelForProperty(name)) {
       props.label = this.getLabel(name)
     }
-    // TODO: is this really what we want? i.e. every CHILDREN value
-    // is rendered as a container?
+    // TODO: is this really what we want? i.e. every CHILDREN value is rendered as a container?
     if (value.type === 'collection') {
       props.container = true
     }

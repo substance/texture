@@ -1,12 +1,9 @@
 import { Component, $$, domHelpers, DefaultDOMElement } from 'substance'
 import { ValueComponent, renderProperty } from '../../kit'
 
-// TODO: this needs to be redesigned
-// TODO: we should follow the same approach as in Metadata, i.e. having a model which is a list of sections
 export default class ManuscriptTOC extends Component {
   render () {
     let el = $$('div').addClass('sc-toc')
-    let manuscriptModel = this.props.model
 
     let tocEntries = $$('div')
       .addClass('se-toc-entries')

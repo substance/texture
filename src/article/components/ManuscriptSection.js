@@ -6,7 +6,7 @@ export default class ManuscriptSection extends Component {
     const SectionLabel = this.getComponent('section-label')
 
     const el = $$('div', { class: `sc-manuscript-section sm-${name}`, 'data-section': name })
-    el.append($$(SectionLabel, { label }))
+    el.append($$(SectionLabel, { label: this.getLabel(label) }))
     el.append(children)
 
     return el

@@ -30,9 +30,9 @@ export default class SupplementaryFileComponent extends NodeComponent {
       )
     )
     el.append(
-      $$(SectionLabel, { label: 'legend-label' }),
+      $$(SectionLabel, { label: this.getLabel('legend-label') }),
       this._renderValue('legend', { placeholder: this.getLabel('legend-placeholder') }),
-      $$(SectionLabel, { label: node.remote ? 'file-location' : 'file-name' }),
+      $$(SectionLabel, { label: this.getLabel(node.remote ? 'file-location' : 'file-name') }),
       hrefSection
     )
     return el

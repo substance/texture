@@ -8,6 +8,11 @@ export default class FootnoteManager extends AbstractCitationManager {
     this._updateLabels('initial')
   }
 
+  static create (context) {
+    const { editorSession, config } = context
+    return new FootnoteManager(editorSession, config.getValue('footnote-label-generator'))
+  }
+
   getCitables () {
     let doc = this._getDocument()
     return documentHelpers.getNodesForPath(doc, ['article', 'footnotes'])

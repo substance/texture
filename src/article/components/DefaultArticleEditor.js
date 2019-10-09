@@ -8,6 +8,13 @@ export default class DefaultArticleEditor extends BasicArticleEditor {
     super._initialize(props)
 
     this._model = this.context.api.getArticleModel()
+
+    // initialize all managers
+    // TODO: do we really want to start all of them instantly?
+    ;[
+      'reference-manager', 'figure-manager', 'table-manager',
+      'footnote-manager', 'equation-manager', 'file-manager'
+    ].forEach(name => this.context.config.getServiceSync(name, this.context))
   }
 
   _getClass () {

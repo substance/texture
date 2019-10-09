@@ -1,11 +1,15 @@
 import { documentHelpers } from 'substance'
 import CitableContentManager from './CitableContentManager'
-import FigureLabelGenerator from './FigureLabelGenerator'
 
 export default class FigureManager extends CitableContentManager {
-  constructor (editorSession, config) {
-    super(editorSession, 'fig', ['figure-panel'], new FigureLabelGenerator(config))
+  constructor (editorSession, labelGenerator) {
+    super(editorSession, 'fig', ['figure-panel'], labelGenerator)
     this._updateLabels('initial')
+  }
+
+  static create (context) {
+    const { editorSession, config } = context
+    return new FigureManager(editorSession, config.getValue('figure-label-generator'))
   }
 
   _detectAddRemoveCitable (op, change) {

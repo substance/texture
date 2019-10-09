@@ -1,9 +1,14 @@
 import CitableContentManager from './CitableContentManager'
 
-export default class SupplementaryManager extends CitableContentManager {
+export default class FileManager extends CitableContentManager {
   constructor (editorSession, labelGenerator) {
     super(editorSession, 'file', ['supplementary-file'], labelGenerator)
     this._updateLabels('initial')
+  }
+
+  static create (context) {
+    const { editorSession, config } = context
+    return new FileManager(editorSession, config.getValue('file-label-generator'))
   }
 
   // ATTENTION: for now we consider only supplementary files that are direct children of the body

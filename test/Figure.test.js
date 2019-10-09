@@ -331,7 +331,7 @@ test('Figure: reference multiple sub-figures', t => {
   editor.find(xrefSelector).click()
   getXrefListItems()[0].click()
   getXrefListItems()[1].click()
-  t.equal(getXref().text(), 'Figures 1A‒B', 'xref label should be Figure 1A-B')
+  t.equal(getXref().text(), 'Figures 1A-B', 'xref label should be Figure 1A-B')
 
   _selectFigurePanel(editor, figure, 0)
   const removePanelTool = openContextMenuAndFindTool(editor, removePanelToolSelector)

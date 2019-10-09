@@ -10,12 +10,6 @@ import renderEntity from '../shared/renderEntity'
 import FigurePanel from '../nodes/FigurePanel'
 import SupplementaryFile from '../nodes/SupplementaryFile'
 import BlockFormula from '../nodes/BlockFormula'
-import FigureManager from '../shared/FigureManager'
-import FootnoteManager from '../shared/FootnoteManager'
-import FormulaManager from '../shared/FormulaManager'
-import ReferenceManager from '../shared/ReferenceManager'
-import TableManager from '../shared/TableManager'
-import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
 import {
@@ -40,15 +34,6 @@ export default class ArticleAPI {
     // TODO: rethink this
     // we created a sub-api for table manipulations in an attempt of modularisation
     this._tableApi = new TableEditingAPI(editorSession)
-
-    // TODO: rethink this
-    // Instead we should register these managers as a service, and instantiate on demand
-    this._figureManager = new FigureManager(editorSession, config.getValue('figure-label-generator'))
-    this._footnoteManager = new FootnoteManager(editorSession, config.getValue('footnote-label-generator'))
-    this._formulaManager = new FormulaManager(editorSession, config.getValue('formula-label-generator'))
-    this._referenceManager = new ReferenceManager(editorSession, config.getValue('reference-label-generator'))
-    this._supplementaryManager = new SupplementaryManager(editorSession, config.getValue('supplementary-file-label-generator'))
-    this._tableManager = new TableManager(editorSession, config.getValue('table-label-generator'))
   }
 
   addAffiliation () {
@@ -642,11 +627,11 @@ export default class ArticleAPI {
     let manager
     switch (refType) {
       case BlockFormula.refType: {
-        manager = this._formulaManager
+        manager = this.config.getServiceSync('equation-manager', this.getContext())
         break
       }
       case 'fig': {
-        manager = this._figureManager
+        manager = this.config.getServiceSync('figure-manager', this.getContext())
         break
       }
       case 'fn': {
@@ -656,7 +641,7 @@ export default class ArticleAPI {
         if (tableFigure) {
           manager = tableFigure.getFootnoteManager()
         } else {
-          manager = this._footnoteManager
+          manager = this.config.getServiceSync('footnote-manager', this.getContext())
         }
         break
       }
@@ -668,15 +653,15 @@ export default class ArticleAPI {
         break
       }
       case 'bibr': {
-        manager = this._referenceManager
+        manager = this.config.getServiceSync('reference-manager', this.getContext())
         break
       }
       case 'table': {
-        manager = this._tableManager
+        manager = this.config.getServiceSync('table-manager', this.getContext())
         break
       }
       case 'file': {
-        manager = this._supplementaryManager
+        manager = this.config.getServiceSync('file-manager', this.getContext())
         break
       }
       default:
@@ -858,9 +843,9 @@ export default class ArticleAPI {
   _removeCorrespondingXrefs (tx, node) {
     let manager
     if (node.isInstanceOf(Reference.type)) {
-      manager = this._referenceManager
+      manager = this.config.getServiceSync('reference-manager')
     } else if (node.isInstanceOf(Footnote.type)) {
-      manager = this._footnoteManager
+      manager = this.config.getServiceSync('footnote-manager')
     } else {
       return
     }

@@ -10,6 +10,11 @@ export default class TableManager extends CitableContentManager {
     this._initializeTableFootnoteManagers()
   }
 
+  static create (context) {
+    const { editorSession, config } = context
+    return new TableManager(editorSession, config.getValue('table-label-generator'))
+  }
+
   // EXPERIMENTAL:
   // watching changes and creating a TableFootnoteManager whenever a TableFigure is created
   // We should find a better location, or think about a framework to register such managers in general

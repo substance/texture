@@ -7,6 +7,11 @@ export default class AbstractCitationManager {
     this.targetTypes = new Set(targetTypes)
     this.labelGenerator = labelGenerator
 
+    if (!editorSession) throw new Error('"editorSession" is mandatory')
+    if (!refType) throw new Error('"refType" is mandatory')
+    if (!targetTypes) throw new Error('"targetTypes" is mandatory')
+    if (!labelGenerator) throw new Error('"labelGenerator" is mandatory')
+
     editorSession.on('change', this._onDocumentChange, this)
   }
 

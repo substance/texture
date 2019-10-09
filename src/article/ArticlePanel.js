@@ -205,6 +205,11 @@ export default class ArticlePanel extends Component {
     return this.refs.content._scrollElementIntoView(el, force)
   }
 
+  /**
+   * Scroll to the node or other content.
+   *
+   * @param {string} params.nodeId
+   */
   _scrollTo (params) {
     return this.refs.content._scrollTo(params)
   }

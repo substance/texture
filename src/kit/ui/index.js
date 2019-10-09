@@ -3,8 +3,6 @@ export {
   Clipboard
 } from 'substance'
 
-export { default as AbstractScrollPane } from './AbstractScrollPane'
-export { default as BodyScrollPane } from './BodyScrollPane'
 export { default as BooleanComponent } from './BooleanComponent'
 export { default as Button } from './Button'
 export { default as CheckboxInput } from './CheckboxInput'

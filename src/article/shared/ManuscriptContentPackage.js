@@ -2,8 +2,8 @@ import { AnnotationComponent } from '../../kit'
 
 import {
   AbstractComponent, AuthorsListComponent, BlockFormulaComponent,
-  BlockQuoteComponent, BoldComponent, BreakComponent, MetadataFieldComponent,
-  ExternalLinkComponent, FigureComponent, FigurePanelComponent, FootnoteComponent,
+  BlockQuoteComponent, BoldComponent, BreakComponent,
+  ExternalLinkComponent, FigureComponent, FootnoteComponent,
   HeadingComponent, InlineFormulaComponent, InlineGraphicComponent, ItalicComponent, ListComponent,
   ListItemComponent, ManuscriptComponent, ParagraphComponent, ReferenceComponent,
   ReferenceListComponent, SectionLabel, SubscriptComponent, SuperscriptComponent,
@@ -21,10 +21,8 @@ export default {
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
-    config.addComponent('metadata-field', MetadataFieldComponent)
     config.addComponent('external-link', ExternalLinkComponent)
     config.addComponent('figure', FigureComponent)
-    config.addComponent('figure-panel', FigurePanelComponent)
     config.addComponent('footnote', FootnoteComponent)
     config.addComponent('heading', HeadingComponent)
     config.addComponent('inline-formula', InlineFormulaComponent)

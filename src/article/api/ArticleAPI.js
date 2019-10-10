@@ -1,16 +1,15 @@
 import {
   documentHelpers, includes, orderBy, without, selectionHelpers,
-  isArray, isString, getKeyForPath, isNil
+  isArray, isString, getKeyForPath, isNil, last
 } from 'substance'
 import { createValueModel } from '../../kit'
 import TableEditingAPI from './TableEditingAPI'
-import { importFigures } from '../articleHelpers'
 import { findParentByType } from '../shared/nodeHelpers'
 import renderEntity from '../shared/renderEntity'
-import FigurePanel from '../nodes/FigurePanel'
 import SupplementaryFile from '../nodes/SupplementaryFile'
 import BlockFormula from '../nodes/BlockFormula'
 import ArticleModel from './ArticleModel'
+import Figure from '../nodes/Figure'
 import Footnote from '../nodes/Footnote'
 import {
   InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person,
@@ -34,6 +33,10 @@ export default class ArticleAPI {
     // TODO: rethink this
     // we created a sub-api for table manipulations in an attempt of modularisation
     this._tableApi = new TableEditingAPI(editorSession)
+  }
+
+  extend (apiExtension) {
+    Object.assign(this, apiExtension)
   }
 
   addAffiliation () {
@@ -66,27 +69,6 @@ export default class ArticleAPI {
 
   addSubject () {
     this._addEntity(['metadata', 'subjects'], Subject.type)
-  }
-
-  addFigurePanel (figureId, file) {
-    const doc = this.getDocument()
-    const figure = doc.get(figureId)
-    if (!figure) throw new Error('Figure does not exist')
-    const pos = figure.getCurrentPanelIndex()
-    const href = this.archive.addAsset(file)
-    const insertPos = pos + 1
-    // NOTE: with this method we are getting the structure of the active panel
-    // to replicate it, currently only for metadata fields
-    const panelTemplate = figure.getTemplateFromCurrentPanel()
-    this.editorSession.transaction(tx => {
-      let template = FigurePanel.getTemplate()
-      template.content.href = href
-      template.content.mimeType = file.type
-      Object.assign(template, panelTemplate)
-      let node = documentHelpers.createNodeFromJson(tx, template)
-      documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
-      tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
-    })
   }
 
   // TODO: it is not so common to add footnotes without an xref in the text
@@ -347,7 +329,7 @@ export default class ArticleAPI {
     let sel = editorSession.getSelection()
     if (!sel || !sel.containerPath) return
     editorSession.transaction(tx => {
-      importFigures(tx, sel, files, paths)
+      this._importFigures(tx, sel, files, paths)
     })
   }
 
@@ -482,15 +464,6 @@ export default class ArticleAPI {
       tx.set(path, val)
       tx.setSelection(this._createValueSelection(path))
     })
-  }
-
-  switchFigurePanel (figure, newPanelIndex) {
-    const editorSession = this.editorSession
-    let sel = editorSession.getSelection()
-    if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
-      this.selectNode(figure.id)
-    }
-    editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
   }
 
   _addEntity (collectionPath, type, createNode) {
@@ -747,6 +720,30 @@ export default class ArticleAPI {
     return relXpath.map(e => e.id).join('/') + '.' + propertyName
   }
 
+  _importFigures (tx, sel, files, paths) {
+    if (files.length === 0) return
+
+    let containerPath = sel.containerPath
+    let figures = files.map((file, idx) => {
+      let href = paths[idx]
+      let mimeType = file.type
+      let figureTemplate = Figure.getTemplate()
+      figureTemplate.content.href = href
+      figureTemplate.content.mimeType = mimeType
+      let figure = documentHelpers.createNodeFromJson(tx, figureTemplate)
+      // Note: this is necessary because tx.insertBlockNode()
+      // selects the inserted node
+      // TODO: maybe we should change the behavior of tx.insertBlockNode()
+      // so that it is easier to insert multiple nodes in a row
+      if (idx !== 0) {
+        tx.break()
+      }
+      tx.insertBlockNode(figure)
+      return figure
+    })
+    selectionHelpers.selectNode(tx, last(figures).id, containerPath)
+  }
+
   _insertBlockNode (createNode) {
     let editorSession = this.getEditorSession()
     let nodeId
@@ -814,12 +811,7 @@ export default class ArticleAPI {
     this._moveChild(collectionPath, nodeId, shift)
   }
 
-  // Used by MoveMetadataFieldCommand(FigureMetadataCommands)
-  // and MoveFigurePanelCommand (FigurePanelCommands)
-  // txHook isued by MoveFigurePanelCommand to update the node state
-  // This needs a little more thinking, however, making it apparent
-  // that in some cases it is not so easy to completely separate Commands
-  // from EditorSession logic
+  // TODO: is this still used?
   _moveChild (collectionPath, childId, shift, txHook) {
     this.editorSession.transaction(tx => {
       let ids = tx.get(collectionPath)

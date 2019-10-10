@@ -210,7 +210,6 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
 b.task('build:desktop:dars', () => {
   // templates
   _packDar('data/blank', APPDIST + 'templates/blank.dar')
-  _packDar('data/blank-figure-package', APPDIST + 'templates/blank-figure-package.dar')
   // examples
   _packDar('data/elife-32671', APPDIST + 'examples/elife-32671.dar')
   _packDar('data/kitchen-sink', APPDIST + 'examples/kitchen-sink.dar')

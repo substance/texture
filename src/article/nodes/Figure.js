@@ -1,48 +1,39 @@
-import { DocumentNode, CHILDREN } from 'substance'
-import MetadataField from './MetadataField'
+import { DocumentNode, STRING, TEXT, CHILD, CONTAINER } from 'substance'
+import { RICH_TEXT_ANNOS } from './modelConstants'
+import Xref from './Xref'
+import Graphic from './Graphic'
+import Paragraph from './Paragraph'
+import Permission from './Permission'
 
 export default class Figure extends DocumentNode {
-  _initialize (...args) {
-    super._initialize(...args)
-
-    this._set('state', {
-      currentPanelIndex: 0
-    })
-  }
-
-  get state () {
-    return this.get('state')
-  }
-
-  getCurrentPanelIndex () {
-    let currentPanelIndex = 0
-    if (this.state) {
-      currentPanelIndex = this.state.currentPanelIndex
-    }
-    return currentPanelIndex
-  }
-
-  getPanels () {
-    return this.resolve('panels')
-  }
-
-  // NOTE: we are using structure of active panel as template for new one,
-  // currently we are replicating the structure of metadata fields
-  getTemplateFromCurrentPanel () {
-    const currentIndex = this.getCurrentPanelIndex()
-    const firstPanel = this.getPanels()[currentIndex]
-    return {
-      metadata: firstPanel.resolve('metadata').map(metadataField => (
-        { type: MetadataField.type, name: metadataField.name, value: '' }
-      ))
-    }
-  }
-
   static get refType () {
     return 'fig'
   }
+
+  static getTemplate () {
+    return {
+      type: 'figure',
+      content: {
+        type: 'graphic'
+      },
+      legend: [{
+        type: 'paragraph'
+      }],
+      permission: {
+        type: 'permission'
+      }
+    }
+  }
 }
+
 Figure.schema = {
   type: 'figure',
-  panels: CHILDREN('figure-panel')
+  label: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS, Xref.type),
+  content: CHILD(Graphic.type),
+  legend: CONTAINER({
+    nodeTypes: [Paragraph.type],
+    defaultTextType: Paragraph.type
+  }),
+  permission: CHILD(Permission.type)
 }

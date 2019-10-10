@@ -137,7 +137,6 @@ export default {
             style: 'descriptive',
             label: 'figure-tools',
             items: [
-              { type: 'command-group', name: 'figure-panel' }
             ]
           },
           {
@@ -220,7 +219,6 @@ export default {
         hideDisabled: true,
         items: [
           { type: 'command-group', name: 'file' },
-          { type: 'command-group', name: 'figure-panel' },
           { type: 'command-group', name: 'footnote' },
           { type: 'command-group', name: 'author' },
           { type: 'command-group', name: 'reference' },
@@ -322,12 +320,6 @@ export default {
     config.addLabel('download-file', 'Download File')
     // Figure tools
     config.addLabel('figure-tools', 'Figure')
-    config.addLabel('add-figure-panel', 'Add Panel')
-    config.addLabel('replace-figure-panel-image', 'Replace Image')
-    config.addLabel('remove-figure-panel', 'Remove Panel')
-    config.addLabel('move-up-figure-panel', 'Move Panel Up')
-    config.addLabel('move-down-figure-panel', 'Move Panel Down')
-    config.addLabel('open-figure-panel-image', 'Open Image')
     // Footnote tools
     config.addLabel('footnote-tools', 'Footnote')
     config.addLabel('remove-footnote', 'Remove Footnote')

@@ -322,42 +322,15 @@ def read() = in.read()
           </permissions>
         </fig>
         <p id="p-4">Lorem ipsum.</p>
-        <fig-group id="fig2">
-          <fig id="fig2a">
-            <label>Figure 2A</label>
-            <caption>
-              <title>First panel</title>
-              <p id="fig2a-caption-p1">First panel legend</p>
-            </caption>
-            <graphic id="fig2a-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
-          </fig>
-          <fig id="fig2b">
-            <label>Figure 2B</label>
-            <caption>
-              <title>Second panel</title>
-              <p id="fig2b-caption-p1">Second panel caption</p>
-            </caption>
-            <graphic id="fig2b-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg" />
-          </fig>
-        </fig-group>
-        <p id="p-5">abc</p>
-        <fig id="fig3">
-          <label>Figure 3</label>
+        <fig id="fig2">
+          <label>Figure 2</label>
           <caption>
-            <title>Figure with metadata.</title>
-            <p id="fig3-caption-p1">Legend.</p>
+            <title>First panel</title>
+            <p id="fig2-caption-p1">First panel legend</p>
           </caption>
-          <kwd-group>
-            <label>Field I</label>
-            <kwd>Value A</kwd>
-            <kwd>Value B</kwd>
-          </kwd-group>
-          <kwd-group>
-            <label>Field II</label>
-            <kwd>Value C</kwd>
-          </kwd-group>
-          <graphic id="fig3-graphic-1" mimetype="image" mime-subtype="jpeg" xlink:href="placeholder.jpg" />
+          <graphic id="fig2-graphic" mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg" />
         </fig>
+        <p id="p-5">abc</p>
       </sec>
       <sec id="sec-3-3">
         <title>Supplementary Files</title>

@@ -10,8 +10,6 @@ import './CrossReference.test'
 import './CustomAbstracts.test'
 import './Entity.test'
 import './Figure.test'
-import './FigureMetadata.test'
-import './FigurePackage.test'
 import './FindAndReplace.test'
 import './Footnotes.test'
 import './FormulaConverter.test'
@@ -29,8 +27,6 @@ import './Table.test'
 import './TableConverter.test'
 import './UndoRedo.test'
 import './Validator.test'
-// FIXME: bring back all relevant tests from MetadataEditor.test
-// import './MetadataEditor.test'
 
 // TODO: there are some tests in ./converter/. Either fix them and include here
 // or remove them

@@ -1,13 +1,12 @@
 import { $$ } from 'substance'
-import FigurePanelComponent from './FigurePanelComponent'
+import FigureComponent from './FigureComponent'
 import LabelComponent from './LabelComponent'
-import TableFigureComponentWithMetadata from './TableFigureComponentWithMetadata'
 
 /**
  * A TableFigure is similar to a figure but has only one panel, and a table as content.
  * Additionally it can contain footnotes.
  */
-export default class TableFigureComponent extends FigurePanelComponent {
+export default class TableFigureComponent extends FigureComponent {
   _getClassNames () {
     return `sc-table-figure`
   }
@@ -43,9 +42,5 @@ export default class TableFigureComponent extends FigurePanelComponent {
     }
 
     return el
-  }
-
-  _renderMetadataVersion () {
-    return $$(TableFigureComponentWithMetadata, { node: this.props.node }).ref('metadata')
   }
 }

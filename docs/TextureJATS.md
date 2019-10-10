@@ -233,7 +233,7 @@ id, xml:base, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-(sec|boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
+(sec|boxed-text|chem-struct-wrap|fig|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -698,22 +698,7 @@ id, xml:base, position, orientation, specific-use, xml:lang, fig-type
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-object-id?,label?,caption?,kwd-group*,graphic,permissions?
-</pre>
-**This element may be contained in:**
-<pre style="white-space:pre-wrap;">
-fig-group, named-content, sec, body
-</pre>
-
-### `<fig-group>`
-
-**Attributes**:
-<pre style="white-space:pre-wrap;">
-id, xml:base, position, orientation, specific-use, xml:lang, content-type
-</pre>
-**Contains**:
-<pre style="white-space:pre-wrap;">
-label?,fig+
+object-id?,label?,caption?,graphic,permissions?
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1032,7 +1017,7 @@ label?,kwd*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-article-meta, fig
+article-meta
 </pre>
 
 ### `<label>`
@@ -1047,7 +1032,7 @@ id, xml:base, alt, xml:lang
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
-aff, kwd-group, fn-group, fig-group, fig, supplementary-material, table-wrap, fn, disp-formula
+aff, kwd-group, fn-group, fig, supplementary-material, table-wrap, fn, disp-formula
 </pre>
 
 ### `<license>`
@@ -1538,7 +1523,7 @@ id, xml:base, xml:lang, sec-type, disp-level, specific-use
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-title?,(boxed-text|chem-struct-wrap|fig|fig-group|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
+title?,(boxed-text|chem-struct-wrap|fig|table-wrap|disp-formula|disp-formula-group|def-list|list|p|preformat|disp-quote|supplementary-material|disp-formula|disp-formula-group|def-list|list|p|ack|disp-quote|speech|statement|verse-group)*,sec*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -2116,6 +2101,7 @@ element-citation, date, pub-date
 - equation-count
 - etal
 - fig-count
+- fig-group
 - floats-group
 - front-stub
 - funding-statement

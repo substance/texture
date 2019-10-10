@@ -2,7 +2,6 @@ import { Component, $$, platform } from 'substance'
 import { AppState, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
-import FigurePackageSettings from './settings/FigurePackageSettings'
 import ArticleAPI from './api/ArticleAPI'
 import ArticleEditorSession from './api/ArticleEditorSession'
 
@@ -164,13 +163,8 @@ export default class ArticlePanel extends Component {
   // On the long run we need to understand better what different means of configuration we want to offer
   _createSettings (doc) {
     let settings = new EditorSettings()
-    let metadata = doc.get('metadata')
     // Default settings
     settings.load(DefaultSettings)
-    // Article type specific settings
-    if (metadata.articleType === 'figure-package') {
-      settings.extend(FigurePackageSettings)
-    }
     return settings
   }
 

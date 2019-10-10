@@ -1,7 +1,7 @@
-import { Component, FontAwesomeIcon } from 'substance'
+import { Component, FontAwesomeIcon, $$ } from 'substance'
 
 export default class PinnedMessage extends Component {
-  render ($$) {
+  render () {
     const icon = this.props.icon
     const label = this.props.label
 

@@ -1,19 +1,19 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { InputWithButton } from '../../kit'
 
 export default class QueryComponent extends Component {
-  render ($$) {
+  render () {
     let Input = this.getComponent('input')
 
     const btnEl = $$('button').addClass('se-action')
 
     if (this.props.loading) {
       btnEl.append(
-        this._renderIcon($$, 'input-loading')
+        this._renderIcon('input-loading')
       )
     } else if (this.props.errors) {
       btnEl.append(
-        this._renderIcon($$, 'input-error')
+        this._renderIcon('input-error')
       )
     } else {
       btnEl.append(
@@ -43,9 +43,9 @@ export default class QueryComponent extends Component {
     return el
   }
 
-  _renderIcon ($$, icon) {
+  _renderIcon (icon) {
     return $$('div').addClass('se-icon').append(
-      this.context.iconProvider.renderIcon($$, icon)
+      this.context.iconProvider.renderIcon(icon)
     )
   }
 

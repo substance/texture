@@ -1,8 +1,9 @@
+import { $$ } from 'substance'
 import { NodeComponent } from '../../kit'
 import TableCellEditor from './TableCellEditor'
 
 export default class TableCellComponent extends NodeComponent {
-  render ($$) {
+  render () {
     const cell = this.props.node
     let el = $$(cell.heading ? 'th' : 'td')
     el.addClass('sc-table-cell')

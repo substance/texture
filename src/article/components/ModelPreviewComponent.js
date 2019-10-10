@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { ifNodeOrRelatedHasChanged } from '../shared/nodeHelpers'
 
 export default class ModelPreviewComponent extends Component {
@@ -10,7 +10,7 @@ export default class ModelPreviewComponent extends Component {
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     let node = this.props.node
     let el = $$('div').addClass('sc-model-preview')
     el.html(

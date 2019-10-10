@@ -1,7 +1,7 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class UnsupportedInlineNodeComponent extends Component {
-  render ($$) {
+  render () {
     const node = this.props.node
     let data
     if (node._isXMLNode) {

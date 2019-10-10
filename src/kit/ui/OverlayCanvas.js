@@ -1,4 +1,4 @@
-import { Component, getRelativeRect } from 'substance'
+import { Component, getRelativeRect, $$ } from 'substance'
 
 export default class OverlayCanvas extends Component {
   constructor (...args) {
@@ -34,7 +34,7 @@ export default class OverlayCanvas extends Component {
   // This component manages itself and does not need to be rerendered
   shouldRerender () { return false }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-overlay-canvas')
     el.addClass('sm-hidden')
     el.addClass('sm-theme-' + this.getTheme())

@@ -1,7 +1,8 @@
+import { $$ } from 'substance'
 import { ModelComponent } from '../../kit'
 
 export default class MetadataSectionTOCEntry extends ModelComponent {
-  render ($$) {
+  render () {
     const name = this.props.name
     const model = this.props.model
     let el = $$('div').addClass('sc-meta-section-toc-entry sc-toc-entry')

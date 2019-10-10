@@ -1,8 +1,8 @@
 import Table from '../nodes/Table'
-import FigurePanel from './FigurePanel'
+import Figure from './Figure'
 import { CHILD, CHILDREN } from 'substance'
 
-export default class TableFigure extends FigurePanel {
+export default class TableFigure extends Figure {
   // HACK: we need a place to store the tableFootnoteManager
   // in a controlled fashion
   getFootnoteManager () {

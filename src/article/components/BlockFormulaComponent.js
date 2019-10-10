@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import { NodeComponent, NodeOverlayEditorMixin } from '../../kit'
 import katex from 'katex'
 import { PREVIEW_MODE } from '../ArticleConstants'
@@ -14,7 +15,7 @@ export default class BlockFormulaComponent extends NodeOverlayEditorMixin(NodeCo
     this.setState(this._deriveState(newProps))
   }
 
-  render ($$) {
+  render () {
     const mode = this.props.mode
     const node = this.props.node
     const label = getLabel(node) || '?'

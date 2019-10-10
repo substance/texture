@@ -1,8 +1,9 @@
+import { $$ } from 'substance'
 import { renderNode, NodeComponent } from '../../kit'
 import { PREVIEW_MODE } from '../ArticleConstants'
 
 export default class XrefEditor extends NodeComponent {
-  render ($$) {
+  render () {
     const targets = this._getAvailableTargets()
     let el = $$('div').addClass('sc-edit-xref-tool')
     // ATTENTION the targets are not models or nodes, but entries
@@ -12,16 +13,18 @@ export default class XrefEditor extends NodeComponent {
       const target = entry.node
       if (!target) continue
       const selected = entry.selected
-      let targetPreviewEl = this._renderOption($$, target, selected)
-      targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
+      let targetPreviewEl = this._renderOption(target, selected)
+      if (this.context.editable) {
+        targetPreviewEl.on('click', this._toggleTarget.bind(this, target.id), this)
+      }
       el.append(targetPreviewEl)
     }
     return el
   }
 
-  _renderOption ($$, target, selected) {
+  _renderOption (target, selected) {
     let optionEl = $$('div').addClass('se-option').append(
-      renderNode($$, this, target, {
+      renderNode(this, target, {
         mode: PREVIEW_MODE
       })
     )

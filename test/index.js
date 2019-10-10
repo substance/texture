@@ -10,8 +10,6 @@ import './CrossReference.test'
 import './CustomAbstracts.test'
 import './Entity.test'
 import './Figure.test'
-import './FigureMetadata.test'
-import './FigurePackage.test'
 import './FindAndReplace.test'
 import './Footnotes.test'
 import './FormulaConverter.test'
@@ -29,8 +27,6 @@ import './Table.test'
 import './TableConverter.test'
 import './UndoRedo.test'
 import './Validator.test'
-// FIXME: bring back all relevant tests from MetadataEditor.test
-// import './MetadataEditor.test'
 
 // TODO: there are some tests in ./converter/. Either fix them and include here
 // or remove them
@@ -60,10 +56,13 @@ if (platform.inNodeJS) {
     platform.DEBUG = true
   }
 
+  // this allows to run only a subset of tests
   if (process.env.TEST) {
     const { test } = require('substance-test')
     let harness = test.getHarness()
     let re = new RegExp(process.env.TEST)
+    // TODO: it would be nice to remove the other tests
+    // because skipped tests still produce a lot of noise
     harness._tests.forEach(t => {
       if (!re.exec(t.name)) {
         t._skip = true

@@ -1,37 +1,27 @@
-import { Component, getKeyForPath } from 'substance'
+import { Component, getKeyForPath, $$ } from 'substance'
 import TextInput from './TextInput'
 
 export default class StringComponent extends Component {
-  render ($$) {
-    let placeholder = this.props.placeholder
-    let model = this.props.model
-    let path = model.getPath()
-    let name = getKeyForPath(path)
-    let el = $$('div').addClass(this.getClassNames())
-    if (this.props.readOnly) {
-      let doc = this.context.api.getDocument()
-      let TextPropertyComponent = this.getComponent('text-property')
-      el.append(
-        $$(TextPropertyComponent, {
-          doc,
-          tagName: 'div',
-          placeholder,
-          path
-        })
-      )
+  render () {
+    const { placeholder, path, readOnly, document } = this.props
+    const parentSurface = this.context.surface
+    const name = getKeyForPath(path)
+    // Note: readOnly and within a ContainerEditor a text property is
+    // plain, not as a surface
+    if (readOnly || (parentSurface && parentSurface._isContainerEditor)) {
+      const TextPropertyComponent = this.getComponent('text-property')
+      return $$(TextPropertyComponent, {
+        doc: document,
+        tagName: 'div',
+        placeholder,
+        path
+      })
     } else {
-      el.append(
-        $$(TextInput, {
-          name,
-          path,
-          placeholder
-        })
-      )
+      return $$(TextInput, {
+        name,
+        path,
+        placeholder
+      })
     }
-    return el
-  }
-
-  getClassNames () {
-    return 'sc-string'
   }
 }

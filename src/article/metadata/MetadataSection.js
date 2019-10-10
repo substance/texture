@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { addModelObserver, removeModelObserver } from '../../kit'
 import MetadataCollectionComponent from './MetadataCollectionComponent'
 
@@ -11,7 +11,7 @@ export default class MetadataSection extends Component {
     removeModelObserver(this)
   }
 
-  render ($$) {
+  render () {
     const model = this.props.model
     const name = this.props.name
     // const label = this.getLabel(model.id)

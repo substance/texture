@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import { ModelComponent } from '../../kit'
 import { METADATA_MODE } from '../ArticleConstants'
 import CardComponent from './CardComponent'
@@ -5,7 +6,7 @@ import CardComponent from './CardComponent'
 // Note: This is used for values of type 'collection'
 // where every item is rendered as a single card
 export default class MetadataCollectionComponent extends ModelComponent {
-  render ($$) {
+  render () {
     const model = this.props.model
     let items = model.getItems()
     let el = $$('div').addClass('sc-collection-editor')

@@ -10,10 +10,11 @@ module.exports = function (coverage) {
   if (coverage) {
     textureEntryPoint = path.join(__dirname, '..', 'tmp', 'texture.instrumented.cjs.js')
   } else {
-    textureEntryPoint = path.join(__dirname, '..', 'index.js')
+    textureEntryPoint = path.join(__dirname, '..', 'index.node.js')
   }
   moduleAlias.addAlias('substance-texture', textureEntryPoint)
   moduleAlias.addAlias('texture', textureEntryPoint)
+  moduleAlias.addAlias('dar-server', path.join(__dirname, '..', 'src', 'dar-server', 'index.js'))
   // register the alias module loaded
   moduleAlias()
 

@@ -1,9 +1,9 @@
-import { Component, parseKeyCombo, parseKeyEvent } from 'substance'
+import { Component, parseKeyCombo, parseKeyEvent, $$ } from 'substance'
 
 const ESCAPE = parseKeyEvent(parseKeyCombo('Escape'))
 
 export default class Input extends Component {
-  render ($$) {
+  render () {
     let { path, type, placeholder } = this.props
     let val = this._getDocumentValue()
 

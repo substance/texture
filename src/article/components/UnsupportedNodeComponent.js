@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import IsolatedNodeComponent from '../../kit/ui/_IsolatedNodeComponent'
 
 export default class UnsupportedNodeComponent extends IsolatedNodeComponent {
@@ -8,7 +8,7 @@ export default class UnsupportedNodeComponent extends IsolatedNodeComponent {
 }
 
 class UnsupportedContentComponent extends Component {
-  render ($$) {
+  render () {
     const node = this.props.node
     let data
     if (node._isXMLNode) {

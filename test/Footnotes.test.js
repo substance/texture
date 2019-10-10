@@ -9,7 +9,7 @@ import setupTestApp from './shared/setupTestApp'
 import { getLabel } from 'substance-texture'
 
 const emptyLabel = '???'
-const manuscriptFootnoteSelector = '.sc-manuscript > .sc-manuscript-section.sm-footnotes .sc-footnote'
+const manuscriptFootnoteSelector = '.sc-manuscript .sc-manuscript-section.sm-footnotes .sc-footnote'
 const tableFootnoteSelector = '.sc-table-figure > .se-footnotes > .sc-footnote'
 const tableFootnoteContentXpath = ['article', 'body', 'table-figure', 'footnote', 'paragraph']
 

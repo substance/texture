@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import DOIInputComponent from '../components/DOIInputComponent'
 import ReferenceUploadComponent from '../components/ReferenceUploadComponent'
 import { INTERNAL_BIBR_TYPES } from '../ArticleConstants'
@@ -21,7 +21,7 @@ export default class AddReferenceWorkflow extends Component {
     })
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-add-reference sm-workflow')
 
     const title = $$('div').addClass('se-title').append(

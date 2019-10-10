@@ -1,6 +1,5 @@
-import {
-  NodeComponent, FormRowComponent, ValueComponent
-} from '../../kit'
+import { $$ } from 'substance'
+import { NodeComponent, FormRowComponent, ValueComponent } from '../../kit'
 
 // ATTENTION: this is displays all RefContribs of a Reference in an 'in-place' style i.e. like a little table
 export default class InplaceRefContribsEditor extends ValueComponent {
@@ -9,11 +8,11 @@ export default class InplaceRefContribsEditor extends ValueComponent {
       removeContrib: this._removeContrib
     }
   }
-  render ($$) {
+  render () {
     const Button = this.getComponent('button')
 
     let el = $$('div').addClass('sc-inplace-ref-contrib-editor')
-    el.append(this._renderRefContribs($$))
+    el.append(this._renderRefContribs())
     el.append(
       $$(Button, {
         icon: 'insert'
@@ -23,37 +22,36 @@ export default class InplaceRefContribsEditor extends ValueComponent {
     return el
   }
 
-  _renderRefContribs ($$) {
-    const model = this.props.model
-    let items = model.getItems()
-    return items.map(item => this._renderRefContrib($$, item))
+  _renderRefContribs () {
+    let items = this._getDocument().resolve(this._getPath())
+    return items.map(item => this._renderRefContrib(item))
   }
 
-  _renderRefContrib ($$, refContrib) {
+  _renderRefContrib (refContrib) {
     let id = refContrib.id
     return $$(InplaceRefContribEditor, { node: refContrib }).ref(id)
   }
 
   _addContrib () {
-    this.props.model.addItem({ type: 'ref-contrib' })
+    this.context.api._appendChild(this._getPath(), { type: 'ref-contrib' })
   }
 
   _removeContrib (contrib) {
-    this.props.model.removeItem(contrib)
+    this.context.api._removeChild(this._getPath(), contrib.id)
   }
 }
 
 class InplaceRefContribEditor extends NodeComponent {
-  render ($$) {
+  render () {
     const node = this.props.node
     const Button = this.getComponent('button')
     let el = $$('div').addClass('sc-inplace-ref-contrib-editor')
     el.append(
       $$(FormRowComponent).attr('data-id', node.id).addClass('sm-ref-contrib').append(
-        this._renderValue($$, 'name', {
+        this._renderValue('name', {
           placeholder: this.getLabel('name')
         }).addClass('sm-name'),
-        this._renderValue($$, 'givenNames', {
+        this._renderValue('givenNames', {
           placeholder: this.getLabel('given-names')
         }).addClass('sm-given-names'),
         $$(Button, {

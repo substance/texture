@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import ValueComponent from './ValueComponent'
 import CheckboxInput from './CheckboxInput'
 
@@ -8,12 +9,11 @@ export default class BooleanComponent extends ValueComponent {
     }
   }
 
-  render ($$) {
-    const model = this.props.model
-    const value = model.getValue()
+  render () {
+    const value = this._getValue()
     let el = $$('div').addClass('sc-boolean')
     if (!this.context.editable) {
-      el.addclass('sm-readonly')
+      el.addClass('sm-readonly')
     }
     el.append(
       $$(CheckboxInput, { value })
@@ -23,8 +23,7 @@ export default class BooleanComponent extends ValueComponent {
 
   _toggleValue () {
     if (this.context.editable) {
-      const model = this.props.model
-      this.props.model.setValue(!model.getValue())
+      this._setValue(!this._getValue())
     }
   }
 }

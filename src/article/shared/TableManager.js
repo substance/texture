@@ -1,4 +1,3 @@
-import { forEach } from 'substance'
 import CitableContentManager from './CitableContentManager'
 import TableFootnoteManager from './TableFootnoteManager'
 
@@ -9,6 +8,11 @@ export default class TableManager extends CitableContentManager {
     this._updateLabels('initial')
 
     this._initializeTableFootnoteManagers()
+  }
+
+  static create (context) {
+    const { editorSession, config } = context
+    return new TableManager(editorSession, config.getValue('table-label-generator'))
   }
 
   // EXPERIMENTAL:
@@ -25,9 +29,9 @@ export default class TableManager extends CitableContentManager {
   _initializeTableFootnoteManagers () {
     let doc = this._getDocument()
     let tableFigures = doc.getIndex('type').get('table-figure')
-    forEach(tableFigures, tableFigure => {
+    for (const tableFigure of tableFigures) {
       tableFigure.setFootnoteManager(new TableFootnoteManager(this.editorSession, tableFigure))
-    })
+    }
   }
 
   _checkForNewTableFigures (change) {

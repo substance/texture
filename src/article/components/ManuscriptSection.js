@@ -1,38 +1,14 @@
-import { Component } from 'substance'
-import { addModelObserver, removeModelObserver } from '../../kit'
+import { Component, $$ } from 'substance'
+
 export default class ManuscriptSection extends Component {
-  didMount () {
-    addModelObserver(this.props.model, this._onModelUpdate, this)
-  }
-
-  dispose () {
-    removeModelObserver(this)
-  }
-
-  render ($$) {
-    const { model, name, label, children, hideWhenEmpty } = this.props
+  render () {
+    const { name, label, children } = this.props
     const SectionLabel = this.getComponent('section-label')
 
-    let el = $$('div')
-      .addClass('sc-manuscript-section')
-      .addClass(`sm-${name}`)
-      .attr({
-        'data-section': name
-      })
-    // only rendering content if
-    if (hideWhenEmpty && model.length === 0) {
-      el.addClass('sm-empty')
-    } else {
-      el.append($$(SectionLabel, { label }))
-      el.append(children)
-    }
+    const el = $$('div', { class: `sc-manuscript-section sm-${name}`, 'data-section': name })
+    el.append($$(SectionLabel, { label: this.getLabel(label) }))
+    el.append(children)
 
     return el
-  }
-
-  _onModelUpdate () {
-    if (this.props.hideWhenEmpty) {
-      this.rerender()
-    }
   }
 }

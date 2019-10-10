@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const url = require('url')
 const fsExtra = require('fs-extra')
-const { DarFileStorage } = require('./lib/texture')
+const { DarFileStorage } = require('./lib/dar-server')
 const debug = require('debug')('main')
 
 const {
@@ -13,10 +13,8 @@ const {
 const DEBUG = process.env.DEBUG
 
 const BLANK_DOCUMENT = path.join(__dirname, 'templates', 'blank.dar')
-const BLANK_FIGURE_PACKAGE = path.join(__dirname, 'templates', 'blank-figure-package.dar')
 const templates = {
-  'article': BLANK_DOCUMENT,
-  'figure-package': BLANK_FIGURE_PACKAGE
+  'article': BLANK_DOCUMENT
 }
 
 let argv = process.argv
@@ -281,12 +279,6 @@ function _createMenu () {
               accelerator: 'CommandOrControl+N',
               click () {
                 _openNew('article')
-              }
-            },
-            {
-              label: 'Figure Package',
-              click () {
-                _openNew('figure-package')
               }
             }
           ]

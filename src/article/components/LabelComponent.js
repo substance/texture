@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import { getLabel } from '../shared/nodeHelpers'
 
 // TODO: we need to rethink how we model labels
@@ -12,7 +12,7 @@ export default class LabelComponent extends Component {
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     const label = getLabel(this.props.node)
     return $$('div').addClass('sc-label').text(label)
   }

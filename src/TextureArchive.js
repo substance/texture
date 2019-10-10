@@ -11,8 +11,8 @@ export default class TextureArchive extends PersistedDocumentArchive {
     let manifestXML = _importManifest(rawArchive)
     let manifest = this._loadManifest({ data: manifestXML })
     documents['manifest'] = manifest
-    let entries = manifest.getDocumentEntries()
 
+    let entries = manifest.getDocumentEntries()
     entries.forEach(entry => {
       let record = rawArchive.resources[entry.path]
       // Note: this happens when a resource is referenced in the manifest

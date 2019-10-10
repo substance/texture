@@ -1,21 +1,21 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class Button extends Component {
-  render ($$) {
+  render () {
     let el = $$('button')
       .addClass('sc-button')
 
     if (this.props.icon) {
-      el.append(this.renderIcon($$))
+      el.append(this.renderIcon())
     }
     if (this.props.label) {
-      el.append(this.renderLabel($$))
+      el.append(this.renderLabel())
     }
     if (this.props.tooltip) {
       el.attr('title', this.props.tooltip)
     }
     if (this.props.dropdown) {
-      el.append(this.renderDropdownIcon($$))
+      el.append(this.renderDropdownIcon())
     }
     if (this.props.active) {
       el.addClass('sm-active')
@@ -38,18 +38,18 @@ export default class Button extends Component {
     return el
   }
 
-  renderIcon ($$) {
-    let iconEl = this.context.iconProvider.renderIcon($$, this.props.icon)
+  renderIcon () {
+    let iconEl = this.context.iconProvider.renderIcon(this.props.icon)
     return iconEl
   }
 
-  renderDropdownIcon ($$) {
-    let iconEl = this.context.iconProvider.renderIcon($$, 'dropdown')
+  renderDropdownIcon () {
+    let iconEl = this.context.iconProvider.renderIcon('dropdown')
     iconEl.addClass('se-dropdown')
     return iconEl
   }
 
-  renderLabel ($$) {
+  renderLabel () {
     return $$('span').addClass('se-label').append(
       this.getLabel(this.props.label)
     )

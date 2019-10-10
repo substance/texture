@@ -1,9 +1,9 @@
-import { domHelpers, platform } from 'substance'
+import { $$, domHelpers, platform } from 'substance'
 import { Tool } from '../../kit'
 
 export default class DownloadSupplementaryFileTool extends Tool {
-  render ($$) {
-    let el = super.render($$)
+  render () {
+    let el = super.render()
     let link = $$('a').ref('link')
       // ATTENTION: stop propagation, otherwise infinite loop
       .on('click', domHelpers.stop)

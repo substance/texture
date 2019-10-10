@@ -1,7 +1,8 @@
+import { $$ } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class GraphicComponent extends NodeComponent {
-  render ($$) {
+  render () {
     const node = this.props.node
     const urlResolver = this.context.urlResolver
     let url = node.href
@@ -13,9 +14,9 @@ export default class GraphicComponent extends NodeComponent {
       .attr('data-id', node.id)
     if (this.state.errored) {
       let errorEl = $$(this.tagName).addClass('se-error').append(
-        this.context.iconProvider.renderIcon($$, 'graphic-load-error').addClass('se-icon')
+        this.context.iconProvider.renderIcon('graphic-load-error').addClass('se-icon')
       )
-      this._renderError($$, errorEl)
+      this._renderError(errorEl)
       el.append(errorEl)
     } else {
       el.append(
@@ -26,7 +27,7 @@ export default class GraphicComponent extends NodeComponent {
     return el
   }
 
-  _renderError ($$, errorEl) {
+  _renderError (errorEl) {
     errorEl.append(
       this.getLabel('graphic-load-error')
     )

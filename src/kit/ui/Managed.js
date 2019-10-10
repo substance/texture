@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 const _ManagedComponentCache = new Map()
 
@@ -47,7 +47,7 @@ export default function Managed (ComponentClass) {
       this.context.editorState.off(this)
     }
 
-    render ($$) {
+    render () {
       return $$(ComponentClass, this._props).ref('managed')
     }
 
@@ -76,13 +76,14 @@ export default function Managed (ComponentClass) {
     }
 
     _deriveManagedProps (props) {
-      const state = this.context.editorState
+      const editorState = this.context.editorState
       const config = this._config
       if (config) {
         let derivedProps = Object.assign({}, props)
         delete derivedProps.bindings
         config.names.forEach(name => {
-          derivedProps[name] = state.get(name)
+          // warning: this will be a problem for mangling
+          derivedProps[name] = editorState._get(name)
         })
         return derivedProps
       } else {

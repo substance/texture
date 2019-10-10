@@ -1,8 +1,7 @@
-import { Component, platform } from 'substance'
+import { Component, $$, platform } from 'substance'
 import { AppState, createComponentContext } from '../kit'
 import DefaultSettings from './settings/DefaultSettings'
 import EditorSettings from './settings/ExperimentalEditorSettings'
-import FigurePackageSettings from './settings/FigurePackageSettings'
 import ArticleAPI from './api/ArticleAPI'
 import ArticleEditorSession from './api/ArticleEditorSession'
 
@@ -10,7 +9,6 @@ export default class ArticlePanel extends Component {
   constructor (...args) {
     super(...args)
 
-    // TODO: should we really (ab-)use the regular Component state as AppState?
     this._initialize(this.props, this.state)
   }
 
@@ -18,6 +16,8 @@ export default class ArticlePanel extends Component {
     return {
       executeCommand: this._executeCommand,
       toggleOverlay: this._toggleOverlay,
+      // TODO: is this really the right place?
+      // IMO this is editor specific and should go into BasicArticleEditor
       startWorkflow: this._startWorkflow,
       closeModal: this._closeModal,
       scrollElementIntoView: this._scrollElementIntoView,
@@ -47,14 +47,20 @@ export default class ArticlePanel extends Component {
     let api = new ArticleAPI(editorSession, archive, config)
     this.api = api
 
-    let context = Object.assign(this.context, createComponentContext(config), {
+    const self = this
+    let context = Object.assign({
+      // HACK: as it is not appropriate to register the ArticlePanel as 'context.editor'
+      // it is necessary to provide a getter via context, passing the actual article-editor instance
+      get editor () {
+        return self.refs.content
+      }
+    }, this.context, createComponentContext(config), {
       config,
       editorSession,
       editorState: appState,
       api,
       archive,
-      urlResolver: archive,
-      editor: this
+      urlResolver: archive
     })
     this.context = context
 
@@ -118,15 +124,15 @@ export default class ArticlePanel extends Component {
     )
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-article-panel')
     el.append(
-      this._renderContent($$)
+      this._renderContent()
     )
     return el
   }
 
-  _renderContent ($$) {
+  _renderContent () {
     const props = this.props
     const api = this.api
     const archive = props.archive
@@ -163,13 +169,8 @@ export default class ArticlePanel extends Component {
   // On the long run we need to understand better what different means of configuration we want to offer
   _createSettings (doc) {
     let settings = new EditorSettings()
-    let metadata = doc.get('metadata')
     // Default settings
     settings.load(DefaultSettings)
-    // Article type specific settings
-    if (metadata.articleType === 'figure-package') {
-      settings.extend(FigurePackageSettings)
-    }
     return settings
   }
 
@@ -204,6 +205,11 @@ export default class ArticlePanel extends Component {
     return this.refs.content._scrollElementIntoView(el, force)
   }
 
+  /**
+   * Scroll to the node or other content.
+   *
+   * @param {string} params.nodeId
+   */
   _scrollTo (params) {
     return this.refs.content._scrollTo(params)
   }

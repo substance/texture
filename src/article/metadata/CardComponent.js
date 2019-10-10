@@ -1,4 +1,4 @@
-import { Component, domHelpers } from 'substance'
+import { Component, domHelpers, $$ } from 'substance'
 
 export default class CardComponent extends Component {
   didMount () {
@@ -12,7 +12,7 @@ export default class CardComponent extends Component {
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     const node = this.props.node
     const nodeId = node.id
     const children = this.props.children

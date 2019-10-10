@@ -1,4 +1,4 @@
-import { isArray } from 'substance'
+import { isArray, $$, getKeyForPath } from 'substance'
 import ValueComponent from './ValueComponent'
 import MultiSelectInput from './MultiSelectInput'
 
@@ -18,7 +18,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     const label = this.getLabel('select-item') + ' ' + this.props.label
     const options = this.getAvailableOptions()
     let selected = this._getSelectedOptions(options)
@@ -28,7 +28,7 @@ export default class ManyRelationshipComponent extends ValueComponent {
         $$(MultiSelectInput, {
           label,
           selected,
-          overlayId: this.props.model.id
+          overlayId: getKeyForPath(this._getPath())
         })
       )
     } else {
@@ -51,45 +51,46 @@ export default class ManyRelationshipComponent extends ValueComponent {
   }
 
   getAvailableOptions () {
-    return this.props.model.getAvailableOptions()
+    return this.context.api._getAvailableOptions(this._getPath())
   }
 
   _getSelectedOptions (options) {
     // pick all selected items from options this makes life easier for the MutliSelectComponent
     // because it does not need to map via ids, just can check equality
-    let targetIds = this.props.model.getValue()
+    let targetIds = this._getValue()
     let selected = targetIds.map(id => options.find(item => item.id === id)).filter(Boolean)
     return selected
   }
 
   _toggleTarget (target) {
     if (this.context.editable) {
-      this.props.model.toggleTarget(target)
+      this.context.api._toggleRelationship(this._getPath(), target.id)
     }
   }
 
   _toggleOverlay () {
-    const appState = this.context.editorState
-    let overlayId = appState.overlayId
-    let modelId = this.props.model.id
+    const editorState = this.context.editorState
+    let overlayId = editorState.overlayId
+    let modelId = getKeyForPath(this._getPath())
     if (overlayId === modelId) {
       this.getParent().send('toggleOverlay')
     } else {
-      // ATTENTION: At the moment a reducer maps value selections to appState.overlayId
+      // ATTENTION: At the moment a reducer maps value selections to editorState.overlayId
       // i.e. we must not call toggleOverlay
       // But if we decided to disable the reducer this would break if
       // we used the common implementation.
       // TODO: rethink this approach in general
       this.context.api.selectValue(this._getPath())
-      // DO NOT UNCOMMENT THIS LINE
-      // appState.set('overlayId', modelId, 'propagateImmediately')
+      // DO NOT UNCOMMENT THESE LINES
+      // editorState.overlayId = modelId
+      // editorState.propagateChanges()
     }
   }
 
   _rerenderOnModelChangeIfNecessary (change) {
     let updateNeeded = Boolean(change.hasUpdated(this._getPath()))
     if (!updateNeeded) {
-      let ids = this.props.model.getValue()
+      let ids = this._getValue()
       if (ids) {
         if (!isArray(ids)) {
           ids = [ids]

@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import ToolPanel from './ToolPanel'
 
 // TODO: refactor this. I don't like how this is tight to ScrollPane
@@ -15,14 +16,14 @@ export default class ContextMenu extends ToolPanel {
     this.context.scrollPane.off(this)
   }
 
-  render ($$) {
+  render () {
     let el = $$('div')
       .addClass(this._getClassNames())
       .addClass('sm-hidden')
       .addClass('sm-theme-' + this.getTheme())
     el.append(
       $$('div').addClass('se-active-tools').append(
-        this._renderItems($$)
+        this._renderItems()
       ).ref('entriesContainer')
     )
     return el

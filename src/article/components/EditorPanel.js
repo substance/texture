@@ -18,9 +18,7 @@ export default class EditorPanel extends Component {
   _initialize (props) {
     const { editorSession } = props
     const config = this.context.config
-    const context = Object.assign(this.context, createEditorContext(config, editorSession, this), {
-      editable: true
-    })
+    const context = Object.assign(this.context, createEditorContext(config, editorSession, this))
     this.context = context
   }
 
@@ -88,16 +86,6 @@ export default class EditorPanel extends Component {
       e.preventDefault()
     }
     return handled
-  }
-
-  _renderWorkflow ($$, workflowId) {
-    let workflowProps = this.context.editorState.workflowProps || {}
-    let Modal = this.getComponent('modal')
-    let WorkflowComponent = this.getComponent(workflowId)
-    return $$(Modal, {
-      width: WorkflowComponent.desiredWidth,
-      content: $$(WorkflowComponent, workflowProps).ref('workflow')
-    }).addClass('se-workflow-modal sm-workflow-' + workflowId)
   }
 
   _scrollElementIntoView (el, force) {

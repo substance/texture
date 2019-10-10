@@ -1,10 +1,9 @@
 import { testAsync } from 'substance-test'
 import { uuid } from 'substance'
-import { DarFileStorage, UnpackedDarFolderStorage } from 'substance-texture'
 import { promisify } from './shared/testHelpers'
-
-// ATTENTION: these tests can not be run in the browser
-// because implementation uses filesystem etc.
+// ATTENTION: this is an alias setup in _initLoader
+// TODO: try to find a better solution
+import { DarFileStorage, UnpackedDarFolderStorage } from 'dar-server'
 
 /*
   TODO:

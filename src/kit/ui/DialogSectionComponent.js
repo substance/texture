@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 /*
   This is an eperimental wrap component for rendering a section in dialogs
@@ -10,7 +10,7 @@ import { Component } from 'substance'
   ```
 */
 export default class DialogSectionComponent extends Component {
-  render ($$) {
+  render () {
     const label = this.props.label
     const description = this.props.description
     const children = this.props.children

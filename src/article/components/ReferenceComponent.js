@@ -1,3 +1,4 @@
+import { $$ } from 'substance'
 import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import { getLabel } from '../shared/nodeHelpers'
@@ -6,7 +7,7 @@ import DefaultNodeComponent from './DefaultNodeComponent'
 import InplaceRefContribsEditor from '../metadata/InplaceRefContribsEditor'
 
 export default class ReferenceComponent extends NodeComponent {
-  render ($$) {
+  render () {
     let mode = this.props.mode
     let node = this.props.node
     let label = this._getReferenceLabel()

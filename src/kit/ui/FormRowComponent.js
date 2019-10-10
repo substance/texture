@@ -1,8 +1,8 @@
-import { Component, FontAwesomeIcon } from 'substance'
+import { Component, $$, FontAwesomeIcon } from 'substance'
 import Tooltip from './Tooltip'
 
 export default class FormRowComponent extends Component {
-  render ($$) {
+  render () {
     const label = this.props.label
     const issues = this.props.issues || []
     const hasIssues = issues.length > 0

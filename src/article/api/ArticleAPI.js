@@ -1,22 +1,15 @@
 import {
   documentHelpers, includes, orderBy, without, selectionHelpers,
-  isArray, isString, getKeyForPath, isNil
+  isArray, isString, getKeyForPath, isNil, last
 } from 'substance'
 import { createValueModel } from '../../kit'
 import TableEditingAPI from './TableEditingAPI'
-import { importFigures } from '../articleHelpers'
 import { findParentByType } from '../shared/nodeHelpers'
 import renderEntity from '../shared/renderEntity'
-import FigurePanel from '../nodes/FigurePanel'
 import SupplementaryFile from '../nodes/SupplementaryFile'
 import BlockFormula from '../nodes/BlockFormula'
-import FigureManager from '../shared/FigureManager'
-import FootnoteManager from '../shared/FootnoteManager'
-import FormulaManager from '../shared/FormulaManager'
-import ReferenceManager from '../shared/ReferenceManager'
-import TableManager from '../shared/TableManager'
-import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
+import Figure from '../nodes/Figure'
 import Footnote from '../nodes/Footnote'
 import {
   InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person,
@@ -40,15 +33,10 @@ export default class ArticleAPI {
     // TODO: rethink this
     // we created a sub-api for table manipulations in an attempt of modularisation
     this._tableApi = new TableEditingAPI(editorSession)
+  }
 
-    // TODO: rethink this
-    // Instead we should register these managers as a service, and instantiate on demand
-    this._figureManager = new FigureManager(editorSession, config.getValue('figure-label-generator'))
-    this._footnoteManager = new FootnoteManager(editorSession, config.getValue('footnote-label-generator'))
-    this._formulaManager = new FormulaManager(editorSession, config.getValue('formula-label-generator'))
-    this._referenceManager = new ReferenceManager(editorSession, config.getValue('reference-label-generator'))
-    this._supplementaryManager = new SupplementaryManager(editorSession, config.getValue('supplementary-file-label-generator'))
-    this._tableManager = new TableManager(editorSession, config.getValue('table-label-generator'))
+  extend (apiExtension) {
+    Object.assign(this, apiExtension)
   }
 
   addAffiliation () {
@@ -81,27 +69,6 @@ export default class ArticleAPI {
 
   addSubject () {
     this._addEntity(['metadata', 'subjects'], Subject.type)
-  }
-
-  addFigurePanel (figureId, file) {
-    const doc = this.getDocument()
-    const figure = doc.get(figureId)
-    if (!figure) throw new Error('Figure does not exist')
-    const pos = figure.getCurrentPanelIndex()
-    const href = this.archive.addAsset(file)
-    const insertPos = pos + 1
-    // NOTE: with this method we are getting the structure of the active panel
-    // to replicate it, currently only for metadata fields
-    const panelTemplate = figure.getTemplateFromCurrentPanel()
-    this.editorSession.transaction(tx => {
-      let template = FigurePanel.getTemplate()
-      template.content.href = href
-      template.content.mimeType = file.type
-      Object.assign(template, panelTemplate)
-      let node = documentHelpers.createNodeFromJson(tx, template)
-      documentHelpers.insertAt(tx, [figure.id, 'panels'], insertPos, node.id)
-      tx.set([figure.id, 'state', 'currentPanelIndex'], insertPos)
-    })
   }
 
   // TODO: it is not so common to add footnotes without an xref in the text
@@ -362,7 +329,7 @@ export default class ArticleAPI {
     let sel = editorSession.getSelection()
     if (!sel || !sel.containerPath) return
     editorSession.transaction(tx => {
-      importFigures(tx, sel, files, paths)
+      this._importFigures(tx, sel, files, paths)
     })
   }
 
@@ -492,13 +459,11 @@ export default class ArticleAPI {
     }
   }
 
-  switchFigurePanel (figure, newPanelIndex) {
-    const editorSession = this.editorSession
-    let sel = editorSession.getSelection()
-    if (!sel.isNodeSelection() || sel.getNodeId() !== figure.id) {
-      this.selectNode(figure.id)
-    }
-    editorSession.updateNodeStates([[figure.id, { currentPanelIndex: newPanelIndex }]], { propagate: true })
+  setValue (path, val) {
+    this.getEditorSession().transaction(tx => {
+      tx.set(path, val)
+      tx.setSelection(this._createValueSelection(path))
+    })
   }
 
   _addEntity (collectionPath, type, createNode) {
@@ -605,8 +570,9 @@ export default class ArticleAPI {
   // TODO: I am not sure if it is the right approach, trying to generalize this
   // Instead we could use dedicated Components derived from the ones from the kit
   // and use specific API to accomplish this
-  _getAvailableOptions (model) {
-    let targetTypes = Array.from(model._targetTypes)
+  _getAvailableOptions (path) {
+    let prop = this.editorSession.getDocument().getProperty(path)
+    let targetTypes = Array.from(prop.targetTypes)
     if (targetTypes.length !== 1) {
       throw new Error('Unsupported relationship. Expected to find one targetType')
     }
@@ -634,11 +600,11 @@ export default class ArticleAPI {
     let manager
     switch (refType) {
       case BlockFormula.refType: {
-        manager = this._formulaManager
+        manager = this.config.getServiceSync('equation-manager', this.getContext())
         break
       }
       case 'fig': {
-        manager = this._figureManager
+        manager = this.config.getServiceSync('figure-manager', this.getContext())
         break
       }
       case 'fn': {
@@ -648,7 +614,7 @@ export default class ArticleAPI {
         if (tableFigure) {
           manager = tableFigure.getFootnoteManager()
         } else {
-          manager = this._footnoteManager
+          manager = this.config.getServiceSync('footnote-manager', this.getContext())
         }
         break
       }
@@ -660,15 +626,15 @@ export default class ArticleAPI {
         break
       }
       case 'bibr': {
-        manager = this._referenceManager
+        manager = this.config.getServiceSync('reference-manager', this.getContext())
         break
       }
       case 'table': {
-        manager = this._tableManager
+        manager = this.config.getServiceSync('table-manager', this.getContext())
         break
       }
       case 'file': {
-        manager = this._supplementaryManager
+        manager = this.config.getServiceSync('file-manager', this.getContext())
         break
       }
       default:
@@ -754,6 +720,30 @@ export default class ArticleAPI {
     return relXpath.map(e => e.id).join('/') + '.' + propertyName
   }
 
+  _importFigures (tx, sel, files, paths) {
+    if (files.length === 0) return
+
+    let containerPath = sel.containerPath
+    let figures = files.map((file, idx) => {
+      let href = paths[idx]
+      let mimeType = file.type
+      let figureTemplate = Figure.getTemplate()
+      figureTemplate.content.href = href
+      figureTemplate.content.mimeType = mimeType
+      let figure = documentHelpers.createNodeFromJson(tx, figureTemplate)
+      // Note: this is necessary because tx.insertBlockNode()
+      // selects the inserted node
+      // TODO: maybe we should change the behavior of tx.insertBlockNode()
+      // so that it is easier to insert multiple nodes in a row
+      if (idx !== 0) {
+        tx.break()
+      }
+      tx.insertBlockNode(figure)
+      return figure
+    })
+    selectionHelpers.selectNode(tx, last(figures).id, containerPath)
+  }
+
   _insertBlockNode (createNode) {
     let editorSession = this.getEditorSession()
     let nodeId
@@ -821,12 +811,7 @@ export default class ArticleAPI {
     this._moveChild(collectionPath, nodeId, shift)
   }
 
-  // Used by MoveMetadataFieldCommand(FigureMetadataCommands)
-  // and MoveFigurePanelCommand (FigurePanelCommands)
-  // txHook isued by MoveFigurePanelCommand to update the node state
-  // This needs a little more thinking, however, making it apparent
-  // that in some cases it is not so easy to completely separate Commands
-  // from EditorSession logic
+  // TODO: is this still used?
   _moveChild (collectionPath, childId, shift, txHook) {
     this.editorSession.transaction(tx => {
       let ids = tx.get(collectionPath)
@@ -850,9 +835,9 @@ export default class ArticleAPI {
   _removeCorrespondingXrefs (tx, node) {
     let manager
     if (node.isInstanceOf(Reference.type)) {
-      manager = this._referenceManager
+      manager = this.config.getServiceSync('reference-manager')
     } else if (node.isInstanceOf(Footnote.type)) {
-      manager = this._footnoteManager
+      manager = this.config.getServiceSync('footnote-manager')
     } else {
       return
     }

@@ -1,7 +1,7 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class InputWithButton extends Component {
-  render ($$) {
+  render () {
     let input = this.props.input
     let button = this.props.button
 

@@ -1,24 +1,25 @@
-import { documentHelpers } from 'substance'
 import CitableContentManager from './CitableContentManager'
-import FigureLabelGenerator from './FigureLabelGenerator'
 
 export default class FigureManager extends CitableContentManager {
-  constructor (editorSession, config) {
-    super(editorSession, 'fig', ['figure-panel'], new FigureLabelGenerator(config))
+  constructor (editorSession, labelGenerator) {
+    super(editorSession, 'fig', ['figure'], labelGenerator)
     this._updateLabels('initial')
   }
 
+  static create (context) {
+    const { editorSession, config } = context
+    return new FigureManager(editorSession, config.getValue('figure-label-generator'))
+  }
+
   _detectAddRemoveCitable (op, change) {
-    // in addition to figure add/remove the labels are affected when panels are added/removed or reordered
-    return super._detectAddRemoveCitable(op, change) || (op.val && op.val.type === 'figure-panel') || (op.path && op.path[1] === 'panels')
+    return super._detectAddRemoveCitable(op, change)
   }
 
   _getItemSelector () {
-    return 'figure-panel'
+    return 'figure'
   }
 
   _computeTargetUpdates () {
-    let doc = this._getDocument()
     let figures = this._getContentElement().findAll('figure')
     let records = {}
     // Iterate through all figures and their panels
@@ -30,28 +31,6 @@ export default class FigureManager extends CitableContentManager {
       let pos = [{ pos: figureCounter }]
       let label = this.labelGenerator.getSingleLabel(pos)
       records[id] = { id, pos, label }
-      // ATTENTION: ATM we do not support any special label generation, such as Figure 1-figure supplement 2, which is controlled via attributes (@specific-use)
-      // TODO: to support eLife's 'Figure Supplement' labeling scheme we would use a different counter and some type of encoding
-      // e.g. [1, { pos: 1, type: 'supplement' }], we would then
-      let panels = documentHelpers.getNodesForIds(doc, figure.panels)
-      let panelCounter = 1
-      // processing sub-figures
-      if (panels.length > 1) {
-        for (let panel of panels) {
-          let id = panel.id
-          let pos = [{ pos: figureCounter }, { pos: panelCounter, type: 'default' }]
-          let label = this.labelGenerator.getSingleLabel(pos)
-          records[id] = { id, pos, label }
-          panelCounter++
-        }
-      // edge-case: figure-groups with just a single panel get a simple label
-      } else {
-        let panel = panels[0]
-        let id = panel.id
-        let pos = [{ pos: figureCounter }]
-        let label = this.labelGenerator.getSingleLabel(pos)
-        records[id] = { id, pos, label }
-      }
       figureCounter++
     }
     return records

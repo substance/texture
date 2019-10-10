@@ -1,7 +1,7 @@
-import { Component, FontAwesomeIcon } from 'substance'
+import { Component, $$, FontAwesomeIcon } from 'substance'
 
 export default class CheckboxInput extends Component {
-  render ($$) {
+  render () {
     const isChecked = Boolean(this.props.value)
     const icon = isChecked ? 'fa-check-square-o' : 'fa-square-o'
     let el = $$('div').addClass('sc-checkbox')

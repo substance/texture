@@ -1,4 +1,4 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 import SupplementaryFileUploadComponent from './SupplementaryFileUploadComponent'
 import { DialogSectionComponent, InputWithButton } from '../../kit'
 
@@ -15,7 +15,7 @@ export default class AddSupplementaryFileWorkflow extends Component {
     })
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-add-supplementary-file sm-workflow')
 
     let Input = this.getComponent('input')

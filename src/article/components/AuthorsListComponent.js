@@ -1,4 +1,4 @@
-import { CustomSurface } from 'substance'
+import { CustomSurface, $$ } from 'substance'
 import { NodeComponent } from '../../kit'
 
 export default class AuthorsListComponent extends CustomSurface {
@@ -22,23 +22,24 @@ export default class AuthorsListComponent extends CustomSurface {
 
   dispose () {
     super.dispose()
+
     this.context.editorState.removeObserver(this)
   }
 
-  render ($$) {
+  render () {
     let el = $$('div').addClass('sc-authors-list')
     el.append(
-      this._renderAuthors($$)
+      this._renderAuthors()
     )
     return el
   }
 
-  _renderAuthors ($$) {
+  _renderAuthors () {
     const sel = this.context.editorState.selection
     const authors = this._getAuthors()
     let els = []
     authors.forEach((author, index) => {
-      const authorEl = $$(AuthorDisplay, { node: author }).ref(author.id)
+      const authorEl = $$(_AuthorDisplay, { node: author }).ref(author.id)
       if (sel && sel.nodeId === author.id) {
         authorEl.addClass('sm-selected')
       }
@@ -55,12 +56,13 @@ export default class AuthorsListComponent extends CustomSurface {
   }
 
   _getAuthors () {
-    return this.props.model.getItems()
+    const document = this.context.editorState.document
+    return document.resolve(this.props.path)
   }
 }
 
-class AuthorDisplay extends NodeComponent {
-  render ($$) {
+class _AuthorDisplay extends NodeComponent {
+  render () {
     let el = $$('span').addClass('se-contrib').html(
       this.context.api.renderEntity(this.props.node)
     )

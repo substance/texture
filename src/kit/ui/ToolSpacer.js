@@ -1,7 +1,7 @@
-import { Component } from 'substance'
+import { Component, $$ } from 'substance'
 
 export default class ToolSpacer extends Component {
-  render ($$) {
+  render () {
     return $$('div').addClass('sc-tool-spacer')
   }
 }

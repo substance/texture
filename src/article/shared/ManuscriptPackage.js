@@ -9,9 +9,7 @@ import PersistencePackage from '../../shared/PersistencePackage'
 
 import {
   AddAuthorCommand, AddAffiliationCommand, AddEntityCommand,
-  AddFigureMetadataFieldCommand, AddFigurePanelCommand,
   AddReferenceCommand,
-  MoveMetadataFieldCommand, RemoveMetadataFieldCommand,
   InsertExtLinkCommand,
   DecreaseHeadingLevelCommand,
   DeleteCellsCommand,
@@ -29,11 +27,7 @@ import {
   InsertTableCommand,
   InsertCrossReferenceCommand,
   InsertFootnoteCrossReferenceCommand,
-  MoveFigurePanelCommand,
-  OpenFigurePanelImageCommand,
-  RemoveFigurePanelCommand,
   RemoveFootnoteCommand,
-  ReplaceFigurePanelImageCommand,
   ReplaceSupplementaryFileCommand,
   TableSelectAllCommand,
   ToggleCellHeadingCommand,
@@ -45,10 +39,9 @@ import {
 
 import {
   AddSupplementaryFileWorkflow,
-  ManuscriptTOC, InsertFigurePanelTool,
+  ManuscriptTOC,
   DownloadSupplementaryFileTool, InsertFigureTool, InsertInlineGraphicTool,
-  OpenFigurePanelImageTool, ReplaceFigurePanelTool,
-  ReplaceSupplementaryFileTool, InsertTableTool, ManuscriptEditor
+  ReplaceSupplementaryFileTool, InsertTableTool, DefaultArticleEditor
 } from '../components'
 
 import { BlockFormula, Figure, Reference, SupplementaryFile, Table } from '../nodes'
@@ -59,7 +52,7 @@ import { AddAuthorWorkflow, AddAffiliationWorkflow, AddReferenceWorkflow } from 
 import EditMetadataWorkflow from '../metadata/EditMetadataWorkflow'
 
 export default {
-  name: 'ManuscriptEditor',
+  name: 'DefaultArticleEditor',
   configure (config) {
     config.import(BasePackage)
     config.import(EditorBasePackage)
@@ -73,12 +66,6 @@ export default {
     config.addComponent('toc', ManuscriptTOC)
 
     config.addCommand('add-author', AddAuthorCommand)
-    config.addCommand('add-figure-panel', AddFigurePanelCommand, {
-      commandGroup: 'figure-panel'
-    })
-    config.addCommand('add-metadata-field', AddFigureMetadataFieldCommand, {
-      commandGroup: 'metadata-fields'
-    })
     config.addCommand('add-affiliation', AddAffiliationCommand)
     config.addCommand('add-reference', AddReferenceCommand)
 
@@ -191,37 +178,9 @@ export default {
       refType: Table.refType,
       commandGroup: 'insert-xref'
     })
-    config.addCommand('move-down-metadata-field', MoveMetadataFieldCommand, {
-      direction: 'down',
-      commandGroup: 'metadata-fields'
-    })
-    config.addCommand('move-down-figure-panel', MoveFigurePanelCommand, {
-      direction: 'down',
-      commandGroup: 'figure-panel'
-    })
-    config.addCommand('move-up-metadata-field', MoveMetadataFieldCommand, {
-      direction: 'up',
-      commandGroup: 'metadata-fields'
-    })
-    config.addCommand('move-up-figure-panel', MoveFigurePanelCommand, {
-      direction: 'up',
-      commandGroup: 'figure-panel'
-    })
-    config.addCommand('open-figure-panel-image', OpenFigurePanelImageCommand, {
-      commandGroup: 'figure-panel'
-    })
-    config.addCommand('remove-metadata-field', RemoveMetadataFieldCommand, {
-      commandGroup: 'metadata-fields'
-    })
-    config.addCommand('remove-figure-panel', RemoveFigurePanelCommand, {
-      commandGroup: 'figure-panel'
-    })
     config.addCommand('remove-footnote', RemoveFootnoteCommand, {
       nodeType: 'footnote',
       commandGroup: 'footnote'
-    })
-    config.addCommand('replace-figure-panel-image', ReplaceFigurePanelImageCommand, {
-      commandGroup: 'figure-panel'
     })
     config.addCommand('replace-file', ReplaceSupplementaryFileCommand, {
       commandGroup: 'file'
@@ -339,12 +298,9 @@ export default {
     config.addIcon('right-control', { 'fontawesome': 'fa-chevron-right' })
 
     // Tools
-    config.addComponent('add-figure-panel', InsertFigurePanelTool)
     config.addComponent('download-file', DownloadSupplementaryFileTool)
     config.addComponent('insert-figure', InsertFigureTool)
     config.addComponent('insert-inline-graphic', InsertInlineGraphicTool)
-    config.addComponent('open-figure-panel-image', OpenFigurePanelImageTool)
-    config.addComponent('replace-figure-panel-image', ReplaceFigurePanelTool)
     config.addComponent('replace-file', ReplaceSupplementaryFileTool)
     config.addComponent('insert-table', InsertTableTool)
 
@@ -449,9 +405,9 @@ export default {
     registerCollectionCommand(config, 'affiliation', ['metadata', 'affiliations'], { keyboardShortcut: 'CommandOrControl+Alt+O' })
     registerCollectionCommand(config, 'subject', ['metadata', 'subjects'])
   },
-  ManuscriptEditor,
+  DefaultArticleEditor,
   // legacy
-  Editor: ManuscriptEditor
+  Editor: DefaultArticleEditor
 }
 
 // For now we just switch view and do the same action as in metadata editor

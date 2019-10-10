@@ -1,4 +1,4 @@
-import { Component, platform } from 'substance'
+import { Component, platform, $$ } from 'substance'
 import TextureConfigurator from './TextureConfigurator'
 import ArticlePackage from './article/ArticlePackage'
 import { PinnedMessage } from './kit/ui'
@@ -11,9 +11,17 @@ export default class Texture extends Component {
     }
   }
 
-  render ($$) {
-    const config = this.props.config
-    const archive = this.props.archive
+  getChildContext () {
+    const { config, archive, editable } = this.props
+    return {
+      config,
+      archive,
+      editable
+    }
+  }
+
+  render () {
+    const { config, archive } = this.props
     let el = $$('div').addClass('sc-texture')
 
     // TODO: switch by current document tab

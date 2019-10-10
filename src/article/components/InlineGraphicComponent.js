@@ -7,7 +7,7 @@ export default class InlineGraphicComponent extends GraphicComponent {
     return 'sc-inline-graphic'
   }
 
-  _renderError ($$, errorEl) {
+  _renderError (errorEl) {
     errorEl.attr('title', this.getLabel('graphic-load-error'))
   }
 }

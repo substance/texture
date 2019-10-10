@@ -4,7 +4,6 @@ import BlockFormulaConverter from './BlockFormulaConverter'
 import BlockQuoteConverter from './BlockQuoteConverter'
 import BreakConverter from './BreakConverter'
 import FigureConverter from './FigureConverter'
-import FigurePanelConverter from './FigurePanelConverter'
 import FootnoteConverter from './FootnoteConverter'
 import ElementCitationConverter from './ElementCitationConverter'
 import ExternalLinkConverter from './ExternalLinkConverter'
@@ -39,7 +38,6 @@ export default [
   new BreakConverter(),
   new ExternalLinkConverter(),
   new FigureConverter(),
-  new FigurePanelConverter(),
   new FootnoteConverter(),
   new GraphicConverter(),
   new HeadingConverter(),

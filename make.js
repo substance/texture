@@ -5,12 +5,16 @@ const path = require('path')
 const fork = require('substance-bundler/extensions/fork')
 const vfs = require('substance-bundler/extensions/vfs')
 const rollup = require('substance-bundler/extensions/rollup')
+const postcss = require('substance-bundler/extensions/postcss')
 const yazl = require('yazl')
 const compileSchema = require('texture-xml-utils/bundler/compileSchema')
 const generateSchemaDocumentation = require('texture-xml-utils/bundler/generateSchemaDocumentation')
 const commonjs = require('rollup-plugin-commonjs')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const istanbul = require('substance-bundler/extensions/rollup/rollup-plugin-istanbul')
+
+let _require = require('esm')(module)
+const serve = _require('./src/dar-server/serve').default
 
 const DIST = 'dist/'
 const APPDIST = 'app-dist/'
@@ -26,7 +30,6 @@ b.yargs.option('d', {
 })
 let argv = b.yargs.argv
 if (argv.d) {
-  const serve = require('./src/dar/serve')
   const rootDir = argv.d
   const archiveDir = path.resolve(path.join(__dirname, rootDir))
   serve(b.server, {
@@ -55,7 +58,7 @@ b.task('lib', ['clean', 'build:schema', 'build:assets', 'build:lib'])
 b.task('dev', ['clean', 'build:schema', 'build:assets', 'build:demo'])
   .describe('builds the web bundle.')
 
-b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib:browser', 'build:desktop'])
+b.task('desktop', ['clean', 'build:schema', 'build:assets', 'build:lib', 'build:desktop'])
   .describe('builds the desktop bundle (electron).')
 
 b.task('test-nodejs', ['clean', 'build:schema', 'build:test-assets'])
@@ -70,7 +73,7 @@ b.task('test:browser', ['test-browser'])
 // spawns electron after build is ready
 b.task('run-app', ['desktop'], () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
-  fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: APPDIST, await: false })
+  fork(b, require.resolve('electron/cli.js'), ['.'], { verbose: true, cwd: APPDIST, await: false })
 }).describe('runs the application in electron.')
 
 b.task('schema:texture-article', () => {
@@ -107,8 +110,14 @@ b.task('build:assets', function () {
   b.copy('./node_modules/substance/dist/substance.js*', DIST + 'lib/substance/')
   b.copy('./node_modules/substance/dist/substance.min.js*', DIST + 'lib/substance/')
   b.copy('./node_modules/texture-plugin-jats/dist', DIST + 'plugins/texture-plugin-jats')
-  b.css('texture.css', DIST + 'texture.css')
-  b.css('texture-reset.css', DIST + 'texture-reset.css')
+  postcss(b, {
+    from: 'texture.css',
+    to: DIST + 'texture.css'
+  })
+  postcss(b, {
+    from: 'texture-reset.css',
+    to: DIST + 'texture-reset.css'
+  })
 })
 
 b.task('build:schema', ['schema:texture-article'])
@@ -139,7 +148,8 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
   ;[
     'texture.js',
     'texture.css',
-    'texture-reset.css'
+    'texture-reset.css',
+    'dar-server.js'
   ].forEach(f => {
     b.copy(`dist/${f}`, APPDIST + 'lib/')
     b.copy(`dist/${f}.map`, APPDIST + 'lib/')
@@ -194,13 +204,12 @@ b.task('build:desktop', ['build:desktop:dars'], () => {
     ]
   })
   // execute 'install-app-deps'
-  fork(b, require.resolve('electron-builder/out/cli/cli.js'), 'install-app-deps', { verbose: true, cwd: APPDIST, await: true })
+  fork(b, require.resolve('electron-builder/out/cli/cli.js'), ['install-app-deps'], { verbose: true, cwd: APPDIST, await: true })
 })
 
 b.task('build:desktop:dars', () => {
   // templates
   _packDar('data/blank', APPDIST + 'templates/blank.dar')
-  _packDar('data/blank-figure-package', APPDIST + 'templates/blank-figure-package.dar')
   // examples
   _packDar('data/elife-32671', APPDIST + 'examples/elife-32671.dar')
   _packDar('data/kitchen-sink', APPDIST + 'examples/kitchen-sink.dar')
@@ -302,15 +311,16 @@ b.task('build:coverage:nodejs', ['build:schema', 'build:test-assets'], () => {
 
 b.task('run:coverage:browser', () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
-  fork(b, require.resolve('electron/cli.js'), '.', '--coverage', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: true })
+  fork(b, require.resolve('electron/cli.js'), ['.', '--coverage'], { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: true })
 })
 
 b.task('run:test:electron', ['test-browser'], () => {
   // Note: `await=false` is important, as otherwise bundler would await this to finish
-  fork(b, require.resolve('electron/cli.js'), '.', { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: false })
+  fork(b, require.resolve('electron/cli.js'), ['.'], { verbose: true, cwd: path.join(__dirname, 'builds', 'test'), await: false })
 })
 
 function _buildCoverageBundle (target) {
+  let input = 'index.js'
   let output = []
   if (target === 'browser') {
     output.push({
@@ -324,13 +334,14 @@ function _buildCoverageBundle (target) {
     })
   }
   if (target === 'nodejs') {
+    input = 'index.node.js'
     output.push({
       file: 'tmp/texture.instrumented.cjs.js',
       format: 'cjs'
     })
   }
   rollup(b, {
-    input: './index.js',
+    input,
     external: [
       'substance',
       'katex'
@@ -353,6 +364,13 @@ function _buildCoverageBundle (target) {
 /* HELPERS */
 
 function _buildLib (DEST, platform) {
+  const external = ['substance', 'katex', 'vfs']
+  const plugins = [
+    nodeResolve(),
+    commonjs({
+      include: 'node_modules/**'
+    })
+  ]
   let output = []
   if (platform === 'browser' || platform === 'all') {
     output.push({
@@ -367,13 +385,6 @@ function _buildLib (DEST, platform) {
       sourcemap: true
     })
   }
-  if (platform === 'nodejs' || platform === 'all') {
-    output.push({
-      file: DEST + 'texture.cjs.js',
-      format: 'cjs',
-      sourcemap: true
-    })
-  }
   if (platform === 'es' || platform === 'all') {
     output.push({
       file: DEST + 'texture.es.js',
@@ -381,17 +392,27 @@ function _buildLib (DEST, platform) {
       sourcemap: true
     })
   }
-  rollup(b, {
-    input: './index.js',
-    external: ['substance', 'katex', 'vfs'],
-    output,
-    plugins: [
-      nodeResolve(),
-      commonjs({
-        include: 'node_modules/**'
-      })
-    ]
-  })
+  // HACK: using a different entry point for nodejs build
+  if (platform !== 'nodejs') {
+    rollup(b, {
+      input: './index.js',
+      external,
+      output,
+      plugins
+    })
+  }
+  if (platform === 'nodejs' || platform === 'all') {
+    rollup(b, {
+      input: './index.node.js',
+      output: {
+        file: DEST + 'texture.cjs.js',
+        format: 'cjs',
+        sourcemap: true
+      },
+      external,
+      plugins
+    })
+  }
 }
 
 function _packDar (dataFolder, darPath) {

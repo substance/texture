@@ -1,5 +1,5 @@
 import { DefaultDOMElement, $$ } from 'substance'
-import { Managed, OverlayCanvas } from '../../kit'
+import { Managed, OverlayCanvas, FileSelect } from '../../kit'
 import EditorPanel from './EditorPanel'
 
 /**
@@ -13,7 +13,8 @@ export default class BasicArticleEditor extends EditorPanel {
   getActionHandlers () {
     return {
       acquireOverlay: this._acquireOverlay,
-      releaseOverlay: this._releaseOverlay
+      releaseOverlay: this._releaseOverlay,
+      requestFileSelect: this._openFileSelect
     }
   }
 
@@ -68,7 +69,8 @@ export default class BasicArticleEditor extends EditorPanel {
         this._renderFooterPane(),
         appState.workflowId
           ? this._renderWorkflow(appState.workflowId)
-          : null
+          : null,
+        $$(FileSelect, {}).ref('fileSelect')
       )
     )
     el.on('keydown', this._onKeydown)
@@ -180,5 +182,11 @@ export default class BasicArticleEditor extends EditorPanel {
 
   _releaseOverlay (...args) {
     this.refs.overlay.releaseOverlay(...args)
+  }
+
+  _openFileSelect (props) {
+    const fileSelect = this.refs.fileSelect
+    fileSelect.setProps(props)
+    return fileSelect.selectFiles()
   }
 }

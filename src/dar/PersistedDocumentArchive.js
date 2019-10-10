@@ -82,6 +82,41 @@ export default class PersistedDocumentArchive extends EventEmitter {
     return filePath
   }
 
+  replaceAsset (oldFileName, newFile) {
+    const asset = this.getAsset(oldFileName)
+    let [name, ext] = _getNameAndExtension(newFile.name)
+    let filePath = this._getUniqueFileName(name, ext)
+    // TODO: this is not ready for collab
+    this._manifestSession.transaction(tx => {
+      const _asset = tx.get(asset.id)
+      _asset.assign({
+        path: filePath,
+        assetType: newFile.type
+      })
+    })
+    this.buffer.addBlob(asset.id, {
+      id: asset.id,
+      path: filePath,
+      blob: newFile
+    })
+    // ATTENTION: blob urls are not supported in nodejs
+    // and I do not see that this is really necessary
+    // For sake of testing we use `PSEUDO-BLOB-URL:${filePath}`
+    // so that we can see if the rest of the system is working
+    if (platform.inBrowser) {
+      this._pendingFiles.set(filePath, {
+        blob: newFile,
+        blobUrl: URL.createObjectURL(newFile)
+      })
+    } else {
+      this._pendingFiles.set(filePath, {
+        blob: newFile,
+        blobUrl: `PSEUDO-BLOB-URL:${filePath}`
+      })
+    }
+    return filePath
+  }
+
   getAsset (fileName) {
     return this._documents['manifest'].getAssetByPath(fileName)
   }

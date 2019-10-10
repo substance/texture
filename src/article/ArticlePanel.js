@@ -47,14 +47,20 @@ export default class ArticlePanel extends Component {
     let api = new ArticleAPI(editorSession, archive, config)
     this.api = api
 
-    let context = Object.assign(this.context, createComponentContext(config), {
+    const self = this
+    let context = Object.assign({
+      // HACK: as it is not appropriate to register the ArticlePanel as 'context.editor'
+      // it is necessary to provide a getter via context, passing the actual article-editor instance
+      get editor () {
+        return self.refs.content
+      }
+    }, this.context, createComponentContext(config), {
       config,
       editorSession,
       editorState: appState,
       api,
       archive,
-      urlResolver: archive,
-      editor: this
+      urlResolver: archive
     })
     this.context = context
 

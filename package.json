@@ -1,14 +1,12 @@
 {
-  "name": "substance-texture",
-  "version": "3.0.0-preview-5",
-  "author": {
-    "name": "Substance",
-    "email": "info@substance.io"
-  },
+  "name": "@libero/texture",
   "description": "A word processor for structured content.",
-  "main": "./dist/texture.cjs.js",
-  "browser": "./dist/texture.js",
-  "jsnext:main": "index.js",
+  "version": "0.0.1",
+  "main": "./dist/texture.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "author": "libero-npm@elifesciences.org",
   "dependencies": {
     "debug": "4.1.1",
     "fs-extra": "7.0.1",
@@ -45,13 +43,15 @@
     "texture-xml-utils": "0.2.0"
   },
   "scripts": {
-    "prepack": "npm install && node make publish",
+    "prepack": "npm install && node make lib",
     "lint": "standard \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\"",
     "start": "node --require esm make dev -s -w -d data",
+    "build": "npm run lib",
+    "lib": "node --require esm make lib",
     "app": "node make run-app -w",
     "release": "node make desktop && build --project app-dist",
     "pretest": "npm run lint",
-    "test": "npm run test-nodejs",
+    "test": "npm run test-browser",
     "test-debug": "node make test-nodejs && node --inspect-brk test/runTests",
     "test-nodejs": "node make test-nodejs && node test/runTests | tap-spec",
     "test-browser": "node make test-browser -s -w",
@@ -61,25 +61,12 @@
     "cover:electron": "node make build:coverage:browser && electron builds/test --coverage | tap-spec",
     "cover:report": "nyc report --reporter=lcov --reporter=html"
   },
-  "nyc": {
-    "include": [
-      "src/**/*.js"
-    ]
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/substance/texture.git"
+    "url": "https://github.com/libero/texture.git"
   },
   "license": "MIT",
-  "files": [
-    "src",
-    "dist",
-    "index.js",
-    "*.md",
-    "package.json",
-    "*.css"
-  ],
   "publishConfig": {
-    "tag": "next"
+    "access": "public"
   }
 }

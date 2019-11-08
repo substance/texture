@@ -1,4 +1,4 @@
-import { DocumentSchema, DefaultDOMElement } from 'substance'
+import { DocumentSchema, DefaultDOMElement, substanceGlobals } from 'substance'
 import InternalArticleDocument from './InternalArticleDocument'
 
 export default class ArticleLoader {
@@ -47,10 +47,19 @@ export default class ArticleLoader {
       let validator = articleConfig.getValidator(xmlSchemaId)
       if (validator) {
         let validationResult = validator.validate(xmlDom)
-        if (!validationResult.ok) {
-          let err = new Error('Validation failed.')
-          err.detail = validationResult.errors
-          throw err
+        if (!validationResult.ok)
+        {
+          // FIXME: For now i've added a temp condig key to disable strict behaviour, but this should be fixed up properly.
+          if (substanceGlobals.STRICT_VALIDATION !== undefined && substanceGlobals.STRICT_VALIDATION === false)
+          {
+            console.warn(`Validation post transformation failed whilst loading the article, carrying on anyway...`)
+          }
+          else
+          {
+            let err = new Error('Validation failed.')
+            err.detail = validationResult.errors
+            throw err
+          }
         }
       }
     }

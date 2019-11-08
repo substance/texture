@@ -30,7 +30,8 @@ export const JATS_BIBR_TYPES_TO_INTERNAL = {
   'report': REPORT_REF,
   'software': SOFTWARE_REF,
   'thesis': THESIS_REF,
-  'webpage': WEBPAGE_REF
+  'webpage': WEBPAGE_REF,
+  'web': WEBPAGE_REF
 }
 
 export const INTERNAL_BIBR_TYPES_TO_JATS = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL).reduce((map, jatsType) => {

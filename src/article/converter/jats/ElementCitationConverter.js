@@ -34,7 +34,14 @@ export default class ElementCitationConverter {
 
 function _importElementCitation (el, node, doc, importer) {
   const type = el.attr('publication-type')
-  node.type = JATS_BIBR_TYPES_TO_INTERNAL[type]
+  node.type = JATS_BIBR_TYPES_TO_INTERNAL[type];
+
+  // FIXME: Temporary workaround to try and render unsupported citation types.
+  if (node.type === undefined)
+  {
+    console.warn(`Unsupported Citation Type ${type}, defaulting to ${JATS_BIBR_TYPES_TO_INTERNAL["journal"]}`);
+    node.type = JATS_BIBR_TYPES_TO_INTERNAL["journal"];
+  }
 
   Object.assign(node, {
     assignee: getText(el, 'collab[collab-type=assignee] > named-content'),

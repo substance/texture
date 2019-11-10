@@ -65,6 +65,7 @@ function _importElementCitation (el, node, doc, importer) {
     archiveId: getText(el, 'pub-id[pub-id-type=archive]'),
     arkId: getText(el, 'pub-id[pub-id-type=ark]'),
     isbn: getText(el, 'pub-id[pub-id-type=isbn]'),
+    issn: getText(el, 'pub-id[pub-id-type=issn]'),
     doi: getText(el, 'pub-id[pub-id-type=doi]'),
     pmid: getText(el, 'pub-id[pub-id-type=pmid]')
   })
@@ -168,6 +169,7 @@ function _exportElementCitation (node, exporter) {
   el.append(_createTextElement($$, node.arkId, 'pub-id', { 'pub-id-type': 'ark' }))
   el.append(_createTextElement($$, node.archiveId, 'pub-id', { 'pub-id-type': 'archive' }))
   el.append(_createTextElement($$, node.isbn, 'pub-id', { 'pub-id-type': 'isbn' }))
+  el.append(_createTextElement($$, node.issn, 'pub-id', { 'pub-id-type': 'issn' }))
   el.append(_createTextElement($$, node.doi, 'pub-id', { 'pub-id-type': 'doi' }))
   el.append(_createTextElement($$, node.pmid, 'pub-id', { 'pub-id-type': 'pmid' }))
   // creators

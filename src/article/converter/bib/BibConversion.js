@@ -82,6 +82,7 @@ function _convertFromCSLJSON (source, type) {
     confName: source.event,
     confLoc: source['event-place'],
     isbn: source.ISBN,
+    issn: source.ISSN,
 
     year: date.year,
     month: date.month,

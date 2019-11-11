@@ -39,5 +39,6 @@ JournalArticleRef.schema = {
   pageRange: STRING, // <page-range>
   elocationId: STRING, // <elocation-id>
   doi: STRING, // <pub-id pub-id-type="doi">
-  pmid: STRING // <pub-id pub-id-type="pmid">
+  pmid: STRING, // <pub-id pub-id-type="pmid">
+  issn: STRING // <pub-id pub-id-type="pmid">
 }

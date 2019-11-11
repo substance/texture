@@ -98,6 +98,7 @@ export default {
     config.addLabel('given-names', 'Given Names')
     config.addLabel('inventors', 'Inventors')
     config.addLabel('isbn', 'ISBN')
+    config.addLabel('issn', 'ISSN')
     config.addLabel('issue', 'Issue')
     config.addLabel('issue-title', 'Issue Title')
     config.addLabel('lpage', 'Last Page')

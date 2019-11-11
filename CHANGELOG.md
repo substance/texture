@@ -1,3 +1,14 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.0.2](https://github.com/libero/texture/compare/v2.0.1...v0.0.2) (2019-11-11)
+
+
+### Bug Fixes
+
+* support for elife reference articles. ([f00ae01](https://github.com/libero/texture/commit/f00ae012ed6cced7cc6907557c741b596af5aacc))
+
 ## Texture 3.0
 
 - Plugin framework

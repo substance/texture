@@ -19,6 +19,10 @@
     "substance": "^1.0.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "husky": "^3.0.9",
+    "standard-version": "^7.0.0",
     "colors": "1.3.3",
     "diff": "4.0.1",
     "electron": "4.0.3",
@@ -49,7 +53,7 @@
     "build": "npm run lib",
     "lib": "node --require esm make lib",
     "app": "node make run-app -w",
-    "release": "node make desktop && build --project app-dist",
+    "release": "standard-version",
     "pretest": "npm run lint",
     "test": "npm run test-browser",
     "test-debug": "node make test-nodejs && node --inspect-brk test/runTests",
@@ -60,6 +64,16 @@
     "cover:nodejs": "node make build:coverage:nodejs && node test/runTests --coverage | tap-spec nyc",
     "cover:electron": "node make build:coverage:browser && electron builds/test --coverage | tap-spec",
     "cover:report": "nyc report --reporter=lcov --reporter=html"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "repository": {
     "type": "git",

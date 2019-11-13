@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from 'substance'
 import { NodeComponent } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import { getLabel } from '../shared/nodeHelpers'
@@ -13,27 +14,34 @@ export default class ReferenceComponent extends NodeComponent {
     let html = this.context.api.renderEntity(node)
     // TODO: use the label provider
     html = html || '<i>Not available</i>'
-    if (mode === PREVIEW_MODE) {
+
+    if (mode === PREVIEW_MODE)
+    {
       // NOTE: We return PreviewComponent directly, to prevent inheriting styles from .sc-reference
       return $$(PreviewComponent, {
         id: node.id,
-        label,
         description: $$('div').html(html)
       })
-    } else if (mode === METADATA_MODE) {
+    }
+    else if (mode === METADATA_MODE)
+    {
       return $$(ReferenceMetadataComponent, { node })
-    } else {
+    }
+    else
+    {
       let el = $$('div').addClass('sc-reference')
       el.append(
-        $$('div').addClass('se-label').append(label),
-        $$('div').addClass('se-text').html(html)
+        $$('div').addClass('se-label').append('\u2022'),
+        $$('div').addClass('se-text').html(html),
+        $$(FontAwesomeIcon, { icon: 'fa-edit' }).addClass('se-icon'),
+        $$(FontAwesomeIcon, { icon: 'fa-trash' }).addClass('se-icon')
       ).attr('data-id', node.id)
       return el
     }
   }
 
   _getReferenceLabel () {
-    return getLabel(this.props.node) || '?'
+    return getLabel(this.props.node) || '?';
   }
 }
 

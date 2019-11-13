@@ -21,10 +21,15 @@ export default class PreviewComponent extends Component {
       )
     }
 
+    if (this.props.label)
+    {
+      el.append(
+        $$('div').addClass('se-label').append(
+          this.props.label
+        )
+      );
+    }
     el.append(
-      $$('div').addClass('se-label').append(
-        this.props.label
-      ),
       // NOTE: description is passed in as HTML string
       $$('div').addClass('se-description').append(
         this.props.description

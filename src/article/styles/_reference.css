@@ -10,8 +10,28 @@
 }
 
 .sc-reference > .se-label {
-  min-width: var(--t-default-spacing);
+  flex-basis: var(--t-default-spacing);
+  flex-grow: 0;
+  flex-shrink: 0;
   margin: 0 var(--t-default-spacing);
   font-weight: var(--t-bold-font-weight);
   text-align: center;
+}
+
+.sc-reference > .se-text {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.sc-reference > .se-icon {
+  flex-basis: var(--t-default-spacing);
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 4px 0 0 var(--t-half-spacing);
+  font-weight: var(--t-bold-font-weight);
+  text-align: center;
+}
+
+.sc-reference > .fa-edit {
+  padding-top: 1px;
 }

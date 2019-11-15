@@ -1,3 +1,5 @@
+import { PATENT_REF } from '../ArticleConstants';
+
 /**
  * Gets the label for the specified node.
  *
@@ -66,6 +68,94 @@ export function findParentByType (node, type)
       return parent;
     }
     parent = parent.getParent();
+  }
+}
+
+/**
+ * Safely get an array of people from the specified citation.
+ *
+ * This function allows you to get an array of contributors for the specified citation. It came about from needing a
+ * consistent single method call to get a list of people regardless of the citation type, and in all cases to return
+ * the desired list or an empty array.
+ *
+ * @export
+ * @param   {*}       the citation to extract the people list from.
+ * @returns {Array}   an array of people.
+ */
+export function getPeopleFromCitation(citation)
+{
+  let people = [];
+  switch(citation.type)
+  {
+    case PATENT_REF:
+      people = citation.inventors || [];
+      break;
+
+    default:
+      people = citation.authors || [];
+  }
+  return people;
+}
+
+/**
+ * Sorts citations by their citation order in the manuscript.
+ *
+ * Sorts citations by there citation order in the document.
+ * Note: This function is intented to be used in [].sort().
+ *
+ * @export
+ * @param   {*} a      the first citation to compare.
+ * @param   {*} b      the second citation to compare.
+ * @returns {number}   0 if citations match, 1 if A should come before B, and -1 if B should come before A.
+ */
+export function sortCitationsByPosition(a, b)
+{
+  return getPos(a) - getPos(b);
+}
+
+/**
+ * Sorts citations by Author(s) name, then publication year
+ *
+ * Sorts citations by author name, falling back to year if names all match.
+ * Note: This function is intented to be used in [].sort().
+ *
+ * @export
+ * @param   {*} a      the first citation to compare.
+ * @param   {*} b      the second citation to compare.
+ * @returns {number}   0 if citations match, 1 if A should come before B, and -1 if B should come before A.
+ */
+export function sortCitationsByNameYear(a, b)
+{
+  let authorStringA = getPeopleFromCitation(a).reduce((acc, authorRef) => {
+    return acc += a.document.get(authorRef).name;
+  }, "");
+
+  let authorStringB = getPeopleFromCitation(b).reduce((acc, authorRef) => {
+    return acc += b.document.get(authorRef).name;
+  }, "");
+
+  // 1st: Try and sort by Author name.
+  if (authorStringA < authorStringB)
+  {
+    return -1;
+  }
+  else if (authorStringA > authorStringB)
+  {
+    return 1;
+  }
+  // 2nd: If no match, then try and sort by year.
+  else if (a.year < b.year)
+  {
+    return -1;
+  }
+  else if (a.year > b.year)
+  {
+    return 1;
+  }
+  // 3rd: Still no match, then sort based on their order in the XML.
+  else
+  {
+    return 0;
   }
 }
 

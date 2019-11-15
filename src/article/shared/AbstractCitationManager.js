@@ -1,4 +1,4 @@
-import { getPos } from './nodeHelpers'
+import { sortCitationsByNameYear } from './nodeHelpers'
 
 export default class AbstractCitationManager {
   constructor (editorSession, refType, targetTypes, labelGenerator) {
@@ -23,9 +23,7 @@ export default class AbstractCitationManager {
   }
 
   getSortedCitables () {
-    return this.getCitables().sort((a, b) => {
-      return getPos(a) - getPos(b)
-    })
+    return this.getCitables().sort(sortCitationsByNameYear);
   }
 
   // TODO: how could this be generalized so that it is less dependent on the internal model?

@@ -1,10 +1,10 @@
 import { documentHelpers } from 'substance'
 import AbstractCitationManager from './AbstractCitationManager'
-import NumberedLabelGenerator from './NumberedLabelGenerator'
+import { sortCitationsByNameYear } from './nodeHelpers'
 
 export default class ReferenceManager extends AbstractCitationManager {
   constructor (editorSession, config) {
-    super(editorSession, 'bibr', ['reference'], new NumberedLabelGenerator(config))
+    super(editorSession, 'bibr', ['reference'], config)
     // compute initial labels
     this._updateLabels('initial')
   }
@@ -20,6 +20,10 @@ export default class ReferenceManager extends AbstractCitationManager {
 
   getCitables () {
     return documentHelpers.getNodesForIds(this._getDocument(), this._getRefIds())
+  }
+
+  getSortedCitables () {
+    return this.getCitables().sort(sortCitationsByNameYear);
   }
 
   _getRefIds () {

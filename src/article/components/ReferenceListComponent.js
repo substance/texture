@@ -1,6 +1,6 @@
 import { CustomSurface } from 'substance'
 import { renderNode, NodeComponent } from '../../kit'
-import { getPos } from '../shared/nodeHelpers'
+import { sortCitationsByNameYear } from '../shared/nodeHelpers'
 
 export default class ReferenceListComponent extends CustomSurface {
   didMount () {
@@ -55,9 +55,7 @@ export default class ReferenceListComponent extends CustomSurface {
 
   _getBibliography () {
     let references = this.props.model.getItems()
-    references.sort((a, b) => {
-      return getPos(a) - getPos(b)
-    })
+    references.sort(sortCitationsByNameYear);
     return references
   }
 }

@@ -33,7 +33,8 @@ export default class ElementCitationConverter {
 }
 
 function _importElementCitation (el, node, doc, importer) {
-  const type = el.attr('publication-type')
+
+  const type = el.attr('publication-type');
   node.type = JATS_BIBR_TYPES_TO_INTERNAL[type];
 
   // FIXME: Temporary workaround to try and render unsupported citation types.
@@ -130,7 +131,8 @@ function _importRefContrib (doc, el) {
     // prefix: getText(el, 'prefix'),
     // suffix: getText(el, 'suffix'),
   } else if (el.tagName === 'collab') {
-    refContrib.name = getText(el, 'named-content[content-type=name]')
+    //refContrib.name = getText(el, 'named-content[content-type=name]')
+    refContrib.name = el.textContent;
   } else {
     console.warn(`${el.tagName} not supported inside <person-group>`)
     return null

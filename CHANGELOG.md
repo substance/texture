@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/libero/texture/compare/v0.0.2...v0.0.3) (2019-11-15)
+
+
+### Bug Fixes
+
+* display references as a bulleted list ([bc7dc48](https://github.com/libero/texture/commit/bc7dc4844e3868a30597b723aedc02b6241bbdeb))
+* references should be ordered alphabetically ([600ee34](https://github.com/libero/texture/commit/600ee341bb69879449d7c660b9ce6939730ca69d))
+
 ### [0.0.2](https://github.com/libero/texture/compare/v2.0.1...v0.0.2) (2019-11-11)
 
 

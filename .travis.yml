@@ -1,21 +1,17 @@
 sudo: false
-
 language: node_js
 node_js:
-  - "lts/*"
-
+- lts/*
 install:
-  - npm install
-
+- npm install
 script:
-  - npm run build
-
+- npm run build
 deploy:
   skip_cleanup: true
   provider: npm
   email: libero-npm@elifesciences.org
   api_key:
-    secure: E7ZBx1yRrzwYvhrAeKun8a0CRCnNBoLLizA0M7odM31UkWGtakEu0PZZ+POdTjOuVeFejhk9q9pIRmTb8BkDgLZv+OC9hKSNQV6O14VNukCdcx2l8iSkfUrX9Ob9KYcFxdKjeGy+WswXr7kUihHQeYYF2I+tURRqDctCcpH3kpsUdt8+xnDxIDx2iB9tVGk0nmYAGr96zlTsf5M+0b65Z9lDknioWDm8+TkG1RKUWGvDpZ4lZgEGpajhAvxs5lLI2VJnR/SolhYU6imTU63B72vy0EsPb4PzhHi/2oHYuNft1LW0wRpioUB5MyD6BBI83SiLV7W1pyZ+7JW1sPUFa3sFMsHJJVxIq83p85l7ADn7N+nix5s1Ynhoho6i4lt3l+IjKKqbx9CU7kw1SdZgJVbFepOpMuw7mOxud5jhnXhY5W7R6LVjj/frKcekNgRq8hOe2d1Nk3drCOqaM1MVgPlxHoplhn0MiXhphzLWJQ8nGRt3jKZAAKynLbAJwqmYKxBt+QAAMDSo8UpeJaPauKAz9XaGHo9avF3pYP4nbHuCL1+AYt6ZHRvS4Qg9hrFVdDiDTRh3+Xzn5utu5pw5H0vWN6NjgeAMIWfGv1RDw23/xwuZOcMlxsr6ROtPWWZhyUyPBVQG8ViZ2nqePvz9e3cmINMR1zZkDrwtLsvzHq0=
+    secure: 0vWlgdUIAn8Yore/5GDnDS/8lapfFMj0ToZ/7vma54wbDWvqyPW1dkJvDE/5QZMUiyq1nPbcgZ3vvcDrupc0ZQGITWTxpEpo+Pv+udGKwLfceLF2+uKH3A4LX6HP16HD6EhXd0HKMMq9HEeAoNMZE+DGFzcObFgIZSVJsqr7XVJ0duMaSwW+tJ1s1TXYv/mvQsIOVgFzbOZynCl5+9fqwxQGWSlzNIR9HbYF5mI710njOitU3++Kn2Pdqf6i5LTZvqOK+Jcn4TrBrFBPHxmsqv59oE6Ir/klE7dRpeYDZ6XATdaCw5n7PxcRod8Nm6Wex9qWB0vwPoZqOfyGB4UxBeXHiM90QrzGd/7l51X71Jop2zZImJmBYLhjPbkL0nC2WJkmp45DH3z0ot3Gq5paaJBUrzW1MaN183oy1XjjPhiZ6NsH+8/jsZjkmOh5aws1oCEX0D9qp1Na1uVwy0Qpms9smT5sgc2hD8sEYvI4MGlYpBpMkSdIcv1G7b37QnNAahmv6m6RrikqAge5Zfp5eXkLsxFGCj05jpSASbg3+06EUC9lU0OK0rpbHIMTpn3dHQZUlUU3vn9hv4Jbfq+mfBFwWbAC+VW6H5M5gi3+gv7RivPTadkVhuycQ92ZO+QwgwVuNxPFjX0w5BbMdtIsR/EEJqINzusvdX3LJnV+Gf0=
   on:
     tags: true
     branch: master

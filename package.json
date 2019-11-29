@@ -1,7 +1,7 @@
 {
   "name": "@libero/texture",
   "description": "A word processor for structured content.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "./dist/texture.js",
   "files": [
     "dist/**/*"

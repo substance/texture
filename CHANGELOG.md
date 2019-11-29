@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/libero/texture/compare/v0.0.5...v0.0.6) (2019-11-29)
+
+
+### Bug Fixes
+
+* update npm token ([bb6fdd6](https://github.com/libero/texture/commit/bb6fdd6b684ff04a50003268a5af342c8ef084ea))
+
 ### [0.0.5](https://github.com/libero/texture/compare/v0.0.4...v0.0.5) (2019-11-29)
 
 

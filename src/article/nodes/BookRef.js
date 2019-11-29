@@ -20,21 +20,33 @@ import { RICH_TEXT_ANNOS } from './modelConstants'
 */
 export default class BookRef extends Reference {}
 BookRef.schema = {
+  // Texture internal
   type: 'book-ref',
+
+  // eLife required fields
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
-  editors: CHILDREN('ref-contrib'), // <person-group person-group-type="editor">
-  translators: CHILDREN('ref-contrib'), // <person-group person-group-type="translator">
-  title: TEXT(...RICH_TEXT_ANNOS), // <source>
-  volume: STRING, // <volume>
-  edition: STRING, // <editor>
-  publisherLoc: STRING, // <publisher-loc>
-  publisherName: STRING, // <publisher-name>
   year: STRING, // <year>
+  title: TEXT(...RICH_TEXT_ANNOS), // <source>
+  publisherName: STRING, // <publisher-name>
+
+  // eLife optional fields
+  chapterTitle: TEXT(...RICH_TEXT_ANNOS), // <chapter-title>
+  editors: CHILDREN('ref-contrib'), // <person-group person-group-type="editor">
+  edition: STRING, // <edition>
+  isbn: STRING, // <pub-id pub-id-type="isbn">
+  publisherLoc: STRING, // <publisher-loc>
+  fpage: STRING, // <fpage>
+  lpage: STRING, // <lpage>
+  elocationId: STRING, // <elocation-id>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  comment: STRING, // <comment>
+
+  // eLife unused fields
+  translators: CHILDREN('ref-contrib'), // <person-group person-group-type="translator">
+  volume: STRING, // <volume>
   month: STRING, // <month>
   day: STRING, // <day>
   pageCount: STRING, // <page-count>
   series: STRING, // <series>
-  doi: STRING, // <pub-id pub-id-type="doi">
-  isbn: STRING, // <pub-id pub-id-type="isbn">
   pmid: STRING // <pub-id pub-id-type="pmid">
 }

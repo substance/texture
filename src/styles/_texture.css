@@ -126,7 +126,8 @@
 }
 
 .sc-texture a {
-  color: var(--t-text-color);
+  color: var(--t-action-color);
+  text-decoration: none;
 }
 
 /* TODO: move these in specific files for sake of consistency */

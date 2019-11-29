@@ -1,151 +1,215 @@
 import { DefaultDOMElement } from 'substance'
 
-function journalArticleRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
+/**
+ * Renders the specified 'journal' type citation.
+ *
+ * Generates a document fragment that renders a 'journal' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function journalArticleRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-
-  // We render an annotated article title here:
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
-      '.'
-    )
-  }
-
-  if (entity.editors.length > 0) {
-    fragments = fragments.concat(
-      ' ',
-      _renderAuthors($$, entity.editors, entityDb),
-      '.'
-    )
-  }
-  if (entity.containerTitle) {
-    fragments.push(
-      ' ',
-      $$('i').append(entity.containerTitle),
-      '.'
-    )
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
   }
 
-  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
-  if (date) {
-    fragments.push(' ', date, ';')
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
   }
 
-  if (entity.volume) {
-    fragments.push(entity.volume)
-  }
-  if (entity.issue) {
-    fragments.push('(', entity.issue, ')')
-  }
-
-  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
-  if (contentLocation) {
-    fragments.push(':', contentLocation, '.')
-  } else {
-    fragments.push('.')
+  // <article-title>
+  if (entity.title)
+  {
+    fragments.push(' ', ...exporter.annotatedText([entity.id, 'title'], entityDb, $$), '.');
   }
 
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
+  // <source>
+  if (entity.containerTitle)
+  {
+    fragments.push(' ', $$('i').append(entity.containerTitle), '.');
   }
 
-  if (entity.pmid) {
-    fragments.push(' PMID ', entity.pmid)
+  // <volume>
+  if (entity.volume)
+  {
+    fragments.push(' ', _renderVolume($$, entity.volume));
   }
-  return fragments
+
+  // <elocation-id>
+  if (entity.elocationId)
+  {
+    if (entity.volume)
+    {
+      fragments.push(`:${entity.elocationId}.`);
+    }
+    else
+    {
+      fragments.push(` ${entity.elocationId}.`);
+    }
+  }
+  // <fpage>
+  else if (entity.fpage)
+  {
+    if (entity.volume)
+    {
+      fragments.push(`:${entity.fpage}`);
+    }
+    else
+    {
+      fragments.push(` ${entity.fpage}`);
+    }
+
+    if (entity.lpage)
+    {
+      fragments.push(`-${entity.lpage}`);
+    }
+
+    fragments.push('.');
+  }
+
+  // <comment>
+  if (!entity.volume && !entity.elocationId && !entity.fpage && !entity.lpage && entity.comment)
+  {
+    fragments.push(` ${entity.comment}.`);
+  }
+
+  // <pub-id pub-id-type="doi">
+  if (entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+
+  // <pub-id pub-id-type="pmid">
+  if (entity.pmid)
+  {
+    fragments.push(', pmid: ', _renderPMID($$, entity.pmid));
+  }
+
+  // <pub-id pub-id-type="pmcid">
+  if (entity.pmcid)
+  {
+    fragments.push(', pmcid: ', _renderPMCID($$, entity.pmcid));
+  }
+
+  return fragments;
 }
 
-function bookRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
+/**
+ * Renders the specified 'book' type citation.
+ *
+ * Generates a document fragment that renders a 'book' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function bookRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
+  let isChapterType = (entity.chapterTitle && entity.chapterTitle.length > 0);
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  } else if (entity.editors.length > 0) {
-    let editorLabel = entity.editors.length > 1 ? 'eds' : 'ed'
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.editors, entityDb),
-      ', ',
-      editorLabel,
-      '.'
-    )
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
   }
-  if (entity.translators.length) {
-    fragments = fragments.concat(
-      ' (',
-      _renderAuthors($$, entity.translators, entityDb),
-      ', trans).'
-    )
+
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
   }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      $$('i').append(entity.title),
-      '.'
-    )
+
+  // <chapter-title> or <source>
+  if (isChapterType)
+  {
+    fragments.push(` ${entity.chapterTitle}.`);
   }
-  if (entity.volume) {
-    if (/^\d+$/.test(entity.volume)) {
-      fragments.push(' Vol ', entity.volume, '.')
-    } else {
-      fragments.push(' ', entity.volume, '.')
+  else if (entity.title)
+  {
+    fragments.push(' ', $$('i').append(entity.title), '.');
+  }
+
+  // <person-group person-group-type="editor">
+  if (entity.editors.length > 0)
+  {
+    if (isChapterType)
+    {
+      fragments.push(' In:');
     }
-  }
-  if (entity.edition) {
-    fragments.push(' ', entity.edition, '.')
-  }
-  if (entity.editors.length > 0 && entity.authors.length > 0) {
-    let editorLabel = entity.editors.length > 1 ? 'eds' : 'ed'
-    fragments = fragments.concat(
-      ' (',
-      _renderAuthors($$, entity.editors, entityDb),
-      ', ',
-      editorLabel,
-      ').'
-    )
+
+    let editorLabel = entity.editors.length > 1 ? 'Eds' : 'Ed';
+    fragments = fragments.concat(' ', _renderAuthors($$, entity.editors, entityDb), ` (${editorLabel}).`);
   }
 
-  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
-
-  if (entity.series) {
-    fragments.push(' (', entity.series, ')')
+  // <source>
+  if (isChapterType)
+  {
+    fragments.push(' ', $$('i').append(entity.title), '.');
   }
 
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, 'short'))
+  // <edition>
+  if (entity.edition)
+  {
+    fragments.push(` ${entity.edition}.`);
+  }
+
+  // <publisher-name> <publisher-loc>
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName));
+
+  // <elocation-id>
+  if (isChapterType && entity.elocationId)
+  {
+    fragments.push(` ${entity.elocationId}.`);
+  }
+
+  // <fpage>
+  if (isChapterType && entity.fpage)
+  {
+    fragments.push(` p. ${entity.fpage}`);
+
+    if (entity.lpage)
+    {
+      fragments.push(`-${entity.lpage}`);
     }
-  }
-  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
-  if (contentLocation) {
-    fragments.push(':', contentLocation, '.')
-  } else {
-    fragments.push('.')
+    fragments.push('.');
   }
 
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
+  // <comment>
+  if (!entity.elocationId && !entity.fpage && !entity.lpage && entity.comment)
+  {
+    fragments.push(` ${entity.comment}.`);
   }
-  return fragments
+
+  // <pub-id pub-id-type="isbn">
+  if (entity.isbn)
+  {
+    fragments.push(` isbn: ${entity.isbn}`);
+  }
+
+  // <pub-id pub-id-type="doi">
+  if (isChapterType && entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+
+  return fragments;
 }
 
 function chapterRenderer ($$, entityId, entityDb, exporter) {
@@ -232,37 +296,70 @@ function chapterRenderer ($$, entityId, entityDb, exporter) {
   return fragments
 }
 
-function patentRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
+/**
+ * Renders the specified 'patent' type citation.
+ *
+ * Generates a document fragment that renders a 'patent' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function patentRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
 
-  if (entity.inventors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.inventors, entityDb),
-      '.'
-    )
-  }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
-      '. '
-    )
+  // <person-group person-group-type="author">
+  if (entity.inventors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.inventors, entityDb), '.');
   }
 
-  if (entity.assignee) {
-    fragments.push(' ', entity.assignee, ',')
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
   }
-  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
-  if (date) {
-    fragments.push(' ', date, ';')
+
+  // <article-title>
+  if (entity.title)
+  {
+    fragments.push(' ', ...exporter.annotatedText([entity.id, 'title'], entityDb, $$), '.');
   }
-  if (entity.patentNumber) {
-    fragments.push(' ', entity.patentNumber)
+
+  // <source>
+  if (entity.containerTitle)
+  {
+    fragments.push(' ', $$('i').append(entity.containerTitle), '.');
   }
-  if (entity.patentCountry) {
-    fragments.push(' (', entity.patentCountry, ').')
+
+  // <patent>
+  if (entity.patentNumber)
+  {
+    fragments.push(` pat: ${entity.patentNumber}`);
+
+    if (!entity.patentCountry)
+    {
+      fragments.push('.');
+    }
   }
+
+  // <patent country="United States">
+  if (entity.patentCountry)
+  {
+    fragments.push(` (${entity.patentCountry}).`);
+  }
+
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
   return fragments
 }
 
@@ -322,53 +419,94 @@ function articleRenderer ($$, entityId, entityDb, exporter) {
   return fragments
 }
 
-function dataPublicationRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
+/**
+ * Renders the specified 'data' type citation.
+ *
+ * Generates a document fragment that renders a 'data' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function dataPublicationRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
   }
-  if (entity.title) {
+
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
+  }
+
+  // <data-title>
+  if (entity.title)
+  {
     fragments.push(
       ' ',
       ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
-      '. '
-    )
+      '.'
+    );
   }
 
-  if (entity.containerTitle) {
+  // <source>
+  if (entity.containerTitle)
+  {
     fragments.push(
       ' ',
       $$('i').append(entity.containerTitle),
       '.'
-    )
+    );
   }
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, 'short'))
+
+  // One of <pub-id pub-id-type="doi">,
+  //        <pub-id pub-id-type="accession">,
+  //        <pub-id pub-id-type="archive">,
+  //        <pub-id pub-id-type="ark">
+  if (entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+  else if (entity.accessionId)
+  {
+    fragments.push(' identifier: ', entity.accessionId);
+    if (entity.href)
+    {
+      fragments.push('. url: ', _renderURI($$, entity.href));
     }
-    fragments.push('.')
   }
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
+  else if (entity.archiveId)
+  {
+    fragments.push(' identifier: ', entity.archiveId);
+    if (entity.href)
+    {
+      fragments.push('. url: ', _renderURI($$, entity.href));
+    }
   }
-  if (entity.arkId) {
-    fragments.push(' ', entity.arkId)
+  else if (entity.arkId)
+  {
+    fragments.push(' identifier: ', entity.arkId);
+    if (entity.href)
+    {
+      fragments.push('. url: ', _renderURI($$, entity.href));
+    }
   }
-  if (entity.archiveId) {
-    fragments.push(' ', entity.archiveId)
+
+  // <element-citation[specific-use]>
+  if (entity.specificUse && entity.specificUse !== 'generated')
+  {
+    fragments.push(' Previously published');
   }
-  if (entity.accessionId) {
-    fragments.push(' ', entity.accessionId)
-  }
+
   return fragments
 }
 
@@ -481,65 +619,443 @@ function newspaperArticleRenderer ($$, entityId, entityDb, exporter) {
   return fragments
 }
 
-function reportRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-  if (entity.authors.length > 0) {
+/**
+ * Renders the specified 'report' type citation.
+ *
+ * Generates a document fragment that renders a 'report' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function reportRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
+
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
     fragments = fragments.concat(
       _renderAuthors($$, entity.authors, entityDb),
       '. '
-    )
+    );
   }
 
-  if (entity.sponsors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.sponsors, entityDb),
-      ', sponsors. '
-    )
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
   }
 
-  if (entity.title) {
+  // <source>
+  if (entity.title)
+  {
     fragments.push(
+      ' ',
       $$('i').append(entity.title),
       '.'
     )
   }
 
+  // <volume>
+  if (entity.volume)
+  {
+    fragments.push(' ', _renderVolume($$, entity.volume), '.');
+  }
+
+  // <publisher-name>
   fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
 
-  if (entity.series) {
-    fragments.push(' (', entity.series, ')')
+  // <pub-id pub-id-type="isbn">
+  if (entity.isbn)
+  {
+    fragments.push(` isbn: ${entity.isbn}`);
   }
 
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, 'short'))
+  // <pub-id pub-id-type="doi">
+  if (entity.doi)
+  {
+    if (entity.isbn)
+    {
+      fragments.push(',');
     }
-    fragments.push('.')
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
   }
 
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    if (entity.isbn || entity.doi)
+    {
+      fragments.push(',');
+    }
+    fragments.push(' url: ', _renderURI($$, entity.uri));
   }
 
   return fragments
 }
 
-function conferencePaperRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
+/**
+ * Renders the specified 'conference' type citation.
+ *
+ * Generates a document fragment that renders a 'conference' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function conferencePaperRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
 
-  if (entity.authors.length > 0) {
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
+  }
+
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
+  }
+
+  // <article-title>
+  if (entity.title)
+  {
+    fragments.push(
+      ' ',
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
+      '.'
+    )
+  }
+
+  // <conf-name>
+  if (entity.confName)
+  {
+    fragments.push(` ${entity.confName}.`);
+  }
+
+  // <conf-loc>
+  if (entity.confLoc)
+  {
+    fragments.push(` ${entity.confLoc}.`);
+  }
+
+  // <conf-date>
+  if (entity.confDate)
+  {
+    fragments.push(` ${entity.confDate}.`);
+  }
+
+  // <volume>
+  if (entity.volume)
+  {
+    fragments.push(' ', _renderVolume($$, entity.volume));
+  }
+
+  // <elocation-id>
+  if (entity.elocationId)
+  {
+    if (entity.volume)
+    {
+      fragments.push(`:${entity.elocationId}.`);
+    }
+    else
+    {
+      fragments.push(` ${entity.elocationId}.`);
+    }
+  }
+  // <fpage>
+  else if (entity.fpage)
+  {
+    if (entity.volume)
+    {
+      fragments.push(`:${entity.fpage}`);
+    }
+    else
+    {
+      fragments.push(` ${entity.fpage}`);
+    }
+
+    if (entity.lpage)
+    {
+      fragments.push('-', entity.lpage);
+    }
+    fragments.push('.');
+  }
+
+  // <pub-id pub-id-type="doi">
+  if (entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
+  return fragments;
+}
+
+/**
+ * Renders the specified 'software' type citation.
+ *
+ * Generates a document fragment that renders a 'software' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function softwareRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
+
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
+  }
+
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
+  }
+
+  // <data-title>
+  if (entity.title)
+  {
+    fragments.push(
+      ' ',
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
+      '.'
+    );
+  }
+
+  // <source>
+  if (entity.containerTitle)
+  {
+    fragments.push(
+      ' ',
+      $$('i').append(entity.containerTitle),
+      '.'
+    )
+  }
+
+  // <version>
+  if (entity.version)
+  {
+    fragments.push(` version: ${entity.version}.`);
+  }
+
+  // <publisher-name>, <publisher-loc>
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  // <pub-id pub-id-type="doi">
+  if (entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
+  return fragments
+}
+
+/**
+ * Renders the specified 'thesis' type citation.
+ *
+ * Generates a document fragment that renders a 'thesis' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function thesisRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
+
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
+  }
+
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
+  }
+
+  // <article-title>
+  if (entity.title)
+  {
+    fragments.push(
+      ' ',
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
+      '.'
+    )
+  }
+
+  // <publisher-name>, <publisher-loc>
+  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
+
+  // <pub-id pub-id-type="doi">
+  if (entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
+  return fragments
+}
+
+/**
+ * Renders the specified 'webpage' type citation.
+ *
+ * Generates a document fragment that renders a 'webpage' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function webpageRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
+
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
+  }
+
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
+  }
+
+  // <article-title>
+  if (entity.title)
+  {
+    fragments.push(
+      ' ',
+      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
+      '.'
+    )
+  }
+
+  // <source>
+  if (entity.containerTitle)
+  {
+    fragments.push(
+      ' ',
+      $$('i').append(entity.containerTitle),
+      '.'
+    )
+  }
+
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
+  // <date-in-citation iso-8601-date="1995-09-10"></date-in-citation>
+  if (entity.accessedDate)
+  {
+    fragments.push(`. [Accessed date: ${entity.accessedDate}]`);
+  }
+
+  return fragments
+}
+
+/**
+ * Renders the specified 'periodical' type citation.
+ *
+ * Generates a document fragment that renders a 'periodical' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function periodicalRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
+
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
     fragments = fragments.concat(
+      ' ',
       _renderAuthors($$, entity.authors, entityDb),
       '.'
     )
   }
-  if (entity.title) {
+
+  // <string-date>
+  if (entity.stringDate)
+  {
+    let stringDate = entityDb.get(entity.stringDate);
+    if (stringDate.month)
+    {
+      fragments.push(` ${stringDate.month}`);
+    }
+
+    if (stringDate.day)
+    {
+      fragments.push(` ${stringDate.day}`);
+    }
+
+    if (stringDate.year)
+    {
+      if (stringDate.month || stringDate.day)
+      {
+        fragments.push(',');
+      }
+      fragments.push(` ${stringDate.year}.`);
+    }
+  }
+
+  // <article-title>
+  if (entity.title)
+  {
     fragments.push(
       ' ',
       ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
@@ -547,152 +1063,108 @@ function conferencePaperRenderer ($$, entityId, entityDb, exporter) {
     )
   }
 
-  if (entity.containerTitle) {
-    fragments.push(' ', $$('i').append(entity.containerTitle), '.')
+  // <source>
+  if (entity.containerTitle)
+  {
+    fragments.push(' ', $$('i').append(entity.containerTitle), '.');
   }
 
-  if (entity.confName && entity.confLoc) {
-    fragments.push(' ', entity.confName, '; ', entity.confLoc, '.')
-  } else if (entity.confName) {
-    fragments.push(' ', entity.confName, '.')
-  } else if (entity.confLoc) {
-    fragments.push(' ', entity.confLoc, '.')
+  // <volume>
+  if (entity.volume)
+  {
+    fragments.push(' ', _renderVolume($$, entity.volume));
   }
 
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, 'short'))
+  // <fpage>-<lpage>
+  if (entity.fpage)
+  {
+    if (entity.volume)
+    {
+      fragments.push(':');
     }
-  }
-
-  let contentLocation = _renderLocation($$, entity.fpage, entity.lpage, entity.pageRange, entity.elocationId)
-  if (contentLocation) {
-    fragments.push(', ', contentLocation, '.')
-  } else {
-    fragments.push('.')
-  }
-
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
-  }
-  return fragments
-}
-
-function softwareRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      ' ',
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
-      '.'
-    )
-  }
-  if (entity.version) {
-    fragments.push(' Version ', entity.version)
-  }
-  fragments.push('.')
-
-  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
-
-  let date = _renderDate($$, entity.year, entity.month, entity.day, 'short')
-  if (date) {
-    fragments.push(' ', date, ';')
-  }
-
-  if (entity.doi) {
-    fragments.push(
-      ' ',
-      _renderDOI($$, entity.doi)
-    )
-  }
-
-  return fragments
-}
-
-function thesisRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
-
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
-      '. '
-    )
-  }
-
-  fragments.push(_renderPublisherPlace($$, entity.publisherLoc, entity.publisherName))
-
-  if (entity.year) {
-    fragments.push(' ', entity.year)
-    if (entity.month) {
-      fragments.push(' ', _renderMonth(entity.month, 'short'))
+    else
+    {
+      fragments.push(' ');
     }
-    fragments.push('.')
+
+    fragments.push(entity.fpage);
+
+    if (entity.lpage)
+    {
+      fragments.push('-', entity.lpage);
+    }
+    fragments.push('.');
   }
 
-  return fragments
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
+  return fragments;
 }
 
-function webpageRenderer ($$, entityId, entityDb, exporter) {
-  let entity = entityDb.get(entityId)
-  let fragments = []
+/**
+ * Renders the specified 'preprint' type citation.
+ *
+ * Generates a document fragment that renders a 'preprint' type citation.
+ *
+ * @param {*}      $$ - DOM
+ * @param {string} entityId - The ID of entity to render
+ * @param {object} entityDb - Handle to a collection of entities
+ * @param {*}      exporter - Handle to an exporter for generating formatted types.
+ *
+ * @returns A document fragment.
+ */
+function preprintRenderer ($$, entityId, entityDb, exporter)
+{
+  let entity = entityDb.get(entityId);
+  let fragments = [];
 
-  if (entity.authors.length > 0) {
-    fragments = fragments.concat(
-      _renderAuthors($$, entity.authors, entityDb),
-      '.'
-    )
-  }
-  if (entity.title) {
-    fragments.push(
-      ' ',
-      ...exporter.annotatedText([entity.id, 'title'], entityDb, $$),
-      '. '
-    )
-  }
-
-  if (entity.publisherLoc) {
-    fragments.push(' ', entity.publisherLoc)
-  }
-
-  if (entity.uri) {
-    fragments.push(
-      ' ',
-      $$('a').attr({
-        href: entity.uri,
-        target: '_blank'
-      }).append(
-        entity.uri
-      )
-    )
+  // <person-group person-group-type="author">
+  if (entity.authors.length > 0)
+  {
+    fragments = fragments.concat(_renderAuthors($$, entity.authors, entityDb), '.');
   }
 
-  if (entity.year) {
-    let dateFormatted = _renderDate($$, entity.year, entity.month, entity.day, 'long')
-    fragments.push('. Accessed ', dateFormatted, '.')
+  // <year>
+  if (entity.year)
+  {
+    fragments.push(` ${entity.year}.`);
   }
 
-  return fragments
+  // <article-title>
+  if (entity.title)
+  {
+    fragments.push(' ', ...exporter.annotatedText([entity.id, 'title'], entityDb, $$), '.');
+  }
+
+  // <source>
+  if (entity.containerTitle)
+  {
+    fragments.push(' ', $$('i').append(entity.containerTitle), '.');
+  }
+
+  // <elocation-id>
+  if (entity.elocationId)
+  {
+    fragments.push(` ${entity.elocationId}.`);
+  }
+
+  // <pub-id pub-id-type="doi">
+  if (entity.doi)
+  {
+    fragments.push(' doi: ', _renderDOI($$, entity.doi));
+  }
+
+  // <ext-link ext-link-type="uri">
+  if (entity.uri)
+  {
+    fragments.push(' url: ', _renderURI($$, entity.uri));
+  }
+
+  return fragments;
 }
 
 function entityRenderer ($$, entityId, entityDb, options = {}) {
@@ -720,6 +1192,8 @@ export default {
   'software-ref': _delegate(softwareRenderer),
   'thesis-ref': _delegate(thesisRenderer),
   'webpage-ref': _delegate(webpageRenderer),
+  'periodical-ref': _delegate(periodicalRenderer),
+  'preprint-ref': _delegate(preprintRenderer),
   'keyword': _delegate(entityRenderer),
   'ref-contrib': _delegate(entityRenderer),
   'patent-ref': _delegate(patentRenderer),
@@ -734,7 +1208,7 @@ function _renderAuthors ($$, authors, entityDb) {
   let fragments = []
   authors.forEach((refContribId, i) => {
     fragments = fragments.concat(
-      entityRenderer($$, refContribId, entityDb, { short: true })
+      entityRenderer($$, refContribId, entityDb, { short: false })
     )
     if (i < authors.length - 1) {
       fragments.push(', ')
@@ -769,6 +1243,10 @@ function _renderMonth (month, format) {
   }
 }
 
+function _renderVolume ($$, volume) {
+  return $$('b').append(volume);
+}
+
 function _renderDOI ($$, doi) {
   return $$('a').attr({
     href: `https://doi.org/${doi}`,
@@ -777,6 +1255,42 @@ function _renderDOI ($$, doi) {
     'https://doi.org/',
     doi
   )
+}
+
+/**
+ * Generates an anchor element, targeting PubMed, for the specified ID.
+ *
+ * @param {*} $$ - DOM
+ * @param {*} id - The PubMed ID of the article to link to.
+ *
+ * @returns {*} Document Fragment
+ */
+function _renderPMID ($$, id)
+{
+  return $$('a').attr({
+    href: `https://www.ncbi.nlm.nih.gov/pubmed/${id}`,
+    target: '_blank'
+  }).append(
+    id
+  );
+}
+
+/**
+ * Generates an anchor element, targeting PubMed Central, for the specified ID.
+ *
+ * @param {*} $$ - DOM
+ * @param {*} id - The PubMed Central ID of the article to link to.
+ *
+ * @returns {*} Document Fragment
+ */
+function _renderPMCID ($$, id)
+{
+  return $$('a').attr({
+    href: `https://www.ncbi.nlm.nih.gov/pmc/articles/${id}`,
+    target: '_blank'
+  }).append(
+    id
+  );
 }
 
 function _renderLocation ($$, fpage, lpage, pageRange, elocationId) {
@@ -811,13 +1325,30 @@ function _renderLocation ($$, fpage, lpage, pageRange, elocationId) {
 
 function _renderPublisherPlace ($$, place, publisher) {
   if (place && publisher) {
-    return ' ' + place + ': ' + publisher + '; '
+    return ' ' + place + ': ' + publisher + '.'
   } else if (place) {
-    return ' ' + place + '; '
+    return ' ' + place + '.'
   } else if (publisher) {
-    return ' ' + publisher + '; '
+    return ' ' + publisher + '.'
   } else {
     return ''
+  }
+}
+
+function _renderURI ($$, uri)
+{
+  if (uri)
+  {
+    return $$('a').attr({
+        href: uri,
+        target: '_blank'
+      }).append(
+        uri
+      );
+  }
+  else
+  {
+    return '';
   }
 }
 

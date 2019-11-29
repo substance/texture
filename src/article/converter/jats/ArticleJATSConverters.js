@@ -20,6 +20,7 @@ import ParagraphConverter from './ParagraphConverter'
 import PermissionsConverter from './PermissionsConverter'
 import PreformatConverter from './PreformatConverter'
 import SmallCapsConverter from './SmallCapsConverter'
+import StringDateConvertor from './StringDateConverter'
 import StrikeThroughConverter from './StrikeThroughConverter'
 import SubscriptConverter from './SubscriptConverter'
 import SuperscriptConverter from './SuperscriptConverter'
@@ -54,6 +55,7 @@ export default [
   new PermissionsConverter(),
   new PreformatConverter(),
   new SmallCapsConverter(),
+  new StringDateConvertor(),
   new StrikeThroughConverter(),
   new SubscriptConverter(),
   new SuperscriptConverter(),

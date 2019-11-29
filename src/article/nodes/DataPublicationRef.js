@@ -20,15 +20,25 @@ import { CHILDREN, STRING, TEXT } from 'substance'
 */
 export default class DataPublicationRef extends Reference {}
 DataPublicationRef.schema = {
+  // Texture internal
   type: 'data-publication-ref', // publication-type="data"
-  title: TEXT(...RICH_TEXT_ANNOS), // <data-title>
+
+  // eLife required fields
+  specificUse: STRING, // <element-citation[specific-specificUse]>
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
-  containerTitle: STRING, // <source>
   year: STRING, // <year>
-  month: STRING, // <month>
-  day: STRING, // <day>
+  title: TEXT(...RICH_TEXT_ANNOS), // <data-title>
+  containerTitle: STRING, // <source>
+
+  // eLife optional fields
+  authority: STRING, // <pub-id assigning-authority>
+  href: STRING,  // <pub-id xlink:href>
   accessionId: STRING, // <pub-id pub-id-type="accession">
-  arkId: STRING, // // <pub-id pub-id-type="ark">
   archiveId: STRING, // <pub-id pub-id-type="archive">
-  doi: STRING // <pub-id pub-id-type="doi">
+  doi: STRING, // <pub-id pub-id-type="doi">
+
+  // eLife unused
+  arkId: STRING, // // <pub-id pub-id-type="ark">
+  month: STRING, // <month>
+  day: STRING // <day>
 }

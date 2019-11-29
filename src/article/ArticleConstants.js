@@ -16,22 +16,28 @@ export const REPORT_REF = 'report-ref'
 export const SOFTWARE_REF = 'software-ref'
 export const THESIS_REF = 'thesis-ref'
 export const WEBPAGE_REF = 'webpage-ref'
+export const PERIODICAL_REF = 'periodical-ref'
+export const PREPRINT_REF = 'preprint-ref'
 
 export const JATS_BIBR_TYPES_TO_INTERNAL = {
   'journal': JOURNAL_ARTICLE_REF,
   'book': BOOK_REF,
-  'chapter': CHAPTER_REF,
   'confproc': CONFERENCE_PAPER_REF,
   'data': DATA_PUBLICATION_REF,
   'patent': PATENT_REF,
+  'report': REPORT_REF,
+  'software': SOFTWARE_REF,
+  'web': WEBPAGE_REF,
+  /* TODO: Check the below against the JATS spec. */
+  'chapter': CHAPTER_REF,
   'article': ARTICLE_REF,
   'newspaper': NEWSPAPER_ARTICLE_REF,
   'magazine': MAGAZINE_ARTICLE_REF,
-  'report': REPORT_REF,
-  'software': SOFTWARE_REF,
   'thesis': THESIS_REF,
   'webpage': WEBPAGE_REF,
-  'web': WEBPAGE_REF
+  /* eLife specifc mappings */
+  'pre-print': PREPRINT_REF,
+  'periodical': PERIODICAL_REF
 }
 
 export const INTERNAL_BIBR_TYPES_TO_JATS = Object.keys(JATS_BIBR_TYPES_TO_INTERNAL).reduce((map, jatsType) => {

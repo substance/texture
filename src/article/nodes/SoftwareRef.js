@@ -25,14 +25,23 @@ import Reference from './Reference'
 */
 export default class SoftwareRef extends Reference {}
 SoftwareRef.schema = {
+  // Texture internal
   type: 'software-ref', // publication-type="software"
-  title: TEXT(...RICH_TEXT_ANNOS), // <source>
+
+  // eLife required fields
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
-  version: STRING, // <version>
+  title: TEXT(...RICH_TEXT_ANNOS), // <data-title>
+  containerTitle: STRING, // <source>
+
+  // eLife optional fields
+  year: STRING, // <year>
+  uri: STRING, // <ext-link ext-link-type="uri">
   publisherLoc: STRING, // <publisher-loc>
   publisherName: STRING, // <publisher-name>
-  year: STRING, // <year>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  version: STRING, // <version>
+
+    // eLife unused
   month: STRING, // <month>
-  day: STRING, // <day>
-  doi: STRING // <pub-id pub-id-type="doi">
+  day: STRING // <day>
 }

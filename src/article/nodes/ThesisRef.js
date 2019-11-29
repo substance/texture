@@ -18,13 +18,21 @@ import Reference from './Reference'
 */
 export default class ThesisRef extends Reference {}
 ThesisRef.schema = {
+  // Texture internal
   type: 'thesis-ref', // publication-type="thesis"
-  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+
+  // eLife required fields
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
   year: STRING, // <year>
-  month: STRING, // <month>
-  day: STRING, // <day>
-  publisherLoc: STRING, // <publisher-loc>
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
   publisherName: STRING, // <publisher-name>
-  doi: STRING // <pub-id pub-id-type="doi">
+
+  // eLife optional fields
+  publisherLoc: STRING, // <publisher-loc>
+  doi: STRING, // <pub-id pub-id-type="doi">
+  uri: STRING, // <ext-link ext-link-type="uri">
+
+ // eLife unused
+  month: STRING, // <month>
+  day: STRING // <day>
 }

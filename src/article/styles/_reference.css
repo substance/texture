@@ -23,6 +23,14 @@
   margin-right: 10px;
 }
 
+.sc-reference > .se-text i {
+  font-style: italic;
+}
+
+.sc-reference > .se-text b {
+  font-weight: bold;
+}
+
 .sc-reference > .se-icon {
   flex-basis: var(--t-default-spacing);
   flex-grow: 0;

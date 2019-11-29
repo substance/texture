@@ -23,16 +23,25 @@ import Reference from './Reference'
 */
 export default class ReportRef extends Reference {}
 ReportRef.schema = {
+  // Texture internal
   type: 'report-ref', // publication-type="report"
+
+  // eLife required fields
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
-  sponsors: CHILDREN('ref-contrib'), // <person-group person-group-type="sponsor">
-  title: TEXT(...RICH_TEXT_ANNOS), // <source>
   year: STRING, // <year>
+  title: TEXT(...RICH_TEXT_ANNOS), // <source>
+  publisherName: STRING, // <publisher-name>
+
+  // eLife optional fields
+  publisherLoc: STRING, // <publisher-loc>
+  volume: STRING, // <volume>
+  isbn: STRING, // <pub-id pub-id-type="isbn">
+  doi: STRING, // <pub-id pub-id-type="doi">
+  uri: STRING, // <ext-link ext-link-type="uri">
+
+  // eLife unused
+  sponsors: CHILDREN('ref-contrib'), // <person-group person-group-type="sponsor">
   month: STRING, // <month>
   day: STRING, // <day>
-  publisherName: STRING, // <publisher-name>
-  publisherLoc: STRING, // <publisher-loc>
-  series: STRING, // <series>
-  isbn: STRING, // <pub-id pub-id-type="isbn">
-  doi: STRING // <pub-id pub-id-type="doi">
+  series: STRING // <series>
 }

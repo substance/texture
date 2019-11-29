@@ -21,14 +21,23 @@ import Reference from './Reference'
 */
 export default class WebpageRef extends Reference {}
 WebpageRef.schema = {
+  // Texture internal
   type: 'webpage-ref', // publication-type="webpage"
-  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
-  // E.g. website name, where the page appeared
-  containerTitle: STRING, // <source>
+
+  // eLife required fields
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+  containerTitle: STRING, // <source>
+  uri: STRING, // <ext-link ext-link-type="uri">
+
+  // eLife optional fields
   year: STRING, // <year>
+
+  // FIXME (#233): The ISO8601 value should be computed.
+  accessedDate: STRING, // <date-in-citation>
+  accessedDateIso8601: STRING, // <date-in-citation iso-8601-date="1995-09-10">
+
+  // eLife unused
   month: STRING, // <month>
-  day: STRING, // <day>
-  accessedDate: STRING, // <date-in-citation iso-8601-date="1995-09-10">
-  uri: STRING // <uri>
+  day: STRING // <day>
 }

@@ -20,15 +20,23 @@ import Reference from './Reference'
 */
 export default class PatentRef extends Reference {}
 PatentRef.schema = {
+  // Texture internal
   type: 'patent-ref', // publication-type="patent"
+
+  // eLife required fields
   inventors: CHILDREN('ref-contrib'), // <person-group person-group-type="inventor">
-  assignee: STRING, // <collab collab-type="assignee"><named-content>
+  year: STRING, // <year>
   title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
   containerTitle: STRING, // <source>
-  year: STRING, // <year>
-  month: STRING, // <month>
-  day: STRING, // <day>
+
+  // eLife optional fields
   patentNumber: STRING, // <patent>US20100941530</patent>
   patentCountry: STRING, // <patent country="United States"></patent>
+  uri: STRING, // <ext-link ext-link-type="uri">
+
+  // eLife unused
+  assignee: STRING, // <collab collab-type="assignee"><named-content>
+  month: STRING, // <month>
+  day: STRING, // <day>
   doi: STRING // <pub-id pub-id-type="doi">
 }

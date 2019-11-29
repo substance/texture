@@ -35,14 +35,17 @@ import NewspaperArticleRef from './NewspaperArticleRef'
 import Overline from './Overline'
 import Paragraph from './Paragraph'
 import PatentRef from './PatentRef'
+import PeriodicalRef from './PeriodicalRef'
 import Permission from './Permission'
 import Person from './Person'
 import Preformat from './Preformat'
+import PreprintRef from './PreprintRef'
 import RefContrib from './RefContrib'
 import Reference from './Reference'
 import ReportRef from './ReportRef'
 import SmallCaps from './SmallCaps'
 import SoftwareRef from './SoftwareRef'
+import StringDate from './StringDate'
 import StrikeThrough from './StrikeThrough'
 import Subject from './Subject'
 import Subscript from './Subscript'
@@ -68,8 +71,8 @@ export default {
       CustomAbstract, MetadataField, DataPublicationRef, ExternalLink, Figure, FigurePanel,
       Footnote, Funder, Graphic, Group, Heading, InlineFormula, InlineGraphic, Italic,
       Keyword, JournalArticleRef, List, ListItem, MagazineArticleRef, Metadata, Monospace,
-      NewspaperArticleRef, Affiliation, Overline, Paragraph, PatentRef, Permission,
-      Person, Preformat, RefContrib, Reference, ReportRef, SmallCaps, SoftwareRef,
+      NewspaperArticleRef, Affiliation, Overline, Paragraph, PatentRef, PeriodicalRef, Permission,
+      Person, Preformat, PreprintRef, RefContrib, Reference, ReportRef, SmallCaps, SoftwareRef, StringDate,
       StrikeThrough, Subject, Subscript, Superscript, SupplementaryFile, Table, TableCell,
       TableFigure, TableRow, ThesisRef, Underline, WebpageRef, Xref
     ].forEach(node => config.addNode(node))

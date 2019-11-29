@@ -40,6 +40,19 @@
   cursor: default;
 }
 
+.sc-card > * > .se-header > * > i {
+  font-style: italic;
+}
+
+.sc-card > * > .se-header > * > b {
+  font-weight: bold;
+}
+
+.sc-card > * > .se-header > * > a {
+  color: var(--t-action-color);
+  text-decoration: none;
+}
+
 .sc-card > * > .se-footer {
   display: flex;
   justify-content: space-between;

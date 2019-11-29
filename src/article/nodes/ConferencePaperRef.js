@@ -18,18 +18,28 @@ import Reference from './Reference'
 */
 export default class ConferencePaperRef extends Reference {}
 ConferencePaperRef.schema = {
+  // Texture internal
   type: 'conference-paper-ref', // publication-type="confproc"
-  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+
+  // eLife required fields
   authors: CHILDREN('ref-contrib'), // <person-group person-group-type="author">
-  confName: STRING, // <conf-name>
-  confLoc: STRING, // <conf-loc>
-  containerTitle: STRING, // <source>
   year: STRING, // <year>
-  month: STRING, // <month>
-  day: STRING, // <day>
+  title: TEXT(...RICH_TEXT_ANNOS), // <article-title>
+  confName: STRING, // <conf-name>
+
+  // eLife optional fields
+  confLoc: STRING, // <conf-loc>
+  confDate: STRING, // <conf-date>
+  volume: STRING, // <volume>
   fpage: STRING, // <fpage>
   lpage: STRING, // <lpage>
-  pageRange: STRING, // <page-range>
   elocationId: STRING, // <elocation-id>
-  doi: STRING // <pub-id pub-id-type="doi">
+  doi: STRING, // <pub-id pub-id-type="doi">
+  uri: STRING, // <ext-link ext-link-type="uri">
+
+  // eLife unused fields.
+  containerTitle: STRING, // <source>
+  month: STRING, // <month>
+  day: STRING, // <day>
+  pageRange: STRING // <page-range>
 }

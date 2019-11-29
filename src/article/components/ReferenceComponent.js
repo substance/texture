@@ -5,6 +5,8 @@ import { getLabel } from '../shared/nodeHelpers'
 import PreviewComponent from './PreviewComponent'
 import DefaultNodeComponent from './DefaultNodeComponent'
 import InplaceRefContribsEditor from '../metadata/InplaceRefContribsEditor'
+import { createNodePropertyModels, createValueModel } from '../../kit'
+import SpecificUseEditor from '../components/SpecificUseEditor'
 
 export default class ReferenceComponent extends NodeComponent {
   render ($$) {
@@ -49,12 +51,41 @@ class ReferenceMetadataComponent extends DefaultNodeComponent {
   _getClassNames () {
     return 'sc-reference sm-metadata'
   }
+
+  _createPropertyModels ()
+  {
+    const api = this.context.api
+    const node = this.props.node
+    const doc = node.getDocument()
+    return createNodePropertyModels(api, this.props.node, (p) => {
+      switch (p.name) {
+        case 'stringDate': {
+          let stringDate = doc.get(node.stringDate)
+          return createNodePropertyModels(api, stringDate)
+        }
+        default:
+          return createValueModel(api, [node.id, p.name], p);
+      }
+    })
+  }
+
   // using a special inplace property editor for 'ref-contrib's
-  _getPropertyEditorClass (name, value) {
-    if (value.hasTargetType('ref-contrib')) {
+  _getPropertyEditorClass (name, value)
+  {
+    if (value.hasTargetType('ref-contrib'))
+    {
       return InplaceRefContribsEditor
-    } else {
-      return super._getPropertyEditorClass(name, value)
+    }
+    else
+    {
+      switch (name)
+      {
+        case 'specificUse':
+          return SpecificUseEditor;
+
+        default:
+          return super._getPropertyEditorClass(name, value)
+      }
     }
   }
 }

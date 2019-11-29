@@ -32,7 +32,8 @@ export function getLabel (node)
  *
  * @export
  * @param {*} node - The target node.
- * @returns {number} the target nodes position.
+ *
+ * @returns {number} The target nodes position.
  */
 export function getPos (node)
 {
@@ -54,9 +55,10 @@ export function getPos (node)
  * Recursively find the nearest parent by type.
  *
  * @export
- * @param   {*}       node   the node to start the search from.
- * @param   {string}  type   the of node to find.
- * @returns {node|undefined} the requested node, if found.
+ * @param   {*}      node - The node to start the search from.
+ * @param   {string} type - The of node to find.
+ *
+ * @returns {node|undefined} The requested node, if found.
  */
 export function findParentByType (node, type)
 {
@@ -79,8 +81,9 @@ export function findParentByType (node, type)
  * the desired list or an empty array.
  *
  * @export
- * @param   {*}       the citation to extract the people list from.
- * @returns {Array}   an array of people.
+ * @param   {*} citation - the citation to extract the people list from.
+ *
+ * @returns {Array} An array of people.
  */
 export function getPeopleFromCitation(citation)
 {
@@ -104,9 +107,10 @@ export function getPeopleFromCitation(citation)
  * Note: This function is intented to be used in [].sort().
  *
  * @export
- * @param   {*} a      the first citation to compare.
- * @param   {*} b      the second citation to compare.
- * @returns {number}   0 if citations match, 1 if A should come before B, and -1 if B should come before A.
+ * @param   {*} a - The first citation to compare.
+ * @param   {*} b - The second citation to compare.
+ *
+ * @returns {number} 0 if citations match, 1 if A should come before B, and -1 if B should come before A.
  */
 export function sortCitationsByPosition(a, b)
 {
@@ -120,9 +124,10 @@ export function sortCitationsByPosition(a, b)
  * Note: This function is intented to be used in [].sort().
  *
  * @export
- * @param   {*} a      the first citation to compare.
- * @param   {*} b      the second citation to compare.
- * @returns {number}   0 if citations match, 1 if A should come before B, and -1 if B should come before A.
+ * @param   {*} a - The first citation to compare.
+ * @param   {*} b - The second citation to compare.
+ *
+ * @returns {number} 0 if citations match, 1 if A should come before B, and -1 if B should come before A.
  */
 export function sortCitationsByNameYear(a, b)
 {

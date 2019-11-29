@@ -1,7 +1,7 @@
 import {
   JATS_BIBR_TYPES_TO_INTERNAL,
   INTERNAL_BIBR_TYPES_TO_JATS,
-  BOOK_REF, REPORT_REF, SOFTWARE_REF, DATA_PUBLICATION_REF, CHAPTER_REF
+  BOOK_REF, REPORT_REF, SOFTWARE_REF, DATA_PUBLICATION_REF, CHAPTER_REF, PERIODICAL_REF
 } from '../../ArticleConstants'
 
 import { getText, getSeparatedText, getAttr } from '../util/domHelpers'
@@ -46,6 +46,8 @@ function _importElementCitation (el, node, doc, importer) {
 
   Object.assign(node, {
     assignee: getText(el, 'collab[collab-type=assignee] > named-content'),
+    comment: getText(el, 'comment'),
+    confDate: getText(el, 'conf-date'),
     confName: getText(el, 'conf-name'),
     confLoc: getText(el, 'conf-loc'),
     day: getText(el, 'day'),
@@ -63,29 +65,45 @@ function _importElementCitation (el, node, doc, importer) {
     publisherLoc: getSeparatedText(el, 'publisher-loc'),
     publisherName: getSeparatedText(el, 'publisher-name'),
     series: getText(el, 'series'),
-    uri: getText(el, 'uri'),
+    uri: getText(el, 'ext-link[ext-link-type=uri]'),
     version: getText(el, 'version'),
     volume: getText(el, 'volume'),
     year: getText(el, 'year'),
-    accessedDate: getAttr(el, 'date-in-citation', 'iso-8601-date'),
+    accessedDate: getText(el, 'date-in-citation'),
+    // FIXME (#233): The ISO8601 value should be computed.
+    accessedDateIso8601: getAttr(el, 'date-in-citation', 'iso-8601-date'),
     // identifiers
     accessionId: getText(el, 'pub-id[pub-id-type=accession]'),
     archiveId: getText(el, 'pub-id[pub-id-type=archive]'),
     arkId: getText(el, 'pub-id[pub-id-type=ark]'),
     isbn: getText(el, 'pub-id[pub-id-type=isbn]'),
     doi: getText(el, 'pub-id[pub-id-type=doi]'),
-    pmid: getText(el, 'pub-id[pub-id-type=pmid]')
+    pmid: getText(el, 'pub-id[pub-id-type=pmid]'),
+    pmcid: getText(el, 'pub-id[pub-id-type=pmcid]')
   })
 
-  if (type === 'book' || type === 'report' || type === 'software') {
-    node.title = getAnnotatedText(importer, el, 'source', [node.id, 'title'])
-  } else {
+  if (type === 'book' || type === 'report')
+  {
+    node.title = getAnnotatedText(importer, el, 'source', [node.id, 'title']);
+
+    if (type === 'book')
+    {
+      node.chapterTitle = getAnnotatedText(importer, el, 'chapter-title', [node.id, 'title']);
+    }
+  }
+  else
+  {
     node.containerTitle = getText(el, 'source')
-    if (type === 'chapter') {
+    if (type === 'chapter')
+    {
       node.title = getAnnotatedText(importer, el, 'chapter-title', [node.id, 'title'])
-    } else if (type === 'data') {
+    }
+    else if (type === 'data' || type === 'software')
+    {
       node.title = getAnnotatedText(importer, el, 'data-title', [node.id, 'title'])
-    } else {
+    }
+    else
+    {
       node.title = getAnnotatedText(importer, el, 'article-title', [node.id, 'title'])
     }
   }
@@ -95,6 +113,29 @@ function _importElementCitation (el, node, doc, importer) {
   node.inventors = _importPersonGroup(el, doc, 'inventor')
   node.sponsors = _importPersonGroup(el, doc, 'sponsor')
   node.translators = _importPersonGroup(el, doc, 'translator')
+
+  // FIXME (#233): The ISO8601 value should be computed.
+  if (type === 'periodical')
+  {
+    const stringDateEl = el.find('string-date');
+    if (stringDateEl)
+    {
+      doc.delete(node.stringDate);
+      let stringDate = importer.convertElement(stringDateEl);
+      // ATTENTION: so that the document model is correct we need to use
+      // the Document API to set the stringDate id
+      node.stringDate = stringDate.id;
+    }
+  }
+
+  // TODO: Check if this can be moved into the table above, although needs to be
+  //       tested once saving/exported is fully supported.
+  if (type === 'data')
+  {
+    node.specificUse = el.attr('specific-use');
+    node.authority = getAttr(el, 'pub-id', 'assigning-authority');
+    node.href = getAttr(el, 'pub-id', 'xlink:href');
+  }
 }
 
 function getAnnotatedText (importer, rootEl, selector, path) {
@@ -152,6 +193,7 @@ function _exportElementCitation (node, exporter) {
       )
     )
   }
+  el.append(_createTextElement($$, node.confDate, 'conf-date'))
   el.append(_createTextElement($$, node.confName, 'conf-name'))
   el.append(_createTextElement($$, node.confLoc, 'conf-loc'))
   el.append(_createTextElement($$, node.day, 'day'))
@@ -167,25 +209,40 @@ function _exportElementCitation (node, exporter) {
   el.append(_createTextElement($$, node.patentNumber, 'patent', { 'country': node.patentCountry }))
   el.append(_createMultipleTextElements($$, node.publisherLoc, 'publisher-loc'))
   el.append(_createMultipleTextElements($$, node.publisherName, 'publisher-name'))
-  el.append(_createTextElement($$, node.uri, 'uri'))
-  el.append(_createTextElement($$, node.accessedDate, 'date-in-citation', { 'iso-8601-date': node.accessedDate }))
+  el.append(_createTextElement($$, node.uri, 'ext-link', {'ext-link-type': 'uri', 'xlink:href': node.uri}))
+  // FIXME (#233): The ISO8601 value should be computed.
+  el.append(_createTextElement($$, node.accessedDate, 'date-in-citation', { 'iso-8601-date': node.accessedDateIso8601 }))
   el.append(_createTextElement($$, node.version, 'version'))
   el.append(_createTextElement($$, node.volume, 'volume'))
   el.append(_createTextElement($$, node.year, 'year'))
+  el.append(_createTextElement($$, node.comment, 'comment'))
   // identifiers
-  el.append(_createTextElement($$, node.accessionId, 'pub-id', { 'pub-id-type': 'accession' }))
-  el.append(_createTextElement($$, node.arkId, 'pub-id', { 'pub-id-type': 'ark' }))
-  el.append(_createTextElement($$, node.archiveId, 'pub-id', { 'pub-id-type': 'archive' }))
-  el.append(_createTextElement($$, node.isbn, 'pub-id', { 'pub-id-type': 'isbn' }))
-  el.append(_createTextElement($$, node.doi, 'pub-id', { 'pub-id-type': 'doi' }))
-  el.append(_createTextElement($$, node.pmid, 'pub-id', { 'pub-id-type': 'pmid' }))
+  if (type == DATA_PUBLICATION_REF)
+  {
+    // TODO: This needs to be revisited when implementing edit/save support to ensure that multiple elements
+    //       aren't written out to the xml.
+    el.append(_createTextElement($$, node.accessionId, 'pub-id', { 'pub-id-type': 'accession', 'assigning-authority': node.authority, 'xlink:href': node.href }))
+    el.append(_createTextElement($$, node.arkId, 'pub-id', { 'pub-id-type': 'ark', 'assigning-authority': node.authority, 'xlink:href': node.href }))
+    el.append(_createTextElement($$, node.archiveId, 'pub-id', { 'pub-id-type': 'archive', 'assigning-authority': node.authority, 'xlink:href': node.href }))
+    el.append(_createTextElement($$, node.doi, 'pub-id', { 'pub-id-type': 'doi', 'assigning-authority': node.authority, 'xlink:href': node.href }))
+  }
+  else
+  {
+    el.append(_createTextElement($$, node.accessionId, 'pub-id', { 'pub-id-type': 'accession' }))
+    el.append(_createTextElement($$, node.arkId, 'pub-id', { 'pub-id-type': 'ark' }))
+    el.append(_createTextElement($$, node.archiveId, 'pub-id', { 'pub-id-type': 'archive' }))
+    el.append(_createTextElement($$, node.isbn, 'pub-id', { 'pub-id-type': 'isbn' }))
+    el.append(_createTextElement($$, node.doi, 'pub-id', { 'pub-id-type': 'doi' }))
+    el.append(_createTextElement($$, node.pmid, 'pub-id', { 'pub-id-type': 'pmid' }))
+    el.append(_createTextElement($$, node.pmcid, 'pub-id', { 'pub-id-type': 'pmcid' }))
+  }
   // creators
   el.append(_exportPersonGroup($$, doc, node.authors, 'author'))
   el.append(_exportPersonGroup($$, doc, node.editors, 'editor'))
   el.append(_exportPersonGroup($$, doc, node.inventors, 'inventor'))
   el.append(_exportPersonGroup($$, doc, node.sponsors, 'sponsor'))
 
-  if (type === BOOK_REF || type === REPORT_REF || type === SOFTWARE_REF) {
+  if (type === BOOK_REF || type === REPORT_REF) {
     el.append(_exportAnnotatedText(exporter, [node.id, 'title'], 'source'))
   } else {
     el.append(_createTextElement($$, node.containerTitle, 'source'))
@@ -193,7 +250,7 @@ function _exportElementCitation (node, exporter) {
       el.append(
         _exportAnnotatedText(exporter, [node.id, 'title'], 'chapter-title')
       )
-    } else if (type === DATA_PUBLICATION_REF) {
+    } else if (type === DATA_PUBLICATION_REF || type === SOFTWARE_REF) {
       el.append(
         _exportAnnotatedText(exporter, [node.id, 'title'], 'data-title')
       )
@@ -202,6 +259,22 @@ function _exportElementCitation (node, exporter) {
         _exportAnnotatedText(exporter, [node.id, 'title'], 'article-title')
       )
     }
+  }
+
+  // FIXME (#233): The ISO8601 value should be computed.
+  if (type === PERIODICAL_REF)
+  {
+    let stringDate = doc.get(node.stringDate);
+    if (stringDate && !stringDate.isEmpty())
+    {
+      articleMeta.append(exporter.convertNode(stringDate));
+    }
+  }
+
+  // TODO: Test once saving/exported is fully supported.
+  if (type === 'data')
+  {
+    el.attr('specific-use', node.specificUse);
   }
   return el
 }

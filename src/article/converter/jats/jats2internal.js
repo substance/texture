@@ -19,6 +19,7 @@ export default function jats2internal (jats, doc, jatsImporter) {
   _populateBody(doc, jats, jatsImporter)
   _populateFootnotes(doc, jats, jatsImporter)
   _populateReferences(doc, jats, jatsImporter)
+  _populateAcknowledgements(doc, jats, jatsImporter);
 
   return doc
 }
@@ -333,6 +334,41 @@ function _populateAbstract (doc, jats, jatsImporter) {
   //   })
   //   documentHelpers.append(doc, ['article', 'translations'], translation.id)
   // }
+}
+
+function _populateAcknowledgements (doc, jats, jatsImporter)
+{
+  let $$ = jats.createElement.bind(jats);
+  let sectionContainerConverter = new SectionContainerConverter();
+
+  let acknowledgments = jats.findAll('article > back > ack');
+  acknowledgments.forEach(acknowledgment => {
+    // Need to remove the 'title' from the child nodes, otherwise it will appear inline with the main text of the
+    // acknowledgement.
+    const titleEl = findChild(acknowledgment, 'title')
+    if (titleEl)
+    {
+      acknowledgment.removeChild(titleEl)
+    }
+
+    // If there are no childNodes (e.g. its an empty element), then add an empty paragraph
+    if (acknowledgment.getChildCount() === 0)
+    {
+      acknowledgment.append($$('p'))
+    }
+
+    let node = doc.create({
+      type: 'acknowledgement',
+      id: acknowledgment.id
+    });
+
+    sectionContainerConverter.import(acknowledgment, node, jatsImporter)
+    if (titleEl)
+    {
+      node.title = jatsImporter.annotatedText(titleEl, [node.id, 'title'])
+    }
+    documentHelpers.append(doc, ['article', 'acknowledgements'], node.id)
+  });
 }
 
 function _populateBody (doc, jats, jatsImporter) {

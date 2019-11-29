@@ -108,6 +108,21 @@ export default class ManuscriptComponent extends Component {
       )
     )
 
+    // Acknowledgements
+    let acknowledgementsModel = manuscript.getAcknowledgements()
+    el.append(
+      $$(ManuscriptSection, {
+        name: 'acknowledgements',
+        label: this.getLabel('acknowledgement-label'),
+        model: acknowledgementsModel
+      }).append(
+        renderModel($$, this, acknowledgementsModel, {
+          name: 'acknowledgement',
+          placeholder: this.getLabel('acknowledgement-placeholder')
+        }).addClass('sm-acknowledgement')
+      )
+    )
+
     return el
   }
 }

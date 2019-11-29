@@ -1,5 +1,6 @@
 export { default as Abstract } from './Abstract'
 export { default as Affiliation } from './Affiliation'
+export { default as Acknowledgement } from './Acknowledgement'
 export { default as Article } from './Article'
 export { default as ArticleRef } from './ArticleRef'
 export { default as BlockFormula } from './BlockFormula'

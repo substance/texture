@@ -89,6 +89,7 @@ export default {
 
     config.addLabel('abstract', 'Main Abstract')
     config.addLabel('abstractType', 'Abstract Type')
+    config.addLabel('acknowledgement', 'Acknowledgements')
     config.addLabel('accessedDate', 'Accessed Date')
     config.addLabel('accessedDateIso8601', 'Accessed Date (ISO 8601)')
     config.addLabel('accessionId', 'Accession ID')

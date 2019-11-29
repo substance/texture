@@ -1,4 +1,5 @@
 import Abstract from './Abstract'
+import Acknowledgement from './Acknowledgement'
 import Affiliation from './Affiliation'
 import Article from './Article'
 import ArticleRef from './ArticleRef'
@@ -66,7 +67,7 @@ export default {
   name: 'article.model',
   configure (config) {
     ;[
-      Abstract, Article, ArticleRef,
+      Abstract, Acknowledgement, Article, ArticleRef,
       BlockFormula, BlockQuote, Body, Bold, BookRef, Break, ChapterRef, ConferencePaperRef,
       CustomAbstract, MetadataField, DataPublicationRef, ExternalLink, Figure, FigurePanel,
       Footnote, Funder, Graphic, Group, Heading, InlineFormula, InlineGraphic, Italic,

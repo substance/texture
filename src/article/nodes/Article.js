@@ -11,5 +11,6 @@ Article.schema = {
   customAbstracts: CHILDREN('custom-abstract'),
   body: CHILD('body'),
   references: CHILDREN('reference'),
+  acknowledgements: CHILDREN('acknowledgement'),
   footnotes: CHILDREN('footnote')
 }

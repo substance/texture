@@ -9,6 +9,11 @@ export default class ArticleModel extends Model {
     return this._getValueModel('article.abstract')
   }
 
+  getAcknowledgements()
+  {
+    return this._getValueModel('article.acknowledgements')
+  }
+
   getAuthors () {
     return this._getValueModel('metadata.authors')
   }

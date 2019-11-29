@@ -1,0 +1,12 @@
+.sc-acknowledgement.sm-hidden {
+  display: none;
+}
+
+.sc-acknowledgement .sc-heading {
+  cursor: default;
+}
+
+.sc-acknowledgement .sc-acknowledgement-content .container-node {
+  border: var(--t-input-default-border);
+  border-radius: var(--t-border-radius);
+}

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/libero/texture/compare/v0.0.3...v0.0.4) (2019-11-29)
+
+
+### Features
+
+* support for 'ack' elements ([a8dfd8c](https://github.com/libero/texture/commit/a8dfd8c6b2315c9a92b87df76f5789cb35647875))
+
+
+### Bug Fixes
+
+* support for eLife references ([9257498](https://github.com/libero/texture/commit/925749887eb3a15bcb011d1b34cc33d3588a1ecc))
+
 ### [0.0.3](https://github.com/libero/texture/compare/v0.0.2...v0.0.3) (2019-11-15)
 
 

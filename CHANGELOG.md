@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/libero/texture/compare/v0.0.7...v0.0.8) (2019-12-03)
+
+
+### Bug Fixes
+
+* actions not triggering on push ([4c1427e](https://github.com/libero/texture/commit/4c1427eae9119ea0d766c831156b123ad706bfcd))
+
 ### [0.0.7](https://github.com/libero/texture/compare/v0.0.6...v0.0.7) (2019-12-03)
 
 ### [0.0.6](https://github.com/libero/texture/compare/v0.0.5...v0.0.6) (2019-11-29)

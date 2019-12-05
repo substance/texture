@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/libero/texture/compare/v0.0.8...v0.0.9) (2019-12-05)
+
+
+### Bug Fixes
+
+* chapter references should use 'pp' rather than 'p' ([91a22c9](https://github.com/libero/texture/commit/91a22c9798152f48b480ec8238b506402ede2422))
+
 ### [0.0.8](https://github.com/libero/texture/compare/v0.0.7...v0.0.8) (2019-12-03)
 
 

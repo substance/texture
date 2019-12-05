@@ -179,16 +179,17 @@ function bookRenderer ($$, entityId, entityDb, exporter)
     fragments.push(` ${entity.elocationId}.`);
   }
 
-  // <fpage>
+  // <fpage> </lpage>
   if (isChapterType && entity.fpage)
   {
-    fragments.push(` p. ${entity.fpage}`);
-
     if (entity.lpage)
     {
-      fragments.push(`-${entity.lpage}`);
+      fragments.push(` pp${entity.fpage}-${entity.lpage}.`);
     }
-    fragments.push('.');
+    else
+    {
+      fragments.push(` p${entity.fpage}.`);
+    }
   }
 
   // <comment>

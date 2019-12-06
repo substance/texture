@@ -88,41 +88,16 @@ export default class AbstractCitationManager {
   _updateLabels (silent) {
     let xrefs = this._getXrefs()
     let refs = this.getCitables()
-    let refsById = refs.reduce((m, ref) => {
-      m[ref.id] = ref
-      return m
-    }, {})
-
     let stateUpdates = []
 
     let pos = 1
     let order = {}
     let refLabels = {}
     let xrefLabels = {}
+
+    // For each Citation...
     xrefs.forEach((xref) => {
-      let isInvalid = false
-      let numbers = []
-      let targetIds = xref.refTargets
-      for (let id of targetIds) {
-        // fail if there is an unknown id
-        if (!refsById[id]) {
-          isInvalid = true
-          continue
-        }
-        if (!order.hasOwnProperty(id)) {
-          order[id] = pos
-          refLabels[id] = this.labelGenerator.getLabel(pos)
-          pos++
-        }
-        numbers.push(order[id])
-      }
-      // invalid labels shall be the same as empty ones
-      if (isInvalid) {
-        // HACK: we just signal invalid references with a ?
-        numbers.push('?')
-        console.warn(`invalid label detected for ${xref.id}`)
-      }
-      xrefLabels[xref.id] = this.labelGenerator.getLabel(numbers)
+      xrefLabels[xref.id] = this.labelGenerator.getLabel(xref);
     })
 
     // HACK

@@ -6,6 +6,7 @@ export { default as FigureManager } from './FigureManager'
 export { default as FootnoteManager } from './FootnoteManager'
 export * from './nodeHelpers'
 export { default as NumberedLabelGenerator } from './NumberedLabelGenerator'
+export { default as CitationLabelGenerator } from './CitationLabelGenerator'
 export { default as ReferenceManager } from './ReferenceManager'
 export { tableHelpers }
 export { default as TableManager } from './TableManager'

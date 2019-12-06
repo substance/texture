@@ -13,6 +13,7 @@ import EntityLabelsPackage from './shared/EntityLabelsPackage'
 import MetadataPackage from './metadata/MetadataPackage'
 import FigureLabelGenerator from './shared/FigureLabelGenerator'
 import NumberedLabelGenerator from './shared/NumberedLabelGenerator'
+import CitationLabelGenerator from './shared/CitationLabelGenerator'
 import ArticleHTMLConverters from './converter/html/ArticleHTMLConverters'
 import ArticleHTMLExporter from './converter/html/ArticleHTMLExporter'
 import ArticleHTMLImporter from './converter/html/ArticleHTMLImporter'
@@ -100,11 +101,7 @@ export default {
       and: ',',
       to: '-'
     }))
-    articleConfig.setValue('reference-label-generator', new NumberedLabelGenerator({
-      template: '[$]',
-      and: ',',
-      to: '-'
-    }))
+    articleConfig.setValue('reference-label-generator', new CitationLabelGenerator({}));
     articleConfig.setValue('supplementary-file-label-generator', new NumberedLabelGenerator({
       name: 'Supplementary File',
       plural: 'Supplementary Files',

@@ -1,5 +1,5 @@
 import { DocumentNode, CHILD, CHILDREN, CONTAINER, STRING, TEXT } from 'substance'
-import { RICH_TEXT_ANNOS } from './modelConstants'
+import { RICH_TEXT_ANNOS, LINKS_AND_XREFS } from './modelConstants'
 import MetadataField from './MetadataField'
 import Graphic from './Graphic'
 import Xref from './Xref'
@@ -22,21 +22,23 @@ export default class FigurePanel extends DocumentNode {
       legend: [{
         type: 'paragraph'
       }],
-      permission: {
+      permissions: [{
         type: 'permission'
-      }
+      }]
     }
   }
 }
+
 FigurePanel.schema = {
   type: 'figure-panel',
   content: CHILD(Graphic.type),
-  title: TEXT(...RICH_TEXT_ANNOS, Xref.type),
-  label: STRING,
+  title: TEXT(...RICH_TEXT_ANNOS, Xref.type), // <caption> > <title>
+  label: STRING, // <label>
   legend: CONTAINER({
     nodeTypes: [Paragraph.type, SupplementaryFile.type],
     defaultTextType: Paragraph.type
   }),
-  permission: CHILD(Permission.type),
+  attribution: TEXT(...RICH_TEXT_ANNOS, ...LINKS_AND_XREFS), // <attrib>
+  permissions: CHILDREN(Permission.type),
   metadata: CHILDREN(MetadataField.type)
 }

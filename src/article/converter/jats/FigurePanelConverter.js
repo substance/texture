@@ -1,4 +1,4 @@
-import { findChild, retainChildren } from '../util/domHelpers'
+import { findChild, findAllChildren, retainChildren } from '../util/domHelpers'
 import { getLabel } from '../../shared/nodeHelpers'
 import { MetadataField } from '../../nodes'
 
@@ -14,7 +14,7 @@ export default class FigurePanelConverter {
     let $$ = el.createElement.bind(el.getOwnerDocument())
     let labelEl = findChild(el, 'label')
     let contentEl = this._getContent(el)
-    let permissionsEl = findChild(el, 'permissions')
+    let permissionsEl = findAllChildren(el, 'permissions')
     let captionEl = findChild(el, 'caption')
     let doc = importer.getDocument()
     // Preparations
@@ -48,10 +48,21 @@ export default class FigurePanelConverter {
     }
     // Note: we are transforming capton content to legend property
     node.legend = captionEl.children.map(child => importer.convertElement(child).id)
-    if (permissionsEl) {
-      node.permission = importer.convertElement(permissionsEl).id
-    } else {
-      node.permission = doc.create({ type: 'permission' }).id
+
+
+    // Get all the permissions elements, create new 'Permission' nodes and pack their ids into an array. Note that if
+    // there aren't any permissions elements, then we create one.
+    node.permissions = new Array();
+    if (permissionsEl.length > 0)
+    {
+      for (let element of permissionsEl)
+      {
+        node.permissions.push(importer.convertElement(element).id);
+      }
+    }
+    else
+    {
+      node.permissions.push(doc.create({ type: 'permission' }).id);
     }
 
     // Custom Metadata Fields
@@ -67,6 +78,13 @@ export default class FigurePanelConverter {
         value
       }).id
     })
+
+    // Attribution
+    let attributionEl = findChild(el, 'attrib');
+    if (attributionEl)
+    {
+      node.attribution = importer.annotatedText(attributionEl, [node.id, 'attribution']);
+    }
   }
 
   _getContent (el) {
@@ -104,6 +122,13 @@ export default class FigurePanelConverter {
       }
       el.append(captionEl)
     }
+
+    // Attribution
+    if (node.attribution)
+    {
+      $$('attrib').append(exporter.annotatedText([node.id, 'attribution']));
+    }
+
     // Custom Metadata Fields
     if (node.metadata.length > 0) {
       let kwdGroupEls = node.resolve('metadata').map(field => {
@@ -123,11 +148,16 @@ export default class FigurePanelConverter {
         exporter.convertNode(node.resolve('content'))
       )
     }
-    let permission = node.resolve('permission')
-    if (permission && !permission.isEmpty()) {
-      el.append(
-        exporter.convertNode(permission)
-      )
+
+    // TODO: This needs to be tested to ensure that the permissions are exported correctly as children of the 'fig'
+    //       element and not packed into a container of sorts.
+    let permissions = node.resolve('permissions')
+    if (permissions.length > 0)
+    {
+      for (let permission of permissions)
+      {
+        el.append(exporter.convertNode(permission));
+      }
     }
   }
 

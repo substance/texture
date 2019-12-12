@@ -1,5 +1,5 @@
 import { DocumentNode, STRING, TEXT } from 'substance'
-import { RICH_TEXT_ANNOS } from './modelConstants'
+import { RICH_TEXT_ANNOS, LINKS_AND_XREFS } from './modelConstants'
 
 export default class Permission extends DocumentNode {
   isEmpty () {
@@ -14,5 +14,5 @@ Permission.schema = {
   // URL to license description  used as a unique license identifier
   // FIXME: bad naming. Use url, or licenseUrl?
   license: STRING,
-  licenseText: TEXT(RICH_TEXT_ANNOS)
+  licenseText: TEXT(...RICH_TEXT_ANNOS, ...LINKS_AND_XREFS)
 }

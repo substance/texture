@@ -121,5 +121,11 @@ export default {
     articleConfig.import(ManuscriptPackage)
 
     articleConfig.import(MetadataPackage)
+
+    // FIXME:
+    // - This is probably a kludge, I don't think this is the right place for this.
+    // - This is duplicated from the MetadataPackage
+    // - Each section of the editor shouldn't need a seperate icon lookup list.
+    config.addIcon('remove', { 'fontawesome': 'fa-trash' })
   }
 }

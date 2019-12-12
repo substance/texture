@@ -5,7 +5,7 @@ import {
   BlockQuoteComponent, BoldComponent, BreakComponent, MetadataFieldComponent,
   ExternalLinkComponent, FigureComponent, FigurePanelComponent, FootnoteComponent,
   HeadingComponent, InlineFormulaComponent, InlineGraphicComponent, ItalicComponent, ListComponent,
-  ListItemComponent, ManuscriptComponent, ParagraphComponent, ReferenceComponent,
+  ListItemComponent, ManuscriptComponent, ParagraphComponent, PermissionComponent, ReferenceComponent,
   ReferenceListComponent, SectionLabel, SubscriptComponent, SuperscriptComponent,
   TableComponent, TableFigureComponent, UnsupportedInlineNodeComponent, XrefComponent,
   UnsupportedNodeComponent, GraphicComponent, SupplementaryFileComponent,
@@ -37,6 +37,7 @@ export default {
     config.addComponent('monospace', AnnotationComponent)
     config.addComponent('overline', AnnotationComponent)
     config.addComponent('paragraph', ParagraphComponent)
+    config.addComponent('permission', PermissionComponent)
     config.addComponent('reference', ReferenceComponent)
     config.addComponent('reference-list', ReferenceListComponent)
     config.addComponent('section-label', SectionLabel)
@@ -64,6 +65,7 @@ export default {
     config.addLabel('abstract-placeholder', 'Enter abstract')
     config.addLabel('acknowledgement-label', 'Acknowledgements')
     config.addLabel('acknowledgement-placeholder', 'Write any acknowledgements here')
+    config.addLabel('attribution-label', 'Attribution')
     config.addLabel('attribution-placeholder', 'Enter attribution')
     config.addLabel('authors-label', 'Authors')
     config.addLabel('body-label', 'Main text')

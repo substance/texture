@@ -14,6 +14,7 @@ export default {
     config.addLabel('show-less-fields', 'Less fields')
     config.addLabel('multi-select-default-value', 'Click to select a value')
     config.addLabel('select-default-value', 'No value selected')
+    config.addLabel('add-license', 'Add License')
 
     // item types
     config.addLabel('journal-article-ref', 'Journal Article')
@@ -201,11 +202,18 @@ export default {
     config.addLabel('figure', 'Figure')
     config.addLabel('content', 'Content')
     config.addLabel('legend', 'Legend')
-    config.addLabel('copyrightStatement', 'Copyright Statement')
-    config.addLabel('copyrightYear', 'Copyright Year')
-    config.addLabel('copyrightHolder', 'Copyright Holder')
+
+    // permission labels
+    config.addLabel('copyrightStatement', 'Copyright')
+    config.addLabel('copyrightStatement-placeholder', 'Enter copyright')
+    config.addLabel('copyrightYear', 'Year')
+    config.addLabel('copyrightYear-placeholder', 'Enter year')
+    config.addLabel('copyrightHolder', 'Holder')
+    config.addLabel('copyrightHolder-placeholder', 'Enter holder')
     config.addLabel('license', 'License')
-    config.addLabel('licenseText', 'License Text (optional)')
+    config.addLabel('license-placeholder', 'Enter license URL')
+    config.addLabel('licenseText', 'Statement')
+    config.addLabel('licenseText-placeholder', 'Enter statement')
 
     // table figure labels
     config.addLabel('table-figure', 'Table')

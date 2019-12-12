@@ -2,6 +2,7 @@ import { NodeComponent, createValueModel } from '../../kit'
 import { PREVIEW_MODE, METADATA_MODE } from '../ArticleConstants'
 import FigurePanelComponentWithMetadata from './FigurePanelComponentWithMetadata'
 import FigureMetadataComponent from './FigureMetadataComponent'
+import FigurePermissionsComponent from './FigurePermissionsComponent'
 import PreviewComponent from './PreviewComponent'
 import LabelComponent from './LabelComponent'
 import { getLabel } from '../shared/nodeHelpers'
@@ -41,8 +42,15 @@ export default class FigurePanelComponent extends NodeComponent {
       $$(SectionLabel, { label: 'title-label' }),
       this._renderValue($$, 'title', { placeholder: this.getLabel('title-placeholder') }).addClass('se-title'),
       $$(SectionLabel, { label: 'legend-label' }),
-      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend')
+      this._renderValue($$, 'legend', { placeholder: this.getLabel('legend-placeholder') }).addClass('se-legend'),
+      $$(SectionLabel, { label: 'attribution-label' }),
+      this._renderValue($$, 'attribution', { placeholder: this.getLabel('attribution-placeholder') }).addClass('se-attribution')
     )
+
+    // Permissions
+    el.append(
+      $$(FigurePermissionsComponent, { model: createValueModel(this.context.api, [node.id, 'permissions']) })
+    );
 
     // TODO: this is problematic as this node does not necessarily rerender if node.metadata has changed
     // the right way is to use a ModelComponent or use an incremental updater

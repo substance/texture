@@ -1,3 +1,5 @@
+import { getAttr } from '../util/domHelpers'
+
 export default class PermissionsConverter {
   get type () { return 'permission' }
 
@@ -19,9 +21,15 @@ export default class PermissionsConverter {
     }
     // TODO: it would be more natural and explicit to do el.find('ali:license-rec')
     let licenseRefEl = el.find('license_ref')
-    if (licenseRefEl) {
+    if (licenseRefEl)
+    {
       node.license = licenseRefEl.textContent
     }
+    else
+    {
+      node.license = getAttr(el, 'license', 'xlink:href');
+    }
+
     let licenseP = el.find('license > license-p')
     if (licenseP) {
       node.licenseText = importer.annotatedText(licenseP, [node.id, 'licenseText'])
@@ -39,14 +47,16 @@ export default class PermissionsConverter {
     if (node.copyrightHolder) {
       el.append($$('copyright-holder').append(node.copyrightHolder))
     }
-    if (node.license || node.licenseText) {
+    if (node.license || node.licenseText)
+    {
       let licenseEl = $$('license')
-      if (node.license) {
-        licenseEl.append(
-          $$('ali:license_ref').append(node.license)
-        )
+      if (node.license)
+      {
+        licenseEl.attr('xlink:href', node.license);
+        licenseEl.append($$('ali:license_ref').append(node.license));
       }
-      if (node.licenseText) {
+      if (node.licenseText)
+      {
         licenseEl.append(
           $$('license-p').append(
             exporter.annotatedText([node.id, 'licenseText'])

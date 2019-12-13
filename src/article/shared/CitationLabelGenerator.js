@@ -20,7 +20,7 @@ export default class CitationLabelGenerator
     if (node && node.type === 'xref' && node.refTargets.length > 0)
     {
       let count = 0;
-      label = '(';
+      label = '';
       for (let targetId of node.refTargets)
       {
         let target = node.document.get(targetId);
@@ -50,7 +50,6 @@ export default class CitationLabelGenerator
           count += 1;
         }
       }
-      label += ')';
     }
     return label;
   }

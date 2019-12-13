@@ -2,7 +2,7 @@ import { AnnotationComponent } from '../../kit'
 
 import {
   AbstractComponent, AcknowledgementComponent, AuthorsListComponent, BlockFormulaComponent,
-  BlockQuoteComponent, BoldComponent, BreakComponent, MetadataFieldComponent,
+  BlockQuoteComponent, BoldComponent, BoxComponent, BreakComponent, MetadataFieldComponent,
   ExternalLinkComponent, FigureComponent, FigurePanelComponent, FootnoteComponent,
   HeadingComponent, InlineFormulaComponent, InlineGraphicComponent, ItalicComponent, ListComponent,
   ListItemComponent, ManuscriptComponent, ParagraphComponent, PermissionComponent, ReferenceComponent,
@@ -19,6 +19,7 @@ export default {
     config.addComponent('acknowledgement', AcknowledgementComponent)
     config.addComponent('authors-list', AuthorsListComponent)
     config.addComponent('bold', BoldComponent)
+    config.addComponent('box', BoxComponent)
     config.addComponent('block-formula', BlockFormulaComponent)
     config.addComponent('block-quote', BlockQuoteComponent)
     config.addComponent('break', BreakComponent)
@@ -97,5 +98,8 @@ export default {
     // Used for rendering warning in case of missing images
     config.addIcon('graphic-load-error', { 'fontawesome': 'fa-warning' })
     config.addLabel('graphic-load-error', 'We couldn\'t load an image, sorry.')
+
+    // Box element labels
+    config.addLabel('box-title-label', 'Box text');
   }
 }

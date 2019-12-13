@@ -7,6 +7,7 @@ import BlockFormula from './BlockFormula'
 import BlockQuote from './BlockQuote'
 import Body from './Body'
 import Bold from './Bold'
+import Box from './Box'
 import BookRef from './BookRef'
 import Break from './Break'
 import ChapterRef from './ChapterRef'
@@ -68,7 +69,7 @@ export default {
   configure (config) {
     ;[
       Abstract, Acknowledgement, Article, ArticleRef,
-      BlockFormula, BlockQuote, Body, Bold, BookRef, Break, ChapterRef, ConferencePaperRef,
+      BlockFormula, BlockQuote, Body, Bold, BookRef, Box, Break, ChapterRef, ConferencePaperRef,
       CustomAbstract, MetadataField, DataPublicationRef, ExternalLink, Figure, FigurePanel,
       Footnote, Funder, Graphic, Group, Heading, InlineFormula, InlineGraphic, Italic,
       Keyword, JournalArticleRef, List, ListItem, MagazineArticleRef, Metadata, Monospace,

@@ -19,7 +19,7 @@ import SupplementaryManager from '../shared/SupplementaryManager'
 import ArticleModel from './ArticleModel'
 import Footnote from '../nodes/Footnote'
 import {
-  InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Person,
+  InlineFormula, Xref, TableFigure, InlineGraphic, BlockQuote, Box, Person,
   Affiliation, CustomAbstract, Reference, Group, Funder, Keyword, Subject
 } from '../nodes'
 

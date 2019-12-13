@@ -1,0 +1,43 @@
+.sc-box
+{
+  position: relative;
+  max-width: 800px;
+  box-shadow: var(--t-default-box-shadow);
+  margin: var(--t-half-spacing) 0;
+  font-size: var(--t-small-font-size);
+  padding: var(--t-default-spacing);
+}
+
+.sc-box.sm-selected {
+  outline: var(--t-input-focus-border)
+}
+
+.sc-box > * {
+  padding: 0px;
+}
+
+.sc-box .sc-title
+{
+  display: flex;
+  flex-direction: row;
+}
+
+.sc-box .sc-title .sc-section-label
+{
+  align-self: flex-start;
+  flex-grow: 1;
+  margin-top: 0px;
+}
+
+.sc-box .sc-title .se-remove-value
+{
+  align-self: flex-start;
+  margin-top: -15px;
+  margin-right: -10px;
+}
+
+.sc-box .sc-text
+{
+  padding-top: var(--t-default-spacing);
+  font-size: var(--t-small-font-size);
+}

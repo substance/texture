@@ -1,5 +1,6 @@
 import BodyConverter from './BodyConverter'
 import BoldConverter from './BoldConverter'
+import BoxedTextConvertor from './BoxedTextConverter'
 import BlockFormulaConverter from './BlockFormulaConverter'
 import BlockQuoteConverter from './BlockQuoteConverter'
 import BreakConverter from './BreakConverter'
@@ -35,6 +36,7 @@ import XrefConverter from './XrefConverter'
 export default [
   new BodyConverter(),
   new BoldConverter(),
+  new BoxedTextConvertor(),
   new BlockFormulaConverter(),
   new BlockQuoteConverter(),
   new BreakConverter(),

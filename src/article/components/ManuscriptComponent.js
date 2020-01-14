@@ -1,19 +1,20 @@
-import { Component } from 'substance'
-import { renderModel } from '../../kit'
-import ManuscriptSection from './ManuscriptSection'
+import { Component } from 'substance';
+import { renderModel } from '../../kit';
+import ManuscriptSection from './ManuscriptSection';
 
 export default class ManuscriptComponent extends Component {
-  render ($$) {
-    const manuscript = this.props.model
-    const AuthorsListComponent = this.getComponent('authors-list')
-    const ReferenceListComponent = this.getComponent('reference-list')
+  render($$) {
+    const manuscript = this.props.model;
+    const AuthorsListComponent = this.getComponent('authors-list');
+    const ReferenceListComponent = this.getComponent('reference-list');
+    const RelatedArticlesListComponent = this.getComponent('related-articles-list');
 
-    let el = $$('div').addClass('sc-manuscript')
+    let el = $$('div').addClass('sc-manuscript');
 
     // TODO: maybe we want to be able to configure if a section should be hidden when empty
 
     // Title
-    let titleModel = manuscript.getTitle()
+    let titleModel = manuscript.getTitle();
     el.append(
       $$(ManuscriptSection, {
         name: 'title',
@@ -24,9 +25,9 @@ export default class ManuscriptComponent extends Component {
           placeholder: this.getLabel('title-placeholder')
         }).addClass('sm-title')
       )
-    )
+    );
     // Sub-title
-    let subTitleModel = manuscript.getSubTitle()
+    let subTitleModel = manuscript.getSubTitle();
     el.append(
       $$(ManuscriptSection, {
         name: 'subtitle',
@@ -37,9 +38,9 @@ export default class ManuscriptComponent extends Component {
           placeholder: this.getLabel('subtitle-placeholder')
         }).addClass('sm-subtitle')
       )
-    )
+    );
     // Authors
-    let authorsModel = manuscript.getAuthors()
+    let authorsModel = manuscript.getAuthors();
     el.append(
       $$(ManuscriptSection, {
         name: 'authors',
@@ -52,9 +53,9 @@ export default class ManuscriptComponent extends Component {
           placeholder: this.getLabel('authors-placeholder')
         }).addClass('sm-authors')
       )
-    )
+    );
     // Abstract
-    let abstractModel = manuscript.getAbstract()
+    let abstractModel = manuscript.getAbstract();
     el.append(
       $$(ManuscriptSection, {
         name: 'abstract',
@@ -66,9 +67,9 @@ export default class ManuscriptComponent extends Component {
           placeholder: this.getLabel('abstract-placeholder')
         }).addClass('sm-abstract')
       )
-    )
+    );
     // Body
-    let bodyModel = manuscript.getBody()
+    let bodyModel = manuscript.getBody();
     el.append(
       $$(ManuscriptSection, {
         name: 'body',
@@ -80,21 +81,19 @@ export default class ManuscriptComponent extends Component {
           placeholder: this.getLabel('body-placeholder')
         }).addClass('sm-body')
       )
-    )
+    );
     // Footnotes
-    let footnotesModel = manuscript.getFootnotes()
+    let footnotesModel = manuscript.getFootnotes();
     el.append(
       $$(ManuscriptSection, {
         name: 'footnotes',
         label: this.getLabel('footnotes-label'),
         model: footnotesModel,
         hideWhenEmpty: true
-      }).append(
-        renderModel($$, this, footnotesModel).addClass('sm-footnotes')
-      )
-    )
+      }).append(renderModel($$, this, footnotesModel).addClass('sm-footnotes'))
+    );
     // References
-    let referencesModel = manuscript.getReferences()
+    let referencesModel = manuscript.getReferences();
     el.append(
       $$(ManuscriptSection, {
         name: 'references',
@@ -106,10 +105,25 @@ export default class ManuscriptComponent extends Component {
           model: referencesModel
         }).addClass('sm-references')
       )
-    )
+    );
+
+    // Related Articles
+    let relatedArticlesModel = manuscript.getRelatedArticles();
+    el.append(
+      $$(ManuscriptSection, {
+        name: 'related-articles',
+        label: 'Related Articles',
+        model: relatedArticlesModel,
+        hideWhenEmpty: true
+      }).append(
+        $$(RelatedArticlesListComponent, {
+          model: relatedArticlesModel
+        }).addClass('sm-related-articles')
+      )
+    );
 
     // Acknowledgements
-    let acknowledgementsModel = manuscript.getAcknowledgements()
+    let acknowledgementsModel = manuscript.getAcknowledgements();
     el.append(
       $$(ManuscriptSection, {
         name: 'acknowledgements',
@@ -121,8 +135,8 @@ export default class ManuscriptComponent extends Component {
           placeholder: this.getLabel('acknowledgement-placeholder')
         }).addClass('sm-acknowledgement')
       )
-    )
+    );
 
-    return el
+    return el;
   }
 }

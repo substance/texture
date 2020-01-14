@@ -39,6 +39,7 @@
 @import './_reference.css';
 @import './_reference-list.css';
 @import './_ref-contrib-editor.css';
+@import './_related_articles_list.css';
 @import './_section-label.css';
 @import './_supplementary-file.css';
 @import './_table.css';
@@ -50,4 +51,4 @@
 @import './_workflow-modal.css';
 @import './_xref';
 
-@import '../metadata/styles/_index.css'
+@import '../metadata/styles/_index.css';

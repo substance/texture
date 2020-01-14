@@ -96,7 +96,6 @@
   <s:not-implemented name="publisher"/>
   <s:not-implemented name="rb"/>
   <s:not-implemented name="ref-count"/>
-  <s:not-implemented name="related-article"/>
   <s:not-implemented name="related-object"/>
   <s:not-implemented name="response"/>
   <s:not-implemented name="roman"/>
@@ -361,6 +360,11 @@
     </optional>
   </define>
 
+  <define name="related-article">
+    <element name="related-article">
+    </element>
+  </define>
+
   <define name="abstract">
     <element name="abstract">
       <ref name="abstract-attlist"/>
@@ -434,6 +438,9 @@
       </optional>
       <optional>
         <ref name="permissions"/>
+      </optional>
+      <optional>
+        <ref name="related-article"/>
       </optional>
       <zeroOrMore>
         <ref name="abstract"/>

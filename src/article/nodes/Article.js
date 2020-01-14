@@ -1,5 +1,5 @@
-import { DocumentNode, CHILD, CHILDREN, TEXT } from 'substance'
-import { RICH_TEXT_ANNOS } from './modelConstants'
+import { DocumentNode, CHILD, CHILDREN, TEXT } from 'substance';
+import { RICH_TEXT_ANNOS } from './modelConstants';
 
 export default class Article extends DocumentNode {}
 Article.schema = {
@@ -11,6 +11,7 @@ Article.schema = {
   customAbstracts: CHILDREN('custom-abstract'),
   body: CHILD('body'),
   references: CHILDREN('reference'),
+  relatedArticles: CHILDREN('related-article'),
   acknowledgements: CHILDREN('acknowledgement'),
   footnotes: CHILDREN('footnote')
-}
+};

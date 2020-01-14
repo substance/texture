@@ -1,0 +1,11 @@
+.sc-card > .sc-related-article {
+  padding-top: 0px;
+}
+
+.sc-card > .sc-related-article > .sc-form-row:first-child {
+  margin-top: 0px;
+}
+
+.sc-card > .sc-related-article > .sc-form-row:last-child {
+  margin-bottom: 0px;
+}

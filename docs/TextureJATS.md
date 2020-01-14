@@ -128,7 +128,7 @@ id, xml:base
 </pre>
 **Contains**:
 <pre style="white-space:pre-wrap;">
-article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,issue-title?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,abstract*,trans-abstract*,kwd-group*,funding-group*
+article-id*,article-categories?,title-group?,contrib-group*,aff*,pub-date*,volume?,issue?,issue-title?,isbn?,(((fpage,lpage?)?,page-range?)|elocation-id)?,history?,permissions?,related-article?,abstract*,trans-abstract*,kwd-group*,funding-group*
 </pre>
 **This element may be contained in:**
 <pre style="white-space:pre-wrap;">
@@ -1485,6 +1485,21 @@ ref*
 back
 </pre>
 
+### `<related-article>`
+
+**Attributes**:
+<pre style="white-space:pre-wrap;">
+
+</pre>
+**Contains**:
+<pre style="white-space:pre-wrap;">
+EMPTY
+</pre>
+**This element may be contained in:**
+<pre style="white-space:pre-wrap;">
+article-meta
+</pre>
+
 ### `<role>`
 
 **Attributes**:
@@ -2157,7 +2172,6 @@ element-citation, date, pub-date
 - publisher
 - rb
 - ref-count
-- related-article
 - related-object
 - response
 - roman

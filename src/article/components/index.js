@@ -13,7 +13,6 @@ export { default as DownloadSupplementaryFileTool } from './DownloadSupplementar
 export { default as EditorPanel } from './EditorPanel';
 export { default as ExternalLinkComponent } from './ExternalLinkComponent';
 export { default as ExternalLinkEditor } from './ExternalLinkEditor';
-export { default as ExtLinkTypeEditor } from './ExtLinkTypeEditor';
 export { default as FigureComponent } from './FigureComponent';
 export { default as FigureMetadataComponent } from './FigureMetadataComponent';
 export { default as FigurePanelComponent } from './FigurePanelComponent';

@@ -1,6 +1,5 @@
 import { CustomSurface } from 'substance';
 import { FormRowComponent, NodeComponent } from '../../kit';
-//import ExtLinkTypeEditor from './ExtLinkTypeEditor';
 
 export default class RelatedArticleListComponent extends CustomSurface {
   getInitialState() {

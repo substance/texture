@@ -4,6 +4,7 @@ import BoxedTextConvertor from './BoxedTextConverter';
 import BlockFormulaConverter from './BlockFormulaConverter';
 import BlockQuoteConverter from './BlockQuoteConverter';
 import BreakConverter from './BreakConverter';
+import ContributorIdentifierConverter from './ContributorIdentifierConverter';
 import FigureConverter from './FigureConverter';
 import FigurePanelConverter from './FigurePanelConverter';
 import FootnoteConverter from './FootnoteConverter';
@@ -41,6 +42,7 @@ export default [
   new BlockFormulaConverter(),
   new BlockQuoteConverter(),
   new BreakConverter(),
+  new ContributorIdentifierConverter(),
   new ExternalLinkConverter(),
   new FigureConverter(),
   new FigurePanelConverter(),

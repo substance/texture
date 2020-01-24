@@ -6,6 +6,7 @@ export default class ManuscriptComponent extends Component {
   render($$) {
     const manuscript = this.props.model;
     const AuthorsListComponent = this.getComponent('authors-list');
+    const AuthorDetailsListComponent = this.getComponent('author-details-list');
     const ReferenceListComponent = this.getComponent('reference-list');
     const RelatedArticlesListComponent = this.getComponent('related-articles-list');
 
@@ -49,8 +50,7 @@ export default class ManuscriptComponent extends Component {
         hideWhenEmpty: true
       }).append(
         $$(AuthorsListComponent, {
-          model: authorsModel,
-          placeholder: this.getLabel('authors-placeholder')
+          model: authorsModel
         }).addClass('sm-authors')
       )
     );
@@ -104,6 +104,21 @@ export default class ManuscriptComponent extends Component {
         $$(ReferenceListComponent, {
           model: referencesModel
         }).addClass('sm-references')
+      )
+    );
+
+    // Author Details
+    let authorDetailsModel = manuscript.getAuthors();
+    el.append(
+      $$(ManuscriptSection, {
+        name: 'author-details',
+        label: this.getLabel('author-details-label'),
+        model: authorDetailsModel,
+        hideWhenEmpty: true
+      }).append(
+        $$(AuthorDetailsListComponent, {
+          model: authorDetailsModel
+        }).addClass('sm-authors')
       )
     );
 

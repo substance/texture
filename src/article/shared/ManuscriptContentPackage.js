@@ -4,6 +4,7 @@ import {
   AbstractComponent,
   AcknowledgementComponent,
   AuthorsListComponent,
+  AuthorDetailsListComponent,
   BlockFormulaComponent,
   BlockQuoteComponent,
   BoldComponent,
@@ -46,6 +47,7 @@ export default {
     config.addComponent('abstract', AbstractComponent);
     config.addComponent('acknowledgement', AcknowledgementComponent);
     config.addComponent('authors-list', AuthorsListComponent);
+    config.addComponent('author-details-list', AuthorDetailsListComponent);
     config.addComponent('bold', BoldComponent);
     config.addComponent('box', BoxComponent);
     config.addComponent('block-formula', BlockFormulaComponent);
@@ -130,5 +132,9 @@ export default {
 
     // Box element labels
     config.addLabel('box-title-label', 'Box text');
+
+    // Author details
+    config.addLabel('author-details-label', 'Author Information');
+    config.addLabel('author-details-correspendance', 'For correspondence');
   }
 };

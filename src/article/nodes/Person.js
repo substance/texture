@@ -1,5 +1,5 @@
-import { DocumentNode, STRING, ONE, MANY, CHILDREN, BOOLEAN } from 'substance'
-import { extractInitials } from './modelHelpers'
+import { DocumentNode, STRING, ONE, MANY, CONTAINER, CHILDREN, BOOLEAN } from 'substance';
+import { extractInitials } from './modelHelpers';
 
 export default class Person extends DocumentNode {
   // not used
@@ -7,24 +7,20 @@ export default class Person extends DocumentNode {
   //   return this.render().join('')
   // }
 
-  render (options = {}) {
-    let { prefix, suffix, givenNames, surname } = this
+  render(options = {}) {
+    let { prefix, suffix, givenNames, surname } = this;
     if (options.short) {
-      givenNames = extractInitials(givenNames)
+      givenNames = extractInitials(givenNames);
     }
-    let result = []
+    let result = [];
     if (prefix) {
-      result.push(prefix, ' ')
+      result.push(prefix, ' ');
     }
-    result.push(
-      givenNames,
-      ' ',
-      surname
-    )
+    result.push(givenNames, ' ', surname);
     if (suffix) {
-      result.push(' (', suffix, ')')
+      result.push(' (', suffix, ')');
     }
-    return result
+    return result;
   }
 }
 Person.schema = {
@@ -42,5 +38,7 @@ Person.schema = {
   bio: CHILDREN('paragraph'),
   equalContrib: BOOLEAN,
   corresp: BOOLEAN,
-  deceased: BOOLEAN
-}
+  deceased: BOOLEAN,
+  contributorIds: CONTAINER('contributor-identifier'),
+  competingInterests: CONTAINER('footnote')
+};

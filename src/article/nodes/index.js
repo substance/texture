@@ -12,6 +12,7 @@ export { default as Box } from './Box';
 export { default as Break } from './Break';
 export { default as ChapterRef } from './ChapterRef';
 export { default as ConferencePaperRef } from './ConferencePaperRef';
+export { default as ContributorIdentifier } from './ContributorIdentifier';
 export { default as CustomAbstract } from './CustomAbstract';
 export { default as MetadataField } from './MetadataField';
 export { default as DataPublicationRef } from './DataPublicationRef';

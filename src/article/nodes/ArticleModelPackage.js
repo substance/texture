@@ -12,6 +12,7 @@ import BookRef from './BookRef';
 import Break from './Break';
 import ChapterRef from './ChapterRef';
 import ConferencePaperRef from './ConferencePaperRef';
+import ContributorIdentifier from './ContributorIdentifier';
 import CustomAbstract from './CustomAbstract';
 import MetadataField from './MetadataField';
 import DataPublicationRef from './DataPublicationRef';
@@ -82,6 +83,7 @@ export default {
       Break,
       ChapterRef,
       ConferencePaperRef,
+      ContributorIdentifier,
       CustomAbstract,
       MetadataField,
       DataPublicationRef,

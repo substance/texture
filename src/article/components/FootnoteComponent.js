@@ -1,33 +1,43 @@
-import { NodeComponent } from '../../kit'
-import { getLabel } from '../shared/nodeHelpers'
-import { PREVIEW_MODE } from '../ArticleConstants'
-import PreviewComponent from './PreviewComponent'
+import { NodeComponent } from '../../kit';
+import { getLabel } from '../shared/nodeHelpers';
+import { PREVIEW_MODE, CONTENT_MODE } from '../ArticleConstants';
+import PreviewComponent from './PreviewComponent';
 
 export default class FootnoteComponent extends NodeComponent {
-  render ($$) {
-    const mode = this.props.mode
+  render($$) {
+    const mode = this.props.mode;
     if (mode === PREVIEW_MODE) {
-      return this._renderPreviewVersion($$)
+      return this._renderPreviewVersion($$);
+    } else if (mode == CONTENT_MODE) {
+      return this._renderContentVersion($$);
     }
 
-    const footnote = this.props.node
-    let label = getLabel(footnote) || '?'
+    const footnote = this.props.node;
+    let label = getLabel(footnote) || '?';
 
-    let el = $$('div').addClass('sc-footnote').attr('data-id', footnote.id)
+    let el = $$('div')
+      .addClass('sc-footnote')
+      .attr('data-id', footnote.id);
     el.append(
-      $$('div').addClass('se-container').append(
-        $$('div').addClass('se-label').append(label),
-        this._renderValue($$, 'content', { placeholder: this.getLabel('footnote-placeholder') })
-      )
-    )
-    return el
+      $$('div')
+        .addClass('se-container')
+        .append(
+          $$('div')
+            .addClass('se-label')
+            .append(label),
+          this._renderValue($$, 'content', { placeholder: this.getLabel('footnote-placeholder') })
+        )
+    );
+    return el;
   }
 
-  _renderPreviewVersion ($$) {
-    let footnote = this.props.node
-    let el = $$('div').addClass('sc-footnote').attr('data-id', footnote.id)
+  _renderPreviewVersion($$) {
+    let footnote = this.props.node;
+    let el = $$('div')
+      .addClass('sc-footnote')
+      .attr('data-id', footnote.id);
 
-    let label = getLabel(footnote) || '?'
+    let label = getLabel(footnote) || '?';
     el.append(
       $$(PreviewComponent, {
         id: footnote.id,
@@ -39,7 +49,11 @@ export default class FootnoteComponent extends NodeComponent {
           editable: false
         })
       })
-    )
-    return el
+    );
+    return el;
+  }
+
+  _renderContentVersion($$) {
+    return this._renderValue($$, 'content', { disabled: true, editable: false }).addClass('se-content');
   }
 }

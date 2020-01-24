@@ -1,0 +1,25 @@
+.se-author-details {
+  margin-top: var(--t-default-spacing);
+}
+
+.se-author-details:first-child {
+  margin-top: var(--t-half-spacing);
+}
+
+.se-author-details-fullname {
+  font-weight: var(--t-bold-font-weight);
+}
+
+.se-author-details-orchid {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.se-author-details-orchid > p {
+  margin-left: var(--t-button-padding);
+}
+
+.se-author-details-orchid > i {
+  color: #a6ce39;
+}

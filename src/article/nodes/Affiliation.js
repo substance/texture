@@ -1,27 +1,37 @@
-import { DocumentNode, STRING } from 'substance'
+import { DocumentNode, STRING } from 'substance';
 
 export default class Affiliation extends DocumentNode {
-  toString () {
-    return this.render().join('')
+  toString() {
+    return this.render().join('');
   }
 
-  render (options = {}) {
-    let { institution, division1, division2, division3 } = this
-    let result = institution ? [ institution ] : '???'
+  render(options = {}) {
+    let { institution, division1, division2, division3, city, country } = this;
+    let result = institution ? [institution] : '???';
     // TODO: do we really want this? Because the divisions might
     // be necessary to really understand the displayed name
     if (!options.short && institution) {
       if (division1) {
-        result.push(', ', division1)
+        result.push(', ', division1);
       }
       if (division2) {
-        result.push(', ', division2)
+        result.push(', ', division2);
       }
       if (division3) {
-        result.push(', ', division3)
+        result.push(', ', division3);
+      }
+
+      // FIXME: Rather than the below, should re-architect this function.
+      result.reverse();
+      if (city) {
+        result.push(', ', city);
+      }
+      if (country) {
+        result.push(', ', country);
       }
     }
-    return result
+
+    return result;
   }
 }
 
@@ -42,4 +52,4 @@ Affiliation.schema = {
   fax: STRING,
   email: STRING,
   uri: STRING
-}
+};

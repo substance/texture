@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/libero/texture/compare/v0.0.9...v0.0.10) (2020-01-24)
+
+
+### Features
+
+* add 'author information' sections to article view ([c873e20](https://github.com/libero/texture/commit/c873e20a357ab802cb018a2fcb702a48cd058d1f))
+* add support for 'boxed-text' element ([5fcdabf](https://github.com/libero/texture/commit/5fcdabf8b9faa94a98f339b5abed28a656cf3dc3))
+* add support for attribution and permissions elements for figures ([17ad754](https://github.com/libero/texture/commit/17ad75408614189b8bb36b43841bb84ae9403376))
+* display affiliations in the main article view ([32fe2f2](https://github.com/libero/texture/commit/32fe2f26d3ea8d91b1fe1345a133c724ad91ae77))
+
+
+### Bug Fixes
+
+* add support for the 'related-article' element ([5fe01e8](https://github.com/libero/texture/commit/5fe01e893e3726a5d41aa614146e376ff6adcbab))
+* invalid reference to ExtLinkTypeComponent ([90e1e33](https://github.com/libero/texture/commit/90e1e337a9287e00376243162d2da73f2ca9c8e5))
+* update citation format to show authors and year ([f087680](https://github.com/libero/texture/commit/f087680d1d9d67f10cbadb84d7cab42968702404))
+
 ### [0.0.9](https://github.com/libero/texture/compare/v0.0.8...v0.0.9) (2019-12-05)
 
 

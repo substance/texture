@@ -13,6 +13,10 @@ export default class ArticleModel extends Model {
     return this._getValueModel('article.acknowledgements');
   }
 
+  getAffiliations() {
+    return this._getValueModel('metadata.affiliations');
+  }
+
   getAuthors() {
     return this._getValueModel('metadata.authors');
   }

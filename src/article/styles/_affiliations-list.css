@@ -1,2 +1,31 @@
-.sc-affiliations-list {  
+.sc-affiliations-list {
+}
+
+.sc-affiliations-list > .sc-affiliation {
+  display: flex;
+  flex-direction: row;
+  margin-top: var(--t-half-spacing);
+  align-items: baseline;
+}
+
+.sc-affiliations-list > .sc-affiliation > .se-label {
+  align-self: flex-start;
+}
+
+.sc-affiliations-list > .sc-affiliation > .se-text {
+  flex-grow: 1;
+  margin-left: var(--t-button-padding);
+}
+
+.sc-affiliations-list > .sc-affiliation > .se-icon {
+}
+
+.sc-affiliations-list > .se-add-affiliation {
+  margin-top: var(--t-half-spacing);
+  padding: 2px 0px;
+  color: var(--t-action-color);
+}
+
+.sc-affiliations-list > .se-add-affiliation > .se-label {
+  margin-left: var(--t-button-padding);
 }

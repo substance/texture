@@ -1,13 +1,24 @@
-import { NodeComponent } from '../../kit'
+import { NodeComponent } from '../../kit';
 
 export default class AcknowledgementComponent extends NodeComponent {
-  render ($$) {
-    let el = $$('div').addClass('sc-acknowledgement')
+  getInitialState() {
+    let items = this._getAcknowledgements();
+    return {
+      hidden: items.length === 0
+    };
+  }
+
+  render($$) {
+    let el = $$('div').addClass('sc-acknowledgement');
     el.append(
       this._renderValue($$, 'content', {
         placeholder: this.getLabel('acknowledgement-placeholder')
       })
-    )
-    return el
+    );
+    return el;
+  }
+
+  _getAcknowledgements() {
+    return this.props.model.getItems();
   }
 }

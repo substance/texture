@@ -30,7 +30,6 @@ export default class Affiliation extends DocumentNode {
         result.push(', ', country);
       }
     }
-
     return result;
   }
 }
@@ -45,7 +44,7 @@ Affiliation.schema = {
   street: STRING,
   addressComplements: STRING,
   city: STRING,
-  state: STRING,
+  county: STRING,
   postalCode: STRING,
   country: STRING,
   phone: STRING,

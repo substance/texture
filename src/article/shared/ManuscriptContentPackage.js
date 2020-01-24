@@ -3,6 +3,7 @@ import { AnnotationComponent } from '../../kit';
 import {
   AbstractComponent,
   AcknowledgementComponent,
+  AffiliationsListComponent,
   AuthorsListComponent,
   AuthorDetailsListComponent,
   BlockFormulaComponent,
@@ -46,6 +47,7 @@ export default {
   configure(config) {
     config.addComponent('abstract', AbstractComponent);
     config.addComponent('acknowledgement', AcknowledgementComponent);
+    config.addComponent('affiliations-list', AffiliationsListComponent);
     config.addComponent('authors-list', AuthorsListComponent);
     config.addComponent('author-details-list', AuthorDetailsListComponent);
     config.addComponent('bold', BoldComponent);
@@ -97,6 +99,8 @@ export default {
     config.addLabel('abstract-placeholder', 'Enter abstract');
     config.addLabel('acknowledgement-label', 'Acknowledgements');
     config.addLabel('acknowledgement-placeholder', 'Write any acknowledgements here');
+    config.addLabel('affiliations-label', 'Affiliations');
+    config.addLabel('add-affiliation', 'Add affiliation');
     config.addLabel('attribution-label', 'Attribution');
     config.addLabel('attribution-placeholder', 'Enter attribution');
     config.addLabel('authors-label', 'Authors');

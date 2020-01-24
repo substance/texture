@@ -1,6 +1,7 @@
 export { default as AbstractComponent } from './AbstractComponent';
 export { default as AcknowledgementComponent } from './AcknowledgementComponent';
 export { default as AddSupplementaryFileWorkflow } from './AddSupplementaryFileWorkflow';
+export { default as AffiliationsListComponent } from './AffiliationsListComponent';
 export { default as AuthorsListComponent } from './AuthorsListComponent';
 export { default as AuthorDetailsListComponent } from './AuthorDetailsListComponent';
 export { default as BlockFormulaComponent } from './BlockFormulaComponent';

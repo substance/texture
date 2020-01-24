@@ -5,6 +5,7 @@ import ManuscriptSection from './ManuscriptSection';
 export default class ManuscriptComponent extends Component {
   render($$) {
     const manuscript = this.props.model;
+    const AffiliationsListComponent = this.getComponent('affiliations-list');
     const AuthorsListComponent = this.getComponent('authors-list');
     const AuthorDetailsListComponent = this.getComponent('author-details-list');
     const ReferenceListComponent = this.getComponent('reference-list');
@@ -54,6 +55,22 @@ export default class ManuscriptComponent extends Component {
         }).addClass('sm-authors')
       )
     );
+
+    // Affiliations
+    let affiliationsModel = manuscript.getAffiliations();
+    el.append(
+      $$(ManuscriptSection, {
+        name: 'affiliations',
+        label: this.getLabel('affiliations-label'),
+        model: affiliationsModel
+      }).append(
+        $$(AffiliationsListComponent, {
+          model: affiliationsModel,
+          placeholder: this.getLabel('affiliations-label')
+        }).addClass('sm-affiliations')
+      )
+    );
+
     // Abstract
     let abstractModel = manuscript.getAbstract();
     el.append(
@@ -143,7 +160,8 @@ export default class ManuscriptComponent extends Component {
       $$(ManuscriptSection, {
         name: 'acknowledgements',
         label: this.getLabel('acknowledgement-label'),
-        model: acknowledgementsModel
+        model: acknowledgementsModel,
+        hideWhenEmpty: true
       }).append(
         renderModel($$, this, acknowledgementsModel, {
           name: 'acknowledgement',

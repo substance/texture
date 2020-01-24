@@ -26,7 +26,6 @@ export default function jats2internal(jats, doc, jatsImporter) {
 
   return doc;
 }
-
 function _populateAffiliations(doc, jats) {
   // FIXME: At the moment we are ONLY getting affiliations for Authors, so we are missing editors, etc. I think that
   //        to properly support them all we need to re-model the metadata model.
@@ -42,7 +41,7 @@ function _populateAffiliations(doc, jats) {
       street: getText(el, 'addr-line[content-type=street-address]'),
       addressComplements: getText(el, 'addr-line[content-type=complements]'),
       city: getText(el, 'city') || getText(el, 'addr-line > city'),
-      state: getText(el, 'state'),
+      county: getText(el, 'state'),
       postalCode: getText(el, 'postal-code'),
       country: getText(el, 'country'),
       phone: getText(el, 'phone'),

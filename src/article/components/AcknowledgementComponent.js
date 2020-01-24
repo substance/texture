@@ -19,6 +19,6 @@ export default class AcknowledgementComponent extends NodeComponent {
   }
 
   _getAcknowledgements() {
-    return this.props.model.getItems();
+    return this.props.node.content;
   }
 }

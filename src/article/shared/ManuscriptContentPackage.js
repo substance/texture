@@ -139,6 +139,6 @@ export default {
 
     // Author details
     config.addLabel('author-details-label', 'Author Information');
-    config.addLabel('author-details-correspendance', 'For correspondence');
+    config.addLabel('author-details-correspendance', 'Corresponding author');
   }
 };

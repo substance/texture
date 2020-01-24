@@ -70,13 +70,7 @@ class AuthorDisplay extends NodeComponent {
           .append(getLabel(person))
       );
     }
-    if (person.corresp) {
-      el.append(
-        $$('sup')
-          .addClass('se-corresponding')
-          .append('*')
-      );
-    }
+
     el.on('mousedown', this._onMousedown).on('click', this._onClick);
     return el;
   }

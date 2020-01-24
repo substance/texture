@@ -109,6 +109,23 @@ export default class ManuscriptComponent extends Component {
         hideWhenEmpty: true
       }).append(renderModel($$, this, footnotesModel).addClass('sm-footnotes'))
     );
+
+    // Acknowledgements
+    let acknowledgementsModel = manuscript.getAcknowledgements();
+    el.append(
+      $$(ManuscriptSection, {
+        name: 'acknowledgements',
+        label: this.getLabel('acknowledgement-label'),
+        model: acknowledgementsModel,
+        hideWhenEmpty: true
+      }).append(
+        renderModel($$, this, acknowledgementsModel, {
+          name: 'acknowledgement',
+          placeholder: this.getLabel('acknowledgement-placeholder')
+        }).addClass('sm-acknowledgement')
+      )
+    );
+
     // References
     let referencesModel = manuscript.getReferences();
     el.append(
@@ -151,22 +168,6 @@ export default class ManuscriptComponent extends Component {
         $$(RelatedArticlesListComponent, {
           model: relatedArticlesModel
         }).addClass('sm-related-articles')
-      )
-    );
-
-    // Acknowledgements
-    let acknowledgementsModel = manuscript.getAcknowledgements();
-    el.append(
-      $$(ManuscriptSection, {
-        name: 'acknowledgements',
-        label: this.getLabel('acknowledgement-label'),
-        model: acknowledgementsModel,
-        hideWhenEmpty: true
-      }).append(
-        renderModel($$, this, acknowledgementsModel, {
-          name: 'acknowledgement',
-          placeholder: this.getLabel('acknowledgement-placeholder')
-        }).addClass('sm-acknowledgement')
       )
     );
 

@@ -46,15 +46,15 @@ class AuthorDetailsDisplay extends NodeComponent {
     el.append(
       $$('p')
         .addClass('se-author-details-fullname')
-        .append(`${author.givenNames} ${author.surname}${author.corresp ? '*' : ''}`)
+        .append(`${author.givenNames} ${author.surname}`)
     );
 
     // Only display an email fir corresponding authors
-    if (author.corresp && author.email) {
+    if (author.email) {
       el.append(
         $$('p')
           .addClass('se-author-details-correspondence')
-          .append(`${this.getLabel('author-details-correspendance')}: `)
+          .append(author.corresp ? `${this.getLabel('author-details-correspendance')}: ` : '')
           .append(
             $$('a')
               .attr('href', `mailto:${author.email}`)

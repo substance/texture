@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/libero/texture/compare/v0.0.10...v0.0.11) (2020-01-24)
+
+
+### Bug Fixes
+
+* error trying to set initial state of acknowledgement component ([a0f8104](https://github.com/libero/texture/commit/a0f81048558a23b015753930e4c3be9ee9a93376))
+
 ### [0.0.10](https://github.com/libero/texture/compare/v0.0.9...v0.0.10) (2020-01-24)
 
 

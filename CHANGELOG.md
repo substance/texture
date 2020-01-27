@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/libero/texture/compare/v0.0.11...v0.0.12) (2020-01-27)
+
+
+### Bug Fixes
+
+* layout tweaks based on feedback from stakeholders ([1982b58](https://github.com/libero/texture/commit/1982b587dfc5c4998c7a1b190214d02ee28aad8a))
+
 ### [0.0.11](https://github.com/libero/texture/compare/v0.0.10...v0.0.11) (2020-01-24)
 
 

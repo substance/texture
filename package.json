@@ -50,8 +50,8 @@
   },
   "scripts": {
     "prepack": "npm install && node make lib",
-    "lint": "eslint \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\"",
-    "lint-fix": "eslint \"builds/**/*.js\" \"src/**/*.js\" \"test/**/*.js\"",
+    "lint": "eslint \"src/**/*.js\" \"test/**/*.js\"",
+    "lint-fix": "eslint --fix \"src/**/*.js\" \"test/**/*.js\"",
     "start": "node --require esm make dev -s -w -d data",
     "build": "npm run lib",
     "lib": "node --require esm make lib",

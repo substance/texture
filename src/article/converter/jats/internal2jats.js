@@ -394,21 +394,21 @@ function _exportDate ($$, node, prop, dateType, tag) {
   const el = $$(tagName).attr('date-type', dateType)
     .attr('iso-8601-date', date)
 
-  const year = date.split('-')[0]
-  const month = date.split('-')[1]
-  const day = date.split('-')[2]
   if (_isDateValid(date)) {
+    const [year, month, day] = date.split('-')
     el.append(
       $$('day').append(day),
       $$('month').append(month),
       $$('year').append(year)
     )
   } else if (_isYearMonthDateValid(date)) {
+    const [year, month] = date.split('-')
     el.append(
       $$('month').append(month),
       $$('year').append(year)
     )
   } else if (_isYearDateValid(date)) {
+    const [year] = date.split('-')
     el.append(
       $$('year').append(year)
     )

@@ -33,7 +33,7 @@
     "module-alias": "2.2.0",
     "nyc": "14.1.1",
     "parse-formdata": "1.0.2",
-    "rollup": "1.11.3",
+    "rollup": "2.80.0",
     "rollup-plugin-commonjs": "9.3.4",
     "rollup-plugin-node-resolve": "4.2.3",
     "source-map-support": "0.5.10",
